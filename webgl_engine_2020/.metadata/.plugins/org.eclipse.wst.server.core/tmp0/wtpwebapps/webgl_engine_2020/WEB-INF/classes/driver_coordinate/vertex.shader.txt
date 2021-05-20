@@ -1,0 +1,14 @@
+
+in	vec4	vertex_location,vertex_material;
+
+uniform		mat4	model_matrix;
+uniform		float	line_length;
+
+out			vec4	frag_location,frag_material;
+
+void main(void)
+{
+	frag_material=vertex_material;
+	frag_location=model_matrix*vec4(vec3(vertex_location)*line_length,1.0);
+	gl_Position=target_info.projection_matrix*frag_location;
+}

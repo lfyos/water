@@ -1,0 +1,28 @@
+
+uniform sampler2D front,back,left,right,top,down;
+
+in vec3 direction;
+
+layout (location=0) out vec4 frag_data;
+
+void main(void)
+{
+	vec3 my_direction=normalize(direction);
+	
+	if((abs(my_direction.x)>=abs(my_direction.y))&&(abs(my_direction.x)>=abs(my_direction.z))){
+	    if(my_direction.x<0.0)
+			frag_data=texture(right,vec2((1.0-my_direction.z/my_direction.x)/2.0,(1.0-my_direction.y/my_direction.x)/2.0));
+		else
+			frag_data=texture(left, vec2((1.0-my_direction.z/my_direction.x)/2.0,(1.0+my_direction.y/my_direction.x)/2.0));
+	}else if((abs(my_direction.y)>=abs(my_direction.x))&&(abs(my_direction.y)>=abs(my_direction.z))){
+		if(my_direction.y<0.0)
+			frag_data=texture(down,vec2((1.0-my_direction.x/my_direction.y)/2.0,(1.0-my_direction.z/my_direction.y)/2.0));
+		else
+			frag_data=texture(top, vec2((1.0+my_direction.x/my_direction.y)/2.0,(1.0-my_direction.z/my_direction.y)/2.0));
+	}else{	
+		if(my_direction.z<0.0)
+			frag_data=texture(back, vec2((1.0+my_direction.x/my_direction.z)/2.0,(1.0-my_direction.y/my_direction.z)/2.0));
+		else
+			frag_data=texture(front,vec2((1.0+my_direction.x/my_direction.z)/2.0,(1.0+my_direction.y/my_direction.z)/2.0));
+	}
+}

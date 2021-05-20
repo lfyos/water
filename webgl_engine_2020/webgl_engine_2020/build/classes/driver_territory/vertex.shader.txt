@@ -1,0 +1,42 @@
+uniform material_information
+{
+	mat4 material_map;
+	float geometry_scale_x,geometry_scale_y,geometry_scale_z;
+	float min_height,max_height;											
+	float grass_scale,earth_scale,bottom_scale,stone_scale,cobble_scale,sandstone_scale;
+}material_info;
+
+in vec4 vertex_location,vertex_normal,vertex_material,vertex_texture;
+
+out vec4 frag_material,frag_texture;
+out vec3 frag_local_location,frag_location,frag_normal;
+
+void main(void)
+{
+	vec4 p;
+	
+	frag_local_location=vertex_location.xyz/vertex_location.w;
+	
+	p=component_info.model_matrix*vec4(
+		material_info.geometry_scale_x*vertex_location.x,
+		material_info.geometry_scale_y*vertex_location.y,
+		material_info.geometry_scale_z*vertex_location.z,
+		1.0);
+	frag_location=p.xyz/p.w;
+
+	p=component_info.model_matrix*vec4(
+		material_info.geometry_scale_x*vertex_normal.x,
+		material_info.geometry_scale_y*vertex_normal.y,
+		material_info.geometry_scale_z*vertex_normal.z,
+		1.0);
+	frag_normal=p.xyz/p.w;
+	
+	p=component_info.model_matrix*vec4(0.0,0.0,0.0,1.0);
+	frag_normal=normalize(frag_normal-p.xyz/p.w);
+	
+	frag_material=vertex_material;
+	
+	frag_texture=vertex_texture;
+	
+	gl_Position=target_info.projection_matrix*vec4(frag_location,1.0);
+}

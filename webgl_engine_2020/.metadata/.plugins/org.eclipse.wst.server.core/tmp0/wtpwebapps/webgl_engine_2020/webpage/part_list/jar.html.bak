@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>weapon</title>
+</head>
+<body>
+
+<div style="white-space:nowrap;text-align:center">
+<h3>
+
+<br/><br/><a href="../../chinese/draw.jsp?change_part=display_part:ancient_jar_part_0">瓦罐0</a>
+<br/><br/><a href="../../chinese/draw.jsp?change_part=display_part:ancient_jar_part_1">瓦罐1</a>
+
+</h3>
+</div>
+
+
+</body>
+</html>

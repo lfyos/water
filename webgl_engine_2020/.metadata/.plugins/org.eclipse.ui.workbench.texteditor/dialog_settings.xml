@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="isRegEx" value="false"/>
+		<item key="selection" value="parent_component"/>
+		<item key="casesensitive" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="wrap" value="true"/>
+		<item key="wholeword" value="false"/>
+		<list key="findhistory">
+			<item value="parent_component"/>
+			<item value="part_list_flag"/>
+			<item value="single"/>
+			<item value="443"/>
+			<item value="&quot; +"/>
+			<item value="                &quot;"/>
+			<item value="get_component_processor"/>
+			<item value="component_event_processor"/>
+			<item value="&quot;"/>
+			<item value="&quot;my_part_list&quot;"/>
+			<item value="my_part_list"/>
+			<item value="Attribute"/>
+			<item value="&quot;hidden&quot;"/>
+			<item value="reload_control_panel"/>
+			<item value="show_select_component_box_component"/>
+		</list>
+		<list key="replacehistory">
+			<item value="p"/>
+			<item value=""/>
+			<item value="render.set_event_component"/>
+			<item value="render.call_server_component"/>
+			<item value="call_server_component"/>
+			<item value="create_component_request_string"/>
+			<item value="render.get_component_to_id_object"/>
+			<item value="1.0E9"/>
+			<item value="&apos;_&apos;"/>
+			<item value="debug_information.print  (&quot;\t"/>
+			<item value="print  (&quot;"/>
+			<item value="x"/>
+			<item value="double"/>
+			<item value="var "/>
+			<item value="render.component_call_processor[component_id]"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_WIDTH" value="417"/>
+		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
+		<item key="DIALOG_HEIGHT" value="410"/>
+		<item key="DIALOG_X_ORIGIN" value="23"/>
+		<item key="DIALOG_Y_ORIGIN" value="260"/>
+	</section>
+</section>

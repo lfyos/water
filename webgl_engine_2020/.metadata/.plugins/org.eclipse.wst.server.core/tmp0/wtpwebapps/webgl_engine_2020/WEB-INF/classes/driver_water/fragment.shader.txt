@@ -1,0 +1,31 @@
+uniform		vec4		par,boundary;
+uniform		mat4		mirror_project_matrix;
+uniform 	sampler2D	mirror_texture,grass_texture,earth_texture;
+
+in			vec3		place;
+in			float		flag;
+
+layout (location=0) out vec4 frag_data;
+
+void main(void)
+{
+	vec4 p=mirror_project_matrix*vec4(place,1.0);
+	vec4 pp=p+vec4(p.w,p.w,0.0,0.0);
+	vec4 mirror_color=texture(mirror_texture,0.5*pp.xy/pp.w);
+	vec4 grass_color=texture(grass_texture,place.xz/10.0);
+	vec4 earth_color=texture(earth_texture,place.xz/11.0);
+	
+	mirror_color=vec4(mirror_color.xyz/mirror_color.w,1.0);
+	grass_color=vec4(grass_color.xyz/grass_color.w,1.0);
+	earth_color=vec4(earth_color.xyz/earth_color.w,1.0);
+
+	vec4 color=vec4(mirror_color.xyz,0.5);	
+	if((flag!=0.0)||(dot(target_info.clip_plane,vec4(place,1.0))>0.0))
+		discard;
+	else if((boundary.x==boundary.y)||(boundary.z==boundary.w))
+		frag_data=color;
+	else if((place.x<boundary.x)||(place.x>boundary.y))
+		frag_data=grass_color;
+	else
+		frag_data=color;
+}

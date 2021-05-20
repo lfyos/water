@@ -1,0 +1,26 @@
+in  vec4 vertex_location,vertex_texture;
+
+out vec4 frag_texture;
+
+void main(void)
+{
+	frag_texture=vertex_texture;
+	
+	gl_Position=vec4(vertex_location.xyz,1.0);
+	
+	float r=2000.0;
+	float alf=(gl_Position.y/r)*(3.14159265/4.0);
+	
+	gl_Position.y =r*sin(alf);
+	gl_Position.x+=r*(1.0-cos(alf));
+	
+	float t=float(system_info.second%4)*1000.0;
+	t+=float(system_info.millisecond);
+	t/=4000.0;
+	t =(t<=0.5)?t:(1.0-t);
+	t*=2.0;
+	gl_Position.xy=gl_Position.xy*t+vertex_location.xy*(1.0-t);
+	
+	gl_Position=component_info.model_matrix*gl_Position;
+	gl_Position=target_info.projection_matrix*gl_Position;
+}

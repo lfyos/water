@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="">
+		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
+		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
+	</section>
+	<section name="SearchDialog.ScopePart">
+		<item key="scope" value="0"/>
+	</section>
+	<section name="TextSearchPage">
+		<item key="HISTORY_SIZE" value="12"/>
+		<item key="CASE_SENSITIVE" value="false"/>
+		<item key="REG_EX_SEARCH" value="false"/>
+		<item key="WHOLE_WORD" value="false"/>
+		<item key="SEARCH_DERIVED" value="false"/>
+		<item key="SEARCH_IN_BINARIES" value="false"/>
+		<section name="HISTORY6">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="directory_component_name can NOT find a component"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY7">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="set_event_component"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY4">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="file_program"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY10">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="call_server_part"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY5">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="&quot;assemble_default&quot;"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="EXTENSIONS">
+			<item key="0" value="*.js, *.jsp, *.txt, *java"/>
+			<item key="1" value="*.java"/>
+			<item key="2" value="*.txt;*.js"/>
+			<item key="3" value="*.txt"/>
+			<item key="4" value="*.js"/>
+			<item key="5" value="*.js, *.txt, *java,*.jsp"/>
+			<item key="6" value="*.js, *.txt, *java"/>
+			<item key="7" value="*.txt,*.js,*java"/>
+			<item key="8" value="*.txt,*.js"/>
+			<item key="9" value="*.draw.txt"/>
+			<item key="10" value="*.jsp"/>
+		</section>
+		<section name="HISTORY11">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="call_server_part_by_component"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY8">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="call_server"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY9">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="call_server_engine"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.js"/>
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY2">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="set_orientation_by_angles"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.js"/>
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY3">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="Can&apos;t Find component by name in component_request_dispatch of dispatch_component_request"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY0">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="&quot;sub_directory&quot;"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY1">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="parse_web_server_response_data fail:"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+	</section>
+	<section name="org.eclipse.search.text.FileSearchResultPage">
+		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
+	</section>
+	<section name="Search">
+		<list key="Search.processedPageIds">
+			<item value="org.eclipse.rse.internal.files.ui.search.searchPage"/>
+			<item value="org.eclipse.search.internal.ui.text.TextSearchPage"/>
+			<item value="org.eclipse.mylyn.tasks.ui.search.page"/>
+			<item value="org.eclipse.egit.ui.commitSearchPage"/>
+			<item value="org.eclipse.jdt.ui.JavaSearchPage"/>
+			<item value="org.eclipse.wst.jsdt.ui.JavaSearchPage"/>
+			<item value="org.eclipse.pde.internal.ui.search.SearchPage"/>
+		</list>
+		<list key="Search.enabledPageIds">
+			<item value="org.eclipse.rse.internal.files.ui.search.searchPage"/>
+			<item value="org.eclipse.search.internal.ui.text.TextSearchPage"/>
+			<item value="org.eclipse.mylyn.tasks.ui.search.page"/>
+			<item value="org.eclipse.egit.ui.commitSearchPage"/>
+			<item value="org.eclipse.jdt.ui.JavaSearchPage"/>
+			<item value="org.eclipse.wst.jsdt.ui.JavaSearchPage"/>
+			<item value="org.eclipse.pde.internal.ui.search.SearchPage"/>
+		</list>
+	</section>
+	<section name="ReplaceDialog2">
+		<list key="replace_with">
+			<item value="public void initialize_component_driver(component comp,int driver_id,"/>
+			<item value=""/>
+			<item value="return super.response_event(p,ek,ci);"/>
+			<item value="public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)"/>
+			<item value="engine_kernel ek,client_information ci,camera_result cr)"/>
+			<item value="engine_kernel ek,client_information ci,camera_result cr,component_collector collector)"/>
+			<item value="public void response_init_data(engine_kernel ek,client_information ci)"/>
+		</list>
+	</section>
+	<section name="SearchDialog">
+		<item key="PREVIOUS_PAGE" value="org.eclipse.search.internal.ui.text.TextSearchPage"/>
+	</section>
+	<section name="org.eclipse.jdt.ui.JavaSearchResultPage">
+		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
+		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
+	</section>
+	<section name="DialogBounds_SearchDialog">
+		<item key="DIALOG_WIDTH" value="771"/>
+		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
+		<item key="DIALOG_HEIGHT" value="492"/>
+		<item key="DIALOG_X_ORIGIN" value="605"/>
+		<item key="DIALOG_Y_ORIGIN" value="192"/>
+	</section>
+	<section name="">
+		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
+		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
+		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
+	</section>
+</section>

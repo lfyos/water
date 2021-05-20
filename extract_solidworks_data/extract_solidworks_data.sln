@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "extract_solidworks_data", "extract_solidworks_data\extract_solidworks_data.csproj", "{DBF98F03-F68E-4799-BA22-A6BA7AE07BBD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DBF98F03-F68E-4799-BA22-A6BA7AE07BBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBF98F03-F68E-4799-BA22-A6BA7AE07BBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBF98F03-F68E-4799-BA22-A6BA7AE07BBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBF98F03-F68E-4799-BA22-A6BA7AE07BBD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B6EB3ADC-B53E-4080-908E-B171033D4EA9}
+	EndGlobalSection
+EndGlobal

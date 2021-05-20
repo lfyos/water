@@ -1,0 +1,17 @@
+uniform int pass_id;
+
+in  vec4 vertex_location,vertex_material;
+out vec4 frag_location,frag_material;
+
+void main(void)
+{
+	frag_location=vec4(vertex_location.xyz,1.0);
+	frag_location=component_info.model_matrix*frag_location;
+	
+	if(pass_id>0)
+		frag_location=target_info.clip_plane_matrix*frag_location;
+	
+	gl_Position=target_info.projection_matrix*frag_location;
+	
+	frag_material=vec4(vertex_material.rgb,1.0);
+}

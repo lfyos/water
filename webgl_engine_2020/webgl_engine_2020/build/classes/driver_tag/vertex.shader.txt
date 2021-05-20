@@ -1,0 +1,28 @@
+
+in	vec4	aVertexPosition,aVertexId;
+
+uniform 	vec4 	p0,right_direct,up_direct;
+uniform		vec4	point_id;
+
+out		vec4	place,vertex_id;
+
+void main(void)
+{
+	vec3 p=p0.xyz/p0.w,px=right_direct.xyz/right_direct.w,py=up_direct.xyz/up_direct.w;
+	
+	px=px*aVertexPosition.x;
+	py=py*aVertexPosition.y;
+	p=p+px+py;
+	place=vec4(p,1.0);
+	
+	vec4 position=target_info.projection_matrix*place;
+	position=position/position.w;
+	if(point_id.x<0.5)
+		gl_PointSize=8.0;
+	else{
+		gl_PointSize=16.0;
+		position.z=-0.99;
+	}
+	vertex_id=aVertexId;
+	gl_Position=position;
+}

@@ -1,0 +1,38 @@
+package kernel_service;
+
+
+import kernel_interface.client_request_switcher;
+
+public class http_server 
+{
+	private client_request_switcher client_switcher;
+	
+	public void destroy()
+	{
+		if(client_switcher!=null) {
+			client_switcher.destroy();
+			client_switcher=null;
+		}
+	}
+	public javax.servlet.jsp.JspWriter service_call(
+			String configure_file_name,String proxy_file_name,
+			
+			javax.servlet.jsp.JspWriter				out,
+			
+			javax.servlet.http.HttpServletRequest	request,
+			javax.servlet.http.HttpServletResponse	response,
+			javax.servlet.ServletContext 			application,
+			javax.servlet.jsp.PageContext			pagecontext,
+			ClassLoader 							loader)
+	{
+		http_implementation http_imp=new http_implementation(
+				out,request,response,application,pagecontext,loader);
+		client_switcher.system_call(http_imp,
+				configure_file_name,proxy_file_name);
+		return http_imp.out;
+	}
+	public http_server()
+	{
+		client_switcher=new client_request_switcher();
+	}
+}

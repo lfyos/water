@@ -1,0 +1,13 @@
+uniform vec4 light_position,color;
+uniform float ambient_scale,diffuse_scale,specular_scale,shininess_scale,k0,k1,k2;
+
+in  vec4 vertex_location,vertex_normal;
+out vec4 frag_location,frag_normal;
+
+void main(void)
+{
+	frag_location=vertex_location/vertex_location.w;
+	frag_normal=vertex_normal/vertex_normal.w;
+	
+	gl_Position=target_info.projection_matrix*(component_info.model_matrix*frag_location);
+}

@@ -1,0 +1,11 @@
+in  vec4 vertex_location;
+
+void main(void)
+{
+	float t=float(system_info.millisecond)/1000.0;
+	gl_Position=vec4(vertex_location.xyz*t,1.0);
+	gl_Position=component_info.model_matrix*gl_Position;
+	gl_Position=target_info.projection_matrix*gl_Position;
+	
+	gl_PointSize=50.0;
+}

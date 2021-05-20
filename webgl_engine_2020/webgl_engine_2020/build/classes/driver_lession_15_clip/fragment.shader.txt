@@ -1,0 +1,17 @@
+uniform int pass_id;
+
+in vec4 frag_location,frag_material;
+
+layout (location = 0) out vec4 frag_data;
+
+void main(void)
+{
+	frag_data=frag_material;
+	if(pass_id<=0){
+		if(dot(target_info.clip_plane,frag_location)>0.0)
+			discard;
+	}else{
+		if(!(gl_FrontFacing))
+			discard;
+	}
+}

@@ -1,0 +1,16 @@
+E:\water_all\relate_program\extract_solidworks_data\extract_solidworks_data\bin\Release\extract_solidworks_data.exe.config
+E:\water_all\relate_program\extract_solidworks_data\extract_solidworks_data\bin\Release\extract_solidworks_data.exe
+E:\water_all\relate_program\extract_solidworks_data\extract_solidworks_data\bin\Release\extract_solidworks_data.pdb
+E:\water_all\relate_program\extract_solidworks_data\extract_solidworks_data\bin\Release\SolidWorks.Interop.sldworks.dll
+E:\water_all\relate_program\extract_solidworks_data\extract_solidworks_data\obj\Release\extract_solidworks_data.csprojAssemblyReference.cache
+E:\water_all\relate_program\extract_solidworks_data\extract_solidworks_data\obj\Release\extract_solidworks_data.csproj.CopyComplete
+E:\water_all\relate_program\extract_solidworks_data\extract_solidworks_data\obj\Release\extract_solidworks_data.exe
+E:\water_all\relate_program\extract_solidworks_data\extract_solidworks_data\obj\Release\extract_solidworks_data.pdb
+E:\water_all\extract_solidworks_data\extract_solidworks_data\bin\Release\extract_solidworks_data.exe.config
+E:\water_all\extract_solidworks_data\extract_solidworks_data\bin\Release\extract_solidworks_data.exe
+E:\water_all\extract_solidworks_data\extract_solidworks_data\bin\Release\extract_solidworks_data.pdb
+E:\water_all\extract_solidworks_data\extract_solidworks_data\bin\Release\SolidWorks.Interop.sldworks.dll
+E:\water_all\extract_solidworks_data\extract_solidworks_data\obj\Release\extract_solidworks_data.csproj.CopyComplete
+E:\water_all\extract_solidworks_data\extract_solidworks_data\obj\Release\extract_solidworks_data.exe
+E:\water_all\extract_solidworks_data\extract_solidworks_data\obj\Release\extract_solidworks_data.pdb
+E:\water_all\extract_solidworks_data\extract_solidworks_data\obj\Release\extract_solidworks_data.csproj.CoreCompileInputs.cache

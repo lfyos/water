@@ -1,0 +1,15 @@
+in  vec4 vertex_location,vertex_material,vertex_id;
+out vec4 frag_location,frag_material,frag_id;
+
+void main(void)
+{
+	frag_location=vertex_location;
+	frag_material=vertex_material;
+	frag_id		 =vertex_id;
+	
+	gl_Position=vec4(vertex_location.xyz,1.0);
+	gl_Position=component_info.model_matrix*gl_Position;
+	gl_Position=target_info.projection_matrix*gl_Position;
+	
+	gl_PointSize=10.0;
+}
