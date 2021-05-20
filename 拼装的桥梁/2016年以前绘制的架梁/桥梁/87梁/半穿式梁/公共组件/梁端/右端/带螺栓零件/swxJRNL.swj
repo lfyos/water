@@ -1,0 +1,15 @@
+' ******************************************************************************
+' swxJRNL.swj - journal recorded on 05/20/10 by ww
+' *****************************************************************************
+Dim swApp As Object
+
+Dim Part As Object
+Dim boolstatus As Boolean
+Dim longstatus As Long, longwarnings As Long
+
+Sub main()
+
+Set swApp = Application.SldWorks
+
+swApp.ExitApp
+End Sub
