@@ -1,0 +1,363 @@
+<?xml version="1.0"?>
+<container>
+	<texture name='alloymagnesium_diffusemap.dds'>
+		<property name='average' value='0.6326224,0.6260158,0.6282544'/>
+		<property name='variance' value='0.004321336,0.004316838,0.004312458'/>
+	</texture>
+	<texture name='aluminum_diffusemap.dds'>
+		<property name='average' value='0.6673803,0.6673803,0.6673803'/>
+		<property name='variance' value='0.0001766876,0.0001766876,0.0001766876'/>
+	</texture>
+	<texture name='ash.dds'>
+		<property name='average' value='0.9347516,0.8375596,0.7157683'/>
+		<property name='variance' value='0.0001564115,0.0002824171,0.001084116'/>
+	</texture>
+	<texture name='beech.dds'>
+		<property name='average' value='0.9474776,0.7106262,0.4935663'/>
+		<property name='variance' value='0.0001847429,0.001134421,0.003400305'/>
+	</texture>
+	<texture name='birch.dds'>
+		<property name='average' value='0.9008344,0.8198285,0.7484853'/>
+		<property name='variance' value='3.149448E-05,0.0001785083,0.0004456998'/>
+	</texture>
+	<texture name='bronzealuminum_diffusemap.dds'>
+		<property name='average' value='0.5171509,0.4349025,0.3134025'/>
+		<property name='variance' value='0.01102228,0.01101687,0.01099288'/>
+	</texture>
+	<texture name='burlap.dds'>
+		<property name='average' value='0.6851978,0.528562,0.3651527'/>
+		<property name='variance' value='0.00696984,0.008383968,0.009713002'/>
+	</texture>
+	<texture name='canvas.dds'>
+		<property name='average' value='0.8552609,0.8325183,0.8136009'/>
+		<property name='variance' value='0.0001738301,0.0002279196,0.0003272915'/>
+	</texture>
+	<texture name='carpet1.dds'>
+		<property name='average' value='0.8474976,0.7980601,0.7316074'/>
+		<property name='variance' value='0.003072167,0.005947482,0.01094144'/>
+	</texture>
+	<texture name='carpet2.dds'>
+		<property name='average' value='0.08998567,0.4000163,0.6897882'/>
+		<property name='variance' value='7.794506E-05,0.000569199,0.001525241'/>
+	</texture>
+	<texture name='carpet3.dds'>
+		<property name='average' value='0.6346446,0.2137902,0.1582145'/>
+		<property name='variance' value='0.001295728,0.0002143458,0.0001479232'/>
+	</texture>
+	<texture name='carpet4.dds'>
+		<property name='average' value='0.5776209,0.5593039,0.5529314'/>
+		<property name='variance' value='0.04619102,0.05003382,0.04965543'/>
+	</texture>
+	<texture name='carpet5.dds'>
+		<property name='average' value='0.4061791,0.5448209,0.5223946'/>
+		<property name='variance' value='0.05474443,0.03381548,0.0320963'/>
+	</texture>
+	<texture name='cf_aramid_fabric.dds'>
+		<property name='average' value='0.5085021,0.4946924,0.334639'/>
+		<property name='variance' value='0.1321971,0.1387533,0.07379778'/>
+	</texture>
+	<texture name='cherry.dds'>
+		<property name='average' value='0.8574852,0.6360382,0.4632121'/>
+		<property name='variance' value='0.0003385765,0.001095875,0.002823301'/>
+	</texture>
+	<texture name='chipboard.dds'>
+		<property name='average' value='0.8729954,0.7134846,0.4586135'/>
+		<property name='variance' value='0.001771094,0.003895997,0.01134234'/>
+	</texture>
+	<texture name='coarse_galvanized.dds'>
+		<property name='average' value='0.5098568,0.5482849,0.479894'/>
+		<property name='variance' value='0.01619064,0.01576861,0.0152261'/>
+	</texture>
+	<texture name='cobalt_diffusemap.dds'>
+		<property name='average' value='0.674273,0.7056231,0.8382588'/>
+		<property name='variance' value='1.37069E-05,1.369687E-05,6.95453E-06'/>
+	</texture>
+	<texture name='cobblestone1.dds'>
+		<property name='average' value='0.4624735,0.5102091,0.4952428'/>
+		<property name='variance' value='0.009631662,0.009728528,0.01114186'/>
+	</texture>
+	<texture name='cobblestone2.dds'>
+		<property name='average' value='0.4692445,0.5026894,0.4709652'/>
+		<property name='variance' value='0.02291478,0.02114795,0.02562104'/>
+	</texture>
+	<texture name='cobblestone3.dds'>
+		<property name='average' value='0.4191227,0.4826537,0.5064992'/>
+		<property name='variance' value='0.007039154,0.007158976,0.007741984'/>
+	</texture>
+	<texture name='cobblestone4.dds'>
+		<property name='average' value='0.5801285,0.5109957,0.4088159'/>
+		<property name='variance' value='0.004518715,0.003892926,0.003832601'/>
+	</texture>
+	<texture name='cottonbeige.dds'>
+		<property name='average' value='0.8213947,0.7011737,0.4804662'/>
+		<property name='variance' value='0.001515587,0.002152373,0.004122967'/>
+	</texture>
+	<texture name='cottonblue.dds'>
+		<property name='average' value='0.0190202,0.266148,0.6206624'/>
+		<property name='variance' value='0.0001811022,0.0008160838,0.0004425058'/>
+	</texture>
+	<texture name='cottonburgundy.dds'>
+		<property name='average' value='0.3931719,0.1403915,0.1516179'/>
+		<property name='variance' value='0.0006978451,0.0006875392,0.0006856878'/>
+	</texture>
+	<texture name='cottongrey.dds'>
+		<property name='average' value='0.2716111,0.2676888,0.2873177'/>
+		<property name='variance' value='0.001183141,0.001183182,0.00118314'/>
+	</texture>
+	<texture name='cottonwhite.dds'>
+		<property name='average' value='0.885512,0.8897393,0.9058358'/>
+		<property name='variance' value='4.210361E-05,3.716136E-05,3.709013E-05'/>
+	</texture>
+	<texture name='darkconcrete.dds'>
+		<property name='average' value='0.3477791,0.3478116,0.3467562'/>
+		<property name='variance' value='0.003433028,0.003462404,0.003384393'/>
+	</texture>
+	<texture name='diffusescratch.dds'>
+		<property name='average' value='0.3891013,0.3867224,0.3510394'/>
+		<property name='variance' value='0.002371229,0.002296534,0.002522473'/>
+	</texture>
+	<texture name='firebrick_diffusemap.dds'>
+		<property name='average' value='0.8221767,0.5757701,0.4092654'/>
+		<property name='variance' value='0.006433723,0.01521417,0.02130911'/>
+	</texture>
+	<texture name='flemishbrick_diffusemap.dds'>
+		<property name='average' value='0.7416893,0.6791326,0.5289571'/>
+		<property name='variance' value='0.02037009,0.01861643,0.01401636'/>
+	</texture>
+	<texture name='floortile1.dds'>
+		<property name='average' value='0.6046873,0.571098,0.4842208'/>
+		<property name='variance' value='0.06847817,0.04882425,0.03667196'/>
+	</texture>
+	<texture name='floor_grime.dds'>
+		<property name='average' value='0.6304668,0.5805685,0.527984'/>
+		<property name='variance' value='0.001762996,0.001908269,0.001932616'/>
+	</texture>
+	<texture name='floor_white.dds'>
+		<property name='average' value='0.6652255,0.5115824,0.3196955'/>
+		<property name='variance' value='0.004526118,0.00582091,0.004473553'/>
+	</texture>
+	<texture name='granite.dds'>
+		<property name='average' value='0.5375349,0.527559,0.497397'/>
+		<property name='variance' value='0.05235147,0.05220999,0.04882727'/>
+	</texture>
+	<texture name='grass.dds'>
+		<property name='average' value='0.2340051,0.3754671,0.08360478'/>
+		<property name='variance' value='0.01326635,0.01963835,0.006950209'/>
+	</texture>
+	<texture name='hardwoodfloor.dds'>
+		<property name='average' value='0.6608247,0.5058752,0.3135843'/>
+		<property name='variance' value='0.004571754,0.005766884,0.004435088'/>
+	</texture>
+	<texture name='hardwoodfloormaritim.dds'>
+		<property name='average' value='0.7654148,0.4991322,0.2100704'/>
+		<property name='variance' value='0.00348211,0.002882414,0.003743653'/>
+	</texture>
+	<texture name='hardwoodflooroak.dds'>
+		<property name='average' value='0.6315228,0.4708144,0.2917061'/>
+		<property name='variance' value='0.001861065,0.002081357,0.003001818'/>
+	</texture>
+	<texture name='heavyclouds.dds'>
+		<property name='average' value='0.6482183,0.6738282,0.6868303'/>
+		<property name='variance' value='0.000619743,0.0004790154,0.000497811'/>
+	</texture>
+	<texture name='iron_diffusemap.dds'>
+		<property name='average' value='0.311415,0.3032398,0.2970418'/>
+		<property name='variance' value='8.525405E-05,7.674153E-05,5.289192E-05'/>
+	</texture>
+	<texture name='laminate.dds'>
+		<property name='average' value='0.8681735,0.7796086,0.6185719'/>
+		<property name='variance' value='0.001224808,0.002752348,0.005237905'/>
+	</texture>
+	<texture name='laminate2.dds'>
+		<property name='average' value='0.8005675,0.5445333,0.1934483'/>
+		<property name='variance' value='0.0009784366,0.001093966,0.001605075'/>
+	</texture>
+	<texture name='laminate3.dds'>
+		<property name='average' value='0.9386883,0.771193,0.5557573'/>
+		<property name='variance' value='0.000169221,0.0005942769,0.001469472'/>
+	</texture>
+	<texture name='leather.dds'>
+		<property name='average' value='0.4165876,0.2992931,0.2492998'/>
+		<property name='variance' value='0.0006158859,0.0005580013,0.0006045663'/>
+	</texture>
+	<texture name='lightclouds.dds'>
+		<property name='average' value='0.5359956,0.6080433,0.7233945'/>
+		<property name='variance' value='0.04718679,0.02611979,0.01071943'/>
+	</texture>
+	<texture name='lightconcrete.dds'>
+		<property name='average' value='0.7342465,0.6905948,0.6243694'/>
+		<property name='variance' value='0.0004303489,0.0004163788,0.0004558275'/>
+	</texture>
+	<texture name='limestone.dds'>
+		<property name='average' value='0.8332007,0.8334155,0.8333704'/>
+		<property name='variance' value='0.0006813004,0.0006804828,0.0006801685'/>
+	</texture>
+	<texture name='mahogany.dds'>
+		<property name='average' value='0.5043754,0.3216983,0.2034154'/>
+		<property name='variance' value='0.00442339,0.005400912,0.006277729'/>
+	</texture>
+	<texture name='maple.dds'>
+		<property name='average' value='0.9211374,0.776636,0.621984'/>
+		<property name='variance' value='0.0002154495,0.0008477055,0.002502292'/>
+	</texture>
+	<texture name='marblebeige.dds'>
+		<property name='average' value='0.8071077,0.7504447,0.7031183'/>
+		<property name='variance' value='0.006572912,0.007100603,0.008337969'/>
+	</texture>
+	<texture name='marbleblue.dds'>
+		<property name='average' value='0.4550546,0.5057516,0.5886384'/>
+		<property name='variance' value='0.02740486,0.03000835,0.02746125'/>
+	</texture>
+	<texture name='marbledark.dds'>
+		<property name='average' value='0.2951866,0.273586,0.2547862'/>
+		<property name='variance' value='0.01248658,0.01287425,0.01275613'/>
+	</texture>
+	<texture name='marblegreen.dds'>
+		<property name='average' value='0.4371367,0.597295,0.5100246'/>
+		<property name='variance' value='0.01841768,0.01870838,0.02082547'/>
+	</texture>
+	<texture name='marblepink.dds'>
+		<property name='average' value='0.8223139,0.6705892,0.6577416'/>
+		<property name='variance' value='0.005416854,0.0140381,0.01422871'/>
+	</texture>
+	<texture name='molybdenum_diffusemap.dds'>
+		<property name='average' value='0.5089856,0.5282237,0.5210415'/>
+		<property name='variance' value='0.01076927,0.01094579,0.01092425'/>
+	</texture>
+	<texture name='nickelbrushed_diffusemap.dds'>
+		<property name='average' value='0.5123213,0.5512198,0.5221387'/>
+		<property name='variance' value='0.01001713,0.009943022,0.009944237'/>
+	</texture>
+	<texture name='oak.dds'>
+		<property name='average' value='0.7659864,0.5725234,0.3452424'/>
+		<property name='variance' value='0.002121703,0.002980993,0.005850702'/>
+	</texture>
+	<texture name='oldenglishbrick2.dds'>
+		<property name='average' value='0.5883047,0.3235143,0.348837'/>
+		<property name='variance' value='0.03690302,0.01005108,0.008196333'/>
+	</texture>
+	<texture name='pine.dds'>
+		<property name='average' value='0.9231082,0.8145223,0.6731078'/>
+		<property name='variance' value='0.00016954,0.0007341336,0.00315485'/>
+	</texture>
+	<texture name='polishedsteel_diffusemap.dds'>
+		<property name='average' value='0.8245093,0.8355637,0.84548'/>
+		<property name='variance' value='0.0004041518,0.0003643443,0.000303762'/>
+	</texture>
+	<texture name='redconcrete.dds'>
+		<property name='average' value='0.8209581,0.5760073,0.5158941'/>
+		<property name='variance' value='0.002452597,0.004985122,0.006975531'/>
+	</texture>
+	<texture name='rosewood.dds'>
+		<property name='average' value='0.7380674,0.3562084,0.2521569'/>
+		<property name='variance' value='0.01344772,0.0122255,0.0124232'/>
+	</texture>
+	<texture name='sand.dds'>
+		<property name='average' value='0.7882103,0.6860863,0.557238'/>
+		<property name='variance' value='0.004103016,0.00517256,0.007118703'/>
+	</texture>
+	<texture name='sandstone.dds'>
+		<property name='average' value='0.9324051,0.7943057,0.6590359'/>
+		<property name='variance' value='0.0003343304,0.001212769,0.002743137'/>
+	</texture>
+	<texture name='skin.dds'>
+		<property name='average' value='0.7047232,0.5742968,0.4474042'/>
+		<property name='variance' value='0.0003095807,0.0005925382,0.001117485'/>
+	</texture>
+	<texture name='slate.dds'>
+		<property name='average' value='0.3168104,0.3588532,0.4102147'/>
+		<property name='variance' value='0.001711276,0.002051868,0.002518882'/>
+	</texture>
+	<texture name='sponge.dds'>
+		<property name='average' value='0.895614,0.6588772,0.302015'/>
+		<property name='variance' value='0.000506627,0.002660401,0.01004805'/>
+	</texture>
+	<texture name='steelcastalloy_diffusemap.dds'>
+		<property name='average' value='0.6706595,0.6706543,0.6706528'/>
+		<property name='variance' value='0.001113841,0.00111384,0.00111396'/>
+	</texture>
+	<texture name='steelcastcarbon_diffusemap.dds'>
+		<property name='average' value='0.3381053,0.3381053,0.3381053'/>
+		<property name='variance' value='0.04107674,0.04107674,0.04107674'/>
+	</texture>
+	<texture name='steelcaststainless_diffusemap.dds'>
+		<property name='average' value='0.7061713,0.6982915,0.7101461'/>
+		<property name='variance' value='0.007961161,0.008228695,0.00783972'/>
+	</texture>
+	<texture name='steelplaincarbon_diffusemap.dds'>
+		<property name='average' value='0.6804916,0.6801382,0.6883937'/>
+		<property name='variance' value='0.0003555358,0.0003485398,0.0003494297'/>
+	</texture>
+	<texture name='steelwroughtstainless_diffusemap.dds'>
+		<property name='average' value='0.7513288,0.7613001,0.7765794'/>
+		<property name='variance' value='0.0005544748,0.000549546,0.0005418216'/>
+	</texture>
+	<texture name='teak.dds'>
+		<property name='average' value='0.6202931,0.3856249,0.1812629'/>
+		<property name='variance' value='0.008217383,0.005922923,0.002998257'/>
+	</texture>
+	<texture name='thread_bolt.dds'>
+		<property name='average' value='0.4551934,0.4551978,0.4552139'/>
+		<property name='variance' value='0.1100195,0.110023,0.1100233'/>
+	</texture>
+	<texture name='vanadium_diffusemap.dds'>
+		<property name='average' value='0.5741438,0.5741438,0.5741438'/>
+		<property name='variance' value='0.000561637,0.000561637,0.000561637'/>
+	</texture>
+	<texture name='wall_grime.dds'>
+		<property name='average' value='0.6437222,0.6009083,0.5329985'/>
+		<property name='variance' value='0.01670416,0.01487382,0.01187689'/>
+	</texture>
+	<texture name='wall_white.dds'>
+		<property name='average' value='0.809194,0.7915263,0.7688922'/>
+		<property name='variance' value='0.007016367,0.01680955,0.03089903'/>
+	</texture>
+	<texture name='walnut.dds'>
+		<property name='average' value='0.6116844,0.3980794,0.2523965'/>
+		<property name='variance' value='0.004858608,0.003156672,0.002378209'/>
+	</texture>
+	<texture name='weatheredbrick_diffusemap.dds'>
+		<property name='average' value='0.6464043,0.5167595,0.3749731'/>
+		<property name='variance' value='0.02026969,0.01412747,0.01366692'/>
+	</texture>
+	<texture name='weld_bead.dds'>
+		<property name='average' value='0.7268487,0.726833,0.7268444'/>
+		<property name='variance' value='0.04927374,0.04928235,0.04927205'/>
+	</texture>
+	<texture name='wetconcrete.dds'>
+		<property name='average' value='0.659117,0.6548824,0.6467327'/>
+		<property name='variance' value='0.0002275256,0.0002439523,0.0002579244'/>
+	</texture>
+	<texture name='woodbeech_diffusemap.dds'>
+		<property name='average' value='0.782666,0.6469668,0.448324'/>
+		<property name='variance' value='0.0008017074,0.001135063,0.001557269'/>
+	</texture>
+	<texture name='woodmahoganyold_diffusemap.dds'>
+		<property name='average' value='0.4008993,0.01195058,6.432627E-07'/>
+		<property name='variance' value='0.001832517,0.000313601,1.402024E-08'/>
+	</texture>
+	<texture name='woodmahogany_diffusemap.dds'>
+		<property name='average' value='0.7276128,0.611547,0.4427074'/>
+		<property name='variance' value='0.0004185965,0.000675563,0.0009859399'/>
+	</texture>
+	<texture name='woodoak_diffusemap.dds'>
+		<property name='average' value='0.4919019,0.3417053,0.1079011'/>
+		<property name='variance' value='0.01249505,0.01920047,0.01251837'/>
+	</texture>
+	<texture name='woodpineold_diffusemap.dds'>
+		<property name='average' value='0.7533876,0.6578216,0.3884497'/>
+		<property name='variance' value='0.003331256,0.01186237,0.01589531'/>
+	</texture>
+	<texture name='woodpine_diffusemap.dds'>
+		<property name='average' value='0.8304715,0.6493249,0.4120801'/>
+		<property name='variance' value='0.0009799504,0.007190995,0.008229322'/>
+	</texture>
+	<texture name='woodredcedar_diffusemap.dds'>
+		<property name='average' value='0.8304715,0.6493249,0.4120801'/>
+		<property name='variance' value='0.0009799504,0.007190995,0.008229322'/>
+	</texture>
+	<texture name='woodteak_diffusemap.dds'>
+		<property name='average' value='0.4539838,0.235097,0.1004819'/>
+		<property name='variance' value='0.0005952286,0.0003987348,0.0002302827'/>
+	</texture>
+</container>

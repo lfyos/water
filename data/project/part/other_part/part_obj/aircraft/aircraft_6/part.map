@@ -1,0 +1,25 @@
+AM84_014_EF_00	wire_154154229	part.mtl	0	0	1
+AM84_014_EF_01	AM84_014_EF_Engine	part.mtl	1	0	1
+AM84_014_EF_02	AM84_014_EF_Engine	part.mtl	2	0	1
+AM84_014_EF_03	AM84_014_EF_Engine2	part.mtl	0	0	1
+AM84_014_EF_06	wire_154154229	part.mtl	0	0	1
+AM84_014_EF_07	AM84_014_EF_Engine2	part.mtl	1	0	1
+AM84_014_EF_08	wire_154154229	part.mtl	0	0	1
+AM84_014_EF_09	AM84_014_EF_	part.mtl	3	0	1
+AM84_014_EF_09	AM84_014_EF_BlackMetal	part.mtl	3	0	1
+AM84_014_EF_09	AM84_014_EF_Glass	part.mtl	3	0	1
+AM84_014_EF_09	AM84_014_EF_Hromm	part.mtl	3	0	1
+AM84_014_EF_09	Material__0	part.mtl	3	0	1
+AM84_014_EF_10	AM84_014_EF_BlackMetal	part.mtl	3	0	1
+AM84_014_EF_11	wire_154154229	part.mtl	0	0	1
+AM84_014_EF_12	AM84_014_EF_Engine2	part.mtl	1	0	1
+AM84_014_EF_13	wire_087225143	part.mtl	0	0	1
+no_group	no_usemtl	part.mtl	4	0	1
+AM84_014_EF_07	no_usemtl	part.mtl	4	0	1
+AM84_014_EF_11	AM84_014_EF_Engine2	part.mtl	4	0	1
+AM84_014_EF_10	wire_154154229	part.mtl	4	0	1
+AM84_014_EF_08	Material__0	part.mtl	4	0	1
+AM84_014_EF_03	wire_154154229	part.mtl	4	0	1
+AM84_014_EF_13	AM84_014_EF_Engine2	part.mtl	4	0	1
+AM84_014_EF_01	wire_087225143	part.mtl	4	0	1
+

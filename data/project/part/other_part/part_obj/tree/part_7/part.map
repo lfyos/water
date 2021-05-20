@@ -1,0 +1,5 @@
+arch24_031_04	wire_006135058	part.mtl	0	0	1
+arch24_031_06	wire_006135058	part.mtl	1	0	1
+no_group	no_usemtl	part.mtl	2	0	1
+arch24_031_04	no_usemtl	part.mtl	2	0	1
+

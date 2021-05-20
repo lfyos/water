@@ -1,0 +1,7 @@
+Line03	wire_108008136	part.mtl	0	0	1
+Box02	wire_108008136	part.mtl	0	0	1
+Box03	wire_108008136	part.mtl	0	0	1
+Box14	wire_108008136	part.mtl	1	0	1
+no_group	no_usemtl	part.mtl	2	0	1
+Line03	no_usemtl	part.mtl	2	0	1
+

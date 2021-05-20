@@ -1,0 +1,13 @@
+/*		geometry_scale		*/	1.0		1.0		1.0
+
+/*		min_height			*/	-15
+/*		max_height			*/	-5
+
+/*		grass_scale			*/	62.5
+/*		earth_scale			*/	62.5
+/*		bottom_scale		*/	62.5
+/*		stone_scale			*/	628.318
+/*		cobble_scale		*/	355.469
+/*		sandstone_scale		*/	1.0
+
+/*		material_map		*/	0	2	2	3	4	5	6	7	8	9	10	11	12	13	14	15

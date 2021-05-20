@@ -1,0 +1,7 @@
+83_old_0		八三式铁路军用轻型桥墩			assemble/2_4/assemble.txt		0	0	parameter.混色.txt	parameter.yzx.txt
+83_old_1		八三式铁路军用轻型桥墩			assemble/3_3/assemble.txt		0	0	parameter.混色.txt	parameter.yzx.txt
+83_old_2		八三式铁路军用轻型桥墩			assemble/3_4/assemble.txt		0	0	parameter.混色.txt	parameter.yzx.txt
+83_old_3		八三式铁路军用轻型桥墩			assemble/3_5/assemble.txt		0	0	parameter.混色.txt	parameter.yzx.txt
+83_old_4		八三式铁路军用轻型桥墩			assemble/3_6/assemble.txt		0	0	parameter.混色.txt	parameter.yzx.txt
+83_old_5		八三式铁路军用轻型桥墩			assemble/4_4/assemble.txt		0	0	parameter.混色.txt	parameter.yzx.txt
+83_old_6		八三式铁路军用轻型桥墩			assemble/4_6/assemble.txt		0	0	parameter.混色.txt	parameter.yzx.txt

@@ -1,0 +1,8 @@
+/*	1:name	*/	system_root_component
+/*	1:type	*/	system_root_part
+/*	1:location	*/	1	0	0	0	0	1	0	0	0	0	1	0	0	0	0	1
+		not_part_list		mount		default.assemble
+		not_part_list		mount		movement.assemble
+		part_list			mount		..\..\..\element\head\ÉÏµæÁ»4_3_4²ãµæÁº_ÁùËÄÁ»_0m-32m.SLDASM.assemble
+		part_list			mount		..\..\..\element\body\4_5_23.5.SLDASM.assemble
+/*	1:child_number	*/	0

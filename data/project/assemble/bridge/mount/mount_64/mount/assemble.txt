@@ -1,0 +1,15 @@
+/*	1:name	*/	system_root_component
+/*	1:type	*/	system_root_part
+/*	1:location	*/	1	0	0	0	0	1	0	0	0	0	1	0	0	0	0	1
+		not_part_list		mount		default.assemble
+		not_part_list		mount		movement.assemble
+		not_part_list		mount		water.assemble
+		part_list			mount		路基_轨枕_铁轨之最高层_64.SLDASM.assemble
+		part_list			mount		六四梁整体架设第一段六四梁之最高层.SLDASM.assemble
+		part_list			mount		六四梁整体架设第二段六四梁之最高层.SLDASM.assemble
+		part_list			mount		六四梁整体架设第三段六四梁之最高层.SLDASM.assemble
+		part_list			mount		六四梁整体架设第一个桥墩之最高层.SLDASM.assemble
+		part_list			mount		六四梁整体架设第二个桥墩之最高层.SLDASM.assemble
+		part_list			mount		六四梁整体架三片48米三角.SLDASM.assemble
+		part_list			mount		六四梁整体架设所有支撑垫梁.SLDASM.assemble
+/*	1:child_number	*/	0

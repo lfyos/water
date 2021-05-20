@@ -1,0 +1,7 @@
+【83_green_old_0		八三式铁路军用轻型桥墩			assemble/2_4/assemble.txt		0	0	parameter.绿色.txt	parameter.yzx.txt
+83_green_old_1		八三式铁路军用轻型桥墩			assemble/3_3/assemble.txt		0	0	parameter.绿色.txt	parameter.yzx.txt
+83_green_old_2		八三式铁路军用轻型桥墩			assemble/3_4/assemble.txt		0	0	parameter.绿色.txt	parameter.yzx.txt
+83_green_old_3		八三式铁路军用轻型桥墩			assemble/3_5/assemble.txt		0	0	parameter.绿色.txt	parameter.yzx.txt
+83_green_old_4		八三式铁路军用轻型桥墩			assemble/3_6/assemble.txt		0	0	parameter.绿色.txt	parameter.yzx.txt
+83_green_old_5		八三式铁路军用轻型桥墩			assemble/4_4/assemble.txt		0	0	parameter.绿色.txt	parameter.yzx.txt
+83_green_old_6		八三式铁路军用轻型桥墩			assemble/4_6/assemble.txt		0	0	parameter.绿色.txt	parameter.yzx.txt

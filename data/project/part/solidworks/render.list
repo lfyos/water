@@ -1,0 +1,59 @@
+bridge_color	solidworks\big.txt				bridge\color.大件.list			light.txt			material.txt
+bridge_color	solidworks\big.coarse.txt		bridge\color.coarse.大件.list	light.txt			material.txt
+bridge_color	solidworks\small.txt			bridge\color.小件.list			light.txt			material.txt
+bridge_color	solidworks\high_priority.txt	bridge\color.no_box.list		light.txt			material.txt
+
+bridge_grey		solidworks\big.txt				bridge\grey.大件.list			light_grey.txt		material.txt
+bridge_grey		solidworks\big.coarse.txt		bridge\grey.coarse.大件.list		light_grey.txt		material.txt
+bridge_grey		solidworks\small.txt			bridge\grey.小件.list			light_grey.txt		material.txt
+bridge_grey		solidworks\high_priority.txt	bridge\grey.no_box.list			light_grey.txt		material.txt
+
+bridge_green	solidworks\big.txt				bridge\green.大件.list			light_green.txt		material.txt
+bridge_green	solidworks\big.coarse.txt		bridge\green.coarse.大件.list	light_green.txt		material.txt
+bridge_green	solidworks\small.txt			bridge\green.小件.list			light_green.txt		material.txt
+bridge_green	solidworks\high_priority.txt	bridge\green.no_box.list		light_green.txt		material.txt
+
+
+64_color		solidworks\parameter.txt		64\color.list					light.txt			material.txt
+64_green		solidworks\parameter.txt		64\green.list					light_green.txt		material.txt
+
+87_color		solidworks\big.txt				87\color.大件.list				light.txt			material.txt
+87_color		solidworks\middle.txt			87\color.中件.list				light.txt			material.txt
+87_color		solidworks\small.txt			87\color.小件.list				light.txt			material.txt
+	
+87_green		solidworks\big.txt				87\green.大件.list				light_green.txt		material.txt
+87_green		solidworks\middle.txt			87\green.中件.list				light_green.txt		material.txt
+87_green		solidworks\small.txt			87\green.小件.list				light_green.txt		material.txt
+
+65_color		solidworks\big.txt				65\color.大件.list				light.txt			material.txt
+65_color		solidworks\middle.txt			65\color.中件.list				light.txt			material.txt
+65_color		solidworks\small.txt			65\color.小件.list				light.txt			material.txt
+
+65_green		solidworks\big.txt				65\green.大件.list				light_green.txt		material.txt
+65_green		solidworks\middle.txt			65\green.中件.list				light_green.txt		material.txt
+65_green		solidworks\small.txt			65\green.小件.list				light_green.txt		material.txt
+
+83_color		solidworks\big.txt				83\color.大件.list				light.txt			material.txt
+83_color		solidworks\middle.txt			83\color.中件.list				light.txt			material.txt
+83_color		solidworks\small.txt			83\color.小件.list				light.txt			material.txt
+83_color		solidworks\big.coarse.txt		83\color.coarse.大件.list		light.txt			material.txt
+83_color		solidworks\middle.coarse.txt	83\color.coarse.中件.list		light.txt			material.txt
+
+83_green		solidworks\big.txt				83\green.大件.list				light_green.txt		material.txt
+83_green		solidworks\middle.txt			83\green.中件.list				light_green.txt		material.txt
+83_green		solidworks\small.txt			83\green.小件.list				light_green.txt		material.txt
+83_green		solidworks\big.coarse.txt		83\green.coarse.大件.list			light_green.txt		material.txt
+83_green		solidworks\middle.coarse.txt	83\green.coarse.中件.list		light_green.txt		material.txt
+	
+83_grey			solidworks\big.txt				83\grey.大件.list					light_grey.txt		material.txt
+83_grey			solidworks\middle.txt			83\grey.中件.list				light_grey.txt		material.txt
+83_grey			solidworks\small.txt			83\grey.小件.list				light_grey.txt		material.txt
+83_grey			solidworks\big.coarse.txt		83\grey.coarse.大件.list			light_grey.txt		material.txt
+83_grey			solidworks\middle.coarse.txt	83\grey.coarse.中件.list			light_grey.txt		material.txt
+
+mount			solidworks\parameter.txt		mount\mount.list				light.txt			material.txt
+mount			solidworks\parameter.txt		mount\railway.list				light.txt			material.txt
+mount			solidworks\parameter.txt		mount\拆装梁枕木.list				light.txt			material.txt
+mount			solidworks\parameter.txt		mount\64.list					light.txt			material.txt
+mount			solidworks\parameter.txt		mount\64枕木.list				light.txt			material.txt
+

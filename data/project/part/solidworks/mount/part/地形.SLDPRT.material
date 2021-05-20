@@ -1,0 +1,36 @@
+/*	material number	*/  4
+
+/*	Material NO.0		*/
+/*	caculate_color_method										*/		2
+/*	caculate_color_parameter									*/		1		1		1		1
+/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1		1		0.5		0.3125		0		0
+/*	texture file name											*/		Users\liufuyan\Desktop\架梁\基本杆件\铁路地面.jpg
+/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0		0		0		0.488281
+/*	need do closing operation when clipping						*/		true
+
+
+/*	Material NO.1		*/
+/*	caculate_color_method										*/		2
+/*	caculate_color_parameter									*/		1		1		1		1
+/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1		1		0.01		1		0		0
+/*	texture file name											*/		Images\textures\floor\cobblestone2.jpg
+/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0		0		0		0.620176
+/*	need do closing operation when clipping						*/		true
+
+
+/*	Material NO.2		*/
+/*	caculate_color_method										*/		2
+/*	caculate_color_parameter									*/		1		1		1		1
+/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1		1		0.01		1		0		0
+/*	texture file name											*/		Images\textures\floor\cobblestone2.jpg
+/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0		0		0		0.2
+/*	need do closing operation when clipping						*/		true
+
+
+/*	Material NO.3		*/
+/*	caculate_color_method										*/		2
+/*	caculate_color_parameter									*/		1		1		1		1
+/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1		1		0.5		0.3125		0		0
+/*	texture file name											*/		Users\liufuyan\Desktop\架梁\基本杆件\铁路路基石子贴图.jpg
+/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0		0		0		0.5
+/*	need do closing operation when clipping						*/		true

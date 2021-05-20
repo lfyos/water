@@ -1,0 +1,102 @@
+
+64_part							拼装杆件-六四式铁路军用粱									assemble/part/all_part/assemble.txt						0	0	parameter.混色.txt	parameter.xyz.txt
+
+
+/*  五片六四粱  */
+
+64_1_5_16.0						单层式五片16.0米六四粱									assemble/5/16.0/assemble.txt							0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_5_16.5_1.5_3.0				单层式五片16.5米六四粱(畸零跨度：1.5米+3.0米)					assemble/5/16.5_1.5_3.0/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_5_16.5_2.5_2.0				单层式五片16.5米六四粱(畸零跨度：2.5米+2.5米)					assemble/5/16.5_2.5_standard/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_5_17.0_2.5_2.5				单层式五片17.0米六四粱(畸零跨度：2.5米+2.5米)					assemble/5/17.0_2.5_2.5/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_5_17.0_3.0_2.0				单层式五片17.0米六四粱(畸零跨度：3.0米+2.0米)					assemble/5/17.0_3.0_standard/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_5_17.5_2.5_3.0				单层式五片17.5米六四粱(畸零跨度：2.5米+3.0米)					assemble/5/17.5_2.5_3.0/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_5_18.0_3.0_3.0				单层式五片18.0米六四粱(畸零跨度：3.0米+3.0米)					assemble/5/18.0_3.0_3.0/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_5_19.0_1.5_1.5				单层式五片19.0米六四粱(畸零跨度：1.5米+1.5米)					assemble/5/19.0_1.5_1.5/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_5_19.5_1.5_2.0				单层式五片19.5米六四粱(畸零跨度：1.5米+2.0米)					assemble/5/19.5_1.5_2.0/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_5_20.0						单层式五片20.0米六四粱									assemble/5/20.0_standard_standard/assemble.txt			0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_5_24.0						单层式五片24.0米六四粱									assemble/5/24.0_standard_standard/assemble.txt			0	0	parameter.混色.txt	parameter.xyz.txt
+
+64_2_5_24.0						双层式五片24.0米六四粱									assemble/5/two_24.0_standard_standard/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_5_28.0						双层式五片28.0米六四粱									assemble/5/two_28.0_standard_standard/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_5_32.0						双层式五片32.0米六四粱									assemble/5/two_32.0_standard_standard/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_5_36.0						双层式五片36.0米六四粱									assemble/5/two_36.0_standard_standard/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_5_40.0						双层式五片40.0米六四粱									assemble/5/two_40.0_standard_standard/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+
+
+64_1_5_16.0_strong				单层式五片16.0米增强型六四粱								assemble/5/16.0_strong/assemble.txt						0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_5_16.5_1.5_3.0_strong		单层式五片16.5米增强型六四粱(畸零跨度：1.5米+3.0米)			assemble/5/16.5_1.5_3.0_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_5_16.5_2.5_2.0_strong		单层式五片16.5米增强型六四粱(畸零跨度：2.5米+2.0米)			assemble/5/16.5_2.5_standard_strong/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_5_17.0_2.5_2.5_strong		单层式五片17.0米增强型六四粱(畸零跨度：2.5米+2.5米)			assemble/5/17.0_2.5_2.5_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_5_17.0_3.0_2.0_strong		单层式五片17.0米增强型六四粱(畸零跨度：3.0米+2.0米)			assemble/5/17.0_3.0_standard_strong/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_5_17.5_2.5_3.0_strong		单层式五片17.5米增强型六四粱(畸零跨度：2.5米+3.0米)			assemble/5/17.5_2.5_3.0_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_5_18.0_3.0_3.0_strong		单层式五片18.0米增强型六四粱(畸零跨度：3.0米+3.0米)			assemble/5/18.0_3.0_3.0_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_5_19.0_1.5_1.5_strong		单层式五片19.0米增强型六四粱(畸零跨度：1.5米+1.5米)			assemble/5/19.0_1.5_1.5_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_5_19.5_1.5_2.0_strong		单层式五片19.5米增强型六四粱(畸零跨度：1.5米+2.0米)			assemble/5/19.5_1.5_2.0_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+
+
+
+/*  六片六四粱  */
+
+64_1_6_16.0						单层式六片16.0米六四粱								assemble/6/16.0/assemble.txt							0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_16.5_1.5_3.0				单层式六片16.5米六四粱(畸零跨度：1.5米+3.0米)				assemble/6/16.5_1.5_3.0/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_16.5_2.5_2.0				单层式六片16.5米六四粱(畸零跨度：2.5米+2.0米)				assemble/6/16.5_2.5_standard/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_17.0_2.5_2.5				单层式六片17.0米六四粱(畸零跨度：2.5米+2.5米)				assemble/6/17.0_2.5_2.5/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_17.0_3.0_2.0				单层式六片17.0米六四粱(畸零跨度：3.0米+2.0米)				assemble/6/17.0_3.0_standard/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_17.5_2.5_3.0				单层式六片17.5米六四粱(畸零跨度：2.5米+3.0米)				assemble/6/17.5_2.5_3.0/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_18.0_3.0_3.0				单层式六片18.0米六四粱(畸零跨度：3.0米+3.0米)				assemble/6/18.0_3.0_3.0/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_19.0_1.5_1.5				单层式六片19.0米六四粱(畸零跨度：1.5米+1.5米)				assemble/6/19.0_1.5_1.5/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_19.5_1.5_2.0				单层式六片19.5米六四粱(畸零跨度：1.5米+2.0米)				assemble/6/19.5_1.5_2.0/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_20.0						单层式六片20.0米六四粱								assemble/6/20.0_standard_standard/assemble.txt			0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_24.0						单层式六片24.0米六四粱								assemble/6/24.0_standard_standard/assemble.txt			0	0	parameter.混色.txt	parameter.xyz.txt
+
+
+64_2_6_24.0						双层式六片24.0米六四粱								assemble/6/two_24.0_standard_standard/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_6_28.0						双层式六片28.0米六四粱								assemble/6/two_28.0_standard_standard/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_6_32.0						双层式六片32.0米六四粱								assemble/6/two_32.0_standard_standard/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_6_36.0						双层式六片36.0米六四粱								assemble/6/two_36.0_standard_standard/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_6_40.0						双层式六片40.0米六四粱								assemble/6/two_40.0_standard_standard/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+
+
+64_1_6_16.0_strong				单层式六片16.0米增强型六四粱							assemble/6/16.0_strong/assemble.txt						0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_16.5_1.5_3.0_strong		单层式六片16.5米增强型六四粱(畸零跨度：1.5米+3.0米)		assemble/6/16.5_1.5_3.0_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_16.5_2.5_2.0_strong		单层式六片16.5米增强型六四粱(畸零跨度：2.5米+2.0米)		assemble/6/16.5_2.5_standard_strong/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_17.0_2.5_2.5_strong		单层式六片17.0米增强型六四粱(畸零跨度：2.5米+2.5米)		assemble/6/17.0_2.5_2.5_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_17.0_3.0_2.0_strong		单层式六片17.0米增强型六四粱(畸零跨度：3.0米+2.0米)		assemble/6/17.0_3.0_standard_strong/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_17.5_1.5_3.0_strong		单层式六片17.5米增强型六四粱(畸零跨度：1.5米+3.0米)		assemble/6/17.5_2.5_3.0_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_18.0_3.0_3.0_strong		单层式六片18.0米增强型六四粱(畸零跨度：3.0米+3.0米)		assemble/6/18.0_3.0_3.0_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_19.0_1.5_1.5_strong		单层式六片19.0米增强型六四粱(畸零跨度：1.5米+1.5米)		assemble/6/19.0_1.5_1.5_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_6_19.5_1.5_2.0_strong		单层式六片19.5米增强型六四粱(畸零跨度：1.5米+2.0米)		assemble/6/19.5_1.5_2.0_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+
+
+
+/*  七片六四粱  */
+
+64_1_7_16.0						单层式七片16.0米六四粱								assemble/7/16.0/assemble.txt							0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_16.5_1.5_3.0				单层式七片16.5米六四粱(畸零跨度：1.5米+3.0米)				assemble/7/16.5_1.5_3.0/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_16.5_2.5_2.0				单层式七片16.5米六四粱(畸零跨度：2.5米+2.0米)				assemble/7/16.5_2.5_standard/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_17.0_2.5_2.5				单层式七片17.0米六四粱(畸零跨度：2.5米+2.5米)				assemble/7/17.0_2.5_2.5/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_17.0_3.0_2.0				单层式七片17.0米六四粱(畸零跨度：3.0米+2.0米)				assemble/7/17.0_3.0_standard/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_17.5_2.5_3.0				单层式七片17.5米六四粱(畸零跨度：2.5米+3.0米)				assemble/7/17.5_2.5_3.0/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_18.0_3.0_3.0				单层式七片18.0米六四粱(畸零跨度：3.0米+3.0米)				assemble/7/18.0_3.0_3.0/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_19.0_1.5_1.5				单层式七片19.0米六四粱(畸零跨度：1.5米+1.5米)				assemble/7/19.0_1.5_1.5/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_19.5_1.5_2.0				单层式七片19.5米六四粱(畸零跨度：1.5米+2.0米)				assemble/7/19.5_1.5_2.0/assemble.txt					0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_20.0						单层式七片20.0米六四粱								assemble/7/20.0_standard_standard/assemble.txt			0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_24.0						单层式七片24.0米六四粱								assemble/7/24.0_standard_standard/assemble.txt			0	0	parameter.混色.txt	parameter.xyz.txt
+
+
+64_2_7_24.0						双层式七片24.0米六四粱								assemble/7/two_24.0_standard_standard/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_7_28.0						双层式七片28.0米六四粱								assemble/7/two_28.0_standard_standard/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_7_32.0						双层式七片32.0米六四粱								assemble/7/two_32.0_standard_standard/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_7_36.0						双层式七片36.0米六四粱								assemble/7/two_36.0_standard_standard/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_2_7_40.0						双层式七片40.0米六四粱								assemble/7/two_40.0_standard_standard/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+
+
+64_1_7_16.0_strong				单层式七片16.0米增强型六四粱							assemble/7/16.0_strong/assemble.txt						0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_16.5_1.5_3.0_strong		单层式七片16.5米增强型六四粱(畸零跨度：1.5米+3.0米)		assemble/7/16.5_1.5_3.0_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_16.5_2.5_2.0_strong		单层式七片16.5米增强型六四粱(畸零跨度：2.5米+2.0米)		assemble/7/16.5_2.5_standard_strong/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_17.0_2.5_2.5_strong		单层式七片17.0米增强型六四粱(畸零跨度：2.5米+2.5米)		assemble/7/17.0_2.5_2.5_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_17.0_3.0_2.0_strong		单层式七片17.0米增强型六四粱(畸零跨度：3.0米+2.0米)		assemble/7/17.0_3.0_standard_strong/assemble.txt		0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_17.5_2.5_3.0_strong		单层式七片17.5米增强型六四粱(畸零跨度：2.5米+3.0米)		assemble/7/17.5_2.5_3.0_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_18.0_3.0_3.0_strong		单层式七片18.0米增强型六四粱(畸零跨度：3.0米+3.0米)		assemble/7/18.0_3.0_3.0_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_19.0_1.5_1.5_strong		单层式七片19.0米增强型六四粱(畸零跨度：1.5米+1.5米)		assemble/7/19.0_1.5_1.5_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt
+64_1_7_19.5_1.5_2.0_strong		单层式七片19.5米增强型六四粱(畸零跨度：1.5米+2.0米)		assemble/7/19.5_1.5_2.0_strong/assemble.txt				0	0	parameter.混色.txt	parameter.xyz.txt

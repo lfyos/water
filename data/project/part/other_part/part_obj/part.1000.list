@@ -1,0 +1,30 @@
+obj_format_file_grass_part_0
+	obj_format_file_grass_part_0
+	grass\part_0\part.obj.mesh
+	grass\part_0\part.material
+	grass\part_0\part.description
+	grass\part_0\part.mp3
+obj_format_file_grass_part_1
+	obj_format_file_grass_part_1
+	grass\part_1\part.obj.mesh
+	grass\part_1\part.material
+	grass\part_1\part.description
+	grass\part_1\part.mp3
+obj_format_file_grass_part_2
+	obj_format_file_grass_part_2
+	grass\part_2\part.obj.mesh
+	grass\part_2\part.material
+	grass\part_2\part.description
+	grass\part_2\part.mp3	
+obj_format_file_grass_part_3
+	obj_format_file_grass_part_3
+	grass\part_3\part.obj.mesh
+	grass\part_3\part.material
+	grass\part_3\part.description
+	grass\part_3\part.mp3	
+obj_format_file_grass_part_4
+	obj_format_file_grass_part_4
+	grass\part_4\part.obj.mesh
+	grass\part_4\part.material
+	grass\part_4\part.description
+	grass\part_4\part.mp3

@@ -1,0 +1,17 @@
+/*	material number	*/  2
+
+
+/*	Material NO.0		*/
+/*	caculate_color_method										*/		0
+/*	caculate_color_parameter									*/		0		0.752941		0		1
+/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		0.7		0.2		0.2		0.0		0.0
+/*	texture file name											*/		notexture
+/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
+
+
+/*	Material NO.1		*/
+/*	caculate_color_method										*/		2
+/*	caculate_color_parameter									*/		1		1		1		1
+/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.7		0.3		0.0		0.0
+/*	texture file name											*/		Images\textures\thread\thread.jpg
+/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		6.37394

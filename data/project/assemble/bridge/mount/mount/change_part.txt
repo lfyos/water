@@ -1,0 +1,128 @@
+
+桥梁\以前的内容\83敦\基本杆件\1：基本杆件.SLDPRT					绿色\基本杆件\1：基本杆件.SLDPRT
+桥梁\以前的内容\83敦\基本杆件\2：辅助杆件.SLDPRT					绿色\基本杆件\2：辅助杆件.SLDPRT
+桥梁\以前的内容\83敦\基本杆件\3：辅助杆件.SLDPRT					绿色\基本杆件\3：辅助杆件.SLDPRT
+桥梁\以前的内容\83敦\基本杆件\4：水平拉撑.SLDPRT					绿色\基本杆件\4：水平拉撑.SLDPRT
+桥梁\以前的内容\83敦\基本杆件\5：2米节间斜拉撑.SLDPRT				绿色\基本杆件\5：2米节间斜拉撑.SLDPRT
+桥梁\以前的内容\83敦\基本杆件\6：1.5米节间斜拉撑.SLDPRT			绿色\基本杆件\6：1.5米节间斜拉撑.SLDPRT
+桥梁\以前的内容\83敦\基本杆件\7：1.0米节间斜拉撑.SLDPRT			绿色\基本杆件\7：1.0米节间斜拉撑.SLDPRT
+桥梁\以前的内容\83敦\基本杆件\8：T型节点板.SLDPRT				绿色\基本杆件\8：T型节点板.SLDPRT
+桥梁\以前的内容\83敦\基本杆件\9：拼接板.SLDPRT					绿色\基本杆件\9：拼接板.SLDPRT
+桥梁\以前的内容\83敦\基本杆件\10：M65螺栓.SLDPRT				绿色\基本杆件\10：M65螺栓.SLDPRT
+桥梁\以前的内容\83敦\基本杆件\11：M50螺栓.SLDPRT				绿色\基本杆件\11：M50螺栓.SLDPRT
+桥梁\以前的内容\83敦\基本杆件\12：螺母.SLDPRT					绿色\基本杆件\12：螺母.SLDPRT
+
+
+桥梁\64梁\基本杆件\1：标准三角.SLDPRT							绿色\基本杆件\1：标准三角.SLDPRT
+桥梁\64梁\基本杆件\10：2米低支点端构架.SLDPRT					绿色\基本杆件\10：2米低支点端构架.SLDPRT
+桥梁\64梁\基本杆件\11：3米低支点端构架.SLDPRT					绿色\基本杆件\11：3米低支点端构架.SLDPRT
+桥梁\64梁\基本杆件\21：加强三角.SLDPRT						绿色\基本杆件\21：加强三角.SLDPRT
+桥梁\64梁\基本杆件\23：加强弦杆.SLDPRT						绿色\基本杆件\23：加强弦杆.SLDPRT
+桥梁\64梁\基本杆件\2：端构架.SLDPRT							绿色\基本杆件\2：端构架.SLDPRT
+桥梁\64梁\基本杆件\3：标准弦杆.SLDPRT							绿色\基本杆件\3：标准弦杆.SLDPRT
+桥梁\64梁\基本杆件\4：端弦杆.SLDPRT							绿色\基本杆件\4：端弦杆.SLDPRT
+桥梁\64梁\基本杆件\5：斜弦杆.SLDPRT							绿色\基本杆件\5：斜弦杆.SLDPRT
+桥梁\64梁\基本杆件\6：撑杆.SLDPRT							绿色\基本杆件\6：撑杆.SLDPRT
+桥梁\64梁\基本杆件\7：1.5米辅助端构架.SLDPRT						绿色\基本杆件\7：1.5米辅助端构架.SLDPRT
+桥梁\64梁\基本杆件\8：2.5米辅助端构架.SLDPRT						绿色\基本杆件\8：2.5米辅助端构架.SLDPRT
+桥梁\64梁\基本杆件\9：3米辅助端构架.SLDPRT						绿色\基本杆件\9：3米辅助端构架.SLDPRT
+桥梁\64梁\基本杆件\一号U型螺栓.SLDPRT							绿色\基本杆件\一号U型螺栓.SLDPRT
+桥梁\64梁\基本杆件\一号U型螺栓垫片.SLDPRT						绿色\基本杆件\一号U型螺栓垫片.SLDPRT
+桥梁\64梁\基本杆件\二号U型螺栓.SLDPRT							绿色\基本杆件\二号U型螺栓.SLDPRT
+桥梁\64梁\基本杆件\二号U型螺栓垫片.SLDPRT						绿色\基本杆件\二号U型螺栓垫片.SLDPRT
+桥梁\64梁\基本杆件\三号U型螺栓.SLDPRT							绿色\基本杆件\三号U型螺栓.SLDPRT
+桥梁\64梁\基本杆件\三号U型螺栓垫片.SLDPRT						绿色\基本杆件\三号U型螺栓垫片.SLDPRT
+桥梁\64梁\基本杆件\垫枕.SLDPRT								绿色\基本杆件\垫枕.SLDPRT
+桥梁\64梁\基本杆件\撑杆销拴.SLDPRT							绿色\基本杆件\撑杆销拴.SLDPRT
+桥梁\64梁\基本杆件\撑杆销拴垫圈.SLDPRT							绿色\基本杆件\撑杆销拴垫圈.SLDPRT
+桥梁\64梁\基本杆件\横联套管.SLDPRT							绿色\基本杆件\横联套管.SLDPRT
+桥梁\64梁\基本杆件\横联套管螺栓.SLDPRT							绿色\基本杆件\横联套管螺栓.SLDPRT
+桥梁\64梁\基本杆件\联结系槽钢.SLDPRT							绿色\基本杆件\联结系槽钢.SLDPRT
+桥梁\64梁\基本杆件\螺母.SLDPRT								绿色\基本杆件\螺母.SLDPRT
+桥梁\64梁\基本杆件\六四梁螺母.SLDPRT							绿色\基本杆件\六四梁螺母.SLDPRT
+桥梁\64梁\基本杆件\钢枕.SLDPRT								绿色\基本杆件\钢枕.SLDPRT
+桥梁\64梁\基本杆件\钢销.SLDPRT								绿色\基本杆件\钢销.SLDPRT
+桥梁\64梁\基本杆件\钢销销子.SLDPRT							绿色\基本杆件\钢销销子.SLDPRT
+
+
+
+桥梁\65墩\基本器材\C1_3米立柱.SLDPRT							绿色\基本器材\C1_3米立柱.SLDPRT
+桥梁\65墩\基本器材\C2_1.5米立柱.SLDPRT						绿色\基本器材\C2_1.5米立柱.SLDPRT
+桥梁\65墩\基本器材\C12_垫梁.SLDPRT							绿色\基本器材\C12_垫梁.SLDPRT
+桥梁\65墩\基本器材\C13_垫梁.SLDPRT							绿色\基本器材\C13_垫梁.SLDPRT
+桥梁\65墩\基本器材\C11_垫梁.SLDPRT							绿色\基本器材\C11_垫梁.SLDPRT
+桥梁\65墩\基本器材\C14_垫梁.SLDPRT							绿色\基本器材\C14_垫梁.SLDPRT
+桥梁\65墩\基本器材\C10_垫梁.SLDPRT							绿色\基本器材\C10_垫梁.SLDPRT
+桥梁\65墩\基本器材\C4_水平拉撑.SLDPRT							绿色\基本器材\C4_水平拉撑.SLDPRT
+桥梁\65墩\基本器材\C5_2米斜拉撑.SLDPRT						绿色\基本器材\C5_2米斜拉撑.SLDPRT
+桥梁\65墩\基本器材\C6_1.5米斜拉撑.SLDPRT						绿色\基本器材\C6_1.5米斜拉撑.SLDPRT
+桥梁\65墩\基本器材\C7_1米斜拉撑.SLDPRT						绿色\基本器材\C7_1米斜拉撑.SLDPRT
+桥梁\65墩\基本器材\C3_1米立柱.SLDPRT							绿色\基本器材\C3_1米立柱.SLDPRT
+桥梁\65墩\基本器材\C8_T型节点板.SLDPRT						绿色\基本器材\C8_T型节点板.SLDPRT
+桥梁\65墩\基本器材\C9_十字型节点板.SLDPRT						绿色\基本器材\C9_十字型节点板.SLDPRT
+桥梁\65墩\基本器材\C15_翼缘拼接板.SLDPRT						绿色\基本器材\C15_翼缘拼接板.SLDPRT
+桥梁\65墩\基本器材\C16_腹板拼接板.SLDPRT						绿色\基本器材\C16_腹板拼接板.SLDPRT
+桥梁\65墩\基本器材\17_间隔撑.SLDPRT							绿色\基本器材\17_间隔撑.SLDPRT
+桥梁\65墩\基本器材\C18_间隔撑.SLDPRT							绿色\基本器材\C18_间隔撑.SLDPRT
+桥梁\65墩\基本器材\C19_夹持器.SLDPRT							绿色\基本器材\C19_夹持器.SLDPRT
+桥梁\65墩\基本器材\M60螺栓.SLDPRT							绿色\基本器材\M60螺栓.SLDPRT
+桥梁\65墩\基本器材\M80螺栓.SLDPRT							绿色\基本器材\M80螺栓.SLDPRT
+桥梁\65墩\基本器材\M100螺栓.SLDPRT							绿色\基本器材\M100螺栓.SLDPRT
+桥梁\65墩\基本器材\六五墩螺母.SLDPRT							绿色\基本器材\六五墩螺母.SLDPRT
+
+
+
+桥梁\拆装梁\parts\basic\_枕木.SLDPRT						bridge\绿色杆件\枕木.SLDPRT
+桥梁\拆装梁\parts\basic\_10号甲.SLDPRT						bridge\绿色杆件\平联斜杆_编号_10甲_原编号_10.SLDPRT
+桥梁\拆装梁\parts\basic\_11号.SLDPRT						bridge\绿色杆件\横联斜杆_编号_11.SLDPRT
+桥梁\拆装梁\parts\basic\_12号.SLDPRT						bridge\绿色杆件\支杆_编号_12_原编号_12甲.SLDPRT
+桥梁\拆装梁\parts\basic\_13号.SLDPRT						bridge\绿色杆件\短弦杆_编号_13.SLDPRT
+桥梁\拆装梁\parts\basic\_14号甲.SLDPRT						bridge\绿色杆件\大拼接板_编号_14甲_原编号_14.SLDPRT
+桥梁\拆装梁\parts\basic\_16号.SLDPRT						bridge\绿色杆件\拼接板_编号_16.SLDPRT
+桥梁\拆装梁\parts\basic\_218号.SLDPRT						bridge\绿色杆件\结点板_编号_218_原编号_18.SLDPRT
+桥梁\拆装梁\parts\basic\_219号.SLDPRT						bridge\绿色杆件\小结点板_编号_219_原编号_19.SLDPRT
+桥梁\拆装梁\parts\basic\_21号.SLDPRT						bridge\绿色杆件\填板_编号_21.SLDPRT
+桥梁\拆装梁\parts\basic\21号.SLDPRT						bridge\绿色杆件\填板_编号_21.SLDPRT
+桥梁\拆装梁\parts\basic\_22号甲.SLDPRT						bridge\绿色杆件\结点板_编号_22甲.SLDPRT
+桥梁\拆装梁\parts\basic\_24号.SLDPRT						bridge\绿色杆件\短弦杆_编号_24.SLDPRT
+桥梁\拆装梁\parts\basic\_25.SLDPRT							bridge\绿色杆件\畸零短弦杆_编号_25.SLDPRT
+桥梁\拆装梁\parts\basic\_251号.SLDPRT						bridge\绿色杆件\加强支杆_编号_251_原编号_101.SLDPRT
+桥梁\拆装梁\parts\basic\_252号.SLDPRT						bridge\绿色杆件\小填板_编号_252_原编号_102.SLDPRT
+桥梁\拆装梁\parts\basic\_253号.SLDPRT						bridge\绿色杆件\横联交叉填板_编号_253_原编号_103.SLDPRT
+桥梁\拆装梁\parts\basic\_254号.SLDPRT						bridge\绿色杆件\顶梁_编号_254_原编号_104.SLDPRT
+桥梁\拆装梁\parts\basic\_255号.SLDPRT						bridge\绿色杆件\连接角_编号_255_原编号_105.SLDPRT
+桥梁\拆装梁\parts\basic\_256号连接角.SLDPRT					bridge\绿色杆件\连接角_编号_256_原编号_106.SLDPRT
+桥梁\拆装梁\parts\basic\_257.SLDPRT						bridge\绿色杆件\连接板_编号_257_原编号_107.SLDPRT
+桥梁\拆装梁\parts\basic\_258.SLDPRT						bridge\绿色杆件\连接板_编号_258_原编号_108.SLDPRT
+桥梁\拆装梁\parts\basic\_259号.SLDPRT						bridge\绿色杆件\填板_编号_259_原编号_109.SLDPRT
+桥梁\拆装梁\parts\basic\_262号.SLDPRT						bridge\绿色杆件\槽钢_编号_262.SLDPRT
+桥梁\拆装梁\parts\basic\_266号.SLDPRT						bridge\绿色杆件\支杆_编号_266.SLDPRT
+桥梁\拆装梁\parts\basic\_267号.SLDPRT						bridge\绿色杆件\横联斜杆_编号_267.SLDPRT              
+桥梁\拆装梁\parts\basic\_26号.SLDPRT						bridge\绿色杆件\畸零短腹杆_编号_26.SLDPRT             
+桥梁\拆装梁\parts\basic\_272号填板.SLDPRT					bridge\绿色杆件\填板_编号_272.SLDPRT            
+桥梁\拆装梁\parts\basic\_27号.SLDPRT						bridge\绿色杆件\畸零平联杆_编号_27.SLDPRT               
+桥梁\拆装梁\parts\basic\_28号.SLDPRT						bridge\绿色杆件\支承结点板_编号_28.SLDPRT         
+桥梁\拆装梁\parts\basic\_3号.SLDPRT						bridge\绿色杆件\弦杆_编号_3.SLDPRT              
+桥梁\拆装梁\parts\basic\_501号.SLDPRT						bridge\绿色杆件\弦杆_编号_501_原编号_1.SLDPRT             
+桥梁\拆装梁\parts\basic\_502号.SLDPRT						bridge\绿色杆件\弦杆_编号_502_原编号_2.SLDPRT            
+桥梁\拆装梁\parts\basic\_507号.SLDPRT						bridge\绿色杆件\腹杆_编号_507_原编号_7.SLDPRT            
+桥梁\拆装梁\parts\basic\_520号.SLDPRT						bridge\绿色杆件\填板_编号_520_原编号_20.SLDPRT             
+桥梁\拆装梁\parts\basic\_5号甲.SLDPRT						bridge\绿色杆件\腹杆_编号_5甲_原编号_5.SLDPRT             
+桥梁\拆装梁\parts\basic\_6号.SLDPRT						bridge\绿色杆件\腹杆_编号_6.SLDPRT             
+桥梁\拆装梁\parts\basic\_8号甲.SLDPRT						bridge\绿色杆件\立杆_编号_8甲_原编号_8.SLDPRT              
+桥梁\拆装梁\parts\basic\_9号甲.SLDPRT						bridge\绿色杆件\端立杆_编号_9甲_原编号_9.SLDPRT 
+
+
+桥梁\拆装梁\parts\basic\_29甲螺栓.SLDPRT					bridge\混色杆件\螺栓_29甲.SLDPRT
+桥梁\拆装梁\parts\basic\_29乙螺栓.SLDPRT					bridge\混色杆件\螺栓_29乙.SLDPRT              
+桥梁\拆装梁\parts\basic\_30螺栓.SLDPRT						bridge\混色杆件\螺栓_30.SLDPRT             
+桥梁\拆装梁\parts\basic\_31螺栓.SLDPRT						bridge\混色杆件\螺栓_31.SLDPRT             
+桥梁\拆装梁\parts\basic\31螺栓.SLDPRT						bridge\混色杆件\螺栓_31.SLDPRT              
+桥梁\拆装梁\parts\basic\_32螺栓.SLDPRT						bridge\混色杆件\螺栓_32.SLDPRT             
+桥梁\拆装梁\parts\basic\_33号栓钉.SLDPRT					bridge\混色杆件\栓钉_33.SLDPRT            
+桥梁\拆装梁\parts\basic\_34号栓钉.SLDPRT					bridge\混色杆件\栓钉_34.SLDPRT              
+桥梁\拆装梁\parts\basic\_35栓钉.SLDPRT						bridge\混色杆件\栓钉_35.SLDPRT              
+桥梁\拆装梁\parts\basic\_36号栓钉.SLDPRT					bridge\混色杆件\栓钉_36.SLDPRT           
+桥梁\拆装梁\parts\basic\_螺母1.SLDPRT						bridge\混色杆件\螺母_1.SLDPRT              
+桥梁\拆装梁\parts\basic\_螺母2.SLDPRT						bridge\混色杆件\螺母_2.SLDPRT
+

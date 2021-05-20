@@ -1,0 +1,9 @@
+/*	material number	*/  1
+
+
+/*	Material NO.0		*/
+/*	caculate_color_method										*/		2
+/*	caculate_color_parameter									*/		0.729412		0.356863		0.0235294		1
+/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		0.7		0.2		0.2		0.0		0.0
+/*	texture file name											*/		images\textures\wood\grain2.jpg
+/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		3.14159		0.350054

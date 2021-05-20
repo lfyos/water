@@ -1,0 +1,8 @@
+/*	1:name	*/	system_root_component
+/*	1:type	*/	system_root_part
+/*	1:location	*/	1	0	0	0	0	1	0	0	0	0	1	0	0	0	0	1
+		not_part_list		mount		default.assemble
+		not_part_list		mount		movement.assemble
+		part_list			mount		..\..\..\element\4乘6墩身\4乘6样式83墩11.5米墩身.SLDASM.assemble
+		part_list			mount		..\..\..\element\4乘4上垫梁\83墩_4乘4样式上垫梁_拆装粱_24+24跨度.SLDASM.assemble
+/*	1:child_number	*/	0

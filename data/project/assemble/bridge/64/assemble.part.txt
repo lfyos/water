@@ -1,0 +1,1 @@
+part_64			六四式铁路军用梁杆件			assemble/part/single_part/assemble.txt		0	0	parameter.part.txt	parameter.xyz.txt

@@ -1,0 +1,65 @@
+/*	material number	*/  8
+
+
+/*	Material NO.0		*/
+/*	caculate_color_method										*/		2
+/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
+/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
+/*	texture file name											*/		20130706024532531808.jpg
+/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
+
+
+/*	Material NO.1		*/
+/*	caculate_color_method										*/		2
+/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
+/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
+/*	texture file name											*/		20130706024532531196.jpg
+/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
+
+
+/*	Material NO.2		*/
+/*	caculate_color_method										*/		2
+/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
+/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
+/*	texture file name											*/		20130706024532531199.jpg
+/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
+
+
+/*	Material NO.3		*/
+/*	caculate_color_method										*/		2
+/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
+/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
+/*	texture file name											*/		20130706024532531999.jpg
+/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
+
+
+/*	Material NO.4		*/
+/*	caculate_color_method										*/		2
+/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
+/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
+/*	texture file name											*/		2013070602453253138.jpg
+/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
+
+
+/*	Material NO.5		*/
+/*	caculate_color_method										*/		2
+/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
+/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
+/*	texture file name											*/		20130706024532531609.jpg
+/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
+
+
+/*	Material NO.6		*/
+/*	caculate_color_method										*/		2
+/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
+/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
+/*	texture file name											*/		20130706024532531891.jpg
+/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
+
+
+/*	Material NO.7		*/
+/*	caculate_color_method										*/		0
+/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
+/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
+/*	texture file name											*/		notexture
+/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0

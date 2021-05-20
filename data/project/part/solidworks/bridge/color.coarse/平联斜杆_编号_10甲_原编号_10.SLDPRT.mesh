@@ -1,0 +1,1334 @@
+/*  version          */  2019.08.05
+
+/*  origin material  */  0  0  0  1
+
+/*  body number      */  1
+
+/*    No.   0  body name  */  ÇÐ³ý-À­Éì1  /*  face number  */  12
+
+/*       No.   0  face name  */  ÇÐ³ý-À­Éì1_0_face
+
+/*            face type   */ plane  /*    parameter number   */ 6  /*  prameter */    0    0    -1    -1.22    0.1    0.008
+
+/*            attribute number   */  1
+
+/*            face vertex number */  6
+/*               No.   0  vertex  */  -1.22    0    0.008    1.0
+/*               No.   1  vertex  */  1.22    0    0.008    1.0
+/*               No.   2  vertex  */  -1.22    0.092    0.008    1.0
+/*               No.   3  vertex  */  -1.22    0.092    0.008    1.0
+/*               No.   4  vertex  */  1.22    0    0.008    1.0
+/*               No.   5  vertex  */  1.22    0.092    0.008    1.0
+
+/*            face normal number */ 6
+/*               NO.   0  normal  */  0    0    1    1.0
+/*               NO.   1  normal  */  0    0    1    1.0
+/*               NO.   2  normal  */  0    0    1    1.0
+/*               NO.   3  normal  */  0    0    1    1.0
+/*               NO.   4  normal  */  0    0    1    1.0
+/*               NO.   5  normal  */  0    0    1    1.0
+
+/*             NO.  0  attribute vertex number   */ 6
+/*                NO.    0   attribute vertex   */  0.100244    0.580519    0    1.0
+/*                NO.    1   attribute vertex   */  1.09843    0.580519    0    1.0
+/*                NO.    2   attribute vertex   */  0.100244    0.618155    0    1.0
+/*                NO.    3   attribute vertex   */  0.100244    0.618155    0    1.0
+/*                NO.    4   attribute vertex   */  1.09843    0.580519    0    1.0
+/*                NO.    5   attribute vertex   */  1.09843    0.618155    0    1.0
+
+/*            face triangle number  */  2
+/*                NO.    0  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    0  vertex  */  0  1  2  -1
+/*                NO.    0  normal  */  0  1  2  -1
+/*                NO.    0  attribute  */  0  1  2  -1
+
+/*                NO.    1  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    1  vertex  */  3  4  5  -1
+/*                NO.    1  normal  */  3  4  5  -1
+/*                NO.    1  attribute  */  3  4  5  -1
+
+
+/*            face loop number   */   1
+
+/*                NO    0     loop edge number    */   4
+
+/*                    NO.    0    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.092    0.008    1    0    0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0.092    0.008        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0.092    0.008        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0.092    0.008    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0.092    0.008    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    1    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0    0.008    -0    -1    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0.092    0.008        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0    0.008        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0.092    0.008    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0    0.008    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    2    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0    0.008    1    0    0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0    0.008        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0    0.008        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0    0.008    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0    0.008    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    3    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.22    0    0.008    0    1    0
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0    0.008        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0.092    0.008        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0    0.008    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0.092    0.008    1   /*  material  */  0    0    0    1    
+
+/*       No.   1  face name  */  ÇÐ³ý-À­Éì1_1_face
+
+/*            face type   */ plane  /*    parameter number   */ 6  /*  prameter */    1    0    0    -1.22    0    0.008
+
+/*            attribute number   */  1
+
+/*            face vertex number */  12
+/*               No.   0  vertex  */  -1.22    0.092    0.015    1.0
+/*               No.   1  vertex  */  -1.22    0.1    0.015    1.0
+/*               No.   2  vertex  */  -1.22    0.092    0.008    1.0
+/*               No.   3  vertex  */  -1.22    0.092    0.008    1.0
+/*               No.   4  vertex  */  -1.22    0.1    0.015    1.0
+/*               No.   5  vertex  */  -1.22    0.1    0    1.0
+/*               No.   6  vertex  */  -1.22    0.092    0.008    1.0
+/*               No.   7  vertex  */  -1.22    0.1    0    1.0
+/*               No.   8  vertex  */  -1.22    0    0.008    1.0
+/*               No.   9  vertex  */  -1.22    0    0.008    1.0
+/*               No.   10  vertex  */  -1.22    0.1    0    1.0
+/*               No.   11  vertex  */  -1.22    0    0    1.0
+
+/*            face normal number */ 12
+/*               NO.   0  normal  */  -1    0    0    1.0
+/*               NO.   1  normal  */  -1    0    0    1.0
+/*               NO.   2  normal  */  -1    0    0    1.0
+/*               NO.   3  normal  */  -1    0    0    1.0
+/*               NO.   4  normal  */  -1    0    0    1.0
+/*               NO.   5  normal  */  -1    0    0    1.0
+/*               NO.   6  normal  */  -1    0    0    1.0
+/*               NO.   7  normal  */  -1    0    0    1.0
+/*               NO.   8  normal  */  -1    0    0    1.0
+/*               NO.   9  normal  */  -1    0    0    1.0
+/*               NO.   10  normal  */  -1    0    0    1.0
+/*               NO.   11  normal  */  -1    0    0    1.0
+
+/*             NO.  0  attribute vertex number   */ 12
+/*                NO.    0   attribute vertex   */  0.0278883    0.042002    0    1.0
+/*                NO.    1   attribute vertex   */  0.0278883    0.0452748    0    1.0
+/*                NO.    2   attribute vertex   */  0.0250247    0.042002    0    1.0
+/*                NO.    3   attribute vertex   */  0.0250247    0.042002    0    1.0
+/*                NO.    4   attribute vertex   */  0.0278883    0.0452748    0    1.0
+/*                NO.    5   attribute vertex   */  0.021752    0.0452748    0    1.0
+/*                NO.    6   attribute vertex   */  0.0250247    0.042002    0    1.0
+/*                NO.    7   attribute vertex   */  0.021752    0.0452748    0    1.0
+/*                NO.    8   attribute vertex   */  0.0250247    0.00436554    0    1.0
+/*                NO.    9   attribute vertex   */  0.0250247    0.00436554    0    1.0
+/*                NO.    10   attribute vertex   */  0.021752    0.0452748    0    1.0
+/*                NO.    11   attribute vertex   */  0.021752    0.00436554    0    1.0
+
+/*            face triangle number  */  4
+/*                NO.    0  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    0  vertex  */  0  1  2  -1
+/*                NO.    0  normal  */  0  1  2  -1
+/*                NO.    0  attribute  */  0  1  2  -1
+
+/*                NO.    1  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    1  vertex  */  3  4  5  -1
+/*                NO.    1  normal  */  3  4  5  -1
+/*                NO.    1  attribute  */  3  4  5  -1
+
+/*                NO.    2  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    2  vertex  */  6  7  8  -1
+/*                NO.    2  normal  */  6  7  8  -1
+/*                NO.    2  attribute  */  6  7  8  -1
+
+/*                NO.    3  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    3  vertex  */  9  10  11  -1
+/*                NO.    3  normal  */  9  10  11  -1
+/*                NO.    3  attribute  */  9  10  11  -1
+
+
+/*            face loop number   */   1
+
+/*                NO    0     loop edge number    */   6
+
+/*                    NO.    0    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.092    0.108    -0    -0    -1
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0.092    0.008        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0.092    0.008    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    1    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    -2.5e-008    0.015    -0    1    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0.1    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0.1    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    2    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.1    0.008    -0    -0    -1
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0.1    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0.1    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0.1    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0.1    0    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    3    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0    0    -0    -1    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0.1    0        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0.1    0    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0    0    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    4    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0    0.008    -0    -0    -1
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0    0.008        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0    0.008    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0    0    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    5    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0    0.008    -0    -1    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0.092    0.008        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0    0.008        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0.092    0.008    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0    0.008    1   /*  material  */  0    0    0    1    
+
+/*       No.   2  face name  */  ÇÐ³ý-À­Éì1_2_face
+
+/*            face type   */ plane  /*    parameter number   */ 6  /*  prameter */    0    1    0    -1.22    0    0.008
+
+/*            attribute number   */  1
+
+/*            face vertex number */  6
+/*               No.   0  vertex  */  1.22    0    0.008    1.0
+/*               No.   1  vertex  */  -1.22    0    0.008    1.0
+/*               No.   2  vertex  */  1.22    0    0    1.0
+/*               No.   3  vertex  */  1.22    0    0    1.0
+/*               No.   4  vertex  */  -1.22    0    0.008    1.0
+/*               No.   5  vertex  */  -1.22    0    0    1.0
+
+/*            face normal number */ 6
+/*               NO.   0  normal  */  0    -1    0    1.0
+/*               NO.   1  normal  */  0    -1    0    1.0
+/*               NO.   2  normal  */  0    -1    0    1.0
+/*               NO.   3  normal  */  0    -1    0    1.0
+/*               NO.   4  normal  */  0    -1    0    1.0
+/*               NO.   5  normal  */  0    -1    0    1.0
+
+/*             NO.  0  attribute vertex number   */ 6
+/*                NO.    0   attribute vertex   */  1.09801    0.600551    0    1.0
+/*                NO.    1   attribute vertex   */  0.0998218    0.600551    0    1.0
+/*                NO.    2   attribute vertex   */  1.09801    0.597278    0    1.0
+/*                NO.    3   attribute vertex   */  1.09801    0.597278    0    1.0
+/*                NO.    4   attribute vertex   */  0.0998218    0.600551    0    1.0
+/*                NO.    5   attribute vertex   */  0.0998218    0.597278    0    1.0
+
+/*            face triangle number  */  2
+/*                NO.    0  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    0  vertex  */  0  1  2  -1
+/*                NO.    0  normal  */  0  1  2  -1
+/*                NO.    0  attribute  */  0  1  2  -1
+
+/*                NO.    1  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    1  vertex  */  3  4  5  -1
+/*                NO.    1  normal  */  3  4  5  -1
+/*                NO.    1  attribute  */  3  4  5  -1
+
+
+/*            face loop number   */   1
+
+/*                NO    0     loop edge number    */   4
+
+/*                    NO.    0    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0    0    1    0    0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0    0        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0    0    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0    0    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    1    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.22    0    0.008    -0    -0    -1
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0    0.008        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0    0.008    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0    0    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    2    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0    0.008    1    0    0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0    0.008        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0    0.008        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0    0.008    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0    0.008    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    3    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0    0.008    -0    -0    -1
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0    0.008        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0    0.008    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0    0    1   /*  material  */  0    0    0    1    
+
+/*       No.   3  face name  */  ÇÐ³ý-À­Éì1_3_face
+
+/*            face type   */ plane  /*    parameter number   */ 6  /*  prameter */    -1    0    0    1.22    0    0.008
+
+/*            attribute number   */  1
+
+/*            face vertex number */  12
+/*               No.   0  vertex  */  1.22    0    0.008    1.0
+/*               No.   1  vertex  */  1.22    0    0    1.0
+/*               No.   2  vertex  */  1.22    0.092    0.008    1.0
+/*               No.   3  vertex  */  1.22    0.092    0.008    1.0
+/*               No.   4  vertex  */  1.22    0    0    1.0
+/*               No.   5  vertex  */  1.22    0.1    0    1.0
+/*               No.   6  vertex  */  1.22    0.092    0.008    1.0
+/*               No.   7  vertex  */  1.22    0.1    0    1.0
+/*               No.   8  vertex  */  1.22    0.092    0.015    1.0
+/*               No.   9  vertex  */  1.22    0.092    0.015    1.0
+/*               No.   10  vertex  */  1.22    0.1    0    1.0
+/*               No.   11  vertex  */  1.22    0.1    0.015    1.0
+
+/*            face normal number */ 12
+/*               NO.   0  normal  */  1    0    0    1.0
+/*               NO.   1  normal  */  1    0    0    1.0
+/*               NO.   2  normal  */  1    0    0    1.0
+/*               NO.   3  normal  */  1    0    0    1.0
+/*               NO.   4  normal  */  1    0    0    1.0
+/*               NO.   5  normal  */  1    0    0    1.0
+/*               NO.   6  normal  */  1    0    0    1.0
+/*               NO.   7  normal  */  1    0    0    1.0
+/*               NO.   8  normal  */  1    0    0    1.0
+/*               NO.   9  normal  */  1    0    0    1.0
+/*               NO.   10  normal  */  1    0    0    1.0
+/*               NO.   11  normal  */  1    0    0    1.0
+
+/*             NO.  0  attribute vertex number   */ 12
+/*                NO.    0   attribute vertex   */  0.0250247    0.00436554    0    1.0
+/*                NO.    1   attribute vertex   */  0.021752    0.00436554    0    1.0
+/*                NO.    2   attribute vertex   */  0.0250247    0.042002    0    1.0
+/*                NO.    3   attribute vertex   */  0.0250247    0.042002    0    1.0
+/*                NO.    4   attribute vertex   */  0.021752    0.00436554    0    1.0
+/*                NO.    5   attribute vertex   */  0.021752    0.0452748    0    1.0
+/*                NO.    6   attribute vertex   */  0.0250247    0.042002    0    1.0
+/*                NO.    7   attribute vertex   */  0.021752    0.0452748    0    1.0
+/*                NO.    8   attribute vertex   */  0.0278883    0.042002    0    1.0
+/*                NO.    9   attribute vertex   */  0.0278883    0.042002    0    1.0
+/*                NO.    10   attribute vertex   */  0.021752    0.0452748    0    1.0
+/*                NO.    11   attribute vertex   */  0.0278883    0.0452748    0    1.0
+
+/*            face triangle number  */  4
+/*                NO.    0  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    0  vertex  */  0  1  2  -1
+/*                NO.    0  normal  */  0  1  2  -1
+/*                NO.    0  attribute  */  0  1  2  -1
+
+/*                NO.    1  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    1  vertex  */  3  4  5  -1
+/*                NO.    1  normal  */  3  4  5  -1
+/*                NO.    1  attribute  */  3  4  5  -1
+
+/*                NO.    2  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    2  vertex  */  6  7  8  -1
+/*                NO.    2  normal  */  6  7  8  -1
+/*                NO.    2  attribute  */  6  7  8  -1
+
+/*                NO.    3  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    3  vertex  */  9  10  11  -1
+/*                NO.    3  normal  */  9  10  11  -1
+/*                NO.    3  attribute  */  9  10  11  -1
+
+
+/*            face loop number   */   1
+
+/*                NO    0     loop edge number    */   6
+
+/*                    NO.    0    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.22    0.1    0.008    -0    -0    -1
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0.1    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0.1    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0.1    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0.1    0    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    1    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.22    -2.5e-008    0.015    -0    1    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0.1    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0.1    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    2    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.22    0.092    0.108    -0    -0    -1
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0.092    0.008        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0.092    0.008    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    3    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.22    0    0.008    0    1    0
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0    0.008        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0.092    0.008        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0    0.008    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0.092    0.008    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    4    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.22    0    0.008    -0    -0    -1
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0    0.008        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0    0.008    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0    0    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    5    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.22    0    0    0    1    0
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0    0        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0.1    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0    0    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0.1    0    1   /*  material  */  0    0    0    1    
+
+/*       No.   4  face name  */  ÇÐ³ý-À­Éì1_4_face
+
+/*            face type   */ plane  /*    parameter number   */ 6  /*  prameter */    0    -1    0    -1.22    0.1    0.008
+
+/*            attribute number   */  1
+
+/*            face vertex number */  18
+/*               No.   0  vertex  */  1.178    0.1    0.015    1.0
+/*               No.   1  vertex  */  1.22    0.1    0.015    1.0
+/*               No.   2  vertex  */  1.22    0.1    0    1.0
+/*               No.   3  vertex  */  -1.22    0.1    0    1.0
+/*               No.   4  vertex  */  -1.22    0.1    0.015    1.0
+/*               No.   5  vertex  */  -1.178    0.1    0.015    1.0
+/*               No.   6  vertex  */  -1.085    0.1    0.108    1.0
+/*               No.   7  vertex  */  1.085    0.1    0.108    1.0
+/*               No.   8  vertex  */  -1.178    0.1    0.015    1.0
+/*               No.   9  vertex  */  -1.178    0.1    0.015    1.0
+/*               No.   10  vertex  */  1.085    0.1    0.108    1.0
+/*               No.   11  vertex  */  1.178    0.1    0.015    1.0
+/*               No.   12  vertex  */  -1.178    0.1    0.015    1.0
+/*               No.   13  vertex  */  1.178    0.1    0.015    1.0
+/*               No.   14  vertex  */  -1.22    0.1    0    1.0
+/*               No.   15  vertex  */  -1.22    0.1    0    1.0
+/*               No.   16  vertex  */  1.178    0.1    0.015    1.0
+/*               No.   17  vertex  */  1.22    0.1    0    1.0
+
+/*            face normal number */ 18
+/*               NO.   0  normal  */  0    1    0    1.0
+/*               NO.   1  normal  */  0    1    0    1.0
+/*               NO.   2  normal  */  0    1    0    1.0
+/*               NO.   3  normal  */  0    1    0    1.0
+/*               NO.   4  normal  */  0    1    0    1.0
+/*               NO.   5  normal  */  0    1    0    1.0
+/*               NO.   6  normal  */  0    1    0    1.0
+/*               NO.   7  normal  */  0    1    0    1.0
+/*               NO.   8  normal  */  0    1    0    1.0
+/*               NO.   9  normal  */  0    1    0    1.0
+/*               NO.   10  normal  */  0    1    0    1.0
+/*               NO.   11  normal  */  0    1    0    1.0
+/*               NO.   12  normal  */  0    1    0    1.0
+/*               NO.   13  normal  */  0    1    0    1.0
+/*               NO.   14  normal  */  0    1    0    1.0
+/*               NO.   15  normal  */  0    1    0    1.0
+/*               NO.   16  normal  */  0    1    0    1.0
+/*               NO.   17  normal  */  0    1    0    1.0
+
+/*             NO.  0  attribute vertex number   */ 18
+/*                NO.    0   attribute vertex   */  1.08141    0.615452    0    1.0
+/*                NO.    1   attribute vertex   */  1.09859    0.615452    0    1.0
+/*                NO.    2   attribute vertex   */  1.09859    0.621589    0    1.0
+/*                NO.    3   attribute vertex   */  0.100405    0.621589    0    1.0
+/*                NO.    4   attribute vertex   */  0.100405    0.615452    0    1.0
+/*                NO.    5   attribute vertex   */  0.117587    0.615452    0    1.0
+/*                NO.    6   attribute vertex   */  0.155632    0.577407    0    1.0
+/*                NO.    7   attribute vertex   */  1.04336    0.577407    0    1.0
+/*                NO.    8   attribute vertex   */  0.117587    0.615452    0    1.0
+/*                NO.    9   attribute vertex   */  0.117587    0.615452    0    1.0
+/*                NO.    10   attribute vertex   */  1.04336    0.577407    0    1.0
+/*                NO.    11   attribute vertex   */  1.08141    0.615452    0    1.0
+/*                NO.    12   attribute vertex   */  0.117587    0.615452    0    1.0
+/*                NO.    13   attribute vertex   */  1.08141    0.615452    0    1.0
+/*                NO.    14   attribute vertex   */  0.100405    0.621589    0    1.0
+/*                NO.    15   attribute vertex   */  0.100405    0.621589    0    1.0
+/*                NO.    16   attribute vertex   */  1.08141    0.615452    0    1.0
+/*                NO.    17   attribute vertex   */  1.09859    0.621589    0    1.0
+
+/*            face triangle number  */  6
+/*                NO.    0  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    0  vertex  */  0  1  2  -1
+/*                NO.    0  normal  */  0  1  2  -1
+/*                NO.    0  attribute  */  0  1  2  -1
+
+/*                NO.    1  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    1  vertex  */  3  4  5  -1
+/*                NO.    1  normal  */  3  4  5  -1
+/*                NO.    1  attribute  */  3  4  5  -1
+
+/*                NO.    2  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    2  vertex  */  6  7  8  -1
+/*                NO.    2  normal  */  6  7  8  -1
+/*                NO.    2  attribute  */  6  7  8  -1
+
+/*                NO.    3  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    3  vertex  */  9  10  11  -1
+/*                NO.    3  normal  */  9  10  11  -1
+/*                NO.    3  attribute  */  9  10  11  -1
+
+/*                NO.    4  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    4  vertex  */  12  13  14  -1
+/*                NO.    4  normal  */  12  13  14  -1
+/*                NO.    4  attribute  */  12  13  14  -1
+
+/*                NO.    5  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    5  vertex  */  15  16  17  -1
+/*                NO.    5  normal  */  15  16  17  -1
+/*                NO.    5  attribute  */  15  16  17  -1
+
+
+/*            face loop number   */   1
+
+/*                NO    0     loop edge number    */   8
+
+/*                    NO.    0    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.1    0.008    -0    -0    -1
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0.1    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0.1    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0.1    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0.1    0    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    1    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.1    0.015    -1    -0    -2.47818e-016
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.178    0.1    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0.1    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.178    0.1    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0.1    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    2    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.085    0.1    0.108    -0.707107    0    -0.707107
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.085    0.1    0.108        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.178    0.1    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.085    0.1    0.108    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.178    0.1    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    3    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.1    0.108    -1    -0    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    1.085    0.1    0.108        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.085    0.1    0.108        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.085    0.1    0.108    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.085    0.1    0.108    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    4    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.085    0.1    0.108    -0.707107    -0    0.707107
+/*                        material  */  0    0    0    1    
+                        start_effective    1.178    0.1    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.085    0.1    0.108        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.178    0.1    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.085    0.1    0.108    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    5    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.22    0.1    0.015    -1    0    2.89121e-016
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0.1    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.178    0.1    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0.1    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.178    0.1    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    6    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.22    0.1    0.008    -0    -0    -1
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0.1    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0.1    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0.1    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0.1    0    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    7    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.1    0    -1    -0    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0.1    0        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0.1    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0.1    0    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0.1    0    1   /*  material  */  0    0    0    1    
+
+/*       No.   5  face name  */  ÇÐ³ý-À­Éì1_5_face
+
+/*            face type   */ plane  /*    parameter number   */ 6  /*  prameter */    0    0    -1    -1.22    0.1    0
+
+/*            attribute number   */  1
+
+/*            face vertex number */  6
+/*               No.   0  vertex  */  1.22    0.1    0    1.0
+/*               No.   1  vertex  */  1.22    0    0    1.0
+/*               No.   2  vertex  */  -1.22    0.1    0    1.0
+/*               No.   3  vertex  */  -1.22    0.1    0    1.0
+/*               No.   4  vertex  */  1.22    0    0    1.0
+/*               No.   5  vertex  */  -1.22    0    0    1.0
+
+/*            face normal number */ 6
+/*               NO.   0  normal  */  0    0    -1    1.0
+/*               NO.   1  normal  */  0    0    -1    1.0
+/*               NO.   2  normal  */  0    0    -1    1.0
+/*               NO.   3  normal  */  0    0    -1    1.0
+/*               NO.   4  normal  */  0    0    -1    1.0
+/*               NO.   5  normal  */  0    0    -1    1.0
+
+/*             NO.  0  attribute vertex number   */ 6
+/*                NO.    0   attribute vertex   */  1.09851    0.578959    0    1.0
+/*                NO.    1   attribute vertex   */  1.09851    0.619869    0    1.0
+/*                NO.    2   attribute vertex   */  0.100321    0.578959    0    1.0
+/*                NO.    3   attribute vertex   */  0.100321    0.578959    0    1.0
+/*                NO.    4   attribute vertex   */  1.09851    0.619869    0    1.0
+/*                NO.    5   attribute vertex   */  0.100321    0.619869    0    1.0
+
+/*            face triangle number  */  2
+/*                NO.    0  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    0  vertex  */  0  1  2  -1
+/*                NO.    0  normal  */  0  1  2  -1
+/*                NO.    0  attribute  */  0  1  2  -1
+
+/*                NO.    1  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    1  vertex  */  3  4  5  -1
+/*                NO.    1  normal  */  3  4  5  -1
+/*                NO.    1  attribute  */  3  4  5  -1
+
+
+/*            face loop number   */   1
+
+/*                NO    0     loop edge number    */   4
+
+/*                    NO.    0    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0    0    -0    -1    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0.1    0        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0.1    0    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0    0    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    1    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.1    0    -1    -0    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0.1    0        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0.1    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0.1    0    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0.1    0    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    2    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.22    0    0    0    1    0
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0    0        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0.1    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0    0    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0.1    0    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    3    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0    0    1    0    0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0    0        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0    0        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0    0    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0    0    1   /*  material  */  0    0    0    1    
+
+/*       No.   6  face name  */  ÇÐ³ý-À­Éì1_6_face
+
+/*            face type   */ plane  /*    parameter number   */ 6  /*  prameter */    0    1    0    -1.22    0.092    0.108
+
+/*            attribute number   */  1
+
+/*            face vertex number */  18
+/*               No.   0  vertex  */  -1.178    0.092    0.015    1.0
+/*               No.   1  vertex  */  -1.22    0.092    0.015    1.0
+/*               No.   2  vertex  */  -1.22    0.092    0.008    1.0
+/*               No.   3  vertex  */  1.22    0.092    0.008    1.0
+/*               No.   4  vertex  */  1.22    0.092    0.015    1.0
+/*               No.   5  vertex  */  1.178    0.092    0.015    1.0
+/*               No.   6  vertex  */  -1.22    0.092    0.008    1.0
+/*               No.   7  vertex  */  1.22    0.092    0.008    1.0
+/*               No.   8  vertex  */  -1.178    0.092    0.015    1.0
+/*               No.   9  vertex  */  -1.178    0.092    0.015    1.0
+/*               No.   10  vertex  */  1.22    0.092    0.008    1.0
+/*               No.   11  vertex  */  1.178    0.092    0.015    1.0
+/*               No.   12  vertex  */  -1.178    0.092    0.015    1.0
+/*               No.   13  vertex  */  1.178    0.092    0.015    1.0
+/*               No.   14  vertex  */  -1.085    0.092    0.108    1.0
+/*               No.   15  vertex  */  -1.085    0.092    0.108    1.0
+/*               No.   16  vertex  */  1.178    0.092    0.015    1.0
+/*               No.   17  vertex  */  1.085    0.092    0.108    1.0
+
+/*            face normal number */ 18
+/*               NO.   0  normal  */  0    -1    0    1.0
+/*               NO.   1  normal  */  0    -1    0    1.0
+/*               NO.   2  normal  */  0    -1    0    1.0
+/*               NO.   3  normal  */  0    -1    0    1.0
+/*               NO.   4  normal  */  0    -1    0    1.0
+/*               NO.   5  normal  */  0    -1    0    1.0
+/*               NO.   6  normal  */  0    -1    0    1.0
+/*               NO.   7  normal  */  0    -1    0    1.0
+/*               NO.   8  normal  */  0    -1    0    1.0
+/*               NO.   9  normal  */  0    -1    0    1.0
+/*               NO.   10  normal  */  0    -1    0    1.0
+/*               NO.   11  normal  */  0    -1    0    1.0
+/*               NO.   12  normal  */  0    -1    0    1.0
+/*               NO.   13  normal  */  0    -1    0    1.0
+/*               NO.   14  normal  */  0    -1    0    1.0
+/*               NO.   15  normal  */  0    -1    0    1.0
+/*               NO.   16  normal  */  0    -1    0    1.0
+/*               NO.   17  normal  */  0    -1    0    1.0
+
+/*             NO.  0  attribute vertex number   */ 18
+/*                NO.    0   attribute vertex   */  0.117503    0.581823    0    1.0
+/*                NO.    1   attribute vertex   */  0.100321    0.581823    0    1.0
+/*                NO.    2   attribute vertex   */  0.100321    0.57896    0    1.0
+/*                NO.    3   attribute vertex   */  1.09851    0.57896    0    1.0
+/*                NO.    4   attribute vertex   */  1.09851    0.581823    0    1.0
+/*                NO.    5   attribute vertex   */  1.08132    0.581823    0    1.0
+/*                NO.    6   attribute vertex   */  0.100321    0.57896    0    1.0
+/*                NO.    7   attribute vertex   */  1.09851    0.57896    0    1.0
+/*                NO.    8   attribute vertex   */  0.117503    0.581823    0    1.0
+/*                NO.    9   attribute vertex   */  0.117503    0.581823    0    1.0
+/*                NO.    10   attribute vertex   */  1.09851    0.57896    0    1.0
+/*                NO.    11   attribute vertex   */  1.08132    0.581823    0    1.0
+/*                NO.    12   attribute vertex   */  0.117503    0.581823    0    1.0
+/*                NO.    13   attribute vertex   */  1.08132    0.581823    0    1.0
+/*                NO.    14   attribute vertex   */  0.155549    0.619869    0    1.0
+/*                NO.    15   attribute vertex   */  0.155549    0.619869    0    1.0
+/*                NO.    16   attribute vertex   */  1.08132    0.581823    0    1.0
+/*                NO.    17   attribute vertex   */  1.04328    0.619869    0    1.0
+
+/*            face triangle number  */  6
+/*                NO.    0  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    0  vertex  */  0  1  2  -1
+/*                NO.    0  normal  */  0  1  2  -1
+/*                NO.    0  attribute  */  0  1  2  -1
+
+/*                NO.    1  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    1  vertex  */  3  4  5  -1
+/*                NO.    1  normal  */  3  4  5  -1
+/*                NO.    1  attribute  */  3  4  5  -1
+
+/*                NO.    2  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    2  vertex  */  6  7  8  -1
+/*                NO.    2  normal  */  6  7  8  -1
+/*                NO.    2  attribute  */  6  7  8  -1
+
+/*                NO.    3  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    3  vertex  */  9  10  11  -1
+/*                NO.    3  normal  */  9  10  11  -1
+/*                NO.    3  attribute  */  9  10  11  -1
+
+/*                NO.    4  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    4  vertex  */  12  13  14  -1
+/*                NO.    4  normal  */  12  13  14  -1
+/*                NO.    4  attribute  */  12  13  14  -1
+
+/*                NO.    5  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    5  vertex  */  15  16  17  -1
+/*                NO.    5  normal  */  15  16  17  -1
+/*                NO.    5  attribute  */  15  16  17  -1
+
+
+/*            face loop number   */   1
+
+/*                NO    0     loop edge number    */   8
+
+/*                    NO.    0    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.1525    0.092    0.0405    -0.707107    0    -0.707107
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.085    0.092    0.108        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.178    0.092    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.085    0.092    0.108    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.178    0.092    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    1    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.092    0.015    -1    0    -2.47818e-016
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.178    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0.092    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.178    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0.092    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    2    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.092    0.108    -0    -0    -1
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0.092    0.008        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0.092    0.008    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    3    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.092    0.008    1    0    0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0.092    0.008        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0.092    0.008        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0.092    0.008    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0.092    0.008    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    4    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.22    0.092    0.108    -0    -0    -1
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0.092    0.008        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0.092    0.008    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    5    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.092    0.015    -1    0    2.89121e-016
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.178    0.092    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.178    0.092    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    6    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -0.0675    0.092    1.2605    -0.707107    0    0.707107
+/*                        material  */  0    0    0    1    
+                        start_effective    1.178    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.085    0.092    0.108        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.178    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.085    0.092    0.108    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    7    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.092    0.108    1    0    0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.085    0.092    0.108        1    /*  material   */   0    0    0    1    
+                        end_effective    1.085    0.092    0.108        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.085    0.092    0.108    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.085    0.092    0.108    1   /*  material  */  0    0    0    1    
+
+/*       No.   7  face name  */  ÇÐ³ý-À­Éì1_7_face
+
+/*            face type   */ plane  /*    parameter number   */ 6  /*  prameter */    -0    0    1    -1.22    0.092    0.108
+
+/*            attribute number   */  1
+
+/*            face vertex number */  6
+/*               No.   0  vertex  */  1.085    0.092    0.108    1.0
+/*               No.   1  vertex  */  1.085    0.1    0.108    1.0
+/*               No.   2  vertex  */  -1.085    0.092    0.108    1.0
+/*               No.   3  vertex  */  -1.085    0.092    0.108    1.0
+/*               No.   4  vertex  */  1.085    0.1    0.108    1.0
+/*               No.   5  vertex  */  -1.085    0.1    0.108    1.0
+
+/*            face normal number */ 6
+/*               NO.   0  normal  */  0    0    1    1.0
+/*               NO.   1  normal  */  0    0    1    1.0
+/*               NO.   2  normal  */  0    0    1    1.0
+/*               NO.   3  normal  */  0    0    1    1.0
+/*               NO.   4  normal  */  0    0    1    1.0
+/*               NO.   5  normal  */  0    0    1    1.0
+
+/*             NO.  0  attribute vertex number   */ 6
+/*                NO.    0   attribute vertex   */  0.976507    0.531006    0    1.0
+/*                NO.    1   attribute vertex   */  0.976507    0.534278    0    1.0
+/*                NO.    2   attribute vertex   */  0.0887767    0.531006    0    1.0
+/*                NO.    3   attribute vertex   */  0.0887767    0.531006    0    1.0
+/*                NO.    4   attribute vertex   */  0.976507    0.534278    0    1.0
+/*                NO.    5   attribute vertex   */  0.0887767    0.534278    0    1.0
+
+/*            face triangle number  */  2
+/*                NO.    0  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    0  vertex  */  0  1  2  -1
+/*                NO.    0  normal  */  0  1  2  -1
+/*                NO.    0  attribute  */  0  1  2  -1
+
+/*                NO.    1  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    1  vertex  */  3  4  5  -1
+/*                NO.    1  normal  */  3  4  5  -1
+/*                NO.    1  attribute  */  3  4  5  -1
+
+
+/*            face loop number   */   1
+
+/*                NO    0     loop edge number    */   4
+
+/*                    NO.    0    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.085    0.092    0.108    0    1    0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.085    0.092    0.108        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.085    0.1    0.108        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.085    0.092    0.108    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.085    0.1    0.108    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    1    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.092    0.108    1    0    0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.085    0.092    0.108        1    /*  material   */   0    0    0    1    
+                        end_effective    1.085    0.092    0.108        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.085    0.092    0.108    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.085    0.092    0.108    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    2    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.085    0.092    0.108    0    -1    0
+/*                        material  */  0    0    0    1    
+                        start_effective    1.085    0.1    0.108        1    /*  material   */   0    0    0    1    
+                        end_effective    1.085    0.092    0.108        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.085    0.1    0.108    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.085    0.092    0.108    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    3    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.1    0.108    -1    -0    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    1.085    0.1    0.108        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.085    0.1    0.108        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.085    0.1    0.108    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.085    0.1    0.108    1   /*  material  */  0    0    0    1    
+
+/*       No.   8  face name  */  ÇÐ³ý-À­Éì1_8_face
+
+/*            face type   */ plane  /*    parameter number   */ 6  /*  prameter */    -2.89121e-016    -0    -1    1.22    -2.5e-008    0.015
+
+/*            attribute number   */  1
+
+/*            face vertex number */  6
+/*               No.   0  vertex  */  1.178    0.1    0.015    1.0
+/*               No.   1  vertex  */  1.178    0.092    0.015    1.0
+/*               No.   2  vertex  */  1.22    0.1    0.015    1.0
+/*               No.   3  vertex  */  1.22    0.1    0.015    1.0
+/*               No.   4  vertex  */  1.178    0.092    0.015    1.0
+/*               No.   5  vertex  */  1.22    0.092    0.015    1.0
+
+/*            face normal number */ 6
+/*               NO.   0  normal  */  2.89121e-016    0    1    1.0
+/*               NO.   1  normal  */  2.89121e-016    0    1    1.0
+/*               NO.   2  normal  */  2.89121e-016    0    1    1.0
+/*               NO.   3  normal  */  2.89121e-016    0    1    1.0
+/*               NO.   4  normal  */  2.89121e-016    0    1    1.0
+/*               NO.   5  normal  */  2.89121e-016    0    1    1.0
+
+/*             NO.  0  attribute vertex number   */ 6
+/*                NO.    0   attribute vertex   */  0.00190355    0.0121308    0    1.0
+/*                NO.    1   attribute vertex   */  0.00190355    0.00885811    0    1.0
+/*                NO.    2   attribute vertex   */  0.0190855    0.0121308    0    1.0
+/*                NO.    3   attribute vertex   */  0.0190855    0.0121308    0    1.0
+/*                NO.    4   attribute vertex   */  0.00190355    0.00885811    0    1.0
+/*                NO.    5   attribute vertex   */  0.0190855    0.00885811    0    1.0
+
+/*            face triangle number  */  2
+/*                NO.    0  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    0  vertex  */  0  1  2  -1
+/*                NO.    0  normal  */  0  1  2  -1
+/*                NO.    0  attribute  */  0  1  2  -1
+
+/*                NO.    1  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    1  vertex  */  3  4  5  -1
+/*                NO.    1  normal  */  3  4  5  -1
+/*                NO.    1  attribute  */  3  4  5  -1
+
+
+/*            face loop number   */   1
+
+/*                NO    0     loop edge number    */   4
+
+/*                    NO.    0    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.22    -2.5e-008    0.015    -0    1    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.22    0.1    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.22    0.1    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    1    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.22    0.1    0.015    -1    0    2.89121e-016
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0.1    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.178    0.1    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0.1    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.178    0.1    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    2    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.178    -2.5e-008    0.015    -0    1    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    1.178    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.178    0.1    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.178    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.178    0.1    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    3    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.092    0.015    -1    0    2.89121e-016
+/*                        material  */  0    0    0    1    
+                        start_effective    1.22    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.178    0.092    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.22    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.178    0.092    0.015    1   /*  material  */  0    0    0    1    
+
+/*       No.   9  face name  */  ÇÐ³ý-À­Éì1_9_face
+
+/*            face type   */ plane  /*    parameter number   */ 6  /*  prameter */    -0.707107    -0    -0.707107    1.085    -2.5e-008    0.108
+
+/*            attribute number   */  1
+
+/*            face vertex number */  6
+/*               No.   0  vertex  */  1.085    0.1    0.108    1.0
+/*               No.   1  vertex  */  1.085    0.092    0.108    1.0
+/*               No.   2  vertex  */  1.178    0.1    0.015    1.0
+/*               No.   3  vertex  */  1.178    0.1    0.015    1.0
+/*               No.   4  vertex  */  1.085    0.092    0.108    1.0
+/*               No.   5  vertex  */  1.178    0.092    0.015    1.0
+
+/*            face normal number */ 6
+/*               NO.   0  normal  */  0.707107    0    0.707107    1.0
+/*               NO.   1  normal  */  0.707107    0    0.707107    1.0
+/*               NO.   2  normal  */  0.707107    0    0.707107    1.0
+/*               NO.   3  normal  */  0.707107    0    0.707107    1.0
+/*               NO.   4  normal  */  0.707107    0    0.707107    1.0
+/*               NO.   5  normal  */  0.707107    0    0.707107    1.0
+
+/*             NO.  0  attribute vertex number   */ 6
+/*                NO.    0   attribute vertex   */  0.00544013    0.0339788    0    1.0
+/*                NO.    1   attribute vertex   */  0.00544013    0.0307061    0    1.0
+/*                NO.    2   attribute vertex   */  0.0592447    0.0339788    0    1.0
+/*                NO.    3   attribute vertex   */  0.0592447    0.0339788    0    1.0
+/*                NO.    4   attribute vertex   */  0.00544013    0.0307061    0    1.0
+/*                NO.    5   attribute vertex   */  0.0592447    0.0307061    0    1.0
+
+/*            face triangle number  */  2
+/*                NO.    0  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    0  vertex  */  0  1  2  -1
+/*                NO.    0  normal  */  0  1  2  -1
+/*                NO.    0  attribute  */  0  1  2  -1
+
+/*                NO.    1  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    1  vertex  */  3  4  5  -1
+/*                NO.    1  normal  */  3  4  5  -1
+/*                NO.    1  attribute  */  3  4  5  -1
+
+
+/*            face loop number   */   1
+
+/*                NO    0     loop edge number    */   4
+
+/*                    NO.    0    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.178    -2.5e-008    0.015    -0    1    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    1.178    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.178    0.1    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.178    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.178    0.1    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    1    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.085    0.1    0.108    -0.707107    -0    0.707107
+/*                        material  */  0    0    0    1    
+                        start_effective    1.178    0.1    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.085    0.1    0.108        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.178    0.1    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.085    0.1    0.108    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    2    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      1.085    0.092    0.108    0    -1    0
+/*                        material  */  0    0    0    1    
+                        start_effective    1.085    0.1    0.108        1    /*  material   */   0    0    0    1    
+                        end_effective    1.085    0.092    0.108        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.085    0.1    0.108    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.085    0.092    0.108    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    3    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -0.0675    0.092    1.2605    -0.707107    0    0.707107
+/*                        material  */  0    0    0    1    
+                        start_effective    1.178    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    1.085    0.092    0.108        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     1.178    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     1.085    0.092    0.108    1   /*  material  */  0    0    0    1    
+
+/*       No.   10  face name  */  ÇÐ³ý-À­Éì1_10_face
+
+/*            face type   */ plane  /*    parameter number   */ 6  /*  prameter */    2.47818e-016    0    -1    -1.22    -2.5e-008    0.015
+
+/*            attribute number   */  1
+
+/*            face vertex number */  6
+/*               No.   0  vertex  */  -1.22    0.1    0.015    1.0
+/*               No.   1  vertex  */  -1.22    0.092    0.015    1.0
+/*               No.   2  vertex  */  -1.178    0.1    0.015    1.0
+/*               No.   3  vertex  */  -1.178    0.1    0.015    1.0
+/*               No.   4  vertex  */  -1.22    0.092    0.015    1.0
+/*               No.   5  vertex  */  -1.178    0.092    0.015    1.0
+
+/*            face normal number */ 6
+/*               NO.   0  normal  */  -2.47818e-016    0    1    1.0
+/*               NO.   1  normal  */  -2.47818e-016    0    1    1.0
+/*               NO.   2  normal  */  -2.47818e-016    0    1    1.0
+/*               NO.   3  normal  */  -2.47818e-016    0    1    1.0
+/*               NO.   4  normal  */  -2.47818e-016    0    1    1.0
+/*               NO.   5  normal  */  -2.47818e-016    0    1    1.0
+
+/*             NO.  0  attribute vertex number   */ 6
+/*                NO.    0   attribute vertex   */  0.00190355    0.0121308    0    1.0
+/*                NO.    1   attribute vertex   */  0.00190355    0.00885811    0    1.0
+/*                NO.    2   attribute vertex   */  0.0190855    0.0121308    0    1.0
+/*                NO.    3   attribute vertex   */  0.0190855    0.0121308    0    1.0
+/*                NO.    4   attribute vertex   */  0.00190355    0.00885811    0    1.0
+/*                NO.    5   attribute vertex   */  0.0190855    0.00885811    0    1.0
+
+/*            face triangle number  */  2
+/*                NO.    0  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    0  vertex  */  0  1  2  -1
+/*                NO.    0  normal  */  0  1  2  -1
+/*                NO.    0  attribute  */  0  1  2  -1
+
+/*                NO.    1  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    1  vertex  */  3  4  5  -1
+/*                NO.    1  normal  */  3  4  5  -1
+/*                NO.    1  attribute  */  3  4  5  -1
+
+
+/*            face loop number   */   1
+
+/*                NO    0     loop edge number    */   4
+
+/*                    NO.    0    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.178    -2.5e-008    0.015    -0    1    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.178    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.178    0.1    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.178    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.178    0.1    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    1    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.1    0.015    -1    -0    -2.47818e-016
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.178    0.1    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0.1    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.178    0.1    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0.1    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    2    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    -2.5e-008    0.015    -0    1    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.22    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0.1    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.22    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0.1    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    3    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.22    0.092    0.015    -1    0    -2.47818e-016
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.178    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.22    0.092    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.178    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.22    0.092    0.015    1   /*  material  */  0    0    0    1    
+
+/*       No.   11  face name  */  ÇÐ³ý-À­Éì1_11_face
+
+/*            face type   */ plane  /*    parameter number   */ 6  /*  prameter */    0.707107    0    -0.707107    -1.085    -2.5e-008    0.108
+
+/*            attribute number   */  1
+
+/*            face vertex number */  6
+/*               No.   0  vertex  */  -1.178    0.1    0.015    1.0
+/*               No.   1  vertex  */  -1.178    0.092    0.015    1.0
+/*               No.   2  vertex  */  -1.085    0.1    0.108    1.0
+/*               No.   3  vertex  */  -1.085    0.1    0.108    1.0
+/*               No.   4  vertex  */  -1.178    0.092    0.015    1.0
+/*               No.   5  vertex  */  -1.085    0.092    0.108    1.0
+
+/*            face normal number */ 6
+/*               NO.   0  normal  */  -0.707107    0    0.707107    1.0
+/*               NO.   1  normal  */  -0.707107    0    0.707107    1.0
+/*               NO.   2  normal  */  -0.707107    0    0.707107    1.0
+/*               NO.   3  normal  */  -0.707107    0    0.707107    1.0
+/*               NO.   4  normal  */  -0.707107    0    0.707107    1.0
+/*               NO.   5  normal  */  -0.707107    0    0.707107    1.0
+
+/*             NO.  0  attribute vertex number   */ 6
+/*                NO.    0   attribute vertex   */  0.00544013    0.0339788    0    1.0
+/*                NO.    1   attribute vertex   */  0.00544013    0.0307061    0    1.0
+/*                NO.    2   attribute vertex   */  0.0592447    0.0339788    0    1.0
+/*                NO.    3   attribute vertex   */  0.0592447    0.0339788    0    1.0
+/*                NO.    4   attribute vertex   */  0.00544013    0.0307061    0    1.0
+/*                NO.    5   attribute vertex   */  0.0592447    0.0307061    0    1.0
+
+/*            face triangle number  */  2
+/*                NO.    0  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    0  vertex  */  0  1  2  -1
+/*                NO.    0  normal  */  0  1  2  -1
+/*                NO.    0  attribute  */  0  1  2  -1
+
+/*                NO.    1  material  */  0.788235  0.380392  0.807843  0
+/*                NO.    1  vertex  */  3  4  5  -1
+/*                NO.    1  normal  */  3  4  5  -1
+/*                NO.    1  attribute  */  3  4  5  -1
+
+
+/*            face loop number   */   1
+
+/*                NO    0     loop edge number    */   4
+
+/*                    NO.    0    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.085    0.092    0.108    0    1    0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.085    0.092    0.108        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.085    0.1    0.108        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.085    0.092    0.108    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.085    0.1    0.108    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    1    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.085    0.1    0.108    -0.707107    0    -0.707107
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.085    0.1    0.108        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.178    0.1    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.085    0.1    0.108    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.178    0.1    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    2    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.178    -2.5e-008    0.015    -0    1    -0
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.178    0.092    0.015        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.178    0.1    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.178    0.092    0.015    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.178    0.1    0.015    1   /*  material  */  0    0    0    1    
+
+/*                    NO.    3    edge     */   
+/*                        curve type   */  line
+/*                        parameter number   */  6  /*  parameter  */      -1.1525    0.092    0.0405    -0.707107    0    -0.707107
+/*                        material  */  0    0    0    1    
+                        start_effective    -1.085    0.092    0.108        1    /*  material   */   0    0    0    1    
+                        end_effective    -1.178    0.092    0.015        1    /*  material   */   0    0    0    1    
+/*                        vertex number   */  2
+/*                        NO.     0   vertex location  */     -1.085    0.092    0.108    1   /*  material  */  0    0    0    1    
+/*                        NO.     1   vertex location  */     -1.178    0.092    0.015    1   /*  material  */  0    0    0    1    
+
+
+
+
+
+
+

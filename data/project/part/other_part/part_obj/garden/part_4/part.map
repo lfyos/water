@@ -1,0 +1,8 @@
+Line01	wire_000000000	part.mtl	0	0	1
+Loft01	wire_000000000	part.mtl	0	0	1
+Loft02	wire_000000000	part.mtl	1	0	1
+guan	wire_000000000	part.mtl	1	0	1
+guan01	wire_000000000	part.mtl	0	0	1
+no_group	no_usemtl	part.mtl	2	0	1
+guan	no_usemtl	part.mtl	2	0	1
+
