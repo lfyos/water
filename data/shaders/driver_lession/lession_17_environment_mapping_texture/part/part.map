@@ -1,0 +1,5 @@
+no_group			no_usemtl			sphere.mtl			no_file_name.jpg			0			0
+0			Sphere001			no_usemtl			sphere.mtl			no_file_name.jpg			0
+0			0			Sphere001			wire_153228153			sphere.mtl			no_file_name.jpg
+Sphere001			no_usemtl			sphere.mtl			0			0			1
+Sphere001			wire_153228153			sphere.mtl			0			0			1

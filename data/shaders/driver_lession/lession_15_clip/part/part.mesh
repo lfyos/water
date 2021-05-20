@@ -1,0 +1,533 @@
+/*	version			*/	2018.11.23
+/*	origin material	*/	0	0	0	0
+/*	body_number		*/	1
+
+   /* body  0  name   */  凸台-拉伸1   /*   face_number   */  6
+  
+  
+     /* face  0  name   */  凸台-拉伸1的第0个表面
+    
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    1.0   0.0   0.0   0.0   1.0   0.0
+        
+         /* face_attribute_number */ 1
+        
+         /* face_vertex_number   */  6
+             /* face_vertex  0  is  */  0.0   1.0   1.0   1
+             /* face_vertex  1  is  */  0.0   1.0   0.0   1
+             /* face_vertex  2  is  */  0.0   0.0   1.0   1
+             /* face_vertex  3  is  */  0.0   0.0   1.0   1
+             /* face_vertex  4  is  */  0.0   1.0   0.0   1
+             /* face_vertex  5  is  */  0.0   0.0   0.0   1
+            
+         /* face_normal_number      */  6
+             /* face_normal  0  is  */  -1.0   0.0   0.0   1
+             /* face_normal  1  is  */  -1.0   0.0   0.0   1
+             /* face_normal  2  is  */  -1.0   0.0   0.0   1
+             /* face_normal  3  is  */  -1.0   0.0   0.0   1
+             /* face_normal  4  is  */  -1.0   0.0   0.0   1
+             /* face_normal  5  is  */  -1.0   0.0   0.0   1
+            
+         /* face_attribute   0  attribute_vertex_number  */  6
+             /* face_attribute_vertex  0  is  */  0.0   1.0   0.0   1
+             /* face_attribute_vertex  1  is  */  1.0   1.0   0.0   1
+             /* face_attribute_vertex  2  is  */  0.0   0.0   0.0   1
+             /* face_attribute_vertex  3  is  */  0.0   0.0   0.0   1
+             /* face_attribute_vertex  4  is  */  1.0   1.0   0.0   1
+             /* face_attribute_vertex  5  is  */  1.0   0.0   0.0   1
+            
+         /* face_primitive_number  */  2
+             /* face_primitive  0  material      */     1    0    0    0
+             /* face_primitive  0  vertex_index  */    0   1   2   -1
+             /* face_primitive  0  normal_index  */    0   1   2   -1
+             /* face_primitive  0  attribute  0 attribute_index   */     0   1   2   -1
+            
+             /* face_primitive  1  material      */     1    0    0    0
+             /* face_primitive  1  vertex_index  */    3   4   5   -1
+             /* face_primitive  1  normal_index  */    3   4   5   -1
+             /* face_primitive  1  attribute  0 attribute_index   */     3   4   5   -1
+            
+            
+            
+         /* face_loop_number   */ 1
+        
+         /* face_loop  0  loop_edge_number    */    4
+        
+             /* face_loop_edge  0  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   0.0   0.0   0.0   0.0   1.0
+                 /* curve point material */      0    0    0    0
+                start_effective   0.0   0.0   0.0   1  /*  material  */      0    0    0    0
+                end_effective   0.0   0.0   1.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 0.0   0.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 0.0   0.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  1  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   1.0   1.0   0.0   -1.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   0.0   1.0   1.0   1  /*  material  */      0    0    0    0
+                end_effective   0.0   0.0   1.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 0.0   1.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 0.0   0.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  2  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   1.0   0.0   0.0   0.0   1.0
+                 /* curve point material */      0    0    0    0
+                start_effective   0.0   1.0   0.0   1  /*  material  */      0    0    0    0
+                end_effective   0.0   1.0   1.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 0.0   1.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 0.0   1.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  3  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   1.0   0.0   0.0   -1.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   0.0   1.0   0.0   1  /*  material  */      0    0    0    0
+                end_effective   0.0   0.0   0.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 0.0   1.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 0.0   0.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                
+     /* face  1  name   */  凸台-拉伸1的第1个表面
+    
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.0   0.0   -1.0   0.0   1.0   1.0
+        
+         /* face_attribute_number */ 1
+        
+         /* face_vertex_number   */  6
+             /* face_vertex  0  is  */  1.0   1.0   1.0   1
+             /* face_vertex  1  is  */  0.0   1.0   1.0   1
+             /* face_vertex  2  is  */  1.0   0.0   1.0   1
+             /* face_vertex  3  is  */  1.0   0.0   1.0   1
+             /* face_vertex  4  is  */  0.0   1.0   1.0   1
+             /* face_vertex  5  is  */  0.0   0.0   1.0   1
+            
+         /* face_normal_number      */  6
+             /* face_normal  0  is  */  0.0   0.0   1.0   1
+             /* face_normal  1  is  */  0.0   0.0   1.0   1
+             /* face_normal  2  is  */  0.0   0.0   1.0   1
+             /* face_normal  3  is  */  0.0   0.0   1.0   1
+             /* face_normal  4  is  */  0.0   0.0   1.0   1
+             /* face_normal  5  is  */  0.0   0.0   1.0   1
+            
+         /* face_attribute   0  attribute_vertex_number  */  6
+             /* face_attribute_vertex  0  is  */  0.0   1.0   0.0   1
+             /* face_attribute_vertex  1  is  */  1.0   1.0   0.0   1
+             /* face_attribute_vertex  2  is  */  0.0   0.0   0.0   1
+             /* face_attribute_vertex  3  is  */  0.0   0.0   0.0   1
+             /* face_attribute_vertex  4  is  */  1.0   1.0   0.0   1
+             /* face_attribute_vertex  5  is  */  1.0   0.0   0.0   1
+            
+         /* face_primitive_number  */  2
+             /* face_primitive  0  material      */     0    1    0    0
+             /* face_primitive  0  vertex_index  */    0   1   2   -1
+             /* face_primitive  0  normal_index  */    0   1   2   -1
+             /* face_primitive  0  attribute  0 attribute_index   */     0   1   2   -1
+            
+             /* face_primitive  1  material      */     0    1    0    0
+             /* face_primitive  1  vertex_index  */    3   4   5   -1
+             /* face_primitive  1  normal_index  */    3   4   5   -1
+             /* face_primitive  1  attribute  0 attribute_index   */     3   4   5   -1
+            
+            
+            
+         /* face_loop_number   */ 1
+        
+         /* face_loop  0  loop_edge_number    */    4
+        
+             /* face_loop_edge  0  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   0.0   1.0   1.0   0.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   0.0   0.0   1.0   1  /*  material  */      0    0    0    0
+                end_effective   1.0   0.0   1.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 0.0   0.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 1.0   0.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  1  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    1.0   1.0   1.0   0.0   -1.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   1.0   1.0   1.0   1  /*  material  */      0    0    0    0
+                end_effective   1.0   0.0   1.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 1.0   1.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 1.0   0.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  2  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   1.0   1.0   1.0   0.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   0.0   1.0   1.0   1  /*  material  */      0    0    0    0
+                end_effective   1.0   1.0   1.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 0.0   1.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 1.0   1.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  3  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   1.0   1.0   0.0   -1.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   0.0   1.0   1.0   1  /*  material  */      0    0    0    0
+                end_effective   0.0   0.0   1.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 0.0   1.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 0.0   0.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                
+     /* face  2  name   */  凸台-拉伸1的第2个表面
+    
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    -1.0   0.0   0.0   1.0   1.0   0.0
+        
+         /* face_attribute_number */ 1
+        
+         /* face_vertex_number   */  6
+             /* face_vertex  0  is  */  1.0   1.0   0.0   1
+             /* face_vertex  1  is  */  1.0   1.0   1.0   1
+             /* face_vertex  2  is  */  1.0   0.0   0.0   1
+             /* face_vertex  3  is  */  1.0   0.0   0.0   1
+             /* face_vertex  4  is  */  1.0   1.0   1.0   1
+             /* face_vertex  5  is  */  1.0   0.0   1.0   1
+            
+         /* face_normal_number      */  6
+             /* face_normal  0  is  */  1.0   0.0   0.0   1
+             /* face_normal  1  is  */  1.0   0.0   0.0   1
+             /* face_normal  2  is  */  1.0   0.0   0.0   1
+             /* face_normal  3  is  */  1.0   0.0   0.0   1
+             /* face_normal  4  is  */  1.0   0.0   0.0   1
+             /* face_normal  5  is  */  1.0   0.0   0.0   1
+            
+         /* face_attribute   0  attribute_vertex_number  */  6
+             /* face_attribute_vertex  0  is  */  0.0   1.0   0.0   1
+             /* face_attribute_vertex  1  is  */  1.0   1.0   0.0   1
+             /* face_attribute_vertex  2  is  */  0.0   0.0   0.0   1
+             /* face_attribute_vertex  3  is  */  0.0   0.0   0.0   1
+             /* face_attribute_vertex  4  is  */  1.0   1.0   0.0   1
+             /* face_attribute_vertex  5  is  */  1.0   0.0   0.0   1
+            
+         /* face_primitive_number  */  2
+             /* face_primitive  0  material      */     0    0    1    0
+             /* face_primitive  0  vertex_index  */    0   1   2   -1
+             /* face_primitive  0  normal_index  */    0   1   2   -1
+             /* face_primitive  0  attribute  0 attribute_index   */     0   1   2   -1
+            
+             /* face_primitive  1  material      */     0    0    1    0
+             /* face_primitive  1  vertex_index  */    3   4   5   -1
+             /* face_primitive  1  normal_index  */    3   4   5   -1
+             /* face_primitive  1  attribute  0 attribute_index   */     3   4   5   -1
+            
+            
+            
+         /* face_loop_number   */ 1
+        
+         /* face_loop  0  loop_edge_number    */    4
+        
+             /* face_loop_edge  0  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    1.0   0.0   0.0   0.0   0.0   -1.0
+                 /* curve point material */      0    0    0    0
+                start_effective   1.0   0.0   1.0   1  /*  material  */      0    0    0    0
+                end_effective   1.0   0.0   0.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 1.0   0.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 1.0   0.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  1  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    1.0   1.0   0.0   0.0   -1.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   1.0   1.0   0.0   1  /*  material  */      0    0    0    0
+                end_effective   1.0   0.0   0.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 1.0   1.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 1.0   0.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  2  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    1.0   1.0   0.0   0.0   0.0   -1.0
+                 /* curve point material */      0    0    0    0
+                start_effective   1.0   1.0   1.0   1  /*  material  */      0    0    0    0
+                end_effective   1.0   1.0   0.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 1.0   1.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 1.0   1.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  3  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    1.0   1.0   1.0   0.0   -1.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   1.0   1.0   1.0   1  /*  material  */      0    0    0    0
+                end_effective   1.0   0.0   1.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 1.0   1.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 1.0   0.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                
+     /* face  3  name   */  凸台-拉伸1的第3个表面
+    
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.0   0.0   1.0   0.0   1.0   0.0
+        
+         /* face_attribute_number */ 1
+        
+         /* face_vertex_number   */  6
+             /* face_vertex  0  is  */  0.0   1.0   0.0   1
+             /* face_vertex  1  is  */  1.0   1.0   0.0   1
+             /* face_vertex  2  is  */  0.0   0.0   0.0   1
+             /* face_vertex  3  is  */  0.0   0.0   0.0   1
+             /* face_vertex  4  is  */  1.0   1.0   0.0   1
+             /* face_vertex  5  is  */  1.0   0.0   0.0   1
+            
+         /* face_normal_number      */  6
+             /* face_normal  0  is  */  0.0   0.0   -1.0   1
+             /* face_normal  1  is  */  0.0   0.0   -1.0   1
+             /* face_normal  2  is  */  0.0   0.0   -1.0   1
+             /* face_normal  3  is  */  0.0   0.0   -1.0   1
+             /* face_normal  4  is  */  0.0   0.0   -1.0   1
+             /* face_normal  5  is  */  0.0   0.0   -1.0   1
+            
+         /* face_attribute   0  attribute_vertex_number  */  6
+             /* face_attribute_vertex  0  is  */  0.0   1.0   0.0   1
+             /* face_attribute_vertex  1  is  */  1.0   1.0   0.0   1
+             /* face_attribute_vertex  2  is  */  0.0   0.0   0.0   1
+             /* face_attribute_vertex  3  is  */  0.0   0.0   0.0   1
+             /* face_attribute_vertex  4  is  */  1.0   1.0   0.0   1
+             /* face_attribute_vertex  5  is  */  1.0   0.0   0.0   1
+            
+         /* face_primitive_number  */  2
+             /* face_primitive  0  material      */     0    1    1    0
+             /* face_primitive  0  vertex_index  */    0   1   2   -1
+             /* face_primitive  0  normal_index  */    0   1   2   -1
+             /* face_primitive  0  attribute  0 attribute_index   */     0   1   2   -1
+            
+             /* face_primitive  1  material      */     0    1    1    0
+             /* face_primitive  1  vertex_index  */    3   4   5   -1
+             /* face_primitive  1  normal_index  */    3   4   5   -1
+             /* face_primitive  1  attribute  0 attribute_index   */     3   4   5   -1
+            
+            
+            
+         /* face_loop_number   */ 1
+        
+         /* face_loop  0  loop_edge_number    */    4
+        
+             /* face_loop_edge  0  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   0.0   0.0   -1.0   0.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   1.0   0.0   0.0   1  /*  material  */      0    0    0    0
+                end_effective   0.0   0.0   0.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 1.0   0.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 0.0   0.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  1  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   1.0   0.0   0.0   -1.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   0.0   1.0   0.0   1  /*  material  */      0    0    0    0
+                end_effective   0.0   0.0   0.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 0.0   1.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 0.0   0.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  2  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   1.0   0.0   -1.0   0.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   1.0   1.0   0.0   1  /*  material  */      0    0    0    0
+                end_effective   0.0   1.0   0.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 1.0   1.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 0.0   1.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  3  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    1.0   1.0   0.0   0.0   -1.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   1.0   1.0   0.0   1  /*  material  */      0    0    0    0
+                end_effective   1.0   0.0   0.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 1.0   1.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 1.0   0.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                
+     /* face  4  name   */  凸台-拉伸1的第4个表面
+    
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.0   1.0   0.0   0.0   1.0   0.0
+        
+         /* face_attribute_number */ 1
+        
+         /* face_vertex_number   */  6
+             /* face_vertex  0  is  */  1.0   1.0   1.0   1
+             /* face_vertex  1  is  */  1.0   1.0   0.0   1
+             /* face_vertex  2  is  */  0.0   1.0   1.0   1
+             /* face_vertex  3  is  */  0.0   1.0   1.0   1
+             /* face_vertex  4  is  */  1.0   1.0   0.0   1
+             /* face_vertex  5  is  */  0.0   1.0   0.0   1
+            
+         /* face_normal_number      */  6
+             /* face_normal  0  is  */  0.0   1.0   0.0   1
+             /* face_normal  1  is  */  0.0   1.0   0.0   1
+             /* face_normal  2  is  */  0.0   1.0   0.0   1
+             /* face_normal  3  is  */  0.0   1.0   0.0   1
+             /* face_normal  4  is  */  0.0   1.0   0.0   1
+             /* face_normal  5  is  */  0.0   1.0   0.0   1
+            
+         /* face_attribute   0  attribute_vertex_number  */  6
+             /* face_attribute_vertex  0  is  */  0.0   1.0   0.0   1
+             /* face_attribute_vertex  1  is  */  1.0   1.0   0.0   1
+             /* face_attribute_vertex  2  is  */  0.0   0.0   0.0   1
+             /* face_attribute_vertex  3  is  */  0.0   0.0   0.0   1
+             /* face_attribute_vertex  4  is  */  1.0   1.0   0.0   1
+             /* face_attribute_vertex  5  is  */  1.0   0.0   0.0   1
+            
+         /* face_primitive_number  */  2
+             /* face_primitive  0  material      */     1    0    1    0
+             /* face_primitive  0  vertex_index  */    0   1   2   -1
+             /* face_primitive  0  normal_index  */    0   1   2   -1
+             /* face_primitive  0  attribute  0 attribute_index   */     0   1   2   -1
+            
+             /* face_primitive  1  material      */     1    0    1    0
+             /* face_primitive  1  vertex_index  */    3   4   5   -1
+             /* face_primitive  1  normal_index  */    3   4   5   -1
+             /* face_primitive  1  attribute  0 attribute_index   */     3   4   5   -1
+            
+            
+            
+         /* face_loop_number   */ 1
+        
+         /* face_loop  0  loop_edge_number    */    4
+        
+             /* face_loop_edge  0  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   1.0   0.0   0.0   0.0   1.0
+                 /* curve point material */      0    0    0    0
+                start_effective   0.0   1.0   0.0   1  /*  material  */      0    0    0    0
+                end_effective   0.0   1.0   1.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 0.0   1.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 0.0   1.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  1  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   1.0   1.0   1.0   0.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   0.0   1.0   1.0   1  /*  material  */      0    0    0    0
+                end_effective   1.0   1.0   1.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 0.0   1.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 1.0   1.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  2  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    1.0   1.0   0.0   0.0   0.0   -1.0
+                 /* curve point material */      0    0    0    0
+                start_effective   1.0   1.0   1.0   1  /*  material  */      0    0    0    0
+                end_effective   1.0   1.0   0.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 1.0   1.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 1.0   1.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  3  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   1.0   0.0   -1.0   0.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   1.0   1.0   0.0   1  /*  material  */      0    0    0    0
+                end_effective   0.0   1.0   0.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 1.0   1.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 0.0   1.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                
+     /* face  5  name   */  凸台-拉伸1的第5个表面
+    
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.0   1.0   0.0   0.0   0.0   0.0
+        
+         /* face_attribute_number */ 1
+        
+         /* face_vertex_number   */  6
+             /* face_vertex  0  is  */  1.0   0.0   0.0   1
+             /* face_vertex  1  is  */  1.0   0.0   1.0   1
+             /* face_vertex  2  is  */  0.0   0.0   0.0   1
+             /* face_vertex  3  is  */  0.0   0.0   0.0   1
+             /* face_vertex  4  is  */  1.0   0.0   1.0   1
+             /* face_vertex  5  is  */  0.0   0.0   1.0   1
+            
+         /* face_normal_number      */  6
+             /* face_normal  0  is  */  0.0   -1.0   0.0   1
+             /* face_normal  1  is  */  0.0   -1.0   0.0   1
+             /* face_normal  2  is  */  0.0   -1.0   0.0   1
+             /* face_normal  3  is  */  0.0   -1.0   0.0   1
+             /* face_normal  4  is  */  0.0   -1.0   0.0   1
+             /* face_normal  5  is  */  0.0   -1.0   0.0   1
+            
+         /* face_attribute   0  attribute_vertex_number  */  6
+             /* face_attribute_vertex  0  is  */  0.0   1.0   0.0   1
+             /* face_attribute_vertex  1  is  */  1.0   1.0   0.0   1
+             /* face_attribute_vertex  2  is  */  0.0   0.0   0.0   1
+             /* face_attribute_vertex  3  is  */  0.0   0.0   0.0   1
+             /* face_attribute_vertex  4  is  */  1.0   1.0   0.0   1
+             /* face_attribute_vertex  5  is  */  1.0   0.0   0.0   1
+            
+         /* face_primitive_number  */  2
+             /* face_primitive  0  material      */     1    1    0    0
+             /* face_primitive  0  vertex_index  */    0   1   2   -1
+             /* face_primitive  0  normal_index  */    0   1   2   -1
+             /* face_primitive  0  attribute  0 attribute_index   */     0   1   2   -1
+            
+             /* face_primitive  1  material      */     1    1    0    0
+             /* face_primitive  1  vertex_index  */    3   4   5   -1
+             /* face_primitive  1  normal_index  */    3   4   5   -1
+             /* face_primitive  1  attribute  0 attribute_index   */     3   4   5   -1
+            
+            
+            
+         /* face_loop_number   */ 1
+        
+         /* face_loop  0  loop_edge_number    */    4
+        
+             /* face_loop_edge  0  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   0.0   0.0   0.0   0.0   1.0
+                 /* curve point material */      0    0    0    0
+                start_effective   0.0   0.0   0.0   1  /*  material  */      0    0    0    0
+                end_effective   0.0   0.0   1.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 0.0   0.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 0.0   0.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  1  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   0.0   0.0   -1.0   0.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   1.0   0.0   0.0   1  /*  material  */      0    0    0    0
+                end_effective   0.0   0.0   0.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 1.0   0.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 0.0   0.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  2  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    1.0   0.0   0.0   0.0   0.0   -1.0
+                 /* curve point material */      0    0    0    0
+                start_effective   1.0   0.0   1.0   1  /*  material  */      0    0    0    0
+                end_effective   1.0   0.0   0.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 1.0   0.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 1.0   0.0   0.0   1  /*  tessellation material  */      0    0    0    0
+                
+             /* face_loop_edge  3  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   0.0   1.0   1.0   0.0   0.0
+                 /* curve point material */      0    0    0    0
+                start_effective   0.0   0.0   1.0   1  /*  material  */      0    0    0    0
+                end_effective   1.0   0.0   1.0   1  /*  material  */      0    0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 0.0   0.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                 /* edge_vertex    1    location   */ 1.0   0.0   1.0   1  /*  tessellation material  */      0    0    0    0
+                
+                
+                
+                
+                

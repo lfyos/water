@@ -1,0 +1,13 @@
+/*	caculate_location_modify_flag	*/	true
+/*	sensor_comp_name				*/	root_component
+/*	mount_component_position		*/	0.0	0.0	0.0	1.0	0.0	0.0	0.0	1.0	0.0
+/*	target_component_name			*/	管段主体_1
+/*	target_component_position		*/	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	-1.0
+/*	modify_component_name			*/	沉管隧道2_0
+
+/*	gps data:latitude						*/	0.0
+/*	gps data:longitude						*/	0.0
+/*	gps data:altitude						*/	0.0
+/*	gps data:delta_latitude					*/	0.002
+/*	gps data:delta_longitude				*/	0.002
+

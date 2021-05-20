@@ -1,0 +1,121 @@
+/*	1:name	*/	map_environment_component_root
+/*	1:type	*/	map_environment_part_root
+/*	1:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+/*	1:child_number	*/	7
+
+		/*	2:name	*/	map_environment_component
+		/*	2:type	*/	lession_18_dynamic_environment_mapping_texture_part_3
+		/*	2:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+				/*	camera_id						*/	2 3 4 5 6 7
+		/*	2:child_number	*/	0
+		
+		/*	2:name	*/	display_component_0
+		/*	2:type	*/	obj_format_file_grass_part_0
+		/*	2:location	*/	
+										1    0    0    0
+									    0    1    0    0
+										0    0    1    0
+										1250    0    0    1  
+		/*	2:child_number	*/	0	
+		
+		/*	2:name	*/	display_component_1
+		/*	2:type	*/	obj_format_file_grass_part_0
+		/*	2:location	*/	
+										1    0    0    0
+									    0    1    0    0
+										0    0    1    0
+										-1250    0    0    1  
+		/*	2:child_number	*/	0	
+		
+		/*	2:name	*/	display_component_2
+		/*	2:type	*/	obj_format_file_grass_part_0
+		/*	2:location	*/	
+										1    0    0    0
+									    0    1    0    0
+										0    0    1    0
+										0	1250      0    1  
+		/*	2:child_number	*/	0	
+		
+		/*	2:name	*/	display_component_3
+		/*	2:type	*/	obj_format_file_grass_part_0
+		/*	2:location	*/	
+										1    0    0    0
+									    0    1    0    0
+										0    0    1    0
+										0	-1250    0    1  
+		/*	2:child_number	*/	0	
+		
+		/*	2:name	*/	display_component_4
+		/*	2:type	*/	obj_format_file_grass_part_0
+		/*	2:location	*/	
+										1    0    0    0
+									    0    1    0    0
+										0    0    1    0
+										0    0    1250    1  
+		/*	2:child_number	*/	0	
+		
+		
+		/*	2:name */			environment_map_root
+		/*	2:type */			undefined_part
+		/*	2:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+		/*	2:child number */		6
+		
+		
+		
+				/* 3:name */			camera_2					/*	front	*/
+				/* 3:type */			undefined_part
+				/* 3:location */			
+										-1    0    0    0
+									    0    1    0    0
+										0    0    -1    0
+										0    0    0    1   
+				/* 3:child number */		0
+				
+				        
+				/* 3:name */			camera_3				/*		back	*/
+				/* 3:type */			undefined_part
+				/* 3:location */			
+										1    0    0    0
+									    0    1    0    0
+										0    0    1    0
+										0    0    0    1    
+				/* 3:child number */		0
+				
+				/* 3:name */			camera_4				/*		left	*/
+				/* 3:type */			undefined_part
+				/* 3:location */			
+										0    0    -1    0
+									    0    1    0    0
+										1    0    0    0
+										0    0    0    1  
+				/* 3:child number */		0
+							
+			
+				/* 3:name */			camera_5				/*		right	*/
+				/* 3:type */        undefined_part
+				/* 3:location */			
+										0    0    1    0
+									    0    1    0    0
+										-1    0    0    0
+										0    0    0    1   
+				/* 3:child number */		0	
+		
+				/* 3:name */			camera_6				/*		up	*/
+				/* 3:type */         undefined_part
+				/* 3:location */			
+										-1    0    0    0
+									    0    0    -1    0
+										0    -1   0    0
+										0    0    0    1    
+				/* 3:child number */		0
+				        
+				/* 3:name */			camera_7				/*		down	*/
+				/* 3:type */         undefined_part
+				/* 3:location */			
+										-1    0    0    0
+									    0    0    1    0
+										0    1    0    0
+										0    0    0    1    
+				/* 3:child number */		0
+				        
+				

@@ -1,0 +1,14 @@
+	/* 1name		*/         root_component
+	/* 1type		*/         undefined_part
+	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+	
+		file_program	initialization\initialization.txt
+		file_program	initialization\system_call_processor.txt
+		file_program	initialization\user_function.txt
+		file_program	initialization\debug.txt
+	
+		mount			common.assemble
+		mount			background.assemble
+		external_part_driver_mount		menu_part	assemble\interface.assemble
+	
+	/* 1children number */	0

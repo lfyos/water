@@ -1,0 +1,12 @@
+/*		time_length		*/		5000
+
+		default_proxy_url
+		
+//		false	true	http://calconline.sigma-simtech.com:9999/test/interface.jsp?channel=buffer&file=
+
+//		true	true	http://localhost:8080/webgl_engine_2020/interface.jsp?channel=buffer&file=
+		
+//		false	true	http://192.168.0.102:8080/webgl_engine_2020/interface.jsp?channel=buffer&file=
+//		false	true	http://192.168.0.102:8080/webgl_engine_2020/interface.jsp?channel=proxy&file=
+
+//		true	false	http://localhost:8080/webgl_engine_2020/temp/proxy_root_directory/

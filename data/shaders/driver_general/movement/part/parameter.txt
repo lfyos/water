@@ -1,0 +1,6 @@
+/*		move_file						*/		move.txt
+/*		design_file						*/		design.txt
+/*		temporary_file_directory		*/		move_temp/
+/*		location_component_name			*/		location_modifier_component
+/*		audio_component_name			*/		audio_component
+/*		render_window_name				*/		parent

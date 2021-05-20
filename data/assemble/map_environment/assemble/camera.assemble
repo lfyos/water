@@ -1,0 +1,239 @@
+	/* 1name		*/         root_component
+	/* 1type		*/         undefined_part
+	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+	
+					file_program	initialization\initialization.txt
+					file_program	initialization\system_call_processor.txt
+					file_program	initialization\user_function.txt
+					file_program	initialization\debug.txt
+					
+					token_program	初始化设置为立体背景
+						function(component_name,component_id,render)
+						{
+							render.system_call_processor.set_background_mode(2);
+						}
+					初始化设置为立体背景
+					
+					external_part_driver_mount		menu_part	assemble\interface.assemble
+
+	/* 1children number */		9
+	
+		/* 2name		*/	show_select_component_box_component
+		/* 2type		*/	show_select_component_box_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+		/* 2child_number	*/	0
+
+		/* 2name		*/	initialization_component
+		/* 2type		*/	initialization_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+		
+			file_program	initialization\initialization.txt
+		
+		/* 2child_number	*/	0	
+		
+		/* 2name		*/	orientation_camera_component
+		/* 2type		*/	orientation_camera_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+					/*	turn_on_flag,orientation_camera_type	*/	false	false
+		/* 2child_number	*/	0
+
+		/* 2name		*/         component_pickup_component
+		/* 2type		*/         component_pickup_part
+		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+		/* 2children number */		0
+		
+		/* 2name		*/         camera_root
+		/* 2type		*/         undefined_part
+		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+		/* 2children number */		2
+	
+				/* 3name		*/			camera_0
+				/* 3type		*/			undefined_part
+				/* 3location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
+				/* 3children number */		0
+		
+				/* 3name		*/			camera_1
+				/* 3type		*/			undefined_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
+				/* 3children number */		0
+					
+		/* 2name		*/         light_root
+		/* 2type		*/         undefined_part
+		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+		/* 2children number */   4
+	
+				/* 3name		*/			light_0
+				/* 3type		*/         undefined_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
+				/* 3children number */		0	
+
+				/* 3name		*/			light_1
+				/* 3type		*/         undefined_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1     
+				/* 3children number */		0
+		        
+				/* 3name		*/			light_2
+				/* 3type		*/         undefined_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
+				/* 3children number */		0
+		        
+				/* 3name		*/			light_3
+				/* 3type		*/         undefined_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+				/* 3children number */		0
+	
+		/* 2name		*/         text_root
+		/* 2type		*/         undefined_part
+		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+		/* 2children number */		10
+	
+				/* 3name		*/          text_0
+				/* 3type		*/         text
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    1   -1    -1    1  
+				/* 3children number */		0
+				
+				/* 3name		*/          text_1
+				/* 3type		*/         text
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0   0    0    1  
+				/* 3children number */		0
+				
+				/* 3name		*/          text_2
+				/* 3type		*/         text
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0   0    0    1  
+				/* 3children number */		0
+				
+				/* 3name		*/          text_3
+				/* 3type		*/         text
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0   0    0    1  
+				/* 3children number */		0
+				
+				/* 3name		*/          text_4
+				/* 3type		*/         text
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0   0    0    1  
+				/* 3children number */		0
+				
+				/* 3name		*/          text_5
+				/* 3type		*/         text
+				/* 3location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0   0    0    1  
+				/* 3children number */		0
+				
+				/* 3name		*/          text_6
+				/* 3type		*/         text
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0   0    0    1  
+				/* 3children number */		0
+				
+				/* 3name		*/          text_7
+				/* 3type		*/         text
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0   0    0    1  
+				/* 3children number */		0
+				
+				/* 3name		*/          text_8
+				/* 3type		*/         text
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0   0    0    1  
+				/* 3children number */		0
+				
+				/* 3name		*/          text_9
+				/* 3type		*/         text
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0   0    0    1  
+				/* 3children number */		0
+				
+		/* 2name		*/         sky_box_component_root
+		/* 2type		*/         sky_box_part_root
+		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 		 
+
+					mount			background.assemble
+
+		/* 2children number */   0
+				
+
+		/* 2name		*/         controller_root
+		/* 2type		*/         undefined_part
+		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+		/* 2children number */	12
+				
+				/* 3name		*/         audio_component
+				/* 3type		*/         audio_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+				/* 3children number */		0
+			
+				/* 3name		*/         proxy_component
+				/* 3type		*/         proxy_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+				/* 3children number */		0
+				
+				/* 3name		*/         screen_rectangle_component
+				/* 3type		*/         screen_rectangle_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+				/* 3children number */		0
+		
+				/* 3name		*/         location_modifier_component
+				/* 3type		*/         location_modifier_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+				/* 3children number */		0
+			
+				/* 3name		*/         manipulator_component
+				/* 3type		*/         manipulator_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+							/*		audio_component		*/		audio_component	
+											
+				/* 3children number */		0
+				
+				/* 3name		*/         camera_operation_component
+				/* 3type		*/         camera_operation_with_initialization_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+				/* 3children number */		0
+			
+				/* 3name		*/         render_target_register_component
+				/* 3type		*/         render_target_register_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				/* 3children number */		0
+		
+		
+				/* 3name		*/         tag_controller
+				/* 3type		*/         tag_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+				
+										/*	3:canvas  			*/		18		32
+										/*	3:view_text_heigh  	*/		0.04  
+										/*	3:line_color		*/		0		1		0
+										/*	3:point_color		*/		1		0		0 
+										/*	3:text number		*/		9
+												text_1
+												text_2
+												text_3
+												text_4
+												text_5
+												text_6
+												text_7
+												text_8
+												text_9
+				/* 3children number */		0
+		
+				/* 3name		*/         component_selection_component
+				/* 3type		*/         component_selection_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+									/* 		screen_rectangle_component	*/			screen_rectangle_component
+									/*		audio_component				*/			audio_component
+									/*		camera_modifier_id			*/		0
+				/* 3children number */		0
+	
+				
+				/* 3name		*/         mouse_modify_location_component
+				/* 3type		*/         mouse_modify_location_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+				/* 3children number */     0
+	
+				
+				/* 3name		*/			caption_controller
+				/* 3type		*/			caption_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+											text_0    4096    64    4    0.25
+				/* 3children number */     0	
+				
+				/* 3name		*/			coordinate
+				/* 3type		*/			coordinate_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+									/*	abandon display coordinate		*/		no
+									/*	abandon select coordinate		*/		yes
+				/* 3children number */		0	
+				

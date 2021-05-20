@@ -1,0 +1,234 @@
+				function(component_name,component_id,render)
+				{
+					render.user_event_processor.set_all_transparant_except_selection=function()
+					{
+						var component_name=encodeURIComponent(encodeURIComponent("cad_root_component_0"));
+						render.call_server_component("manipulator_component","all",
+							[["event_method","transparency"],["transparency",0.05],["component",component_name]],
+							function(response_data,render)
+							{
+								render.call_server_component("manipulator_component","all",
+									[["event_method","transparency"],["transparency",1.0]]);
+							});
+					};
+					render.user_event_processor.set_all_untransparant=function()
+					{
+						var component_name=encodeURIComponent(encodeURIComponent("cad_root_component_0"));
+						render.call_server_component("manipulator_component","all",
+							[["event_method","transparency"],["transparency",1.0],["component",component_name]]);
+					};
+
+					render.user_event_processor.tree_mousedown=function(component_name)
+					{
+						component_name=encodeURIComponent(encodeURIComponent(component_name));
+						render.call_server_component("manipulator_component","all",
+								[["event_method","selection"],["event_operation","clear"]],
+								function()
+								{
+									render.call_server_component("manipulator_component","all",
+										[["event_method","selection"],["event_operation","component"],
+										["component",component_name]]);
+								});
+						render.call_server_component(
+							"show_select_component_box_component","all",[["component_name",component_name]]);
+					};
+
+					render.user_event_processor.show_component=function(component_name)
+					{
+						if(typeof(component_name)=="string")
+							render.call_server_component("manipulator_component","all",
+								[["event_method","show_hide_component"],["event_operation","show"],
+								 ["component_name",encodeURIComponent(encodeURIComponent(component_name))]]);
+						else
+							render.call_server_component("manipulator_component","all",
+								[["event_method","show_hide_component"],["event_operation","show"],
+								 ["component_id",component_name]]);
+					};
+					render.user_event_processor.hide_component=function(component_name)
+					{
+						if(typeof(component_name)=="string")
+							render.call_server_component("manipulator_component","all",
+								[["event_method","show_hide_component"],["event_operation","hide"],
+								 ["component_name",encodeURIComponent(encodeURIComponent(component_name))]]);
+						else
+							render.call_server_component("manipulator_component","all",
+								[["event_method","show_hide_component"],["event_operation","hide"],
+								 ["component_id",component_name]]);
+					};
+
+					render.user_event_processor.show_component_only=function(component_name)
+					{
+						render.call_server_component("manipulator_component","all",
+							[["event_method","selection"],["event_operation","clear"]],	
+							function()
+							{
+								render.call_server_component("manipulator_component","all",
+									[["event_method","part_list"],["operation","create"]],
+							
+									function()
+									{
+											render.call_server_component("manipulator_component","all",
+												[	["event_method","selection"],["event_operation","component"],
+													(typeof(component_name)=="string")
+														?["component",		encodeURIComponent(encodeURIComponent(component_name))]
+														:["component_id",	component_name]
+												],
+												function()
+												{
+													render.user_event_processor.show_selected_component_only();
+												});
+									});
+							});
+					};
+					render.user_event_processor.show_selected_component_only=function()
+					{
+						render.call_server_component("manipulator_component","all",
+							[["event_method","part_list"],["operation","create"]],
+							function()
+							{
+								render.call_server_component("manipulator_component","all",
+									[["event_method","selection"],["event_operation","clear"]]);
+								for(var i=0;i<10;i++)
+									render.call_server_component("render_target_register_component","all",
+										[["target",i.toString()],["operation","parameter_channel"],["parameter_channel",0]]);
+							});
+					};
+					render.user_event_processor.reverse_component_selection=function(operate_component_id)
+					{
+						render.call_server_component("manipulator_component","all",
+							[["event_method","selection"],["event_operation","clear"]],
+							function()
+							{
+								render.call_server_component("manipulator_component","all",
+									[	["event_method","selection"],["event_operation","component"],
+										["component",encodeURIComponent(encodeURIComponent("display_component_root"))]
+									],
+									function()
+									{
+										render.call_server_component("manipulator_component","all",
+											[["event_method","selection"],["event_operation","switch"],
+							 				["component_id",operate_component_id]]);
+									});
+							});
+					};
+					render.user_event_processor.show_all_component=function()
+					{
+						render.call_server_component("manipulator_component","all",
+							[["event_method","selection"],["event_operation","clear"]],	
+							function()
+							{
+								render.call_server_component("manipulator_component","all",
+										[["event_method","show_hide_component"],["event_operation","show"]]);
+							});
+					};
+					render.user_event_processor.reset_view=function()
+					{
+						var do_render_request_response_number=render.do_render_request_response_number;
+						render.append_routine_function(
+							function()
+							{
+								if(render.pickup.component_id>=0){
+									do_render_request_response_number=render.do_render_request_response_number;
+									return true;
+								}
+								if((render.do_render_request_response_number-do_render_request_response_number)<=2)
+									return true;	
+								render.call_server_component("mouse_modify_location_component","all",
+									[
+										["event_operation",		"dblclick"],
+										["operate_component_id",render.current.camera_component_id]
+									]);
+								return false;
+							});
+					};
+					
+					render.user_event_processor.reset_all=function()
+					{
+						render.user_event_processor.set_all_untransparant();
+						
+						render.call_server_component("manipulator_component","all",
+							[["event_method","selection"],["event_operation","clear"]],	
+							function()
+							{
+								render.call_server_component("manipulator_component","all",
+									[["event_method","show_hide_component"],["event_operation","show"]],
+									function()
+									{
+										render.call_server_component("manipulator_component","all",
+											[["event_method","part_list"],["operation","create"]],
+											function()
+											{
+												render.user_event_processor.reset_view();
+											});
+									});
+							});
+					};
+					
+					render.user_event_processor.highlight_component=function()
+					{
+						render.call_server_component("manipulator_component","all",
+							[["event_method","part_list"],["operation","create"]],
+							function()
+							{
+								render.call_server_component("manipulator_component","all",
+									[["event_method","selection"],["event_operation","clear"]],	
+									function()
+									{
+										render.call_server_component("manipulator_component","all",
+											[["event_method","transparency"],["transparency",0.05]],
+											function(response_data,render)
+											{
+												render.call_server_component("manipulator_component","all",
+													[["event_method","part_list"],["operation","manipulation"],["manipulation","swap"]],
+													function()
+													{
+														render.call_server_component("manipulator_component","all",
+															[["event_method","transparency"],["transparency",1.0]],
+															function(response_data,render)
+															{
+																render.call_server_component("manipulator_component","all",
+																	[["event_method","selection"],["event_operation","clear"]]);
+															});
+													});	
+											});
+									});
+							
+							});
+					};
+
+					render.user_event_processor.show_blank_context_menu=function()
+					{
+						render.call_server_component("blank_context_menu","all",
+								[	["operation","show"],["center","center"],
+									["operate_component_id",render.pickup.component_id]
+								]);
+					};
+					render.user_event_processor.hide_blank_context_menu=function()
+					{
+						render.call_server_component("blank_context_menu","all",
+								[	["operation","hide"],
+									["operate_component_id",render.pickup.component_id]
+								]);
+					};
+					render.user_event_processor.show_component_context_menu=function()
+					{
+						render.call_server_component("component_context_menu","all",
+								[	["operation","show"],["center","center"],
+									["operate_component_id",render.pickup.component_id],
+								]);
+					};
+					render.user_event_processor.hide_component_context_menu=function()
+					{
+						render.call_server_component("component_context_menu","all",
+								[	["operation","hide"],
+									["operate_component_id",render.pickup.component_id]
+								]);
+					};
+					render.system_event_processor.mousedown=function(event,render)	
+					{
+						render.call_server_component(
+							"show_select_component_box_component","all",
+							[["component_id",render.pickup.component_id]]);
+						return false;
+					};
+				}

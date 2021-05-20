@@ -1,0 +1,366 @@
+	/* 1name		*/        相机交互界面组件
+	/* 1type		*/         undefined_part
+	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+	/* 1children number */		7
+
+			/* 2name		*/	相机功能选择组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				camera.png		0.2		0.7
+
+				token_program	相机功能选择
+					function(component_name,component_id,render)
+					{
+						render.component_event_processor[component_id]={
+							pickupmouseselect	:	function(event,component_id,render)
+							{
+								var ep=render.component_event_processor[component_id];
+								var function_id=Math.floor((1.0-ep.y)*7.0);
+								switch(function_id){
+								case 0:
+								case 1:
+								case 2:
+								case 3:
+								case 4:
+								case 5:
+									var show_component_name=[
+										"选择相机组件",
+										"操作相机组件",
+										"旋转相机组件",
+										"设置标准方向组件",
+										"设置最近方向组件",
+										"设置相机参数组件"
+									];
+									render.system_call_processor.set_menu_show_me_only(show_component_name[function_id]);
+									break;
+								case 6:
+									if(ep.x<=0.5)
+										render.system_call_processor.set_menu_show_me_only("交互界面主菜单");
+									else
+										render.system_call_processor.set_menu_hide(component_id);
+									break;
+								};
+								return;
+							}
+						}
+					}
+				相机功能选择
+
+			/* 2child_number	*/	0
+	
+	
+			/* 2name		*/	选择相机组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				selection.png		0.2		0.9
+
+				token_program	选择相机组件
+					function(component_name,component_id,render)
+					{
+						render.component_event_processor[component_id]={
+							pickupmouseselect	:	function(event,component_id,render)
+							{
+								var ep=render.component_event_processor[component_id];
+								var new_camera_id=Math.floor((1.0-ep.y)*9.0);
+								if((new_camera_id>=0)&&(new_camera_id<=7)){
+									ep.hightlight=[0,1.0-new_camera_id/9.0-1.0/9.0,		1.0,1.0-new_camera_id/9.0];
+									render.system_call_processor.select_camera(new_camera_id);
+								}else{
+									if(ep.x<=0.5)
+										render.system_call_processor.set_menu_show_me_only("相机功能选择组件");
+									else
+										render.system_call_processor.set_menu_hide(component_id);	
+								}							
+								return;
+							}
+						}
+					}
+				选择相机组件
+
+			/* 2child_number	*/	0
+	
+	
+			/* 2name		*/	设置标准方向组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				direction.png		0.2		1.5
+
+				token_program	设置标准方向组件
+					function(component_name,component_id,render)
+					{
+						render.component_event_processor[component_id]={
+							pickupmouseselect	:	function(event,component_id,render)
+							{
+								var ep=render.component_event_processor[component_id];
+								var direction_id=Math.floor((1.0-ep.y)*15.0);
+								var direction_data=[
+										[+1,+1,+1],
+										[-1,+1,+1],
+										[-1,+1,-1],
+										[+1,+1,-1],
+										[+1,-1,-1],
+										[-1,-1,-1],
+										[-1,-1,+1],
+										[+1,-1,+1],
+										
+										[+1, 0, 0],
+										[-1, 0, 0],
+										[ 0,+1, 0],
+										[ 0,-1, 0],
+										[ 0, 0,+1],
+										[ 0, 0,-1]
+								];
+								
+								if((direction_id<0)||(direction_id>=direction_data.length)){
+									if(ep.x<=0.5)
+										render.system_call_processor.set_menu_show_me_only("相机功能选择组件");	
+									else
+										render.system_call_processor.set_menu_hide(component_id);
+									return;
+								}
+								ep.hightlight=[0,1.0-direction_id/15.0-1.0/15.0,		1.0,1.0-direction_id/15.0];
+								render.system_call_processor.set_camera_direction(
+									"false","selection",			direction_data[direction_id][0],
+									direction_data[direction_id][1],direction_data[direction_id][2]);
+								return;
+							}
+						}
+					}
+				设置标准方向组件
+
+			/* 2child_number	*/	0
+	
+	
+			/* 2name		*/	设置最近方向组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				direction.png		0.2		1.5
+
+				token_program	设置最近方向组件
+					function(component_name,component_id,render)
+					{
+						render.component_event_processor[component_id]={
+							pickupmouseselect	:	function(event,component_id,render)
+							{
+								var ep=render.component_event_processor[component_id];
+								var direction_id=Math.floor((1.0-ep.y)*15.0);
+								var direction_data=[
+										[+1,+1,+1],
+										[-1,+1,+1],
+										[-1,+1,-1],
+										[+1,+1,-1],
+										[+1,-1,-1],
+										[-1,-1,-1],
+										[-1,-1,+1],
+										[+1,-1,+1],
+										
+										[+1, 0, 0],
+										[-1, 0, 0],
+										[ 0,+1, 0],
+										[ 0,-1, 0],
+										[ 0, 0,+1],
+										[ 0, 0,-1]
+								];
+								
+								if((direction_id<0)||(direction_id>=direction_data.length)){
+									if(ep.x<=0.5)
+										render.system_call_processor.set_menu_show_me_only("相机功能选择组件");
+									else
+										render.system_call_processor.set_menu_hide(component_id);	
+									return;
+								}
+								
+								ep.hightlight=[0,1.0-direction_id/15.0-1.0/15.0,		1.0,1.0-direction_id/15.0];
+								render.system_call_processor.set_camera_direction(
+									"true","selection",				direction_data[direction_id][0],
+									direction_data[direction_id][1],direction_data[direction_id][2]);
+								return;
+							}
+						}
+					}
+				设置最近方向组件
+
+			/* 2child_number	*/	0
+
+
+			/* 2name		*/	旋转相机组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				rotate.png		0.2		0.8
+
+				token_program	旋转相机组件
+					function(component_name,component_id,render)
+					{
+						render.component_event_processor[component_id]={
+							
+							rotate_angle		:	90,
+							
+							pickupmouseselect	:	function(event,component_id,render)
+							{
+								var ep=render.component_event_processor[component_id];
+								var function_id=Math.floor((1.0-ep.y)*8.0);
+								
+								if(function_id==6){
+									var str=prompt("请 输入旋转角度",ep.rotate_angle.toString());
+									if(str!=null)
+										try{
+											ep.rotate_angle=parseFloat(str);
+										}catch(e){
+											alert("请输入正确的浮点数");
+										}
+									return;
+								}
+								if((function_id<0)||(function_id>6)){
+									if(ep.x<=0.5)
+										render.system_call_processor.set_menu_show_me_only("相机功能选择组件");
+									else
+										render.system_call_processor.set_menu_hide(component_id);	
+									return;
+								}
+								ep.hightlight=[0,1.0-function_id/8.0-1.0/8.0,		1.0,1.0-function_id/8.0];
+								render.system_call_processor.camera_rotate(
+										ep.rotate_angle,function_id%3,(function_id<3)?true:false);
+								return;
+							}
+						}
+					}
+				旋转相机组件
+
+			/* 2child_number	*/	0
+
+			/* 2name		*/	操作相机组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				control.png		0.2		0.6
+
+				token_program	操作相机组件
+					function(component_name,component_id,render)
+					{
+						render.component_event_processor[component_id]={
+							last_time	:	0,
+							
+							pickupmouseselect	:	function(event,component_id,render)
+							{
+								var ep=render.component_event_processor[component_id];
+								var current_time=(new Date()).getTime();
+								var function_id=Math.floor((1.0-ep.y)*6.0);
+								
+								if((current_time-ep.last_time)<500)
+									return;
+								ep.last_time=current_time;
+
+								switch(function_id){
+								default:
+									if(ep.x<=0.5)
+										render.system_call_processor.set_menu_show_me_only("相机功能选择组件");
+									else
+										render.system_call_processor.set_menu_hide(component_id);	
+									return;
+								case 0:
+									render.system_call_processor.camera_retreat();
+									break;
+								case 1:
+									render.system_call_processor.scale_camera_at_center();
+									break;
+								case 2:
+									render.system_call_processor.locate_camera_at_center();
+									break;
+								case 3:
+									render.system_call_processor.set_orientation_camera_parameter(
+										true,(ep.x<=0.5)?true:false);
+									break;
+								case 4:
+									render.system_call_processor.set_orientation_camera_parameter(
+										false,(ep.x<=0.5)?true:false);
+									break;
+								}
+								
+								ep.hightlight=[0,1.0-function_id/6.0-1.0/6.0,		1.0,1.0-function_id/6.0];
+								
+								return;
+							}
+						}
+					}
+				操作相机组件
+
+			/* 2child_number	*/	0
+			
+			
+			/* 2name		*/	设置相机参数组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				parameter.png		0.2		1.6
+
+				token_program	设置相机参数组件
+				function(component_name,component_id,render)
+				{
+					render.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,render)
+						{
+							var ep=render.component_event_processor[component_id];
+							var function_id=Math.floor((1.0-ep.y)*16.0);
+							
+							switch(function_id){
+							case 0:
+								return;
+							case 1:
+								render.system_call_processor.set_camera_projection(true);
+								break;
+							case 2:
+								render.system_call_processor.set_camera_projection(false);
+								break;
+							case 3:
+								return;
+							case 4:
+								render.system_call_processor.set_camera_change_type(true);
+								break;
+							case 5:
+								render.system_call_processor.set_camera_change_type(false);
+								break;
+							case 6:
+								break;
+							case 7:
+								render.system_call_processor.turnonoff_view_move(true);
+								break;
+							case 8:
+								render.system_call_processor.turnonoff_view_move(false);
+								break;
+							case 9:
+								return;
+							case 10:
+								render.system_call_processor.turnonoff_view_direct(true);
+								break;
+							case 11:
+								render.system_call_processor.turnonoff_view_direct(false);
+								break;
+							case 12:
+								return;
+							case 13:
+								render.system_call_processor.turnonoff_view_scale(true);
+								break;
+							case 14:
+								render.system_call_processor.turnonoff_view_scale(false);
+								break;
+							default:
+								if(ep.x<=0.5)
+									render.system_call_processor.set_menu_show_me_only("相机功能选择组件");
+								else
+									render.system_call_processor.set_menu_hide(component_id);
+								return;
+							}
+							
+							ep.hightlight=[0,1.0-function_id/16.0-1.0/16.0,		1.0,1.0-function_id/16.0];
+							return;
+						}
+					};
+				}
+				设置相机参数组件
+
+			/* 2child_number	*/	0

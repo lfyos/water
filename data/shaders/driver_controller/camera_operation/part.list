@@ -1,0 +1,10 @@
+·½Ïò°´Å¥
+	camera_operation_with_initialization_part
+	part\part.SLDPRT.mesh
+	part\part.material
+	part\part.description
+	part\part.mp3
+	
+	/*	init_file_name				x		y		scale	camera_modifier_id	*/		
+		part/init_file_name.txt		0.85	0.75	15.0	0
+		

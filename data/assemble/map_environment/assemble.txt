@@ -1,0 +1,4 @@
+map_environment_1	ª∑æ≥”≥…‰≤‚ ‘	assemble/assemble_1/assemble.txt	0	0	parameter.txt	parameter.xyz.txt
+map_environment_2	ª∑æ≥”≥…‰≤‚ ‘	assemble/assemble_2/assemble.txt	0	0	parameter.txt	parameter.xyz.txt
+map_environment_3	ª∑æ≥”≥…‰≤‚ ‘	assemble/assemble_3/assemble.txt	0	0	parameter.txt	parameter.xyz.txt
+map_environment_4	ª∑æ≥”≥…‰≤‚ ‘	assemble/assemble_4/assemble.txt	0	0	parameter.txt	parameter.xyz.txt

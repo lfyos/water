@@ -1,0 +1,19 @@
+			"light"	:	[
+				{
+					"camera_id"			:	4,
+					"color_factor"		:	[0.4,0.4,0.4,0.8]
+				},
+				{
+					"camera_id"			:	5,
+					"color_factor"		:	[0.4,0.4,0.4,0.8]
+				},
+				{
+					"camera_id"			:	6,
+					"color_factor"		:	[0.4,0.4,0.4,0.8]
+				},
+				{
+					"camera_id"			:	7,
+					"color_factor"		:	[0.4,0.4,0.4,0.8]
+				}
+			],
+	

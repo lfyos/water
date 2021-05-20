@@ -1,0 +1,138 @@
+/*	switch_time					*/		1000000000
+/*	distance    	 			*/		50
+/*	fovy						*/		45
+/*	near						*/		0.1
+/*	far							*/		10
+/*	low_precision_scale			*/		0.50
+/*	high_precision_scale		*/		1.0
+
+/*	frustrum					*/		no
+/*	movement					*/		yes
+/*	direction					*/		yes
+/*	change_type_flag			*/		no
+/*	scale						*/		1.0
+/*	synchronize_location_flag	*/		no
+/*	name           				*/		camera_0
+
+
+
+/*	switch_time					*/		1000000000
+/*	distance     				*/		10
+/*	fovy						*/		45
+/*	near						*/		0.1
+/*	far							*/		10
+/*	low_precision_scale			*/		0.50
+/*	high_precision_scale		*/		1.0
+
+/*	frustrum					*/		no
+/*	movement					*/		yes
+/*	direction					*/		yes
+/*	change_type_flag			*/		no
+/*	scale						*/		1.0
+/*	synchronize_location_flag	*/		no
+/*	name						*/		camera_1
+
+
+		
+/*	switch_time					*/		1000000000
+/*	distance     				*/		10
+/*	fovy						*/		45
+/*	near						*/		0.1
+/*	far							*/		10
+/*	low_precision_scale			*/		0.50
+/*	high_precision_scale		*/		1.0
+
+/*	frustrum					*/		no
+/*	movement					*/		yes
+/*	direction					*/		yes
+/*	change_type_flag			*/		no
+/*	scale						*/		1.0
+/*	synchronize_location_flag	*/		no
+/*	name            			*/		camera_2
+
+
+/*	switch_time					*/		1000000000
+/*	distance     				*/		10
+/*	fovy						*/		45
+/*	near						*/		0.1
+/*	far							*/		10
+/*	low_precision_scale			*/		0.50
+/*	high_precision_scale		*/		1.0
+
+/*	frustrum					*/		no
+/*	movement					*/		yes
+/*	direction					*/		yes
+/*	change_type_flag			*/		no
+/*	scale						*/		1.0
+/*	synchronize_location_flag	*/		no
+/*	name            			*/		camera_3
+		        
+
+/*	switch_time					*/		1000000000
+/*	distance     				*/		10
+/*	fovy						*/		45
+/*	near						*/		0.1
+/*	far							*/		10
+/*	low_precision_scale			*/		0.50
+/*	high_precision_scale		*/		1.0
+
+/*	frustrum					*/		no
+/*	movement					*/		no
+/*	direction					*/		no
+/*	change_type_flag			*/		no
+/*	scale						*/		-0.55
+/*	synchronize_location_flag	*/		no
+/*	name            			*/		light_0
+		        
+		
+/*	switch_time					*/		1000000000
+/*	distance     				*/		10
+/*	fovy						*/		45
+/*	near						*/		0.1
+/*	far							*/		10
+/*	low_precision_scale			*/		0.50
+/*	high_precision_scale		*/		1.0
+
+/*	frustrum					*/		no
+/*	movement					*/		no
+/*	direction					*/		no
+/*	change_type_flag			*/		no
+/*	scale						*/		-0.55
+/*	synchronize_location_flag	*/		no
+/*	name            			*/		light_1
+
+		
+
+
+/*	switch_time					*/		1000000000
+/*	distance     				*/		10
+/*	fovy						*/		45
+/*	near						*/		0.1
+/*	far							*/		10
+/*	low_precision_scale			*/		0.50
+/*	high_precision_scale		*/		1.0
+
+/*	frustrum					*/		no
+/*	movement					*/		no
+/*	direction					*/		no
+/*	change_type_flag			*/		no
+/*	scale						*/		-0.55
+/*	synchronize_location_flag	*/		no
+/*	name           				*/		light_2
+		        
+
+/*	switch_time					*/		1000000000
+/*	distance     				*/		10
+/*	fovy						*/		45
+/*	near						*/		0.1
+/*	far							*/		10
+/*	low_precision_scale			*/		0.50
+/*	high_precision_scale		*/		1.0
+
+/*	frustrum					*/		no
+/*	movement					*/		no
+/*	direction					*/		no
+/*	change_type_flag			*/		no
+/*	scale						*/		-0.55
+/*	synchronize_location_flag	*/		no
+/*	name           				*/		light_3

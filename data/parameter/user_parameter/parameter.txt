@@ -1,0 +1,28 @@
+/*	user_max_component_number		*/	500000
+/*	user_max_engine_kernel_number	*/	30
+
+/*	time_increase_step				*/	50000000
+/*	max_time_step			 		*/	10000
+
+/*	delay_time_length				*/	
+	5000
+	2000
+	1000
+	500
+	250
+	125
+	100
+	50
+	25
+	25
+	25
+	25
+	25
+	25
+	25
+	25
+	25
+	25
+	25
+	25
+	

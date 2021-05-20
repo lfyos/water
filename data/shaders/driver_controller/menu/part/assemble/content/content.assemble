@@ -1,0 +1,351 @@
+	/* 1name		*/        内容显示交互界面组件
+	/* 1type		*/         undefined_part
+	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+	/* 1children number */		7
+	
+			/* 2name		*/	内容显示功能选择组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				content.png		0.25		0.6
+
+				token_program	内容显示功能选择组件
+				
+				function(component_name,component_id,render)
+				{
+					render.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,render)
+						{
+							var ep=render.component_event_processor[component_id];
+							var function_id=Math.floor((1.0-ep.y)*6.0);
+							var show_component_name=[
+									"内容显示显示方式组件",
+									"内容显示显示内容组件",
+									"内容显示显示结果组件",
+									"内容显示显示背景组件",
+									"内容显示坐标轴方向按钮组件"
+							];
+							if((function_id<0)||(function_id>4)){
+								if(ep.x<=0.5)
+									render.system_call_processor.set_menu_show_me_only("交互界面主菜单");
+								else
+									render.system_call_processor.set_menu_hide(component_id);
+								return;
+							}
+							render.system_call_processor.set_menu_show_me_only(show_component_name[function_id]);
+							return;
+						}
+					};
+				}
+				
+				内容显示功能选择组件
+
+			/* 2child_number	*/	0
+
+			/* 2name		*/	内容显示显示方式组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				display.png		0.25		1.5
+				
+				token_program	内容显示显示方式组件
+				function(component_name,component_id,render)
+				{
+					render.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,render)
+						{
+							var ep=render.component_event_processor[component_id];
+							var function_id=Math.floor((1.0-ep.y)*15.0);
+													
+							switch(function_id){
+							case 1:
+							case 2:
+							case 3:
+							case 5:
+							case 6:
+							case 8:
+							case 9:
+							case 11:
+							case 12:
+							case 13:
+								ep.hightlight=[0,1.0-function_id/15.0-1.0/15.0,		1.0,1.0-function_id/15.0];
+								break;
+							}
+	
+							switch(function_id){
+							case 0:
+								return;
+							case 1:		//仅仅显示表面
+								render.system_call_processor.set_display_mode(
+									true,true,true,true,true,true,false,false,false,false);
+								return;
+							case 2:		//显示表面及线框
+								render.system_call_processor.set_display_mode(
+									true,true,true,true,true,true,false,true,false,false);
+								return;
+							case 3:		//显示表面及边线
+								render.system_call_processor.set_display_mode(
+									true,true,true,true,true,true,false,false,true,false);
+								return;
+							case 4:
+								return;
+							case 5:		//仅仅显示线框
+								render.system_call_processor.set_display_mode(
+									true,true,true,true,true,false,false,true,false,false);
+								return;
+							case 6:		//仅仅显示边线
+								render.system_call_processor.set_display_mode(
+									true,true,true,true,true,false,false,false,true,false);
+								return;
+							case 7:
+								return;
+							case 8:		//显示线框(消隐)
+								render.system_call_processor.set_display_mode(
+									true,true,true,true,true,false,true,true,false,false);
+								return;;
+							case 9:		//"显示边线(消隐)"
+								render.system_call_processor.set_display_mode(
+									true,true,true,true,true,false,true,false,true,false);
+								return;
+							case 10:
+								return;
+							case 11:	//显示点
+								render.system_call_processor.set_display_mode(
+									false,false,false,false,true,false,false,false,false,true);
+								return;
+							case 12:	//隐藏点
+								render.system_call_processor.set_display_mode(
+									false,false,false,false,true,false,false,false,false,false);
+								return;
+							case 13:	//全屏幕显示
+								render.utility.set_clear_fullscreen(true);
+								return;
+							default:
+								if(ep.x<=0.5)
+									render.system_call_processor.set_menu_show_me_only("内容显示功能选择组件");
+								else
+									render.system_call_processor.set_menu_hide(component_id);
+								return;
+							}
+						}
+					};
+				}
+				
+				内容显示显示方式组件
+
+			/* 2child_number	*/	0
+
+			
+			/* 2name		*/	内容显示显示内容组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				item.png		0.2		0.9
+				
+				token_program	内容显示显示内容组件
+				
+				function(component_name,component_id,render)
+				{
+					render.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,render)
+						{
+							var ep=render.component_event_processor[component_id];
+							var function_id=Math.floor((1.0-ep.y)*9.0);
+							if((function_id>=0)&&(function_id<=7)){
+								for(var i=0;i<10;i++)
+									render.system_call_processor.set_target_parameter_channel(i,function_id);
+								ep.hightlight=[0,1.0-function_id/9.0-1.0/9.0,		1.0,1.0-function_id/9.0];
+							}else{
+								if(ep.x<=0.5)
+									render.system_call_processor.set_menu_show_me_only("内容显示功能选择组件");
+								else
+									render.system_call_processor.set_menu_hide(component_id);
+							}
+						}
+					};
+				}
+				
+				内容显示显示内容组件
+
+			/* 2child_number	*/	0
+
+			/* 2name		*/	内容显示显示结果组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				result.png		0.15		1.3
+				
+				token_program	内容显示显示结果组件
+				
+				function(component_name,component_id,render)
+				{
+					render.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,render)
+						{
+							var ep=render.component_event_processor[component_id];
+							var function_id=Math.floor((1.0-ep.y)*13.0);
+
+							if((function_id>=0)&&(function_id<=11)){
+								ep.hightlight=[0,1.0-function_id/13.0-1.0/13.0,		1.0,1.0-function_id/13.0];
+								render.system_call_processor.set_display_value(function_id);
+							}else{
+								if(ep.x<=0.5)
+									render.system_call_processor.set_menu_show_me_only("内容显示功能选择组件");
+								else
+									render.system_call_processor.set_menu_hide(component_id);
+							}
+						}
+					};
+				}
+				
+				内容显示显示结果组件
+
+			/* 2child_number	*/	0
+	
+	
+			/* 2name		*/	内容显示显示背景组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				background_type.png		0.2		0.6
+				
+				token_program	内容显示显示背景组件
+				
+				function(component_name,component_id,render)
+				{
+					render.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,render)
+						{
+							var ep=render.component_event_processor[component_id];
+							var function_id=Math.floor((1.0-ep.y)*6.0);
+
+							switch(function_id){
+							default:
+								if(ep.x<=0.5)
+									render.system_call_processor.set_menu_show_me_only("内容显示功能选择组件");
+								else
+									render.system_call_processor.set_menu_hide(component_id);
+								return;
+							case 0:
+								render.system_call_processor.set_background_mode(-1);									
+								var new_red=0.0,new_green=0.0,new_blue=0.0;
+								if((new_red=prompt("请输入红色值") )==null)
+									break;
+								if((new_green=prompt("请输入绿色值") )==null)
+									break;
+								if((new_blue=prompt("请输入蓝色值") )==null)
+									break;
+								render.system_call_processor.set_target_background_color(
+									0,0,new_red,new_green,new_blue);
+								break;
+							case 1:
+							case 2:
+							case 3:
+								render.system_call_processor.set_background_mode(function_id-1);
+								break;
+							case 4:
+								render.system_call_processor.set_menu_show_me_only("内容显示显示背景图片组件");
+								break;
+							}
+							ep.hightlight=[0,1.0-function_id/6.0-1.0/6.0,		1.0,1.0-function_id/6.0];
+							return;
+						}
+					};
+				}
+				
+				内容显示显示背景组件
+
+			/* 2child_number	*/	0
+			
+			
+			/* 2name		*/	内容显示显示背景图片组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				background_picture.png		0.2		1.1
+				
+				token_program	内容显示显示背景图片组件
+				
+				function(component_name,component_id,render)
+				{
+					render.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,render)
+						{
+							var ep=render.component_event_processor[component_id];
+							var function_id=Math.floor((1.0-ep.y)*11.0);
+							if((function_id<0)||(function_id>9)){
+								if(ep.x<=0.5)
+									render.system_call_processor.set_menu_show_me_only("内容显示显示背景组件");
+								else
+									render.system_call_processor.set_menu_hide(component_id);
+								return;
+							}
+							render.system_call_processor.set_background_picture("picture_"+function_id.toString()+"/");								
+							ep.hightlight=[0,1.0-function_id/11.0-1.0/11.0,		1.0,1.0-function_id/11.0];
+							return;
+						}
+					};
+				}
+				
+				内容显示显示背景图片组件
+
+			/* 2child_number	*/	0
+			
+			/* 2name		*/	内容显示坐标轴方向按钮组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				coordinator.png		0.2		0.9
+				
+				token_program	内容显示坐标轴方向按钮组件
+				
+				function(component_name,component_id,render)
+				{
+					render.component_event_processor[component_id]={
+		
+						pickupmouseselect	:	function(event,component_id,render)
+						{
+							var ep=render.component_event_processor[component_id];
+							var function_id=Math.floor((1.0-ep.y)*9.0);
+
+							switch(function_id){
+							case 0:
+								return;
+							case 1:
+								render.system_call_processor.show_hide_coordinate(true,"");
+								break;
+							case 2:
+								render.system_call_processor.show_hide_coordinate("",true);
+								break;
+							case 3:
+								render.system_call_processor.show_hide_coordinate(false,"");
+								break;
+							case 4:
+								render.system_call_processor.show_hide_coordinate("",false);
+								break;
+							case 5:
+								return;
+							case 6:
+								render.system_call_processor.show_hide_camera_operation(true);
+								break;
+							case 7:
+								render.system_call_processor.show_hide_camera_operation(false);
+								break;
+							default:
+								if(ep.x<=0.5)
+									render.system_call_processor.set_menu_show_me_only("内容显示功能选择组件");
+								else
+									render.system_call_processor.set_menu_hide(component_id);
+								return;
+							}								
+							ep.hightlight=[0,1.0-function_id/9.0-1.0/9.0,		1.0,1.0-function_id/9.0];
+							return;
+						}
+					};
+				}
+				
+				内容显示坐标轴方向按钮组件
+
+			/* 2child_number	*/	0
+			
+			

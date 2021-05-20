@@ -1,0 +1,1 @@
+system_root_component	gltf_component_root

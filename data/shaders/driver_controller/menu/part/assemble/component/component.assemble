@@ -1,0 +1,137 @@
+	/* 1name		*/        组件操作功能组件
+	/* 1type		*/         undefined_part
+	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+	/* 1children number */		2
+	
+			/* 2name		*/	组件操作功能选择组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				component.png		0.25		1.1
+
+				token_program	组件操作功能选择组件
+				
+				function(component_name,component_id,render)
+				{
+					render.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,render)
+						{
+							var ep=render.component_event_processor[component_id];
+							var function_id=Math.floor((1.0-ep.y)*11.0);
+							var str;
+							
+							ep.hightlight=[-1,-1,-1,-1];
+							
+							switch(function_id){
+							case 0:		//执行组件选择
+								render.system_call_processor.set_menu_show_me_only("组件操作选择操作组件");
+								break;
+							case 1:		//隐藏选择组件
+								render.system_call_processor.show_hide_component(false);
+								break;
+							case 2:		//显示选择组件
+								render.system_call_processor.show_hide_component(true);
+								break;
+							case 3:		//执行组件剖分	
+								render.system_call_processor.clip_onoff_component(true);
+								break;
+							case 4:		//取消组件剖分
+								render.system_call_processor.clip_onoff_component(false);
+								break;
+							case 5:	//执行爆炸视图
+								render.system_call_processor.explose_onoff_component(true,0,0.2);
+								break;
+							case 6:	//取消爆炸视图
+								render.system_call_processor.explose_onoff_component(false,0,0.2);
+								break;
+							case 7:	//设置透明
+								render.system_call_processor.set_component_transparency(0.05);
+								break;
+							case 8:	//取消透明
+								render.system_call_processor.set_component_transparency(1.0);
+								break;
+							case 9:	//设置显示精度
+								var high_precision_scale,low_precision_scale;
+								if((high_precision_scale=prompt("鼠标抬起时的显示精度值"))==null)
+									break;
+								if((low_precision_scale=prompt("鼠标按下时的显示精度值"))==null)
+									break;	
+								render.system_call_processor.set_component_display_precision(
+									high_precision_scale,low_precision_scale);
+								break;
+							default:
+								if(ep.x<=0.5)
+									render.system_call_processor.set_menu_show_me_only("交互界面主菜单");
+								else
+									render.system_call_processor.set_menu_hide(component_id);
+								return;
+							}
+							ep.hightlight=[0,1.0-function_id/11.0-1.0/11.0,		1.0,1.0-function_id/11.0];
+							return;
+						}
+					};
+				}
+				组件操作功能选择组件
+
+			/* 2child_number	*/	0
+
+			/* 2name		*/	组件操作选择操作组件
+			/* 2type		*/	menu_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				selection.png		0.25		1.2
+				
+				token_program	组件操作选择操作组件
+				
+				function(component_name,component_id,render)
+				{
+					render.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,render)
+						{
+							var ep=render.component_event_processor[component_id];
+							var function_id=Math.floor((1.0-ep.y)*12.0);
+							var select_operation_str;
+							
+							ep.hightlight=[-1,-1,-1,-1];
+							switch(function_id){
+							case 0:
+								select_operation_str="clear";		break;
+							case 1:
+								return;
+							case 2:
+								select_operation_str="parent";		break;
+							case 3:
+								select_operation_str="child";		break;
+							case 4:
+								select_operation_str="move";		break;
+							case 5:
+								select_operation_str="latest";		break;
+							case 6:
+								select_operation_str="all";			break;
+							case 7:
+								select_operation_str="visible";		break;
+							case 8:
+								select_operation_str="display";		break;
+							case 9:
+								select_operation_str="select";		break;
+							case 10:
+								select_operation_str="part_list";	break;
+							default:
+								if(ep.x<=0.5)
+									render.system_call_processor.set_menu_show_me_only("组件操作功能选择组件");
+								else
+									render.system_call_processor.set_menu_hide(component_id);
+								return;
+							}								
+							ep.hightlight=[0,1.0-function_id/12.0-1.0/12.0,		1.0,1.0-function_id/12.0];
+							render.system_call_processor.select_component(select_operation_str);
+							return;
+						}
+					};
+				}
+				
+				组件操作选择操作组件
+
+			/* 2child_number	*/	0
+			
+			

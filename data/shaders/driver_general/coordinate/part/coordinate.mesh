@@ -1,0 +1,60 @@
+
+
+
+/*	version			*/	2018.11.23
+/*	rigin material	*/	0	0	0	0
+/*	body_number		*/	1
+
+   /* body  0  name   */  拉伸1   /*   face_number   */  1
+    
+     /* face  0  name   */  拉伸1的第0个表面
+    
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    1.0   0.0   0.0   0.0   0.0   1.0
+        
+         /* face_attribute_number */ 0
+        
+         /* face_vertex_number   */  0
+            
+         /* face_normal_number      */  0
+            
+         /* face_primitive_number  */  0
+            
+            
+         /* face_loop_number   */ 1
+        
+         /* face_loop  0  loop_edge_number    */    3
+        
+             /* face_loop_edge  0  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   0.0   0.0   -0.0   -1.0   -0.0
+                 /* curve point material */      0.0    0.0    0    0
+                start_effective   0.0   0.0   0.0   1.0  /*  material  */      0.0    0.0    0    0
+                end_effective   1.0   0.0   0.0   1.0  /*  material  */      0.0    0.0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 0.0   0.0   0.0   1.0  /*  tessellation material  */      1.0    0.0    0.0    1
+                 /* edge_vertex    1    location   */ 1.0   0.0   0.0   1.0  /*  tessellation material  */      1.0    0.0    0.0    1
+                
+             /* face_loop_edge  1  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   0.0   1.0   -0.0   -0.0   -1.0
+                 /* curve point material */      0.0    0.0    0    0
+                start_effective   0.0   0.0   0.0   1.0  /*  material  */      0.0    0.0    0    0
+                end_effective   0.0   1.0   0.0   1.0  /*  material  */      0.0    0.0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 0.0   0.0   0.0   1.0  /*  tessellation material  */      0.0    1.0    0.0    1
+                 /* edge_vertex    1    location   */ 0.0   1.0   0.0   1.0  /*  tessellation material  */      0.0    1.0    0.0    1
+                
+             /* face_loop_edge  2  data   */   
+                 /* curve_type    */  line
+                 /* parameter_number  */  6 /* parameter */    0.0   0.0   1.0   -0.0   -1.0   -0.0
+                 /* curve point material */      0.0    0.0    0    0
+                start_effective   0.0   0.0   0.0   1.0  /*  material  */      0.0    0.0    0    0
+                end_effective   0.0   0.0   1.0   1.0  /*  material  */      0.0    0.0    0    0
+                 /* edge_vertex_number  */  2
+                 /* edge_vertex    0    location   */ 0.0   0.0   0.0   1.0  /*  tessellation material  */      0.0    0.0    1.0    1
+                 /* edge_vertex    1    location   */ 0.0   0.0   1.0   1.0  /*  tessellation material  */      0.0    0.0    1.0    1
+                
+                
+                
+                
+                

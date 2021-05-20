@@ -1,0 +1,58 @@
+
+/*	1:name	*/	display_component_root
+/*	1:type	*/	display_part_root
+/*	1:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+/*	1:child_number	*/	10
+
+	/*	2:name			*/	display_component_cad
+	/*	2:type			*/	display_part_cad
+	/*	2:location		*/	relative_file_location	coordinate
+			part_list		external_part_driver_mount		cad_part_0		assemble.assemble
+			not_part_list	external_part_driver_mount		cad_part_0		movement.assemble
+	/*	2:child_number	*/	0
+
+	/*	2:name	*/	display_component
+	/*	2:type	*/	display_part
+	/*	2:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+	/*	2:child_number	*/	0
+	
+	/*	2:name	*/	display_component_1
+	/*	2:type	*/	display_part_1
+	/*	2:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+	/*	2:child_number	*/	0
+	
+	/*	2:name	*/	display_component_2
+	/*	2:type	*/	display_part_2
+	/*	2:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	1.0	0.0	0.0	1.0
+	/*	2:child_number	*/	0
+	
+	/*	2:name	*/	display_component_3
+	/*	2:type	*/	display_part_3
+	/*	2:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+	/*	2:child_number	*/	0
+	
+	/*	2:name	*/	display_component_4
+	/*	2:type	*/	display_part_4
+	/*	2:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+	/*	2:child_number	*/	0
+
+	/*	2:name	*/	display_component_5
+	/*	2:type	*/	display_part_5
+	/*	2:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+	/*	2:child_number	*/	0
+
+	/*	2:name	*/	display_component_6
+	/*	2:type	*/	display_part_6
+	/*	2:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+	/*	2:child_number	*/	0
+	
+	/*	2:name	*/	display_component_7
+	/*	2:type	*/	display_part_7
+	/*	2:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	1.0	0.0	0.0	1.0
+	/*	2:child_number	*/	0
+	
+	/*	2:name	*/	display_component_8
+	/*	2:type	*/	display_part_8
+	/*	2:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+	/*	2:child_number	*/	0
+	

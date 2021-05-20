@@ -1,0 +1,51 @@
+			
+			"default_material"	:	{
+					"base_color_factor"						:	[	0.5,	0.5,	0.5,	1.0	],
+					"metallic_factor"						:	0.0,
+					"roughness_factor"						:	0.0,
+					"normal_factor"							:	[	1.0,	1.0,	1.0,	1.0	],
+					"occlusion_factor"						:	[	1.0,	1.0,	1.0,	1.0	],
+					"emissive_factor"						:	[	1.0,	1.0,	1.0,	1.0	],
+					"base_color_factor_texture_id"			:	-1,
+					"metallic_roughness_factor_texture_id"	:	-1,
+					"normal_texture_id"						:	-1,
+					"occlusion_texture_id"					:	-1,
+					"emissive_texture_id"					:	-1
+			},
+			
+			"selection_material"	:	{
+					"base_color_factor"						:	[	0.1,	0.5,	1.0,	1.0	],
+					"metallic_factor"						:	0.0,
+					"roughness_factor"						:	0.0,
+					"normal_factor"							:	[	1.0,	1.0,	1.0,	1.0	],
+					"occlusion_factor"						:	[	1.0,	1.0,	1.0,	1.0	],
+					"emissive_factor"						:	[	1.0,	1.0,	1.0,	1.0	],
+					"base_color_factor_texture_id"			:	-1,
+					"metallic_roughness_factor_texture_id"	:	-1,
+					"normal_texture_id"						:	-1,
+					"occlusion_texture_id"					:	-1,
+					"emissive_texture_id"					:	-1
+			},
+			
+			"light"	:	[
+				{
+					"camera_id"			:	4,
+					"color_factor"		:	[0.425,0.425,0.425,0.8],
+					"shininess"			:	8
+				},
+				{
+					"camera_id"			:	5,
+					"color_factor"		:	[0.425,0.425,0.425,0.8],
+					"shininess"			:	8
+				},
+				{
+					"camera_id"			:	6,
+					"color_factor"		:	[0.425,0.425,0.425,0.8],
+					"shininess"			:	8
+				},
+				{
+					"camera_id"			:	7,
+					"color_factor"		:	[0.425,0.425,0.425,0.8],
+					"shininess"			:	8
+				}
+			],

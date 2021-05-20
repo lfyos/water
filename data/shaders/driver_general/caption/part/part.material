@@ -1,0 +1,12 @@
+/*	time_step	*/		400000000
+
+/*	
+	fps name:
+			data_time_length
+			render_time_length
+			read_time_length
+			render_interval_length
+*/
+
+	render_interval_length
+	

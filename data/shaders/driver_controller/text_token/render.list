@@ -1,0 +1,4 @@
+common		high_priority.txt		part.list
+
+	/*	directory_component_name	*/		movement_manager
+	/*	file_name					*/		check.txt

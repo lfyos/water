@@ -1,0 +1,54 @@
+movement_manager
+	movement_manager
+	part\part.mesh
+	part\part.material
+	part\part.description
+	part\part.mp3
+	
+	/*	sound_pre_string		*/	./
+
+movement_manager_up
+	movement_manager_up
+	part\part.mesh
+	part\part.material
+	part\part.description
+	part\part.mp3
+
+	/*	sound_pre_string		*/	../
+	
+movement_manager_up_2
+	movement_manager_up_2
+	part\part.mesh
+	part\part.material
+	part\part.description
+	part\part.mp3
+
+	/*	sound_pre_string		*/	../../
+	
+movement_manager_up_3
+	movement_manager_up_3
+	part\part.mesh
+	part\part.material
+	part\part.description
+	part\part.mp3
+
+	/*	sound_pre_string		*/	../../../
+	
+movement_manager_up_4
+	movement_manager_up_4
+	part\part.mesh
+	part\part.material
+	part\part.description
+	part\part.mp3
+
+	/*	sound_pre_string		*/	../../../../	
+
+movement_manager_up_5
+	movement_manager_up_5
+	part\part.mesh
+	part\part.material
+	part\part.description
+	part\part.mp3
+
+	/*	sound_pre_string		*/	../../../../../		
+			

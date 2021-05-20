@@ -1,0 +1,34 @@
+/*	local_data_charset									*/		GBK
+/*	network_data_charset								*/		UTF-8
+
+/*	user_file_name										*/		users/users.txt
+/*	shader_file_name									*/		shaders/shaders.txt
+/*	default_parameter_directory							*/		parameter
+/*	language_change_file_name							*/		language_change.txt
+
+/*	default_max_loading_number							*/		10
+/*	response_block_size									*/		65536
+/*	mesh_decimal_number									*/		8
+/*	max_material_id										*/		100
+
+/*	engine_expire_time_length,		unit:nanosecond		*/		60000000000
+/*	engine_load_time_length,		unit:nanosecond		*/		  150000000
+/*	engine_touch_time_length,		unit:nanosecond		*/		10000000000
+
+/*	create_engine_concurrent_number						*/		3
+/*	create_engine_sleep_time_length_scale				*/		1.5
+/*	create_engine_sleep_time_length,unit:macrosecond	*/		1000
+/*	create_engine_max_sleep_time_length				 	*/		60000
+
+/*	file_buffer_expire_time_length,	unit:second			*/		365000000
+
+/*	max_client_interface_number							*/		100
+/*	max_engine_kernel_number							*/		300
+/*	max_component_number								*/		3000000
+/*	max_request_number									*/		10
+
+/*	max_buffer_object_head_package_length				*/		8000000
+	
+/*	file_download_cors_string							*/		*
+
+/*	debug_mode_flag										*/		true

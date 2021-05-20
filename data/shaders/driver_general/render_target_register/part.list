@@ -1,0 +1,14 @@
+render_target_register_part
+	render_target_register_part
+	part\part.mesh
+	part\part.material
+	part\part.description
+	part\part.mp3
+
+render_target_register_part_two
+	render_target_register_part_two
+	part\part.mesh
+	part\part.two.material
+	part\part.description
+	part\part.mp3
+	

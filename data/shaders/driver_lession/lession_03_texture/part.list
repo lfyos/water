@@ -1,0 +1,13 @@
+lession_03_texture_part
+	lession_03_texture_part
+	part\part.mesh
+	part\part.material
+	part\part.description
+	part\part.mp3
+
+lession_03_texture_tree
+	lession_03_texture_tree
+	tree\part.obj.mesh
+	tree\part.material
+	tree\part.description
+	tree\part.mp3

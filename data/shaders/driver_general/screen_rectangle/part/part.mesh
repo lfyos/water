@@ -1,0 +1,29 @@
+/*	version			*/	2018.11.23
+/*	rigin material	*/	0	0	0	0
+/*	body_number		*/	1
+
+   /* body  0  name   */  Íø¸ñ   /*   face_number   */  1
+  
+  
+     /* face  0  name   */  Íø¸ñÃæ
+    
+         /* face_type   */  unknown  /*   parameter_number   */  0 /*   parameter  */ 
+        
+         /* face_attribute_number */ 0
+        
+         /* face_vertex_number   */  4
+             /* face_vertex  0  is  */  0.0   0.0   0.0   1.0
+             /* face_vertex  1  is  */  1.0   0.0   0.0   1.0
+             /* face_vertex  2  is  */  1.0   1.0   0.0   1.0
+             /* face_vertex  3  is  */  0.0   1.0   0.0   1.0
+            
+         /* face_normal_number      */  1
+             /* face_normal  0  is  */  1.0   1.0   1.0   1.0
+            
+         /* face_primitive_number  */  1
+             /* face_primitive  0  material      */     0.0    0.0    0.0    1.0
+             /* face_primitive  0  vertex_index  */    0   1   2   3   -1
+             /* face_primitive  0  normal_index  */    0   0   0   0   -1
+             
+         /* face_loop_number   */ 0
+         

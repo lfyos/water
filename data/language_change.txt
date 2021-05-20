@@ -1,0 +1,2 @@
+load+english			load
+load+chinese			×°Èë
