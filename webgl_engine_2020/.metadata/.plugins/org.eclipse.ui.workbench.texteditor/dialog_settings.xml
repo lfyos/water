@@ -8,6 +8,11 @@
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="stop"/>
+			<item value="create_component_request_string"/>
+			<item value="call_server_component"/>
+			<item value="new_transfer_length"/>
+			<item value="movement_manager"/>
 			<item value="target_parameter[target_id].parameter_channel_id"/>
 			<item value="set_target_parameter_channel"/>
 			<item value="show_"/>
@@ -18,11 +23,6 @@
 			<item value="parent_component"/>
 			<item value="part_list_flag"/>
 			<item value="single"/>
-			<item value="443"/>
-			<item value="&quot; +"/>
-			<item value="                &quot;"/>
-			<item value="get_component_processor"/>
-			<item value="component_event_processor"/>
 		</list>
 		<list key="replacehistory">
 			<item value="p"/>

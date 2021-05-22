@@ -986,6 +986,13 @@ public class movement_function_switch
 			return null;
 		}
 	}
+	private void update_component_location(component comp)
+	{
+		comp.uniparameter.do_response_location_flag=true;
+		comp.update_location_version();
+		for(int i=0,ni=comp.children_number();i<ni;i++)
+			update_component_location(comp.children[i]);
+	}
 	private String[]  movement_request_dispatch()
 	{
 		String str;
@@ -1002,6 +1009,7 @@ public class movement_function_switch
 		switch(str){
 		case "stop":
 			ek.modifier_cont[manager.move_channel_id.movement_modifier_id].clear_modifier(ek,ci);
+			update_component_location(ek.component_cont.root_component);
 			break;
 		case "continue":
 			boolean direction_flag=true;

@@ -99,7 +99,8 @@ function body_onresize()
 <div style="text-align:left"	align="center"						>
 	<canvas id="my_canvas"		tabindex="0"						></canvas>
 	<iframe id="my_part_list"	tabindex="1"	hidden="hidden"		></iframe>
-</div>
+</div><br/>
+<output id="debug"></output>
 
 </body>
 

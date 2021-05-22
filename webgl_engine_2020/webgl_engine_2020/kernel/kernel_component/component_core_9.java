@@ -12,6 +12,11 @@ import kernel_engine.part_type_string_sorter;
 public class component_core_9 extends component_core_8
 {
 	private long location_version,absolute_location_version;
+	
+	public void update_location_version()
+	{
+		location_version++;
+	}
 	public long get_location_version()
 	{
 		return location_version;
