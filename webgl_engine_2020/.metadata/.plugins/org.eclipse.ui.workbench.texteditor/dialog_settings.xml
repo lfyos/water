@@ -2,12 +2,19 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="parent_component"/>
+		<item key="selection" value=""/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="target_parameter[target_id].parameter_channel_id"/>
+			<item value="set_target_parameter_channel"/>
+			<item value="show_"/>
+			<item value="show"/>
+			<item value="test_can_not_todesignbuffer"/>
+			<item value="todesignbuffer"/>
+			<item value="todesignbuffer_movement"/>
 			<item value="parent_component"/>
 			<item value="part_list_flag"/>
 			<item value="single"/>
@@ -16,13 +23,6 @@
 			<item value="                &quot;"/>
 			<item value="get_component_processor"/>
 			<item value="component_event_processor"/>
-			<item value="&quot;"/>
-			<item value="&quot;my_part_list&quot;"/>
-			<item value="my_part_list"/>
-			<item value="Attribute"/>
-			<item value="&quot;hidden&quot;"/>
-			<item value="reload_control_panel"/>
-			<item value="show_select_component_box_component"/>
 		</list>
 		<list key="replacehistory">
 			<item value="p"/>

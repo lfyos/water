@@ -13,7 +13,7 @@ import kernel_part.part_container_for_part_search;
 
 public class component_core_4 extends component_core_3
 {
-public component children[];
+	public component children[];
 	
 	public void destroy()
 	{

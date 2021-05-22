@@ -9,7 +9,7 @@ import kernel_part.part_container_for_part_search;
 
 public class component_core_7 extends component_core_6
 {
-public boolean children_location_modify_flag;
+	public boolean children_location_modify_flag;
 	
 	public void destroy()
 	{

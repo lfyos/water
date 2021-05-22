@@ -40,7 +40,7 @@ public String component_directory_name,component_file_name,component_charset;
 		caculate_box(true);
 		
 		for(int i=0,ni=multiparameter.length;i<ni;i++)
-			this.caculate_effective_display_flag(i);
+			caculate_effective_display_flag(i);
 		
 		uniparameter.discard_precision2=-1;
 		for(int i=0,ni=driver_number();i<ni;i++)
