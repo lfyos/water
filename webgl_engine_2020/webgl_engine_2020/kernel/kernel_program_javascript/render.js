@@ -291,7 +291,10 @@ function construct_render_routine(my_gl,my_user_name,my_pass_word,
 		var response_data,start_time=(new Date()).getTime();
 		try{
 			response_data=JSON.parse(responseText);
+			this.can_do_render_request_flag=true;
 		}catch(e){
+			this.can_do_render_request_flag	=false;
+			
 			console.log("\n\n\n\nparse_web_server_response_data fail:"+e.toString());
 			console.log(responseText);
 			console.log("\n\n\n\n");
@@ -684,7 +687,6 @@ function construct_render_routine(my_gl,my_user_name,my_pass_word,
 					return;
 				};
 				cur.parse_web_server_response_data(my_ajax.responseText,my_ajax.browser_start_time);
-				cur.can_do_render_request_flag=true;
 				cur.do_render_request_response_number++;
 				return;
 			};

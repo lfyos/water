@@ -6,38 +6,8 @@ version	2015.10
 /*	sequence/parallel	*/	sequence
 /*	direction		*/	no_direction
 /*	camera scale		*/	upper	1.0
-/*	children number		*/	4
+/*	children number		*/	3
 
-        /*	name			*/	no_node_name
-        /*	audio			*/	no_sound_file
-        /*	description		*/	no_description
-        /*	sequence/parallel	*/	sequence
-        /*	direction		*/	no_direction
-        /*	camera scale		*/	upper	1.0
-        /*	children number		*/	0
-        
-        component_start
-        
-                16.00米标准式拆装梁
-                
-        component_end
-        
-        
-        /*	start state	*/	invisible
-        /*	end state	*/	visible
-        /*	step number	*/	1
-        
-            /*	time length	*/	 1.0E9
-            /*	parameter number */	 0	/* parameter */	
-            /*	location	*/	 6.123233995736766E-17 0.0 -1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 6.123233995736766E-17 0.0 0.0 5.0 0.0 1.0 
-            
-            /*	time length	*/	 1.0E9
-            /*	parameter number */	 0	/* parameter */	
-            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-            
-        
-        /*	match number	*/	0
-        
         /*	name			*/	测试
         /*	audio			*/	no_sound_file
         /*	description		*/	no_description

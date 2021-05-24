@@ -142,10 +142,7 @@ public class extended_instance_driver  extends instance_driver
 			if(ek.collector_stack.get_top_collector()!=null)
 				if((new_display_information=ek.collector_stack.get_top_collector().description)==null)
 					new_display_information="";
-		new_display_information=new_display_information.trim();
-
 		new_display_information+=caculate_fps_string(ek,ci);
-
 		if(new_display_information.compareTo(bak_display_information)==0)
 			return true;
 		
@@ -161,7 +158,7 @@ public class extended_instance_driver  extends instance_driver
 		
 		t_item.display_information	=new String[]
 			{
-				new String(new_display_information)
+				new String(new_display_information.trim())
 			};
 		component text_comp=ek.component_cont.get_component(text_component_id);
 		if(text_comp!=null)

@@ -2,29 +2,31 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value=""/>
+		<item key="selection" value="parse_web_server_response_data"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
-			<item value="stop"/>
-			<item value="create_component_request_string"/>
-			<item value="call_server_component"/>
-			<item value="new_transfer_length"/>
-			<item value="movement_manager"/>
-			<item value="target_parameter[target_id].parameter_channel_id"/>
-			<item value="set_target_parameter_channel"/>
-			<item value="show_"/>
-			<item value="show"/>
-			<item value="test_can_not_todesignbuffer"/>
-			<item value="todesignbuffer"/>
-			<item value="todesignbuffer_movement"/>
-			<item value="parent_component"/>
-			<item value="part_list_flag"/>
-			<item value="single"/>
+			<item value="parse_web_server_response_data"/>
+			<item value="can_do_render_request_flag"/>
+			<item value="mount_stop"/>
+			<item value="url"/>
+			<item value="mount_edit_url"/>
+			<item value="language_change"/>
+			<item value="edit_extract_string"/>
+			<item value="edit_from_child"/>
+			<item value="edit_invert"/>
+			<item value="edit_select_component"/>
+			<item value="edit_modify_view_location_title"/>
+			<item value="delete_view"/>
+			<item value="edit_make_view"/>
+			<item value="edit_right_button"/>
+			<item value="edit_tag"/>
 		</list>
 		<list key="replacehistory">
+			<item value="up"/>
+			<item value="onselect"/>
 			<item value="p"/>
 			<item value=""/>
 			<item value="render.set_event_component"/>
@@ -38,8 +40,6 @@
 			<item value="print  (&quot;"/>
 			<item value="x"/>
 			<item value="double"/>
-			<item value="var "/>
-			<item value="render.component_call_processor[component_id]"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

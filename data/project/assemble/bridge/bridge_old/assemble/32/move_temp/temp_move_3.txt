@@ -6,68 +6,8 @@ version	2015.10
 /*	sequence/parallel	*/	sequence
 /*	direction		*/	no_direction
 /*	camera scale		*/	upper	1.0
-/*	children number		*/	70
+/*	children number		*/	68
 
-        /*	name			*/	no_node_name
-        /*	audio			*/	no_sound_file
-        /*	description		*/	no_description
-        /*	sequence/parallel	*/	sequence
-        /*	direction		*/	no_direction
-        /*	camera scale		*/	upper	1.0
-        /*	children number		*/	0
-        
-        component_start
-        
-                32米标准式拆装式桁梁
-                
-        component_end
-        
-        
-        /*	start state	*/	visible
-        /*	end state	*/	visible
-        /*	step number	*/	1
-        
-            /*	time length	*/	 1.0E7
-            /*	parameter number */	 0	/* parameter */	
-            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-            
-            /*	time length	*/	 1.0E7
-            /*	parameter number */	 0	/* parameter */	
-            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-            
-        
-        /*	match number	*/	0
-        
-        /*	name			*/	no_node_name
-        /*	audio			*/	no_sound_file
-        /*	description		*/	no_description
-        /*	sequence/parallel	*/	sequence
-        /*	direction		*/	no_direction
-        /*	camera scale		*/	upper	1.0
-        /*	children number		*/	0
-        
-        component_start
-        
-                32米标准式拆装式桁梁
-                
-        component_end
-        
-        
-        /*	start state	*/	visible
-        /*	end state	*/	visible
-        /*	step number	*/	1
-        
-            /*	time length	*/	 1.0E7
-            /*	parameter number */	 0	/* parameter */	
-            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-            
-            /*	time length	*/	 1.0E7
-            /*	parameter number */	 0	/* parameter */	
-            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-            
-        
-        /*	match number	*/	0
-        
         /*	name			*/	00001:没有标记
         /*	audio			*/	no_sound
         /*	description		*/	第一步：平整宽度5～6米、长度适当的水平作业场地，在桁梁底部距弦杆端头20㎝处各摆放两根同一规格的木枕或垫木做桁梁拼装支承平台。在支承平台上画出中心线以确定起点和控制平直。
@@ -320,7 +260,7 @@ version	2015.10
         /*	camera scale		*/	upper	1.0
         /*	children number		*/	9
         
-                /*	name			*/	00003:没有标记/00001:没有标记
+                /*	name			*/	00003:没有标记/00009:没有标记
                 /*	audio			*/	sound\3.mp3
                 /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
                 /*	sequence/parallel	*/	parallel
@@ -328,7 +268,7 @@ version	2015.10
                 /*	camera scale		*/	upper	1.0
                 /*	children number		*/	1
                 
-                        /*	name			*/	00003:没有标记/00001:没有标记/00001
+                        /*	name			*/	00003:没有标记/00009:没有标记/00001
                         /*	audio			*/	sound\3.mp3
                         /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
                         /*	sequence/parallel	*/	sequence
@@ -338,310 +278,22 @@ version	2015.10
                         
                         component_start
                         
-                                218号_x1_2_1-1
+                                29号乙螺栓_x1_5_2-1
                                 
                         component_end
                         
                         
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
                         /*	step number	*/	1
                         
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 2.30611E-34 0.0 0.0 9.41428E-34 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -2.22045E-16 -1.08156 -4.16334E-17 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
                             /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
                             
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00003:没有标记/00002:没有标记
-                /*	audio			*/	sound\3.mp3
-                /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00003:没有标记/00002:没有标记/00001
-                        /*	audio			*/	sound\3.mp3
-                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                218号_x1_2_2-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 9.17777E-34 0.0 0.0 9.17777E-34 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -5.55112E-16 -1.40071 5.44703E-16 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00003:没有标记/00003:没有标记
-                /*	audio			*/	sound\3.mp3
-                /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00003:没有标记/00003:没有标记/00001
-                        /*	audio			*/	sound\3.mp3
-                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                两个218号_x1_2_1-1/218号-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 -1.0 0.0 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00003:没有标记/00004:没有标记
-                /*	audio			*/	sound\3.mp3
-                /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00003:没有标记/00004:没有标记/00001
-                        /*	audio			*/	sound\3.mp3
-                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                两个218号_x1_2_1-1/218号-2
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 -1.0 0.0 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00003:没有标记/00005:没有标记
-                /*	audio			*/	sound\3.mp3
-                /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	2
-                
-                        /*	name			*/	00003:没有标记/00005:没有标记/00001
-                        /*	audio			*/	sound\3.mp3
-                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                29甲螺栓29乙螺栓_x1_4_2-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 3.50328E-34 0.0 0.0 3.50328E-34 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 -1.11022E-16 -1.40071 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                        /*	name			*/	00003:没有标记/00005:没有标记/00002
-                        /*	audio			*/	sound\3.mp3
-                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                29甲螺栓29乙螺栓_x1_4_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.514185 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00003:没有标记/00006:没有标记
-                /*	audio			*/	sound\3.mp3
-                /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	2
-                
-                        /*	name			*/	00003:没有标记/00006:没有标记/00001
-                        /*	audio			*/	sound\3.mp3
-                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                24号_x1_5_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -1.0461 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                        /*	name			*/	00003:没有标记/00006:没有标记/00002
-                        /*	audio			*/	sound\3.mp3
-                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                24号_x1_5_2-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 -1.24348E-32 0.0 0.0 -1.24348E-32 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -2.22045E-15 3.88578E-16 -0.691489 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00003:没有标记/00007:没有标记
-                /*	audio			*/	sound\3.mp3
-                /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00003:没有标记/00007:没有标记/00001
-                        /*	audio			*/	sound\3.mp3
-                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                29号乙螺栓_x1_5_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.93972 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            /*	location	*/	 1.0 -1.24348E-32 0.0 0.0 -1.24348E-32 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -3.10862E-15 5.27356E-16 -1.01064 1.0 
                             
                         
                         /*	match number	*/	0
@@ -669,22 +321,22 @@ version	2015.10
                         component_end
                         
                         
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
                         /*	step number	*/	1
                         
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.0 0.0 0.0 1.0 
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
                             
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.0 0.0 0.0 1.0 
                             
                         
                         /*	match number	*/	0
                         
-                /*	name			*/	00003:没有标记/00009:没有标记
+                /*	name			*/	00003:没有标记/00007:没有标记
                 /*	audio			*/	sound\3.mp3
                 /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
                 /*	sequence/parallel	*/	parallel
@@ -692,7 +344,7 @@ version	2015.10
                 /*	camera scale		*/	upper	1.0
                 /*	children number		*/	1
                 
-                        /*	name			*/	00003:没有标记/00009:没有标记/00001
+                        /*	name			*/	00003:没有标记/00007:没有标记/00001
                         /*	audio			*/	sound\3.mp3
                         /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
                         /*	sequence/parallel	*/	sequence
@@ -702,22 +354,310 @@ version	2015.10
                         
                         component_start
                         
-                                29号乙螺栓_x1_5_2-1
+                                29号乙螺栓_x1_5_1-1
                                 
                         component_end
                         
                         
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
                         /*	step number	*/	1
                         
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 -1.24348E-32 0.0 0.0 -1.24348E-32 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -3.10862E-15 5.27356E-16 -1.01064 1.0 
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
                             
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.93972 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00003:没有标记/00006:没有标记
+                /*	audio			*/	sound\3.mp3
+                /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00003:没有标记/00006:没有标记/00002
+                        /*	audio			*/	sound\3.mp3
+                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                24号_x1_5_2-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
                             /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 -1.24348E-32 0.0 0.0 -1.24348E-32 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -2.22045E-15 3.88578E-16 -0.691489 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:没有标记/00006:没有标记/00001
+                        /*	audio			*/	sound\3.mp3
+                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                24号_x1_5_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -1.0461 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00003:没有标记/00005:没有标记
+                /*	audio			*/	sound\3.mp3
+                /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00003:没有标记/00005:没有标记/00002
+                        /*	audio			*/	sound\3.mp3
+                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                29甲螺栓29乙螺栓_x1_4_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.514185 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:没有标记/00005:没有标记/00001
+                        /*	audio			*/	sound\3.mp3
+                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                29甲螺栓29乙螺栓_x1_4_2-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 3.50328E-34 0.0 0.0 3.50328E-34 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 -1.11022E-16 -1.40071 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00003:没有标记/00004:没有标记
+                /*	audio			*/	sound\3.mp3
+                /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00003:没有标记/00004:没有标记/00001
+                        /*	audio			*/	sound\3.mp3
+                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                两个218号_x1_2_1-1/218号-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 -1.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00003:没有标记/00003:没有标记
+                /*	audio			*/	sound\3.mp3
+                /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00003:没有标记/00003:没有标记/00001
+                        /*	audio			*/	sound\3.mp3
+                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                两个218号_x1_2_1-1/218号-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 -1.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00003:没有标记/00002:没有标记
+                /*	audio			*/	sound\3.mp3
+                /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00003:没有标记/00002:没有标记/00001
+                        /*	audio			*/	sound\3.mp3
+                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                218号_x1_2_2-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 9.17777E-34 0.0 0.0 9.17777E-34 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -5.55112E-16 -1.40071 5.44703E-16 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00003:没有标记/00001:没有标记
+                /*	audio			*/	sound\3.mp3
+                /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00003:没有标记/00001:没有标记/00001
+                        /*	audio			*/	sound\3.mp3
+                        /*	description		*/	第三步：在H0和HH0拼接点的13号短弦杆中插入安装两块重合的218号端结点板，在218号端结点板外端安装24号弦杆短头，在不影响下一步安装255号连接角的栓钉、螺栓位置打入栓钉安装螺栓。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                218号_x1_2_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 2.30611E-34 0.0 0.0 9.41428E-34 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -2.22045E-16 -1.08156 -4.16334E-17 1.0 
                             
                         
                         /*	match number	*/	0
@@ -28267,7 +28207,7 @@ version	2015.10
                         /*	match number	*/	0
                         
         /*	name			*/	00068:没有标记
-        /*	audio			*/	no_sound
+        /*	audio			*/	sound/68.mp3
         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
         /*	sequence/parallel	*/	sequence
         /*	direction		*/	no_direction
@@ -28275,7 +28215,7 @@ version	2015.10
         /*	children number		*/	3
         
                 /*	name			*/	00068:没有标记/00001:没有标记
-                /*	audio			*/	sound\68.mp3
+                /*	audio			*/	sound/68.mp3
                 /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
@@ -28283,7 +28223,7 @@ version	2015.10
                 /*	children number		*/	1
                 
                         /*	name			*/	00068:没有标记/00001:没有标记/00001
-                        /*	audio			*/	sound\68.mp3
+                        /*	audio			*/	sound/68.mp3
                         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                         /*	sequence/parallel	*/	sequence
                         /*	direction		*/	no_direction
@@ -28313,7 +28253,7 @@ version	2015.10
                         /*	match number	*/	0
                         
                 /*	name			*/	00068:没有标记/00002:没有标记
-                /*	audio			*/	sound\68.mp3
+                /*	audio			*/	sound/68.mp3
                 /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
@@ -28321,7 +28261,7 @@ version	2015.10
                 /*	children number		*/	1
                 
                         /*	name			*/	00068:没有标记/00002:没有标记/00001
-                        /*	audio			*/	sound\68.mp3
+                        /*	audio			*/	sound/68.mp3
                         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                         /*	sequence/parallel	*/	sequence
                         /*	direction		*/	no_direction
@@ -28351,7 +28291,7 @@ version	2015.10
                         /*	match number	*/	0
                         
                 /*	name			*/	00068:没有标记/00003:没有标记
-                /*	audio			*/	sound\68.mp3
+                /*	audio			*/	sound/68.mp3
                 /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
@@ -28359,7 +28299,7 @@ version	2015.10
                 /*	children number		*/	1
                 
                         /*	name			*/	00068:没有标记/00003:没有标记/00001
-                        /*	audio			*/	sound\68.mp3
+                        /*	audio			*/	sound/68.mp3
                         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                         /*	sequence/parallel	*/	sequence
                         /*	direction		*/	no_direction

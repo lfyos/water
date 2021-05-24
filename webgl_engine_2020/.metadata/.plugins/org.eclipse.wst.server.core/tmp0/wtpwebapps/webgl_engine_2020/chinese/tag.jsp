@@ -16,20 +16,24 @@
 <%
 {
 	String movement_component_id=request.getParameter("component_id");
-	String render_windows_name=request.getParameter("windows");
-	String render_string;
-	
-	String mount_call_processor_string=request.getParameter("windows");
-	mount_call_processor_string=((mount_call_processor_string==null)?"parent":mount_call_processor_string);
-	if(mount_call_processor_string.compareTo("top")==0)
+	String mount_call_processor_string;
+	if((mount_call_processor_string=request.getParameter("windows"))==null)
+		mount_call_processor_string="parent";
+	switch(mount_call_processor_string){
+	case "top":
 		mount_call_processor_string="window.top.";
-	else if(mount_call_processor_string.compareTo("parent")==0)
+		break;
+	case "parent":
 		mount_call_processor_string="window.parent.";
-	else if(mount_call_processor_string.compareTo("this")==0)
+		break;
+	case "this":
 		mount_call_processor_string="";
-	else
+		break;
+	default:
 		mount_call_processor_string ="window.frames[\""+mount_call_processor_string+"\"].";
-
+		break;
+	}
+	
 	out.print("var mcp="+mount_call_processor_string+
 			"render.component_call_processor["+movement_component_id+"];");
 	out.println("var id="+request.getParameter("movement_id")+";");

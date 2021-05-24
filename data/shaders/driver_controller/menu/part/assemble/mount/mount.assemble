@@ -115,7 +115,7 @@
 						{
 							var mcp=render.component_call_processor[
 									render.get_component_to_id_object("movement_manager").component_id];
-							var url=mcp.mount_edit_url(true);
+							var url=mcp.mount_edit_url();
 							var ep=render.component_event_processor[component_id];
 							var index_id=-1,function_id=Math.floor((1.0-ep.y)*7.0);
 							

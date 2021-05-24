@@ -6,98 +6,8 @@ version	2015.10
 /*	sequence/parallel	*/	sequence
 /*	direction		*/	no_direction
 /*	camera scale		*/	upper	1.0
-/*	children number		*/	71
+/*	children number		*/	68
 
-        /*	name			*/	no_node_name
-        /*	audio			*/	no_sound_file
-        /*	description		*/	no_description
-        /*	sequence/parallel	*/	sequence
-        /*	direction		*/	no_direction
-        /*	camera scale		*/	upper	1.0
-        /*	children number		*/	0
-        
-        component_start
-        
-                32米标准式拆装式桁梁
-                
-        component_end
-        
-        
-        /*	start state	*/	visible
-        /*	end state	*/	visible
-        /*	step number	*/	1
-        
-            /*	time length	*/	 1.0E7
-            /*	parameter number */	 0	/* parameter */	
-            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-            
-            /*	time length	*/	 1.0E7
-            /*	parameter number */	 0	/* parameter */	
-            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-            
-        
-        /*	match number	*/	0
-        
-        /*	name			*/	no_node_name
-        /*	audio			*/	no_sound_file
-        /*	description		*/	no_description
-        /*	sequence/parallel	*/	sequence
-        /*	direction		*/	no_direction
-        /*	camera scale		*/	upper	1.0
-        /*	children number		*/	0
-        
-        component_start
-        
-                32米标准式拆装式桁梁
-                
-        component_end
-        
-        
-        /*	start state	*/	visible
-        /*	end state	*/	visible
-        /*	step number	*/	1
-        
-            /*	time length	*/	 1.0E7
-            /*	parameter number */	 0	/* parameter */	
-            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-            
-            /*	time length	*/	 1.0E7
-            /*	parameter number */	 0	/* parameter */	
-            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-            
-        
-        /*	match number	*/	0
-        
-        /*	name			*/	no_node_name
-        /*	audio			*/	no_sound_file
-        /*	description		*/	no_description
-        /*	sequence/parallel	*/	sequence
-        /*	direction		*/	no_direction
-        /*	camera scale		*/	upper	1.0
-        /*	children number		*/	0
-        
-        component_start
-        
-                32米标准式拆装式桁梁
-                
-        component_end
-        
-        
-        /*	start state	*/	visible
-        /*	end state	*/	visible
-        /*	step number	*/	1
-        
-            /*	time length	*/	 1.0E7
-            /*	parameter number */	 0	/* parameter */	
-            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-            
-            /*	time length	*/	 1.0E7
-            /*	parameter number */	 0	/* parameter */	
-            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-            
-        
-        /*	match number	*/	0
-        
         /*	name			*/	00001:没有标记
         /*	audio			*/	no_sound
         /*	description		*/	第一步：平整宽度5～6米、长度适当的水平作业场地，在桁梁底部距弦杆端头20㎝处各摆放两根同一规格的木枕或垫木做桁梁拼装支承平台。在支承平台上画出中心线以确定起点和控制平直。
@@ -28297,7 +28207,7 @@ version	2015.10
                         /*	match number	*/	0
                         
         /*	name			*/	00068:没有标记
-        /*	audio			*/	no_sound
+        /*	audio			*/	sound/68.mp3
         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
         /*	sequence/parallel	*/	sequence
         /*	direction		*/	no_direction
@@ -28305,7 +28215,7 @@ version	2015.10
         /*	children number		*/	3
         
                 /*	name			*/	00068:没有标记/00001:没有标记
-                /*	audio			*/	sound\68.mp3
+                /*	audio			*/	sound/68.mp3
                 /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
@@ -28313,7 +28223,7 @@ version	2015.10
                 /*	children number		*/	1
                 
                         /*	name			*/	00068:没有标记/00001:没有标记/00001
-                        /*	audio			*/	sound\68.mp3
+                        /*	audio			*/	sound/68.mp3
                         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                         /*	sequence/parallel	*/	sequence
                         /*	direction		*/	no_direction
@@ -28343,7 +28253,7 @@ version	2015.10
                         /*	match number	*/	0
                         
                 /*	name			*/	00068:没有标记/00002:没有标记
-                /*	audio			*/	sound\68.mp3
+                /*	audio			*/	sound/68.mp3
                 /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
@@ -28351,7 +28261,7 @@ version	2015.10
                 /*	children number		*/	1
                 
                         /*	name			*/	00068:没有标记/00002:没有标记/00001
-                        /*	audio			*/	sound\68.mp3
+                        /*	audio			*/	sound/68.mp3
                         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                         /*	sequence/parallel	*/	sequence
                         /*	direction		*/	no_direction
@@ -28381,7 +28291,7 @@ version	2015.10
                         /*	match number	*/	0
                         
                 /*	name			*/	00068:没有标记/00003:没有标记
-                /*	audio			*/	sound\68.mp3
+                /*	audio			*/	sound/68.mp3
                 /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
@@ -28389,7 +28299,7 @@ version	2015.10
                 /*	children number		*/	1
                 
                         /*	name			*/	00068:没有标记/00003:没有标记/00001
-                        /*	audio			*/	sound\68.mp3
+                        /*	audio			*/	sound/68.mp3
                         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                         /*	sequence/parallel	*/	sequence
                         /*	direction		*/	no_direction

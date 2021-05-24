@@ -56,11 +56,9 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			render.call_server_component(component_id,"all",
 				[["operation","movement"],["move_method","stop"]]);
 		};
-		render.component_call_processor[component_id].mount_edit_url=function(flag,id)
+		render.component_call_processor[component_id].mount_edit_url=function(id)
 		{
-			if(typeof(flag)!="boolean")
-				flag=true;
-			var par=[["operation","design"],["move_method","edit"],["flag",flag?"true":"false"]];
+			var par=[["operation","design"],["move_method","edit"]];
 			if(typeof(id)!="undefined")
 				par.push(["id",id]);
 			return render.create_component_request_string(component_id,"all",par);

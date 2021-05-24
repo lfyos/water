@@ -6,7 +6,7 @@ version	2015.10
 /*	sequence/parallel	*/	sequence
 /*	direction		*/	no_direction
 /*	camera scale		*/	upper	1.0
-/*	children number		*/	69
+/*	children number		*/	68
 
         /*	name			*/	00001:没有标记
         /*	audio			*/	no_sound
@@ -670,15 +670,15 @@ version	2015.10
         /*	camera scale		*/	upper	1.0
         /*	children number		*/	17
         
-                /*	name			*/	00004:没有标记/00001:没有标记
+                /*	name			*/	00004:没有标记/00017:没有标记
                 /*	audio			*/	sound\4.mp3
                 /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
                 /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
+                /*	children number		*/	2
                 
-                        /*	name			*/	00004:没有标记/00001:没有标记/00001
+                        /*	name			*/	00004:没有标记/00017:没有标记/00002
                         /*	audio			*/	sound\4.mp3
                         /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
                         /*	sequence/parallel	*/	sequence
@@ -688,35 +688,27 @@ version	2015.10
                         
                         component_start
                         
-                                252号_x1_6_1-1
+                                29乙螺栓_x1_9_1-1
                                 
                         component_end
                         
                         
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
                         /*	step number	*/	1
                         
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.549645 1.0 
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
                             
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -1.0 1.0 
                             
                         
                         /*	match number	*/	0
                         
-                /*	name			*/	00004:没有标记/00002:没有标记
-                /*	audio			*/	sound\4.mp3
-                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00004:没有标记/00002:没有标记/00001
+                        /*	name			*/	00004:没有标记/00017:没有标记/00001
                         /*	audio			*/	sound\4.mp3
                         /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
                         /*	sequence/parallel	*/	sequence
@@ -726,516 +718,22 @@ version	2015.10
                         
                         component_start
                         
-                                252号_x1_6_2-1
+                                29乙螺栓_x1_9_2-1
                                 
                         component_end
                         
                         
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
                         /*	step number	*/	1
                         
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.691489 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
                             /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
                             
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00004:没有标记/00003:没有标记
-                /*	audio			*/	sound\4.mp3
-                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00004:没有标记/00003:没有标记/00001
-                        /*	audio			*/	sound\4.mp3
-                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                255号_x1_6_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 -1.54723E-33 0.0 0.0 4.77566E-32 1.0 0.0 0.5 -5.55112E-17 -2.22045E-16 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00004:没有标记/00004:没有标记
-                /*	audio			*/	sound\4.mp3
-                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00004:没有标记/00004:没有标记/00001
-                        /*	audio			*/	sound\4.mp3
-                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                255号_x1_6_2-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 -2.1352E-33 0.0 0.0 -2.1352E-33 1.0 0.0 0.982269 -1.249E-16 0.0 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00004:没有标记/00005:没有标记
-                /*	audio			*/	sound\4.mp3
-                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00004:没有标记/00005:没有标记/00001
-                        /*	audio			*/	sound\4.mp3
-                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                255号_x1_6_3-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.999999 0.0 0.0 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00004:没有标记/00006:没有标记
-                /*	audio			*/	sound\4.mp3
-                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00004:没有标记/00006:没有标记/00001
-                        /*	audio			*/	sound\4.mp3
-                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                520号_x1_6_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.90426 6.10623E-16 0.0 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00004:没有标记/00007:没有标记
-                /*	audio			*/	sound\4.mp3
-                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00004:没有标记/00007:没有标记/00001
-                        /*	audio			*/	sound\4.mp3
-                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                30号31号34号35号_x1_6_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -1.36525 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00004:没有标记/00008:没有标记
-                /*	audio			*/	sound\4.mp3
-                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00004:没有标记/00008:没有标记/00001
-                        /*	audio			*/	sound\4.mp3
-                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                255号520号29甲螺栓_x1_6_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 1.63601E-31 0.0 0.0 1.63601E-31 1.0 0.0 -2.22045E-16 1.83187E-15 -0.65603 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00004:没有标记/00009:没有标记
-                /*	audio			*/	sound\4.mp3
-                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00004:没有标记/00009:没有标记/00001
-                        /*	audio			*/	sound\4.mp3
-                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                520号255号_x1_6_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 -3.6728E-17 5.174E-17 0.0 2.4585E-17 1.0 2.673E-17 0.0 3.785E-17 -1.466E-17 1.0 0.0 1.0 -5.48173E-16 3.10862E-15 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00004:没有标记/00010:没有标记
-                /*	audio			*/	sound\4.mp3
-                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00004:没有标记/00010:没有标记/00001
-                        /*	audio			*/	sound\4.mp3
-                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                252号255号_x1_6_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00004:没有标记/00011:没有标记
-                /*	audio			*/	sound\4.mp3
-                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00004:没有标记/00011:没有标记/00001
-                        /*	audio			*/	sound\4.mp3
-                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                30号31号34号35号_x1_6_2-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 -3.36058E-32 0.0 0.0 1.12216E-31 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -2.88658E-15 4.16334E-16 -1.0 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00004:没有标记/00012:没有标记
-                /*	audio			*/	sound\4.mp3
-                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00004:没有标记/00012:没有标记/00001
-                        /*	audio			*/	sound\4.mp3
-                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                255号520号29甲螺栓_x1_6_2-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 9.75066E-32 0.0 0.0 9.75066E-32 1.0 0.0 3.10862E-15 1.94289E-15 -1.0 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00004:没有标记/00013:没有标记
-                /*	audio			*/	sound\4.mp3
-                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00004:没有标记/00013:没有标记/00001
-                        /*	audio			*/	sound\4.mp3
-                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                251号_x1_7_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 -4.44274E-32 0.0 0.0 -9.03576E-33 1.0 0.0 9.99201E-16 -1.0 4.44089E-16 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00004:没有标记/00014:没有标记
-                /*	audio			*/	sound\4.mp3
-                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00004:没有标记/00014:没有标记/00001
-                        /*	audio			*/	sound\4.mp3
-                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                29甲螺栓_x1_7_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 8.95231E-33 0.0 0.0 8.95231E-33 1.0 0.0 0.0 -6.66134E-16 -1.0 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name			*/	00004:没有标记/00015:没有标记
-                /*	audio			*/	sound\4.mp3
-                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                /*	sequence/parallel	*/	parallel
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name			*/	00004:没有标记/00015:没有标记/00001
-                        /*	audio			*/	sound\4.mp3
-                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction		*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                22号甲_x1_9_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 -1.8209E-17 -1.8068E-17 0.0 7.372E-17 1.0 5.0E-21 0.0 1.8206E-17 -5.0E-21 1.0 0.0 2.22045E-16 -3.88578E-16 1.0 1.0 
-                            
-                            /*	time length	*/	 1.0E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            /*	location	*/	 1.0 1.79696E-32 0.0 0.0 8.28344E-33 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.33227E-15 2.22045E-16 -1.0 1.0 
                             
                         
                         /*	match number	*/	0
@@ -1263,13 +761,13 @@ version	2015.10
                         component_end
                         
                         
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
                         /*	step number	*/	2
                         
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 -0.2 1.0 
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
                             
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
@@ -1277,20 +775,20 @@ version	2015.10
                             
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 -0.2 1.0 
                             
                         
                         /*	match number	*/	0
                         
-                /*	name			*/	00004:没有标记/00017:没有标记
+                /*	name			*/	00004:没有标记/00015:没有标记
                 /*	audio			*/	sound\4.mp3
                 /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
                 /*	camera scale		*/	upper	1.0
-                /*	children number		*/	2
+                /*	children number		*/	1
                 
-                        /*	name			*/	00004:没有标记/00017:没有标记/00001
+                        /*	name			*/	00004:没有标记/00015:没有标记/00001
                         /*	audio			*/	sound\4.mp3
                         /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
                         /*	sequence/parallel	*/	sequence
@@ -1300,27 +798,35 @@ version	2015.10
                         
                         component_start
                         
-                                29乙螺栓_x1_9_2-1
+                                22号甲_x1_9_1-1
                                 
                         component_end
                         
                         
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
                         /*	step number	*/	1
                         
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 1.79696E-32 0.0 0.0 8.28344E-33 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.33227E-15 2.22045E-16 -1.0 1.0 
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
                             
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            /*	location	*/	 1.0 -1.8209E-17 -1.8068E-17 0.0 7.372E-17 1.0 5.0E-21 0.0 1.8206E-17 -5.0E-21 1.0 0.0 2.22045E-16 -3.88578E-16 1.0 1.0 
                             
                         
                         /*	match number	*/	0
                         
-                        /*	name			*/	00004:没有标记/00017:没有标记/00002
+                /*	name			*/	00004:没有标记/00014:没有标记
+                /*	audio			*/	sound\4.mp3
+                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00004:没有标记/00014:没有标记/00001
                         /*	audio			*/	sound\4.mp3
                         /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
                         /*	sequence/parallel	*/	sequence
@@ -1330,22 +836,516 @@ version	2015.10
                         
                         component_start
                         
-                                29乙螺栓_x1_9_1-1
+                                29甲螺栓_x1_7_1-1
                                 
                         component_end
                         
                         
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
                         /*	step number	*/	1
                         
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -1.0 1.0 
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
                             
                             /*	time length	*/	 1.0E9
                             /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 8.95231E-33 0.0 0.0 8.95231E-33 1.0 0.0 0.0 -6.66134E-16 -1.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00004:没有标记/00013:没有标记
+                /*	audio			*/	sound\4.mp3
+                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00004:没有标记/00013:没有标记/00001
+                        /*	audio			*/	sound\4.mp3
+                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                251号_x1_7_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
                             /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 -4.44274E-32 0.0 0.0 -9.03576E-33 1.0 0.0 9.99201E-16 -1.0 4.44089E-16 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00004:没有标记/00012:没有标记
+                /*	audio			*/	sound\4.mp3
+                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00004:没有标记/00012:没有标记/00001
+                        /*	audio			*/	sound\4.mp3
+                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                255号520号29甲螺栓_x1_6_2-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 9.75066E-32 0.0 0.0 9.75066E-32 1.0 0.0 3.10862E-15 1.94289E-15 -1.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00004:没有标记/00011:没有标记
+                /*	audio			*/	sound\4.mp3
+                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00004:没有标记/00011:没有标记/00001
+                        /*	audio			*/	sound\4.mp3
+                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                30号31号34号35号_x1_6_2-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 -3.36058E-32 0.0 0.0 1.12216E-31 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -2.88658E-15 4.16334E-16 -1.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00004:没有标记/00010:没有标记
+                /*	audio			*/	sound\4.mp3
+                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00004:没有标记/00010:没有标记/00001
+                        /*	audio			*/	sound\4.mp3
+                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                252号255号_x1_6_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00004:没有标记/00009:没有标记
+                /*	audio			*/	sound\4.mp3
+                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00004:没有标记/00009:没有标记/00001
+                        /*	audio			*/	sound\4.mp3
+                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                520号255号_x1_6_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 -3.6728E-17 5.174E-17 0.0 2.4585E-17 1.0 2.673E-17 0.0 3.785E-17 -1.466E-17 1.0 0.0 1.0 -5.48173E-16 3.10862E-15 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00004:没有标记/00008:没有标记
+                /*	audio			*/	sound\4.mp3
+                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00004:没有标记/00008:没有标记/00001
+                        /*	audio			*/	sound\4.mp3
+                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                255号520号29甲螺栓_x1_6_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 1.63601E-31 0.0 0.0 1.63601E-31 1.0 0.0 -2.22045E-16 1.83187E-15 -0.65603 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00004:没有标记/00007:没有标记
+                /*	audio			*/	sound\4.mp3
+                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00004:没有标记/00007:没有标记/00001
+                        /*	audio			*/	sound\4.mp3
+                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                30号31号34号35号_x1_6_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -1.36525 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00004:没有标记/00006:没有标记
+                /*	audio			*/	sound\4.mp3
+                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00004:没有标记/00006:没有标记/00001
+                        /*	audio			*/	sound\4.mp3
+                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                520号_x1_6_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.90426 6.10623E-16 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00004:没有标记/00005:没有标记
+                /*	audio			*/	sound\4.mp3
+                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00004:没有标记/00005:没有标记/00001
+                        /*	audio			*/	sound\4.mp3
+                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                255号_x1_6_3-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.999999 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00004:没有标记/00004:没有标记
+                /*	audio			*/	sound\4.mp3
+                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00004:没有标记/00004:没有标记/00001
+                        /*	audio			*/	sound\4.mp3
+                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                255号_x1_6_2-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 -2.1352E-33 0.0 0.0 -2.1352E-33 1.0 0.0 0.982269 -1.249E-16 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00004:没有标记/00003:没有标记
+                /*	audio			*/	sound\4.mp3
+                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00004:没有标记/00003:没有标记/00001
+                        /*	audio			*/	sound\4.mp3
+                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                255号_x1_6_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 -1.54723E-33 0.0 0.0 4.77566E-32 1.0 0.0 0.5 -5.55112E-17 -2.22045E-16 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00004:没有标记/00002:没有标记
+                /*	audio			*/	sound\4.mp3
+                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00004:没有标记/00002:没有标记/00001
+                        /*	audio			*/	sound\4.mp3
+                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                252号_x1_6_2-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.691489 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00004:没有标记/00001:没有标记
+                /*	audio			*/	sound\4.mp3
+                /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00004:没有标记/00001:没有标记/00001
+                        /*	audio			*/	sound\4.mp3
+                        /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                252号_x1_6_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.549645 1.0 
                             
                         
                         /*	match number	*/	0
@@ -28207,7 +28207,7 @@ version	2015.10
                         /*	match number	*/	0
                         
         /*	name			*/	00068:没有标记
-        /*	audio			*/	no_sound
+        /*	audio			*/	sound/68.mp3
         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
         /*	sequence/parallel	*/	sequence
         /*	direction		*/	no_direction
@@ -28215,7 +28215,7 @@ version	2015.10
         /*	children number		*/	3
         
                 /*	name			*/	00068:没有标记/00001:没有标记
-                /*	audio			*/	sound\68.mp3
+                /*	audio			*/	sound/68.mp3
                 /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
@@ -28223,7 +28223,7 @@ version	2015.10
                 /*	children number		*/	1
                 
                         /*	name			*/	00068:没有标记/00001:没有标记/00001
-                        /*	audio			*/	sound\68.mp3
+                        /*	audio			*/	sound/68.mp3
                         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                         /*	sequence/parallel	*/	sequence
                         /*	direction		*/	no_direction
@@ -28253,7 +28253,7 @@ version	2015.10
                         /*	match number	*/	0
                         
                 /*	name			*/	00068:没有标记/00002:没有标记
-                /*	audio			*/	sound\68.mp3
+                /*	audio			*/	sound/68.mp3
                 /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
@@ -28261,7 +28261,7 @@ version	2015.10
                 /*	children number		*/	1
                 
                         /*	name			*/	00068:没有标记/00002:没有标记/00001
-                        /*	audio			*/	sound\68.mp3
+                        /*	audio			*/	sound/68.mp3
                         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                         /*	sequence/parallel	*/	sequence
                         /*	direction		*/	no_direction
@@ -28291,7 +28291,7 @@ version	2015.10
                         /*	match number	*/	0
                         
                 /*	name			*/	00068:没有标记/00003:没有标记
-                /*	audio			*/	sound\68.mp3
+                /*	audio			*/	sound/68.mp3
                 /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
@@ -28299,7 +28299,7 @@ version	2015.10
                 /*	children number		*/	1
                 
                         /*	name			*/	00068:没有标记/00003:没有标记/00001
-                        /*	audio			*/	sound\68.mp3
+                        /*	audio			*/	sound/68.mp3
                         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                         /*	sequence/parallel	*/	sequence
                         /*	direction		*/	no_direction
@@ -28328,161 +28328,3 @@ version	2015.10
                         
                         /*	match number	*/	0
                         
-        /*	name			*/	拼装完成
-        /*	audio			*/	sound.mp3
-        /*	description		*/	拼装完成
-        /*	sequence/parallel	*/	sequence
-        /*	direction		*/	no_direction
-        /*	camera scale		*/	upper	1.0
-        /*	children number		*/	5
-        
-                /*	name			*/	no_node_name
-                /*	audio			*/	sound.mp3
-                /*	description		*/	拼装完成
-                /*	sequence/parallel	*/	sequence
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	0
-                
-                component_start
-                
-                        32米标准式拆装式桁梁
-                        
-                component_end
-                
-                
-                /*	start state	*/	visible
-                /*	end state	*/	visible
-                /*	step number	*/	1
-                
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                
-                /*	match number	*/	0
-                
-                /*	name			*/	no_node_name
-                /*	audio			*/	sound.mp3
-                /*	description		*/	拼装完成
-                /*	sequence/parallel	*/	sequence
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	0
-                
-                component_start
-                
-                        32米标准式拆装式桁梁
-                        
-                component_end
-                
-                
-                /*	start state	*/	visible
-                /*	end state	*/	visible
-                /*	step number	*/	1
-                
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                
-                /*	match number	*/	0
-                
-                /*	name			*/	no_node_name
-                /*	audio			*/	sound.mp3
-                /*	description		*/	拼装完成
-                /*	sequence/parallel	*/	sequence
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	0
-                
-                component_start
-                
-                        32米标准式拆装式桁梁
-                        
-                component_end
-                
-                
-                /*	start state	*/	visible
-                /*	end state	*/	visible
-                /*	step number	*/	1
-                
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                
-                /*	match number	*/	0
-                
-                /*	name			*/	no_node_name
-                /*	audio			*/	sound.mp3
-                /*	description		*/	拼装完成
-                /*	sequence/parallel	*/	sequence
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	0
-                
-                component_start
-                
-                        32米标准式拆装式桁梁
-                        
-                component_end
-                
-                
-                /*	start state	*/	visible
-                /*	end state	*/	visible
-                /*	step number	*/	1
-                
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                
-                /*	match number	*/	0
-                
-                /*	name			*/	no_node_name
-                /*	audio			*/	sound.mp3
-                /*	description		*/	拼装完成
-                /*	sequence/parallel	*/	sequence
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	0
-                
-                component_start
-                
-                        32米标准式拆装式桁梁
-                        
-                component_end
-                
-                
-                /*	start state	*/	visible
-                /*	end state	*/	visible
-                /*	step number	*/	1
-                
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                
-                /*	match number	*/	0
-                

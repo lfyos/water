@@ -6,7 +6,7 @@ version	2015.10
 /*	sequence/parallel	*/	sequence
 /*	direction		*/	no_direction
 /*	camera scale		*/	upper	1.0
-/*	children number		*/	69
+/*	children number		*/	68
 
         /*	name			*/	00001:没有标记
         /*	audio			*/	no_sound
@@ -675,7 +675,7 @@ version	2015.10
                 /*	description		*/	第四步：在H0和HH0拼接点13号短弦杆和24号弦杆短头连接处外侧安装两块大面相对的255号连接角，并在两个255号连接角间插入安装一块520号填板。在13号弦杆内侧垫入两块252号小填板安装255号连接角，在255号连接角上安装251号加强支杆。在218号端结点板内侧安装22甲平联横联结点板，用螺栓紧固22甲平联横联结点板和251号加强支杆。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
+                /*	camera scale		*/	start	1.0
                 /*	children number		*/	1
                 
                         /*	name			*/	00004:没有标记/00001:没有标记/00001
@@ -28207,7 +28207,7 @@ version	2015.10
                         /*	match number	*/	0
                         
         /*	name			*/	00068:没有标记
-        /*	audio			*/	no_sound
+        /*	audio			*/	sound/68.mp3
         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
         /*	sequence/parallel	*/	sequence
         /*	direction		*/	no_direction
@@ -28215,7 +28215,7 @@ version	2015.10
         /*	children number		*/	3
         
                 /*	name			*/	00068:没有标记/00001:没有标记
-                /*	audio			*/	sound\68.mp3
+                /*	audio			*/	sound/68.mp3
                 /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
@@ -28223,7 +28223,7 @@ version	2015.10
                 /*	children number		*/	1
                 
                         /*	name			*/	00068:没有标记/00001:没有标记/00001
-                        /*	audio			*/	sound\68.mp3
+                        /*	audio			*/	sound/68.mp3
                         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                         /*	sequence/parallel	*/	sequence
                         /*	direction		*/	no_direction
@@ -28253,7 +28253,7 @@ version	2015.10
                         /*	match number	*/	0
                         
                 /*	name			*/	00068:没有标记/00002:没有标记
-                /*	audio			*/	sound\68.mp3
+                /*	audio			*/	sound/68.mp3
                 /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
@@ -28261,7 +28261,7 @@ version	2015.10
                 /*	children number		*/	1
                 
                         /*	name			*/	00068:没有标记/00002:没有标记/00001
-                        /*	audio			*/	sound\68.mp3
+                        /*	audio			*/	sound/68.mp3
                         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                         /*	sequence/parallel	*/	sequence
                         /*	direction		*/	no_direction
@@ -28291,7 +28291,7 @@ version	2015.10
                         /*	match number	*/	0
                         
                 /*	name			*/	00068:没有标记/00003:没有标记
-                /*	audio			*/	sound\68.mp3
+                /*	audio			*/	sound/68.mp3
                 /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
@@ -28299,7 +28299,7 @@ version	2015.10
                 /*	children number		*/	1
                 
                         /*	name			*/	00068:没有标记/00003:没有标记/00001
-                        /*	audio			*/	sound\68.mp3
+                        /*	audio			*/	sound/68.mp3
                         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                         /*	sequence/parallel	*/	sequence
                         /*	direction		*/	no_direction
@@ -28328,161 +28328,3 @@ version	2015.10
                         
                         /*	match number	*/	0
                         
-        /*	name			*/	拼装完成
-        /*	audio			*/	sound.mp3
-        /*	description		*/	拼装完成
-        /*	sequence/parallel	*/	sequence
-        /*	direction		*/	no_direction
-        /*	camera scale		*/	upper	1.0
-        /*	children number		*/	5
-        
-                /*	name			*/	拼装完成
-                /*	audio			*/	sound.mp3
-                /*	description		*/	拼装完成
-                /*	sequence/parallel	*/	sequence
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	0
-                
-                component_start
-                
-                        32米标准式拆装式桁梁
-                        
-                component_end
-                
-                
-                /*	start state	*/	visible
-                /*	end state	*/	visible
-                /*	step number	*/	1
-                
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                
-                /*	match number	*/	0
-                
-                /*	name			*/	拼装完成
-                /*	audio			*/	sound.mp3
-                /*	description		*/	拼装完成
-                /*	sequence/parallel	*/	sequence
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	0
-                
-                component_start
-                
-                        32米标准式拆装式桁梁
-                        
-                component_end
-                
-                
-                /*	start state	*/	visible
-                /*	end state	*/	visible
-                /*	step number	*/	1
-                
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                
-                /*	match number	*/	0
-                
-                /*	name			*/	拼装完成
-                /*	audio			*/	sound.mp3
-                /*	description		*/	拼装完成
-                /*	sequence/parallel	*/	sequence
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	0
-                
-                component_start
-                
-                        32米标准式拆装式桁梁
-                        
-                component_end
-                
-                
-                /*	start state	*/	visible
-                /*	end state	*/	visible
-                /*	step number	*/	1
-                
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                
-                /*	match number	*/	0
-                
-                /*	name			*/	拼装完成
-                /*	audio			*/	sound.mp3
-                /*	description		*/	拼装完成
-                /*	sequence/parallel	*/	sequence
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	0
-                
-                component_start
-                
-                        32米标准式拆装式桁梁
-                        
-                component_end
-                
-                
-                /*	start state	*/	visible
-                /*	end state	*/	visible
-                /*	step number	*/	1
-                
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                
-                /*	match number	*/	0
-                
-                /*	name			*/	拼装完成
-                /*	audio			*/	sound.mp3
-                /*	description		*/	拼装完成
-                /*	sequence/parallel	*/	sequence
-                /*	direction		*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	0
-                
-                component_start
-                
-                        32米标准式拆装式桁梁
-                        
-                component_end
-                
-                
-                /*	start state	*/	visible
-                /*	end state	*/	visible
-                /*	step number	*/	1
-                
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                    /*	time length	*/	 1.0E7
-                    /*	parameter number */	 0	/* parameter */	
-                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                    
-                
-                /*	match number	*/	0
-                

@@ -28207,7 +28207,7 @@ version	2015.10
                         /*	match number	*/	0
                         
         /*	name			*/	00068:没有标记
-        /*	audio			*/	no_sound
+        /*	audio			*/	sound/68.mp3
         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
         /*	sequence/parallel	*/	sequence
         /*	direction		*/	no_direction
@@ -28215,7 +28215,7 @@ version	2015.10
         /*	children number		*/	3
         
                 /*	name			*/	00068:没有标记/00001:没有标记
-                /*	audio			*/	sound\68.mp3
+                /*	audio			*/	sound/68.mp3
                 /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
@@ -28223,7 +28223,7 @@ version	2015.10
                 /*	children number		*/	1
                 
                         /*	name			*/	00068:没有标记/00001:没有标记/00001
-                        /*	audio			*/	sound\68.mp3
+                        /*	audio			*/	sound/68.mp3
                         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                         /*	sequence/parallel	*/	sequence
                         /*	direction		*/	no_direction
@@ -28253,7 +28253,7 @@ version	2015.10
                         /*	match number	*/	0
                         
                 /*	name			*/	00068:没有标记/00002:没有标记
-                /*	audio			*/	sound\68.mp3
+                /*	audio			*/	sound/68.mp3
                 /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
@@ -28261,7 +28261,7 @@ version	2015.10
                 /*	children number		*/	1
                 
                         /*	name			*/	00068:没有标记/00002:没有标记/00001
-                        /*	audio			*/	sound\68.mp3
+                        /*	audio			*/	sound/68.mp3
                         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                         /*	sequence/parallel	*/	sequence
                         /*	direction		*/	no_direction
@@ -28291,7 +28291,7 @@ version	2015.10
                         /*	match number	*/	0
                         
                 /*	name			*/	00068:没有标记/00003:没有标记
-                /*	audio			*/	sound\68.mp3
+                /*	audio			*/	sound/68.mp3
                 /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                 /*	sequence/parallel	*/	parallel
                 /*	direction		*/	no_direction
@@ -28299,7 +28299,7 @@ version	2015.10
                 /*	children number		*/	1
                 
                         /*	name			*/	00068:没有标记/00003:没有标记/00001
-                        /*	audio			*/	sound\68.mp3
+                        /*	audio			*/	sound/68.mp3
                         /*	description		*/	第六十八步：在B16和BB16拼接点外端的218号端结点板内外侧对应安装24号弦杆短头。根据桁梁拼装作业技术要求，全面检查、补充和复紧各部位的栓钉、螺栓和杆件。
                         /*	sequence/parallel	*/	sequence
                         /*	direction		*/	no_direction

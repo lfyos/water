@@ -91,7 +91,7 @@ public class movement_function_switch
 		}
 		return searcher.result_parent.movement_tree_id;
 	}
-	private void edit_move(boolean do_edit_flag)
+	private void edit_move()
 	{
 		if(manager.root_movement==null)
 			return;
@@ -105,7 +105,7 @@ public class movement_function_switch
 		if(move_id<0)
 			move_id=manager.root_movement.movement_tree_id;
 		manager.last_edit_move_id=move_id;
-		new movement_edit(ek,ci,manager,move_id,do_edit_flag);
+		new movement_edit(ek,ci,manager,move_id);
 	}
 	private int delete_move()
 	{
@@ -852,17 +852,7 @@ public class movement_function_switch
 			return null;
 		switch(str.trim().toLowerCase()){
 		case "edit":
-			switch(((str=ci.request_response.get_parameter("flag"))==null)?"true":str){
-			default:
-			case "true":
-			case "yes":
-				edit_move(true);
-				break;
-			case "false":
-			case "no":
-				edit_move(false);
-				break;
-			}
+			edit_move();
 			return null;
 		case "jason":
 			movement_jason.create_jason_with_current_movement_tree_id(
@@ -957,7 +947,7 @@ public class movement_function_switch
 			push();
 			fromdesignbuffer();
 			if(manager.root_movement!=null)
-				new movement_edit(ek,ci,manager,manager.root_movement.movement_tree_id,true);
+				new movement_edit(ek,ci,manager,manager.root_movement.movement_tree_id);
 			return null;
 		case "deletedesignbuffer":
 			if((str=ci.request_response.get_parameter("buffer"))!=null)
