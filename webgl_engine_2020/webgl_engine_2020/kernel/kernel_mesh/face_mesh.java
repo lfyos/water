@@ -15,7 +15,7 @@ public interface face_mesh
 	public int get_attribute_number(int attribute_id,auxiliary_file_handler f);
 	public double[] get_attribute(int index_id,int attribute_id,auxiliary_file_handler f);
 	public String get_attribute_extra_data(int index_id,int attribute_id,auxiliary_file_handler f);
-	
+
 	public int get_attribute_number();
 	public int get_primitive_number();
 	public int get_primitive_vertex_number(int primitive_id,auxiliary_file_handler f);

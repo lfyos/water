@@ -103,7 +103,6 @@ public class face_mesh_default_primitive_set
 						{my_material[0],my_material[1],my_material[2],my_material[3]},
 						{my_material[0],my_material[1],my_material[2],my_material[3]},
 				};
-
 		vertex=new int[][]
 				{
 						{0,1,2},	{2,1,3},		//left face
