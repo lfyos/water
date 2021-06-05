@@ -13,18 +13,16 @@ namespace extract_solidworks_data
 {
     class solidworks
     {
-        
-        private void do_extract(string source_file_name,string target_directory_name,string charset,int tessellation_quality,part_collector collector)
+        private string do_extract(string charset,int tessellation_quality,double ChordTolerance,double LengthTolerance)
         {
             Console.WriteLine("Starting Solidworks......");
 
             string solidworks_name = "SldWorks.Application";
 
             ISldWorks sw = null;
-            bool terminated_flag=false;
             try
             {
-                sw = System.Runtime.InteropServices.Marshal.GetActiveObject(solidworks_name) as SolidWorks.Interop.sldworks.ISldWorks;
+                sw=System.Runtime.InteropServices.Marshal.GetActiveObject(solidworks_name) as SolidWorks.Interop.sldworks.ISldWorks;
             }
             catch (Exception)
             {
@@ -34,7 +32,6 @@ namespace extract_solidworks_data
                 try
                 {
                     sw = System.Activator.CreateInstance(System.Type.GetTypeFromProgID(solidworks_name)) as SolidWorks.Interop.sldworks.ISldWorks;
-                    terminated_flag =true;
                 }
                 catch (Exception)
                 {
@@ -44,52 +41,45 @@ namespace extract_solidworks_data
             if (sw == null)
             {
                 Console.WriteLine("Can NOT start or connect to Solidworks");
-                return;
+                return "";
             }
 
             sw.Visible = true;
             sw.CommandInProgress = true;
 
-            Console.WriteLine("Start loading Solidworks document: " + source_file_name);
-
-            IModelDoc2 doc = null;
-            int longstatus = 0, longwarnings = 0;
-
-            if (!(System.IO.File.Exists(source_file_name)))
+            IModelDoc2 doc=(ModelDoc2)(sw.ActiveDoc);
+            if (doc== null)
             {
-                if((doc = (ModelDoc2)(sw.ActiveDoc)) == null)
-                {
-                    Console.WriteLine("NO active Solidworks document exists");
-                    return;
-                }
+                Console.WriteLine("NO active Solidworks document exists");
+                return "";
             }
-            else
-            {
-                if ((doc = (IModelDoc2)(sw.OpenDoc6(source_file_name, (int)(swDocumentTypes_e.swDocASSEMBLY), 0, "", ref longstatus, ref longwarnings))) == null)
-                    if ((doc = (IModelDoc2)(sw.OpenDoc6(source_file_name, (int)(swDocumentTypes_e.swDocPART), 0, "", ref longstatus, ref longwarnings))) == null)
-                        if ((doc = (ModelDoc2)(sw.LoadFile4(source_file_name, "", null, ref longstatus))) == null)
-                        {
-                            Console.WriteLine("Can NOT open Solidworks document: " + source_file_name);
-                            return;
-                        }
-            }
+            string document_path_name=doc.GetPathName();
             if (doc.GetType() == (int)(swDocumentTypes_e.swDocASSEMBLY))
             {
-                Console.WriteLine("Starting assemble ResolveAllLightweight: " + doc.GetPathName());
+                Console.WriteLine("Starting assemble ResolveAllLightweight: " + document_path_name);
                 ((IAssemblyDoc)doc).ResolveAllLightweight();
             }
 
             if(tessellation_quality>0)
                 doc.SetTessellationQuality(tessellation_quality);
 
-            Console.WriteLine("Starting ForceRebuild3: " + doc.GetPathName());
+            Console.WriteLine("Starting ForceRebuild3: " + document_path_name);
             doc.ForceRebuild3(false);
             doc.ViewZoomtofit2();
             doc.GraphicsRedraw2();
-            Console.WriteLine("ForceRebuild3 finished : " + doc.GetPathName());
+            Console.WriteLine("ForceRebuild3 finished : " + document_path_name);
+
+            string target_directory_name = document_path_name+".lfy_3d\\";
+
+            if (System.IO.Directory.Exists(target_directory_name))
+                new DirectoryInfo(target_directory_name).Delete(true);
+            new DirectoryInfo(target_directory_name).Create();
+            
 
             FileStream assemble_stream = new FileStream(target_directory_name + "assemble.assemble", FileMode.Create, FileAccess.Write);
             StreamWriter assemble_writer = new StreamWriter(assemble_stream, Encoding.GetEncoding(charset));
+
+            part_collector collector = new part_collector(target_directory_name, charset, ChordTolerance, LengthTolerance);
 
             if (doc.GetType() == (int)(swDocumentTypes_e.swDocASSEMBLY))
                 new assemble(doc, collector, target_directory_name).root_tree_node.write("", assemble_writer);
@@ -102,30 +92,35 @@ namespace extract_solidworks_data
                 assemble_writer.WriteLine("0");
             }
             else
-                Console.WriteLine("Can NOT get Solidworks document type: " + doc.GetPathName());
+                Console.WriteLine("Can NOT get Solidworks document type: " + document_path_name);
 
+            collector.close();
             assemble_writer.Close();
             assemble_stream.Close();
 
             sw.QuitDoc(doc.GetTitle());
             sw.CommandInProgress = false;
 
-            if(terminated_flag)
-                sw.ExitApp();
+            return document_path_name;
         }
-        public solidworks(string source_file_name,string target_directory_name,string charset,
-           int tessellation_quality, double ChordTolerance, double LengthTolerance,part_collector collector)
+        public solidworks()
         {
-            Console.WriteLine("Extract_solidworks_data: source_file_name:" + source_file_name);
-            Console.WriteLine("Extract_solidworks_data: target_directory_name:" + target_directory_name);
-            Console.WriteLine("Extract_solidworks_data: charset:" + charset);
-            Console.WriteLine("Extract_solidworks_data: tessellation_quality:" + tessellation_quality);
-            Console.WriteLine("Extract_solidworks_data: ChordTolerance:" + ChordTolerance);
-            Console.WriteLine("Extract_solidworks_data: LengthTolerance:" + LengthTolerance);
+            StreamReader config = new StreamReader(
+                AppDomain.CurrentDomain.BaseDirectory + "\\config.txt",
+                System.Text.Encoding.GetEncoding("gb2312"));
+            string charset              =   config.ReadLine().Trim();
+            int tessellation_quality    =   int.Parse(config.ReadLine().Trim());
+            double ChordTolerance       =   double.Parse(config.ReadLine().Trim());
+            double LengthTolerance      =   double.Parse(config.ReadLine().Trim());
+            config.Close();
 
-            do_extract(source_file_name,target_directory_name,charset,tessellation_quality, collector);
-
-            Console.WriteLine("End extract_solidworks_data: source_file_name:" + source_file_name);
+            Console.WriteLine("Extract_solidworks_data: charset:"               + charset);
+            Console.WriteLine("Extract_solidworks_data: tessellation_quality:"  + tessellation_quality);
+            Console.WriteLine("Extract_solidworks_data: ChordTolerance:"        + ChordTolerance);
+            Console.WriteLine("Extract_solidworks_data: LengthTolerance:"       + LengthTolerance);
+            Console.WriteLine("End extract_solidworks_data from "               +
+                do_extract(charset, tessellation_quality, ChordTolerance,LengthTolerance));
         }
     }
 }
+ 
