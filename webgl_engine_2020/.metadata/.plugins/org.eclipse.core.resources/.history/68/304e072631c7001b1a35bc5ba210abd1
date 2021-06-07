@@ -2,6 +2,9 @@ package kernel_part;
 
 import java.io.File;
 
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
+
 public class buffer_object_file_modify_time_and_length 
 {
 	public long buffer_object_head_last_modify_time;
