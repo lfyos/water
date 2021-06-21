@@ -1,0 +1,3191 @@
+/*	version					*/	2021.07.01
+/*	origin material			*/	0	0	0	1
+/*	default material		*/	0.86	0.8	0.909804	0
+/*	max_attribute_number	*/	0
+
+/*	body_number	*/	1
+   /* body  0  name   */  LPattern10   /*   face_number   */  101
+     /* face  0  name   */  LPattern10的第0个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0319685 -0.011 -0.011  0.0322391 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0322391   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0322391 -0.0109151 -0.0109483  0.0322391 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0319685   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0319685 -0.0109151 -0.0109483  0.0319685 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  1  name   */  LPattern10的第1个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0335921 -0.011 -0.011  0.0338627 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0338627   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0338627 -0.0109151 -0.0109483  0.0338627 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0335921   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0335921 -0.0109151 -0.0109483  0.0335921 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  2  name   */  LPattern10的第2个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0352157 -0.011 -0.011  0.0354863 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0354863   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0354863 -0.0109151 -0.0109483  0.0354863 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0352157   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0352157 -0.0109151 -0.0109483  0.0352157 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  3  name   */  LPattern10的第3个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0368393 -0.011 -0.011  0.0371099 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0371099   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0371099 -0.0109151 -0.0109483  0.0371099 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0368393   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0368393 -0.0109151 -0.0109483  0.0368393 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  4  name   */  LPattern10的第4个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0384629 -0.011 -0.011  0.0387335 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0387335   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0387335 -0.0109151 -0.0109483  0.0387335 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0384629   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0384629 -0.0109151 -0.0109483  0.0384629 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  5  name   */  LPattern10的第5个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0400865 -0.011 -0.011  0.0403571 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0403571   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0403571 -0.0109151 -0.0109483  0.0403571 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0400865   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0400865 -0.0109151 -0.0109483  0.0400865 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  6  name   */  LPattern10的第6个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0417101 -0.011 -0.011  0.0419807 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0419807   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0419807 -0.0109151 -0.0109483  0.0419807 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0417101   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0417101 -0.0109151 -0.0109483  0.0417101 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  7  name   */  LPattern10的第7个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0433337 -0.011 -0.011  0.0436043 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0436043   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0436043 -0.0109151 -0.0109483  0.0436043 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0433337   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0433337 -0.0109151 -0.0109483  0.0433337 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  8  name   */  LPattern10的第8个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0449573 -0.011 -0.011  0.0452279 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0452279   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0452279 -0.0109151 -0.0109483  0.0452279 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0449573   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0449573 -0.0109151 -0.0109483  0.0449573 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  9  name   */  LPattern10的第9个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0465809 -0.011 -0.011  0.0468515 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0468515   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0468515 -0.0109151 -0.0109483  0.0468515 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0465809   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0465809 -0.0109151 -0.0109483  0.0465809 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  10  name   */  LPattern10的第10个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0482045 -0.011 -0.011  0.0484751 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0484751   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0484751 -0.0109151 -0.0109483  0.0484751 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0482045   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0482045 -0.0109151 -0.0109483  0.0482045 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  11  name   */  LPattern10的第11个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0498281 -0.011 -0.011  0.0500987 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0500987   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0500987 -0.0109151 -0.0109483  0.0500987 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0498281   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0498281 -0.0109151 -0.0109483  0.0498281 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  12  name   */  LPattern10的第12个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0514517 -0.011 -0.011  0.0517223 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0517223   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0517223 -0.0109151 -0.0109483  0.0517223 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0514517   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0514517 -0.0109151 -0.0109483  0.0514517 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  13  name   */  LPattern10的第13个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0530753 -0.011 -0.011  0.0533459 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0533459   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0533459 -0.0109151 -0.0109483  0.0533459 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0530753   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0530753 -0.0109151 -0.0109483  0.0530753 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  14  name   */  LPattern10的第14个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0546989 -0.011 -0.011  0.0549695 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0549695   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0549695 -0.0109151 -0.0109483  0.0549695 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0546989   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0546989 -0.0109151 -0.0109483  0.0546989 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  15  name   */  LPattern10的第15个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0563225 -0.011 -0.011  0.0565931 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0565931   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0565931 -0.0109151 -0.0109483  0.0565931 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0563225   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0563225 -0.0109151 -0.0109483  0.0563225 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  16  name   */  LPattern10的第16个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0579461 -0.011 -0.011  0.0582167 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0582167   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0582167 -0.0109151 -0.0109483  0.0582167 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0579461   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0579461 -0.0109151 -0.0109483  0.0579461 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  17  name   */  LPattern10的第17个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0595697 -0.011 -0.011  0.0598403 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0598403   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0598403 -0.0109151 -0.0109483  0.0598403 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0595697   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0595697 -0.0109151 -0.0109483  0.0595697 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  18  name   */  LPattern10的第18个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0611933 -0.011 -0.011  0.0614639 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0614639   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0614639 -0.0109151 -0.0109483  0.0614639 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0611933   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0611933 -0.0109151 -0.0109483  0.0611933 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  19  name   */  LPattern10的第19个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0628169 -0.011 -0.011  0.0630875 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0630875   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0630875 -0.0109151 -0.0109483  0.0630875 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0628169   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0628169 -0.0109151 -0.0109483  0.0628169 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  20  name   */  LPattern10的第20个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0644405 -0.011 -0.011  0.0647111 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0647111   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0647111 -0.0109151 -0.0109483  0.0647111 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0644405   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0644405 -0.0109151 -0.0109483  0.0644405 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  21  name   */  LPattern10的第21个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0660641 -0.011 -0.011  0.0663347 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0663347   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0663347 -0.0109151 -0.0109483  0.0663347 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0660641   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0660641 -0.0109151 -0.0109483  0.0660641 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  22  name   */  LPattern10的第22个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0676877 -0.011 -0.011  0.0679583 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0679583   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0679583 -0.0109151 -0.0109483  0.0679583 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0676877   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0676877 -0.0109151 -0.0109483  0.0676877 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  23  name   */  LPattern10的第23个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0693113 -0.011 -0.011  0.0695819 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0695819   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0695819 -0.0109151 -0.0109483  0.0695819 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0693113   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0693113 -0.0109151 -0.0109483  0.0693113 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  24  name   */  LPattern10的第24个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0709349 -0.011 -0.011  0.0712055 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0712055   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0712055 -0.0109151 -0.0109483  0.0712055 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0709349   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0709349 -0.0109151 -0.0109483  0.0709349 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  25  name   */  LPattern10的第25个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0725585 -0.011 -0.011  0.0728291 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0728291   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0728291 -0.0109151 -0.0109483  0.0728291 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0725585   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0725585 -0.0109151 -0.0109483  0.0725585 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  26  name   */  LPattern10的第26个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0741821 -0.011 -0.011  0.0744527 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0744527   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0744527 -0.0109151 -0.0109483  0.0744527 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0741821   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0741821 -0.0109151 -0.0109483  0.0741821 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  27  name   */  LPattern10的第27个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0758057 -0.011 -0.011  0.0760763 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0760763   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0760763 -0.0109151 -0.0109483  0.0760763 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0758057   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0758057 -0.0109151 -0.0109483  0.0758057 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  28  name   */  LPattern10的第28个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0774293 -0.011 -0.011  0.0776999 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0776999   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0776999 -0.0109151 -0.0109483  0.0776999 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0774293   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0774293 -0.0109151 -0.0109483  0.0774293 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  29  name   */  LPattern10的第29个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0783764   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0783764 -0.011 -0.011  0.0790529 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0790529   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0790529 -0.0109151 -0.0109483  0.0790529 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0783764   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0783764 -0.0097295 -0.00982827  0.0783764 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  30  name   */  LPattern10的第30个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0776999   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0776999 -0.011 -0.011  0.0783764 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0783764   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0783764 -0.0097295 -0.00982827  0.0783764 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0776999   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0776999 -0.0109151 -0.0109483  0.0776999 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  31  name   */  LPattern10的第31个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    -1.0   -0.0   -0.0   0.08   0.011   0.0
+         /* total_face_primitive_number */ 10
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.08 -0.00982827 -0.00982827  0.08 0.00982827 0.00982827 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.08   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.08 -0.0097295 -0.00982827  0.08 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  32  name   */  LPattern10的第32个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0793235   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0793235 -0.011 -0.011  0.08 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.08   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.08 -0.0097295 -0.00982827  0.08 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0793235   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0793235 -0.0109151 -0.0109483  0.0793235 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  33  name   */  LPattern10的第33个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0790529 -0.011 -0.011  0.0793235 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0793235   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0793235 -0.0109151 -0.0109483  0.0793235 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0790529   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0790529 -0.0109151 -0.0109483  0.0790529 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  34  name   */  LPattern10的第34个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0767528   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0767528 -0.011 -0.011  0.0774293 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0774293   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0774293 -0.0109151 -0.0109483  0.0774293 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0767528   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0767528 -0.0097295 -0.00982827  0.0767528 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  35  name   */  LPattern10的第35个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0760763   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0760763 -0.011 -0.011  0.0767528 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0767528   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0767528 -0.0097295 -0.00982827  0.0767528 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0760763   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0760763 -0.0109151 -0.0109483  0.0760763 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  36  name   */  LPattern10的第36个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0751292   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0751292 -0.011 -0.011  0.0758057 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0758057   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0758057 -0.0109151 -0.0109483  0.0758057 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0751292   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0751292 -0.0097295 -0.00982827  0.0751292 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  37  name   */  LPattern10的第37个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0744527   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0744527 -0.011 -0.011  0.0751292 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0751292   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0751292 -0.0097295 -0.00982827  0.0751292 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0744527   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0744527 -0.0109151 -0.0109483  0.0744527 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  38  name   */  LPattern10的第38个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0735056   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0735056 -0.011 -0.011  0.0741821 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0741821   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0741821 -0.0109151 -0.0109483  0.0741821 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0735056   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0735056 -0.0097295 -0.00982827  0.0735056 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  39  name   */  LPattern10的第39个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0728291   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0728291 -0.011 -0.011  0.0735056 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0735056   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0735056 -0.0097295 -0.00982827  0.0735056 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0728291   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0728291 -0.0109151 -0.0109483  0.0728291 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  40  name   */  LPattern10的第40个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.071882   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.071882 -0.011 -0.011  0.0725585 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0725585   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0725585 -0.0109151 -0.0109483  0.0725585 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.071882   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.071882 -0.0097295 -0.00982827  0.071882 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  41  name   */  LPattern10的第41个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0712055   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0712055 -0.011 -0.011  0.071882 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.071882   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.071882 -0.0097295 -0.00982827  0.071882 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0712055   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0712055 -0.0109151 -0.0109483  0.0712055 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  42  name   */  LPattern10的第42个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0702584   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0702584 -0.011 -0.011  0.0709349 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0709349   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0709349 -0.0109151 -0.0109483  0.0709349 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0702584   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0702584 -0.0097295 -0.00982827  0.0702584 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  43  name   */  LPattern10的第43个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0695819   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0695819 -0.011 -0.011  0.0702584 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0702584   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0702584 -0.0097295 -0.00982827  0.0702584 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0695819   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0695819 -0.0109151 -0.0109483  0.0695819 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  44  name   */  LPattern10的第44个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0686348   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0686348 -0.011 -0.011  0.0693113 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0693113   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0693113 -0.0109151 -0.0109483  0.0693113 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0686348   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0686348 -0.0097295 -0.00982827  0.0686348 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  45  name   */  LPattern10的第45个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0679583   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0679583 -0.011 -0.011  0.0686348 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0686348   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0686348 -0.0097295 -0.00982827  0.0686348 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0679583   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0679583 -0.0109151 -0.0109483  0.0679583 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  46  name   */  LPattern10的第46个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0670112   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0670112 -0.011 -0.011  0.0676877 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0676877   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0676877 -0.0109151 -0.0109483  0.0676877 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0670112   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0670112 -0.0097295 -0.00982827  0.0670112 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  47  name   */  LPattern10的第47个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0663347   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0663347 -0.011 -0.011  0.0670112 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0670112   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0670112 -0.0097295 -0.00982827  0.0670112 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0663347   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0663347 -0.0109151 -0.0109483  0.0663347 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  48  name   */  LPattern10的第48个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0653876   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0653876 -0.011 -0.011  0.0660641 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0660641   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0660641 -0.0109151 -0.0109483  0.0660641 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0653876   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0653876 -0.0097295 -0.00982827  0.0653876 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  49  name   */  LPattern10的第49个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0647111   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0647111 -0.011 -0.011  0.0653876 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0653876   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0653876 -0.0097295 -0.00982827  0.0653876 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0647111   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0647111 -0.0109151 -0.0109483  0.0647111 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  50  name   */  LPattern10的第50个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.063764   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.063764 -0.011 -0.011  0.0644405 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0644405   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0644405 -0.0109151 -0.0109483  0.0644405 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.063764   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.063764 -0.0097295 -0.00982827  0.063764 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  51  name   */  LPattern10的第51个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0630875   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0630875 -0.011 -0.011  0.063764 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.063764   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.063764 -0.0097295 -0.00982827  0.063764 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0630875   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0630875 -0.0109151 -0.0109483  0.0630875 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  52  name   */  LPattern10的第52个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0621404   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0621404 -0.011 -0.011  0.0628169 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0628169   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0628169 -0.0109151 -0.0109483  0.0628169 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0621404   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0621404 -0.0097295 -0.00982827  0.0621404 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  53  name   */  LPattern10的第53个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0614639   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0614639 -0.011 -0.011  0.0621404 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0621404   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0621404 -0.0097295 -0.00982827  0.0621404 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0614639   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0614639 -0.0109151 -0.0109483  0.0614639 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  54  name   */  LPattern10的第54个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0605168   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0605168 -0.011 -0.011  0.0611933 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0611933   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0611933 -0.0109151 -0.0109483  0.0611933 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0605168   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0605168 -0.0097295 -0.00982827  0.0605168 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  55  name   */  LPattern10的第55个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0598403   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0598403 -0.011 -0.011  0.0605168 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0605168   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0605168 -0.0097295 -0.00982827  0.0605168 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0598403   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0598403 -0.0109151 -0.0109483  0.0598403 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  56  name   */  LPattern10的第56个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0588932   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0588932 -0.011 -0.011  0.0595697 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0595697   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0595697 -0.0109151 -0.0109483  0.0595697 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0588932   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0588932 -0.0097295 -0.00982827  0.0588932 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  57  name   */  LPattern10的第57个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0582167   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0582167 -0.011 -0.011  0.0588932 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0588932   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0588932 -0.0097295 -0.00982827  0.0588932 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0582167   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0582167 -0.0109151 -0.0109483  0.0582167 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  58  name   */  LPattern10的第58个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0572696   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0572696 -0.011 -0.011  0.0579461 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0579461   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0579461 -0.0109151 -0.0109483  0.0579461 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0572696   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0572696 -0.0097295 -0.00982827  0.0572696 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  59  name   */  LPattern10的第59个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0565931   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0565931 -0.011 -0.011  0.0572696 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0572696   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0572696 -0.0097295 -0.00982827  0.0572696 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0565931   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0565931 -0.0109151 -0.0109483  0.0565931 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  60  name   */  LPattern10的第60个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.055646   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.055646 -0.011 -0.011  0.0563225 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0563225   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0563225 -0.0109151 -0.0109483  0.0563225 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.055646   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.055646 -0.0097295 -0.00982827  0.055646 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  61  name   */  LPattern10的第61个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0549695   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0549695 -0.011 -0.011  0.055646 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.055646   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.055646 -0.0097295 -0.00982827  0.055646 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0549695   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0549695 -0.0109151 -0.0109483  0.0549695 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  62  name   */  LPattern10的第62个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0540224   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0540224 -0.011 -0.011  0.0546989 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0546989   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0546989 -0.0109151 -0.0109483  0.0546989 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0540224   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0540224 -0.0097295 -0.00982827  0.0540224 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  63  name   */  LPattern10的第63个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0533459   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0533459 -0.011 -0.011  0.0540224 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0540224   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0540224 -0.0097295 -0.00982827  0.0540224 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0533459   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0533459 -0.0109151 -0.0109483  0.0533459 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  64  name   */  LPattern10的第64个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0523988   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0523988 -0.011 -0.011  0.0530753 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0530753   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0530753 -0.0109151 -0.0109483  0.0530753 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0523988   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0523988 -0.0097295 -0.00982827  0.0523988 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  65  name   */  LPattern10的第65个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0517223   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0517223 -0.011 -0.011  0.0523988 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0523988   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0523988 -0.0097295 -0.00982827  0.0523988 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0517223   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0517223 -0.0109151 -0.0109483  0.0517223 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  66  name   */  LPattern10的第66个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0507752   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0507752 -0.011 -0.011  0.0514517 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0514517   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0514517 -0.0109151 -0.0109483  0.0514517 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0507752   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0507752 -0.0097295 -0.00982827  0.0507752 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  67  name   */  LPattern10的第67个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0500987   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0500987 -0.011 -0.011  0.0507752 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0507752   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0507752 -0.0097295 -0.00982827  0.0507752 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0500987   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0500987 -0.0109151 -0.0109483  0.0500987 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  68  name   */  LPattern10的第68个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0491516   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0491516 -0.011 -0.011  0.0498281 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0498281   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0498281 -0.0109151 -0.0109483  0.0498281 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0491516   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0491516 -0.0097295 -0.00982827  0.0491516 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  69  name   */  LPattern10的第69个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0484751   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0484751 -0.011 -0.011  0.0491516 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0491516   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0491516 -0.0097295 -0.00982827  0.0491516 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0484751   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0484751 -0.0109151 -0.0109483  0.0484751 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  70  name   */  LPattern10的第70个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.047528   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.047528 -0.011 -0.011  0.0482045 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0482045   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0482045 -0.0109151 -0.0109483  0.0482045 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.047528   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.047528 -0.0097295 -0.00982827  0.047528 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  71  name   */  LPattern10的第71个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0468515   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0468515 -0.011 -0.011  0.047528 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.047528   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.047528 -0.0097295 -0.00982827  0.047528 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0468515   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0468515 -0.0109151 -0.0109483  0.0468515 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  72  name   */  LPattern10的第72个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0459044   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0459044 -0.011 -0.011  0.0465809 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0465809   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0465809 -0.0109151 -0.0109483  0.0465809 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0459044   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0459044 -0.0097295 -0.00982827  0.0459044 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  73  name   */  LPattern10的第73个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0452279   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0452279 -0.011 -0.011  0.0459044 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0459044   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0459044 -0.0097295 -0.00982827  0.0459044 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0452279   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0452279 -0.0109151 -0.0109483  0.0452279 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  74  name   */  LPattern10的第74个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0442808   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0442808 -0.011 -0.011  0.0449573 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0449573   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0449573 -0.0109151 -0.0109483  0.0449573 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0442808   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0442808 -0.0097295 -0.00982827  0.0442808 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  75  name   */  LPattern10的第75个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0436043   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0436043 -0.011 -0.011  0.0442808 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0442808   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0442808 -0.0097295 -0.00982827  0.0442808 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0436043   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0436043 -0.0109151 -0.0109483  0.0436043 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  76  name   */  LPattern10的第76个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0426572   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0426572 -0.011 -0.011  0.0433337 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0433337   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0433337 -0.0109151 -0.0109483  0.0433337 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0426572   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0426572 -0.0097295 -0.00982827  0.0426572 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  77  name   */  LPattern10的第77个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0419807   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0419807 -0.011 -0.011  0.0426572 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0426572   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0426572 -0.0097295 -0.00982827  0.0426572 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0419807   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0419807 -0.0109151 -0.0109483  0.0419807 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  78  name   */  LPattern10的第78个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0410336   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0410336 -0.011 -0.011  0.0417101 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0417101   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0417101 -0.0109151 -0.0109483  0.0417101 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0410336   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0410336 -0.0097295 -0.00982827  0.0410336 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  79  name   */  LPattern10的第79个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0403571   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0403571 -0.011 -0.011  0.0410336 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0410336   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0410336 -0.0097295 -0.00982827  0.0410336 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0403571   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0403571 -0.0109151 -0.0109483  0.0403571 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  80  name   */  LPattern10的第80个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.03941   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.03941 -0.011 -0.011  0.0400865 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0400865   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0400865 -0.0109151 -0.0109483  0.0400865 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.03941   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.03941 -0.0097295 -0.00982827  0.03941 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  81  name   */  LPattern10的第81个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0387335   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0387335 -0.011 -0.011  0.03941 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.03941   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.03941 -0.0097295 -0.00982827  0.03941 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0387335   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0387335 -0.0109151 -0.0109483  0.0387335 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  82  name   */  LPattern10的第82个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0377864   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0377864 -0.011 -0.011  0.0384629 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0384629   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0384629 -0.0109151 -0.0109483  0.0384629 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0377864   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0377864 -0.0097295 -0.00982827  0.0377864 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  83  name   */  LPattern10的第83个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0371099   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0371099 -0.011 -0.011  0.0377864 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0377864   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0377864 -0.0097295 -0.00982827  0.0377864 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0371099   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0371099 -0.0109151 -0.0109483  0.0371099 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  84  name   */  LPattern10的第84个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0361628   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0361628 -0.011 -0.011  0.0368393 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0368393   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0368393 -0.0109151 -0.0109483  0.0368393 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0361628   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0361628 -0.0097295 -0.00982827  0.0361628 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  85  name   */  LPattern10的第85个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0354863   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0354863 -0.011 -0.011  0.0361628 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0361628   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0361628 -0.0097295 -0.00982827  0.0361628 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0354863   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0354863 -0.0109151 -0.0109483  0.0354863 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  86  name   */  LPattern10的第86个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0345392   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0345392 -0.011 -0.011  0.0352157 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0352157   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0352157 -0.0109151 -0.0109483  0.0352157 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0345392   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0345392 -0.0097295 -0.00982827  0.0345392 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  87  name   */  LPattern10的第87个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0338627   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0338627 -0.011 -0.011  0.0345392 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0345392   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0345392 -0.0097295 -0.00982827  0.0345392 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0338627   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0338627 -0.0109151 -0.0109483  0.0338627 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  88  name   */  LPattern10的第88个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0329156   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0329156 -0.011 -0.011  0.0335921 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0335921   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0335921 -0.0109151 -0.0109483  0.0335921 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0329156   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0329156 -0.0097295 -0.00982827  0.0329156 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  89  name   */  LPattern10的第89个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0322391   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0322391 -0.011 -0.011  0.0329156 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0329156   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0329156 -0.0097295 -0.00982827  0.0329156 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0322391   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0322391 -0.0109151 -0.0109483  0.0322391 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  90  name   */  LPattern10的第90个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.031292   0.0   0.0   -1.0   -0.0   -0.0   0.00982827   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.031292 -0.011 -0.011  0.0319685 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0319685   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0319685 -0.0109151 -0.0109483  0.0319685 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.031292   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.031292 -0.0097295 -0.00982827  0.031292 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  91  name   */  LPattern10的第91个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0306155   0.0   0.0   1.0   0.0   0.0   0.011   1.0472
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0306155 -0.011 -0.011  0.031292 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.031292   0.0   0.0   -1.0   -0.0   -0.0   0.00982827
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.031292 -0.0097295 -0.00982827  0.031292 0.00972868 0.00982827 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0306155   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0306155 -0.0109151 -0.0109483  0.0306155 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  92  name   */  LPattern10的第92个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    1.0   0.0   0.0   0.0   0.0   0.0
+         /* total_face_primitive_number */ 10
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0 -0.0204 -0.0204  0.0 0.0204 0.0204 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.0   -1.0   -0.0   -0.0   0.0204
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.0203818 -0.0203919  0.0 0.020398 0.0204 
+                /* total_edge_primitive_number */  33
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  93  name   */  LPattern10的第93个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.0204
+         /* total_face_primitive_number */ 24
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0 -0.0204 -0.0204  0.00204968 0.0204 0.0204 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.0   -1.0   -0.0   -0.0   0.0204
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.0203818 -0.0203919  0.0 0.020398 0.0204 
+                /* total_edge_primitive_number */  33
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.00204968   0.0   0.0   -1.0   -0.0   -0.0   0.0204
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.00204968 -0.0203818 -0.0203919  0.00204968 0.020398 0.0204 
+                /* total_edge_primitive_number */  33
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  94  name   */  LPattern10的第94个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.220446   0.975399   -0.0   0.0130822   0.0176066   0.0
+         /* total_face_primitive_number */ 4
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.00215017 0.0176066 -0.00315  0.0130822 0.0200773 0.00315 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   0.00215017   0.0200773   0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.00215017   0.0200773   -0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.00215017 0.0199779 -0.00315  0.00258977 0.0200773 0.00315 
+                /* total_edge_primitive_number */  6
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0130822   0.0176066   0.00315   -0.975399   0.220446   0.0
+                start_effective   0.0130822   0.0176066   0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.00215017   0.0200773   0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.00215017 0.0176066 0.00315  0.0130822 0.0200773 0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0130822   0.0176066   0.0   0.0   0.0   1.0
+                start_effective   0.0130822   0.0176066   -0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0130822   0.0176066   0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0130822 0.0176066 -0.00315  0.0130822 0.0176066 0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0130822   0.0176066   -0.00315   -0.975399   0.220446   0.0
+                start_effective   0.0130822   0.0176066   -0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.00215017   0.0200773   -0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.00215017 0.0176066 -0.00315  0.0130822 0.0200773 -0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  95  name   */  LPattern10的第95个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.0   0.0   1.0   0.04   0.0   -0.00315
+         /* total_face_primitive_number */ 2
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.00215017 0.0105393 -0.00315  0.0143283 0.0200773 -0.00315 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0143   0.0107   -0.00315   -0.173648   0.984808   0.0
+                start_effective   0.0143283   0.0105393   -0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0130822   0.0176066   -0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0130822 0.0105393 -0.00315  0.0143283 0.0176066 -0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -0.00171436   0.0105393   -0.00315   -1.0   -0.0   -0.0
+                start_effective   0.0143283   0.0105393   -0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0143   0.0105393   -0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0143 0.0105393 -0.00315  0.0143283 0.0105393 -0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   0.0143   0.0105393   -0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.00215017   0.0200773   -0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.00215017 0.0105393 -0.00315  0.0143 0.0200773 -0.00315 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0130822   0.0176066   -0.00315   -0.975399   0.220446   0.0
+                start_effective   0.0130822   0.0176066   -0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.00215017   0.0200773   -0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.00215017 0.0176066 -0.00315  0.0130822 0.0200773 -0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  96  name   */  LPattern10的第96个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0143   0.0   0.0   1.0   0.0   0.0   0.011   0.654498
+         /* total_face_primitive_number */ 29
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.00204968 -0.0204 -0.0204  0.0143 0.0204 0.0204 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0143   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_effective   0.0143   0.0105393   -0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0143   0.0105393   0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0143 -0.0109241 -0.0109738  0.0143 0.0105393 0.0109408 
+                /* total_edge_primitive_number */  23
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   0.0143   0.0105393   0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.00215017   0.0200773   0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.00215017 0.0105393 0.00315  0.0143 0.0200773 0.00315 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   0.00215017   0.0200773   0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.00215017   0.0200773   -0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.00215017 0.0199779 -0.00315  0.00258977 0.0200773 0.00315 
+                /* total_edge_primitive_number */  6
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   0.0143   0.0105393   -0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.00215017   0.0200773   -0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.00215017 0.0105393 -0.00315  0.0143 0.0200773 -0.00315 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  0
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.00204968   0.0   0.0   -1.0   -0.0   -0.0   0.0204
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.00204968 -0.0203818 -0.0203919  0.00204968 0.020398 0.0204 
+                /* total_edge_primitive_number */  33
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  97  name   */  LPattern10的第97个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.0   0.0   1.0   0.04   0.0   0.00315
+         /* total_face_primitive_number */ 2
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.00215017 0.0105393 0.00315  0.0143283 0.0200773 0.00315 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0130822   0.0176066   0.00315   -0.975399   0.220446   0.0
+                start_effective   0.0130822   0.0176066   0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.00215017   0.0200773   0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.00215017 0.0176066 0.00315  0.0130822 0.0200773 0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   0.0143   0.0105393   0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.00215017   0.0200773   0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.00215017 0.0105393 0.00315  0.0143 0.0200773 0.00315 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -0.00171436   0.0105393   0.00315   -1.0   -0.0   -0.0
+                start_effective   0.0143283   0.0105393   0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0143   0.0105393   0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0143 0.0105393 0.00315  0.0143283 0.0105393 0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0143   0.0107   0.00315   -0.173648   0.984808   0.0
+                start_effective   0.0143283   0.0105393   0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0130822   0.0176066   0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0130822 0.0105393 0.00315  0.0143283 0.0176066 0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  98  name   */  LPattern10的第98个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.984808   0.173648   -0.0   0.0143   0.0107   0.0
+         /* total_face_primitive_number */ 5
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0130822 0.0105393 -0.00315  0.0143283 0.0176066 0.00315 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    6
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    0.0161867   0.0   0.0   0.0111697   -0.173648   0.984808   -0.0   0.011   0.0   0.0   1.0
+                start_effective   0.0143283   0.0105393   -0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0143   0.0107   -0.00255147   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0143 0.0105393 -0.00315  0.0143283 0.0107 -0.00255147 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  7
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0143   0.0107   -0.00315   -0.173648   0.984808   0.0
+                start_effective   0.0143283   0.0105393   -0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0130822   0.0176066   -0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0130822 0.0105393 -0.00315  0.0143283 0.0176066 -0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0130822   0.0176066   0.0   0.0   0.0   1.0
+                start_effective   0.0130822   0.0176066   -0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0130822   0.0176066   0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0130822 0.0176066 -0.00315  0.0130822 0.0176066 0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0143   0.0107   0.00315   -0.173648   0.984808   0.0
+                start_effective   0.0143283   0.0105393   0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0130822   0.0176066   0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0130822 0.0105393 0.00315  0.0143283 0.0176066 0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  4  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    0.0161867   0.0   0.0   0.0111697   -0.173648   0.984808   -0.0   0.011   0.0   0.0   1.0
+                start_effective   0.0143   0.0107   0.00255147   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0143283   0.0105393   0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0143 0.0105393 0.00255147  0.0143283 0.0107 0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  7
+                
+             /* face_loop_edge  5  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    0.0159546   0.00131653   0.0   0.00988052   -0.173648   0.984808   -0.0   0.00964094   0.0   0.0   1.0
+                start_effective   0.0143   0.0107   -0.00255147   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0143   0.0107   0.00255147   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0142391 0.0107 -0.00255147  0.0143 0.0110455 0.00255147 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  7
+                
+                
+     /* face  99  name   */  LPattern10的第99个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0143   0.0   0.0   1.0   0.0   0.0   0.011   0.654498
+         /* total_face_primitive_number */ 2
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0142895 0.0107 -0.00255147  0.0143 0.011 0.00255147 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    2
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0143   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_effective   0.0143   0.0107   0.00255147   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0143   0.0107   -0.00255147   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0143 0.0107 -0.00255147  0.0143 0.010993 0.00255147 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    0.0159546   0.00131653   0.0   0.00988052   -0.173648   0.984808   -0.0   0.00964094   0.0   0.0   1.0
+                start_effective   0.0143   0.0107   -0.00255147   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0143   0.0107   0.00255147   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0142391 0.0107 -0.00255147  0.0143 0.0110455 0.00255147 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  7
+                
+                
+     /* face  100  name   */  LPattern10的第100个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -0.00171436   0.0   0.0   -1.0   -0.0   -0.0   0.011
+         /* total_face_primitive_number */ 30
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0143 -0.011 -0.011  0.0306155 0.011 0.011 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    6
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0143   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_effective   0.0143   0.0107   0.00255147   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0143   0.0107   -0.00255147   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0143 0.0107 -0.00255147  0.0143 0.010993 0.00255147 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    0.0161867   0.0   0.0   0.0111697   -0.173648   0.984808   -0.0   0.011   0.0   0.0   1.0
+                start_effective   0.0143   0.0107   0.00255147   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0143283   0.0105393   0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0143 0.0105393 0.00255147  0.0143283 0.0107 0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  7
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -0.00171436   0.0105393   0.00315   -1.0   -0.0   -0.0
+                start_effective   0.0143283   0.0105393   0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0143   0.0105393   0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0143 0.0105393 0.00315  0.0143283 0.0105393 0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0143   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_effective   0.0143   0.0105393   -0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0143   0.0105393   0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0143 -0.0109241 -0.0109738  0.0143 0.0105393 0.0109408 
+                /* total_edge_primitive_number */  23
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  4  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -0.00171436   0.0105393   -0.00315   -1.0   -0.0   -0.0
+                start_effective   0.0143283   0.0105393   -0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0143   0.0105393   -0.00315   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0143 0.0105393 -0.00315  0.0143283 0.0105393 -0.00315 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  5  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    0.0161867   0.0   0.0   0.0111697   -0.173648   0.984808   -0.0   0.011   0.0   0.0   1.0
+                start_effective   0.0143283   0.0105393   -0.00315   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0143   0.0107   -0.00255147   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0143 0.0105393 -0.00315  0.0143283 0.0107 -0.00255147 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  7
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0306155   0.0   0.0   -1.0   -0.0   -0.0   0.011
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0306155 -0.0109151 -0.0109483  0.0306155 0.0109871 0.011 
+                /* total_edge_primitive_number */  25
+                /* total_point_primitive_number */  1
+                
+                
+                

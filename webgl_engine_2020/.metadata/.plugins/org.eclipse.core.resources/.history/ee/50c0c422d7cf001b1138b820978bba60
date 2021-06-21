@@ -1,0 +1,358 @@
+package kernel_render;
+
+import kernel_common_class.debug_information;
+import kernel_component.component;
+import kernel_engine.scene_parameter;
+import kernel_engine.system_parameter;
+import kernel_file_manager.file_directory;
+import kernel_network.client_request_response;
+import kernel_part.part;
+import kernel_part.part_container_for_part_search;
+import kernel_part.part_loader;
+import kernel_part.part_parameter;
+import kernel_part.part_rude;
+import kernel_part.part_loader_container;
+import kernel_render.render_container;
+
+public class create_assemble_part 
+{		
+	private String	can_create_assemble_part_name[];
+	private int part_number[],component_number,give_up_number,all_part_number;
+	private component component_heap[];
+
+	private int do_test(component p)
+	{
+		if(p.children_number()<=0){
+			for(int i=0,ni=p.driver_number();i<ni;i++){
+				part comp_part=p.driver_array[i].component_part;
+				if(comp_part==null)
+					continue;
+				if(comp_part.driver==null)
+					continue;
+				if(comp_part.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,null,null)==null)
+					continue;
+				can_create_assemble_part_name[p.component_id]=comp_part.part_par.assemble_part_name;
+				return comp_part.render_id;
+			}
+			can_create_assemble_part_name[p.component_id]=null;
+			return -1;
+		}
+		
+		int do_test_result=-1;
+		can_create_assemble_part_name[p.component_id]=null;
+		
+		for(int i=0,n=p.children.length;i<n;i++){
+			int child_do_test_result=do_test(p.children[i]);
+			if(i==0){
+				do_test_result=child_do_test_result;
+				can_create_assemble_part_name[p.component_id]=can_create_assemble_part_name[p.children[i].component_id];
+			}else if(child_do_test_result>=0)
+					if(!(p.children[i].get_dynamic_location_flag()))
+						if(do_test_result>=0)
+							if(do_test_result==child_do_test_result) {
+								String my_str	=can_create_assemble_part_name[p.component_id];
+								String child_str=can_create_assemble_part_name[p.children[i].component_id];
+								if(my_str.compareTo(child_str)==0)
+									continue;
+							}
+				do_test_result=-1;
+				can_create_assemble_part_name[p.component_id]=null;
+			}
+		}
+		return can_create_assemble_part_flag[p.component_id]?do_test_result:null;
+	}
+	private int caculate_part_number(component p)
+	{
+		int children_number;
+		if((children_number=p.children_number())<=0){
+			if(p.driver_number()>0)
+				if(p.get_component_box(false)!=null){
+					part_number[p.component_id]=1;
+					all_part_number++;
+					return 1;
+				}
+			part_number[p.component_id]=0;
+			give_up_number++;
+			return 0;
+		}else {
+			int my_part_number=0;
+			for(int i=0;i<children_number;i++)
+				my_part_number+=caculate_part_number(p.children[i]);
+			part_number[p.component_id]=my_part_number;
+			return my_part_number;
+		}
+	}
+	private component get_heap_component()
+	{
+		component ret_val=component_heap[0];
+		component_heap[0]=component_heap[--component_number];
+		component_heap[component_number]=null;
+		for(int comp_id=0;comp_id<component_number;){
+			int child_id,left_child_id=comp_id+comp_id+1,right_child_id=comp_id+comp_id+2;
+			if(left_child_id>=component_number)
+				break;
+			if(right_child_id>=component_number)
+				child_id=left_child_id;
+			else{
+				int left_child_number	=part_number[component_heap[left_child_id ].component_id];
+				int right_child_number	=part_number[component_heap[right_child_id].component_id];
+				if(left_child_number>right_child_number)
+					child_id=left_child_id;
+				else if(left_child_number<right_child_number)
+					child_id=right_child_id;
+				else{
+					String left_child_name	=component_heap[left_child_id ].part_name;
+					String right_child_name	=component_heap[right_child_id].part_name;
+					child_id=(left_child_name.compareTo(right_child_name)<=0)?left_child_id:right_child_id;
+				}
+			}
+			int this_number =part_number[component_heap[comp_id ].component_id];
+			int child_number=part_number[component_heap[child_id].component_id];
+			
+			if(this_number>child_number)
+				break;
+			if(this_number==child_number){
+				String this_name	=component_heap[comp_id ].part_name;
+				String child_name	=component_heap[child_id].part_name;
+				if(this_name.compareTo(child_name)<=0)
+					break;
+			}
+			component p=component_heap[child_id];
+			component_heap[child_id]=component_heap[comp_id];
+			component_heap[comp_id]=p;
+			comp_id=child_id;
+		}
+		return ret_val;
+	}
+	private void register_component(component p)
+	{
+		int children_number;
+		while((children_number=p.children_number())==1)
+			p=p.children[0];
+		if(children_number<=0)
+			return;
+		if(part_number[p.component_id]<=1)
+			return;
+		if(p.driver_number()>0)
+			return;
+		
+		if(can_create_assemble_part_name[p.component_id]==null) {
+			for(int i=0;i<children_number;i++)
+				register_component(p.children[i]);
+			return;
+		}
+		component_heap[component_number++]=p;
+		for(int comp_id=component_number-1;comp_id>0;){
+			int parent_id=(comp_id-1)/2;
+			int parent_number=part_number[component_heap[parent_id].component_id];
+			int this_number  =part_number[component_heap[comp_id  ].component_id];
+			if(parent_number>this_number)
+				break;
+			if(parent_number==this_number)
+				if(component_heap[parent_id].part_name.compareTo(component_heap[comp_id].part_name)<=0)
+					break;
+			component pp=component_heap[parent_id];
+			component_heap[parent_id]=component_heap[comp_id];
+			component_heap[comp_id]=pp;
+			comp_id=parent_id;
+		}
+		return;
+	}
+	
+	private part caculate_assemble_part(component comp,
+			double create_top_part_assembly_precision2,double create_top_part_discard_precision2)
+	{
+		part ret_val;
+		int children_number=comp.children_number();
+		if(children_number>0){
+			for(int i=0;i<children_number;i++)
+				if((ret_val=caculate_assemble_part(comp.children[i],
+						create_top_part_assembly_precision2,create_top_part_discard_precision2))!=null)
+					return ret_val;
+		}
+		
+		int driver_number=comp.driver_number();
+		for(int i=0;i<driver_number;i++)
+			if((ret_val=comp.driver_array[i].component_part)!=null)
+				return ret_val;
+	
+		return null;
+	}
+	
+	private part_parameter create_assemble_part_parameter(part p,
+		double create_top_part_assembly_precision2,double create_top_part_discard_precision2)
+	{
+		return new part_parameter(
+				p.part_par.part_type_string,
+				p.part_par.assemble_part_name,
+				p.part_par.directory_name,
+				p.part_par.file_name,
+				
+				p.part_par.last_modified_time,
+				
+				p.part_par.process_sequence_id,
+				
+				p.part_par.max_file_head_length,
+				p.part_par.max_file_data_length,
+				p.part_par.max_buffer_object_data_length,
+				
+				1.0,
+				p.part_par.lod_precision_scale,
+				
+				create_top_part_assembly_precision2,
+				create_top_part_discard_precision2,
+				create_top_part_discard_precision2,
+				
+				p.part_par.create_face_buffer_object_bitmap,
+				p.part_par.create_edge_buffer_object_bitmap,
+				p.part_par.create_point_buffer_object_bitmap,
+				
+				p.part_par.max_component_data_buffer_number,
+				p.part_par.max_part_load_thread_number,
+				p.part_par.max_mesh_load_thread_number,
+				p.part_par.max_part_list_load_thread_number,
+				
+				false,
+				
+				p.part_par.combine_to_part_package_flag,
+				p.part_par.delete_buffer_object_text_file_flag,
+				p.part_par.clear_model_file_flag);
+		
+	}
+	
+	public part top_box_part[];
+	
+	public create_assemble_part(
+			client_request_response request_response,component root_component,
+			double expand_ratio,double left_ratio,double create_top_part_assembly_precision2,
+			double create_top_part_discard_precision2,double discard_top_part_component_precision2,
+			render_container render_cont,part_loader_container part_loader_cont,
+			system_parameter system_par,scene_parameter scene_par,
+			part_container_for_part_search pcps,long last_modified_time)
+	{
+		int max_component_number		=root_component.component_id+1;
+		
+		can_create_assemble_part_name	=new String[max_component_number];
+		part_number						=new int[max_component_number];
+		component_heap					=new component[max_component_number];
+		
+		for(int i=0;i<max_component_number;i++){
+			can_create_assemble_part_name[i]=null;
+			part_number[i]=0;
+			component_heap[i]=null;
+		}
+		
+		do_test(root_component,pcps);
+		
+		give_up_number=0;
+		all_part_number=0;
+		caculate_part_number(root_component);
+
+		component_number=0;
+		register_component(root_component);
+		
+		int min_expand_part_number	=(int)(((double)all_part_number)/expand_ratio);
+		int min_left_part_number	=(int)(((double)all_part_number)/left_ratio);
+
+		while(component_number>0){
+			int max_part_number=part_number[component_heap[0].component_id];
+			if(max_part_number<=min_expand_part_number)
+				break;
+			component expand_p=get_heap_component();
+			for(int i=0,child_number=expand_p.children_number();i<child_number;i++)
+				register_component(expand_p.children[i]);
+		}
+
+		top_box_part=new part[component_number];
+		
+		debug_information.println();
+		debug_information.print  ("Begin creating top box");
+		debug_information.print  ("\tmin_expand_part_number:",min_expand_part_number);
+		debug_information.print  ("\tmin_left_part_number:",min_left_part_number);
+		debug_information.print  ("\tcomponent_number:",component_number);
+		debug_information.print  ("\tgive_up_number:",give_up_number);
+		debug_information.print  ("\tall_part_number:",all_part_number);
+		
+		part_loader already_loaded_part[]=new part_loader[]{};
+		int create_part_number=0,add_part_number=0;
+		
+		while(component_number>0){
+			if((create_part_number+min_left_part_number)>=all_part_number)
+				break;
+			int my_create_part_number=0;
+			my_create_part_number+=part_number[component_heap[0].component_id];
+			component comp_p=get_heap_component();
+			while(component_number>0){
+				if(component_heap[0].part_name.compareTo(comp_p.part_name)!=0)
+					break;
+				my_create_part_number+=part_number[component_heap[0].component_id];
+				get_heap_component();
+			}
+			part assemble_part;
+			if((assemble_part=caculate_assemble_part(comp_p,
+				create_top_part_assembly_precision2,create_top_part_discard_precision2))==null)
+					continue;
+			part_parameter part_par=create_assemble_part_parameter(assemble_part,
+				create_top_part_assembly_precision2,create_top_part_discard_precision2);
+			part_rude topbox_part_rude=create_part_rude.create(comp_p,
+				assemble_part.part_mesh.origin_material,max_component_number,discard_top_part_component_precision2);
+			if(topbox_part_rude==null){
+				give_up_number+=my_create_part_number;
+				all_part_number-=my_create_part_number;
+				continue;
+			}
+			part add_part=new part(2,part_par,
+					assemble_part.directory_name,assemble_part.file_charset,comp_p.part_name,comp_p.part_name,null,
+					assemble_part.material_file_name,assemble_part.description_file_name,assemble_part.audio_file_name);
+			
+			add_part.top_box_part_flag=true;
+			add_part.part_mesh=topbox_part_rude;
+				
+			render_cont.renders[assemble_part.render_id].add_part(assemble_part.render_id,add_part);
+				
+			add_part.part_from_id			=assemble_part.part_id;
+			add_part.permanent_part_from_id	=assemble_part.permanent_part_id;
+				
+			try{
+				add_part.driver=assemble_part.driver.clone(assemble_part,add_part,system_par,request_response);
+			}catch(Exception e) {
+				debug_information.println("Execte part clone() fail",e.toString());
+				debug_information.println("Part user name:",	add_part.user_name);
+				debug_information.println("Part system name:",	add_part.system_name);
+				debug_information.println("Mesh_file_name:",	add_part.directory_name+add_part.mesh_file_name);
+				debug_information.println("Material_file_name:",add_part.directory_name+add_part.material_file_name);
+				debug_information.println("Temp directory:",	file_directory.part_file_directory(add_part,system_par,scene_par));
+				e.printStackTrace();
+			}
+			already_loaded_part=part_loader_cont.load(
+				add_part,render_cont.get_copy_from_part(add_part),
+				last_modified_time,system_par,scene_par,already_loaded_part,pcps);
+			top_box_part[add_part_number++]=add_part;
+			create_part_number+=my_create_part_number;	
+		}
+		
+		if(add_part_number<=0)
+			top_box_part=null;
+		else{
+			part bak[]=top_box_part;
+			top_box_part=new part[add_part_number];
+			for(int i=0;i<add_part_number;i++)
+				top_box_part[i]=bak[i];
+			part_loader_container.wait_for_completion(already_loaded_part,system_par,scene_par);
+		}
+		debug_information.println();
+		debug_information.print  ("End creating top box");
+		debug_information.print  ("\tadd_part_number:",add_part_number);
+		debug_information.print  ("\tcomponent_number:",component_number);
+		debug_information.print  ("\tgive_up_number:",give_up_number);
+		debug_information.print  ("\tratio:",all_part_number-create_part_number);
+		debug_information.print  ("/",all_part_number);
+		if(all_part_number>0){
+			double ratio=10000*(double)(all_part_number-create_part_number);
+			ratio=Math.round(ratio/(double)all_part_number)/100.0;
+			debug_information.print  ("/",Double.toString(ratio)+"%");
+		}
+		debug_information.println();
+		debug_information.println();
+	}
+}

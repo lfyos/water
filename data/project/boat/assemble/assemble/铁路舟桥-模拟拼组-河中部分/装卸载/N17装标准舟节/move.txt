@@ -1,0 +1,456 @@
+version	2015.10
+
+/*	name			*/	movement
+/*	audio			*/	no_sound
+/*	description		*/	no_description
+/*	sequence/parallel	*/	sequence
+/*	direction		*/	no_direction
+/*	camera scale		*/	upper	1.0
+/*	children number		*/	3
+
+        /*	name			*/	00001:平车装载标准舟节
+        /*	audio			*/	no_sound
+        /*	description		*/	平板车就位，准备装载标准舟节。注意事项：平板车顶要放置防滑草垫。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00001:平车装载标准舟节/00001:没有标记
+                /*	audio			*/	sound\平车装载标准舟节1.mp3
+                /*	description		*/	平板车就位，准备装载标准舟节。注意事项：平板车顶要放置防滑草垫。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00001:平车装载标准舟节/00001:没有标记/00001
+                        /*	audio			*/	sound\平车装载标准舟节1.mp3
+                        /*	description		*/	平板车就位，准备装载标准舟节。注意事项：平板车顶要放置防滑草垫。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                N17-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00002:标准舟节装车
+        /*	audio			*/	no_sound
+        /*	description		*/	将2个标准舟节通过联结角钢联结在一起，整体吊装至平板车上。吊装用4根φ19.5，长6米的钢丝绳；吊点选择在公母扣上。捆绑用8米长φ15钢丝绳，横向共2道。注意事项：平板车顶要放置防滑草垫。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00002:标准舟节装车/00001:没有标记
+                /*	audio			*/	sound\平车装载标准舟节2.mp3
+                /*	description		*/	将2个标准舟节通过联结角钢联结在一起，整体吊装至平板车上。吊装用4根φ19.5，长6米的钢丝绳；吊点选择在公母扣上。捆绑用8米长φ15钢丝绳，横向共2道。注意事项：平板车顶要放置防滑草垫。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	6
+                
+                        /*	name			*/	00002:标准舟节装车/00001:没有标记/00001
+                        /*	audio			*/	sound\平车装载标准舟节2.mp3
+                        /*	description		*/	将2个标准舟节通过联结角钢联结在一起，整体吊装至平板车上。吊装用4根φ19.5，长6米的钢丝绳；吊点选择在公母扣上。捆绑用8米长φ15钢丝绳，横向共2道。注意事项：平板车顶要放置防滑草垫。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                组合的标准舟节-1/带角钢的标准舟节-2/联接角钢-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 2.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 3.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 2.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00002:标准舟节装车/00001:没有标记/00002
+                        /*	audio			*/	sound\平车装载标准舟节2.mp3
+                        /*	description		*/	将2个标准舟节通过联结角钢联结在一起，整体吊装至平板车上。吊装用4根φ19.5，长6米的钢丝绳；吊点选择在公母扣上。捆绑用8米长φ15钢丝绳，横向共2道。注意事项：平板车顶要放置防滑草垫。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                组合的标准舟节-1/带角钢的标准舟节-1/联接角钢-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 2.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 3.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 2.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00002:标准舟节装车/00001:没有标记/00003
+                        /*	audio			*/	sound\平车装载标准舟节2.mp3
+                        /*	description		*/	将2个标准舟节通过联结角钢联结在一起，整体吊装至平板车上。吊装用4根φ19.5，长6米的钢丝绳；吊点选择在公母扣上。捆绑用8米长φ15钢丝绳，横向共2道。注意事项：平板车顶要放置防滑草垫。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                组合的标准舟节-1/带角钢的标准舟节-2/联接角钢-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 2.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 3.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 2.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00002:标准舟节装车/00001:没有标记/00004
+                        /*	audio			*/	sound\平车装载标准舟节2.mp3
+                        /*	description		*/	将2个标准舟节通过联结角钢联结在一起，整体吊装至平板车上。吊装用4根φ19.5，长6米的钢丝绳；吊点选择在公母扣上。捆绑用8米长φ15钢丝绳，横向共2道。注意事项：平板车顶要放置防滑草垫。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                组合的标准舟节-1/带角钢的标准舟节-1/联接角钢-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 2.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 3.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 2.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00002:标准舟节装车/00001:没有标记/00005
+                        /*	audio			*/	sound\平车装载标准舟节2.mp3
+                        /*	description		*/	将2个标准舟节通过联结角钢联结在一起，整体吊装至平板车上。吊装用4根φ19.5，长6米的钢丝绳；吊点选择在公母扣上。捆绑用8米长φ15钢丝绳，横向共2道。注意事项：平板车顶要放置防滑草垫。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                组合的标准舟节-1/带角钢的标准舟节-1/标准舟节-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 2.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -3.0 1.0 
+                            
+                            /*	time length	*/	 2.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00002:标准舟节装车/00001:没有标记/00006
+                        /*	audio			*/	sound\平车装载标准舟节2.mp3
+                        /*	description		*/	将2个标准舟节通过联结角钢联结在一起，整体吊装至平板车上。吊装用4根φ19.5，长6米的钢丝绳；吊点选择在公母扣上。捆绑用8米长φ15钢丝绳，横向共2道。注意事项：平板车顶要放置防滑草垫。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                组合的标准舟节-1/带角钢的标准舟节-2/标准舟节-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 2.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -3.0 1.0 
+                            
+                            /*	time length	*/	 2.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00003:钢丝绳捆绑
+        /*	audio			*/	no_sound
+        /*	description		*/	说明：横向捆绑钢丝绳和前后捆绑钢丝绳都是φ15mm。捆法：（1）横向捆绑：10米长钢丝绳打两个绳扣，一个是固定绳扣，一个是拉紧绳扣。固定绳扣用3个卡子卡紧，挂在车皮挂钩上。将拉紧绳扣扔到另一侧，将多余钢丝绳绕过另一侧车皮挂钩；将7m拉紧钢丝绳一个绳扣与捆绑钢丝绳固定绳扣挂在同一个火车皮挂钩上，另一绳扣也扔到另一侧；将手扳葫芦挂钩挂在捆绑钢丝绳拉紧绳扣与拉紧钢丝绳另一绳扣上，扳动手扳葫芦，拉紧捆绑钢丝绳，用钢丝绳卡子将拉紧端两股钢丝绳卡紧，打成一个绳扣固定在另一侧车皮挂钩上，用钳子将多余钢丝绳剪断。（2）前后捆绑：将6米长钢丝绳固定端绳扣挂到浮箱的公母扣上，并加垫皮。使用两股钢丝绳成八字形交叉捆绑。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	2
+        
+                /*	name			*/	00003:钢丝绳捆绑/00001:没有标记
+                /*	audio			*/	sound\平车装载标准舟节3.mp3
+                /*	description		*/	说明：横向捆绑钢丝绳和前后捆绑钢丝绳都是φ15mm。捆法：（1）横向捆绑：10米长钢丝绳打两个绳扣，一个是固定绳扣，一个是拉紧绳扣。固定绳扣用3个卡子卡紧，挂在车皮挂钩上。将拉紧绳扣扔到另一侧，将多余钢丝绳绕过另一侧车皮挂钩；将7m拉紧钢丝绳一个绳扣与捆绑钢丝绳固定绳扣挂在同一个火车皮挂钩上，另一绳扣也扔到另一侧；将手扳葫芦挂钩挂在捆绑钢丝绳拉紧绳扣与拉紧钢丝绳另一绳扣上，扳动手扳葫芦，拉紧捆绑钢丝绳，用钢丝绳卡子将拉紧端两股钢丝绳卡紧，打成一个绳扣固定在另一侧车皮挂钩上，用钳子将多余钢丝绳剪断。（2）前后捆绑：将6米长钢丝绳固定端绳扣挂到浮箱的公母扣上，并加垫皮。使用两股钢丝绳成八字形交叉捆绑。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00003:钢丝绳捆绑/00001:没有标记/00001
+                        /*	audio			*/	sound\平车装载标准舟节3.mp3
+                        /*	description		*/	说明：横向捆绑钢丝绳和前后捆绑钢丝绳都是φ15mm。捆法：（1）横向捆绑：10米长钢丝绳打两个绳扣，一个是固定绳扣，一个是拉紧绳扣。固定绳扣用3个卡子卡紧，挂在车皮挂钩上。将拉紧绳扣扔到另一侧，将多余钢丝绳绕过另一侧车皮挂钩；将7m拉紧钢丝绳一个绳扣与捆绑钢丝绳固定绳扣挂在同一个火车皮挂钩上，另一绳扣也扔到另一侧；将手扳葫芦挂钩挂在捆绑钢丝绳拉紧绳扣与拉紧钢丝绳另一绳扣上，扳动手扳葫芦，拉紧捆绑钢丝绳，用钢丝绳卡子将拉紧端两股钢丝绳卡紧，打成一个绳扣固定在另一侧车皮挂钩上，用钳子将多余钢丝绳剪断。（2）前后捆绑：将6米长钢丝绳固定端绳扣挂到浮箱的公母扣上，并加垫皮。使用两股钢丝绳成八字形交叉捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                绳3-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 2.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:钢丝绳捆绑/00001:没有标记/00002
+                        /*	audio			*/	sound\平车装载标准舟节3.mp3
+                        /*	description		*/	说明：横向捆绑钢丝绳和前后捆绑钢丝绳都是φ15mm。捆法：（1）横向捆绑：10米长钢丝绳打两个绳扣，一个是固定绳扣，一个是拉紧绳扣。固定绳扣用3个卡子卡紧，挂在车皮挂钩上。将拉紧绳扣扔到另一侧，将多余钢丝绳绕过另一侧车皮挂钩；将7m拉紧钢丝绳一个绳扣与捆绑钢丝绳固定绳扣挂在同一个火车皮挂钩上，另一绳扣也扔到另一侧；将手扳葫芦挂钩挂在捆绑钢丝绳拉紧绳扣与拉紧钢丝绳另一绳扣上，扳动手扳葫芦，拉紧捆绑钢丝绳，用钢丝绳卡子将拉紧端两股钢丝绳卡紧，打成一个绳扣固定在另一侧车皮挂钩上，用钳子将多余钢丝绳剪断。（2）前后捆绑：将6米长钢丝绳固定端绳扣挂到浮箱的公母扣上，并加垫皮。使用两股钢丝绳成八字形交叉捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                绳3-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 2.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00003:钢丝绳捆绑/00002:没有标记
+                /*	audio			*/	sound\平车装载标准舟节3.mp3
+                /*	description		*/	说明：横向捆绑钢丝绳和前后捆绑钢丝绳都是φ15mm。捆法：（1）横向捆绑：10米长钢丝绳打两个绳扣，一个是固定绳扣，一个是拉紧绳扣。固定绳扣用3个卡子卡紧，挂在车皮挂钩上。将拉紧绳扣扔到另一侧，将多余钢丝绳绕过另一侧车皮挂钩；将7m拉紧钢丝绳一个绳扣与捆绑钢丝绳固定绳扣挂在同一个火车皮挂钩上，另一绳扣也扔到另一侧；将手扳葫芦挂钩挂在捆绑钢丝绳拉紧绳扣与拉紧钢丝绳另一绳扣上，扳动手扳葫芦，拉紧捆绑钢丝绳，用钢丝绳卡子将拉紧端两股钢丝绳卡紧，打成一个绳扣固定在另一侧车皮挂钩上，用钳子将多余钢丝绳剪断。（2）前后捆绑：将6米长钢丝绳固定端绳扣挂到浮箱的公母扣上，并加垫皮。使用两股钢丝绳成八字形交叉捆绑。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	4
+                
+                        /*	name			*/	00003:钢丝绳捆绑/00002:没有标记/00001
+                        /*	audio			*/	sound\平车装载标准舟节3.mp3
+                        /*	description		*/	说明：横向捆绑钢丝绳和前后捆绑钢丝绳都是φ15mm。捆法：（1）横向捆绑：10米长钢丝绳打两个绳扣，一个是固定绳扣，一个是拉紧绳扣。固定绳扣用3个卡子卡紧，挂在车皮挂钩上。将拉紧绳扣扔到另一侧，将多余钢丝绳绕过另一侧车皮挂钩；将7m拉紧钢丝绳一个绳扣与捆绑钢丝绳固定绳扣挂在同一个火车皮挂钩上，另一绳扣也扔到另一侧；将手扳葫芦挂钩挂在捆绑钢丝绳拉紧绳扣与拉紧钢丝绳另一绳扣上，扳动手扳葫芦，拉紧捆绑钢丝绳，用钢丝绳卡子将拉紧端两股钢丝绳卡紧，打成一个绳扣固定在另一侧车皮挂钩上，用钳子将多余钢丝绳剪断。（2）前后捆绑：将6米长钢丝绳固定端绳扣挂到浮箱的公母扣上，并加垫皮。使用两股钢丝绳成八字形交叉捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                绳4-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:钢丝绳捆绑/00002:没有标记/00002
+                        /*	audio			*/	sound\平车装载标准舟节3.mp3
+                        /*	description		*/	说明：横向捆绑钢丝绳和前后捆绑钢丝绳都是φ15mm。捆法：（1）横向捆绑：10米长钢丝绳打两个绳扣，一个是固定绳扣，一个是拉紧绳扣。固定绳扣用3个卡子卡紧，挂在车皮挂钩上。将拉紧绳扣扔到另一侧，将多余钢丝绳绕过另一侧车皮挂钩；将7m拉紧钢丝绳一个绳扣与捆绑钢丝绳固定绳扣挂在同一个火车皮挂钩上，另一绳扣也扔到另一侧；将手扳葫芦挂钩挂在捆绑钢丝绳拉紧绳扣与拉紧钢丝绳另一绳扣上，扳动手扳葫芦，拉紧捆绑钢丝绳，用钢丝绳卡子将拉紧端两股钢丝绳卡紧，打成一个绳扣固定在另一侧车皮挂钩上，用钳子将多余钢丝绳剪断。（2）前后捆绑：将6米长钢丝绳固定端绳扣挂到浮箱的公母扣上，并加垫皮。使用两股钢丝绳成八字形交叉捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                绳4-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:钢丝绳捆绑/00002:没有标记/00003
+                        /*	audio			*/	sound\平车装载标准舟节3.mp3
+                        /*	description		*/	说明：横向捆绑钢丝绳和前后捆绑钢丝绳都是φ15mm。捆法：（1）横向捆绑：10米长钢丝绳打两个绳扣，一个是固定绳扣，一个是拉紧绳扣。固定绳扣用3个卡子卡紧，挂在车皮挂钩上。将拉紧绳扣扔到另一侧，将多余钢丝绳绕过另一侧车皮挂钩；将7m拉紧钢丝绳一个绳扣与捆绑钢丝绳固定绳扣挂在同一个火车皮挂钩上，另一绳扣也扔到另一侧；将手扳葫芦挂钩挂在捆绑钢丝绳拉紧绳扣与拉紧钢丝绳另一绳扣上，扳动手扳葫芦，拉紧捆绑钢丝绳，用钢丝绳卡子将拉紧端两股钢丝绳卡紧，打成一个绳扣固定在另一侧车皮挂钩上，用钳子将多余钢丝绳剪断。（2）前后捆绑：将6米长钢丝绳固定端绳扣挂到浮箱的公母扣上，并加垫皮。使用两股钢丝绳成八字形交叉捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                绳4-4
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:钢丝绳捆绑/00002:没有标记/00004
+                        /*	audio			*/	sound\平车装载标准舟节3.mp3
+                        /*	description		*/	说明：横向捆绑钢丝绳和前后捆绑钢丝绳都是φ15mm。捆法：（1）横向捆绑：10米长钢丝绳打两个绳扣，一个是固定绳扣，一个是拉紧绳扣。固定绳扣用3个卡子卡紧，挂在车皮挂钩上。将拉紧绳扣扔到另一侧，将多余钢丝绳绕过另一侧车皮挂钩；将7m拉紧钢丝绳一个绳扣与捆绑钢丝绳固定绳扣挂在同一个火车皮挂钩上，另一绳扣也扔到另一侧；将手扳葫芦挂钩挂在捆绑钢丝绳拉紧绳扣与拉紧钢丝绳另一绳扣上，扳动手扳葫芦，拉紧捆绑钢丝绳，用钢丝绳卡子将拉紧端两股钢丝绳卡紧，打成一个绳扣固定在另一侧车皮挂钩上，用钳子将多余钢丝绳剪断。（2）前后捆绑：将6米长钢丝绳固定端绳扣挂到浮箱的公母扣上，并加垫皮。使用两股钢丝绳成八字形交叉捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                绳4-3
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        

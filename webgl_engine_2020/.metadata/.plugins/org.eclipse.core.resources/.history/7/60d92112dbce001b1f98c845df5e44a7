@@ -1,0 +1,374 @@
+package driver_project_boat_2011;
+
+import driver_opengl_fixed_pipeline.light_parameter;
+import driver_opengl_fixed_pipeline.render_material_parameter;
+import kernel_engine.system_parameter;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
+import kernel_part.part;
+import kernel_part.part_rude;
+import kernel_part.part_container_for_part_search;
+
+public class extended_part_driver extends driver_opengl_fixed_pipeline.extended_part_driver
+{
+	private String get_str(file_reader f,int n)
+	{
+		for(int i=1;i<n;i++)
+			f.get_string();
+		return f.get_string();
+	}
+	private int get_int(file_reader f,int n)
+	{
+		for(int i=1;i<n;i++)
+			f.get_string();
+		return f.get_int();
+	}
+	private double get(file_reader f,int n)
+	{
+		for(int i=1;i<n;i++)
+			f.get_string();
+		return f.get_double();
+	}
+	private double [][]convert_material(String source_file_name,String target_file_name,String file_system_charset)
+	{
+		file_reader fr=new file_reader(source_file_name,file_system_charset);
+		int material_number=((material_number=get_int(fr,2))<1)?1:material_number;
+		double color_par[][]	=new double[material_number][];
+		double rotate_scale[][]	=new double[material_number][];
+		String texture[]		=new String[material_number];
+		String mixture[]		=new String[material_number];
+		
+		for(int i=0;i<material_number;i++){
+			color_par[i]	=new double[9];
+			rotate_scale[i]	=new double[2];
+			
+			get_str(fr,4);
+			for(int j=0,nj=color_par[i].length;j<nj;j++)
+				color_par[i][j]=fr.get_double();
+			
+			texture		[i]		=get_str(fr,2);		texture[i]=(texture[i]==null)?"":texture[i];
+			rotate_scale[i][0]	=get(fr,2);
+			rotate_scale[i][1]	=get(fr,2);
+			mixture		[i]		=get_str(fr,2);		mixture[i]=(mixture[i]==null)?"":mixture[i];
+		}
+		fr.close();
+		
+		file_writer fw=new file_writer(target_file_name,file_system_charset);
+		
+		fw.println(material_number);
+		
+		for(int i=0;i<material_number;i++){
+			switch(texture[i]){
+			default:
+				fw.println("2");
+				break;
+			case "":
+			case "notexture":
+			case "没有纹理":
+				fw.println("0");
+				break;
+			}
+			fw.println("	"+color_par[i][0]+"	"+color_par[i][1]+"	"+color_par[i][2]+"	1");
+			fw.println("	"+color_par[i][3]+"	"+color_par[i][4]+"	"+color_par[i][5]+"	"+color_par[i][6]+"	0	0");
+			
+			switch(texture[i]){
+			default:
+				fw.println(texture[i]);
+				break;
+			case "":
+			case "没有纹理":
+				fw.println("notexture");
+				break;
+			}
+			fw.print  ("	0	0	",	rotate_scale[i][0]);
+			fw.println("	",			rotate_scale[i][1]);
+			fw.println();
+		}
+		fw.close();	
+	
+		return color_par;
+	}
+	private void convert_face(file_reader fr,file_writer fw,double material[][])
+	{
+		double vertex_data[][],normal_data[][],texture_data[][][];
+		int material_id[],vertex_index[][],normal_index[][],texture_index[][][];
+		
+		int text_number=get_int(fr,2);
+		
+		text_number=(text_number<0)?0:text_number;
+		
+		{
+			int vertex_number=get_int(fr,2);
+			vertex_data=new double [vertex_number][];
+			for(int i=0;i<vertex_number;i++){
+				vertex_data[i]=new double[4];
+				vertex_data[i][0]=get(fr,4);
+				vertex_data[i][1]=get(fr,0);
+				vertex_data[i][2]=get(fr,0);
+				vertex_data[i][3]=1.0;
+			}
+		}
+		{
+			int normal_number=get_int(fr,2);
+			normal_data=new double [normal_number][];
+			for(int i=0;i<normal_number;i++){
+				normal_data[i]=new double[4];
+				normal_data[i][0]=get(fr,4);
+				normal_data[i][1]=get(fr,0);
+				normal_data[i][2]=get(fr,0);
+				normal_data[i][3]=1.0;
+			}
+		}
+		{
+			texture_data=new double[text_number][][];
+			for(int texture_id=0;texture_id<text_number;texture_id++){
+				int sub_texture_number=get_int(fr,4);
+				texture_data[texture_id]=new double [sub_texture_number][];
+				for(int i=0;i<sub_texture_number;i++){
+					texture_data[texture_id][i]=new double[4];
+					texture_data[texture_id][i][0]=get(fr,4);
+					texture_data[texture_id][i][1]=get(fr,0);
+					texture_data[texture_id][i][2]=get(fr,0);
+					texture_data[texture_id][i][3]=1.0;
+				}
+			}
+		}
+		{
+			int triangle_number=get_int(fr,2);
+			material_id=new int[triangle_number];
+			vertex_index=new int[triangle_number][];
+			normal_index=new int[triangle_number][];
+			texture_index=new int[triangle_number][][];
+			
+			for(int i=0;i<triangle_number;i++){
+				material_id[i]		=get_int(fr,4);
+				
+				vertex_index[i]		=new int[3];
+				vertex_index[i][0]	=get_int(fr,8);
+				vertex_index[i][1]	=get_int(fr,0);
+				vertex_index[i][2]	=get_int(fr,0);
+				
+				normal_index[i]		=new int[3];
+				normal_index[i][0]	=get_int(fr,4);
+				normal_index[i][1]	=get_int(fr,0);
+				normal_index[i][2]	=get_int(fr,0);
+				
+				texture_index[i]	=new int[text_number][];
+				for(int j=0;j<text_number;j++){
+					texture_index[i][j]		=new int[3];
+					texture_index[i][j][0]	=get_int(fr,6);
+					texture_index[i][j][1]	=get_int(fr,0);
+					texture_index[i][j][2]	=get_int(fr,0);
+				}
+			}
+		}
+		String face_type=get_str(fr,2).trim();
+		if(face_type.compareTo("平面")==0)
+			face_type="plane";
+		else if(face_type.compareTo("柱面")==0)
+			face_type="cylinder";
+		else if(face_type.compareTo("锥面")==0)
+			face_type="cone";
+		else if(face_type.compareTo("球面")==0)
+			face_type="sphere";
+		else if(face_type.compareTo("环面")==0)
+			face_type="torus";
+		else
+			face_type="unknown";
+		
+		fw.print("	",face_type);
+		int parameter_number=get_int(fr,2);
+		fw.print("	",parameter_number);
+		get_str(fr,1);
+		for(int i=0;i<parameter_number;i++)
+			fw.print("	",get(fr,0));
+		fw.println();
+		
+		fw.println("	",text_number);
+		
+		fw.println("	",vertex_data.length);
+		for(int i=0;i<vertex_data.length;i++){
+			fw.print  ("	",vertex_data[i][0]);
+			fw.print  ("	",vertex_data[i][1]);
+			fw.print  ("	",vertex_data[i][2]);
+			fw.println("	",vertex_data[i][3]);
+		}
+		
+		fw.println("	",normal_data.length);
+		for(int i=0;i<normal_data.length;i++){
+			fw.print  ("	",normal_data[i][0]);
+			fw.print  ("	",normal_data[i][1]);
+			fw.print  ("	",normal_data[i][2]);
+			fw.println("	",normal_data[i][3]);
+		}
+		for(int j=0;j<text_number;j++){
+			fw.println("	",texture_data[j].length);
+			for(int i=0;i<texture_data[j].length;i++){
+				fw.print  ("	",texture_data[j][i][0]);
+				fw.print  ("	",texture_data[j][i][1]);
+				fw.print  ("	",texture_data[j][i][2]);
+				fw.println("	",texture_data[j][i][3]);
+			}
+		}
+		
+		fw.println("	",vertex_index.length);
+		for(int i=0,ni=vertex_index.length;i<ni;i++){
+			if(material_id[i]<0)
+				material_id[i]=0;
+			if(material_id[i]>=material.length)
+				material_id[i]=material.length-1;
+			
+			fw.print  ("	",material[material_id[i]][0]);
+			fw.print  ("	",material[material_id[i]][1]);
+			fw.print  ("	",material[material_id[i]][2]);
+			fw.println("	",material_id[i]);
+			
+			fw.print  ("	",vertex_index[i][0]);
+			fw.print  ("	",vertex_index[i][1]);
+			fw.print  ("	",vertex_index[i][2]);
+			fw.println("	-1");
+			
+			fw.print  ("	",normal_index[i][0]);
+			fw.print  ("	",normal_index[i][1]);
+			fw.print  ("	",normal_index[i][2]);
+			fw.println("	-1");
+			
+			for(int j=0;j<text_number;j++){
+				fw.print  ("	",texture_index[i][j][0]);
+				fw.print  ("	",texture_index[i][j][1]);
+				fw.print  ("	",texture_index[i][j][2]);
+				fw.println("	-1");
+			}
+		}
+	}
+	private void convert_edge(file_reader fr,file_writer fw,double material[][])
+	{
+		double x0=0,y0=0,z0=0,x1=0,y1=0,z1=0;
+		String start_type="",end_type="";
+		
+		start_type=(get_str(fr,4).compareTo("起点有效")==0)?"start_effective":"start_not_effective";	
+		x0=get(fr,0);	y0=get(fr,0);	z0=get(fr,0);
+		end_type=(get_str(fr,0).compareTo("终点有效")==0)?"end_effective":"end_not_effective";
+		x1=get(fr,0);	y1=get(fr,0);	z1=get(fr,0);
+
+		String curve_type=get_str(fr,2);
+		if(curve_type.compareTo("直线")==0)
+			curve_type="line";
+		else if(curve_type.compareTo("圆")==0)
+			curve_type="circle";
+		else if(curve_type.compareTo("椭圆")==0)
+			curve_type="ellipse";
+		else 
+			curve_type="unknown";
+		int parameter_number=get_int(fr,2);
+		fw.println("	",curve_type);
+		fw.print  ("	",parameter_number);
+		
+		get_str(fr,1);
+		for(int i=0;i<parameter_number;i++)
+			fw.print  ("	",get(fr,0));
+		fw.println();
+		
+		fw.println("	0	0	0	1");
+		
+		fw.print  ("	",start_type);
+		if(start_type.compareTo("start_effective")!=0)
+			fw.println();
+		else{
+			fw.print  ("	",x0);			
+			fw.print  ("	",y0);		
+			fw.print  ("	",z0);	
+			fw.println("	1.0			0	0	0	1");
+		};
+		
+		
+		fw.print  ("	",end_type);
+		if(end_type.compareTo("end_effective")!=0)
+			fw.println();
+		else{
+			fw.print  ("	",x1);			
+			fw.print  ("	",y1);		
+			fw.print  ("	",z1);	
+			fw.println("	1.0			0	0	0	1");
+		}
+		
+		int vertex_number=get_int(fr,2);
+		
+		fw.println("	",vertex_number);
+		
+		for(int i=0;i<vertex_number;i++){
+			fw.print  ("	",get(fr,4));			
+			fw.print  ("	",get(fr,0));			
+			fw.print  ("	",get(fr,0));
+			fw.println("	1.0			0	0	0	1");
+		}
+	}
+	
+	public extended_part_driver(light_parameter my_light,render_material_parameter render_material,
+			String my_scene_directory_name,String my_scene_parameter_directory_name)
+	{
+		super(my_light,render_material,my_scene_directory_name,my_scene_parameter_directory_name);
+	}
+	public part_rude create_part_mesh_and_buffer_object_head(
+			part p,file_writer buffer_object_file_writer,
+			part_container_for_part_search pcps,system_parameter system_par)
+	{
+		{
+			file_reader fr=new file_reader(p.directory_name+p.mesh_file_name,p.file_charset);
+			String version_str=fr.get_string();
+			fr.close();
+			
+			if(version_str!=null)
+				if(version_str.compareTo("2021.07.01")==0)
+					return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par);
+		}
+		
+		double material[][]=convert_material(p.directory_name+p.material_file_name,
+			p.directory_name+p.material_file_name+".liufuyan.bak",p.file_charset);
+		
+		if(p.mesh_file_name==null) {
+			super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par);
+			file_writer.file_delete(p.directory_name+p.material_file_name+".liufuyan.bak");
+			return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par);
+		}
+
+		file_writer fw=new file_writer(
+				p.directory_name+p.mesh_file_name+".liufuyan.bak",p.file_charset);
+		file_reader fr=new file_reader(
+				p.directory_name+p.mesh_file_name,p.file_charset);
+		int body_number=get_int(fr,2);
+		
+		fw.println("/*	version          */		2019.08.05");
+		fw.println("/*	origin material  */		0  0  0  1");
+		fw.println("/*	body_number      */		",body_number);
+		for(int body_id=0;body_id<body_number;body_id++){
+			String body_name=get_str(fr,4);
+			int face_number=get_int(fr,2);
+			fw.print (body_name);
+			fw.println("	",face_number);
+			for(int face_id=0;face_id<face_number;face_id++){
+				fw.println(get_str(fr,4));
+				convert_face(fr,fw,material);
+				int loop_number=get_int(fr,2);
+				fw.println("\n	",loop_number);
+				for(int loop_id=0;loop_id<loop_number;loop_id++){
+					int edge_number=get_int(fr,4);
+					fw.println("	",edge_number);
+					for(int edge_id=0;edge_id<edge_number;edge_id++)
+						convert_edge(fr,fw,material);
+				}
+			}
+		}
+		
+		fr.close();
+		fw.close();	
+		
+		kernel_common_class.debug_information.println(
+				"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		
+		file_writer.file_copy(p.directory_name+p.mesh_file_name+".liufuyan.bak", p.directory_name+p.mesh_file_name);
+		file_writer.file_copy(p.directory_name+p.material_file_name+".liufuyan.bak", p.directory_name+p.material_file_name);
+
+		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par);
+	}
+}

@@ -16,7 +16,9 @@ public class component_container_information extends jason_creator
 		print("part_component_number",			cc.part_component_number);
 		print("exist_part_component_number",	cc.exist_part_component_number);
 		print("top_assemble_component_number",	cc.top_assemble_component_number);
-		print("total_primitive_number",			cc.total_primitive_number);
+		print("total_face_primitive_number",	cc.total_face_primitive_number);
+		print("total_edge_primitive_number",	cc.total_edge_primitive_number);
+		print("total_point_primitive_number",	cc.total_point_primitive_number);
 	}
 	public component_container_information(
 			String my_scene_directory_name,String my_scene_file_name,

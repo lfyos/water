@@ -59,8 +59,15 @@ public class part_container_for_process_sequence extends sorter<part,part>
 	{
 		return compare_part(s,t);
 	}
+	private static part[] clone_array(part my_parts[])
+	{
+		part ret_val[]=new part[my_parts.length];
+		for(int i=0,ni=ret_val.length;i<ni;i++)
+			ret_val[i]=my_parts[i];
+		return ret_val;
+	}
 	public part_container_for_process_sequence(part my_parts[])
 	{
-		super(part.clone_array(my_parts),-1,new part[my_parts.length]);
+		super(clone_array(my_parts),-1,new part[my_parts.length]);
 	}
 }

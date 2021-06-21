@@ -1,0 +1,41 @@
+/*	global_ambient			*/			0.1		0.1		0.1
+
+
+/*	light_number			*/			4
+
+/*	camera_id											*/	4
+/*	light_type											*/	0
+/*	red			green			blue					*/	0.20	0.20	0.20
+/*	direction_x	direction_y		direction_z				*/	1		1		1
+/*	Ambient		Diffuse			Specular	Shininess	*/	0.20	0.50	1.00	5.00
+/*	k0			k1				k2						*/	0.20	0.00	0.00
+/*	spot_angle	spot_exponent							*/	0		1
+
+
+/*	camera_id											*/	5
+/*	light_type											*/	0
+/*	red			green			blue					*/	0.20	0.20	0.20
+/*	direction_x	direction_y		direction_z				*/	1		1		1
+/*	Ambient		Diffuse			Specular	Shininess	*/	0.20	0.50	1.00	5.00
+/*	k0			k1				k2						*/	0.20	0.00	0.00
+/*	spot_angle	spot_exponent							*/	0		1
+
+
+
+/*	camera_id											*/	6
+/*	light_type											*/	0
+/*	red			green			blue					*/	0.20	0.20	0.20
+/*	direction_x	direction_y		direction_z				*/	1		1		1
+/*	Ambient		Diffuse			Specular	Shininess	*/	0.20	0.50	1.00	5.00
+/*	k0			k1				k2						*/	0.20	0.00	0.00
+/*	spot_angle	spot_exponent							*/	0		1
+
+
+
+/*	camera_id											*/	7
+/*	light_type											*/	0
+/*	red			green			blue					*/	0.20	0.20	0.20
+/*	direction_x	direction_y		direction_z				*/	1		1		1
+/*	Ambient		Diffuse			Specular	Shininess	*/	0.20	0.50	1.00	5.00
+/*	k0			k1				k2						*/	0.20	0.00	0.00
+/*	spot_angle	spot_exponent							*/	0		1

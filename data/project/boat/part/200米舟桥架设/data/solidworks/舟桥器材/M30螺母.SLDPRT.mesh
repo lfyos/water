@@ -1,0 +1,552 @@
+/*	version					*/	2021.07.01
+/*	origin material			*/	0	0	0	1
+/*	default material		*/	0.86	0.8	0.9	0
+/*	max_attribute_number	*/	0
+
+/*	body_number	*/	1
+   /* body  0  name   */  切除-旋转1   /*   face_number   */  11
+     /* face  0  name   */  切除-旋转1的第0个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    -0.0   0.0   1.0   9.78177E-18   -0.0288675   0.028
+         /* total_face_primitive_number */ 48
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -0.0244596 -0.0244596 0.028  0.0244596 0.0244596 0.028 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.028   0.0   0.0   1.0   0.015
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.0149347 -0.0149379 0.028  0.015 0.0149837 0.028 
+                /* total_edge_primitive_number */  29
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.028   -0.0   -0.0   1.0   0.0244596
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.0244062 -0.0244587 0.028  0.0244596 0.0244193 0.028 
+                /* total_edge_primitive_number */  36
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  1  name   */  切除-旋转1的第1个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.5   0.866025   -0.0   -0.025   -0.0144338   0.028
+         /* total_face_primitive_number */ 18
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -0.025 -0.0288675 4.86567E-4  2.42861E-17 -0.0144338 0.0275134 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -0.025   -0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   1.73472E-17   -0.0288675   0.0240784   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 -0.0288675 0.0240784  1.73472E-17 -0.0144338 0.0275134 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -0.025   -0.0144338   0.028   -0.0   -0.0   -1.0
+                start_effective   -0.025   -0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   -0.025   -0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 -0.0144338 0.00392159  -0.025 -0.0144338 0.0240784 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -0.025   -0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                end_effective   3.1225E-17   -0.0288675   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 -0.0288675 4.86567E-4  3.1225E-17 -0.0144338 0.00392159 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    3.50298E-18   -0.0288675   0.028   -0.0   -0.0   -1.0
+                start_effective   1.73472E-17   -0.0288675   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   3.1225E-17   -0.0288675   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 3.50298E-18 -0.0288675 0.00392159  3.1225E-17 -0.0288675 0.0240784 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  2  name   */  切除-旋转1的第2个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    -0.5   0.866025   0.0   3.50298E-18   -0.0288675   0.028
+         /* total_face_primitive_number */ 18
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  1.08815E-17 -0.0288675 4.86567E-4  0.025 -0.0144338 0.0275134 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   1.73472E-17   -0.0288675   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   0.025   -0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 9.99858E-18 -0.0288675 0.0240784  0.025 -0.0144338 0.0275134 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    3.50298E-18   -0.0288675   0.028   -0.0   -0.0   -1.0
+                start_effective   1.73472E-17   -0.0288675   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   3.1225E-17   -0.0288675   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 3.50298E-18 -0.0288675 0.00392159  3.1225E-17 -0.0288675 0.0240784 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   3.1225E-17   -0.0288675   0.00392159   1.0  /*  material  */      0    0    0    1
+                end_effective   0.025   -0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 2.28768E-17 -0.0288675 4.86567E-4  0.025 -0.0144338 0.00392159 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.025   -0.0144338   0.028   -0.0   -0.0   -1.0
+                start_effective   0.025   -0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   0.025   -0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.025 -0.0144338 0.00392159  0.025 -0.0144338 0.0240784 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  3  name   */  切除-旋转1的第3个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    -1.0   -3.60556E-16   0.0   0.025   -0.0144338   0.028
+         /* total_face_primitive_number */ 18
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.025 -0.0144338 4.89277E-4  0.025 0.0144338 0.0275107 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   0.025   -0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   0.025   0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.025 -0.0144338 0.0240784  0.025 0.0144338 0.0275192 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.025   -0.0144338   0.028   -0.0   -0.0   -1.0
+                start_effective   0.025   -0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   0.025   -0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.025 -0.0144338 0.00392159  0.025 -0.0144338 0.0240784 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   0.025   -0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                end_effective   0.025   0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.025 -0.0144338 4.80822E-4  0.025 0.0144338 0.00392159 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.025   0.0144338   0.028   -0.0   -0.0   -1.0
+                start_effective   0.025   0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   0.025   0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.025 0.0144338 0.00392159  0.025 0.0144338 0.0240784 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  4  name   */  切除-旋转1的第4个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    -0.5   -0.866025   0.0   0.025   0.0144338   0.028
+         /* total_face_primitive_number */ 18
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -2.42861E-17 0.0144338 4.86567E-4  0.025 0.0288675 0.0275134 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   0.025   0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   -6.93889E-18   0.0288675   0.0240784   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.06727E-17 0.0144338 0.0240784  0.025 0.0288675 0.0275134 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.025   0.0144338   0.028   -0.0   -0.0   -1.0
+                start_effective   0.025   0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   0.025   0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.025 0.0144338 0.00392159  0.025 0.0144338 0.0240784 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   0.025   0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                end_effective   -2.08167E-17   0.0288675   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -2.08167E-17 0.0144338 4.86567E-4  0.025 0.0288675 0.00392159 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -7.13856E-18   0.0288675   0.028   -0.0   -0.0   -1.0
+                start_effective   -6.93889E-18   0.0288675   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   -2.08167E-17   0.0288675   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -2.08167E-17 0.0288675 0.00392159  -6.93889E-18 0.0288675 0.0240784 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  5  name   */  切除-旋转1的第5个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.5   -0.866025   0.0   -7.13856E-18   0.0288675   0.028
+         /* total_face_primitive_number */ 18
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -0.025 0.0144338 4.86567E-4  -2.48187E-18 0.0288675 0.0275134 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -6.93889E-18   0.0288675   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   -0.025   0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 0.0144338 0.0240784  -2.15917E-18 0.0288675 0.0275134 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -7.13856E-18   0.0288675   0.028   -0.0   -0.0   -1.0
+                start_effective   -6.93889E-18   0.0288675   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   -2.08167E-17   0.0288675   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -2.08167E-17 0.0288675 0.00392159  -6.93889E-18 0.0288675 0.0240784 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -2.08167E-17   0.0288675   0.00392159   1.0  /*  material  */      0    0    0    1
+                end_effective   -0.025   0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 0.0144338 4.86567E-4  -1.7628E-17 0.0288675 0.00392159 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -0.025   0.0144338   0.028   -0.0   -0.0   -1.0
+                start_effective   -0.025   0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   -0.025   0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 0.0144338 0.00392159  -0.025 0.0144338 0.0240784 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  6  name   */  切除-旋转1的第6个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    1.0   2.4037E-16   -0.0   -0.025   0.0144338   0.028
+         /* total_face_primitive_number */ 18
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -0.025 -0.0144338 4.89277E-4  -0.025 0.0144338 0.0275107 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -0.025   0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   -0.025   -0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 -0.0144338 0.0240784  -0.025 0.0144338 0.0275107 
+                /* total_edge_primitive_number */  15
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -0.025   0.0144338   0.028   -0.0   -0.0   -1.0
+                start_effective   -0.025   0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   -0.025   0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 0.0144338 0.00392159  -0.025 0.0144338 0.0240784 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -0.025   0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                end_effective   -0.025   -0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 -0.0144338 4.89277E-4  -0.025 0.0144338 0.00392159 
+                /* total_edge_primitive_number */  15
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -0.025   -0.0144338   0.028   -0.0   -0.0   -1.0
+                start_effective   -0.025   -0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   -0.025   -0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 -0.0144338 0.00392159  -0.025 -0.0144338 0.0240784 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  7  name   */  切除-旋转1的第7个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    -0.0   0.0   1.0   9.78177E-18   -0.0288675   0.0
+         /* total_face_primitive_number */ 48
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -0.0244596 -0.0244596 0.0  0.0244596 0.0244596 0.0 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   -3.46945E-18   -0.0   -0.0   1.0   0.0244596
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.0244062 -0.0244587 -3.46945E-18  0.0244596 0.0244193 -3.46945E-18 
+                /* total_edge_primitive_number */  36
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.0   0.0   0.0   1.0   0.015
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.0149347 -0.0149379 0.0  0.015 0.0149837 0.0 
+                /* total_edge_primitive_number */  29
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  8  name   */  切除-旋转1的第8个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    0.0   0.0   0.028   -0.0   -0.0   -1.0   0.015
+         /* total_face_primitive_number */ 48
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -0.015 -0.015 0.0  0.015 0.015 0.028 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.028   0.0   0.0   1.0   0.015
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.0149347 -0.0149379 0.028  0.015 0.0149837 0.028 
+                /* total_edge_primitive_number */  29
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.0   0.0   0.0   1.0   0.015
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.0149347 -0.0149379 0.0  0.015 0.0149837 0.0 
+                /* total_edge_primitive_number */  29
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  9  name   */  切除-旋转1的第9个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0   0.0   -3.46945E-18   0.0   0.0   -1.0   0.0244596   0.843717
+         /* total_face_primitive_number */ 78
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -0.025 -0.0288675 -3.46945E-18  0.025 0.0288675 0.00392159 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   -3.46945E-18   -0.0   -0.0   1.0   0.0244596
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.0244062 -0.0244587 -3.46945E-18  0.0244596 0.0244193 -3.46945E-18 
+                /* total_edge_primitive_number */  36
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    6
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -0.025   0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                end_effective   -0.025   -0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 -0.0144338 4.89277E-4  -0.025 0.0144338 0.00392159 
+                /* total_edge_primitive_number */  15
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -2.08167E-17   0.0288675   0.00392159   1.0  /*  material  */      0    0    0    1
+                end_effective   -0.025   0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 0.0144338 4.86567E-4  -1.7628E-17 0.0288675 0.00392159 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   0.025   0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                end_effective   -2.08167E-17   0.0288675   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -2.08167E-17 0.0144338 4.86567E-4  0.025 0.0288675 0.00392159 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   0.025   -0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                end_effective   0.025   0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.025 -0.0144338 4.80822E-4  0.025 0.0144338 0.00392159 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  4  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   3.1225E-17   -0.0288675   0.00392159   1.0  /*  material  */      0    0    0    1
+                end_effective   0.025   -0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 2.28768E-17 -0.0288675 4.86567E-4  0.025 -0.0144338 0.00392159 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  5  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -0.025   -0.0144338   0.00392159   1.0  /*  material  */      0    0    0    1
+                end_effective   3.1225E-17   -0.0288675   0.00392159   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 -0.0288675 4.86567E-4  3.1225E-17 -0.0144338 0.00392159 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+                
+     /* face  10  name   */  切除-旋转1的第10个表面
+         /* face_type   */  cone  /*   parameter_number   */  8 /*   parameter  */    0.0   0.0   0.028   -0.0   -0.0   1.0   0.0244596   0.843717
+         /* total_face_primitive_number */ 78
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -0.025 -0.0288675 0.0240784  0.025 0.0288675 0.028 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.028   -0.0   -0.0   1.0   0.0244596
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.0244062 -0.0244587 0.028  0.0244596 0.0244193 0.028 
+                /* total_edge_primitive_number */  36
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    6
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -0.025   -0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   1.73472E-17   -0.0288675   0.0240784   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 -0.0288675 0.0240784  1.73472E-17 -0.0144338 0.0275134 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   1.73472E-17   -0.0288675   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   0.025   -0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 9.99858E-18 -0.0288675 0.0240784  0.025 -0.0144338 0.0275134 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   0.025   -0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   0.025   0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.025 -0.0144338 0.0240784  0.025 0.0144338 0.0275192 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   0.025   0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   -6.93889E-18   0.0288675   0.0240784   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.06727E-17 0.0144338 0.0240784  0.025 0.0288675 0.0275134 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  4  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -6.93889E-18   0.0288675   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   -0.025   0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 0.0144338 0.0240784  -2.15917E-18 0.0288675 0.0275134 
+                /* total_edge_primitive_number */  16
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  5  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -0.025   0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                end_effective   -0.025   -0.0144338   0.0240784   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.025 -0.0144338 0.0240784  -0.025 0.0144338 0.0275107 
+                /* total_edge_primitive_number */  15
+                /* total_point_primitive_number */  0
+                
+                
+                

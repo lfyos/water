@@ -64,7 +64,6 @@ public class part_loader_container
 		debug_information.println();
 		debug_information.println("Begin wait_for_completion");
 		debug_information.println();
-		
 		for(int wait_number=0;;wait_number++){
 			int number=0;
 			for(int i=0,ni=already_loaded_part.length;i<ni;i++){

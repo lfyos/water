@@ -1,0 +1,76 @@
+/*	version					*/	2021.07.01
+/*	origin material			*/	0	0	0	1
+/*	default material		*/	0.0	0.5	0.0	0
+/*	max_attribute_number	*/	0
+
+/*	body_number	*/	1
+   /* body  0  name   */  <钢丝绳2>-<拉伸1>   /*   face_number   */  3
+     /* face  0  name   */  <钢丝绳2>-<拉伸1>的第0个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    0.00369666   -1.99019   3.96776E-14   -8.70808E-4   1.0   -9.34669E-15   0.01
+         /* total_face_primitive_number */ 48
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -0.0119636 -1.9902 -0.01  0.0136967 4.50981 0.01 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.00369666   -1.99019   3.96776E-14   -8.70808E-4   1.0   -9.34669E-15   0.01
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.00625342 -1.9902 -0.00999616  0.0136153 -1.99019 0.01 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    -0.00196359   4.5098   -2.10759E-14   -8.70808E-4   1.0   -9.34669E-15   0.01
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.0119137 4.5098 -0.00999616  0.00795501 4.50981 0.01 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  1  name   */  <钢丝绳2>-<拉伸1>的第1个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    8.70808E-4   -1.0   9.34669E-15   0.00369666   -1.99019   3.96776E-14
+         /* total_face_primitive_number */ 22
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -0.00630333 -1.9902 -0.01  0.0136967 -1.99018 0.01 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.00369666   -1.99019   3.96776E-14   -8.70808E-4   1.0   -9.34669E-15   0.01
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.00625342 -1.9902 -0.00999616  0.0136153 -1.99019 0.01 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+     /* face  2  name   */  <钢丝绳2>-<拉伸1>的第2个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    8.70808E-4   -1.0   9.34669E-15   -0.00196359   4.5098   -2.10759E-14
+         /* total_face_primitive_number */ 22
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -0.0119636 4.5098 -0.01  0.00803641 4.50981 0.01 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    -0.00196359   4.5098   -2.10759E-14   -8.70808E-4   1.0   -9.34669E-15   0.01
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -0.0119137 4.5098 -0.00999616  0.00795501 4.50981 0.01 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  1
+                
+                
+                

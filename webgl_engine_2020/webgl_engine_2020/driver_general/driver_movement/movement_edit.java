@@ -71,7 +71,9 @@ public class movement_edit  extends web_page
 			"function process_movement(movement_id)",
 			"{",
 			"	var seletion=document.getElementById(\"move_id_\"+movement_id);",
-			"	switch(seletion.value){",
+			"	var seletion_value=seletion.value;",
+			"	seletion.value=\"\"",
+			"	switch(seletion_value){",
 			"	case \""+edit_locate_camera_string+"\":",
 			"		operate_id(movement_id,mcp.locate_camera_movement);",
 			"		break;",
@@ -186,6 +188,8 @@ public class movement_edit  extends web_page
 					out.print  ("<select id=\"move_id_",t.movement_tree_id);
 					out.print  ("\" onclick=\"process_movement(",t.movement_tree_id);
 					out.println(");\">");
+					
+					out.println("<option title=\"\"></option>");
 					
 					out.print  ("<option title=\"",edit_locate_camera_title_string);out.print("\">");
 					out.println(edit_locate_camera_string,"</option>");

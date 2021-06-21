@@ -67,26 +67,28 @@ public class component_collector_stack
 	public component_collector push_collector(system_parameter system_par,scene_parameter scene_par,
 			component_collector push_collector,component_container component_cont,render []renders)
 	{
-		part comp_p;
+		part p;
 		if(push_collector.part_number==1)
 			for(int render_id=0,exit_flag=1;(exit_flag>0)&&(render_id<push_collector.component_collector.length);render_id++)
 				if(push_collector.component_collector[render_id]!=null)
 					for(int part_id=0;(exit_flag>0)&&(part_id<push_collector.component_collector[render_id].length);part_id++)
 						for(component_link_list cll=push_collector.component_collector[render_id][part_id];(exit_flag>0)&&(cll!=null);cll=cll.next_list_item)
 							for(int i=0,ni=cll.comp.driver_number();(exit_flag>0)&&(i<ni);i++)
-								if((comp_p=cll.comp.driver_array[i].component_part)!=null){
-									String root_directory=file_directory.part_file_directory(comp_p,system_par,scene_par);
+								if((p=cll.comp.driver_array[i].component_part)!=null){
+									String root_directory=file_directory.part_file_directory(p,system_par,scene_par);
 									
 									if(cll.comp.uniparameter.display_part_name_or_component_name_flag)
-										push_collector.title=comp_p.user_name;
+										push_collector.title=p.user_name;
 									else
 										push_collector.title=cll.comp.component_name;
-									if(file_reader.is_exist(comp_p.directory_name+comp_p.description_file_name))
-										push_collector.description=file_reader.get_text(
-											comp_p.directory_name+comp_p.description_file_name,comp_p.file_charset);
-									else
-										push_collector.description=comp_p.user_name;
-									push_collector.audio_file_name=root_directory+comp_p.part_par.audio_file_name;
+									
+									push_collector.description=p.user_name;
+									if(p.description_file_name!=null)
+										if(file_reader.is_exist(p.directory_name+p.description_file_name))
+											push_collector.description=file_reader.get_text(
+													p.directory_name+p.description_file_name,p.file_charset);
+
+									push_collector.audio_file_name=root_directory+"audio.mp3";
 									exit_flag=0;
 								}
 

@@ -1,0 +1,30 @@
+package kernel_maintain;
+
+import kernel_common_class.debug_information;
+import kernel_file_manager.travel_through_directory;
+import kernel_file_manager.file_writer;
+import kernel_part.body;
+import kernel_transformation.box;
+import kernel_transformation.location;
+
+public class test_1 
+{
+	public static void main(String args[])
+	{
+		debug_information.println("Begin");
+		
+		body b=new body(1,null,null,null,null,null,null);
+		
+		
+		body b=new body(1,new location(),new box[] {new box(0,0,0,1,1,1)},
+				new String [] {"1"},new String[][] {new String[] {"0","0","0","1"}},
+				new double[][] {new double[] {0,0,0}},
+				new String[][] {new String[] {"1"}});
+		
+				int my_box_number,location my_box_loca[],box my_box_array[],
+				String extra_data[],String my_default_material[][],
+				double my_default_attribute_double[][],String my_default_attribute_string[][])
+				
+		debug_information.println("End");
+	}
+}

@@ -1,0 +1,1371 @@
+version	2015.10
+
+/*	name			*/	movement
+/*	audio			*/	no_sound
+/*	description		*/	no_description
+/*	sequence/parallel	*/	sequence
+/*	direction		*/	no_direction
+/*	camera scale		*/	upper	1.0
+/*	children number		*/	4
+
+        /*	name			*/	00001:标准梁节岸上预拼
+        /*	audio			*/	no_sound
+        /*	description		*/	标准梁节岸上预拼。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00001:标准梁节岸上预拼/00001:没有标记
+                /*	audio			*/	sound\标准梁节预拼1.mp3
+                /*	description		*/	标准梁节岸上预拼。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00001:标准梁节岸上预拼/00001:没有标记/00001
+                        /*	audio			*/	sound\标准梁节预拼1.mp3
+                        /*	description		*/	标准梁节岸上预拼。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                标准梁节-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 2.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00002:梁端安装滚板
+        /*	audio			*/	no_sound
+        /*	description		*/	将四块滚板悬挂在在梁节下缘板端部，支托下连接板，便于梁节或门桥连接。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	2
+        
+                /*	name			*/	00002:梁端安装滚板/00001:没有标记
+                /*	audio			*/	sound\标准梁节预拼2.mp3
+                /*	description		*/	将四块滚板悬挂在在梁节下缘板端部，支托下连接板，便于梁节或门桥连接。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00002:梁端安装滚板/00001:没有标记/00001
+                        /*	audio			*/	sound\标准梁节预拼2.mp3
+                        /*	description		*/	将四块滚板悬挂在在梁节下缘板端部，支托下连接板，便于梁节或门桥连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                滚板-4
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.8 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00002:梁端安装滚板/00001:没有标记/00002
+                        /*	audio			*/	sound\标准梁节预拼2.mp3
+                        /*	description		*/	将四块滚板悬挂在在梁节下缘板端部，支托下连接板，便于梁节或门桥连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                滚板-3
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.8 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00002:梁端安装滚板/00002:没有标记
+                /*	audio			*/	sound\标准梁节预拼2.mp3
+                /*	description		*/	将四块滚板悬挂在在梁节下缘板端部，支托下连接板，便于梁节或门桥连接。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00002:梁端安装滚板/00002:没有标记/00001
+                        /*	audio			*/	sound\标准梁节预拼2.mp3
+                        /*	description		*/	将四块滚板悬挂在在梁节下缘板端部，支托下连接板，便于梁节或门桥连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                滚板-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00002:梁端安装滚板/00002:没有标记/00002
+                        /*	audio			*/	sound\标准梁节预拼2.mp3
+                        /*	description		*/	将四块滚板悬挂在在梁节下缘板端部，支托下连接板，便于梁节或门桥连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                滚板-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00003:梁端安装连接板
+        /*	audio			*/	no_sound
+        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	4
+        
+                /*	name			*/	00003:梁端安装连接板/00001:没有标记
+                /*	audio			*/	sound\标准梁节预拼3.mp3
+                /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	8
+                
+                        /*	name			*/	00003:梁端安装连接板/00001:没有标记/00001
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                下连接板-5
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00001:没有标记/00002
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                上连接板-5
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00001:没有标记/00003
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                下连接板-8
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00001:没有标记/00004
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                上连接板-7
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00001:没有标记/00005
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                上连接板-6
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00001:没有标记/00006
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                下连接板-7
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        下连接板-7
+                        0
+                        15
+                        标准梁节-1
+                        0
+                        178
+                        
+                        /*	name			*/	00003:梁端安装连接板/00001:没有标记/00007
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                上连接板-8
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00001:没有标记/00008
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                下连接板-6
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00003:梁端安装连接板/00002:没有标记
+                /*	audio			*/	sound\标准梁节预拼3.mp3
+                /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	8
+                
+                        /*	name			*/	00003:梁端安装连接板/00002:没有标记/00001
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-3
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00002:没有标记/00002
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-7
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00002:没有标记/00003
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-5
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00002:没有标记/00004
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-10
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00002:没有标记/00005
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-6
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00002:没有标记/00006
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-8
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00002:没有标记/00007
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-9
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        钢销-9
+                        7
+                        10
+                        下连接板-7
+                        0
+                        17
+                        
+                        /*	name			*/	00003:梁端安装连接板/00002:没有标记/00008
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-4
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00003:梁端安装连接板/00003:没有标记
+                /*	audio			*/	sound\标准梁节预拼3.mp3
+                /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	8
+                
+                        /*	name			*/	00003:梁端安装连接板/00003:没有标记/00001
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                下连接板-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00003:没有标记/00002
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                下连接板-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00003:没有标记/00003
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                上连接板-3
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00003:没有标记/00004
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                上连接板-4
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00003:没有标记/00005
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                上连接板-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00003:没有标记/00006
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                下连接板-3
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00003:没有标记/00007
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                下连接板-4
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00003:没有标记/00008
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                上连接板-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.3 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        上连接板-2
+                        0
+                        21
+                        标准梁节-1
+                        0
+                        187
+                        
+                /*	name			*/	00003:梁端安装连接板/00004:没有标记
+                /*	audio			*/	sound\标准梁节预拼3.mp3
+                /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	8
+                
+                        /*	name			*/	00003:梁端安装连接板/00004:没有标记/00001
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-12
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.18 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00004:没有标记/00002
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-16
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.18 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00004:没有标记/00003
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-13
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.18 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00004:没有标记/00004
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-11
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.18 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00004:没有标记/00005
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.18 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00004:没有标记/00006
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.18 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:梁端安装连接板/00004:没有标记/00007
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-14
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.18 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        钢销-14
+                        7
+                        10
+                        上连接板-2
+                        0
+                        21
+                        
+                        /*	name			*/	00003:梁端安装连接板/00004:没有标记/00008
+                        /*	audio			*/	sound\标准梁节预拼3.mp3
+                        /*	description		*/	将上下连接板按照面对梁端“右上左下”“上大下小”，槽口向下进行放置。并用钢销固定。将64付Φ48梁翼缘上连接螺栓、64个Φ48钢销、32付M32×80法兰螺栓和4个法兰定位销放置在8个螺栓箱内。同时将步行板和铁梯放置在梁节上，并进行捆绑。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                钢销-15
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.18 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00004:悬挂吊拦
+        /*	audio			*/	no_sound
+        /*	description		*/	待梁节起吊后，将两组吊拦分别安挂在梁节端部上翼缘槽钢上，供拼组门桥和门桥之间连接操作人员的脚手用。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00004:悬挂吊拦/00001:没有标记
+                /*	audio			*/	sound\标准梁节预拼4.mp3
+                /*	description		*/	待梁节起吊后，将两组吊拦分别安挂在梁节端部上翼缘槽钢上，供拼组门桥和门桥之间连接操作人员的脚手用。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	4
+                
+                        /*	name			*/	00004:悬挂吊拦/00001:没有标记/00001
+                        /*	audio			*/	sound\标准梁节预拼4.mp3
+                        /*	description		*/	待梁节起吊后，将两组吊拦分别安挂在梁节端部上翼缘槽钢上，供拼组门桥和门桥之间连接操作人员的脚手用。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                吊兰-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.5 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00004:悬挂吊拦/00001:没有标记/00002
+                        /*	audio			*/	sound\标准梁节预拼4.mp3
+                        /*	description		*/	待梁节起吊后，将两组吊拦分别安挂在梁节端部上翼缘槽钢上，供拼组门桥和门桥之间连接操作人员的脚手用。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                吊兰-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 7.10543E-15 0.0 0.5 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00004:悬挂吊拦/00001:没有标记/00003
+                        /*	audio			*/	sound\标准梁节预拼4.mp3
+                        /*	description		*/	待梁节起吊后，将两组吊拦分别安挂在梁节端部上翼缘槽钢上，供拼组门桥和门桥之间连接操作人员的脚手用。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                吊拦-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        吊拦-2
+                        0
+                        129
+                        标准梁节-1
+                        0
+                        370
+                        
+                        /*	name			*/	00004:悬挂吊拦/00001:没有标记/00004
+                        /*	audio			*/	sound\标准梁节预拼4.mp3
+                        /*	description		*/	待梁节起吊后，将两组吊拦分别安挂在梁节端部上翼缘槽钢上，供拼组门桥和门桥之间连接操作人员的脚手用。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                吊拦-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        

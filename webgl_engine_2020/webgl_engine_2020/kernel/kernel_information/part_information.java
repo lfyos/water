@@ -27,7 +27,9 @@ public class part_information extends jason_creator
 		print("description_file_name",		p.description_file_name);
 		print("audio_file_name",			p.audio_file_name);
 		
-		print("total_primitive_number",		p.part_mesh.total_primitive_number);
+		print("total_face_primitive_number",	p.part_mesh.total_face_primitive_number);
+		print("total_edge_primitive_number",	p.part_mesh.total_edge_primitive_number);
+		print("total_point_primitive_number",	p.part_mesh.total_point_primitive_number);
 		
 		int		total_buffer_object_file_number=1;
 		long	total_buffer_object_text_data_length=p.boftal.buffer_object_head_length;

@@ -1,0 +1,13 @@
+package get_old_part_rude;
+
+import kernel_common_class.debug_information;
+
+public class test 
+{
+	public static void main(String args[])
+	{
+		debug_information.println("Begin");
+		
+		debug_information.println("End");
+	}
+}

@@ -1,6 +1,5 @@
 package kernel_part;
 
-import kernel_mesh.auxiliary_file_handler;
 import kernel_transformation.point;
 
 public class graphics_buffer_object_for_point
@@ -13,8 +12,8 @@ public class graphics_buffer_object_for_point
 	{
 		int material_id=caculate_material_id.caculate(
 				my_part.driver,max_material_id,my_part,"line",i,j,k,m,
-				fe.parameter_point_material[0],fe.parameter_point_material[1],
-				fe.parameter_point_material[2],fe.parameter_point_material[3]);
+				fe.parameter_material[0],fe.parameter_material[1],
+				fe.parameter_material[2],fe.parameter_material[3]);
 		graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
 				my_file_name,my_file_charset,my_create_buffer_object_bitmap);
 		
@@ -26,8 +25,8 @@ public class graphics_buffer_object_for_point
 		gbo.register(pp.x,pp.y,pp.z,"1");
 		gbo.register(normal.x,normal.y,normal.z,"1");
 		gbo.register(
-				fe.parameter_point_material[0],fe.parameter_point_material[1],
-				fe.parameter_point_material[2],fe.parameter_point_material[3]);
+				fe.parameter_material[0],fe.parameter_material[1],
+				fe.parameter_material[2],fe.parameter_material[3]);
 		gbo.register(Integer.toString(i),Integer.toString(j),"3",Integer.toString(flag));
 		gbo.register(Integer.toString(k),Integer.toString(m),curve_type_id,curve_type_id);
 		if(gbo.test_end(max_file_data_length,false))
@@ -41,8 +40,8 @@ public class graphics_buffer_object_for_point
 	{
 		int material_id=caculate_material_id.caculate(
 				my_part.driver,max_material_id,my_part,"circle",i,j,k,m,
-				fe.parameter_point_material[0],fe.parameter_point_material[1],
-				fe.parameter_point_material[2],fe.parameter_point_material[3]);
+				fe.parameter_material[0],fe.parameter_material[1],
+				fe.parameter_material[2],fe.parameter_material[3]);
 		graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
 				my_file_name,my_file_charset,my_create_buffer_object_bitmap);
 		
@@ -51,8 +50,8 @@ public class graphics_buffer_object_for_point
 		gbo.register(fe.curve_parameter[0],fe.curve_parameter[1],fe.curve_parameter[2],"1.0");
 		gbo.register(fe.curve_parameter[3],fe.curve_parameter[4],fe.curve_parameter[5],
 				 Double.toString(fe.curve_parameter[6]));
-		gbo.register(fe.parameter_point_material[0],fe.parameter_point_material[1],
-				 fe.parameter_point_material[2],fe.parameter_point_material[3]);
+		gbo.register(fe.parameter_material[0],fe.parameter_material[1],
+				 fe.parameter_material[2],fe.parameter_material[3]);
 		gbo.register(Integer.toString(i),Integer.toString(j),"4",Integer.toString(flag));
 		gbo.register(Integer.toString(k),Integer.toString(m),curve_type_id,curve_type_id);
 
@@ -67,8 +66,8 @@ public class graphics_buffer_object_for_point
 	{
 		int material_id=caculate_material_id.caculate(
 				my_part.driver,max_material_id,my_part,fe.curve_type,i,j,k,m,
-				fe.parameter_point_material[0],fe.parameter_point_material[1],
-				fe.parameter_point_material[2],fe.parameter_point_material[3]);
+				fe.parameter_material[0],fe.parameter_material[1],
+				fe.parameter_material[2],fe.parameter_material[3]);
 		point center	=new point(fe.curve_parameter[0],fe.curve_parameter[1],fe.curve_parameter[2]);
 		point a_point	=new point(fe.curve_parameter[3],fe.curve_parameter[4],fe.curve_parameter[5]);
 		point b_point	=new point(fe.curve_parameter[6],fe.curve_parameter[7],fe.curve_parameter[8]);
@@ -123,8 +122,8 @@ public class graphics_buffer_object_for_point
 			gbo.register(pp.x,pp.y,pp.z,"1.0");
 			gbo.register(normal.x,normal.y,normal.z,"1.0");
 			gbo.register(
-				fe.parameter_point_material[0],fe.parameter_point_material[1],
-				fe.parameter_point_material[2],fe.parameter_point_material[3]);
+				fe.parameter_material[0],fe.parameter_material[1],
+				fe.parameter_material[2],fe.parameter_material[3]);
 			gbo.register(Integer.toString(i),Integer.toString(j),
 				Integer.toString(point_i+5),Integer.toString(flag));
 			gbo.register(Integer.toString(k),Integer.toString(m),curve_type_id,curve_type_id);
@@ -135,36 +134,34 @@ public class graphics_buffer_object_for_point
 		return normal;
 	}
 	
-	private void point_set_create(auxiliary_file_handler f,
-			int flag,int i,int j,int k,int m,face_edge fe,part my_part,
+	private void point_set_create(int flag,int i,int j,int k,int m,face_edge fe,part my_part,
 			String my_file_name,String my_file_charset,String curve_type_id,
 			long my_create_buffer_object_bitmap,int max_material_id,long max_file_data_length)
 	{
-		if(fe.edge==null)
-			return;
-		
 		int material_id=caculate_material_id.caculate(
 				my_part.driver,max_material_id,my_part,"point_set",i,j,k,m,
-				fe.parameter_point_material[0],fe.parameter_point_material[1],
-				fe.parameter_point_material[2],fe.parameter_point_material[3]);
+				fe.parameter_material[0],fe.parameter_material[1],
+				fe.parameter_material[2],fe.parameter_material[3]);
 		
-		for(int point_i=0,point_n=fe.edge.tessellation_point_number();point_i<point_n;point_i++){
+		int point_n=0;
+		if(fe.curve_parameter!=null)
+			point_n=fe.curve_parameter.length/3;
+		
+		for(int point_i=0;point_i<point_n;point_i++){
 			graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
 					my_file_name,my_file_charset,my_create_buffer_object_bitmap);
 			
-			point  tessellation_location	=fe.edge.get_tessellation_point(i,f);
-			String tessellation_extra_data	=fe.edge.get_tessellation_extra_data(i,f);
-			String tessellation_material[]	=fe.edge.get_tessellation_material(i,f);
+			double x=fe.curve_parameter[3*point_i+0];
+			double y=fe.curve_parameter[3*point_i+1];
+			double z=fe.curve_parameter[3*point_i+2];
 			
-			gbo.vertex_begin(tessellation_location.x,tessellation_location.y,tessellation_location.z);
+			gbo.vertex_begin(x,y,z);
 
-			gbo.register(tessellation_location.x,tessellation_location.y,
-					tessellation_location.z,tessellation_extra_data);
-			gbo.register(tessellation_material[0],tessellation_material[1],
-					tessellation_material[2],tessellation_material[3]);
+			gbo.register(x,y,z,fe.start_extra_data);
+			gbo.register(x,y,z,fe.start_extra_data);
 			gbo.register(
-					fe.parameter_point_material[0],fe.parameter_point_material[1],
-					fe.parameter_point_material[2],fe.parameter_point_material[3]);
+					fe.parameter_material[0],fe.parameter_material[1],
+					fe.parameter_material[2],fe.parameter_material[3]);
 			gbo.register(Integer.toString(i),Integer.toString(j),
 					Integer.toString(point_i+1000),Integer.toString(flag));
 			gbo.register(Integer.toString(k),Integer.toString(m),curve_type_id,curve_type_id);
@@ -177,7 +174,7 @@ public class graphics_buffer_object_for_point
 			face_edge fe,part my_part,String my_file_name,String my_file_charset,String curve_type_id,
 			long my_create_buffer_object_bitmap,int max_material_id,long max_file_data_length)
 	{
-		if(fe.start_effective_flag){
+		if(fe.start_point!=null){
 			int material_id=caculate_material_id.caculate(
 					my_part.driver,max_material_id,my_part,"start",i,j,k,m,
 					fe.start_point_material[0],fe.start_point_material[1],
@@ -197,7 +194,7 @@ public class graphics_buffer_object_for_point
 			if(gbo.test_end(max_file_data_length,false))
 				gbocc.expand_creater_array(material_id);
 		}
-		if(fe.end_effective_flag){
+		if(fe.end_point!=null){
 			int material_id=caculate_material_id.caculate(
 					my_part.driver,max_material_id,my_part,"end",i,j,k,m,
 					fe.end_point_material[0],fe.end_point_material[1],
@@ -247,8 +244,7 @@ public class graphics_buffer_object_for_point
 			gbocc.expand_creater_array(material_id);
 	}
 	
-	public graphics_buffer_object_for_point(
-			auxiliary_file_handler f,int max_material_id,
+	public graphics_buffer_object_for_point(int max_material_id,
 			part my_part,String my_file_name,String my_file_charset,
 			long max_file_data_length,long my_create_buffer_object_bitmap)
 	{
@@ -280,7 +276,7 @@ public class graphics_buffer_object_for_point
 								curve_type_id,my_create_buffer_object_bitmap,max_material_id,max_file_data_length);
 							break;
 						case "point_set":
-							point_set_create(f,flag,i,j,k,m,fe,my_part,my_file_name,my_file_charset,
+							point_set_create(flag,i,j,k,m,fe,my_part,my_file_name,my_file_charset,
 									curve_type_id,my_create_buffer_object_bitmap,max_material_id,max_file_data_length);
 							break;
 						case "segment":

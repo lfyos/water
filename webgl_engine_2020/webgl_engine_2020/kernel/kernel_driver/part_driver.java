@@ -1,5 +1,7 @@
 package kernel_driver;
 
+import java.io.File;
+
 import kernel_common_class.const_value;
 import kernel_component.component;
 import kernel_engine.client_information;
@@ -13,12 +15,9 @@ import kernel_part.part;
 import kernel_part.part_container_for_part_search;
 import kernel_transformation.box;
 import kernel_transformation.point;
-import kernel_part.part_rude;
 import kernel_network.client_request_response;
 import kernel_common_class.debug_information;
-
-import format_convert.file_converter;
-
+import kernel_part.part_rude;
 
 public class part_driver
 {
@@ -45,25 +44,56 @@ public class part_driver
 	{
 		return 0;
 	}
-	public part_rude create_mesh_and_material(part p,file_writer buffer_object_file_writer,
+	public part_rude create_part_mesh_and_buffer_object_head(
+			part p,file_writer buffer_object_file_writer,
 			part_container_for_part_search pcps,system_parameter system_par)
 	{
-		if(p.mesh_file_name!=null){
-			String	my_mesh_file_name=p.directory_name+p.mesh_file_name;
-			if(file_reader.is_exist(my_mesh_file_name)){
-				String	my_target_file_name	=buffer_object_file_writer.directory_name;
-				my_target_file_name+=p.part_par.buffer_object_file_name+".txt";
-				if(file_converter.convert(0,my_mesh_file_name,p.file_charset,my_target_file_name,p.file_charset))
-					my_mesh_file_name=my_target_file_name;
+		if(p.part_mesh!=null)
+			return p.part_mesh;
+		if(p.mesh_file_name==null)
+			return null;
+		
+		String my_file_path=file_reader.separator(p.directory_name+p.mesh_file_name);
+		if(!(new File(my_file_path).exists()))
+			return null;
+		
+		kernel_common_class.exclusive_file_mutex my_lock;
+		my_lock=kernel_common_class.exclusive_file_mutex.lock(my_file_path+".lock");
+	
+		file_reader fr=new file_reader(my_file_path,p.file_charset);
+		fr.mark_start();
+		String version_str=fr.get_string();
+		if(version_str!=null)
+			if(version_str.compareTo("2021.07.01")==0) {
+				my_lock.unlock();
 				
-				file_reader fr=new file_reader(my_mesh_file_name,p.file_charset);
-				part_rude ret_val=new part_rude(fr,p.part_par.scale_value,1.0,false,false,false);
+				fr.mark_terminate(true);
+				part_rude ret_val=new part_rude(fr,p.part_par.scale_value);
 				fr.close();
 				
 				return ret_val;
 			}
-		}
-		return null;
+		fr.close();
+		
+		String targety_file_path=buffer_object_file_writer.directory_name+"part.tmp.mesh";
+		
+		file_writer.file_rename(my_file_path,		 targety_file_path);
+		file_writer.file_rename(my_file_path+".face",targety_file_path+".face");
+		file_writer.file_rename(my_file_path+".edge",targety_file_path+".edge");
+		
+		convert_old_part_rude_2021_07_01.part_rude.convert(targety_file_path,my_file_path,p.file_charset);
+		
+		file_writer.file_delete(targety_file_path);
+		file_writer.file_delete(targety_file_path+".face");
+		file_writer.file_delete(targety_file_path+".edge");
+		
+		my_lock.unlock();
+		
+		fr=new file_reader(my_file_path,p.file_charset);
+		part_rude ret_val=new part_rude(fr,p.part_par.scale_value);
+		fr.close();
+		
+		return ret_val;
 	}
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,
 			part my_component_part,engine_kernel ek,client_request_response request_response)

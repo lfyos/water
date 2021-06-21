@@ -356,8 +356,8 @@ public class file_writer extends common_writer
 				
 				fr.close();
 				fw.close();
-				
 				file_rename(file_name+".nocomment",file_name);
+				(new File(fr.directory_name+fr.file_name)).setLastModified(fr.lastModified_time);
 			}
 		};
 		new delete_comment_travel_through_directory().do_travel(directory_or_file_name,false);

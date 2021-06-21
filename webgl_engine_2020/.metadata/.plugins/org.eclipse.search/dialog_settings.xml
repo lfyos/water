@@ -2,6 +2,8 @@
 <section name="Workbench">
 	<section name="">
 		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
+		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
+		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
 	</section>
 	<section name="SearchDialog.ScopePart">
 		<item key="scope" value="0"/>
@@ -17,13 +19,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="parse_web_server_response_data fail:"/>
+			<item key="textPattern" value="create_mesh_and_material_routine exception"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-				<item value="*.js"/>
+				<item value="*.java"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -32,13 +31,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="set_orientation_by_angles"/>
+			<item key="textPattern" value="create_mesh_and_material_routine"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.js"/>
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
+				<item value="*.java"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -47,7 +43,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;view_direction&quot;"/>
+			<item key="textPattern" value="Begin load_mesh_and_create_buffer_objec"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.java"/>
@@ -59,13 +55,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;assemble_default&quot;"/>
+			<item key="textPattern" value="public void create_part_mesh_and_buffer_object_head"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-				<item value="*.js"/>
+				<item value="*.java"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -74,20 +67,17 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;sub_directory&quot;"/>
+			<item key="textPattern" value="part:&#x09;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.js"/>
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
+				<item value="*.java"/>
 			</list>
 			<list key="workingSets">
 			</list>
 		</section>
 		<section name="EXTENSIONS">
-			<item key="0" value="*.js, *.jsp, *.txt, *java"/>
-			<item key="1" value="*.java"/>
+			<item key="0" value="*.java"/>
+			<item key="1" value="*.js, *.jsp, *.txt, *java"/>
 			<item key="2" value="*.txt;*.js"/>
 			<item key="3" value="*.txt"/>
 			<item key="4" value="*.js"/>
@@ -102,13 +92,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="directory_component_name can NOT find a component"/>
+			<item key="textPattern" value="create_part_mesh_and_buffer_object_head"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-				<item value="*.js"/>
+				<item value="*.java"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -117,13 +104,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Can&apos;t Find component by name in component_request_dispatch of dispatch_component_request"/>
+			<item key="textPattern" value="create_file_proxy_url error"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-				<item value="*.js"/>
+				<item value="*.java"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -132,13 +116,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="file_program"/>
+			<item key="textPattern" value="create_mesh_and_material fail"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-				<item value="*.js"/>
+				<item value="*.java"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -147,7 +128,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;tag&quot;"/>
+			<item key="textPattern" value="Begin creating top box"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.java"/>
@@ -159,7 +140,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;view_box&quot;"/>
+			<item key="textPattern" value="Begin creating top box&#x09;min_expand_part_number"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.java"/>
@@ -171,13 +152,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="directory_component_name can NOT"/>
+			<item key="textPattern" value="external_part_driver driver assemble_file_name_and_file_charset error(par==null)"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-				<item value="*.js"/>
+				<item value="*.java"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -186,13 +164,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="parse_web_server_response_data fail"/>
+			<item key="textPattern" value="part:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.js"/>
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
+				<item value="*.java"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -223,13 +198,13 @@
 	</section>
 	<section name="ReplaceDialog2">
 		<list key="replace_with">
+			<item value="public part_rude create_part_mesh_and_buffer_object_head"/>
+			<item value="create_part_mesh_and_buffer_object_head"/>
 			<item value="public void initialize_component_driver(component comp,int driver_id,"/>
 			<item value=""/>
 			<item value="return super.response_event(p,ek,ci);"/>
 			<item value="public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)"/>
 			<item value="engine_kernel ek,client_information ci,camera_result cr)"/>
-			<item value="engine_kernel ek,client_information ci,camera_result cr,component_collector collector)"/>
-			<item value="public void response_init_data(engine_kernel ek,client_information ci)"/>
 		</list>
 	</section>
 	<section name="SearchDialog">
@@ -243,11 +218,10 @@
 		<item key="DIALOG_WIDTH" value="771"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="492"/>
-		<item key="DIALOG_X_ORIGIN" value="605"/>
-		<item key="DIALOG_Y_ORIGIN" value="192"/>
+		<item key="DIALOG_X_ORIGIN" value="1066"/>
+		<item key="DIALOG_Y_ORIGIN" value="242"/>
 	</section>
 	<section name="">
-		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
-		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
+		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
 	</section>
 </section>

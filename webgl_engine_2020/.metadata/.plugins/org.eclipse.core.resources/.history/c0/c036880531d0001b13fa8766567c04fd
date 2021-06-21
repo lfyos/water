@@ -1,0 +1,25 @@
+package driver_project_boat_2011;
+
+import kernel_part.part;
+
+import kernel_driver.part_driver;
+import kernel_file_manager.file_reader;
+import kernel_network.client_request_response;
+import kernel_engine.system_parameter;
+
+public class extended_render_driver extends driver_opengl_fixed_pipeline.extended_render_driver
+{
+	public extended_render_driver()
+	{
+		super();
+	}
+	public void destroy()
+	{
+		super.destroy();
+	}
+	public part_driver create_part_driver(file_reader part_fr,part p,
+			system_parameter system_par,client_request_response request_response)
+	{
+		return new extended_part_driver(light_par,render_material_par,null,null);
+	}
+}

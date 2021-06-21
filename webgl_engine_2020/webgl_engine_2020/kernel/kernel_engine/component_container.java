@@ -7,8 +7,6 @@ import kernel_component.component_array;
 import kernel_component.component_caculator;
 import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
-import kernel_part.part_container_for_part_search;
-import kernel_render.render_container;
 import kernel_transformation.box;
 
 public class component_container 
@@ -16,9 +14,9 @@ public class component_container
 	public component root_component;
 	
 	public int original_part_number;
-	public int part_component_number,exist_part_component_number;
-	public int top_assemble_component_number,total_primitive_number;
+	public int part_component_number,exist_part_component_number,top_assemble_component_number;
 	public int render_component_id_and_driver_id[][][],part_component_id_and_driver_id[][][][];
+	public long total_face_primitive_number,total_edge_primitive_number,total_point_primitive_number;
 	
 	public change_name change_part_name,change_component_name;
 	
@@ -150,20 +148,18 @@ public class component_container
 		top_assemble_component_number		=c_c.top_assemble_component_number;
 		part_component_number				=c_c.part_component_number;
 		exist_part_component_number			=c_c.exist_part_component_number;
-		total_primitive_number				=c_c.total_primitive_number;
+		total_face_primitive_number			=c_c.total_face_primitive_number;
+		total_edge_primitive_number			=c_c.total_edge_primitive_number;
+		total_point_primitive_number		=c_c.total_point_primitive_number;
 
 		if(display_flag) {
 			debug_information.println();
 			debug_information.print  ("component number:",				component_pointer.length);
 			debug_information.print  (",\tpart_component_number:",		part_component_number);
 			debug_information.print  (",\texist_part_component_number:",exist_part_component_number);
-			debug_information.println(",\ttotal_primitive_number:",		total_primitive_number);
-		}		
-	}
-	public  part_container_for_part_search	caculate_part_container_for_part_search(render_container render_cont)
-	{
-		original_part_number=(new compress_render_container(render_cont,root_component)).original_part_number;
-		return new part_container_for_part_search(render_cont.part_array(false,-1));
+			debug_information.println(",\ttotal_primitive_number:[",		
+				total_face_primitive_number+","+total_edge_primitive_number+","+total_point_primitive_number+"]");
+		}
 	}
 	public component_container(file_reader scene_f,engine_kernel ek,
 			long default_display_bitmap,client_request_response request_response,
@@ -181,7 +177,9 @@ public class component_container
 			part_component_number				=0;
 			exist_part_component_number			=0;
 			top_assemble_component_number		=0;
-			total_primitive_number				=0;
+			total_face_primitive_number			=0;
+			total_edge_primitive_number			=0;
+			total_point_primitive_number		=0;
 			
 			render_component_id_and_driver_id	=null;
 			part_component_id_and_driver_id		=null;

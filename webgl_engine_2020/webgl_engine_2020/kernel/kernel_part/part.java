@@ -6,7 +6,6 @@ import kernel_driver.part_driver;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
-import kernel_mesh.auxiliary_file_handler;
 import kernel_network.client_request_response;
 
 import kernel_transformation.box;
@@ -55,25 +54,19 @@ public class part
 		
 		return null;
 	}
-	
-	public part_rude caculate_part_box_mesh(part pp)
+	public part_rude caculate_part_box_mesh()
 	{
-		box b;
-		if(pp.part_mesh==null)
+		if(part_mesh==null)
 			return null;
-		if(pp.part_mesh.origin_material==null)
+		box b=secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,null,null);
+		if(b==null)
 			return null;
-		if((b=pp.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,null,null))==null)
-			return null;
-		String material[][]=new String[1][];
-		material[0]=new String[pp.part_mesh.box_material.length];
-		for(int k=0,nk=material[0].length;k<nk;k++)
-			material[0][k]=pp.part_mesh.box_material[k];
-		
-		return new part_rude(
-			1,new location[]{new location()},new box[] {b},material,
-			pp.part_mesh.origin_material,pp.part_mesh.box_attribute_double,
-			pp.part_mesh.box_attribute_string);
+					
+		return new part_rude(part_mesh.origin_material,
+				new String[][]{part_mesh.default_material},
+				new double[][]{part_mesh.default_attribute_double},
+				new String[][]{part_mesh.default_attribute_string},
+				1,new location[]{new location()},new box[] {b},new String[] {"1"});
 	}
 	public void destroy()
 	{
@@ -106,7 +99,7 @@ public class part
 		}
 		boftal=null;
 	}
-	private String response_buffer_object_data(auxiliary_file_handler f,
+	private String response_buffer_object_data(primitive_interface p_i,
 		int max_material_id,mesh_file_collector file_collector,file_writer fw,
 		String front_str,String follow_str,String buffer_object_data_charset)
 	{	
@@ -128,18 +121,18 @@ public class part
 		default:
 			front_str="face";
 		case "face":
-			gbocc=(new graphics_buffer_object_for_face(
-				f,max_material_id,this,file_name+"."+front_str,buffer_object_data_charset,
+			gbocc=(new graphics_buffer_object_for_face(p_i,
+				max_material_id,this,file_name+"."+front_str,buffer_object_data_charset,
 				part_par.max_file_data_length,part_par.create_face_buffer_object_bitmap)).gbocc;
 			break;
 		case "edge":
-			gbocc=(new graphics_buffer_object_for_edge(
-				f,max_material_id,this,file_name+"."+front_str,buffer_object_data_charset,
+			gbocc=(new graphics_buffer_object_for_edge(p_i,
+				max_material_id,this,file_name+"."+front_str,buffer_object_data_charset,
 				part_par.max_file_data_length,part_par.create_edge_buffer_object_bitmap)).gbocc;
 			break;
 		case "point":
 			gbocc=(new graphics_buffer_object_for_point(
-				f,max_material_id,this,file_name+"."+front_str,buffer_object_data_charset,
+				max_material_id,this,file_name+"."+front_str,buffer_object_data_charset,
 				part_par.max_file_data_length,part_par.create_point_buffer_object_bitmap)).gbocc;
 			break;
 		}
@@ -151,15 +144,14 @@ public class part
 				+"\tfile number:\t"	+Integer.toString(gbocc.file_number);
 	}
 	
-	private String create_mesh_and_material_routine(
-			String part_temporary_file_directory,String simple_mesh_file_name,
+	private String create_mesh_and_material_routine(String part_temporary_file_directory,
 			String buffer_object_file_name,String buffer_object_file_charset,
 			system_parameter system_par,part_container_for_part_search pcps)
 	{
 		String ret_val="";
 
 		ret_val+="\n\tbuffer object directory:\t"+part_temporary_file_directory;
-		ret_val+="\n\tbuffer object file name:\t"+part_par.buffer_object_file_name;	
+		ret_val+="\n\tbuffer object file name:\tmesh";	
 
 		file_writer head_fw=new file_writer(buffer_object_file_name,buffer_object_file_charset);
 		
@@ -184,15 +176,13 @@ public class part
 		head_fw.println("\t\"material\"\t\t:");
 		head_fw.println("\t[");
 		
-		part_rude my_part_mesh;
-		
-		debug_information.println("Begin load part mesh:	",directory_name+mesh_file_name);
+		debug_information.println("Begin create_part_mesh_and_buffer_object_head:	",directory_name+mesh_file_name);
 		
 		try{
-			my_part_mesh=driver.create_mesh_and_material(this,head_fw,pcps,system_par);
+			part_rude my_part_mesh=driver.create_part_mesh_and_buffer_object_head(this,head_fw,pcps,system_par);
+			if(part_mesh==null)
+				part_mesh=my_part_mesh;
 		}catch(Exception e){
-			my_part_mesh=null;
-			
 			debug_information.println("create_mesh_and_material fail:",e.toString());
 			debug_information.println("Part user name:",	user_name);
 			debug_information.println("Part system name:",	system_name);
@@ -200,9 +190,8 @@ public class part
 			debug_information.println("Material_file_name:",directory_name+material_file_name);
 			e.printStackTrace();
 		}
-		debug_information.println("End load part mesh:	",directory_name+mesh_file_name);
-
-		part_mesh=(mesh_file_name!=null)?my_part_mesh:part_mesh;
+		debug_information.println("End create_part_mesh_and_buffer_object_head:	",directory_name+mesh_file_name);
+		
 		head_fw.println("\t],");
 		
 		head_fw.println("\t\"property\"\t\t:\t");
@@ -230,23 +219,29 @@ public class part
 		head_fw.println("\t\"data\"\t\t\t:\t");
 		head_fw.println("\t{");
 		head_fw.print  ("\t\t\"max_buffer_object_data_length\"\t:\t",part_par.max_buffer_object_data_length);
+		
 		mesh_file_collector file_collector=new mesh_file_collector();
 		if(part_mesh==null) {
 			head_fw.println();
 		}else{
-			auxiliary_file_handler auxiliary_f=new auxiliary_file_handler(this);
+			primitive_interface p_i;
+			
+			if(this.mesh_file_name==null)
+				p_i=new primitive_from_box(this.part_mesh.body_array);
+			else
+				p_i=new primitive_from_file(directory_name+mesh_file_name,file_charset,
+						part_par.max_comment_file_length,system_par.response_block_size);
 			
 			head_fw.println(",");
 			head_fw.println();
 			
-			ret_val+="\n\t\tmesh " +response_buffer_object_data(auxiliary_f,
+			ret_val+="\n\t\tmesh " +response_buffer_object_data(p_i,
 				system_par.max_material_id,file_collector,head_fw,"face",",",head_fw.get_charset());
-			ret_val+="\n\t\tedge " +response_buffer_object_data(auxiliary_f,
+			ret_val+="\n\t\tedge " +response_buffer_object_data(p_i,
 				system_par.max_material_id,file_collector,head_fw,"edge",",",head_fw.get_charset());
-			ret_val+="\n\t\tpoint "+response_buffer_object_data(auxiliary_f,
+			ret_val+="\n\t\tpoint "+response_buffer_object_data(p_i,
 				system_par.max_material_id,file_collector,head_fw,"point"," ",head_fw.get_charset());
-			
-			auxiliary_f.destroy();
+			p_i.destroy(part_par.max_compress_file_length,system_par.response_block_size);
 		}
 		
 		head_fw.println("\t}");
@@ -261,39 +256,24 @@ public class part
 		head_fw.println("]");
 		
 		head_fw.close();
-
-		boftal=new buffer_object_file_modify_time_and_length(
-						part_temporary_file_directory+part_par.buffer_object_file_name);
+		
+		boftal=new buffer_object_file_modify_time_and_length(part_temporary_file_directory+"mesh");
+		file_writer boftal_fw=new file_writer(part_temporary_file_directory+"mesh.boftal",
+				buffer_object_file_charset);
+		boftal.write_out(boftal_fw);
+		boftal_fw.close();
 		
 		create_binary_buffer_object_file.create(part_par.delete_buffer_object_text_file_flag,
 				system_par.response_block_size,head_fw.get_charset(),system_par.network_data_charset,
-				part_temporary_file_directory+part_par.buffer_object_file_name);
-		
-		file_writer fw=new file_writer(simple_mesh_file_name,head_fw.get_charset());
-		if(part_mesh!=null){
-			auxiliary_file_handler auxiliary_f=new auxiliary_file_handler(this);
-			
-			ret_val+="\n\tsimple mesh file name:\t\t"+part_par.simple_mesh_file_name;
-			part_mesh.write_out(auxiliary_f,fw,part_par.scale_value,
-				part_par.only_free_vertex_memory_flag,true,part_par.create_face_buffer_object_bitmap!=0,
-				(part_par.create_edge_buffer_object_bitmap!=0)||(part_par.create_point_buffer_object_bitmap!=0));
-			
-			auxiliary_f.destroy();
-		}
-		fw.close();
-		
-		if(part_par.delete_comment_in_simple_mesh_flag) {
-			file_writer.delete_comment(fw.directory_name+fw.file_name,fw.get_charset());
-			auxiliary_file_handler.delete_comment(this,fw.get_charset());
-		}
-		if(file_reader.is_exist(directory_name+audio_file_name))
-			file_writer.file_copy(directory_name+audio_file_name,
-					part_temporary_file_directory+part_par.audio_file_name);
+				part_temporary_file_directory+"mesh");
+
+		if(audio_file_name!=null)
+			if(file_reader.is_exist(directory_name+audio_file_name))
+				file_writer.file_copy(directory_name+audio_file_name,part_temporary_file_directory+"audio.mp3");
 
 		return ret_val;
 	}
-	private String create_mesh_and_material(
-			String part_temporary_file_directory,String simple_mesh_file_name,
+	private String create_mesh_and_material(String part_temporary_file_directory,
 			String buffer_object_file_name,String buffer_object_file_charset,
 			system_parameter system_par,part_container_for_part_search pcps)
 	{
@@ -310,8 +290,7 @@ public class part
 				+"\t"+system_par.system_exclusive_mutex.get_lock_number());
 
 		try{
-			ret_val=create_mesh_and_material_routine(
-					part_temporary_file_directory,simple_mesh_file_name,
+			ret_val=create_mesh_and_material_routine(part_temporary_file_directory,
 					buffer_object_file_name,buffer_object_file_charset,system_par,pcps);
 		}catch(Exception e) {
 			debug_information.println("create_mesh_and_material_routine exception:",
@@ -330,12 +309,18 @@ public class part
 	private void clear_mesh_file_content()
 	{
 		String clear_file_name_array[]=new String[]
-				{mesh_file_name,material_file_name,description_file_name,audio_file_name};
-		
-		if(part_par.clear_model_file_flag[0])
-			auxiliary_file_handler.delete_auxiliary_file(this);
-		
+		{
+			material_file_name,
+			description_file_name,
+			audio_file_name,
+			mesh_file_name+".face",
+			mesh_file_name+".face.gzip",
+			mesh_file_name+".edge",
+			mesh_file_name+".edge.gzip"
+		};
 		for(int i=0,ni=clear_file_name_array.length;i<ni;i++) {
+			if(clear_file_name_array[i]==null)
+				continue;
 			if(!(part_par.clear_model_file_flag[i]))
 				continue;
 			String clear_file_name=file_reader.separator(directory_name+clear_file_name_array[i]);
@@ -362,7 +347,6 @@ public class part
 				debug_information.println("setLastModified fail in clear_file_content	:	",clear_file_name);
 		}
 	}
-	
 	public String load_mesh_and_create_buffer_object(
 			part copy_from_part,long last_modified_time,
 			String part_temporary_file_directory,String part_temporary_file_charset,
@@ -379,46 +363,42 @@ public class part
 		str+="\n\tmaterial file name:\t\t"		+material_file_name;
 		str+="\n\tdescription file name:\t\t"	+description_file_name;
 		str+="\n\taudio_file_name:\t\t"			+audio_file_name;
-		
-		String token_file_name			=part_temporary_file_directory+"part.token";
-		String simple_mesh_file_name	=part_temporary_file_directory+part_par.simple_mesh_file_name;
-		String buffer_object_file_name	=part_temporary_file_directory+part_par.buffer_object_file_name+".head.txt";
-		String cfp_mesh_file_name=copy_from_part.directory_name+copy_from_part.mesh_file_name;
-		String cfp_material_file_name=copy_from_part.directory_name+copy_from_part.material_file_name;
-	
-		long token_file_last_time=new File(token_file_name).lastModified();
-		if(token_file_last_time>last_modified_time)
-			if(token_file_last_time>part_par.last_modified_time)
-				if(token_file_last_time>new File(cfp_mesh_file_name).lastModified())
-					if(token_file_last_time>new File(cfp_material_file_name).lastModified()){
-						if(mesh_file_name!=null){
-							file_reader fr=new file_reader(simple_mesh_file_name,part_temporary_file_charset);
-							part_mesh=new part_rude(fr,1.0,1.0,false,false,false);
-							fr.close();
-						}
-						if(part_mesh!=null)
-							part_mesh.free_memory(part_par.only_free_vertex_memory_flag);
-						
-						boftal=new buffer_object_file_modify_time_and_length(
-								part_temporary_file_directory+part_par.buffer_object_file_name);
-						
-						return str;
-					}
-		
-		file_writer.file_delete(part_temporary_file_directory);
-		file_writer.make_directory(part_temporary_file_directory);
-		str+=create_mesh_and_material(part_temporary_file_directory,simple_mesh_file_name,
-						buffer_object_file_name,part_temporary_file_charset,system_par,pcps);
-		clear_mesh_file_content();
 
-		if(part_mesh!=null)
-			part_mesh.free_memory(part_par.only_free_vertex_memory_flag);
-		
-		file_writer.file_touch(token_file_name,true);
-		
+		do{
+			String token_file_name			=part_temporary_file_directory+"part.token";
+			String buffer_object_file_name	=part_temporary_file_directory+"mesh.head.txt";
+			String cfp_mesh_file_name=copy_from_part.directory_name+copy_from_part.mesh_file_name;
+			String cfp_material_file_name=copy_from_part.directory_name+copy_from_part.material_file_name;
+	
+			long token_file_last_time=new File(token_file_name).lastModified();
+			if(token_file_last_time>last_modified_time)
+				if(token_file_last_time>part_par.last_modified_time)
+					if(token_file_last_time>new File(cfp_mesh_file_name).lastModified())
+						if(token_file_last_time>new File(cfp_material_file_name).lastModified()) {
+							if((part_mesh==null)&&(mesh_file_name!=null)){
+								String my_file_path=file_reader.separator(directory_name+mesh_file_name);
+								if(new File(my_file_path).exists()){
+									file_reader fr=new file_reader(my_file_path,file_charset);
+									part_mesh=new part_rude(fr,part_par.scale_value);
+									fr.close();
+								}
+							}
+							file_reader boftal_fr=new file_reader(
+								part_temporary_file_directory+"mesh.boftal",part_temporary_file_charset);
+							boftal=new buffer_object_file_modify_time_and_length(boftal_fr);
+							boftal_fr.close();
+							break;
+						}
+			file_writer.file_delete(part_temporary_file_directory);
+			file_writer.make_directory(part_temporary_file_directory);
+			str+=create_mesh_and_material(part_temporary_file_directory,
+					buffer_object_file_name,part_temporary_file_charset,system_par,pcps);
+			clear_mesh_file_content();
+			file_writer.file_touch(token_file_name,true);
+		}while(false);
+
 		return str;
 	}
-	
 	public part(
 			int my_part_type_id,part_parameter my_part_par,String my_directory_name,String my_file_charset,
 			String my_user_name,String my_system_name,String my_mesh_file_name,String my_material_file_name,
@@ -439,19 +419,19 @@ public class part
 		
 		part_par				=my_part_par.clone();
 			
-		directory_name			=new String(my_directory_name);
-		file_charset			=new String(my_file_charset);
-		user_name				=new String(my_user_name);
-		system_name				=new String(my_system_name);
-		mesh_file_name			=(my_mesh_file_name==null)?null:new String(my_mesh_file_name);
-		description_file_name	=new String(my_description_file_name);
-		audio_file_name			=new String(my_audio_file_name);
-		material_file_name		=new String(my_material_file_name);
+		directory_name			=my_directory_name;
+		file_charset			=my_file_charset;
+		user_name				=my_user_name;
+		system_name				=my_system_name;
+		mesh_file_name			=(my_mesh_file_name==null)?null:my_mesh_file_name;
+		description_file_name	=my_description_file_name;
+		audio_file_name			=my_audio_file_name;
+		material_file_name		=my_material_file_name;
 		part_mesh				=null;
 
 		driver					=null;
 		
-		boftal					=new buffer_object_file_modify_time_and_length();
+		boftal					=null;
 	}
 	public part(part p,system_parameter system_par,client_request_response request_response)
 	{
@@ -470,16 +450,16 @@ public class part
 		
 		part_par				=p.part_par.clone();
 		
-		directory_name			=new String(p.directory_name);
-		file_charset			=new String(p.file_charset);
-		user_name				=new String(p.user_name);
-		system_name				=new String(p.system_name);
+		directory_name			=p.directory_name;
+		file_charset			=p.file_charset;
+		user_name				=p.user_name;
+		system_name				=p.system_name;
 		
-		mesh_file_name			=(p.mesh_file_name==null)?null:new String(p.mesh_file_name);
+		mesh_file_name			=(p.mesh_file_name==null)?null:p.mesh_file_name;
 		
-		description_file_name	=new String(p.description_file_name);
-		audio_file_name			=new String(p.audio_file_name);
-		material_file_name		=new String(p.material_file_name);
+		description_file_name	=p.description_file_name;
+		audio_file_name			=p.audio_file_name;
+		material_file_name		=p.material_file_name;
 
 		if(p.part_mesh==null)
 			part_mesh=null;
@@ -500,12 +480,5 @@ public class part
 			debug_information.println("Mesh file name:	",		p.mesh_file_name);
 			e.printStackTrace();
 		}
-	}
-	public static part[] clone_array(part my_parts[])
-	{
-		part ret_val[]=new part[my_parts.length];
-		for(int i=0,ni=ret_val.length;i<ni;i++)
-			ret_val[i]=my_parts[i];
-		return ret_val;
 	}
 }

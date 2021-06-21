@@ -133,8 +133,8 @@ public class part_package
 					file_writer list_file_writer=null;
 					for(int i=0,package_id=0;i<package_number;i++){
 						if(part_package[i].length==1) {
-							String my_package_file_name=file_directory.part_file_directory(part_package[i][0],system_par,scene_par);
-							my_package_file_name+=part_package[i][0].part_par.buffer_object_file_name+".head.gzip_text";
+							String my_package_file_name=file_directory.part_file_directory(
+									part_package[i][0],system_par,scene_par)+"mesh.head.gzip_text";
 							
 							File f=new File(my_package_file_name);
 							package_length[i]=f.length();
@@ -168,8 +168,18 @@ public class part_package
 							fw.println("[");
 	
 							for(int k=0,nk=part_package[i].length;k<nk;k++) {
-								String my_file_name=file_directory.part_file_directory(part_package[i][k],system_par,scene_par);
-								my_file_name+=part_package[i][k].part_par.buffer_object_file_name+".head.gzip_text";
+								debug_information.println("Part type:	",		part_package[i][k].part_par.part_type_string);
+								debug_information.println("Part user_name:	",	part_package[i][k].user_name);
+								if(part_package[i][k].mesh_file_name==null)
+									debug_information.println("Part mesh_file_name:	NO mesh_file_name",
+											 ",permanent_render_id:"+part_package[i][k].permanent_render_id
+											+",permanent_part_id:"	+part_package[i][k].permanent_part_id);
+								else
+									debug_information.println("part mesh_file_name:	",
+											part_package[i][k].directory_name+part_package[i][k].mesh_file_name);
+								
+								String my_file_name=file_directory.part_file_directory(
+										part_package[i][k],system_par,scene_par)+"mesh.head.gzip_text";
 								compress_file_data.do_uncompress(new File(my_tmp_file_name),
 									new File(my_file_name),system_par.response_block_size,"gzip");
 								fw.print_file(my_tmp_file_name).println((k<(nk-1))?",":"");

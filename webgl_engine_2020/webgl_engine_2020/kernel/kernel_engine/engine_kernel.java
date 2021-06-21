@@ -153,7 +153,7 @@ public class engine_kernel
 		
 		if(component_cont!=null)
 			if(component_cont.root_component!=null)
-				if(component_cont.root_component.uniparameter.file_last_modified_time>ret_val)
+				if(ret_val<component_cont.root_component.uniparameter.file_last_modified_time)
 					ret_val=component_cont.root_component.uniparameter.file_last_modified_time;
 		
 		if(process_part_sequence!=null)
@@ -209,22 +209,22 @@ public class engine_kernel
 	
 	private void load_create_assemble_part(
 			client_request_response request_response,part_container_for_part_search all_part_part_cont)
-	{
+	{	
 		if((create_top_part_expand_ratio>=1.0)&&(create_top_part_left_ratio>=1.0)){
 			if(component_cont.root_component!=null){
-				part top_box_part[]=(new create_assemble_part(request_response,
+				part top_box_part[]=(new create_assemble_part(
+						request_response,component_cont.root_component,
 						create_top_part_expand_ratio,create_top_part_left_ratio,
 						scene_par.create_top_part_assembly_precision2,
 						scene_par.create_top_part_discard_precision2,
 						scene_par.discard_top_part_component_precision2,
-						component_cont.root_component,render_cont,part_loader_cont,
+						render_cont,part_loader_cont,
 						system_par,scene_par,all_part_part_cont,
 						get_file_last_modified_time())).top_box_part;
 				if(top_box_part!=null)
 					if(top_box_part.length>0)
 						mount_top_box_part(component_cont.root_component,
-							new part_container_for_part_search(top_box_part),
-							request_response);
+							new part_container_for_part_search(top_box_part),request_response);
 			}
 		}
 	}
@@ -294,7 +294,10 @@ public class engine_kernel
 		component_cont.do_component_caculator(false);
 		component_cont.root_component.reset_component(component_cont);
 		load_create_assemble_part(request_response,all_part_part_cont);
-		part_cont=component_cont.caculate_part_container_for_part_search(render_cont);
+		component_cont.original_part_number=new compress_render_container(
+			render_cont,part_cont,component_cont.root_component).original_part_number;
+		part_cont=new part_container_for_part_search(render_cont.part_array(false,-1));
+		
 		render_cont.scene_part_package=new part_package(render_cont,2,system_par,scene_par);
 		
 		component_cont.do_component_caculator(true);

@@ -1,0 +1,101 @@
+package kernel_part;
+
+import kernel_file_manager.file_reader;
+import kernel_transformation.box;
+
+import kernel_transformation.location;
+
+public class face_face 
+{
+	public void destroy()
+	{
+		face_type=null;
+		face_parameter=null;
+		face_face_box=null;
+		default_material=null;
+		default_attribute_double=null;
+		default_attribute_string=null;
+	}
+	public int face_parameter_number()
+	{
+		return (face_parameter==null)?0:face_parameter.length;
+	}
+	public String face_type;
+	public double face_parameter[];
+
+	public int total_face_primitive_number,attribute_number;
+	
+	public box face_face_box;
+	
+	public String default_material[];
+	public double default_attribute_double[];
+	public String default_attribute_string[];
+	
+	public face_face(file_reader fr,String my_default_material[],
+			double my_default_attribute_double[],String my_default_attribute_string[])
+	{
+		String str;
+		
+		if((face_type=fr.get_string())==null)
+			face_type="";
+		int my_face_parameter_number;
+		if((my_face_parameter_number=fr.get_int())<=0)
+			face_parameter=null;
+		else{
+			face_parameter=new double[my_face_parameter_number];
+			for(int i=0;i<my_face_parameter_number;i++)
+				face_parameter[i]=fr.get_double();
+		}
+		if((total_face_primitive_number=fr.get_int())<0)
+			total_face_primitive_number=0;
+		if((attribute_number=fr.get_int())<0)
+			attribute_number=0;
+
+		fr.mark_start();
+		if((str=fr.get_string())==null)
+			str="nobox";
+		if(str.toLowerCase().compareTo("nobox")==0) {
+			fr.mark_terminate(false);
+			face_face_box=null;
+		}else{
+			fr.mark_terminate(true);
+			face_face_box=new box(fr);
+		}
+		default_material=my_default_material;
+		default_attribute_double=my_default_attribute_double;
+		default_attribute_string=my_default_attribute_string;
+		return;
+	}
+	
+	public face_face(face_face s)
+	{
+		face_type=s.face_type;
+		face_parameter=s.face_parameter;
+		
+		total_face_primitive_number	=s.total_face_primitive_number;
+		attribute_number			=s.attribute_number;
+		
+		face_face_box=s.face_face_box;
+		default_material=s.default_material;
+		 
+		default_attribute_string=s.default_attribute_string;
+		default_attribute_double=s.default_attribute_double;
+	}
+	public face_face(box b,
+			String my_default_material[],
+			double my_default_attribute_double[],
+			String my_default_attribute_string[])
+	{
+		face_type="unknown";
+		face_parameter=null;
+		
+		total_face_primitive_number=12;
+		attribute_number=0;
+		
+		face_face_box=new box(b);
+		
+		default_material=my_default_material;
+		default_attribute_double=my_default_attribute_double;
+		default_attribute_string=my_default_attribute_string;
+	}
+}

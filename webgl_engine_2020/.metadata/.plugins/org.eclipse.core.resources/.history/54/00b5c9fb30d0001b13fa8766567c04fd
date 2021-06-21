@@ -1,0 +1,77 @@
+package driver_project_boat_2011;
+
+import driver_opengl_fixed_pipeline.light_parameter;
+import driver_opengl_fixed_pipeline.render_material_parameter;
+import kernel_engine.system_parameter;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
+import kernel_part.part;
+import kernel_part.part_rude;
+import kernel_part.part_container_for_part_search;
+
+public class extended_part_driver extends driver_opengl_fixed_pipeline.extended_part_driver
+{
+	public extended_part_driver(light_parameter my_light,render_material_parameter render_material,
+			String my_scene_directory_name,String my_scene_parameter_directory_name)
+	{
+		super(my_light,render_material,my_scene_directory_name,my_scene_parameter_directory_name);
+	}
+	public part_rude create_part_mesh_and_buffer_object_head(
+			part p,file_writer buffer_object_file_writer,
+			part_container_for_part_search pcps,system_parameter system_par)
+	{
+		if(p.mesh_file_name==null)
+			return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par);
+		
+		file_reader fr=new file_reader(p.directory_name+p.mesh_file_name,p.file_charset);
+		String version_str=fr.get_string();
+		fr.close();
+		
+		if(version_str!=null)
+			if(version_str.compareTo("2021.07.01")==0)
+				return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par);
+		
+		double material[][]=convert_material(p.directory_name+p.material_file_name,
+			p.directory_name+p.material_file_name+".liufuyan.bak",p.file_charset);
+		
+		
+		fr=new file_reader(p.directory_name+p.mesh_file_name,p.file_charset);
+		file_writer fw=new file_writer(
+				p.directory_name+p.mesh_file_name+".liufuyan.bak",p.file_charset);
+		
+		int body_number=get_int(fr,2);
+		
+		fw.println("/*	version          */		2019.08.05");
+		fw.println("/*	origin material  */		0  0  0  1");
+		fw.println("/*	body_number      */		",body_number);
+		for(int body_id=0;body_id<body_number;body_id++){
+			String body_name=get_str(fr,4);
+			int face_number=get_int(fr,2);
+			fw.print (body_name);
+			fw.println("	",face_number);
+			for(int face_id=0;face_id<face_number;face_id++){
+				fw.println(get_str(fr,4));
+				convert_face(fr,fw,material);
+				int loop_number=get_int(fr,2);
+				fw.println("\n	",loop_number);
+				for(int loop_id=0;loop_id<loop_number;loop_id++){
+					int edge_number=get_int(fr,4);
+					fw.println("	",edge_number);
+					for(int edge_id=0;edge_id<edge_number;edge_id++)
+						convert_edge(fr,fw,material);
+				}
+			}
+		}
+		
+		fr.close();
+		fw.close();
+		
+		file_writer.file_copy(p.directory_name+p.mesh_file_name+".liufuyan.bak", p.directory_name+p.mesh_file_name);
+		file_writer.file_copy(p.directory_name+p.material_file_name+".liufuyan.bak", p.directory_name+p.material_file_name);
+		
+		file_writer.file_delete(p.directory_name+p.mesh_file_name+".liufuyan.bak");
+		file_writer.file_delete(p.directory_name+p.material_file_name+".liufuyan.bak");
+
+		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par);
+	}
+}

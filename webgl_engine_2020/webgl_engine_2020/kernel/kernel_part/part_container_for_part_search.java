@@ -39,9 +39,16 @@ public class part_container_for_part_search extends sorter<part,String>
 		
 		return 0;
 	}
+	private static part[] clone_array(part my_parts[])
+	{
+		part ret_val[]=new part[my_parts.length];
+		for(int i=0,ni=ret_val.length;i<ni;i++)
+			ret_val[i]=my_parts[i];
+		return ret_val;
+	}
 	public part_container_for_part_search(part my_parts[])
 	{
-		super(part.clone_array(my_parts),-1,new part[my_parts.length]);
+		super(clone_array(my_parts),-1,new part[my_parts.length]);
 		
 		for(int i=0,j=0,id=0,n=get_number();i<n;){
 			for(id=i,j=i;j<n;j++){

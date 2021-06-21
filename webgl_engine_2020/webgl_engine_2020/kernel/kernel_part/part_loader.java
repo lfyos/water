@@ -60,6 +60,7 @@ public class part_loader extends Thread
 		String part_temporary_file_directory=file_directory.part_file_directory(loaded_part,system_par,scene_par);
 		String lock_file_name=file_reader.separator(part_temporary_file_directory+"part.lock");
 		
+		debug_information.println();
 		debug_information.println(
 	    		"Begin load_mesh_and_create_buffer_object_and_material_file:\t",loaded_part.system_name);
 		debug_information.println(

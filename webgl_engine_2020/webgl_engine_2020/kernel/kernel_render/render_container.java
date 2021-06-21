@@ -116,12 +116,11 @@ public class render_container
 					}else{
 						if(type_id==0)
 							continue;
-						if((p.part_mesh=p.caculate_part_box_mesh(
-								renders[i].parts[p.part_from_id]))==null)
-									continue;
+						if((p.part_mesh=renders[i].parts[p.part_from_id].caculate_part_box_mesh())==null)
+							continue;
 					}
 					already_loaded_part=part_loader_cont.load(p,get_copy_from_part(p),
-							-1,system_par,scene_par,already_loaded_part,pcps);
+						-1,system_par,scene_par,already_loaded_part,pcps);
 					load_number++;
 				}
 			}
@@ -211,6 +210,7 @@ public class render_container
 		for(int extract_id=0;!(f_render_list.eof());extract_id++){
 			String str;
 			String part_type_string			=f_render_list.get_string();
+			String assemble_part_name		=f_render_list.get_string();
 			String part_parameter_file_name	=(str=f_render_list.get_string())==null?"":str;
 			String par_list_file_name		=(str=f_render_list.get_string())==null?"":str;
 			if((par_list_file_name=file_reader.separator(par_list_file_name)).compareTo("")==0)
@@ -222,7 +222,8 @@ public class render_container
 				part_parameter_file_name=system_par.default_parameter_directory
 						+"part_parameter"+File.separator+part_parameter_file_name;
 			
-			part_parameter part_par=new part_parameter(part_type_string,part_parameter_file_name,f_render_list.get_charset());
+			part_parameter part_par=new part_parameter(part_type_string,
+				assemble_part_name,part_parameter_file_name,f_render_list.get_charset());
 			
 			String extract_file_directory=file_directory.extract_file_directory(
 				part_type_id,(renders==null)?0:(renders.length),extract_id,system_par,scene_par);

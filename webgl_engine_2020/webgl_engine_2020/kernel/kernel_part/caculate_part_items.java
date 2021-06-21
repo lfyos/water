@@ -49,7 +49,7 @@ public class caculate_part_items
 				my_box=new box(new point(0,0,0));
 				return;
 			}
-		my_box=(my_part_rude.rp_box!=null)?(my_part_rude.rp_box):my_box;
+		my_box=(my_part_rude.part_box!=null)?(my_part_rude.part_box):my_box;
 		if((body_id<0)||(body_id>=(my_part_rude.body_number())))
 			return ;
 		if((my_body=my_part_rude.body_array[body_id])==null)
@@ -148,10 +148,13 @@ public class caculate_part_items
 			return;
 		}
 		case "point_set":
-			if(my_face_edge.edge!=null)
+			if(my_face_edge.curve_parameter!=null)
 				if(point_id>=1000)
-					if((point_id-1000)<(my_face_edge.edge.tessellation_point_number())) 
-						my_box=new box(my_face_edge.edge.get_tessellation_point(point_id-1000,null));
+					if((point_id-1000)<(my_face_edge.curve_parameter.length/3))
+						my_box=new box(new point(
+									my_face_edge.curve_parameter[3*point_id+0],
+									my_face_edge.curve_parameter[3*point_id+1],
+									my_face_edge.curve_parameter[3*point_id+2]));
 			return;
 		}
 		return;

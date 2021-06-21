@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="kernel_render.render_container"/>
 <fullyQualifiedTypeName name="kernel_client_interface.dispatch_program_request"/>
 <fullyQualifiedTypeName name="cadex.ModelData_Model.VoidElementVisitor"/>
 <fullyQualifiedTypeName name="cadex.CadExCreo"/>
@@ -19,9 +18,7 @@
 <fullyQualifiedTypeName name="kernel_part.part_container_for_process_sequence"/>
 <fullyQualifiedTypeName name="javax.script.ScriptEngine"/>
 <fullyQualifiedTypeName name="javax.script.ScriptEngineManager"/>
-<fullyQualifiedTypeName name="kernel_part.body"/>
 <fullyQualifiedTypeName name="java.lang.Math"/>
-<fullyQualifiedTypeName name="kernel_common_class.exclusive_file_mutex"/>
 <fullyQualifiedTypeName name="format_convert.gltf_converter"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
@@ -30,9 +27,7 @@
 <fullyQualifiedTypeName name="kernel_render.render_target"/>
 <fullyQualifiedTypeName name="kernel_render.target_viewport"/>
 <fullyQualifiedTypeName name="kernel_component.component"/>
-<fullyQualifiedTypeName name="kernel_part.part_rude"/>
 <fullyQualifiedTypeName name="java.net.URLDecoder"/>
-<fullyQualifiedTypeName name="kernel_common_class.compress_file_data"/>
 <fullyQualifiedTypeName name="java.nio.channels.OverlappingFileLockException"/>
 <fullyQualifiedTypeName name="kernel_common_class.exclusive_name_mutex"/>
 <fullyQualifiedTypeName name="kernel_mesh.auxiliary_file_handler"/>
@@ -42,7 +37,6 @@
 <fullyQualifiedTypeName name="format_convert.cadex_converter"/>
 <fullyQualifiedTypeName name="java.net.URLEncoder"/>
 <fullyQualifiedTypeName name="kernel_transformation.location"/>
-<fullyQualifiedTypeName name="kernel_common_class.const_value"/>
 <fullyQualifiedTypeName name="javax.servlet.jsp.JspApplicationContext"/>
 <fullyQualifiedTypeName name="kernel_common_class.common_reader"/>
 <fullyQualifiedTypeName name="kernel_component.component_link_list"/>
@@ -52,12 +46,18 @@
 <fullyQualifiedTypeName name="kernel_common_class.common_writer"/>
 <fullyQualifiedTypeName name="kernel_transformation.box"/>
 <fullyQualifiedTypeName name="kernel_file_manager.travel_through_directory"/>
-<fullyQualifiedTypeName name="kernel_file_manager.file_writer"/>
-<fullyQualifiedTypeName name="kernel_transformation.point"/>
 <fullyQualifiedTypeName name="kernel_common_class.gps_caculater"/>
 <fullyQualifiedTypeName name="kernel_common_class.change_name"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="kernel_transformation.point"/>
+<fullyQualifiedTypeName name="get_old_part_rude.part_rude"/>
+<fullyQualifiedTypeName name="kernel_common_class.exclusive_file_mutex"/>
+<fullyQualifiedTypeName name="kernel_part.part_rude"/>
+<fullyQualifiedTypeName name="kernel_common_class.const_value"/>
+<fullyQualifiedTypeName name="kernel_part.body"/>
+<fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
+<fullyQualifiedTypeName name="kernel_common_class.compress_file_data"/>
+<fullyQualifiedTypeName name="kernel_file_manager.file_writer"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="kernel_file_manager.file_reader"/>
-<fullyQualifiedTypeName name="java.io.File"/>
-<fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 </qualifiedTypeNameHistroy>

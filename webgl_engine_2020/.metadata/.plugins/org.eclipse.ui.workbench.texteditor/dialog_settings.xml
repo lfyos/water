@@ -2,51 +2,51 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="parse_web_server_response_data"/>
+		<item key="selection" value="debug_information"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
-			<item value="parse_web_server_response_data"/>
-			<item value="can_do_render_request_flag"/>
-			<item value="mount_stop"/>
-			<item value="url"/>
-			<item value="mount_edit_url"/>
-			<item value="language_change"/>
-			<item value="edit_extract_string"/>
-			<item value="edit_from_child"/>
-			<item value="edit_invert"/>
-			<item value="edit_select_component"/>
-			<item value="edit_modify_view_location_title"/>
-			<item value="delete_view"/>
-			<item value="edit_make_view"/>
-			<item value="edit_right_button"/>
-			<item value="edit_tag"/>
+			<item value="debug_information"/>
+			<item value="face_file_name"/>
+			<item value="String "/>
+			<item value=");"/>
+			<item value="new String("/>
+			<item value="Begin load_mesh_and_create_buffer_objec"/>
+			<item value="min_expand_part_number"/>
+			<item value="assemble_part[0]"/>
+			<item value="boat&#x09;solidworks\parameter.txt"/>
+			<item value="audio"/>
+			<item value="0.38"/>
+			<item value="tessellation_point_number"/>
+			<item value=".location"/>
+			<item value="create_buffer_object_head"/>
+			<item value="camera_operation_with_initialization_part"/>
 		</list>
 		<list key="replacehistory">
-			<item value="up"/>
-			<item value="onselect"/>
-			<item value="p"/>
+			<item value="f"/>
+			<item value="edge_file_name"/>
+			<item value="face_edge_name"/>
 			<item value=""/>
-			<item value="render.set_event_component"/>
-			<item value="render.call_server_component"/>
-			<item value="call_server_component"/>
-			<item value="create_component_request_string"/>
-			<item value="render.get_component_to_id_object"/>
-			<item value="1.0E9"/>
-			<item value="&apos;_&apos;"/>
-			<item value="debug_information.print  (&quot;\t"/>
-			<item value="print  (&quot;"/>
-			<item value="x"/>
-			<item value="double"/>
+			<item value=";"/>
+			<item value="assemble_part"/>
+			<item value="boat&#x09;any_assemble_part_name&#x09;&#x09;solidworks\parameter.txt"/>
+			<item value="boat&#x09;any_assemble_part_name&#x09;solidworks\parameter.txt"/>
+			<item value="parameter_material"/>
+			<item value="body_array"/>
+			<item value="p_i."/>
+			<item value="face_curve_box."/>
+			<item value="p"/>
+			<item value="default_attribute_string"/>
+			<item value="default_attribute_double"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_WIDTH" value="417"/>
+		<item key="DIALOG_WIDTH" value="303"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="23"/>
-		<item key="DIALOG_Y_ORIGIN" value="260"/>
+		<item key="DIALOG_X_ORIGIN" value="137"/>
+		<item key="DIALOG_Y_ORIGIN" value="181"/>
 	</section>
 </section>

@@ -30,8 +30,6 @@ public class extended_render_driver extends render_driver
 			String load_sub_directory_name,String par_list_file_name,String extract_file_directory,
 			part_parameter part_par,system_parameter system_par,client_request_response request_response)
 	{
-		part_par.only_free_vertex_memory_flag=true;
-		part_par.delete_comment_in_simple_mesh_flag=false;
 		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
 	}
 	public part_driver create_part_driver(file_reader part_fr,part p,

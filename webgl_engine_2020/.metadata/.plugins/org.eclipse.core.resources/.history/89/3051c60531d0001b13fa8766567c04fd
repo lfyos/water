@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="webgl_engine_2020">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/kernel"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/format_converter"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/driver_general"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/driver_controller"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/driver_lession"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/driver_bridge"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/driver_project"/>
+        <property name="context-root" value="webgl_engine_2020"/>
+        <property name="java-output-path" value="/webgl_engine_2020/build/classes"/>
+    </wb-module>
+</project-modules>

@@ -12,8 +12,8 @@ import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_network.client_request_response;
 import kernel_part.part;
-import kernel_part.part_container_for_part_search;
 import kernel_part.part_rude;
+import kernel_part.part_container_for_part_search;
 import kernel_transformation.box;
 import kernel_transformation.location;
 import kernel_transformation.point;
@@ -117,7 +117,8 @@ public class extended_part_driver extends part_driver
 	{
 		return 0;
 	}
-	public part_rude create_mesh_and_material(part p,file_writer buffer_object_file_writer,
+	public part_rude create_part_mesh_and_buffer_object_head(
+			part p,file_writer buffer_object_file_writer,
 			part_container_for_part_search pcps,system_parameter system_par)
 	{
 		buffer_object_file_writer.println("		{");
@@ -125,12 +126,7 @@ public class extended_part_driver extends part_driver
 		buffer_object_file_writer.println(file_reader.get_text(p.directory_name+p.material_file_name,p.file_charset));
 		buffer_object_file_writer.println("		}");
 		
-		String file_name=p.directory_name+p.mesh_file_name;
-		file_reader fr=new file_reader(file_name,p.file_charset);
-		part_rude ret_val=new part_rude(fr,p.part_par.scale_value,1.0,false,false,create_normal_flag);
-		fr.close();
-		
-		return ret_val;
+		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par);
 	}
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,
 			part my_component_part,engine_kernel ek,client_request_response request_response)

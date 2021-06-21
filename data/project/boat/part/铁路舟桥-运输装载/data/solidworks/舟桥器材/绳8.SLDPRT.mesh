@@ -1,0 +1,1144 @@
+/*	version					*/	2021.07.01
+/*	origin material			*/	0	0	0	1
+/*	default material		*/	0.86	0.8	0.9	0
+/*	max_attribute_number	*/	0
+
+/*	body_number	*/	1
+   /* body  0  name   */  镜向2   /*   face_number   */  23
+     /* face  0  name   */  镜向2的第0个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -1.51364   -1.71185   0.0   0.423725   -0.905791   0.0   0.01
+         /* total_face_primitive_number */ 158
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -1.52364 -1.84381 -0.01  -1.44484 -1.70963 0.01 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    -1.51364   -1.71185   0.0   0.0102442   -0.976164   -0.217036   -0.0   0.01   -0.0   0.0   1.0
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.52364 -1.71407 -0.00999111  -1.50366 -1.70963 0.00994251 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  7
+                
+         /* face_loop  1  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -1.46295   -1.84381   -1.17455E-4   1.0  /*  material  */      0    0    0    1
+                end_effective   -1.44484   -1.83533   0.0   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.46389 -1.84381 -0.00999968  -1.44484 -1.83086 0.0 
+                /* total_edge_primitive_number */  37
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -1.46295   -1.84381   -5.93929E-18   1.0  /*  material  */      0    0    0    1
+                end_effective   -1.46295   -1.84381   -1.17455E-4   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.46295 -1.84381 -1.17455E-4  -1.46295 -1.84381 -5.93929E-18 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -1.44484   -1.83533   1.19002E-4   1.0  /*  material  */      0    0    0    1
+                end_effective   -1.46295   -1.84381   -5.93929E-18   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.46388 -1.84381 -5.93929E-18  -1.44484 -1.83104 0.00999997 
+                /* total_edge_primitive_number */  38
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -1.44484   -1.83533   0.0   1.0  /*  material  */      0    0    0    1
+                end_effective   -1.44484   -1.83533   1.19002E-4   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.44484 -1.83533 -5.96837E-18  -1.44484 -1.83533 1.19002E-4 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  0
+                
+                
+     /* face  1  name   */  镜向2的第1个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -1.51364   -1.63087   0.0   0.0   -1.0   0.0   0.01
+         /* total_face_primitive_number */ 88
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -1.52364 -1.71407 -0.01  -1.50364 -1.62965 0.01 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    -1.51364   -1.63087   0.0   0.0100739   -0.992662   0.120925   0.0   0.01   -0.0   0.0   -1.0
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.52364 -1.63208 -0.00992637  -1.50365 -1.62965 0.00996621 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  7
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    -1.51364   -1.71185   0.0   0.0102442   -0.976164   -0.217036   -0.0   0.01   -0.0   0.0   1.0
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.52364 -1.71407 -0.00999111  -1.50366 -1.70963 0.00994251 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  7
+                
+                
+     /* face  2  name   */  镜向2的第2个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -1.11032   0.0   0.0   -0.240075   -0.970754   0.0   0.01
+         /* total_face_primitive_number */ 88
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -1.52364 -1.63209 -0.01  -1.10249 0.01 0.01 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    -1.11032   0.0   0.0   0.0126996   0.616411   -0.787425   0.0   0.01   0.0   -0.0   -1.0
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.11809 -0.01 -0.0099796  -1.10249 0.009924 0.00998232 
+                /* total_edge_primitive_number */  27
+                /* total_point_primitive_number */  7
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    -1.51364   -1.63087   0.0   0.0100739   -0.992662   0.120925   0.0   0.01   -0.0   0.0   -1.0
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.52364 -1.63208 -0.00992637  -1.50365 -1.62965 0.00996621 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  7
+                
+                
+     /* face  3  name   */  镜向2的第3个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    -1.1386   0.0   0.0   1.0   -0.0   -0.0   0.01
+         /* total_face_primitive_number */ 116
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -1.11814 -0.01 -0.01  1.11814 0.01 0.01 
+        
+         /* face_loop_number   */ 4
+         /* face_loop  0  loop_edge_number    */    6
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.01   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.01   -0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 -0.00380021 0.00924978  0.01 0.0 0.01 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -1.1386   -0.00380021   0.00924978   -1.0   0.0   0.0
+                start_effective   0.01   -0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   -0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 0.00924978  0.01 -0.00380021 0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.0   -0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 0.00924978  0.0 0.0 0.01 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.0   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -1.22461E-18 0.00924978  0.0 0.00380021 0.01 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  4  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -1.1386   0.00380021   0.00924978   1.0   -0.0   -0.0
+                start_effective   0.0   0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.00380021 0.00924978  0.01 0.00380021 0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  5  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.01   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.01   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 -1.22461E-18 0.00924978  0.01 0.00380021 0.01 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+         /* face_loop  1  loop_edge_number    */    6
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.01   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.01   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   -0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 -0.00380021 -0.01  0.01 0.0 -0.00924978 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.01   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.01   0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 0.0 -0.01  0.01 0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -1.1386   0.00380021   -0.00924978   -1.0   0.0   0.0
+                start_effective   0.01   0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.00380021 -0.00924978  0.01 0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.0   0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.0 -0.01  0.0 0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  4  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.0   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   -0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 -0.01  0.0 0.0 -0.00924978 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  5  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -1.1386   -0.00380021   -0.00924978   1.0   -0.0   -0.0
+                start_effective   0.0   -0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   -0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 -0.00924978  0.01 -0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+         /* face_loop  2  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    -1.11032   0.0   0.0   0.0126996   0.616411   -0.787425   0.0   0.01   0.0   -0.0   -1.0
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.11809 -0.01 -0.0099796  -1.10249 0.009924 0.00998232 
+                /* total_edge_primitive_number */  27
+                /* total_point_primitive_number */  7
+                
+         /* face_loop  3  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    1.11032   0.0   0.0   0.0126996   -0.616411   -0.787425   -0.0   0.01   0.0   0.0   -1.0
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 1.10249 -0.01 -0.0099796  1.11809 0.009924 0.00998232 
+                /* total_edge_primitive_number */  27
+                /* total_point_primitive_number */  7
+                
+                
+     /* face  4  name   */  镜向2的第4个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    1.51364   -1.71185   0.0   -0.423725   -0.905791   0.0   0.01
+         /* total_face_primitive_number */ 163
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  1.44484 -1.84381 -0.01  1.52364 -1.70963 0.01 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   1.44484   -1.83533   -5.96837E-18   1.0  /*  material  */      0    0    0    1
+                end_effective   1.46295   -1.84381   -1.17455E-4   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 1.44484 -1.84381 -0.00999743  1.46388 -1.83086 7.73669E-14 
+                /* total_edge_primitive_number */  38
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   1.44484   -1.83533   -5.96837E-18   1.0  /*  material  */      0    0    0    1
+                end_effective   1.44484   -1.83533   1.19002E-4   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 1.44484 -1.83533 -5.96837E-18  1.44484 -1.83533 1.19002E-4 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   1.46295   -1.84381   -5.93929E-18   1.0  /*  material  */      0    0    0    1
+                end_effective   1.44484   -1.83533   1.19002E-4   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 1.44484 -1.84381 -5.93929E-18  1.46388 -1.83104 0.00999342 
+                /* total_edge_primitive_number */  36
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   1.46295   -1.84381   -5.93929E-18   1.0  /*  material  */      0    0    0    1
+                end_effective   1.46295   -1.84381   -1.17455E-4   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 1.46295 -1.84381 -1.17455E-4  1.46295 -1.84381 -2.44921E-18 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  0
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    1.51364   -1.71185   0.0   0.0102442   0.976164   -0.217036   0.0   0.01   0.0   0.0   1.0
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 1.50366 -1.71407 -0.00999111  1.52364 -1.70963 0.00994251 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  7
+                
+                
+     /* face  5  name   */  镜向2的第5个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    1.51364   -1.63087   0.0   0.0   -1.0   0.0   0.01
+         /* total_face_primitive_number */ 88
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  1.50364 -1.71407 -0.01  1.52364 -1.62965 0.01 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    1.51364   -1.63087   0.0   0.0100739   0.992662   0.120925   -0.0   0.01   0.0   -0.0   -1.0
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 1.50365 -1.63208 -0.00992637  1.52364 -1.62965 0.00996621 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  7
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    1.51364   -1.71185   0.0   0.0102442   0.976164   -0.217036   0.0   0.01   0.0   0.0   1.0
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 1.50366 -1.71407 -0.00999111  1.52364 -1.70963 0.00994251 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  7
+                
+                
+     /* face  6  name   */  镜向2的第6个表面
+         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    1.11032   0.0   0.0   0.240075   -0.970754   0.0   0.01
+         /* total_face_primitive_number */ 88
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  1.10249 -1.63209 -0.01  1.52364 0.01 0.01 
+        
+         /* face_loop_number   */ 2
+         /* face_loop  0  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    1.11032   0.0   0.0   0.0126996   -0.616411   -0.787425   -0.0   0.01   0.0   0.0   -1.0
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 1.10249 -0.01 -0.0099796  1.11809 0.009924 0.00998232 
+                /* total_edge_primitive_number */  27
+                /* total_point_primitive_number */  7
+                
+         /* face_loop  1  loop_edge_number    */    1
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  ellipse
+                /* parameter_number  */  11 /* parameter */    1.51364   -1.63087   0.0   0.0100739   0.992662   0.120925   -0.0   0.01   0.0   -0.0   -1.0
+                start_not_effective
+                end_not_effective
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 1.50365 -1.63208 -0.00992637  1.52364 -1.62965 0.00996621 
+                /* total_edge_primitive_number */  24
+                /* total_point_primitive_number */  7
+                
+                
+     /* face  7  name   */  镜向2的第7个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    1.0   0.0   0.0   0.0   -0.00380021   -0.01
+         /* total_face_primitive_number */ 2
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0 0.0 -0.01  0.0 0.00380021 -0.00924978 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    3
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.0   0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.0 -0.01  0.0 0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   0.00380021   0.01   -0.0   -0.0   1.0
+                start_effective   0.0   0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.00380021 -0.01  0.0 0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   0.00380021   -0.01   -0.0   1.0   -0.0
+                start_effective   0.0   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.0 -0.01  0.0 0.00380021 -0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  8  name   */  镜向2的第8个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    1.0   0.0   0.0   0.01   -0.00380021   -0.01
+         /* total_face_primitive_number */ 2
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.01 0.0 -0.01  0.01 0.00380021 -0.00924978 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    3
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   0.01   -0.0   -0.0   1.0
+                start_effective   0.01   0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 0.00380021 -0.01  0.01 0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.01   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.01   0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 0.0 -0.01  0.01 0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   -0.01   -0.0   1.0   -0.0
+                start_effective   0.01   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 0.0 -0.01  0.01 0.00380021 -0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  9  name   */  镜向2的第9个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    -0.0   1.0   0.0   0.01   -0.00380021   0.01
+         /* total_face_primitive_number */ 2
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0 -0.00380021 -0.01  0.01 -0.00380021 -0.00924978 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -1.1386   -0.00380021   -0.00924978   1.0   -0.0   -0.0
+                start_effective   0.0   -0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   -0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 -0.00924978  0.01 -0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   -0.00380021   0.01   0.0   0.0   -1.0
+                start_effective   0.0   -0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   -0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 -0.01  0.0 -0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   -0.00380021   -0.01   -1.0   -0.0   -0.0
+                start_effective   0.01   -0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   -0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 -0.01  0.01 -0.00380021 -0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   -0.00380021   0.01   0.0   0.0   -1.0
+                start_effective   0.01   -0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   -0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 -0.00380021 -0.01  0.01 -0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  10  name   */  镜向2的第10个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    1.0   0.0   0.0   0.0   -0.00380021   -0.01
+         /* total_face_primitive_number */ 2
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0 -0.00380021 -0.01  0.0 0.0 -0.00924978 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    3
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.0   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   -0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 -0.01  0.0 0.0 -0.00924978 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   0.00380021   -0.01   -0.0   1.0   -0.0
+                start_effective   0.0   -0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 -0.01  0.0 8.67362E-19 -0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   -0.00380021   0.01   0.0   0.0   -1.0
+                start_effective   0.0   -0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   -0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 -0.01  0.0 -0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  11  name   */  镜向2的第11个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    1.0   0.0   0.0   0.01   -0.00380021   -0.01
+         /* total_face_primitive_number */ 2
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.01 -0.00380021 -0.01  0.01 0.0 -0.00924978 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    3
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   -0.01   -0.0   1.0   -0.0
+                start_effective   0.01   -0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 -0.00380021 -0.01  0.01 8.67362E-19 -0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.01   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.01   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   -0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 -0.00380021 -0.01  0.01 0.0 -0.00924978 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   -0.00380021   0.01   0.0   0.0   -1.0
+                start_effective   0.01   -0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   -0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 -0.00380021 -0.01  0.01 -0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  12  name   */  镜向2的第12个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.0   -1.0   0.0   0.01   0.00380021   0.01
+         /* total_face_primitive_number */ 2
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0 0.00380021 -0.01  0.01 0.00380021 -0.00924978 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -1.1386   0.00380021   -0.00924978   -1.0   0.0   0.0
+                start_effective   0.01   0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.00380021 -0.00924978  0.01 0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   0.01   -0.0   -0.0   1.0
+                start_effective   0.01   0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 0.00380021 -0.01  0.01 0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   -0.01   -1.0   -0.0   -0.0
+                start_effective   0.01   0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.00380021 -0.01  0.01 0.00380021 -0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   0.00380021   0.01   -0.0   -0.0   1.0
+                start_effective   0.0   0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.00380021   -0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.00380021 -0.01  0.0 0.00380021 -0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  13  name   */  镜向2的第13个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    -0.0   0.0   1.0   0.01   0.00380021   -0.01
+         /* total_face_primitive_number */ 4
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0 -0.00380021 -0.01  0.01 0.00380021 -0.01 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    6
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   -0.01   -0.0   1.0   -0.0
+                start_effective   0.01   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 0.0 -0.01  0.01 0.00380021 -0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   -0.01   -0.0   1.0   -0.0
+                start_effective   0.01   -0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 -0.00380021 -0.01  0.01 8.67362E-19 -0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   -0.00380021   -0.01   -1.0   -0.0   -0.0
+                start_effective   0.01   -0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   -0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 -0.01  0.01 -0.00380021 -0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   0.00380021   -0.01   -0.0   1.0   -0.0
+                start_effective   0.0   -0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 -0.01  0.0 8.67362E-19 -0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  4  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   0.00380021   -0.01   -0.0   1.0   -0.0
+                start_effective   0.0   0.0   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.0 -0.01  0.0 0.00380021 -0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  5  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   -0.01   -1.0   -0.0   -0.0
+                start_effective   0.01   0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.00380021   -0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.00380021 -0.01  0.01 0.00380021 -0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  14  name   */  镜向2的第14个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.0   0.0   -1.0   0.01   0.00380021   0.01
+         /* total_face_primitive_number */ 4
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0 -0.00380021 0.01  0.01 0.00380021 0.01 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    6
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   0.01   0.0   -1.0   0.0
+                start_effective   0.01   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   -0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 -0.00380021 0.01  0.01 8.67362E-19 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   0.01   0.0   -1.0   0.0
+                start_effective   0.01   0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 0.0 0.01  0.01 0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   0.01   -1.0   -0.0   -0.0
+                start_effective   0.01   0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.00380021 0.01  0.01 0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   0.00380021   0.01   0.0   -1.0   0.0
+                start_effective   0.0   0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.0 0.01  0.0 0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  4  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   0.00380021   0.01   0.0   -1.0   0.0
+                start_effective   0.0   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   -0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 0.01  0.0 8.67362E-19 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  5  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   -0.00380021   0.01   -1.0   -0.0   -0.0
+                start_effective   0.01   -0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   -0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 0.01  0.01 -0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  15  name   */  镜向2的第15个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    -0.0   1.0   0.0   0.01   -0.00380021   0.01
+         /* total_face_primitive_number */ 2
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0 -0.00380021 0.00924978  0.01 -0.00380021 0.01 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -1.1386   -0.00380021   0.00924978   -1.0   0.0   0.0
+                start_effective   0.01   -0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   -0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 0.00924978  0.01 -0.00380021 0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   -0.00380021   0.01   0.0   0.0   -1.0
+                start_effective   0.01   -0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   -0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 -0.00380021 0.00924978  0.01 -0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   -0.00380021   0.01   -1.0   -0.0   -0.0
+                start_effective   0.01   -0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   -0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 0.01  0.01 -0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   -0.00380021   0.01   0.0   0.0   -1.0
+                start_effective   0.0   -0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   -0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 0.00924978  0.0 -0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  16  name   */  镜向2的第16个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    1.0   0.0   0.0   0.01   -0.00380021   -0.01
+         /* total_face_primitive_number */ 2
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.01 -0.00380021 0.00924978  0.01 0.0 0.01 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    3
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   -0.00380021   0.01   0.0   0.0   -1.0
+                start_effective   0.01   -0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   -0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 -0.00380021 0.00924978  0.01 -0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.01   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.01   -0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 -0.00380021 0.00924978  0.01 0.0 0.01 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   0.01   0.0   -1.0   0.0
+                start_effective   0.01   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   -0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 -0.00380021 0.01  0.01 8.67362E-19 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  17  name   */  镜向2的第17个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    1.0   0.0   0.0   0.01   -0.00380021   -0.01
+         /* total_face_primitive_number */ 2
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.01 0.0 0.00924978  0.01 0.00380021 0.01 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    3
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   0.01   0.0   -1.0   0.0
+                start_effective   0.01   0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 0.0 0.01  0.01 0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.01   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.01   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 -1.22461E-18 0.00924978  0.01 0.00380021 0.01 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   0.01   -0.0   -0.0   1.0
+                start_effective   0.01   0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 0.00380021 0.00924978  0.01 0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  18  name   */  镜向2的第18个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    1.0   0.0   0.0   0.0   -0.00380021   -0.01
+         /* total_face_primitive_number */ 2
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0 -0.00380021 0.00924978  0.0 0.0 0.01 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    3
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.0   -0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 0.00924978  0.0 0.0 0.01 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   -0.00380021   0.01   0.0   0.0   -1.0
+                start_effective   0.0   -0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   -0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 0.00924978  0.0 -0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   0.00380021   0.01   0.0   -1.0   0.0
+                start_effective   0.0   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   -0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -0.00380021 0.01  0.0 8.67362E-19 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  19  name   */  镜向2的第19个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    1.0   0.0   0.0   0.0   -0.00380021   -0.01
+         /* total_face_primitive_number */ 2
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0 0.0 0.00924978  0.0 0.00380021 0.01 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    3
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  circle
+                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.0   -1.0   -0.0   -0.0   0.01
+                start_effective   0.0   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 -1.22461E-18 0.00924978  0.0 0.00380021 0.01 
+                /* total_edge_primitive_number */  3
+                /* total_point_primitive_number */  1
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   0.00380021   0.01   0.0   -1.0   0.0
+                start_effective   0.0   0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.0   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.0 0.01  0.0 0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   0.00380021   0.01   -0.0   -0.0   1.0
+                start_effective   0.0   0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.00380021 0.00924978  0.0 0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  20  name   */  镜向2的第20个表面
+         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.0   -1.0   0.0   0.01   0.00380021   0.01
+         /* total_face_primitive_number */ 2
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  0.0 0.00380021 0.00924978  0.01 0.00380021 0.01 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    -1.1386   0.00380021   0.00924978   1.0   -0.0   -0.0
+                start_effective   0.0   0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.00380021 0.00924978  0.01 0.00380021 0.00924978 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.0   0.00380021   0.01   -0.0   -0.0   1.0
+                start_effective   0.0   0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.00380021 0.00924978  0.0 0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   0.01   -1.0   -0.0   -0.0
+                start_effective   0.01   0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                end_effective   0.0   0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.0 0.00380021 0.01  0.01 0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  line
+                /* parameter_number  */  6 /* parameter */    0.01   0.00380021   0.01   -0.0   -0.0   1.0
+                start_effective   0.01   0.00380021   0.00924978   1.0  /*  material  */      0    0    0    1
+                end_effective   0.01   0.00380021   0.01   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 0.01 0.00380021 0.00924978  0.01 0.00380021 0.01 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  3
+                
+                
+     /* face  21  name   */  镜向2的第21个表面
+         /* face_type   */  unknown  /*   parameter_number   */  0 /*   parameter  */ 
+         /* total_face_primitive_number */ 2782
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  -1.4639 -1.9066 -0.0388964  -1.4439 -1.83086 0.0375187 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -1.44484   -1.83533   0.0   1.0  /*  material  */      0    0    0    1
+                end_effective   -1.44484   -1.83533   1.19002E-4   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.44484 -1.83533 -5.96837E-18  -1.44484 -1.83533 1.19002E-4 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -1.44484   -1.83533   1.19002E-4   1.0  /*  material  */      0    0    0    1
+                end_effective   -1.46295   -1.84381   -5.93929E-18   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.46388 -1.84381 -5.93929E-18  -1.44484 -1.83104 0.00999997 
+                /* total_edge_primitive_number */  38
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -1.46295   -1.84381   -5.93929E-18   1.0  /*  material  */      0    0    0    1
+                end_effective   -1.46295   -1.84381   -1.17455E-4   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.46295 -1.84381 -1.17455E-4  -1.46295 -1.84381 -5.93929E-18 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   -1.46295   -1.84381   -1.17455E-4   1.0  /*  material  */      0    0    0    1
+                end_effective   -1.44484   -1.83533   0.0   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 -1.46389 -1.84381 -0.00999968  -1.44484 -1.83086 0.0 
+                /* total_edge_primitive_number */  37
+                /* total_point_primitive_number */  0
+                
+                
+     /* face  22  name   */  镜向2的第22个表面
+         /* face_type   */  unknown  /*   parameter_number   */  0 /*   parameter  */ 
+         /* total_face_primitive_number */ 2785
+         /* face_attribute_number 		*/ 0
+         /* face_face_box				*/  1.4439 -1.9066 -0.0388964  1.4639 -1.83086 0.0375187 
+        
+         /* face_loop_number   */ 1
+         /* face_loop  0  loop_edge_number    */    4
+             /* face_loop_edge  0  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   1.44484   -1.83533   -5.96837E-18   1.0  /*  material  */      0    0    0    1
+                end_effective   1.46295   -1.84381   -1.17455E-4   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 1.44484 -1.84381 -0.00999743  1.46388 -1.83086 7.73669E-14 
+                /* total_edge_primitive_number */  38
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  1  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   1.46295   -1.84381   -5.93929E-18   1.0  /*  material  */      0    0    0    1
+                end_effective   1.46295   -1.84381   -1.17455E-4   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 1.46295 -1.84381 -1.17455E-4  1.46295 -1.84381 -2.44921E-18 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  2  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   1.46295   -1.84381   -5.93929E-18   1.0  /*  material  */      0    0    0    1
+                end_effective   1.44484   -1.83533   1.19002E-4   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 1.44484 -1.84381 -5.93929E-18  1.46388 -1.83104 0.00999342 
+                /* total_edge_primitive_number */  36
+                /* total_point_primitive_number */  0
+                
+             /* face_loop_edge  3  data   */   
+                /* curve_type    */  unknown
+                /* parameter_number  */  0 /* parameter */ 
+                start_effective   1.44484   -1.83533   -5.96837E-18   1.0  /*  material  */      0    0    0    1
+                end_effective   1.44484   -1.83533   1.19002E-4   1.0  /*  material  */      0    0    0    1
+                /* curve point material */      0    0    0    1
+                /* box definition  */	 1.44484 -1.83533 -5.96837E-18  1.44484 -1.83533 1.19002E-4 
+                /* total_edge_primitive_number */  2
+                /* total_point_primitive_number */  0
+                
+                
+                

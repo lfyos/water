@@ -7,7 +7,6 @@ import kernel_part.face_face;
 import kernel_part.part;
 import kernel_part.part_rude;
 import kernel_file_manager.file_writer;
-import kernel_mesh.auxiliary_file_handler;
 import kernel_transformation.point;
 
 public class triangle_collector 
@@ -45,6 +44,7 @@ public class triangle_collector
 	}
 	public void write_out(String triangle_file_name,engine_kernel ek)
 	{
+/*
 		triangle_item t;
 		
 		String file_name=ek.scene_par.scene_proxy_directory_name+triangle_file_name;
@@ -52,6 +52,7 @@ public class triangle_collector
 		file_writer id_fw=new file_writer(file_name+".id",ek.system_par.local_data_charset);
 		
 		stl_fw.println("solid	",stl_fw.file_name);
+		
 		for(int render_id=0,render_number=ek.render_cont.renders.length;render_id<render_number;render_id++) {
 			if(triangle[render_id]==null)
 				continue;
@@ -60,12 +61,10 @@ public class triangle_collector
 					continue;
 				triangle[render_id][part_id]=null;
 				part p=ek.render_cont.renders[render_id].parts[part_id];
-				part_rude pr=null;
-				
+				part_rude pr=null;				
 				if(p.mesh_file_name==null){
 					if(!(p.top_box_part_flag))
-						pr=p.caculate_part_box_mesh(
-								ek.render_cont.renders[p.render_id].parts[p.part_from_id]);
+						pr=ek.render_cont.renders[p.render_id].parts[p.part_from_id].caculate_part_box_mesh();
 				}else if(p.driver!=null) {
 					file_writer tmp_fw=new file_writer(file_name+".tmp",ek.system_par.local_data_charset);
 					pr=p.driver.create_mesh_and_material(p,tmp_fw,ek.part_cont,ek.system_par);
@@ -133,9 +132,11 @@ public class triangle_collector
 				}
 			}
 		}
+		
 		stl_fw.println("endsolid").println();
 		
 		stl_fw.close();
-		id_fw.close();
+		id_fw.close();	
+*/		
 	}
 }

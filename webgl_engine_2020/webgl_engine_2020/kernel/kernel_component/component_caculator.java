@@ -13,7 +13,8 @@ public class component_caculator
 	
 	public int render_component_id_and_driver_id[][][],part_component_id_and_driver_id[][][][];
 	public component component_pointer[],sort_component_pointer[];
-	public int top_assemble_component_number,part_component_number,exist_part_component_number,total_primitive_number;
+	public int top_assemble_component_number,part_component_number,exist_part_component_number;
+	public long total_face_primitive_number,total_edge_primitive_number,total_point_primitive_number;
 	
 	private void caculate_component_driver_id(component comp)
 	{
@@ -232,7 +233,9 @@ public class component_caculator
 			top_assemble_component_number=0;
 			part_component_number=0;
 			exist_part_component_number=0;
-			total_primitive_number=0;
+			total_face_primitive_number=0;
+			total_edge_primitive_number=0;
+			total_point_primitive_number=0;
 		
 			for(int i=0,ni=component_pointer.length;i<ni;i++){
 				component comp=component_pointer[i];
@@ -248,8 +251,11 @@ public class component_caculator
 					if(comp.driver_number()>0){
 						exist_part_component_number++;
 						part_rude part_mesh;
-						if((part_mesh=comp.driver_array[0].component_part.part_mesh)!=null)
-							total_primitive_number+=part_mesh.total_primitive_number;
+						if((part_mesh=comp.driver_array[0].component_part.part_mesh)!=null) {
+							total_face_primitive_number	+=part_mesh.total_face_primitive_number;
+							total_edge_primitive_number	+=part_mesh.total_edge_primitive_number;
+							total_point_primitive_number+=part_mesh.total_point_primitive_number;
+						}
 					}
 				}	
 			}

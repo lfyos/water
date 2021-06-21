@@ -207,8 +207,7 @@ public class response_render_component_request
 	}
 	private static int response_buffer_object_proxy_request(part p,engine_kernel ek,client_information ci)
 	{
-		String directory_name=file_directory.part_file_directory(p,ek.system_par,ek.scene_par);
-		directory_name+=p.part_par.buffer_object_file_name+".";
+		String directory_name=file_directory.part_file_directory(p,ek.system_par,ek.scene_par)+"mesh.";
 		
 		String proxy_url_directory=ci.get_request_url_header()+"&command=buffer&operation=buffer_data";
 		proxy_url_directory+="&render="+(p.render_id)+"&part="+(p.part_id)+"&data_file=";

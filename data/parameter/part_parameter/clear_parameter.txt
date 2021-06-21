@@ -1,11 +1,11 @@
-/*	simple_mesh_file_name				*/		simple.txt
-/*	buffer_object_file_name				*/		mesh
-/*	audio_file_name						*/		audio.mp3
 /*	process_sequence_id					*/		0
 
 /*	max_file_head_length				*/		2000000
 /*	max_file_data_length				*/		4000000
 /*	max_buffer_object_data_length		*/		8000000
+
+/*	max_comment_file_length				*/		-1
+/*	max_compress_file_length			*/		131072
 
 /*	scale_value							*/		1.0
 /*	lod_precision_scale					*/		1.0
@@ -22,8 +22,6 @@
 /*	max_part_list_load_thread_number	*/		2
 
 /*	do_create_bottom_box_flag			*/		false
-/*	only_free_vertex_memory_flag		*/		true
-/*	delete_comment_in_simple_mesh_flag	*/		false
 /*	combine_to_part_package_flag		*/		true
 /*	delete_buffer_object_text_file_flag	*/		true
-/*	clear_model_file_flag				*/		true	true	false	false
+/*	clear_model_file_flag				*/		true	true	true	true	true	true	true

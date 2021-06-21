@@ -6,6 +6,15 @@ import kernel_transformation.location;
 
 public class body
 {
+	public String name;	
+	public face face_array[];
+	public box body_box;
+	public int total_face_primitive_number,total_edge_primitive_number,total_point_primitive_number;
+	
+	public int face_number()
+	{
+		return (face_array==null)?0:face_array.length;
+	}
 	public void destroy()
 	{
 		for(int i=0,ni=face_number();i<ni;i++)
@@ -19,32 +28,24 @@ public class body
 	}
 	public body(body s)
 	{
+		int face_number;
 		name=new String(s.name);
-		face_array=null;
-		if(s.face_number()>0){
-			face_array=new face[s.face_array.length];
-			for(int i=0,ni=face_array.length;i<ni;i++)
+		if((face_number=s.face_number())<=0)
+			face_array=null;
+		else{
+			face_array=new face[face_number];
+			for(int i=0;i<face_number;i++)
 				face_array[i]=new face(s.face_array[i]);
 		}
-		body_box=null;
-		if(s.body_box!=null)
-			body_box=new box(s.body_box);
+		body_box=(s.body_box==null)?null:(new box(s.body_box));
+		total_face_primitive_number=s.total_face_primitive_number;
+		total_edge_primitive_number=s.total_edge_primitive_number;
+		total_point_primitive_number=s.total_point_primitive_number;
 	}
-	public String name;	
-	
-	public face face_array[];
-	public int face_number()
-	{
-		if(face_array==null)
-			return 0;
-		else
-			return face_array.length;
-	}
-	public box body_box;
-
-	private void caculate_box()
+	private void caculate_box_and_primitive_number()
 	{
 		body_box=null;
+		total_face_primitive_number=0;
 		for(int i=0,ni=face_number();i<ni;i++){
 			if(face_array[i].face_box!=null){
 				if(body_box==null)
@@ -52,11 +53,13 @@ public class body
 				else
 					body_box=body_box.add(face_array[i].face_box);
 			}
+			total_face_primitive_number+=face_array[i].fa_face.total_face_primitive_number;
+			total_edge_primitive_number+=face_array[i].fa_curve.total_edge_primitive_number;
+			total_point_primitive_number+=face_array[i].fa_curve.total_point_primitive_number;
 		}
 	}
-		
-	public body(file_reader fr,double vertex_scale_value,double normal_scale_value,
-			boolean delete_redundant_data_flag,boolean combine_flag,boolean create_normal_flag)
+	public body(file_reader fr,double vertex_scale_value,String my_default_material[],
+			double my_default_attribute_double[],String my_default_attribute_string[])
 	
 	{
 		name=fr.get_string();
@@ -70,22 +73,21 @@ public class body
 		}else{
 			face_array=new face[my_face_number];
 			for(int i=0;i<my_face_number;i++)
-				face_array[i]=new face(fr,vertex_scale_value,normal_scale_value,
-						delete_redundant_data_flag,combine_flag,create_normal_flag);
+				face_array[i]=new face(fr,vertex_scale_value,
+					my_default_material,my_default_attribute_double,my_default_attribute_string);
 		}
-		caculate_box();
+		caculate_box_and_primitive_number();
 	}
-	public body(int box_number,location loca[],box b[],String material[][])
+	public body(
+			int my_box_number,location my_box_loca[],box my_box_array[],
+			String extra_data[],String my_default_material[][],
+			double my_default_attribute_double[][],String my_default_attribute_string[][])
 	{
-		name="no_name";	
-		face_array=new face[box_number];
-		for(int i=0;i<box_number;i++)
-			face_array[i]=new face(loca[i],b[i],material[i]);
-		caculate_box();
-	}
-	public void free_memory()
-	{
-		for(int face_id=0,my_face_number=face_number();face_id<my_face_number;face_id++)
-			face_array[face_id].free_memory();
+		name="box_body_with_"+my_box_number+"_faces";	
+		face_array=new face[my_box_number];
+		for(int i=0;i<my_box_number;i++)
+			face_array[i]=new face(my_box_loca[i],my_box_array[i],extra_data[i],
+				my_default_material[i],my_default_attribute_double[i],my_default_attribute_string[i]);
+		caculate_box_and_primitive_number();
 	}
 }

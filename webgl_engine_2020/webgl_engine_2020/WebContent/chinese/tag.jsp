@@ -19,20 +19,14 @@
 	String mount_call_processor_string;
 	if((mount_call_processor_string=request.getParameter("windows"))==null)
 		mount_call_processor_string="parent";
-	switch(mount_call_processor_string){
-	case "top":
+	if(mount_call_processor_string.compareTo("top")==0)
 		mount_call_processor_string="window.top.";
-		break;
-	case "parent":
+	else if(mount_call_processor_string.compareTo("parent")==0)
 		mount_call_processor_string="window.parent.";
-		break;
-	case "this":
+	else if(mount_call_processor_string.compareTo("this")==0)
 		mount_call_processor_string="";
-		break;
-	default:
+	else
 		mount_call_processor_string ="window.frames[\""+mount_call_processor_string+"\"].";
-		break;
-	}
 	
 	out.print("var mcp="+mount_call_processor_string+
 			"render.component_call_processor["+movement_component_id+"];");

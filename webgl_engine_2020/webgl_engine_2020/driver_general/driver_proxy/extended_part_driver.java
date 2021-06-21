@@ -13,8 +13,8 @@ import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_network.client_request_response;
 import kernel_part.part;
-import kernel_part.part_container_for_part_search;
 import kernel_part.part_rude;
+import kernel_part.part_container_for_part_search;
 import kernel_transformation.box;
 import kernel_transformation.point;
 
@@ -45,7 +45,8 @@ public class extended_part_driver extends part_driver
 	{
 		return 0;
 	}
-	public part_rude create_mesh_and_material(part p,file_writer buffer_object_file_writer,
+	public part_rude create_part_mesh_and_buffer_object_head(
+			part p,file_writer buffer_object_file_writer,
 			part_container_for_part_search pcps,system_parameter system_par)
 	{
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -64,8 +65,8 @@ public class extended_part_driver extends part_driver
 		file_writer fw=new file_writer(file_name,system_par.local_data_charset);
 		fw.println(str);
 		fw.close();
-
-		return super.create_mesh_and_material(p,buffer_object_file_writer,pcps,system_par);
+		
+		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par);
 	}
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,
 			part my_component_part,engine_kernel ek,client_request_response request_response)

@@ -1,0 +1,26 @@
+package driver_project_boat_2011;
+
+import driver_opengl_fixed_pipeline.light_parameter;
+import driver_opengl_fixed_pipeline.render_material_parameter;
+import kernel_engine.system_parameter;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
+import kernel_part.part;
+import kernel_part.part_rude;
+import kernel_part.part_container_for_part_search;
+
+public class extended_part_driver extends driver_opengl_fixed_pipeline.extended_part_driver
+{
+	public extended_part_driver(light_parameter my_light,render_material_parameter render_material,
+			String my_scene_directory_name,String my_scene_parameter_directory_name)
+	{
+		super(my_light,render_material,my_scene_directory_name,my_scene_parameter_directory_name);
+	}
+	public part_rude create_part_mesh_and_buffer_object_head(
+			part p,file_writer buffer_object_file_writer,
+			part_container_for_part_search pcps,system_parameter system_par)
+	{
+		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par);
+		
+	}
+}

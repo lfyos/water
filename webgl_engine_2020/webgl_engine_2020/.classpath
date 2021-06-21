@@ -5,7 +5,6 @@
 	<classpathentry kind="src" path="driver_general"/>
 	<classpathentry kind="src" path="driver_controller"/>
 	<classpathentry kind="src" path="driver_lession"/>
-	<classpathentry kind="src" path="driver_bridge"/>
 	<classpathentry kind="src" path="driver_project"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_221">
 		<attributes>

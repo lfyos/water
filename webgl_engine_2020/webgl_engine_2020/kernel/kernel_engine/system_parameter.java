@@ -17,7 +17,9 @@ public class system_parameter
 	public String local_data_charset,network_data_charset;
 	public String user_file_name,shader_file_name,default_parameter_directory;
 	
-	public int default_max_loading_number,response_block_size,mesh_decimal_number,max_material_id;
+	public int default_max_loading_number,mesh_decimal_number,max_material_id;
+	
+	public int response_block_size;
 	
 	public long engine_expire_time_length,engine_load_time_length,engine_touch_time_length;
 	
@@ -53,9 +55,10 @@ public class system_parameter
 		default_parameter_directory		=new String(sp.default_parameter_directory);
 		
 		default_max_loading_number		=sp.default_max_loading_number;
-		response_block_size				=sp.response_block_size;
 		mesh_decimal_number				=sp.mesh_decimal_number;
 		max_material_id					=sp.max_material_id;
+		
+		response_block_size				=sp.response_block_size;
 		
 		engine_expire_time_length		=sp.engine_expire_time_length;
 		engine_load_time_length			=sp.engine_load_time_length;
@@ -158,14 +161,15 @@ public class system_parameter
 		else
 			language_change_file_name=file_reader.separator(language_change_file_name);	
 		
-		default_max_loading_number			=f.get_int();
-		response_block_size					=f.get_int();
-		mesh_decimal_number					=f.get_int();
-		max_material_id						=f.get_int();
+		default_max_loading_number				=f.get_int();
+		mesh_decimal_number						=f.get_int();
+		max_material_id							=f.get_int();
 		
-		engine_expire_time_length			=f.get_long();
-		engine_load_time_length				=f.get_long();
-		engine_touch_time_length			=f.get_long();
+		response_block_size						=f.get_int();
+		
+		engine_expire_time_length				=f.get_long();
+		engine_load_time_length					=f.get_long();
+		engine_touch_time_length				=f.get_long();
 		
 		create_engine_concurrent_number			=f.get_int();
 		create_engine_sleep_time_length_scale	=f.get_double();
@@ -174,19 +178,19 @@ public class system_parameter
 		
 		file_buffer_expire_time_length			=f.get_long();
 		
-		max_client_interface_number			=f.get_int();
-		max_engine_kernel_number			=f.get_int();
-		max_component_number				=f.get_int();
-		max_request_number					=f.get_int();
+		max_client_interface_number				=f.get_int();
+		max_engine_kernel_number				=f.get_int();
+		max_component_number					=f.get_int();
+		max_request_number						=f.get_int();
 		
-		max_buffer_object_head_package_length=f.get_long();
+		max_buffer_object_head_package_length	=f.get_long();
 		
 		file_download_cors_string=f.get_string();
 		String my_file_name=f.directory_name+file_download_cors_string;
 		if(new File(my_file_name).exists())
 			file_download_cors_string=file_reader.get_text(my_file_name,f.get_charset()).trim();
 		
-		debug_mode_flag						=f.get_boolean();
+		debug_mode_flag							=f.get_boolean();
 		
 		f.close();
 		

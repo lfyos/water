@@ -11,7 +11,8 @@ import kernel_transformation.box;
 public class component_collector 
 {
 	public component_link_list component_collector[][];
-	public int render_number,part_number,component_number,render_component_number[],part_component_number[][],total_primitive_number;
+	public int render_number,part_number,component_number,render_component_number[],part_component_number[][];
+	public long total_face_primitive_number,total_edge_primitive_number,total_point_primitive_number;
 	public long list_id;
 	
 	public String title,description,audio_file_name;
@@ -105,8 +106,11 @@ public class component_collector
 				if((driver_id>=0)&&(driver_id<comp.driver_number()))
 					if(comp.driver_array[driver_id]!=null)
 						if(comp.driver_array[driver_id].component_part!=null)
-							if((part_mesh=comp.driver_array[driver_id].component_part.part_mesh)!=null)
-								total_primitive_number+=part_mesh.total_primitive_number;
+							if((part_mesh=comp.driver_array[driver_id].component_part.part_mesh)!=null) {
+								total_face_primitive_number+=part_mesh.total_face_primitive_number;
+								total_edge_primitive_number+=part_mesh.total_edge_primitive_number;
+								total_point_primitive_number+=part_mesh.total_point_primitive_number;
+							}
 					
 				component_collector[render_id][part_id]=new component_link_list(
 						comp,driver_id,component_collector[render_id][part_id]);
@@ -159,7 +163,10 @@ public class component_collector
 		render_number=0;
 		part_number=0;
 		component_number=0;
-		total_primitive_number=0;
+		total_face_primitive_number=0;
+		total_edge_primitive_number=0;
+		total_point_primitive_number=0;
+		
 		if(render_component_number!=null)
 			for(int i=0,ni=render_component_number.length;i<ni;i++)
 				render_component_number[i]=0;

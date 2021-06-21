@@ -1,0 +1,2701 @@
+version	2015.10
+
+/*	name			*/	运动信息
+/*	audio			*/	没有配音
+/*	description		*/	根节点
+/*	sequence/parallel	*/	sequence
+/*	direction		*/	no_direction
+/*	camera scale		*/	upper	1.0
+/*	children number		*/	16
+
+        /*	name			*/	00001:安装1号和3号垫梁组
+        /*	audio			*/	没有配音
+        /*	description		*/	垫梁组由横垫梁S8、纵垫梁S9和部分联结件组成。每两片横垫梁通过横梁间隔撑S8d连接，S8与S9间通过联结件S9a连接，横垫垫梁间的联结系由S8a、S8b、S8c、S8e四种联接板，S4、S5两种撑杆构成。注意事项：①1#、3#垫梁组在吊装摆放时应严格控制其设计位置的定位精准性，一般按纵横向误差均不得大于5mm控制，定位时可按如下方式进行：基础铺设整平→按图3所示位置处放样1、2、3、4点位→以1、2点位为定位基准点安放垫梁组→以3、4点位校核。②连接件S8a、S8b、S8c、S8e和S4、S5撑杆形成的喇叭口远离塔心。③每组垫梁组共有4块连接件S9a，均在远离塔心的两片横垫梁与纵垫梁件安装。④垫梁组最外侧纵垫梁S9的第三、四排螺栓孔与横垫梁S8的第一、二排螺栓孔相连。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	2
+        
+                /*	name			*/	00001:安装1号和3号垫梁组/00001
+                /*	audio			*/	sound\升降塔拼组1.mp3
+                /*	description		*/	垫梁组由横垫梁S8、纵垫梁S9和部分联结件组成。每两片横垫梁通过横梁间隔撑S8d连接，S8与S9间通过联结件S9a连接，横垫垫梁间的联结系由S8a、S8b、S8c、S8e四种联接板，S4、S5两种撑杆构成。注意事项：①1#、3#垫梁组在吊装摆放时应严格控制其设计位置的定位精准性，一般按纵横向误差均不得大于5mm控制，定位时可按如下方式进行：基础铺设整平→按图3所示位置处放样1、2、3、4点位→以1、2点位为定位基准点安放垫梁组→以3、4点位校核。②连接件S8a、S8b、S8c、S8e和S4、S5撑杆形成的喇叭口远离塔心。③每组垫梁组共有4块连接件S9a，均在远离塔心的两片横垫梁与纵垫梁件安装。④垫梁组最外侧纵垫梁S9的第三、四排螺栓孔与横垫梁S8的第一、二排螺栓孔相连。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00001:安装1号和3号垫梁组/00001/00001
+                        /*	audio			*/	sound\升降塔拼组1.mp3
+                        /*	description		*/	垫梁组由横垫梁S8、纵垫梁S9和部分联结件组成。每两片横垫梁通过横梁间隔撑S8d连接，S8与S9间通过联结件S9a连接，横垫垫梁间的联结系由S8a、S8b、S8c、S8e四种联接板，S4、S5两种撑杆构成。注意事项：①1#、3#垫梁组在吊装摆放时应严格控制其设计位置的定位精准性，一般按纵横向误差均不得大于5mm控制，定位时可按如下方式进行：基础铺设整平→按图3所示位置处放样1、2、3、4点位→以1、2点位为定位基准点安放垫梁组→以3、4点位校核。②连接件S8a、S8b、S8c、S8e和S4、S5撑杆形成的喇叭口远离塔心。③每组垫梁组共有4块连接件S9a，均在远离塔心的两片横垫梁与纵垫梁件安装。④垫梁组最外侧纵垫梁S9的第三、四排螺栓孔与横垫梁S8的第一、二排螺栓孔相连。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔垫木-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00001:安装1号和3号垫梁组/00001/00002
+                        /*	audio			*/	sound\升降塔拼组1.mp3
+                        /*	description		*/	垫梁组由横垫梁S8、纵垫梁S9和部分联结件组成。每两片横垫梁通过横梁间隔撑S8d连接，S8与S9间通过联结件S9a连接，横垫垫梁间的联结系由S8a、S8b、S8c、S8e四种联接板，S4、S5两种撑杆构成。注意事项：①1#、3#垫梁组在吊装摆放时应严格控制其设计位置的定位精准性，一般按纵横向误差均不得大于5mm控制，定位时可按如下方式进行：基础铺设整平→按图3所示位置处放样1、2、3、4点位→以1、2点位为定位基准点安放垫梁组→以3、4点位校核。②连接件S8a、S8b、S8c、S8e和S4、S5撑杆形成的喇叭口远离塔心。③每组垫梁组共有4块连接件S9a，均在远离塔心的两片横垫梁与纵垫梁件安装。④垫梁组最外侧纵垫梁S9的第三、四排螺栓孔与横垫梁S8的第一、二排螺栓孔相连。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔内垫木-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00001:安装1号和3号垫梁组/00002
+                /*	audio			*/	sound\升降塔拼组1.mp3
+                /*	description		*/	垫梁组由横垫梁S8、纵垫梁S9和部分联结件组成。每两片横垫梁通过横梁间隔撑S8d连接，S8与S9间通过联结件S9a连接，横垫垫梁间的联结系由S8a、S8b、S8c、S8e四种联接板，S4、S5两种撑杆构成。注意事项：①1#、3#垫梁组在吊装摆放时应严格控制其设计位置的定位精准性，一般按纵横向误差均不得大于5mm控制，定位时可按如下方式进行：基础铺设整平→按图3所示位置处放样1、2、3、4点位→以1、2点位为定位基准点安放垫梁组→以3、4点位校核。②连接件S8a、S8b、S8c、S8e和S4、S5撑杆形成的喇叭口远离塔心。③每组垫梁组共有4块连接件S9a，均在远离塔心的两片横垫梁与纵垫梁件安装。④垫梁组最外侧纵垫梁S9的第三、四排螺栓孔与横垫梁S8的第一、二排螺栓孔相连。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00001:安装1号和3号垫梁组/00002/00001
+                        /*	audio			*/	sound\升降塔拼组1.mp3
+                        /*	description		*/	垫梁组由横垫梁S8、纵垫梁S9和部分联结件组成。每两片横垫梁通过横梁间隔撑S8d连接，S8与S9间通过联结件S9a连接，横垫垫梁间的联结系由S8a、S8b、S8c、S8e四种联接板，S4、S5两种撑杆构成。注意事项：①1#、3#垫梁组在吊装摆放时应严格控制其设计位置的定位精准性，一般按纵横向误差均不得大于5mm控制，定位时可按如下方式进行：基础铺设整平→按图3所示位置处放样1、2、3、4点位→以1、2点位为定位基准点安放垫梁组→以3、4点位校核。②连接件S8a、S8b、S8c、S8e和S4、S5撑杆形成的喇叭口远离塔心。③每组垫梁组共有4块连接件S9a，均在远离塔心的两片横垫梁与纵垫梁件安装。④垫梁组最外侧纵垫梁S9的第三、四排螺栓孔与横垫梁S8的第一、二排螺栓孔相连。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔1号垫梁组-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.5 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00001:安装1号和3号垫梁组/00002/00002
+                        /*	audio			*/	sound\升降塔拼组1.mp3
+                        /*	description		*/	垫梁组由横垫梁S8、纵垫梁S9和部分联结件组成。每两片横垫梁通过横梁间隔撑S8d连接，S8与S9间通过联结件S9a连接，横垫垫梁间的联结系由S8a、S8b、S8c、S8e四种联接板，S4、S5两种撑杆构成。注意事项：①1#、3#垫梁组在吊装摆放时应严格控制其设计位置的定位精准性，一般按纵横向误差均不得大于5mm控制，定位时可按如下方式进行：基础铺设整平→按图3所示位置处放样1、2、3、4点位→以1、2点位为定位基准点安放垫梁组→以3、4点位校核。②连接件S8a、S8b、S8c、S8e和S4、S5撑杆形成的喇叭口远离塔心。③每组垫梁组共有4块连接件S9a，均在远离塔心的两片横垫梁与纵垫梁件安装。④垫梁组最外侧纵垫梁S9的第三、四排螺栓孔与横垫梁S8的第一、二排螺栓孔相连。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔3号垫梁组-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.5 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00002:安装两组小纵梁
+        /*	audio			*/	没有配音
+        /*	description		*/	小纵梁组由2根小纵梁S7通过连接板S7a、S7b连接成整体。S7a位于翼缘，S7b在下翼缘。小纵梁安装在两根立柱底部横垫梁之间。注：小纵梁吊装就位后，一端用螺栓与横垫梁栓节(2~4个螺栓，带紧即可)，另一端用枕木支垫水平，保证小纵梁另一端与横垫梁能顺利安装。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	2
+        
+                /*	name			*/	00002:安装两组小纵梁/00001
+                /*	audio			*/	sound\升降塔拼组2.mp3
+                /*	description		*/	小纵梁组由2根小纵梁S7通过连接板S7a、S7b连接成整体。S7a位于翼缘，S7b在下翼缘。小纵梁安装在两根立柱底部横垫梁之间。注：小纵梁吊装就位后，一端用螺栓与横垫梁栓节(2~4个螺栓，带紧即可)，另一端用枕木支垫水平，保证小纵梁另一端与横垫梁能顺利安装。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00002:安装两组小纵梁/00001/00001
+                        /*	audio			*/	sound\升降塔拼组2.mp3
+                        /*	description		*/	小纵梁组由2根小纵梁S7通过连接板S7a、S7b连接成整体。S7a位于翼缘，S7b在下翼缘。小纵梁安装在两根立柱底部横垫梁之间。注：小纵梁吊装就位后，一端用螺栓与横垫梁栓节(2~4个螺栓，带紧即可)，另一端用枕木支垫水平，保证小纵梁另一端与横垫梁能顺利安装。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔小纵梁-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        升降塔小纵梁-1/S7-1
+                        0
+                        33
+                        升降塔3号垫梁组-1/S8-4
+                        0
+                        4
+                        
+                        /*	name			*/	00002:安装两组小纵梁/00001/00002
+                        /*	audio			*/	sound\升降塔拼组2.mp3
+                        /*	description		*/	小纵梁组由2根小纵梁S7通过连接板S7a、S7b连接成整体。S7a位于翼缘，S7b在下翼缘。小纵梁安装在两根立柱底部横垫梁之间。注：小纵梁吊装就位后，一端用螺栓与横垫梁栓节(2~4个螺栓，带紧即可)，另一端用枕木支垫水平，保证小纵梁另一端与横垫梁能顺利安装。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔小纵梁-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -1.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        升降塔小纵梁-2/S7-1
+                        0
+                        22
+                        升降塔1号垫梁组-1/S8-4
+                        0
+                        4
+                        
+                /*	name			*/	00002:安装两组小纵梁/00002
+                /*	audio			*/	sound\升降塔拼组2.mp3
+                /*	description		*/	小纵梁组由2根小纵梁S7通过连接板S7a、S7b连接成整体。S7a位于翼缘，S7b在下翼缘。小纵梁安装在两根立柱底部横垫梁之间。注：小纵梁吊装就位后，一端用螺栓与横垫梁栓节(2~4个螺栓，带紧即可)，另一端用枕木支垫水平，保证小纵梁另一端与横垫梁能顺利安装。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00002:安装两组小纵梁/00002/00001
+                        /*	audio			*/	sound\升降塔拼组2.mp3
+                        /*	description		*/	小纵梁组由2根小纵梁S7通过连接板S7a、S7b连接成整体。S7a位于翼缘，S7b在下翼缘。小纵梁安装在两根立柱底部横垫梁之间。注：小纵梁吊装就位后，一端用螺栓与横垫梁栓节(2~4个螺栓，带紧即可)，另一端用枕木支垫水平，保证小纵梁另一端与横垫梁能顺利安装。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00002:安装两组小纵梁/00002/00002
+                        /*	audio			*/	sound\升降塔拼组2.mp3
+                        /*	description		*/	小纵梁组由2根小纵梁S7通过连接板S7a、S7b连接成整体。S7a位于翼缘，S7b在下翼缘。小纵梁安装在两根立柱底部横垫梁之间。注：小纵梁吊装就位后，一端用螺栓与横垫梁栓节(2~4个螺栓，带紧即可)，另一端用枕木支垫水平，保证小纵梁另一端与横垫梁能顺利安装。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木1-4
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00003:安装2号、4号垫梁组
+        /*	audio			*/	没有配音
+        /*	description		*/	垫梁组的安装同步骤1，安装完毕后，安装定位杆S22，共4根。2#、4#垫梁组安装完毕后，应对4组垫梁组的顶面标高进行调平，相对高差按不大于、5mm控制，并检查两对角线长度是否相等。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	2
+        
+                /*	name			*/	00003:安装2号、4号垫梁组/00001
+                /*	audio			*/	sound\升降塔拼组3.mp3
+                /*	description		*/	垫梁组的安装同步骤1，安装完毕后，安装定位杆S22，共4根。2#、4#垫梁组安装完毕后，应对4组垫梁组的顶面标高进行调平，相对高差按不大于、5mm控制，并检查两对角线长度是否相等。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00003:安装2号、4号垫梁组/00001/00001
+                        /*	audio			*/	sound\升降塔拼组3.mp3
+                        /*	description		*/	垫梁组的安装同步骤1，安装完毕后，安装定位杆S22，共4根。2#、4#垫梁组安装完毕后，应对4组垫梁组的顶面标高进行调平，相对高差按不大于、5mm控制，并检查两对角线长度是否相等。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔4号垫梁组-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.5 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        升降塔4号垫梁组-1/S8-2
+                        0
+                        14
+                        升降塔小纵梁-1/S7-2
+                        0
+                        22
+                        
+                        /*	name			*/	00003:安装2号、4号垫梁组/00001/00002
+                        /*	audio			*/	sound\升降塔拼组3.mp3
+                        /*	description		*/	垫梁组的安装同步骤1，安装完毕后，安装定位杆S22，共4根。2#、4#垫梁组安装完毕后，应对4组垫梁组的顶面标高进行调平，相对高差按不大于、5mm控制，并检查两对角线长度是否相等。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔2号垫梁组-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.5 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        升降塔2号垫梁组-1/S8-2
+                        0
+                        14
+                        升降塔小纵梁-2/S7-1
+                        0
+                        33
+                        
+                /*	name			*/	00003:安装2号、4号垫梁组/00002
+                /*	audio			*/	sound\升降塔拼组3.mp3
+                /*	description		*/	垫梁组的安装同步骤1，安装完毕后，安装定位杆S22，共4根。2#、4#垫梁组安装完毕后，应对4组垫梁组的顶面标高进行调平，相对高差按不大于、5mm控制，并检查两对角线长度是否相等。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	8
+                
+                        /*	name			*/	00003:安装2号、4号垫梁组/00002/00001
+                        /*	audio			*/	sound\升降塔拼组3.mp3
+                        /*	description		*/	垫梁组的安装同步骤1，安装完毕后，安装定位杆S22，共4根。2#、4#垫梁组安装完毕后，应对4组垫梁组的顶面标高进行调平，相对高差按不大于、5mm控制，并检查两对角线长度是否相等。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s22-4
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.8 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:安装2号、4号垫梁组/00002/00002
+                        /*	audio			*/	sound\升降塔拼组3.mp3
+                        /*	description		*/	垫梁组的安装同步骤1，安装完毕后，安装定位杆S22，共4根。2#、4#垫梁组安装完毕后，应对4组垫梁组的顶面标高进行调平，相对高差按不大于、5mm控制，并检查两对角线长度是否相等。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s22-6
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.8 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        s22-6
+                        0
+                        1
+                        升降塔1号垫梁组-1/S8-2
+                        0
+                        9
+                        
+                        /*	name			*/	00003:安装2号、4号垫梁组/00002/00003
+                        /*	audio			*/	sound\升降塔拼组3.mp3
+                        /*	description		*/	垫梁组的安装同步骤1，安装完毕后，安装定位杆S22，共4根。2#、4#垫梁组安装完毕后，应对4组垫梁组的顶面标高进行调平，相对高差按不大于、5mm控制，并检查两对角线长度是否相等。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s22-3
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.8 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:安装2号、4号垫梁组/00002/00004
+                        /*	audio			*/	sound\升降塔拼组3.mp3
+                        /*	description		*/	垫梁组的安装同步骤1，安装完毕后，安装定位杆S22，共4根。2#、4#垫梁组安装完毕后，应对4组垫梁组的顶面标高进行调平，相对高差按不大于、5mm控制，并检查两对角线长度是否相等。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s22-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.8 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:安装2号、4号垫梁组/00002/00005
+                        /*	audio			*/	sound\升降塔拼组3.mp3
+                        /*	description		*/	垫梁组的安装同步骤1，安装完毕后，安装定位杆S22，共4根。2#、4#垫梁组安装完毕后，应对4组垫梁组的顶面标高进行调平，相对高差按不大于、5mm控制，并检查两对角线长度是否相等。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s22-8
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.8 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:安装2号、4号垫梁组/00002/00006
+                        /*	audio			*/	sound\升降塔拼组3.mp3
+                        /*	description		*/	垫梁组的安装同步骤1，安装完毕后，安装定位杆S22，共4根。2#、4#垫梁组安装完毕后，应对4组垫梁组的顶面标高进行调平，相对高差按不大于、5mm控制，并检查两对角线长度是否相等。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s22-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.8 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00003:安装2号、4号垫梁组/00002/00007
+                        /*	audio			*/	sound\升降塔拼组3.mp3
+                        /*	description		*/	垫梁组的安装同步骤1，安装完毕后，安装定位杆S22，共4根。2#、4#垫梁组安装完毕后，应对4组垫梁组的顶面标高进行调平，相对高差按不大于、5mm控制，并检查两对角线长度是否相等。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s22-5
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.8 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        s22-5
+                        0
+                        1
+                        升降塔1号垫梁组-1/S8-1
+                        0
+                        9
+                        
+                        /*	name			*/	00003:安装2号、4号垫梁组/00002/00008
+                        /*	audio			*/	sound\升降塔拼组3.mp3
+                        /*	description		*/	垫梁组的安装同步骤1，安装完毕后，安装定位杆S22，共4根。2#、4#垫梁组安装完毕后，应对4组垫梁组的顶面标高进行调平，相对高差按不大于、5mm控制，并检查两对角线长度是否相等。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s22-7
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.8 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00004:安装1号、3号桁架组
+        /*	audio			*/	没有配音
+        /*	description		*/	桁架组由主桁SO1、SO2、副桁SO3各1片，立柱S1a、S1b立柱各1根通过及撑杆、联结件、联结板栓接而成。立柱位于靠近塔心的横垫梁中部。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00004:安装1号、3号桁架组/00001
+                /*	audio			*/	sound\升降塔拼组4.mp3
+                /*	description		*/	桁架组由主桁SO1、SO2、副桁SO3各1片，立柱S1a、S1b立柱各1根通过及撑杆、联结件、联结板栓接而成。立柱位于靠近塔心的横垫梁中部。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00004:安装1号、3号桁架组/00001/00001
+                        /*	audio			*/	sound\升降塔拼组4.mp3
+                        /*	description		*/	桁架组由主桁SO1、SO2、副桁SO3各1片，立柱S1a、S1b立柱各1根通过及撑杆、联结件、联结板栓接而成。立柱位于靠近塔心的横垫梁中部。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔1号桁架组-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.5 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        升降塔1号桁架组-2/S1b-1
+                        0
+                        2
+                        升降塔1号垫梁组-1/s8b-1
+                        0
+                        1
+                        
+                        /*	name			*/	00004:安装1号、3号桁架组/00001/00002
+                        /*	audio			*/	sound\升降塔拼组4.mp3
+                        /*	description		*/	桁架组由主桁SO1、SO2、副桁SO3各1片，立柱S1a、S1b立柱各1根通过及撑杆、联结件、联结板栓接而成。立柱位于靠近塔心的横垫梁中部。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔3号桁架组-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.5 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        升降塔3号桁架组-1/S1a-1
+                        0
+                        6
+                        升降塔3号垫梁组-1/s8b-1
+                        0
+                        1
+                        
+        /*	name			*/	00005:安装1号纵梁SB0
+        /*	audio			*/	没有配音
+        /*	description		*/	先将纵梁一端插入两根立柱之间，另一端底部用枕木支垫水平，以便与另一组桁架组连接。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	2
+        
+                /*	name			*/	00005:安装1号纵梁SB0/00001
+                /*	audio			*/	sound\升降塔拼组5.mp3
+                /*	description		*/	先将纵梁一端插入两根立柱之间，另一端底部用枕木支垫水平，以便与另一组桁架组连接。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00005:安装1号纵梁SB0/00001/00001
+                        /*	audio			*/	sound\升降塔拼组5.mp3
+                        /*	description		*/	先将纵梁一端插入两根立柱之间，另一端底部用枕木支垫水平，以便与另一组桁架组连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降1号纵梁-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00005:安装1号纵梁SB0/00002
+                /*	audio			*/	sound\升降塔拼组5.mp3
+                /*	description		*/	先将纵梁一端插入两根立柱之间，另一端底部用枕木支垫水平，以便与另一组桁架组连接。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	4
+                
+                        /*	name			*/	00005:安装1号纵梁SB0/00002/00001
+                        /*	audio			*/	sound\升降塔拼组5.mp3
+                        /*	description		*/	先将纵梁一端插入两根立柱之间，另一端底部用枕木支垫水平，以便与另一组桁架组连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-8
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00005:安装1号纵梁SB0/00002/00002
+                        /*	audio			*/	sound\升降塔拼组5.mp3
+                        /*	description		*/	先将纵梁一端插入两根立柱之间，另一端底部用枕木支垫水平，以便与另一组桁架组连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-7
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00005:安装1号纵梁SB0/00002/00003
+                        /*	audio			*/	sound\升降塔拼组5.mp3
+                        /*	description		*/	先将纵梁一端插入两根立柱之间，另一端底部用枕木支垫水平，以便与另一组桁架组连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-5
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00005:安装1号纵梁SB0/00002/00004
+                        /*	audio			*/	sound\升降塔拼组5.mp3
+                        /*	description		*/	先将纵梁一端插入两根立柱之间，另一端底部用枕木支垫水平，以便与另一组桁架组连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-6
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00006:安装2号桁架组
+        /*	audio			*/	没有配音
+        /*	description		*/	桁架组安装同步骤4。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	2
+        
+                /*	name			*/	00006:安装2号桁架组/00001
+                /*	audio			*/	sound\升降塔拼组6.mp3
+                /*	description		*/	桁架组安装同步骤4。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00006:安装2号桁架组/00001/00001
+                        /*	audio			*/	sound\升降塔拼组6.mp3
+                        /*	description		*/	桁架组安装同步骤4。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔2号桁架组-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.5 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        升降塔2号桁架组-1/S1b-1
+                        0
+                        2
+                        升降塔2号垫梁组-1/s8b-1
+                        0
+                        1
+                        
+                /*	name			*/	00006:安装2号桁架组/00002
+                /*	audio			*/	sound\升降塔拼组6.mp3
+                /*	description		*/	桁架组安装同步骤4。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	4
+                
+                        /*	name			*/	00006:安装2号桁架组/00002/00001
+                        /*	audio			*/	sound\升降塔拼组6.mp3
+                        /*	description		*/	桁架组安装同步骤4。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-5
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00006:安装2号桁架组/00002/00002
+                        /*	audio			*/	sound\升降塔拼组6.mp3
+                        /*	description		*/	桁架组安装同步骤4。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-6
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00006:安装2号桁架组/00002/00003
+                        /*	audio			*/	sound\升降塔拼组6.mp3
+                        /*	description		*/	桁架组安装同步骤4。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-7
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00006:安装2号桁架组/00002/00004
+                        /*	audio			*/	sound\升降塔拼组6.mp3
+                        /*	description		*/	桁架组安装同步骤4。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-8
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00007:安装横梁组
+        /*	audio			*/	没有配音
+        /*	description		*/	横梁组由横梁SA0和横梁顶面的栈桥梁支座SZ、边孔支座组成。将横梁SA0一端与1#纵梁SB0腹板法兰连接(纵梁腹板共8排栓孔，中心对称布置，连接时，只能安装第1、4、5、8排栓孔的螺栓，如图5?12)，另一端底部用枕木支垫水平，以便另一端与2#纵梁SB0腹板法兰进行连接。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00007:安装横梁组/00001
+                /*	audio			*/	sound\升降塔拼组7.mp3
+                /*	description		*/	横梁组由横梁SA0和横梁顶面的栈桥梁支座SZ、边孔支座组成。将横梁SA0一端与1#纵梁SB0腹板法兰连接(纵梁腹板共8排栓孔，中心对称布置，连接时，只能安装第1、4、5、8排栓孔的螺栓，如图5?12)，另一端底部用枕木支垫水平，以便另一端与2#纵梁SB0腹板法兰进行连接。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00007:安装横梁组/00001/00001
+                        /*	audio			*/	sound\升降塔拼组7.mp3
+                        /*	description		*/	横梁组由横梁SA0和横梁顶面的栈桥梁支座SZ、边孔支座组成。将横梁SA0一端与1#纵梁SB0腹板法兰连接(纵梁腹板共8排栓孔，中心对称布置，连接时，只能安装第1、4、5、8排栓孔的螺栓，如图5?12)，另一端底部用枕木支垫水平，以便另一端与2#纵梁SB0腹板法兰进行连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔横梁组-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        升降塔横梁组-1/SA0-1/7-1
+                        0
+                        1
+                        升降1号纵梁-2/SB0-1
+                        0
+                        2
+                        
+        /*	name			*/	00008:安装2号纵梁组SB0
+        /*	audio			*/	没有配音
+        /*	description		*/	纵梁安装同步骤5。纵梁安装完毕后，进行横梁SA0与纵梁SB0腹板法兰连接。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	3
+        
+                /*	name			*/	00008:安装2号纵梁组SB0/00001
+                /*	audio			*/	sound\升降塔拼组8.mp3
+                /*	description		*/	纵梁安装同步骤5。纵梁安装完毕后，进行横梁SA0与纵梁SB0腹板法兰连接。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00008:安装2号纵梁组SB0/00001/00001
+                        /*	audio			*/	sound\升降塔拼组8.mp3
+                        /*	description		*/	纵梁安装同步骤5。纵梁安装完毕后，进行横梁SA0与纵梁SB0腹板法兰连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降1号纵梁-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -2.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	2
+                        没有标记
+                        升降1号纵梁-1/SB0-1
+                        0
+                        9
+                        升降塔3号桁架组-1/SB1-1
+                        0
+                        54
+                        没有标记
+                        升降1号纵梁-1/SB0-1
+                        0
+                        3
+                        升降塔横梁组-1/SA0-1
+                        52
+                        0
+                        
+                /*	name			*/	00008:安装2号纵梁组SB0/00002
+                /*	audio			*/	sound\升降塔拼组8.mp3
+                /*	description		*/	纵梁安装同步骤5。纵梁安装完毕后，进行横梁SA0与纵梁SB0腹板法兰连接。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	4
+                
+                        /*	name			*/	00008:安装2号纵梁组SB0/00002/00001
+                        /*	audio			*/	sound\升降塔拼组8.mp3
+                        /*	description		*/	纵梁安装同步骤5。纵梁安装完毕后，进行横梁SA0与纵梁SB0腹板法兰连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-4
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00008:安装2号纵梁组SB0/00002/00002
+                        /*	audio			*/	sound\升降塔拼组8.mp3
+                        /*	description		*/	纵梁安装同步骤5。纵梁安装完毕后，进行横梁SA0与纵梁SB0腹板法兰连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00008:安装2号纵梁组SB0/00002/00003
+                        /*	audio			*/	sound\升降塔拼组8.mp3
+                        /*	description		*/	纵梁安装同步骤5。纵梁安装完毕后，进行横梁SA0与纵梁SB0腹板法兰连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00008:安装2号纵梁组SB0/00002/00004
+                        /*	audio			*/	sound\升降塔拼组8.mp3
+                        /*	description		*/	纵梁安装同步骤5。纵梁安装完毕后，进行横梁SA0与纵梁SB0腹板法兰连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-3
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00008:安装2号纵梁组SB0/00003
+                /*	audio			*/	sound\升降塔拼组8.mp3
+                /*	description		*/	纵梁安装同步骤5。纵梁安装完毕后，进行横梁SA0与纵梁SB0腹板法兰连接。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00008:安装2号纵梁组SB0/00003/00001
+                        /*	audio			*/	sound\升降塔拼组8.mp3
+                        /*	description		*/	纵梁安装同步骤5。纵梁安装完毕后，进行横梁SA0与纵梁SB0腹板法兰连接。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔内垫木-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00009:安装4号桁架组
+        /*	audio			*/	没有配音
+        /*	description		*/	桁架组安装同步骤4。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	2
+        
+                /*	name			*/	00009:安装4号桁架组/00001
+                /*	audio			*/	sound\升降塔拼组9.mp3
+                /*	description		*/	桁架组安装同步骤4。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00009:安装4号桁架组/00001/00001
+                        /*	audio			*/	sound\升降塔拼组9.mp3
+                        /*	description		*/	桁架组安装同步骤4。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔4号桁架组-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.5 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        升降塔4号桁架组-1/S1b-1
+                        0
+                        2
+                        升降塔4号垫梁组-1/s8b-1
+                        0
+                        1
+                        
+                /*	name			*/	00009:安装4号桁架组/00002
+                /*	audio			*/	sound\升降塔拼组9.mp3
+                /*	description		*/	桁架组安装同步骤4。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	4
+                
+                        /*	name			*/	00009:安装4号桁架组/00002/00001
+                        /*	audio			*/	sound\升降塔拼组9.mp3
+                        /*	description		*/	桁架组安装同步骤4。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00009:安装4号桁架组/00002/00002
+                        /*	audio			*/	sound\升降塔拼组9.mp3
+                        /*	description		*/	桁架组安装同步骤4。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-3
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00009:安装4号桁架组/00002/00003
+                        /*	audio			*/	sound\升降塔拼组9.mp3
+                        /*	description		*/	桁架组安装同步骤4。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-4
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00009:安装4号桁架组/00002/00004
+                        /*	audio			*/	sound\升降塔拼组9.mp3
+                        /*	description		*/	桁架组安装同步骤4。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00010:安装端横梁组
+        /*	audio			*/	没有配音
+        /*	description		*/	端横梁SA1法兰与纵梁腹板的螺栓孔对接(纵梁腹板共8排栓孔，中心对称布置，端横梁与其对接时，通过安装其端部法兰板的第2、3、6、7排栓孔的螺栓，将端横梁、纵梁、横梁连接成整体)，与横梁位于同一条轴线上。①现场拼装时可先将导向滑车支架SA3、卷扬机垫座SA2a、SA2b提前安装在端横梁SA1上可形成端横梁预拼组。②滑车支架直立一侧与端横梁顶面栓结，斜立一侧与卷扬机垫座顶面栓结。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00010:安装端横梁组/00001
+                /*	audio			*/	sound\升降塔拼组10.mp3
+                /*	description		*/	端横梁SA1法兰与纵梁腹板的螺栓孔对接(纵梁腹板共8排栓孔，中心对称布置，端横梁与其对接时，通过安装其端部法兰板的第2、3、6、7排栓孔的螺栓，将端横梁、纵梁、横梁连接成整体)，与横梁位于同一条轴线上。①现场拼装时可先将导向滑车支架SA3、卷扬机垫座SA2a、SA2b提前安装在端横梁SA1上可形成端横梁预拼组。②滑车支架直立一侧与端横梁顶面栓结，斜立一侧与卷扬机垫座顶面栓结。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00010:安装端横梁组/00001/00001
+                        /*	audio			*/	sound\升降塔拼组10.mp3
+                        /*	description		*/	端横梁SA1法兰与纵梁腹板的螺栓孔对接(纵梁腹板共8排栓孔，中心对称布置，端横梁与其对接时，通过安装其端部法兰板的第2、3、6、7排栓孔的螺栓，将端横梁、纵梁、横梁连接成整体)，与横梁位于同一条轴线上。①现场拼装时可先将导向滑车支架SA3、卷扬机垫座SA2a、SA2b提前安装在端横梁SA1上可形成端横梁预拼组。②滑车支架直立一侧与端横梁顶面栓结，斜立一侧与卷扬机垫座顶面栓结。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔端横梁组-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.3 0.0 -0.5 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        升降塔端横梁组-2/SA1-1
+                        0
+                        24
+                        升降1号纵梁-2/SB0-1
+                        0
+                        3
+                        
+                        /*	name			*/	00010:安装端横梁组/00001/00002
+                        /*	audio			*/	sound\升降塔拼组10.mp3
+                        /*	description		*/	端横梁SA1法兰与纵梁腹板的螺栓孔对接(纵梁腹板共8排栓孔，中心对称布置，端横梁与其对接时，通过安装其端部法兰板的第2、3、6、7排栓孔的螺栓，将端横梁、纵梁、横梁连接成整体)，与横梁位于同一条轴线上。①现场拼装时可先将导向滑车支架SA3、卷扬机垫座SA2a、SA2b提前安装在端横梁SA1上可形成端横梁预拼组。②滑车支架直立一侧与端横梁顶面栓结，斜立一侧与卷扬机垫座顶面栓结。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔端横梁组-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.3 0.0 -0.5 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        升降塔端横梁组-1/SA1-1
+                        0
+                        24
+                        升降1号纵梁-1/SB0-1
+                        0
+                        2
+                        
+        /*	name			*/	00011:安装1号、2号托吊梁
+        /*	audio			*/	没有配音
+        /*	description		*/	托吊梁SA4栓结在端横梁SA1下翼缘上。注意事项：托吊梁与端横梁最外侧螺栓孔相连。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00011:安装1号、2号托吊梁/00001
+                /*	audio			*/	sound\升降塔拼组11.mp3
+                /*	description		*/	托吊梁SA4栓结在端横梁SA1下翼缘上。注意事项：托吊梁与端横梁最外侧螺栓孔相连。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00011:安装1号、2号托吊梁/00001/00001
+                        /*	audio			*/	sound\升降塔拼组11.mp3
+                        /*	description		*/	托吊梁SA4栓结在端横梁SA1下翼缘上。注意事项：托吊梁与端横梁最外侧螺栓孔相连。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                SA4-3
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.8 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00011:安装1号、2号托吊梁/00001/00002
+                        /*	audio			*/	sound\升降塔拼组11.mp3
+                        /*	description		*/	托吊梁SA4栓结在端横梁SA1下翼缘上。注意事项：托吊梁与端横梁最外侧螺栓孔相连。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                SA4-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.8 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00012:安装1号、2号吊梁
+        /*	audio			*/	没有配音
+        /*	description		*/	梁安装在两根升降塔副桁SO3的顶端。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00012:安装1号、2号吊梁/00001
+                /*	audio			*/	sound\升降塔拼组12.mp3
+                /*	description		*/	梁安装在两根升降塔副桁SO3的顶端。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00012:安装1号、2号吊梁/00001/00001
+                        /*	audio			*/	sound\升降塔拼组12.mp3
+                        /*	description		*/	梁安装在两根升降塔副桁SO3的顶端。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                S10装配图-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.8 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00012:安装1号、2号吊梁/00001/00002
+                        /*	audio			*/	sound\升降塔拼组12.mp3
+                        /*	description		*/	梁安装在两根升降塔副桁SO3的顶端。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                S10装配图-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.8 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00013:安装导向卷扬机垫座、滑车支架
+        /*	audio			*/	没有配音
+        /*	description		*/	卷扬机垫座SA2a、SA2b通过螺栓安装在端横梁及横梁顶面。注意事项：①卷扬机底座由3根SA2a、2根SA2b、2片SA5、2片SA6组成。卷扬机垫座从梁端依次是2根SA2a、2根SA2b、1根SA2a，远离塔心的垫座上部铺设2片SA5、靠近塔心的垫座上部铺设2片SA6。②卷扬机底座、滑车支架均可在横梁预拼和端横梁预拼时提前现场安装，详见步骤7、10。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	2
+        
+                /*	name			*/	00013:安装导向卷扬机垫座、滑车支架/00001
+                /*	audio			*/	sound\升降塔拼组13.mp3
+                /*	description		*/	卷扬机垫座SA2a、SA2b通过螺栓安装在端横梁及横梁顶面。注意事项：①卷扬机底座由3根SA2a、2根SA2b、2片SA5、2片SA6组成。卷扬机垫座从梁端依次是2根SA2a、2根SA2b、1根SA2a，远离塔心的垫座上部铺设2片SA5、靠近塔心的垫座上部铺设2片SA6。②卷扬机底座、滑车支架均可在横梁预拼和端横梁预拼时提前现场安装，详见步骤7、10。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	4
+                
+                        /*	name			*/	00013:安装导向卷扬机垫座、滑车支架/00001/00001
+                        /*	audio			*/	sound\升降塔拼组13.mp3
+                        /*	description		*/	卷扬机垫座SA2a、SA2b通过螺栓安装在端横梁及横梁顶面。注意事项：①卷扬机底座由3根SA2a、2根SA2b、2片SA5、2片SA6组成。卷扬机垫座从梁端依次是2根SA2a、2根SA2b、1根SA2a，远离塔心的垫座上部铺设2片SA5、靠近塔心的垫座上部铺设2片SA6。②卷扬机底座、滑车支架均可在横梁预拼和端横梁预拼时提前现场安装，详见步骤7、10。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                SA6-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.8 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00013:安装导向卷扬机垫座、滑车支架/00001/00002
+                        /*	audio			*/	sound\升降塔拼组13.mp3
+                        /*	description		*/	卷扬机垫座SA2a、SA2b通过螺栓安装在端横梁及横梁顶面。注意事项：①卷扬机底座由3根SA2a、2根SA2b、2片SA5、2片SA6组成。卷扬机垫座从梁端依次是2根SA2a、2根SA2b、1根SA2a，远离塔心的垫座上部铺设2片SA5、靠近塔心的垫座上部铺设2片SA6。②卷扬机底座、滑车支架均可在横梁预拼和端横梁预拼时提前现场安装，详见步骤7、10。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                SA5-1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.8 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00013:安装导向卷扬机垫座、滑车支架/00001/00003
+                        /*	audio			*/	sound\升降塔拼组13.mp3
+                        /*	description		*/	卷扬机垫座SA2a、SA2b通过螺栓安装在端横梁及横梁顶面。注意事项：①卷扬机底座由3根SA2a、2根SA2b、2片SA5、2片SA6组成。卷扬机垫座从梁端依次是2根SA2a、2根SA2b、1根SA2a，远离塔心的垫座上部铺设2片SA5、靠近塔心的垫座上部铺设2片SA6。②卷扬机底座、滑车支架均可在横梁预拼和端横梁预拼时提前现场安装，详见步骤7、10。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                SA5-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.8 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00013:安装导向卷扬机垫座、滑车支架/00001/00004
+                        /*	audio			*/	sound\升降塔拼组13.mp3
+                        /*	description		*/	卷扬机垫座SA2a、SA2b通过螺栓安装在端横梁及横梁顶面。注意事项：①卷扬机底座由3根SA2a、2根SA2b、2片SA5、2片SA6组成。卷扬机垫座从梁端依次是2根SA2a、2根SA2b、1根SA2a，远离塔心的垫座上部铺设2片SA5、靠近塔心的垫座上部铺设2片SA6。②卷扬机底座、滑车支架均可在横梁预拼和端横梁预拼时提前现场安装，详见步骤7、10。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                SA6-1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.8 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00013:安装导向卷扬机垫座、滑车支架/00002
+                /*	audio			*/	sound\升降塔拼组13.mp3
+                /*	description		*/	卷扬机垫座SA2a、SA2b通过螺栓安装在端横梁及横梁顶面。注意事项：①卷扬机底座由3根SA2a、2根SA2b、2片SA5、2片SA6组成。卷扬机垫座从梁端依次是2根SA2a、2根SA2b、1根SA2a，远离塔心的垫座上部铺设2片SA5、靠近塔心的垫座上部铺设2片SA6。②卷扬机底座、滑车支架均可在横梁预拼和端横梁预拼时提前现场安装，详见步骤7、10。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	4
+                
+                        /*	name			*/	00013:安装导向卷扬机垫座、滑车支架/00002/00001
+                        /*	audio			*/	sound\升降塔拼组13.mp3
+                        /*	description		*/	卷扬机垫座SA2a、SA2b通过螺栓安装在端横梁及横梁顶面。注意事项：①卷扬机底座由3根SA2a、2根SA2b、2片SA5、2片SA6组成。卷扬机垫座从梁端依次是2根SA2a、2根SA2b、1根SA2a，远离塔心的垫座上部铺设2片SA5、靠近塔心的垫座上部铺设2片SA6。②卷扬机底座、滑车支架均可在横梁预拼和端横梁预拼时提前现场安装，详见步骤7、10。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                SA6-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.8 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00013:安装导向卷扬机垫座、滑车支架/00002/00002
+                        /*	audio			*/	sound\升降塔拼组13.mp3
+                        /*	description		*/	卷扬机垫座SA2a、SA2b通过螺栓安装在端横梁及横梁顶面。注意事项：①卷扬机底座由3根SA2a、2根SA2b、2片SA5、2片SA6组成。卷扬机垫座从梁端依次是2根SA2a、2根SA2b、1根SA2a，远离塔心的垫座上部铺设2片SA5、靠近塔心的垫座上部铺设2片SA6。②卷扬机底座、滑车支架均可在横梁预拼和端横梁预拼时提前现场安装，详见步骤7、10。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                SA5-1-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.8 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00013:安装导向卷扬机垫座、滑车支架/00002/00003
+                        /*	audio			*/	sound\升降塔拼组13.mp3
+                        /*	description		*/	卷扬机垫座SA2a、SA2b通过螺栓安装在端横梁及横梁顶面。注意事项：①卷扬机底座由3根SA2a、2根SA2b、2片SA5、2片SA6组成。卷扬机垫座从梁端依次是2根SA2a、2根SA2b、1根SA2a，远离塔心的垫座上部铺设2片SA5、靠近塔心的垫座上部铺设2片SA6。②卷扬机底座、滑车支架均可在横梁预拼和端横梁预拼时提前现场安装，详见步骤7、10。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                SA6-1-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.8 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00013:安装导向卷扬机垫座、滑车支架/00002/00004
+                        /*	audio			*/	sound\升降塔拼组13.mp3
+                        /*	description		*/	卷扬机垫座SA2a、SA2b通过螺栓安装在端横梁及横梁顶面。注意事项：①卷扬机底座由3根SA2a、2根SA2b、2片SA5、2片SA6组成。卷扬机垫座从梁端依次是2根SA2a、2根SA2b、1根SA2a，远离塔心的垫座上部铺设2片SA5、靠近塔心的垫座上部铺设2片SA6。②卷扬机底座、滑车支架均可在横梁预拼和端横梁预拼时提前现场安装，详见步骤7、10。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                SA5-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.8 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00014:安装卷扬机
+        /*	audio			*/	没有配音
+        /*	description		*/	在底座上安装卷扬机。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00014:安装卷扬机/00001
+                /*	audio			*/	sound\升降塔拼组14.mp3
+                /*	description		*/	在底座上安装卷扬机。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00014:安装卷扬机/00001/00001
+                        /*	audio			*/	sound\升降塔拼组14.mp3
+                        /*	description		*/	在底座上安装卷扬机。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                锚机加隔板-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -1.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00014:安装卷扬机/00001/00002
+                        /*	audio			*/	sound\升降塔拼组14.mp3
+                        /*	description		*/	在底座上安装卷扬机。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                锚机加隔板-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -1.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00015:安装连接件和斜撑杆
+        /*	audio			*/	没有配音
+        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	2
+        
+                /*	name			*/	00015:安装连接件和斜撑杆/00001
+                /*	audio			*/	sound\升降塔拼组15.mp3
+                /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	8
+                
+                        /*	name			*/	00015:安装连接件和斜撑杆/00001/00001
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s12a-3
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.5 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00015:安装连接件和斜撑杆/00001/00002
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s12b-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.5 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00015:安装连接件和斜撑杆/00001/00003
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s12a-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.5 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00015:安装连接件和斜撑杆/00001/00004
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s12a-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.5 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00015:安装连接件和斜撑杆/00001/00005
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s12b-3
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.5 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00015:安装连接件和斜撑杆/00001/00006
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s12b-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.5 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00015:安装连接件和斜撑杆/00001/00007
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s12b-4
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.5 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00015:安装连接件和斜撑杆/00001/00008
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s12a-4
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.5 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00015:安装连接件和斜撑杆/00002
+                /*	audio			*/	sound\升降塔拼组15.mp3
+                /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	8
+                
+                        /*	name			*/	00015:安装连接件和斜撑杆/00002/00001
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s6-1-10
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.4 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00015:安装连接件和斜撑杆/00002/00002
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s6-1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.4 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00015:安装连接件和斜撑杆/00002/00003
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s6-1-13
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.4 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00015:安装连接件和斜撑杆/00002/00004
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s6-1-9
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.4 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00015:安装连接件和斜撑杆/00002/00005
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s6-1-11
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.4 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00015:安装连接件和斜撑杆/00002/00006
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s6-1-8
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.4 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00015:安装连接件和斜撑杆/00002/00007
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s6-1-14
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.4 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00015:安装连接件和斜撑杆/00002/00008
+                        /*	audio			*/	sound\升降塔拼组15.mp3
+                        /*	description		*/	安装连接件S12a、S12b、S7a和斜撑杆S6S12a、S12a、S12b、S7a和斜撑杆S6
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                s6-1-12
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.4 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00016:穿吊梁与托吊梁间的钢丝绳
+        /*	audio			*/	没有配音
+        /*	description		*/	从卷扬机中穿出的钢丝绳穿过导向滑车支架的滑轮SC3后，再从靠近中心一侧穿过吊梁S10中的单式滑轮SC2，随后从靠近中心一侧穿过靠近塔心的滑轮，然后穿过吊梁的双式滑轮SC1,最后从远离中心线一侧穿过托吊梁，最后锚固在托吊梁上
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00016:穿吊梁与托吊梁间的钢丝绳/00001
+                /*	audio			*/	sound\升降塔拼组16.mp3
+                /*	description		*/	从卷扬机中穿出的钢丝绳穿过导向滑车支架的滑轮SC3后，再从靠近中心一侧穿过吊梁S10中的单式滑轮SC2，随后从靠近中心一侧穿过靠近塔心的滑轮，然后穿过吊梁的双式滑轮SC1,最后从远离中心线一侧穿过托吊梁，最后锚固在托吊梁上
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00016:穿吊梁与托吊梁间的钢丝绳/00001/00001
+                        /*	audio			*/	sound\升降塔拼组16.mp3
+                        /*	description		*/	从卷扬机中穿出的钢丝绳穿过导向滑车支架的滑轮SC3后，再从靠近中心一侧穿过吊梁S10中的单式滑轮SC2，随后从靠近中心一侧穿过靠近塔心的滑轮，然后穿过吊梁的双式滑轮SC1,最后从远离中心线一侧穿过托吊梁，最后锚固在托吊梁上
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                升降塔钢丝绳-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -1.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
