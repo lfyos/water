@@ -75,7 +75,7 @@
 								render.user_call_processor.turnon_control_panel(mcp.mount_search_url());
 								return;
 							case 4:
-								render.user_call_processor.turnon_control_panel(mcp.mount_edit_url(false));
+								render.user_call_processor.turnon_control_panel(mcp.mount_edit_url());
 								return;
 							case 5:
 								var speed=prompt("请输入拼装速度");

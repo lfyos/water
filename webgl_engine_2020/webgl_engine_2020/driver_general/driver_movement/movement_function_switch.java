@@ -787,7 +787,6 @@ public class movement_function_switch
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Integer.decode(str));
 		if(searcher.result!=null){
 			component_selection cs=new component_selection(ek);
-			cs.clear_selected_flag(ek.component_cont);
 			do_select_component(searcher.result,cs);
 			add_component(searcher.result);
 			driver_audio.extended_component_driver acd;
