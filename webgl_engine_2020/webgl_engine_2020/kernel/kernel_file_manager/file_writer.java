@@ -287,17 +287,24 @@ public class file_writer extends common_writer
 	}
 	public void close()
 	{
-		try{
-			bos.close();
-			bos=null;
-			
-			fos.close();
-			fos=null;
-		}catch(Exception e){
-			debug_information.println("file_writer close exception:\t",e.toString());
-			debug_information.println(directory_name,file_name);
-			e.printStackTrace();
-		}
+		if(bos!=null)
+			try{
+				bos.close();
+				bos=null;
+			}catch(Exception e){
+				debug_information.println("file_writer close exception 1:\t",e.toString());
+				debug_information.println(directory_name,file_name);
+				e.printStackTrace();
+			}
+		if(fos!=null)
+			try{
+				fos.close();
+				fos=null;
+			}catch(Exception e){
+				debug_information.println("file_writer close exception 2:\t",e.toString());
+				debug_information.println(directory_name,file_name);
+				e.printStackTrace();
+			}
 	}
 	public common_writer flush()
 	{

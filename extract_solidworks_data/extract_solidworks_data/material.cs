@@ -43,9 +43,8 @@ namespace extract_solidworks_data
                 else
                     texture_file_name = texture_file;
             }
-            material_writer.WriteLine("     /*	    caculate_color_parameter                                    */      "+ red+"    "+green+"   "+blue+"    1");
             material_writer.WriteLine("     /*	    ambient,diffuse,specular,shininess,transparency,emission    */      "
-                + ambient + "   " + diffuse + " " + specular + "    " + shininess + "   " + transparency + "    " + emission);
+                + ambient + "   " + diffuse + "     " + specular + "    " + shininess + "   " + transparency + "    " + emission);
             material_writer.WriteLine("     /*	    texture file name                                           */      " + texture_file_name);
             material_writer.WriteLine("     /*	    texture_move_x,texture_move_y,texture_alf,texture_scale     */      "
                 + trans_x + "   " + trans_y + "  " + rotate_angle + "    " + scale_factor);
@@ -107,12 +106,6 @@ namespace extract_solidworks_data
 
         public bool compare(material p)
         {
-            if (p.red != red)
-                return false;
-            if (p.green != green)
-                return false;
-            if (p.blue != blue)
-                return false;
             if (p.ambient != ambient)
                 return false;
             if (p.diffuse != diffuse)

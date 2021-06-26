@@ -1,0 +1,21 @@
+package kernel_maintain;
+
+import format_convert.stl_converter;
+
+import kernel_common_class.debug_information;
+
+public class test_6 
+{
+	public static void main(String args[])
+	{
+		debug_information.println("Begin");
+		
+		new stl_converter(
+				"E:\\water_all\\data\\project\\part\\other_part\\part_stl\\part\\part_0.stl",
+				"GBK",
+				"E:\\water_all\\data\\project\\part\\other_part\\part_stl\\part\\part_1.stl.mesh",
+				"GBK");
+		
+		debug_information.println("End");
+	}
+}

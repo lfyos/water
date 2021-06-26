@@ -7,201 +7,117 @@ import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
+import kernel_common_class.debug_information;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 
 public class stl_converter 
 {
-	private byte a,b,c,d,e,f;
-	private boolean not_ascii_flag;
+	private byte a,b,c,d;
+	private double box_data[];
+	private int triangle_number;
 	
-	public double stl_data[][][];
-	public int facet_number;
-
-	private void write_out_one_data(file_writer f,String data_header,double data[])
+	private int ascii_search_for_header(file_reader f,String head_string)
 	{
-		f.print(data_header);
-		for(int i=0,ni=data.length;i<ni;i++){
-			f.print("	");
-			f.print(data[i]);
-		}
-		f.println();
-	}
-	private void write_out(file_writer f)
-	{
-		if((stl_data==null)||(facet_number<=0))
-			return;
-		f.println("/* version          */   2019.08.12");
-		f.println("/* origin material  */   0  0  0  1");
-		f.println("/* body_number      */   1");
-		f.println("/* body  0  name   */  stl_body   /*   face_number   */  1");
-		f.println();
-		f.println("	/* face  0  name   */  stl_face");
-		f.println("	/* face_type   */  unknown  /*   parameter_number   */  0 /*   parameter  */"); 
-		f.println("	/* face_attribute_number   */  0");
-
-
-		f.println();
-		f.print  ("	/* face_vertex_number   */  ");		f.println(facet_number*3);
-		for(int i=0;i<facet_number;i++){
-			write_out_one_data(f,"/*		face_vertex  "+Integer.toString(3*i+0)+" is  */",stl_data[i][1]);
-			write_out_one_data(f,"/*		face_vertex  "+Integer.toString(3*i+1)+" is  */",stl_data[i][2]);
-			write_out_one_data(f,"/*		face_vertex  "+Integer.toString(3*i+2)+" is  */",stl_data[i][3]);
-		}
-
-		f.println();
-		f.print  ("	/* face_normal_number    */  ");		f.println(facet_number);
-		for(int i=0;i<facet_number;i++)
-			write_out_one_data(f,"/*		face_normal  "+Integer.toString(i)+" is  */",stl_data[i][0]);
-	
-		f.println();
-		f.print  ("	/* face_primitive_number */  ");		f.println(facet_number);
-		
-		for(int i=0;i<facet_number;i++){
-			f.print  ("		/* face_primitive  ",i);		
-			f.println("  material     */    0    0    0    0");  
-
-			f.print  ("		/* face_primitive  ",	i);		
-			f.print  ("  vertex_index */    ",		3*i+0);
-			f.print  ("    ",						3*i+1);
-			f.print  ("    ",						3*i+2);
-			f.println("    -1");
-			
-			f.print  ("		/* normal_index  ",		i);		
-			f.print  ("  vertex_index */    ",		i);
-			f.print  ("    ",						i);
-			f.print  ("    ",						i);
-			f.println("    -1");
-		}
-		
-		f.println();
-		f.println();
-        f.println("		/* face_loop_number   */ 0");
-        f.println();
-        f.println();
-
-	}
-	private String ascii_search_for_header(file_reader f,String head_string)
-	{
-		not_ascii_flag=false;
-		while(true){
-			String str;
-			
-			if(f.eof())
-				return null;
-			if(f.error_flag())
-				return null;
-			if((str=f.get_string())!=null){
+		int number=0;
+		for(;!(f.eof());number++) {
+			String str=f.get_string();
+			if(str!=null)
 				if(str.toLowerCase().compareTo(head_string)==0)
-					return head_string;
-				else
-					not_ascii_flag=true;
-			}
+					return number;
 		}
+		return -1;
 	}
 	private double []ascii_get_data(file_reader f,String header_string)
 	{
 		ascii_search_for_header(f,header_string);
-		
-		double ret_val[]=new double[4];
+		double ret_val[]=new double[] {0,0,0,1};
 		for(int i=0;i<3;i++)
 			ret_val[i]=f.get_double();
-		ret_val[3]=1.0;
-		
 		return ret_val;
 	}
-	private boolean ascii_processor(String file_name,String file_system_charset)
-	{	
-		file_reader f=new file_reader(file_name,file_system_charset);
+	
+	private void output_triangle(double normal[],double vertex1[],double vertex2[],double vertex3[],file_writer fw)
+	{
+		double vertex[][]=new double[][] {vertex1,vertex2,vertex3};
 		
-		if((ascii_search_for_header(f,"solid")==null)||not_ascii_flag){
-			f.close();
-			return true;
-		}
-		for(int j=0;;j++){
-			String str=ascii_search_for_header(f,"facet");
+		fw.println();
+		fw.println("/*	triangle:"+(triangle_number++)+"	*/");
+		
+		fw.println("	/*	material		*/	0	0	0	0");
+		fw.println("	/*	vertex number	*/	3");
+		
+		for(int i=0,ni=vertex.length;i<ni;i++) {
+			fw.println("	/*	"+i+".location		*/	"
+					+vertex[i][0]	+"	"+vertex[i][1]	+"	"+vertex[i][2]	+"	1");
+			fw.println("	/*	"+i+".normal		*/	"
+					+normal [0]		+"	"+normal [1]	+"	"+normal [2]	+"	1");
 			
-			if(str==null){
-				f.close();
-				return (facet_number>0)?false:true;
+			if(box_data==null)
+				box_data=new double[] 
+				{
+						vertex[i][0],vertex[i][1],vertex[i][2],
+						vertex[i][0],vertex[i][1],vertex[i][2]
+				};
+			else {
+				box_data[0]=(box_data[0]<vertex[i][0])?box_data[0]:vertex[i][0];
+				box_data[1]=(box_data[1]<vertex[i][1])?box_data[1]:vertex[i][1];
+				box_data[2]=(box_data[2]<vertex[i][2])?box_data[2]:vertex[i][2];
+				
+				box_data[3]=(box_data[3]>vertex[i][0])?box_data[3]:vertex[i][0];
+				box_data[4]=(box_data[4]>vertex[i][1])?box_data[4]:vertex[i][1];
+				box_data[5]=(box_data[5]>vertex[i][2])?box_data[5]:vertex[i][2];
 			}
-			if(j>0){
-				if(not_ascii_flag){
-					f.close();
-					return true;
-				}	
-			}
-			double normal[]=ascii_get_data(f,"normal");
-			if(not_ascii_flag){
-				f.close();
-				return true;
-			}
-			ascii_search_for_header(f,"outer");
-			if(not_ascii_flag){
-				f.close();
-				return true;
-			}
-			ascii_search_for_header(f,"loop");
-			if(not_ascii_flag){
-				f.close();
-				return true;
-			}
-			double vertex1[]=ascii_get_data(f,"vertex");
-			if(not_ascii_flag){
-				f.close();
-				return true;
-			}
-			double vertex2[]=ascii_get_data(f,"vertex");
-			if(not_ascii_flag){
-				f.close();
-				return true;
-			}
-			double vertex3[]=ascii_get_data(f,"vertex");
-			if(not_ascii_flag){
-				f.close();
-				return true;
-			}
-			ascii_search_for_header(f,"endloop");
-			if(not_ascii_flag){
-				f.close();
-				return true;
-			}
-			ascii_search_for_header(f,"endfacet");
-			if(not_ascii_flag){
-				f.close();
-				return true;
-			}
-			if(facet_number<=0)
-				stl_data=new double[1000][][];
-			else if(facet_number>=(stl_data.length)){
-				double bak_stl_data[][][]=stl_data;
-				stl_data=new double[facet_number+1000][][];
-				for(int i=0;i<facet_number;i++)
-					stl_data[i]=bak_stl_data[i];
-			}
-			double this_data[][]={normal,vertex1,vertex2,vertex3};
-			stl_data[facet_number++]=this_data;
 		}
+	}
+	private void ascii_processor(String mesh_file_name,String mesh_charset,file_writer fw)
+	{	
+		file_reader fr=new file_reader(mesh_file_name,mesh_charset);
+		
+		ascii_search_for_header(fr,"solid");
+		while(!(fr.eof()))
+			if(ascii_search_for_header(fr,"facet")>=0){
+				double normal[]=ascii_get_data(fr,"normal");
+				if(ascii_search_for_header(fr,"outer")>=0)
+					if(ascii_search_for_header(fr,"loop")>=0){
+						double vertex1[]=ascii_get_data(fr,"vertex");
+						double vertex2[]=ascii_get_data(fr,"vertex");
+						double vertex3[]=ascii_get_data(fr,"vertex");
+						if(ascii_search_for_header(fr,"endloop")>=0)
+							if(ascii_search_for_header(fr,"endfacet")>=0)
+								output_triangle(normal,vertex1,vertex2,vertex3,fw);
+					}
+			}
+		
+		fr.close();
 	}
 	private void binary_switch_four_byte(DataInputStream dr,DataOutputStream dw)
 	{
 		try{
-			a=dr.readByte();		b=dr.readByte();			c=dr.readByte();			d=dr.readByte();
-			dw.writeByte(d);		dw.writeByte(c);			dw.writeByte(b);			dw.writeByte(a);
+			a=dr.readByte();	b=dr.readByte();	c=dr.readByte();	d=dr.readByte();
+			dw.writeByte(d);	dw.writeByte(c);	dw.writeByte(b);	dw.writeByte(a);
 		}catch(Exception e){
-			;
+			a=0;	b=0;	c=0;	d=0;
 		}
 	}
-	private boolean binary_change_format(String file_name,String new_file_name)
+	private void binary_change_format(String file_name,String new_file_name)
 	{
+		FileInputStream 		fr=null;
+		BufferedInputStream 	br=null;
+		DataInputStream 		dr=null;
+		
+		FileOutputStream		fw=null;
+		BufferedOutputStream	bw=null;
+		DataOutputStream		dw=null;
+		
 		try{
-			FileInputStream 		fr=new FileInputStream(file_name);
-			BufferedInputStream 	br=new BufferedInputStream(fr);
-			DataInputStream 		dr=new DataInputStream(br);
+			fr=new FileInputStream(file_name);
+			br=new BufferedInputStream(fr);
+			dr=new DataInputStream(br);
 			
-			FileOutputStream		fw=new FileOutputStream(new_file_name);
-			BufferedOutputStream	bw=new BufferedOutputStream(fw);
-			DataOutputStream		dw=new DataOutputStream(bw);
+			fw=new FileOutputStream(new_file_name);
+			bw=new BufferedOutputStream(fw);
+			dw=new DataOutputStream(bw);
 			
 			dr.skipBytes(80);
 			
@@ -211,71 +127,160 @@ public class stl_converter
 				for(int j=0;j<4;j++)
 					for(int k=0;k<3;k++)
 						binary_switch_four_byte(dr,dw);
-				e=dr.readByte();
-				f=dr.readByte();
+				byte e=dr.readByte();
+				byte f=dr.readByte();
 				dr.skipBytes(256*f+e);
 			}
-			
-			dw.close();
-			bw.close();
-			fw.close();
-			
-			dr.close();
-			br.close();
-			fr.close();
-			
-			return true;
 		}catch(Exception e){
-			return false;
+			debug_information.println(e.toString());
+			e.printStackTrace();
 		}
+		if(dw!=null)
+			try{
+				dw.close();
+			}catch(Exception e){
+				;
+			}
+		if(bw!=null)
+			try{
+				bw.close();
+			}catch(Exception e){
+				;
+			}
+		if(fw!=null)
+			try{
+				fw.close();
+			}catch(Exception e){
+				;
+			}
+		if(dr!=null)
+			try{
+				dr.close();
+			}catch(Exception e){
+				;
+			}
+		if(br!=null)
+			try{
+				br.close();
+			}catch(Exception e){
+				;
+			}
+		if(fr!=null)
+			try{
+				fr.close();
+			}catch(Exception e){
+				;
+			}
 	}
 	
-	private void binary_read_facet_data(String file_name)
+	private void binary_processor(String file_name,file_writer fw)
 	{
-		try{
-			FileInputStream 		fr=new FileInputStream(file_name);
-			BufferedInputStream 	br=new BufferedInputStream(fr);
-			DataInputStream 		dr=new DataInputStream(br);
-			
-			facet_number=dr.readInt();
-			if(facet_number>0){
-				stl_data=new double[facet_number][][];
-				for(int i=0;i<facet_number;i++){
-					stl_data[i]	=new double[4][];
-					for(int j=0;j<4;j++){
-						stl_data[i][j]=new double[4];
-						stl_data[i][j][3]=1.0;
-						for(int k=0;k<3;k++)
-							stl_data[i][j][k]=dr.readFloat();
-					}
-				}
-			}
-			dr.close();
-			br.close();
-			fr.close();
-		}catch(Exception e){
-			;
-		}
-	}
-	private void do_convert(String file_name,String file_system_charset)
-	{
-		stl_data=null;
-		facet_number=0;
-		if(ascii_processor(file_name,file_system_charset)){
-			stl_data=null;
-			facet_number=0;
-			if(binary_change_format(file_name,file_name+".binary")){
-				binary_read_facet_data(file_name+".binary");
-				file_writer.file_delete(file_name+".binary");
-			}
-		}
-	}
-	public stl_converter(String mesh_file_name,String mesh_charset,String target_file_name,String target_charset)
-	{
-		do_convert(mesh_file_name,mesh_charset);
+		FileInputStream 		fr=null;
+		BufferedInputStream 	br=null;
+		DataInputStream 		dr=null;
 		
-		file_writer fw=new file_writer(target_file_name,target_charset);
-		write_out(fw);
+		try{
+			fr=new FileInputStream(file_name);
+			br=new BufferedInputStream(fr);
+			dr=new DataInputStream(br);
+			
+			int facet_number=dr.readInt();
+			for(int face_id=0;face_id<facet_number;face_id++){
+				double stl_data[][]=new double[4][];
+				for(int j=0;j<4;j++){
+					stl_data[j]=new double[4];
+					stl_data[j][3]=1.0;
+					for(int k=0;k<3;k++)
+						stl_data[j][k]=dr.readFloat();
+				}
+				output_triangle(stl_data[0],stl_data[1],stl_data[2],stl_data[3],fw);
+			}
+		}catch(Exception e){
+			debug_information.println(e.toString());
+			e.printStackTrace();
+		}
+		if(dr!=null)
+			try{
+				dr.close();
+			}catch(Exception e){
+				;
+			}
+		if(br!=null)
+			try{
+				br.close();
+			}catch(Exception e){
+				;
+			}
+		if(fr!=null)
+			try{
+				fr.close();
+			}catch(Exception e){
+				;
+			}
+	}
+	
+	private boolean test_format(String mesh_file_name,String mesh_charset)
+	{
+		file_reader fr=new file_reader(mesh_file_name,mesh_charset);
+		if(ascii_search_for_header(fr,"solid")>=0)
+			if(ascii_search_for_header(fr,"facet")>=0)
+				if(ascii_search_for_header(fr,"normal")==0)
+					if(ascii_search_for_header(fr,"outer")>=0)
+						if(ascii_search_for_header(fr,"loop")==0)
+							if(ascii_search_for_header(fr,"endloop")>=0)
+								if(ascii_search_for_header(fr,"endfacet")==0) {
+									fr.close();
+									return true;
+								}
+		fr.close();
+		return false;
+	}
+	public stl_converter(
+			String mesh_file_name,String mesh_charset,
+			String target_file_name,String target_charset)
+	{
+		file_writer.file_delete(target_file_name+".edge");
+		file_writer.file_touch(target_file_name+".edge",true);
+		
+		file_writer fw=new file_writer(target_file_name+".face",target_charset);
+		fw.println("/*	body:0	face:0	*/");
+		
+		box_data=null;
+		triangle_number=0;
+		
+		if(test_format(mesh_file_name,mesh_charset)) 
+			ascii_processor(mesh_file_name,mesh_charset,fw);
+		else{
+			String binary_file_name=mesh_file_name+".binary";
+			binary_change_format(mesh_file_name,binary_file_name);
+			binary_processor(binary_file_name,fw);
+			file_writer.file_delete(binary_file_name);
+		}
+		fw.close();
+		
+		fw=new file_writer(target_file_name,target_charset);
+		
+		fw.println("/*	version				*/	2021.07.01");
+		fw.println("/*	origin material		*/	0	0	0	0");
+		fw.println("/*	default material	*/	0	0	0	0");
+		fw.println("/*	max_attribute_number	*/	0");
+
+		fw.println("/*	body_number	*/	1");
+		fw.println("	/* body  0  name   */  body_0   /*   face_number   */  1");
+		fw.println("		/* face  0  name   */  body_0_face_0");
+		fw.println("			/* face_type   */  unknown  /*   parameter_number   */  0 /*   parameter  */");
+		fw.println("			/* total_face_primitive_number */ ",triangle_number);
+		fw.println("			/* face_attribute_number 		*/ 0");
+		fw.print  ("			/* face_face_box				*/");
+		if(box_data==null)
+			fw.print  ("	nobox");
+		else
+			for(int i=0,ni=box_data.length;i<ni;i++)
+				fw.print  ("	",box_data[i]);
+		fw.println();
+		
+		fw.println("			/* face_loop_number   */ 0");
+		
 		fw.close();
 	}
 }
