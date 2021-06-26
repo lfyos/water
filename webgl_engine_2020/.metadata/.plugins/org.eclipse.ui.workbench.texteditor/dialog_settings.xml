@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="mount_edit_url"/>
+		<item key="selection" value=""/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="total_face_primitive_number"/>
 			<item value="mount_edit_url"/>
 			<item value="&quot;edit&quot;"/>
 			<item value="edit"/>
@@ -22,7 +23,6 @@
 			<item value="min_expand_part_number"/>
 			<item value="assemble_part[0]"/>
 			<item value="boat&#x09;solidworks\parameter.txt"/>
-			<item value="audio"/>
 		</list>
 		<list key="replacehistory">
 			<item value="f"/>

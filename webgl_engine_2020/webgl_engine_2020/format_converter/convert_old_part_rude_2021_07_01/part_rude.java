@@ -208,8 +208,7 @@ public class part_rude
 			f.print("	",box_material[i]);
 		f.println();
 		
-		f.println("/*	max_attribute_number	*/	",
-				box_attribute_string.length);
+		f.println("/*	max_attribute_number	*/	",box_attribute_string.length);
 		for(int i=0,j=0,ni=box_attribute_string.length;i<ni;) {
 			f.print  ("	",box_attribute_double[j++]);
 			f.print  ("	",box_attribute_double[j++]);

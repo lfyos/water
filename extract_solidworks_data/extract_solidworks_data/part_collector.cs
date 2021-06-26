@@ -23,7 +23,8 @@ namespace extract_solidworks_data
         private FileStream part_list_stream;
         private StreamWriter part_list_writer;
 
-        public part_collector(string my_directory_name, string my_charset, double my_ChordTolerance, double my_LengthTolerance)
+        public part_collector(
+            string my_directory_name, string my_charset, double my_ChordTolerance, double my_LengthTolerance)
         {
             directory_name = my_directory_name;
             charset = my_charset;
@@ -58,7 +59,7 @@ namespace extract_solidworks_data
 
             string my_part_name = my_doc.GetTitle().Replace(" ", "").Replace("\t", "").Replace("\r", "").Replace("\n", "");
             for (int i = 0, ni = part_name.Length; i < ni; i++)
-                if (string.Compare(part_name[i], my_part_name) == 0)
+                if (string.Compare(part_name[i],my_part_name) == 0)
                 {
                     Console.WriteLine("Find same title part,title:" + my_part_name + ",file 1:" + my_path_name + ",file 2:" + path_name[i]);
 

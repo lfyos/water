@@ -13,12 +13,17 @@ namespace extract_solidworks_data
 {
     class edge
     {
-        private Curve curve(Edge my_edge, StreamWriter mesh_writer)
+        private int total_point_primitive_number;
+        private Boolean box_exist_flag;
+        private double min_x, min_y, min_z, max_x, max_y, max_z;
+        private Curve curve_parameter(Edge my_edge, StreamWriter mesh_writer)
         {
             string curve_name;
             double[] curve_data;
 
             Curve my_curve;
+
+            total_point_primitive_number = 0;
 
             try
             {
@@ -36,24 +41,28 @@ namespace extract_solidworks_data
             {
                 curve_name = "line";
                 curve_data = (double[])(my_curve.LineParams);
+
+                total_point_primitive_number = 1;
             }
             else if (my_curve.IsCircle())
             {
                 curve_name = "circle";
                 curve_data = (double[])(my_curve.CircleParams);
+                total_point_primitive_number = 1;
             }
             else if (my_curve.IsEllipse())
             {
                 curve_name = "ellipse";
                 curve_data = (double[])(my_curve.GetEllipseParams());
+                total_point_primitive_number = 2;
             }
             else
             {
                 curve_name = "unknown";
                 curve_data = new double[0];
             }
-            mesh_writer.WriteLine("/*                   curve type          */  "+ curve_name);
-            mesh_writer.Write    ("/*                   parameter number    */  "+ curve_data.Length+ "  /*  parameter  */");
+            mesh_writer.WriteLine("             /*  curve type             */  "+ curve_name);
+            mesh_writer.Write    ("             /*  parameter number       */  "+ curve_data.Length+ "  /*  parameter  */");
 
             for (int i = 0, ni = curve_data.Length; i < ni; i++)
                 mesh_writer.Write("   " + curve_data[i]);
@@ -72,19 +81,21 @@ namespace extract_solidworks_data
                     if (p != null)
                         if ((start_data = (double[])(p.GetPoint())) != null)
                         {
-                            mesh_writer.Write("                     start_effective    "
+                            mesh_writer.Write("             start_effective    "
                                 + start_data[0] + "   " + start_data[1] + "   " + start_data[2] + "   1 ");
 
                             mesh_writer.WriteLine("/*   start_point_material  */"
                                        + "    " + default_material.red + "    " + default_material.green
                                        + "    " + default_material.blue + "    " + default_material.meterial_id);
+
+                            total_point_primitive_number++;
                             break;
                         }
                 }catch(Exception )
                 {
                     ;
                 }
-                mesh_writer.Write("                     start_not_effective    ");
+                mesh_writer.Write("             start_not_effective    ");
                 start_data = new double[] { 0, 0, 0 };
             } while (false);
 
@@ -95,29 +106,39 @@ namespace extract_solidworks_data
                     if (p != null)
                         if ((end_data = (double[])(p.GetPoint())) != null)
                         {
-                            mesh_writer.Write("                     end_effective    " 
+                            mesh_writer.Write("             end_effective    " 
                                 + end_data[0] + "   " + end_data[1] + "   " + end_data[2] + "   1 ");
 
                             mesh_writer.WriteLine("/*   end_point_material  */"
                                    + "    " + default_material.red + "    " + default_material.green
                                    + "    " + default_material.blue + "    " + default_material.meterial_id);
+                            total_point_primitive_number++;
                             break;
                         }
                 }catch(Exception )
                 {
 
                 }
-                mesh_writer.Write("                     end_not_effective    ");
+                mesh_writer.Write("             end_not_effective    ");
                 end_data = new double[] { 0, 0, 0 };
             } while (false);
 
             return new double[][] { start_data, end_data};
         }
 
-        private void tessellation_point(Curve my_curve, double[]start_point,double[] end_point,
-            double ChordTolerance, double LengthTolerance,StreamWriter mesh_writer, material default_material)
+        private int tessellation_point(int body_id,int face_id,int loop_id,int edge_id,
+            Curve my_curve, double[]start_point,double[] end_point,
+            double ChordTolerance, double LengthTolerance,StreamWriter edge_writer, material default_material)
         {
-            mesh_writer.Write("/*                   vertex number  */   ");
+            min_x = 0;
+            min_y = 0;
+            min_z = 0;
+            max_x = 0;
+            max_y = 0;
+            max_z = 0;
+
+            box_exist_flag = false;
+
 
             double[] data;
             try
@@ -129,33 +150,75 @@ namespace extract_solidworks_data
             }
             if (data == null)
             {
-                mesh_writer.WriteLine(0);
-                return;
+                edge_writer.WriteLine(0);
+                return 0;
             }
 
-            int vertex_number = data.Length / 3;
-            mesh_writer.WriteLine(vertex_number);
+            int edge_primitive_number = data.Length / 3;
 
-            for(int i = 0; i < vertex_number; i++)
+            edge_writer.WriteLine();
+            edge_writer.WriteLine("/*   body_id:" + body_id
+                + ",face_id:" + face_id
+                + ",loop_id:" + loop_id
+                + ",edge_id:" + edge_id
+                + ",edge_primitive_number:"+ edge_primitive_number
+                + "     */");
+
+            for (int i = 0; i < edge_primitive_number; i++)
             {
                 double x = data[3 * i + 0], y = data[3 * i + 1], z = data[3 * i + 2];
-                mesh_writer.Write("/*                   NO."+i+"    vertex location  */   " + x + " " + y + " " + z+ "  1   ");
-                mesh_writer.WriteLine("/*   tessellation_material  */"
-                + "    " + default_material.red + "    " + default_material.green
-                + "    " + default_material.blue + "    " + default_material.meterial_id);
-            }
-        }
-        public edge(Edge my_edge, double ChordTolerance, double LengthTolerance, StreamWriter mesh_writer, material default_material)
-        {
-            Curve my_curve=curve(my_edge, mesh_writer);
+                edge_writer.Write("     /*  NO."+i+"    vertex location  */   " + x + " " + y + " " + z+ "  1   ");
+                edge_writer.WriteLine("/*   tessellation_material  */"
+                        + "    " + default_material.red + "    " + default_material.green
+                        + "    " + default_material.blue + "    " + default_material.meterial_id);
 
-            mesh_writer.WriteLine("/*                   parameter_point_material  */"
+                if (box_exist_flag)
+                {
+                    min_x = (min_x < x) ? min_x : x;
+                    min_y = (min_y < y) ? min_y : y;
+                    min_z = (min_z < z) ? min_z : z;
+                    max_x = (max_x > x) ? max_x : x;
+                    max_y = (max_y > y) ? max_y : y;
+                    max_z = (max_z > z) ? max_z : z;
+                }
+                else
+                {
+                    min_x = x;
+                    min_y = y;
+                    min_z = z;
+                    max_x = x;
+                    max_y = y;
+                    max_z = z;
+
+                    box_exist_flag = true;
+                }
+            }
+
+            return edge_primitive_number;
+        }
+        public edge(int body_id, int face_id, int loop_id, int edge_id,
+            Edge my_edge, double ChordTolerance, double LengthTolerance,
+            StreamWriter mesh_writer, StreamWriter edge_writer, material default_material)
+        {
+            Curve my_curve= curve_parameter(my_edge, mesh_writer);
+
+            double[][] p = start_end(my_edge, mesh_writer, default_material);
+
+            mesh_writer.WriteLine("             /*  parameter_point_material  */"
                 + "    " + default_material.red  + "    " + default_material.green 
                 + "    " + default_material.blue + "    " + default_material.meterial_id);
 
-            double[][]p=start_end(my_edge, mesh_writer, default_material);
+            int total_edge_primitive_number = tessellation_point(body_id, face_id, loop_id, edge_id,
+                my_curve,p[0],p[1], ChordTolerance, LengthTolerance, edge_writer, default_material);
 
-            tessellation_point(my_curve,p[0],p[1], ChordTolerance, LengthTolerance, mesh_writer, default_material);
+            if (box_exist_flag)
+                mesh_writer.WriteLine("             /*  box definition  */  "
+                    +min_x + " " + min_y + " " + min_z + " " + max_x + " " + max_y + " " + max_z);
+            else
+                mesh_writer.WriteLine("             /*  box definition  */	 nobox");
+
+            mesh_writer.WriteLine("             /*  total_edge_primitive_number     */  " + total_edge_primitive_number);
+            mesh_writer.WriteLine("             /*  total_point_primitive_number    */  " + total_point_primitive_number);
         }
     }
 }

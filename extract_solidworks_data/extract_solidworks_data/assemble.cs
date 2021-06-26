@@ -54,7 +54,8 @@ namespace extract_solidworks_data
     }
     class assemble
     {
-        private assemble_tree_node traverse_component_tree(Component2 comp,location negative_parent_absulate_loca, part_collector collector)
+        private assemble_tree_node traverse_component_tree(Component2 comp,
+            location negative_parent_absulate_loca, part_collector collector)
         {
             String component_name = comp.Name2;
             string part_name=collector.register((IModelDoc2)(comp.GetModelDoc2()),++component_number);

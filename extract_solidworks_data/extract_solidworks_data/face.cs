@@ -13,7 +13,11 @@ namespace extract_solidworks_data
 {
     class face
     {
-        private string create_parameter_surface(Face2 f)
+        public int triangle_number;
+        public Boolean box_exist_flag;
+        public double min_x, min_y, min_z, max_x, max_y, max_z;
+        public double default_color_red, default_color_green, default_color_blue, default_color_material;
+        private void write_face_parameter(Face2 f, StreamWriter mesh_writer)
         {
             string str;
             double[] p;
@@ -57,114 +61,91 @@ namespace extract_solidworks_data
                 str = "unknown";
                 p = new double[0];
             }
-            str = "/*   face type   */  "+str+"  /*    parameter number   */    "+p.Length+"    /*  prameter */    ";
+
+            mesh_writer.WriteLine();
+            mesh_writer.WriteLine("             /*  face type                   */  " + str);
+            mesh_writer.Write    ("             /*  parameter number            */  " + p.Length + "    /*  prameter */ ");
+
             for (int i = 0; i < p.Length; i++)
-                str += "    " + p[i];
+                mesh_writer.Write("    " + p[i]);
 
-            return str;
+            mesh_writer.WriteLine();
         }
-        private int get_tess_triangles(Face2 f, StreamWriter mesh_writer)
+
+        private void write_face_tess(
+            int body_id,int face_id,Face2 f, StreamWriter face_writer,
+            material default_material, material_container material_cont)
         {
-            System.Single[] p;
+            System.Single[] vertex, normal;
+            System.Double[] texture;
 
             try
             {
-                p = (System.Single[])(f.GetTessTriangles(true));
-                if (p == null)
-                    p = new System.Single[] { 0, 0, 0 };
-                else if (p.Length < 3)
-                    p = new System.Single[] { 0, 0, 0 };
-            }catch(Exception)
-            {
-                p = new System.Single[] { 0, 0, 0 };
+                vertex = (System.Single[])(f.GetTessTriangles(true));
+                if (vertex == null)
+                    vertex = new System.Single[] { 0, 0, 0 };
+                else if (vertex.Length < 3)
+                    vertex = new System.Single[] { 0, 0, 0 };
             }
-
-            int vertex_number = p.Length / 3;
-
-            mesh_writer.WriteLine();
-            mesh_writer.WriteLine("/*            face vertex number */  "+vertex_number);
-            for(int i = 0; i < vertex_number; i++)
+            catch (Exception)
             {
-                mesh_writer.Write("/*               No.   "+i);
-                mesh_writer.Write("  vertex  */");
-                for(int j=3*i,nj=3*i+3;j<nj;j++)
-                    mesh_writer.Write("  "+p[j]);
-                mesh_writer.WriteLine("  1");
+                vertex = new System.Single[] { 0, 0, 0 };
             }
-            mesh_writer.WriteLine();
-            return vertex_number;
-        }
-
-        private int get_tess_normal(Face2 f, StreamWriter mesh_writer)
-        {
-            System.Single[] p;
 
             try
             {
-                p = (System.Single[])(f.GetTessNorms());
-                if (p == null)
-                    p = new System.Single[] { 0, 0, 0 };
-                else if (p.Length < 3)
-                    p = new System.Single[] { 0, 0, 0 };
+                normal = (System.Single[])(f.GetTessNorms());
+                if (normal == null)
+                    normal = new System.Single[] { 0, 0, 0 };
+                else if (normal.Length < 3)
+                    normal = new System.Single[] { 0, 0, 0 };
             }
             catch (Exception)
             {
-                p = new System.Single[] { 0, 0, 0 };
+                normal = new System.Single[] { 0, 0, 0 };
             }
 
-            int normal_number = p.Length / 3;
-
-            mesh_writer.WriteLine();
-            mesh_writer.WriteLine("/*            face normal number */  " + normal_number);
-            for (int i = 0; i < normal_number; i++)
+            try
             {
-                mesh_writer.Write("/*               No.   " + i);
-                mesh_writer.Write("  normal  */");
-                for (int j = 3 * i, nj = 3 * i + 3; j < nj; j++)
-                    mesh_writer.Write("  " + p[j]);
-                mesh_writer.WriteLine("  1");
-            }
-            mesh_writer.WriteLine();
-
-            return normal_number;
-        }
-
-        private int get_tess_texture(Face2 f, StreamWriter mesh_writer)
-        {
-            System.Double[] p;
-            
-            try{
-                p= (System.Double[])(f.GetTessTextures());
-                if (p == null)
-                    p = new System.Double[] { 0, 0 };
-                else if (p.Length < 2)
-                    p = new System.Double[] { 0, 0 };
+                texture = (System.Double[])(f.GetTessTextures());
+                if (texture == null)
+                    texture = new System.Double[] { 0, 0 };
+                else if (texture.Length < 2)
+                    texture = new System.Double[] { 0, 0 };
             }
             catch (Exception)
             {
-                p = new System.Double[] { 0, 0 };
+                texture = new System.Double[] { 0, 0 };
             }
 
-            int texture_number = p.Length / 2;
+            int vertex_number = vertex.Length;
+            int normal_number = normal.Length;
+            int texture_number = texture.Length;
+            triangle_number = ((vertex_number < normal_number) ? vertex_number : normal_number) / 9;
 
-            mesh_writer.WriteLine();
-            mesh_writer.WriteLine("/*            face texture number */  " + texture_number);
-            for (int i = 0; i < texture_number; i++)
+            if (triangle_number <= 0)
             {
-                mesh_writer.Write("/*               No.   " + i);
-                mesh_writer.Write("  texture  */");
-                for (int j = 2 * i, nj = 2 * i + 2; j < nj; j++)
-                    mesh_writer.Write("  " + p[j]);
-                mesh_writer.WriteLine("  0  1");
-            }
-            mesh_writer.WriteLine();
+                min_x = 0;
+                min_y = 0;
+                min_z = 0;
+                max_x = 0;
+                max_y = 0;
+                max_z = 0;
 
-            return texture_number;
-        }
-        private material create_triangle(
-            Face2 f, int vertex_number,int normal_number,int texture_number,
-            StreamWriter mesh_writer, material default_material, material_container material_cont)
-        {
+                box_exist_flag = false;
+            }
+            else
+            {
+                min_x = vertex[0];
+                min_y = vertex[1];
+                min_z = vertex[2];
+                max_x = vertex[0];
+                max_y = vertex[1];
+                max_z = vertex[2];
+
+                box_exist_flag = true;
+            }
+
             try
             {
                 if (f.MaterialPropertyValues != null)
@@ -172,38 +153,64 @@ namespace extract_solidworks_data
             }
             catch (Exception)
             {
-               
+
             }
 
-            int triangle_number = vertex_number / 3;
+            default_color_red = default_material.red;
+            default_color_green = default_material.green;
+            default_color_blue = default_material.blue;
+            default_color_material = default_material.meterial_id;
 
-            mesh_writer.WriteLine(); 
-            mesh_writer.WriteLine("/*            face triangle number  */  "+ triangle_number);
-            for(int i=0,ni= triangle_number; i < ni; i++)
+            face_writer.WriteLine();
+            face_writer.WriteLine("/*   body_id:"+body_id+",face_id:"+face_id+ ",triangle_number:"+ triangle_number+"   */");
+
+            for (int i = 0; i < triangle_number; i++)
             {
-                string str = "/*                NO.    ";
-                mesh_writer.WriteLine(str + "  material		*/	" + default_material.red + "  " + default_material.green + "  " + default_material.blue + "  "+ default_material.meterial_id);
-                mesh_writer.WriteLine(str + "  vertex		*/	" + ((3 * i + 0) % vertex_number)  + "    " + ((3 * i + 1) % vertex_number)  + "    " + ((3 * i + 2) % vertex_number)  + "    -1");
-                mesh_writer.WriteLine(str + "  normal		*/	" + ((3 * i + 0) % normal_number)  + "    " + ((3 * i + 1) % normal_number)  + "    " + ((3 * i + 2) % normal_number)  + "    -1");
-                mesh_writer.WriteLine(str + "  texture		*/	" + ((3 * i + 0) % texture_number) + "    " + ((3 * i + 1) % texture_number) + "    " + ((3 * i + 2) % texture_number) + "    -1");
-                mesh_writer.WriteLine();
+                face_writer.WriteLine();
+                face_writer.WriteLine("/*	triangle:"+i+",material	*/  "
+                    + default_color_red + "   "
+                    + default_color_green + "   "
+                    + default_color_blue + "   "
+                    + default_color_material);
+
+                face_writer.WriteLine("/*	triangle:" + i + ",vertex number    */	3");
+
+                for (int j = 0; j < 3; j++)
+                {
+                    double px = vertex[9 * i + 3 * j + 0], py = vertex[9 * i + 3 * j + 1], pz = vertex[9 * i + 3 * j + 2];
+                    double nx = normal[9 * i + 3 * j + 0], ny = normal[9 * i + 3 * j + 1], nz = normal[9 * i + 3 * j + 2];
+                    double tx = texture[6 * i + 2 * j + 0], ty = texture[6 * i + 2 * j + 1], tz = 0;
+
+                    min_x = (min_x < px) ? min_x : px;
+                    min_y = (min_y < py) ? min_y : py;
+                    min_z = (min_z < pz) ? min_z : pz;
+                    max_x = (max_x > px) ? max_x : px;
+                    max_y = (max_y > py) ? max_y : py;
+                    max_z = (max_z > pz) ? max_z : pz;
+
+                    face_writer.WriteLine("/*		" + j + ".location		*/  " + px + "   " + py + "    " + pz + " 1");
+                    face_writer.WriteLine("/*		" + j + ".normal		*/  " + nx + "   " + ny + "    " + nz + " 1");
+                    face_writer.WriteLine("/*		" + j + ".texture		*/  " + tx + "   " + ty + "    " + tz + " 1");
+                }
             }
-
-            mesh_writer.WriteLine();
-            return default_material;
         }
-        public face(Face2 f, double ChordTolerance, double LengthTolerance, 
-            StreamWriter mesh_writer, material default_material, material_container material_cont)
+       
+        public face(int body_id, int face_id, 
+            Face2 f, double ChordTolerance, double LengthTolerance, 
+            StreamWriter mesh_writer, StreamWriter face_writer, StreamWriter edge_writer, 
+            material default_material, material_container material_cont)
         {
-            mesh_writer.WriteLine("        "+create_parameter_surface(f));
-            mesh_writer.WriteLine("        /*   attribute number   */  1");
+            write_face_parameter(f, mesh_writer);
+            write_face_tess(body_id, face_id, f,face_writer,default_material,material_cont);
 
-            default_material = create_triangle(f,get_tess_triangles(f,mesh_writer),
-                                               get_tess_normal(f,mesh_writer),
-                                               get_tess_texture(f,mesh_writer),
-                                               mesh_writer,
-                                               default_material,
-                                               material_cont);
+            mesh_writer.WriteLine("             /*  total_face_primitive_number */  " + triangle_number);
+            mesh_writer.WriteLine("             /*  face_attribute_number       */  1");
+            mesh_writer.Write    ("             /*  face_face_box               */  ");
+
+            if (box_exist_flag)
+                mesh_writer.WriteLine(min_x + " " + min_y + " " + min_z + " " + max_x + " " + max_y + " " + max_z);
+            else
+                mesh_writer.WriteLine("nobox");
 
             System.Object[] p_loop;
             
@@ -217,7 +224,8 @@ namespace extract_solidworks_data
                 p_loop = new System.Object[0];
             }
 
-            mesh_writer.WriteLine("/*            face loop number   */   "+ (p_loop.Length));
+            mesh_writer.WriteLine();
+            mesh_writer.WriteLine("         /*  face loop number        */  " + (p_loop.Length));
 
             for (int i = 0, ni = p_loop.Length; i < ni; i++)
             {
@@ -234,15 +242,15 @@ namespace extract_solidworks_data
                     p_edge = new System.Object[0];
                 }
 
-                mesh_writer.WriteLine("/*               Loop NO." + i + "     edge number    */   " + (p_edge.Length));
+                mesh_writer.WriteLine("         /*  Loop NO." + i + "   edge number */  " + (p_edge.Length));
 
                 for (int j = 0, nj = p_edge.Length; j < nj; j++) {
                     mesh_writer.WriteLine();
-                    mesh_writer.WriteLine("/*                   Loop NO." + i + "  Edge NO." + j + "   */");
-                    new edge((Edge)(p_edge[j]), ChordTolerance, LengthTolerance, mesh_writer, default_material);
+                    mesh_writer.WriteLine("             /*  Loop NO." + i + "  Edge NO." + j + "   */");
+                    new edge(body_id, face_id, i, j,
+                        (Edge)(p_edge[j]), ChordTolerance, LengthTolerance,mesh_writer, edge_writer,default_material);
                 }
             }
-
             mesh_writer.WriteLine();
         }
     }
