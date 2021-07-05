@@ -1,18 +1,16 @@
 /*	version					*/	2021.07.01
 /*	origin material			*/	0	0	0	1
-/*	default material		*/	0	0	0	1
+/*	default material		*/	0	0	0	0
 /*	max_attribute_number	*/	2
-	240.25624999999997	9.911375	483.718125	0,1
-	0.5824987354577643	0.4115727002967359	0.272932200450841	0.3865089323056701,0.4120980865271309,0.5276030253764049,0.28838535889716366,0.4749546279491833,0.49668625734650496,0.1344915254237288,0.14106262212710524
+							-61.65200000000001	-291.4811666666667	1057.121	2,33978
+							0.6198280222559435	0.4064540059347181	0.26877059129530084	0.5062436517894485,0.4363952640143651,0.5982187036120732,0.3699889082554271,0.41597096188747734,0.5114417906715018,0.10406779661016949,0.10030706243602866
+/*	body_number		*/	1
+/*	body 0 name		*/	inp_body	/*	face_number	*/	1
+/* 	face 0 name					*/  inp_face
+/*		face_type					*/  unknown	/*	parameter_number	*/	0	/*	parameter	*/
+/*		total_face_primitive_number	*/	33978
+/*		face_attribute_number		*/	2
+/*		face_face_box				*/	-510.0	-510.0	0.0	980.275	510.0	1335.887
 
-/*	body_number	*/	1
-   /* body  0  name   */  my_body   /*   face_number   */  1
-     /* face  0  name   */  my_face
-         /* face_type   */  unknown  /*   parameter_number   */  0 /*   parameter  */ 
-         /* total_face_primitive_number */ 33978
-         /* face_attribute_number 		*/ 2
-         /* face_face_box				*/  -510.0 -510.0 0.0  980.275 510.0 1335.887 
-        
-         /* face_loop_number   */ 0
-        
-        
+/*		face_loop_number			*/	0
+

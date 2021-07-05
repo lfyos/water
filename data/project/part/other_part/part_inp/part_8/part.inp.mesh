@@ -1,18 +1,16 @@
 /*	version					*/	2021.07.01
 /*	origin material			*/	0	0	0	1
-/*	default material		*/	0	0	0	3
+/*	default material		*/	0	0	0	0
 /*	max_attribute_number	*/	2
-	1578.97	671.13325	475.59925	3,1
-	0.6902329730370124	0.27508023359814804	0.9035982627937316	0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+							556.0405	-72.5075	473.7745	3,124985
+							0.642430118542368	0.2961493718688436	0.8968893219060831	0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+/*	body_number		*/	1
+/*	body 0 name		*/	inp_body	/*	face_number	*/	1
+/* 	face 0 name					*/  inp_face
+/*		face_type					*/  unknown	/*	parameter_number	*/	0	/*	parameter	*/
+/*		total_face_primitive_number	*/	124985
+/*		face_attribute_number		*/	2
+/*		face_face_box				*/	-1600.0	-280.0	200.0	1600.0	1500.0	515.055
 
-/*	body_number	*/	1
-   /* body  0  name   */  my_body   /*   face_number   */  1
-     /* face  0  name   */  my_face
-         /* face_type   */  unknown  /*   parameter_number   */  0 /*   parameter  */ 
-         /* total_face_primitive_number */ 124985
-         /* face_attribute_number 		*/ 2
-         /* face_face_box				*/  -1600.0 -280.0 200.0  1600.0 1500.0 515.055 
-        
-         /* face_loop_number   */ 0
-        
-        
+/*		face_loop_number			*/	0
+

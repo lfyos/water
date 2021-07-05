@@ -84,12 +84,15 @@ public class caculate_part_items
 			my_box=new box(new point(0,0,0));
 			return;
 		case 1:
-			my_box=new box(my_face_edge.start_point);
+			if(my_face_edge.start_point!=null)
+				my_box=new box(my_face_edge.start_point);
 			return;
 		case 2:
-			my_box=new box(my_face_edge.end_point);
+			if(my_face_edge.end_point!=null)
+				my_box=new box(my_face_edge.end_point);
 			return;
 		};
+		
 		switch(my_face_edge.curve_type) {
 		case "line":
 			my_box=new box(my_face_edge.end_point.add(my_face_edge.start_point).scale(0.5));
@@ -147,7 +150,7 @@ public class caculate_part_items
 					my_box=new box(point_array[point_id-5]);
 			return;
 		}
-		case "point_set":
+		case "pickup_point_set":
 			if(my_face_edge.curve_parameter!=null)
 				if(point_id>=1000)
 					if((point_id-1000)<(my_face_edge.curve_parameter.length/3))
@@ -155,6 +158,8 @@ public class caculate_part_items
 									my_face_edge.curve_parameter[3*point_id+0],
 									my_face_edge.curve_parameter[3*point_id+1],
 									my_face_edge.curve_parameter[3*point_id+2]));
+			return;
+		case "render_point_set":
 			return;
 		}
 		return;

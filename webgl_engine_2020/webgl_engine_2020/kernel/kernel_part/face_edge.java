@@ -84,10 +84,9 @@ public class face_edge
 			else
 				edge_box=edge_box.add(new box(end_point));
 		}
-		total_edge_primitive_number	=1;
+		total_edge_primitive_number	=2;
 		total_point_primitive_number=2;
 	}
-	
 	public face_edge(file_reader fr,double scale_value)
 	{
 		curve_type=fr.get_string();

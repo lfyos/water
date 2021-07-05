@@ -6,12 +6,13 @@ public class graphics_buffer_object_for_point
 {
 	public graphics_buffer_object_creater_container gbocc;
 	
-	private point line_create(int flag,int i,int j,int k,int m,face_edge fe,part my_part,
+	private point line_create(int flag,
+		int body_id,int face_id,int loop_id,int edge_id,face_edge fe,part my_part,
 		String my_file_name,String my_file_charset,String curve_type_id,
 		long my_create_buffer_object_bitmap,int max_material_id,long max_file_data_length)
 	{
-		int material_id=caculate_material_id.caculate(
-				my_part.driver,max_material_id,my_part,"line",i,j,k,m,
+		int material_id=caculate_material_id.caculate(my_part.driver,
+				max_material_id,my_part,"line",body_id,face_id,loop_id,edge_id,
 				fe.parameter_material[0],fe.parameter_material[1],
 				fe.parameter_material[2],fe.parameter_material[3]);
 		graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
@@ -27,19 +28,19 @@ public class graphics_buffer_object_for_point
 		gbo.register(
 				fe.parameter_material[0],fe.parameter_material[1],
 				fe.parameter_material[2],fe.parameter_material[3]);
-		gbo.register(Integer.toString(i),Integer.toString(j),"3",Integer.toString(flag));
-		gbo.register(Integer.toString(k),Integer.toString(m),curve_type_id,curve_type_id);
+		gbo.register(Integer.toString(body_id),Integer.toString(face_id),"3",Integer.toString(flag));
+		gbo.register(Integer.toString(loop_id),Integer.toString(edge_id),curve_type_id,curve_type_id);
 		if(gbo.test_end(max_file_data_length,false))
 			gbocc.expand_creater_array(material_id);
 		
 		return normal;
 	}
-	private point circle_create(int flag,int i,int j,int k,int m,face_edge fe,part my_part,
+	private point circle_create(int flag,int body_id,int face_id,int loop_id,int edge_id,face_edge fe,part my_part,
 			String my_file_name,String my_file_charset,String curve_type_id,
 			long my_create_buffer_object_bitmap,int max_material_id,long max_file_data_length)
 	{
-		int material_id=caculate_material_id.caculate(
-				my_part.driver,max_material_id,my_part,"circle",i,j,k,m,
+		int material_id=caculate_material_id.caculate(my_part.driver,
+				max_material_id,my_part,"circle",body_id,face_id,loop_id,edge_id,
 				fe.parameter_material[0],fe.parameter_material[1],
 				fe.parameter_material[2],fe.parameter_material[3]);
 		graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
@@ -52,20 +53,21 @@ public class graphics_buffer_object_for_point
 				 Double.toString(fe.curve_parameter[6]));
 		gbo.register(fe.parameter_material[0],fe.parameter_material[1],
 				 fe.parameter_material[2],fe.parameter_material[3]);
-		gbo.register(Integer.toString(i),Integer.toString(j),"4",Integer.toString(flag));
-		gbo.register(Integer.toString(k),Integer.toString(m),curve_type_id,curve_type_id);
+		gbo.register(Integer.toString(body_id),Integer.toString(face_id),"4",Integer.toString(flag));
+		gbo.register(Integer.toString(loop_id),Integer.toString(edge_id),curve_type_id,curve_type_id);
 
 		if(gbo.test_end(max_file_data_length,false))
 			gbocc.expand_creater_array(material_id);
 		
 		return (new point(fe.curve_parameter[3],fe.curve_parameter[4],fe.curve_parameter[5])).expand(1);
 	}
-	private point ellipse_hyperbola_parabola_create(int flag,int i,int j,int k,int m,face_edge fe,part my_part,
+	private point ellipse_hyperbola_parabola_create(int flag,
+			int body_id,int face_id,int loop_id,int edge_id,face_edge fe,part my_part,
 			String my_file_name,String my_file_charset,String curve_type_id,
 			long my_create_buffer_object_bitmap,int max_material_id,long max_file_data_length)
 	{
-		int material_id=caculate_material_id.caculate(
-				my_part.driver,max_material_id,my_part,fe.curve_type,i,j,k,m,
+		int material_id=caculate_material_id.caculate(my_part.driver,
+				max_material_id,my_part,fe.curve_type,body_id,face_id,loop_id,edge_id,
 				fe.parameter_material[0],fe.parameter_material[1],
 				fe.parameter_material[2],fe.parameter_material[3]);
 		point center	=new point(fe.curve_parameter[0],fe.curve_parameter[1],fe.curve_parameter[2]);
@@ -124,9 +126,9 @@ public class graphics_buffer_object_for_point
 			gbo.register(
 				fe.parameter_material[0],fe.parameter_material[1],
 				fe.parameter_material[2],fe.parameter_material[3]);
-			gbo.register(Integer.toString(i),Integer.toString(j),
+			gbo.register(Integer.toString(body_id),Integer.toString(face_id),
 				Integer.toString(point_i+5),Integer.toString(flag));
-			gbo.register(Integer.toString(k),Integer.toString(m),curve_type_id,curve_type_id);
+			gbo.register(Integer.toString(loop_id),Integer.toString(edge_id),curve_type_id,curve_type_id);
 			
 			if(gbo.test_end(max_file_data_length,false))
 				gbocc.expand_creater_array(material_id);
@@ -134,12 +136,13 @@ public class graphics_buffer_object_for_point
 		return normal;
 	}
 	
-	private void point_set_create(int flag,int i,int j,int k,int m,face_edge fe,part my_part,
+	private void pickup_point_set_create(
+			int flag,int body_id,int face_id,int loop_id,int edge_id,face_edge fe,part my_part,
 			String my_file_name,String my_file_charset,String curve_type_id,
 			long my_create_buffer_object_bitmap,int max_material_id,long max_file_data_length)
 	{
-		int material_id=caculate_material_id.caculate(
-				my_part.driver,max_material_id,my_part,"point_set",i,j,k,m,
+		int material_id=caculate_material_id.caculate(my_part.driver,
+				max_material_id,my_part,"pickup_point_set",body_id,face_id,loop_id,edge_id,
 				fe.parameter_material[0],fe.parameter_material[1],
 				fe.parameter_material[2],fe.parameter_material[3]);
 		
@@ -162,21 +165,53 @@ public class graphics_buffer_object_for_point
 			gbo.register(
 					fe.parameter_material[0],fe.parameter_material[1],
 					fe.parameter_material[2],fe.parameter_material[3]);
-			gbo.register(Integer.toString(i),Integer.toString(j),
+			gbo.register(Integer.toString(body_id),Integer.toString(face_id),
 					Integer.toString(point_i+1000),Integer.toString(flag));
-			gbo.register(Integer.toString(k),Integer.toString(m),curve_type_id,curve_type_id);
+			gbo.register(Integer.toString(loop_id),Integer.toString(edge_id),curve_type_id,curve_type_id);
 			
 			if(gbo.test_end(max_file_data_length,false))
 				gbocc.expand_creater_array(material_id);
 		}
 	}
-	private void start_end_create(int flag,int i,int j,int k,int m,point start_end_normal,
+	private void render_point_set_create(primitive_interface p_i,
+			int flag,int body_id,int face_id,int loop_id,int edge_id,face_edge fe,part my_part,
+			String my_file_name,String my_file_charset,String curve_type_id,
+			long my_create_buffer_object_bitmap,int max_material_id,long max_file_data_length)
+	{
+		for(int point_i=0;point_i<fe.total_point_primitive_number;point_i++){
+			double my_location_data[]		=p_i.get_point_location_data(body_id,face_id,loop_id,edge_id,point_i);
+			String my_location_extra_data	=p_i.get_point_extra_data	(body_id,face_id,loop_id,edge_id,point_i);
+			String my_material[]			=p_i.get_point_material		(body_id,face_id,loop_id,edge_id,point_i);
+			
+			int material_id=caculate_material_id.caculate(
+					my_part.driver,max_material_id,my_part,"render_point_set",body_id,face_id,loop_id,edge_id,
+					my_material[0],my_material[1],my_material[2],my_material[3]);
+
+			graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
+					my_file_name,my_file_charset,my_create_buffer_object_bitmap);
+			
+			double x=my_location_data[0],y=my_location_data[1],z=my_location_data[2];
+			
+			gbo.vertex_begin(x,y,z);
+
+			gbo.register(x,y,z,my_location_extra_data);
+			gbo.register(x,y,z,my_location_extra_data);
+			gbo.register(my_material[0],my_material[1],my_material[2],my_material[3]);
+			gbo.register(Integer.toString(body_id),Integer.toString(face_id),
+					Integer.toString(point_i+1000),Integer.toString(flag));
+			gbo.register(Integer.toString(loop_id),Integer.toString(edge_id),curve_type_id,curve_type_id);
+			
+			if(gbo.test_end(max_file_data_length,false))
+				gbocc.expand_creater_array(material_id);
+		}
+	}
+	private void start_end_create(int flag,int body_id,int face_id,int loop_id,int edge_id,point start_end_normal,
 			face_edge fe,part my_part,String my_file_name,String my_file_charset,String curve_type_id,
 			long my_create_buffer_object_bitmap,int max_material_id,long max_file_data_length)
 	{
 		if(fe.start_point!=null){
 			int material_id=caculate_material_id.caculate(
-					my_part.driver,max_material_id,my_part,"start",i,j,k,m,
+					my_part.driver,max_material_id,my_part,"start",body_id,face_id,loop_id,edge_id,
 					fe.start_point_material[0],fe.start_point_material[1],
 					fe.start_point_material[2],fe.start_point_material[3]);
 			graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
@@ -188,15 +223,15 @@ public class graphics_buffer_object_for_point
 			gbo.register(start_end_normal.x,start_end_normal.y,start_end_normal.z,"1.0");
 			gbo.register(fe.start_point_material[0],fe.start_point_material[1],
 					 fe.start_point_material[2],fe.start_point_material[3]);
-			gbo.register(Integer.toString(i),Integer.toString(j),"1",Integer.toString(flag));
-			gbo.register(Integer.toString(k),Integer.toString(m),curve_type_id,curve_type_id);
+			gbo.register(Integer.toString(body_id),Integer.toString(face_id),"1",Integer.toString(flag));
+			gbo.register(Integer.toString(loop_id),Integer.toString(edge_id),curve_type_id,curve_type_id);
 			
 			if(gbo.test_end(max_file_data_length,false))
 				gbocc.expand_creater_array(material_id);
 		}
 		if(fe.end_point!=null){
 			int material_id=caculate_material_id.caculate(
-					my_part.driver,max_material_id,my_part,"end",i,j,k,m,
+					my_part.driver,max_material_id,my_part,"end",body_id,face_id,loop_id,edge_id,
 					fe.end_point_material[0],fe.end_point_material[1],
 					fe.end_point_material[2],fe.end_point_material[3]);
 			graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
@@ -207,8 +242,8 @@ public class graphics_buffer_object_for_point
 			gbo.register(start_end_normal.x,start_end_normal.y,start_end_normal.z,"1.0");
 			gbo.register(fe.end_point_material[0],fe.end_point_material[1],
 					 fe.end_point_material[2],fe.end_point_material[3]);
-			gbo.register(Integer.toString(i),Integer.toString(j),"2",Integer.toString(flag));
-			gbo.register(Integer.toString(k),Integer.toString(m),curve_type_id,curve_type_id);
+			gbo.register(Integer.toString(body_id),Integer.toString(face_id),"2",Integer.toString(flag));
+			gbo.register(Integer.toString(loop_id),Integer.toString(edge_id),curve_type_id,curve_type_id);
 			
 			if(gbo.test_end(max_file_data_length,false))
 				gbocc.expand_creater_array(material_id);
@@ -244,7 +279,8 @@ public class graphics_buffer_object_for_point
 			gbocc.expand_creater_array(material_id);
 	}
 	
-	public graphics_buffer_object_for_point(int max_material_id,
+	public graphics_buffer_object_for_point(
+			primitive_interface p_i,int max_material_id,
 			part my_part,String my_file_name,String my_file_charset,
 			long max_file_data_length,long my_create_buffer_object_bitmap)
 	{
@@ -252,40 +288,53 @@ public class graphics_buffer_object_for_point
 		gbocc=new graphics_buffer_object_creater_container();
 		origin_create(flag,my_part,my_file_name,my_file_charset,
 			my_create_buffer_object_bitmap,max_material_id,max_file_data_length);
-		for(int i=0,ni=my_part.part_mesh.body_number();i<ni;i++)
-			for(int j=0,nj=my_part.part_mesh.body_array[i].face_number();j<nj;j++)
-				for(int k=0,nk=my_part.part_mesh.body_array[i].face_array[j].fa_curve.face_loop_number();k<nk;k++)
-					for(int m=0,nm=my_part.part_mesh.body_array[i].face_array[j].fa_curve.f_loop[k].edge_number();m<nm;m++) {
-						face_edge fe=my_part.part_mesh.body_array[i].face_array[j].fa_curve.f_loop[k].edge[m];
+		for(int body_id=0,body_number=my_part.part_mesh.body_number();body_id<body_number;body_id++)
+			for(int face_id=0,face_number=my_part.part_mesh.body_array[body_id].face_number();face_id<face_number;face_id++) {
+				int loop_number=my_part.part_mesh.body_array[body_id].face_array[face_id].fa_curve.face_loop_number();
+				for(int loop_id=0;loop_id<loop_number;loop_id++) {
+					int edge_number=my_part.part_mesh.body_array[body_id].face_array[face_id].fa_curve.f_loop[loop_id].edge_number();
+					for(int edge_id=0;edge_id<edge_number;edge_id++) {
+						face_edge fe=my_part.part_mesh.body_array[body_id].face_array[face_id].fa_curve.f_loop[loop_id].edge[edge_id];
 						point start_end_normal=new point(0,0,1);
 						String curve_type_id=Integer.toString(curve_type.curve_type_id(fe.curve_type));
 						switch(fe.curve_type){
 						case "line":
-							start_end_normal=line_create(flag,i,j,k,m,fe,my_part,my_file_name,my_file_charset,
+							start_end_normal=line_create(flag,
+								body_id,face_id,loop_id,edge_id,fe,my_part,my_file_name,my_file_charset,
 								curve_type_id,my_create_buffer_object_bitmap,max_material_id,max_file_data_length);
 							break;
 						case "circle":
-							start_end_normal=circle_create(flag,i,j,k,m,fe,my_part,my_file_name,my_file_charset,
+							start_end_normal=circle_create(flag,
+								body_id,face_id,loop_id,edge_id,fe,my_part,my_file_name,my_file_charset,
 								curve_type_id,my_create_buffer_object_bitmap,max_material_id,max_file_data_length);
 							break;
 						case "ellipse":
 						case "hyperbola":
 						case "parabola":
 							start_end_normal=ellipse_hyperbola_parabola_create(
-								flag,i,j,k,m,fe,my_part,my_file_name,my_file_charset,
+								flag,body_id,face_id,loop_id,edge_id,fe,my_part,my_file_name,my_file_charset,
 								curve_type_id,my_create_buffer_object_bitmap,max_material_id,max_file_data_length);
 							break;
-						case "point_set":
-							point_set_create(flag,i,j,k,m,fe,my_part,my_file_name,my_file_charset,
-									curve_type_id,my_create_buffer_object_bitmap,max_material_id,max_file_data_length);
+						case "pickup_point_set":
+							pickup_point_set_create(flag,
+								body_id,face_id,loop_id,edge_id,fe,my_part,my_file_name,my_file_charset,
+								curve_type_id,my_create_buffer_object_bitmap,max_material_id,max_file_data_length);
+							break;
+						case "render_point_set":
+							render_point_set_create(p_i,flag,
+								body_id,face_id,loop_id,edge_id,fe,my_part,my_file_name,my_file_charset,
+								curve_type_id,my_create_buffer_object_bitmap,max_material_id,max_file_data_length);
 							break;
 						case "segment":
 							break;
 						default:
 							break;
 						}
-						start_end_create(flag,i,j,k,m,start_end_normal,fe,my_part,my_file_name,my_file_charset,
+						start_end_create(flag,
+							body_id,face_id,loop_id,edge_id,start_end_normal,fe,my_part,my_file_name,my_file_charset,
 							curve_type_id,my_create_buffer_object_bitmap,max_material_id,max_file_data_length);
 					}
+				}
+			}
 	}
 }

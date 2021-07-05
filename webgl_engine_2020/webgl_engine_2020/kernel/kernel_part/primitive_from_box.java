@@ -19,8 +19,7 @@ public class primitive_from_box implements primitive_interface
 	public double[]get_primitive_vertex_location_data(int body_id,int face_id,int primitive_id,int vertex_id)
 	{
 		point p;
-		face f=body_array[body_id].face_array[face_id];
-		face_loop fl=f.fa_curve.f_loop[primitive_id/2];
+		face_loop fl=body_array[body_id].face_array[face_id].fa_curve.f_loop[primitive_id/2];
 		switch(3*(primitive_id%2)+vertex_id) {
 		default:
 		case 0:
@@ -93,22 +92,35 @@ public class primitive_from_box implements primitive_interface
 	{
 		return "1";
 	}
-	public double[]get_tessellation_location_data(int body_id,int face_id,int loop_id,int edge_id,int tessellation_point_id)
+	
+	
+	public double[]get_edge_location_data(int body_id,int face_id,int loop_id,int edge_id,int point_id)
 	{
-		face f=body_array[body_id].face_array[face_id];
-		face_edge fe=f.fa_curve.f_loop[loop_id].edge[edge_id];
-		point p=((tessellation_point_id%2)==0)?fe.start_point:fe.end_point;
+		face_edge fe=body_array[body_id].face_array[face_id].fa_curve.f_loop[loop_id].edge[edge_id];
+		point p=((point_id%2)==0)?fe.start_point:fe.end_point;
 		return new double[] {p.x,p.y,p.z};
 	}
-	public String get_tessellation_extra_data(int body_id,int face_id,int loop_id,int edge_id,int tessellation_point_id)
+	public String get_edge_extra_data(int body_id,int face_id,int loop_id,int edge_id,int point_id)
 	{
 		face_edge fe=body_array[body_id].face_array[face_id].fa_curve.f_loop[loop_id].edge[edge_id];
-		return ((tessellation_point_id%2)==0)?fe.start_extra_data:fe.end_extra_data;
+		return ((point_id%2)==0)?fe.start_extra_data:fe.end_extra_data;
 	}
-	public String[] get_tessellation_material(int body_id,int face_id,int loop_id,int edge_id,int tessellation_point_id)
+	public String[] get_edge_material(int body_id,int face_id,int loop_id,int edge_id,int point_id)
 	{
 		face_edge fe=body_array[body_id].face_array[face_id].fa_curve.f_loop[loop_id].edge[edge_id];
-		return ((tessellation_point_id%2)==0)?fe.start_point_material:fe.end_point_material;
+		return ((point_id%2)==0)?fe.start_point_material:fe.end_point_material;
+	}
+	public double[]get_point_location_data(int body_id,int face_id,int loop_id,int edge_id,int point_id)
+	{
+		return new double[] {0,0,0,1};
+	}
+	public String get_point_extra_data(int body_id,int face_id,int loop_id,int edge_id,int point_id)
+	{
+		return "1";
+	}
+	public String[] get_point_material(int body_id,int face_id,int loop_id,int edge_id,int point_id)
+	{
+		return new String[] {"0","0","0","1"};
 	}
 	public void destroy(long my_max_compress_file_length,int my_response_block_size)
 	{

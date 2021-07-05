@@ -1,0 +1,35 @@
+package old_convert;
+
+import format_convert.old_obj_converter;
+import kernel_file_manager.file_writer;
+
+public class file_converter
+{
+	public static boolean convert(int converter_flag,
+			String file_name,		String mesh_charset,
+			String target_file_name,String target_charset)
+	{
+		int index_id;
+		if((index_id=file_name.lastIndexOf('.'))<0)
+			return false;
+		String type_str=file_name.substring(index_id).toLowerCase();
+
+		switch(type_str){
+		case ".obj":
+			if(converter_flag>=0)
+				new old_obj_converter(file_name,mesh_charset,target_file_name,target_charset);
+			break;
+		case ".inp":
+			if(converter_flag>=0)
+				new inp_converter(file_name,mesh_charset,target_file_name,target_charset);
+			break;
+		default:
+			return false;
+		};
+		if(converter_flag<0)
+			file_writer.file_delete(target_file_name);
+		if(converter_flag>0)
+			file_writer.delete_comment(target_file_name,target_charset);
+		return true;
+	}
+}

@@ -260,18 +260,18 @@ public class stl_converter
 		
 		fw=new file_writer(target_file_name,target_charset);
 		
-		fw.println("/*	version				*/	2021.07.01");
-		fw.println("/*	origin material		*/	0	0	0	0");
-		fw.println("/*	default material	*/	0	0	0	0");
+		fw.println("/*	version					*/	2021.07.01");
+		fw.println("/*	origin material			*/	0	0	0	0");
+		fw.println("/*	default material		*/	0	0	0	0");
 		fw.println("/*	max_attribute_number	*/	0");
 
 		fw.println("/*	body_number	*/	1");
-		fw.println("	/* body  0  name   */  body_0   /*   face_number   */  1");
-		fw.println("		/* face  0  name   */  body_0_face_0");
-		fw.println("			/* face_type   */  unknown  /*   parameter_number   */  0 /*   parameter  */");
-		fw.println("			/* total_face_primitive_number */ ",triangle_number);
-		fw.println("			/* face_attribute_number 		*/ 0");
-		fw.print  ("			/* face_face_box				*/");
+		fw.println("	/* body  0  name	*/	body_0	/*	face_number	*/	1");
+		fw.println("		/* face  0  name	*/  body_0_face_0");
+		fw.println("			/*	face_type   */  unknown		/*	parameter_number	*/	0	/*	parameter	*/");
+		fw.println("			/*	total_face_primitive_number	*/	",triangle_number);
+		fw.println("			/*	face_attribute_number		*/	0");
+		fw.print  ("			/*	face_face_box				*/");
 		if(box_data==null)
 			fw.print  ("	nobox");
 		else
@@ -279,8 +279,21 @@ public class stl_converter
 				fw.print  ("	",box_data[i]);
 		fw.println();
 		
-		fw.println("			/* face_loop_number   */ 0");
+		fw.println("			/*	face_loop_number			*/	0");
 		
 		fw.close();
+	}
+	
+	public static void main(String args[])
+	{
+		debug_information.println("Begin");
+		
+		new  stl_converter(
+				"E:\\water_all\\data\\project\\part\\other_part\\part_stl\\part\\part_1.stl",
+				"GBK",
+				"E:\\temp\\part_0.mesh",
+				"GBK");
+		
+		debug_information.println("End");
 	}
 }

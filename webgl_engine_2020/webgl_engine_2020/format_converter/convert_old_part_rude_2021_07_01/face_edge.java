@@ -18,9 +18,6 @@ public class face_edge
 	}
 	public void free_memory()
 	{
-		if(curve_type!=null)
-			if(curve_type.compareTo("point_set")==0)
-				return;
 		if(edge!=null){
 			edge.destroy();
 			edge=null;

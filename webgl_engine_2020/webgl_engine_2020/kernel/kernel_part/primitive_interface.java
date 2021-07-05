@@ -14,9 +14,13 @@ public interface primitive_interface
 	public double[]get_primitive_vertex_attribute_data(int body_id,int face_id,int primitive_id,int vertex_id,int attribute_id);
 	public String get_primitive_vertex_attribute_extra_data(int body_id,int face_id,int primitive_id,int vertex_id,int attribute_id);
 
-	public double[]get_tessellation_location_data(int body_id,int face_id,int loop_id,int edge_id,int tessellation_point_id);
-	public String get_tessellation_extra_data(int body_id,int face_id,int loop_id,int edge_id,int tessellation_point_id);
-	public String[] get_tessellation_material(int body_id,int face_id,int loop_id,int edge_id,int tessellation_point_id);
+	public double[]get_edge_location_data(int body_id,int face_id,int loop_id,int edge_id,int point_id);
+	public String get_edge_extra_data(int body_id,int face_id,int loop_id,int edge_id,int point_id);
+	public String[] get_edge_material(int body_id,int face_id,int loop_id,int edge_id,int point_id);
+	
+	public double[]get_point_location_data(int body_id,int face_id,int loop_id,int edge_id,int point_id);
+	public String get_point_extra_data(int body_id,int face_id,int loop_id,int edge_id,int point_id);
+	public String[] get_point_material(int body_id,int face_id,int loop_id,int edge_id,int point_id);
 	
 	public void destroy(long my_max_compress_file_length,int my_response_block_size);
 }

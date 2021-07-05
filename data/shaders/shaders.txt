@@ -27,7 +27,6 @@
 /*	render_23	*/	driver_radar.extended_render_driver							driver_controller\radar\render.list
 /*	render_24	*/	driver_text_token.extended_render_driver					driver_controller\text_token\render.list
 
-
 /*	******************************		driver_lession		********************************************	*/
 /*	render_25	*/	driver_lession_00_start_driver.extended_render_driver							driver_lession\lession_00_start_driver\render.list
 /*	render_26	*/	driver_lession_01_modify_location_at_server.extended_render_driver				driver_lession\lession_01_modify_location_at_server\render.list
@@ -62,4 +61,3 @@
 
 /*	########################	driver_project_boat_2011	#######################		*/
 /*	render_49	*/	driver_opengl_fixed_pipeline.extended_render_driver								..\project\boat\part\render.list
-	

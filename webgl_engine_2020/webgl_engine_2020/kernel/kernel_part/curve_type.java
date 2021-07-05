@@ -13,10 +13,16 @@ public class curve_type
 			return 2;
 		case "ellipse":
 			return 3;
-		case "point_set":
+		case "hyperbola":
 			return 4;
-		case "segment":
+		case "parabola":
 			return 5;
+		case "segment":
+			return 6;
+		case "pickup_point_set":
+			return 7;
+		case "render_point_set":
+			return 8;
 		}
 	}
 }

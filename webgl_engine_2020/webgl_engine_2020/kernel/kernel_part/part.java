@@ -131,7 +131,7 @@ public class part
 				part_par.max_file_data_length,part_par.create_edge_buffer_object_bitmap)).gbocc;
 			break;
 		case "point":
-			gbocc=(new graphics_buffer_object_for_point(
+			gbocc=(new graphics_buffer_object_for_point(p_i,
 				max_material_id,this,file_name+"."+front_str,buffer_object_data_charset,
 				part_par.max_file_data_length,part_par.create_point_buffer_object_bitmap)).gbocc;
 			break;
