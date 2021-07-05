@@ -1,0 +1,17 @@
+package kernel_common_class;
+
+import java.util.concurrent.locks.ReentrantLock;
+
+public class exclusive_name_mutex 
+{
+	private int name_number;
+	private String name_array[];
+	private ReentrantLock mutex_lock;
+	
+	public exclusive_name_mutex()
+	{
+		name_number	=0;
+		name_array	=new String[0];
+		mutex_lock	=new ReentrantLock();
+	}
+}

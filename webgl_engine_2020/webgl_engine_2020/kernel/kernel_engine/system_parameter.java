@@ -5,7 +5,8 @@ import java.nio.charset.Charset;
 
 import kernel_common_class.change_name;
 import kernel_common_class.debug_information;
-import kernel_common_class.exclusive_mutex;
+import kernel_common_class.exclusive_number_mutex;
+import kernel_common_class.exclusive_name_mutex;
 import kernel_file_manager.file_reader;
 import kernel_content_type.get_content_type_change_name;
 
@@ -37,7 +38,9 @@ public class system_parameter
 	
 	public boolean debug_mode_flag;
 	
-	public exclusive_mutex system_exclusive_mutex;
+	public exclusive_number_mutex system_exclusive_number_mutex;
+	public exclusive_name_mutex   system_exclusive_name_mutex;
+	
 	public change_name language_change_name,content_type_change_name;
 	public proxy_parameter proxy_par;
 
@@ -82,7 +85,8 @@ public class system_parameter
 		
 		debug_mode_flag					=sp.debug_mode_flag;
 		
-		system_exclusive_mutex			=sp.system_exclusive_mutex;
+		system_exclusive_number_mutex	=sp.system_exclusive_number_mutex;
+		system_exclusive_name_mutex		=sp.system_exclusive_name_mutex;
 		content_type_change_name		=new change_name(sp.content_type_change_name,false);
 		language_change_name			=new change_name(sp.language_change_name,false);
 		
@@ -194,7 +198,8 @@ public class system_parameter
 		
 		f.close();
 		
-		system_exclusive_mutex=new exclusive_mutex();
+		system_exclusive_number_mutex=new exclusive_number_mutex();
+		system_exclusive_name_mutex=new exclusive_name_mutex();
 		
 		proxy_par=new proxy_parameter(proxy_configure_file_name,local_data_charset);
 		language_change_name=new change_name(

@@ -8,7 +8,6 @@ import kernel_program_reader.program_file_reader;
 import kernel_render.render_container;
 import kernel_common_class.common_reader;
 import kernel_common_class.debug_information;
-import kernel_common_class.exclusive_file_mutex;
 
 public class copy_program 
 {
@@ -72,7 +71,7 @@ public class copy_program
 				continue;
 			}
 			
-			exclusive_file_mutex enm=exclusive_file_mutex.lock(lock_file_name);
+			system_par.system_exclusive_name_mutex.lock(lock_file_name);
 			file_writer fw=new file_writer(program_file_name,system_par.network_data_charset);
 			
 			fw.print  ("[",render_cont.renders[i].parts[0].permanent_render_id);
@@ -138,7 +137,7 @@ public class copy_program
 			fw.println("]");
 			fw.close();
 			
-			enm.unlock();
+			system_par.system_exclusive_name_mutex.unlock(lock_file_name);
 			
 			if(ret_val<(program_last_time=new File(fw.directory_name+fw.file_name).lastModified()))
 				ret_val=program_last_time;

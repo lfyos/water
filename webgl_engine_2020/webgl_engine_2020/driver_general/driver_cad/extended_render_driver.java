@@ -99,7 +99,7 @@ public class extended_render_driver extends render_driver
 		light_file_name			=render_fr.directory_name+par_list_file_name;
 		light_file_charset		=render_fr.get_charset();
 
-		zip_file.unzip_directory(assemble_directory_name);
+		zip_file.unzip_directory(assemble_directory_name,system_par.system_exclusive_name_mutex);
 		file_writer.file_touch(assemble_directory_name,false);
 		
 		String movement_assemble_file_name=assemble_directory_name+"movement.assemble";

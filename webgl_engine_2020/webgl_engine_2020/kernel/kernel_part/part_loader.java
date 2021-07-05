@@ -1,7 +1,6 @@
 package kernel_part;
 
 import kernel_common_class.debug_information;
-import kernel_common_class.exclusive_file_mutex;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_directory;
@@ -66,7 +65,7 @@ public class part_loader extends Thread
 		debug_information.println(
 				"Begin lock part:\t",loaded_part.system_name+"\t"+lock_file_name);
 		
-		exclusive_file_mutex efm=exclusive_file_mutex.lock(lock_file_name);
+		system_par.system_exclusive_name_mutex.lock(lock_file_name);
 		try{
 			debug_information.println(
 				loaded_part.load_mesh_and_create_buffer_object(
@@ -78,7 +77,7 @@ public class part_loader extends Thread
 			debug_information.println(e.toString());
 			e.printStackTrace();
 		}
-		efm.unlock();
+		system_par.system_exclusive_name_mutex.unlock(lock_file_name);
    
     	debug_information.println(
             	"End load_mesh_and_create_buffer_object_and_material_file:\t",loaded_part.system_name);

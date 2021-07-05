@@ -17,9 +17,9 @@
 /*	create_buffer_object_bitmap			*/		0x7fffffffffffffff	0x7fffffffffffffff	0x7fffffffffffffff
 
 /*	max_component_buffer_data_number	*/		2
-/*	max_part_load_thread_number			*/		4
-/*	max_mesh_load_thread_number			*/		3
-/*	max_part_list_load_thread_number	*/		2
+/*	max_part_load_thread_number			*/		16
+/*	max_mesh_load_thread_number			*/		8
+/*	max_part_list_load_thread_number	*/		8
 
 /*	do_create_bottom_box_flag			*/		false
 /*	combine_to_part_package_flag		*/		true

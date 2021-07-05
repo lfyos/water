@@ -1,0 +1,53 @@
+package kernel_common_class;
+
+import java.util.concurrent.locks.ReentrantLock;
+
+public class exclusive_name_mutex 
+{
+	private int name_number;
+	private String name_array[];
+	private ReentrantLock mutex_lock;
+	private long sleep_time_length,max_time_length;
+	
+	private void lock(String my_name)
+	{
+		mutex_lock.lock();
+		
+		for(int begin_pointer=0,end_pointer=name_number-1;begin_pointer<=end_pointer;) {
+			int middle_pointer=(begin_pointer+end_pointer)/2;
+			int cmp_result=my_name.compareTo(name_array[middle_pointer]);
+			if(cmp_result<0) {
+				end_pointer=middle_pointer-1;
+				continue;
+			}else if(cmp_result>0)
+				begin_pointer=middle_pointer+1;
+			else{
+				if((sleep_time_length=(long)Math.round(1.2*sleep_time_length))>max_time_length)
+					sleep_time_length=max_time_length;
+				long this_sleep_time_length=(long)(Math.round(Math.random()*sleep_time_length));
+				this_sleep_time_length=(this_sleep_time_length<=0)?1:this_sleep_time_length;
+				try {
+					Thread.sleep(this_sleep_time_length);
+					continue;
+				}catch(Exception e) {
+					debug_information.println("lock_number:max_lock_number/"+max_lock_number,
+							",sleep_time_length/"+this_sleep_time_length+"\t"+e.toString());
+					e.printStackTrace();
+					Thread.yield();
+				}
+			}
+		}
+		
+		
+		mutex_lock.unlock();
+	}
+	public exclusive_name_mutex()
+	{
+		name_number	=0;
+		name_array	=new String[0];
+		mutex_lock	=new ReentrantLock();
+		
+		sleep_time_length=4;
+		max_time_length=64*1024;
+	}
+}

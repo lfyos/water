@@ -3,7 +3,6 @@ package kernel_render;
 import java.io.File;
 
 import kernel_common_class.debug_information;
-import kernel_common_class.exclusive_file_mutex;
 import kernel_driver.render_driver;
 import kernel_engine.part_type_string_sorter;
 import kernel_engine.scene_parameter;
@@ -237,12 +236,12 @@ public class render_container
 			}else
 				str="";
 
-			exclusive_file_mutex efm=exclusive_file_mutex.lock(extract_file_directory+"extract_file.lock");
+			system_par.system_exclusive_name_mutex.lock(extract_file_directory+"extract_file.lock");
 			
-			if(system_par.system_exclusive_mutex!=null)
+			if(system_par.system_exclusive_number_mutex!=null)
 				debug_information.println("load_render lock number result is ",
-						system_par.system_exclusive_mutex.lock_number(
-								part_par.max_part_list_load_thread_number));
+					system_par.system_exclusive_number_mutex.lock_number(
+							part_par.max_part_list_load_thread_number));
 
 			debug_information.println("		part list file:	",par_list_file_name+"			"+str);
 			
@@ -272,11 +271,11 @@ public class render_container
 					else
 						part_list_file_charset=f_render_list.get_charset();
 				}
-			if(system_par.system_exclusive_mutex!=null)
+			if(system_par.system_exclusive_number_mutex!=null)
 				debug_information.println("load_render unlock number result is ",
-						system_par.system_exclusive_mutex.unlock_number());
+					system_par.system_exclusive_number_mutex.unlock_number());
 			
-			efm.unlock();
+			system_par.system_exclusive_name_mutex.unlock(extract_file_directory+"extract_file.lock");
 
 			if(giveup_part_load_flag||(par_list_file_name==null))
 				continue;

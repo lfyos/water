@@ -96,7 +96,8 @@ public class zip_file
 		
 		return null;
 	}
-	public static String unzip_directory(String directory_name)
+	public static String unzip_directory(
+			String directory_name,exclusive_name_mutex system_exclusive_name_mutex)
 	{
 		directory_name=file_reader.separator(directory_name);
 		for(int i=directory_name.length()-1;i>=0;i--)
@@ -108,7 +109,8 @@ public class zip_file
 		String zip_file_name=directory_name+".zip";
 		File f=new File(zip_file_name);
 		if(f.exists()){
-			exclusive_file_mutex efm=exclusive_file_mutex.lock(lock_file_name);
+			if(system_exclusive_name_mutex!=null)
+				system_exclusive_name_mutex.lock(lock_file_name);
 			try{
 				if(f.exists()){
 					directory_name+=File.separator;
@@ -121,17 +123,10 @@ public class zip_file
 				debug_information.println("zip_file_name:	",zip_file_name);
 				debug_information.println("unzip_directory execption:	",e.toString());
 				e.printStackTrace();
-			}	
-			efm.unlock();
+			}
+			if(system_exclusive_name_mutex!=null)
+				system_exclusive_name_mutex.unlock(lock_file_name);
 		}
 		return lock_file_name;
 	}
-	public static void main(String args[])
-	{ 
-		System.out.println("Begin");
-		
-		unzip_directory("c:\\temp\\a.step");
-		
-		System.out.println("Done!");
-    } 
 }

@@ -1,0 +1,6 @@
+package kernel_common_class;
+
+public class exclusive_number_mutex 
+{
+
+}

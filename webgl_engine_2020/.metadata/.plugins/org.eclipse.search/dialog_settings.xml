@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="">
-		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
+		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
+		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
 	</section>
 	<section name="SearchDialog.ScopePart">
 		<item key="scope" value="0"/>
@@ -17,7 +18,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Begin creating top box&#x09;min_expand_part_number"/>
+			<item key="textPattern" value="part:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.java"/>
@@ -29,7 +30,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Begin load_mesh_and_create_buffer_objec"/>
+			<item key="textPattern" value="Begin creating top box"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.java"/>
@@ -41,7 +42,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="part:"/>
+			<item key="textPattern" value="start_not_effective"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.java"/>
@@ -53,7 +54,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="create_mesh_and_material_routine"/>
+			<item key="textPattern" value="part:&#x09;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.java"/>
@@ -65,7 +66,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Begin creating top box"/>
+			<item key="textPattern" value="external_part_driver driver assemble_file_name_and_file_charset error(par==null)"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.java"/>
@@ -90,7 +91,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="create_file_proxy_url error"/>
+			<item key="textPattern" value="create_mesh_and_material_routine exception"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.java"/>
@@ -102,7 +103,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="part:&#x09;"/>
+			<item key="textPattern" value="Begin creating top box&#x09;min_expand_part_number"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.java"/>
@@ -114,7 +115,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="create_mesh_and_material_routine exception"/>
+			<item key="textPattern" value="Begin load_mesh_and_create_buffer_objec"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.java"/>
@@ -126,7 +127,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="start_not_effective"/>
+			<item key="textPattern" value="_point_set&quot;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.java"/>
@@ -138,7 +139,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="external_part_driver driver assemble_file_name_and_file_charset error(par==null)"/>
+			<item key="textPattern" value="&quot;point_set&quot;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.java"/>
@@ -150,7 +151,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="_point_set&quot;"/>
+			<item key="textPattern" value="lock exclusive_file_mutex"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.java"/>
@@ -162,7 +163,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;point_set&quot;"/>
+			<item key="textPattern" value="current part loading number is"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.java"/>
@@ -220,6 +221,7 @@
 		<item key="DIALOG_Y_ORIGIN" value="242"/>
 	</section>
 	<section name="">
+		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
 		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
 		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
 	</section>

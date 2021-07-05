@@ -57,15 +57,14 @@ public class part_driver
 		if(!(new File(my_file_path).exists()))
 			return null;
 		
-		kernel_common_class.exclusive_file_mutex my_lock;
-		my_lock=kernel_common_class.exclusive_file_mutex.lock(my_file_path+".lock");
+		system_par.system_exclusive_name_mutex.lock(my_file_path+".lock");
 	
 		file_reader fr=new file_reader(my_file_path,p.file_charset);
 		fr.mark_start();
 		String version_str=fr.get_string();
 		if(version_str!=null)
 			if(version_str.compareTo("2021.07.01")==0) {
-				my_lock.unlock();
+				system_par.system_exclusive_name_mutex.unlock(my_file_path+".lock");
 				
 				fr.mark_terminate(true);
 				part_rude ret_val=new part_rude(fr,p.part_par.scale_value);
@@ -87,7 +86,7 @@ public class part_driver
 		file_writer.file_delete(targety_file_path+".face");
 		file_writer.file_delete(targety_file_path+".edge");
 		
-		my_lock.unlock();
+		system_par.system_exclusive_name_mutex.unlock(my_file_path+".lock");
 		
 		fr=new file_reader(my_file_path,p.file_charset);
 		part_rude ret_val=new part_rude(fr,p.part_par.scale_value);

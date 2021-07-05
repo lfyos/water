@@ -281,13 +281,13 @@ public class part
 		
 		debug_information.println(
 				"Begin:\tlock_number:\t"+system_name+"\t"+Integer.toString(part_par.max_mesh_load_thread_number)+"\t",
-				system_par.system_exclusive_mutex.get_lock_number());
+				system_par.system_exclusive_number_mutex.get_lock_number());
 		
-		system_par.system_exclusive_mutex.lock_number(part_par.max_mesh_load_thread_number);
+		system_par.system_exclusive_number_mutex.lock_number(part_par.max_mesh_load_thread_number);
 		
 		debug_information.println("End:\tlock_number:\t"+system_name
 				+"\t"+Integer.toString(part_par.max_mesh_load_thread_number)
-				+"\t"+system_par.system_exclusive_mutex.get_lock_number());
+				+"\t"+system_par.system_exclusive_number_mutex.get_lock_number());
 
 		try{
 			ret_val=create_mesh_and_material_routine(part_temporary_file_directory,
@@ -298,11 +298,11 @@ public class part
 			e.printStackTrace();
 		}
 		
-		system_par.system_exclusive_mutex.unlock_number();
+		system_par.system_exclusive_number_mutex.unlock_number();
 		
 		debug_information.println(
 			"End:\tunlock_number:\t"+system_name+"\t"+Integer.toString(part_par.max_mesh_load_thread_number)+"\t",
-			system_par.system_exclusive_mutex.get_lock_number());
+			system_par.system_exclusive_number_mutex.get_lock_number());
 		
 		return ret_val;
 	}

@@ -6,7 +6,6 @@ import kernel_render.render_target;
 import kernel_render.render_target_container;
 import kernel_transformation.plane;
 import kernel_camera.camera_result;
-import kernel_common_class.exclusive_file_mutex;
 import kernel_component.component_collector;
 import kernel_driver.instance_driver_container;
 import kernel_interface.user_statistics;
@@ -272,7 +271,7 @@ public class client_information
 	public client_information(client_request_response my_request_response,
 			engine_kernel ek,user_statistics my_statistics_user,interface_statistics my_statistics_interface)
 	{
-		exclusive_file_mutex efm=exclusive_file_mutex.lock(
+		ek.system_par.system_exclusive_name_mutex.lock(
 				ek.scene_par.scene_proxy_directory_name+"engine.lock");
 
 		render_buffer					=new buffer_container(ek);
@@ -308,7 +307,8 @@ public class client_information
 		message_display		=new display_message();				
 		creation_parameter	=new client_creation_parameter(ek,request_response);
 		
-		efm.unlock();
+		ek.system_par.system_exclusive_name_mutex.unlock(
+				ek.scene_par.scene_proxy_directory_name+"engine.lock");
 		
 		return;
 	}

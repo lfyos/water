@@ -8,7 +8,6 @@ import java.io.FileInputStream;
 import java.util.Base64;
 
 import kernel_common_class.debug_information;
-import kernel_common_class.exclusive_file_mutex;
 import kernel_common_class.nanosecond_timer;
 import kernel_engine.engine_call_result;
 import kernel_engine.system_parameter;
@@ -263,7 +262,7 @@ public class client_request_response extends common_writer
 
 		if((ecr.charset_file_name!=null)&&(ecr.file_charset!=null))
 			if(system_par.network_data_charset.compareTo(ecr.file_charset)!=0){
-				exclusive_file_mutex efm=exclusive_file_mutex.lock(ecr.charset_file_name+".lock");
+				system_par.system_exclusive_name_mutex.lock(ecr.charset_file_name+".lock");
 				try {
 					long s=new File(file_name).lastModified();
 					long t=new File(ecr.charset_file_name).lastModified();
@@ -274,7 +273,7 @@ public class client_request_response extends common_writer
 					debug_information.println("response_file_data exception 1\t",e.toString());
 					e.printStackTrace();
 				}
-				efm.unlock();
+				system_par.system_exclusive_name_mutex.unlock(ecr.charset_file_name+".lock");
 				file_name=ecr.charset_file_name;
 				network_data_charset=system_par.network_data_charset;
 			}
@@ -296,7 +295,7 @@ public class client_request_response extends common_writer
 				break;
 			default:
 				String compress_file_name=ecr.compress_file_name+"."+compress_response_header;
-				exclusive_file_mutex efm=exclusive_file_mutex.lock(compress_file_name+".lock");
+				system_par.system_exclusive_name_mutex.lock(compress_file_name+".lock");
 				try {
 					File gf=new File(compress_file_name);
 					if(f.lastModified()<gf.lastModified())
@@ -311,7 +310,7 @@ public class client_request_response extends common_writer
 					debug_information.println("response_file_data exception 2\t",e.toString());
 					e.printStackTrace();
 				}
-				efm.unlock();
+				system_par.system_exclusive_name_mutex.unlock(compress_file_name+".lock");
 				break;
 			}
 

@@ -4,7 +4,6 @@ import java.io.File;
 
 import kernel_common_class.debug_information;
 import kernel_common_class.compress_file_data;
-import kernel_common_class.exclusive_file_mutex;
 import kernel_file_manager.file_directory;
 import kernel_file_manager.file_writer;
 import kernel_part.part;
@@ -128,7 +127,7 @@ public class part_package
 				package_flag			=new boolean[package_number];
 				
 				String package_directory_name=file_directory.system_package_directory(part_type_id,system_par,scene_par);
-				exclusive_file_mutex efm=exclusive_file_mutex.lock(package_directory_name+"package.lock");
+				system_par.system_exclusive_name_mutex.lock(package_directory_name+"package.lock");
 				try {
 					file_writer list_file_writer=null;
 					for(int i=0,package_id=0;i<package_number;i++){
@@ -220,7 +219,7 @@ public class part_package
 						package_directory_name+"\t"+e.toString());
 					e.printStackTrace();
 				}
-				efm.unlock();
+				system_par.system_exclusive_name_mutex.unlock(package_directory_name+"package.lock");
 			}
 		}
 		

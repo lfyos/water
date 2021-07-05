@@ -19,7 +19,6 @@ import kernel_render.create_assemble_part;
 import kernel_driver.component_driver;
 import kernel_part.part_loader_container;
 import kernel_common_class.debug_information;
-import kernel_common_class.exclusive_file_mutex;
 
 public class engine_kernel
 {
@@ -319,10 +318,11 @@ public class engine_kernel
 	}
 	public void load(client_request_response request_response)
 	{
-		exclusive_file_mutex efm=exclusive_file_mutex.lock(
+		system_par.system_exclusive_name_mutex.lock(
 				scene_par.scene_proxy_directory_name+"engine.lock");
 		load_routine(request_response);
-		efm.unlock();
+		system_par.system_exclusive_name_mutex.unlock(
+				scene_par.scene_proxy_directory_name+"engine.lock");
 	}
 	private boolean reset_flag;
 	public void mark_reset_flag()
