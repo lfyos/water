@@ -3,7 +3,7 @@
 /*	render_1	*/	driver_background.extended_render_driver					driver_general\background\render.list
 /*	render_2	*/	driver_caption.extended_render_driver						driver_general\caption\render.list	
 /*	render_3	*/	driver_coordinate.extended_render_driver					driver_general\coordinate\render.list
-/*	render_4	*/	driver_find_visible.extended_render_driver					driver_general\find_visible\render.list
+/*	render_4	*/	driver_trace_primitive.extended_render_driver				driver_general\driver_trace_primitive\render.list
 /*	render_5	*/	driver_movement.extended_render_driver						driver_general\movement\render.list
 /*	render_6	*/	driver_proxy.extended_render_driver							driver_general\proxy\render.list
 /*	render_6	*/	driver_render_target_register.extended_render_driver		driver_general\render_target_register\render.list
@@ -49,6 +49,7 @@
 /*	render_43	*/	driver_lession_18_dynamic_environment_mapping_texture.extended_render_driver	driver_lession\lession_18_dynamic_environment_mapping_texture\render.list
 /*	render_44	*/	driver_lession_19_caculate_color.extended_render_driver							driver_lession\lession_19_caculate_color\render.list
 
+
 /*	########################	driver_project		#######################		*/
 /*	render_45	*/	driver_opengl_fixed_pipeline.extended_render_driver								..\project\part\solidworks\render.list
 /*	render_46	*/	driver_territory.extended_render_driver											..\project\part\territory\render.list
@@ -61,3 +62,4 @@
 
 /*	########################	driver_project_boat_2011	#######################		*/
 /*	render_49	*/	driver_opengl_fixed_pipeline.extended_render_driver								..\project\boat\part\render.list
+

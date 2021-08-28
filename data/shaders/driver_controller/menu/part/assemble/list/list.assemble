@@ -18,11 +18,11 @@
 				
 				switch(function_id){
 				case 0:
-					render.user_call_processor.turnon_control_panel(
+					render.debug_call_processor.turnon_control_panel(
 						render.system_call_processor.collector_list_webpage_url("simple"));
 					break;
 				case 1:
-					render.user_call_processor.turnoff_control_panel();
+					render.debug_call_processor.turnoff_control_panel();
 					break;
 				case 2:
 					window.open(render.system_call_processor.collector_list_jason_part_url(),"_blank");

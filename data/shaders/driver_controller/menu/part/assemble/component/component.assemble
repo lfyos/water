@@ -39,10 +39,10 @@
 								render.system_call_processor.clip_onoff_component(false);
 								break;
 							case 5:	//执行爆炸视图
-								render.system_call_processor.explose_onoff_component(true,0,0.2);
+								render.system_call_processor.explose_onoff_component(true,0.2);
 								break;
 							case 6:	//取消爆炸视图
-								render.system_call_processor.explose_onoff_component(false,0,0.2);
+								render.system_call_processor.explose_onoff_component(false,0.2);
 								break;
 							case 7:	//设置透明
 								render.system_call_processor.set_component_transparency(0.05);

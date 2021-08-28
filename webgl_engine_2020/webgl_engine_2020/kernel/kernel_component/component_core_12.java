@@ -7,10 +7,9 @@ import kernel_part.part_container_for_part_search;
 import kernel_engine.engine_kernel;
 import kernel_engine.part_type_string_sorter;
 
-
 public class component_core_12  extends component_core_11
 {
-public boolean selected_component_family_flag,can_display_assembly_set_flag;
+	public boolean selected_component_family_flag,can_display_assembly_set_flag;
 	
 	private boolean can_display_assembly_flag[];
 	
@@ -19,10 +18,9 @@ public boolean selected_component_family_flag,can_display_assembly_set_flag;
 		super.destroy();
 		can_display_assembly_flag=null;
 	}
-	
 	public boolean get_can_display_assembly_flag(int parameter_channel_id)
 	{
-		return can_display_assembly_flag[parameter_channel_id]&can_display_assembly_set_flag;
+		return can_display_assembly_flag[parameter_channel_id]&&can_display_assembly_set_flag;
 	}
 	public boolean caculate_assembly_flag(int parameter_channel_id)
 	{
@@ -51,7 +49,6 @@ public boolean selected_component_family_flag,can_display_assembly_set_flag;
 		}
 		return (can_display_assembly_flag[parameter_channel_id])^old_value;
 	}
-	
 	public component_core_12(String token_string,
 			engine_kernel ek,client_request_response request_response,
 			file_reader fr,part_container_for_part_search pcfps,

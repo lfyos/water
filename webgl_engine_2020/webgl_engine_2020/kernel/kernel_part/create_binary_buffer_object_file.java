@@ -71,8 +71,7 @@ public class create_binary_buffer_object_file
 			fos=null;
 		}
 	}
-	public static void create(
-		boolean delete_buffer_object_text_file_flag,int response_block_size,
+	public static void create(int response_block_size,
 		String my_source_charset,String my_target_charset,String root_file_name)
 	{
 		String my_tmp_file_name			=root_file_name+".tmp";
@@ -81,8 +80,7 @@ public class create_binary_buffer_object_file
 		
 		file_writer.charset_copy(my_head_file_name,
 				my_source_charset,my_tmp_file_name,my_target_charset);
-		if(delete_buffer_object_text_file_flag)
-			file_writer.file_delete(my_head_file_name);
+		file_writer.file_delete(my_head_file_name);
 		compress_file_data.do_compress(new File(my_tmp_file_name),
 				new File(my_head_gzip_file_name),response_block_size,"gzip");
 		String file_type[]=new String[]{".face",".edge",".point"};
@@ -99,8 +97,7 @@ public class create_binary_buffer_object_file
 					compress_file_data.do_compress(new File(my_tmp_file_name),
 						new File(my_gzip_file_name),response_block_size,"gzip");
 				}
-				if(delete_buffer_object_text_file_flag)
-					file_writer.file_delete(my_text_file_name);
+				file_writer.file_delete(my_text_file_name);
 			}
 		}
 		file_writer.file_delete(my_tmp_file_name);

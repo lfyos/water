@@ -43,6 +43,9 @@ namespace extract_solidworks_data
                 else
                     texture_file_name = texture_file;
             }
+
+            material_writer.WriteLine("     /*		caculate_color_parameter									*/      "
+                + red + "   " + green + "   " + blue + "   1") ;
             material_writer.WriteLine("     /*	    ambient,diffuse,specular,shininess,transparency,emission    */      "
                 + ambient + "   " + diffuse + "     " + specular + "    " + shininess + "   " + transparency + "    " + emission);
             material_writer.WriteLine("     /*	    texture file name                                           */      " + texture_file_name);

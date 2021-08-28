@@ -1,6 +1,9 @@
-/*	version					*/	2021.07.01
+/*	version					*/	2021.07.15
 /*	origin material			*/	0	0	0	0
 /*	default material		*/	0	0	0	0
+/*	origin  vertex_location_extra_data	*/	1
+/*	default vertex_location_extra_data	*/	1
+/*	default vertex_normal_extra_data	*/	1
 /*	max_attribute_number	*/	1
 	1.2959475380286355E7	1.2303798974988516E7	3.5988001E7	1
 /*	body_number	*/	1
@@ -18,7 +21,8 @@
 				/*	curve_type		*/	segment		/* parameter_number  */  0 /* parameter */
 				start_not_effective
 				end_not_effective
-				/*	curve point material				*/      0    0    0    1
+				/*  parameter_point_extra_data		*/	1
+				/*	parameter_point_material		*/  0    0    0    1
 				/*	box definition						*/		nobox
 				/*	total_edge_primitive_number			*/		0
 				/*	total_point_primitive_number		*/		0

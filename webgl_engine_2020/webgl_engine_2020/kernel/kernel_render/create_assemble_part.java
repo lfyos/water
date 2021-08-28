@@ -10,7 +10,6 @@ import kernel_part.part;
 import kernel_part.part_container_for_part_search;
 import kernel_part.part_loader;
 import kernel_part.part_parameter;
-import kernel_part.part_rude;
 import kernel_part.part_loader_container;
 import kernel_render.render_container;
 
@@ -71,11 +70,10 @@ public class create_assemble_part
 			give_up_number++;
 			return 0;
 		}else {
-			int my_part_number=0;
+			part_number[p.component_id]=0;
 			for(int i=0;i<children_number;i++)
-				my_part_number+=caculate_part_number(p.children[i]);
-			part_number[p.component_id]=my_part_number;
-			return my_part_number;
+				part_number[p.component_id]+=caculate_part_number(p.children[i]);
+			return part_number[p.component_id];
 		}
 	}
 	private component get_heap_component()
@@ -154,18 +152,6 @@ public class create_assemble_part
 		}
 		return;
 	}
-	private part caculate_assemble_part(component comp)
-	{
-		part ret_val;
-		for(int i=0,children_number=comp.children_number();i<children_number;i++)
-			if((ret_val=caculate_assemble_part(comp.children[i]))!=null)
-				return ret_val;
-		for(int i=0,driver_number=comp.driver_number();i<driver_number;i++)
-			if((ret_val=comp.driver_array[i].component_part)!=null)
-				if(ret_val.driver!=null)
-					return ret_val;
-		return null;
-	}
 	private part_parameter create_assemble_part_parameter(part p,long my_last_modified_time,
 		double create_top_part_assembly_precision2,double create_top_part_discard_precision2)
 	{
@@ -185,7 +171,6 @@ public class create_assemble_part
 				p.part_par.max_comment_file_length,
 				p.part_par.max_compress_file_length,
 				
-				1.0,
 				p.part_par.lod_precision_scale,
 				
 				create_top_part_assembly_precision2,
@@ -204,7 +189,6 @@ public class create_assemble_part
 				false,
 				
 				p.part_par.combine_to_part_package_flag,
-				p.part_par.delete_buffer_object_text_file_flag,
 				p.part_par.clear_model_file_flag);
 		
 	}
@@ -219,16 +203,16 @@ public class create_assemble_part
 			system_parameter system_par,scene_parameter scene_par,
 			part_container_for_part_search pcps,long last_modified_time)
 	{
-		int max_component_number		=root_component.component_id+1;
+		int max_component_number			=root_component.component_id+1;
 		
-		can_create_assemble_part_name	=new String[max_component_number];
-		part_number						=new int[max_component_number];
-		component_heap					=new component[max_component_number];
+		can_create_assemble_part_name		=new String[max_component_number];
+		part_number							=new int[max_component_number];
+		component_heap						=new component[max_component_number];
 		
 		for(int i=0;i<max_component_number;i++){
 			can_create_assemble_part_name[i]=null;
-			part_number[i]=0;
-			component_heap[i]=null;
+			part_number[i]					=0;
+			component_heap[i]				=null;
 		}
 		
 		do_test(root_component);
@@ -252,8 +236,6 @@ public class create_assemble_part
 				register_component(expand_p.children[i]);
 		}
 
-		top_box_part=new part[component_number];
-		
 		debug_information.println();
 		debug_information.print  ("Begin creating top box");
 		debug_information.print  ("\tmin_expand_part_number:",min_expand_part_number);
@@ -264,57 +246,46 @@ public class create_assemble_part
 		
 		part_loader already_loaded_part[]=new part_loader[]{};
 		int create_part_number=0,add_part_number=0;
+		top_box_part=new part[component_number];
 		
 		while(component_number>0){
 			if((create_part_number+min_left_part_number)>=all_part_number)
 				break;
-			int my_create_part_number=0;
-			my_create_part_number+=part_number[component_heap[0].component_id];
 			component comp_p=get_heap_component();
+			int my_create_part_number=part_number[comp_p.component_id];
 			while(component_number>0){
 				if(component_heap[0].part_name.compareTo(comp_p.part_name)!=0)
 					break;
 				my_create_part_number+=part_number[component_heap[0].component_id];
 				get_heap_component();
 			}
-			
 			if(can_create_assemble_part_name[comp_p.component_id]==null)
 				continue;
 			
+			create_part_rude cpr=new create_part_rude(comp_p,
+					max_component_number,discard_top_part_component_precision2);
+			if((cpr.topbox_part_rude==null)&&(cpr.max_part==null)) {
+				give_up_number+=my_create_part_number;
+				all_part_number-=my_create_part_number;
+				continue;
+			}
 			part assemble_part=null,assemble_part_array[];
-			switch(can_create_assemble_part_name[comp_p.component_id].toLowerCase()) {
-			case "any_assemble_part_name":
-				assemble_part=caculate_assemble_part(comp_p);
-				break;
-			default:
-				if((assemble_part_array=pcps.search_part(
-						can_create_assemble_part_name[comp_p.component_id]))==null)
-					break;
+			if((assemble_part_array=pcps.search_part(
+					can_create_assemble_part_name[comp_p.component_id]))!=null)
 				for(int i=0,ni=assemble_part_array.length;i<ni;i++)
 					if((assemble_part=assemble_part_array[i])!=null)
 						if(assemble_part.driver!=null)
 							break;
-				break;
-			}	
 			if(assemble_part==null)
-				continue;
+				assemble_part=cpr.max_part;
 			
 			part_parameter part_par=create_assemble_part_parameter(
 				assemble_part,comp_p.uniparameter.file_last_modified_time,
 				create_top_part_assembly_precision2,create_top_part_discard_precision2);
 			
-			part_rude topbox_part_rude=create_part_rude.create(comp_p,
-				assemble_part.part_mesh.origin_material,max_component_number,discard_top_part_component_precision2);
-			if(topbox_part_rude==null){
-				give_up_number+=my_create_part_number;
-				all_part_number-=my_create_part_number;
-				continue;
-			}
-			part add_part=new part(2,part_par,assemble_part.directory_name,assemble_part.file_charset,
+			part add_part=new part(2,true,part_par,assemble_part.directory_name,assemble_part.file_charset,
 					comp_p.part_name,comp_p.part_name,null,assemble_part.material_file_name,null,null);
-			
-			add_part.top_box_part_flag=true;
-			add_part.part_mesh=topbox_part_rude;
+			add_part.part_mesh=cpr.topbox_part_rude;
 				
 			render_cont.renders[assemble_part.render_id].add_part(assemble_part.render_id,add_part);
 				
@@ -337,6 +308,14 @@ public class create_assemble_part
 				last_modified_time,system_par,scene_par,already_loaded_part,pcps);
 			top_box_part[add_part_number++]=add_part;
 			create_part_number+=my_create_part_number;	
+			
+			debug_information.println();
+			debug_information.println(add_part_number+".add top part		name:"+add_part.system_name);
+			debug_information.println(add_part_number+".add top part		"
+					+"render_id:"		+add_part.render_id		+"	permanent_render_id:"	+add_part.permanent_render_id
+					+"	part_id:"		+add_part.part_id		+"	permanent_part_id:"		+add_part.permanent_part_id
+					+"	part_from_id:"	+add_part.part_from_id	+"	permanent_part_from_id:"+add_part.permanent_part_from_id);
+			debug_information.println(add_part_number+".add top part		material:"		+add_part.directory_name+add_part.material_file_name);
 		}
 		
 		if(add_part_number<=0)
@@ -344,8 +323,10 @@ public class create_assemble_part
 		else{
 			part bak[]=top_box_part;
 			top_box_part=new part[add_part_number];
-			for(int i=0;i<add_part_number;i++)
+			for(int i=0;i<add_part_number;i++) {
 				top_box_part[i]=bak[i];
+				pcps.append_one_part(bak[i]);
+			}
 			part_loader_container.wait_for_completion(already_loaded_part,system_par,scene_par);
 		}
 		

@@ -60,22 +60,22 @@
 							switch(function_id){
 							case 0:
 								mcp.mount_forward(1000);
-								render.user_call_processor.turnon_control_panel(
+								render.debug_call_processor.turnon_control_panel(
 									render.system_call_processor.collector_list_webpage_url("simple"));
 								return;
 							case 1:
 								mcp.mount_backward(1000);
-								render.user_call_processor.turnon_control_panel(
+								render.debug_call_processor.turnon_control_panel(
 									render.system_call_processor.collector_list_webpage_url("simple"));
 								return;
 							case 2:
 								mcp.mount_stop();
 								return;
 							case 3:
-								render.user_call_processor.turnon_control_panel(mcp.mount_search_url());
+								render.debug_call_processor.turnon_control_panel(mcp.mount_search_url());
 								return;
 							case 4:
-								render.user_call_processor.turnon_control_panel(mcp.mount_edit_url());
+								render.debug_call_processor.turnon_control_panel(mcp.mount_edit_url());
 								return;
 							case 5:
 								var speed=prompt("请输入拼装速度");
@@ -148,7 +148,7 @@
 									render.system_call_processor.set_menu_hide(component_id);
 								return;
 							}
-							render.user_call_processor.turnon_control_panel(url);
+							render.debug_call_processor.turnon_control_panel(url);
 						}
 					}
 				}

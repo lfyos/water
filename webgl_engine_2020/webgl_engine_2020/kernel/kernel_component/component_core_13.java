@@ -10,7 +10,7 @@ import kernel_engine.part_type_string_sorter;
 
 public class component_core_13 extends component_core_12
 {
-public String component_directory_name,component_file_name,component_charset;
+	public String component_directory_name,component_file_name,component_charset;
 	
 	public void destroy()
 	{

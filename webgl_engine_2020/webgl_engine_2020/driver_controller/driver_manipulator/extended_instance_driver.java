@@ -64,7 +64,7 @@ public class extended_instance_driver extends instance_driver
 			check_component.check(ek,ci);
 			break;
 		case "transparency":
-			transparent_component.do_transparency(ek, ci);
+			operate_component_transparent.do_transparency(ek, ci);
 			break;
 		case "explosion":
 			operate_component_explosion.do_explosion(camera_modifier_id,touch_time_length,ek, ci);
@@ -85,7 +85,7 @@ public class extended_instance_driver extends instance_driver
 			operate_fix_render_driver_id.fix_render_driver_id_request(ek, ci);
 			break;
 		case "render_assemble":
-			operate_display_assembly_flag.display_assembly_flag_request(ek, ci);
+			operate_display_assembly_flag.set_clear_display_assembly_flag_request(ek, ci);
 			break;
 		case "selection":
 			operate_selection.selection_request(parameter_channel_id,ek, ci);

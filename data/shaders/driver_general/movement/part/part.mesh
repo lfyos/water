@@ -1,6 +1,9 @@
-/*	version					*/	2021.07.01
-/*	origin material			*/	0	0	0	0
-/*	default material		*/	0	0	0	0
-/*	max_attribute_number	*/	0
+/*	version								*/	2021.07.15
+/*	origin material						*/	0	0	0	0
+/*	default material					*/	0	0	0	0
+/*	origin  vertex_location_extra_data	*/	1
+/*	default vertex_location_extra_data	*/	1
+/*	default vertex_normal_extra_data	*/	1
+/*	max_attribute_number				*/	0
 
-/*	body_number	*/	0
+/*	body_number		*/	0

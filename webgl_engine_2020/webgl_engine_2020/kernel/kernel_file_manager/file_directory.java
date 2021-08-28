@@ -30,12 +30,14 @@ public class file_directory
 	public static String part_file_directory(part p,system_parameter system_par,scene_parameter scene_par)
 	{
 		String part_directory=render_file_directory(p.part_type_id,p.permanent_render_id,system_par,scene_par);
-		if(p.mesh_file_name!=null)
+		if(p.is_normal_part())
 			part_directory	+="part_";
-		else if(p.top_box_part_flag)
+		else if(p.is_bottom_box_part())
+			part_directory	+="part_bottom_box_";
+		else if(p.is_top_box_part())
 			part_directory	+="part_top_box_";
 		else
-			part_directory	+="part_bottom_box_";
+			part_directory	+="part_unknown_";
 		return part_directory+p.permanent_part_id+File.separator;
 	}
 	public static String extract_file_directory(int part_type_id,

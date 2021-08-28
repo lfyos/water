@@ -1,27 +1,36 @@
 package kernel_common_class;
 
+import java.util.Date;
+import kernel_file_manager.file_writer;
+
 public class debug_information 
 {
-	public static String info="";
-	private static String info_buffer="";
+	private static file_writer fw=null;
 	
+	public static void mount_file(String file_name)
+	{
+		if(fw!=null)
+			fw.close();
+		fw=new file_writer(file_name,null);
+		fw.println((new Date()).toString());
+		fw.println();
+	}
 	public static void print(String x)
 	{
 		System.out.print(x);
-		info_buffer+=x;
+		if(fw!=null)
+			fw.print(x);
 	}
 	public static void println()
 	{
 		System.out.println();
-		info=info_buffer;
-		info_buffer="";
+		if(fw!=null)
+			fw.println();
 	}
-	
 	public static void println(String x)
 	{
 		print(x);println();
 	}
-
 	public static void print(int x)
 	{
 		print(Integer.toString(x));

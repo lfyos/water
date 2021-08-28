@@ -38,7 +38,7 @@ function construct_buffer_object(my_gl,my_url,my_channel,my_parameter)
 			point_region_data=new Array();
 			point_file_number=0;
 			
-			alert("Part head file error:"+e.toString());
+			alert("create_empty_buffer_object error,render_id:"+my_render_id+",part_id"+my_part_id+",my_part_from_id"+my_part_from_id+"error:"+e.toString());
 		}
 		
 		var created_buffer_object;

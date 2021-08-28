@@ -3,6 +3,7 @@ package kernel_render;
 import java.io.File;
 
 import kernel_common_class.debug_information;
+import kernel_common_class.exclusive_file_mutex;
 import kernel_driver.render_driver;
 import kernel_engine.part_type_string_sorter;
 import kernel_engine.scene_parameter;
@@ -14,6 +15,9 @@ import kernel_network.client_request_response;
 import kernel_part.part;
 import kernel_part.part_loader;
 import kernel_part.part_parameter;
+import kernel_part.part_rude;
+import kernel_transformation.box;
+import kernel_transformation.location;
 import kernel_part.part_loader_container;
 import kernel_part.part_container_for_part_search;
 
@@ -85,7 +89,7 @@ public class render_container
 			p=renders[p.render_id].parts[p.part_from_id];
 		return p;
 	}
-	public void load_part(
+	public void load_part(int part_type,int part_flag,
 			part_loader_container part_loader_cont,system_parameter system_par,
 			scene_parameter scene_par,part_container_for_part_search pcps)
 	{
@@ -96,90 +100,89 @@ public class render_container
 		debug_information.println("Begin loading part meshes");
 		debug_information.println();
 		
+		part p;
 		int load_number=0;
-		
-		for(int type_id=0;type_id<2;type_id++){
-			part_loader already_loaded_part[]=new part_loader[]{};
-			for(int i=0,ni=renders.length;i<ni;i++){
-				if(renders[i].parts==null)
-					continue;
-				for(int j=0,part_number=renders[i].parts.length;j<part_number;j++){
-					part p;
-					if((p=renders[i].parts[j])==null)
-						continue;
-					if(p.part_mesh!=null)
-						continue;
-					if((p.mesh_file_name!=null)||(p.part_from_id<0)||(p.part_from_id>=part_number)){
-						if(type_id==1)
+		part_loader already_loaded_part[]=new part_loader[]{};
+		for(int i=0,ni=renders.length;i<ni;i++)
+			if(renders[i].parts!=null)
+				for(int j=0,part_number=renders[i].parts.length;j<part_number;j++)
+					if((p=renders[i].parts[j])!=null){
+						if(((1<<p.part_type_id)&part_type)==0)
 							continue;
-					}else{
-						if(type_id==0)
+						int my_part_flag=0;
+						my_part_flag+=p.is_normal_part()	?1:0;
+						my_part_flag+=p.is_bottom_box_part()?2:0;
+						my_part_flag+=p.is_top_box_part()	?4:0;
+						
+						if((my_part_flag&part_flag)==0)
 							continue;
-						if((p.part_mesh=renders[i].parts[p.part_from_id].caculate_part_box_mesh())==null)
-							continue;
+						
+						already_loaded_part=part_loader_cont.load(p,get_copy_from_part(p),
+							-1,system_par,scene_par,already_loaded_part,pcps);
+						load_number++;
 					}
-					already_loaded_part=part_loader_cont.load(p,get_copy_from_part(p),
-						-1,system_par,scene_par,already_loaded_part,pcps);
-					load_number++;
-				}
-			}
-			part_loader_container.wait_for_completion(already_loaded_part,system_par,scene_par);
-		}
-
+		
+		part_loader_container.wait_for_completion(already_loaded_part,system_par,scene_par);
+		
 		debug_information.println();
 		debug_information.println("End loading part meshes\t",load_number);
 		debug_information.println();
 		
 		return;
 	}
-	public void create_bottom_box_part(
+	
+	public void create_bottom_box_part(part_container_for_part_search pcps,
 			client_request_response request_response,system_parameter system_par)
 	{
-		part p_array[]=part_array(true,-1);
-		part_container_for_part_search p_c=new part_container_for_part_search(p_array);
-		
-		for(int i=0,j=0,part_number=p_c.get_number();i<part_number;i=j){
+		for(int i=0,j=0,part_number=pcps.get_number();i<part_number;i=j){
 			for(j=i;j<part_number;j++)
-				if(p_c.data_array[i].system_name.compareTo(p_c.data_array[j].system_name)!=0)
+				if(pcps.data_array[i].system_name.compareTo(pcps.data_array[j].system_name)!=0)
 					break;
 			part p=null;
-			for(;i<j;i++){
-				if(p_c.data_array[i].mesh_file_name==null){
+			box b=null;
+			for(;i<j;i++)
+				if(pcps.data_array[i].is_normal_part()){
+					if(p==null)
+						if(pcps.data_array[i].part_mesh!=null)
+							if(pcps.data_array[i].part_par.do_create_bottom_box_flag)
+								if(pcps.data_array[i].driver!=null)
+									if((b=pcps.data_array[i].secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,null,null))!=null)
+										p=pcps.data_array[i];
+				}else {
 					p=null;
+					b=null;
 					break;
 				}
-				if(p==null)
-					if(p_c.data_array[i].part_par.do_create_bottom_box_flag)
-						if(p_c.data_array[i].driver!=null)
-								p=p_c.data_array[i];
+			if((p==null)||(b==null))
+				continue;
+			part add_part=new part(p.part_type_id,false,p.part_par.box_part_parameter(),
+						p.directory_name,p.file_charset,p.user_name,p.system_name,
+						null,p.material_file_name,p.description_file_name,p.audio_file_name);
+			if((add_part.part_mesh=new part_rude(1,new part[] {p},new location[]{new location()},new box[] {b}))==null)
+				continue;
+			renders[p.render_id].add_part(p.render_id,add_part);
+			add_part.part_from_id			=p.part_id;
+			add_part.permanent_part_from_id	=p.permanent_part_id;
+			try {
+				add_part.driver=p.driver.clone(p,add_part,system_par,request_response);
+				pcps.append_one_part(add_part);
+			}catch(Exception e) {
+				debug_information.println("Execte part driver clone() fail");
+				debug_information.println("Part user name:",	p.user_name);
+				debug_information.println("Part system name:",	p.system_name);
+				debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);
+				debug_information.println("Material_file_name:",p.directory_name+p.material_file_name);
+				debug_information.println(e.toString());
+				e.printStackTrace();
+				renders[p.render_id].delete_last_part();
+				continue;
 			}
-			if(p!=null){
-				part add_part=new part(p.part_type_id,
-							p.part_par.box_part_parameter(),p.directory_name,p.file_charset,
-							p.user_name,p.system_name,null,p.material_file_name,
-							p.description_file_name,p.audio_file_name);
-
-				renders[p.render_id].add_part(p.render_id,add_part);
-				
-				add_part.part_from_id			=p.part_id;
-				add_part.permanent_part_from_id	=p.permanent_part_id;
-				
-				try {
-					add_part.driver=p.driver.clone(p,add_part,system_par,request_response);
-				}catch(Exception e) {
-					add_part.driver=null;
-					debug_information.println("Execte part driver clone() fail");
-					debug_information.println("Part user name:",	p.user_name);
-					debug_information.println("Part system name:",	p.system_name);
-					debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);
-					debug_information.println("Material_file_name:",p.directory_name+p.material_file_name);
-					debug_information.println(e.toString());
-					e.printStackTrace();
-				}
-			}
+			pcps.append_one_part(add_part);
 		}
 	}
-	private void load_one_shader(String driver_name,String load_sub_directory_name,
+	
+	private void load_one_shader(part_container_for_part_search pcps,
+			String driver_name,String load_sub_directory_name,
 			String render_list_file_name,String file_system_charset,String shader_file_name,
 			int part_type_id,part_type_string_sorter my_part_type_string_sorter,
 			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
@@ -199,8 +202,8 @@ public class render_container
 	    }
 		render_driver my_render_driver=(render_driver)obj;
     
-		debug_information.println("Driver name:	",			driver_name);
-		debug_information.println("render list file:	",	render_list_file_name);
+		debug_information.print  ("Driver name:	",			driver_name);
+		debug_information.print  ("		render list file:	",	render_list_file_name);
 		debug_information.println(file_reader.is_exist(render_list_file_name)?"":"		not exist");
 		
 		file_reader f_render_list=new file_reader(render_list_file_name,file_system_charset);
@@ -236,15 +239,18 @@ public class render_container
 			}else
 				str="";
 
-			system_par.system_exclusive_name_mutex.lock(extract_file_directory+"extract_file.lock");
+			exclusive_file_mutex efm=exclusive_file_mutex.lock(
+					extract_file_directory+"extract_file.lock",
+					"1.wait for extract scene files:	"+par_list_file_name);
 			
 			if(system_par.system_exclusive_number_mutex!=null)
 				debug_information.println("load_render lock number result is ",
 					system_par.system_exclusive_number_mutex.lock_number(
-							part_par.max_part_list_load_thread_number));
+						part_par.max_part_list_load_thread_number,
+						"2.wait for extract scene files:	"+par_list_file_name));
 
 			debug_information.println("		part list file:	",par_list_file_name+"			"+str);
-			
+
 			String get_part_list_result[]=null;
 			try{
 				get_part_list_result=my_render_driver.get_part_list(
@@ -275,7 +281,7 @@ public class render_container
 				debug_information.println("load_render unlock number result is ",
 					system_par.system_exclusive_number_mutex.unlock_number());
 			
-			system_par.system_exclusive_name_mutex.unlock(extract_file_directory+"extract_file.lock");
+			efm.unlock();
 
 			if(giveup_part_load_flag||(par_list_file_name==null))
 				continue;
@@ -295,7 +301,7 @@ public class render_container
 						part_f.setLastModified(f_render_list.lastModified_time);
 				
 				int render_id=(renders==null)?0:renders.length;
-				ren.add_part(my_render_driver,part_type_id,render_id,
+				ren.add_part(pcps,my_render_driver,part_type_id,render_id,
 					part_par,system_par,par_list_file_name,part_list_file_charset,
 					"part_mesh_"+Integer.toString(render_id)+"_",request_response);
 			}
@@ -330,7 +336,8 @@ public class render_container
 		renders[renders.length-1]=ren;
 		return;
 	}
-	public void load_shader(long last_modify_time,String shader_file_name,
+	public void load_shader(part_container_for_part_search pcps,
+		long last_modify_time,String shader_file_name,
 		String shader_file_charset,String load_sub_directory_name,int part_type_id,
 		part_type_string_sorter my_part_type_string_sorter,system_parameter system_par,
 		scene_parameter scene_par,client_request_response request_response)
@@ -344,12 +351,12 @@ public class render_container
 		file_reader f_shader=new file_reader(shader_file_name,shader_file_charset);
 		if(f_shader.error_flag()) {
 			debug_information.println();
-			debug_information.println("shader configure file error \nfile name is :",shader_file_name);
+			debug_information.println("shader configure file error,file name is ",shader_file_name);
 			f_shader.close();
 			return;
 		}
 		debug_information.println();
-		debug_information.println("Begin shader and part initialization \nfile name is :",shader_file_name);
+		debug_information.println("Begin shader and part initialization,file name is ",shader_file_name);
 
 		for(String str;!(f_shader.eof());){
 			String driver_name=(str=f_shader.get_string())==null?"":str.trim();			
@@ -362,7 +369,7 @@ public class render_container
 					if(f_shader.lastModified_time>render_f.lastModified())
 						render_f.setLastModified(f_shader.lastModified_time);
 			}
-			load_one_shader(driver_name,load_sub_directory_name,
+			load_one_shader(pcps,driver_name,load_sub_directory_name,
 				f_shader.directory_name+render_list_file_name,f_shader.get_charset(),
 				f_shader.directory_name+f_shader.file_name,part_type_id,
 				my_part_type_string_sorter,system_par,scene_par,request_response);

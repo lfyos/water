@@ -1,437 +1,468 @@
-/*	version					*/	2021.07.01
-/*	origin material			*/	0	0	0	1
-/*	default material		*/	0	0.752941	0	0
-/*	max_attribute_number	*/	1
-	0.467697	0.110744	0.0	1.0
+/*	version								*/	2021.07.15
+/*	origin material						*/	0	0	0	1
+/*	default material					*/	0	0.752941	0	0
+/*	origin  vertex_location_extra_data	*/	1
+/*	default vertex_location_extra_data	*/	1
+/*	default vertex_normal_extra_data	*/	1
+/*	max_attribute_number				*/	1
+/*		0.attribute:	*/	0.467697	0.110744	0.0	1.0
 
-/*	body_number	*/	1
-   /* body  0  name   */  旋转2   /*   face_number   */  15
-     /* face  0  name   */  旋转2_0_face
-         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.0   0.0   -1.0   0.0   0.0   0.0
-         /* total_face_primitive_number */ 30
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.0275 -0.0273494 0.0  0.0275 0.0273494 0.0 
-        
-         /* face_loop_number   */ 1
-         /* face_loop  0  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.0   -0.0   -0.0   1.0   0.0275
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0274315 -0.0274424 0.0  0.0275 0.0274829 0.0 
-                /* total_edge_primitive_number */  38
-                /* total_point_primitive_number */  1
-                
-                
-     /* face  1  name   */  旋转2_1_face
-         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    0.0   0.0   1.0   -0.0   -0.0   1.0   0.0275
-         /* total_face_primitive_number */ 60
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.0275 -0.0273494 -0.033  0.0275 0.0273494 0.0 
-        
-         /* face_loop_number   */ 2
-         /* face_loop  0  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   0.0   -0.0   -0.0   1.0   0.0275
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0274315 -0.0274424 0.0  0.0275 0.0274829 0.0 
-                /* total_edge_primitive_number */  38
-                /* total_point_primitive_number */  1
-                
-         /* face_loop  1  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.033   -0.0   -0.0   1.0   0.0275
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0274315 -0.0274424 -0.033  0.0275 0.0274829 -0.033 
-                /* total_edge_primitive_number */  38
-                /* total_point_primitive_number */  1
-                
-                
-     /* face  2  name   */  旋转2_2_face
-         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.0   0.0   -1.0   0.0   0.0275   -0.033
-         /* total_face_primitive_number */ 61
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.0298461 -0.0299615 -0.033  0.03 0.0299615 -0.033 
-        
-         /* face_loop_number   */ 2
-         /* face_loop  0  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.033   -0.0   -0.0   1.0   0.0275
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0274315 -0.0274424 -0.033  0.0275 0.0274829 -0.033 
-                /* total_edge_primitive_number */  38
-                /* total_point_primitive_number */  1
-                
-         /* face_loop  1  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.033   -0.0   -0.0   1.0   0.03
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0299783 -0.0299909 -0.033  0.03 0.0299411 -0.033 
-                /* total_edge_primitive_number */  40
-                /* total_point_primitive_number */  1
-                
-                
-     /* face  3  name   */  旋转2_3_face
-         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    0.0   0.0   1.0   -0.0   -0.0   1.0   0.03
-         /* total_face_primitive_number */ 62
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.0298461 -0.0299615 -0.0435  0.03 0.0299615 -0.033 
-        
-         /* face_loop_number   */ 2
-         /* face_loop  0  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.033   -0.0   -0.0   1.0   0.03
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0299783 -0.0299909 -0.033  0.03 0.0299411 -0.033 
-                /* total_edge_primitive_number */  40
-                /* total_point_primitive_number */  1
-                
-         /* face_loop  1  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.0435   -0.0   -0.0   1.0   0.03
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0299783 -0.0299909 -0.0435  0.03 0.0299411 -0.0435 
-                /* total_edge_primitive_number */  40
-                /* total_point_primitive_number */  1
-                
-                
-     /* face  4  name   */  旋转2_4_face
-         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    -0.0   -0.0   1.0   0.0   0.03   -0.0435
-         /* total_face_primitive_number */ 61
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.0298461 -0.0299615 -0.0435  0.03 0.0299615 -0.0435 
-        
-         /* face_loop_number   */ 2
-         /* face_loop  0  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.0435   -0.0   -0.0   1.0   0.03
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0299783 -0.0299909 -0.0435  0.03 0.0299411 -0.0435 
-                /* total_edge_primitive_number */  40
-                /* total_point_primitive_number */  1
-                
-         /* face_loop  1  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.0435   -0.0   -0.0   1.0   0.0285
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0284741 -0.0284944 -0.0435  0.0285 0.0284444 -0.0435 
-                /* total_edge_primitive_number */  39
-                /* total_point_primitive_number */  1
-                
-                
-     /* face  5  name   */  旋转2_5_face
-         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    0.0   0.0   1.0   -0.0   -0.0   1.0   0.0285
-         /* total_face_primitive_number */ 60
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.0285 -0.0283439 -0.047  0.0285 0.0283439 -0.0435 
-        
-         /* face_loop_number   */ 2
-         /* face_loop  0  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.0435   -0.0   -0.0   1.0   0.0285
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0284741 -0.0284944 -0.0435  0.0285 0.0284444 -0.0435 
-                /* total_edge_primitive_number */  39
-                /* total_point_primitive_number */  1
-                
-         /* face_loop  1  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.047   -0.0   -0.0   1.0   0.0285
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0284741 -0.0284944 -0.047  0.0285 0.0284444 -0.047 
-                /* total_edge_primitive_number */  39
-                /* total_point_primitive_number */  1
-                
-                
-     /* face  6  name   */  旋转2_6_face
-         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.0   0.0   -1.0   0.0   0.0285   -0.047
-         /* total_face_primitive_number */ 62
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.0325 -0.0325 -0.047  0.0325 0.0325 -0.047 
-        
-         /* face_loop_number   */ 2
-         /* face_loop  0  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.047   -0.0   -0.0   1.0   0.0285
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0284741 -0.0284944 -0.047  0.0285 0.0284444 -0.047 
-                /* total_edge_primitive_number */  39
-                /* total_point_primitive_number */  1
-                
-         /* face_loop  1  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.047   -0.0   -0.0   1.0   0.0325
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0324999 -0.0324997 -0.047  0.0325 0.0325 -0.047 
-                /* total_edge_primitive_number */  42
-                /* total_point_primitive_number */  1
-                
-                
-     /* face  7  name   */  旋转2_7_face
-         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    0.0   0.0   1.0   -0.0   -0.0   1.0   0.0325
-         /* total_face_primitive_number */ 64
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.0325 -0.0325 -0.1835  0.0325 0.0325 -0.047 
-        
-         /* face_loop_number   */ 2
-         /* face_loop  0  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.047   -0.0   -0.0   1.0   0.0325
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0324999 -0.0324997 -0.047  0.0325 0.0325 -0.047 
-                /* total_edge_primitive_number */  42
-                /* total_point_primitive_number */  1
-                
-         /* face_loop  1  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.1835   -0.0   -0.0   1.0   0.0325
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0324999 -0.0324997 -0.1835  0.0325 0.0325 -0.1835 
-                /* total_edge_primitive_number */  42
-                /* total_point_primitive_number */  1
-                
-                
-     /* face  8  name   */  旋转2_8_face
-         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    0.0   0.0   -1.0   0.0   0.0325   -0.1835
-         /* total_face_primitive_number */ 68
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.04 -0.04 -0.1835  0.04 0.04 -0.1835 
-        
-         /* face_loop_number   */ 2
-         /* face_loop  0  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.1835   -0.0   -0.0   1.0   0.0325
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0324999 -0.0324997 -0.1835  0.0325 0.0325 -0.1835 
-                /* total_edge_primitive_number */  42
-                /* total_point_primitive_number */  1
-                
-         /* face_loop  1  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.1835   -0.0   -0.0   1.0   0.04
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0399824 -0.0399604 -0.1835  0.04 0.0399956 -0.1835 
-                /* total_edge_primitive_number */  46
-                /* total_point_primitive_number */  1
-                
-                
-     /* face  9  name   */  旋转2_9_face
-         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    0.0   0.0   1.0   -0.0   -0.0   1.0   0.04
-         /* total_face_primitive_number */ 72
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.04 -0.04 -0.2065  0.04 0.04 -0.1835 
-        
-         /* face_loop_number   */ 2
-         /* face_loop  0  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.1835   -0.0   -0.0   1.0   0.04
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0399824 -0.0399604 -0.1835  0.04 0.0399956 -0.1835 
-                /* total_edge_primitive_number */  46
-                /* total_point_primitive_number */  1
-                
-         /* face_loop  1  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.2065   -0.0   -0.0   1.0   0.04
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0399824 -0.0399604 -0.2065  0.04 0.0399956 -0.2065 
-                /* total_edge_primitive_number */  46
-                /* total_point_primitive_number */  1
-                
-                
-     /* face  10  name   */  旋转2_10_face
-         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    -0.0   -0.0   1.0   0.0   0.04   -0.2065
-         /* total_face_primitive_number */ 69
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.04 -0.04 -0.2065  0.04 0.04 -0.2065 
-        
-         /* face_loop_number   */ 2
-         /* face_loop  0  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.2065   -0.0   -0.0   1.0   0.04
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0399824 -0.0399604 -0.2065  0.04 0.0399956 -0.2065 
-                /* total_edge_primitive_number */  46
-                /* total_point_primitive_number */  1
-                
-         /* face_loop  1  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.2065   -0.0   -0.0   1.0   0.0335
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0334579 -0.0334052 -0.2065  0.0335 0.0334895 -0.2065 
-                /* total_edge_primitive_number */  42
-                /* total_point_primitive_number */  1
-                
-                
-     /* face  11  name   */  旋转2_11_face
-         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    0.0   0.0   1.0   -0.0   -0.0   1.0   0.0335
-         /* total_face_primitive_number */ 66
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.0333483 -0.0334621 -0.221  0.0335 0.0334621 -0.2065 
-        
-         /* face_loop_number   */ 2
-         /* face_loop  0  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.2065   -0.0   -0.0   1.0   0.0335
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0334579 -0.0334052 -0.2065  0.0335 0.0334895 -0.2065 
-                /* total_edge_primitive_number */  42
-                /* total_point_primitive_number */  1
-                
-         /* face_loop  1  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.221   -0.0   -0.0   1.0   0.0335
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0334579 -0.0334052 -0.221  0.0335 0.0334895 -0.221 
-                /* total_edge_primitive_number */  42
-                /* total_point_primitive_number */  1
-                
-                
-     /* face  12  name   */  旋转2_12_face
-         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    -0.0   -0.0   1.0   0.0   0.0335   -0.221
-         /* total_face_primitive_number */ 63
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.0333483 -0.0334621 -0.221  0.0335 0.0334621 -0.221 
-        
-         /* face_loop_number   */ 2
-         /* face_loop  0  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.221   -0.0   -0.0   1.0   0.0335
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0334579 -0.0334052 -0.221  0.0335 0.0334895 -0.221 
-                /* total_edge_primitive_number */  42
-                /* total_point_primitive_number */  1
-                
-         /* face_loop  1  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.221   -0.0   -0.0   1.0   0.0275
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0274315 -0.0274424 -0.221  0.0275 0.0274829 -0.221 
-                /* total_edge_primitive_number */  38
-                /* total_point_primitive_number */  1
-                
-                
-     /* face  13  name   */  旋转2_13_face
-         /* face_type   */  cylinder  /*   parameter_number   */  7 /*   parameter  */    0.0   0.0   1.0   -0.0   -0.0   1.0   0.0275
-         /* total_face_primitive_number */ 60
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.0275 -0.0273494 -0.251  0.0275 0.0273494 -0.221 
-        
-         /* face_loop_number   */ 2
-         /* face_loop  0  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.221   -0.0   -0.0   1.0   0.0275
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0274315 -0.0274424 -0.221  0.0275 0.0274829 -0.221 
-                /* total_edge_primitive_number */  38
-                /* total_point_primitive_number */  1
-                
-         /* face_loop  1  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.251   -0.0   -0.0   1.0   0.0275
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0274315 -0.0274424 -0.251  0.0275 0.0274829 -0.251 
-                /* total_edge_primitive_number */  38
-                /* total_point_primitive_number */  1
-                
-                
-     /* face  14  name   */  旋转2_14_face
-         /* face_type   */  plane  /*   parameter_number   */  6 /*   parameter  */    -0.0   -0.0   1.0   0.0   0.0275   -0.251
-         /* total_face_primitive_number */ 30
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.0275 -0.0273494 -0.251  0.0275 0.0273494 -0.251 
-        
-         /* face_loop_number   */ 1
-         /* face_loop  0  loop_edge_number    */    1
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  circle
-                /* parameter_number  */  7 /* parameter */    0.0   0.0   -0.251   -0.0   -0.0   1.0   0.0275
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	 -0.0274315 -0.0274424 -0.251  0.0275 0.0274829 -0.251 
-                /* total_edge_primitive_number */  38
-                /* total_point_primitive_number */  1
-                
-                
-                
+/*	body_number		*/	1
+	/*  body    0  name    */  旋转2	/*  face_number */	15
+	/*  body 0 face 0  name	*/	旋转2_0_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	-1.0	0.0	0.0	0.0
+	/*  total_face_primitive_number	*/  30
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0275	-0.0273494	0.0	0.0275	0.0273494	0.0
+
+	/*  loop number		*/	1
+		/*  body:0 face:0 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	-0.0	-0.0	1.0	0.0275
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0274315	-0.0274424	0.0	0.0275	0.0274829	0.0
+			/*  total_edge_primitive_number		*/	38
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 1  name	*/	旋转2_1_face
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	1.0	-0.0	-0.0	1.0	0.0275
+	/*  total_face_primitive_number	*/  60
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0275	-0.0273494	-0.033	0.0275	0.0273494	0.0
+
+	/*  loop number		*/	2
+		/*  body:0 face:1 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	-0.0	-0.0	1.0	0.0275
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0274315	-0.0274424	0.0	0.0275	0.0274829	0.0
+			/*  total_edge_primitive_number		*/	38
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:1 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.033	-0.0	-0.0	1.0	0.0275
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0274315	-0.0274424	-0.033	0.0275	0.0274829	-0.033
+			/*  total_edge_primitive_number		*/	38
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 2  name	*/	旋转2_2_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	-1.0	0.0	0.0275	-0.033
+	/*  total_face_primitive_number	*/  61
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0298461	-0.0299615	-0.033	0.03	0.0299615	-0.033
+
+	/*  loop number		*/	2
+		/*  body:0 face:2 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.033	-0.0	-0.0	1.0	0.0275
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0274315	-0.0274424	-0.033	0.0275	0.0274829	-0.033
+			/*  total_edge_primitive_number		*/	38
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:2 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.033	-0.0	-0.0	1.0	0.03
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0299783	-0.0299909	-0.033	0.03	0.0299411	-0.033
+			/*  total_edge_primitive_number		*/	40
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 3  name	*/	旋转2_3_face
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	1.0	-0.0	-0.0	1.0	0.03
+	/*  total_face_primitive_number	*/  62
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0298461	-0.0299615	-0.0435	0.03	0.0299615	-0.033
+
+	/*  loop number		*/	2
+		/*  body:0 face:3 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.033	-0.0	-0.0	1.0	0.03
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0299783	-0.0299909	-0.033	0.03	0.0299411	-0.033
+			/*  total_edge_primitive_number		*/	40
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:3 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.0435	-0.0	-0.0	1.0	0.03
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0299783	-0.0299909	-0.0435	0.03	0.0299411	-0.0435
+			/*  total_edge_primitive_number		*/	40
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 4  name	*/	旋转2_4_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-0.0	-0.0	1.0	0.0	0.03	-0.0435
+	/*  total_face_primitive_number	*/  61
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0298461	-0.0299615	-0.0435	0.03	0.0299615	-0.0435
+
+	/*  loop number		*/	2
+		/*  body:0 face:4 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.0435	-0.0	-0.0	1.0	0.03
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0299783	-0.0299909	-0.0435	0.03	0.0299411	-0.0435
+			/*  total_edge_primitive_number		*/	40
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:4 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.0435	-0.0	-0.0	1.0	0.0285
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0284741	-0.0284944	-0.0435	0.0285	0.0284444	-0.0435
+			/*  total_edge_primitive_number		*/	39
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 5  name	*/	旋转2_5_face
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	1.0	-0.0	-0.0	1.0	0.0285
+	/*  total_face_primitive_number	*/  60
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0285	-0.0283439	-0.047	0.0285	0.0283439	-0.0435
+
+	/*  loop number		*/	2
+		/*  body:0 face:5 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.0435	-0.0	-0.0	1.0	0.0285
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0284741	-0.0284944	-0.0435	0.0285	0.0284444	-0.0435
+			/*  total_edge_primitive_number		*/	39
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:5 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.047	-0.0	-0.0	1.0	0.0285
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0284741	-0.0284944	-0.047	0.0285	0.0284444	-0.047
+			/*  total_edge_primitive_number		*/	39
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 6  name	*/	旋转2_6_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	-1.0	0.0	0.0285	-0.047
+	/*  total_face_primitive_number	*/  62
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0325	-0.0325	-0.047	0.0325	0.0325	-0.047
+
+	/*  loop number		*/	2
+		/*  body:0 face:6 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.047	-0.0	-0.0	1.0	0.0285
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0284741	-0.0284944	-0.047	0.0285	0.0284444	-0.047
+			/*  total_edge_primitive_number		*/	39
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:6 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.047	-0.0	-0.0	1.0	0.0325
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0324999	-0.0324997	-0.047	0.0325	0.0325	-0.047
+			/*  total_edge_primitive_number		*/	42
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 7  name	*/	旋转2_7_face
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	1.0	-0.0	-0.0	1.0	0.0325
+	/*  total_face_primitive_number	*/  64
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0325	-0.0325	-0.1835	0.0325	0.0325	-0.047
+
+	/*  loop number		*/	2
+		/*  body:0 face:7 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.047	-0.0	-0.0	1.0	0.0325
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0324999	-0.0324997	-0.047	0.0325	0.0325	-0.047
+			/*  total_edge_primitive_number		*/	42
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:7 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.1835	-0.0	-0.0	1.0	0.0325
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0324999	-0.0324997	-0.1835	0.0325	0.0325	-0.1835
+			/*  total_edge_primitive_number		*/	42
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 8  name	*/	旋转2_8_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	-1.0	0.0	0.0325	-0.1835
+	/*  total_face_primitive_number	*/  68
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.04	-0.04	-0.1835	0.04	0.04	-0.1835
+
+	/*  loop number		*/	2
+		/*  body:0 face:8 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.1835	-0.0	-0.0	1.0	0.0325
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0324999	-0.0324997	-0.1835	0.0325	0.0325	-0.1835
+			/*  total_edge_primitive_number		*/	42
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:8 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.1835	-0.0	-0.0	1.0	0.04
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0399824	-0.0399604	-0.1835	0.04	0.0399956	-0.1835
+			/*  total_edge_primitive_number		*/	46
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 9  name	*/	旋转2_9_face
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	1.0	-0.0	-0.0	1.0	0.04
+	/*  total_face_primitive_number	*/  72
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.04	-0.04	-0.2065	0.04	0.04	-0.1835
+
+	/*  loop number		*/	2
+		/*  body:0 face:9 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.1835	-0.0	-0.0	1.0	0.04
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0399824	-0.0399604	-0.1835	0.04	0.0399956	-0.1835
+			/*  total_edge_primitive_number		*/	46
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:9 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.2065	-0.0	-0.0	1.0	0.04
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0399824	-0.0399604	-0.2065	0.04	0.0399956	-0.2065
+			/*  total_edge_primitive_number		*/	46
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 10  name	*/	旋转2_10_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-0.0	-0.0	1.0	0.0	0.04	-0.2065
+	/*  total_face_primitive_number	*/  69
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.04	-0.04	-0.2065	0.04	0.04	-0.2065
+
+	/*  loop number		*/	2
+		/*  body:0 face:10 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.2065	-0.0	-0.0	1.0	0.04
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0399824	-0.0399604	-0.2065	0.04	0.0399956	-0.2065
+			/*  total_edge_primitive_number		*/	46
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:10 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.2065	-0.0	-0.0	1.0	0.0335
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0334579	-0.0334052	-0.2065	0.0335	0.0334895	-0.2065
+			/*  total_edge_primitive_number		*/	42
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 11  name	*/	旋转2_11_face
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	1.0	-0.0	-0.0	1.0	0.0335
+	/*  total_face_primitive_number	*/  66
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0333483	-0.0334621	-0.221	0.0335	0.0334621	-0.2065
+
+	/*  loop number		*/	2
+		/*  body:0 face:11 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.2065	-0.0	-0.0	1.0	0.0335
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0334579	-0.0334052	-0.2065	0.0335	0.0334895	-0.2065
+			/*  total_edge_primitive_number		*/	42
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:11 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.221	-0.0	-0.0	1.0	0.0335
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0334579	-0.0334052	-0.221	0.0335	0.0334895	-0.221
+			/*  total_edge_primitive_number		*/	42
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 12  name	*/	旋转2_12_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-0.0	-0.0	1.0	0.0	0.0335	-0.221
+	/*  total_face_primitive_number	*/  63
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0333483	-0.0334621	-0.221	0.0335	0.0334621	-0.221
+
+	/*  loop number		*/	2
+		/*  body:0 face:12 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.221	-0.0	-0.0	1.0	0.0335
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0334579	-0.0334052	-0.221	0.0335	0.0334895	-0.221
+			/*  total_edge_primitive_number		*/	42
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:12 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.221	-0.0	-0.0	1.0	0.0275
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0274315	-0.0274424	-0.221	0.0275	0.0274829	-0.221
+			/*  total_edge_primitive_number		*/	38
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 13  name	*/	旋转2_13_face
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	1.0	-0.0	-0.0	1.0	0.0275
+	/*  total_face_primitive_number	*/  60
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0275	-0.0273494	-0.251	0.0275	0.0273494	-0.221
+
+	/*  loop number		*/	2
+		/*  body:0 face:13 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.221	-0.0	-0.0	1.0	0.0275
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0274315	-0.0274424	-0.221	0.0275	0.0274829	-0.221
+			/*  total_edge_primitive_number		*/	38
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:13 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.251	-0.0	-0.0	1.0	0.0275
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0274315	-0.0274424	-0.251	0.0275	0.0274829	-0.251
+			/*  total_edge_primitive_number		*/	38
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 14  name	*/	旋转2_14_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-0.0	-0.0	1.0	0.0	0.0275	-0.251
+	/*  total_face_primitive_number	*/  30
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0275	-0.0273494	-0.251	0.0275	0.0273494	-0.251
+
+	/*  loop number		*/	1
+		/*  body:0 face:14 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	-0.251	-0.0	-0.0	1.0	0.0275
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0274315	-0.0274424	-0.251	0.0275	0.0274829	-0.251
+			/*  total_edge_primitive_number		*/	38
+			/*  total_point_primitive_number	*/	1
+
+
+
+

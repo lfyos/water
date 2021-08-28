@@ -9,13 +9,20 @@ import kernel_file_manager.file_writer;
 public class primitive_from_file implements primitive_interface
 {
 	private file_reader face_file,edge_file,point_file;
+	
 	private String face_file_name,edge_file_name,point_file_name;
 	private String gzip_face_file_name,gzip_edge_file_name,gzip_point_file_name;
 	private String file_charset;
 	
 	public String[]get_primitive_material(int body_id,int face_id,int primitive_id)
 	{
-		return new String[] {face_file.get_string(),face_file.get_string(),face_file.get_string(),face_file.get_string()};
+		String ret_val[]=new String[4];
+		for(int i=0;i<4;i++)
+			if((ret_val[i]=face_file.get_string())==null)
+				ret_val[i]="0";
+			else if(ret_val[i].trim().length()<=0)
+				ret_val[i]="0";
+		return ret_val;
 	}
 	public int get_primitive_vertex_number(int body_id,int face_id,int primitive_id)
 	{
@@ -27,7 +34,8 @@ public class primitive_from_file implements primitive_interface
 	}
 	public String get_primitive_vertex_location_extra_data(int body_id,int face_id,int primitive_id,int vertex_id)
 	{
-		return face_file.get_string();
+		String ret_val=face_file.get_string();
+		return (ret_val==null)?"1":(ret_val.trim().length()<=0)?"1":ret_val;
 	}
 	
 	public double[]get_primitive_vertex_normal_data(int body_id,int face_id,int primitive_id,int vertex_id)
@@ -36,7 +44,8 @@ public class primitive_from_file implements primitive_interface
 	}
 	public String get_primitive_vertex_normal_extra_data(int body_id,int face_id,int primitive_id,int vertex_id)
 	{
-		return face_file.get_string();
+		String ret_val=face_file.get_string();
+		return (ret_val==null)?"1":(ret_val.trim().length()<=0)?"1":ret_val;
 	}
 	
 	public double[]get_primitive_vertex_attribute_data(int body_id,int face_id,int primitive_id,int vertex_id,int attribute_id)
@@ -45,7 +54,8 @@ public class primitive_from_file implements primitive_interface
 	}
 	public String get_primitive_vertex_attribute_extra_data(int body_id,int face_id,int primitive_id,int vertex_id,int attribute_id)
 	{
-		return face_file.get_string();
+		String ret_val=face_file.get_string();
+		return (ret_val==null)?"1":(ret_val.trim().length()<=0)?"1":ret_val;
 	}
 
 	public double[]get_edge_location_data(int body_id,int face_id,int loop_id,int edge_id,int point_id)
@@ -54,24 +64,37 @@ public class primitive_from_file implements primitive_interface
 	}
 	public String get_edge_extra_data(int body_id,int face_id,int loop_id,int edge_id,int point_id)
 	{
-		return edge_file.get_string();
+		String ret_val=edge_file.get_string();
+		return (ret_val==null)?"1":(ret_val.trim().length()<=0)?"1":ret_val;
 	}
 	public String[] get_edge_material(int body_id,int face_id,int loop_id,int edge_id,int point_id)
 	{
-		return new String[] {edge_file.get_string(),edge_file.get_string(),edge_file.get_string(),edge_file.get_string()};
+		String ret_val[]=new String[4];
+		for(int i=0;i<4;i++)
+			if((ret_val[i]=edge_file.get_string())==null)
+				ret_val[i]="0";
+			else if(ret_val[i].trim().length()<=0)
+				ret_val[i]="0";
+		return ret_val;
 	}
-	
 	public double[]get_point_location_data(int body_id,int face_id,int loop_id,int edge_id,int point_id)
 	{
 		return new double[] {point_file.get_double(),point_file.get_double(),point_file.get_double()};
 	}
 	public String get_point_extra_data(int body_id,int face_id,int loop_id,int edge_id,int point_id)
 	{
-		return point_file.get_string();
+		String ret_val=point_file.get_string();
+		return (ret_val==null)?"1":(ret_val.trim().length()<=0)?"1":ret_val;
 	}
 	public String[] get_point_material(int body_id,int face_id,int loop_id,int edge_id,int point_id)
 	{
-		return new String[] {point_file.get_string(),point_file.get_string(),point_file.get_string(),point_file.get_string()};
+		String ret_val[]=new String[4];
+		for(int i=0;i<4;i++)
+			if((ret_val[i]=point_file.get_string())==null)
+				ret_val[i]="0";
+			else if(ret_val[i].trim().length()<=0)
+				ret_val[i]="0";
+		return ret_val;
 	}
 	
 	public void destroy(long my_max_compress_file_length,int my_response_block_size)

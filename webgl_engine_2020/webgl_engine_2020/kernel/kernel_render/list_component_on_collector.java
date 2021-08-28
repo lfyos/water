@@ -23,7 +23,7 @@ public class list_component_on_collector
 	
 	private int no_driver_component_number;
 	
-	private boolean register(int render_buffer_id,component comp,int driver_id,double lod_precision2)
+	private boolean register(int slot_id,int render_buffer_id,component comp,int driver_id)
 	{
 		part my_part;
 		instance_driver in_dr;
@@ -69,23 +69,20 @@ public class list_component_on_collector
 				return false;
 			}
 		if(add_number_flag){
-			if(lod_precision2<0)
-				ci.statistics_client.lod_component_number[0]++;
-			else if(my_part.mesh_file_name==null){
-				if(my_part.top_box_part_flag)
-					ci.statistics_client.top_box_component_number++;
-				else
-					ci.statistics_client.bottom_box_component_number++;
-			}else{
-				if((driver_id+1)>=ci.statistics_client.lod_component_number.length){
-					int bak[]=ci.statistics_client.lod_component_number;
-					ci.statistics_client.lod_component_number=new int[driver_id+2];
-					for(int i=0,n=bak.length;i<n;i++)
-						ci.statistics_client.lod_component_number[i]=bak[i];
-					for(int i=bak.length,n=ci.statistics_client.lod_component_number.length;i<n;i++)
-						ci.statistics_client.lod_component_number[i]=0;
-				}
-				ci.statistics_client.lod_component_number[driver_id+1]++;
+			if(my_part.is_top_box_part())
+				ci.statistics_client.top_box_component_number++;
+			if(my_part.is_bottom_box_part())
+				ci.statistics_client.bottom_box_component_number++;
+			if(slot_id<0)
+				slot_id=0;
+			if(slot_id>=ci.statistics_client.lod_component_number.length){
+				int bak[]=ci.statistics_client.lod_component_number;
+				ci.statistics_client.lod_component_number=new int[slot_id+1];
+				for(int i=0,n=bak.length;i<n;i++)
+					ci.statistics_client.lod_component_number[i]=bak[i];
+				for(int i=bak.length,n=ci.statistics_client.lod_component_number.length;i<n;i++)
+					ci.statistics_client.lod_component_number[i]=0;
+				ci.statistics_client.lod_component_number[slot_id]++;
 			}
 			if(comp.clip.clip_plane!=null)
 				ci.statistics_client.clip_plane_component_number++;
@@ -100,20 +97,16 @@ public class list_component_on_collector
 	{
 		if(!(do_discard_lod_flag||do_selection_lod_flag))
 			return false;
-		
 		if(comp.selected_component_family_flag)
 			return false;
-		
 		double lod_precision2;
 		{
 			box my_box;
 			if((my_box=comp.get_component_box(false))==null)
 				return false;
-			
 			double distance2=my_box.center().sub(cam_result.eye_point).distance2();
 			double fovy_tanl=cam_result.cam.parameter.half_fovy_tanl*2.0;
 			distance2*=fovy_tanl*fovy_tanl;
-			
 			double diameter2=my_box.distance2();
 			lod_precision2=diameter2/distance2;
 		}
@@ -123,7 +116,6 @@ public class list_component_on_collector
 			if(driver_lod_precision_scale>const_value.min_value)
 				lod_precision2*=driver_lod_precision_scale*driver_lod_precision_scale;
 		}
-		
 		if(do_discard_lod_flag){
 			if(lod_precision2<=comp.uniparameter.discard_precision2){
 				if(add_number_flag)
@@ -131,10 +123,9 @@ public class list_component_on_collector
 				return true;
 			}
 		}
-		
 		if(do_selection_lod_flag){
-			int driver_number=comp.driver_number();
-			if(driver_number<=0)
+			int driver_number;
+			if((driver_number=comp.driver_number())<=0)
 				return false;
 			if(comp.children_number()>0)
 				if(!(comp.get_can_display_assembly_flag(parameter_channel_id)))
@@ -144,7 +135,7 @@ public class list_component_on_collector
 					if(comp.children_number()>0)
 						if(comp.driver_array[i].component_part.part_par.assembly_precision2<=lod_precision2)
 							return false;
-					if(register(render_buffer_id,comp,i,lod_precision2))
+					if(register(i+1,render_buffer_id,comp,i))
 						return true;
 				}
 			return true;
@@ -178,39 +169,35 @@ public class list_component_on_collector
 		if(do_lod(render_buffer_id,comp,parameter_channel_id))
 			return;
 		
-		int children_number=comp.children_number();
-		int driver_number=comp.driver_number();
+		int children_number	=comp.children_number();
+		int driver_number	=comp.driver_number();
 		if(children_number<=0){
 			for(int i=0;i<driver_number;i++)
-				if(register(render_buffer_id,comp,i,-1))
+				if(register(i+1,render_buffer_id,comp,i))
 					return;
 			no_driver_component_number++;
 			if(add_number_flag)
 				ci.statistics_client.no_driver_component_number++;
 			return;
 		}
+		
 		int old_no_driver_component_number=no_driver_component_number;
 		for(int i=0;i<children_number;i++)
 			collect(render_buffer_id,comp.children[i],parameter_channel_id,clipper_test_depth+1);
 		comp.caculate_box(false);
 		
-		if(driver_number<=0)
-			return ;
 		if(ek.scene_par.not_do_ancestor_render_flag)
 			return;
-		if(no_driver_component_number<=old_no_driver_component_number)
+		if((driver_number<=0)||(children_number<=0)||(no_driver_component_number<=old_no_driver_component_number))
 			return;
-		if(ek.scene_par.test_display_assembly_flag)
-			if(!(comp.get_can_display_assembly_flag(parameter_channel_id)))
-				return;
-		for(int i=0;i<driver_number;i++){
-			part my_part=comp.driver_array[i].component_part;
-			if((my_part.mesh_file_name!=null)||(!(my_part.top_box_part_flag)))
-				if(register(render_buffer_id,comp,i,-1)){
-					no_driver_component_number=old_no_driver_component_number;
-					return;
-				}
-		}
+		if(comp.get_can_display_assembly_flag(parameter_channel_id))
+			for(int i=0;i<driver_number;i++)
+				if(comp.driver_array[i].component_part.is_normal_part())
+					if(register(i+1,render_buffer_id,comp,i)){
+						no_driver_component_number=old_no_driver_component_number;
+						return;
+					}
+		return;
 	}
 	
 	public list_component_on_collector(				int render_buffer_id, 
@@ -244,11 +231,13 @@ public class list_component_on_collector
 				if(cam_result.target.comp[i]!=null)
 					collect(render_buffer_id,cam_result.target.comp[i],parameter_channel_id,0);
 		}else{
-			int comp_number=cam_result.target.comp.length;
-			int driver_number=cam_result.target.driver_id.length;
+			int comp_number		=cam_result.target.comp.length;
+			int driver_number	=cam_result.target.driver_id.length;
 			for(int i=0,ni=(comp_number<driver_number)?comp_number:driver_number;i<ni;i++)
-				if((cam_result.target.comp[i]!=null)&&(cam_result.target.driver_id[i]>=0))
-					register(render_buffer_id,cam_result.target.comp[i],cam_result.target.driver_id[i],-1.0);
+				if(cam_result.target.comp[i]!=null)
+					if(cam_result.target.driver_id[i]>=0)
+						register(cam_result.target.driver_id[i]+1,render_buffer_id,
+								cam_result.target.comp[i],cam_result.target.driver_id[i]);
 		}
 		if(ci.parameter.high_or_low_precision_flag)
 			for(component p=ci.parameter.comp;p!=null;p=ek.component_cont.get_component(p.parent_component_id))

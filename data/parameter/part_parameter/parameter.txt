@@ -7,7 +7,6 @@
 /*	max_comment_file_length				*/		-1
 /*	max_compress_file_length			*/		131072
 
-/*	scale_value							*/		1.0
 /*	lod_precision_scale					*/		1.0
 
 /*	assembly_precision					*/		0.50
@@ -18,10 +17,9 @@
 
 /*	max_component_buffer_data_number	*/		2
 /*	max_part_load_thread_number			*/		16
-/*	max_mesh_load_thread_number			*/		8
-/*	max_part_list_load_thread_number	*/		8
+/*	max_mesh_load_thread_number			*/		12
+/*	max_part_list_load_thread_number	*/		4
 
 /*	do_create_bottom_box_flag			*/		false
 /*	combine_to_part_package_flag		*/		true
-/*	delete_buffer_object_text_file_flag	*/		false
 /*	clear_model_file_flag				*/		false	false	false	false	false	false	false

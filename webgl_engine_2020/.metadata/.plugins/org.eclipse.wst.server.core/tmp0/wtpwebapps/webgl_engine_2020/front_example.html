@@ -30,6 +30,7 @@ function body_onload()
 			document.title=render.title;	//ÉèÖÃÍøÒ³±êÌâ
 		});
 }
+
 function body_onunload()
 {
 	if(typeof(render)=="object")
@@ -37,6 +38,7 @@ function body_onunload()
 			if(typeof(render.terminate)=="function")
 				render.terminate();
 }
+
 </script>
 </head>
 

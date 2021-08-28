@@ -10,7 +10,7 @@ public class compress_render_container
 {
 	private render_container render_cont;
 	
-	private static part[]compress_part(part my_part[])
+	private part[]compress_part(part my_part[])
 	{
 		if(my_part==null)
 			return null;
@@ -33,6 +33,7 @@ public class compress_render_container
 			for(int i=0,ni=my_part.length;i<ni;i++)
 				my_part[i]=bak[i];
 		}
+		
 		for(int i=0,ni=my_part.length,permanent_part_from_id;i<ni;i++){
 			my_part[i].part_id=i;
 			my_part[i].part_from_id=-1;

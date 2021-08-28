@@ -14,57 +14,46 @@ public class buffer_object_file_modify_time_and_length
 	public long	buffer_object_text_file_length[][];
 	public boolean buffer_object_file_in_head_flag[][];
 	
-	public void write_out(file_writer fw)
+	public buffer_object_file_modify_time_and_length()
 	{
-		fw.println("/*\tpart mesh file length information\t\t*/");
-		fw.println();
+		buffer_object_head_last_modify_time=0;
+		buffer_object_head_length=0;
+		buffer_object_total_file_length=0;
 		
-		fw.println("/*\tbuffer_object_head_last_modify_time\t\t*/\t",
-			buffer_object_head_last_modify_time);
-		fw.println("/*\tbuffer_object_head_length\t\t\t\t*/\t",
-			buffer_object_head_length);
-		fw.println("/*\tbuffer_object_text_file_length.length\t*/\t",
-			buffer_object_text_file_length.length);
-		for(int i=0,ni=buffer_object_text_file_length.length;i<ni;i++){
-			fw.println("/*\t\tbuffer_object_text_file_length["+i+"]\t*/\t",
-				buffer_object_text_file_length[i].length);
-			for(int j=0,nj=buffer_object_text_file_length[i].length;j<nj;j++){
-				fw.println("/*\t\t\tbuffer_object_file_last_modify_time\t["+i+","+j+"]\t\t*/\t",
-					buffer_object_file_last_modify_time[i][j]);
-				fw.println("/*\t\t\tbuffer_object_text_file_length\t\t["+i+","+j+"]\t\t*/\t",
-					buffer_object_text_file_length[i][j]);
-				fw.println("/*\t\t\tbuffer_object_file_in_head_flag\t\t["+i+","+j+"]\t\t*/\t",
-					buffer_object_file_in_head_flag[i][j]?"true":"false");
-			}
-		}
-		fw.println();
+		buffer_object_file_last_modify_time	=new long[0][];
+		buffer_object_text_file_length		=new long[0][];
+		buffer_object_file_in_head_flag		=new boolean[0][];
 	}
-	public buffer_object_file_modify_time_and_length(file_reader fr)
+	public buffer_object_file_modify_time_and_length(
+			boolean read_write_flag,String root_file_name,String file_charset)
 	{
-		buffer_object_head_last_modify_time	=fr.get_long();
-		buffer_object_head_length			=fr.get_long();
-		buffer_object_total_file_length		=buffer_object_head_length;
-		
-		buffer_object_text_file_length		=new long[fr.get_int()][];
-		buffer_object_file_last_modify_time	=new long[buffer_object_text_file_length.length][];
-		buffer_object_file_in_head_flag		=new boolean[buffer_object_text_file_length.length][];
-		
-		for(int i=0,ni=buffer_object_text_file_length.length;i<ni;i++){
-			buffer_object_text_file_length[i]		=new long[fr.get_int()];
-			buffer_object_file_last_modify_time[i]	=new long[buffer_object_text_file_length[i].length];
-			buffer_object_file_in_head_flag[i]		=new boolean[buffer_object_text_file_length[i].length];
-			for(int j=0,nj=buffer_object_text_file_length[i].length;j<nj;j++){
-				buffer_object_file_last_modify_time[i][j]	=fr.get_long();
-				buffer_object_text_file_length[i][j]		=fr.get_long();
-				buffer_object_file_in_head_flag[i][j]		=fr.get_boolean();
-				if(!(buffer_object_file_in_head_flag[i][j]))
-					buffer_object_total_file_length+=buffer_object_text_file_length[i][j];
+		if(read_write_flag) {
+			file_reader fr=new file_reader(root_file_name+".boftal",file_charset);
+			
+			buffer_object_head_last_modify_time	=fr.get_long();
+			buffer_object_head_length			=fr.get_long();
+			buffer_object_total_file_length		=buffer_object_head_length;
+			
+			buffer_object_text_file_length		=new long[fr.get_int()][];
+			buffer_object_file_last_modify_time	=new long[buffer_object_text_file_length.length][];
+			buffer_object_file_in_head_flag		=new boolean[buffer_object_text_file_length.length][];
+			
+			for(int i=0,ni=buffer_object_text_file_length.length;i<ni;i++){
+				buffer_object_text_file_length[i]		=new long[fr.get_int()];
+				buffer_object_file_last_modify_time[i]	=new long[buffer_object_text_file_length[i].length];
+				buffer_object_file_in_head_flag[i]		=new boolean[buffer_object_text_file_length[i].length];
+				for(int j=0,nj=buffer_object_text_file_length[i].length;j<nj;j++){
+					buffer_object_file_last_modify_time[i][j]	=fr.get_long();
+					buffer_object_text_file_length[i][j]		=fr.get_long();
+					buffer_object_file_in_head_flag[i][j]		=fr.get_boolean();
+					if(!(buffer_object_file_in_head_flag[i][j]))
+						buffer_object_total_file_length+=buffer_object_text_file_length[i][j];
+				}
 			}
+			fr.close();
+			return;
 		}
-	}
-
-	public buffer_object_file_modify_time_and_length(String root_file_name)
-	{
+		
 		File f=new File(root_file_name+".head.txt");
 		buffer_object_head_last_modify_time	=f.lastModified();
 		buffer_object_head_length			=f.length();
@@ -136,5 +125,31 @@ public class buffer_object_file_modify_time_and_length
 					buffer_object_file_in_head_flag[i][j]=bak_flag[j];
 			}
 		}
+		
+		file_writer fw=new file_writer(root_file_name+".boftal",file_charset);
+	
+		fw.println("/*\tpart mesh file length information\t\t*/");
+		fw.println();
+		
+		fw.println("/*\tbuffer_object_head_last_modify_time\t\t*/\t",
+			buffer_object_head_last_modify_time);
+		fw.println("/*\tbuffer_object_head_length\t\t\t\t*/\t",
+			buffer_object_head_length);
+		fw.println("/*\tbuffer_object_text_file_length.length\t*/\t",
+			buffer_object_text_file_length.length);
+		for(int i=0,ni=buffer_object_text_file_length.length;i<ni;i++){
+			fw.println("/*\t\tbuffer_object_text_file_length["+i+"]\t*/\t",
+				buffer_object_text_file_length[i].length);
+			for(int j=0,nj=buffer_object_text_file_length[i].length;j<nj;j++){
+				fw.println("/*\t\t\tbuffer_object_file_last_modify_time\t["+i+","+j+"]\t\t*/\t",
+					buffer_object_file_last_modify_time[i][j]);
+				fw.println("/*\t\t\tbuffer_object_text_file_length\t\t["+i+","+j+"]\t\t*/\t",
+					buffer_object_text_file_length[i][j]);
+				fw.println("/*\t\t\tbuffer_object_file_in_head_flag\t\t["+i+","+j+"]\t\t*/\t",
+					buffer_object_file_in_head_flag[i][j]?"true":"false");
+			}
+		}
+		fw.println();
+		fw.close();
 	}
 }

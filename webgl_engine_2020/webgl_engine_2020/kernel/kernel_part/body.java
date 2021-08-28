@@ -58,8 +58,7 @@ public class body
 			total_point_primitive_number+=face_array[i].fa_curve.total_point_primitive_number;
 		}
 	}
-	public body(file_reader fr,double vertex_scale_value,String my_default_material[],
-			double my_default_attribute_double[],String my_default_attribute_string[])
+	public body(file_reader fr)
 	
 	{
 		name=fr.get_string();
@@ -73,21 +72,17 @@ public class body
 		}else{
 			face_array=new face[my_face_number];
 			for(int i=0;i<my_face_number;i++)
-				face_array[i]=new face(fr,vertex_scale_value,
-					my_default_material,my_default_attribute_double,my_default_attribute_string);
+				face_array[i]=new face(fr);
 		}
 		caculate_box_and_primitive_number();
 	}
-	public body(
-			int my_box_number,location my_box_loca[],box my_box_array[],
-			String extra_data[],String my_default_material[][],
-			double my_default_attribute_double[][],String my_default_attribute_string[][])
+	
+	public body(int my_box_number,part my_reference_part[],location my_box_loca[],box my_box_array[])
 	{
 		name="box_body_with_"+my_box_number+"_faces";	
 		face_array=new face[my_box_number];
 		for(int i=0;i<my_box_number;i++)
-			face_array[i]=new face(my_box_loca[i],my_box_array[i],extra_data[i],
-				my_default_material[i],my_default_attribute_double[i],my_default_attribute_string[i]);
+			face_array[i]=new face(my_reference_part[i],my_box_loca[i],my_box_array[i]);
 		caculate_box_and_primitive_number();
 	}
 }

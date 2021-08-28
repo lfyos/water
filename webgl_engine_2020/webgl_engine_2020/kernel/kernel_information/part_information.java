@@ -9,7 +9,9 @@ public class part_information extends jason_creator
 
 	public void print()
 	{
-		print("top_box_part_flag",			p.top_box_part_flag);
+		print("top_box_part_flag",			p.is_top_box_part());
+		print("bottom_box_part_flag",		p.is_bottom_box_part());
+		print("normal_box_part_flag",		p.is_normal_part());
 		print("part_type_id",				p.part_type_id);
 		
 		print("render_id",					p.render_id);

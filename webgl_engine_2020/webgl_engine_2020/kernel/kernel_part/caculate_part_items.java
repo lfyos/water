@@ -15,6 +15,70 @@ import kernel_transformation.point;
 
 public class caculate_part_items
 {
+	public static point caculate_normal_for_ellipse_hyperbola_parabola(double par[])
+	{
+		point center	=new point(par[0],par[1],par[2]);
+		point a_point	=new point(par[3],par[4],par[5]);
+		point b_point	=new point(par[6],par[7],par[8]);
+		point max_dir	=a_point.sub(center);
+		point min_dir	=b_point.sub(center);
+		return max_dir.expand(1).cross(min_dir.expand(1)).expand(1);
+	}
+	public static point[] caculate_point_for_ellipse_hyperbola_parabola(double par[],String curve_type)
+	{
+		point center	=new point(par[0],par[1],par[2]);
+		point a_point	=new point(par[3],par[4],par[5]);
+		point b_point	=new point(par[6],par[7],par[8]);
+		point max_dir	=a_point.sub(center);
+		point min_dir	=b_point.sub(center);
+		double a		=max_dir.distance();
+		double b		=min_dir.distance();
+		max_dir=max_dir.expand(1);
+		min_dir=min_dir.expand(1);
+
+		location loca=new location(center,center.add(max_dir),center.add(min_dir),
+				center.add(max_dir.cross(min_dir).expand(1))).multiply(location.standard_negative);
+		switch(curve_type) {
+		default:
+			return new point[] {};
+		case "ellipse":
+			if(a*a>=b*b) {
+				double c=Math.sqrt(Math.abs(a*a-b*b));
+				return new point[]
+				{
+					center,
+					loca.multiply(a,	0,	0),	loca.multiply(-a,	0,		0),
+					loca.multiply(0,	b,	0),	loca.multiply(0,	-b,		0),
+					loca.multiply(c,	0,	0),	loca.multiply(-c,	0,		0)
+				};
+			}else{
+				double c=Math.sqrt(Math.abs(b*b-a*a));
+				return new point[]
+				{
+					center,
+					loca.multiply(a,	0,	0),	loca.multiply(-a,	0,		0),
+					loca.multiply(0,	b,	0),	loca.multiply(0,	b,		0),
+					loca.multiply(0,	c,	0),	loca.multiply(0,	-c,		0)
+				};
+			}
+		case "hyperbola":
+			double c=Math.sqrt(a*a+b*b);
+			return new point[]
+			{
+				center,
+				loca.multiply(a,	0,		0),	loca.multiply(-a,	0,		0),
+				loca.multiply(0,	b,		0),	loca.multiply(0,	-b,		0),
+				loca.multiply(c,	0,		0),	loca.multiply(-c,	0,		0)
+			};
+		case "parabola":
+			return new point[]
+			{
+				center,
+				loca.multiply(2*a,0,0)
+			};
+		}
+	}
+	
 	public box my_box;
 
 	public part_rude my_part_rude;
@@ -104,52 +168,12 @@ public class caculate_part_items
 		case "ellipse":
 		case "hyperbola":
 		case "parabola":
-		{
-			point center	=new point(my_face_edge.curve_parameter[0],my_face_edge.curve_parameter[1],my_face_edge.curve_parameter[2]);
-			point a_point	=new point(my_face_edge.curve_parameter[3],my_face_edge.curve_parameter[4],my_face_edge.curve_parameter[5]);
-			point b_point	=new point(my_face_edge.curve_parameter[6],my_face_edge.curve_parameter[7],my_face_edge.curve_parameter[8]);
-			double a_dist2	=a_point.sub(center).distance2();
-			double b_dist2	=b_point.sub(center).distance2();
-
-			if(a_dist2<b_dist2){
-				point pp=a_point;a_point=b_point;b_point=pp;
-				double dist2=a_dist2;a_dist2=b_dist2;b_dist2=dist2;
-			}
-			point a_dir=a_point.sub(center),b_dir=b_point.sub(center),c_dir,point_array[];
-			
-			switch(my_face_edge.curve_type) {
-			default:
-			case "ellipse":
-				c_dir=a_dir.expand(Math.sqrt(a_dist2-b_dist2));
-				point_array=new point[]
-				{
-					center,
-					center.add(a_dir),center.add(b_dir),center.add(c_dir),
-					center.sub(a_dir),center.sub(b_dir),center.sub(c_dir)
-				};
-				break;
-			case "hyperbola":
-				c_dir=a_dir.expand(Math.sqrt(a_dist2+b_dist2));
-				point_array=new point[]
-				{
-					center,
-					center.add(a_dir),center.add(b_dir),center.add(c_dir),
-					center.sub(a_dir),center.sub(b_dir),center.sub(c_dir)
-				};
-				break;
-			case "parabola":
-				point_array=new point[]
-				{
-					center,
-					center.add(a_dir)
-				};
-				break;
-			}
+			point point_array[]=caculate_point_for_ellipse_hyperbola_parabola(
+					my_face_edge.curve_parameter,my_face_edge.curve_type);
 			if(point_id>=5)
 				if((point_id-5)<point_array.length)
 					my_box=new box(point_array[point_id-5]);
 			return;
-		}
 		case "pickup_point_set":
 			if(my_face_edge.curve_parameter!=null)
 				if(point_id>=1000)
@@ -328,12 +352,6 @@ public class caculate_part_items
 		part_item_name="Î´ÖªÇúÃæ";
 		
 		return p0;
-	}
-	public caculate_part_items(part_rude box_part_mesh,int body_id,int face_id,int loop_id,int edge_id,int point_id)
-	{
-		clear_all();
-		do_caculate_part_box(box_part_mesh,body_id,face_id,loop_id,edge_id,point_id);
-		return;
 	}
 	public caculate_part_items(part p,int body_id,int face_id,int loop_id,int edge_id,int point_id)
 	{

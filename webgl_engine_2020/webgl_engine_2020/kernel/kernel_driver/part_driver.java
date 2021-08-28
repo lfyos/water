@@ -6,6 +6,7 @@ import kernel_common_class.const_value;
 import kernel_component.component;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
+import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
@@ -17,6 +18,7 @@ import kernel_transformation.box;
 import kernel_transformation.point;
 import kernel_network.client_request_response;
 import kernel_common_class.debug_information;
+import kernel_common_class.exclusive_file_mutex;
 import kernel_part.part_rude;
 
 public class part_driver
@@ -44,54 +46,49 @@ public class part_driver
 	{
 		return 0;
 	}
-	public part_rude create_part_mesh_and_buffer_object_head(
-			part p,file_writer buffer_object_file_writer,
-			part_container_for_part_search pcps,system_parameter system_par)
+	public part_rude create_part_mesh_and_buffer_object_head(part p,
+			file_writer buffer_object_file_writer,part_container_for_part_search pcps,
+			system_parameter system_par,scene_parameter scene_par)
 	{
 		if(p.part_mesh!=null)
 			return p.part_mesh;
-		if(p.mesh_file_name==null)
+		if(!(p.is_normal_part()))
 			return null;
 		
 		String my_file_path=file_reader.separator(p.directory_name+p.mesh_file_name);
 		if(!(new File(my_file_path).exists()))
 			return null;
-		
-		system_par.system_exclusive_name_mutex.lock(my_file_path+".lock");
-	
-		file_reader fr=new file_reader(my_file_path,p.file_charset);
-		fr.mark_start();
-		String version_str=fr.get_string();
-		if(version_str!=null)
-			if(version_str.compareTo("2021.07.01")==0) {
-				system_par.system_exclusive_name_mutex.unlock(my_file_path+".lock");
-				
-				fr.mark_terminate(true);
-				part_rude ret_val=new part_rude(fr,p.part_par.scale_value);
-				fr.close();
-				
-				return ret_val;
+
+		file_reader fr=null;
+		exclusive_file_mutex efm=exclusive_file_mutex.lock(
+			my_file_path+".lock","wait for create buffer_object_head:	"+my_file_path);
+		try{
+			fr=new file_reader(my_file_path,p.file_charset);
+			fr.mark_start();
+			for(String version_str;;) {
+				if((version_str=fr.get_string())!=null)
+					if(version_str.compareTo("2021.07.15")==0) {
+						fr.mark_terminate(true);
+						break;
+					}
+				fr.close();	
+				convert_old_part_rude_2021_07_01.part_rude.convert(my_file_path,p.file_charset);
+				fr=new file_reader(my_file_path,p.file_charset);
+				break;
 			}
+		}catch(Exception e) {
+			debug_information.println("create_part_mesh_and_buffer_object_head(format convertion) exception:	",e.toString());
+			e.printStackTrace();
+			if(fr!=null) {
+				fr.close();
+				fr=null;
+			}
+		}
+		efm.unlock();
+		if(fr==null)
+			return null;
+		part_rude ret_val=new part_rude(fr);
 		fr.close();
-		
-		String targety_file_path=buffer_object_file_writer.directory_name+"part.tmp.mesh";
-		
-		file_writer.file_rename(my_file_path,		 targety_file_path);
-		file_writer.file_rename(my_file_path+".face",targety_file_path+".face");
-		file_writer.file_rename(my_file_path+".edge",targety_file_path+".edge");
-		
-		convert_old_part_rude_2021_07_01.part_rude.convert(targety_file_path,my_file_path,p.file_charset);
-		
-		file_writer.file_delete(targety_file_path);
-		file_writer.file_delete(targety_file_path+".face");
-		file_writer.file_delete(targety_file_path+".edge");
-		
-		system_par.system_exclusive_name_mutex.unlock(my_file_path+".lock");
-		
-		fr=new file_reader(my_file_path,p.file_charset);
-		part_rude ret_val=new part_rude(fr,p.part_par.scale_value);
-		fr.close();
-		
 		return ret_val;
 	}
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,

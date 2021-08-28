@@ -10,7 +10,7 @@ public class face
 	
 	public face_face fa_face;
 	public face_curve fa_curve;
-	
+	public part reference_part;
 	public box face_box;
 
 	public void destroy()
@@ -25,6 +25,8 @@ public class face
 			fa_curve.destroy();
 			fa_curve=null;
 		}
+		if(reference_part!=null)
+			reference_part=null;
 		if(face_box!=null)
 			face_box=null;
 	}
@@ -48,25 +50,39 @@ public class face
 		name	=new String(s.name);
 		fa_face	=(s.fa_face ==null)?null:new face_face (s.fa_face);
 		fa_curve=(s.fa_curve==null)?null:new face_curve(s.fa_curve);
+		reference_part=s.reference_part;
 		face_box=(s.face_box==null)?null:new box(s.face_box);
 	}
-	public face(file_reader fr,double vertex_scale_value,String my_default_material[],
-			double my_default_attribute_double[],String my_default_attribute_string[])
+	public face(file_reader fr)
 	{
 		name=fr.get_string();
 		name=(name==null)?"":name;
-		fa_face=new face_face(fr,my_default_material,my_default_attribute_double,my_default_attribute_string);
-		fa_curve=new face_curve(fr,vertex_scale_value);
+		fa_face=new face_face(fr);
+		fa_curve=new face_curve(fr);
+		reference_part=null;
 		caculate_box();
 	}
-	public face(
-		location my_face_loca,box my_face_box,String extra_data,String my_default_material[],
-		double my_default_attribute_double[],String my_default_attribute_string[])
+	public face(part my_reference_part,location my_face_loca,box my_face_box)
 	{
 		name="no_name";
-		fa_curve=new face_curve(my_face_loca,my_face_box,extra_data,my_default_material);
-		fa_face=new face_face(fa_curve.curve_box,my_default_material,
-			my_default_attribute_double,my_default_attribute_string);
+		
+		String my_extra_data=null,my_material[]=null;
+		if(my_reference_part!=null)
+			if(my_reference_part.part_mesh!=null) {
+				if(my_reference_part.part_mesh.default_vertex_extra_string!=null)
+					my_extra_data=my_reference_part.part_mesh.default_vertex_extra_string;
+				if(my_reference_part.part_mesh.default_material!=null)
+					if(my_reference_part.part_mesh.default_material.length>=4)
+						my_material=my_reference_part.part_mesh.default_material;
+			}
+		if(my_extra_data==null)
+			my_extra_data="1";
+		if(my_material==null)
+			my_material=new String[] {"0","0","0","0"};
+		
+		fa_curve=new face_curve(my_face_loca,my_face_box,my_extra_data,my_material);
+		fa_face=new face_face(fa_curve.curve_box);
+		reference_part=my_reference_part;
 		caculate_box();
 	}
 };

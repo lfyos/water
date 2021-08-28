@@ -271,9 +271,6 @@ public class client_information
 	public client_information(client_request_response my_request_response,
 			engine_kernel ek,user_statistics my_statistics_user,interface_statistics my_statistics_interface)
 	{
-		ek.system_par.system_exclusive_name_mutex.lock(
-				ek.scene_par.scene_proxy_directory_name+"engine.lock");
-
 		render_buffer					=new buffer_container(ek);
 		target_container				=new render_target_container();
 		
@@ -306,9 +303,6 @@ public class client_information
 		instance_container	=new instance_driver_container(ek,request_response);
 		message_display		=new display_message();				
 		creation_parameter	=new client_creation_parameter(ek,request_response);
-		
-		ek.system_par.system_exclusive_name_mutex.unlock(
-				ek.scene_par.scene_proxy_directory_name+"engine.lock");
 		
 		return;
 	}

@@ -6,6 +6,7 @@ import kernel_common_class.debug_information;
 import kernel_engine.engine_kernel_link_list;
 import kernel_engine.system_parameter;
 import kernel_network.client_request_response;
+import kernel_part.part;
 import kernel_part.part_container_for_part_search;
 import kernel_part.part_loader_container;
 import kernel_render.render_container;
@@ -104,13 +105,17 @@ public class engine_interface
 		if(original_render==null){
 			int part_type_id=0;
 			original_render=new render_container();
-			original_render.load_shader(system_par.last_modified_time,
+			part_container_for_part_search pcps=new part_container_for_part_search(new part[]{});
+			original_render.load_shader(pcps,system_par.last_modified_time,
 					system_par.data_root_directory_name+system_par.shader_file_name,
 					system_par.local_data_charset,"",part_type_id,
 					null,system_par,null,request_response);
-			original_render.create_bottom_box_part(request_response,system_par);
-			original_render.load_part(part_loader_cont,system_par,null,
-					new part_container_for_part_search(original_render.part_array(true,-1)));
+			pcps.execute_append();
+			original_render.load_part(1<<part_type_id,1,part_loader_cont,system_par,null,pcps);
+			
+			original_render.create_bottom_box_part(pcps,request_response,system_par);
+			pcps.execute_append();
+			original_render.load_part(1<<part_type_id,2,part_loader_cont,system_par,null,pcps);
 			
 			debug_information.println("Begin create system_part_package");
 			original_render.system_part_package=new part_package(original_render,part_type_id,system_par,null);
@@ -151,9 +156,9 @@ public class engine_interface
 			request_response.implementor.get_client_id(),"	No created engine found, create it!");
 		debug_information.println();
 		
-		engine_kernel_link_list_first=new engine_kernel_link_list(system_par,
-					session,request_response,original_render,part_loader_cont,
-					scene_name,link_name,engine_kernel_link_list_first);
+		engine_kernel_link_list_first=new engine_kernel_link_list(
+				system_par,session,request_response,original_render,part_loader_cont,
+				scene_name,link_name,engine_kernel_link_list_first);
 
 		if(engine_kernel_link_list_first.ek!=null){
 			engine_kernel_link_list_first.increase_link_number();

@@ -4,6 +4,7 @@ import java.io.File;
 
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
+import kernel_common_class.debug_information;
 import kernel_common_class.sorter;
 
 public class proxy_parameter extends sorter<proxy_information,String>
@@ -16,7 +17,7 @@ public class proxy_parameter extends sorter<proxy_information,String>
 	{
 		return s.original_url.compareTo(t);
 	}
-	
+	public String engine_log_directory;
 	public String extract_data_root_directory;
 	public String proxy_data_root_directory_name;
 	
@@ -24,6 +25,16 @@ public class proxy_parameter extends sorter<proxy_information,String>
 	public String compress_extract_data_root_directory;
 	public String compress_proxy_data_root_directory_name;
 	
+	public void switch_log_file()
+	{
+		for(int i=0;;i++) {
+			String log_path_name=engine_log_directory+"log_"+i+".log";
+			if(!(new File(log_path_name).exists())) {
+				debug_information.mount_file(log_path_name);
+				break;
+			}
+		}
+	}
 	public proxy_parameter(String configure_file_name,String configure_file_system_charset)
 	{
 		if(file_reader.is_not_exist(configure_file_name)){
@@ -32,7 +43,7 @@ public class proxy_parameter extends sorter<proxy_information,String>
 					file_writer.make_directory(configure_file_name.substring(0,i+1));
 			
 			file_writer fw=new file_writer(configure_file_name,configure_file_system_charset);
-			
+			fw.println("engine_log_directory");
 			fw.println("extract_data_root_directory");
 			fw.println("proxy_root_directory");
 			
@@ -44,12 +55,17 @@ public class proxy_parameter extends sorter<proxy_information,String>
 		}
 		file_reader f=new file_reader(configure_file_name,configure_file_system_charset);
 		
+		engine_log_directory					=f.directory_name+file_reader.separator(f.get_string());
 		extract_data_root_directory				=f.directory_name+file_reader.separator(f.get_string());
 		proxy_data_root_directory_name			=f.directory_name+file_reader.separator(f.get_string());
 		
 		compress_data_root_directory_name		=f.directory_name+file_reader.separator(f.get_string());
 		compress_extract_data_root_directory	=f.directory_name+file_reader.separator(f.get_string());
 		compress_proxy_data_root_directory_name	=f.directory_name+file_reader.separator(f.get_string());
+		
+		if(engine_log_directory.charAt(engine_log_directory.length()-1)!=File.separatorChar)
+			engine_log_directory+=File.separator;
+		file_writer.make_directory(engine_log_directory);
 		
 		if(extract_data_root_directory.charAt(extract_data_root_directory.length()-1)!=File.separatorChar)
 			extract_data_root_directory+=File.separator;
@@ -70,6 +86,8 @@ public class proxy_parameter extends sorter<proxy_information,String>
 		if(compress_proxy_data_root_directory_name.charAt(compress_proxy_data_root_directory_name.length()-1)!=File.separatorChar)
 			compress_proxy_data_root_directory_name+=File.separator;
 		file_writer.make_directory(compress_proxy_data_root_directory_name);
+		
+		switch_log_file();
 		
 		data_array=new proxy_information[0];
 		while(true){

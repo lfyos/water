@@ -95,7 +95,7 @@ namespace extract_solidworks_data
                 {
                     ;
                 }
-                mesh_writer.Write("             start_not_effective    ");
+                mesh_writer.WriteLine("             start_not_effective    ");
                 start_data = new double[] { 0, 0, 0 };
             } while (false);
 
@@ -119,7 +119,7 @@ namespace extract_solidworks_data
                 {
 
                 }
-                mesh_writer.Write("             end_not_effective    ");
+                mesh_writer.WriteLine("             end_not_effective    ");
                 end_data = new double[] { 0, 0, 0 };
             } while (false);
 
@@ -204,7 +204,8 @@ namespace extract_solidworks_data
 
             double[][] p = start_end(my_edge, mesh_writer, default_material);
 
-            mesh_writer.WriteLine("             /*  parameter_point_material  */"
+            mesh_writer.WriteLine("             /*  parameter_point_extra_data  */      1");
+            mesh_writer.WriteLine("             /*  parameter_point_material    */"
                 + "    " + default_material.red  + "    " + default_material.green 
                 + "    " + default_material.blue + "    " + default_material.meterial_id);
 

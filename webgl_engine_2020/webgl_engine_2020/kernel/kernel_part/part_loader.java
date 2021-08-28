@@ -1,6 +1,7 @@
 package kernel_part;
 
 import kernel_common_class.debug_information;
+import kernel_common_class.exclusive_file_mutex;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_directory;
@@ -59,25 +60,26 @@ public class part_loader extends Thread
 		String part_temporary_file_directory=file_directory.part_file_directory(loaded_part,system_par,scene_par);
 		String lock_file_name=file_reader.separator(part_temporary_file_directory+"part.lock");
 		
-		debug_information.println();
 		debug_information.println(
 	    		"Begin load_mesh_and_create_buffer_object_and_material_file:\t",loaded_part.system_name);
 		debug_information.println(
 				"Begin lock part:\t",loaded_part.system_name+"\t"+lock_file_name);
 		
-		system_par.system_exclusive_name_mutex.lock(lock_file_name);
+		exclusive_file_mutex efm=exclusive_file_mutex.lock(lock_file_name,
+				 "wait for load_mesh_and_create_buffer_object_and_material_file:	"
+				+loaded_part.directory_name+loaded_part.mesh_file_name);
 		try{
 			debug_information.println(
 				loaded_part.load_mesh_and_create_buffer_object(
 					copy_from_part,last_modified_time,part_temporary_file_directory,
-					system_par.local_data_charset,system_par,pcps));
+					system_par.local_data_charset,system_par,scene_par,pcps));
 		}catch(Exception e){
 			debug_information.println(
 	            	"Error in load_mesh_and_create_buffer_object_and_material_file:\t",loaded_part.system_name);
 			debug_information.println(e.toString());
 			e.printStackTrace();
 		}
-		system_par.system_exclusive_name_mutex.unlock(lock_file_name);
+		efm.unlock();
    
     	debug_information.println(
             	"End load_mesh_and_create_buffer_object_and_material_file:\t",loaded_part.system_name);

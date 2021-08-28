@@ -241,7 +241,7 @@ public class component_caculator
 				component comp=component_pointer[i];
 				for(int j=0,nj=comp.driver_number();j<nj;j++){
 					part my_part=comp.driver_array[j].component_part;
-					if(my_part.top_box_part_flag){
+					if(my_part.is_top_box_part()){
 						top_assemble_component_number++;
 						break;
 					}	

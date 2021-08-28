@@ -8,6 +8,7 @@ public class part_rude
 {
 	public void destroy()
 	{
+		origin_vertex_extra_data=null;
 		origin_material=null;
 		default_material=null;
 		default_attribute_double=null;
@@ -21,8 +22,9 @@ public class part_rude
 		part_box=null;
 	}
 	
-	public String origin_material[];
+	public String origin_vertex_extra_data,origin_material[];
 	public String default_material[];
+	public String default_vertex_extra_string,default_normal_extra_string;
 	public double default_attribute_double[];
 	public String default_attribute_string[];
 	
@@ -57,11 +59,13 @@ public class part_rude
 	}
 	public part_rude(part_rude s)
 	{
-		origin_material=s.origin_material;
-		
-		default_material=s.default_material;
-		default_attribute_double=s.default_attribute_double;
-		default_attribute_string=s.default_attribute_string;
+		origin_vertex_extra_data	=s.origin_vertex_extra_data;
+		origin_material				=s.origin_material;
+		default_material			=s.default_material;
+		default_vertex_extra_string	=s.default_vertex_extra_string;
+		default_normal_extra_string	=s.default_normal_extra_string;
+		default_attribute_double	=s.default_attribute_double;
+		default_attribute_string	=s.default_attribute_string;
 		
 		int body_number;
 		if((body_number=s.body_number())<=0)
@@ -79,26 +83,40 @@ public class part_rude
 		total_edge_primitive_number =s.total_edge_primitive_number;
 		total_point_primitive_number=s.total_point_primitive_number;
 	}
-	public part_rude(file_reader fr,double vertex_scale_value)
+	public part_rude(file_reader fr)
 	{
-		fr.get_string();	//version code 
+		String default_value="0";
 		
+		fr.get_string();	//version code 
+
 		origin_material=new String[4];
 		for(int i=0,ni=origin_material.length;i<ni;i++)
-			origin_material[i]=fr.get_string();
+			if((origin_material[i]=fr.get_string())==null)
+				origin_material[i]=default_value;
 		
-		default_material=new String[]
-			{fr.get_string(),fr.get_string(),fr.get_string(),fr.get_string()};
+		default_material=new String[4];
+		for(int i=0,ni=default_material.length;i<ni;i++)
+			if((default_material[i]=fr.get_string())==null)
+				default_material[i]=default_value;
+		
+		if((origin_vertex_extra_data=fr.get_string())==null)
+			origin_vertex_extra_data="1";
+		if((default_vertex_extra_string=fr.get_string())==null)
+			default_vertex_extra_string="1";
+		if((default_normal_extra_string=fr.get_string())==null)
+			default_normal_extra_string="1";
+		
 		int max_attribute_number=fr.get_int();
 		max_attribute_number=(max_attribute_number<=0)?0:max_attribute_number;
 		
 		default_attribute_double=new double[3*max_attribute_number];
 		default_attribute_string=new String[1*max_attribute_number];
-		for(int i=0,j=0;j<max_attribute_number;) {
+		for(int i=0,j=0;j<max_attribute_number;j++) {
 			default_attribute_double[i++]=fr.get_double();
 			default_attribute_double[i++]=fr.get_double();
 			default_attribute_double[i++]=fr.get_double();
-			default_attribute_string[j++]=fr.get_string();
+			if((default_attribute_string[j]=fr.get_string())==null)
+				default_attribute_string[j]="1";
 		}
 		int my_body_number;
 		if((my_body_number=fr.get_int())<=0)
@@ -106,41 +124,13 @@ public class part_rude
 		else{
 			body_array=new body[my_body_number];
 			for(int i=0;i<my_body_number;i++)
-				body_array[i]=new body(fr,vertex_scale_value,
-					default_material,default_attribute_double,default_attribute_string);
+				body_array[i]=new body(fr);
 		}
 		caculate_rp_box_and_primitive_number();
 		return;
 	}
-	public part_rude(String my_origin_material[],String my_default_material[][],
-		double my_default_attribute_double[][],String my_default_attribute_string[][],
-		int my_box_number,location my_box_loca[],box my_box_array[],String my_extra_data[])
+	public part_rude(int my_box_number,part my_reference_part[],location my_box_loca[],box my_box_array[])
 	{
-		origin_material			=my_origin_material;
-		default_material		=my_default_material[0];
-		default_attribute_double=my_default_attribute_double[0];
-		default_attribute_string=my_default_attribute_string[0];
-		for(int i=0;i<my_box_number;i++)
-			if(default_attribute_string.length<my_default_attribute_string[i].length) {
-				default_material=my_default_material[i];
-				default_attribute_double=my_default_attribute_double[i];
-				default_attribute_string=my_default_attribute_string[i];
-			}
-		for(int i=0;i<my_box_number;i++)
-			if(my_default_attribute_string[i].length<default_attribute_string.length){
-				double bak_default_attribute_double[]=my_default_attribute_double[i];
-				String bak_default_attribute_string[]=my_default_attribute_string[i];
-				my_default_attribute_double[i]=new double[default_attribute_double.length];
-				my_default_attribute_string[i]=new String[default_attribute_string.length];
-				for(int j=0,nj=bak_default_attribute_double.length;j<nj;j++)
-					my_default_attribute_double[i][j]=bak_default_attribute_double[j];
-				for(int j=bak_default_attribute_double.length,nj=default_attribute_double.length;j<nj;j++)
-					my_default_attribute_double[i][j]=default_attribute_double[j];
-				for(int j=0,nj=bak_default_attribute_string.length;j<nj;j++)
-					my_default_attribute_string[i][j]=bak_default_attribute_string[j];
-				for(int j=bak_default_attribute_string.length,nj=default_attribute_string.length;j<nj;j++)
-					my_default_attribute_string[i][j]=default_attribute_string[j];
-			}
 		double max_distance_2=my_box_array[0].distance2();
 		int max_index_id=0;
 		for(int i=0;i<my_box_number;i++){
@@ -150,16 +140,36 @@ public class part_rude
 				max_index_id=i;
 			}
 		}
-
-		default_material		=my_default_material		[max_index_id];
-		default_attribute_double=my_default_attribute_double[max_index_id];
-		default_attribute_string=my_default_attribute_string[max_index_id];
+		part_rude pr=my_reference_part[max_index_id].part_mesh;
 		
-		body_array=new body[]
-		{
-			new body(my_box_number,my_box_loca,my_box_array,my_extra_data,my_default_material,
-						my_default_attribute_double,my_default_attribute_string)
-		};
+		origin_vertex_extra_data	=pr.origin_vertex_extra_data;
+		origin_material				=pr.origin_material;
+		default_material			=pr.default_material;
+		default_vertex_extra_string	=pr.default_vertex_extra_string;
+		default_normal_extra_string	=pr.default_normal_extra_string;
+		default_attribute_double	=pr.default_attribute_double;
+		default_attribute_string	=pr.default_attribute_string;
+		
+		for(int i=0;i<my_box_number;i++) {
+			if(default_attribute_string.length<pr.default_attribute_string.length) {
+				String bak[]=default_attribute_string;
+				default_attribute_string=new String[pr.default_attribute_string.length];
+				for(int j=0,nj=bak.length;j<nj;j++)
+					default_attribute_string[j]=bak[j];
+				for(int j=bak.length,nj=pr.default_attribute_string.length;j<nj;j++)
+					default_attribute_string[j]=pr.default_attribute_string[j];
+			}
+			if(default_attribute_double.length<pr.default_attribute_double.length) {
+				double bak[]=default_attribute_double;
+				default_attribute_double=new double[pr.default_attribute_double.length];
+				for(int j=0,nj=bak.length;j<nj;j++)
+					default_attribute_double[j]=bak[j];
+				for(int j=bak.length,nj=pr.default_attribute_double.length;j<nj;j++)
+					default_attribute_double[j]=pr.default_attribute_double[j];
+			}
+		}
+		
+		body_array=new body[]{new body(my_box_number,my_reference_part,my_box_loca,my_box_array)};
 		caculate_rp_box_and_primitive_number();
 		return;
 	}

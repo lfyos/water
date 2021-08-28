@@ -1448,9 +1448,12 @@ class write_out_mesh
 	}
 	private void create_mesh(file_writer fw)
 	{
-		fw.println("/*	version					*/	2021.07.01");
+		fw.println("/*	version					*/	2021.07.15");
 		fw.println("/*	origin material			*/	0	0	0	0");
 		fw.println("/*	default material		*/	0	0	0	0");
+		fw.println("/*	origin  vertex_location_extra_data	*/	1");
+		fw.println("/*	default vertex_location_extra_data	*/	1");
+		fw.println("/*	default vertex_normal_extra_data	*/	1");
 		fw.println("/*	max_attribute_number	*/	0");
 		fw.println();
 
@@ -1472,7 +1475,10 @@ class write_out_mesh
 		fw.println("				/*	curve_type	*/	segment			/*	parameter_number	*/	0	/*	parameter	*/");
 		fw.println("				start_not_effective");
 		fw.println("				end_not_effective");
-		fw.println("				/*	curve point material			*/	0	0	0	1");
+		
+		fw.println("				/*  parameter_point_extra_data  */	1");
+		fw.println("				/*  parameter_point_material    */	0	0	0	1");
+
 		fw.println("				/*	edge_box						*/	",
 											edge_box.p[0].x+"	"+edge_box.p[0].y+"	"+edge_box.p[0].z+"	"+
 											edge_box.p[1].x+"	"+edge_box.p[1].y+"	"+edge_box.p[1].z);
@@ -1652,6 +1658,7 @@ public class pointset_converter
 				new String[] {"e:\\part.mesh.pipe"},
 				"GBK",new double[] {1,	-1,		1},
 				0.25,125,125);
+		
 		debug_information.println("End");
 	}
 }

@@ -19,6 +19,7 @@ import kernel_render.create_assemble_part;
 import kernel_driver.component_driver;
 import kernel_part.part_loader_container;
 import kernel_common_class.debug_information;
+import kernel_common_class.exclusive_file_mutex;
 
 public class engine_kernel
 {
@@ -44,7 +45,7 @@ public class engine_kernel
 	
 	private part_loader_container 			part_loader_cont;
 
-	private double create_top_part_expand_ratio,create_top_part_left_ratio;
+	private double							create_top_part_expand_ratio,create_top_part_left_ratio;
 	private long							program_last_time;
 
 	public void destroy()
@@ -95,7 +96,7 @@ public class engine_kernel
 			long my_scene_list_file_last_modified_time,
 			String my_parameter_file_name,String my_parameter_charset,
 			String my_extra_parameter_file_name,String my_extra_parameter_charset,
-			system_parameter my_system_parameter,render_container my_render_cont,
+			system_parameter my_system_parameter,render_container my_original_render,
 			part_loader_container my_part_loader_cont)
 	{
 		create_top_part_expand_ratio	=my_create_top_part_expand_ratio;
@@ -132,7 +133,9 @@ public class engine_kernel
 		scene_charset			=my_scene_charset;
 		
 		reset_flag				=false;
-		render_cont				=new render_container(my_render_cont,system_par,request_response);
+		
+		render_cont				=my_original_render;
+		part_cont				=null;	
 		
 		program_last_time		=0;
 	}
@@ -227,6 +230,7 @@ public class engine_kernel
 			}
 		}
 	}
+	
 	private void load_routine(client_request_response request_response)
 	{
 		debug_information.println();
@@ -249,25 +253,31 @@ public class engine_kernel
 			if(scene_par.scene_last_modified_time<scene_f.lastModified_time)
 				scene_par.scene_last_modified_time=scene_f.lastModified_time;
 		}
+		
+		render_cont=new render_container(render_cont,system_par,request_response);
+		part_cont=new part_container_for_part_search(render_cont.part_array(true,-1));
 
 		part_type_string_sorter my_part_type_string_sorter=new part_type_string_sorter(
 				new String[]{
 						scene_par.directory_name+scene_par.type_string_file_name,
 						scene_directory_name	+scene_par.type_string_file_name
 				},scene_par.part_type_string,scene_par.parameter_charset);
-		render_cont.load_shader(scene_par.parameter_last_modified_time,
+		
+		render_cont.load_shader(part_cont,scene_par.parameter_last_modified_time,
 				scene_par.directory_name+scene_par.type_shader_file_name,
 				scene_par.parameter_charset,"",1,null,system_par,scene_par,request_response);
-		render_cont.load_shader(scene_par.scene_last_modified_time,
+		render_cont.load_shader(part_cont,scene_par.scene_last_modified_time,
 				scene_directory_name+scene_par.scene_shader_file_name,scene_charset,
 				scene_par.scene_sub_directory, 2,my_part_type_string_sorter,
 				system_par,scene_par,request_response);
-		render_cont.create_bottom_box_part(request_response,system_par);
-		part_container_for_part_search all_part_part_cont=new part_container_for_part_search(render_cont.part_array(true,-1));
-		render_cont.load_part(part_loader_cont,system_par,scene_par,all_part_part_cont);
-		render_cont.type_part_package=new part_package(render_cont,1,system_par,scene_par);
+		part_cont.execute_append();
+		render_cont.load_part((1<<1)+(1<<2),1,part_loader_cont,system_par,scene_par,part_cont);
+
+		render_cont.create_bottom_box_part(part_cont,request_response,system_par);
+		part_cont.execute_append();
+		render_cont.load_part((1<<1)+(1<<2),2,part_loader_cont,system_par,scene_par,part_cont);
 		
-		part_cont=new part_container_for_part_search(render_cont.part_array(false,-1));
+		render_cont.type_part_package=new part_package(render_cont,1,system_par,scene_par);
 		
 		component_cont=new component_container(scene_f,
 				this,scene_par.default_display_bitmap,request_response,
@@ -292,12 +302,15 @@ public class engine_kernel
 		
 		component_cont.do_component_caculator(false);
 		component_cont.root_component.reset_component(component_cont);
-		load_create_assemble_part(request_response,all_part_part_cont);
-		component_cont.original_part_number=new compress_render_container(
-			render_cont,part_cont,component_cont.root_component).original_part_number;
-		part_cont=new part_container_for_part_search(render_cont.part_array(false,-1));
+		
+		load_create_assemble_part(request_response,part_cont);
+		part_cont.execute_append();
+		render_cont.load_part((1<<2),4,part_loader_cont,system_par,scene_par,part_cont);
 		
 		render_cont.scene_part_package=new part_package(render_cont,2,system_par,scene_par);
+		
+		component_cont.original_part_number=new compress_render_container(
+			render_cont,part_cont,component_cont.root_component).original_part_number;
 		
 		component_cont.do_component_caculator(true);
 		process_part_sequence=new part_process_sequence(render_cont,component_cont.root_component);
@@ -315,14 +328,20 @@ public class engine_kernel
 			(new File(scene_par.type_proxy_directory_name)).setLastModified(current_time);
 			(new File(scene_par.scene_proxy_directory_name)).setLastModified(current_time);
 		}
+		
 	}
 	public void load(client_request_response request_response)
 	{
-		system_par.system_exclusive_name_mutex.lock(
-				scene_par.scene_proxy_directory_name+"engine.lock");
-		load_routine(request_response);
-		system_par.system_exclusive_name_mutex.unlock(
-				scene_par.scene_proxy_directory_name+"engine.lock");
+		String my_lock_name=scene_par.scene_proxy_directory_name+"engine.lock";
+		exclusive_file_mutex efm=exclusive_file_mutex.lock(my_lock_name,
+				"wait for load engine kernel:	"+scene_par.scene_proxy_directory_name);
+		try {
+			load_routine(request_response);
+		}catch(Exception e) {
+			debug_information.println("Engine load exception:	",e.toString());
+			e.printStackTrace();
+		}
+		efm.unlock();
 	}
 	private boolean reset_flag;
 	public void mark_reset_flag()

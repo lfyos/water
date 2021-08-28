@@ -10,9 +10,6 @@ public class face_face
 		face_type=null;
 		face_parameter=null;
 		face_face_box=null;
-		default_material=null;
-		default_attribute_double=null;
-		default_attribute_string=null;
 	}
 	public int face_parameter_number()
 	{
@@ -24,13 +21,8 @@ public class face_face
 	public int total_face_primitive_number,attribute_number;
 	
 	public box face_face_box;
-	
-	public String default_material[];
-	public double default_attribute_double[];
-	public String default_attribute_string[];
-	
-	public face_face(file_reader fr,String my_default_material[],
-			double my_default_attribute_double[],String my_default_attribute_string[])
+
+	public face_face(file_reader fr)
 	{
 		String str;
 		
@@ -59,9 +51,6 @@ public class face_face
 			fr.mark_terminate(true);
 			face_face_box=new box(fr);
 		}
-		default_material=my_default_material;
-		default_attribute_double=my_default_attribute_double;
-		default_attribute_string=my_default_attribute_string;
 		return;
 	}
 	
@@ -74,15 +63,8 @@ public class face_face
 		attribute_number			=s.attribute_number;
 		
 		face_face_box=s.face_face_box;
-		default_material=s.default_material;
-		 
-		default_attribute_string=s.default_attribute_string;
-		default_attribute_double=s.default_attribute_double;
 	}
-	public face_face(box b,
-			String my_default_material[],
-			double my_default_attribute_double[],
-			String my_default_attribute_string[])
+	public face_face(box b)
 	{
 		face_type="unknown";
 		face_parameter=null;
@@ -91,9 +73,5 @@ public class face_face
 		attribute_number=0;
 		
 		face_face_box=new box(b);
-		
-		default_material=my_default_material;
-		default_attribute_double=my_default_attribute_double;
-		default_attribute_string=my_default_attribute_string;
 	}
 }

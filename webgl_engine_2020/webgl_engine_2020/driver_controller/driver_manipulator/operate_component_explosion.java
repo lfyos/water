@@ -42,37 +42,10 @@ public class operate_component_explosion
 	public static void do_explosion(int camera_modifier_id,long touch_time_length,engine_kernel ek,client_information ci)
 	{
 		String str;
-		double t=0,direction_x=0,direction_y=0,direction_z=0;
-		int list_id=0;
-		component_collector cc[];
-		
-		try{
-			if((str=ci.request_response.get_parameter("t"))!=null)
-				t=Double.parseDouble(str);
-			if((str=ci.request_response.get_parameter("x"))!=null)
-				direction_x=Double.parseDouble(str);
-			if((str=ci.request_response.get_parameter("y"))!=null)
-				direction_y=Double.parseDouble(str);
-			if((str=ci.request_response.get_parameter("z"))!=null)
-				direction_z=Double.parseDouble(str);
-			
-			if((str=ci.request_response.get_parameter("list"))!=null)
-				list_id=Integer.decode(str);
-		}catch(Exception e){
-			return;
-		}
-		component my_comp;
 		component_array comp_array=new component_array(ek.component_cont.root_component.component_id+1);
 		
-		switch(list_id) {
-		case -2:
-			if((str=ci.request_response.get_parameter("component_id"))!=null)
-				if(str.length()>0)
-					if((my_comp=ek.component_cont.get_component(Integer.decode(str)))!=null)
-						comp_array.add_component(my_comp);
-			break;
-		case -1:
-			if((str=ci.request_response.get_parameter("component"))!=null)
+		for(component my_comp;;){
+			if((str=ci.request_response.get_parameter("component"))!=null) {
 				if(str.length()>0){
 					try {
 						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
@@ -80,30 +53,48 @@ public class operate_component_explosion
 					}catch(Exception e) {
 						;
 					}
-					if((my_comp=ek.component_cont.search_component(str))!=null)
+					if((my_comp=ek.component_cont.search_component(str))!=null) {
 						comp_array.add_component(my_comp);
+						if(comp_array.component_number>0)
+							break;
+					}
 				}
-			break;
-		case 0:
+				return;
+			}
+			if((str=ci.request_response.get_parameter("component_id"))!=null) {
+				if(str.length()>0)
+					if((my_comp=ek.component_cont.get_component(Integer.decode(str)))!=null) {
+						comp_array.add_component(my_comp);
+						if(comp_array.component_number>0)
+							break;
+					}
+				return;
+			}
+			if((str=ci.request_response.get_parameter("list"))!=null) {
+				component_collector cc[];
+				if((cc=ek.collector_stack.get_all_collector())!=null)
+					try{
+						int list_id=cc.length-Integer.decode(str);
+						if((list_id>=0)&&(list_id<cc.length)){
+							comp_array.add_collector(cc[list_id]);
+							if(comp_array.component_number>0)
+								break;
+						}
+					}catch(Exception e) {
+						;
+					}
+				return;
+			}
 			comp_array.add_selected_component(ek.component_cont.root_component);
 			if(comp_array.component_number<=0)
 				comp_array.add_component(ek.component_cont.root_component);	
+			if(comp_array.component_number<=0)
+				return;
 			break;
-		default:
-			if((cc=ek.collector_stack.get_all_collector())!=null){
-				list_id=cc.length-list_id;
-				if((list_id>=0)&&(list_id<cc.length)){
-					comp_array.add_collector(cc[list_id]);
-					if(comp_array.component_number>0)
-						break;
-				}
-			}
-			return;
 		}
 
 		comp_array.make_to_children();
 		comp_array.remove_not_in_part_list_component(true);
-		
 		if(comp_array.component_number<=0)
 			return;
 		
@@ -120,6 +111,20 @@ public class operate_component_explosion
 				reset_flag=true;
 		
 		ek.component_cont.root_component.reset_component(ek.component_cont);
+		
+		double t=0,direction_x=0,direction_y=0,direction_z=0;
+		try{
+			if((str=ci.request_response.get_parameter("t"))!=null)
+				t=Double.parseDouble(str);
+			if((str=ci.request_response.get_parameter("x"))!=null)
+				direction_x=Double.parseDouble(str);
+			if((str=ci.request_response.get_parameter("y"))!=null)
+				direction_y=Double.parseDouble(str);
+			if((str=ci.request_response.get_parameter("z"))!=null)
+				direction_z=Double.parseDouble(str);
+		}catch(Exception e){
+			return;
+		}
 		
 		for(int i=0,ni=comp_array.component_number;i<ni;i++) {
 			modifier_container_timer timer=ek.modifier_cont[camera_modifier_id].get_timer();

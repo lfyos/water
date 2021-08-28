@@ -7,7 +7,7 @@
 			/* 2type		*/	menu_part
 			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 				
-				parameter.png		0.2		1.2
+				parameter.png		0.2		1.0
 
 				token_program	设置系统信息功能选择组件
 				
@@ -17,7 +17,7 @@
 						pickupmouseselect	:	function(event,component_id,render)
 						{
 							var ep=render.component_event_processor[component_id];
-							var function_id=Math.floor((1.0-ep.y)*12.0);
+							var function_id=Math.floor((1.0-ep.y)*10.0);
 							var str;
 							
 							ep.hightlight=[-1,-1,-1,-1];
@@ -47,14 +47,6 @@
 									render.system_call_processor.set_level_of_detail_parameter(str);
 								break;
 							case 8:
-								if((str=prompt("输入渲染层次"))!=null)
-									render.system_call_processor.set_render_driver_id(str);
-								break;							
-							case 9:
-								render.system_call_processor.set_can_display_assembly_set_flag(
-									confirm("设置渲染装配体(渲染/不渲染)"));
-								break;
-							case 10:
 								render.system_call_processor.set_menu_show_me_only("查询系统信息功能选择组件");
 								return;
 							default:
@@ -64,7 +56,7 @@
 									render.system_call_processor.set_menu_hide(component_id);
 								return;
 							}							
-							ep.hightlight=[0,1.0-function_id/12.0-1.0/12.0,		1.0,1.0-function_id/12.0];
+							ep.hightlight=[0,1.0-function_id/10.0-1.0/10.0,		1.0,1.0-function_id/10.0];
 							return;
 						}
 					};					

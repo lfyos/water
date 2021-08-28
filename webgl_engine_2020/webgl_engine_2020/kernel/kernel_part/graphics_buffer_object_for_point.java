@@ -23,8 +23,8 @@ public class graphics_buffer_object_for_point
 		
 		gbo.vertex_begin(pp.x,pp.y,pp.z);
 			
-		gbo.register(pp.x,pp.y,pp.z,"1");
-		gbo.register(normal.x,normal.y,normal.z,"1");
+		gbo.register(pp.x,		pp.y,		pp.z,		fe.parameter_extra_data);
+		gbo.register(normal.x,	normal.y,	normal.z,	"1");
 		gbo.register(
 				fe.parameter_material[0],fe.parameter_material[1],
 				fe.parameter_material[2],fe.parameter_material[3]);
@@ -48,11 +48,9 @@ public class graphics_buffer_object_for_point
 		
 		gbo.vertex_begin(fe.curve_parameter[0],fe.curve_parameter[1],fe.curve_parameter[2]);
 			
-		gbo.register(fe.curve_parameter[0],fe.curve_parameter[1],fe.curve_parameter[2],"1.0");
-		gbo.register(fe.curve_parameter[3],fe.curve_parameter[4],fe.curve_parameter[5],
-				 Double.toString(fe.curve_parameter[6]));
-		gbo.register(fe.parameter_material[0],fe.parameter_material[1],
-				 fe.parameter_material[2],fe.parameter_material[3]);
+		gbo.register(fe.curve_parameter[0],fe.curve_parameter[1],fe.curve_parameter[2],fe.parameter_extra_data);
+		gbo.register(fe.curve_parameter[3],fe.curve_parameter[4],fe.curve_parameter[5],"1");
+		gbo.register(fe.parameter_material[0],fe.parameter_material[1],fe.parameter_material[2],fe.parameter_material[3]);
 		gbo.register(Integer.toString(body_id),Integer.toString(face_id),"4",Integer.toString(flag));
 		gbo.register(Integer.toString(loop_id),Integer.toString(edge_id),curve_type_id,curve_type_id);
 
@@ -70,49 +68,9 @@ public class graphics_buffer_object_for_point
 				max_material_id,my_part,fe.curve_type,body_id,face_id,loop_id,edge_id,
 				fe.parameter_material[0],fe.parameter_material[1],
 				fe.parameter_material[2],fe.parameter_material[3]);
-		point center	=new point(fe.curve_parameter[0],fe.curve_parameter[1],fe.curve_parameter[2]);
-		point a_point	=new point(fe.curve_parameter[3],fe.curve_parameter[4],fe.curve_parameter[5]);
-		point b_point	=new point(fe.curve_parameter[6],fe.curve_parameter[7],fe.curve_parameter[8]);
-		double a_dist2	=a_point.sub(center).distance2();
-		double b_dist2	=b_point.sub(center).distance2();
-		if(a_dist2<b_dist2){
-			point pp=a_point;a_point=b_point;b_point=pp;
-			double dist2=a_dist2;a_dist2=b_dist2;b_dist2=dist2;
-		}
-		
-		point a_dir=a_point.sub(center);
-		point b_dir=b_point.sub(center);
-		point point_array[],c_dir;
-		
-		switch(fe.curve_type) {
-		default:
-		case "ellipse":
-			c_dir=a_dir.expand(Math.sqrt(a_dist2-b_dist2));
-			point_array=new point[]
-			{
-				center,
-				center.add(a_dir),center.add(b_dir),center.add(c_dir),
-				center.sub(a_dir),center.sub(b_dir),center.sub(c_dir)
-			};
-			break;
-		case "hyperbola":
-			c_dir=a_dir.expand(Math.sqrt(a_dist2+b_dist2));
-			point_array=new point[]
-			{
-				center,
-				center.add(a_dir),center.add(b_dir),center.add(c_dir),
-				center.sub(a_dir),center.sub(b_dir),center.sub(c_dir)
-			};
-			break;
-		case "parabola":
-			point_array=new point[]
-			{
-				center,
-				center.add(a_dir)
-			};
-			break;
-		}
-		point normal=a_dir.cross(b_dir).expand(1.0);
+		point point_array[]=caculate_part_items.caculate_point_for_ellipse_hyperbola_parabola(fe.curve_parameter,fe.curve_type);
+		point normal=caculate_part_items.caculate_normal_for_ellipse_hyperbola_parabola(fe.curve_parameter);
+	
 		for(int point_i=0,point_n=point_array.length;point_i<point_n;point_i++){
 			graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
 				my_file_name,my_file_charset,my_create_buffer_object_bitmap);
@@ -121,11 +79,9 @@ public class graphics_buffer_object_for_point
 			
 			gbo.vertex_begin(pp.x,pp.y,pp.z);
 
-			gbo.register(pp.x,pp.y,pp.z,"1.0");
-			gbo.register(normal.x,normal.y,normal.z,"1.0");
-			gbo.register(
-				fe.parameter_material[0],fe.parameter_material[1],
-				fe.parameter_material[2],fe.parameter_material[3]);
+			gbo.register(pp.x,		pp.y,		pp.z,		fe.parameter_extra_data);
+			gbo.register(normal.x,	normal.y,	normal.z,	"1");
+			gbo.register(fe.parameter_material[0],fe.parameter_material[1],fe.parameter_material[2],fe.parameter_material[3]);
 			gbo.register(Integer.toString(body_id),Integer.toString(face_id),
 				Integer.toString(point_i+5),Integer.toString(flag));
 			gbo.register(Integer.toString(loop_id),Integer.toString(edge_id),curve_type_id,curve_type_id);
@@ -133,6 +89,7 @@ public class graphics_buffer_object_for_point
 			if(gbo.test_end(max_file_data_length,false))
 				gbocc.expand_creater_array(material_id);
 		}
+		
 		return normal;
 	}
 	
@@ -160,11 +117,9 @@ public class graphics_buffer_object_for_point
 			
 			gbo.vertex_begin(x,y,z);
 
-			gbo.register(x,y,z,fe.start_extra_data);
-			gbo.register(x,y,z,fe.start_extra_data);
-			gbo.register(
-					fe.parameter_material[0],fe.parameter_material[1],
-					fe.parameter_material[2],fe.parameter_material[3]);
+			gbo.register(x,y,z,fe.parameter_extra_data);
+			gbo.register(x,y,z,"1");
+			gbo.register(fe.parameter_material[0],fe.parameter_material[1],fe.parameter_material[2],fe.parameter_material[3]);
 			gbo.register(Integer.toString(body_id),Integer.toString(face_id),
 					Integer.toString(point_i+1000),Integer.toString(flag));
 			gbo.register(Integer.toString(loop_id),Integer.toString(edge_id),curve_type_id,curve_type_id);
@@ -195,7 +150,7 @@ public class graphics_buffer_object_for_point
 			gbo.vertex_begin(x,y,z);
 
 			gbo.register(x,y,z,my_location_extra_data);
-			gbo.register(x,y,z,my_location_extra_data);
+			gbo.register(x,y,z,"1");
 			gbo.register(my_material[0],my_material[1],my_material[2],my_material[3]);
 			gbo.register(Integer.toString(body_id),Integer.toString(face_id),
 					Integer.toString(point_i+1000),Integer.toString(flag));
@@ -220,7 +175,7 @@ public class graphics_buffer_object_for_point
 			gbo.vertex_begin(fe.start_point.x,fe.start_point.y,fe.start_point.z);
 
 			gbo.register(fe.start_point.x,fe.start_point.y,fe.start_point.z,fe.start_extra_data);
-			gbo.register(start_end_normal.x,start_end_normal.y,start_end_normal.z,"1.0");
+			gbo.register(start_end_normal.x,start_end_normal.y,start_end_normal.z,"1");
 			gbo.register(fe.start_point_material[0],fe.start_point_material[1],
 					 fe.start_point_material[2],fe.start_point_material[3]);
 			gbo.register(Integer.toString(body_id),Integer.toString(face_id),"1",Integer.toString(flag));
@@ -239,7 +194,7 @@ public class graphics_buffer_object_for_point
 			
 			gbo.vertex_begin(fe.end_point.x,fe.end_point.y,fe.end_point.z);
 			gbo.register(fe.end_point.x,fe.end_point.y,fe.end_point.z,fe.end_extra_data);
-			gbo.register(start_end_normal.x,start_end_normal.y,start_end_normal.z,"1.0");
+			gbo.register(start_end_normal.x,start_end_normal.y,start_end_normal.z,"1");
 			gbo.register(fe.end_point_material[0],fe.end_point_material[1],
 					 fe.end_point_material[2],fe.end_point_material[3]);
 			gbo.register(Integer.toString(body_id),Integer.toString(face_id),"2",Integer.toString(flag));
@@ -263,25 +218,19 @@ public class graphics_buffer_object_for_point
 				
 		gbo.vertex_begin();
 		
-		gbo.register("0","0","0","1");
+		gbo.register("0","0","0",my_part.part_mesh.origin_vertex_extra_data);
 		gbo.register("0","0","1","1");
-		gbo.register(
-				my_part.part_mesh.origin_material[0],
-				my_part.part_mesh.origin_material[1],
-				my_part.part_mesh.origin_material[2],
-				my_part.part_mesh.origin_material[3]);
-		gbo.register(
-				Integer.toString(my_part.part_mesh.body_number()),
-				"0","0",Integer.toString(flag));
+		gbo.register(my_part.part_mesh.origin_material[0],	 my_part.part_mesh.origin_material[1],
+					 my_part.part_mesh.origin_material[2],	 my_part.part_mesh.origin_material[3]);
+		gbo.register(Integer.toString(my_part.part_mesh.body_number()),"0","0",Integer.toString(flag));
 		gbo.register("0","0","0","0");
 		
 		if(gbo.test_end(max_file_data_length,false))
 			gbocc.expand_creater_array(material_id);
 	}
 	
-	public graphics_buffer_object_for_point(
-			primitive_interface p_i,int max_material_id,
-			part my_part,String my_file_name,String my_file_charset,
+	public graphics_buffer_object_for_point(primitive_interface p_i,
+			int max_material_id,part my_part,String my_file_name,String my_file_charset,
 			long max_file_data_length,long my_create_buffer_object_bitmap)
 	{
 		int flag=2;

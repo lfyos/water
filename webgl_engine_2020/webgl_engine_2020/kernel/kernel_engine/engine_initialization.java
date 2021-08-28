@@ -16,7 +16,11 @@ import kernel_driver.component_driver;
 public class engine_initialization
 {
 	private component sort_component_array[];
-	
+	private String change_str(String str)
+	{
+		str=str.replace("\\","\\\\").replace("\n","\\n\\r").replace("\"","\\\"").replace("\r","\\n\\r");
+		return "\""+str+"\"";
+	}
 	public engine_initialization(engine_kernel ek,client_request_response request_response)
 	{
 		if((sort_component_array=ek.component_cont.get_sort_component_array())==null)
@@ -142,14 +146,14 @@ public class engine_initialization
 		fw.println(",");
 		
 		fw.println("[");
-		for(int i=0,ni=sort_component_array.length,number=0;i<ni;i++){
-			if((number++)>0)
+		for(int i=0,ni=sort_component_array.length;i<ni;i++){
+			fw.print("\t",change_str(sort_component_array[i].component_name));
+			fw.print(",",sort_component_array[i].component_id);
+			if(i!=(ni-1))
 				fw.println(",");
-			fw.print("\t\"",sort_component_array[i].component_name.replace("\\","\\\\").
-					replace("\n","\\n\\r").replace("\"","\\\"").replace("\r","\\n\\r"));
-			fw.print("\",",sort_component_array[i].component_id);
+			else
+				fw.println();
 		}
-		fw.println();
 		fw.println("],");
 		fw.println();
 		
@@ -192,14 +196,8 @@ public class engine_initialization
 					fw.println(",");
 				fw.println("\t{");
 				
-				fw.print  ("\t\tcomponent_id			:	",	init_comp[i].component_id);
-				fw.println(",");
-					
-				fw.print  ("\t\tcomponent_name			:	\"",init_comp[i].component_name.
-							replace("\\","\\\\").replace("\n","\\n\\r").
-							replace("\"","\\\"").replace("\r","\\n\\r"));
-				fw.println("\",");
-
+				fw.println("\t\tcomponent_id			:	",init_comp[i].component_id+",");
+				fw.print  ("\t\tcomponent_name			:	",change_str(init_comp[i].component_name)+",");
 				fw.println("\t\tinitialization_function	:	");
 				fw.println(my_program_text);
 				
@@ -212,7 +210,8 @@ public class engine_initialization
 		fw.println();
 
 		fw.println("[");
-		for(int render_id=0,render_number=ek.render_cont.renders.length;render_id<render_number;render_id++) {
+		int render_number=ek.render_cont.renders.length;
+		for(int render_id=0;render_id<render_number;render_id++) {
 			fw.print_file(file_directory.render_file_directory(
 				ek.render_cont.renders[render_id].parts[0].part_type_id,
 				ek.render_cont.renders[render_id].parts[0].permanent_render_id,

@@ -1,15 +1,18 @@
-/*	version					*/	2021.07.01
-/*	origin material			*/	0	0	0	1
-/*	default material		*/	0	0	0	2
-/*	max_attribute_number	*/	0
+/*	version								*/	2021.07.15
+/*	origin material						*/	0	0	0	1
+/*	default material					*/	0	0	0	2
+/*	origin  vertex_location_extra_data	*/	1
+/*	default vertex_location_extra_data	*/	1
+/*	default vertex_normal_extra_data	*/	1
+/*	max_attribute_number				*/	0
 
-/*	body_number	*/	1
+/*	body_number		*/		1
    /* body  0  name   */  grid_body   /*   face_number   */  1
      /* face  0  name   */  grid_face
          /* face_type   */  unknown  /*   parameter_number   */  0 /*   parameter  */ 
          /* total_face_primitive_number */ 1089
          /* face_attribute_number 		*/ 0
-         /* face_face_box				*/  -1.9311142158238759 -2.0091780549357 -2.061511053124962  2.0270501231445035 2.0252459113668597 2.0597304458415 
+         /* face_face_box				*/  -1.8501683282347279 -1.8740139628255519 -2.0470298268367593  1.8808751135988488 1.9409702230096655 2.04252465805422 
         
          /* face_loop_number   */ 0
         

@@ -7,6 +7,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import kernel_common_class.debug_information;
+import kernel_common_class.exclusive_file_mutex;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 
@@ -96,8 +97,7 @@ public class zip_file
 		
 		return null;
 	}
-	public static String unzip_directory(
-			String directory_name,exclusive_name_mutex system_exclusive_name_mutex)
+	public static String unzip_directory(String directory_name,String msg)
 	{
 		directory_name=file_reader.separator(directory_name);
 		for(int i=directory_name.length()-1;i>=0;i--)
@@ -105,12 +105,11 @@ public class zip_file
 				directory_name=directory_name.substring(0,i+1);
 				break;
 			}
-		String lock_file_name=directory_name+".lock";
 		String zip_file_name=directory_name+".zip";
 		File f=new File(zip_file_name);
 		if(f.exists()){
-			if(system_exclusive_name_mutex!=null)
-				system_exclusive_name_mutex.lock(lock_file_name);
+			exclusive_file_mutex efm=exclusive_file_mutex.lock(directory_name+".lock",msg);
+			
 			try{
 				if(f.exists()){
 					directory_name+=File.separator;
@@ -124,9 +123,9 @@ public class zip_file
 				debug_information.println("unzip_directory execption:	",e.toString());
 				e.printStackTrace();
 			}
-			if(system_exclusive_name_mutex!=null)
-				system_exclusive_name_mutex.unlock(lock_file_name);
+			efm.unlock();
 		}
-		return lock_file_name;
+		
+		return directory_name;
 	}
 }

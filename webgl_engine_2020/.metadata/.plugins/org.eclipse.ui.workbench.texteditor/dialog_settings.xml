@@ -2,51 +2,51 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="edge_"/>
+		<item key="selection" value="process_part_component_id_and_driver_id"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
-			<item value="edge_"/>
-			<item value="get_tessellation_"/>
-			<item value="\\part.obj"/>
-			<item value="dir+i"/>
-			<item value="\\\\"/>
-			<item value="l_"/>
-			<item value="f_"/>
-			<item value="f"/>
-			<item value="&quot;point_set&quot;"/>
-			<item value="point_set"/>
-			<item value="&quot;point&quot;"/>
-			<item value="&quot;points&quot;"/>
-			<item value="frag_color"/>
-			<item value="separate triagles:"/>
-			<item value="write out vertex:"/>
+			<item value="process_part_component_id_and_driver_id"/>
+			<item value="change_str"/>
+			<item value="permanent_render_part_id"/>
+			<item value="part_component_id_and_driver_id"/>
+			<item value="mousemove_event_listener"/>
+			<item value="my_face_edge.curve_parameter"/>
+			<item value="par"/>
+			<item value="parabola"/>
+			<item value="hyperbola"/>
+			<item value="ellipse"/>
+			<item value="/*  body 0 face 2  name&#x09;*/"/>
+			<item value="hyperb"/>
+			<item value="&quot;selection&quot;"/>
+			<item value="call_server_component"/>
+			<item value="append_routine_function"/>
 		</list>
 		<list key="replacehistory">
+			<item value="par"/>
+			<item value="render."/>
+			<item value="debug_"/>
+			<item value="render.debug_"/>
+			<item value="render_object."/>
+			<item value=","/>
+			<item value=""/>
+			<item value="跟踪可见片元"/>
+			<item value="double"/>
+			<item value="point"/>
+			<item value="pr"/>
+			<item value="face_advance(body_id,face_id,primitive_id);"/>
+			<item value="default_attribute_double"/>
 			<item value="point_"/>
 			<item value="get_edge_"/>
-			<item value=""/>
-			<item value="file_name"/>
-			<item value="\\"/>
-			<item value="f"/>
-			<item value="edge_file_name"/>
-			<item value="face_edge_name"/>
-			<item value=";"/>
-			<item value="assemble_part"/>
-			<item value="boat&#x09;any_assemble_part_name&#x09;&#x09;solidworks\parameter.txt"/>
-			<item value="boat&#x09;any_assemble_part_name&#x09;solidworks\parameter.txt"/>
-			<item value="parameter_material"/>
-			<item value="body_array"/>
-			<item value="p_i."/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item key="DIALOG_WIDTH" value="303"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="1508"/>
-		<item key="DIALOG_Y_ORIGIN" value="128"/>
+		<item key="DIALOG_X_ORIGIN" value="71"/>
+		<item key="DIALOG_Y_ORIGIN" value="144"/>
 	</section>
 </section>

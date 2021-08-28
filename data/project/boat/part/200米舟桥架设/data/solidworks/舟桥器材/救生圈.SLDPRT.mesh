@@ -1,17 +1,20 @@
-/*	version					*/	2021.07.01
-/*	origin material			*/	0	0	0	1
-/*	default material		*/	1.0	1.0	0.0	1
-/*	max_attribute_number	*/	1
-	0.0564595	0.384761	0.0	1.0
+/*	version								*/	2021.07.15
+/*	origin material						*/	0	0	0	1
+/*	default material					*/	1.0	1.0	0.0	1
+/*	origin  vertex_location_extra_data	*/	1
+/*	default vertex_location_extra_data	*/	1
+/*	default vertex_normal_extra_data	*/	1
+/*	max_attribute_number				*/	1
+/*		0.attribute:	*/	0.0564595	0.384761	0.0	1.0
 
-/*	body_number	*/	1
-   /* body  0  name   */  扫描1   /*   face_number   */  1
-     /* face  0  name   */  扫描1的第0个表面
-         /* face_type   */  torus  /*   parameter_number   */  8 /*   parameter  */    0.0   0.0   0.0   -0.0   -1.0   -0.0   0.35   0.08
-         /* total_face_primitive_number */ 1152
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -0.43 -0.08 -0.43  0.43 0.08 0.43 
-        
-         /* face_loop_number   */ 0
-        
-        
+/*	body_number		*/	1
+	/*  body    0  name    */  扫描1	/*  face_number */	1
+	/*  body 0 face 0  name	*/	扫描1的第0个表面
+	/*  face type	*/	torus	/*  parameter number	*/	8	/*  parameter	*/	0.0	0.0	0.0	-0.0	-1.0	-0.0	0.35	0.08
+	/*  total_face_primitive_number	*/  1152
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.43	-0.08	-0.43	0.43	0.08	0.43
+
+	/*  loop number		*/	0
+
+

@@ -410,12 +410,17 @@ public class inp_converter
 		fw.close();
 		
 		String str[]=new String[]{
-				"/*	version					*/	2021.07.01",
+
+				"/*	version					*/	2021.07.15",
 				"/*	origin material			*/	0	0	0	1",
 				"/*	default material		*/	0	0	0	0",
+				"/*	origin  vertex_location_extra_data	*/	1",
+				"/*	default vertex_location_extra_data	*/	1",
+				"/*	default vertex_normal_extra_data	*/	1",
 				"/*	max_attribute_number	*/	2",
 				"							"+default_attr_0,
 				"							"+default_attr_1,
+				"",
 				"/*	body_number		*/	1",
 				"/*	body 0 name		*/	inp_body	/*	face_number	*/	1",
 				"/* 	face 0 name					*/  inp_face",

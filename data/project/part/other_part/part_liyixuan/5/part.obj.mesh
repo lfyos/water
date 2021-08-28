@@ -1,38 +1,42 @@
-/*	version					*/	2021.07.01
-/*	origin material			*/	0	0	0	1
-/*	default material		*/	0	0	0	0
-/*	max_attribute_number	*/	1
-	-0.7004743814	-0.8262449503	0.9995003939	1
+/*	version								*/	2021.07.15
+/*	origin material						*/	0	0	0	1
+/*	default material					*/	0	0	0	0
+/*	origin  vertex_location_extra_data	*/	1
+/*	default vertex_location_extra_data	*/	1
+/*	default vertex_normal_extra_data	*/	1
+/*	max_attribute_number				*/	1
+/*		0.attribute:	*/	-0.7004743814	-0.8262449503	0.9995003939	1
 
-/*	body_number	*/	1
-   /* body  0  name   */  obj_object_body_0   /*   face_number   */  1
-     /* face  0  name   */  no_face_name
-         /* face_type   */  unknown  /*   parameter_number   */  0 /*   parameter  */ 
-         /* total_face_primitive_number */ 31920
-         /* face_attribute_number 		*/ 1
-         /* face_face_box				*/  -25.0594940186 0.0316696167 -25.475353241  25.0594959259 87.8256225586 25.4753303528 
-        
-         /* face_loop_number   */ 1
-         /* face_loop  0  loop_edge_number    */    2
-             /* face_loop_edge  0  data   */   
-                /* curve_type    */  segment
-                /* parameter_number  */  0 /* parameter */ 
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	nobox 
-                /* total_edge_primitive_number */  0
-                /* total_point_primitive_number */  0
-                
-             /* face_loop_edge  1  data   */   
-                /* curve_type    */  point
-                /* parameter_number  */  0 /* parameter */ 
-                start_not_effective
-                end_not_effective
-                /* curve point material */      0    0    0    1
-                /* box definition  */	nobox 
-                /* total_edge_primitive_number */  0
-                /* total_point_primitive_number */  0
-                
-                
-                
+/*	body_number		*/	1
+	/*  body    0  name    */  obj_object_body_0	/*  face_number */	1
+	/*  body 0 face 0  name	*/	no_face_name
+	/*  face type	*/	unknown	/*  parameter number	*/	0	/*  parameter	*/
+	/*  total_face_primitive_number	*/  31920
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-25.0594940186	0.0316696167	-25.475353241	25.0594959259	87.8256225586	25.4753303528
+
+	/*  loop number		*/	1
+		/*  body:0 face:0 loop 0 edge number	*/	2
+			/*  Edge NO.0   */
+			/*  curve type	*/  segment	/*  parameter number	*/	0	/*  parameter	*/
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	nobox
+			/*  total_edge_primitive_number		*/	0
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  point	/*  parameter number	*/	0	/*  parameter	*/
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	nobox
+			/*  total_edge_primitive_number		*/	0
+			/*  total_point_primitive_number	*/	0
+
+
+
+

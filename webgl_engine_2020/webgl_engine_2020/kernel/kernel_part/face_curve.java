@@ -40,7 +40,7 @@ public class face_curve
 				total_point_primitive_number+=f_loop[i].total_point_primitive_number;
 			}
 	}
-	public face_curve(location loca,box b,String extra_data,String parameter_material[])
+	public face_curve(location loca,box b,String my_extra_data,String my_material[])
 	{														//		 Y
 		point p[]=new point[]								//		 |
 		{													//       2***********************6
@@ -59,18 +59,18 @@ public class face_curve
 		
 		f_loop=new face_loop[] 
 		{
-			new face_loop(p[0],p[1],p[3],p[2],extra_data,parameter_material),		//left face
-			new face_loop(p[5],p[4],p[6],p[7],extra_data,parameter_material),		//right face
-			new face_loop(p[1],p[0],p[4],p[5],extra_data,parameter_material),		//down
-			new face_loop(p[2],p[3],p[7],p[6],extra_data,parameter_material),		//up
-			new face_loop(p[0],p[2],p[6],p[4],extra_data,parameter_material),		//front
-			new face_loop(p[1],p[5],p[7],p[3],extra_data,parameter_material)		//back
+			new face_loop(p[0],p[1],p[3],p[2],my_extra_data,my_material),		//left face
+			new face_loop(p[5],p[4],p[6],p[7],my_extra_data,my_material),		//right face
+			new face_loop(p[1],p[0],p[4],p[5],my_extra_data,my_material),		//down
+			new face_loop(p[2],p[3],p[7],p[6],my_extra_data,my_material),		//up
+			new face_loop(p[0],p[2],p[6],p[4],my_extra_data,my_material),		//front
+			new face_loop(p[1],p[5],p[7],p[3],my_extra_data,my_material)		//back
 		};
 		
 		caculate_box_and_primitive_number();
 	}
 	
-	public face_curve(file_reader fr,double scale_value)
+	public face_curve(file_reader fr)
 	{
 		int my_face_loop_number;
 		if((my_face_loop_number=fr.get_int())<=0)
@@ -78,7 +78,7 @@ public class face_curve
 		else{
 			f_loop=new face_loop[my_face_loop_number];
 			for(int i=0;i<my_face_loop_number;i++)
-				f_loop[i]=new face_loop(fr,scale_value);
+				f_loop[i]=new face_loop(fr);
 		}
 		caculate_box_and_primitive_number();
 	}

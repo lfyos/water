@@ -175,7 +175,7 @@ public class component_array
 				int top_number=0;
 				for(int j=0;j<driver_number;j++){
 					part my_part=comp[i].driver_array[j].component_part;
-					if(my_part.top_box_part_flag)
+					if(my_part.is_top_box_part())
 						top_number++;
 				}
 				if(top_number==driver_number)

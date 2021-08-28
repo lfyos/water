@@ -40,9 +40,9 @@ function body_onload()
 			render.system_call_processor.set_camera_change_type(true);
 			
 			if((operation_str==null)||(operation_str=="null"))
-				render.user_call_processor.turnoff_control_panel();
+				render.debug_call_processor.turnoff_control_panel();
 			else
-				render.user_call_processor.turnon_control_panel(operation_str);
+				render.debug_call_processor.turnon_control_panel(operation_str);
 		});
 }
 
@@ -50,7 +50,7 @@ function body_onload()
 
 </head>
 
-<body onload="body_onload();" onunload="render.terminate();" onresize="render.user_call_processor.resize();">
+<body onload="body_onload();" onunload="render.terminate();" onresize="render.debug_call_processor.resize();">
 
 <div style="text-align:left"	align="center">
 	<canvas id="my_canvas"		tabindex="0"					></canvas>

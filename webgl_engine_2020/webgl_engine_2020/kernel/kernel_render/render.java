@@ -7,6 +7,7 @@ import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
 import kernel_part.part;
+import kernel_part.part_container_for_part_search;
 import kernel_part.part_parameter;
 
 
@@ -83,6 +84,21 @@ public class render
 		
 		parts=null;
 	}
+	public void delete_last_part()
+	{
+		if(parts==null)
+			return;
+		if(parts.length<=1) {
+			parts=null;
+			return;
+		}
+		part bak[]=parts;
+		parts=new part[parts.length-1];
+		for(int i=0,ni=parts.length;i<ni;i++)
+			parts[i]=bak[i];
+		bak[bak.length-1].destroy();
+		return;
+	}
 	public void add_part(int add_render_id,part p)
 	{
 		if(p==null)
@@ -108,7 +124,8 @@ public class render
 		
 		return;
 	}
-	public void add_part(render_driver r_driver,int part_type_id,int add_render_id,
+	public void add_part(part_container_for_part_search pcps,
+			render_driver r_driver,int part_type_id,int add_render_id,
 			part_parameter part_par,system_parameter system_par,
 			String file_name,String file_charset,String pre_buffer_object_file_name,
 			client_request_response request_response)
@@ -150,8 +167,8 @@ public class render
 						if(material_f.lastModified()<f.lastModified_time)
 							material_f.setLastModified(f.lastModified_time);
 				}
-				part my_part=new part(
-						part_type_id,part_par.clone(),f.directory_name,f.get_charset(),
+				part my_part=new part(part_type_id,false,
+						part_par.clone(),f.directory_name,f.get_charset(),
 						(user_name==null)				?"":user_name,
 						(system_name==null)				?"":system_name,
 						(mesh_file_name==null)			?"":mesh_file_name,
@@ -169,10 +186,12 @@ public class render
 					debug_information.println("Mesh file name:	",		my_part.mesh_file_name);
 					e.printStackTrace();
 				}
-				if(my_part.driver!=null)
-					add_part(add_render_id,my_part);
-				else
+				if(my_part.driver==null)
 					my_part.destroy();
+				else {
+					add_part(add_render_id,my_part);
+					pcps.append_one_part(my_part);
+				}
 		}
 		f.close();
 		return;

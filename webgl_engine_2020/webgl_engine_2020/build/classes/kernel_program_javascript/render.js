@@ -44,6 +44,9 @@ function construct_render_routine(my_gl,my_user_name,my_pass_word,
 	this.canvas						=my_canvas;
 	this.language_name				=my_language_name;
 	
+	this.debug_event_processor		=new Object();
+	this.debug_call_processor		=new Object();
+	
 	this.user_event_processor		=new Object();
 	this.user_call_processor		=new Object();
 	
@@ -52,8 +55,11 @@ function construct_render_routine(my_gl,my_user_name,my_pass_word,
 
 	this.component_event_processor	=new Array(component_number);
 	this.component_call_processor	=new Array(component_number);
+	
+	this.event_component			=new Object();
 
 	this.target_processor			=new Array();
+	
 	this.routine_array				=new Array();
 	
 	this.current=
@@ -104,8 +110,6 @@ function construct_render_routine(my_gl,my_user_name,my_pass_word,
 		aspect			:	-1
 	};
 
-	this.event_component			=new Object();
-
 	this.event_listener				=new construct_event_listener(this);
 	
     this.computer					=new construct_computation_object();
@@ -149,8 +153,8 @@ function construct_render_routine(my_gl,my_user_name,my_pass_word,
 	this.do_render_request_response_number	=0;
 	this.collector_stack_version			=0;
 
-	this.process_part_component_id_and_driver_id=function(component_number,
-			sorted_component_name_id,part_component_id_and_driver_id)
+	this.process_part_component_id_and_driver_id=function(
+			component_number,sorted_component_name_id,part_component_id_and_driver_id)
 	{
 		this.component_to_id_array  =new Array(component_number);
 		this.component_to_name_array=new Array(component_number);
@@ -707,6 +711,11 @@ function construct_render_routine(my_gl,my_user_name,my_pass_word,
 	};
 	this.append_routine_function=function(my_routine_function,my_routine_id)
 	{
+		try{
+			my_routine_id=my_routine_id.toString();
+		}catch(e){
+			my_routine_id="undefined_routine_id";
+		}
 		this.routine_array.push(
 				{
 					routine_id			:	my_routine_id.toString(),
@@ -830,53 +839,91 @@ function construct_render_routine(my_gl,my_user_name,my_pass_word,
 					return;
 				cur.current.calling_server_number--;
 
-				if(typeof(response_function)!="function")
-					return;
 				if(my_ajax.status!=200){
-					try{
-						if(typeof(error_function)=="function")
+					if(typeof(error_function)=="function"){
+						try{
 							error_function(0,cur);
-					}catch(e){
-						if(cur.parameter.debug_mode_flag){
-							alert("this.call_server=function(request_string,response_function,error_function) fail"+my_ajax.status);
-							alert(e.toString());
-						}else{
-							console.log("this.call_server=function(request_string,response_function,error_function) fail"+my_ajax.status);
-							console.log(e.toString());
-						};
+						}catch(e){
+							if(cur.parameter.debug_mode_flag){
+								alert("this.call_server:my_ajax.status!=200:error_function exception	"+my_ajax.status);
+								alert(e.toString());
+							}else{
+								console.log("this.call_server:my_ajax.status!=200:error_function exception	"+my_ajax.status);
+								console.log(e.toString());
+							}
+						}
+					}else if(cur.parameter.debug_mode_flag){
+						alert("this.call_server:my_ajax.status!=200:no error_function:	"+my_ajax.status);
+					}else{
+						console.log("this.call_server:my_ajax.status!=200:no error_function:	"+my_ajax.status);
 					};
 					return;
 				};
 				
 				var response_data;
 				switch(response_type_string){
-				default:
-					response_data=my_ajax.responseText;
-					break;
 				case "text":
 					try{
 						response_data=JSON.parse(my_ajax.responseText);
+						break;
 					}catch(e){
-						if(typeof(error_function)=="function")
-							error_function(1,cur,e,my_ajax.responseText);
-						response_data=my_ajax.responseText;
+						;
 					};
+				default:
+					response_data=my_ajax.responseText;
 					break;
 				};
-				try{
-					response_function(response_data,cur);
-				}catch(e){
-					if(typeof(error_function)=="function")
-						error_function(2,cur,e,response_data);
-				};
+				
+				if(typeof(response_function)=="function"){
+					try{
+						response_function(response_data,cur);
+					}catch(e){
+						if(typeof(error_function)=="function"){
+							try{
+								error_function(1,cur,e,response_data);
+							}catch(e){
+								if(cur.parameter.debug_mode_flag){
+									alert("this.call_server:response_function exception:error_function exception	"+my_ajax.status);
+									alert(e.toString());
+								}else{
+									console.log("this.call_server:response_function exception:error_function exception	"+my_ajax.status);
+									console.log(e.toString());
+								}
+							}
+						}else if(cur.parameter.debug_mode_flag){
+							alert("this.call_server:response_function exception	"+my_ajax.responseText);
+							alert(e.toString());
+						}else{
+							console.log("this.call_server:response_function exception	"+my_ajax.responseText);
+							console.log(e.toString());
+						}
+					}
+				}
 				return;
 			};
 			my_ajax.open("GET",request_string,true);
 			my_ajax.send(upload_data);
 			this.current.calling_server_number++;
 		}catch(e){
-			if(typeof(error_function)=="function")
-				error_function(3,this,e,request_string);
+			if(typeof(error_function)=="function"){
+				try{
+					error_function(2,this,e,request_string);
+				}catch(e){
+					if(cur.parameter.debug_mode_flag){
+						alert("this.call_server:ajax fail:error_function exception	"+my_ajax.status);
+						alert(e.toString());
+					}else{
+						console.log("this.call_server:ajax fail:error_function exception	"+my_ajax.status);
+						console.log(e.toString());
+					}
+				};
+			}else if(cur.parameter.debug_mode_flag){
+				alert("this.call_server:ajax fail:	"+my_ajax.responseText);
+				alert(e.toString());
+			}else{
+				console.log("this.call_server:ajax fail:	"+my_ajax.responseText);
+				console.log(e.toString());
+			}
 		};
 	};
 	this.create_part_request_string=function(render_id_or_part_name,part_id_or_driver_id,part_parameter)
@@ -986,5 +1033,172 @@ function construct_render_routine(my_gl,my_user_name,my_pass_word,
 				return false;
 			},"render.set_event_component() error"
 		);
+	};
+	this.upload_string=function(str_content,str_url,complete_function,error_function)
+	{
+		try{
+			var my_ajax=new XMLHttpRequest(),cur=this.render_instance;
+
+			my_ajax.onreadystatechange=function()
+			{
+				if(my_ajax.readyState!=4)
+					return;
+				if(my_ajax.status!=200){
+					if(typeof(error_function)=="function"){
+						try{
+							error_function(0,cur);
+						}catch(e){
+							if(cur.parameter.debug_mode_flag){
+								alert("this.upload_string:my_ajax.status!=200:error_function exception	"+my_ajax.status);
+								alert(e.toString());
+							}else{
+								console.log("this.upload_string:my_ajax.status!=200:error_function exception	"+my_ajax.status);
+								console.log(e.toString());
+							}
+						};
+					}else if(cur.parameter.debug_mode_flag){
+						alert("this.upload_string:my_ajax.status!=200	"+my_ajax.status);
+						alert(e.toString());
+					}else{
+						console.log("this.upload_string:my_ajax.status!=200	"+my_ajax.status);
+						console.log(e.toString());
+					}
+					return;
+				}
+				
+				if(typeof(complete_function)=="function"){
+					try{
+						complete_function(cur,my_ajax.responseText);
+					}catch(e){
+						if(typeof(error_function)=="function"){
+							try{
+								error_function(1,cur,e,my_ajax.responseText);
+							}catch(e){
+								if(cur.parameter.debug_mode_flag){
+									alert("this.upload_string:complete_function exception:error_function exception	"+my_ajax.status);
+									alert(e.toString());
+								}else{
+									console.log("this.upload_string:complete_function exception:error_function exception	"+my_ajax.status);
+									console.log(e.toString());
+								}
+							};
+						}else if(cur.parameter.debug_mode_flag){
+							alert("this.upload_string:complete_function exception	"+my_ajax.responseText);
+							alert(e.toString());
+						}else{
+							console.log("this.upload_string:complete_function exception	"+my_ajax.responseText);
+							console.log(e.toString());
+						}
+					}
+				}
+			};
+			my_ajax.open("POST",str_url,true);
+			my_ajax.setRequestHeader("Content-type","text/plain");
+			my_ajax.send(str_content);
+			return true;
+		}catch(e){
+			if(typeof(error_function)=="function"){
+				try{
+					error_function(2,this,e,str_url);
+				}catch(e){
+					if(cur.parameter.debug_mode_flag){
+						alert("upload_string fail:error_function exception	"+my_ajax.status);
+						alert(e.toString());
+					}else{
+						console.log("upload_string fail:error_function exception	"+my_ajax.status);
+						console.log(e.toString());
+					}
+				};
+			}else if(cur.parameter.debug_mode_flag)
+				alert("upload_string fail!"+e.toString());
+			else
+				console.log("upload_string fail!"+e.toString());	
+			return false;
+		};
+	};
+	this.upload_canvas_image=function(uploaded_canvas,png_url,complete_function,error_function)
+	{
+		try{
+			var my_ajax=new XMLHttpRequest(),cur=this.render_instance;
+
+			my_ajax.onreadystatechange=function()
+			{
+				if(my_ajax.readyState!=4)
+					return;
+				if(my_ajax.status!=200){
+					if(typeof(error_function)=="function"){
+						try{
+							error_function(0,cur);
+						}catch(e){
+							if(cur.parameter.debug_mode_flag){
+								alert("this.upload_canvas_image:my_ajax.status!=200:error_function exception	"+my_ajax.status);
+								alert(e.toString());
+							}else{
+								console.log("this.upload_canvas_image:my_ajax.status!=200:error_function exception	"+my_ajax.status);
+								console.log(e.toString());
+							}
+						};
+					}else if(cur.parameter.debug_mode_flag){
+						alert("this.upload_canvas_image:my_ajax.status!=200	"+my_ajax.status);
+						alert(e.toString());
+					}else{
+						console.log("this.upload_canvas_image:my_ajax.status!=200	"+my_ajax.status);
+						console.log(e.toString());
+					}
+					return;
+				}
+				if(typeof(complete_function)=="function"){
+					try{
+						complete_function(cur,my_ajax.responseText);
+					}catch(e){
+						if(typeof(error_function)=="function"){
+							try{
+								error_function(1,cur,e,my_ajax.responseText);
+							}catch(e){
+								if(cur.parameter.debug_mode_flag){
+									alert("this.upload_canvas_image:complete_function exception:error_function exception	"+my_ajax.status);
+									alert(e.toString());
+								}else{
+									console.log("this.upload_canvas_image:complete_function exception:error_function exception	"+my_ajax.status);
+									console.log(e.toString());
+								}
+							}
+						}else if(cur.parameter.debug_mode_flag){
+							alert("this.upload_canvas_image:complete_function exception	"+my_ajax.responseText);
+							alert(e.toString());
+						}else{
+							console.log("this.upload_canvas_image:complete_function exception	"+my_ajax.responseText);
+							console.log(e.toString());
+						}
+					}
+				}
+			};
+			my_ajax.open("POST",png_url,true);
+			my_ajax.setRequestHeader("Content-type","image/png");
+			my_ajax.send(uploaded_canvas.toDataURL());
+			return true;
+		}catch(e){
+			if(typeof(error_function)=="function"){
+				try{
+					error_function(2,this,e,png_url);
+				}catch(e){
+					if(cur.parameter.debug_mode_flag){
+						alert("upload_canvas_image fail:error_function exception	"+my_ajax.status);
+						alert(e.toString());
+					}else{
+						console.log("upload_canvas_image fail:error_function exception	"+my_ajax.status);
+						console.log(e.toString());
+					}
+				};
+			}else if(cur.parameter.debug_mode_flag)
+				alert("upload_canvas_image fail!"+e.toString());
+			else
+				console.log("upload_canvas_image fail!"+e.toString());
+			return false;
+		};
+	};
+	this.upload_scene_image=function(png_url,complete_function,error_function)
+	{
+		this.upload_canvas_image(this.canvas,png_url,complete_function,error_function)
 	};
 };

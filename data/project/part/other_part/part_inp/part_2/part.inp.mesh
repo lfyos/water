@@ -1,9 +1,13 @@
-/*	version					*/	2021.07.01
+/*	version					*/	2021.07.15
 /*	origin material			*/	0	0	0	1
 /*	default material		*/	0	0	0	0
+/*	origin  vertex_location_extra_data	*/	1
+/*	default vertex_location_extra_data	*/	1
+/*	default vertex_normal_extra_data	*/	1
 /*	max_attribute_number	*/	2
 							366.57466666666664	202.61366666666666	70.0	2,45050
 							0.02281395929134139	0.02678206907814159	0.9800412938747418	0.7163618140816839,0.09665155054738675,0.31458407499703334,0.8250857422831945,0.5859136212624585,0.6517094017094017,0.15500195771339073,0.14138146911519198
+
 /*	body_number		*/	1
 /*	body 0 name		*/	inp_body	/*	face_number	*/	1
 /* 	face 0 name					*/  inp_face

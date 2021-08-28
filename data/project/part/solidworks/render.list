@@ -1,3 +1,5 @@
+test			any_assemble_part_name		parameter.txt					F22\part.list					light.txt			material.txt
+
 bridge_color	any_assemble_part_name		solidworks\big.txt				bridge\color.大件.list			light.txt			material.txt
 bridge_color	any_assemble_part_name		solidworks\big.coarse.txt		bridge\color.coarse.大件.list	light.txt			material.txt
 bridge_color	any_assemble_part_name		solidworks\small.txt			bridge\color.小件.list			light.txt			material.txt

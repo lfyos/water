@@ -101,7 +101,8 @@ public class face_write_out
 				}
 				fw.println();
 				
-				fw.print("/* curve point material */  ");
+				fw.println("/* curve point extra_data	*/  1");
+				fw.print("/* curve point material	*/  ");
 				for(int k=0;k<4;k++)
 					fw.print("    ",fe.parameter_material[k]);			
 				fw.println();

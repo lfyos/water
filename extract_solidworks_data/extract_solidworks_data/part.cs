@@ -123,13 +123,17 @@ namespace extract_solidworks_data
             FileStream new_mesh_stream = new FileStream(mesh_file_name+".new", FileMode.Create, FileAccess.Write);
             StreamWriter new_mesh_writer = new StreamWriter(new_mesh_stream, Encoding.GetEncoding(charset));
 
-            new_mesh_writer.WriteLine("/*	version					*/	2021.07.01");
+            new_mesh_writer.WriteLine("/*	version					*/	2021.07.15");
             new_mesh_writer.WriteLine("/*	origin material			*/	0	0	0	1");
             new_mesh_writer.WriteLine("/*	default material		*/	"
                 + default_color_red + "  " + default_color_green + "  " 
                 + default_color_blue + "  " + default_color_material);
+            new_mesh_writer.WriteLine("/*	origin extra_data		            */	1");
+            new_mesh_writer.WriteLine("/*	default vertex_location_extra_data	*/	1");
+            new_mesh_writer.WriteLine("/*	default vertex_normal_extra_data	*/	1");
             new_mesh_writer.WriteLine("/*	max_attribute_number	*/  1");
             new_mesh_writer.WriteLine("     /*      attribute_0	    */  0   0   0   1");
+            new_mesh_writer.WriteLine();
 
             mesh_stream = new FileStream(mesh_file_name, FileMode.Open, FileAccess.Read);
             StreamReader mesh_reader = new StreamReader(mesh_stream, Encoding.GetEncoding(charset));

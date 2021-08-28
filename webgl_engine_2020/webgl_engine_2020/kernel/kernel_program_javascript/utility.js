@@ -191,66 +191,6 @@ function construct_render_utility(my_render_instance)
 			return false;
 		}
 	};
-	this.upload_string=function(str_content,str_url,complete_function)
-	{
-		try{
-			var my_ajax=new XMLHttpRequest(),cur=this.render_instance;
-
-			my_ajax.onreadystatechange=function()
-			{
-				if(my_ajax.readyState!=4)
-					return;
-				if(my_ajax.status!=200){
-					if(cur.parameter.debug_mode_flag)
-						alert("this.upload_string=function(str_content,str_url,complete_function) fail"+my_ajax.status);
-					else
-						console.log("this.upload_string=function(str_content,str_url,complete_function) fail"+my_ajax.status);
-					return;
-				}
-				if(typeof(complete_function)=="function")
-					complete_function(cur,my_ajax.responseText);
-			};
-			my_ajax.open("POST",str_url,true);
-			my_ajax.setRequestHeader("Content-type","text/plain");
-			my_ajax.send(str_content);
-			return true;
-		}catch(e){
-			alert("upload_string fail!\n"+e.toString());
-			return false;
-		};
-	};
-	this.upload_canvas_image=function(uploaded_canvas,png_url,complete_function)
-	{
-		try{
-			var my_ajax=new XMLHttpRequest(),cur=this.render_instance;
-
-			my_ajax.onreadystatechange=function()
-			{
-				if(my_ajax.readyState!=4)
-					return;
-				if(my_ajax.status!=200){
-					if(cur.parameter.debug_mode_flag)
-						alert("this.upload_scene_image=function(png_url,complete_function) fail"+my_ajax.status);
-					else
-						console.log("this.upload_scene_image=function(png_url,complete_function) fail"+my_ajax.status);
-					return;
-				}
-				if(typeof(complete_function)=="function")
-					complete_function(cur,my_ajax.responseText);
-			};
-			my_ajax.open("POST",png_url,true);
-			my_ajax.setRequestHeader("Content-type","image/png");
-			my_ajax.send(uploaded_canvas.toDataURL());
-			return true;
-		}catch(e){
-			alert("upload_scene_image fail!\n"+e.toString());
-			return false;
-		};
-	};
-	this.upload_scene_image=function(png_url,complete_function)
-	{
-		this.upload_canvas_image(this.render_instance.canvas,png_url,complete_function)
-	};
 	this.set_clear_fullscreen=function(set_clear_flag)
 	{
 		if(set_clear_flag){

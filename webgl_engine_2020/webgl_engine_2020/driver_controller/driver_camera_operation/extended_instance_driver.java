@@ -456,10 +456,9 @@ public class extended_instance_driver extends instance_driver
 		case "client_parameter":
 			client_parameter_request(ci,ek.camera_cont.camera_array);
 			return null;
-			
 		case "show_hide":
 			ci.instance_container.get_driver(comp,driver_id).update_component_parameter_version(0);
-			if((str=ci.request_response.get_parameter("show_hide"))!=null)
+			if((str=ci.request_response.get_parameter("show_hide"))!=null){
 				switch(str.toLowerCase()){
 				case "yes":
 				case "true":
@@ -472,6 +471,7 @@ public class extended_instance_driver extends instance_driver
 				default:
 					break;
 				}
+			}
 			return null;
 		}
 		return null;

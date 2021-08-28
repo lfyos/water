@@ -280,9 +280,12 @@ public class obj_converter
 	private void write_out_mesh(String target_file_name,String target_charset)
 	{
 		String str[]= {
-				"/*	version					*/	2021.07.01",
+				"/*	version					*/	2021.07.15",
 				"/*	origin material			*/	0	0	0	"+face_material,
 				"/*	default material		*/	0	0	0	"+face_material,
+				"/*	origin  vertex_location_extra_data	*/	1",
+				"/*	default vertex_location_extra_data	*/	1",
+				"/*	default vertex_normal_extra_data	*/	1",
 				"/*	max_attribute_number	*/	1",
 				"	"+face_attribute.x+"	"+face_attribute.y+"	"+face_attribute.z+"	1",
 
@@ -304,7 +307,10 @@ public class obj_converter
 				"				/*	curve_type		*/	segment		/* parameter_number  */  0 /* parameter */",
 				"				start_not_effective",
 				"				end_not_effective",
-				"				/*	curve point material				*/      0    0    0    "+edge_material,
+				
+				"				/*  parameter_point_extra_data		*/	1",
+				"				/*	parameter_point_material		*/  0    0    0    "+edge_material,
+
 				"				/*	box definition						*/		"+((edge_box==null)?"nobox":(
 									edge_box.p[0].x+"	"+edge_box.p[0].y+"	"+edge_box.p[0].z+"	"+
 									edge_box.p[1].x+"	"+edge_box.p[1].y+"	"+edge_box.p[1].z)),

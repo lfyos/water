@@ -39,6 +39,5 @@
 /*	compress_response_length					*/		1024
 
 /*	not_do_ancestor_render_flag					*/		yes
-/*	test_display_assembly_flag					*/		yes
 /*	do_discard_lod_flag							*/		no
 /*	do_selection_lod_flag						*/		no

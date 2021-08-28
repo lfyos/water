@@ -106,6 +106,9 @@ public class part_rude
 	}
 	private void caculate_box_attribute()
 	{
+		box_attribute_string=new String[] {};
+		box_attribute_double=new double[] {};
+		
 		body max_body=null;
 		for(int i=0,ni=body_number();i<ni;i++)
 			if(body_array[i].body_box!=null){
@@ -124,10 +127,35 @@ public class part_rude
 				else if(fa.face_box.distance2()>max_fa.face_box.distance2())
 					max_fa=fa;
 			}
-		if(max_fa!=null){
-			box_attribute_string=max_fa.fa_face.box_attribute_string;
-			box_attribute_double=max_fa.fa_face.box_attribute_double;
-		}
+		if(max_fa==null)
+			return;
+		
+		if((box_attribute_string=max_fa.fa_face.box_attribute_string)==null)
+			box_attribute_string=new String[] {};
+		if((box_attribute_double=max_fa.fa_face.box_attribute_double)==null)
+			box_attribute_double=new double[] {};
+		
+		face_face ff;
+		for(int i=0,ni=body_number();i<ni;i++)
+			for(int j=0,nj=body_array[i].face_number();j<nj;j++)
+				if((ff=body_array[i].face_array[j].fa_face).box_attribute_string!=null)
+					if(ff.box_attribute_string.length>box_attribute_string.length){
+						String bak_box_attribute_string[]=box_attribute_string;
+						double bak_box_attribute_double[]=box_attribute_double;
+						
+						box_attribute_string=new String[ff.box_attribute_string.length];
+						box_attribute_double=new double[ff.box_attribute_double.length];
+						
+						for(int k=0,nk=bak_box_attribute_string.length;k<nk;k++)
+							box_attribute_string[k]=bak_box_attribute_string[k];
+						for(int k=bak_box_attribute_string.length,nk=ff.box_attribute_string.length;k<nk;k++)
+							box_attribute_string[k]=ff.box_attribute_string[k];
+						
+						for(int k=0,nk=bak_box_attribute_double.length;k<nk;k++)
+							box_attribute_double[k]=bak_box_attribute_double[k];
+						for(int k=bak_box_attribute_double.length,nk=ff.box_attribute_double.length;k<nk;k++)
+							box_attribute_double[k]=ff.box_attribute_double[k];
+					}
 	}
 	
 	public part_rude(file_reader fr,double vertex_scale_value,double normal_scale_value,
@@ -197,18 +225,21 @@ public class part_rude
 	}
 	private void write_out_head(file_writer f)
 	{
-		f.println("/*	version					*/	2021.07.01");
-		f.print  ("/*	origin material			*/");
+		f.println("/*	version								*/	2021.07.15");
+		f.print  ("/*	origin material						*/");
 		for(int i=0;i<4;i++)
 			f.print("	",origin_material[i]);
 		f.println();
 		
-		f.print  ("/*	default material		*/");
+		f.print  ("/*	default material					*/");
 		for(int i=0;i<4;i++)
 			f.print("	",box_material[i]);
 		f.println();
+		f.println("/*	origin  vertex_location_extra_data	*/	1");
+		f.println("/*	default vertex_location_extra_data	*/	1");
+		f.println("/*	default vertex_normal_extra_data	*/	1");
 		
-		f.println("/*	max_attribute_number	*/	",box_attribute_string.length);
+		f.println("/*	max_attribute_number				*/	",box_attribute_string.length);
 		for(int i=0,j=0,ni=box_attribute_string.length;i<ni;) {
 			f.print  ("	",box_attribute_double[j++]);
 			f.print  ("	",box_attribute_double[j++]);
@@ -218,7 +249,7 @@ public class part_rude
 		}
 		f.println();
 		
-		f.print  ("/*	body_number	*/	",body_number());
+		f.print  ("/*	body_number		*/		",body_number());
 		for(int i=0,ni=body_number();i<ni;i++){
 			body b=body_array[i];
 			f.set_pace(2);
@@ -300,24 +331,185 @@ public class part_rude
 		f.println();
 	}
 	
-	public static void convert(String source_file_name,String destination_file_name,String file_charset)
+	private static void convert_from_2021_07_10_to_2021_07_15(
+			String source_file_name,String destination_file_name,String file_charset)
 	{
+		String str;
+		int max_attribute_number,body_number;
+		
 		file_reader fr=new file_reader(source_file_name,file_charset);
-		auxiliary_file_handler afh=new auxiliary_file_handler(source_file_name,file_charset);
-		file_writer head_fw=new file_writer(destination_file_name,file_charset);
-		file_writer face_fw=new file_writer(destination_file_name+".face",file_charset);
-		file_writer edge_fw=new file_writer(destination_file_name+".edge",file_charset);
+		file_writer fw=new file_writer(destination_file_name,file_charset);
 		
-		part_rude pr=new part_rude(fr,1,1,false,false,false);
-		pr.write_out_head(head_fw);
-		pr.write_out_face(face_fw,afh);
-		pr.write_out_edge(edge_fw,afh);
-		pr.destroy();
+		fr.get_string();
+		fw.println("/*	version								*/	2021.07.15");
+		fw.println("/*	origin material						*/	",
+				fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string());
+		fw.println("/*	default material					*/	",
+				fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string());
+		fw.println("/*	origin  vertex_location_extra_data	*/	1");
+		fw.println("/*	default vertex_location_extra_data	*/	",fr.get_string());
+		fw.println("/*	default vertex_normal_extra_data	*/	",fr.get_string());
+		fw.println("/*	max_attribute_number				*/	",max_attribute_number=fr.get_int());
+		for(int i=0;i<max_attribute_number;i++) 
+			fw.println("/*		"+i+".attribute:	*/	"+fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string());
 		
-		afh.destroy();
+		fw.println();
+		fw.println("/*	body_number		*/	",body_number=fr.get_int());
+
+		for(int body_id=0,face_number;body_id<body_number;body_id++) {
+			fw.print  ("	/*  body    "+body_id+"  name    */  ",fr.get_string());
+			fw.println("	/*  face_number */	",face_number=fr.get_int());
+			for(int face_id=0,parameter_number,loop_number;face_id<face_number;face_id++) {
+				fw.println("	/*  body "+body_id+" face "+face_id+"  name	*/	",fr.get_string());
+				fw.print  ("	/*  face type	*/	",fr.get_string());
+				fw.print  ("	/*  parameter number	*/	",parameter_number=fr.get_int());
+				fw.print  ("	/*  parameter	*/");
+				for(int i=0;i<parameter_number;i++)
+					fw.print  ("	",fr.get_double());
+				fw.println();
+				fw.println("	/*  total_face_primitive_number	*/  ",fr.get_string());
+				fw.println("	/*  face_attribute_number		*/  ",fr.get_string());
+				fw.print  ("	/*  face_face_box               */");
+				if((str=fr.get_string())==null)
+					str="nobox";
+				if(str.toLowerCase().compareTo("nobox")==0)
+					fw.println("	nobox");
+				else {
+					fw.print  ("	",str);
+					for(int i=0;i<5;i++)
+						fw.print  ("	",fr.get_string());
+					fw.println();
+				}
+				fw.println();
+				
+				fw.println("	/*  loop number		*/	",loop_number=fr.get_int());
+				for(int loop_id=0,edge_number;loop_id<loop_number;loop_id++) {
+					fw.println("		/*  body:"+body_id+" face:"+face_id
+							+" loop "+loop_id+" edge number	*/	",
+							edge_number=fr.get_int());
+					for(int edge_id=0;edge_id<edge_number;edge_id++) {
+						fw.println("			/*  Edge NO."+edge_id+"   */");
+						fw.print  ("			/*  curve type	*/  ",fr.get_string());
+						fw.print  ("	/*  parameter number	*/	",parameter_number=fr.get_int());
+						fw.print  ("	/*  parameter	*/");
+						for(int i=0;i<parameter_number;i++)
+							fw.print  ("	",fr.get_string());
+						fw.println();
+						
+						if(fr.get_string().compareTo("start_effective")==0) {
+							fw.print  ("			start_effective		",
+									fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string());
+							fw.println("	/*	start_point_material	*/	",
+									fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string());
+						}else
+							fw.println("			start_not_effective");
+						
+						if(fr.get_string().compareTo("end_effective")==0) {
+							fw.print  ("			end_effective		",
+									fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string());
+							fw.println("	/*	end_point_material		*/	",
+									fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string());
+						}else
+							fw.println("			end_not_effective");
+						
+						fw.println("			/*  parameter_point_extra_data  */	1");
+						fw.print  ("			/*  parameter_point_material    */");
+						fw.print  ("	",fr.get_string());
+						fw.print  ("	",fr.get_string());
+						fw.print  ("	",fr.get_string());
+						fw.println("	",fr.get_string());
+						
+						fw.print  ("			/*  box definition  */");
+						
+						if((str=fr.get_string())==null)
+							str="nobox";
+						if(str.toLowerCase().compareTo("nobox")==0)
+							fw.println("	nobox");
+						else {
+							fw.print  ("	",str);
+							for(int i=0;i<5;i++)
+								fw.print  ("	",fr.get_string());
+							fw.println();
+						}
+						
+						fw.println("			/*  total_edge_primitive_number		*/	",fr.get_string());
+						fw.println("			/*  total_point_primitive_number	*/	",fr.get_string());
+			            
+						fw.println();
+					}
+					fw.println();
+				}
+				fw.println();
+			}
+			fw.println();
+		}
+
 		fr.close();
-		head_fw.close();
-		face_fw.close();
-		edge_fw.close();
+		fw.close();
+	}
+	public static void convert(String file_name,String file_charset)
+	{
+		file_reader fr=new file_reader(file_name,file_charset);
+		String str=fr.get_string();
+		fr.close();
+		
+		switch((str==null)?"":str.trim()) {
+		default:
+			file_writer.file_rename(file_name,file_name+".tmp");
+			fr=new file_reader(file_name+".tmp",file_charset);
+			
+			auxiliary_file_handler afh=new auxiliary_file_handler(file_name+".tmp",file_charset);
+			file_writer head_fw=new file_writer(file_name,file_charset);
+			file_writer face_fw=new file_writer(file_name+".face",file_charset);
+			file_writer edge_fw=new file_writer(file_name+".edge",file_charset);
+		
+			part_rude pr=new part_rude(fr,1,1,false,false,false);
+			
+			pr.write_out_head(head_fw);
+			pr.write_out_face(face_fw,afh);
+			pr.write_out_edge(edge_fw,afh);
+			
+			pr.destroy();
+			
+			head_fw.close();
+			face_fw.close();
+			edge_fw.close();
+			
+			afh.destroy();
+			
+			fr.close();
+			
+			file_writer.file_delete(file_name+".tmp");
+			return;
+		case "2021.07.01":
+			file_writer.file_rename(file_name,file_name+".tmp");
+			fr=new file_reader(file_name+".tmp",file_charset);
+			file_writer fw=new file_writer(file_name,file_charset);
+			fr.get_string();
+			fw.println("/*	version								*/	2021.07.10");
+			fw.println("/*	origin material						*/	",
+					fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string());
+			fw.println("/*	default material					*/	",
+					fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string());
+			fw.println("/*	default vertex_location_extra_data	*/	1");
+			fw.println("/*	default vertex_normal_extra_data	*/	1");
+			int max_attribute_number=fr.get_int();
+			fw.println("/*	max_attribute_number				*/	",max_attribute_number);
+			for(int i=0;i<max_attribute_number;i++)
+				fw.println("		",fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string()+"	"+fr.get_string());
+			fw.println();
+			int body_number=fr.get_int();
+			fw.println("/*	body_number							*/	",body_number);
+			while(!(fr.eof()))
+				if((str=fr.get_line())!=null)
+					fw.println(str);
+			fr.close();
+			fw.close();
+			file_writer.file_delete(file_name+".tmp");
+		case "2021.07.10":
+			convert_from_2021_07_10_to_2021_07_15(file_name,file_name+".tmp",file_charset);
+			file_writer.file_rename(file_name+".tmp", file_name);
+			break;
+		}
 	}
 }

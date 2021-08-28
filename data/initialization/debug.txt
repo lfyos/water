@@ -1,26 +1,26 @@
 				function(component_name,component_id,render)
 				{
-					render.user_call_processor.canvas_scene_url="";
+					render.debug_call_processor.canvas_scene_url="";
 					
-					render.user_call_processor.resize=function()
+					render.debug_call_processor.resize=function()
 					{
 						var part_list;
 						if((part_list=document.getElementById("my_part_list"))!=null)
 							if(!(part_list.hidden)){
-								render.user_call_processor.turnon_control_panel(part_list.src);
+								render.debug_call_processor.turnon_control_panel(part_list.src);
 								return;
 							}
-						render.user_call_processor.turnoff_control_panel();
+						render.debug_call_processor.turnoff_control_panel();
 					}
-					render.user_call_processor.reload_control_panel=function()
+					render.debug_call_processor.reload_control_panel=function()
 					{
 						var part_list;
 						if((part_list=document.getElementById("my_part_list"))!=null)
-							part_list.src=render.user_call_processor.canvas_scene_url;
+							part_list.src=render.debug_call_processor.canvas_scene_url;
 					}
-					render.user_call_processor.turnon_control_panel=function(my_canvas_scene_url)
+					render.debug_call_processor.turnon_control_panel=function(my_canvas_scene_url)
 					{
-						render.user_call_processor.canvas_scene_url=my_canvas_scene_url;
+						render.debug_call_processor.canvas_scene_url=my_canvas_scene_url;
 						
 						var width	=window.innerWidth *0.975;
 						var height	=window.innerHeight*0.925;
@@ -32,7 +32,7 @@
 								part_list.width	=width*0.30;
 								part_list.height=height;
 								part_list.removeAttribute("hidden");
-								part_list.src=render.user_call_processor.canvas_scene_url;
+								part_list.src=render.debug_call_processor.canvas_scene_url;
 							}
 						}else{
 							render.canvas.width =width;
@@ -45,11 +45,11 @@
 									
 								part_list.removeAttribute("hidden");
 
-								part_list.src=render.user_call_processor.canvas_scene_url;
+								part_list.src=render.debug_call_processor.canvas_scene_url;
 							}
 						}
 					}
-					render.user_call_processor.turnoff_control_panel=function()
+					render.debug_call_processor.turnoff_control_panel=function()
 					{
 						var width			=window.innerWidth *0.975;
 						var height			=window.innerHeight*0.925;
@@ -63,10 +63,17 @@
 							part_list.src="";
 						}
 					}
+					render.system_event_processor.mousedown=function(event,render)	
+					{
+						render.call_server_component(
+							"show_select_component_box_component","all",
+							[["component_id",render.pickup.component_id]]);
+						return false;
+					};
 					render.system_event_processor.pickupcontextmenu=function(event,pickup_component_id,render)
 					{
 						var p=render.get_component_to_id_object("movement_manager");
-						render.user_call_processor.turnon_control_panel(
+						render.debug_call_processor.turnon_control_panel(
 							render.component_call_processor[p.component_id].mount_extract_url());
 						return false;
 					};
@@ -93,7 +100,7 @@
 							else
 								mcp.mount_forward(1000);
 							
-							render.user_call_processor.turnon_control_panel(
+							render.debug_call_processor.turnon_control_panel(
 								render.system_call_processor.collector_list_webpage_url("simple"));
 							break;
 						}
@@ -150,10 +157,23 @@
 							render.set_event_component("text_token_component");
 							break;
 						case 112://F1
-							render.user_event_processor.set_all_transparant_except_selection();
+							{
+								var component_name=encodeURIComponent(encodeURIComponent("cad_root_component_0"));
+								render.call_server_component("manipulator_component","all",
+									[["event_method","transparency"],["transparency",0.05],["component",component_name]],
+									function(response_data,render)
+									{
+										render.call_server_component("manipulator_component","all",
+											[["event_method","transparency"],["transparency",1.0]]);
+									});
+							};
 							break;
 						case 113://F2
-							render.user_event_processor.set_all_untransparant()
+							{
+								var component_name=encodeURIComponent(encodeURIComponent("cad_root_component_0"));
+								render.call_server_component("manipulator_component","all",
+									[["event_method","transparency"],["transparency",1.0],["component",component_name]]);
+							};
 							break;
 						case 114://F3
 							window.open(render.system_call_processor.component_check_url(),"_blank");
@@ -163,30 +183,10 @@
 						case 116://F5
 							break;
 						case 117://F6
-							window.open(
-								render.create_component_request_string(
-									"find_visible_component","all",[["operation","file"]]),
-								"_blank");
 							break;
 						case 118://F7
-							var precision;
-							if((precision=prompt("输入精度","1"))==null)
-								break;
-							precision=parseFloat(precision);
-							render.call_server_component("find_visible_component","all",
-								[	["operation","start"],
-									["width",	Math.round(render.canvas.width *precision)],
-									["height",	Math.round(render.canvas.height*precision)]
-								],
-								function(response_data,render)
-								{
-									var my_component_id=render.get_component_to_id_object("find_visible_component").component_id;
-									render.component_event_processor[my_component_id].clear_triangle(my_component_id);
-								});
 							break;
 						case 119://F8
-							var my_component_id=render.get_component_to_id_object("find_visible_component").component_id;
-							render.component_event_processor[my_component_id].caculate_triangle(my_component_id);
 							break;
 						case 120://F9
 							break;
@@ -196,6 +196,32 @@
 							break;
 						case 123://F12
 							render.system_call_processor.set_menu_show_me_only("交互界面主菜单");
+							break;
+
+
+						case 49://1
+						case 50://2
+						case 51://3
+						case 52://4
+						case 53://5
+						case 54://6
+						case 55://7
+						case 56://8
+						case 57://9
+						case 48://0
+						case 81://q
+						case 87://w
+						case 69://e
+						case 82://r
+						case 84://t
+						case 89://y
+						case 85://u
+						case 73://i
+						case 79://o
+						case 80://p
+							break;
+							
+						default:
 							break;
 						};
 						return false;

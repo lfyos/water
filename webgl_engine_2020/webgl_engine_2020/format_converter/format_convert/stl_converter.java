@@ -260,10 +260,14 @@ public class stl_converter
 		
 		fw=new file_writer(target_file_name,target_charset);
 		
-		fw.println("/*	version					*/	2021.07.01");
+		fw.println("/*	version					*/	2021.07.15");
 		fw.println("/*	origin material			*/	0	0	0	0");
 		fw.println("/*	default material		*/	0	0	0	0");
+		fw.println("/*	origin  vertex_location_extra_data	*/	1");
+		fw.println("/*	default vertex_location_extra_data	*/	1");
+		fw.println("/*	default vertex_normal_extra_data	*/	1");
 		fw.println("/*	max_attribute_number	*/	0");
+		fw.println();
 
 		fw.println("/*	body_number	*/	1");
 		fw.println("	/* body  0  name	*/	body_0	/*	face_number	*/	1");
@@ -288,11 +292,11 @@ public class stl_converter
 	{
 		debug_information.println("Begin");
 		
-		new  stl_converter(
-				"E:\\water_all\\data\\project\\part\\other_part\\part_stl\\part\\part_1.stl",
-				"GBK",
-				"E:\\temp\\part_0.mesh",
-				"GBK");
+		String dir="E:\\water_all\\data\\project\\part\\other_part\\part_stl\\part\\";
+		
+		new  stl_converter(dir+"part_0.stl",	"GBK",		dir+"part_0.stl.mesh",	"GBK");
+		new  stl_converter(dir+"part_1.stl",	"GBK",		dir+"part_1.stl.mesh",	"GBK");
+		new  stl_converter(dir+"part_2.stl",	"GBK",		dir+"part_2.stl.mesh",	"GBK");
 		
 		debug_information.println("End");
 	}

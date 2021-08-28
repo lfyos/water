@@ -56,7 +56,7 @@ public class face_loop
 		total_edge_primitive_number	=s.total_edge_primitive_number;
 		total_point_primitive_number=s.total_point_primitive_number;
 	}
-	public face_loop(file_reader fr,double scale_value)
+	public face_loop(file_reader fr)
 	{
 		int my_edge_number;
 
@@ -65,17 +65,17 @@ public class face_loop
 		else {
 			edge=new face_edge[my_edge_number];		
 			for(int i=0;i<my_edge_number;i++)
-				edge[i]=new face_edge(fr,scale_value);
+				edge[i]=new face_edge(fr);
 		}
 		caculate_box_and_primitive_number();
 	}
-	public face_loop(point p0,point p1,point p2,point p3,String extra_data,String parameter_material[])
+	public face_loop(point p0,point p1,point p2,point p3,String my_extra_data,String my_material[])
 	{
 		edge=new face_edge[4];
-		edge[0]=new face_edge(p0,p1,extra_data,parameter_material);
-		edge[1]=new face_edge(p1,p2,extra_data,parameter_material);
-		edge[2]=new face_edge(p2,p3,extra_data,parameter_material);
-		edge[3]=new face_edge(p3,p0,extra_data,parameter_material);
+		edge[0]=new face_edge(p0,p1,my_extra_data,my_material);
+		edge[1]=new face_edge(p1,p2,my_extra_data,my_material);
+		edge[2]=new face_edge(p2,p3,my_extra_data,my_material);
+		edge[3]=new face_edge(p3,p0,my_extra_data,my_material);
 		caculate_box_and_primitive_number();
 	}
 };

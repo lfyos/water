@@ -39,7 +39,8 @@ namespace extract_solidworks_data
                 else if (s.IsCone())
                 {
                     str = "cone";
-                    p = (double[])(s.ConeParams);
+                    p = (double[])(s.ConeParams2);
+       
                 }
                 else if (s.IsSphere())
                 {

@@ -8,14 +8,15 @@ import kernel_transformation.location;
 
 public class create_part_rude 
 {
-	private part_rude topbox_part_rude;
+	public part_rude topbox_part_rude;
+	public part max_part;
 	
 	private int box_number;
+	private part reference_part[];
 	private location box_loca[];
 	private box box_array[];
-	private String default_material[][];
-	private double default_attribute_double[][];
-	private String default_attribute_string[][];
+	
+	private double max_distance2;
 	
 	private void create_location_box_and_material(component comp,location nega,double length2)
 	{
@@ -28,47 +29,42 @@ public class create_part_rude
 		else
 			for(int i=0,ni=comp.driver_number();i<ni;i++)
 				if((p=comp.driver_array[i].component_part)!=null){
-					if((box_array[box_number]=p.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,null,null))!=null)
-						if(box_array[box_number].distance2()>length2){
-							box_loca				[box_number]=nega.multiply(comp.absolute_location);
-							default_material		[box_number]=p.part_mesh.default_material;
-							default_attribute_double[box_number]=p.part_mesh.default_attribute_double;
-							default_attribute_string[box_number]=p.part_mesh.default_attribute_string;
+					if((box_array[box_number]=p.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,null,null))!=null) {
+						double my_distance2=box_array[box_number].distance2();
+						if(my_distance2>length2){
+							if((max_part==null)||(max_distance2<my_distance2)){
+								max_part=p;
+								max_distance2=my_distance2;
+							}
+							reference_part	[box_number]=p;
+							box_loca		[box_number]=nega.multiply(comp.absolute_location);
 							box_number++;
 							break;
 						}
+					}
 				}
 	}
-	private create_part_rude(component comp,String origin_material[],
+	public create_part_rude(component comp,
 			int max_component_number,double discard_top_part_component_precision2)
 	{
 		box my_box;
-		topbox_part_rude=null;
-		if((my_box=comp.get_component_box(false))==null)
-			return;
-		box_number				=0;
-		box_loca				=new location	[max_component_number];
-		box_array				=new box		[max_component_number];
-		default_material		=new String		[max_component_number][];
-		default_attribute_double=new double		[max_component_number][];
-		default_attribute_string=new String		[max_component_number][];
+		if((my_box=comp.get_component_box(false))!=null) {
+			box_number				=0;
+			reference_part			=new part		[max_component_number];
+			box_loca				=new location	[max_component_number];
+			box_array				=new box		[max_component_number];
 
-		create_location_box_and_material(comp,comp.absolute_location.negative(),
-				my_box.distance2()*discard_top_part_component_precision2);
-		
-		if(box_number<=0)
+			max_part				=null;
+			max_distance2			=0;
+	
+			create_location_box_and_material(comp,comp.absolute_location.negative(),
+					my_box.distance2()*discard_top_part_component_precision2);
+			if((box_number>1)&&(max_part!=null))
+				topbox_part_rude=new part_rude(box_number,reference_part,box_loca,box_array);
 			return;
-		String extra_data[]=new String[box_number];
-		for(int i=0;i<box_number;i++)
-			extra_data[i]="1";
-		topbox_part_rude=new part_rude(origin_material,
-				default_material,default_attribute_double,default_attribute_string,
-				box_number,box_loca,box_array,extra_data);
-	}
-	public static part_rude create(component comp,String origin_material[],
-			int max_component_number,double discard_top_part_component_precision2)
-	{
-		return new create_part_rude(comp,origin_material,
-			max_component_number,discard_top_part_component_precision2).topbox_part_rude;
+		}
+		max_part		=null;
+		topbox_part_rude=null;
+		return;
 	}
 }

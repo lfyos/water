@@ -8,9 +8,81 @@ import kernel_program_reader.program_file_reader;
 import kernel_render.render_container;
 import kernel_common_class.common_reader;
 import kernel_common_class.debug_information;
+import kernel_common_class.exclusive_file_mutex;
 
 public class copy_program 
 {
+	private static long exclusive_copy_shader_programs(int render_id,
+			render_container render_cont,system_parameter system_par,
+			String program_file_name,String type_name[],common_reader common_shader_reader)
+	{
+		file_writer fw=new file_writer(program_file_name,system_par.network_data_charset);
+		
+		fw.print  ("[",render_cont.renders[render_id].parts[0].permanent_render_id);
+		fw.println(",");
+		
+		common_reader decode_reader=program_file_reader.get_render_program_reader(render_cont.renders[render_id],"decode");
+		if(decode_reader!=null) {
+			decode_reader.get_text(fw);
+			decode_reader.close();
+		}else {
+			debug_information.println(
+					"copy_shader_programs fail,can Not get decode program for : ",program_file_name);
+			fw.print  ("null");
+		}
+		fw.println(",");
+		
+		common_reader draw_reader=program_file_reader.get_render_program_reader(render_cont.renders[render_id],"draw");
+		if(draw_reader!=null) {
+			draw_reader.get_text(fw);
+			draw_reader.close();
+		}else {
+			debug_information.println(
+					"copy_shader_programs fail,can Not get draw program for : ",program_file_name);
+			fw.print  ("null");
+		}
+		fw.println(",");
+
+		for(int j=0,nj=type_name.length;j<nj;j++){
+			String program_str="",str="";
+			
+			common_reader system_shader_reader;
+			if((system_shader_reader=program_file_reader.get_system_program_reader(type_name[j]))!=null) {
+				if((str=system_shader_reader.get_text())==null)
+					str="";
+				common_shader_reader.close();
+			}
+			program_str+=str+"\n";str="";
+			
+			if((common_shader_reader=program_file_reader.get_system_program_reader("common"))!=null) {
+				if((str=common_shader_reader.get_text())==null)
+					str="";
+				common_shader_reader.close();
+			}
+			program_str+=str+"\n";str="";
+
+			common_reader user_shader_reader;
+			if((user_shader_reader=program_file_reader.get_render_program_reader(render_cont.renders[render_id],type_name[j]))!=null) {
+				if((str=user_shader_reader.get_text())==null) {
+					str="";
+					program_str="";
+				}
+				user_shader_reader.close();
+			}else {
+				str="";
+				program_str="";
+			}
+			program_str+=str+"\n";
+			program_str=program_str.replace("\n","\\n\\r").replace("\"","\\\"").replace("\r","\\n\\r");
+
+			fw.print  ("\"",program_str);
+			fw.println("\"",(j==(nj-1))?"":",");
+		}
+		fw.println("]");
+		fw.close();
+		
+		return new File(fw.directory_name+fw.file_name).lastModified();
+	}
 	public static long copy_shader_programs(
 			render_container render_cont,system_parameter system_par,scene_parameter scene_par)
 	{
@@ -71,76 +143,19 @@ public class copy_program
 				continue;
 			}
 			
-			system_par.system_exclusive_name_mutex.lock(lock_file_name);
-			file_writer fw=new file_writer(program_file_name,system_par.network_data_charset);
-			
-			fw.print  ("[",render_cont.renders[i].parts[0].permanent_render_id);
-			fw.println(",");
-			
-			decode_reader=program_file_reader.get_render_program_reader(render_cont.renders[i],"decode");
-			if(decode_reader!=null) {
-				decode_reader.get_text(fw);
-				decode_reader.close();
-			}else {
-				debug_information.println(
-						"copy_shader_programs fail,can Not get decode program for : ",program_file_name);
-				fw.print  ("null");
+			exclusive_file_mutex efm=exclusive_file_mutex.lock(lock_file_name,
+					"wait for create scene client program:	"+program_file_name);
+			try{
+				program_last_time=exclusive_copy_shader_programs(i,
+						render_cont,system_par,program_file_name,type_name,common_shader_reader);
+				if(ret_val<program_last_time)
+					ret_val=program_last_time;
+			}catch(Exception e) {
+				debug_information.println("copy_shader_programs exception:	",e.toString());
+				e.printStackTrace();
 			}
-			fw.println(",");
 			
-			draw_reader=program_file_reader.get_render_program_reader(render_cont.renders[i],"draw");
-			if(draw_reader!=null) {
-				draw_reader.get_text(fw);
-				draw_reader.close();
-			}else {
-				debug_information.println(
-						"copy_shader_programs fail,can Not get draw program for : ",program_file_name);
-				fw.print  ("null");
-			}
-			fw.println(",");
-
-			for(int j=0,nj=type_name.length;j<nj;j++){
-				String program_str="",str="";
-				
-				common_reader system_shader_reader;
-				if((system_shader_reader=program_file_reader.get_system_program_reader(type_name[j]))!=null) {
-					if((str=system_shader_reader.get_text())==null)
-						str="";
-					common_shader_reader.close();
-				}
-				program_str+=str+"\n";str="";
-				
-				if((common_shader_reader=program_file_reader.get_system_program_reader("common"))!=null) {
-					if((str=common_shader_reader.get_text())==null)
-						str="";
-					common_shader_reader.close();
-				}
-				program_str+=str+"\n";str="";
-
-				common_reader user_shader_reader;
-				if((user_shader_reader=program_file_reader.get_render_program_reader(render_cont.renders[i],type_name[j]))!=null) {
-					if((str=user_shader_reader.get_text())==null) {
-						str="";
-						program_str="";
-					}
-					user_shader_reader.close();
-				}else {
-					str="";
-					program_str="";
-				}
-				program_str+=str+"\n";
-				program_str=program_str.replace("\n","\\n\\r").replace("\"","\\\"").replace("\r","\\n\\r");
-
-				fw.print  ("\"",program_str);
-				fw.println("\"",(j==(nj-1))?"":",");
-			}
-			fw.println("]");
-			fw.close();
-			
-			system_par.system_exclusive_name_mutex.unlock(lock_file_name);
-			
-			if(ret_val<(program_last_time=new File(fw.directory_name+fw.file_name).lastModified()))
-				ret_val=program_last_time;
+			efm.unlock();
 		}
 		return ret_val;
 	}

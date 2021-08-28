@@ -60,6 +60,9 @@ public class client_request_switcher
 		system_call_switch_result ret_val=new system_call_switch_result();
 		String channel_string=request_response.get_parameter("channel");
 		switch((channel_string==null)?"javascript":channel_string){
+		case "switch_log":
+			system_par.proxy_par.switch_log_file();
+			break;
 		case "readme":
 			ret_val.ecr=download_readme_file.download_driver_readme(request_response,
 					system_par.data_root_directory_name+system_par.shader_file_name,

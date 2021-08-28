@@ -3,8 +3,8 @@
 	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 	/* 1children number */		9
 	
-		/* 2name		*/	find_visible_component
-		/* 2type		*/	find_visible_part
+		/* 2name		*/	trace_primitive_component
+		/* 2type		*/	trace_primitive_part
 		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 		/* 2child_number	*/	0
 

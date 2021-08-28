@@ -4,11 +4,65 @@ import kernel_common_class.sorter;
 
 public class part_container_for_part_search extends sorter<part,String>
 {
+	private part append_part_array[];
+	private int append_part_number;
+	
+	public void append_one_part(part new_part)
+	{
+		if(new_part!=null) {
+			if(append_part_array==null)
+				append_part_array=new part[100];
+			if(append_part_array.length<=append_part_number) {
+				part bak[]=append_part_array;
+				append_part_array=new part[bak.length+100];
+				for(int i=0,ni=bak.length;i<ni;i++)
+					append_part_array[i]=bak[i];
+			}
+			append_part_array[append_part_number++]=new_part;
+		}
+	}
+	public void execute_append()
+	{
+		part my_parts[]=new part[append_part_number];
+		for(int i=0;i<append_part_number;i++) {
+			my_parts[i]=append_part_array[i];
+			append_part_array[i]=null;
+		}
+		append_part_array=null;
+		append_part_number=0;
+		
+		part_container_for_part_search pcps=new part_container_for_part_search(my_parts);
+		
+		part p1[]=data_array,	p2[]=pcps.data_array;
+		int  n1	 =get_number(),	n2	=pcps.get_number();
+		
+		if(n1<=0)
+			data_array=p2;
+		else if(n2<=0)
+			data_array=p1;
+		else {
+			data_array=new part[n1+n2];
+			for(int i1=0,i2=0,j=0;;) {
+				if(i1>=n1) {
+					if(i2>=n2)
+						break;
+					data_array[j++]=p2[i2++];
+				}else if(i2>=n2)
+					data_array[j++]=p1[i1++];
+				else if(compare_data(p1[i1],p2[i2])<=0)
+					data_array[j++]=p1[i1++];
+				else
+					data_array[j++]=p2[i2++];
+			}
+		}
+	}
+	
 	public void destroy()
 	{
 		super.destroy();
+		append_part_array=null;
+		append_part_number=0;
 	}
-	
 	public int compare_key(part s,String t)
 	{
 		return s.system_name.compareTo(t);
@@ -31,11 +85,23 @@ public class part_container_for_part_search extends sorter<part,String>
 			return 3;
 		if(pi.part_par.bottom_box_discard_precision2>pj.part_par.bottom_box_discard_precision2)
 			return -3;
-
-		if((pi.mesh_file_name==null)&&(!(pj.mesh_file_name==null)))
-			return 3;
-		if((!(pi.mesh_file_name==null))&&(pj.mesh_file_name==null))
-			return -3;
+		
+		boolean i_flag,j_flag;
+		
+		i_flag=pi.is_normal_part();
+		j_flag=pj.is_normal_part();
+		if(i_flag^j_flag)
+			return i_flag?-2:2;
+		
+		i_flag=pi.is_bottom_box_part();
+		j_flag=pj.is_bottom_box_part();
+		if(i_flag^j_flag)
+			return i_flag?-1:1;
+		
+		i_flag=pi.is_top_box_part();
+		j_flag=pj.is_top_box_part();
+		if(i_flag^j_flag)
+			return i_flag?-1:1;
 		
 		return 0;
 	}
@@ -60,6 +126,9 @@ public class part_container_for_part_search extends sorter<part,String>
 			for(;i<j;i++)
 				data_array[i].part_par.assembly_precision2=data_array[id].part_par.assembly_precision2;
 		}
+		
+		append_part_array=null;
+		append_part_number=0;
 	}
 	
 	public part[] search_part(String my_part_system_name)
@@ -75,23 +144,24 @@ public class part_container_for_part_search extends sorter<part,String>
 		part bak[]=new part[ret_part.length];
 		int effective_part_number=0;
 		boolean top_flag=false,bottom_flag=false;
-		for(int i=0,ni=ret_part.length;i<ni;i++)
-			if((bak[effective_part_number++]=ret_part[i]).mesh_file_name==null){
-				if(ret_part[i].top_box_part_flag){
-					if(top_flag)
-						effective_part_number--;
-					else
-						top_flag=true;
-				}else{
-					if(bottom_flag)
-						effective_part_number--;
-					else
-						bottom_flag=true;
-				}
+		for(int i=0,ni=ret_part.length;i<ni;i++) {
+			bak[effective_part_number++]=ret_part[i];
+			if(ret_part[i].is_bottom_box_part()){
+				if(bottom_flag)
+					effective_part_number--;
+				else
+					bottom_flag=true;
 			}
+			if(ret_part[i].is_top_box_part()){
+				if(top_flag)
+					effective_part_number--;
+				else
+					top_flag=true;
+			}
+		}
 		if(bak.length==effective_part_number)
 			ret_part=bak;
-		else {
+		else{
 			ret_part=new part[effective_part_number];
 			for(int i=0;i<effective_part_number;i++)
 				ret_part[i]=bak[i];

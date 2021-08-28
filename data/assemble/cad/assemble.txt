@@ -1,1 +1,1 @@
-cad		cad		assemble/assemble.txt	0	0	parameter.txt	parameter.xyz.txt
+cad		cad		assemble/assemble.txt	8	8	parameter.txt	parameter.xyz.txt

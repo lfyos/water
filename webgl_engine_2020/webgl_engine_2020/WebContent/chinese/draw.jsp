@@ -56,14 +56,14 @@ function body_onload()
 			render=my_render;
 			document.title=render.title;
 			
-			render.user_call_processor.turnoff_control_panel();
+			render.debug_call_processor.turnoff_control_panel();
 			
 			render.append_routine_function(
 					function(render)
 					{
 						if(render.collector_stack_version!=collector_stack_version){
 							collector_stack_version=render.collector_stack_version;
-							render.user_call_processor.reload_control_panel();
+							render.debug_call_processor.reload_control_panel();
 						}
 						return true;
 					},"init in draw.jsp"
@@ -84,10 +84,10 @@ function body_onresize()
 {
 	if(typeof(render)=="object")
 		if(render!=null)
-			if(typeof(render.user_call_processor)=="object")
-				if(render.user_call_processor!=null)
-					if(typeof(render.user_call_processor.resize)=="function")
-						render.user_call_processor.resize();
+			if(typeof(render.debug_call_processor)=="object")
+				if(render.debug_call_processor!=null)
+					if(typeof(render.debug_call_processor.resize)=="function")
+						render.debug_call_processor.resize();
 }
 
 </script>

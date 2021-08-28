@@ -3,6 +3,7 @@ package kernel_engine;
 import java.io.File;
 
 import kernel_common_class.debug_information;
+import kernel_common_class.exclusive_file_mutex;
 import kernel_common_class.compress_file_data;
 import kernel_file_manager.file_directory;
 import kernel_file_manager.file_writer;
@@ -65,8 +66,6 @@ public class part_package
 					return ret_val;
 				if((ret_val=s.part_par.process_sequence_id-t.part_par.process_sequence_id)!=0)
 					return ret_val;
-				if((s.mesh_file_name==null)^(t.mesh_file_name==null))
-					return (s.mesh_file_name==null)?-1:1;
 				return 0;
 			}
 			public int compare_part(part pi,part pj)
@@ -85,6 +84,9 @@ public class part_package
 					if(!(data_array[i].part_par.combine_to_part_package_flag))
 						continue;
 					data_array[i].part_package_id=package_number;
+					if(data_array[i].boftal==null)
+						debug_information.println("Find null boftal:	",
+								data_array[i].system_name+"	"+data_array[i].directory_name+data_array[i].mesh_file_name);
 					my_package_length+=data_array[i].boftal.buffer_object_head_length;
 					if(my_package_length<system_par.max_buffer_object_head_package_length)
 						if(i<(ni-1))
@@ -127,7 +129,8 @@ public class part_package
 				package_flag			=new boolean[package_number];
 				
 				String package_directory_name=file_directory.system_package_directory(part_type_id,system_par,scene_par);
-				system_par.system_exclusive_name_mutex.lock(package_directory_name+"package.lock");
+				exclusive_file_mutex efm=exclusive_file_mutex.lock(
+					package_directory_name+"package.lock","wait for create scene package:	"+package_directory_name);
 				try {
 					file_writer list_file_writer=null;
 					for(int i=0,package_id=0;i<package_number;i++){
@@ -167,15 +170,18 @@ public class part_package
 							fw.println("[");
 	
 							for(int k=0,nk=part_package[i].length;k<nk;k++) {
-								debug_information.println("Part type:	",		part_package[i][k].part_par.part_type_string);
-								debug_information.println("Part user_name:	",	part_package[i][k].user_name);
-								if(part_package[i][k].mesh_file_name==null)
-									debug_information.println("Part mesh_file_name:	NO mesh_file_name",
+								debug_information.print  ("part user_name:	",	part_package[i][k].user_name);
+								debug_information.print  ("		part type:	",	part_package[i][k].part_par.part_type_string);
+								if(part_package[i][k].is_normal_part())
+									debug_information.println("		part mesh_file_name:	",
+											part_package[i][k].directory_name+part_package[i][k].mesh_file_name);
+								else
+									debug_information.println(
+											part_package[i][k].is_bottom_box_part()
+												?"		Bottom box part"
+												:"		Top box part",
 											 ",permanent_render_id:"+part_package[i][k].permanent_render_id
 											+",permanent_part_id:"	+part_package[i][k].permanent_part_id);
-								else
-									debug_information.println("part mesh_file_name:	",
-											part_package[i][k].directory_name+part_package[i][k].mesh_file_name);
 								
 								String my_file_name=file_directory.part_file_directory(
 										part_package[i][k],system_par,scene_par)+"mesh.head.gzip_text";
@@ -214,12 +220,10 @@ public class part_package
 					if(list_file_writer!=null)
 						list_file_writer.close();
 				}catch(Exception e){
-					debug_information.println(
-						"part_package_collector exception:\t",
-						package_directory_name+"\t"+e.toString());
+					debug_information.println("part_package_collector exception:\t",package_directory_name+"\t"+e.toString());
 					e.printStackTrace();
 				}
-				system_par.system_exclusive_name_mutex.unlock(package_directory_name+"package.lock");
+				efm.unlock();
 			}
 		}
 		

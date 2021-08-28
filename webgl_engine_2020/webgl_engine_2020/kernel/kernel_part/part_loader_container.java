@@ -35,27 +35,27 @@ public class part_loader_container
 			boolean display_flag,system_parameter system_par,scene_parameter scene_par)
 	{
 		if(display_flag) {
-			debug_information.println(
-					"Begin:\twait_for_completion:\t"+pl.loaded_part.system_name+"\t:\t"+
-					pl.loaded_part.directory_name+pl.loaded_part.mesh_file_name+"\t:\t",
-					file_directory.part_file_directory(pl.loaded_part, system_par, scene_par));
+			debug_information.println("Begin:\twait_for_completion:\t",pl.loaded_part.system_name);
+			debug_information.println("		",pl.loaded_part.directory_name+pl.loaded_part.mesh_file_name);
+			debug_information.println("		",pl.loaded_part.directory_name+pl.loaded_part.material_file_name);
+			debug_information.println("		",file_directory.part_file_directory(pl.loaded_part, system_par, scene_par));
 		}
 		try{			
 			pl.join(10000);
 		}catch(Exception e){
-			debug_information.println(
-					"Error:\twait_for_completion:\t"+pl.loaded_part.system_name+"\t:\t"+
-					pl.loaded_part.directory_name+pl.loaded_part.mesh_file_name+"\t:\t",
-					file_directory.part_file_directory(pl.loaded_part, system_par, scene_par));
 			debug_information.println(e.toString());
+			debug_information.println("Error:\twait_for_completion:\t"+pl.loaded_part.system_name);
+			debug_information.println("		",pl.loaded_part.directory_name+pl.loaded_part.mesh_file_name);
+			debug_information.println("		",pl.loaded_part.directory_name+pl.loaded_part.material_file_name);
+			debug_information.println("		",file_directory.part_file_directory(pl.loaded_part,system_par, scene_par));
 			e.printStackTrace();
 		}
 		if(display_flag)
 			if(!(pl.isAlive())) {
-				debug_information.println(
-					"End:\twait_for_completion:\t"+pl.loaded_part.system_name+"\t\t"+
-					pl.loaded_part.directory_name+pl.loaded_part.mesh_file_name+"\t\t",
-					file_directory.part_file_directory(pl.loaded_part, system_par, scene_par));
+				debug_information.println("End:\twait_for_completion:\t"+pl.loaded_part.system_name);
+				debug_information.println("		",pl.loaded_part.directory_name+pl.loaded_part.mesh_file_name);
+				debug_information.println("		",pl.loaded_part.directory_name+pl.loaded_part.material_file_name);
+				debug_information.println("		",file_directory.part_file_directory(pl.loaded_part,system_par, scene_par));
 			}
 	}
 	public static void wait_for_completion(part_loader already_loaded_part[],
@@ -163,6 +163,7 @@ public class part_loader_container
 			return already_loaded_part;
 		}
 	}
+	
 	public part_loader[] load(part my_part,part my_copy_from_part,
 			long last_modified_time,system_parameter system_par,scene_parameter scene_par,
 			part_loader already_loaded_part[],part_container_for_part_search pcps)
