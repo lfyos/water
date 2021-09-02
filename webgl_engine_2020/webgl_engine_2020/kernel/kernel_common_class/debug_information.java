@@ -7,13 +7,22 @@ public class debug_information
 {
 	private static file_writer fw=null;
 	
-	public static void mount_file(String file_name)
+	public static void mount_log_file(String file_name)
 	{
 		if(fw!=null)
 			fw.close();
 		fw=new file_writer(file_name,null);
 		fw.println((new Date()).toString());
 		fw.println();
+	}
+	public static void close_log_file()
+	{
+		if(fw!=null){
+			fw.println((new Date()).toString());
+			fw.println();
+			fw.close();
+			fw=null;
+		}
 	}
 	public static void print(String x)
 	{

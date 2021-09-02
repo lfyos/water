@@ -33,7 +33,7 @@ public class exclusive_file_mutex
 	}
 	private exclusive_file_mutex lock_routine(String msg)
 	{
-		for(long sleep_time_length=10,max_time_length=20000;;){
+		for(long sleep_time_length=50,max_time_length=2000;;){
 			File f=new File(file_name);
 			try{
 				if(f_out==null)
@@ -45,7 +45,6 @@ public class exclusive_file_mutex
 		    	if(f_lock!=null)
 					if(f_lock.isValid())
 						return this;
-		    	
 		    }catch(OverlappingFileLockException e){
 		    	;
 			}catch(Exception e) {
@@ -58,14 +57,14 @@ public class exclusive_file_mutex
 			
 			long this_sleep_time_length=(long)(Math.round(Math.random()*sleep_time_length));
 			this_sleep_time_length=(this_sleep_time_length<1)?1:this_sleep_time_length;
-			try {
+			try{
 				Thread.sleep(this_sleep_time_length);
 			}catch(Exception e) {
 				debug_information.println("exclusive_file_mutex sleep exception:	",e.toString());
 				e.printStackTrace();
 				Thread.yield();
 			}
-			if((sleep_time_length=(long)(Math.round(1.25*sleep_time_length)))>max_time_length) {
+			if((sleep_time_length=(long)(Math.round(1.5*sleep_time_length)))>max_time_length) {
 				sleep_time_length=max_time_length;
 				if(msg!=null)
 					debug_information.println(this_sleep_time_length+":	"+msg);

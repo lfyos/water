@@ -1,11 +1,21 @@
 package kernel_part;
 
 import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
 import kernel_transformation.box;
 import kernel_transformation.location;
 
 public class part_rude 
 {
+	public void free_memory()
+	{
+		for(int i=0,ni=body_number();i<ni;i++)
+			if(body_array[i]!=null){
+				body_array[i].destroy();
+				body_array[i]=null;
+			}
+		body_array=null;
+	}
 	public void destroy()
 	{
 		origin_vertex_extra_data=null;
@@ -13,13 +23,9 @@ public class part_rude
 		default_material=null;
 		default_attribute_double=null;
 		default_attribute_string=null;
-		for(int i=0,ni=body_number();i<ni;i++)
-			if(body_array[i]!=null){
-				body_array[i].destroy();
-				body_array[i]=null;
-			}
-		body_array=null;
 		part_box=null;
+		
+		free_memory();
 	}
 	
 	public String origin_vertex_extra_data,origin_material[];
@@ -44,6 +50,8 @@ public class part_rude
 	{
 		part_box=null;
 		total_face_primitive_number=0;
+		total_edge_primitive_number=0;
+		total_point_primitive_number=0;
 		for(int i=0,ni=body_number();i<ni;i++)
 			if(body_array[i]!=null){
 				if(body_array[i].body_box!=null) {
@@ -83,11 +91,13 @@ public class part_rude
 		total_edge_primitive_number =s.total_edge_primitive_number;
 		total_point_primitive_number=s.total_point_primitive_number;
 	}
-	public part_rude(file_reader fr)
+	private void load(file_reader fr)
 	{
 		String default_value="0";
 		
-		fr.get_string();	//version code 
+		String version_string=fr.get_string();	//version code
+		if(version_string==null)
+			version_string="simple";
 
 		origin_material=new String[4];
 		for(int i=0,ni=origin_material.length;i<ni;i++)
@@ -118,16 +128,45 @@ public class part_rude
 			if((default_attribute_string[j]=fr.get_string())==null)
 				default_attribute_string[j]="1";
 		}
-		int my_body_number;
-		if((my_body_number=fr.get_int())<=0)
+		
+		if(version_string.compareTo("simple")==0) {
 			body_array=null;
-		else{
-			body_array=new body[my_body_number];
-			for(int i=0;i<my_body_number;i++)
-				body_array[i]=new body(fr);
+			fr.mark_start();
+			String str;
+			if((str=fr.get_string())==null)
+				str="nobox";
+			if(str.toLowerCase().compareTo("nobox")==0) {
+				fr.mark_terminate(false);
+				part_box=null;
+			}else{
+				fr.mark_terminate(true);
+				part_box=new box(fr);
+			}
+			total_face_primitive_number	=fr.get_int();
+			total_edge_primitive_number	=fr.get_int();
+			total_point_primitive_number=fr.get_int();
+		}else {
+			int my_body_number;
+			if((my_body_number=fr.get_int())<=0)
+				body_array=null;
+			else{
+				body_array=new body[my_body_number];
+				for(int i=0;i<my_body_number;i++)
+					body_array[i]=new body(fr);
+			}
+			caculate_rp_box_and_primitive_number();
 		}
-		caculate_rp_box_and_primitive_number();
 		return;
+	}
+	public part_rude(file_reader fr)
+	{
+		load(fr);
+	}
+	public part_rude(String file_name,String file_charset)
+	{
+		file_reader fr=new file_reader(file_name,file_charset);
+		load(fr);
+		fr.close();
 	}
 	public part_rude(int my_box_number,part my_reference_part[],location my_box_loca[],box my_box_array[])
 	{
@@ -168,9 +207,53 @@ public class part_rude
 					default_attribute_double[j]=pr.default_attribute_double[j];
 			}
 		}
-		
 		body_array=new body[]{new body(my_box_number,my_reference_part,my_box_loca,my_box_array)};
 		caculate_rp_box_and_primitive_number();
+		return;
+	}
+	
+	public void write_out_to_simple_file(String file_name,String file_charset)
+	{
+		String str[]=new String[] {
+				"/*	version								*/	simple",
+				"/*	origin material						*/	"
+						+origin_material[0]+"	"+origin_material[1]+"	"+origin_material[2]+"	"+origin_material[3],
+				"/*	default material					*/	"
+						+default_material[0]+"	"+default_material[1]+"	"+default_material[2]+"	"+default_material[3],
+				"/*	origin  vertex_location_extra_data	*/	"+origin_vertex_extra_data,
+				"/*	default vertex_location_extra_data	*/	"+default_vertex_extra_string,
+				"/*	default vertex_normal_extra_data	*/	"+default_normal_extra_string,
+				"",
+				"/*	max_attribute_number				*/	"+default_attribute_string.length
+		};
+		
+		file_writer fw=new file_writer(file_name,file_charset);
+		
+		for(int i=0,ni=str.length;i<ni;i++)
+			fw.println(str[i]);
+		for(int i=0,j=0,ni=default_attribute_string.length;i<ni;i++) {
+			fw.print  ("/*		"+i+".attribute:					*/	",
+								default_attribute_double[j++]);
+			fw.print  ("	",	default_attribute_double[j++]);
+			fw.print  ("	",	default_attribute_double[j++]);
+			fw.println("	",	default_attribute_string[i]);
+		}
+		
+		fw.println();
+		fw.print  ("/*	part_box							*/	");
+		if(part_box==null)
+			fw.println("nobox");
+		else
+			fw.println(	part_box.p[0].x+"	"+part_box.p[0].y+"	"+part_box.p[0].z+"	"+
+						part_box.p[1].x+"	"+part_box.p[1].y+"	"+part_box.p[1].z);
+		fw.println();
+		
+		fw.println("/*	total_face_primitive_number			*/	",total_face_primitive_number);
+		fw.println("/*	total_edge_primitive_number			*/	",total_edge_primitive_number);
+		fw.println("/*	total_point_primitive_number		*/	",total_point_primitive_number);
+		
+		fw.close();
+		
 		return;
 	}
 }

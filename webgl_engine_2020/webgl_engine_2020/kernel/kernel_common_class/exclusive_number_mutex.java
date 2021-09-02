@@ -31,7 +31,7 @@ public class exclusive_number_mutex
 	public int lock_number(int max_lock_number,String msg)
 	{
 		int ret_val;
-		for(long sleep_time_length=10,max_time_length=20000;(ret_val=test_and_lock(2,max_lock_number))<0;){
+		for(long sleep_time_length=50,max_time_length=2000;(ret_val=test_and_lock(2,max_lock_number))<0;){
 			long this_sleep_time_length=(long)(Math.round(Math.random()*sleep_time_length));
 			this_sleep_time_length=(this_sleep_time_length<10)?10:this_sleep_time_length;
 			try{
@@ -42,7 +42,7 @@ public class exclusive_number_mutex
 				e.printStackTrace();
 				Thread.yield();
 			}
-			if((sleep_time_length=(long)(Math.round(1.25*sleep_time_length)))>max_time_length) {
+			if((sleep_time_length=(long)(Math.round(1.5*sleep_time_length)))>max_time_length) {
 				sleep_time_length=max_time_length;
 				if(msg!=null)
 					debug_information.println(this_sleep_time_length+":	"+msg);

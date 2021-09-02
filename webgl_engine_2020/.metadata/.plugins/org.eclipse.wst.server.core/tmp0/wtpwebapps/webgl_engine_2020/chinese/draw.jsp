@@ -68,6 +68,7 @@ function body_onload()
 						return true;
 					},"init in draw.jsp"
 				);
+//			window.close();
 		}
 	);
 }

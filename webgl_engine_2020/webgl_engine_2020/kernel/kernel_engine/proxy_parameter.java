@@ -30,7 +30,7 @@ public class proxy_parameter extends sorter<proxy_information,String>
 		for(int i=0;;i++) {
 			String log_path_name=engine_log_directory+"log_"+i+".log";
 			if(!(new File(log_path_name).exists())) {
-				debug_information.mount_file(log_path_name);
+				debug_information.mount_log_file(log_path_name);
 				break;
 			}
 		}

@@ -95,6 +95,7 @@ public class compress_render_container
 				p.render_id=-1;
 			}
 	}
+	
 	public int original_part_number;
 	public compress_render_container(render_container my_render_cont,
 			part_container_for_part_search pcps,component root_component)

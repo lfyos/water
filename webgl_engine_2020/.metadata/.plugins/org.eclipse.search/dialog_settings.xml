@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="">
-		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
-		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
 		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
 	</section>
 	<section name="SearchDialog.ScopePart">
@@ -19,13 +17,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="start_effective"/>
+			<item key="textPattern" value="&quot;creation&quot;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.js"/>
 				<item value="*.jsp"/>
 				<item value="*.txt"/>
 				<item value="*java"/>
-				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -34,13 +32,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="“plane”"/>
+			<item key="textPattern" value="Finish date and time"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.js"/>
 				<item value="*.jsp"/>
 				<item value="*.txt"/>
 				<item value="*java"/>
-				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -64,13 +62,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="get_component_location"/>
+			<item key="textPattern" value="Begin part response_init_data"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.js"/>
 				<item value="*.jsp"/>
 				<item value="*.txt"/>
 				<item value="*java"/>
+				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -79,7 +77,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;start_effective"/>
+			<item key="textPattern" value="System.gc();"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.js"/>
@@ -92,22 +90,22 @@
 		</section>
 		<section name="EXTENSIONS">
 			<item key="0" value="*.js, *.jsp, *.txt, *java"/>
-			<item key="1" value="*.java"/>
-			<item key="2" value="*.txt;*.js"/>
-			<item key="3" value="*.txt"/>
-			<item key="4" value="*.js"/>
-			<item key="5" value="*.js, *.txt, *java,*.jsp"/>
-			<item key="6" value="*.js, *.txt, *java"/>
-			<item key="7" value="*.txt,*.js,*java"/>
-			<item key="8" value="*.txt,*.js"/>
-			<item key="9" value="*.draw.txt"/>
-			<item key="10" value="*.jsp"/>
+			<item key="1" value="*java"/>
+			<item key="2" value="*.java"/>
+			<item key="3" value="*.txt;*.js"/>
+			<item key="4" value="*.txt"/>
+			<item key="5" value="*.js"/>
+			<item key="6" value="*.js, *.txt, *java,*.jsp"/>
+			<item key="7" value="*.js, *.txt, *java"/>
+			<item key="8" value="*.txt,*.js,*java"/>
+			<item key="9" value="*.txt,*.js"/>
+			<item key="10" value="*.draw.txt"/>
 		</section>
 		<section name="HISTORY11">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;component_coordinate&quot;"/>
+			<item key="textPattern" value="End create initialization file"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.jsp"/>
@@ -122,13 +120,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="write_routine int file writer exception"/>
+			<item key="textPattern" value="Current created face number"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.js"/>
 				<item value="*.jsp"/>
 				<item value="*.txt"/>
 				<item value="*java"/>
+				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -137,7 +135,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="this.call_server:JSON.parse:JSON.parse(my_ajax.responseText) exception"/>
+			<item key="textPattern" value="Current created component number"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.jsp"/>
@@ -152,13 +150,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Find error child_number:"/>
+			<item key="textPattern" value="process_buffer_object_head="/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
 				<item value="*java"/>
-				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -167,13 +162,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value=".user_"/>
+			<item key="textPattern" value="gc"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
 				<item value="*java"/>
-				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -182,7 +174,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="permanent_render_part_id"/>
+			<item key="textPattern" value="wait for extract"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.jsp"/>
@@ -197,13 +189,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="external_part_driver driver assemble_file_name_and_file_charset error(par==null):"/>
+			<item key="textPattern" value="process_buffer_object_head"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.js"/>
 				<item value="*.jsp"/>
 				<item value="*.txt"/>
 				<item value="*java"/>
-				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>

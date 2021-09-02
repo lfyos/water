@@ -48,7 +48,10 @@ public class engine_interface
 	private boolean clear_expire_engine_kernel_routine(system_parameter system_par)
 	{
 		int my_current_component_number=0,my_current_engine_kernel_number=0;
+		int my_current_part_face_number=0,my_current_part_edge_number=0;
+		
 		int my_reset_engine_kernel_number=0,my_reset_component_number=0;
+		int my_reset_part_face_number=0,my_reset_part_edge_number=0;
 		
 		engine_kernel_link_list p=engine_kernel_link_list_first,q;
 		for(engine_kernel_link_list_first=null;p!=null;){
@@ -64,8 +67,11 @@ public class engine_interface
 					debug_information.print(", scene title is ",q.ek.title);
 					
 					if(q.ek.component_cont!=null)
-						if(q.ek.component_cont.root_component!=null)
+						if(q.ek.component_cont.root_component!=null) {
 							my_reset_component_number+=q.ek.component_cont.root_component.component_id+1;
+							my_reset_part_face_number+=q.ek.component_cont.part_face_number;
+							my_reset_part_edge_number+=q.ek.component_cont.part_edge_number;
+						}
 				}
 				debug_information.println();
 				q.destroy();
@@ -77,21 +83,40 @@ public class engine_interface
 						if(q.ek.component_cont.root_component!=null) {
 							my_current_engine_kernel_number++;
 							my_current_component_number+=q.ek.component_cont.root_component.component_id+1;
+							my_current_part_face_number+=q.ek.component_cont.part_face_number;
+							my_current_part_edge_number+=q.ek.component_cont.part_edge_number;
 						}
 			}
 		}
 		debug_information.println();
 		debug_information.print  ("Engine number			:	",my_current_engine_kernel_number);
 		debug_information.print  ("/",my_reset_engine_kernel_number);	
-		debug_information.println("/",system_par.max_engine_kernel_number);	
+		debug_information.println("/",system_par.max_engine_kernel_number);
+		
 		debug_information.print  ("Component number		:	",my_current_component_number);
 		debug_information.print  ("/",my_reset_component_number);
-		debug_information.println("/",system_par.max_component_number);
+		debug_information.println("/",system_par.max_engine_component_number);
+		
+		debug_information.print  ("part face number		:	",my_current_part_face_number);
+		debug_information.print  ("/",my_reset_part_face_number);
+		debug_information.println("/",system_par.max_engine_part_face_number);
+		
+		debug_information.print  ("part edge number		:	",my_current_part_edge_number);
+		debug_information.print  ("/",my_reset_part_edge_number);
+		debug_information.println("/",system_par.max_engine_part_edge_number);
+		
 		debug_information.println();
 
-		engine_current_number=new int[] {my_current_engine_kernel_number,my_current_component_number};
-		if(my_current_component_number<system_par.max_component_number)
-			if(my_current_engine_kernel_number<system_par.max_engine_kernel_number)
+		engine_current_number=new int[] {
+				my_current_engine_kernel_number,
+				my_current_component_number,
+				my_current_part_face_number,
+				my_current_part_edge_number
+		};
+		if(	  (my_current_engine_kernel_number<system_par.max_engine_kernel_number)
+			&&(my_current_component_number<system_par.max_engine_component_number)
+			&&(my_current_part_face_number<system_par.max_engine_part_face_number)
+			&&(my_current_part_edge_number<system_par.max_engine_part_edge_number))
 				return false;
 		
 		debug_information.println(

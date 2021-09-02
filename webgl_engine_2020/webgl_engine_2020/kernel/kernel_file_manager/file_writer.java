@@ -311,10 +311,16 @@ public class file_writer extends common_writer
 		try {
 			bos.flush();
 		}catch(Exception e) {
+			debug_information.println("bos flush int file writer exception:\t",e.toString());
+			debug_information.println(directory_name,file_name);
+			e.printStackTrace();
 		}
 		try {
 			fos.flush();
 		}catch(Exception e) {
+			debug_information.println("fos flush int file writer exception:\t",e.toString());
+			debug_information.println(directory_name,file_name);
+			e.printStackTrace();
 		}
 		return this;
 	}

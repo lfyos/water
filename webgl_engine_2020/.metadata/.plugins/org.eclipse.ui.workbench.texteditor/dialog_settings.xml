@@ -2,12 +2,16 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="process_part_component_id_and_driver_id"/>
+		<item key="selection" value=""/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="max_"/>
+			<item value="render_cont."/>
+			<item value="user_engine_kernel_number--"/>
+			<item value="max_client_interface_number"/>
 			<item value="process_part_component_id_and_driver_id"/>
 			<item value="change_str"/>
 			<item value="permanent_render_part_id"/>
@@ -19,19 +23,15 @@
 			<item value="hyperbola"/>
 			<item value="ellipse"/>
 			<item value="/*  body 0 face 2  name&#x09;*/"/>
-			<item value="hyperb"/>
-			<item value="&quot;selection&quot;"/>
-			<item value="call_server_component"/>
-			<item value="append_routine_function"/>
 		</list>
 		<list key="replacehistory">
+			<item value=""/>
 			<item value="par"/>
 			<item value="render."/>
 			<item value="debug_"/>
 			<item value="render.debug_"/>
 			<item value="render_object."/>
 			<item value=","/>
-			<item value=""/>
 			<item value="跟踪可见片元"/>
 			<item value="double"/>
 			<item value="point"/>

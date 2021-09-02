@@ -292,7 +292,7 @@ public class client_information
 		statistics_client	=new client_statistics();
 		statistics_interface=my_statistics_interface;
 		statistics_user		=my_statistics_user;
-		engine_current_number=new int[] {0,0};
+		engine_current_number=new int[] {0,0,0};
 		
 		request_response	=my_request_response;
 		

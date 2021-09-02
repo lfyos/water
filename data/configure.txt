@@ -24,8 +24,12 @@
 /*	file_buffer_expire_time_length,	unit:second								*/		365000000
 
 /*	max_client_interface_number												*/		100
+
 /*	max_engine_kernel_number												*/		300
-/*	max_component_number													*/		3000000
+/*	max_engine_component_number												*/		3000000
+/*	max_engine_part_face_number												*/		300000
+/*	max_engine_part_edge_number												*/		1000000
+
 /*	max_request_number														*/		10
 
 /*	max_buffer_object_head_package_length									*/		8000000

@@ -5,6 +5,7 @@ import kernel_common_class.nanosecond_timer;
 import kernel_engine.engine_call_result;
 import kernel_engine.interface_statistics;
 import kernel_engine.system_parameter;
+import kernel_file_manager.file_writer;
 import kernel_network.client_request_response;
 import kernel_network.network_implementation;
 import kernel_program_javascript.javascript_program;
@@ -60,8 +61,21 @@ public class client_request_switcher
 		system_call_switch_result ret_val=new system_call_switch_result();
 		String channel_string=request_response.get_parameter("channel");
 		switch((channel_string==null)?"javascript":channel_string){
-		case "switch_log":
-			system_par.proxy_par.switch_log_file();
+		case "log":
+			String str=((str=request_response.get_parameter("command"))==null)?"":str;
+			switch(str) {
+			case "switch":
+				system_par.proxy_par.switch_log_file();
+				debug_information.println("Switch log file");
+				break;
+			case "delete":
+				debug_information.close_log_file();
+				file_writer.file_delete(system_par.proxy_par.engine_log_directory);
+				file_writer.make_directory(system_par.proxy_par.engine_log_directory);
+				system_par.proxy_par.switch_log_file();
+				debug_information.println("Delete log file");
+				break;
+			}
 			break;
 		case "readme":
 			ret_val.ecr=download_readme_file.download_driver_readme(request_response,
@@ -131,6 +145,7 @@ public class client_request_switcher
 	
 		client_request_response request_response=new client_request_response(
 			system_par.network_data_charset,network_implementor);
+		
 		system_call_switch_result scrr=system_call_switch(request_response);
 
 		if(scrr.ecr!=null){

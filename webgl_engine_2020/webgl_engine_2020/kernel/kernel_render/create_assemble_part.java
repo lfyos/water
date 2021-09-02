@@ -189,6 +189,7 @@ public class create_assemble_part
 				false,
 				
 				p.part_par.combine_to_part_package_flag,
+				p.part_par.free_part_memory_flag,
 				p.part_par.clear_model_file_flag);
 		
 	}

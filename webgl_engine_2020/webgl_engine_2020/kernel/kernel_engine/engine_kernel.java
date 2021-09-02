@@ -309,10 +309,12 @@ public class engine_kernel
 		
 		render_cont.scene_part_package=new part_package(render_cont,2,system_par,scene_par);
 		
-		component_cont.original_part_number=new compress_render_container(
-			render_cont,part_cont,component_cont.root_component).original_part_number;
-		
+		component_cont.original_part_number	=new compress_render_container(
+				render_cont,part_cont,component_cont.root_component).original_part_number;
+
 		component_cont.do_component_caculator(true);
+		component_cont.cacuate_part_face_number(render_cont.renders);
+		
 		process_part_sequence=new part_process_sequence(render_cont,component_cont.root_component);
 
 		collector_stack=new component_collector_stack(scene_directory_name,
@@ -328,7 +330,6 @@ public class engine_kernel
 			(new File(scene_par.type_proxy_directory_name)).setLastModified(current_time);
 			(new File(scene_par.scene_proxy_directory_name)).setLastModified(current_time);
 		}
-		
 	}
 	public void load(client_request_response request_response)
 	{
@@ -340,8 +341,9 @@ public class engine_kernel
 		}catch(Exception e) {
 			debug_information.println("Engine load exception:	",e.toString());
 			e.printStackTrace();
+		}finally {
+			efm.unlock();
 		}
-		efm.unlock();
 	}
 	private boolean reset_flag;
 	public void mark_reset_flag()

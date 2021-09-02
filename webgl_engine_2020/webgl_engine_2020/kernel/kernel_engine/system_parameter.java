@@ -29,7 +29,11 @@ public class system_parameter
 	
 	public long file_buffer_expire_time_length;
 	
-	public int max_client_interface_number,max_engine_kernel_number,max_component_number,max_request_number;
+	public int max_client_interface_number;
+	
+	public int max_engine_kernel_number,max_engine_component_number,max_engine_part_face_number,max_engine_part_edge_number;
+	
+	public int max_request_number;
 	
 	public long max_buffer_object_head_package_length;
 	
@@ -73,8 +77,12 @@ public class system_parameter
 		file_buffer_expire_time_length			=sp.file_buffer_expire_time_length;
 		
 		max_client_interface_number		=sp.max_client_interface_number;
+		
 		max_engine_kernel_number		=sp.max_engine_kernel_number;
-		max_component_number			=sp.max_component_number;
+		max_engine_component_number		=sp.max_engine_component_number;
+		max_engine_part_face_number		=sp.max_engine_part_face_number;
+		max_engine_part_edge_number		=sp.max_engine_part_edge_number;
+		
 		max_request_number				=sp.max_request_number;
 		
 		max_buffer_object_head_package_length=sp.max_buffer_object_head_package_length;
@@ -180,8 +188,12 @@ public class system_parameter
 		file_buffer_expire_time_length			=f.get_long();
 		
 		max_client_interface_number				=f.get_int();
+		
 		max_engine_kernel_number				=f.get_int();
-		max_component_number					=f.get_int();
+		max_engine_component_number				=f.get_int();
+		max_engine_part_face_number				=f.get_int();
+		max_engine_part_edge_number				=f.get_int();
+		
 		max_request_number						=f.get_int();
 		
 		max_buffer_object_head_package_length	=f.get_long();

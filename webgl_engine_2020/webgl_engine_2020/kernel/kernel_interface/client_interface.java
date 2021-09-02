@@ -121,22 +121,29 @@ public class client_interface
 	
 	private boolean destroy_ek_ci_node(ek_ci_node ecn)
 	{
+		engine_kernel ek;
 		if(ecn==null)
 			return true;
 		if(ecn.ek_ci.lock_number>0)
 			return true;
-		engine_kernel ek;
 		if((ek=ecn.ek_ci.engine_kernel_link_list.ek)!=null){
-			session.statistics_user.user_kernel_number--;
-			if(ek.component_cont!=null)
+			session.statistics_user.user_engine_kernel_number--;
+			if(ek.component_cont!=null){
 				if(ek.component_cont.root_component!=null)
-					session.statistics_user.user_component_number-=ek.component_cont.root_component.component_id+1;
+					session.statistics_user.user_engine_component_number-=ek.component_cont.root_component.component_id+1;
+				session.statistics_user.user_engine_part_face_number-=ek.component_cont.part_face_number;
+				session.statistics_user.user_engine_part_edge_number-=ek.component_cont.part_edge_number;
+			}
 		}
 		debug_information.println("Execute destroy_ek_ci_node");
-		debug_information.print  ("kernel_number:",session.statistics_user.user_kernel_number);
-		debug_information.println("/",session.statistics_user.max_user_kernel_number);
-		debug_information.print  ("component_number:",session.statistics_user.user_component_number);
-		debug_information.println("/",session.statistics_user.max_user_component_number);
+		debug_information.print  ("kernel_number:",session.statistics_user.user_engine_kernel_number);
+		debug_information.println("/",session.statistics_user.user_max_engine_kernel_number);
+		debug_information.print  ("component_number:",session.statistics_user.user_engine_component_number);
+		debug_information.println("/",session.statistics_user.user_max_engine_component_number);
+		debug_information.print  ("face_number:",session.statistics_user.user_engine_part_face_number);
+		debug_information.println("/",session.statistics_user.user_max_engine_part_face_number);
+		debug_information.print  ("edge_number:",session.statistics_user.user_engine_part_edge_number);
+		debug_information.println("/",session.statistics_user.user_max_engine_part_edge_number);
 		
 		if(ecn.ek_ci.client_information!=null) {
 			ecn.ek_ci.engine_kernel_link_list.destroy_client_information(ecn.ek_ci.client_information);
@@ -199,14 +206,24 @@ public class client_interface
 			client_request_response request_response,long delay_time_length,
 			interface_statistics statistics_interface)
 	{
-		if(session.statistics_user.user_component_number>session.statistics_user.max_user_component_number) {
-			debug_information.print  ("Create too many component\t\t:\t",session.statistics_user.user_component_number);
-			debug_information.println("/",session.statistics_user.max_user_component_number);
+		if(session.statistics_user.user_engine_kernel_number>session.statistics_user.user_max_engine_kernel_number) {
+			debug_information.print  ("Create too many engine\t\t\t:\t",session.statistics_user.user_engine_kernel_number);
+			debug_information.println("/",session.statistics_user.user_max_engine_kernel_number);
 			return null;
 		}
-		if(session.statistics_user.user_kernel_number>session.statistics_user.max_user_kernel_number) {
-			debug_information.print  ("Create too many engine\t\t\t:\t",session.statistics_user.user_kernel_number);
-			debug_information.println("/",session.statistics_user.max_user_kernel_number);
+		if(session.statistics_user.user_engine_component_number>session.statistics_user.user_max_engine_component_number) {
+			debug_information.print  ("Create too many component\t\t:\t",session.statistics_user.user_engine_component_number);
+			debug_information.println("/",session.statistics_user.user_max_engine_component_number);
+			return null;
+		}
+		if(session.statistics_user.user_engine_part_face_number>session.statistics_user.user_max_engine_part_face_number) {
+			debug_information.print  ("Create too many face\t\t:\t",session.statistics_user.user_engine_part_face_number);
+			debug_information.println("/",session.statistics_user.user_max_engine_part_face_number);
+			return null;
+		}
+		if(session.statistics_user.user_engine_part_edge_number>session.statistics_user.user_max_engine_part_edge_number) {
+			debug_information.print  ("Create too many edge\t\t:\t",session.statistics_user.user_engine_part_edge_number);
+			debug_information.println("/",session.statistics_user.user_max_engine_part_edge_number);
 			return null;
 		}
 
@@ -271,16 +288,23 @@ public class client_interface
 			return null;
 		}
 		if(create_ekll.ek!=null){
-			session.statistics_user.user_kernel_number++;
-			if(create_ekll.ek.component_cont!=null)
+			session.statistics_user.user_engine_kernel_number++;
+			if(create_ekll.ek.component_cont!=null) {
 				if(create_ekll.ek.component_cont.root_component!=null)
-					session.statistics_user.user_component_number+=create_ekll.ek.component_cont.root_component.component_id+1;
+					session.statistics_user.user_engine_component_number+=create_ekll.ek.component_cont.root_component.component_id+1;
+				session.statistics_user.user_engine_part_face_number+=create_ekll.ek.component_cont.part_face_number;
+				session.statistics_user.user_engine_part_edge_number+=create_ekll.ek.component_cont.part_edge_number;
+			}
 		}
-		debug_information.print  (request_response.implementor.get_client_id());
-		debug_information.print  (":	Current created engine number is ",session.statistics_user.user_kernel_number);
-		debug_information.print  ("/",session.statistics_user.max_user_kernel_number);
-		debug_information.print  (",Current created component number is ",session.statistics_user.user_component_number);
-		debug_information.println("/",session.statistics_user.max_user_component_number);
+		debug_information.println(request_response.implementor.get_client_id());
+		debug_information.print  ("Current created engine number is ",session.statistics_user.user_engine_kernel_number);
+		debug_information.println("/",session.statistics_user.user_max_engine_kernel_number);
+		debug_information.print  ("Current created component number is ",session.statistics_user.user_engine_component_number);
+		debug_information.println("/",session.statistics_user.user_max_engine_component_number);
+		debug_information.print  ("Current created face number is ",session.statistics_user.user_engine_part_face_number);
+		debug_information.println("/",session.statistics_user.user_max_engine_part_face_number);
+		debug_information.print  ("Current created edge number is ",session.statistics_user.user_engine_part_edge_number);
+		debug_information.println("/",session.statistics_user.user_max_engine_part_edge_number);
 		
 		ek_ci_node ecn=new ek_ci_node((ec.client_information==null)
 				?(-(request_response.request_time)):(ec.client_information.channel_id));
@@ -326,7 +350,8 @@ public class client_interface
 		engine_call_result ret_val=create_engine_routine(session,ei,request_response,delay_time_length,statistics_interface);
 		
 		now = Calendar.getInstance();  
-		debug_information.print  ("Finish date and time\t\t\t:\t",now.get(Calendar.YEAR));  
+		debug_information.println();
+		debug_information.print  ("Finish date and time:\t",now.get(Calendar.YEAR));  
 		debug_information.print  ("-",(now.get(Calendar.MONTH) + 1));  
 		debug_information.print  ("-",now.get(Calendar.DAY_OF_MONTH));  
 		debug_information.print  ("/",now.get(Calendar.HOUR_OF_DAY));  

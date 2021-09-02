@@ -14,7 +14,7 @@ public class part_parameter
 	public int 		max_component_data_buffer_number,max_part_load_thread_number;
 	public int 		max_mesh_load_thread_number,max_part_list_load_thread_number;
 	
-	public boolean	do_create_bottom_box_flag,combine_to_part_package_flag,clear_model_file_flag[];
+	public boolean	do_create_bottom_box_flag,combine_to_part_package_flag,free_part_memory_flag,clear_model_file_flag[];
 
 	public part_parameter(
 			String	my_part_type_string,
@@ -49,6 +49,7 @@ public class part_parameter
 			
 			boolean	my_do_create_bottom_box_flag,
 			boolean my_combine_to_part_package_flag,
+			boolean my_free_part_memory_flag,
 			boolean my_clear_model_file_flag[])
 	{
 		part_type_string				=my_part_type_string;
@@ -82,6 +83,7 @@ public class part_parameter
 		
 		do_create_bottom_box_flag			=my_do_create_bottom_box_flag;
 		combine_to_part_package_flag		=my_combine_to_part_package_flag;
+		free_part_memory_flag				=my_free_part_memory_flag;
 		clear_model_file_flag				=new boolean[my_clear_model_file_flag.length];
 		for(int i=0,ni=clear_model_file_flag.length;i<ni;i++)
 			clear_model_file_flag[i]=my_clear_model_file_flag[i];
@@ -122,6 +124,7 @@ public class part_parameter
 
 				do_create_bottom_box_flag,
 				combine_to_part_package_flag,
+				free_part_memory_flag,
 				clear_model_file_flag);
 	}
 	
@@ -160,6 +163,7 @@ public class part_parameter
 
 				false,
 				combine_to_part_package_flag,
+				free_part_memory_flag,
 				clear_model_file_flag);
 	}
 	
@@ -202,6 +206,7 @@ public class part_parameter
 		
 		do_create_bottom_box_flag			=f.get_boolean();
 		combine_to_part_package_flag		=f.get_boolean();
+		free_part_memory_flag				=f.get_boolean();
 		clear_model_file_flag				=new boolean[]
 		{
 			f.get_boolean(),
