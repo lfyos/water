@@ -1,7 +1,7 @@
 /*	user_max_engine_kernel_number		*/	30
 /*	user_max_engine_component_number	*/	500000
-/*	user_max_engine_part_face_number	*/	50000
-/*	user_max_engine_part_edge_number	*/	100000
+/*	user_max_engine_part_face_number	*/	100000
+/*	user_max_engine_part_edge_number	*/	200000
 
 /*	time_increase_step					*/	50000000
 /*	max_time_step				 		*/	10000

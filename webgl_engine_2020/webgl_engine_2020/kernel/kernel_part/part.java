@@ -269,8 +269,8 @@ public class part
 		
 		head_fw.close();
 		
-		boftal=new buffer_object_file_modify_time_and_length(false,
-				part_temporary_file_directory+"mesh",buffer_object_file_charset);
+		boftal=new buffer_object_file_modify_time_and_length(true,false,
+				part_temporary_file_directory+"mesh",buffer_object_file_charset,part_mesh);
 		
 		create_binary_buffer_object_file.create(system_par.response_block_size,
 				head_fw.get_charset(),system_par.network_data_charset,part_temporary_file_directory+"mesh");
@@ -373,54 +373,47 @@ public class part
 		str+="\n\tdescription file name:\t\t"	+description_file_name;
 		str+="\n\taudio_file_name:\t\t"			+audio_file_name;
 
-		do{
-			String token_file_name			=part_temporary_file_directory+"part.token";
-			String buffer_object_file_name	=part_temporary_file_directory+"mesh.head.txt";
-			String simple_mesh_file_name	=part_temporary_file_directory+"mesh.simple.txt";
-			String cfp_mesh_file_name=copy_from_part.directory_name+copy_from_part.mesh_file_name;
-			String cfp_material_file_name=copy_from_part.directory_name+copy_from_part.material_file_name;
-	
-			long token_file_last_time=new File(token_file_name).lastModified();
-			if(token_file_last_time>last_modified_time)
-				if(token_file_last_time>part_par.last_modified_time)
-					if(token_file_last_time>new File(cfp_mesh_file_name).lastModified())
-						if(token_file_last_time>new File(cfp_material_file_name).lastModified()){
-							if(part_mesh==null){
-								File sf=new File(simple_mesh_file_name);
-								if(sf.exists()&&part_par.free_part_memory_flag)
-									part_mesh=new part_rude(simple_mesh_file_name,part_temporary_file_charset);
-								else if(mesh_file_name!=null){
-									String my_file_path=file_reader.separator(directory_name+mesh_file_name);
-									part_mesh=new part_rude(my_file_path,file_charset);
-									if(part_par.free_part_memory_flag)
-										if(sf.lastModified()<=new File(my_file_path).lastModified())
-											part_mesh.write_out_to_simple_file(
-												simple_mesh_file_name,part_temporary_file_charset);
-								}
-							}
-							if(part_mesh!=null)
-								if(part_par.free_part_memory_flag)
-									part_mesh.free_memory();
-							boftal=new buffer_object_file_modify_time_and_length(true,
-									part_temporary_file_directory+"mesh",part_temporary_file_charset);
-							break;
-						}
-			file_writer.file_delete(part_temporary_file_directory);
-			file_writer.make_directory(part_temporary_file_directory);
-			str+=create_mesh_and_material(part_temporary_file_directory,
-					buffer_object_file_name,part_temporary_file_charset,system_par,scene_par,pcps);
-			clear_mesh_file_content();
-			
-			if(part_mesh!=null)
-				if(part_par.free_part_memory_flag){
-					if(mesh_file_name!=null)
-						part_mesh.write_out_to_simple_file(
-							simple_mesh_file_name,part_temporary_file_charset);
-					part_mesh.free_memory();
-				}
-			file_writer.file_touch(token_file_name,true);
-		}while(false);
+		String token_file_name			=part_temporary_file_directory+"part.token";
+		String buffer_object_file_name	=part_temporary_file_directory+"mesh.head.txt";
+		String cfp_mesh_file_name=copy_from_part.directory_name+copy_from_part.mesh_file_name;
+		String cfp_material_file_name=copy_from_part.directory_name+copy_from_part.material_file_name;
 
+		long token_file_last_time=new File(token_file_name).lastModified();
+		if(token_file_last_time>last_modified_time)
+			if(token_file_last_time>part_par.last_modified_time)
+				if(token_file_last_time>new File(cfp_mesh_file_name).lastModified())
+					if(token_file_last_time>new File(cfp_material_file_name).lastModified()){
+						if(part_mesh!=null)
+							boftal=new buffer_object_file_modify_time_and_length(false,false,
+									part_temporary_file_directory+"mesh",part_temporary_file_charset,part_mesh);
+						else if((mesh_file_name==null)||(part_par.free_part_memory_flag)){
+							boftal=new buffer_object_file_modify_time_and_length(false,true,
+									part_temporary_file_directory+"mesh",part_temporary_file_charset,part_mesh);
+							part_mesh=boftal.simple_part_mesh;
+							boftal.simple_part_mesh=null;
+						}else{
+							file_reader fr=new file_reader(file_reader.separator(directory_name+mesh_file_name),file_charset);
+							part_mesh=new part_rude(fr);
+							fr.close();
+							boftal=new buffer_object_file_modify_time_and_length(false,false,
+									part_temporary_file_directory+"mesh",part_temporary_file_charset,part_mesh);
+						}
+						
+						if((part_mesh!=null)&&(part_par.free_part_memory_flag))
+							part_mesh.free_memory();
+						
+						return str;
+					}
+		file_writer.file_delete(part_temporary_file_directory);
+		file_writer.make_directory(part_temporary_file_directory);
+		str+=create_mesh_and_material(part_temporary_file_directory,
+				buffer_object_file_name,part_temporary_file_charset,system_par,scene_par,pcps);
+		clear_mesh_file_content();
+		
+		if((part_mesh!=null)&&(part_par.free_part_memory_flag))
+			part_mesh.free_memory();
+		file_writer.file_touch(token_file_name,true);
+		
 		return str;
 	}
 	public part(int my_part_type_id,boolean my_top_box_part_flag,

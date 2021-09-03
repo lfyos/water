@@ -91,7 +91,7 @@ public class part_rude
 		total_edge_primitive_number =s.total_edge_primitive_number;
 		total_point_primitive_number=s.total_point_primitive_number;
 	}
-	private void load(file_reader fr)
+	public part_rude(file_reader fr)
 	{
 		String default_value="0";
 		
@@ -158,16 +158,6 @@ public class part_rude
 		}
 		return;
 	}
-	public part_rude(file_reader fr)
-	{
-		load(fr);
-	}
-	public part_rude(String file_name,String file_charset)
-	{
-		file_reader fr=new file_reader(file_name,file_charset);
-		load(fr);
-		fr.close();
-	}
 	public part_rude(int my_box_number,part my_reference_part[],location my_box_loca[],box my_box_array[])
 	{
 		double max_distance_2=my_box_array[0].distance2();
@@ -212,7 +202,7 @@ public class part_rude
 		return;
 	}
 	
-	public void write_out_to_simple_file(String file_name,String file_charset)
+	public void write_out_to_simple_file(file_writer fw)
 	{
 		String str[]=new String[] {
 				"/*	version								*/	simple",
@@ -226,8 +216,6 @@ public class part_rude
 				"",
 				"/*	max_attribute_number				*/	"+default_attribute_string.length
 		};
-		
-		file_writer fw=new file_writer(file_name,file_charset);
 		
 		for(int i=0,ni=str.length;i<ni;i++)
 			fw.println(str[i]);
@@ -251,8 +239,6 @@ public class part_rude
 		fw.println("/*	total_face_primitive_number			*/	",total_face_primitive_number);
 		fw.println("/*	total_edge_primitive_number			*/	",total_edge_primitive_number);
 		fw.println("/*	total_point_primitive_number		*/	",total_point_primitive_number);
-		
-		fw.close();
 		
 		return;
 	}

@@ -14,6 +14,8 @@ public class buffer_object_file_modify_time_and_length
 	public long	buffer_object_text_file_length[][];
 	public boolean buffer_object_file_in_head_flag[][];
 	
+	public part_rude simple_part_mesh;
+	
 	public buffer_object_file_modify_time_and_length()
 	{
 		buffer_object_head_last_modify_time=0;
@@ -25,9 +27,10 @@ public class buffer_object_file_modify_time_and_length
 		buffer_object_file_in_head_flag		=new boolean[0][];
 	}
 	public buffer_object_file_modify_time_and_length(
-			boolean read_write_flag,String root_file_name,String file_charset)
+			boolean write_simple_part_mesh_flag,boolean load_simple_part_mesh_flag,
+			String root_file_name,String file_charset,part_rude pr)
 	{
-		if(read_write_flag) {
+		if(!write_simple_part_mesh_flag){
 			file_reader fr=new file_reader(root_file_name+".boftal",file_charset);
 			
 			buffer_object_head_last_modify_time	=fr.get_long();
@@ -50,9 +53,17 @@ public class buffer_object_file_modify_time_and_length
 						buffer_object_total_file_length+=buffer_object_text_file_length[i][j];
 				}
 			}
+			
+			if(load_simple_part_mesh_flag)
+				simple_part_mesh=new part_rude(fr);
+			else
+				simple_part_mesh=null;
+			
 			fr.close();
 			return;
 		}
+		
+		simple_part_mesh=null;
 		
 		File f=new File(root_file_name+".head.txt");
 		buffer_object_head_last_modify_time	=f.lastModified();
@@ -127,7 +138,7 @@ public class buffer_object_file_modify_time_and_length
 		}
 		
 		file_writer fw=new file_writer(root_file_name+".boftal",file_charset);
-	
+		
 		fw.println("/*\tpart mesh file length information\t\t*/");
 		fw.println();
 		
@@ -149,7 +160,26 @@ public class buffer_object_file_modify_time_and_length
 					buffer_object_file_in_head_flag[i][j]?"true":"false");
 			}
 		}
+
 		fw.println();
+		fw.println();
+		
+		if(pr!=null)
+			pr.write_out_to_simple_file(fw);
+		else{
+			fw.println("/*	version:part_mesh==null				*/	simple");
+			fw.println("/*	origin material						*/	0	0	0	0");
+			fw.println("/*	default material					*/	0	0	0	0");
+			fw.println("/*	origin  vertex_location_extra_data	*/	1");
+			fw.println("/*	default vertex_location_extra_data	*/	1");
+			fw.println("/*	default vertex_normal_extra_data	*/	1");
+			fw.println("/*	max_attribute_number				*/	0");
+			fw.println("/*	part_box							*/	nobox");
+			fw.println("/*	total_face_primitive_number			*/	0");
+			fw.println("/*	total_edge_primitive_number			*/	0");
+			fw.println("/*	total_point_primitive_number		*/	0");
+			fw.println();
+		}
 		fw.close();
 	}
 }
