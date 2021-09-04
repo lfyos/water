@@ -1,10 +1,11 @@
-function construct_render_routine(my_gl,my_user_name,my_pass_word,
-				my_canvas,my_url,my_language_name,response_data)
+function construct_render_routine(my_process_bar_id,my_gl,
+	my_user_name,my_pass_word,my_canvas,my_url,my_language_name,response_data)
 {
 	this.channel						=response_data[0].toString().trim();
-    this.channel					   +="&user_name="+my_user_name;
-    this.channel					   +="&pass_word="+my_pass_word;
-    this.channel					   +="&language="+my_language_name;
+    this.channel					   +="&user_name="	+my_user_name;
+    this.channel					   +="&pass_word="	+my_pass_word;
+    this.channel					   +="&process_bar="+my_process_bar_id;
+    this.channel					   +="&language="	+my_language_name;
     
 	var	my_part_initialize_data			=response_data[1];
 	var	my_instance_initialize_data		=response_data[2];
@@ -38,6 +39,7 @@ function construct_render_routine(my_gl,my_user_name,my_pass_word,
 		this.instance_initialize_data[my_component_id][my_driver_id]=my_data;
 	}
 
+	this.process_bar_id				=my_process_bar_id;
 	this.gl							=my_gl;
 	this.url						=my_url;
 	this.url_and_channel			=my_url+"?channel="+this.channel;
@@ -127,7 +129,7 @@ function construct_render_routine(my_gl,my_user_name,my_pass_word,
 
 	this.modifier_time_parameter	=new construct_modifier_time_parameter(modifier_container_number);
 	this.render_program				=new construct_program_object	(this.gl,this.parameter);
-	this.buffer_object				=new construct_buffer_object	(this.gl,this.url,this.channel,this.parameter);
+	this.buffer_object				=new construct_buffer_object	(this.gl,this.parameter);
 	this.camera						=new construct_camera_object	(camera_component_id,this.component_location_data,this.computer);
 	this.uniform_block				=new construct_uniform_block_object(this.gl);
 	this.deviceorientation			=new construct_deviceorientation(this.computer);
@@ -581,7 +583,8 @@ function construct_render_routine(my_gl,my_user_name,my_pass_word,
 		this.can_do_render_request_flag	=false;
 		this.render_request_start_time	=(new Date()).getTime();
 		var min_value=this.computer.min_value();
-		var request_string=this.url+"?command=component&method=update_render&channel="+this.channel;
+		var request_string=this.url_and_channel+"&command=component&method=update_render";
+		
 		this.view.aspect=this.canvas.width/this.canvas.height;
 		if(Math.abs(this.view_bak.aspect-this.view.aspect)>min_value){
 			this.view_bak.aspect=this.view.aspect;
@@ -774,17 +777,28 @@ function construct_render_routine(my_gl,my_user_name,my_pass_word,
 		this.render_request(start_time);
 		this.render_time_length=(new Date()).getTime()-start_time;
 	};
+	
 	this.terminate=function()
 	{
 		this.parameter.debug_mode_flag=false;
+		
+		if(this.process_bar_id>=0)
+			try{
+				var my_ajax=new XMLHttpRequest();
+				my_ajax.open("GET",this.url+"?channel=process_bar&command=release&process_bar="+this.process_bar_id,true);
+				my_ajax.send(null);
+			}catch(e){
+				;
+			};
 		try{
 			var my_ajax=new XMLHttpRequest();
-			my_ajax.open("GET",this.url+"?channel="+this.channel+"&command=termination",true);
+			my_ajax.open("GET",this.url_and_channel+"&command=termination",true);
 			my_ajax.send(null);
 		}catch(e){
 			;
 		};
 	};
+	
 	this.get_component_to_id_object=function(my_component_name)
 	{
 		for(var begin_pointer=0,end_pointer=this.component_to_id_array.length-1;begin_pointer<=end_pointer;){

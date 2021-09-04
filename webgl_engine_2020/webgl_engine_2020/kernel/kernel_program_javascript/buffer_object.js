@@ -1,9 +1,7 @@
 
-function construct_buffer_object(my_gl,my_url,my_channel,my_parameter)
+function construct_buffer_object(my_gl,my_parameter)
 {
 	this.gl=my_gl;
-	this.url=my_url;
-	this.channel=my_channel;
 	this.parameter=my_parameter;
 	
 	this.buffer_object	=new Array();

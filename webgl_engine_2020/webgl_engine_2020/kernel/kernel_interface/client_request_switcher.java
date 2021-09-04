@@ -56,13 +56,53 @@ public class client_request_switcher
 			ecr		=null;
 		}
 	}
+	private void process_bar(client_request_response request_response,client_interface client)
+	{
+		String str;
+		client_process_bar process_bar;
+		if((client=client_container.get_client_interface(request_response,system_par))==null)
+			return;
+		if((str=request_response.get_parameter("command"))==null)
+			return;
+		switch(str){
+		case "request":
+			process_bar=client.request_process_bar();
+			request_response.println(process_bar.process_bar_id);
+			process_bar.set_process_bar(true,"wait_for_create_scene", 0, 1);
+			break;
+		case "release":
+			if((str=request_response.get_parameter("process_bar"))!=null)
+				client.release_process_bar(Integer.parseInt(str));
+			break;
+		case "data":
+			if((process_bar=client.get_process_bar(request_response))==null)
+				break;
+			str=request_response.get_parameter("language");
+			str=process_bar.process_title+"+"+((str==null)?"english":str);
+			str=system_par.language_change_name.search_change_name(str,process_bar.process_title);
+			long current_time=nanosecond_timer.absolute_nanoseconds();
+			long time_length=current_time-process_bar.start_time;
+			long engine_time_length=current_time-process_bar.original_time;
+
+			request_response.println("{");
+			request_response.print  ("	\"caption\":		\"",	str							).println("\",");
+			request_response.print  ("	\"title\":			\"",	process_bar.process_title	).println("\",");
+			request_response.print  ("	\"current\":		",		process_bar.current_process	).println(",");
+			request_response.print  ("	\"max\":			",  	process_bar.max_process		).println(",");
+			request_response.print  ("	\"time_length\":	",  	time_length/1000000			).println(",");
+			request_response.print  ("	\"engine_time_length\":	",  engine_time_length/1000000	).println(",");
+			request_response.print  ("	\"id\":				",		process_bar.process_bar_id	).println("");
+			request_response.println("}");
+			break;	
+		}
+	}
 	private system_call_switch_result system_call_switch(client_request_response request_response)
 	{
 		system_call_switch_result ret_val=new system_call_switch_result();
-		String channel_string=request_response.get_parameter("channel");
+		String str,channel_string=request_response.get_parameter("channel");
 		switch((channel_string==null)?"javascript":channel_string){
 		case "log":
-			String str=((str=request_response.get_parameter("command"))==null)?"":str;
+			str=((str=request_response.get_parameter("command"))==null)?"":str;
 			switch(str) {
 			case "switch":
 				system_par.proxy_par.switch_log_file();
@@ -100,6 +140,10 @@ public class client_request_switcher
 		case "proxy":
 			if((ret_val.ecr=download_proxy.download(request_response,system_par,statistics_interface))!=null)
 				ret_val.ecr.date_string=null;
+			break;
+		case "process_bar":
+			ret_val.ecr=new engine_call_result(null,null,null,null,null,"*");
+			process_bar(request_response,ret_val.client);
 			break;
 		case "creation":
 			if(test_creation_engine_lock_number(1)>system_par.create_engine_concurrent_number){

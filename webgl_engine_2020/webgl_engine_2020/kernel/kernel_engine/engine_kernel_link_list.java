@@ -10,6 +10,7 @@ import kernel_engine.engine_call_result;
 import kernel_client_interface.dispatch_request_main;
 import kernel_common_class.debug_information;
 import kernel_file_manager.file_reader;
+import kernel_interface.client_process_bar;
 import kernel_network.client_request_response;
 import kernel_part.part_loader_container;
 import kernel_render.render_container;
@@ -212,7 +213,8 @@ public class engine_kernel_link_list
 				cccfn.file_name,file_charset,cccfn.charset_file_name,
 				cccfn.compress_file_name,null,ek.scene_par.scene_cors_string);
 	}
-	private engine_call_result get_engine_result_routine(client_session session,
+	private engine_call_result get_engine_result_routine(
+			client_process_bar process_bar,client_session session,
 			engine_kernel_link_list_and_client_information ec,
 			client_request_response my_request_response,long delay_time_length,
 			interface_statistics statistics_interface,int engine_current_number [])
@@ -225,7 +227,7 @@ public class engine_kernel_link_list
 		if(initilization_flag){
 			initilization_flag=false;
 			if(ek.component_cont==null) {
-				ek.load(my_request_response);
+				ek.load(my_request_response,process_bar);
 				if(ek.component_cont.root_component!=null) {
 					engine_current_number[0]++;
 					engine_current_number[1]+=ek.component_cont.root_component.component_id+1;
@@ -239,9 +241,8 @@ public class engine_kernel_link_list
 					" in function get_engine_result() of engine_container");
 				return null;
 			}
-			ec.client_information=new client_information(my_request_response,ek,
-					session.statistics_user,statistics_interface);
-			
+			ec.client_information=new client_information(
+				my_request_response,process_bar,ek,session.statistics_user,statistics_interface);
 		}
 		ec.client_information.engine_current_number=engine_current_number;
 		ec.client_information.request_response=my_request_response;
@@ -273,7 +274,7 @@ public class engine_kernel_link_list
 		return new engine_call_result(null,null,null,
 				my_compress_file_name,null,ek.scene_par.scene_cors_string);
 	}
-	public engine_call_result get_engine_result(
+	public engine_call_result get_engine_result(client_process_bar process_bar,
 			client_session session,engine_kernel_link_list_and_client_information ec,
 			client_request_response my_request_response,long delay_time_length,
 			interface_statistics statistics_interface,int engine_current_number[])
@@ -281,7 +282,7 @@ public class engine_kernel_link_list
 		engine_call_result ret_val;
 		engine_kernel_lock.lock();
 		try{
-			ret_val=get_engine_result_routine(session,ec,my_request_response,
+			ret_val=get_engine_result_routine(process_bar,session,ec,my_request_response,
 				delay_time_length,statistics_interface,engine_current_number);
 		}catch(Exception e){
 			debug_information.println(

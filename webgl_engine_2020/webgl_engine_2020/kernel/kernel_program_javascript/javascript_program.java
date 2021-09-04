@@ -74,7 +74,8 @@ public class javascript_program
 		}
 		String str[]=new String[]{
 				"function "+function_name+"(my_canvas,my_user_name,my_pass_word,my_language_name,",
-				"		scene_name,link_name,initialization_parameter,initialization_function)"	,
+				"		scene_name,link_name,initialization_parameter,initialization_function,",
+				"		show_process_bar_interval,show_process_bar_termination_flag,show_process_bar_function)",
 				"{"
 		};
 		for(int i=0,ni=str.length;i<ni;i++)
@@ -94,7 +95,8 @@ public class javascript_program
 							+create_engine_max_sleep_time_length	+",my_canvas,"			,
 				"		\""	+request_response.implementor.get_url()	+"\","					,
 				"		my_user_name,my_pass_word,my_language_name,scene_name,link_name,"	,
-				"		initialization_parameter,initialization_function);"					,
+				"		initialization_parameter,initialization_function,",
+				"		show_process_bar_interval,show_process_bar_termination_flag,show_process_bar_function);",
 				"};"
 		};
 		

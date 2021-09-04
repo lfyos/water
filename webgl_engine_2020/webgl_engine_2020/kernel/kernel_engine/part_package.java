@@ -7,6 +7,7 @@ import kernel_common_class.exclusive_file_mutex;
 import kernel_common_class.compress_file_data;
 import kernel_file_manager.file_directory;
 import kernel_file_manager.file_writer;
+import kernel_interface.client_process_bar;
 import kernel_part.part;
 import kernel_render.render_container;
 import kernel_part.part_container_for_process_sequence;
@@ -50,7 +51,8 @@ public class part_package
 			package_flag[i]=pp.package_flag[i];
 	}
 	
-	public part_package(render_container rc,
+	public part_package(
+			client_process_bar process_bar,String process_bar_title,render_container rc,
 			int part_type_id,system_parameter system_par,scene_parameter scene_par)
 	{
 		class part_package_collector extends part_container_for_process_sequence
@@ -134,6 +136,8 @@ public class part_package
 				try {
 					file_writer list_file_writer=null;
 					for(int i=0,package_id=0;i<package_number;i++){
+						if(process_bar!=null)
+							process_bar.set_process_bar((i<=0),process_bar_title,i,package_number);
 						if(part_package[i].length==1) {
 							String my_package_file_name=file_directory.part_file_directory(
 									part_package[i][0],system_par,scene_par)+"mesh.head.gzip_text";
@@ -219,6 +223,8 @@ public class part_package
 					}
 					if(list_file_writer!=null)
 						list_file_writer.close();
+					if(process_bar!=null)
+						process_bar.set_process_bar(false,process_bar_title,package_number,package_number);
 				}catch(Exception e){
 					debug_information.println("part_package_collector exception:\t",package_directory_name+"\t"+e.toString());
 					e.printStackTrace();

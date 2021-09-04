@@ -68,7 +68,23 @@ function body_onload()
 						return true;
 					},"init in draw.jsp"
 				);
-//			window.close();
+		},
+		1000,
+		true,
+		function(	process_bar_caption,		process_bar_title,
+					process_bar_current,		process_bar_max,
+					process_bar_time_length,	process_bar_engine_time_length,
+					process_bar_id)
+		{
+			console.log(
+						process_bar_caption				+"	:	"+
+						process_bar_title				+"	:	"+
+						process_bar_current				+"	:	"+
+						process_bar_max					+"	:	"+
+						process_bar_time_length			+"	:	"+
+						process_bar_engine_time_length	+"	:	"+
+						process_bar_id);
+			return true;
 		}
 	);
 }

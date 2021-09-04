@@ -11,6 +11,7 @@ import kernel_driver.instance_driver_container;
 import kernel_interface.user_statistics;
 import kernel_network.client_request_response;
 import kernel_buffer.buffer_container;
+import kernel_interface.client_process_bar;
 
 
 public class client_information 
@@ -37,6 +38,7 @@ public class client_information
 	public user_statistics 				statistics_user;
 	public int							engine_current_number[];		
 	public client_request_response 		request_response;
+	public client_process_bar			process_bar;
 	
 	public instance_driver_container	instance_container;
 	
@@ -268,7 +270,7 @@ public class client_information
 		render_buffer.target_buffer.clear_buffer(target_id);
 	}
 	
-	public client_information(client_request_response my_request_response,
+	public client_information(client_request_response my_request_response,client_process_bar my_process_bar,
 			engine_kernel ek,user_statistics my_statistics_user,interface_statistics my_statistics_interface)
 	{
 		render_buffer					=new buffer_container(ek);
@@ -295,6 +297,8 @@ public class client_information
 		engine_current_number=new int[] {0,0,0};
 		
 		request_response	=my_request_response;
+		
+		process_bar			=my_process_bar;
 		
 		file_proxy_url_encode_flag=new boolean[0];
 		file_proxy_url_array=new String[0];

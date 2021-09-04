@@ -59,8 +59,10 @@ final class ek_ci_node extends balance_tree_item
 public class client_interface
 {
 	public long touch_time;
-
+	
 	private system_parameter system_par;
+	private client_process_bar_container process_bar_cont;
+
 	private delay_manager manager_delay;
 	private client_session session;
 
@@ -82,6 +84,26 @@ public class client_interface
 			e.printStackTrace();
 		}
 		my_client_interface_lock.unlock();
+	}
+	public client_process_bar request_process_bar()
+	{
+		return process_bar_cont.get_process_bar(process_bar_cont.request_release_process_bar(-1));
+	}
+	public void release_process_bar(int process_bar_id)
+	{
+		process_bar_cont.request_release_process_bar(process_bar_id);
+	}
+	public client_process_bar get_process_bar(client_request_response request_response)
+	{
+		String str;
+		int process_bar_id=-1;
+		if((str=request_response.get_parameter("process_bar"))!=null)
+			try{
+				process_bar_id=Integer.parseInt(str);
+			}catch(Exception e) {
+				process_bar_id=-1;
+			}
+		return process_bar_cont.get_process_bar(process_bar_id);
 	}
 	private void destroy_routine()
 	{	
@@ -271,7 +293,8 @@ public class client_interface
 		
 		engine_call_result ecr=null;
 		try{
-			ecr=ec.engine_kernel_link_list.get_engine_result(session,ec,request_response,
+			ecr=ec.engine_kernel_link_list.get_engine_result(
+					get_process_bar(request_response),session,ec,request_response,
 					delay_time_length,statistics_interface,ei.engine_current_number);
 		}catch(Exception e) {
 			ecr=null;
@@ -413,7 +436,8 @@ public class client_interface
 		ecn.ek_ci.lock_number++;
 		client_interface_lock.unlock();
 		try{
-			ecr=ecn.ek_ci.engine_kernel_link_list.get_engine_result(session,ecn.ek_ci,
+			ecr=ecn.ek_ci.engine_kernel_link_list.get_engine_result(
+					get_process_bar(request_response),session,ecn.ek_ci,
 					request_response,delay_time_length,statistics_interface,engine_current_number);
 		}catch(Exception e){
 			ecr=null;
@@ -585,6 +609,9 @@ public class client_interface
 		touch_time	=nanosecond_timer.absolute_nanoseconds();
 		
 		system_par	 =new system_parameter(my_system_par);
+		process_bar_cont=new client_process_bar_container(
+				system_par.max_engine_kernel_number,
+				system_par.engine_expire_time_length);
 		manager_delay=null;
 		session		 =null;
 		

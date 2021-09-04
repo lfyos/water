@@ -1,0 +1,23 @@
+package kernel_interface;
+
+public class client_process_bar 
+{
+	public String process_title;
+	public long max_process,current_process,touch_time;
+	public int process_bar_id;
+	
+	public client_process_bar(int my_process_bar_id,long my_time)
+	{
+		process_title	="";
+		current_process	=0;
+		max_process		=1;
+		process_bar_id	=my_process_bar_id;
+		touch_time		=my_time;
+	}
+	public void set_process_bar(String my_process_title,long my_max_process,long my_current_process)
+	{
+		process_title	=my_process_title;
+		max_process		=my_max_process;
+		current_process	=my_current_process;
+	}
+}

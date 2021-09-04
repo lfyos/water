@@ -2,51 +2,51 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value=""/>
+		<item key="selection" value="url"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
-			<item value="max_"/>
-			<item value="render_cont."/>
-			<item value="user_engine_kernel_number--"/>
-			<item value="max_client_interface_number"/>
-			<item value="process_part_component_id_and_driver_id"/>
-			<item value="change_str"/>
-			<item value="permanent_render_part_id"/>
-			<item value="part_component_id_and_driver_id"/>
-			<item value="mousemove_event_listener"/>
-			<item value="my_face_edge.curve_parameter"/>
-			<item value="par"/>
-			<item value="parabola"/>
-			<item value="hyperbola"/>
-			<item value="ellipse"/>
-			<item value="/*  body 0 face 2  name&#x09;*/"/>
+			<item value="url"/>
+			<item value="parameter"/>
+			<item value="buffer_head_request_queue"/>
+			<item value="channel"/>
+			<item value="url_and_channel"/>
+			<item value="process_bar"/>
+			<item value="language_name"/>
+			<item value="create_first_class_package"/>
+			<item value="ret_val.client"/>
+			<item value="，"/>
+			<item value="render_initialization"/>
+			<item value="processs_bar_object.show_process_bar_function=null;"/>
+			<item value="Create process bar JSON.parse error"/>
+			<item value="process_bar_id"/>
+			<item value="processs_bar_object.process_bar_id=-1"/>
 		</list>
 		<list key="replacehistory">
+			<item value="client"/>
+			<item value=","/>
 			<item value=""/>
+			<item value="processs_bar_object.show_process_bar_function=null"/>
 			<item value="par"/>
 			<item value="render."/>
 			<item value="debug_"/>
 			<item value="render.debug_"/>
 			<item value="render_object."/>
-			<item value=","/>
 			<item value="跟踪可见片元"/>
 			<item value="double"/>
 			<item value="point"/>
 			<item value="pr"/>
 			<item value="face_advance(body_id,face_id,primitive_id);"/>
 			<item value="default_attribute_double"/>
-			<item value="point_"/>
-			<item value="get_edge_"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_WIDTH" value="303"/>
+		<item key="DIALOG_WIDTH" value="467"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="71"/>
-		<item key="DIALOG_Y_ORIGIN" value="144"/>
+		<item key="DIALOG_X_ORIGIN" value="1316"/>
+		<item key="DIALOG_Y_ORIGIN" value="510"/>
 	</section>
 </section>

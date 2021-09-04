@@ -1,0 +1,16 @@
+package kernel_interface;
+
+public class client_process_bar 
+{
+	public String process_title;
+	public long max_process,current_process;
+	public int process_bar_id;
+	
+	public client_process_bar()
+	{
+		process_title	="";
+		current_process	=0;
+		max_process		=1;
+		process_bar_id	=-1;
+	}
+}
