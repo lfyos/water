@@ -1978,7 +1978,7 @@ public class gltf_converter
 	public static void main(String args[])
 	{
 		debug_information.println("Begin");
-		
+		new gltf_converter("c:\\temp\\1111.glb","GBK","c:\\temp\\","GBK");
 		debug_information.println("End");
 	}
 }
