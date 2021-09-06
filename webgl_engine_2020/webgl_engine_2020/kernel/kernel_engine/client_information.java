@@ -288,7 +288,7 @@ public class client_information
 		
 		clip_plane			=null;
 		
-		channel_id			=system_channel_id++;
+		channel_id			=System.nanoTime();
 		parameter			=new client_parameter(ek.scene_par.do_discard_lod_flag,ek.scene_par.do_selection_lod_flag);
 		
 		statistics_client	=new client_statistics();
@@ -310,5 +310,4 @@ public class client_information
 		
 		return;
 	}
-	static private long	system_channel_id=0;
 }

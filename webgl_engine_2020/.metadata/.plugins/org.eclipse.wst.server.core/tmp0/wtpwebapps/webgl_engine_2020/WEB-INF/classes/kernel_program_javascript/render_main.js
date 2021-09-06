@@ -333,7 +333,7 @@ function render_show_process_bar(process_bar_url,processs_bar_object)
 						response_data.caption,		response_data.title,
 						response_data.current,		response_data.max,
 						response_data.time_length,	response_data.engine_time_length,
-						response_data.id))
+						response_data.id,			processs_bar_object.show_process_bar_webgl_context))
 					if(processs_bar_object.show_process_bar_interval>0)
 						setTimeout(
 								function()
@@ -402,7 +402,8 @@ function render_main(create_engine_sleep_time_length_scale,
 					process_bar_id						:	response_data,
 					show_process_bar_interval			:	my_show_process_bar_interval,
 					show_process_bar_function			:	my_show_process_bar_function,
-					show_process_bar_termination_flag	:	my_show_process_bar_termination_flag
+					show_process_bar_termination_flag	:	my_show_process_bar_termination_flag,
+					show_process_bar_webgl_context		:	my_gl
 			};
 			
 			var process_bar_url=my_url+"?channel=process_bar&command=data";
