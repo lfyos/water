@@ -1,10 +1,16 @@
 function redraw(render)
 {
+	if(render.terminate_flag)
+		return;
+	
 	var redraw_object=new Object();
 	redraw_object.touch_time=0;
 	
 	function render_routine()
 	{
+		if(render.terminate_flag)
+			return;
+		
 		var my_current_time=(new Date()).getTime();
 		var render_interval_length=my_current_time-redraw_object.touch_time;
 		redraw_object.touch_time=my_current_time;
@@ -15,6 +21,9 @@ function redraw(render)
 
 	function touch_routine()
 	{
+		if(render.terminate_flag)
+			return;
+		
 		var my_current_time=(new Date()).getTime();
 		if(!(render.can_do_render_request_flag)){
 			redraw_object.touch_time=my_current_time;
@@ -39,6 +48,8 @@ function redraw(render)
 	};
 	function data_load_routine()
 	{
+		if(render.terminate_flag)
+			return;
 		var loaded_data_length=render.buffer_object.loaded_buffer_object_data_length;
 		if(loaded_data_length>=render.parameter.total_buffer_object_data_length){
 			render_routine();
@@ -54,8 +65,7 @@ function redraw(render)
 	data_load_routine();
 };
 
-function render_initialization(
-	initialization_url,render,user_initialization_function,processs_bar_object)
+function render_initialization(initialization_url,render,user_initialization_function,processs_bar_object)
 {
 	try{
 		var my_ajax=new XMLHttpRequest();
@@ -63,6 +73,9 @@ function render_initialization(
 		{
 			if(my_ajax.readyState!=4)
 				return;
+			if(render.terminate_flag)
+				return;
+			
 			if(my_ajax.status!=200){
 				processs_bar_object.show_process_bar_function=null;
 				
@@ -164,7 +177,7 @@ function render_initialization(
 				setTimeout(
 					function()
 					{
-						processs_bar_object.show_process_bar_function=null;;
+						processs_bar_object.show_process_bar_function=null;
 					},
 					processs_bar_object.show_process_bar_interval);
 		};
@@ -333,7 +346,7 @@ function render_show_process_bar(process_bar_url,processs_bar_object)
 						response_data.caption,		response_data.title,
 						response_data.current,		response_data.max,
 						response_data.time_length,	response_data.engine_time_length,
-						response_data.id,			processs_bar_object.show_process_bar_webgl_context))
+						response_data.id))
 					if(processs_bar_object.show_process_bar_interval>0)
 						setTimeout(
 								function()
@@ -360,6 +373,13 @@ function render_main(create_engine_sleep_time_length_scale,
 	my_language_name		=(typeof(my_language_name		)!="string")?"english"		:(my_language_name.trim());
 	my_scene_name			=(typeof(my_scene_name			)!="string")?""				:(my_scene_name.trim());
 	my_link_name			=(typeof(my_link_name			)!="string")?""				:(my_link_name.trim());
+	
+	my_show_process_bar_interval=(typeof(my_show_process_bar_interval)!="number")
+						?-1:my_show_process_bar_interval;
+	my_show_process_bar_termination_flag=(typeof(my_show_process_bar_termination_flag)!="boolean")
+						?true:my_show_process_bar_termination_flag;
+	my_show_process_bar_function=(typeof(my_show_process_bar_function)!="function")
+						?null:my_show_process_bar_function;
 
 	var my_gl;
 	if((my_gl=create_webgl_context(my_canvas))==null)
@@ -402,8 +422,7 @@ function render_main(create_engine_sleep_time_length_scale,
 					process_bar_id						:	response_data,
 					show_process_bar_interval			:	my_show_process_bar_interval,
 					show_process_bar_function			:	my_show_process_bar_function,
-					show_process_bar_termination_flag	:	my_show_process_bar_termination_flag,
-					show_process_bar_webgl_context		:	my_gl
+					show_process_bar_termination_flag	:	my_show_process_bar_termination_flag
 			};
 			
 			var process_bar_url=my_url+"?channel=process_bar&command=data";

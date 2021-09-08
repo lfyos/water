@@ -39,6 +39,7 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		this.instance_initialize_data[my_component_id][my_driver_id]=my_data;
 	}
 
+	this.terminate_flag				=false;
 	this.process_bar_id				=my_process_bar_id;
 	this.gl							=my_gl;
 	this.url						=my_url;
@@ -686,6 +687,9 @@ function construct_render_routine(my_process_bar_id,my_gl,
 			{
 				if(my_ajax.readyState!=4)
 					return;
+				if(cur.terminate_flag)
+					return;
+				
 				if(my_ajax.status!=200){
 					if(cur.parameter.debug_mode_flag)
 						alert("render_request:my_ajax.status!=200 fail:"+my_ajax.status);
@@ -693,6 +697,8 @@ function construct_render_routine(my_process_bar_id,my_gl,
 						console.log("render_request:my_ajax.status!=200 fail:"+my_ajax.status);
 					return;
 				};
+				if(cur.terminate_flag)
+					return;
 				cur.parse_web_server_response_data(my_ajax.responseText,my_ajax.browser_start_time);
 				cur.do_render_request_response_number++;
 				return;
@@ -748,6 +754,9 @@ function construct_render_routine(my_process_bar_id,my_gl,
 	};
 	this.do_render=function(my_render_interval_length)
 	{
+		if(this.terminate_flag)
+			return this.terminate_flag;
+		
 		var start_time=(new Date()).getTime();
 		this.render_interval_length=my_render_interval_length;
 		if(this.browser_current_time>0){
@@ -776,11 +785,14 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		this.buffer_object.process_buffer_head_request_queue(this);
 		this.render_request(start_time);
 		this.render_time_length=(new Date()).getTime()-start_time;
+		
+		return this.terminate_flag;
 	};
 	
 	this.terminate=function()
 	{
 		this.parameter.debug_mode_flag=false;
+		this.terminate_flag=true;
 		
 		if(this.process_bar_id>=0)
 			try{
@@ -851,6 +863,9 @@ function construct_render_routine(my_process_bar_id,my_gl,
 			{
 				if(my_ajax.readyState!=4)
 					return;
+				if(cur.terminate_flag)
+					return;
+				
 				cur.current.calling_server_number--;
 
 				if(my_ajax.status!=200){
@@ -1057,6 +1072,9 @@ function construct_render_routine(my_process_bar_id,my_gl,
 			{
 				if(my_ajax.readyState!=4)
 					return;
+				if(cur.terminate_flag)
+					return;
+				
 				if(my_ajax.status!=200){
 					if(typeof(error_function)=="function"){
 						try{
@@ -1139,6 +1157,9 @@ function construct_render_routine(my_process_bar_id,my_gl,
 			{
 				if(my_ajax.readyState!=4)
 					return;
+				if(cur.terminate_flag)
+					return;
+				
 				if(my_ajax.status!=200){
 					if(typeof(error_function)=="function"){
 						try{

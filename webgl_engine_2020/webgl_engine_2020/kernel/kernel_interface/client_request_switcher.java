@@ -68,7 +68,7 @@ public class client_request_switcher
 		case "request":
 			process_bar=client.request_process_bar();
 			request_response.println(process_bar.process_bar_id);
-			process_bar.set_process_bar(true,"wait_for_create_scene", 1,2);
+			process_bar.set_process_bar(true,"wait_for_create_scene", 0, 1);
 			break;
 		case "release":
 			if((str=request_response.get_parameter("process_bar"))!=null)

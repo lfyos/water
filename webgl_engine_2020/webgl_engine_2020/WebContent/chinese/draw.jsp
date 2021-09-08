@@ -77,7 +77,7 @@ function body_onload()
 		function(	process_bar_caption,		process_bar_title,
 					process_bar_current,		process_bar_max,
 					process_bar_time_length,	process_bar_engine_time_length,
-					process_bar_id,				process_bar_webgl_context)
+					process_bar_id)
 		{
 			var canvas=document.getElementById("my_processor_bar");
 			canvas.width	=window.innerWidth *0.975;

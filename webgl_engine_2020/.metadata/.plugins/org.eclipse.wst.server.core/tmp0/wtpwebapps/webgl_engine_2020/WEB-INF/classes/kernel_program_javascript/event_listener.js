@@ -60,6 +60,9 @@ function construct_event_listener(my_render)
 	this.render.system_event_processor.mousemove		=function(event,render)						{return false;};
 	this.mousemove_event_listener=function (event)
 	{
+		if(this.render.terminate_flag)
+			return;
+			
 		var ep,component_id;
 		event.preventDefault();
 		this.set_render_view(event);
@@ -111,6 +114,9 @@ function construct_event_listener(my_render)
 	this.render.system_event_processor.mousedown		=function(event,render)						{return false;};
 	this.mousedown_event_listener=function (event)
 	{
+		if(this.render.terminate_flag)
+			return;
+		
 		var ep,component_id;
 
 		event.preventDefault();
@@ -163,6 +169,9 @@ function construct_event_listener(my_render)
 	this.render.system_event_processor.mouseup			=function(event,render)						{return false;};
 	this.mouseup_event_listener=function (event)
 	{
+		if(this.render.terminate_flag)
+			return;
+		
 		var ep,component_id;
 		
 		event.preventDefault();
@@ -214,6 +223,9 @@ function construct_event_listener(my_render)
 	this.render.system_event_processor.dblclick			=function(event,render)						{return false;};
 	this.dblclick_event_listener=function (event)
 	{
+		if(this.render.terminate_flag)
+			return;
+		
 		var ep,component_id;
 		
 		event.preventDefault();
@@ -265,6 +277,9 @@ function construct_event_listener(my_render)
 	this.render.system_event_processor.mousewheel		=function(event,render)						{return false;};
 	this.mousewheel_event_listener=function (event)
 	{
+		if(this.render.terminate_flag)
+			return;
+		
 		var ep,component_id;
 		event.preventDefault();
 		this.set_render_view(event);
@@ -315,6 +330,9 @@ function construct_event_listener(my_render)
 	this.render.system_event_processor.touchstart		=function(event,render)						{return false;};
 	this.touchstart_event_listener=function (event)
 	{
+		if(this.render.terminate_flag)
+			return;
+		
 		var ep,component_id;
 		event.preventDefault();
 		this.set_mobile_render_view(event);
@@ -365,6 +383,9 @@ function construct_event_listener(my_render)
 	this.render.system_event_processor.touchend			=function(event,render)						{return false;};
 	this.touchend_event_listener=function (event)
 	{
+		if(this.render.terminate_flag)
+			return;
+		
 		var ep,component_id;
 		event.preventDefault();
 		this.set_mobile_render_view(event);
@@ -417,6 +438,9 @@ function construct_event_listener(my_render)
 	this.render.system_event_processor.touchmove		=function(event,render){return false;};
 	this.touchmove_event_listener=function (event)
 	{
+		if(this.render.terminate_flag)
+			return;
+		
 		var ep,component_id;
 		event.preventDefault();
 		this.set_mobile_render_view(event);
@@ -471,6 +495,9 @@ function construct_event_listener(my_render)
 	this.render.system_event_processor.keydown			=function(event,render){return false;};
 	this.keydown_event_listener=function (event)
 	{
+		if(this.render.terminate_flag)
+			return;
+		
 		var ep,component_id;
 		event.preventDefault();
 		
@@ -520,6 +547,9 @@ function construct_event_listener(my_render)
 	this.render.system_event_processor.keypress			=function(event,render){return false;};
 	this.keypress_event_listener=function (event)
 	{
+		if(this.render.terminate_flag)
+			return;
+		
 		var ep,component_id;
 		event.preventDefault();
 
@@ -570,6 +600,9 @@ function construct_event_listener(my_render)
 	this.render.system_event_processor.keyup		=function(event,render){return false;};
 	this.keyup_event_listener=function (event)
 	{
+		if(this.render.terminate_flag)
+			return;
+		
 		var ep,component_id;
 		event.preventDefault();
 		
@@ -621,6 +654,9 @@ function construct_event_listener(my_render)
 	this.render.system_event_processor.contextmenu		=function(event,render)						{return false;};
 	this.contextmenu_event_listener=function (event)
 	{
+		if(this.render.terminate_flag)
+			return;
+		
 		var ep,component_id;
 
 		event.preventDefault();
@@ -671,6 +707,9 @@ function construct_event_listener(my_render)
 	this.render.system_event_processor.gamepadconnected			=function(event,render){return false;};
 	this.gamepadconnected_event_listener=function (event)
 	{
+		if(this.render.terminate_flag)
+			return;
+		
 		var ep,component_id;
 		event.preventDefault();
 		
@@ -723,6 +762,9 @@ function construct_event_listener(my_render)
 	this.render.system_event_processor.gamepaddisconnected			=function(event,render){return false;};
 	this.gamepaddisconnected_event_listener=function (event)
 	{
+		if(this.render.terminate_flag)
+			return;
+		
 		var ep,component_id;
 		event.preventDefault();
 		
