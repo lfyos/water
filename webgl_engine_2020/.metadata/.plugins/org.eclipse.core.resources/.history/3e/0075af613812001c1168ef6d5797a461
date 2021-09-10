@@ -392,22 +392,23 @@ public class part
 			if(token_file_last_time>part_par.last_modified_time)
 				if(token_file_last_time>new File(cfp_mesh_file_name).lastModified())
 					if(token_file_last_time>new File(cfp_material_file_name).lastModified()){
-						
-						file_reader fr=new file_reader(
-							part_temporary_file_directory+"mesh.boftal",part_temporary_file_charset);
-						boftal=new buffer_object_file_modify_time_and_length(fr);
-						fr.close();
-						
-						if(part_mesh==null){
-							if(part_par.free_part_memory_flag)
-								part_mesh=boftal.simple_part_mesh;
-							else
-								part_mesh=call_part_driver_for_load_part_mesh(null,pcps,system_par,scene_par);
-						}
 						if(part_mesh!=null)
-							if(part_par.free_part_memory_flag)
-								part_mesh.free_memory();
+							boftal=new buffer_object_file_modify_time_and_length(
+									part_temporary_file_directory+"mesh",part_temporary_file_charset);
+						else if((mesh_file_name==null)||(part_par.free_part_memory_flag)){
+							boftal=new buffer_object_file_modify_time_and_length(
+									part_temporary_file_directory+"mesh",part_temporary_file_charset);
+							part_mesh=boftal.simple_part_mesh;
+						}else{
+							part_mesh=call_part_driver_for_load_part_mesh(null,pcps,system_par,scene_par);
+							boftal=new buffer_object_file_modify_time_and_length(
+									part_temporary_file_directory+"mesh",part_temporary_file_charset);
+						}
 						boftal.simple_part_mesh=null;
+						
+						if((part_mesh!=null)&&(part_par.free_part_memory_flag))
+							part_mesh.free_memory();
+						
 						return str;
 					}
 		file_writer.file_delete(part_temporary_file_directory);

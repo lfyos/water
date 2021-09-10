@@ -28,8 +28,10 @@ public class buffer_object_file_modify_time_and_length
 		buffer_object_file_in_head_flag		=new boolean[0][];
 	}
 	
-	public buffer_object_file_modify_time_and_length(file_reader fr)
+	public buffer_object_file_modify_time_and_length(String root_file_name,String file_charset)
 	{
+		file_reader fr=new file_reader(root_file_name+".boftal",file_charset);
+		
 		buffer_object_head_last_modify_time	=fr.get_long();
 		buffer_object_head_length			=fr.get_long();
 		buffer_object_total_file_length		=buffer_object_head_length;
@@ -52,7 +54,9 @@ public class buffer_object_file_modify_time_and_length
 		}
 		
 		simple_part_mesh=new part_rude(fr);
-
+	
+		fr.close();
+		
 		return;
 	}
 	

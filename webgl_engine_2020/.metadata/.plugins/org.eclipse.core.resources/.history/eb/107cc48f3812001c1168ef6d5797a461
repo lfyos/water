@@ -392,12 +392,8 @@ public class part
 			if(token_file_last_time>part_par.last_modified_time)
 				if(token_file_last_time>new File(cfp_mesh_file_name).lastModified())
 					if(token_file_last_time>new File(cfp_material_file_name).lastModified()){
-						
-						file_reader fr=new file_reader(
-							part_temporary_file_directory+"mesh.boftal",part_temporary_file_charset);
-						boftal=new buffer_object_file_modify_time_and_length(fr);
-						fr.close();
-						
+						boftal=new buffer_object_file_modify_time_and_length(
+								part_temporary_file_directory+"mesh",part_temporary_file_charset);
 						if(part_mesh==null){
 							if(part_par.free_part_memory_flag)
 								part_mesh=boftal.simple_part_mesh;
