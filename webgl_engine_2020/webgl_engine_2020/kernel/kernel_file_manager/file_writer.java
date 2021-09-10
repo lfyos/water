@@ -326,6 +326,7 @@ public class file_writer extends common_writer
 	}
 	public common_writer write_routine(byte data[],int offset,int length)
 	{
+		file_length+=length;
 		try{
 			bos.write(data,offset,length);
 		}catch(Exception e){

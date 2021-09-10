@@ -302,7 +302,7 @@ function request_create_engine(create_engine_sleep_time_length_scale,
 			};
 			return;
 		};
-		my_ajax.open("GET",request_url,true);
+		my_ajax.open("GET",request_url+"&process_bar="+processs_bar_object.process_bar_id,true);
 		my_ajax.send(null);
 	}catch(e){
 		processs_bar_object.show_process_bar_function=null;
@@ -355,7 +355,7 @@ function render_show_process_bar(process_bar_url,processs_bar_object)
 								},
 								processs_bar_object.show_process_bar_interval);
 		};
-		my_ajax.open("GET",process_bar_url,true);
+		my_ajax.open("GET",process_bar_url+"&process_bar="+processs_bar_object.process_bar_id,true);
 		my_ajax.send(null);
 	}catch(e){
 		;
@@ -368,22 +368,34 @@ function render_main(create_engine_sleep_time_length_scale,
 	my_scene_name,my_link_name,my_initialization_parameter,my_user_initialization_function,
 	my_show_process_bar_interval,my_show_process_bar_termination_flag,my_show_process_bar_function)
 {
-	my_user_name			=(typeof(my_user_name			)!="string")?"NoName"		:(my_user_name.trim());
-	my_pass_word			=(typeof(my_pass_word			)!="string")?"NoPassword"	:(my_pass_word.trim());
-	my_language_name		=(typeof(my_language_name		)!="string")?"english"		:(my_language_name.trim());
-	my_scene_name			=(typeof(my_scene_name			)!="string")?""				:(my_scene_name.trim());
-	my_link_name			=(typeof(my_link_name			)!="string")?""				:(my_link_name.trim());
+	my_user_name						=(typeof(my_user_name						 )!="string"  )?"NoName"	:(my_user_name.trim());
+	my_pass_word						=(typeof(my_pass_word					 	 )!="string"  )?"NoPassword":(my_pass_word.trim());
+	my_language_name					=(typeof(my_language_name					 )!="string"  )?"english"	:(my_language_name.trim());
+	my_scene_name						=(typeof(my_scene_name						 )!="string"  )?""			:(my_scene_name.trim());
+	my_link_name						=(typeof(my_link_name						 )!="string"  )?""			:(my_link_name.trim());
 	
-	my_show_process_bar_interval=(typeof(my_show_process_bar_interval)!="number")
-						?-1:my_show_process_bar_interval;
-	my_show_process_bar_termination_flag=(typeof(my_show_process_bar_termination_flag)!="boolean")
-						?true:my_show_process_bar_termination_flag;
-	my_show_process_bar_function=(typeof(my_show_process_bar_function)!="function")
-						?null:my_show_process_bar_function;
-
+	var process_bar_url=my_url+"?channel=process_bar&command=data&language="+my_language_name;
+	var request_url=my_url+"?channel=creation&command=creation&language="	+my_language_name;
+	request_url+="&user_name="	+my_user_name		+"&pass_word="	+my_pass_word;
+	request_url+="&scene_name="	+my_scene_name		+"&link_name="	+my_link_name;
+	if(typeof(my_initialization_parameter)=="object")
+		if(typeof(my_initialization_parameter.length)=="number")
+			for(var i=0,ni=my_initialization_parameter.length;i<ni;i++){
+				var parameter_item	=my_initialization_parameter[i];
+				var parameter_name	=parameter_item[0].toString().trim();
+				var parameter_value	=parameter_item[1].toString().trim();
+				request_url+="&"+parameter_name+"="+parameter_value;
+			};
+	var processs_bar_object={
+			process_bar_id						:-1,
+			show_process_bar_interval			:(typeof(my_show_process_bar_interval		 )!="number"  )?-1			:my_show_process_bar_interval,
+			show_process_bar_termination_flag	:(typeof(my_show_process_bar_termination_flag)!="boolean" )?true		:my_show_process_bar_termination_flag,
+			show_process_bar_function			:(typeof(my_show_process_bar_function		 )!="function")?null		:my_show_process_bar_function
+	};
+	
 	var my_gl;
 	if((my_gl=create_webgl_context(my_canvas))==null)
-    	return;
+    	return; 
   
 	var max_draw_buffers=my_gl.getParameter(my_gl.MAX_DRAW_BUFFERS); 
 	var max_color_attatchments=my_gl.getParameter(my_gl.MAX_COLOR_ATTACHMENTS);
@@ -405,49 +417,22 @@ function render_main(create_engine_sleep_time_length_scale,
 				alert("Create process bar response status error: "+my_ajax.status.toString());
 				return;
 			};
-			
-			var response_data;
 			try{
-				response_data=JSON.parse(my_ajax.responseText);
+				processs_bar_object.process_bar_id=JSON.parse(my_ajax.responseText);
 			}catch(e){
 				alert("Create process bar JSON.parse error:  "+e.toString());
 				alert(my_ajax.responseText);
 				return;
 			}
-			if(typeof(response_data)!="number"){
-				alert("Create process bar :  process bar id is NOT number	:	"+response_data);
+			if(typeof(processs_bar_object.process_bar_id)!="number"){
+				alert("Create process bar :  process bar id is NOT number	:	"+processs_bar_object.process_bar_id);
 				return;
 			}
-			var processs_bar_object={
-					process_bar_id						:	response_data,
-					show_process_bar_interval			:	my_show_process_bar_interval,
-					show_process_bar_function			:	my_show_process_bar_function,
-					show_process_bar_termination_flag	:	my_show_process_bar_termination_flag
-			};
-			
-			var process_bar_url=my_url+"?channel=process_bar&command=data";
-			process_bar_url+="&language="+my_language_name;
-			process_bar_url+="&process_bar="+processs_bar_object.process_bar_id;
 			render_show_process_bar(process_bar_url,processs_bar_object);
-			
-			var request_url=my_url+"?channel=creation&command=creation";
-			request_url+="&language="	+my_language_name	+"&process_bar="+processs_bar_object.process_bar_id;
-			request_url+="&user_name="	+my_user_name		+"&pass_word="	+my_pass_word;
-			request_url+="&scene_name="	+my_scene_name		+"&link_name="	+my_link_name;
-			
-			if(typeof(my_initialization_parameter)=="object")
-				if(typeof(my_initialization_parameter.length)=="number")
-					for(var i=0,ni=my_initialization_parameter.length;i<ni;i++){
-						var parameter_item	=my_initialization_parameter[i];
-						var parameter_name	=parameter_item[0].toString().trim();
-						var parameter_value	=parameter_item[1].toString().trim();
-						request_url+="&"+parameter_name+"="+parameter_value;
-					};
 			request_create_engine(create_engine_sleep_time_length_scale,
 				create_engine_sleep_time_length,create_engine_max_sleep_time_length,
 				request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,
 				my_user_initialization_function,processs_bar_object);
-
 			return;
 		};
 		my_ajax.open("GET",my_url+"?channel=process_bar&command=request",true);

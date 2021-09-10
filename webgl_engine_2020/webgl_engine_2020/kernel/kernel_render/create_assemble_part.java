@@ -168,7 +168,6 @@ public class create_assemble_part
 				p.part_par.max_file_head_length,
 				p.part_par.max_file_data_length,
 				p.part_par.max_buffer_object_data_length,
-				p.part_par.max_comment_file_length,
 				p.part_par.max_compress_file_length,
 				
 				p.part_par.lod_precision_scale,

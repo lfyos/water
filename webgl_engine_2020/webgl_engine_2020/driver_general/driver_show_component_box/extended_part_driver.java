@@ -48,18 +48,19 @@ public class extended_part_driver extends part_driver
 			file_writer buffer_object_file_writer,part_container_for_part_search pcps,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-//		file_writer.file_copy_with_brother(
+		if(buffer_object_file_writer!=null) {
+//			file_writer.file_copy_with_brother(
 //				p.directory_name+p.mesh_file_name,buffer_object_file_writer.directory_name);
-		file_reader f_material=new file_reader(p.directory_name+p.material_file_name,p.file_charset);
-		f_material.get_string();
-		f_material.get_long();
-		buffer_object_file_writer.
-			print(		f_material.get_double()).
-			print(",",	f_material.get_double()).
-			print(",",	f_material.get_double()).
-			print(",",	f_material.get_double());
-		f_material.close();
-		
+			file_reader f_material=new file_reader(p.directory_name+p.material_file_name,p.file_charset);
+			f_material.get_string();
+			f_material.get_long();
+			buffer_object_file_writer.
+				print(		f_material.get_double()).
+				print(",",	f_material.get_double()).
+				print(",",	f_material.get_double()).
+				print(",",	f_material.get_double());
+			f_material.close();
+		}
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,

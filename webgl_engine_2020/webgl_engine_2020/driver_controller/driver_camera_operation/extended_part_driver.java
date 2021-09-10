@@ -75,11 +75,12 @@ public class extended_part_driver extends part_driver
 		if(box_distance<const_value.min_value)
 			return ret_val;
 
-		buffer_object_file_writer.print  ("		",	x0);
-		buffer_object_file_writer.print  (",",		y0);
-		buffer_object_file_writer.print  (",",		scale);
-		buffer_object_file_writer.println(",",		box_distance);
-		
+		if(buffer_object_file_writer!=null) {
+			buffer_object_file_writer.print  ("		",	x0);
+			buffer_object_file_writer.print  (",",		y0);
+			buffer_object_file_writer.print  (",",		scale);
+			buffer_object_file_writer.println(",",		box_distance);
+		}
 		return ret_val;
 	}
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,

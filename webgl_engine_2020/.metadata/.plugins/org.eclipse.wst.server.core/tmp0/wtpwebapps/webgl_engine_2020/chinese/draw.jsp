@@ -100,12 +100,13 @@ function body_onload()
 			canvas_2d_context.lineTo(Math.round(canvas.width*process_bar_current/process_bar_max),canvas.height);
 			canvas_2d_context.stroke();
 
-			var display_value=process_bar_current/process_bar_max;
-			display_value=Math.round(1000*display_value);
-			display_value=display_value/10;
+			var display_value="";
+			display_value+=(Math.round((process_bar_current/process_bar_max)*1000.0)/10.0).toString()+"%,";
+			display_value+=(Math.round(process_bar_time_length/1000.0)).toString()+"秒,";
+			display_value+=(Math.round(process_bar_engine_time_length/1000.0)).toString()+"秒";
 			
 			canvas_2d_context.strokeText(
-				process_bar_caption+":"+(display_value.toString())+"%",
+				process_bar_caption+":"+display_value,
 				canvas.width/2.0,
 				canvas.height/2.0);
 

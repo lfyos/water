@@ -51,34 +51,36 @@ public class extended_part_driver extends part_driver
 			file_writer buffer_object_file_writer,part_container_for_part_search pcps,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		class my_create_grid extends create_grid
-		{
-			public double[][]vertex_data_modifier(double old_vertex_data[][])
+		if(buffer_object_file_writer!=null) {
+			class my_create_grid extends create_grid
 			{
-				double new_vertex_data[][]=new double[old_vertex_data.length][];
-				for(int i=0,ni=old_vertex_data.length;i<ni;i++){
-					new_vertex_data[i]=new double[old_vertex_data[i].length];
-					double alf	=1.0*Math.PI*Math.random();
-					double belt	=2.0*Math.PI*Math.random();
-					double radius=Math.PI*Math.random()*0.5+0.5;
-					
-					new_vertex_data[i][0]=radius*Math.sin(alf)*Math.cos(belt);
-					new_vertex_data[i][1]=radius*Math.sin(alf)*Math.sin(belt);
-					new_vertex_data[i][2]=radius*Math.cos(alf);
-					new_vertex_data[i][3]=1.0;
+				public double[][]vertex_data_modifier(double old_vertex_data[][])
+				{
+					double new_vertex_data[][]=new double[old_vertex_data.length][];
+					for(int i=0,ni=old_vertex_data.length;i<ni;i++){
+						new_vertex_data[i]=new double[old_vertex_data[i].length];
+						double alf	=1.0*Math.PI*Math.random();
+						double belt	=2.0*Math.PI*Math.random();
+						double radius=Math.PI*Math.random()*0.5+0.5;
+						
+						new_vertex_data[i][0]=radius*Math.sin(alf)*Math.cos(belt);
+						new_vertex_data[i][1]=radius*Math.sin(alf)*Math.sin(belt);
+						new_vertex_data[i][2]=radius*Math.cos(alf);
+						new_vertex_data[i][3]=1.0;
+					}
+					return new_vertex_data;
 				}
-				return new_vertex_data;
-			}
-		};
-		
-		String file_name=p.directory_name+p.mesh_file_name;
-		long t=(new File(file_name)).lastModified();
-		
-		(new my_create_grid()).do_create(file_name,false,32,32,new String[] {"vertex","normal"},p.file_charset);
-		
-		file_writer.file_copy_with_brother(file_name,buffer_object_file_writer.directory_name);
-		
-		(new File(file_name)).setLastModified(t);
+			};
+			
+			String file_name=p.directory_name+p.mesh_file_name;
+			long t=(new File(file_name)).lastModified();
+			
+			(new my_create_grid()).do_create(file_name,false,32,32,new String[] {"vertex","normal"},p.file_charset);
+			
+			file_writer.file_copy_with_brother(file_name,buffer_object_file_writer.directory_name);
+			
+			(new File(file_name)).setLastModified(t);
+		}
 		
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}

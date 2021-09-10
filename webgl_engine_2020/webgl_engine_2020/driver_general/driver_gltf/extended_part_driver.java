@@ -66,14 +66,15 @@ public class extended_part_driver extends part_driver
 			file_writer buffer_object_file_writer,part_container_for_part_search pcps,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		String charset=buffer_object_file_writer.get_charset();
-		buffer_object_file_writer.println("\t\t{");
-		append_file(buffer_object_file_writer,"\t\t",p.directory_name+"gltf.material",		charset);
-		append_file(buffer_object_file_writer,"\t\t",p.directory_name+p.material_file_name,	charset);
-		append_file(buffer_object_file_writer,"\t\t",light_file_name,						charset);
-		buffer_object_file_writer.println("\t\t\t\"part_group\"	:	",part_group_id);
-		buffer_object_file_writer.println("\t\t}");
-		
+		if(buffer_object_file_writer!=null) {
+			String charset=buffer_object_file_writer.get_charset();
+			buffer_object_file_writer.println("\t\t{");
+			append_file(buffer_object_file_writer,"\t\t",p.directory_name+"gltf.material",		charset);
+			append_file(buffer_object_file_writer,"\t\t",p.directory_name+p.material_file_name,	charset);
+			append_file(buffer_object_file_writer,"\t\t",light_file_name,						charset);
+			buffer_object_file_writer.println("\t\t\t\"part_group\"	:	",part_group_id);
+			buffer_object_file_writer.println("\t\t}");
+		}
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,

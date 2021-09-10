@@ -8,7 +8,7 @@ public class part_parameter
 	public long 	last_modified_time;
 	
 	public int		process_sequence_id;
-	public long		max_file_head_length,max_file_data_length,max_buffer_object_data_length,max_comment_file_length,max_compress_file_length;
+	public long		max_file_head_length,max_file_data_length,max_buffer_object_data_length,max_compress_file_length;
 	public double	lod_precision_scale,assembly_precision2,discard_precision2,bottom_box_discard_precision2;
 	public long		create_face_buffer_object_bitmap,create_edge_buffer_object_bitmap,create_point_buffer_object_bitmap;
 	public int 		max_component_data_buffer_number,max_part_load_thread_number;
@@ -29,7 +29,6 @@ public class part_parameter
 			long	my_max_file_head_length,
 			long	my_max_file_data_length,
 			long	my_max_buffer_object_data_length,
-			long	my_max_comment_file_length,
 			long	my_max_compress_file_length,
 			
 			double	my_lod_precision_scale,
@@ -64,7 +63,6 @@ public class part_parameter
 		max_file_head_length			=my_max_file_head_length;
 		max_file_data_length			=my_max_file_data_length;
 		max_buffer_object_data_length	=my_max_buffer_object_data_length;
-		max_comment_file_length			=my_max_comment_file_length;
 		max_compress_file_length		=my_max_compress_file_length;
 		
 		lod_precision_scale				=my_lod_precision_scale;
@@ -104,7 +102,6 @@ public class part_parameter
 				max_file_head_length,
 				max_file_data_length,
 				max_buffer_object_data_length,
-				max_comment_file_length,
 				max_compress_file_length,
 				
 				lod_precision_scale,
@@ -143,7 +140,6 @@ public class part_parameter
 				max_file_head_length,
 				max_file_data_length,
 				max_buffer_object_data_length,
-				max_comment_file_length,
 				max_compress_file_length,
 				
 				lod_precision_scale,
@@ -185,7 +181,6 @@ public class part_parameter
 		max_file_head_length				=f.get_long();
 		max_file_data_length				=f.get_long();
 		max_buffer_object_data_length		=f.get_long();
-		max_comment_file_length				=f.get_long();
 		max_compress_file_length			=f.get_long();
 		
 		lod_precision_scale					=f.get_double();

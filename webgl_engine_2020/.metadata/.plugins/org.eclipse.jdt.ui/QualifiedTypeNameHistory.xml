@@ -58,6 +58,6 @@
 <fullyQualifiedTypeName name="convert_old_part_rude_2021_07_01.part_rude"/>
 <fullyQualifiedTypeName name="kernel_part.part"/>
 <fullyQualifiedTypeName name="kernel_file_manager.file_writer"/>
-<fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 <fullyQualifiedTypeName name="kernel_interface.client_process_bar"/>
+<fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 </qualifiedTypeNameHistroy>

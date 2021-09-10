@@ -75,15 +75,16 @@ public class extended_part_driver extends part_driver
 			file_writer buffer_object_file_writer,part_container_for_part_search pcps,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		String file_name=p.directory_name+p.mesh_file_name;
-		long t=(new File(file_name)).lastModified();
-
-		int width=128,height=64;
-		new my_create_grid(file_name,width,height,p.file_charset);
-		file_writer.file_copy_with_brother(file_name,buffer_object_file_writer.directory_name);
-		
-		(new File(file_name)).setLastModified(t);
-		
+		if(buffer_object_file_writer!=null) {
+			String file_name=p.directory_name+p.mesh_file_name;
+			long t=(new File(file_name)).lastModified();
+	
+			int width=128,height=64;
+			new my_create_grid(file_name,width,height,p.file_charset);
+			file_writer.file_copy_with_brother(file_name,buffer_object_file_writer.directory_name);
+			
+			(new File(file_name)).setLastModified(t);
+		}
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,

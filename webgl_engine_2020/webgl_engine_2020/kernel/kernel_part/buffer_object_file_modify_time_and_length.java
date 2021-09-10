@@ -1,6 +1,7 @@
 package kernel_part;
 
 import java.io.File;
+
 import kernel_file_manager.file_reader; 
 import kernel_file_manager.file_writer; 
 
@@ -26,43 +27,42 @@ public class buffer_object_file_modify_time_and_length
 		buffer_object_text_file_length		=new long[0][];
 		buffer_object_file_in_head_flag		=new boolean[0][];
 	}
-	public buffer_object_file_modify_time_and_length(
-			boolean write_simple_part_mesh_flag,boolean load_simple_part_mesh_flag,
-			String root_file_name,String file_charset,part_rude pr)
+	
+	public buffer_object_file_modify_time_and_length(String root_file_name,String file_charset)
 	{
-		if(!write_simple_part_mesh_flag){
-			file_reader fr=new file_reader(root_file_name+".boftal",file_charset);
-			
-			buffer_object_head_last_modify_time	=fr.get_long();
-			buffer_object_head_length			=fr.get_long();
-			buffer_object_total_file_length		=buffer_object_head_length;
-			
-			buffer_object_text_file_length		=new long[fr.get_int()][];
-			buffer_object_file_last_modify_time	=new long[buffer_object_text_file_length.length][];
-			buffer_object_file_in_head_flag		=new boolean[buffer_object_text_file_length.length][];
-			
-			for(int i=0,ni=buffer_object_text_file_length.length;i<ni;i++){
-				buffer_object_text_file_length[i]		=new long[fr.get_int()];
-				buffer_object_file_last_modify_time[i]	=new long[buffer_object_text_file_length[i].length];
-				buffer_object_file_in_head_flag[i]		=new boolean[buffer_object_text_file_length[i].length];
-				for(int j=0,nj=buffer_object_text_file_length[i].length;j<nj;j++){
-					buffer_object_file_last_modify_time[i][j]	=fr.get_long();
-					buffer_object_text_file_length[i][j]		=fr.get_long();
-					buffer_object_file_in_head_flag[i][j]		=fr.get_boolean();
-					if(!(buffer_object_file_in_head_flag[i][j]))
-						buffer_object_total_file_length+=buffer_object_text_file_length[i][j];
-				}
+		file_reader fr=new file_reader(root_file_name+".boftal",file_charset);
+		
+		buffer_object_head_last_modify_time	=fr.get_long();
+		buffer_object_head_length			=fr.get_long();
+		buffer_object_total_file_length		=buffer_object_head_length;
+		
+		buffer_object_text_file_length		=new long[fr.get_int()][];
+		buffer_object_file_last_modify_time	=new long[buffer_object_text_file_length.length][];
+		buffer_object_file_in_head_flag		=new boolean[buffer_object_text_file_length.length][];
+		
+		for(int i=0,ni=buffer_object_text_file_length.length;i<ni;i++){
+			buffer_object_text_file_length[i]		=new long[fr.get_int()];
+			buffer_object_file_last_modify_time[i]	=new long[buffer_object_text_file_length[i].length];
+			buffer_object_file_in_head_flag[i]		=new boolean[buffer_object_text_file_length[i].length];
+			for(int j=0,nj=buffer_object_text_file_length[i].length;j<nj;j++){
+				buffer_object_file_last_modify_time[i][j]	=fr.get_long();
+				buffer_object_text_file_length[i][j]		=fr.get_long();
+				buffer_object_file_in_head_flag[i][j]		=fr.get_boolean();
+				if(!(buffer_object_file_in_head_flag[i][j]))
+					buffer_object_total_file_length+=buffer_object_text_file_length[i][j];
 			}
-			
-			if(load_simple_part_mesh_flag)
-				simple_part_mesh=new part_rude(fr);
-			else
-				simple_part_mesh=null;
-			
-			fr.close();
-			return;
 		}
 		
+		simple_part_mesh=new part_rude(fr);
+	
+		fr.close();
+		
+		return;
+	}
+	
+	public buffer_object_file_modify_time_and_length(
+		part_rude pr,String root_file_name,String file_charset)
+	{
 		simple_part_mesh=null;
 		
 		File f=new File(root_file_name+".head.txt");
@@ -180,6 +180,7 @@ public class buffer_object_file_modify_time_and_length
 			fw.println("/*	total_point_primitive_number		*/	0");
 			fw.println();
 		}
+		
 		fw.close();
 	}
 }

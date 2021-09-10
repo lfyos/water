@@ -50,23 +50,24 @@ public class extended_part_driver extends part_driver
 			file_writer buffer_object_file_writer,part_container_for_part_search pcps,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String str=sdf.format(new Date()).trim();
-
-		str=str.replace( ' ','_');
-		str=str.replace('\t','_');
-		
-		str=str.replace('\r','_');
-		str=str.replace('\n','_');
-		
-		str=str.replace( '-','_');
-		str=str.replace( ':','_');
-		
-		String file_name=buffer_object_file_writer.directory_name+"version.txt";
-		file_writer fw=new file_writer(file_name,system_par.local_data_charset);
-		fw.println(str);
-		fw.close();
-		
+		if(buffer_object_file_writer!=null) {
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String str=sdf.format(new Date()).trim();
+	
+			str=str.replace( ' ','_');
+			str=str.replace('\t','_');
+			
+			str=str.replace('\r','_');
+			str=str.replace('\n','_');
+			
+			str=str.replace( '-','_');
+			str=str.replace( ':','_');
+			
+			String file_name=buffer_object_file_writer.directory_name+"version.txt";
+			file_writer fw=new file_writer(file_name,system_par.local_data_charset);
+			fw.println(str);
+			fw.close();
+		}
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,

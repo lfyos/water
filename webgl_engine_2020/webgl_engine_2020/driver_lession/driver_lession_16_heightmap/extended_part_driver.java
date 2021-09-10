@@ -74,32 +74,33 @@ public class extended_part_driver extends part_driver
 			file_writer buffer_object_file_writer,part_container_for_part_search pcps,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		String file_name=p.directory_name+p.mesh_file_name;
-		long t=(new File(file_name)).lastModified();
-
-		new my_create_grid(file_name,grid_width,grid_height,p.file_charset);
-		
-		(new File(file_name)).setLastModified(t);
-		
-		
-		buffer_object_file_writer.println("\t\t{");
-		
-		buffer_object_file_writer.print  ("\t\t\t\"model_scale\"\t:\t");
-		buffer_object_file_writer.print  ("[\t",model_scale[0]);
-		buffer_object_file_writer.print  (",",model_scale[1]);
-		buffer_object_file_writer.print  (",",model_scale[2]);
-		buffer_object_file_writer.println(",1\t],");
-		
-		buffer_object_file_writer.print  ("\t\t\t\"texture_scale\"\t:\t");
-		buffer_object_file_writer.print  ("[\t",texture_scale[0]);
-		buffer_object_file_writer.print  (",",texture_scale[1]);
-		buffer_object_file_writer.println(",0,1\t]");
-		
-		buffer_object_file_writer.println("\t\t}");
-
-		file_writer.file_copy_with_brother(
-				p.directory_name+p.mesh_file_name,buffer_object_file_writer.directory_name);
-		
+		if(buffer_object_file_writer!=null) {
+			String file_name=p.directory_name+p.mesh_file_name;
+			long t=(new File(file_name)).lastModified();
+	
+			new my_create_grid(file_name,grid_width,grid_height,p.file_charset);
+			
+			(new File(file_name)).setLastModified(t);
+			
+			
+			buffer_object_file_writer.println("\t\t{");
+			
+			buffer_object_file_writer.print  ("\t\t\t\"model_scale\"\t:\t");
+			buffer_object_file_writer.print  ("[\t",model_scale[0]);
+			buffer_object_file_writer.print  (",",model_scale[1]);
+			buffer_object_file_writer.print  (",",model_scale[2]);
+			buffer_object_file_writer.println(",1\t],");
+			
+			buffer_object_file_writer.print  ("\t\t\t\"texture_scale\"\t:\t");
+			buffer_object_file_writer.print  ("[\t",texture_scale[0]);
+			buffer_object_file_writer.print  (",",texture_scale[1]);
+			buffer_object_file_writer.println(",0,1\t]");
+			
+			buffer_object_file_writer.println("\t\t}");
+	
+			file_writer.file_copy_with_brother(
+					p.directory_name+p.mesh_file_name,buffer_object_file_writer.directory_name);
+		}
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,

@@ -4,7 +4,6 @@ import java.io.File;
 
 import kernel_common_class.compress_file_data;
 import kernel_file_manager.file_reader;
-import kernel_file_manager.file_writer;
 
 public class primitive_from_file implements primitive_interface
 {
@@ -155,8 +154,7 @@ public class primitive_from_file implements primitive_interface
 			}
 		}
 	}
-	public primitive_from_file(String my_file_name,String my_file_charset,
-			long my_max_comment_file_length,int my_response_block_size)
+	public primitive_from_file(String my_file_name,String my_file_charset,int my_response_block_size)
 	{
 		File f,gf;
 		
@@ -172,27 +170,18 @@ public class primitive_from_file implements primitive_interface
 			if((gf=new File(gzip_face_file_name)).exists()){
 				long last_time=gf.lastModified();
 				compress_file_data.do_uncompress(f,gf,my_response_block_size, "gzip");
-				if(my_max_comment_file_length>0)
-					if(new File(face_file_name).length()>my_max_comment_file_length)
-						file_writer.delete_comment(face_file_name,file_charset);
 				new File(face_file_name).setLastModified(last_time);
 			}
 		if(!((f=new File(edge_file_name)).exists()))
 			if((gf=new File(gzip_edge_file_name)).exists()) {
 				long last_time=gf.lastModified();
 				compress_file_data.do_uncompress(f, gf, my_response_block_size, "gzip");
-				if(my_max_comment_file_length>0)
-					if(new File(edge_file_name).length()>my_max_comment_file_length)
-						file_writer.delete_comment(edge_file_name,file_charset);
 				new File(edge_file_name).setLastModified(last_time);
 			}
 		if(!((f=new File(point_file_name)).exists()))
 			if((gf=new File(gzip_point_file_name)).exists()) {
 				long last_time=gf.lastModified();
 				compress_file_data.do_uncompress(f, gf, my_response_block_size, "gzip");
-				if(my_max_comment_file_length>0)
-					if(new File(point_file_name).length()>my_max_comment_file_length)
-						file_writer.delete_comment(point_file_name,file_charset);
 				new File(point_file_name).setLastModified(last_time);
 			}
 		face_file	=new file_reader(face_file_name, file_charset);

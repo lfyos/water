@@ -80,49 +80,50 @@ public class extended_part_driver extends part_driver
 			file_writer buffer_object_file_writer,part_container_for_part_search pcps,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		String material_file_name=p.directory_name+p.material_file_name;
-		String material_file_charset=p.file_charset;
-		
-		if(p.is_top_box_part()) {
-			String test_file_name=render_material_par.render_directory_name+render_material_par.top_box_part_material_file_name;
+		if(buffer_object_file_writer!=null) {
+			String material_file_name=p.directory_name+p.material_file_name;
+			String material_file_charset=p.file_charset;
 			
-			if(new File(test_file_name).exists()) {
-				material_file_name=test_file_name;
-				material_file_charset=render_material_par.render_material_charset;
-			}
-			if(scene_parameter_directory_name!=null) {
-				test_file_name=scene_parameter_directory_name+render_material_par.top_box_part_material_file_name;
+			if(p.is_top_box_part()) {
+				String test_file_name=render_material_par.render_directory_name+render_material_par.top_box_part_material_file_name;
+				
 				if(new File(test_file_name).exists()) {
 					material_file_name=test_file_name;
+					material_file_charset=render_material_par.render_material_charset;
+				}
+				if(scene_parameter_directory_name!=null) {
+					test_file_name=scene_parameter_directory_name+render_material_par.top_box_part_material_file_name;
+					if(new File(test_file_name).exists()) {
+						material_file_name=test_file_name;
+					}
+				}
+				if(scene_directory_name!=null) {
+					test_file_name=scene_directory_name+render_material_par.top_box_part_material_file_name;
+					if(new File(test_file_name).exists()) {
+						material_file_name=test_file_name;
+					}
 				}
 			}
-			if(scene_directory_name!=null) {
-				test_file_name=scene_directory_name+render_material_par.top_box_part_material_file_name;
-				if(new File(test_file_name).exists()) {
-					material_file_name=test_file_name;
+			part_material_parameter material[]=part_material_parameter.load_material_parameter(
+					material_file_name,render_material_par.texture_directory_name,material_file_charset);
+			for(int i=0,ni=material.length;i<ni;i++) {
+				if(material[i].texture_file_name!=null) {
+					String d_file_name=buffer_object_file_writer.directory_name+material[i].texture_file_name;
+					String s_file_name_1=material[i].directory_name+material[i].texture_file_name;
+					if(new File(s_file_name_1).exists())
+						file_writer.file_copy(s_file_name_1,d_file_name);
+					else{
+						String s_file_name_2=render_material_par.texture_directory_name+material[i].texture_file_name;
+						if(new File(s_file_name_2).exists())
+							file_writer.file_copy(s_file_name_2,d_file_name);
+					}
 				}
 			}
+			buffer_object_file_writer.println("\t\t{");
+			light_par.create_light_in_part_head(buffer_object_file_writer);		
+			part_material_parameter.create_material_in_part_head(buffer_object_file_writer,material,render_material_par);
+			buffer_object_file_writer.println("\t\t}");
 		}
-		part_material_parameter material[]=part_material_parameter.load_material_parameter(
-				material_file_name,render_material_par.texture_directory_name,material_file_charset);
-		for(int i=0,ni=material.length;i<ni;i++) {
-			if(material[i].texture_file_name!=null) {
-				String d_file_name=buffer_object_file_writer.directory_name+material[i].texture_file_name;
-				String s_file_name_1=material[i].directory_name+material[i].texture_file_name;
-				if(new File(s_file_name_1).exists())
-					file_writer.file_copy(s_file_name_1,d_file_name);
-				else{
-					String s_file_name_2=render_material_par.texture_directory_name+material[i].texture_file_name;
-					if(new File(s_file_name_2).exists())
-						file_writer.file_copy(s_file_name_2,d_file_name);
-				}
-			}
-		}
-		buffer_object_file_writer.println("\t\t{");
-		light_par.create_light_in_part_head(buffer_object_file_writer);		
-		part_material_parameter.create_material_in_part_head(buffer_object_file_writer,material,render_material_par);
-		buffer_object_file_writer.println("\t\t}");
-		
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,

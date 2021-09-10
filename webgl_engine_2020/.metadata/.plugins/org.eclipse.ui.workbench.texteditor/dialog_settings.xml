@@ -2,12 +2,18 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="show_process_bar_interval"/>
+		<item key="selection" value="comment_"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="create_part_mesh_and_buffer_object_head"/>
+			<item value="comment_"/>
+			<item value="request_create_engine"/>
+			<item value="request_url"/>
+			<item value="render_show_process_bar"/>
+			<item value="process_bar_url"/>
 			<item value="show_process_bar_interval"/>
 			<item value="render_initialization"/>
 			<item value="mousemove_event_listener"/>
@@ -17,12 +23,6 @@
 			<item value="mousewheel_event_listener"/>
 			<item value="touchstart_event_listener"/>
 			<item value="touchend_event_listener"/>
-			<item value="touchmove_event_listener"/>
-			<item value="keydown_event_listener"/>
-			<item value="keypress_event_listener"/>
-			<item value="keyup_event_listener"/>
-			<item value="contextmenu_event_listener"/>
-			<item value="gamepadconnected_event_listener"/>
 		</list>
 		<list key="replacehistory">
 			<item value="client"/>
@@ -46,7 +46,7 @@
 		<item key="DIALOG_WIDTH" value="335"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="1316"/>
-		<item key="DIALOG_Y_ORIGIN" value="510"/>
+		<item key="DIALOG_X_ORIGIN" value="1168"/>
+		<item key="DIALOG_Y_ORIGIN" value="580"/>
 	</section>
 </section>
