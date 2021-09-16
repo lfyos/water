@@ -1,19 +1,92 @@
 
 function construct_buffer_object(my_gl,my_parameter)
 {
-	this.gl=my_gl;
-	this.parameter=my_parameter;
+	this.gl								=my_gl;
+	this.parameter						=my_parameter;
 	
-	this.buffer_object	=new Array();
-	this.request_render_part_id=new Array();
-	this.buffer_head_request_queue=new Array();
+	this.buffer_object					=new Array();
+	this.request_render_part_id			=new Array();
+	this.buffer_head_request_queue		=new Array();
 	
-	this.current_loading_mesh_number=0;
+	this.current_loading_mesh_number	=0;
 	
-	this.loading_render_id=-1;
-	this.loading_part_id=-1;
+	this.loading_render_id				=-1;
+	this.loading_part_id				=-1;
 	this.loaded_buffer_object_file_number=0;
 	this.loaded_buffer_object_data_length=0;
+	
+	this.terminate_buffer_object=function()
+	{
+		var render_number=this.buffer_object.length;
+		for(var render_id=0;render_id<render_number;render_id++){
+			if(typeof(this.buffer_object[render_id])!="object")
+				continue;
+			var part_number=this.buffer_object[render_id].length;
+			for(var part_id=0;part_id<part_number;part_id++){			
+				if(typeof(this.buffer_object[render_id][part_id])!="object")
+					continue;			
+
+				var p=[
+					this.buffer_object[render_id][part_id].face,
+					this.buffer_object[render_id][part_id].frame,
+					this.buffer_object[render_id][part_id].edge,
+					this.buffer_object[render_id][part_id].point
+				];				
+				for(var i=0,ni=p.length;i<ni;i++){
+					if(p[i].region_data!=null){
+						for(var j=0,nj=p[i].region_data.length;j<nj;j++){
+							if(typeof(p[i].region_data[j])!="object")
+								continue;
+							if(p[i].region_data[j]==null)
+								continue;
+							
+							this.gl.deleteBuffer(p[i].region_data[j].buffer_object);
+							
+							p[i].region_data[j].buffer_object	=null;
+							p[i].region_data[j].region_box		=null;
+							p[i].region_data[j].private_data	=null;
+							p[i].region_data[j]=null;					
+						}
+						p[i].region_data=null;					
+					}
+					if(p[i].server_region_data!=null){
+						for(var j=0,nj=p[i].server_region_data.length;j<nj;j++){
+							if(typeof(p[i].server_region_data[j])!="object")
+								continue;
+							if(p[i].server_region_data[j]==null)
+								continue;
+							p[i].server_region_data[j].region_box=null;
+						}
+						p[i].server_region_data=null;
+					}
+					if(p[i].data_collector!=null){					
+						for(var j=0,nj=p[i].data_collector.length;j<nj;j++){
+							if(typeof(p[i].data_collector[j])!="object")
+								continue;
+							if(p[i].data_collector[j]==null)
+								continue;
+							p[i].data_collector[j].region_data	=null;
+							p[i].data_collector[j].region_box	=null;
+							p[i].data_collector[j]=null;
+						}					
+						p[i].data_collector=null;
+					}	
+				}
+				this.buffer_object[render_id][part_id].face	=null;
+				this.buffer_object[render_id][part_id].frame=null;
+				this.buffer_object[render_id][part_id].edge	=null;
+				this.buffer_object[render_id][part_id].point=null;
+				
+				this.buffer_object[render_id][part_id]=null;
+			}						
+			this.buffer_object[render_id]=null;
+		}	
+		this.gl							=null;
+		this.parameter					=null;
+		this.buffer_object				=null;
+		this.request_render_part_id		=null;
+		this.buffer_head_request_queue	=null;
+	};
 	
 	this.create_empty_buffer_object=function(
 			my_render_id,my_part_id,my_part_from_id,buffer_object_head_data)

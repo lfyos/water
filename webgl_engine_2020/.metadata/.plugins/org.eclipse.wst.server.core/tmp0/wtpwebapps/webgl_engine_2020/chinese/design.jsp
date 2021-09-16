@@ -29,7 +29,7 @@
 		mount_call_processor_string ="window.frames[\""+mount_call_processor_string+"\"].";
 	
 	out.print("var mcp="+mount_call_processor_string+"render.component_call_processor["
-		+mount_call_processor_string+"render.get_component_to_id_object(\""
+		+mount_call_processor_string+"render.get_component_object_by_component_name(\""
 		+movement_component_name+"\").component_id];");
 };
 %>

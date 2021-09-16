@@ -63,6 +63,15 @@
 							part_list.src="";
 						}
 					}
+					render.system_event_processor.pickupmousedown=function(event,pickup_component_id,render)
+					{
+						setTimeout(
+							function()
+							{
+								render.user_call_processor.scene_mousedown(pickup_component_id);
+							},500);
+						return false;
+					}
 					render.system_event_processor.mousedown=function(event,render)	
 					{
 						render.call_server_component(
@@ -72,7 +81,7 @@
 					};
 					render.system_event_processor.pickupcontextmenu=function(event,pickup_component_id,render)
 					{
-						var p=render.get_component_to_id_object("movement_manager");
+						var p=render.get_component_object_by_component_name("movement_manager");
 						render.debug_call_processor.turnon_control_panel(
 							render.component_call_processor[p.component_id].mount_extract_url());
 						return false;
@@ -92,7 +101,7 @@
 						case 37://left arrow
 						case 39://right arrow
 						{
-							var my_component_id=render.get_component_to_id_object("movement_manager").component_id;
+							var my_component_id=render.get_component_object_by_component_name("movement_manager").component_id;
 							var mcp=render.component_call_processor[my_component_id];
 							
 							if(event.keyCode==37)
@@ -111,7 +120,7 @@
 							render.system_call_processor.select_component("child");
 							break;
 						case 32://space
-							var my_component_id=render.get_component_to_id_object("movement_manager").component_id;
+							var my_component_id=render.get_component_object_by_component_name("movement_manager").component_id;
 							var mcp=render.component_call_processor[my_component_id];
 							mcp.mount_stop();
 							break;
@@ -157,28 +166,19 @@
 							render.set_event_component("text_token_component");
 							break;
 						case 112://F1
-							{
-								var component_name=encodeURIComponent(encodeURIComponent("cad_root_component_0"));
-								render.call_server_component("manipulator_component","all",
-									[["event_method","transparency"],["transparency",0.05],["component",component_name]],
-									function(response_data,render)
-									{
-										render.call_server_component("manipulator_component","all",
-											[["event_method","transparency"],["transparency",1.0]]);
-									});
-							};
+							render.user_call_processor.set_all_transparant_except_selection();
 							break;
 						case 113://F2
-							{
-								var component_name=encodeURIComponent(encodeURIComponent("cad_root_component_0"));
-								render.call_server_component("manipulator_component","all",
-									[["event_method","transparency"],["transparency",1.0],["component",component_name]]);
-							};
+							render.user_call_processor.set_all_untransparant();
 							break;
 						case 114://F3
 							window.open(render.system_call_processor.component_check_url(),"_blank");
 							break;
 						case 115://F4
+							var p=render.user_call_processor.get_component_tree();
+							alert(p.component_name);
+							alert(p.component_id);
+							alert(p.component_children.length);
 							break;
 						case 116://F5
 							break;

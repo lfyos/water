@@ -4,43 +4,71 @@ function construct_program_object(my_gl,my_parameter)
 	this.parameter=my_parameter;
 	this.render_program=new Array();
 	
-	this.compile_program=function(program_id,permanent_render_id,
-			my_decode_function,my_draw_function,my_vertex_program,my_fragment_program,
-			my_geometry_program,my_tess_control_Program,my_tess_evalueprogram)
+	this.terminate_program_object=function()
 	{
-		var vertex=this.gl.createShader(this.gl.VERTEX_SHADER);
-		this.gl.shaderSource(vertex,my_vertex_program);
-		this.gl.compileShader(vertex);
-		if (!(this.gl.getShaderParameter(vertex,this.gl.COMPILE_STATUS))){
+		var program_number=this.render_program.length;
+		for(var program_id=0;program_id<program_number;program_id++){
+			if(typeof(this.render_program[program_id])!="object")
+				continue;
+			if(this.render_program[program_id]==null)
+				continue;
+			
+			this.gl.deleteProgram(this.render_program[program_id].shader_program);
+			this.gl.deleteShader(this.render_program[program_id].vertex_shader);
+			this.gl.deleteShader(this.render_program[program_id].fragment_shader);
+
+			this.render_program[program_id].decode_function	=null;
+			this.render_program[program_id].draw_function	=null;
+			this.render_program[program_id].destroy_function=null;
+			this.render_program[program_id].vertex_shader	=null;
+			this.render_program[program_id].fragment_shader	=null;
+			this.render_program[program_id].shader_program	=null;
+			this.render_program[program_id]=null;
+		}
+		this.gl				=null;
+		this.parameter		=null;
+		this.render_program	=null;
+	}
+	
+	this.compile_program=function(program_id,permanent_render_id,
+			my_decode_function,my_draw_function,my_destroy_function,
+			my_vertex_program,my_fragment_program,my_geometry_program,my_tess_control_Program,my_tess_evalueprogram)
+	{
+		var my_vertex=this.gl.createShader(this.gl.VERTEX_SHADER);
+		this.gl.shaderSource(my_vertex,my_vertex_program);
+		this.gl.compileShader(my_vertex);
+		if (!(this.gl.getShaderParameter(my_vertex,this.gl.COMPILE_STATUS))){
 		   	if(this.parameter.debug_mode_flag){
 		   		alert("vertex shader program: "+permanent_render_id.toString());
-		   		alert(this.gl.getShaderInfoLog(vertex));
+		   		alert(this.gl.getShaderInfoLog(my_vertex));
 		   		alert(my_vertex_program);
 		   	}else{
 		   		console.log("vertex shader program: "+permanent_render_id.toString());
-		   		console.log(this.gl.getShaderInfoLog(vertex));
+		   		console.log(this.gl.getShaderInfoLog(my_vertex));
 		   		console.log(my_vertex_program);
 		   	}
 		}
-		var fragment=this.gl.createShader(this.gl.FRAGMENT_SHADER);
-		this.gl.shaderSource(fragment,my_fragment_program);
-		this.gl.compileShader(fragment);
-		if(!(this.gl.getShaderParameter(fragment,this.gl.COMPILE_STATUS))){
+		
+		
+		var my_fragment=this.gl.createShader(this.gl.FRAGMENT_SHADER);
+		this.gl.shaderSource(my_fragment,my_fragment_program);
+		this.gl.compileShader(my_fragment);
+		if(!(this.gl.getShaderParameter(my_fragment,this.gl.COMPILE_STATUS))){
 		   	if(this.parameter.debug_mode_flag){
 				alert("fragment shader program: "+permanent_render_id.toString());
-				alert(this.gl.getShaderInfoLog(fragment));
+				alert(this.gl.getShaderInfoLog(my_fragment));
 				alert(my_fragment_program);
 		   	}else{
 		  		console.log("fragment shader program: "+permanent_render_id.toString());
-		  		console.log(this.gl.getShaderInfoLog(fragment));
+		  		console.log(this.gl.getShaderInfoLog(my_fragment));
 		  		console.log(my_fragment_program);
 		   	}
 		}
 		
 		var my_shader_program=this.gl.createProgram();
 
-		this.gl.attachShader(my_shader_program, vertex);
-	    this.gl.attachShader(my_shader_program, fragment);     	
+		this.gl.attachShader(my_shader_program, my_vertex);
+	    this.gl.attachShader(my_shader_program, my_fragment);     	
 	    this.gl.linkProgram (my_shader_program);
 
 	    if(this.gl.getProgramParameter(my_shader_program,this.gl.LINK_STATUS)==null){
@@ -69,6 +97,9 @@ function construct_program_object(my_gl,my_parameter)
 		{
 			decode_function	:	my_decode_function,
 			draw_function	:	my_draw_function,
+			destroy_function:	my_destroy_function,
+			vertex_shader	:	my_vertex,
+			fragment_shader	:	my_fragment,
 			shader_program	:	my_shader_program
 		};
 	};

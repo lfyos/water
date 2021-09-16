@@ -29,6 +29,9 @@ public class program_file_reader
 		case "draw":
 			file_name=r.javascript_draw;
 			break;
+		case "destroy":
+			file_name=r.javascript_destroy;
+			break;
 		case "vertex":
 			file_name=r.vertex_shader;
 			break;

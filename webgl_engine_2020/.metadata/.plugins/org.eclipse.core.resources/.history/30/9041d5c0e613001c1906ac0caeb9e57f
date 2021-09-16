@@ -1,0 +1,13 @@
+package kernel_engine;
+
+import kernel_render.render;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
+
+public class engine_boftal_creator 
+{
+	public engine_boftal_creator(render renders[],String file_name,String file_charset)
+	{
+		
+	}
+}

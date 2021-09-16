@@ -125,9 +125,7 @@ function construct_render_routine(my_process_bar_id,my_gl,
 	this.part_information			=new Array();
 
 	this.component_location_data	=new construct_component_location_object(component_number,this.computer,this.gl);
-	
 	this.component_render_data		=new construct_component_render_object(render_number,this.parameter);
-
 	this.modifier_time_parameter	=new construct_modifier_time_parameter(modifier_container_number);
 	this.render_program				=new construct_program_object	(this.gl,this.parameter);
 	this.buffer_object				=new construct_buffer_object	(this.gl,this.parameter);
@@ -157,20 +155,30 @@ function construct_render_routine(my_process_bar_id,my_gl,
 	this.collector_stack_version			=0;
 
 	this.process_part_component_id_and_driver_id=function(
-			component_number,sorted_component_name_id,part_component_id_and_driver_id)
+			sorted_component_name_id,part_component_id_and_driver_id)
 	{
-		this.component_to_id_array  =new Array(component_number);
-		this.component_to_name_array=new Array(component_number);
-		for(var i=0,j=0,ni=sorted_component_name_id.length;i<ni;j++){
-			var my_component_name=sorted_component_name_id[i++];
-			var my_component_id	 =sorted_component_name_id[i++];
+		var component_number=sorted_component_name_id.length;
+		this.component_array_sorted_by_name =new Array(component_number);
+		this.component_array_sorted_by_id	=new Array(component_number);
+		for(var i=0;i<component_number;i++){
+			var my_component_name		=sorted_component_name_id[i][0];
+			var my_component_id	 		=sorted_component_name_id[i][1];
+			var my_component_children	=sorted_component_name_id[i][2];
 			var p={
-					component_name	:	my_component_name,
-					component_id	:	my_component_id
+					component_name		:	my_component_name,
+					component_id		:	my_component_id,
+					component_children	:	my_component_children
 			};
-			this.component_to_id_array[j]=p;
-			this.component_to_name_array[my_component_id]=p;
+			this.component_array_sorted_by_name[i]=p;
+			this.component_array_sorted_by_id[my_component_id]=p;
 		};
+		for(var i=0;i<component_number;i++){
+			var p=this.component_array_sorted_by_id[i],my_component_children=new Array();
+			for(var j=0,nj=p.component_children.length;j<nj;j++)
+				my_component_children.push(this.component_array_sorted_by_id[p.component_children[j]]);
+			p.component_children=my_component_children;
+		};
+		
 		var component_render_id_and_part_id=new Array(component_number);
 		for(var i=0;i<component_number;i++)
 			component_render_id_and_part_id[i]=new Array();
@@ -794,34 +802,82 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		this.parameter.debug_mode_flag=false;
 		this.terminate_flag=true;
 		
-		if(this.process_bar_id>=0)
+		if(this.process_bar_id>=0){
 			try{
 				var my_ajax=new XMLHttpRequest();
 				my_ajax.open("GET",this.url+"?channel=process_bar&command=release&process_bar="+this.process_bar_id,true);
 				my_ajax.send(null);
 			}catch(e){
 				;
-			};
+			}
+		}
+
 		try{
 			var my_ajax=new XMLHttpRequest();
 			my_ajax.open("GET",this.url_and_channel+"&command=termination",true);
 			my_ajax.send(null);
 		}catch(e){
 			;
-		};
+		}
+
+		var render_number=this.render_program.render_program.length;
+		for(var render_id=0;render_id<render_number;render_id++){
+			var destroy_function=this.render_program.render_program[render_id].destroy_function;
+			var part_number=this.permanent_render_part_id[render_id].length;
+			for(var part_id=0;part_id<part_number;part_id++)
+				try{
+					destroy_function(render_id,part_id,this);
+				}catch(e){
+					;
+				}
+		}
+		
+		this.utility.terminate_utility_object();
+		this.utility=null;
+		
+		this.event_listener.terminate_event_listener_object();
+		this.event_listener=null;
+		
+		this.deviceorientation.terminate_deviceorientation_object();
+		this.deviceorientation=null;
+		
+		this.camera.terminate_camera_object();
+		this.camera=null;
+		
+		this.component_render_data.terminate_component_render_object();
+		this.component_render_data=null;
+		
+		this.component_location_data.terminate_component_location_object();
+		this.component_location_data=null;
+		
+		this.buffer_object.terminate_buffer_object();
+		this.buffer_object=null;
+		
+		this.render_program.terminate_program_object();
+		this.render_program=null;
+
 	};
 	
-	this.get_component_to_id_object=function(my_component_name)
+	this.get_component_object_by_component_id=function(my_component_id)
 	{
-		for(var begin_pointer=0,end_pointer=this.component_to_id_array.length-1;begin_pointer<=end_pointer;){
+		if(my_component_id<0)
+			return null;
+		if(my_component_id>=this.component_array_sorted_by_id.length)
+			return null;
+		return this.component_array_sorted_by_id[my_component_id];
+	};
+	
+	this.get_component_object_by_component_name=function(my_component_name)
+	{
+		for(var begin_pointer=0,end_pointer=this.component_array_sorted_by_name.length-1;begin_pointer<=end_pointer;){
 			var middle_pointer=Math.floor((begin_pointer+end_pointer)/2.0);
-			var array_component_name=this.component_to_id_array[middle_pointer].component_name;
+			var array_component_name=this.component_array_sorted_by_name[middle_pointer].component_name;
 			if(array_component_name<my_component_name)
 				begin_pointer=middle_pointer+1;
 			else if(array_component_name>my_component_name)
 				end_pointer=middle_pointer-1;
 			else 
-				return this.component_to_id_array[middle_pointer];
+				return this.component_array_sorted_by_name[middle_pointer];
 		};
 		return null;
 	};
@@ -829,7 +885,7 @@ function construct_render_routine(my_process_bar_id,my_gl,
 	{
 		var my_component_id=my_component_name;
 		if(typeof(my_component_id)=="string"){
-			var p=this.get_component_to_id_object(my_component_id);
+			var p=this.get_component_object_by_component_name(my_component_id);
 			if(p==null)
 				return null;
 			my_component_id=p.component_id;

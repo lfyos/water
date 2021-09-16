@@ -89,26 +89,28 @@ function body_onload()
 					return true;
 				}
 			}
+
+			canvas_2d_context.fillStyle="rgb(0,255,0)";
+			canvas_2d_context.beginPath();
+			canvas_2d_context.moveTo(0,0);
+			canvas_2d_context.lineTo(Math.round(canvas.width*process_bar_current/process_bar_max),0);
+			canvas_2d_context.lineTo(Math.round(canvas.width*process_bar_current/process_bar_max),canvas.height);
+			canvas_2d_context.lineTo(0,canvas.height);
+			canvas_2d_context.lineTo(0,0);
+			canvas_2d_context.fill();
+
+			var display_value="";
+			display_value+=(Math.round(1000*process_bar_current/process_bar_max)/10.0).toString()+"%,";
+			display_value+=(Math.round(process_bar_time_length/1000.0)).toString()+"秒,";
+			display_value+=(Math.round(process_bar_engine_time_length/1000.0)).toString()+"秒";
 			
 			canvas_2d_context.font			="bold 64px Arial";
 			canvas_2d_context.textAlign		="center";
 			canvas_2d_context.textBaseline	="middle";
-			canvas_2d_context.strokeStyle	="rgb(255,0,0)";
-			
-			canvas_2d_context.beginPath();
-			canvas_2d_context.moveTo(Math.round(canvas.width*process_bar_current/process_bar_max),0);
-			canvas_2d_context.lineTo(Math.round(canvas.width*process_bar_current/process_bar_max),canvas.height);
-			canvas_2d_context.stroke();
-
-			var display_value="";
-			display_value+=(Math.round((process_bar_current/process_bar_max)*1000.0)/10.0).toString()+"%,";
-			display_value+=(Math.round(process_bar_time_length/1000.0)).toString()+"秒,";
-			display_value+=(Math.round(process_bar_engine_time_length/1000.0)).toString()+"秒";
-			
-			canvas_2d_context.strokeText(
-				process_bar_caption+":"+display_value,
-				canvas.width/2.0,
-				canvas.height/2.0);
+			canvas_2d_context.fillStyle		="rgb(255,0,0)";
+			canvas_2d_context.fillText(
+					process_bar_caption+":"+display_value,
+					canvas.width/2.0, canvas.height/2.0);
 
 			return true;
 		}

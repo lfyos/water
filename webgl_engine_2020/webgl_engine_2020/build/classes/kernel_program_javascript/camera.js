@@ -15,6 +15,15 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 	this.component_location_data=my_component_location_data;
 	this.computer				=my_computer;
 	
+	
+	this.terminate_camera_object=function()
+	{
+		this.camera_object_parameter=null;
+		this.camera_render_parameter=null;
+		this.component_location_data=null;
+		this.computer				=null;
+	}
+	
 	this.modify_camera_data=function(render_buffer_id,camera_data_from_server)
 	{
 		var all_camera_data		=camera_data_from_server[0];

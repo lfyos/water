@@ -142,17 +142,19 @@ public class engine_initialization
 		file_writer fw=new file_writer(destination_file_name,ek.system_par.network_data_charset);
 
 		fw.println("[");
-		fw.print  (sort_component_array.length);
-		fw.println(",");
-		
 		fw.println("[");
 		for(int i=0,ni=sort_component_array.length;i<ni;i++){
-			fw.print("\t",change_str(sort_component_array[i].component_name));
+			fw.print("\t[",change_str(sort_component_array[i].component_name));
 			fw.print(",",sort_component_array[i].component_id);
+			fw.print(",[");
+			
+			for(int j=0,nj=sort_component_array[i].children_number();j<nj;j++)
+				fw.print((j<=0)?"":",",sort_component_array[i].children[j].component_id);
+			
 			if(i!=(ni-1))
-				fw.println(",");
+				fw.println("]],");
 			else
-				fw.println();
+				fw.println("]]");
 		}
 		fw.println("],");
 		fw.println();

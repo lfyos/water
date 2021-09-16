@@ -6,6 +6,7 @@ import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_directory;
 import kernel_network.client_request_response;
+import kernel_part.buffer_object_file_modify_time_and_length_container;
 import kernel_part.part;
 import kernel_part.part_container_for_part_search;
 import kernel_part.part_loader;
@@ -189,8 +190,9 @@ public class create_assemble_part
 				
 				p.part_par.combine_to_part_package_flag,
 				p.part_par.free_part_memory_flag,
+				p.part_par.engine_boftal_flag,
+				p.part_par.do_load_lock_flag,
 				p.part_par.clear_model_file_flag);
-		
 	}
 	
 	public part top_box_part[];
@@ -200,8 +202,8 @@ public class create_assemble_part
 			double expand_ratio,double left_ratio,double create_top_part_assembly_precision2,
 			double create_top_part_discard_precision2,double discard_top_part_component_precision2,
 			render_container render_cont,part_loader_container part_loader_cont,
-			system_parameter system_par,scene_parameter scene_par,
-			part_container_for_part_search pcps,long last_modified_time)
+			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
+			buffer_object_file_modify_time_and_length_container boftal_container,long last_modified_time)
 	{
 		int max_component_number			=root_component.component_id+1;
 		
@@ -303,9 +305,8 @@ public class create_assemble_part
 				debug_information.println("Temp directory:",	file_directory.part_file_directory(add_part,system_par,scene_par));
 				e.printStackTrace();
 			}
-			already_loaded_part=part_loader_cont.load(
-				add_part,render_cont.get_copy_from_part(add_part),
-				last_modified_time,system_par,scene_par,already_loaded_part,pcps);
+			already_loaded_part=part_loader_cont.load(add_part,render_cont.get_copy_from_part(add_part),
+				last_modified_time,system_par,scene_par,already_loaded_part,pcps,boftal_container);
 			top_box_part[add_part_number++]=add_part;
 			create_part_number+=my_create_part_number;	
 			

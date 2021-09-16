@@ -1,35 +1,41 @@
-load+english					load
-load+chinese					装入
+load+english									load
+load+chinese									装入
 
-wait_for_create_scene+english				1.wait_for_create_scene
-wait_for_create_scene+chinese				1.等待创建场景
+wait_for_create_scene+english					1.wait_for_create_scene
+wait_for_create_scene+chinese					1.等待创建场景
 
-load_first_class_part+english				2.load_first_parts
-load_first_class_part+chinese				2.装入第一类零件数据
+load_buffer_object_file_information+english		2.load_buffer_file_information
+load_buffer_object_file_information+chinese		2.装入缓冲文件信息
 
-load_second_class_part+english				3.load_second_parts
-load_second_class_part+chinese				3.装入第二类零件数据
+load_first_class_part+english					3.load_first_parts
+load_first_class_part+chinese					3.装入第一类零件数据
 
-load_third_class_part+english				4.load_third_parts
-load_third_class_part+chinese				4.装入第三类零件数据
+load_second_class_part+english					4.load_second_parts
+load_second_class_part+chinese					4.装入第二类零件数据
 
-load_component+english						5.load_components 
-load_component+chinese						5.装入组件数据
+load_third_class_part+english					5.load_third_parts
+load_third_class_part+chinese					5.装入第三类零件数据
 
-create_first_class_package+english			6.create_first_class_packages
-create_first_class_package+chinese			6.生成第一类下载数据包
+create_buffer_object_file+english				6.create_buffer_file_information
+create_buffer_object_file+chinese				6.生成缓冲文件信息
 
-create_second_class_package+english			7.create_second_class_packages
-create_second_class_package+chinese			7.生成第二类下载数据包
+load_component+english							7.load_components 
+load_component+chinese							7.装入组件数据
 
-caculate_scene_data+english					8.caculate_scene_data 
-caculate_scene_data+chinese					8.计算场景相关数据
+create_first_class_package+english				8.create_first_class_packages
+create_first_class_package+chinese				8.生成第一类下载数据包
 
-create_shader+english						9.create_shaders 
-create_shader+chinese						9.生成着色程序
+create_second_class_package+english				9.create_second_class_packages
+create_second_class_package+chinese				9.生成第二类下载数据包
 
-scene_initialization+english				10.scene_initialization 
-scene_initialization+chinese				10.场景初始化
+caculate_scene_data+english						10.caculate_scene_data 
+caculate_scene_data+chinese						10.计算场景相关数据
 
-load_termination+english					11.load_termination 
-load_termination+chinese					11.场景数据装入完毕
+create_shader+english							11.create_shaders 
+create_shader+chinese							11.生成着色程序
+
+scene_initialization+english					12.scene_initialization 
+scene_initialization+chinese					12.场景初始化
+
+load_termination+english						13.load_termination 
+load_termination+chinese						13.场景数据装入完毕

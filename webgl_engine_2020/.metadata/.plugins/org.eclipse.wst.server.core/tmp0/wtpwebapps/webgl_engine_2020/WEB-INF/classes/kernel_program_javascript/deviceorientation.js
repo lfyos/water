@@ -43,7 +43,7 @@ function construct_deviceorientation(my_computer)
 				z:	0
 			}
 	};
-	
+
 	this.set_transform_matrix=function(new_transform_matrix)
 	{
 		this.deviceorientation.transform_matrix=new_transform_matrix;
@@ -121,25 +121,52 @@ function construct_deviceorientation(my_computer)
 		}
 	);
 	
-	window.addEventListener(
-		"deviceorientation",
-		function(event)
-		{
-			event.preventDefault();
-			
-			my_deviceorientation.deviceorientation.alpha=event.alpha;
-			my_deviceorientation.deviceorientation.beta	=event.beta;
-			my_deviceorientation.deviceorientation.gamma=event.gamma;
+	function deviceorientation_fun(event)
+	{
+		if(typeof(event)!="object")
+			return;
+		if(event==null)
+			return;
+		if(my_deviceorientation==null)
+			return;
+		if(my_deviceorientation.deviceorientation==null)
+			return;
+		
+		event.preventDefault();
+		
+		my_deviceorientation.deviceorientation.alpha=event.alpha;
+		my_deviceorientation.deviceorientation.beta	=event.beta;
+		my_deviceorientation.deviceorientation.gamma=event.gamma;
 
-			my_deviceorientation.deviceorientation.version++;
-		},
-		true);
-	window.addEventListener(
-		"devicemotion",
-		function(event)
-		{
-			my_deviceorientation.acceleration.translation	=event.accelerationIncludingGravity;
-			my_deviceorientation.acceleration.rotation		=event.rotationRate;
-		},
-		true);
+		my_deviceorientation.deviceorientation.version++;
+	};
+	function devicemotion_fun(event)
+	{
+		if(typeof(event)!="object")
+			return;
+		if(event==null)
+			return;
+		if(my_deviceorientation==null)
+			return;
+		if(my_deviceorientation.acceleration==null)
+			return;
+		my_deviceorientation.acceleration.translation	=event.accelerationIncludingGravity;
+		my_deviceorientation.acceleration.rotation		=event.rotationRate;
+	};
+	
+	this.terminate_deviceorientation_object=function()
+	{
+		this.computer=null;
+		this.gps=null;
+		this.deviceorientation=null;
+		this.acceleration=null;
+		
+		if(this.gps!=null)
+			navigator.geolocation.clearWatch(this.gps.watch_id);
+		window.removeEventListener("deviceorientation",	deviceorientation_fun);
+		window.removeEventListener("devicemotion",		devicemotion_fun);
+	};
+	
+	window.addEventListener("deviceorientation",deviceorientation_fun,	true);
+	window.addEventListener("devicemotion",		devicemotion_fun,		true);
 };

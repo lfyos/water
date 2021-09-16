@@ -12,6 +12,7 @@ import kernel_driver.modifier_container;
 import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
 import kernel_render.render_container;
+import kernel_part.buffer_object_file_modify_time_and_length_container;
 import kernel_part.part;
 import kernel_part.part_container_for_part_search;
 import kernel_render.create_assemble_part;
@@ -209,8 +210,9 @@ public class engine_kernel
 		}	
 	}
 	
-	private void load_create_assemble_part(
-			client_request_response request_response,part_container_for_part_search all_part_part_cont)
+	private void load_create_assemble_part(client_request_response request_response,
+			part_container_for_part_search all_part_part_cont,
+			buffer_object_file_modify_time_and_length_container boftal_container)
 	{	
 		if((create_top_part_expand_ratio>=1.0)&&(create_top_part_left_ratio>=1.0)){
 			if(component_cont.root_component!=null){
@@ -221,7 +223,7 @@ public class engine_kernel
 						scene_par.create_top_part_discard_precision2,
 						scene_par.discard_top_part_component_precision2,
 						render_cont,part_loader_cont,
-						system_par,scene_par,all_part_part_cont,
+						system_par,scene_par,all_part_part_cont,boftal_container,
 						get_file_last_modified_time())).top_box_part;
 				if(top_box_part!=null)
 					if(top_box_part.length>0)
@@ -230,7 +232,6 @@ public class engine_kernel
 			}
 		}
 	}
-	
 	private void load_routine(client_request_response request_response,client_process_bar process_bar)
 	{
 		debug_information.println();
@@ -254,6 +255,10 @@ public class engine_kernel
 				scene_par.scene_last_modified_time=scene_f.lastModified_time;
 		}
 		
+		buffer_object_file_modify_time_and_length_container boftal_container;
+		boftal_container=new buffer_object_file_modify_time_and_length_container(process_bar,
+			scene_par.scene_proxy_directory_name+"engine.boftal",system_par.local_data_charset);
+		
 		render_cont=new render_container(render_cont,system_par,request_response);
 		part_cont=new part_container_for_part_search(render_cont.part_array(true,-1));
 
@@ -271,13 +276,18 @@ public class engine_kernel
 				scene_par.scene_sub_directory, 2,my_part_type_string_sorter,
 				system_par,scene_par,request_response);
 		part_cont.execute_append();
-		render_cont.load_part((1<<1)+(1<<2),1,part_loader_cont,system_par,scene_par,part_cont,"load_first_class_part",process_bar);
+		render_cont.load_part((1<<1)+(1<<2),1,part_loader_cont,
+				system_par,scene_par,part_cont,boftal_container,"load_first_class_part",process_bar);
 
 		render_cont.create_bottom_box_part(part_cont,request_response,system_par);
 		part_cont.execute_append();
-		render_cont.load_part((1<<1)+(1<<2),2,part_loader_cont,system_par,scene_par,part_cont,"load_second_class_part",process_bar);
+		render_cont.load_part((1<<1)+(1<<2),2,part_loader_cont,
+				system_par,scene_par,part_cont,boftal_container,"load_second_class_part",process_bar);
 		
 		render_cont.type_part_package=new part_package(process_bar,"create_first_class_package",render_cont,1,system_par,scene_par);
+		
+		new engine_boftal_creator(scene_par.scene_proxy_directory_name+"engine.boftal",
+				system_par.local_data_charset,render_cont.renders,system_par,scene_par,process_bar);
 		
 		process_bar.set_process_bar(true,"load_component", 1, 2);
 		component_cont=new component_container(scene_f,
@@ -306,9 +316,10 @@ public class engine_kernel
 		component_cont.do_component_caculator(false);
 		component_cont.root_component.reset_component(component_cont);
 		
-		load_create_assemble_part(request_response,part_cont);
+		load_create_assemble_part(request_response,part_cont,boftal_container);
 		part_cont.execute_append();
-		render_cont.load_part((1<<2),4,part_loader_cont,system_par,scene_par,part_cont,"load_third_class_part",process_bar);
+		render_cont.load_part((1<<2),4,part_loader_cont,
+				system_par,scene_par,part_cont,boftal_container,"load_third_class_part",process_bar);
 		
 		render_cont.scene_part_package=new part_package(process_bar,"create_second_class_package",render_cont,2,system_par,scene_par);
 		

@@ -13,6 +13,7 @@ import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_interface.client_process_bar;
 import kernel_network.client_request_response;
+import kernel_part.buffer_object_file_modify_time_and_length_container;
 import kernel_part.part;
 import kernel_part.part_loader;
 import kernel_part.part_parameter;
@@ -93,6 +94,7 @@ public class render_container
 	public void load_part(int part_type,int part_flag,
 			part_loader_container part_loader_cont,system_parameter system_par,
 			scene_parameter scene_par,part_container_for_part_search pcps,
+			buffer_object_file_modify_time_and_length_container boftal_container,
 			String process_bar_title,client_process_bar process_bar)
 	{
 		if(renders==null)
@@ -139,7 +141,7 @@ public class render_container
 							continue;
 						
 						already_loaded_part=part_loader_cont.load(p,get_copy_from_part(p),
-							-1,system_par,scene_par,already_loaded_part,pcps);
+							-1,system_par,scene_par,already_loaded_part,pcps,boftal_container);
 						
 						if(process_bar!=null)
 							process_bar.set_process_bar(false,process_bar_title,load_number++,(all_number<1)?1:all_number);

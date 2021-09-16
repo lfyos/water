@@ -2,32 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="comment_"/>
+		<item key="selection" value="select_component"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
-			<item value="create_part_mesh_and_buffer_object_head"/>
-			<item value="comment_"/>
-			<item value="request_create_engine"/>
-			<item value="request_url"/>
-			<item value="render_show_process_bar"/>
-			<item value="process_bar_url"/>
-			<item value="show_process_bar_interval"/>
+			<item value="select_component"/>
+			<item value="pickupmousedown"/>
+			<item value="system_event_processor"/>
+			<item value="component_check_url"/>
+			<item value="get_component_object_by_component_name"/>
+			<item value="component_array_sorted_by_name"/>
+			<item value="get_component_to_id_object"/>
+			<item value="component_number"/>
 			<item value="render_initialization"/>
-			<item value="mousemove_event_listener"/>
-			<item value="mousedown_event_listener"/>
-			<item value="mouseup_event_listener"/>
-			<item value="dblclick_event_listener"/>
-			<item value="mousewheel_event_listener"/>
-			<item value="touchstart_event_listener"/>
-			<item value="touchend_event_listener"/>
+			<item value="component_to_name_array"/>
+			<item value="component_to_id_array"/>
+			<item value="sorted_component_name_id"/>
+			<item value="process_part_component_id_and_driver_id"/>
+			<item value="cad_root_component_0"/>
+			<item value="mousemove"/>
 		</list>
 		<list key="replacehistory">
+			<item value="get_component_object_by_component_name"/>
+			<item value="component_array_sorted_by_id"/>
+			<item value="component_array_sorted_by_name"/>
+			<item value="display_component_root"/>
+			<item value=""/>
+			<item value="removeEventListener"/>
 			<item value="client"/>
 			<item value=","/>
-			<item value=""/>
 			<item value="processs_bar_object.show_process_bar_function=null"/>
 			<item value="par"/>
 			<item value="render."/>
@@ -35,18 +40,13 @@
 			<item value="render.debug_"/>
 			<item value="render_object."/>
 			<item value="跟踪可见片元"/>
-			<item value="double"/>
-			<item value="point"/>
-			<item value="pr"/>
-			<item value="face_advance(body_id,face_id,primitive_id);"/>
-			<item value="default_attribute_double"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item key="DIALOG_WIDTH" value="335"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="1168"/>
-		<item key="DIALOG_Y_ORIGIN" value="580"/>
+		<item key="DIALOG_X_ORIGIN" value="174"/>
+		<item key="DIALOG_Y_ORIGIN" value="551"/>
 	</section>
 </section>

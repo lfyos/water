@@ -7,6 +7,14 @@ function construct_component_render_object(max_render_number,my_parameter)
 	for(var i=0;i<max_render_number;i++)
 		this.collect_array[i]=new Array();
 	
+	this.terminate_component_render_object=function()
+	{
+		this.parameter=null;
+		this.component_render_object=null;
+		this.collect_array=null;
+		return;
+	};
+	
 	this.get_render_list=function(render_buffer_id)
 	{
 		var p=this.component_render_object;

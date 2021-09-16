@@ -101,29 +101,30 @@ function render_initialization(initialization_url,render,user_initialization_fun
 				};
 				return;
 			};
-			var component_number				=response_data[0];
-			var sorted_component_name_id		=response_data[1];
-			var	part_component_id_and_driver_id	=response_data[2];
-			var response_fun_array				=response_data[3];
-			var program_data					=response_data[4];
+			var sorted_component_name_id		=response_data[0];
+			var	part_component_id_and_driver_id	=response_data[1];
+			var response_fun_array				=response_data[2];
+			var program_data					=response_data[3];
 			
-			render.process_part_component_id_and_driver_id(component_number,
+			render.process_part_component_id_and_driver_id(
 					sorted_component_name_id,part_component_id_and_driver_id);
 			
 			for(var i=0,ni=program_data.length;i<ni;i++){
 				var permanent_render_id	=program_data[i][0];
 				var decode_function		=program_data[i][1];
 				var draw_function		=program_data[i][2];
-				var vertex_program		=program_data[i][3];
-				var fragment_program	=program_data[i][4];
-				var geometry_program	=program_data[i][5];
-				var tess_control_Program=program_data[i][6];
-				var tess_evalueprogram	=program_data[i][7];
+				var destroy_function	=program_data[i][3];
+				var vertex_program		=program_data[i][4];
+				var fragment_program	=program_data[i][5];
+				var geometry_program	=program_data[i][6];
+				var tess_control_Program=program_data[i][7];
+				var tess_evalueprogram	=program_data[i][8];
 				
 				render.render_program.compile_program(i,
 						permanent_render_id,
 						decode_function,
 						draw_function,
+						destroy_function,
 						vertex_program,
 						fragment_program,
 						geometry_program,

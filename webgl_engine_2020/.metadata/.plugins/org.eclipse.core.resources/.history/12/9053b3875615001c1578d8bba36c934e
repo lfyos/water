@@ -1,0 +1,26 @@
+function (render_id,part_id,render)
+{
+var flag=0;
+
+	try{
+	var gl								=render.gl;			flag++;
+	var shader_program					=render.render_program.render_program[render_id].shader_program;			flag++;
+	var part_buffer_object				=render.buffer_object.buffer_object[render_id][part_id];			flag++;
+
+	var data_buffer						=render.data_buffer[render_id][part_id];			flag++;
+
+	var permanent_render_id				=render.permanent_render_part_id[render_id][part_id].permanent_render_id;			flag++;
+	var permanent_part_id				=render.permanent_render_part_id[render_id][part_id].permanent_part_id;			flag++;
+	
+	var part_information				=render.part_information[render_id][part_id].information;			flag++;
+	var part_material					=render.part_information[render_id][part_id].material;			flag++;
+	var part_property					=render.part_information[render_id][part_id].property;			flag++;
+	var part_component_id_and_driver_id	=render.part_information[render_id][part_id].part_component_id_and_driver_id;			flag++;
+	var instance_initialize_data		=render.part_information[render_id][part_id].instance_initialize_data;			flag++;
+	var part_initialize_data			=render.part_information[render_id][part_id].part_initialize_data;			flag++;
+	
+	var computer						=render.computer;			flag++;
+	}catch(e){
+		alert(flag.toString+":"+e.toString());
+	}
+}

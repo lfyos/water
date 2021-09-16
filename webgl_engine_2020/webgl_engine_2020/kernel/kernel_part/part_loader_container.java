@@ -97,7 +97,8 @@ public class part_loader_container
 	}
 	private part_loader[] load_routine(part my_part,part my_copy_from_part,
 			long last_modified_time,system_parameter system_par,scene_parameter scene_par,
-			part_loader already_loaded_part[],part_container_for_part_search pcps)
+			part_loader already_loaded_part[],part_container_for_part_search pcps,
+			buffer_object_file_modify_time_and_length_container boftal_container)
 	{
 		int max_part_load_thread_number=my_part.part_par.max_part_load_thread_number;
 		if(max_part_load_thread_number<1)
@@ -143,8 +144,8 @@ public class part_loader_container
 				}
 				continue;
 			}
-			part_loader my_loader=new part_loader(my_part,
-				my_copy_from_part,last_modified_time,system_par,scene_par,pcps);
+			part_loader my_loader=new part_loader(my_part,my_copy_from_part,
+					last_modified_time,system_par,scene_par,pcps,boftal_container);
 			part_loader_array[number++]=my_loader;
 				
 			for(int i=0,ni=already_loaded_part.length;i<ni;i++){
@@ -169,13 +170,14 @@ public class part_loader_container
 	
 	public part_loader[] load(part my_part,part my_copy_from_part,
 			long last_modified_time,system_parameter system_par,scene_parameter scene_par,
-			part_loader already_loaded_part[],part_container_for_part_search pcps)
+			part_loader already_loaded_part[],part_container_for_part_search pcps,
+			buffer_object_file_modify_time_and_length_container boftal_container)
 	{
 		part_loader ret_val[]=already_loaded_part;
 		part_loader_container_lock.lock();
 		try{
 			ret_val=load_routine(my_part,my_copy_from_part,
-				last_modified_time,system_par,scene_par,already_loaded_part,pcps);
+				last_modified_time,system_par,scene_par,already_loaded_part,pcps,boftal_container);
 		}catch(Exception e) {
 			debug_information.println("load of part_loader_container fail");
 			debug_information.println(e.toString());

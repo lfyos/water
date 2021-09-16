@@ -1,8 +1,20 @@
 				function(component_name,component_id,render)
 				{
+					render.user_call_processor.scene_mousedown=function(component_id)
+					{
+					};
+					render.user_call_processor.tree_mousedown=function(component_id)
+					{
+						render.system_call_processor.select_component("component",[["component_id",component_id]]);
+					};
+					render.user_call_processor.get_component_tree=function()
+					{
+						var p=render.get_component_object_by_component_name("display_component_root");
+						return p.component_children[0].component_children[0];
+					};
 					render.user_call_processor.set_all_transparant_except_selection=function()
 					{
-						var component_name=encodeURIComponent(encodeURIComponent("cad_root_component_0"));
+						var component_name=encodeURIComponent(encodeURIComponent("display_component_root"));
 						render.call_server_component("manipulator_component","all",
 							[["event_method","transparency"],["transparency",0.05],["component_name",component_name]],
 							function(response_data,render)
@@ -13,7 +25,7 @@
 					};
 					render.user_call_processor.set_all_untransparant=function()
 					{
-						var component_name=encodeURIComponent(encodeURIComponent("cad_root_component_0"));
+						var component_name=encodeURIComponent(encodeURIComponent("display_component_root"));
 						render.call_server_component("manipulator_component","all",
 							[["event_method","transparency"],["transparency",1.0],["component_name",component_name]]);
 					};
@@ -41,7 +53,7 @@
 					
 					render.user_call_processor.reset_all=function()
 					{
-						var component_name=encodeURIComponent(encodeURIComponent("cad_root_component_0"));
+						var component_name=encodeURIComponent(encodeURIComponent("display_component_root"));
 						render.call_server_component("manipulator_component","all",
 							[["event_method","transparency"],["transparency",1.0],["component",component_name]],
 							function()

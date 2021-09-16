@@ -10,27 +10,29 @@ import kernel_engine.system_parameter;
 
 public class render_driver
 {
-	public String javascript_decode,javascript_draw;
+	public String javascript_decode,javascript_draw,javascript_destroy;
 	public String vertex_shader,fragment_shader,geometry_shader,tess_control_shader,tess_evalue_shader;
 	
 	public void destroy()
 	{
 		javascript_decode	=null;
 		javascript_draw		=null;
+		javascript_destroy	=null;
 		vertex_shader		=null;
 		fragment_shader		=null;
 		geometry_shader		=null;
 		tess_control_shader	=null;
 		tess_evalue_shader	=null;
 	}
-	public render_driver(
-			String my_javascript_decode,	String my_javascript_draw,
+	public render_driver(					
+			String my_javascript_decode,	String my_javascript_draw,		String my_javascript_destroy,
 			String my_vertex_shader,		String my_fragment_shader,
 			String my_geometry_shader,	
 			String my_tess_control_shader,	String my_tess_evalue_shader)
 	{
 		javascript_decode	=my_javascript_decode;
 		javascript_draw		=my_javascript_draw;
+		javascript_destroy	=my_javascript_destroy;
 		
 		vertex_shader		=my_vertex_shader;
 		fragment_shader		=my_fragment_shader;

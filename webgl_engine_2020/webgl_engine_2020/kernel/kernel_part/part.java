@@ -5,6 +5,7 @@ import java.io.File;
 import kernel_driver.part_driver;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
+import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_network.client_request_response;
@@ -12,6 +13,7 @@ import kernel_network.client_request_response;
 import kernel_transformation.box;
 import kernel_transformation.point;
 import kernel_common_class.debug_information;
+import kernel_common_class.exclusive_file_mutex;
 import kernel_component.component;
 
 public class part
@@ -367,8 +369,9 @@ public class part
 	}
 	
 	public String load_mesh_and_create_buffer_object(part copy_from_part,
-			long last_modified_time,String part_temporary_file_directory,String part_temporary_file_charset,
-			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps)
+			long last_modified_time,String part_temporary_file_charset,
+			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
+			buffer_object_file_modify_time_and_length_container boftal_container)
 	{
 		String str;
 		
@@ -382,43 +385,64 @@ public class part
 		str+="\n\tdescription file name:\t\t"	+description_file_name;
 		str+="\n\taudio_file_name:\t\t"			+audio_file_name;
 
-		String token_file_name			=part_temporary_file_directory+"part.token";
-		String buffer_object_file_name	=part_temporary_file_directory+"mesh.head.txt";
+		String part_temporary_file_directory=file_directory.part_file_directory(this,system_par,scene_par);
+		String lock_file_name=file_reader.separator(part_temporary_file_directory+"part.lock");
+		String buffer_object_head_file_name		=part_temporary_file_directory+"mesh.head.txt";
+		String buffer_object_head_gzip_file_name=part_temporary_file_directory+"mesh.head.gzip_text";
 		String cfp_mesh_file_name=copy_from_part.directory_name+copy_from_part.mesh_file_name;
 		String cfp_material_file_name=copy_from_part.directory_name+copy_from_part.material_file_name;
 
-		long token_file_last_time=new File(token_file_name).lastModified();
-		if(token_file_last_time>last_modified_time)
-			if(token_file_last_time>part_par.last_modified_time)
-				if(token_file_last_time>new File(cfp_mesh_file_name).lastModified())
-					if(token_file_last_time>new File(cfp_material_file_name).lastModified()){
+		long buffer_object_head_last_modify_time=new File(buffer_object_head_gzip_file_name).lastModified();
+		if(buffer_object_head_last_modify_time>last_modified_time)
+			if(buffer_object_head_last_modify_time>part_par.last_modified_time)
+				if(buffer_object_head_last_modify_time>new File(cfp_mesh_file_name).lastModified())
+					if(buffer_object_head_last_modify_time>new File(cfp_material_file_name).lastModified()){
+						boftal=null;
+						if(part_par.engine_boftal_flag)
+							if(boftal_container!=null)
+								if(buffer_object_head_last_modify_time<boftal_container.last_modify_time)
+									boftal=boftal_container.search_boftal(part_temporary_file_directory);
 						
-						file_reader fr=new file_reader(
-							part_temporary_file_directory+"mesh.boftal",part_temporary_file_charset);
-						boftal=new buffer_object_file_modify_time_and_length(fr);
-						fr.close();
-						
+						if(boftal==null) {
+							file_reader fr=new file_reader(
+								part_temporary_file_directory+"mesh.boftal",part_temporary_file_charset);
+							boftal=new buffer_object_file_modify_time_and_length(fr);
+							fr.close();
+						}
 						if(part_mesh==null){
 							if(part_par.free_part_memory_flag)
 								part_mesh=boftal.simple_part_mesh;
-							else
+							else{
+								exclusive_file_mutex efm=null;
+								if(part_par.do_load_lock_flag)
+									efm=exclusive_file_mutex.lock(lock_file_name,
+										 "wait for load_mesh_and_create_buffer_object_and_material_file:	"
+										+directory_name+mesh_file_name);
 								part_mesh=call_part_driver_for_load_part_mesh(null,pcps,system_par,scene_par);
+								if(efm!=null)
+									efm.unlock();
+							}
 						}
 						if(part_mesh!=null)
 							if(part_par.free_part_memory_flag)
 								part_mesh.free_memory();
+						
 						boftal.simple_part_mesh=null;
+						
 						return str;
 					}
+		exclusive_file_mutex efm=exclusive_file_mutex.lock(lock_file_name,
+				 "wait for load_mesh_and_create_buffer_object_and_material_file:	"
+				+directory_name+mesh_file_name);
 		file_writer.file_delete(part_temporary_file_directory);
 		file_writer.make_directory(part_temporary_file_directory);
 		str+=create_mesh_and_material(part_temporary_file_directory,
-				buffer_object_file_name,part_temporary_file_charset,system_par,scene_par,pcps);
+				buffer_object_head_file_name,part_temporary_file_charset,system_par,scene_par,pcps);
 		clear_mesh_file_content();
+		efm.unlock();
 		
 		if((part_mesh!=null)&&(part_par.free_part_memory_flag))
 			part_mesh.free_memory();
-		file_writer.file_touch(token_file_name,true);
 		
 		return str;
 	}

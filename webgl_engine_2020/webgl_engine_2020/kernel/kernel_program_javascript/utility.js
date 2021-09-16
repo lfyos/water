@@ -2,6 +2,11 @@ function construct_render_utility(my_render_instance)
 {
 	this.render_instance=my_render_instance;
 	
+	this.terminate_utility_object=function()
+	{
+		this.render_instance=null;
+	}
+	
 	this.get_pinpoint=function()
 	{
 		var target_id			=this.render_instance.current.target_id;

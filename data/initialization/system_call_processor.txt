@@ -176,21 +176,21 @@ function(component_name,component_id,render)
 	render.system_call_processor.start_trace_primitive=function(my_precision,my_response_fun,my_error_fun)
 	{
 		var my_component_object;
-		if((my_component_object=render.get_component_to_id_object("trace_primitive_component"))!=null)
+		if((my_component_object=render.get_component_object_by_component_name("trace_primitive_component"))!=null)
 			render.component_event_processor[my_component_object.component_id].
 						start_trace_primitive(my_component_object.component_id,my_precision,my_response_fun,my_error_fun);
 	};
 	render.system_call_processor.collect_trace_primitive=function(my_response_fun)
 	{
 		var my_component_object;
-		if((my_component_object=render.get_component_to_id_object("trace_primitive_component"))!=null)
+		if((my_component_object=render.get_component_object_by_component_name("trace_primitive_component"))!=null)
 			render.component_event_processor[my_component_object.component_id].
 						collect_trace_primitive(my_component_object.component_id,my_response_fun);
 	};
 	render.system_call_processor.trace_primitive_download_url=function(file_type)
 	{
 		var my_component_object;
-		if((my_component_object=render.get_component_to_id_object("trace_primitive_component"))!=null)
+		if((my_component_object=render.get_component_object_by_component_name("trace_primitive_component"))!=null)
 			return render.component_event_processor[my_component_object.component_id].
 						trace_primitive_download_url(my_component_object.component_id,file_type);
 		return null;

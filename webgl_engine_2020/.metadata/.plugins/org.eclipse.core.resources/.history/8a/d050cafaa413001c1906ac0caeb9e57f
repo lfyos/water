@@ -1,0 +1,11 @@
+package kernel_part;
+
+public class buffer_object_file_modify_time_and_length_container 
+{
+	private buffer_object_file_modify_time_and_length boftal_array[];
+	
+	public buffer_object_file_modify_time_and_length_container()
+	{
+		
+	}
+}

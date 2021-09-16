@@ -27,7 +27,6 @@ public class buffer_object_file_modify_time_and_length
 		buffer_object_text_file_length		=new long[0][];
 		buffer_object_file_in_head_flag		=new boolean[0][];
 	}
-	
 	public buffer_object_file_modify_time_and_length(file_reader fr)
 	{
 		buffer_object_head_last_modify_time	=fr.get_long();
