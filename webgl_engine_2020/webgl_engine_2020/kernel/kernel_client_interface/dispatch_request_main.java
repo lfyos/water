@@ -8,8 +8,8 @@ import kernel_common_class.debug_information;
 
 public class dispatch_request_main
 {
-	static private String[] get_engine_result_routine(engine_kernel ek,
-			client_information ci,long delay_time_length)
+	static private String[] get_engine_result_routine(
+			engine_kernel ek,client_information ci,long delay_time_length)
 	{
 		String str;
 		if((str=ci.request_response.get_parameter("command"))==null) {

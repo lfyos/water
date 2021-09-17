@@ -15,6 +15,7 @@
 /*	engine_expire_time_length,		unit:nanosecond							*/		60000000000
 /*	engine_load_time_length,		unit:nanosecond							*/		  150000000
 /*	engine_touch_time_length,		unit:nanosecond							*/		10000000000
+/*	download_minimal_time_length	unit:nanosecond							*/		 2000000000
 
 /*	create_engine_concurrent_number											*/		3
 /*	create_engine_sleep_time_length_scale									*/		1.5

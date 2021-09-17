@@ -818,73 +818,88 @@ function construct_event_listener(my_render)
 	
 	function mousemove_fun(event)	
 	{	
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.mousemove_event_listener(event);
 	};
 	function mousedown_fun(event)
 	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.mousedown_event_listener(event);
 	};
 	function mouseup_fun(event)
 	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.mouseup_event_listener(event);
 	};
 	function dblclick_fun(event)
 	{
-		cur.dblclick_event_listener(event);	
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.dblclick_event_listener(event);	
 	};
 	function mousewheel_fun(event)
 	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.mousewheel_event_listener(event);
 	};
 	function touchstart_fun(event)
 	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.touchstart_event_listener(event);
 	};
 	function touchend_fun(event)
 	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.touchend_event_listener(event);
 	};
 	function touchmove_fun(event)
 	{
-		cur.touchmove_event_listener(event);
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.touchmove_event_listener(event);
 	};
 	function keydown_fun(event)
 	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.keydown_event_listener(event);
 	};
 	function keypress_fun(event)
 	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.keypress_event_listener(event);	
 	};
 	function keyup_fun(event)
 	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.keyup_event_listener(event);
 	};
 	function contextmenu_fun(event)
 	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.contextmenu_event_listener(event);
 	};
 	function gamepadconnected_fun(event)
 	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.gamepadconnected_event_listener(event);
 	};
 	function gamepaddisconnected_fun(event)
 	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.gamepaddisconnected_event_listener(event);
 	};
-	
 
 	this.render.canvas.addEventListener(	"mousemove",			mousemove_fun,			false);
 	this.render.canvas.addEventListener(	"mousedown",			mousedown_fun,			false);

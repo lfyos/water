@@ -107,7 +107,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			var my_ep=my_render_instance.component_event_processor[my_component_id];
 			
 			var alf=parseFloat(my_ep.alf);
-			alf=event.shiftKey?(-alf):alf;
+			alf=(event.shiftKey||event.ctrlKey)?(-alf):alf;
 			if(event.altKey)
 				alf=alf/10.0;
 			alf*=Math.PI/180.0;

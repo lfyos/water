@@ -265,20 +265,24 @@ function request_create_engine(create_engine_sleep_time_length_scale,
 				return;
 			}
 			if(typeof(response_data)=="boolean"){
-				var new_create_engine_sleep_time_length=create_engine_sleep_time_length;
-				new_create_engine_sleep_time_length*=create_engine_sleep_time_length_scale;
-				if(new_create_engine_sleep_time_length>create_engine_max_sleep_time_length)
-					new_create_engine_sleep_time_length=create_engine_max_sleep_time_length;
-				setTimeout(
-					function()
-					{
-						request_create_engine(create_engine_sleep_time_length_scale,
-							new_create_engine_sleep_time_length,create_engine_max_sleep_time_length,
-							request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,
-							my_language_name,my_user_initialization_function,processs_bar_object);
-					},create_engine_sleep_time_length);
+				if(response_data)
+					alert("Web server error, get_client_interface fail!");
+				else{
+					var new_create_engine_sleep_time_length=create_engine_sleep_time_length;
+					new_create_engine_sleep_time_length*=create_engine_sleep_time_length_scale;
+					if(new_create_engine_sleep_time_length>create_engine_max_sleep_time_length)
+						new_create_engine_sleep_time_length=create_engine_max_sleep_time_length;
+					setTimeout(
+						function()
+						{
+							request_create_engine(create_engine_sleep_time_length_scale,
+								new_create_engine_sleep_time_length,create_engine_max_sleep_time_length,
+								request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,
+								my_language_name,my_user_initialization_function,processs_bar_object);
+						},create_engine_sleep_time_length);
+				};
 				return;
-			};
+			}
 			var render,initialization_url=response_data.pop();
 			try{
 				render=new construct_render_routine(

@@ -18,12 +18,9 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Delete time out client_information found"/>
+			<item key="textPattern" value="start_create_kernel"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.js"/>
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
 				<item value="*java"/>
 			</list>
 			<list key="workingSets">
@@ -33,13 +30,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE,my_can"/>
+			<item key="textPattern" value="wait_for_create_scene"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
 				<item value="*java"/>
-				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -48,7 +42,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="create_part_mesh_and_buffer_object_head"/>
+			<item key="textPattern" value="&quot;component&quot;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -60,94 +54,6 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;language&quot;"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-				<item value="*.js"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY5">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="hidden"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.js"/>
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="EXTENSIONS">
-			<item key="0" value="*java"/>
-			<item key="1" value="*.js, *.jsp, *.txt, *java"/>
-			<item key="2" value="*.java"/>
-			<item key="3" value="*.txt;*.js"/>
-			<item key="4" value="*.txt"/>
-			<item key="5" value="*.js"/>
-			<item key="6" value="*.js, *.txt, *java,*.jsp"/>
-			<item key="7" value="*.js, *.txt, *java"/>
-			<item key="8" value="*.txt,*.js,*java"/>
-			<item key="9" value="*.txt,*.js"/>
-			<item key="10" value="*.draw.txt"/>
-		</section>
-		<section name="HISTORY11">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Active client_interface number is"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-				<item value="*.js"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY8">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="load_first_class_part"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.js"/>
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY9">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="show_process_bar_function"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.js"/>
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY2">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
 			<item key="textPattern" value="scene_proxy_directory_name"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
@@ -156,7 +62,32 @@
 			<list key="workingSets">
 			</list>
 		</section>
-		<section name="HISTORY3">
+		<section name="HISTORY5">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="load_buffer_object_file_information"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="EXTENSIONS">
+			<item key="0" value="*java"/>
+			<item key="1" value="*.js"/>
+			<item key="2" value="*.js, *.jsp, *.txt, *java"/>
+			<item key="3" value="*.java"/>
+			<item key="4" value="*.txt;*.js"/>
+			<item key="5" value="*.txt"/>
+			<item key="6" value="*.js, *.txt, *java,*.jsp"/>
+			<item key="7" value="*.js, *.txt, *java"/>
+			<item key="8" value="*.txt,*.js,*java"/>
+			<item key="9" value="*.txt,*.js"/>
+			<item key="10" value="*.draw.txt"/>
+		</section>
+		<section name="HISTORY11">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
@@ -168,7 +99,7 @@
 			<list key="workingSets">
 			</list>
 		</section>
-		<section name="HISTORY0">
+		<section name="HISTORY8">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
@@ -180,11 +111,59 @@
 			<list key="workingSets">
 			</list>
 		</section>
-		<section name="HISTORY1">
+		<section name="HISTORY9">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
 			<item key="textPattern" value="part.token"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY2">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="Date"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY3">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="&quot;switch&quot;"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY0">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="&quot;silent_time&quot;"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY1">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="requesting_number"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -242,7 +221,6 @@
 		<item key="DIALOG_Y_ORIGIN" value="242"/>
 	</section>
 	<section name="">
-		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
-		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
+		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
 	</section>
 </section>

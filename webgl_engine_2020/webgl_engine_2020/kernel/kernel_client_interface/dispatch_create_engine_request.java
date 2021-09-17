@@ -123,11 +123,12 @@ public class dispatch_create_engine_request
 			ci.creation_parameter.max_client_loading_number);
 			
 		ci.request_response.print(",\"total_buffer_object_data_length\":",
-			ek.process_part_sequence.total_buffer_object_text_data_length);
+					ek.process_part_sequence.total_buffer_object_text_data_length);
 			
-		ci.request_response.print(",\"engine_load_time_length\":",	ek.system_par.engine_load_time_length);
-		ci.request_response.print(",\"engine_touch_time_length\":",	ek.system_par.engine_touch_time_length);
-		ci.request_response.print(",\"debug_mode_flag\":",			ek.system_par.debug_mode_flag?"true":"false");
+		ci.request_response.print(",\"engine_load_time_length\":",		ek.system_par.engine_load_time_length);
+		ci.request_response.print(",\"engine_touch_time_length\":",		ek.system_par.engine_touch_time_length);
+		ci.request_response.print(",\"download_minimal_time_length\":",	ek.system_par.download_minimal_time_length/1000000);
+		ci.request_response.print(",\"debug_mode_flag\":",				ek.system_par.debug_mode_flag?"true":"false");
 			
 		ci.request_response.print("}");
 		ci.request_response.print("],\"");

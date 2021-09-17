@@ -1,11 +1,26 @@
 				function(component_name,component_id,render)
 				{
-					render.user_call_processor.scene_mousedown=function(component_id)
+					render.user_call_processor.scene_mousedown=function(component_id,event)
 					{
+//						render.user_call_processor.tree_mousedown(component_id,event);
 					};
-					render.user_call_processor.tree_mousedown=function(component_id)
+					render.user_call_processor.tree_mousedown=function(component_id,event)
 					{
-						render.system_call_processor.select_component("component",[["component_id",component_id]]);
+						if(typeof(event)!="object")
+							event={
+								shiftKey:false,
+								ctrlKey	:false,
+								altKey	:false
+							};
+						if(typeof(event.shiftKey)!="boolean")
+							event.shiftKey=false;
+						if(typeof(event.ctrlKey)!="boolean")
+							event.ctrlKey=false;
+						if(typeof(event.altKey)!="boolean")
+							event.altKey=false;
+						render.system_call_processor.select_component(
+							(event.shiftKey||event.ctrlKey||event.altKey)?"switch":"component",
+							[["component_id",component_id]]);
 					};
 					render.user_call_processor.get_component_tree=function()
 					{

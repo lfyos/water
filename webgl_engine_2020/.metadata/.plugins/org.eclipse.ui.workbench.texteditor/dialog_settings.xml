@@ -2,29 +2,30 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="select_component"/>
+		<item key="selection" value="download_minimal_time_length"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="download_minimal_time_length"/>
+			<item value="start_time"/>
+			<item value="process_buffer_head_request_queue"/>
+			<item value="parse_web_server_response_data"/>
+			<item value="render_request"/>
+			<item value="request_buffer_object_data"/>
+			<item value="process_buffer_object_head"/>
+			<item value="request_buffer_head_package"/>
+			<item value="buffer_head_request_queue"/>
+			<item value="last_event_time"/>
+			<item value="render_request_start_time"/>
+			<item value="last_"/>
+			<item value="cur.render.event_time"/>
 			<item value="select_component"/>
 			<item value="pickupmousedown"/>
-			<item value="system_event_processor"/>
-			<item value="component_check_url"/>
-			<item value="get_component_object_by_component_name"/>
-			<item value="component_array_sorted_by_name"/>
-			<item value="get_component_to_id_object"/>
-			<item value="component_number"/>
-			<item value="render_initialization"/>
-			<item value="component_to_name_array"/>
-			<item value="component_to_id_array"/>
-			<item value="sorted_component_name_id"/>
-			<item value="process_part_component_id_and_driver_id"/>
-			<item value="cad_root_component_0"/>
-			<item value="mousemove"/>
 		</list>
 		<list key="replacehistory">
+			<item value="cur.render.last_event_time"/>
 			<item value="get_component_object_by_component_name"/>
 			<item value="component_array_sorted_by_id"/>
 			<item value="component_array_sorted_by_name"/>
@@ -39,14 +40,13 @@
 			<item value="debug_"/>
 			<item value="render.debug_"/>
 			<item value="render_object."/>
-			<item value="跟踪可见片元"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item key="DIALOG_WIDTH" value="335"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="174"/>
-		<item key="DIALOG_Y_ORIGIN" value="551"/>
+		<item key="DIALOG_X_ORIGIN" value="15"/>
+		<item key="DIALOG_Y_ORIGIN" value="330"/>
 	</section>
 </section>

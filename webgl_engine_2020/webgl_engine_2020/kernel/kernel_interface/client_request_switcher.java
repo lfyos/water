@@ -60,15 +60,13 @@ public class client_request_switcher
 	{
 		String str;
 		client_process_bar process_bar;
-		if((client=client_container.get_client_interface(request_response,system_par))==null)
-			return;
 		if((str=request_response.get_parameter("command"))==null)
 			return;
 		switch(str){
 		case "request":
 			process_bar=client.request_process_bar();
 			request_response.println(process_bar.process_bar_id);
-			process_bar.set_process_bar(true,"wait_for_create_scene", 0, 1);
+			process_bar.set_process_bar(true,"start_create_scene", 0, 1);
 			break;
 		case "release":
 			if((str=request_response.get_parameter("process_bar"))!=null)
@@ -142,15 +140,24 @@ public class client_request_switcher
 				ret_val.ecr.date_string=null;
 			break;
 		case "process_bar":
+			if((ret_val.client=client_container.get_client_interface(request_response,system_par))!=null)
+				process_bar(request_response,ret_val.client);
 			ret_val.ecr=new engine_call_result(null,null,null,null,null,"*");
-			process_bar(request_response,ret_val.client);
 			break;
 		case "creation":
-			if(test_creation_engine_lock_number(1)>system_par.create_engine_concurrent_number){
+			if((ret_val.client=client_container.get_client_interface(request_response,system_par))==null) {
 				ret_val.ecr=new engine_call_result(null,null,null,null,null,"*");
 				request_response.println("true");
-			}else if((ret_val.client=client_container.get_client_interface(request_response,system_par))!=null)
-					ret_val.ecr=ret_val.client.execute_create_call(ei,request_response,statistics_interface);
+				break;
+			}
+			int creation_engine_lock_number=test_creation_engine_lock_number(1);
+			if(creation_engine_lock_number<system_par.create_engine_concurrent_number)
+				ret_val.ecr=ret_val.client.execute_create_call(ei,ret_val.client,request_response,statistics_interface);
+			else{
+				ret_val.ecr=new engine_call_result(null,null,null,null,null,"*");
+				request_response.println("false");
+				ret_val.client.get_process_bar(request_response).set_process_bar(true,"wait_for_other_exit",1,2);
+			}
 			test_creation_engine_lock_number(-1);
 			break;
 		default:

@@ -5,7 +5,7 @@ import kernel_component.component;
 public class client_parameter 
 {
 	public boolean 	do_discard_lod_flag,do_selection_lod_flag;
-	
+
 	public int body_id,face_id,loop_id,edge_id,vertex_id,point_id;
 	public double body_value,face_value,loop_value,edge_value,vertex_value;
 	public double x,y,aspect,depth,value;
@@ -161,7 +161,7 @@ public class client_parameter
 			ci.statistics_client.read_time_length=1;
 		else if((ci.statistics_client.read_time_length=1000000*Long.decode(str))<=0)
 			ci.statistics_client.read_time_length=1;
-		
+
 		if((str=ci.request_response.get_parameter("render_interval"))==null)
 			ci.statistics_client.render_interval_length=1;
 		else if((ci.statistics_client.render_interval_length=1000000*Long.decode(str))<=0)

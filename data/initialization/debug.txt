@@ -68,8 +68,8 @@
 						setTimeout(
 							function()
 							{
-								render.user_call_processor.scene_mousedown(pickup_component_id);
-							},500);
+								render.user_call_processor.scene_mousedown(pickup_component_id,event);
+							},50);
 						return false;
 					}
 					render.system_event_processor.mousedown=function(event,render)	

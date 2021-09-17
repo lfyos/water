@@ -515,6 +515,7 @@ function construct_buffer_object(my_gl,my_parameter)
 			}
 		}
 	}
+	
 	this.process_buffer_head_request_queue=function(my_render)
 	{
 		while(this.buffer_head_request_queue.length>0){

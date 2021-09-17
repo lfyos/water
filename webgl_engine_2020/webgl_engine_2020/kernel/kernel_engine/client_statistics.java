@@ -44,7 +44,7 @@ public class client_statistics
 		response_network_data_length		=0;
 		response_proxy_data_length			=0;
 		
-		update_location_number=0;
+		update_location_number	=0;
 		
 		system_call_execute_number		=new long[1][];
 		system_call_execute_number[0]	=new long[1];
@@ -53,7 +53,7 @@ public class client_statistics
 		component_response_number		=null;
 		response_component_id			=null;
 		
-		loading_request_number=0;
+		loading_request_number			=0;
 		
 		start(1,0);
 	}

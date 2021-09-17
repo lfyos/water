@@ -39,6 +39,7 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		this.instance_initialize_data[my_component_id][my_driver_id]=my_data;
 	}
 
+	this.last_event_time			=0;
 	this.terminate_flag				=false;
 	this.process_bar_id				=my_process_bar_id;
 	this.gl							=my_gl;
@@ -593,7 +594,7 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		this.render_request_start_time	=(new Date()).getTime();
 		var min_value=this.computer.min_value();
 		var request_string=this.url_and_channel+"&command=component&method=update_render";
-		
+
 		this.view.aspect=this.canvas.width/this.canvas.height;
 		if(Math.abs(this.view_bak.aspect-this.view.aspect)>min_value){
 			this.view_bak.aspect=this.view.aspect;
@@ -677,9 +678,14 @@ function construct_render_routine(my_process_bar_id,my_gl,
 			else if(max_request_number>this.parameter.max_loading_number)
 				max_request_number=this.parameter.max_loading_number;
 
-			var requesting_number=this.buffer_object.current_loading_mesh_number
-			requesting_number+=this.buffer_object.request_render_part_id.length;
-			requesting_number+=this.buffer_object.buffer_head_request_queue.length;
+			var requesting_number;
+			if((this.render_request_start_time-this.last_event_time)<=this.parameter.download_minimal_time_length)
+				requesting_number=max_request_number;
+			else{
+				requesting_number =this.buffer_object.current_loading_mesh_number
+				requesting_number+=this.buffer_object.request_render_part_id.length;
+				requesting_number+=this.buffer_object.buffer_head_request_queue.length;
+			}
 			request_string+="&requesting_number="+requesting_number+"_"+max_request_number;
 		};
 		
@@ -788,9 +794,13 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		};
 		this.process_routine_function();
 		this.render_routine();
-		for(var i=0,ni=this.parameter.max_loading_number;i<ni;)
-			i+=this.buffer_object.request_buffer_object_data(this);
-		this.buffer_object.process_buffer_head_request_queue(this);
+		
+		if((start_time-this.last_event_time)>this.parameter.download_minimal_time_length){
+			for(var i=0,ni=this.parameter.max_loading_number;i<ni;)
+				i+=this.buffer_object.request_buffer_object_data(this);
+			this.buffer_object.process_buffer_head_request_queue(this);
+		}
+
 		this.render_request(start_time);
 		this.render_time_length=(new Date()).getTime()-start_time;
 		

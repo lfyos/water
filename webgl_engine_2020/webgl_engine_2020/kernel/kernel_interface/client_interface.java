@@ -224,9 +224,8 @@ public class client_interface
 		}
 	}
 	private engine_call_result create_engine_routine(
-			client_session session,engine_interface ei,
-			client_request_response request_response,long delay_time_length,
-			interface_statistics statistics_interface)
+			client_session session,engine_interface ei,client_interface client,ReentrantLock my_client_interface_lock,
+			client_request_response request_response,long delay_time_length,interface_statistics statistics_interface)
 	{
 		if(session.statistics_user.user_engine_kernel_number>session.statistics_user.user_max_engine_kernel_number) {
 			debug_information.print  ("Create too many engine\t\t\t:\t",session.statistics_user.user_engine_kernel_number);
@@ -248,10 +247,11 @@ public class client_interface
 			debug_information.println("/",session.statistics_user.user_max_engine_part_edge_number);
 			return null;
 		}
+		
+		client.get_process_bar(request_response).set_process_bar(true,"start_create_kernel",1,2);
 
 		engine_kernel_link_list create_ekll=null;
-		ReentrantLock my_client_interface_lock=client_interface_lock;
-		
+
 		my_client_interface_lock.unlock();
 		try{
 			create_ekll=ei.get_kernel_container(session,request_response,system_par);
@@ -290,6 +290,8 @@ public class client_interface
 
 		ec.lock_number++;
 		my_client_interface_lock.unlock();
+		
+		client.get_process_bar(request_response).set_process_bar(true,"start_load_scene",1,2);
 		
 		engine_call_result ecr=null;
 		try{
@@ -345,7 +347,8 @@ public class client_interface
 		}
 		return ecr;
 	}
-	private engine_call_result create_engine(engine_interface ei,
+	private engine_call_result create_engine(
+			engine_interface ei,ReentrantLock my_client_interface_lock,client_interface client,
 			client_session session,client_request_response request_response,
 			long delay_time_length,interface_statistics statistics_interface)
 	{
@@ -370,7 +373,8 @@ public class client_interface
 		debug_information.println("default_parameter_directory	:	",		system_par.default_parameter_directory);
 		debug_information.println("proxy_data_root_directory_name:		",	system_par.proxy_par.proxy_data_root_directory_name);
 		
-		engine_call_result ret_val=create_engine_routine(session,ei,request_response,delay_time_length,statistics_interface);
+		engine_call_result ret_val=create_engine_routine(session,ei,client,
+				my_client_interface_lock,request_response,delay_time_length,statistics_interface);
 		
 		now = Calendar.getInstance();  
 		debug_information.println();
@@ -386,7 +390,8 @@ public class client_interface
 		
 		return ret_val;
 	}
-	private engine_call_result execute_system_call_routine(long channel_id,
+	private engine_call_result execute_system_call_routine(
+			long channel_id,ReentrantLock my_client_interface_lock,
 			client_session session,client_request_response request_response,
 			interface_statistics statistics_interface,int engine_current_number[])
 	{
@@ -434,7 +439,8 @@ public class client_interface
 		engine_call_result ecr=null;
 		
 		ecn.ek_ci.lock_number++;
-		client_interface_lock.unlock();
+		
+		my_client_interface_lock.unlock();
 		try{
 			ecr=ecn.ek_ci.engine_kernel_link_list.get_engine_result(
 					get_process_bar(request_response),session,ecn.ek_ci,
@@ -445,7 +451,7 @@ public class client_interface
 			debug_information.println(e.toString());
 			e.printStackTrace();
 		}
-		client_interface_lock.lock();
+		my_client_interface_lock.lock();
 		ecn.ek_ci.lock_number--;
 		
 		if(request_response.request_time<=0) {
@@ -488,13 +494,14 @@ public class client_interface
 		if(channel_id<0)
 			return ret_val;
 
-		client_interface_lock.lock();
+		ReentrantLock my_client_interface_lock=client_interface_lock;
+		my_client_interface_lock.lock();
 		
 		if(manager_delay==null)
 			debug_information.println("manager_delay==null		",request_response.implementor.get_client_id());
 		else {
 			try{
-				ret_val=execute_system_call_routine(channel_id,
+				ret_val=execute_system_call_routine(channel_id,my_client_interface_lock,
 						session,request_response,statistics_interface,engine_current_number);
 			}catch(Exception e) {
 				ret_val=null;
@@ -505,12 +512,13 @@ public class client_interface
 			}
 			process_timeout(request_response);
 		}
-		client_interface_lock.unlock();
+		my_client_interface_lock.unlock();
 		return ret_val;
 	}
 	public void clear_all_engine()
 	{
-		client_interface_lock.lock();
+		ReentrantLock my_client_interface_lock=client_interface_lock;
+		my_client_interface_lock.lock();
 		while(true)
 			try {
 				if(destroy_ek_ci_node(first))
@@ -519,14 +527,16 @@ public class client_interface
 				debug_information.println("clear_all_engine exception:	",e.toString());
 				e.printStackTrace();
 			}
-		client_interface_lock.unlock();
+		my_client_interface_lock.unlock();
 	}
-	public engine_call_result execute_create_call(engine_interface ei,
+	public engine_call_result execute_create_call(engine_interface ei,client_interface client,
 			client_request_response request_response,interface_statistics statistics_interface)
 	{
 		engine_call_result ret_val=null;
 		
-		client_interface_lock.lock();
+		ReentrantLock my_client_interface_lock=client_interface_lock;
+		my_client_interface_lock.lock();
+		
 		if(manager_delay==null)
 			debug_information.println("manager_delay==null		",request_response.implementor.get_client_id());
 		else {
@@ -537,7 +547,8 @@ public class client_interface
 					debug_information.println("TIME OUT FOUND,Client ID is ",
 							request_response.implementor.get_client_id());
 				else
-					ret_val=create_engine(ei,session,request_response,delay_time_length,statistics_interface);
+					ret_val=create_engine(ei,my_client_interface_lock,client,
+							session,request_response,delay_time_length,statistics_interface);
 			}catch(Exception e){
 				ret_val=null;
 				debug_information.println(
@@ -548,9 +559,7 @@ public class client_interface
 			process_timeout(request_response);
 		}
 		
-		ReentrantLock my_client_interface_lock;
-		if((my_client_interface_lock=client_interface_lock)!=null)
-			my_client_interface_lock.unlock();
+		my_client_interface_lock.unlock();
 	
 		return ret_val;
 	}
