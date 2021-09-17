@@ -3,66 +3,61 @@ function redraw(render)
 	if(render.terminate_flag)
 		return;
 	
-	var redraw_object=new Object();
-	redraw_object.touch_time=0;
-	
+	var redraw_object={
+			touch_time:			0,
+			interval_length:	1
+	};
 	function render_routine()
 	{
-		if(render.terminate_flag)
-			return;
-		
-		var my_current_time=(new Date()).getTime();
-		var render_interval_length=my_current_time-redraw_object.touch_time;
-		redraw_object.touch_time=my_current_time;
-		
-		render.do_render(render_interval_length);
-		window.requestAnimationFrame(render_routine);
-	};
-
-	function touch_routine()
-	{
-		if(render.terminate_flag)
-			return;
-		
-		var my_current_time=(new Date()).getTime();
-		if(!(render.can_do_render_request_flag)){
-			redraw_object.touch_time=my_current_time;
+		if(render.terminate_flag){
+			redraw_object=null;
 			return;
 		}
-		var my_time_length=my_current_time-redraw_object.touch_time;
-		var max_time_length=render.parameter.engine_touch_time_length/1000/1000;
-		if(my_time_length<max_time_length)
-			return;
+		var my_current_time=(new Date()).getTime();
+		redraw_object.interval_length=my_current_time-redraw_object.touch_time;
 		redraw_object.touch_time=my_current_time;
+		render.do_render(redraw_object.interval_length);
 		
-		var my_url=render.url;
-		my_url+="?channel="+render.channel;
-		my_url+="&command=touch";
-		try{
-			var my_ajax=new XMLHttpRequest();
-			my_ajax.open("GET",my_url,true);
-			my_ajax.send(null);
-		}catch(e){
-			;
-		};
+		window.requestAnimationFrame(render_routine);
+	};
+	function touch_routine()
+	{
+		if(render.terminate_flag){
+			redraw_object=null;
+			return;
+		}
+		var my_current_time=(new Date()).getTime();
+		var my_interval_length=my_current_time-redraw_object.touch_time;
+		if(my_interval_length>(render.parameter.engine_touch_time_length/1000/1000)){
+			redraw_object.interval_length=my_interval_length;
+			redraw_object.touch_time=my_current_time;
+			render.do_render(redraw_object.interval_length);
+		}
+		setTimeout(touch_routine,render.parameter.engine_touch_time_length/1000/1000);
 	};
 	function data_load_routine()
 	{
-		if(render.terminate_flag)
+		if(render.terminate_flag){
+			redraw_object=null;
 			return;
+		}
+		
 		var loaded_data_length=render.buffer_object.loaded_buffer_object_data_length;
-		if(loaded_data_length>=render.parameter.total_buffer_object_data_length){
-			render_routine();
-			setInterval(touch_routine,render.parameter.engine_touch_time_length/1000/1000);
-		}else{
+		if(loaded_data_length>=render.parameter.total_buffer_object_data_length)
+			touch_routine();
+		else{
 			var my_current_time=(new Date()).getTime();
-			var render_interval_length=my_current_time-redraw_object.touch_time;
-			redraw_object.touch_time=my_current_time;
-			render.do_render(render_interval_length);
+			var my_interval_length=my_current_time-redraw_object.touch_time;
+			if(my_interval_length>(render.parameter.engine_load_time_length/1000/1000)){
+				redraw_object.interval_length=my_interval_length;
+				redraw_object.touch_time=my_current_time;
+				render.do_render(redraw_object.interval_length);
+			}
 			setTimeout(data_load_routine,render.parameter.engine_load_time_length/1000/1000);
 		};
 	};
 	data_load_routine();
+	render_routine();
 };
 
 function render_initialization(initialization_url,render,user_initialization_function,processs_bar_object)

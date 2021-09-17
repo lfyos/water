@@ -39,7 +39,8 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		this.instance_initialize_data[my_component_id][my_driver_id]=my_data;
 	}
 
-	this.last_event_time			=0;
+	this.engine_start_time			=(new Date()).getTime();
+	this.last_event_time			=this.engine_start_time;
 	this.terminate_flag				=false;
 	this.process_bar_id				=my_process_bar_id;
 	this.gl							=my_gl;
@@ -678,14 +679,16 @@ function construct_render_routine(my_process_bar_id,my_gl,
 			else if(max_request_number>this.parameter.max_loading_number)
 				max_request_number=this.parameter.max_loading_number;
 
-			var requesting_number;
-			if((this.render_request_start_time-this.last_event_time)<=this.parameter.download_minimal_time_length)
-				requesting_number=max_request_number;
-			else{
+			var requesting_number=max_request_number;
+			do{
+				if((this.render_request_start_time-this.last_event_time)<=this.parameter.download_minimal_time_length)
+					if((this.render_request_start_time-this.engine_start_time)>this.parameter.download_start_time_length)
+						break;
 				requesting_number =this.buffer_object.current_loading_mesh_number
 				requesting_number+=this.buffer_object.request_render_part_id.length;
 				requesting_number+=this.buffer_object.buffer_head_request_queue.length;
-			}
+			}while(false);
+			
 			request_string+="&requesting_number="+requesting_number+"_"+max_request_number;
 		};
 		
@@ -795,12 +798,15 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		this.process_routine_function();
 		this.render_routine();
 		
-		if((start_time-this.last_event_time)>this.parameter.download_minimal_time_length){
+		do{
+			if((this.render_request_start_time-this.last_event_time)<=this.parameter.download_minimal_time_length)
+				if((this.render_request_start_time-this.engine_start_time)>this.parameter.download_start_time_length)
+					break;
 			for(var i=0,ni=this.parameter.max_loading_number;i<ni;)
 				i+=this.buffer_object.request_buffer_object_data(this);
 			this.buffer_object.process_buffer_head_request_queue(this);
-		}
-
+		}while(false);
+		
 		this.render_request(start_time);
 		this.render_time_length=(new Date()).getTime()-start_time;
 		

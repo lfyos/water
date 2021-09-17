@@ -42,9 +42,6 @@ public class dispatch_request_main
 			return dispatch_modifier_request.do_dispatch(6,ek, ci);
 		case "information":
 			return dispatch_information_request.do_dispatch(7,ek,ci);
-		case "touch":
-			ci.statistics_client.register_system_call_execute_number(8,0);
-			return null;
 		case "termination":
 			ci.request_response.request_time=0;
 			return null;

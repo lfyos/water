@@ -9,20 +9,20 @@
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
 			<item value="download_minimal_time_length"/>
-			<item value="start_time"/>
-			<item value="process_buffer_head_request_queue"/>
-			<item value="parse_web_server_response_data"/>
-			<item value="render_request"/>
-			<item value="request_buffer_object_data"/>
-			<item value="process_buffer_object_head"/>
-			<item value="request_buffer_head_package"/>
-			<item value="buffer_head_request_queue"/>
-			<item value="last_event_time"/>
-			<item value="render_request_start_time"/>
-			<item value="last_"/>
-			<item value="cur.render.event_time"/>
-			<item value="select_component"/>
-			<item value="pickupmousedown"/>
+			<item value="this.do_render"/>
+			<item value="can_do_render_request_flag"/>
+			<item value="redraw_object"/>
+			<item value="do_render"/>
+			<item value=".do_render"/>
+			<item value="render_interval_length"/>
+			<item value=".do_render("/>
+			<item value="set_target_parameter_channel"/>
+			<item value="log"/>
+			<item value="flush"/>
+			<item value="load_third_class_part"/>
+			<item value="load_second_class_part"/>
+			<item value="load_first_class_part"/>
+			<item value="load_buffer_object_file_information"/>
 		</list>
 		<list key="replacehistory">
 			<item value="cur.render.last_event_time"/>
