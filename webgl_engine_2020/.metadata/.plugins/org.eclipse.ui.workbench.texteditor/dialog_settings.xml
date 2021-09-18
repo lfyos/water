@@ -2,12 +2,19 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="download_minimal_time_length"/>
+		<item key="selection" value="interval_length"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="interval_length"/>
+			<item value="title"/>
+			<item value="last_event_time"/>
+			<item value="clear"/>
+			<item value="call_server_component"/>
+			<item value="select_component"/>
+			<item value="create_engine_sleep_time_length_scale"/>
 			<item value="download_minimal_time_length"/>
 			<item value="this.do_render"/>
 			<item value="can_do_render_request_flag"/>
@@ -16,21 +23,14 @@
 			<item value=".do_render"/>
 			<item value="render_interval_length"/>
 			<item value=".do_render("/>
-			<item value="set_target_parameter_channel"/>
-			<item value="log"/>
-			<item value="flush"/>
-			<item value="load_third_class_part"/>
-			<item value="load_second_class_part"/>
-			<item value="load_first_class_part"/>
-			<item value="load_buffer_object_file_information"/>
 		</list>
 		<list key="replacehistory">
+			<item value=""/>
 			<item value="cur.render.last_event_time"/>
 			<item value="get_component_object_by_component_name"/>
 			<item value="component_array_sorted_by_id"/>
 			<item value="component_array_sorted_by_name"/>
 			<item value="display_component_root"/>
-			<item value=""/>
 			<item value="removeEventListener"/>
 			<item value="client"/>
 			<item value=","/>
@@ -46,7 +46,7 @@
 		<item key="DIALOG_WIDTH" value="335"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="15"/>
-		<item key="DIALOG_Y_ORIGIN" value="330"/>
+		<item key="DIALOG_X_ORIGIN" value="104"/>
+		<item key="DIALOG_Y_ORIGIN" value="261"/>
 	</section>
 </section>

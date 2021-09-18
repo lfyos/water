@@ -18,9 +18,17 @@
 							event.ctrlKey=false;
 						if(typeof(event.altKey)!="boolean")
 							event.altKey=false;
-						render.system_call_processor.select_component(
-							(event.shiftKey||event.ctrlKey||event.altKey)?"switch":"component",
-							[["component_id",component_id]]);
+							
+						if(event.ctrlKey)							
+							render.system_call_processor.select_component(
+								event.shiftKey?"switch":"component",[["component_id",component_id]]);
+						else
+							render.system_call_processor.select_component("clear",[],
+								function()
+								{
+									render.system_call_processor.select_component(
+										event.shiftKey?"switch":"component",[["component_id",component_id]]);
+								});
 					};
 					render.user_call_processor.get_component_tree=function()
 					{

@@ -684,7 +684,7 @@ function construct_render_routine(my_process_bar_id,my_gl,
 				if((this.render_request_start_time-this.last_event_time)<=this.parameter.download_minimal_time_length)
 					if((this.render_request_start_time-this.engine_start_time)>this.parameter.download_start_time_length)
 						break;
-				requesting_number =this.buffer_object.current_loading_mesh_number
+				requesting_number =this.buffer_object.current_loading_mesh_number;
 				requesting_number+=this.buffer_object.request_render_part_id.length;
 				requesting_number+=this.buffer_object.buffer_head_request_queue.length;
 			}while(false);

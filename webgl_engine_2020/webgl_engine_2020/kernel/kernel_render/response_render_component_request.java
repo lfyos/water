@@ -369,8 +369,8 @@ public class response_render_component_request
 					if(max_loading_request_number<1)
 						max_loading_request_number=1;
 				}
-			if(max_loading_request_number>ek.system_par.max_request_number)
-				max_loading_request_number=ek.system_par.max_request_number;
+			if(max_loading_request_number>ek.system_par.max_loading_number)
+				max_loading_request_number=ek.system_par.max_loading_number;
 		}
 		
 		display_data_load_message(ek,ci);

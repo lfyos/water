@@ -39,6 +39,8 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		this.instance_initialize_data[my_component_id][my_driver_id]=my_data;
 	}
 
+	this.engine_start_time			=(new Date()).getTime();
+	this.last_event_time			=this.engine_start_time;
 	this.terminate_flag				=false;
 	this.process_bar_id				=my_process_bar_id;
 	this.gl							=my_gl;
@@ -155,20 +157,30 @@ function construct_render_routine(my_process_bar_id,my_gl,
 	this.collector_stack_version			=0;
 
 	this.process_part_component_id_and_driver_id=function(
-			component_number,sorted_component_name_id,part_component_id_and_driver_id)
+			sorted_component_name_id,part_component_id_and_driver_id)
 	{
-		this.component_to_id_array  =new Array(component_number);
-		this.component_to_name_array=new Array(component_number);
-		for(var i=0,j=0,ni=sorted_component_name_id.length;i<ni;j++){
-			var my_component_name=sorted_component_name_id[i++];
-			var my_component_id	 =sorted_component_name_id[i++];
+		var component_number=sorted_component_name_id.length;
+		this.component_array_sorted_by_name =new Array(component_number);
+		this.component_array_sorted_by_id	=new Array(component_number);
+		for(var i=0;i<component_number;i++){
+			var my_component_name		=sorted_component_name_id[i][0];
+			var my_component_id	 		=sorted_component_name_id[i][1];
+			var my_component_children	=sorted_component_name_id[i][2];
 			var p={
-					component_name	:	my_component_name,
-					component_id	:	my_component_id
+					component_name		:	my_component_name,
+					component_id		:	my_component_id,
+					component_children	:	my_component_children
 			};
-			this.component_to_id_array[j]=p;
-			this.component_to_name_array[my_component_id]=p;
+			this.component_array_sorted_by_name[i]=p;
+			this.component_array_sorted_by_id[my_component_id]=p;
 		};
+		for(var i=0;i<component_number;i++){
+			var p=this.component_array_sorted_by_id[i],my_component_children=new Array();
+			for(var j=0,nj=p.component_children.length;j<nj;j++)
+				my_component_children.push(this.component_array_sorted_by_id[p.component_children[j]]);
+			p.component_children=my_component_children;
+		};
+		
 		var component_render_id_and_part_id=new Array(component_number);
 		for(var i=0;i<component_number;i++)
 			component_render_id_and_part_id[i]=new Array();
@@ -583,7 +595,7 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		this.render_request_start_time	=(new Date()).getTime();
 		var min_value=this.computer.min_value();
 		var request_string=this.url_and_channel+"&command=component&method=update_render";
-		
+
 		this.view.aspect=this.canvas.width/this.canvas.height;
 		if(Math.abs(this.view_bak.aspect-this.view.aspect)>min_value){
 			this.view_bak.aspect=this.view.aspect;
@@ -667,9 +679,18 @@ function construct_render_routine(my_process_bar_id,my_gl,
 			else if(max_request_number>this.parameter.max_loading_number)
 				max_request_number=this.parameter.max_loading_number;
 
-			var requesting_number=this.buffer_object.current_loading_mesh_number
-			requesting_number+=this.buffer_object.request_render_part_id.length;
-			requesting_number+=this.buffer_object.buffer_head_request_queue.length;
+			var requesting_number=max_request_number;
+			do{
+				if((this.render_request_start_time-this.last_event_time)<=this.parameter.download_minimal_time_length)
+					if((this.render_request_start_time-this.engine_start_time)>this.parameter.download_start_time_length)
+						break;
+				requesting_number =this.buffer_object.current_loading_mesh_number
+				requesting_number+=this.buffer_object.request_render_part_id.length;
+				requesting_number+=this.buffer_object.buffer_head_request_queue.length;
+			}while(false);
+			
+			document.title=this.title;
+			
 			request_string+="&requesting_number="+requesting_number+"_"+max_request_number;
 		};
 		
@@ -778,9 +799,16 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		};
 		this.process_routine_function();
 		this.render_routine();
-		for(var i=0,ni=this.parameter.max_loading_number;i<ni;)
-			i+=this.buffer_object.request_buffer_object_data(this);
-		this.buffer_object.process_buffer_head_request_queue(this);
+		
+		do{
+			if((this.render_request_start_time-this.last_event_time)<=this.parameter.download_minimal_time_length)
+				if((this.render_request_start_time-this.engine_start_time)>this.parameter.download_start_time_length)
+					break;
+			for(var i=0,ni=this.parameter.max_loading_number;i<ni;)
+				i+=this.buffer_object.request_buffer_object_data(this);
+			this.buffer_object.process_buffer_head_request_queue(this);
+		}while(false);
+		
 		this.render_request(start_time);
 		this.render_time_length=(new Date()).getTime()-start_time;
 		
@@ -814,26 +842,25 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		for(var render_id=0;render_id<render_number;render_id++){
 			var destroy_function=this.render_program.render_program[render_id].destroy_function;
 			var part_number=this.permanent_render_part_id[render_id].length;
-			for(var part_id=0;part_id<part_number;part_id++){
-				var permanent_render_id	=this.permanent_render_part_id[render_id][part_id].permanent_render_id;
-				var permanent_part_id	=this.permanent_render_part_id[render_id][part_id].permanent_part_id;
+			for(var part_id=0;part_id<part_number;part_id++)
 				try{
 					destroy_function(render_id,part_id,this);
 				}catch(e){
-					if(this.parameter.debug_mode_flag){
-						alert("Execute terminate exception,permanent_render_id:"
-								+permanent_render_id+",permanent_part_id:"+permanent_part_id);
-						alert(e.toString());
-					}else{
-						console.log("Execute terminate exception,permanent_render_id:"
-								+permanent_render_id+",permanent_part_id:"+permanent_part_id);
-						console.log(e.toString());
-					}
+					;
 				}
-			}
 		}
 		
-		this.terminate_camera_object();
+		this.utility.terminate_utility_object();
+		this.utility=null;
+		
+		this.event_listener.terminate_event_listener_object();
+		this.event_listener=null;
+		
+		this.deviceorientation.terminate_deviceorientation_object();
+		this.deviceorientation=null;
+		
+		this.camera.terminate_camera_object();
+		this.camera=null;
 		
 		this.component_render_data.terminate_component_render_object();
 		this.component_render_data=null;
@@ -849,17 +876,26 @@ function construct_render_routine(my_process_bar_id,my_gl,
 
 	};
 	
-	this.get_component_to_id_object=function(my_component_name)
+	this.get_component_object_by_component_id=function(my_component_id)
 	{
-		for(var begin_pointer=0,end_pointer=this.component_to_id_array.length-1;begin_pointer<=end_pointer;){
+		if(my_component_id<0)
+			return null;
+		if(my_component_id>=this.component_array_sorted_by_id.length)
+			return null;
+		return this.component_array_sorted_by_id[my_component_id];
+	};
+	
+	this.get_component_object_by_component_name=function(my_component_name)
+	{
+		for(var begin_pointer=0,end_pointer=this.component_array_sorted_by_name.length-1;begin_pointer<=end_pointer;){
 			var middle_pointer=Math.floor((begin_pointer+end_pointer)/2.0);
-			var array_component_name=this.component_to_id_array[middle_pointer].component_name;
+			var array_component_name=this.component_array_sorted_by_name[middle_pointer].component_name;
 			if(array_component_name<my_component_name)
 				begin_pointer=middle_pointer+1;
 			else if(array_component_name>my_component_name)
 				end_pointer=middle_pointer-1;
 			else 
-				return this.component_to_id_array[middle_pointer];
+				return this.component_array_sorted_by_name[middle_pointer];
 		};
 		return null;
 	};
@@ -867,7 +903,7 @@ function construct_render_routine(my_process_bar_id,my_gl,
 	{
 		var my_component_id=my_component_name;
 		if(typeof(my_component_id)=="string"){
-			var p=this.get_component_to_id_object(my_component_id);
+			var p=this.get_component_object_by_component_name(my_component_id);
 			if(p==null)
 				return null;
 			my_component_id=p.component_id;

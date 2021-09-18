@@ -6,15 +6,13 @@
 /*	default_parameter_directory												*/		parameter
 /*	language_change_file_name												*/		language_change.txt
 
-/*	default_max_loading_number												*/		10
-/*	mesh_decimal_number														*/		8
+/*	max_loading_number														*/		10
 /*	max_material_id															*/		100
 
 /*	response_block_size														*/		65536
 
 /*	engine_expire_time_length		unit:nanosecond							*/		60000000000
-/*	engine_load_time_length			unit:nanosecond							*/		  150000000
-/*	engine_touch_time_length		unit:nanosecond							*/		10000000000
+/*	engine_touch_time_length		unit:nanosecond							*/		 5000000000
 /*	download_start_time_length		unit:nanosecond							*/		 5000000000
 /*	download_minimal_time_length	unit:nanosecond							*/		 2000000000
 
@@ -31,8 +29,6 @@
 /*	max_engine_component_number												*/		3000000
 /*	max_engine_part_face_number												*/		300000
 /*	max_engine_part_edge_number												*/		1000000
-
-/*	max_request_number														*/		10
 
 /*	max_buffer_object_head_package_length									*/		8000000
 	

@@ -23,7 +23,7 @@
 	out.println("var part_type=\""				+(((str=request.getParameter("part_type"				))==null)?"":str)+"\";");
 	out.println("var sub_directory=\""			+(((str=request.getParameter("sub_directory"			))==null)?"":str)+"\";");
 	out.println("var coordinate=\""				+(((str=request.getParameter("coordinate"				))==null)?"xyz":str)+"\";");
-	out.println("var max_loading_number=\""		+(((str=request.getParameter("max_loading_number"		))==null)?"5":str)+"\";");
+	out.println("var max_loading_number=\""		+(((str=request.getParameter("max_loading_number"		))==null)?"10":str)+"\";");
 }
 
 %>

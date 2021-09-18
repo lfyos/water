@@ -11,6 +11,8 @@ function redraw(render)
 	{
 		if(render.terminate_flag){
 			redraw_object=null;
+			render_routine=null;
+			touch_routine=null;
 			return;
 		}
 		var my_current_time=(new Date()).getTime();
@@ -24,6 +26,8 @@ function redraw(render)
 	{
 		if(render.terminate_flag){
 			redraw_object=null;
+			render_routine=null;
+			touch_routine=null;
 			return;
 		}
 		var my_current_time=(new Date()).getTime();
@@ -35,29 +39,8 @@ function redraw(render)
 		}
 		setTimeout(touch_routine,render.parameter.engine_touch_time_length/1000/1000);
 	};
-	function data_load_routine()
-	{
-		if(render.terminate_flag){
-			redraw_object=null;
-			return;
-		}
-		
-		var loaded_data_length=render.buffer_object.loaded_buffer_object_data_length;
-		if(loaded_data_length>=render.parameter.total_buffer_object_data_length)
-			touch_routine();
-		else{
-			var my_current_time=(new Date()).getTime();
-			var my_interval_length=my_current_time-redraw_object.touch_time;
-			if(my_interval_length>(render.parameter.engine_load_time_length/1000/1000)){
-				redraw_object.interval_length=my_interval_length;
-				redraw_object.touch_time=my_current_time;
-				render.do_render(redraw_object.interval_length);
-			}
-			setTimeout(data_load_routine,render.parameter.engine_load_time_length/1000/1000);
-		};
-	};
-	data_load_routine();
 	render_routine();
+	touch_routine();
 };
 
 function render_initialization(initialization_url,render,user_initialization_function,processs_bar_object)

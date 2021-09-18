@@ -26,7 +26,6 @@ public class system_parameter_information extends jason_creator
 		print("response_block_size",					sp.response_block_size);
 
 		print("engine_expire_time_length",				sp.engine_expire_time_length);
-		print("engine_load_time_length",				sp.engine_load_time_length);
 		print("engine_touch_time_length",				sp.engine_touch_time_length);
 		
 		print("max_client_interface_number",			sp.max_client_interface_number);
@@ -35,8 +34,6 @@ public class system_parameter_information extends jason_creator
 		print("max_engine_component_number",			sp.max_engine_component_number);
 		print("max_engine_part_face_number",			sp.max_engine_part_face_number);
 		print("max_engine_part_edge_number",			sp.max_engine_part_edge_number);
-		
-		print("max_request_number",						sp.max_request_number);
 		
 		print("file_download_cors_string",				sp.file_download_cors_string);
 		print("debug_mode_flag",						sp.debug_mode_flag);

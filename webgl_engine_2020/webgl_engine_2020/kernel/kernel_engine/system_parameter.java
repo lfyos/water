@@ -17,12 +17,11 @@ public class system_parameter
 	public String local_data_charset,network_data_charset;
 	public String user_file_name,shader_file_name,default_parameter_directory;
 	
-	public int default_max_loading_number,mesh_decimal_number,max_material_id;
+	public int max_loading_number,max_material_id;
 	
 	public int response_block_size;
 	
-	public long engine_expire_time_length,engine_load_time_length;
-	public long engine_touch_time_length,download_start_time_length,download_minimal_time_length;
+	public long engine_expire_time_length,engine_touch_time_length,download_start_time_length,download_minimal_time_length;
 	
 	public int create_engine_concurrent_number;
 	public double create_engine_sleep_time_length_scale;
@@ -33,8 +32,6 @@ public class system_parameter
 	public int max_client_interface_number;
 	
 	public int max_engine_kernel_number,max_engine_component_number,max_engine_part_face_number,max_engine_part_edge_number;
-	
-	public int max_request_number;
 	
 	public long max_buffer_object_head_package_length;
 	
@@ -60,14 +57,12 @@ public class system_parameter
 		shader_file_name				=new String(sp.shader_file_name);
 		default_parameter_directory		=new String(sp.default_parameter_directory);
 		
-		default_max_loading_number		=sp.default_max_loading_number;
-		mesh_decimal_number				=sp.mesh_decimal_number;
+		max_loading_number				=sp.max_loading_number;
 		max_material_id					=sp.max_material_id;
 		
 		response_block_size				=sp.response_block_size;
 		
 		engine_expire_time_length		=sp.engine_expire_time_length;
-		engine_load_time_length			=sp.engine_load_time_length;
 		engine_touch_time_length		=sp.engine_touch_time_length;
 		download_start_time_length		=sp.download_start_time_length;
 		download_minimal_time_length	=sp.download_minimal_time_length;
@@ -85,8 +80,6 @@ public class system_parameter
 		max_engine_component_number		=sp.max_engine_component_number;
 		max_engine_part_face_number		=sp.max_engine_part_face_number;
 		max_engine_part_edge_number		=sp.max_engine_part_edge_number;
-		
-		max_request_number				=sp.max_request_number;
 		
 		max_buffer_object_head_package_length=sp.max_buffer_object_head_package_length;
 		
@@ -173,14 +166,12 @@ public class system_parameter
 		else
 			language_change_file_name=file_reader.separator(language_change_file_name);	
 		
-		default_max_loading_number				=f.get_int();
-		mesh_decimal_number						=f.get_int();
+		max_loading_number						=f.get_int();
 		max_material_id							=f.get_int();
 		
 		response_block_size						=f.get_int();
 		
 		engine_expire_time_length				=f.get_long();
-		engine_load_time_length					=f.get_long();
 		engine_touch_time_length				=f.get_long();
 		download_start_time_length				=f.get_long();
 		download_minimal_time_length			=f.get_long();
@@ -198,9 +189,7 @@ public class system_parameter
 		max_engine_component_number				=f.get_int();
 		max_engine_part_face_number				=f.get_int();
 		max_engine_part_edge_number				=f.get_int();
-		
-		max_request_number						=f.get_int();
-		
+
 		max_buffer_object_head_package_length	=f.get_long();
 		
 		file_download_cors_string=f.get_string();
