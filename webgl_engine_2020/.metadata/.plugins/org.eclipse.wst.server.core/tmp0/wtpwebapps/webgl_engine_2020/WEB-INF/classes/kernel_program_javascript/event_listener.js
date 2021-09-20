@@ -923,9 +923,12 @@ function construct_event_listener(my_render)
 
 	this.render.canvas.focus();
 	
-	this.terminate_event_listener_object=function()
+	this.destroy=function()
 	{
-		if(this.render!=null){
+		window.removeEventListener("gamepadconnected",		gamepadconnected_fun);
+		window.removeEventListener("gamepaddisconnected",	gamepaddisconnected_fun);
+		
+		if(this.render!=null)
 			if(this.render.canvas!=null){
 				this.render.canvas.removeEventListener(	"mousemove",			mousemove_fun);
 				this.render.canvas.removeEventListener(	"mousedown",			mousedown_fun);
@@ -944,11 +947,58 @@ function construct_event_listener(my_render)
 				
 				this.render.canvas.removeEventListener(	"contextmenu", 			contextmenu_fun);
 			}
-			
-			window.removeEventListener(					"gamepadconnected",		gamepadconnected_fun);
-			window.removeEventListener(					"gamepaddisconnected",	gamepaddisconnected_fun);
-			
-			this.render=null;
-		}
+
+		this.set_render_view											=null;
+		this.set_mobile_render_view										=null;
+		this.caculate_pickup_event_processor							=null;
+		this.caculate_component_event_processor							=null;
+		this.render.system_event_processor.pickupmousemove				=null;
+		this.render.system_event_processor.mousemove					=null;
+		this.mousemove_event_listener									=null;
+		this.render.system_event_processor.pickupmousedown				=null;
+		this.render.system_event_processor.mousedown					=null;
+		this.mousedown_event_listener									=null;
+		this.render.system_event_processor.pickupmouseup				=null;
+		this.render.system_event_processor.mouseup						=null;
+		this.mouseup_event_listener										=null;
+		this.render.system_event_processor.pickupdblclick				=null;
+		this.render.system_event_processor.dblclick						=null;
+		this.dblclick_event_listener									=null;
+		this.render.system_event_processor.pickupmousewheel				=null;
+		this.render.system_event_processor.mousewheel					=null;
+		this.mousewheel_event_listener									=null;
+		this.render.system_event_processor.pickuptouchstart				=null;
+		this.render.system_event_processor.touchstart					=null;
+		this.touchstart_event_listener									=null;
+		this.render.system_event_processor.pickuptouchend				=null;
+		this.render.system_event_processor.touchend						=null;
+		this.touchend_event_listener									=null;
+		this.render.system_event_processor.pickuptouchmove				=null;
+		this.render.system_event_processor.touchmove					=null;
+		this.touchmove_event_listener									=null;
+		
+		this.render.system_event_processor.pickupkeydown				=null;
+		this.render.system_event_processor.keydown						=null;
+		this.keydown_event_listener										=null;
+		this.render.system_event_processor.pickupkeypress				=null;
+		this.render.system_event_processor.keypress						=null;
+		this.keypress_event_listener									=null;
+		
+		this.render.system_event_processor.pickupkeyup					=null;
+		this.render.system_event_processor.keyup						=null;
+		this.keyup_event_listener										=null;
+		this.render.system_event_processor.pickupcontextmenu			=null;
+		this.render.system_event_processor.contextmenu					=null;
+		this.contextmenu_event_listener									=null;
+		this.render.system_event_processor.pickupgamepadconnected		=null;
+		this.render.system_event_processor.gamepadconnected				=null;
+		this.gamepadconnected_event_listener							=null;
+		this.render.system_event_processor.pickupgamepaddisconnected	=null;
+		this.render.system_event_processor.gamepaddisconnected			=null;
+		this.gamepaddisconnected_event_listener							=null;
+		
+		this.destroy													=null;
+		
+		this.render=null;
 	}
 };

@@ -94,8 +94,7 @@ public class system_parameter
 		proxy_par						=sp.proxy_par;
 	}
 	public system_parameter(String application_directory_name,
-			String data_configure_environment_variable,
-			String proxy_configure_environment_variable)
+			String data_configure_environment_variable,String proxy_configure_environment_variable)
 	{
 		String data_configure_file_name;
 		if((data_configure_file_name=System.getenv(data_configure_environment_variable))==null)

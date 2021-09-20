@@ -1,6 +1,8 @@
 
 function construct_buffer_object(my_gl,my_parameter)
 {
+	this.destroy_flag					=false;
+	
 	this.gl								=my_gl;
 	this.parameter						=my_parameter;
 	
@@ -15,17 +17,29 @@ function construct_buffer_object(my_gl,my_parameter)
 	this.loaded_buffer_object_file_number=0;
 	this.loaded_buffer_object_data_length=0;
 	
-	this.terminate_buffer_object=function()
+	this.destroy=function()
 	{
+		this.destroy_flag=true;
+		
 		var render_number=this.buffer_object.length;
 		for(var render_id=0;render_id<render_number;render_id++){
 			if(typeof(this.buffer_object[render_id])!="object")
 				continue;
+			if(typeof(this.buffer_object[render_id].destroy)=="function"){
+				this.buffer_object[render_id].destroy(this.buffer_object[render_id],this,render_id);
+				this.buffer_object[render_id].destroy=null;
+			}
 			var part_number=this.buffer_object[render_id].length;
 			for(var part_id=0;part_id<part_number;part_id++){			
 				if(typeof(this.buffer_object[render_id][part_id])!="object")
-					continue;			
-
+					continue;
+				
+				if(typeof(this.buffer_object[render_id][part_id].destroy)=="function"){
+					this.buffer_object[render_id][part_id].destroy(
+						this.buffer_object[render_id][part_id],this,render_id,part_id);
+					this.buffer_object[render_id][part_id].destroy=null;
+				}
+				
 				var p=[
 					this.buffer_object[render_id][part_id].face,
 					this.buffer_object[render_id][part_id].frame,
@@ -34,14 +48,27 @@ function construct_buffer_object(my_gl,my_parameter)
 				];				
 				for(var i=0,ni=p.length;i<ni;i++){
 					if(p[i].region_data!=null){
+						if(typeof(p[i].destroy)=="function"){
+							p[i].destroy(p[i],this,render_id,part_id,i);
+							p[i].destroy=null;
+						}
 						for(var j=0,nj=p[i].region_data.length;j<nj;j++){
 							if(typeof(p[i].region_data[j])!="object")
 								continue;
 							if(p[i].region_data[j]==null)
 								continue;
 							
-							this.gl.deleteBuffer(p[i].region_data[j].buffer_object);
+							if(typeof(p[i].region_data[j].destroy)=="function"){
+								p[i].region_data[j].destroy(
+									p[i].region_data[j],this,render_id,part_id,i,j);
+								p[i].region_data[j].destroy=null;
+							}
 							
+							this.gl.deleteBuffer	 (p[i].region_data[j].buffer_object);
+							if(typeof(p[i].region_data[j].vertex_array_object)!="undefined"){
+								this.gl.deleteVertexArray(p[i].region_data[j].vertex_array_object);
+								p[i].region_data[j].vertex_array_object=null;
+							}
 							p[i].region_data[j].buffer_object	=null;
 							p[i].region_data[j].region_box		=null;
 							p[i].region_data[j].private_data	=null;
@@ -80,12 +107,29 @@ function construct_buffer_object(my_gl,my_parameter)
 				this.buffer_object[render_id][part_id]=null;
 			}						
 			this.buffer_object[render_id]=null;
-		}	
-		this.gl							=null;
-		this.parameter					=null;
-		this.buffer_object				=null;
-		this.request_render_part_id		=null;
-		this.buffer_head_request_queue	=null;
+		}
+		
+		this.gl									=null;
+		this.parameter							=null;
+		this.buffer_object						=null;
+		this.request_render_part_id				=null;
+		this.buffer_head_request_queue			=null;
+	
+		this.destroy							=null;
+		
+		this.create_empty_buffer_object			=null;
+		this.save_data_into_buffer_object		=null;
+		this.test_busy							=null;
+		this.process_buffer_object_data			=null;
+		
+		this.request_buffer_object_data			=null;
+		
+		this.process_buffer_object_head			=null;
+		this.process_buffer_head_package		=null;
+		
+		this.request_buffer_head_package		=null;
+		this.process_buffer_head_request_queue	=null;
+		
 	};
 	
 	this.create_empty_buffer_object=function(
@@ -270,6 +314,11 @@ function construct_buffer_object(my_gl,my_parameter)
 	
 	this.request_buffer_object_data=function(my_render)
 	{
+		if(my_render.terminate_flag)
+			return this.parameter.max_loading_number;
+		if(this.destroy_flag)
+			return this.parameter.max_loading_number;
+		
 		if(this.request_render_part_id.length<=0)
 			return this.parameter.max_loading_number;
 
@@ -343,12 +392,17 @@ function construct_buffer_object(my_gl,my_parameter)
 		this.loading_part_id	=part_id;
 		
 		try{
-			var my_ajax=new XMLHttpRequest(),cur=this;			
+			var my_ajax=new XMLHttpRequest(),cur=this;
 			my_ajax.responseType="arraybuffer";
 			my_ajax.onreadystatechange=function()
 			{
 				if(my_ajax.readyState!=4)
 					return;
+				if(my_render.terminate_flag)
+					return;
+				if(cur.destroy_flag)
+					return;
+				
 				cur.current_loading_mesh_number--;
 				object_pointer.loaded_number--;
 				
@@ -468,15 +522,17 @@ function construct_buffer_object(my_gl,my_parameter)
 			{
 				if(my_ajax.readyState!=4)
 					return;
+				if(my_render.terminate_flag)
+					return;
+				if(cur.destroy_flag)
+					return;
 				cur.current_loading_mesh_number--;
 				if(my_ajax.status!=200){
 					if(cur.parameter.debug_mode_flag){
 						alert("this.request_buffer_head_package response status error: "+my_ajax.status.toString());
-						alert("package_proxy_url: "+package_proxy_url);
 						alert(package_proxy_url);
 					}else{
 						console.log("this.request_buffer_head_package response status error: "+my_ajax.status.toString());
-						console.log("package_proxy_url: "+package_proxy_url);
 						console.log(package_proxy_url);
 					}
 					return;
@@ -518,7 +574,13 @@ function construct_buffer_object(my_gl,my_parameter)
 	
 	this.process_buffer_head_request_queue=function(my_render)
 	{
-		while(this.buffer_head_request_queue.length>0){
+		while(true){
+			if(my_render.terminate_flag)
+				return;
+			if(this.destroy_flag)
+				return;
+			if(this.buffer_head_request_queue.length<=0)
+				return;
 			if(this.test_busy()<=0)
 				break;
 			var p=this.buffer_head_request_queue.shift();

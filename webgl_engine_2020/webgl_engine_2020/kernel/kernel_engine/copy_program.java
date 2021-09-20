@@ -43,18 +43,6 @@ public class copy_program
 		}
 		fw.println(",");
 		
-		
-		common_reader destroy_reader=program_file_reader.get_render_program_reader(render_cont.renders[render_id],"destroy");
-		if(destroy_reader!=null) {
-			destroy_reader.get_text(fw);
-			destroy_reader.close();
-		}else {
-			debug_information.println(
-					"copy_shader_programs fail,can Not get destroy program for : ",program_file_name);
-			fw.print  ("null");
-		}
-		fw.println(",");
-		
 		for(int j=0,nj=type_name.length;j<nj;j++){
 			String program_str="",str="";
 			
@@ -148,13 +136,6 @@ public class copy_program
 					source_last_time=my_last_time;
 				draw_reader.close();
 			}
-			common_reader destroy_reader=program_file_reader.get_render_program_reader(render_cont.renders[i],"destroy");
-			if(destroy_reader!=null){
-				if(source_last_time<(my_last_time=destroy_reader.lastModified_time))
-					source_last_time=my_last_time;
-				destroy_reader.close();
-			}
-			
 			if(source_last_time<program_last_time) {
 				if(ret_val<program_last_time)
 					ret_val=program_last_time;

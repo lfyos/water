@@ -58,6 +58,6 @@
 <fullyQualifiedTypeName name="kernel_file_manager.file_reader"/>
 <fullyQualifiedTypeName name="kernel_part.part"/>
 <fullyQualifiedTypeName name="kernel_common_class.sorter"/>
-<fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 <fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 </qualifiedTypeNameHistroy>

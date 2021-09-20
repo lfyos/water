@@ -6,7 +6,7 @@
 /*	default_parameter_directory												*/		parameter
 /*	language_change_file_name												*/		language_change.txt
 
-/*	max_loading_number														*/		10
+/*	max_loading_number														*/		8
 /*	max_material_id															*/		100
 
 /*	response_block_size														*/		65536

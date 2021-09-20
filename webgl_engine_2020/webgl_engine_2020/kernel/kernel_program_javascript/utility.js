@@ -2,9 +2,26 @@ function construct_render_utility(my_render_instance)
 {
 	this.render_instance=my_render_instance;
 	
-	this.terminate_utility_object=function()
+	this.destroy=function()
 	{
 		this.render_instance=null;
+		
+		this.destroy=null;
+		this.get_pinpoint=null;
+		this.destroy_texture_image=null;
+		this.load_texture_image=null;
+		this.load_server_part_image=null;
+		this.load_server_component_image=null;
+		this.destroy_texture_video=null;
+		this.load_texture_video=null;
+		this.load_server_part_video=null;
+		this.load_server_component_video=null;
+		this.load_camera_video=null;
+		this.bind_camera_video=null;
+		this.set_clear_fullscreen=null;
+		this.decode_integer_from_pixel=null;
+		this.decode_float_from_pixel=null;
+		
 	}
 	
 	this.get_pinpoint=function()
@@ -64,11 +81,15 @@ function construct_render_utility(my_render_instance)
 		texture_object.image.crossOrigin="Anonymous";
 		texture_object.image.onerror= function()
 		{
+			if(cur.terminate_flag)
+				return;
 	    	cur.buffer_object.current_loading_mesh_number--;
 	    	texture_object.state="error";
 		};
 		texture_object.image.onload = function()
 		{
+			if(cur.terminate_flag)
+				return;
 			cur.buffer_object.current_loading_mesh_number--;
 			cur.gl.bindTexture	(cur.gl.TEXTURE_2D,texture_object);
 			cur.gl.texImage2D	(cur.gl.TEXTURE_2D,0,cur.gl.RGBA,
@@ -79,6 +100,8 @@ function construct_render_utility(my_render_instance)
 	    cur.append_routine_function(
 	    		function(my_render)
 	    		{
+	    			if(cur.terminate_flag)
+	    				return;
 	    			if(cur.buffer_object.test_busy()<=0)
 	    				return true;
 	    			texture_object.state="loading";

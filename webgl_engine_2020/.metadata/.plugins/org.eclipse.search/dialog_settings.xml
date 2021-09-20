@@ -3,6 +3,7 @@
 	<section name="">
 		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
 		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
+		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
 	</section>
 	<section name="SearchDialog.ScopePart">
 		<item key="scope" value="0"/>
@@ -18,10 +19,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Date"/>
+			<item key="textPattern" value="this.render_request=function(current_time)"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.js"/>
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -30,9 +34,12 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;switch&quot;"/>
+			<item key="textPattern" value="onreadystatechange"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.js"/>
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
 				<item value="*java"/>
 			</list>
 			<list key="workingSets">
@@ -42,10 +49,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;silent_time&quot;"/>
+			<item key="textPattern" value="this.call_server:my_ajax.status!=200:no error_function:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
 				<item value="*java"/>
+				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -54,9 +64,12 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="start_create_kernel"/>
+			<item key="textPattern" value="compile_program"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.js"/>
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
 				<item value="*java"/>
 			</list>
 			<list key="workingSets">
@@ -66,9 +79,12 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="requesting_number"/>
+			<item key="textPattern" value="this.request_buffer_head_package response status error"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.js"/>
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
 				<item value="*java"/>
 			</list>
 			<list key="workingSets">
@@ -91,7 +107,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="wait_for_create_scene"/>
+			<item key="textPattern" value="&quot;destroy&quot;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -103,31 +119,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;component&quot;"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*java"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY9">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="load_buffer_object_file_information"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*java"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY2">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="download_minimal_time_length"/>
+			<item key="textPattern" value="Loading Buffer Object Data response status error: "/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.js"/>
@@ -138,14 +130,47 @@
 			<list key="workingSets">
 			</list>
 		</section>
+		<section name="HISTORY9">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="cur.process_buffer_head_package(package_length,package_data,head_data_array,my_render)"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY2">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value=".do_render"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
 		<section name="HISTORY3">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;parameter_channel&quot;"/>
+			<item key="textPattern" value="&quot;max_loading_number&quot;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
 				<item value="*java"/>
+				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -154,7 +179,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;render_interval&quot;"/>
+			<item key="textPattern" value="Begin create part package"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.jsp"/>
@@ -169,13 +194,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="engine_load_time_length"/>
+			<item key="textPattern" value="request_buffer_object_data"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.js"/>
 				<item value="*.jsp"/>
 				<item value="*.txt"/>
 				<item value="*java"/>
-				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>

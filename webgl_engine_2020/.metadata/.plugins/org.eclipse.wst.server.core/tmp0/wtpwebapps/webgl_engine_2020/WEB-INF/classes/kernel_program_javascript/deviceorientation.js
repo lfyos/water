@@ -1,4 +1,3 @@
-
 function construct_deviceorientation(my_computer)
 {
 	this.computer=my_computer;
@@ -154,17 +153,31 @@ function construct_deviceorientation(my_computer)
 		my_deviceorientation.acceleration.rotation		=event.rotationRate;
 	};
 	
-	this.terminate_deviceorientation_object=function()
+	this.destroy=function()
 	{
-		this.computer=null;
-		this.gps=null;
-		this.deviceorientation=null;
-		this.acceleration=null;
+		window.addEventListener("deviceorientation",deviceorientation_fun,	true);
+		window.addEventListener("devicemotion",		devicemotion_fun,		true);
 		
-		if(this.gps!=null)
+		if(this.gps!=null){
 			navigator.geolocation.clearWatch(this.gps.watch_id);
-		window.removeEventListener("deviceorientation",	deviceorientation_fun);
-		window.removeEventListener("devicemotion",		devicemotion_fun);
+			this.gps.watch_id=null;
+		}
+		
+		this.computer							=null;
+		this.gps								=null;
+		this.deviceorientation					=null;
+		this.acceleration						=null;
+	
+		this.set_transform_matrix				=null;
+		this.get_deviceorientation_version		=null;
+		this.get_deviceorientation_location		=null;
+		this.get_acceleration_translation		=null;
+		this.get_acceleration_rotation			=null;
+		this.destroy							=null;
+		
+		deviceorientation_fun					=null;
+		devicemotion_fun						=null;
+		my_deviceorientation					=null;		
 	};
 	
 	window.addEventListener("deviceorientation",deviceorientation_fun,	true);

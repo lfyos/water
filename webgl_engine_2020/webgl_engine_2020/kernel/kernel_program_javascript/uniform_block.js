@@ -26,6 +26,28 @@ function construct_uniform_block_object(my_gl)
 	this.gl.bindBufferBase	(this.gl.UNIFORM_BUFFER,this.target_bind_point_id,	this.target_buffer_object);
 	this.gl.bindBufferBase	(this.gl.UNIFORM_BUFFER,this.pass_bind_point_id,	this.pass_buffer_object);
 	
+	this.destroy=function()
+	{
+		this.gl.deleteBuffer(this.system_buffer_object);
+		this.gl.deleteBuffer(this.target_buffer_object);
+		this.gl.deleteBuffer(this.pass_buffer_object);
+
+		this.gl							=null;
+		this.system_bind_point_id		=null;
+		this.target_bind_point_id		=null;
+		this.pass_bind_point_id			=null;
+		this.system_buffer_object		=null;
+		this.target_buffer_object		=null;
+		this.pass_buffer_object			=null;
+
+		this.destroy					=null;
+		this.bind_system				=null;
+		this.get_target_project_matrix	=null;
+		this.bind_target				=null;
+		this.bind_pass					=null;
+		
+	};
+	
 	this.bind_system=function(pickup,current_time,canvas_width,canvas_height)
 	{
 		var t=current_time;

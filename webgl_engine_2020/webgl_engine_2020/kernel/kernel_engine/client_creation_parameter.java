@@ -13,6 +13,7 @@ public class client_creation_parameter
 		max_client_loading_number=ek.system_par.max_loading_number;
 		if((str=request_response.get_parameter("max_loading_number"))!=null)	
 			if((new_max_loading_number=Integer.decode(str))>0)
-				max_client_loading_number=new_max_loading_number;
+				if((max_client_loading_number=new_max_loading_number)>ek.system_par.max_loading_number)
+					max_client_loading_number=ek.system_par.max_loading_number;
 	}
 }

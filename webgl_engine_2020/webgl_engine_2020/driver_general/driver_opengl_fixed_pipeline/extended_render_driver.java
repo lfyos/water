@@ -21,7 +21,6 @@ public class extended_render_driver extends render_driver
 	{
 		super(	"javascript.decode.txt",
 				"javascript.draw.txt",
-				"javascript.destroy.txt",
 				"vertex.shader.txt",
 				"fragment.shader.txt",
 				"geometry.shader.txt",

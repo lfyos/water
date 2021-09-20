@@ -4,7 +4,7 @@ function construct_program_object(my_gl,my_parameter)
 	this.parameter=my_parameter;
 	this.render_program=new Array();
 	
-	this.terminate_program_object=function()
+	this.destroy=function()
 	{
 		var program_number=this.render_program.length;
 		for(var program_id=0;program_id<program_number;program_id++){
@@ -12,6 +12,11 @@ function construct_program_object(my_gl,my_parameter)
 				continue;
 			if(this.render_program[program_id]==null)
 				continue;
+			
+			if(typeof(this.render_program[program_id].destroy)=="function"){
+				this.render_program[program_id].destroy(this.render_program[program_id],this,program_id);
+				this.render_program[program_id].destroy=null;
+			}
 			
 			this.gl.deleteProgram(this.render_program[program_id].shader_program);
 			this.gl.deleteShader(this.render_program[program_id].vertex_shader);
@@ -28,10 +33,12 @@ function construct_program_object(my_gl,my_parameter)
 		this.gl				=null;
 		this.parameter		=null;
 		this.render_program	=null;
+		
+		this.compile_program=null;
+		this.destroy		=null;
 	}
 	
-	this.compile_program=function(program_id,permanent_render_id,
-			my_decode_function,my_draw_function,my_destroy_function,
+	this.compile_program=function(program_id,permanent_render_id,my_decode_function,my_draw_function,
 			my_vertex_program,my_fragment_program,my_geometry_program,my_tess_control_Program,my_tess_evalueprogram)
 	{
 		var my_vertex=this.gl.createShader(this.gl.VERTEX_SHADER);
@@ -97,7 +104,6 @@ function construct_program_object(my_gl,my_parameter)
 		{
 			decode_function	:	my_decode_function,
 			draw_function	:	my_draw_function,
-			destroy_function:	my_destroy_function,
 			vertex_shader	:	my_vertex,
 			fragment_shader	:	my_fragment,
 			shader_program	:	my_shader_program

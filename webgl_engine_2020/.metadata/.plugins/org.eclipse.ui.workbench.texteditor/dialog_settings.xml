@@ -2,29 +2,31 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="interval_length"/>
+		<item key="selection" value="request_buffer_object_data"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
-			<item value="interval_length"/>
-			<item value="title"/>
-			<item value="last_event_time"/>
-			<item value="clear"/>
-			<item value="call_server_component"/>
-			<item value="select_component"/>
-			<item value="create_engine_sleep_time_length_scale"/>
-			<item value="download_minimal_time_length"/>
-			<item value="this.do_render"/>
-			<item value="can_do_render_request_flag"/>
-			<item value="redraw_object"/>
-			<item value="do_render"/>
 			<item value=".do_render"/>
-			<item value="render_interval_length"/>
-			<item value=".do_render("/>
+			<item value="request_buffer_object_data"/>
+			<item value="terminate_flag"/>
+			<item value="max_loading_number"/>
+			<item value="modify_parameter"/>
+			<item value="delay_time_length"/>
+			<item value="modifier_time_parameter"/>
+			<item value="set_transform_matrix"/>
+			<item value="deviceorientation"/>
+			<item value="buffer_head_request_queue"/>
+			<item value="modifier_current_time"/>
+			<item value="process_part_component_id_and_driver_id"/>
+			<item value="clip_plane_array"/>
+			<item value="this.render_request"/>
+			<item value="this.do_render"/>
 		</list>
 		<list key="replacehistory">
+			<item value="destroy"/>
+			<item value="alert"/>
 			<item value=""/>
 			<item value="cur.render.last_event_time"/>
 			<item value="get_component_object_by_component_name"/>
@@ -38,15 +40,13 @@
 			<item value="par"/>
 			<item value="render."/>
 			<item value="debug_"/>
-			<item value="render.debug_"/>
-			<item value="render_object."/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item key="DIALOG_WIDTH" value="335"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="104"/>
-		<item key="DIALOG_Y_ORIGIN" value="261"/>
+		<item key="DIALOG_X_ORIGIN" value="1520"/>
+		<item key="DIALOG_Y_ORIGIN" value="214"/>
 	</section>
 </section>

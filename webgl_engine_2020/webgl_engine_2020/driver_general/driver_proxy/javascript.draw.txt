@@ -34,9 +34,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 	var modifier_current_time			=render.modifier_current_time;
 	
 	
-	function add_one_proxy(component_id,driver_id,
-			version_string,time_length,file_name,stamp_string,original_url,
-			my_proxy,my_encode_flag)
+	function add_one_proxy(component_id,driver_id,version_string,time_length,
+					file_name,stamp_string,original_url,my_proxy,my_encode_flag)
 	{
 		var my_url =my_proxy;
 		
@@ -55,6 +54,10 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			{
 				if(my_ajax.readyState!=4)
 					return;
+				
+				if(render.terminate_flag)
+					return;
+				
 				if(my_ajax.status!=200){
 					data_buffer.can_do_register_flag=true;
 					if(render.parameter.debug_mode_flag){

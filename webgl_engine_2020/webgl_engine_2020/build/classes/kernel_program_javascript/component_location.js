@@ -32,16 +32,18 @@ function construct_component_location_object(component_number,my_computer,my_gl)
 	this.component_bind_point_id=this.gl.getParameter(this.gl.MAX_UNIFORM_BUFFER_BINDINGS)-4;
 	this.gl.bindBufferBase(this.gl.UNIFORM_BUFFER,this.component_bind_point_id,this.component_buffer_object[0]);
 
-	this.terminate_component_location_object=function()
+	this.destroy=function()
 	{
 		for(var i=0;i<this.component_number;i++){
+			if(typeof(this.component[i].destroy)=="function"){
+				this.component[i].destroy(this.component[i],this,i);
+				this.component[i].destroy=null;
+			}
 			this.component[i].absolute_location	=null;
 			this.component[i].move_matrix		=null;
 			this.component[i].relative			=null;
 			this.component[i]=null;
 		};
-		this.component=null;
-		
 		for(var i=0;i<this.component_number;i++){
 			if(typeof(this.component_buffer_object[i])!="object")
 				continue;
@@ -50,7 +52,18 @@ function construct_component_location_object(component_number,my_computer,my_gl)
 			this.gl.deleteBuffer(this.component_buffer_object[i]);
 			this.component_buffer_object[i]=null;
 		}
-		this.component_buffer_object=null;
+		this.gl									=null;
+		this.computer							=null;
+		this.component							=null;
+		this.component_buffer_object			=null;
+
+		this.destroy							=null;
+		this.modify_one_component_location		=null;
+		this.decode_location					=null;
+		this.modify_component_location			=null;
+		this.get_one_component_location			=null;
+		this.get_component_location_routine		=null;
+		this.get_component_location				=null;	
 	}
 	this.modify_one_component_location=function(component_id,loca)
 	{

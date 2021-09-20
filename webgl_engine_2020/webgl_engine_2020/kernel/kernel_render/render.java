@@ -15,7 +15,7 @@ public class render
 {
 	public Class<?>driver_class;
 	
-	public String javascript_decode,javascript_draw,javascript_destroy;
+	public String javascript_decode,javascript_draw;
 	public String vertex_shader,fragment_shader,geometry_shader,tess_control_shader,tess_evalue_shader;
 	
 	public part parts[];
@@ -26,7 +26,6 @@ public class render
 		
 		javascript_decode	=null;
 		javascript_draw		=null;
-		javascript_destroy	=null;
 		vertex_shader		=null;
 		fragment_shader		=null;
 		geometry_shader		=null;
@@ -48,7 +47,6 @@ public class render
 		
 		javascript_decode	=new String(r.javascript_decode);
 		javascript_draw		=new String(r.javascript_draw);
-		javascript_destroy	=new String(r.javascript_destroy);
 		
 		vertex_shader		=new String(r.vertex_shader);
 		fragment_shader		=new String(r.fragment_shader);
@@ -75,7 +73,6 @@ public class render
 		
 		javascript_decode	=new String(my_driver.javascript_decode);
 		javascript_draw		=new String(my_driver.javascript_draw);
-		javascript_destroy	=new String(my_driver.javascript_destroy);
 		
 		vertex_shader		=new String(my_driver.vertex_shader);
 		fragment_shader		=new String(my_driver.fragment_shader);

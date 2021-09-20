@@ -33,7 +33,12 @@ function construct_framebuffer(gl,width,height,render_target_number)
     {
     	gl.deleteFramebuffer	(this.frame);
     	gl.deleteRenderbuffer	(this.depth_renderbuffer);
-    	for(var i=0,ni=this.texture.length;i<ni;i++)
-    		gl.deleteTexture	(this.texture[i]);
+    	for(var i=0,ni=this.texture.length;i<ni;i++){
+    		gl.deleteTexture(this.texture[i]);
+    		this.texture[i]	=null;
+    	}
+    	this.frame				=null;
+    	this.depth_renderbuffer	=null;
+    	this.texture			=null;
     };
 };
