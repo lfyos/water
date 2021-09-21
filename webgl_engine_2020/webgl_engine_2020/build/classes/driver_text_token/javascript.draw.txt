@@ -1,3 +1,7 @@
+[
+	"vertex_location"
+],
+
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			render_buffer_id,	component_data_array,	project_matrix,			do_render_number,	render)
 {
@@ -94,20 +98,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		
 		if(token_place_array.length>1)
 			for(var j=0,nj=part_buffer_object.region_data.length;j<nj;j++){
-				var p=part_buffer_object.region_data[j];
-				if(typeof(p.vertex_array_object)!="undefined")
-					gl.bindVertexArray(p.vertex_array_object);
-				else{
-					p.vertex_array_object=gl.createVertexArray();
-					gl.bindVertexArray(p.vertex_array_object);
-					gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer_object);
-					
-					var attribute_id;
-					
-					attribute_id=gl.getAttribLocation (shader_program,"vertex_location");
-					gl.vertexAttribPointer		(attribute_id,4,gl.FLOAT,false,p.item_size*4,0);
-					gl.enableVertexAttribArray	(attribute_id);
-				}
+				gl.bindVertexArray(part_buffer_object.region_data[j].vertex_array_object);
 				for(var k=1,nk=token_place_array.length;k<nk;k++){
 					var my_component_id=token_place_array[k][3];
 					var model_matrix_data=component_location.get_component_location(my_component_id);

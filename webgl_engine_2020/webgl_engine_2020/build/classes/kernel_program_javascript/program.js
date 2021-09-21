@@ -38,7 +38,7 @@ function construct_program_object(my_gl,my_parameter)
 		this.destroy		=null;
 	}
 	
-	this.compile_program=function(program_id,permanent_render_id,my_decode_function,my_draw_function,
+	this.compile_program=function(program_id,permanent_render_id,my_decode_function,my_attribute_map,my_draw_function,
 			my_vertex_program,my_fragment_program,my_geometry_program,my_tess_control_Program,my_tess_evalueprogram)
 	{
 		var my_vertex=this.gl.createShader(this.gl.VERTEX_SHADER);
@@ -103,6 +103,7 @@ function construct_program_object(my_gl,my_parameter)
     	this.render_program[program_id]=
 		{
 			decode_function	:	my_decode_function,
+			attribute_map	:	my_attribute_map,
 			draw_function	:	my_draw_function,
 			vertex_shader	:	my_vertex,
 			fragment_shader	:	my_fragment,

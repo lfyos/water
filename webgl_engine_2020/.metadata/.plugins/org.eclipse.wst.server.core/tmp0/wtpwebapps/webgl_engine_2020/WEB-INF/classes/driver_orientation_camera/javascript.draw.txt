@@ -1,3 +1,7 @@
+[
+	
+],
+
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			render_buffer_id,	component_data_array,	project_matrix,			do_render_number,	render)
 {

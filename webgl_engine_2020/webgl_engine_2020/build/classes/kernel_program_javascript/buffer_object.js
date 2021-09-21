@@ -64,14 +64,18 @@ function construct_buffer_object(my_gl,my_parameter)
 								p[i].region_data[j].destroy=null;
 							}
 							
-							this.gl.deleteBuffer	 (p[i].region_data[j].buffer_object);
+							this.gl.deleteBuffer(p[i].region_data[j].buffer_object);
 							if(typeof(p[i].region_data[j].vertex_array_object)!="undefined"){
-								this.gl.deleteVertexArray(p[i].region_data[j].vertex_array_object);
-								p[i].region_data[j].vertex_array_object=null;
+								if(p[i].region_data[j].vertex_array_object_flag){
+									for(var k=0,nk=p[i].region_data[j].vertex_array_object.length;k<nk;k++)
+										this.gl.deleteVertexArray(p[i].region_data[j].vertex_array_object[k]);
+								}else
+									this.gl.deleteVertexArray(p[i].region_data[j].vertex_array_object);
 							}
-							p[i].region_data[j].buffer_object	=null;
-							p[i].region_data[j].region_box		=null;
-							p[i].region_data[j].private_data	=null;
+							p[i].region_data[j].vertex_array_object	=null;
+							p[i].region_data[j].buffer_object		=null;
+							p[i].region_data[j].region_box			=null;
+							p[i].region_data[j].private_data		=null;
 							p[i].region_data[j]=null;					
 						}
 						p[i].region_data=null;					
@@ -199,7 +203,9 @@ function construct_buffer_object(my_gl,my_parameter)
     	created_buffer_object.error_flag		=false;
 		this.buffer_object[my_render_id][my_part_id].point=created_buffer_object;
 	};
-	this.save_data_into_buffer_object=function(object_pointer,buffer_object_data,my_material_id)
+	
+	this.save_data_into_buffer_object=function(
+			shader_program,attribute_map,object_pointer,buffer_object_data,my_material_id)
 	{
 		var my_region_data=new Object();
 		
@@ -217,17 +223,70 @@ function construct_buffer_object(my_gl,my_parameter)
 		this.gl.bufferData(this.gl.ARRAY_BUFFER,
 				new Float32Array(buffer_object_data.region_data),this.gl.STATIC_DRAW,0);
 		
+		this.gl.useProgram(shader_program);
+		
+		do{
+			if(attribute_map.length>0){
+				if(typeof(attribute_map[0])!="string"){
+					my_region_data.vertex_array_object=new Array(attribute_map.length);
+					for(var i=0,ni=attribute_map.length;i<ni;i++){
+						my_region_data.vertex_array_object[i]=this.gl.createVertexArray();
+						this.gl.bindVertexArray(my_region_data.vertex_array_object[i]);
+						this.gl.bindBuffer(this.gl.ARRAY_BUFFER,my_region_data.buffer_object);
+						for(var j=0,nj=attribute_map[i].length;j<nj;j++){
+							if(attribute_map[i][j]==null)
+								continue;
+							if(attribute_map[i][j]=="")
+								continue;
+							var attribute_id=this.gl.getAttribLocation (shader_program,attribute_map[i][j]);
+							if((j*16)>=(my_region_data.item_size*4))
+								this.gl.disableVertexAttribArray(attribute_id);
+							else{
+								this.gl.vertexAttribPointer(attribute_id,4,this.gl.FLOAT,false,my_region_data.item_size*4,j*16);
+								this.gl.enableVertexAttribArray	(attribute_id);
+							}
+						}
+					}
+					my_region_data.vertex_array_object_flag=true;
+					break;
+				}
+			}
+			
+			my_region_data.vertex_array_object=this.gl.createVertexArray();
+			this.gl.bindVertexArray(my_region_data.vertex_array_object);
+			this.gl.bindBuffer(this.gl.ARRAY_BUFFER,my_region_data.buffer_object);
+				
+			for(var i=0,ni=attribute_map.length;i<ni;i++){
+				if(attribute_map[i]==null)
+					continue;
+				if(attribute_map[i]=="")
+					continue;
+				var attribute_id=this.gl.getAttribLocation (shader_program,attribute_map[i]);
+				if((i*16)>=(my_region_data.item_size*4))
+					this.gl.disableVertexAttribArray(attribute_id);
+				else{
+					this.gl.vertexAttribPointer(attribute_id,4,this.gl.FLOAT,false,my_region_data.item_size*4,i*16);
+					this.gl.enableVertexAttribArray	(attribute_id);
+				}
+			}
+			my_region_data.vertex_array_object_flag=false;
+		}while(false);
+		
+		this.gl.useProgram(null);
+
 		object_pointer.error_flag|=(this.gl.getError()==this.gl.NO_ERROR)?false:true;
 		
 		object_pointer.region_data.push(my_region_data);
 
 		return;
 	};
+	
 	this.test_busy=function()
 	{
 		return this.parameter.max_loading_number-this.current_loading_mesh_number;
 	};
-	this.process_buffer_object_data=function(buffer_object_data,request_str,
+	this.process_buffer_object_data=function(
+			shader_program,attribute_map,buffer_object_data,request_str,
 			object_pointer,frame_object_pointer,max_buffer_object_data_length,
 			decode_function,part_information,part_material,part_property,request_file_id)
 	{
@@ -281,6 +340,7 @@ function construct_buffer_object(my_gl,my_parameter)
 			begin_material_id=my_material_id;
 			end_material_id=my_material_id;
 		}
+		
 		for(var i=begin_material_id;i<=end_material_id;i++){
 			var processed_buffer_object_data,frame_processed_buffer_object_data;
 			if((p=object_pointer.data_collector[i])==null)
@@ -305,10 +365,12 @@ function construct_buffer_object(my_gl,my_parameter)
 				continue;
 			}
 			if(processed_buffer_object_data.region_data.length>0)
-				this.save_data_into_buffer_object(object_pointer,processed_buffer_object_data,i);
+				this.save_data_into_buffer_object(shader_program,attribute_map,
+						object_pointer,processed_buffer_object_data,i);
 			if(request_str=="face")
 				if(frame_processed_buffer_object_data.region_data.length>0)
-					this.save_data_into_buffer_object(frame_object_pointer,frame_processed_buffer_object_data,i);
+					this.save_data_into_buffer_object(shader_program,attribute_map,
+							frame_object_pointer,frame_processed_buffer_object_data,i);
 		}
 	};
 	
@@ -358,7 +420,9 @@ function construct_buffer_object(my_gl,my_parameter)
 		
 		p=my_render.render_program.render_program[render_id];
 		var decode_function	=p.decode_function;
-
+		var shader_program	=p.shader_program;
+		var attribute_map	=p.attribute_map;
+		
 		var request_file_id	=(--(object_pointer.file_number));
 		
 		if(part_file_proxy_url[request_file_id].length<2){
@@ -372,7 +436,8 @@ function construct_buffer_object(my_gl,my_parameter)
 				buffer_object_affiliated_data.pop();
 				
 				object_pointer.loaded_number--;
-				this.process_buffer_object_data(new Float32Array(my_data),request_str,
+				this.process_buffer_object_data(
+						shader_program,attribute_map,new Float32Array(my_data),request_str,
 						object_pointer,frame_object_pointer,max_buffer_object_data_length,
 						decode_function,part_information,part_material,part_property,request_file_id);
 				return 0;
@@ -434,9 +499,10 @@ function construct_buffer_object(my_gl,my_parameter)
 					return;
 				}
 				try{
-					cur.process_buffer_object_data(my_response_data,request_str,
-						object_pointer,frame_object_pointer,max_buffer_object_data_length,
-						decode_function,part_information,part_material,part_property,request_file_id);
+					cur.process_buffer_object_data(
+							shader_program,attribute_map,my_response_data,request_str,
+							object_pointer,frame_object_pointer,max_buffer_object_data_length,
+							decode_function,part_information,part_material,part_property,request_file_id);
 				}catch(e){
 					if(cur.parameter.debug_mode_flag){
 						alert("process_buffer_object_data error, "+e.toString());

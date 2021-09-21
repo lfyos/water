@@ -2,12 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="+client_id"/>
+		<item key="selection" value="create_vertex_array"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="create_vertex_array"/>
+			<item value="p."/>
+			<item value="token_place_array"/>
+			<item value="vertex_array_object_test"/>
+			<item value="gl"/>
+			<item value="save_data_into_buffer_object"/>
+			<item value="buffer_object_data"/>
+			<item value="process_buffer_object_data"/>
 			<item value="+get_client_id()"/>
 			<item value=".do_render"/>
 			<item value="request_buffer_object_data"/>
@@ -15,16 +23,9 @@
 			<item value="max_loading_number"/>
 			<item value="modify_parameter"/>
 			<item value="delay_time_length"/>
-			<item value="modifier_time_parameter"/>
-			<item value="set_transform_matrix"/>
-			<item value="deviceorientation"/>
-			<item value="buffer_head_request_queue"/>
-			<item value="modifier_current_time"/>
-			<item value="process_part_component_id_and_driver_id"/>
-			<item value="clip_plane_array"/>
-			<item value="this.render_request"/>
 		</list>
 		<list key="replacehistory">
+			<item value="vertex_array_object"/>
 			<item value="+client_id"/>
 			<item value="destroy"/>
 			<item value="alert"/>
@@ -39,14 +40,13 @@
 			<item value=","/>
 			<item value="processs_bar_object.show_process_bar_function=null"/>
 			<item value="par"/>
-			<item value="render."/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item key="DIALOG_WIDTH" value="335"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="1520"/>
-		<item key="DIALOG_Y_ORIGIN" value="214"/>
+		<item key="DIALOG_X_ORIGIN" value="1516"/>
+		<item key="DIALOG_Y_ORIGIN" value="496"/>
 	</section>
 </section>

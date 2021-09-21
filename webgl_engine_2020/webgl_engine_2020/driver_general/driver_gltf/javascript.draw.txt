@@ -1,3 +1,7 @@
+[
+	
+],
+
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			render_buffer_id,	component_data_array,	project_matrix,			do_render_number,	render)
 {
@@ -37,14 +41,14 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 	{
 		var attribute_id;
 		
-		if(typeof(region_data.vertex_array_object)!="undefined"){
+		if(typeof(region_data.vertex_array_flag)=="boolean"){
 			gl.bindVertexArray(region_data.vertex_array_object);
 			return;
 		}
-		region_data.vertex_array_object=gl.createVertexArray();
+		region_data.vertex_array_flag=true;
+		
 		gl.bindVertexArray(region_data.vertex_array_object);
-		gl.bindBuffer(gl.ARRAY_BUFFER,region_data.buffer_object);
-				
+
 		attribute_id=gl.getAttribLocation (shader_program,"vertex_location");
 		gl.vertexAttribPointer		(attribute_id,4,gl.FLOAT,false,region_data.item_size*4,attribute_data.attribute[0].POSITION*16);
 		gl.enableVertexAttribArray	(attribute_id);
@@ -64,6 +68,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			gl.vertexAttribPointer		(attribute_id,4,gl.FLOAT,false,region_data.item_size*4,attribute_data.attribute[0].NORMAL*16+32);
 			gl.enableVertexAttribArray	(attribute_id);
 		}
+		
 		attribute_id=gl.getAttribLocation (shader_program,"vertex_texture");
 		if(typeof(attribute_data.attribute[0].TEXCOORD_0)=="undefined")
 			gl.disableVertexAttribArray	(attribute_id);

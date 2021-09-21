@@ -1,3 +1,9 @@
+[
+	"vertex_location",
+	"", 
+	"vertex_material"
+],
+
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			render_buffer_id,	component_data_array,	project_matrix,			do_render_number,	render)
 {
@@ -59,23 +65,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 				
 			for(var k=0,nk=buffer_object.region_data.length;k<nk;k++){
 				var p=buffer_object.region_data[k];
-				if(typeof(p.vertex_array_object)!="undefined")
-					gl.bindVertexArray(p.vertex_array_object);
-				else{
-					p.vertex_array_object=gl.createVertexArray();
-					gl.bindVertexArray(p.vertex_array_object);
-					gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer_object);	
-					
-					var my_attribute;
-			
-					my_attribute=gl.getAttribLocation (shader_program, "vertex_location");
-					gl.vertexAttribPointer(my_attribute,4,gl.FLOAT, false,p.item_size*4, 0*16);
-					gl.enableVertexAttribArray(my_attribute);
-					
-					my_attribute=gl.getAttribLocation (shader_program, "vertex_material");
-					gl.vertexAttribPointer(my_attribute,4,gl.FLOAT, false,p.item_size*4, 2*16);
-					gl.enableVertexAttribArray(my_attribute);
-				}
+				gl.bindVertexArray(p.vertex_array_object);
 				gl.drawArrays(gl.LINES,0,p.item_number);		
 			}	
 		}

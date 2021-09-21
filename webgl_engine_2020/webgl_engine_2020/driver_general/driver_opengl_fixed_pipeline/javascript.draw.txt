@@ -1,3 +1,7 @@
+[
+
+],
+
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			render_buffer_id,	component_data_array,	project_matrix,			do_render_number,	render)
 {
@@ -35,6 +39,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 	
 	function create_vertex_array(p)
 	{
+		p.vertex_array_object_flag=true;
 		p.vertex_array_object=new Array();
 		
 		for(var i=0;;i++){
@@ -54,7 +59,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 					offset+=4;
 				}
 			}
-			
+
 			attribute_id=gl.getAttribLocation (shader_program,"vertex_unit");
 			if(p.item_size<=offset)
 				gl.disableVertexAttribArray	(attribute_id);
@@ -90,8 +95,11 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			var p=part_buffer_object.region_data[i];
 			var my_material=material[p.material_id%material.length];
 			if(my_material.do_clip_close|my_do_clip_close){
-				if(typeof(p.vertex_array_object)=="undefined")
+				if(typeof(p.opengl_flag)=="undefined"){
+					p.opengl_flag=true;
+					gl.deleteVertexArray(p.vertex_array_object);
 					create_vertex_array(p);
+				}
 				gl.bindTexture(gl.TEXTURE_2D,my_material.texture_object);
 				gl.bindBufferBase(gl.UNIFORM_BUFFER,0,my_material.uniform_block_buffer_object);
 				gl.bindVertexArray(p.vertex_array_object[display_value_id%(p.vertex_array_object.length)]);

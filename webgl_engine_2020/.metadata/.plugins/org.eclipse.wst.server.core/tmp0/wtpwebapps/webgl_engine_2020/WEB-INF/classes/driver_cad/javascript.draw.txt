@@ -1,3 +1,12 @@
+[
+	"vertex_location",
+	"vertex_normal",
+	"vertex_material",
+	"vertex_id",
+	"vertex_texture",
+	"vertex_color"
+],
+
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			render_buffer_id,	component_data_array,	project_matrix,			do_render_number,	render)
 {
@@ -106,34 +115,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		 		}
 				for(var k=0,nk=part_buffer_object.region_data.length;k<nk;k++){
 					var p=part_buffer_object.region_data[k];
-					if(typeof(p.vertex_array_object)!="undefined")
-						gl.bindVertexArray(p.vertex_array_object);
-					else{
-						p.vertex_array_object=gl.createVertexArray();
-						gl.bindVertexArray(p.vertex_array_object);
-						gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer_object);
-						
-						var attribute_id;
-						
-						attribute_id=gl.getAttribLocation (shader_program,"vertex_location");
-						gl.vertexAttribPointer		(attribute_id,4,gl.FLOAT,false,p.item_size*4,0*16);
-						gl.enableVertexAttribArray	(attribute_id);
-						attribute_id=gl.getAttribLocation (shader_program,"vertex_normal");
-						gl.vertexAttribPointer		(attribute_id,4,gl.FLOAT,false,p.item_size*4,1*16);
-						gl.enableVertexAttribArray	(attribute_id);
-						attribute_id=gl.getAttribLocation (shader_program,"vertex_material");
-						gl.vertexAttribPointer		(attribute_id,4,gl.FLOAT,false,p.item_size*4,2*16);
-						gl.enableVertexAttribArray	(attribute_id);
-						attribute_id=gl.getAttribLocation (shader_program,"vertex_id");
-						gl.vertexAttribPointer		(attribute_id,4,gl.FLOAT,false,p.item_size*4,3*16);
-						gl.enableVertexAttribArray	(attribute_id);
-						attribute_id=gl.getAttribLocation (shader_program,"vertex_texture");
-						gl.vertexAttribPointer		(attribute_id,4,gl.FLOAT,false,p.item_size*4,4*16);
-						gl.enableVertexAttribArray	(attribute_id);
-						attribute_id=gl.getAttribLocation (shader_program,"vertex_color");
-						gl.vertexAttribPointer		(attribute_id,4,gl.FLOAT,false,p.item_size*4,5*16);
-						gl.enableVertexAttribArray	(attribute_id);
-					}
+					gl.bindVertexArray(p.vertex_array_object);
 					gl.bindBufferBase(gl.UNIFORM_BUFFER,1,part_material[0].material[p.material_id].buffer_object);
 					gl.drawArrays(primitive_type,0,p.item_number);
 				}

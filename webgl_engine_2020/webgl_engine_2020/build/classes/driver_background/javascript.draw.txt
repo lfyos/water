@@ -1,3 +1,7 @@
+[
+	"vertex_location"
+],
+
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			render_buffer_id,	component_data_array,	project_matrix,			do_render_number,	render)
 {
@@ -115,17 +119,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		if(set_texture(part_buffer_object,buffer_id,component_id,driver_id,mode,reset_flag))
 			for(var j=0,nj=part_buffer_object.region_data.length;j<nj;j++){
 				var p=part_buffer_object.region_data[j];
-				if(typeof(p.vertex_array_object)!="undefined")
-					gl.bindVertexArray(p.vertex_array_object);
-				else{
-					p.vertex_array_object=gl.createVertexArray();
-					gl.bindVertexArray(p.vertex_array_object);
-					gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer_object);
-					
-					var vertex_location_attribute=gl.getAttribLocation (shader_program,"vertex_location");
-					gl.vertexAttribPointer(vertex_location_attribute,4,gl.FLOAT, false, p.item_size*4,0);
-					gl.enableVertexAttribArray(vertex_location_attribute);
-				}
+				gl.bindVertexArray(p.vertex_array_object);
 				gl.drawArrays(gl.TRIANGLES, 0, p.item_number);
 			}
 		gl.bindVertexArray(null);

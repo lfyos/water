@@ -88,16 +88,18 @@ function render_initialization(initialization_url,my_render,user_initialization_
 			for(var i=0,ni=program_data.length;i<ni;i++){
 				var permanent_render_id	=program_data[i][0];
 				var decode_function		=program_data[i][1];
-				var draw_function		=program_data[i][2];
-				var vertex_program		=program_data[i][3];
-				var fragment_program	=program_data[i][4];
-				var geometry_program	=program_data[i][5];
-				var tess_control_Program=program_data[i][6];
-				var tess_evalueprogram	=program_data[i][7];
+				var attribute_map		=program_data[i][2];
+				var draw_function		=program_data[i][3];
+				var vertex_program		=program_data[i][4];
+				var fragment_program	=program_data[i][5];
+				var geometry_program	=program_data[i][6];
+				var tess_control_Program=program_data[i][7];
+				var tess_evalueprogram	=program_data[i][8];
 				
 				render.render_program.compile_program(i,
 						permanent_render_id,
 						decode_function,
+						attribute_map,
 						draw_function,
 						vertex_program,
 						fragment_program,
