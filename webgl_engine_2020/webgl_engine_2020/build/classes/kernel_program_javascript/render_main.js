@@ -29,12 +29,12 @@ function redraw(render,processs_bar_object)
 		}
 		var my_current_time=(new Date()).getTime();
 		var my_interval_length=my_current_time-redraw_object.touch_time;
-		if(my_interval_length>(render.parameter.engine_touch_time_length/1000/1000)){
+		if(my_interval_length>(render.parameter.engine_touch_time_length/1000000)){
 			redraw_object.interval_length=my_interval_length;
 			redraw_object.touch_time=my_current_time;
 			render.do_render(redraw_object.interval_length);
 		}
-		setTimeout(touch_routine,render.parameter.engine_touch_time_length/1000/1000);
+		setTimeout(touch_routine,render.parameter.engine_touch_time_length/1000000);
 	};
 	render_routine();
 	touch_routine();

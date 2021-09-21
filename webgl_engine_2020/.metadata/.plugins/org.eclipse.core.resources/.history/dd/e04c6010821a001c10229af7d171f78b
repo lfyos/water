@@ -1,78 +1,54 @@
-function redraw(render)
+function redraw(render,processs_bar_object)
 {
-	if(render.terminate_flag)
+	if(render.terminate_flag){
+		processs_bar_object.show_process_bar_function=null;
 		return;
-	
-	var redraw_object=new Object();
-	redraw_object.touch_time=0;
-	
+	}
+	var redraw_object={
+			touch_time:			0,
+			interval_length:	1
+	};
 	function render_routine()
 	{
-		if(render.terminate_flag)
-			return;
-		
-		var my_current_time=(new Date()).getTime();
-		var render_interval_length=my_current_time-redraw_object.touch_time;
-		redraw_object.touch_time=my_current_time;
-		
-		render.do_render(render_interval_length);
-		window.requestAnimationFrame(render_routine);
-	};
-
-	function touch_routine()
-	{
-		if(render.terminate_flag)
-			return;
-		
-		var my_current_time=(new Date()).getTime();
-		if(!(render.can_do_render_request_flag)){
-			redraw_object.touch_time=my_current_time;
+		if(render.terminate_flag){
+			processs_bar_object.show_process_bar_function=null;
 			return;
 		}
-		var my_time_length=my_current_time-redraw_object.touch_time;
-		var max_time_length=render.parameter.engine_touch_time_length/1000/1000;
-		if(my_time_length<max_time_length)
-			return;
+		var my_current_time=(new Date()).getTime();
+		redraw_object.interval_length=my_current_time-redraw_object.touch_time;
 		redraw_object.touch_time=my_current_time;
+		render.do_render(redraw_object.interval_length);
 		
-		var my_url=render.url;
-		my_url+="?channel="+render.channel;
-		my_url+="&command=touch";
-		try{
-			var my_ajax=new XMLHttpRequest();
-			my_ajax.open("GET",my_url,true);
-			my_ajax.send(null);
-		}catch(e){
-			;
-		};
+		window.requestAnimationFrame(render_routine);
 	};
-	function data_load_routine()
+	function touch_routine()
 	{
-		if(render.terminate_flag)
+		if(render.terminate_flag){
+			processs_bar_object.show_process_bar_function=null;
 			return;
-		var loaded_data_length=render.buffer_object.loaded_buffer_object_data_length;
-		if(loaded_data_length>=render.parameter.total_buffer_object_data_length){
-			render_routine();
-			setInterval(touch_routine,render.parameter.engine_touch_time_length/1000/1000);
-		}else{
-			var my_current_time=(new Date()).getTime();
-			var render_interval_length=my_current_time-redraw_object.touch_time;
+		}
+		var my_current_time=(new Date()).getTime();
+		var my_interval_length=my_current_time-redraw_object.touch_time;
+		if(my_interval_length>(render.parameter.engine_touch_time_length/2000000)){
+			redraw_object.interval_length=my_interval_length;
 			redraw_object.touch_time=my_current_time;
-			render.do_render(render_interval_length);
-			setTimeout(data_load_routine,render.parameter.engine_load_time_length/1000/1000);
-		};
+			render.do_render(redraw_object.interval_length);
+		}
+		setTimeout(touch_routine,render.parameter.engine_touch_time_length/2000000);
 	};
-	data_load_routine();
+	render_routine();
+	touch_routine();
 };
 
-function render_initialization(initialization_url,render,user_initialization_function,processs_bar_object)
+function render_initialization(initialization_url,my_render,user_initialization_function,processs_bar_object)
 {
 	try{
-		var my_ajax=new XMLHttpRequest();
+		var my_ajax=new XMLHttpRequest(),render=my_render;
 		my_ajax.onreadystatechange=function()
 		{
 			if(my_ajax.readyState!=4)
 				return;
+			
 			if(render.terminate_flag)
 				return;
 			
@@ -113,18 +89,16 @@ function render_initialization(initialization_url,render,user_initialization_fun
 				var permanent_render_id	=program_data[i][0];
 				var decode_function		=program_data[i][1];
 				var draw_function		=program_data[i][2];
-				var destroy_function	=program_data[i][3];
-				var vertex_program		=program_data[i][4];
-				var fragment_program	=program_data[i][5];
-				var geometry_program	=program_data[i][6];
-				var tess_control_Program=program_data[i][7];
-				var tess_evalueprogram	=program_data[i][8];
+				var vertex_program		=program_data[i][3];
+				var fragment_program	=program_data[i][4];
+				var geometry_program	=program_data[i][5];
+				var tess_control_Program=program_data[i][6];
+				var tess_evalueprogram	=program_data[i][7];
 				
 				render.render_program.compile_program(i,
 						permanent_render_id,
 						decode_function,
 						draw_function,
-						destroy_function,
 						vertex_program,
 						fragment_program,
 						geometry_program,
@@ -139,40 +113,14 @@ function render_initialization(initialization_url,render,user_initialization_fun
 				var component_id=response_fun_array[i].component_id;
 				var component_name=response_fun_array[i].component_name;
 				var init_function=response_fun_array[i].initialization_function;
-				
-				if(typeof(init_function)!="function")
-					continue;
-				try{
+				if(typeof(init_function)=="function")
 					init_function(component_name,component_id,render);
-				}catch(e){
-					if(render.parameter.debug_mode_flag){
-						alert("Execute initialization_function_array error: "+i.toString()+":"+e.toString());
-						alert("component_name	:	"+component_name.toString());
-						alert("component_id		:	"+component_id.toString());
-						alert(my_ajax.responseText);
-					}else{
-						console.log("Execute initialization_function_array error: "+i.toString()+":"+e.toString());
-						console.log("component_name	:	"+component_name.toString());
-						console.log("component_id	:	"+component_id.toString());
-						console.log(my_ajax.responseText);
-					};
-				};
 			};
 			
-			if(typeof(user_initialization_function)=="function"){
-				try{
-					user_initialization_function(render);
-				}catch(e){
-					processs_bar_object.show_process_bar_function=null;
-					if(render.parameter.debug_mode_flag){
-						alert("Execute user_initialization_function error: "+e.toString());
-					}else{
-						console.log("Execute user_initialization_function error: "+e.toString());
-					};
-				};
-			};
+			if(typeof(user_initialization_function)=="function")
+				user_initialization_function(render);
 			
-			redraw(render);
+			redraw(render,processs_bar_object);
 			
 			if(processs_bar_object.show_process_bar_termination_flag)
 				setTimeout(
@@ -248,6 +196,7 @@ function request_create_engine(create_engine_sleep_time_length_scale,
 		{
 			if(my_ajax.readyState!=4)
 				return;
+			
 			if(my_ajax.status!=200){
 				processs_bar_object.show_process_bar_function=null;
 				
@@ -284,27 +233,9 @@ function request_create_engine(create_engine_sleep_time_length_scale,
 				return;
 			}
 			var render,initialization_url=response_data.pop();
-			try{
-				render=new construct_render_routine(
-						processs_bar_object.process_bar_id,
-						my_gl,my_user_name,my_pass_word,my_canvas,
-						my_url,my_language_name,response_data);
-			}catch(e){
-				processs_bar_object.show_process_bar_function=null;
-				
-				alert("Construct scene from server data fail:  "+e.toString());
-				alert(my_ajax.responseText);
-				return;
-			};
-			try{
-				render_initialization(initialization_url,render,my_user_initialization_function,processs_bar_object);
-			}catch(e){
-				processs_bar_object.show_process_bar_function=null;
-				
-				alert("Execute scene initialization fail:  "+e.toString());
-				alert(my_ajax.responseText);
-				return;
-			};
+			render=new construct_render_routine(processs_bar_object.process_bar_id,
+				my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,response_data);
+			render_initialization(initialization_url,render,my_user_initialization_function,processs_bar_object);
 			return;
 		};
 		my_ajax.open("GET",request_url+"&process_bar="+processs_bar_object.process_bar_id,true);
@@ -338,6 +269,7 @@ function render_show_process_bar(process_bar_url,processs_bar_object)
 		{
 			if(my_ajax.readyState!=4)
 				return;
+			
 			if(my_ajax.status!=200)
 				return;
 			var response_data;
@@ -418,6 +350,7 @@ function render_main(create_engine_sleep_time_length_scale,
 		{
 			if(my_ajax.readyState!=4)
 				return;
+			
 			if(my_ajax.status!=200){
 				alert("Create process bar response status error: "+my_ajax.status.toString());
 				return;

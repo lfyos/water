@@ -143,7 +143,7 @@ function file_name_change()
 			fw.close();
 			break;
 		}
-		InputStream is=new jsp_network_implementation(request,response,application).get_content_stream();
+		InputStream is=new jsp_network_implementation(request,session,response,application).get_content_stream();
 		if(is==null){
 			fw.close();
 			file_writer.file_delete(source_file_name);
