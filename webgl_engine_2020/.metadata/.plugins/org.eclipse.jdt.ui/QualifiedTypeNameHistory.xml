@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="driver_ground.create_mesh_from_vertex"/>
 <fullyQualifiedTypeName name="kernel_engine.create_initialization_file"/>
 <fullyQualifiedTypeName name="kernel_security.client_session"/>
 <fullyQualifiedTypeName name="kernel_driver.component_driver"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="kernel_common_class.sorter"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
 </qualifiedTypeNameHistroy>

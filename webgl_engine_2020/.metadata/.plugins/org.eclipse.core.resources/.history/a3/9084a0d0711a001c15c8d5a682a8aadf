@@ -1,0 +1,12 @@
+package kernel_service;
+
+public class jsp_client_id 
+{
+	private static long system_client_id=0;
+	private long user_client_id;
+	
+	public jsp_client_id()
+	{
+		user_client_id=system_client_id++;
+	}
+}

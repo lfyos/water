@@ -22,7 +22,6 @@ public class jsp_network_implementation implements network_implementation
 	
 	public jsp_network_implementation(
 			javax.servlet.http.HttpServletRequest	my_request,
-			javax.servlet.http.HttpSession			my_session,
 			javax.servlet.http.HttpServletResponse	my_response,
 			javax.servlet.ServletContext			my_application)
 	{
@@ -38,9 +37,11 @@ public class jsp_network_implementation implements network_implementation
 		}catch(Exception e) {
 			;
 		}
-		if((client_id=request.getRemoteAddr())==null)
-			client_id="NoRemoteAddr";
-		client_id =client_id+"/"+my_session.getId();
+		
+		String str;
+		client_id =	   (((str=request.getRemoteAddr())==null)?"NoRemoteAddr":(str.trim()));
+		client_id+="/"+(((str=request.getRemoteUser())==null)?"NoRemoteUser":(str.trim()));
+		client_id+="/"+(((str=request.getRemoteHost())==null)?"NoRemoteHost":(str.trim()));
 	}
 	static private void print_error(boolean print_stack_trace_flag,
 			String front_msg,Exception e,String end_msg_1,String end_msg_2)
@@ -71,7 +72,8 @@ public class jsp_network_implementation implements network_implementation
 			try{
 				return new String(str.getBytes(request_charset));
 			}catch(Exception e){
-				print_error(true,"Error in get_parameter\t",e,"Client_id:"+client_id,"parameter name is "+name);
+				print_error(true,"Error in get_parameter\t",e,
+						"Client_id:"+get_client_id(),"parameter name is "+name);
 			}
 		return null;
 	}
@@ -118,7 +120,7 @@ public class jsp_network_implementation implements network_implementation
 			response.addHeader("Cache-Control","max-age="+max_age_string);
 			response.sendError(javax.servlet.http.HttpServletResponse.SC_NOT_MODIFIED);
 		}catch(Exception e){
-			print_error(true,"Error in response_not_modify\t",e,"Client_id:"+client_id,error_msg);
+			print_error(true,"Error in response_not_modify\t",e,"Client_id:"+get_client_id(),error_msg);
 		}
 	}
 	public void set_response_http_header(
@@ -142,7 +144,8 @@ public class jsp_network_implementation implements network_implementation
 			output_stream=response.getOutputStream();
 		}catch(Exception e){
 			output_stream=null;
-			print_error(true,"output_stream=response.getOutputStream() fail:\t",e,"Client_id:"+client_id,error_msg);
+			print_error(true,"output_stream=response.getOutputStream() fail:\t",
+					e,"Client_id:"+get_client_id(),error_msg);
 		}
 	}
 	public boolean response_binary_data(String error_msg,byte data_buf[],int length)
@@ -154,7 +157,8 @@ public class jsp_network_implementation implements network_implementation
 				output_stream.write(data_buf,0,length);
 				return false;
 			}catch(Exception e){
-				print_error(false,"response_binary_data fail:\t",e,"Client_id:"+client_id+"\n",error_msg);
+				print_error(false,"response_binary_data fail:\t",
+						e,"Client_id:"+get_client_id()+"\n",error_msg);
 			}
 		return true;
 	}
@@ -167,13 +171,13 @@ public class jsp_network_implementation implements network_implementation
 				output_stream.flush();
 			}catch(Exception e){
 				print_error(false,"terminate_response_binary_data:output_stream.flush() fail:\t",
-						e,"Client_id:"+client_id,error_msg);
+						e,"Client_id:"+get_client_id(),error_msg);
 			}
 		try{
 			response.flushBuffer();
 		}catch(Exception e){
 			print_error(false,
-					"terminate_response_binary_data: response.flushBuffer() fail:\t",e,"Client_id:"+client_id+"\n",error_msg);
+					"terminate_response_binary_data: response.flushBuffer() fail:\t",e,"Client_id:"+get_client_id()+"\n",error_msg);
 		}
 	}
 	public InputStream get_content_stream()
@@ -181,7 +185,7 @@ public class jsp_network_implementation implements network_implementation
 		try{
 			return request.getInputStream();
 		}catch(Exception e) {
-			print_error(true,"get_input_stream() fail:\t",e,"Client_id:"+client_id,"");
+			print_error(true,"get_input_stream() fail:\t",e,"Client_id:"+get_client_id(),"");
 			return null;
 		}
 	};

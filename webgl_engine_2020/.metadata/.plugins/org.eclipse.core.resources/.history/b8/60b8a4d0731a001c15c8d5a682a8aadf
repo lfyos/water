@@ -20,9 +20,8 @@ public class jsp_network_implementation implements network_implementation
 	
 	private String request_charset,client_id;
 	
-	public jsp_network_implementation(
+	public jsp_network_implementation(String 		my_session_id,
 			javax.servlet.http.HttpServletRequest	my_request,
-			javax.servlet.http.HttpSession			my_session,
 			javax.servlet.http.HttpServletResponse	my_response,
 			javax.servlet.ServletContext			my_application)
 	{
@@ -40,7 +39,7 @@ public class jsp_network_implementation implements network_implementation
 		}
 		if((client_id=request.getRemoteAddr())==null)
 			client_id="NoRemoteAddr";
-		client_id =client_id+"/"+my_session.getId();
+		client_id =my_session_id+":"+client_id.trim();
 	}
 	static private void print_error(boolean print_stack_trace_flag,
 			String front_msg,Exception e,String end_msg_1,String end_msg_2)

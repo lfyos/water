@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="request_buffer_object_data"/>
+		<item key="selection" value="+client_id"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="+get_client_id()"/>
 			<item value=".do_render"/>
 			<item value="request_buffer_object_data"/>
 			<item value="terminate_flag"/>
@@ -22,9 +23,9 @@
 			<item value="process_part_component_id_and_driver_id"/>
 			<item value="clip_plane_array"/>
 			<item value="this.render_request"/>
-			<item value="this.do_render"/>
 		</list>
 		<list key="replacehistory">
+			<item value="+client_id"/>
 			<item value="destroy"/>
 			<item value="alert"/>
 			<item value=""/>
@@ -39,7 +40,6 @@
 			<item value="processs_bar_object.show_process_bar_function=null"/>
 			<item value="par"/>
 			<item value="render."/>
-			<item value="debug_"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

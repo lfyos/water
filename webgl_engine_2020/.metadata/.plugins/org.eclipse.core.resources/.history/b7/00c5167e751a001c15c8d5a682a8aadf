@@ -33,8 +33,9 @@ public class jsp_network_implementation implements network_implementation
 
 		if((request_charset=request.getCharacterEncoding())==null)
 			request_charset="UTF-8";
+		request.setCharacterEncoding(request_charset);
 		try {			
-			request.setCharacterEncoding(request_charset);
+			
 		}catch(Exception e) {
 			;
 		}
