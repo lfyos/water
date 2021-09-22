@@ -1,5 +1,7 @@
 [
-	"vertex_location"
+	[
+		"vertex_location"
+	]
 ],
 
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
@@ -69,7 +71,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 
 		for(var j=0,nj=part_buffer_object.region_data.length;j<nj;j++){
 			var p=part_buffer_object.region_data[j];
-			gl.bindVertexArray(p.vertex_array_object);
+			gl.bindVertexArray(p.vertex_array_object[0]);
 			gl.drawArrays(gl.POINTS,0,p.item_number);
 		}		
 	}

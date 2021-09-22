@@ -1,8 +1,10 @@
 [
-	"aVertexPosition",
-	"",
-	"",
-	"aVertexId"
+	[
+		"aVertexPosition",
+		"",
+		"",
+		"aVertexId"
+	]
 ],
 
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
@@ -132,7 +134,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 					gl.uniform4fv(shader_program.id_uniform,			new Float32Array([method_id+0.01,component_id+0.01,pp[5]+0.01,1.0]));	
 					for(var k=0,nk=buffer_object.region_data.length;k<nk;k++){
 						var p=buffer_object.region_data[k];
-						gl.bindVertexArray(p.vertex_array_object);
+						gl.bindVertexArray(p.vertex_array_object[0]);
 						gl.drawArrays(primitive_type,0,p.item_number);
 					}
 				}

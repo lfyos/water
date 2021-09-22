@@ -19,14 +19,10 @@ function construct_program_object(my_gl,my_parameter)
 			}
 			
 			this.gl.deleteProgram(this.render_program[program_id].shader_program);
-			this.gl.deleteShader(this.render_program[program_id].vertex_shader);
-			this.gl.deleteShader(this.render_program[program_id].fragment_shader);
-
+			
 			this.render_program[program_id].decode_function	=null;
+			this.render_program[program_id].attribute_map	=null;
 			this.render_program[program_id].draw_function	=null;
-			this.render_program[program_id].destroy_function=null;
-			this.render_program[program_id].vertex_shader	=null;
-			this.render_program[program_id].fragment_shader	=null;
 			this.render_program[program_id].shader_program	=null;
 			this.render_program[program_id]=null;
 		}
@@ -77,6 +73,9 @@ function construct_program_object(my_gl,my_parameter)
 		this.gl.attachShader(my_shader_program, my_vertex);
 	    this.gl.attachShader(my_shader_program, my_fragment);     	
 	    this.gl.linkProgram (my_shader_program);
+	    
+		this.gl.deleteShader(my_vertex);
+		this.gl.deleteShader(my_fragment);
 
 	    if(this.gl.getProgramParameter(my_shader_program,this.gl.LINK_STATUS)==null){
 	       	if(this.parameter.debug_mode_flag){
@@ -105,8 +104,6 @@ function construct_program_object(my_gl,my_parameter)
 			decode_function	:	my_decode_function,
 			attribute_map	:	my_attribute_map,
 			draw_function	:	my_draw_function,
-			vertex_shader	:	my_vertex,
-			fragment_shader	:	my_fragment,
 			shader_program	:	my_shader_program
 		};
 	};

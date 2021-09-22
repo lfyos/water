@@ -1,5 +1,7 @@
 [
-	"vertex_location"
+	[
+		"vertex_location"
+	]
 ],
 
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
@@ -98,7 +100,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		
 		if(token_place_array.length>1)
 			for(var j=0,nj=part_buffer_object.region_data.length;j<nj;j++){
-				gl.bindVertexArray(part_buffer_object.region_data[j].vertex_array_object);
+				gl.bindVertexArray(part_buffer_object.region_data[j].vertex_array_object[0]);
 				for(var k=1,nk=token_place_array.length;k<nk;k++){
 					var my_component_id=token_place_array[k][3];
 					var model_matrix_data=component_location.get_component_location(my_component_id);

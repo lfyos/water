@@ -65,13 +65,10 @@ function construct_buffer_object(my_gl,my_parameter)
 							}
 							
 							this.gl.deleteBuffer(p[i].region_data[j].buffer_object);
-							if(typeof(p[i].region_data[j].vertex_array_object)!="undefined"){
-								if(p[i].region_data[j].vertex_array_object_flag){
-									for(var k=0,nk=p[i].region_data[j].vertex_array_object.length;k<nk;k++)
-										this.gl.deleteVertexArray(p[i].region_data[j].vertex_array_object[k]);
-								}else
-									this.gl.deleteVertexArray(p[i].region_data[j].vertex_array_object);
-							}
+							
+							for(var k=0,nk=p[i].region_data[j].vertex_array_object.length;k<nk;k++)
+								this.gl.deleteVertexArray(p[i].region_data[j].vertex_array_object[k]);
+							
 							p[i].region_data[j].vertex_array_object	=null;
 							p[i].region_data[j].buffer_object		=null;
 							p[i].region_data[j].region_box			=null;
@@ -225,52 +222,25 @@ function construct_buffer_object(my_gl,my_parameter)
 		
 		this.gl.useProgram(shader_program);
 		
-		do{
-			if(attribute_map.length>0){
-				if(typeof(attribute_map[0])!="string"){
-					my_region_data.vertex_array_object=new Array(attribute_map.length);
-					for(var i=0,ni=attribute_map.length;i<ni;i++){
-						my_region_data.vertex_array_object[i]=this.gl.createVertexArray();
-						this.gl.bindVertexArray(my_region_data.vertex_array_object[i]);
-						this.gl.bindBuffer(this.gl.ARRAY_BUFFER,my_region_data.buffer_object);
-						for(var j=0,nj=attribute_map[i].length;j<nj;j++){
-							if(attribute_map[i][j]==null)
-								continue;
-							if(attribute_map[i][j]=="")
-								continue;
-							var attribute_id=this.gl.getAttribLocation (shader_program,attribute_map[i][j]);
-							if((j*16)>=(my_region_data.item_size*4))
-								this.gl.disableVertexAttribArray(attribute_id);
-							else{
-								this.gl.vertexAttribPointer(attribute_id,4,this.gl.FLOAT,false,my_region_data.item_size*4,j*16);
-								this.gl.enableVertexAttribArray	(attribute_id);
-							}
-						}
-					}
-					my_region_data.vertex_array_object_flag=true;
-					break;
-				}
-			}
-			
-			my_region_data.vertex_array_object=this.gl.createVertexArray();
-			this.gl.bindVertexArray(my_region_data.vertex_array_object);
+		my_region_data.vertex_array_object=new Array(attribute_map.length);
+		for(var i=0,ni=attribute_map.length;i<ni;i++){
+			my_region_data.vertex_array_object[i]=this.gl.createVertexArray();
+			this.gl.bindVertexArray(my_region_data.vertex_array_object[i]);
 			this.gl.bindBuffer(this.gl.ARRAY_BUFFER,my_region_data.buffer_object);
-				
-			for(var i=0,ni=attribute_map.length;i<ni;i++){
-				if(attribute_map[i]==null)
+			for(var j=0,nj=attribute_map[i].length;j<nj;j++){
+				if(attribute_map[i][j]==null)
 					continue;
-				if(attribute_map[i]=="")
+				if(attribute_map[i][j]=="")
 					continue;
-				var attribute_id=this.gl.getAttribLocation (shader_program,attribute_map[i]);
-				if((i*16)>=(my_region_data.item_size*4))
+				var attribute_id=this.gl.getAttribLocation (shader_program,attribute_map[i][j]);
+				if((j*16)>=(my_region_data.item_size*4))
 					this.gl.disableVertexAttribArray(attribute_id);
 				else{
-					this.gl.vertexAttribPointer(attribute_id,4,this.gl.FLOAT,false,my_region_data.item_size*4,i*16);
+					this.gl.vertexAttribPointer(attribute_id,4,this.gl.FLOAT,false,my_region_data.item_size*4,j*16);
 					this.gl.enableVertexAttribArray	(attribute_id);
 				}
 			}
-			my_region_data.vertex_array_object_flag=false;
-		}while(false);
+		}
 		
 		this.gl.useProgram(null);
 

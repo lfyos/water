@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="create_vertex_array"/>
+		<item key="selection" value="vertex_array_object"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="vertex_array_object"/>
 			<item value="create_vertex_array"/>
 			<item value="p."/>
 			<item value="token_place_array"/>
@@ -22,9 +23,9 @@
 			<item value="terminate_flag"/>
 			<item value="max_loading_number"/>
 			<item value="modify_parameter"/>
-			<item value="delay_time_length"/>
 		</list>
 		<list key="replacehistory">
+			<item value="vertex_array_object[0]"/>
 			<item value="vertex_array_object"/>
 			<item value="+client_id"/>
 			<item value="destroy"/>
@@ -39,7 +40,6 @@
 			<item value="client"/>
 			<item value=","/>
 			<item value="processs_bar_object.show_process_bar_function=null"/>
-			<item value="par"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

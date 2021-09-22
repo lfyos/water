@@ -1,5 +1,7 @@
 [
-	"vertex_location"
+	[
+		"vertex_location"
+	]
 ],
 
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
@@ -65,7 +67,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		gl.uniform4fv(shader_program.rectangle_data_uniform,new Float32Array(ep.data));
 		for(var j=0,nj=part_buffer_object.region_data.length;j<nj;j++){
 			var p=part_buffer_object.region_data[j];
-			gl.bindVertexArray(p.vertex_array_object);
+			gl.bindVertexArray(p.vertex_array_object[0]);
 			gl.drawArrays(gl.LINE_LOOP,0,p.item_number);
 		}
 		gl.bindVertexArray(null);

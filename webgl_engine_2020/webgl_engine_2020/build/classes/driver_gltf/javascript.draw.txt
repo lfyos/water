@@ -1,5 +1,6 @@
 [
-	
+	[
+	]
 ],
 
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
@@ -42,12 +43,13 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		var attribute_id;
 		
 		if(typeof(region_data.vertex_array_flag)=="boolean"){
-			gl.bindVertexArray(region_data.vertex_array_object);
+			gl.bindVertexArray(region_data.vertex_array_object[0]);
 			return;
 		}
 		region_data.vertex_array_flag=true;
 		
-		gl.bindVertexArray(region_data.vertex_array_object);
+		gl.bindVertexArray(region_data.vertex_array_object[0]);
+		gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer_object);
 
 		attribute_id=gl.getAttribLocation (shader_program,"vertex_location");
 		gl.vertexAttribPointer		(attribute_id,4,gl.FLOAT,false,region_data.item_size*4,attribute_data.attribute[0].POSITION*16);

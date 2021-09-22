@@ -1,7 +1,9 @@
 [
-	"vertex_location",
-	"", 
-	"vertex_material"
+	[
+		"vertex_location",
+		"", 
+		"vertex_material"
+	]
 ],
 
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
@@ -65,7 +67,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 				
 			for(var k=0,nk=buffer_object.region_data.length;k<nk;k++){
 				var p=buffer_object.region_data[k];
-				gl.bindVertexArray(p.vertex_array_object);
+				gl.bindVertexArray(p.vertex_array_object[0]);
 				gl.drawArrays(gl.LINES,0,p.item_number);		
 			}	
 		}

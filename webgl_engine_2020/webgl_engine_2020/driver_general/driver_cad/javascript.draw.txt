@@ -1,10 +1,12 @@
 [
-	"vertex_location",
-	"vertex_normal",
-	"vertex_material",
-	"vertex_id",
-	"vertex_texture",
-	"vertex_color"
+	[
+		"vertex_location",
+		"vertex_normal",
+		"vertex_material",
+		"vertex_id",
+		"vertex_texture",
+		"vertex_color"
+	]
 ],
 
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
@@ -115,7 +117,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		 		}
 				for(var k=0,nk=part_buffer_object.region_data.length;k<nk;k++){
 					var p=part_buffer_object.region_data[k];
-					gl.bindVertexArray(p.vertex_array_object);
+					gl.bindVertexArray(p.vertex_array_object[0]);
 					gl.bindBufferBase(gl.UNIFORM_BUFFER,1,part_material[0].material[p.material_id].buffer_object);
 					gl.drawArrays(primitive_type,0,p.item_number);
 				}

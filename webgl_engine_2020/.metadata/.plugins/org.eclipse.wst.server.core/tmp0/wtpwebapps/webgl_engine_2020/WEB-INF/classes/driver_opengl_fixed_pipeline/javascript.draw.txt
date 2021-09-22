@@ -1,5 +1,19 @@
 [
-
+	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
+	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
+	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
+	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
+	
+	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
+	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
+	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
+	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
+	
+	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
+	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
+	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
+	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"]
+	
 ],
 
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
@@ -39,27 +53,12 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 	
 	function create_vertex_array(p)
 	{
-		p.vertex_array_object_flag=true;
-		p.vertex_array_object=new Array();
-		
-		for(var i=0;;i++){
-			p.vertex_array_object[i]=gl.createVertexArray();
+		for(var i=0,ni=p.vertex_array_object.length;i<ni;i++){
 			gl.bindVertexArray(p.vertex_array_object[i]);
 			gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer_object);
 		
-			var offset=0,attribute_id;
-			var attribute_name=["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"];
-			for(var j=0,nj=attribute_name.length;j<nj;j++){
-				attribute_id=gl.getAttribLocation (shader_program,attribute_name[j]);
-				if(p.item_size<=offset)
-					gl.disableVertexAttribArray	(attribute_id);
-				else{
-					gl.vertexAttribPointer		(attribute_id,4,gl.FLOAT,false,p.item_size*4,offset*4);
-					gl.enableVertexAttribArray	(attribute_id);
-					offset+=4;
-				}
-			}
-
+			var offset=20,attribute_id;
+			
 			attribute_id=gl.getAttribLocation (shader_program,"vertex_unit");
 			if(p.item_size<=offset)
 				gl.disableVertexAttribArray	(attribute_id);
@@ -82,8 +81,6 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 					offset++;
 				}
 			}
-			if(p.item_size<=offset)
-				return;
 		}
 	}
 	
@@ -97,7 +94,6 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			if(my_material.do_clip_close|my_do_clip_close){
 				if(typeof(p.opengl_flag)=="undefined"){
 					p.opengl_flag=true;
-					gl.deleteVertexArray(p.vertex_array_object);
 					create_vertex_array(p);
 				}
 				gl.bindTexture(gl.TEXTURE_2D,my_material.texture_object);

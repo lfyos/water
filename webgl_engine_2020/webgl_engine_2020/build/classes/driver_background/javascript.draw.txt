@@ -1,5 +1,7 @@
 [
-	"vertex_location"
+	[
+		"vertex_location"
+	]
 ],
 
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
@@ -119,7 +121,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		if(set_texture(part_buffer_object,buffer_id,component_id,driver_id,mode,reset_flag))
 			for(var j=0,nj=part_buffer_object.region_data.length;j<nj;j++){
 				var p=part_buffer_object.region_data[j];
-				gl.bindVertexArray(p.vertex_array_object);
+				gl.bindVertexArray(p.vertex_array_object[0]);
 				gl.drawArrays(gl.TRIANGLES, 0, p.item_number);
 			}
 		gl.bindVertexArray(null);
