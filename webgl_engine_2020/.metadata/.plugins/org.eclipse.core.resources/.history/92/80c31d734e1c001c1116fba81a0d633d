@@ -245,7 +245,6 @@ function construct_buffer_object(my_gl,my_parameter)
 		this.gl.useProgram(null);
 
 		object_pointer.error_flag|=(this.gl.getError()==this.gl.NO_ERROR)?false:true;
-		
 		object_pointer.region_data.push(my_region_data);
 		for(var i=object_pointer.region_data.length-2;i>=0;i--){
 			var p0=object_pointer.region_data[i+0];

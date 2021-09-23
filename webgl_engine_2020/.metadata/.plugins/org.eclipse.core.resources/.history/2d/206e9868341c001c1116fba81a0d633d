@@ -40,7 +40,7 @@ public class jsp_network_implementation implements network_implementation
 		}
 		if((client_id=request.getRemoteAddr())==null)
 			client_id="NoRemoteAddr";
-//		client_id =client_id+"/"+my_session.getId();
+		client_id =client_id+"/"+my_session.getId();
 	}
 	static private void print_error(boolean print_stack_trace_flag,
 			String front_msg,Exception e,String end_msg_1,String end_msg_2)

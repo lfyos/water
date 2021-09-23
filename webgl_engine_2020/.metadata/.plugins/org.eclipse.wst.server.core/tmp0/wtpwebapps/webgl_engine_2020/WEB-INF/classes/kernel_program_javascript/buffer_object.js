@@ -247,8 +247,14 @@ function construct_buffer_object(my_gl,my_parameter)
 		object_pointer.error_flag|=(this.gl.getError()==this.gl.NO_ERROR)?false:true;
 		
 		object_pointer.region_data.push(my_region_data);
-
-		return;
+		for(var i=object_pointer.region_data.length-2;i>=0;i--){
+			var p0=object_pointer.region_data[i+0];
+			var p1=object_pointer.region_data[i+1];
+			if(p0.material_id<=p1.material_id)
+				break;
+			object_pointer.region_data[i+0]=p1;
+			object_pointer.region_data[i+1]=p0;
+		}
 	};
 	
 	this.test_busy=function()
@@ -468,20 +474,11 @@ function construct_buffer_object(my_gl,my_parameter)
 					}
 					return;
 				}
-				try{
-					cur.process_buffer_object_data(
-							shader_program,attribute_map,my_response_data,request_str,
-							object_pointer,frame_object_pointer,max_buffer_object_data_length,
-							decode_function,part_information,part_material,part_property,request_file_id);
-				}catch(e){
-					if(cur.parameter.debug_mode_flag){
-						alert("process_buffer_object_data error, "+e.toString());
-						alert(data_url);
-					}else{
-						console.log("process_buffer_object_data error, "+e.toString());
-						console.log(data_url);
-					}
-				}
+				
+				cur.process_buffer_object_data(shader_program,attribute_map,my_response_data,
+					request_str,object_pointer,frame_object_pointer,max_buffer_object_data_length,
+					decode_function,part_information,part_material,part_property,request_file_id);
+				
 				return;
 			};
 			my_ajax.open("GET",data_url,true);

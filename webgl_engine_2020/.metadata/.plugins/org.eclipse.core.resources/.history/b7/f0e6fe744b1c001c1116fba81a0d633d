@@ -246,15 +246,29 @@ function construct_buffer_object(my_gl,my_parameter)
 
 		object_pointer.error_flag|=(this.gl.getError()==this.gl.NO_ERROR)?false:true;
 		
-		object_pointer.region_data.push(my_region_data);
-		for(var i=object_pointer.region_data.length-2;i>=0;i--){
-			var p0=object_pointer.region_data[i+0];
-			var p1=object_pointer.region_data[i+1];
-			if(p0.material_id<=p1.material_id)
-				break;
-			object_pointer.region_data[i+0]=p1;
-			object_pointer.region_data[i+1]=p0;
-		}
+		var data_length;
+		if((data_length=object_pointer.region_data.length)<=0)
+			object_pointer.region_data.push(my_region_data);
+		else
+			for(var begin_pointer=0,end_pointer=data_length-1;begin_pointer<=end_pointer){
+				var middle_pointer=(begin_pointer+end_pointer)/2;
+				var p=object_pointer.region_data[middle_pointer];
+				if(p.material_id<my_region_data.material_id){
+					if((begin_pointer=middle_pointer+1)>end_pointer){
+						object_pointer.region_data.splice(
+							(begin_pointer<data_length)?begin_pointer:data_length,0,my_region_data);
+						break;
+					}
+				}else if(p.material_id>my_region_data.material_id)
+					if((end_pointer=middle_pointer-1)<begin_pointer){
+						object_pointer.region_data.splice((end_pointer<0)?0:end_pointer,0,my_region_data);
+						break;
+					}
+				else{
+					object_pointer.region_data.splice(middle_pointer,0,my_region_data);
+					break;
+				} 
+			}
 	};
 	
 	this.test_busy=function()
@@ -474,11 +488,20 @@ function construct_buffer_object(my_gl,my_parameter)
 					}
 					return;
 				}
-				
-				cur.process_buffer_object_data(shader_program,attribute_map,my_response_data,
-					request_str,object_pointer,frame_object_pointer,max_buffer_object_data_length,
-					decode_function,part_information,part_material,part_property,request_file_id);
-				
+				try{
+					cur.process_buffer_object_data(
+							shader_program,attribute_map,my_response_data,request_str,
+							object_pointer,frame_object_pointer,max_buffer_object_data_length,
+							decode_function,part_information,part_material,part_property,request_file_id);
+				}catch(e){
+					if(cur.parameter.debug_mode_flag){
+						alert("process_buffer_object_data error, "+e.toString());
+						alert(data_url);
+					}else{
+						console.log("process_buffer_object_data error, "+e.toString());
+						console.log(data_url);
+					}
+				}
 				return;
 			};
 			my_ajax.open("GET",data_url,true);
