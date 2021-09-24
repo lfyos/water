@@ -125,10 +125,10 @@ public class part_package
 					data_array[i].part_package_sequence_id=bak.length;
 				}
 
-				package_length			=new long[package_number];
-				package_last_time		=new long[package_number];
-				package_file_name		=new String[package_number];
-				package_flag			=new boolean[package_number];
+				package_length	 =new long	 [package_number];
+				package_last_time=new long	 [package_number];
+				package_file_name=new String [package_number];
+				package_flag	 =new boolean[package_number];
 				
 				String package_directory_name=file_directory.system_package_directory(part_type_id,system_par,scene_par);
 				exclusive_file_mutex efm=exclusive_file_mutex.lock(

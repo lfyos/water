@@ -91,7 +91,7 @@ public class render_container
 			p=renders[p.render_id].parts[p.part_from_id];
 		return p;
 	}
-	public void load_part(int part_type,int part_flag,
+	public void load_part(boolean fast_load_flag,int part_type,int part_flag,
 			part_loader_container part_loader_cont,system_parameter system_par,
 			scene_parameter scene_par,part_container_for_part_search pcps,
 			buffer_object_file_modify_time_and_length_container boftal_container,
@@ -140,8 +140,8 @@ public class render_container
 						if((my_part_flag&part_flag)==0)
 							continue;
 						
-						already_loaded_part=part_loader_cont.load(p,get_copy_from_part(p),
-							-1,system_par,scene_par,already_loaded_part,pcps,boftal_container);
+						already_loaded_part=part_loader_cont.load(fast_load_flag,p,
+							get_copy_from_part(p),-1,system_par,scene_par,already_loaded_part,pcps,boftal_container);
 						
 						if(process_bar!=null)
 							process_bar.set_process_bar(false,process_bar_title,load_number++,(all_number<1)?1:all_number);
@@ -269,12 +269,6 @@ public class render_container
 			exclusive_file_mutex efm=exclusive_file_mutex.lock(
 					extract_file_directory+"extract_file.lock",
 					"1.wait for extract scene files:	"+par_list_file_name);
-			
-			if(system_par.system_exclusive_number_mutex!=null)
-				debug_information.println("load_render lock number result is ",
-					system_par.system_exclusive_number_mutex.lock_number(
-						part_par.max_part_list_load_thread_number,
-						"2.wait for extract scene files:	"+par_list_file_name));
 
 			debug_information.println("		part list file:	",par_list_file_name+"			"+str);
 
@@ -304,9 +298,6 @@ public class render_container
 					else
 						part_list_file_charset=f_render_list.get_charset();
 				}
-			if(system_par.system_exclusive_number_mutex!=null)
-				debug_information.println("load_render unlock number result is ",
-					system_par.system_exclusive_number_mutex.unlock_number());
 			
 			efm.unlock();
 

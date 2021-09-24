@@ -1,11 +1,13 @@
 package kernel_part;
 
+import java.io.File;
 import java.util.concurrent.locks.ReentrantLock;
 
 import kernel_common_class.debug_information;
+import kernel_common_class.exclusive_file_mutex;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_directory;
-
+import kernel_file_manager.file_reader;
 import kernel_engine.scene_parameter;
 
 public class part_loader_container
@@ -168,11 +170,87 @@ public class part_loader_container
 		}
 	}
 	
-	public part_loader[] load(part my_part,part my_copy_from_part,
+	private boolean fast_load_routine(String part_temporary_file_directory,boolean fast_load_flag,
+			part my_part,part my_copy_from_part,long last_modified_time,
+			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
+			buffer_object_file_modify_time_and_length_container boftal_container)
+	{
+		if(my_part.part_par.free_part_memory_flag&&fast_load_flag) {
+			buffer_object_file_modify_time_and_length my_boftal;
+			int cut_directory_length=system_par.proxy_par.proxy_data_root_directory_name.length();
+			my_boftal=boftal_container.search_boftal(part_temporary_file_directory.substring(cut_directory_length));
+			if(my_boftal!=null){
+				if(my_part.part_mesh==null)
+					my_part.part_mesh=my_boftal.simple_part_mesh;
+				my_part.boftal=my_boftal;
+				my_part.part_mesh.free_memory();
+				
+				return true;
+			};
+		}
+		
+		String buffer_object_head_gzip_file_name=part_temporary_file_directory+"mesh.head.gzip_text";
+		long buffer_object_head_last_modify_time=new File(buffer_object_head_gzip_file_name).lastModified();
+		if(buffer_object_head_last_modify_time<=last_modified_time) 
+			return false;
+		if(buffer_object_head_last_modify_time<=my_part.part_par.last_modified_time)
+			return false;
+		String cfp_mesh_file_name=my_copy_from_part.directory_name+my_copy_from_part.mesh_file_name;
+		if(buffer_object_head_last_modify_time<=new File(cfp_mesh_file_name).lastModified())
+			return false;
+		String cfp_material_file_name=my_copy_from_part.directory_name+my_copy_from_part.material_file_name;
+		if(buffer_object_head_last_modify_time<=new File(cfp_material_file_name).lastModified())
+			return false;
+		
+		my_part.boftal=null;
+		if(my_part.part_par.engine_boftal_flag)
+			if(boftal_container!=null)
+				if(buffer_object_head_last_modify_time<boftal_container.last_modify_time)
+					my_part.boftal=boftal_container.search_boftal(part_temporary_file_directory);
+		
+		if(my_part.boftal==null) {
+			file_reader fr=new file_reader(
+				part_temporary_file_directory+"mesh.boftal",system_par.local_data_charset);
+			my_part.boftal=new buffer_object_file_modify_time_and_length(fr);
+			fr.close();
+		}
+		
+		if(my_part.part_mesh==null){
+			if(my_part.part_par.free_part_memory_flag)
+				my_part.part_mesh=my_part.boftal.simple_part_mesh;
+			else{
+				exclusive_file_mutex efm=null;
+				if(my_part.part_par.do_load_lock_flag)
+					efm=exclusive_file_mutex.lock(
+							file_reader.separator(part_temporary_file_directory+"part.lock"),
+							"wait for load_mesh_and_create_buffer_object_and_material_file:	"
+									+my_part.directory_name+my_part.mesh_file_name);
+				my_part.part_mesh=my_part.call_part_driver_for_load_part_mesh(null,pcps,system_par,scene_par);
+				if(efm!=null)
+					efm.unlock();
+			}
+		}
+		
+		if(my_part.part_mesh!=null)
+			if(my_part.part_par.free_part_memory_flag)
+				my_part.part_mesh.free_memory();
+		
+		my_part.boftal.simple_part_mesh=null;
+		
+		return true;
+	}
+	
+	public part_loader[] load(boolean fast_load_flag,part my_part,part my_copy_from_part,
 			long last_modified_time,system_parameter system_par,scene_parameter scene_par,
 			part_loader already_loaded_part[],part_container_for_part_search pcps,
 			buffer_object_file_modify_time_and_length_container boftal_container)
 	{
+		String part_temporary_file_directory=file_directory.part_file_directory(my_part,system_par,scene_par);
+		
+		if(fast_load_routine(part_temporary_file_directory,fast_load_flag,
+			my_part,my_copy_from_part,last_modified_time,system_par,scene_par,pcps,boftal_container))
+				return already_loaded_part;
+		
 		part_loader ret_val[]=already_loaded_part;
 		part_loader_container_lock.lock();
 		try{

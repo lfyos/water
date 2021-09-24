@@ -161,12 +161,12 @@ public class part
 		p_i.destroy(part_par.max_compress_file_length,system_par.response_block_size);
 	}
 	
-	private part_rude call_part_driver_for_load_part_mesh(file_writer head_fw,
+	public part_rude call_part_driver_for_load_part_mesh(file_writer head_fw,
 			part_container_for_part_search pcps,system_parameter system_par,scene_parameter scene_par)
 	{
 		part_rude my_part_mesh=null;
 		
-		debug_information.println("Begin create_part_mesh_and_buffer_object_head:	",
+		debug_information.println("Begin call_part_driver_for_load_part_mesh:	",
 				(directory_name+mesh_file_name)+"		"+directory_name+material_file_name);
 		try{
 			my_part_mesh=driver.create_part_mesh_and_buffer_object_head(this,head_fw,pcps,system_par,scene_par);
@@ -178,13 +178,12 @@ public class part
 			debug_information.println("Material_file_name:",			directory_name+material_file_name);
 			e.printStackTrace();
 		}
-		debug_information.println("End create_part_mesh_and_buffer_object_head:	",
+		debug_information.println("End call_part_driver_for_load_part_mesh:	",
 				(directory_name+mesh_file_name)+"		"+directory_name+material_file_name);
 		
 		return my_part_mesh;
 	}
 	private String create_mesh_and_material_routine(String part_temporary_file_directory,
-			String buffer_object_file_name,String buffer_object_file_charset,
 			part_container_for_part_search pcps,system_parameter system_par,scene_parameter scene_par)
 	{
 		String ret_val="";
@@ -192,7 +191,8 @@ public class part
 		ret_val+="\n\tbuffer object directory:\t"+part_temporary_file_directory;
 		ret_val+="\n\tbuffer object file name:\tmesh";	
 
-		file_writer head_fw=new file_writer(buffer_object_file_name,buffer_object_file_charset);
+		file_writer head_fw=new file_writer(
+				part_temporary_file_directory+"mesh.head.txt",system_par.local_data_charset);
 		
 		head_fw.println("[");
 		head_fw.println();
@@ -281,7 +281,7 @@ public class part
 		head_fw.close();
 		
 		boftal=new buffer_object_file_modify_time_and_length(part_mesh,
-				part_temporary_file_directory+"mesh",buffer_object_file_charset);
+				part_temporary_file_directory+"mesh",system_par.local_data_charset);
 		
 		create_binary_buffer_object_file.create(system_par.response_block_size,
 				head_fw.get_charset(),system_par.network_data_charset,part_temporary_file_directory+"mesh");
@@ -292,40 +292,7 @@ public class part
 
 		return ret_val;
 	}
-	private String create_mesh_and_material(String part_temporary_file_directory,
-			String buffer_object_file_name,String buffer_object_file_charset,
-			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps)
-	{
-		String ret_val="";
-		
-		debug_information.println(
-				"Begin:\tlock_number:\t"+system_name+"\t"+Integer.toString(part_par.max_mesh_load_thread_number)+"\t",
-				system_par.system_exclusive_number_mutex.get_lock_number());
-		
-		system_par.system_exclusive_number_mutex.lock_number(part_par.max_mesh_load_thread_number,
-				"wait for create_mesh_and_material:	"+directory_name+mesh_file_name);
-		
-		debug_information.println("End:\tlock_number:\t"+system_name
-				+"\t"+Integer.toString(part_par.max_mesh_load_thread_number)
-				+"\t"+system_par.system_exclusive_number_mutex.get_lock_number());
-
-		try{
-			ret_val=create_mesh_and_material_routine(part_temporary_file_directory,
-					buffer_object_file_name,buffer_object_file_charset,pcps,system_par,scene_par);
-		}catch(Exception e) {
-			debug_information.println("create_mesh_and_material_routine exception:",
-				"\t"+system_name+"\t"+user_name+"\t"+e.toString());
-			e.printStackTrace();
-		}
-		
-		system_par.system_exclusive_number_mutex.unlock_number();
-		
-		debug_information.println(
-			"End:\tunlock_number:\t"+system_name+"\t"+Integer.toString(part_par.max_mesh_load_thread_number)+"\t",
-			system_par.system_exclusive_number_mutex.get_lock_number());
-		
-		return ret_val;
-	}
+	
 	private void clear_mesh_file_content()
 	{
 		String clear_file_name_array[]=new String[]
@@ -368,8 +335,7 @@ public class part
 		}
 	}
 	
-	public String load_mesh_and_create_buffer_object(part copy_from_part,
-			long last_modified_time,String part_temporary_file_charset,
+	public String load_mesh_and_create_buffer_object(part copy_from_part,long last_modified_time,
 			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
 			buffer_object_file_modify_time_and_length_container boftal_container)
 	{
@@ -387,57 +353,21 @@ public class part
 
 		String part_temporary_file_directory=file_directory.part_file_directory(this,system_par,scene_par);
 		String lock_file_name=file_reader.separator(part_temporary_file_directory+"part.lock");
-		String buffer_object_head_file_name		=part_temporary_file_directory+"mesh.head.txt";
-		String buffer_object_head_gzip_file_name=part_temporary_file_directory+"mesh.head.gzip_text";
-		String cfp_mesh_file_name=copy_from_part.directory_name+copy_from_part.mesh_file_name;
-		String cfp_material_file_name=copy_from_part.directory_name+copy_from_part.material_file_name;
-
-		long buffer_object_head_last_modify_time=new File(buffer_object_head_gzip_file_name).lastModified();
-		if(buffer_object_head_last_modify_time>last_modified_time)
-			if(buffer_object_head_last_modify_time>part_par.last_modified_time)
-				if(buffer_object_head_last_modify_time>new File(cfp_mesh_file_name).lastModified())
-					if(buffer_object_head_last_modify_time>new File(cfp_material_file_name).lastModified()){
-						boftal=null;
-						if(part_par.engine_boftal_flag)
-							if(boftal_container!=null)
-								if(buffer_object_head_last_modify_time<boftal_container.last_modify_time)
-									boftal=boftal_container.search_boftal(part_temporary_file_directory);
-						
-						if(boftal==null) {
-							file_reader fr=new file_reader(
-								part_temporary_file_directory+"mesh.boftal",part_temporary_file_charset);
-							boftal=new buffer_object_file_modify_time_and_length(fr);
-							fr.close();
-						}
-						if(part_mesh==null){
-							if(part_par.free_part_memory_flag)
-								part_mesh=boftal.simple_part_mesh;
-							else{
-								exclusive_file_mutex efm=null;
-								if(part_par.do_load_lock_flag)
-									efm=exclusive_file_mutex.lock(lock_file_name,
-										 "wait for load_mesh_and_create_buffer_object_and_material_file:	"
-										+directory_name+mesh_file_name);
-								part_mesh=call_part_driver_for_load_part_mesh(null,pcps,system_par,scene_par);
-								if(efm!=null)
-									efm.unlock();
-							}
-						}
-						if(part_mesh!=null)
-							if(part_par.free_part_memory_flag)
-								part_mesh.free_memory();
-						
-						boftal.simple_part_mesh=null;
-						
-						return str;
-					}
+		
 		exclusive_file_mutex efm=exclusive_file_mutex.lock(lock_file_name,
 				 "wait for load_mesh_and_create_buffer_object_and_material_file:	"
 				+directory_name+mesh_file_name);
 		file_writer.file_delete(part_temporary_file_directory);
 		file_writer.make_directory(part_temporary_file_directory);
-		str+=create_mesh_and_material(part_temporary_file_directory,
-				buffer_object_head_file_name,part_temporary_file_charset,system_par,scene_par,pcps);
+		
+		try{
+			str+=create_mesh_and_material_routine(part_temporary_file_directory,pcps,system_par,scene_par);
+		}catch(Exception e) {
+			debug_information.println("create_mesh_and_material_routine exception:",
+				"\t"+system_name+"\t"+user_name+"\t"+e.toString());
+			e.printStackTrace();
+		}
+
 		clear_mesh_file_content();
 		efm.unlock();
 		

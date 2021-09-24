@@ -137,10 +137,13 @@ function render_initialization(initialization_url,my_render,user_initialization_
 	}catch(e){
 		processs_bar_object.show_process_bar_function=null;
 		
-		if(render.parameter.debug_mode_flag)
+		if(render.parameter.debug_mode_flag){
 			alert("Loading system_initialization_function fail: "+e.toString());
-		else
+			alert(initialization_url);
+		}else{
 			console.log("Loading system_initialization_function fail: "+e.toString());
+			console.log(initialization_url);
+		}
 	};
 };
 

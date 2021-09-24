@@ -71,15 +71,17 @@ public class engine_boftal_creator extends sorter <part,String>
 		
 		do_sort(-1,new part[number]);
 		
+		
+		int cut_directory_length=system_par.proxy_par.proxy_data_root_directory_name.length();
 		file_writer fw=new  file_writer(file_name,file_charset);
 		
 		fw.println(number);
-				
+		
 		for(int i=0;i<number;i++) {
 			process_bar.set_process_bar(false, "create_buffer_object_file", i, number);
-			
+
 			String part_temporary_file_directory=file_directory.part_file_directory(data_array[i],system_par,scene_par);
-			fw.println(part_temporary_file_directory);
+			fw.println(part_temporary_file_directory.substring(cut_directory_length));
 			
 			file_reader fr=new file_reader(part_temporary_file_directory+"mesh.boftal",fw.get_charset());
 			while(!(fr.eof()))

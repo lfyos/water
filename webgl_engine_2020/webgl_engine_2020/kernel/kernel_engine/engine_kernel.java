@@ -210,13 +210,14 @@ public class engine_kernel
 		}	
 	}
 	
-	private void load_create_assemble_part(client_request_response request_response,
+	private void load_create_assemble_part(
+			boolean fast_load_flag,client_request_response request_response,
 			part_container_for_part_search all_part_part_cont,
 			buffer_object_file_modify_time_and_length_container boftal_container)
 	{	
 		if((create_top_part_expand_ratio>=1.0)&&(create_top_part_left_ratio>=1.0)){
 			if(component_cont.root_component!=null){
-				part top_box_part[]=(new create_assemble_part(
+				part top_box_part[]=(new create_assemble_part(fast_load_flag,
 						request_response,component_cont.root_component,
 						create_top_part_expand_ratio,create_top_part_left_ratio,
 						scene_par.create_top_part_assembly_precision2,
@@ -247,6 +248,16 @@ public class engine_kernel
 		debug_information.println("part_type_string		:	"		 ,	scene_par.part_type_string);
 		debug_information.println("scene_sub_directory		:	"	 ,	scene_par.scene_sub_directory);
 
+		String str;
+		boolean fast_load_flag=false;
+		if((str=request_response.get_parameter("fast_load"))!=null)
+			switch(str.toLowerCase()) {
+			case "true":
+			case "yes":
+				fast_load_flag=true;
+				break;
+			}
+		
 		file_reader scene_f=new file_reader(scene_directory_name+scene_file_name,scene_charset);
 		if(!(scene_f.error_flag())){
 			scene_directory_name				=scene_f.directory_name;
@@ -276,12 +287,12 @@ public class engine_kernel
 				scene_par.scene_sub_directory, 2,my_part_type_string_sorter,
 				system_par,scene_par,request_response);
 		part_cont.execute_append();
-		render_cont.load_part((1<<1)+(1<<2),1,part_loader_cont,
+		render_cont.load_part(fast_load_flag,(1<<1)+(1<<2),1,part_loader_cont,
 				system_par,scene_par,part_cont,boftal_container,"load_first_class_part",process_bar);
 
 		render_cont.create_bottom_box_part(part_cont,request_response,system_par);
 		part_cont.execute_append();
-		render_cont.load_part((1<<1)+(1<<2),2,part_loader_cont,
+		render_cont.load_part(fast_load_flag,(1<<1)+(1<<2),2,part_loader_cont,
 				system_par,scene_par,part_cont,boftal_container,"load_second_class_part",process_bar);
 		
 		render_cont.type_part_package=new part_package(process_bar,"create_first_class_package",render_cont,1,system_par,scene_par);
@@ -316,10 +327,11 @@ public class engine_kernel
 		component_cont.do_component_caculator(false);
 		component_cont.root_component.reset_component(component_cont);
 		
-		load_create_assemble_part(request_response,part_cont,boftal_container);
+		load_create_assemble_part(fast_load_flag,request_response,part_cont,boftal_container);
 		part_cont.execute_append();
-		render_cont.load_part((1<<2),4,part_loader_cont,
+		render_cont.load_part(fast_load_flag,(1<<2),4,part_loader_cont,
 				system_par,scene_par,part_cont,boftal_container,"load_third_class_part",process_bar);
+		boftal_container.destroy();
 		
 		render_cont.scene_part_package=new part_package(process_bar,"create_second_class_package",render_cont,2,system_par,scene_par);
 		
@@ -338,9 +350,7 @@ public class engine_kernel
 		process_bar.set_process_bar(true,"create_shader", 1, 2);
 		program_last_time=copy_program.copy_shader_programs(render_cont,system_par,scene_par);
 		
-		process_bar.set_process_bar(true,"scene_initialization", 1, 2);
-		
-		new engine_initialization(this,request_response);
+		new engine_initialization(this,request_response,process_bar);
 
 		{
 			long current_time=(new Date()).getTime();

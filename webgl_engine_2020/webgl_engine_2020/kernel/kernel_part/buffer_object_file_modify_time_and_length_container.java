@@ -11,6 +11,19 @@ public class buffer_object_file_modify_time_and_length_container
 	private String boftal_token_array[];
 	private buffer_object_file_modify_time_and_length boftal_array[];
 	
+	public void destroy()
+	{
+		if(boftal_token_array!=null)
+			boftal_token_array=null;
+		if(boftal_array!=null) {
+			for(int i=0,ni=boftal_array.length;i<ni;i++)
+				if(boftal_array[i]!=null) {
+					boftal_array[i].simple_part_mesh=null;
+					boftal_array[i]=null;
+				}
+		}
+	}
+	
 	public buffer_object_file_modify_time_and_length_container(
 			client_process_bar process_bar,String boftal_file_name,String boftal_file_charset)
 	{

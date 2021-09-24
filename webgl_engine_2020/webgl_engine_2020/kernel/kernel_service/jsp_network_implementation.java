@@ -39,7 +39,7 @@ public class jsp_network_implementation implements network_implementation
 			;
 		}
 		if((client_id=request.getRemoteAddr())==null)
-			client_id="NoRemoteAddr";
+			client_id="NoRemoteAddr";		
 //		client_id =client_id+"/"+my_session.getId();
 	}
 	static private void print_error(boolean print_stack_trace_flag,

@@ -24,6 +24,7 @@
 	out.println("var sub_directory=\""			+(((str=request.getParameter("sub_directory"			))==null)?"":str)+"\";");
 	out.println("var coordinate=\""				+(((str=request.getParameter("coordinate"				))==null)?"xyz":str)+"\";");
 	out.println("var max_loading_number=\""		+(((str=request.getParameter("max_loading_number"		))==null)?"10":str)+"\";");
+	out.println("var fast_load=\""				+(((str=request.getParameter("fast_load"				))==null)?"false":str)+"\";");
 }
 
 %>
@@ -49,7 +50,8 @@ function body_onload()
 			["part_type",				part_type			],
 			["sub_directory",			sub_directory		],
 			["coordinate",				coordinate			],
-			["max_loading_number",		max_loading_number	]
+			["max_loading_number",		max_loading_number	],
+			["fast_load",				fast_load			]
 		],
 		function(my_render)
 		{
@@ -100,7 +102,9 @@ function body_onload()
 			canvas_2d_context.fill();
 
 			var display_value="";
-			display_value+=(Math.round(1000*process_bar_current/process_bar_max)/10.0).toString()+"%,";
+			process_bar_current=1000.0*process_bar_current/process_bar_max;
+			
+			display_value+=(Math.round(process_bar_current)/10.0).toString()+"%,";
 			display_value+=(Math.round(process_bar_time_length/1000.0)).toString()+"秒,";
 			display_value+=(Math.round(process_bar_engine_time_length/1000.0)).toString()+"秒";
 			

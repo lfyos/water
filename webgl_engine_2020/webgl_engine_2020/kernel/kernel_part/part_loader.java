@@ -69,8 +69,8 @@ public class part_loader extends Thread
         debug_information.println();
 		try{
 			debug_information.println(
-				loaded_part.load_mesh_and_create_buffer_object(copy_from_part,last_modified_time,
-					system_par.local_data_charset,system_par,scene_par,pcps,boftal_container));
+				loaded_part.load_mesh_and_create_buffer_object(
+						copy_from_part,last_modified_time,system_par,scene_par,pcps,boftal_container));
 		}catch(Exception e){
 			debug_information.println(
 	            	"Error in load_mesh_and_create_buffer_object_and_material_file:\t",loaded_part.system_name);

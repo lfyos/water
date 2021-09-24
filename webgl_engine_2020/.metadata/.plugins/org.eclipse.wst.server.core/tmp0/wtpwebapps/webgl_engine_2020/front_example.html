@@ -17,12 +17,13 @@ function body_onload()
 		"cad",										//场景名称
 		"",											//连接名称,用于多人协同操作一个场景
 		[											//初始化参数
-			["sub_directory",			"1080-PA-601-3D"],			//显示内容
-			["coordinate",				"location.xyz.txt"],		//坐标系选择
-			["change_part",				""	],						//part换名
-			["change_component",		""	],						//component换名
-			["part_type",				""	],						//part类型
-			["max_loading_number",		10	]						//同时下载数量
+			["sub_directory",			"1080-PA-601-3D"	],	//显示内容
+			["coordinate",				"location.xyz.txt"	],	//坐标系选择
+			["change_part",				""					],	//part换名
+			["change_component",		""					],	//component换名
+			["part_type",				""					],	//part类型
+			["max_loading_number",		10					],	//同时下载数量
+			["fast_load",				"false"				]	//非快速加载模式
 		],
 		function(my_render)					//创建场景成功后执行的函数
 		{

@@ -12,7 +12,7 @@ start_create_kernel+english						3.start_create_kernel
 start_create_kernel+chinese						3.开始创建场景核心
 
 start_load_scene+english						4.start_load_kernel
-start_load_scene+chinese						4.开始创建场景核心
+start_load_scene+chinese						4.开始装入场景核心
 
 load_buffer_object_file_information+english		5.load_buffer_file_information
 load_buffer_object_file_information+chinese		5.装入缓冲文件信息
@@ -44,8 +44,22 @@ caculate_scene_data+chinese						13.计算场景相关数据
 create_shader+english							14.create_shaders 
 create_shader+chinese							14.生成着色程序
 
-scene_initialization+english					15.scene_initialization 
-scene_initialization+chinese					15.场景初始化
+part_driver_initialization+english				15.part_driver_initialization 
+part_driver_initialization+chinese				15.零件驱动初始化
 
-load_termination+english						16.load_termination 
-load_termination+chinese						16.场景数据装入完毕
+component_driver_initialization+english			16.component_driver_initialization 
+component_driver_initialization+chinese			16.组件驱动初始化
+
+file_initialization_0+english					17.file_initialization_0 
+file_initialization_0+chinese					17.文件初始化_0
+file_initialization_1+english					17.file_initialization_1 
+file_initialization_1+chinese					17.文件初始化_1
+file_initialization_2+english					17.file_initialization_2 
+file_initialization_2+chinese					17.文件初始化_2
+file_initialization_3+english					17.file_initialization_3 
+file_initialization_3+chinese					17.文件初始化_3
+file_initialization_4+english					17.file_initialization_4 
+file_initialization_4+chinese					17.文件初始化_4
+
+load_termination+english						18.load_termination 
+load_termination+chinese						18.场景数据装入完毕
