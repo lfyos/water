@@ -56,7 +56,7 @@ public class javascript_program
 				function_date=null;
 		if(function_date==null){
 			String url=request_response.implementor.get_url();
-			url+="?function_name="+function_name+"&function_date="+last_modified_str;
+			url+="?channel=javascript&function_name="+function_name+"&function_date="+last_modified_str;
 			request_response.implementor.redirect_url(url,"*");
 			return null;
 		}

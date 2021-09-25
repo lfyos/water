@@ -196,7 +196,7 @@ public class create_assemble_part
 	
 	public part top_box_part[];
 	
-	public create_assemble_part(boolean fast_load_flag,
+	public create_assemble_part(
 			client_request_response request_response,component root_component,
 			double expand_ratio,double left_ratio,double create_top_part_assembly_precision2,
 			double create_top_part_discard_precision2,double discard_top_part_component_precision2,
@@ -304,9 +304,8 @@ public class create_assemble_part
 				debug_information.println("Temp directory:",	file_directory.part_file_directory(add_part,system_par,scene_par));
 				e.printStackTrace();
 			}
-			already_loaded_part=part_loader_cont.load(
-				fast_load_flag,add_part,render_cont.get_copy_from_part(add_part),
-				last_modified_time,system_par,scene_par,already_loaded_part,pcps,boftal_container);
+			already_loaded_part=part_loader_cont.load(add_part,render_cont.get_copy_from_part(add_part),
+						last_modified_time,system_par,scene_par,already_loaded_part,pcps,boftal_container);
 			top_box_part[add_part_number++]=add_part;
 			create_part_number+=my_create_part_number;	
 			

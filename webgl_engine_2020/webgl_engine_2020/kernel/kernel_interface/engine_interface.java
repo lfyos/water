@@ -136,11 +136,11 @@ public class engine_interface
 					system_par.local_data_charset,"",part_type_id,
 					null,system_par,null,request_response);
 			pcps.execute_append();
-			original_render.load_part(false,1<<part_type_id,1,part_loader_cont,system_par,null,pcps,null,null,null);
+			original_render.load_part(1<<part_type_id,1,part_loader_cont,system_par,null,pcps,null,null,null);
 			
 			original_render.create_bottom_box_part(pcps,request_response,system_par);
 			pcps.execute_append();
-			original_render.load_part(false,1<<part_type_id,2,part_loader_cont,system_par,null,pcps,null,null,null);
+			original_render.load_part(1<<part_type_id,2,part_loader_cont,system_par,null,pcps,null,null,null);
 			
 			debug_information.println("Begin create system_part_package");
 			original_render.system_part_package=new part_package(null,null,original_render,part_type_id,system_par,null);

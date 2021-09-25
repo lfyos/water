@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="kernel_engine.create_initialization_file"/>
 <fullyQualifiedTypeName name="kernel_security.client_session"/>
 <fullyQualifiedTypeName name="kernel_driver.component_driver"/>
 <fullyQualifiedTypeName name="kernel_common_class.download_file_from_webserver"/>
@@ -54,10 +53,11 @@
 <fullyQualifiedTypeName name="convert_old_part_rude_2021_07_01.part_rude"/>
 <fullyQualifiedTypeName name="kernel_file_manager.file_writer"/>
 <fullyQualifiedTypeName name="kernel_interface.client_process_bar"/>
-<fullyQualifiedTypeName name="kernel_file_manager.file_reader"/>
 <fullyQualifiedTypeName name="kernel_part.part"/>
 <fullyQualifiedTypeName name="kernel_common_class.sorter"/>
 <fullyQualifiedTypeName name="java.io.File"/>
-<fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
+<fullyQualifiedTypeName name="kernel_file_manager.file_reader"/>
+<fullyQualifiedTypeName name="kernel_interface.client_switch_server"/>
+<fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 </qualifiedTypeNameHistroy>

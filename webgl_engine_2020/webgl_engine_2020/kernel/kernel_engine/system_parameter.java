@@ -7,6 +7,7 @@ import kernel_common_class.change_name;
 import kernel_common_class.debug_information;
 import kernel_file_manager.file_reader;
 import kernel_content_type.get_content_type_change_name;
+import kernel_interface.switch_engine_server;
 
 public class system_parameter
 {
@@ -40,6 +41,7 @@ public class system_parameter
 	
 	public change_name language_change_name,content_type_change_name;
 	public proxy_parameter proxy_par;
+	public switch_engine_server	switch_server;
 
 	public system_parameter(system_parameter sp)
 	{
@@ -88,6 +90,7 @@ public class system_parameter
 		language_change_name			=new change_name(sp.language_change_name,false);
 		
 		proxy_par						=sp.proxy_par;
+		switch_server					=sp.switch_server;
 	}
 	public system_parameter(String application_directory_name,
 			String data_configure_environment_variable,String proxy_configure_environment_variable)
@@ -161,6 +164,12 @@ public class system_parameter
 		else
 			language_change_file_name=file_reader.separator(language_change_file_name);	
 		
+		String switch_server_url_file_name;
+		if((switch_server_url_file_name=f.get_string())==null)
+			switch_server_url_file_name="";
+		else
+			switch_server_url_file_name=file_reader.separator(switch_server_url_file_name);	
+		
 		max_loading_number						=f.get_int();
 		max_material_id							=f.get_int();
 		
@@ -201,5 +210,10 @@ public class system_parameter
 				new String[]{data_root_directory_name+language_change_file_name},
 				null,local_data_charset);
 		content_type_change_name=get_content_type_change_name.get_change_name();
+		
+		switch_server=new switch_engine_server(
+				data_root_directory_name+switch_server_url_file_name,local_data_charset);
+		
+		return;
 	}
 }

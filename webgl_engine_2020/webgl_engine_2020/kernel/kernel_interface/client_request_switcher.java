@@ -96,20 +96,34 @@ public class client_request_switcher
 	private system_call_switch_result system_call_switch(client_request_response request_response)
 	{
 		system_call_switch_result ret_val=new system_call_switch_result();
-		String channel_string=request_response.get_parameter("channel");
-		switch((channel_string==null)?"javascript":channel_string){
-		case "readme":
-			ret_val.ecr=download_readme_file.download_driver_readme(request_response,
-					system_par.data_root_directory_name+system_par.shader_file_name,
-					system_par.local_data_charset,system_par.file_download_cors_string,
-					Long.toString(system_par.file_buffer_expire_time_length));
-			break;
+		String str=request_response.get_parameter("channel");
+		switch((str==null)?"switch":str){
+		case "switch":
+			if((str=system_par.switch_server.get_switch_server_url())!=null) {
+				String function_name;
+				if((function_name=request_response.get_parameter("function_name"))==null)
+					function_name="construct_render_object";
+				else if(function_name.compareTo("construct_render_object_routine")==0)
+					function_name="construct_render_object";
+				
+				str+="?channel=javascript&function_name="+function_name;
+				request_response.implementor.redirect_url(str,"*");
+				ret_val.ecr=new engine_call_result(null,null,null,null,null,"*");
+
+				break;
+			}
 		case "javascript":
 			ret_val.ecr=program_javascript.create(request_response,
 					Long.toString(system_par.file_buffer_expire_time_length),
 					system_par.create_engine_sleep_time_length_scale,
 					system_par.create_engine_sleep_time_length,
 					system_par.create_engine_max_sleep_time_length);
+			break;
+		case "readme":
+			ret_val.ecr=download_readme_file.download_driver_readme(request_response,
+					system_par.data_root_directory_name+system_par.shader_file_name,
+					system_par.local_data_charset,system_par.file_download_cors_string,
+					Long.toString(system_par.file_buffer_expire_time_length));
 			break;
 		case "clear":
 			if((ret_val.client=client_container.get_client_interface(request_response,system_par))!=null)
@@ -148,11 +162,11 @@ public class client_request_switcher
 			if((ret_val.client=client_container.get_client_interface(request_response,system_par))!=null) {
 				long channel_id;
 				try{
-					channel_id=Long.decode(channel_string);
+					channel_id=Long.decode(str);
 				}catch(Exception e) {
 					debug_information.println("Channel id is wrong");
 					debug_information.println("client:",request_response.implementor.get_client_id());
-					debug_information.println(",Channel:",channel_string);
+					debug_information.println(",Channel:",str);
 					debug_information.println(",exception:",e.toString());
 					e.printStackTrace();
 					return null;

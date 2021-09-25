@@ -1,0 +1,35 @@
+package kernel_interface;
+
+import kernel_file_manager.file_reader;
+
+public class switch_engine_server 
+{
+	private String server_url_array[];
+	private int index_id=0;
+	
+	public switch_engine_server(String file_name,String file_charset)
+	{
+		server_url_array=new String[] {};
+		
+		file_reader fr=new file_reader(file_name,file_charset);
+		for(String my_url;!(fr.eof());)
+			if((my_url=fr.get_string())!=null) 
+				if((my_url=my_url.trim()).length()>0){
+					String bak[]=server_url_array;
+					server_url_array=new String[bak.length+1];
+					for(int i=0,ni=bak.length;i<ni;i++)
+						server_url_array[i]=bak[i];
+					server_url_array[server_url_array.length-1]=my_url;
+				}
+		fr.close();
+	}
+	public String get_switch_server_url()
+	{
+		int number;
+		if((number=server_url_array.length)<=0)
+			return null;
+		index_id%=number;
+		
+		return server_url_array[index_id++];
+	}
+}

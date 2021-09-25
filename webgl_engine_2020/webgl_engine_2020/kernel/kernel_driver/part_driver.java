@@ -18,7 +18,6 @@ import kernel_transformation.box;
 import kernel_transformation.point;
 import kernel_network.client_request_response;
 import kernel_common_class.debug_information;
-import kernel_common_class.exclusive_file_mutex;
 import kernel_part.part_rude;
 
 public class part_driver
@@ -46,6 +45,7 @@ public class part_driver
 	{
 		return 0;
 	}
+	
 	public part_rude create_part_mesh_and_buffer_object_head(part p,
 			file_writer buffer_object_file_writer,part_container_for_part_search pcps,
 			system_parameter system_par,scene_parameter scene_par)
@@ -60,8 +60,6 @@ public class part_driver
 			return null;
 
 		file_reader fr=null;
-		exclusive_file_mutex efm=exclusive_file_mutex.lock(
-			my_file_path+".lock","wait for create buffer_object_head:	"+my_file_path);
 		try{
 			fr=new file_reader(my_file_path,p.file_charset);
 			fr.mark_start();
@@ -84,11 +82,13 @@ public class part_driver
 				fr=null;
 			}
 		}
-		efm.unlock();
+		
 		if(fr==null)
 			return null;
+		
 		part_rude ret_val=new part_rude(fr);
 		fr.close();
+		
 		return ret_val;
 	}
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,

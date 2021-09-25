@@ -41,3 +41,4 @@
 /*	not_do_ancestor_render_flag					*/		yes
 /*	do_discard_lod_flag							*/		no
 /*	do_selection_lod_flag						*/		no
+/*	fast_load_scene_flag						*/		no

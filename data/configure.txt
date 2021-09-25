@@ -6,6 +6,7 @@
 /*	shader_file_name														*/		shaders/shaders.txt
 /*	default_parameter_directory												*/		parameter
 /*	language_change_file_name												*/		language_change.txt
+/*	switch_server_url_file_name												*/		switch_server_url.txt
 
 /*	max_loading_number														*/		8
 /*	max_material_id															*/		100

@@ -6,38 +6,43 @@ function redraw(render,processs_bar_object)
 	}
 	var redraw_object={
 			touch_time:			0,
-			interval_length:	1
+			interval_length:	1,
+			clear_interval_id:	-1	
 	};
 	function render_routine()
 	{
 		if(render.terminate_flag){
 			processs_bar_object.show_process_bar_function=null;
-			return;
+			clearInterval(redraw_object.clear_interval_id);
+		}else{
+			var my_current_time=(new Date()).getTime();
+			redraw_object.interval_length=my_current_time-redraw_object.touch_time;
+			redraw_object.touch_time=my_current_time;
+			render.do_render(redraw_object.interval_length);
+			
+			window.requestAnimationFrame(render_routine);
 		}
-		var my_current_time=(new Date()).getTime();
-		redraw_object.interval_length=my_current_time-redraw_object.touch_time;
-		redraw_object.touch_time=my_current_time;
-		render.do_render(redraw_object.interval_length);
-		
-		window.requestAnimationFrame(render_routine);
+		return;
 	};
 	function touch_routine()
 	{
 		if(render.terminate_flag){
 			processs_bar_object.show_process_bar_function=null;
-			return;
+			clearInterval(redraw_object.clear_interval_id);
+		}else{
+			var my_current_time=(new Date()).getTime();
+			var my_interval_length=my_current_time-redraw_object.touch_time;
+			if(my_interval_length>(render.parameter.engine_touch_time_length/1000000)){
+				redraw_object.interval_length=my_interval_length;
+				redraw_object.touch_time=my_current_time;
+				render.do_render(redraw_object.interval_length);
+			}
 		}
-		var my_current_time=(new Date()).getTime();
-		var my_interval_length=my_current_time-redraw_object.touch_time;
-		if(my_interval_length>(render.parameter.engine_touch_time_length/1000000)){
-			redraw_object.interval_length=my_interval_length;
-			redraw_object.touch_time=my_current_time;
-			render.do_render(redraw_object.interval_length);
-		}
-		setTimeout(touch_routine,render.parameter.engine_touch_time_length/1000000);
+		return;
 	};
+	redraw_object.clear_interval_id=setInterval(touch_routine,render.parameter.engine_touch_time_length/1000000);
+	
 	render_routine();
-	touch_routine();
 };
 
 function render_initialization(initialization_url,my_render,user_initialization_function,processs_bar_object)

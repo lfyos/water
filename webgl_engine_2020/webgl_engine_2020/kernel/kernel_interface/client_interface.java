@@ -619,8 +619,7 @@ public class client_interface
 		
 		system_par	 =new system_parameter(my_system_par);
 		process_bar_cont=new client_process_bar_container(
-				system_par.max_engine_kernel_number,
-				system_par.engine_expire_time_length);
+				system_par.max_engine_kernel_number,system_par.engine_expire_time_length);
 		manager_delay=null;
 		session		 =null;
 		

@@ -13,7 +13,6 @@ import kernel_network.client_request_response;
 import kernel_transformation.box;
 import kernel_transformation.point;
 import kernel_common_class.debug_information;
-import kernel_common_class.exclusive_file_mutex;
 import kernel_component.component;
 
 public class part
@@ -352,11 +351,7 @@ public class part
 		str+="\n\taudio_file_name:\t\t"			+audio_file_name;
 
 		String part_temporary_file_directory=file_directory.part_file_directory(this,system_par,scene_par);
-		String lock_file_name=file_reader.separator(part_temporary_file_directory+"part.lock");
 		
-		exclusive_file_mutex efm=exclusive_file_mutex.lock(lock_file_name,
-				 "wait for load_mesh_and_create_buffer_object_and_material_file:	"
-				+directory_name+mesh_file_name);
 		file_writer.file_delete(part_temporary_file_directory);
 		file_writer.make_directory(part_temporary_file_directory);
 		
@@ -369,8 +364,7 @@ public class part
 		}
 
 		clear_mesh_file_content();
-		efm.unlock();
-		
+
 		if((part_mesh!=null)&&(part_par.free_part_memory_flag))
 			part_mesh.free_memory();
 		

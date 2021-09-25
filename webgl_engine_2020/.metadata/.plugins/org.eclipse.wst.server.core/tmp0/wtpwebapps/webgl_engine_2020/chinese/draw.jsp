@@ -24,7 +24,6 @@
 	out.println("var sub_directory=\""			+(((str=request.getParameter("sub_directory"			))==null)?"":str)+"\";");
 	out.println("var coordinate=\""				+(((str=request.getParameter("coordinate"				))==null)?"xyz":str)+"\";");
 	out.println("var max_loading_number=\""		+(((str=request.getParameter("max_loading_number"		))==null)?"10":str)+"\";");
-	out.println("var fast_load=\""				+(((str=request.getParameter("fast_load"				))==null)?"false":str)+"\";");
 }
 
 %>
@@ -50,8 +49,7 @@ function body_onload()
 			["part_type",				part_type			],
 			["sub_directory",			sub_directory		],
 			["coordinate",				coordinate			],
-			["max_loading_number",		max_loading_number	],
-			["fast_load",				fast_load			]
+			["max_loading_number",		max_loading_number	]
 		],
 		function(my_render)
 		{
@@ -128,7 +126,6 @@ function body_onunload()
 			if(typeof(render.terminate)=="function")
 				render.terminate();
 }
-
 function body_onresize()
 {
 	if(typeof(render)=="object")
