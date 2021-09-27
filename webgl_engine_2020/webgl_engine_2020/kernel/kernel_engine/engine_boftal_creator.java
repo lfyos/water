@@ -1,6 +1,7 @@
 package kernel_engine;
 
 import java.io.File;
+import java.io.FileWriter;
 
 import kernel_render.render;
 import kernel_part.part;
@@ -81,14 +82,31 @@ public class engine_boftal_creator extends sorter <part,String>
 			process_bar.set_process_bar(false, "create_buffer_object_file", i, number);
 
 			String part_temporary_file_directory=file_directory.part_file_directory(data_array[i],system_par,scene_par);
+			String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
 			fw.println(part_temporary_file_directory.substring(cut_directory_length));
-			
-			file_reader fr=new file_reader(part_temporary_file_directory+"mesh.boftal",fw.get_charset());
+
+			file_reader fr=new file_reader(boftal_file_name,fw.get_charset());
 			while(!(fr.eof()))
 				if((str=fr.get_string())!=null)
 					fw.println(str);
 			fr.close();
-			
+						
+			if(scene_par!=null)
+				if(scene_par.scene_fast_load_flag)
+					if(data_array[i].part_par.engine_boftal_flag)
+						if(data_array[i].part_par.free_part_memory_flag){
+							File f=new File(boftal_file_name);
+							long t=f.lastModified();
+							try{
+								if(f.exists())
+									new FileWriter(boftal_file_name).close();
+								else
+									f.createNewFile();
+							}catch(Exception e) {
+								;
+							}
+							f.setLastModified(t);
+						}
 			fw.println();
 		}
 		
