@@ -94,19 +94,22 @@ public class engine_boftal_creator extends sorter <part,String>
 			if(scene_par!=null)
 				if(scene_par.scene_fast_load_flag)
 					if(data_array[i].part_par.engine_boftal_flag)
-						if(data_array[i].part_par.free_part_memory_flag){
-							File f=new File(boftal_file_name);
-							long t=f.lastModified();
-							try{
-								if(f.exists())
-									new FileWriter(boftal_file_name).close();
-								else
-									f.createNewFile();
-							}catch(Exception e) {
-								;
+						if(data_array[i].part_par.free_part_memory_flag)
+							switch(data_array[i].part_type_id){
+							case 2:
+								File f=new File(boftal_file_name);
+								long t=f.lastModified();
+								try{
+									if(f.exists())
+										new FileWriter(boftal_file_name).close();
+									else
+										f.createNewFile();
+								}catch(Exception e) {
+									;
+								}
+								f.setLastModified(t);
+								break;
 							}
-							f.setLastModified(t);
-						}
 			fw.println();
 		}
 		
