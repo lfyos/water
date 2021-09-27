@@ -3,6 +3,7 @@ package driver_movement;
 import kernel_camera.camera_parameter;
 import kernel_camera.locate_camera;
 import kernel_common_class.debug_information;
+import kernel_common_class.jason_string;
 import kernel_common_class.web_page;
 import kernel_component.component;
 import kernel_component.component_array;
@@ -354,23 +355,23 @@ public class movement_function_switch
 		else
 			manager.last_edit_move_id=searcher.result_parent.movement_tree_id;
 		
-		String node_name="no_node_name",sound_file_name="no_sound_file",description="no_description";
+		String node_name="\"no_node_name\"",sound_file_name="\"no_sound_file\"",description="\"no_description\"";
 		if(searcher.result!=null){
 			if(searcher.result.node_name!=null)
 				if(searcher.result.node_name.trim().length()>0)
-					node_name=searcher.result.node_name.trim().replace('\\','/').replace("\"","");
+					node_name=jason_string.change_string(searcher.result.node_name.trim());
 			if(searcher.result.sound_file_name!=null)
 				if(searcher.result.sound_file_name.trim().length()>0)
-					sound_file_name=searcher.result.sound_file_name.trim().replace('\\','/').replace("\"","");
+					sound_file_name=jason_string.change_string(searcher.result.sound_file_name.trim());
 			if(searcher.result.description!=null)
 				if(searcher.result.description.trim().length()>0)
-					description=searcher.result.description.trim().replace('\\','/').replace("\"","");
+					description=jason_string.change_string(searcher.result.description.trim());
 		}
 		
 		ci.request_response.println("{");
-		ci.request_response.println("	\"node_name\"		:	\"",node_name+"\",");
-		ci.request_response.println("	\"sound_file_name\"	:	\"",sound_file_name+"\",");
-		ci.request_response.println("	\"description\"		:	\"",description+"\",");
+		ci.request_response.println("	\"node_name\"		:	",node_name+",");
+		ci.request_response.println("	\"sound_file_name\"	:	",sound_file_name+",");
+		ci.request_response.println("	\"description\"		:	",description+",");
 		ci.request_response.println("	\"id\"				:	",searcher.result.movement_tree_id);
 		ci.request_response.println("}");
 

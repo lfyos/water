@@ -1,6 +1,7 @@
 package driver_text;
 
 import kernel_camera.camera_result;
+import kernel_common_class.jason_string;
 import kernel_component.component;
 import kernel_component.component_collector;
 import kernel_driver.instance_driver;
@@ -103,16 +104,8 @@ public class extended_instance_driver extends instance_driver
 		int total_height=dt.canvas_height*text_line_number;
 
 		ci.request_response.print("[[");
-		for(int i=0;i<text_line_number;i++){
-			String str=my_display_information[i].
-				replace("\\","\\\\").
-				replace("\n","\\n").
-				replace("\r","\\r").
-				replace("\"","\\\"").
-				replace("\t","    ");
-			ci.request_response.print((i==0)?"\"":",\"",str);
-			ci.request_response.print("\"");
-		}
+		for(int i=0;i<text_line_number;i++)
+			ci.request_response.print((i==0)?"":",",jason_string.change_string(my_display_information[i]));
 		ci.request_response.print("],",new int 		[]{dt.canvas_width,total_height,dt.canvas_height}).
 							print(",", new double 	[]{dt.text_square_width,dt.text_square_height*text_line_number}).
 							print(",",comp.component_id).

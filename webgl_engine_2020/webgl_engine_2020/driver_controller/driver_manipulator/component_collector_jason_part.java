@@ -1,5 +1,6 @@
 package driver_manipulator;
 
+import kernel_common_class.jason_string;
 import kernel_component.component_collector;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
@@ -16,10 +17,6 @@ public class component_collector_jason_part
 	{
 		ci.request_response.println(pre_str,str);
 	};
-	private String normal_str(String str)
-	{
-		return str.replace('\\','/').replace("\"","");
-	}	
 	public component_collector_jason_part(
 			component_collector collector,client_information my_ci,engine_kernel my_ek)
 	{
@@ -42,9 +39,9 @@ public class component_collector_jason_part
 		pre_str="\t";
 		
 		print("\"list_id\":	"			+collector.list_id+",");
-		print("\"title\":	\""			+normal_str(collector.title)+"\",");
-		print("\"description\":	\""		+normal_str(collector.description)+"\",");
-		print("\"audio_file_name\":	\""	+normal_str(collector.audio_file_name)+"\",");
+		print("\"title\":	"			+jason_string.change_string(collector.title)+",");
+		print("\"description\":	"		+jason_string.change_string(collector.description)+",");
+		print("\"audio_file_name\":	"	+jason_string.change_string(collector.audio_file_name)+",");
 		
 		print("\"render_list\":	[");
 		for(int i=0,ni=collector.component_collector.length;i<ni;i++) {
@@ -77,13 +74,13 @@ public class component_collector_jason_part
 						
 						String id_str	 =Integer.toString(	(cll.comp==null)?-1:(cll.comp.component_id));
 						String driver_str=Integer.toString(	(cll.comp==null)?-1:(cll.driver_id));
-						String name_str	 =					(cll.comp==null)?"NULL_name":normal_str(cll.comp.component_name);
+						String name_str	 =					(cll.comp==null)?"NULL_name":(cll.comp.component_name);
 						
 						pre_str="\t\t\t\t\t\t\t";
 						
-						print("\"component_id\"\t\t:\t"		+id_str+",");
-						print("\"driver_id\"\t\t:\t"		+driver_str+",");
-						print("\"component_name\"\t:\t\""	+name_str+"\"");
+						print("\"component_id\"\t\t:\t"	+id_str+",");
+						print("\"driver_id\"\t\t:\t"	+driver_str+",");
+						print("\"component_name\"\t:\t"	+jason_string.change_string(name_str));
 
 						pre_str="\t\t\t\t\t\t";
 						print((cll.next_list_item==null)?"}":"},");

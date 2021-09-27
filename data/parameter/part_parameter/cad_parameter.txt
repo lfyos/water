@@ -23,4 +23,5 @@
 /*	engine_boftal_flag					*/		true
 /*	do_load_lock_flag					*/		false
 
-/*	clear_model_file_flag				*/		false	false	false	false	false	false	false
+/*	clear_buffer_head_file_flag			*/		false
+/*	clear_model_file_flag				*/		false	false	false	false	false	false	false	false

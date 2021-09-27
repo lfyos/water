@@ -1,7 +1,5 @@
 package kernel_part;
 
-import java.io.File;
-
 import kernel_driver.part_driver;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
@@ -13,6 +11,7 @@ import kernel_network.client_request_response;
 import kernel_transformation.box;
 import kernel_transformation.point;
 import kernel_common_class.debug_information;
+import kernel_common_class.jason_string;
 import kernel_component.component;
 
 public class part
@@ -202,12 +201,10 @@ public class part
 		
 		head_fw.println("\t{");
 		
-		head_fw.println("\t\t\"user_name\"\t\t:\t\"",user_name.replace('\\','/').replace("\"","")+"\",");
-		head_fw.println("\t\t\"system_name\"\t:\t\"",system_name.replace('\\','/').replace("\"","")+"\",");
-		head_fw.println("\t\t\"mesh_file\"\t\t:\t\"",
-			(directory_name+mesh_file_name).replace('\\','/').replace("\"","")+"\",");
-		head_fw.println("\t\t\"material_file\"\t:\t\"",
-			(directory_name+material_file_name).replace('\\','/').replace("\"","")+"\"");
+		head_fw.println("\t\t\"user_name\"\t\t:\t",jason_string.change_string(user_name)+",");
+		head_fw.println("\t\t\"system_name\"\t:\t",jason_string.change_string(system_name)+",");
+		head_fw.println("\t\t\"mesh_file\"\t\t:\t",jason_string.change_string(directory_name+mesh_file_name)+",");
+		head_fw.println("\t\t\"material_file\"\t:\t",jason_string.change_string(directory_name+material_file_name));
 		
 		head_fw.println("\t},");
 		
@@ -291,49 +288,6 @@ public class part
 
 		return ret_val;
 	}
-	
-	private void clear_mesh_file_content()
-	{
-		String clear_file_name_array[]=new String[]
-		{
-			material_file_name,
-			description_file_name,
-			audio_file_name,
-			mesh_file_name+".face",
-			mesh_file_name+".face.gzip",
-			mesh_file_name+".edge",
-			mesh_file_name+".edge.gzip"
-		};
-		for(int i=0,ni=clear_file_name_array.length;i<ni;i++) {
-			if(clear_file_name_array[i]==null)
-				continue;
-			if(!(part_par.clear_model_file_flag[i]))
-				continue;
-			String clear_file_name=file_reader.separator(directory_name+clear_file_name_array[i]);
-			File f=new File(clear_file_name);
-			if(!(f.exists()))
-				continue;
-			long t=f.lastModified();
-			if(!(f.delete())) {
-				debug_information.println("Delete file fail in clear_file_content	:	",clear_file_name);
-				continue;
-			}
-			try{
-				if(!(f.createNewFile())) {
-					debug_information.println("Create file fail in clear_file_content	:	",clear_file_name);
-					continue;
-				}
-			}catch(Exception e) {
-				debug_information.println("Create file error in clear_file_content	:	",clear_file_name);
-				debug_information.println("Create file error in clear_file_content	:	",e.toString());
-				e.printStackTrace();
-				continue;
-			}
-			if(!(f.setLastModified(t)))
-				debug_information.println("setLastModified fail in clear_file_content	:	",clear_file_name);
-		}
-	}
-	
 	public String load_mesh_and_create_buffer_object(part copy_from_part,long last_modified_time,
 			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
 			buffer_object_file_modify_time_and_length_container boftal_container)
@@ -362,9 +316,6 @@ public class part
 				"\t"+system_name+"\t"+user_name+"\t"+e.toString());
 			e.printStackTrace();
 		}
-
-		clear_mesh_file_content();
-
 		if((part_mesh!=null)&&(part_par.free_part_memory_flag))
 			part_mesh.free_memory();
 		

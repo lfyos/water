@@ -154,19 +154,16 @@ public class render
 				description_file_name	=file_reader.separator(description_file_name);
 				audio_file_name			=file_reader.separator(audio_file_name);
 				
-				{
-					File mesh_f=new File(f.directory_name+mesh_file_name);
-					if(!(mesh_f.exists())){
-						debug_information.println("mesh file not exist ",f.directory_name+mesh_file_name);
-						continue;
-					}
+				File mesh_f=new File(f.directory_name+mesh_file_name);
+				if(mesh_f.exists())
 					if(mesh_f.lastModified()<f.lastModified_time)
 						mesh_f.setLastModified(f.lastModified_time);
-					File material_f=new File(f.directory_name+material_file_name);
-					if(material_f.exists())
-						if(material_f.lastModified()<f.lastModified_time)
-							material_f.setLastModified(f.lastModified_time);
-				}
+				
+				File material_f=new File(f.directory_name+material_file_name);
+				if(material_f.exists())
+					if(material_f.lastModified()<f.lastModified_time)
+						material_f.setLastModified(f.lastModified_time);
+				
 				part my_part=new part(part_type_id,false,
 						part_par.clone(),f.directory_name,f.get_charset(),
 						(user_name==null)				?"":user_name,

@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URLEncoder;
 
 import kernel_camera.camera_result;
+import kernel_common_class.jason_string;
 import kernel_component.component;
 import kernel_component.component_collector;
 import kernel_driver.instance_driver;
@@ -12,28 +13,26 @@ import kernel_engine.engine_kernel;
 import kernel_part.part;
 import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
-import kernel_network.client_request_response;
-
 
 public class extended_instance_driver extends instance_driver
 {
 	private int time_length;
-	private String proxy_url[],version_file_charset;
+	private String proxy_url[];
 	private boolean proxy_encode_flag[];
 	
 	public void destroy()
 	{
 		super.destroy();
-		proxy_url=null;
-		proxy_encode_flag=null;
+		
+		proxy_url			=null;
+		proxy_encode_flag	=null;
 	}
-	public extended_instance_driver(component my_comp,int my_driver_id,
-			String my_version_file_charset,client_request_response request_response)
+	public extended_instance_driver(component my_comp,int my_driver_id)
 	{
 		super(my_comp,my_driver_id);
-		proxy_url=null;
-		proxy_encode_flag=null;
-		version_file_charset=my_version_file_charset;
+		
+		proxy_url			=null;
+		proxy_encode_flag	=null;
 	}
 	public void response_init_data(engine_kernel ek,client_information ci)
 	{
@@ -106,9 +105,9 @@ public class extended_instance_driver extends instance_driver
 		
 		String version_file_name=file_directory.part_file_directory(p,ek.system_par,ek.scene_par)+"version.txt";
 		String stamp_string=Long.toString((new File(version_file_name)).lastModified());
-		String version_string=file_reader.get_text(version_file_name,version_file_charset);
+		String version_string=file_reader.get_text(version_file_name,p.file_charset);
 		int dir_length=ek.system_par.proxy_par.proxy_data_root_directory_name.length();
-		version_file_name=version_file_name.substring(dir_length).replace('\\','/').replace("\"","");
+		version_file_name=jason_string.change_string(version_file_name.substring(dir_length));
 		
 		String original_url=ci.request_response.implementor.get_url();
 		try {
@@ -122,7 +121,7 @@ public class extended_instance_driver extends instance_driver
 		ci.request_response.print  ("\"driver_id\":",			driver_id);			ci.request_response.println(",");
 		ci.request_response.print  ("\"version_string\":\"",	version_string);	ci.request_response.println("\",");
 		ci.request_response.print  ("\"time_length\":",			time_length);		ci.request_response.println(",");
-		ci.request_response.print  ("\"file_name\":\"",			version_file_name);	ci.request_response.println("\",");
+		ci.request_response.print  ("\"file_name\":",			version_file_name);	ci.request_response.println(",");
 		ci.request_response.print  ("\"stamp_string\":\"",		stamp_string);		ci.request_response.println("\",");
 		ci.request_response.print  ("\"original_url\":\"",		original_url);		ci.request_response.println("\",");
 		ci.request_response.println("\"proxy_list\":[");
@@ -162,16 +161,15 @@ public class extended_instance_driver extends instance_driver
 	}
 	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
 	{
-		String str=ci.request_response.get_parameter("operation");
-		if(str!=null)
-			switch(str){
-			case "append":
-				ci.add_file_proxy_url(get_proxy_url(ci,ek.system_par.network_data_charset),get_proxy_encode_flag(ci));
-				break;
-			case "delete":
-				ci.delete_file_proxy_url(get_proxy_url(ci,ek.system_par.network_data_charset));
-				break;
-			}
+		String str;
+		switch(((str=ci.request_response.get_parameter("operation"))==null)?"":str){
+		case "append":
+			ci.add_file_proxy_url(get_proxy_url(ci,ek.system_par.network_data_charset),get_proxy_encode_flag(ci));
+			break;
+		case "delete":
+			ci.delete_file_proxy_url(get_proxy_url(ci,ek.system_par.network_data_charset));
+			break;
+		}
 		return null;
 	}
 }

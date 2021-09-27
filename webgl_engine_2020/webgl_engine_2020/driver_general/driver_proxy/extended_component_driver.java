@@ -11,16 +11,13 @@ import kernel_file_manager.file_reader;
 
 public class extended_component_driver  extends component_driver
 {
-	private String version_file_charset;
-	
 	public void destroy()
 	{
 		super.destroy();
 	}
-	public extended_component_driver(part my_component_part,String my_version_file_charset)
+	public extended_component_driver(part my_component_part)
 	{
 		super(my_component_part);
-		version_file_charset=my_version_file_charset;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
@@ -39,6 +36,6 @@ public class extended_component_driver  extends component_driver
 	public instance_driver create_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_instance_driver(comp,driver_id,version_file_charset,request_response);
+		return new extended_instance_driver(comp,driver_id);
 	}
 }

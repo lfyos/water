@@ -5,6 +5,7 @@ import java.io.File;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_common_class.debug_information;
+import kernel_common_class.jason_string;
 
 public class part_material_parameter
 {
@@ -83,10 +84,8 @@ public class part_material_parameter
 		fw.print  ("					\"texture_file\"	:	");
 		if(texture_file_name==null)
 			fw.println("null,");
-		else {
-			fw.print  ("\"",texture_file_name.replace('\\','/'));
-			fw.println("\",");
-		}
+		else
+			fw.println(jason_string.change_string(texture_file_name),",");
 
 		fw.print  ("					\"parameter\"		:	[",	render_method);
 		

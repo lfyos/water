@@ -8,6 +8,7 @@ import kernel_file_manager.file_directory;
 import kernel_network.client_request_response;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
 import kernel_part.part;
+import kernel_part.part_container;
 import kernel_part.part_container_for_part_search;
 import kernel_part.part_loader;
 import kernel_part.part_parameter;
@@ -191,12 +192,13 @@ public class create_assemble_part
 				p.part_par.engine_boftal_flag,
 				p.part_par.do_load_lock_flag,
 				
+				p.part_par.clear_buffer_head_file_flag,
 				p.part_par.clear_model_file_flag);
 	}
 	
 	public part top_box_part[];
 	
-	public create_assemble_part(
+	public create_assemble_part(part_container part_cont_for_delete_file,
 			client_request_response request_response,component root_component,
 			double expand_ratio,double left_ratio,double create_top_part_assembly_precision2,
 			double create_top_part_discard_precision2,double discard_top_part_component_precision2,
@@ -305,7 +307,7 @@ public class create_assemble_part
 				e.printStackTrace();
 			}
 			already_loaded_part=part_loader_cont.load(add_part,render_cont.get_copy_from_part(add_part),
-						last_modified_time,system_par,scene_par,already_loaded_part,pcps,boftal_container);
+						last_modified_time,system_par,scene_par,part_cont_for_delete_file,already_loaded_part,pcps,boftal_container);
 			top_box_part[add_part_number++]=add_part;
 			create_part_number+=my_create_part_number;	
 			

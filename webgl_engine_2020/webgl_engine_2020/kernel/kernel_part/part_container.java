@@ -1,0 +1,24 @@
+package kernel_part;
+
+public class part_container
+{
+	public int number;
+	private part_link_list pll;
+	public part_container()
+	{
+		pll=null;
+		number=0;
+	}
+	public void add_part(part p)
+	{
+		pll=new part_link_list(p,pll);
+		number++;
+	}
+	public part_link_list get_part_list()
+	{
+		part_link_list ret_val=pll;
+		pll=null;
+		number=0;
+		return ret_val;
+	}
+}

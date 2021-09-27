@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="">
-		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
 		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
 		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
 	</section>
@@ -19,13 +18,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Begin create_part_mesh_and_buffer_object_head:"/>
+			<item key="textPattern" value="replace(&apos;\\\\&apos;,&apos;/&apos;)"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.js"/>
 				<item value="*.jsp"/>
 				<item value="*.txt"/>
 				<item value="*java"/>
-				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -34,7 +33,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;program.txt&quot;"/>
+			<item key="textPattern" value="instance_initialize_data"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.jsp"/>
@@ -49,106 +48,15 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;engine.boftal&quot;"/>
+			<item key="textPattern" value="in_head_flag"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
 				<item value="*java"/>
-				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
 		</section>
 		<section name="HISTORY10">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Begin create part package"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.js"/>
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY5">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Begin initialize_part_driver"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-				<item value="*.js"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="EXTENSIONS">
-			<item key="0" value="*.js, *.jsp, *.txt, *java"/>
-			<item key="1" value="*java"/>
-			<item key="2" value="*.js"/>
-			<item key="3" value="*.java"/>
-			<item key="4" value="*.txt;*.js"/>
-			<item key="5" value="*.txt"/>
-			<item key="6" value="*.js, *.txt, *java,*.jsp"/>
-			<item key="7" value="*.js, *.txt, *java"/>
-			<item key="8" value="*.txt,*.js,*java"/>
-			<item key="9" value="*.txt,*.js"/>
-			<item key="10" value="*.draw.txt"/>
-		</section>
-		<section name="HISTORY11">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="request_buffer_object_data"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.js"/>
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY8">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="engine_touch_time_length"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-				<item value="*.js"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY9">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="setMaxInactiveInterval"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-				<item value="*.js"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY2">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
@@ -163,7 +71,32 @@
 			<list key="workingSets">
 			</list>
 		</section>
-		<section name="HISTORY3">
+		<section name="HISTORY5">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="replace(&quot;\&quot;&quot;,"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="EXTENSIONS">
+			<item key="0" value="*java"/>
+			<item key="1" value="*.js, *.jsp, *.txt, *java"/>
+			<item key="2" value="*.js"/>
+			<item key="3" value="*.java"/>
+			<item key="4" value="*.txt;*.js"/>
+			<item key="5" value="*.txt"/>
+			<item key="6" value="*.js, *.txt, *java,*.jsp"/>
+			<item key="7" value="*.js, *.txt, *java"/>
+			<item key="8" value="*.txt,*.js,*java"/>
+			<item key="9" value="*.txt,*.js"/>
+			<item key="10" value="*.draw.txt"/>
+		</section>
+		<section name="HISTORY11">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
@@ -178,7 +111,7 @@
 			<list key="workingSets">
 			</list>
 		</section>
-		<section name="HISTORY0">
+		<section name="HISTORY8">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
@@ -193,7 +126,7 @@
 			<list key="workingSets">
 			</list>
 		</section>
-		<section name="HISTORY1">
+		<section name="HISTORY9">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
@@ -204,6 +137,54 @@
 				<item value="*.txt"/>
 				<item value="*java"/>
 				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY2">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value=".lock"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY3">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value=".in_head_flag"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY0">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="mesh file not exist"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY1">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="head.gzip_text"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*java"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -260,5 +241,6 @@
 	<section name="">
 		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
 		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
+		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
 	</section>
 </section>

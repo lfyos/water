@@ -7,6 +7,7 @@ import kernel_engine.engine_kernel_link_list;
 import kernel_engine.system_parameter;
 import kernel_network.client_request_response;
 import kernel_part.part;
+import kernel_part.part_container_for_delete_part_file;
 import kernel_part.part_container_for_part_search;
 import kernel_part.part_loader_container;
 import kernel_render.render_container;
@@ -129,6 +130,7 @@ public class engine_interface
 	{
 		if(original_render==null){
 			int part_type_id=0;
+			part_container_for_delete_part_file part_cont_for_delete_file=new part_container_for_delete_part_file();
 			original_render=new render_container();
 			part_container_for_part_search pcps=new part_container_for_part_search(new part[]{});
 			original_render.load_shader(pcps,system_par.last_modified_time,
@@ -136,15 +138,19 @@ public class engine_interface
 					system_par.local_data_charset,"",part_type_id,
 					null,system_par,null,request_response);
 			pcps.execute_append();
-			original_render.load_part(1<<part_type_id,1,part_loader_cont,system_par,null,pcps,null,null,null);
+			original_render.load_part(1<<part_type_id,1,part_loader_cont,
+					system_par,null,pcps,null,null,null,part_cont_for_delete_file);
 			
 			original_render.create_bottom_box_part(pcps,request_response,system_par);
 			pcps.execute_append();
-			original_render.load_part(1<<part_type_id,2,part_loader_cont,system_par,null,pcps,null,null,null);
+			original_render.load_part(1<<part_type_id,2,part_loader_cont,
+					system_par,null,pcps,null,null,null,part_cont_for_delete_file);
 			
 			debug_information.println("Begin create system_part_package");
 			original_render.system_part_package=new part_package(null,null,original_render,part_type_id,system_par,null);
 			debug_information.println("End create system_part_package");
+			
+			part_cont_for_delete_file.delete_part_file(system_par,null);
 		}
 		
 		if(clear_expire_engine_kernel_routine(system_par))

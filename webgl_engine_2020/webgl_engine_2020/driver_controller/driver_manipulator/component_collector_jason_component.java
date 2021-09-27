@@ -1,6 +1,7 @@
 package driver_manipulator;
 
 import kernel_common_class.common_writer;
+import kernel_common_class.jason_string;
 import kernel_component.component_collector;
 import kernel_component.component_array;
 import kernel_engine.client_information;
@@ -14,16 +15,9 @@ public class component_collector_jason_component
 		for(int i=0,ni=comp_array.component_number;i<ni;i++) {
 			cw.println("	{");
 			
-			cw.println("		\"part_name\"		:	\"",
-					(comp_array.comp[i].part_name==null)?"\",":
-					(comp_array.comp[i].part_name.replace('\\','/').replace("\"","")+"\","));
-			
-			cw.println("		\"component_name\"	:	\"",
-				(comp_array.comp[i].component_name==null)?"\",":
-				(comp_array.comp[i].component_name.replace('\\','/').replace("\"","")+"\","));
-			
-			cw.println("		\"component_id\"		:	",
-				comp_array.comp[i].component_id+",");
+			cw.println("		\"part_name\"		:	",jason_string.change_string(comp_array.comp[i].part_name)+",");
+			cw.println("		\"component_name\"	:	",jason_string.change_string(comp_array.comp[i].component_name)+",");
+			cw.println("		\"component_id\"	:	",comp_array.comp[i].component_id+",");
 
 			cw.print("		\"relative_location\"	:	[");
 			double p[]=comp_array.comp[i].relative_location.get_location_data();

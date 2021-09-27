@@ -97,8 +97,9 @@ public class part_loader_container
 		debug_information.println("End wait_for_completion");
 		debug_information.println();
 	}
-	private part_loader[] load_routine(part my_part,part my_copy_from_part,
-			long last_modified_time,system_parameter system_par,scene_parameter scene_par,
+	private part_loader[] load_routine(
+			part my_part,part my_copy_from_part,long last_modified_time,
+			system_parameter system_par,scene_parameter scene_par,
 			part_loader already_loaded_part[],part_container_for_part_search pcps,
 			buffer_object_file_modify_time_and_length_container boftal_container)
 	{
@@ -189,24 +190,23 @@ public class part_loader_container
 							return true;
 						}
 					}
-		
-		String buffer_object_head_gzip_file_name=part_temporary_file_directory+"mesh.head.gzip_text";
-		long buffer_object_head_last_modify_time=new File(buffer_object_head_gzip_file_name).lastModified();
-		if(buffer_object_head_last_modify_time<=last_modified_time) 
+		String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
+		long boftal_last_modify_time=new File(boftal_file_name).lastModified();
+		if(boftal_last_modify_time<=last_modified_time) 
 			return false;
-		if(buffer_object_head_last_modify_time<=my_part.part_par.last_modified_time)
+		if(boftal_last_modify_time<=my_part.part_par.last_modified_time)
 			return false;
 		String cfp_mesh_file_name=my_copy_from_part.directory_name+my_copy_from_part.mesh_file_name;
-		if(buffer_object_head_last_modify_time<=new File(cfp_mesh_file_name).lastModified())
+		if(boftal_last_modify_time<=new File(cfp_mesh_file_name).lastModified())
 			return false;
 		String cfp_material_file_name=my_copy_from_part.directory_name+my_copy_from_part.material_file_name;
-		if(buffer_object_head_last_modify_time<=new File(cfp_material_file_name).lastModified())
+		if(boftal_last_modify_time<=new File(cfp_material_file_name).lastModified())
 			return false;
 		
 		my_part.boftal=null;
 		if(my_part.part_par.engine_boftal_flag)
 			if(boftal_container!=null)
-				if(buffer_object_head_last_modify_time<boftal_container.last_modify_time)
+				if(boftal_last_modify_time<boftal_container.last_modify_time)
 					my_part.boftal=boftal_container.search_boftal(part_temporary_file_directory);
 		
 		if(my_part.boftal==null) {
@@ -240,8 +240,8 @@ public class part_loader_container
 		return true;
 	}
 	
-	public part_loader[] load(part my_part,part my_copy_from_part,
-			long last_modified_time,system_parameter system_par,scene_parameter scene_par,
+	public part_loader[] load(part my_part,part my_copy_from_part,long last_modified_time,
+			system_parameter system_par,scene_parameter scene_par,part_container part_cont_for_delete_file,
 			part_loader already_loaded_part[],part_container_for_part_search pcps,
 			buffer_object_file_modify_time_and_length_container boftal_container)
 	{
@@ -259,8 +259,8 @@ public class part_loader_container
 		part_loader ret_val[]=already_loaded_part;
 		part_loader_container_lock.lock();
 		try{
-			ret_val=load_routine(my_part,my_copy_from_part,
-				last_modified_time,system_par,scene_par,already_loaded_part,pcps,boftal_container);
+			ret_val=load_routine(my_part,my_copy_from_part,last_modified_time,
+					system_par,scene_par,already_loaded_part,pcps,boftal_container);
 		}catch(Exception e) {
 			debug_information.println("load of part_loader_container fail");
 			debug_information.println(e.toString());
@@ -269,6 +269,8 @@ public class part_loader_container
 		part_loader_container_lock.unlock();
 		
 		efm.unlock();
+		
+		part_cont_for_delete_file.add_part(my_part);
 		
 		return ret_val;
 	}

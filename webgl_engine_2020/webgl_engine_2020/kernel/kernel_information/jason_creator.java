@@ -1,5 +1,6 @@
 package kernel_information;
 
+import kernel_common_class.jason_string;
 import kernel_network.client_request_response;
 
 public class jason_creator
@@ -11,13 +12,12 @@ public class jason_creator
 	public void print(String name,String value)
 	{
 		String str=(value==null)?"":value;
-		str=str.replace('\\','/').replace("\"","");
 		
 		if((number++)!=0)
 			out.println(",");
 		out.print  (tab_space,	"\"");
-		out.print  (name,		"\" : \"");
-		out.print  (str,		"\"");
+		out.print  (name,		"\" : ");
+		out.print  (jason_string.change_string(str));
 	}
 	public void print(String name,boolean value)
 	{
@@ -62,12 +62,7 @@ public class jason_creator
 		if(value!=null)
 			for(int i=0;i<value.length;i++) {
 				String str=(value[i]==null)?"":value[i];
-				str=str.replace('\\','/').replace("\"","");
-				if(i>0)
-					out.print(",\"");
-				else
-					out.print("\"");
-				out.print(str,"\"");
+				out.print((i>0)?",":"",jason_string.change_string(str));
 			}
 		out.print  ("]");
 	}
@@ -142,18 +137,11 @@ public class jason_creator
 		if(value!=null)
 			for(int i=0,ni=value.length;i<ni;i++){
 				out.print(tab_space,"		[");
-				
 				if(value[i]!=null)
 					for(int j=0,nj=value[i].length;j<nj;j++) {
 						String str=(value[i][j]==null)?"":value[i][j];
-						str=str.replace('\\','/').replace("\"","");
-						if(j>0)
-							out.print(",\"",str);
-						else
-							out.print("\"",str);
-						out.print("\"");
+						out.print((j>0)?",":"",jason_string.change_string(str));
 					}
-				
 				out.println((i<(ni-1))?"],":"]");
 			}
 		out.print(tab_space,"]");

@@ -1,26 +1,19 @@
 package driver_movement;
 
 import kernel_common_class.common_writer;
+import kernel_common_class.jason_string;
 
 public class movement_jason 
 {
-	private static String replace(String str)
-	{
-		if(str==null)
-			return null;
-		else
-			return str.replace('\\','/').replace('\r','\t').replace('\n','\t').replace('\"',' ');
-	}
-	
 	private static void create_jason(movement_tree t,common_writer cw,String space,String follow_string)
 	{
 		String child_space=space+"\t";
 		cw.println(space,"{");
 
-		cw.println(child_space+"\"movement_tree_id\"	:	",	t.movement_tree_id			+",");
-		cw.println(child_space+"\"node_name\"		:	\"",	replace(t.node_name)		+"\",");
-		cw.println(child_space+"\"description\"		:	\"",	replace(t.description)		+"\",");
-		cw.println(child_space+"\"sound_file_name\"	:	\"",	replace(t.sound_file_name)	+"\",");
+		cw.println(child_space+"\"movement_tree_id\"	:	",	t.movement_tree_id								+",");
+		cw.println(child_space+"\"node_name\"		:	",		jason_string.change_string(t.node_name)			+",");
+		cw.println(child_space+"\"description\"		:	",		jason_string.change_string(t.description)		+",");
+		cw.println(child_space+"\"sound_file_name\"	:	",		jason_string.change_string(t.sound_file_name)	+",");
 		cw.println(child_space+"\"sequence_flag\"		:	",	t.sequence_flag?"true,":"false,");
 		
 		cw.println(child_space+"\"time_length\"		:	",		(t.terminate_time-t.start_time)+",");
@@ -42,7 +35,8 @@ public class movement_jason
 			cw.println(child_space+"\"follow_component_name\"	:	[],");
 			cw.println(child_space+"\"follow_component_id\"	:	[],");
 		}else{
-			cw.println(child_space+"\"component_name\"	:	\"",	replace(t.move.moved_component_name)+"\",");
+			cw.println(child_space+"\"component_name\"	:	",
+					jason_string.change_string(t.move.moved_component_name)+",");
 			cw.println(child_space+"\"component_id\"		:	",	t.move.moved_component_id+",");
 			
 			cw.print  (child_space+"\"follow_component_name\"	:	[");

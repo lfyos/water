@@ -1,6 +1,7 @@
 package driver_manipulator;
 
 import kernel_common_class.change_name;
+import kernel_common_class.jason_string;
 import kernel_common_class.web_page;
 import kernel_component.component_collector;
 import kernel_component.component_link_list;
@@ -193,9 +194,8 @@ public class component_collector_web_page extends web_page
 				create_collector_list_item(language_change("top"),		"top",		i,true);
 				create_collector_list_item(language_change("delete"),	"delete",	i,true);
 				
-				out.print  ("<td><input type=\"text\" value=\"",
-					all_collector[i].title.replace('\\','/').replace("\"",""));
-				out.print  ("\" id=\"list_item_id_",i);
+				out.print  ("<td><input type=\"text\" value=",jason_string.change_string(all_collector[i].title));
+				out.print  (" id=\"list_item_id_",i);
 				out.print  ("\"	onchange=lfy_change_title(\"",component_request_url_header);
 				out.print  ("\",",all_collector[i].list_id);
 				out.print  (",\"list_item_id_",i);

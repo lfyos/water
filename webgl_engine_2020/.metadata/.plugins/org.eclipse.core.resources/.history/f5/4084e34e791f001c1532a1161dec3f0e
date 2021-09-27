@@ -1,0 +1,9 @@
+package kernel_part;
+
+public class part_container_for_delete_part_file extends part_container
+{
+	public part_container_for_delete_part_file()
+	{
+		
+	}
+}

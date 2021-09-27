@@ -6,6 +6,7 @@ import kernel_file_manager.file_directory;
 import kernel_file_manager.file_writer;
 import kernel_program_reader.program_file_reader;
 import kernel_render.render_container;
+import kernel_common_class.jason_string;
 import kernel_common_class.common_reader;
 import kernel_common_class.debug_information;
 import kernel_common_class.exclusive_file_mutex;
@@ -73,10 +74,8 @@ public class copy_program
 				program_str="";
 			}
 			program_str+=str+"\n";
-			program_str=program_str.replace("\n","\\n\\r").replace("\"","\\\"").replace("\r","\\n\\r");
-
-			fw.print  ("\"",program_str);
-			fw.println("\"",(j==(nj-1))?"":",");
+			
+			fw.println(jason_string.change_string(program_str),(j==(nj-1))?"":",");
 		}
 		fw.println("]");
 		fw.close();

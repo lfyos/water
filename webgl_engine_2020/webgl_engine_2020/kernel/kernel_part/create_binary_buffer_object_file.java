@@ -92,7 +92,9 @@ public class create_binary_buffer_object_file
 				String my_flag_file_name=root_file_name+file_type[i]+id_str+".in_head_flag";
 				if(!(new File(my_text_file_name).exists()))
 					break;
-				if(!(new File(my_flag_file_name).exists())){
+				if(new File(my_flag_file_name).exists())
+					file_writer.file_delete(my_flag_file_name);
+				else{
 					convert(my_text_file_name,my_source_charset,my_tmp_file_name);
 					compress_file_data.do_compress(new File(my_tmp_file_name),
 						new File(my_gzip_file_name),response_block_size,"gzip");

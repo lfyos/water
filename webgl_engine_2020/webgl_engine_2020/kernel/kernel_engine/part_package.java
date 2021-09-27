@@ -89,7 +89,8 @@ public class part_package
 					if(data_array[i].boftal==null)
 						debug_information.println("Find null boftal:	",
 								data_array[i].system_name+"	"+data_array[i].directory_name+data_array[i].mesh_file_name);
-					my_package_length+=data_array[i].boftal.buffer_object_head_length;
+					else
+						my_package_length+=data_array[i].boftal.buffer_object_head_length;
 					if(my_package_length<system_par.max_buffer_object_head_package_length)
 						if(i<(ni-1))
 							if(package_compare(data_array[i+0],data_array[i+1])==0)
@@ -139,9 +140,10 @@ public class part_package
 						if(process_bar!=null)
 							process_bar.set_process_bar((i<=0),process_bar_title,i,package_number);
 						if(part_package[i].length==1) {
+							part_package[i][0].part_par.combine_to_part_package_flag=false;
+							
 							String my_package_file_name=file_directory.part_file_directory(
 									part_package[i][0],system_par,scene_par)+"mesh.head.gzip_text";
-							
 							File f=new File(my_package_file_name);
 							package_length[i]=f.length();
 							package_last_time[i]=f.lastModified();
@@ -189,8 +191,9 @@ public class part_package
 								
 								String my_file_name=file_directory.part_file_directory(
 										part_package[i][k],system_par,scene_par)+"mesh.head.gzip_text";
-								compress_file_data.do_uncompress(new File(my_tmp_file_name),
-									new File(my_file_name),system_par.response_block_size,"gzip");
+								f=new File(my_file_name);
+								compress_file_data.do_uncompress(
+									new File(my_tmp_file_name),f,system_par.response_block_size,"gzip");
 								fw.print_file(my_tmp_file_name).println((k<(nk-1))?",":"");
 								long my_file_length=new File(my_tmp_file_name).length();
 	
@@ -198,7 +201,6 @@ public class part_package
 								list_file_writer.print  ("		",part_package[i][k].user_name);
 								list_file_writer.print  ("		",my_file_length);
 								list_file_writer.println("		",my_file_name);
-	
 							}
 							
 							fw.println("]");

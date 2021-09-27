@@ -18,7 +18,6 @@ import kernel_part.part_container_for_part_search;
 import kernel_transformation.box;
 import kernel_transformation.location;
 import kernel_transformation.point;
-import kernel_common_class.exclusive_file_mutex;
 
 public class extended_part_driver extends part_driver
 {
@@ -119,21 +118,14 @@ public class extended_part_driver extends part_driver
 	{
 		return 0;
 	}
-	private String get_file_text(String file_name,String file_charset)
-	{
-		exclusive_file_mutex efm=exclusive_file_mutex.lock(file_name+".lock","error:"+file_name);
-		String ret_val=file_reader.get_text(file_name,file_charset);
-		efm.unlock();
-		return ret_val;
-	}
 	public part_rude create_part_mesh_and_buffer_object_head(part p,
 			file_writer buffer_object_file_writer,part_container_for_part_search pcps,
 			system_parameter system_par,scene_parameter scene_par)
 	{
 		if(buffer_object_file_writer!=null) {
 			buffer_object_file_writer.println("		{");
-			buffer_object_file_writer.println(get_file_text(light_file_name,light_file_charset));
-			buffer_object_file_writer.println(get_file_text(p.directory_name+p.material_file_name,p.file_charset));
+			buffer_object_file_writer.println(file_reader.get_text(light_file_name,light_file_charset));
+			buffer_object_file_writer.println(file_reader.get_text(p.directory_name+p.material_file_name,p.file_charset));
 			buffer_object_file_writer.println("		}");
 		}
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);

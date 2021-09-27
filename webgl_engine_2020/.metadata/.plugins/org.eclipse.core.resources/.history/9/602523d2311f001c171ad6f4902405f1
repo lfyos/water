@@ -1,0 +1,27 @@
+package kernel_part;
+
+import java.io.File;
+
+import kernel_common_class.string_link_list;
+
+public class part_file_delete_container 
+{
+	private string_link_list sll;
+	
+	public part_file_delete_container()
+	{
+		sll=null;
+	}
+	public void append(String file_name)
+	{
+		sll=new string_link_list(file_name,sll);
+	}
+	public void do_file_delete()
+	{
+		File f;
+		for(string_link_list p=sll;p!=null;p=p.next_list)
+			if((f=new File(p.str)).exists())
+				f.delete();
+		
+	}
+}

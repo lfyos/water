@@ -8,6 +8,7 @@ import kernel_engine.client_information;
 import kernel_file_manager.file_directory;
 
 import kernel_common_class.debug_information;
+import kernel_common_class.jason_string;
 
 public class dispatch_create_engine_request
 {
@@ -115,9 +116,10 @@ public class dispatch_create_engine_request
 		ci.request_response.print("]");
 			
 		ci.request_response.print(",\"",	ek.link_name);			//parameter	3	4
-		ci.request_response.print("\",\"",	ek.title+ek.scene_par.scene_sub_directory.replace('\\','/'));	//parameter	2	6
+		ci.request_response.print("\",",	jason_string.change_string(
+				ek.title+ek.scene_par.scene_sub_directory));		//parameter	2	6
 	
-		ci.request_response.print("\",{");							//parameter	3	5
+		ci.request_response.print(",{");							//parameter	3	5
 			
 		ci.request_response.print( "\"max_loading_number\":",
 			ci.creation_parameter.max_client_loading_number);
@@ -131,9 +133,7 @@ public class dispatch_create_engine_request
 		ci.request_response.print("}");
 		ci.request_response.print("],\"");
 
-		String initialization_url;
-		initialization_url =ek.scene_par.scene_proxy_directory_name;
-		initialization_url+=ek.scene_par.proxy_initialization_file_name;
+		String initialization_url=ek.scene_par.scene_proxy_directory_name+ek.scene_par.proxy_initialization_file_name;
 		if((initialization_url=ci.get_file_proxy_url(initialization_url,ek.system_par))==null)
 			initialization_url=ci.get_request_url_header()+"&command=initialization";
 		ci.request_response.print(initialization_url,"\"");	//parameter	4   last

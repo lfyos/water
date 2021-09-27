@@ -2,6 +2,7 @@ package kernel_engine;
 
 import java.io.File;
 
+import kernel_common_class.jason_string;
 import kernel_common_class.compress_file_data;
 import kernel_common_class.debug_information;
 import kernel_component.component;
@@ -17,11 +18,7 @@ import kernel_driver.component_driver;
 public class engine_initialization
 {
 	private component sort_component_array[];
-	private String change_str(String str)
-	{
-		str=str.replace("\\","\\\\").replace("\n","\\n\\r").replace("\"","\\\"").replace("\r","\\n\\r");
-		return "\""+str+"\"";
-	}
+	
 	public engine_initialization(engine_kernel ek,
 			client_request_response request_response,client_process_bar process_bar)
 	{
@@ -167,7 +164,7 @@ public class engine_initialization
 		for(int i=0;i<number;i++){
 			process_bar.set_process_bar(false,"file_initialization_1",i, number);
 			
-			fw.print("\t[",change_str(sort_component_array[i].component_name));
+			fw.print("\t[",jason_string.change_string(sort_component_array[i].component_name));
 			fw.print(",",sort_component_array[i].component_id);
 			fw.print(",[");
 			
@@ -232,8 +229,10 @@ public class engine_initialization
 					fw.println(",");
 				fw.println("\t{");
 				
-				fw.println("\t\tcomponent_id			:	",init_comp[i].component_id+",");
-				fw.print  ("\t\tcomponent_name			:	",change_str(init_comp[i].component_name)+",");
+				fw.println("\t\tcomponent_id			:	",
+						init_comp[i].component_id+",");
+				fw.print  ("\t\tcomponent_name			:	",
+						jason_string.change_string(init_comp[i].component_name)+",");
 				fw.println("\t\tinitialization_function	:	");
 				fw.println(my_program_text);
 				
