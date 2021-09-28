@@ -21,8 +21,6 @@ public class scene_parameter
 	public String change_part_file_name,change_component_file_name,mount_component_file_name;
 	public String type_string_file_name;
 	
-	public String proxy_initialization_file_name;
-	
 	public String inserted_component_name,inserted_part_name;
 	public int inserted_component_and_part_id,max_child_number;
 	
@@ -169,11 +167,6 @@ public class scene_parameter
 		extra_directory_name=f.directory_name;
 		extra_parameter_charset=f.get_charset();
 
-		if((proxy_initialization_file_name=f.get_string())==null)
-			proxy_initialization_file_name="";
-		else
-			proxy_initialization_file_name=file_reader.separator(proxy_initialization_file_name);
-		
 		if((inserted_component_name=f.get_string())==null)
 			inserted_component_name="";
 		if((inserted_part_name=f.get_string())==null)

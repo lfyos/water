@@ -2,12 +2,14 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="light"/>
+		<item key="selection" value="proxy_initialization_file_name"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="proxy_initialization_file_name"/>
+			<item value="synchronize_location_flag"/>
 			<item value="light"/>
 			<item value="render_pass_number"/>
 			<item value="my_region_data"/>
@@ -21,8 +23,6 @@
 			<item value="vertex_array_object_test"/>
 			<item value="gl"/>
 			<item value="buffer_object_data"/>
-			<item value="+get_client_id()"/>
-			<item value=".do_render"/>
 		</list>
 		<list key="replacehistory">
 			<item value="vertex_array_object[0]"/>

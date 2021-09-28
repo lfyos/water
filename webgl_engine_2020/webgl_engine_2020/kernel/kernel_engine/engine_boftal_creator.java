@@ -5,6 +5,7 @@ import java.io.FileWriter;
 
 import kernel_render.render;
 import kernel_part.part;
+import kernel_common_class.debug_information;
 import kernel_common_class.sorter;
 import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
@@ -33,6 +34,8 @@ public class engine_boftal_creator extends sorter <part,String>
 		system_par=my_system_par;
 		scene_par=my_scene_par;
 		
+		debug_information.println("Create engine boftal file: test.....");
+		
 		part p;
 		String str;
 		int number=0;
@@ -51,8 +54,12 @@ public class engine_boftal_creator extends sorter <part,String>
 									should_not_create_flag=false;
 								break;
 							}
-		if(should_not_create_flag)
+		if(should_not_create_flag) {
+			debug_information.println("Test engine boftal file end, unnecessary to create new file.");
 			return;
+		}
+		
+		debug_information.println("Create engine boftal file: create .....");
 		
 		process_bar.set_process_bar(true, "create_buffer_object_file", 0, number);
 		
@@ -75,7 +82,6 @@ public class engine_boftal_creator extends sorter <part,String>
 		
 		int cut_directory_length=system_par.proxy_par.proxy_data_root_directory_name.length();
 		file_writer fw=new  file_writer(file_name,file_charset);
-		
 		fw.println(number);
 		
 		for(int i=0;i<number;i++) {
@@ -90,6 +96,7 @@ public class engine_boftal_creator extends sorter <part,String>
 				if((str=fr.get_string())!=null)
 					fw.println(str);
 			fr.close();
+			fw.println();
 						
 			if(scene_par!=null)
 				if(scene_par.scene_fast_load_flag)
@@ -97,24 +104,24 @@ public class engine_boftal_creator extends sorter <part,String>
 						if(data_array[i].part_par.free_part_memory_flag)
 							switch(data_array[i].part_type_id){
 							case 2:
-								File f=new File(boftal_file_name);
-								long t=f.lastModified();
-								try{
-									if(f.exists())
+								File f;
+								if((f=new File(boftal_file_name)).length()>0){
+									long t=f.lastModified();
+									try{
 										new FileWriter(boftal_file_name).close();
-									else
-										f.createNewFile();
-								}catch(Exception e) {
-									;
+									}catch(Exception e) {
+										;
+									}
+									f.setLastModified(t);
 								}
-								f.setLastModified(t);
 								break;
 							}
-			fw.println();
 		}
 		
 		fw.close();
 		
 		process_bar.set_process_bar(false, "create_buffer_object_file",number,number);
+		
+		debug_information.println("Create engine boftal file: finished");
 	}
 }

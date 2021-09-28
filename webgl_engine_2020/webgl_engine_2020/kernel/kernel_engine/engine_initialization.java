@@ -103,10 +103,7 @@ public class engine_initialization
 	
 	private void file_initialize(engine_kernel ek,client_process_bar process_bar)
 	{
-		String destination_file_name;
-		destination_file_name =ek.scene_par.scene_proxy_directory_name;
-		destination_file_name+=ek.scene_par.proxy_initialization_file_name;
-		
+		String destination_file_name=ek.scene_par.scene_proxy_directory_name+"initialization.gzip_text";
 		long my_last_time,last_time=ek.get_file_last_modified_time();
 
 		int collect_init_comp_number=0;

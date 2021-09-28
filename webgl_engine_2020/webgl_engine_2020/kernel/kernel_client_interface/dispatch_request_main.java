@@ -29,8 +29,10 @@ public class dispatch_request_main
 			return null;
 		case "initialization":
 			ci.statistics_client.register_system_call_execute_number(1,0);
-			str=ek.scene_par.scene_proxy_directory_name+ek.scene_par.proxy_initialization_file_name;
-			return new String[] {str,ek.system_par.network_data_charset};
+			return new String[] {
+				ek.scene_par.scene_proxy_directory_name+"initialization.gzip_text",
+				ek.system_par.network_data_charset
+			};
 		case "buffer":
 			str=dispatch_buffer_request.do_dispatch(3,ek,ci);
 			return (str==null)?null:(new String[] {str,ek.system_par.local_data_charset});

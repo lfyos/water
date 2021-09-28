@@ -31,8 +31,6 @@ public class scene_parameter_information extends jason_creator
 		print("change_component_file_name",					sp.change_component_file_name);
 		print("type_string_file_name",						sp.type_string_file_name);
 		
-		print("proxy_initialization_file_name",				sp.proxy_initialization_file_name);
-		
 		print("inserted_component_name",					sp.inserted_component_name);
 		print("inserted_part_name",							sp.inserted_part_name);
 		print("inserted_component_and_part_id",				sp.inserted_component_and_part_id);

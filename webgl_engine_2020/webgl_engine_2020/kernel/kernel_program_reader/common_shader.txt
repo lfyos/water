@@ -26,7 +26,7 @@ uniform system_information
 	
 	int canvas_width;
 	int canvas_height;
-	
+
 }system_info;
 
 uniform target_information 

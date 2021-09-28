@@ -1,5 +1,3 @@
-/*	initialization_file_name					*/		proxy_initialization.gzip_text
-
 /*	inserted_component_name						*/		inserted_component_name
 /*	inserted_part_name							*/		inserted_part_name
 /*	max_child_number							*/		16

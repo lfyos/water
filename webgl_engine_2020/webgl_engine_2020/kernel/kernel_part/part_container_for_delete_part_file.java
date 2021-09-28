@@ -13,6 +13,9 @@ public class part_container_for_delete_part_file extends part_container
 	{
 		File f;
 		for(part_link_list pll=get_part_list();pll!=null;pll=pll.next) {
+			if(pll.p.part_par==null)
+				continue;
+			
 			String clear_file_name_array[]=new String[]
 			{
 				pll.p.mesh_file_name,
@@ -24,6 +27,7 @@ public class part_container_for_delete_part_file extends part_container
 				pll.p.mesh_file_name+".edge",
 				pll.p.mesh_file_name+".edge.gzip"
 			};
+
 			for(int i=0,ni=clear_file_name_array.length;i<ni;i++) {
 				if(pll.p.part_par.clear_model_file_flag[i])
 					if(clear_file_name_array[i]!=null){
@@ -32,7 +36,7 @@ public class part_container_for_delete_part_file extends part_container
 							f.delete();
 					}
 			}
-			
+
 			if((pll.p.part_par.clear_buffer_head_file_flag)&&(pll.p.part_par.combine_to_part_package_flag)){
 				String part_temporary_file_directory=file_directory.part_file_directory(pll.p,system_par,scene_par);
 				String file_name=part_temporary_file_directory+"mesh.head.gzip_text";
