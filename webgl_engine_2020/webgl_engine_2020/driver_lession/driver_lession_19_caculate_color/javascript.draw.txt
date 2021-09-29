@@ -9,7 +9,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			render_buffer_id,	component_data_array,	project_matrix,			do_render_number,	render)
 {
 	var gl								=render.gl;
-	var shader_program					=render.render_program.render_program[render_id].shader_program;
+	var shader_object					=render.render_program.render_program[render_id];
+	var shader_program					=shader_object.shader_program;
 	var part_buffer_object				=render.buffer_object.buffer_object[render_id][part_id];
 	
 	var component_location				=render.component_location_data;

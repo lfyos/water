@@ -3,12 +3,13 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 	this.camera_object_parameter=new Array();
 	for(var i=0,n=camera_component_id.length;i<n;i++){
 		this.camera_object_parameter[i]=new Object();
-		this.camera_object_parameter[i].component_id	=camera_component_id[i];
-		this.camera_object_parameter[i].distance		=1.0;
-		this.camera_object_parameter[i].half_fovy_tanl	=1.0;
-		this.camera_object_parameter[i].near_value_ratio=0.10;
-		this.camera_object_parameter[i].far_value_ratio	=10.0;
-		this.camera_object_parameter[i].projection_type_flag=true;
+		this.camera_object_parameter[i].component_id		=camera_component_id[i];
+		this.camera_object_parameter[i].distance			=1.0;
+		this.camera_object_parameter[i].half_fovy_tanl		=1.0;
+		this.camera_object_parameter[i].near_value_ratio	=0.10;
+		this.camera_object_parameter[i].far_value_ratio		=10.0;
+		this.camera_object_parameter[i].projection_type_flag=false;
+		this.camera_object_parameter[i].light_camera_flag	=false;
 	}
 	
 	this.camera_render_parameter=new Array();
@@ -55,6 +56,9 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 				break;
 			case 4:
 				this.camera_object_parameter[camera_id].projection_type_flag=(parameter_value>0.5)?true:false;
+				break;
+			case 5:
+				this.camera_object_parameter[camera_id].light_camera_flag=(parameter_value>0.5)?true:false;
 				break;
 			}
 		}

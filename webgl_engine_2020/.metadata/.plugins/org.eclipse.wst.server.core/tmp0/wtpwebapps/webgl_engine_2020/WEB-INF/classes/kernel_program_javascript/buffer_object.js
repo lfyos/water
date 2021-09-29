@@ -26,7 +26,7 @@ function construct_buffer_object(my_gl,my_parameter)
 			if(typeof(this.buffer_object[render_id])!="object")
 				continue;
 			if(typeof(this.buffer_object[render_id].destroy)=="function"){
-				this.buffer_object[render_id].destroy(this.buffer_object[render_id],this,render_id);
+				this.buffer_object[render_id].destroy(this.gl,this.buffer_object[render_id],render_id);
 				this.buffer_object[render_id].destroy=null;
 			}
 			var part_number=this.buffer_object[render_id].length;
@@ -35,8 +35,8 @@ function construct_buffer_object(my_gl,my_parameter)
 					continue;
 				
 				if(typeof(this.buffer_object[render_id][part_id].destroy)=="function"){
-					this.buffer_object[render_id][part_id].destroy(
-						this.buffer_object[render_id][part_id],this,render_id,part_id);
+					this.buffer_object[render_id][part_id].destroy(this.gl,
+						this.buffer_object[render_id][part_id],render_id,part_id);
 					this.buffer_object[render_id][part_id].destroy=null;
 				}
 				
@@ -49,7 +49,7 @@ function construct_buffer_object(my_gl,my_parameter)
 				for(var i=0,ni=p.length;i<ni;i++){
 					if(p[i].region_data!=null){
 						if(typeof(p[i].destroy)=="function"){
-							p[i].destroy(p[i],this,render_id,part_id,i);
+							p[i].destroy(this.gl,p[i],render_id,part_id,i);
 							p[i].destroy=null;
 						}
 						for(var j=0,nj=p[i].region_data.length;j<nj;j++){
@@ -59,8 +59,8 @@ function construct_buffer_object(my_gl,my_parameter)
 								continue;
 							
 							if(typeof(p[i].region_data[j].destroy)=="function"){
-								p[i].region_data[j].destroy(
-									p[i].region_data[j],this,render_id,part_id,i,j);
+								p[i].region_data[j].destroy(this.gl,
+									p[i].region_data[j],render_id,part_id,i,j);
 								p[i].region_data[j].destroy=null;
 							}
 							

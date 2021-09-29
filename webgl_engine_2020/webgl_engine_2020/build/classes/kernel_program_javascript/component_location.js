@@ -36,7 +36,7 @@ function construct_component_location_object(component_number,my_computer,my_gl)
 	{
 		for(var i=0;i<this.component_number;i++){
 			if(typeof(this.component[i].destroy)=="function"){
-				this.component[i].destroy(this.component[i],this,i);
+				this.component[i].destroy(this.gl,this.component[i],this,i);
 				this.component[i].destroy=null;
 			}
 			this.component[i].absolute_location	=null;
@@ -179,6 +179,7 @@ function construct_component_location_object(component_number,my_computer,my_gl)
 			return [1,	0,	0,	0,		0,	1,	0,	0,		0,	0,	1,	0,		0,	0,	0,	1];
 		
 		if(this.component[component_id].uniform_block_modify_flag){
+			this.component[component_id].uniform_block_modify_flag=false;
 			if(this.component_buffer_object[component_id]!=null)
 				this.gl.bindBuffer(this.gl.UNIFORM_BUFFER,this.component_buffer_object[component_id]);
 			else{
@@ -187,8 +188,9 @@ function construct_component_location_object(component_number,my_computer,my_gl)
 				this.gl.bufferData(this.gl.UNIFORM_BUFFER,128,this.gl.DYNAMIC_DRAW);
 				this.gl.bufferSubData(this.gl.UNIFORM_BUFFER,64,new Int32Array([component_id]),0);
 			}
+			if(loca.length>16)
+				loca.length=16;
 			this.gl.bufferSubData(this.gl.UNIFORM_BUFFER,0,new Float32Array(loca),0);
-			this.component[component_id].uniform_block_modify_flag=false;
 		}
 		this.gl.bindBufferBase(this.gl.UNIFORM_BUFFER,
 			this.component_bind_point_id,this.component_buffer_object[component_id]);

@@ -10,9 +10,7 @@ public class test_1 extends travel_through_directory
 	{
 		String str=file_reader.get_text(file_name, "GBK");
 		if(str!=null) {
-			if(str.indexOf("parameter.yzx.txt")>=0)
-				debug_information.println(file_name);
-			else if(str.indexOf("parameter.zyx.txt")>=0)
+			if(str.indexOf("append_routine_function")>=0)
 				debug_information.println(file_name);
 		}
 	}

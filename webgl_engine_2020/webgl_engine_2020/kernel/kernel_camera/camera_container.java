@@ -37,6 +37,7 @@ public class camera_container
 			boolean change_type_flag			=f.get_boolean();
 			double scale_value					=f.get_double();
 			boolean synchronize_location_flag	=f.get_boolean();
+			boolean light_camera_flag			=f.get_boolean();
 			String component_name				=f.get_string();
 
 			if(component_name==null)
@@ -58,7 +59,7 @@ public class camera_container
 						scale_value,switch_time_length,distance,
 						half_fovy_tanl,half_fovy_tanl,near_value_ratio,far_value_ratio,
 						projection_type_flag,low_precision_scale,high_precision_scale,
-						synchronize_location_flag);
+						synchronize_location_flag,light_camera_flag);
 				camera_array[camera_array.length-1]=new camera(
 						eye_component,cam_par,max_camera_stack_number);
 			}

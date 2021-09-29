@@ -14,7 +14,9 @@ function construct_program_object(my_gl,my_parameter)
 				continue;
 			
 			if(typeof(this.render_program[program_id].destroy)=="function"){
-				this.render_program[program_id].destroy(this.render_program[program_id],this,program_id);
+				this.render_program[program_id].destroy(this.gl,
+						this.render_program[program_id].shader_program,
+						this.render_program[program_id],program_id);
 				this.render_program[program_id].destroy=null;
 			}
 			
@@ -89,8 +91,8 @@ function construct_program_object(my_gl,my_parameter)
 	    
 	    var system_index_id		=this.gl.getUniformBlockIndex(my_shader_program,"system_information");
     	var target_index_id		=this.gl.getUniformBlockIndex(my_shader_program,"target_information");
-    	var pass_index_id		=this.gl.getUniformBlockIndex(my_shader_program,"pass_information")
-    	var component_index_id	=this.gl.getUniformBlockIndex(my_shader_program,"component_information")
+    	var pass_index_id		=this.gl.getUniformBlockIndex(my_shader_program,"pass_information");
+    	var component_index_id	=this.gl.getUniformBlockIndex(my_shader_program,"component_information");
     	
     	var max_uniform_buffer_bindings=this.gl.getParameter(this.gl.MAX_UNIFORM_BUFFER_BINDINGS);
     	

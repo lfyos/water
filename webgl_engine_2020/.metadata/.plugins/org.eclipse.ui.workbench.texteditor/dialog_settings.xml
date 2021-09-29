@@ -2,29 +2,31 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="proxy_initialization_file_name"/>
+		<item key="selection" value="shader_program"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
-			<item value="proxy_initialization_file_name"/>
-			<item value="synchronize_location_flag"/>
-			<item value="light"/>
-			<item value="render_pass_number"/>
-			<item value="my_region_data"/>
-			<item value="material_id"/>
-			<item value="process_buffer_object_data"/>
-			<item value="save_data_into_buffer_object"/>
-			<item value="vertex_array_object"/>
-			<item value="create_vertex_array"/>
-			<item value="p."/>
-			<item value="token_place_array"/>
-			<item value="vertex_array_object_test"/>
-			<item value="gl"/>
-			<item value="buffer_object_data"/>
+			<item value="shader_program"/>
+			<item value="destroy"/>
+			<item value="material_info"/>
+			<item value="scale_vector"/>
+			<item value="transparency_value"/>
+			<item value="color_alfa"/>
+			<item value="flag"/>
+			<item value="to_light_value"/>
+			<item value="light_info"/>
+			<item value="uniform_block"/>
+			<item value="if(response_all_camera_data_flag||"/>
+			<item value="append_routine_function"/>
+			<item value="catch"/>
+			<item value="length"/>
+			<item value="target_buffer_object_stride"/>
 		</list>
 		<list key="replacehistory">
+			<item value="transparency_value"/>
+			<item value="if"/>
 			<item value="vertex_array_object[0]"/>
 			<item value="vertex_array_object"/>
 			<item value="+client_id"/>
@@ -38,15 +40,13 @@
 			<item value="display_component_root"/>
 			<item value="removeEventListener"/>
 			<item value="client"/>
-			<item value=","/>
-			<item value="processs_bar_object.show_process_bar_function=null"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item key="DIALOG_WIDTH" value="335"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="1516"/>
-		<item key="DIALOG_Y_ORIGIN" value="496"/>
+		<item key="DIALOG_X_ORIGIN" value="1369"/>
+		<item key="DIALOG_Y_ORIGIN" value="140"/>
 	</section>
 </section>

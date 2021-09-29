@@ -12,17 +12,20 @@ public class extended_instance_driver extends instance_driver
 {
 	private int close_clip_plane_number;
 	private long display_bitmap[];
-	private component_parameter parameter;
+	private double transparency_value;
+	private boolean effective_selected_flag;
+	
 	public void destroy()
 	{
 		super.destroy();
 		display_bitmap=null;
+		transparency_value=-1;
+		effective_selected_flag=false;
 	}
-	public extended_instance_driver(component my_comp,int my_driver_id,component_parameter my_parameter)
+	public extended_instance_driver(component my_comp,int my_driver_id)
 	{
 		super(my_comp,my_driver_id);
 		display_bitmap=new long[0];
-		parameter=my_parameter;
 	}
 	public void response_init_data(engine_kernel ek,client_information ci)
 	{
@@ -44,11 +47,11 @@ public class extended_instance_driver extends instance_driver
 			update_component_render_version(render_buffer_id,0);
 		}
 		
-		if(	  (parameter.effective_selected_flag^comp.uniparameter.effective_selected_flag) 
-			||(parameter.transparency_value!=comp.uniparameter.transparency_value))
+		if(	  (effective_selected_flag^comp.uniparameter.effective_selected_flag) 
+			||(transparency_value!=comp.uniparameter.transparency_value))
 		{
-			parameter.effective_selected_flag=comp.uniparameter.effective_selected_flag;
-			parameter.transparency_value=comp.uniparameter.transparency_value;
+			effective_selected_flag=comp.uniparameter.effective_selected_flag;
+			transparency_value=comp.uniparameter.transparency_value;
 			comp.driver_array[driver_id].update_component_parameter_version();
 		}
 		if(comp.clip.close_clip_plane_number!=close_clip_plane_number){
@@ -67,13 +70,9 @@ public class extended_instance_driver extends instance_driver
 	{
 		ci.request_response.
 			print  ("[",comp.component_id).
-			print  (",",parameter.transparency_value).
+			print  (",",transparency_value).
 			print  (",",close_clip_plane_number).
-			print  (",",parameter.effective_selected_flag?"1":"0").
-			print  (",[",parameter.x_scale).
-			print  (",",parameter.y_scale).
-			print  (",",parameter.z_scale).
-			println(",1]]");
+			print  (effective_selected_flag?",1]":",0]");
 	}
 	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
 	{

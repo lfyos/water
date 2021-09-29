@@ -13,7 +13,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			render_buffer_id,	component_data_array,	project_matrix,			do_render_number,	render)
 {
 	var gl								=render.gl;
-	var shader_program					=render.render_program.render_program[render_id].shader_program;
+	var shader_object					=render.render_program.render_program[render_id];
+	var shader_program					=shader_object.shader_program;
 	var part_buffer_object				=render.buffer_object.buffer_object[render_id][part_id];
 	
 	var component_location				=render.component_location_data;
@@ -57,7 +58,6 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			var transparency_value		=data_buffer[buffer_id][0][1];
 			var close_clip_plane_number	=data_buffer[buffer_id][0][2];
 			var selected_flag			=data_buffer[buffer_id][0][3];
-			var scale_vector			=data_buffer[buffer_id][0][4];
 			
 			var discard_flag=false;
 			
@@ -98,12 +98,10 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			}
 			var model_matrix_data=component_location.get_component_location(component_id);
 			
-			gl.uniform4f(shader_program.scale_vector_uniform,
-				scale_vector[0],scale_vector[1],scale_vector[2],transparency_value);
+			gl.uniform1f(shader_program.transparency_value_uniform,transparency_value);
 
 			for(var j=0;j<render_pass_number;j++){
-				gl.uniform1i(shader_program.flag_uniform,
-					(selected_flag?1:0)		+((j!=0)?2:0)	+(discard_flag?4:0));
+				gl.uniform1i(shader_program.flag_uniform,(selected_flag?1:0)+((j!=0)?2:0)+(discard_flag?4:0));
 				
 				if(render_pass_number>1){
 					gl.enable(gl.STENCIL_TEST);
@@ -131,16 +129,22 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 	if(do_render_number.engine_render==0){
 		shader_program.light_information_uniform_block_buffer_object=gl.createBuffer();
 		gl.bindBuffer(gl.UNIFORM_BUFFER,shader_program.light_information_uniform_block_buffer_object);
-		gl.bufferData(gl.UNIFORM_BUFFER,part_material[0].light.length*32,gl.DYNAMIC_DRAW);
-
+		gl.bufferData(gl.UNIFORM_BUFFER,new Float32Array(part_material[0].light),gl.STATIC_DRAW);
 		gl.uniformBlockBinding(shader_program,gl.getUniformBlockIndex(shader_program,"light_information"),0);
 		gl.bindBufferBase(gl.UNIFORM_BUFFER,0,shader_program.light_information_uniform_block_buffer_object);
 		
 		gl.uniformBlockBinding(shader_program,gl.getUniformBlockIndex(shader_program,"material_information"),1);
 		
-		shader_program.scale_vector_uniform	=gl.getUniformLocation(shader_program,"scale_vector");
-		shader_program.flag_uniform=gl.getUniformLocation(shader_program,"flag");
+		shader_program.transparency_value_uniform	=gl.getUniformLocation(shader_program,"transparency_value");
+		shader_program.flag_uniform					=gl.getUniformLocation(shader_program,"flag");
+		
+		shader_object.destroy=function(gl,shader_program,shader_object,program_id)
+		{
+			gl.deleteBuffer(shader_program.light_information_uniform_block_buffer_object);
+			alert("delete program:"+program_id);
+		}
 	}
+	
 	if(do_render_number.engine_part==0){
 		for(var i=0,ni=part_material[0].material.length;i<ni;i++){
 			var p=part_material[0].material[i],buffer_data=new Array();
@@ -155,19 +159,11 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			gl.bindBuffer(gl.UNIFORM_BUFFER,p.buffer_object);
 			gl.bufferData(gl.UNIFORM_BUFFER,new Float32Array(buffer_data),gl.STATIC_DRAW);
 		}
-	}
-	if(do_render_number.render_render==0){
-		var light=part_material[0].light,light_data=new Array(),color_data=new Array();
-		for(var i=0,ni=light.length;i<ni;i++){
-			var light_component_id	=camera_object_parameter[light[i].camera_id].component_id;
-			var light_distance		=camera_object_parameter[light[i].camera_id].distance;
-			var light_matrix		=component_location.get_component_location_routine(light_component_id);
-			var light_position		=computer.caculate_coordinate(light_matrix,0,0,light_distance);
-			light_data.push(light_position[0],			light_position[1],			light_position[2],			light_position[3]);
-			color_data.push(light[i].color_factor[0],	light[i].color_factor[1],	light[i].color_factor[2],	light[i].color_factor[3]);
-		}	
-		gl.bindBuffer(gl.UNIFORM_BUFFER,shader_program.light_information_uniform_block_buffer_object);
-		gl.bufferSubData(gl.UNIFORM_BUFFER,0,new Float32Array(light_data.concat(color_data)),0);
+		part_buffer_object.destroy=function(gl,part_buffer_object,render_id,part_id)
+		{
+			for(var i=0,ni=part_material[0].material.length;i<ni;i++)
+				gl.deleteBuffer(part_material[0].material[i].buffer_object);
+		}
 	}
 
 	switch(method_id){

@@ -1,9 +1,6 @@
 
 uniform system_information
 {
-	float pickup_depth;
-	float pickup_value;
-	
 	int pickup_component_id;
 	int pickup_render_id;
 	int pickup_part_id;
@@ -26,6 +23,13 @@ uniform system_information
 	
 	int canvas_width;
 	int canvas_height;
+	
+	float pickup_depth;
+	float pickup_value;
+	
+	float tmp_0,tmp_1;
+	
+	vec4 light_position[8];
 
 }system_info;
 

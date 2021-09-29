@@ -400,41 +400,23 @@ function construct_render_routine(my_process_bar_id,my_gl,
 				last_render_id=render_id;
 				this.gl.useProgram(shader_program);
 			};
+			
 			this.gl.bindVertexArray(null);
-		    try{
-		    	draw_function(
-		    		method_id,  			pass_id,			parameter_channel_id,
-		    		render_id,				part_id,			render_buffer_id,
-		    		component_render_data,	project_matrix,
-		    		{
-		    			engine_render	:	(this.engine_do_render_number[render_id].render_do_render_number)++,
-		    			engine_part		:	(this.engine_do_render_number[render_id].part_do_render_number[part_id])++,
+			
+		    draw_function(
+		    	method_id,  			pass_id,			parameter_channel_id,
+		    	render_id,				part_id,			render_buffer_id,
+		    	component_render_data,	project_matrix,
+		    	{
+		    		engine_render	:	(this.engine_do_render_number[render_id].render_do_render_number)++,
+		    		engine_part		:	(this.engine_do_render_number[render_id].part_do_render_number[part_id])++,
 			    		
-		    			render_render	:	(render_do_render_number[render_id].render_do_render_number)++,
-		    			render_part		:	(render_do_render_number[render_id].part_do_render_number[part_id])++,
+		    		render_render	:	(render_do_render_number[render_id].render_do_render_number)++,
+		    		render_part		:	(render_do_render_number[render_id].part_do_render_number[part_id])++,
 			    		
-		    			pass_render		:	(pass_do_render_number[render_id].render_do_render_number)++,
-		    			pass_part		:	(pass_do_render_number[render_id].part_do_render_number[part_id])++
-		    		},this);
-		    }catch(e){
-		    	var part_info=this.part_information[render_id][part_id];
-		    	if(!(part_info.find_error_flag)){
-			   		var err_msg;
-			   		part_info.find_error_flag=true;
-			   		err_msg =  "part system name:"	+part_info.information.system_name;
-			   		err_msg+="\npart user   name:"	+part_info.information.user_name;
-			   		err_msg+="\nmesh file   name:"	+part_info.information.mesh_file;
-			   		err_msg+="\nmaterial file name:"+part_info.information.material_file;
-			   		
-			   		if(this.parameter.debug_mode_flag){
-			   			alert("method_id:"+method_id.toString()+",driver fail:"+e.toString());
-			   			alert(err_msg);
-			   		}else{
-			   			console.log("method_id:"+method_id.toString()+",driver fail:"+e.toString());
-			   			console.log(err_msg);
-			   		};
-		    	};
-		    };
+		    		pass_render		:	(pass_do_render_number[render_id].render_do_render_number)++,
+		    		pass_part		:	(pass_do_render_number[render_id].part_do_render_number[part_id])++
+		    	},this);
 		};
 	};
 	this.render_routine=function()
@@ -442,12 +424,12 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		if(typeof(this.render_data)=="undefined")
 			return;
 
-		this.gl.depthRange(0.0,1.0);
-		this.uniform_block.bind_system(this.pickup,
-				this.current_time,this.canvas.width,this.canvas.height);
-		
 		var render_do_render_number=new Array();
-		
+		this.uniform_block.bind_system(
+				this.pickup,this.current_time,this.canvas.width,this.canvas.height,
+				this.camera.camera_object_parameter,this.component_location_data,this.computer);
+		this.gl.depthRange(0.0,1.0);
+
 		for(var i=0,ni=this.render_data.length,draw_buffer_id=0;i<ni;i++){
 			var render_buffer_id	=this.render_data[i][0];
 			var target_id			=this.render_data[i][1];
@@ -504,10 +486,8 @@ function construct_render_routine(my_process_bar_id,my_gl,
 				};
 				render_framebuffer=null;
 			};
-			this.uniform_block.bind_target(project_matrix,
-					this.clip_plane_array[render_buffer_id],
-					this.clip_plane_matrix_array[render_buffer_id],
-					width,height,this_draw_buffer_id);
+			this.uniform_block.bind_target(project_matrix,this.clip_plane_array[render_buffer_id],
+					this.clip_plane_matrix_array[render_buffer_id],width,height,this_draw_buffer_id);
 			this.viewport			=new Object();
 			this.viewport.width		=width;
 			this.viewport.height	=height;
@@ -516,18 +496,8 @@ function construct_render_routine(my_process_bar_id,my_gl,
 			if((target_id>=0)&&(target_id<(this.target_processor.length)))
 				if(typeof(this.target_processor[target_id])=="object")
 					if(typeof(this.target_processor[target_id].before_target_render)=="function")
-						try{
-							this.target_processor[target_id].before_target_render(
+						this.target_processor[target_id].before_target_render(
 									target_id,render_target_id,width,height,render_target_number,this);
-						}catch(e){
-							if(this.parameter.debug_mode_flag){
-								alert("Execute before_target_render error,target id is "+target_id.toString());
-								alert(e.toString());
-							}else{
-								console.log("Execute before_target_render error,target id is "+target_id.toString());
-								console.log(e.toString());
-							};
-						};
 
 			var render_list=this.component_render_data.get_render_list(render_buffer_id);
 			var pass_do_render_number=new Array();
@@ -576,18 +546,8 @@ function construct_render_routine(my_process_bar_id,my_gl,
 			if((target_id>=0)&&(target_id<(this.target_processor.length)))
 				if(typeof(this.target_processor[target_id])=="object")
 					if(typeof(this.target_processor[target_id].after_target_render)=="function")
-						try{
-							this.target_processor[target_id].after_target_render(
+						this.target_processor[target_id].after_target_render(
 									target_id,render_target_id,width,height,render_target_number,this);
-						}catch(e){
-							if(this.parameter.debug_mode_flag){
-								alert("Execute after_target_render error,target id is "+target_id.toString());
-								alert(e.toString());
-							}else{
-								console.log("Execute after_target_render error,target id is "+target_id.toString());
-								console.log(e.toString());
-							};
-						};
 		};
 		this.gl.bindFramebuffer(this.gl.FRAMEBUFFER,null);
 		this.do_execute_render_number++;
@@ -744,39 +704,19 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		};
 		return true;
 	};
-	this.append_routine_function=function(my_routine_function,my_routine_id)
+	this.append_routine_function=function(my_routine_function)
 	{
-		try{
-			my_routine_id=my_routine_id.toString();
-		}catch(e){
-			my_routine_id="undefined_routine_id";
-		}
-		this.routine_array.push(
-				{
-					routine_id			:	my_routine_id.toString(),
-					routine_function	:	my_routine_function
-				});
+		this.routine_array.push(my_routine_function);
 		return this.routine_array.length-1;
 	};
 	this.process_routine_function=function()
 	{
 		var fun_array=this.routine_array;
 		this.routine_array=new Array();
-		
 		for(var i=0,ni=fun_array.length;i<ni;i++)
-			if(typeof(fun_array[i].routine_function)=="function")
-				try{
-					if(fun_array[i].routine_function(this))
-						this.routine_array.push(fun_array[i]);
-				}catch(e){
-					if(this.parameter.debug_mode_flag){
-						alert("Processing routine Array error,ID is "+fun_array[i].routine_id.toString());
-						alert(e.toString());
-					}else{
-						console.log("Processing routine Array error,ID is "+fun_array[i].routine_id.toString());
-						console.log(e.toString());
-					}
-				}
+			if(typeof(fun_array[i])=="function")
+				if(fun_array[i](this))
+					this.routine_array.push(fun_array[i]);
 	};
 	this.do_render=function(my_render_interval_length)
 	{
@@ -975,25 +915,13 @@ function construct_render_routine(my_process_bar_id,my_gl,
 				cur.current.calling_server_number--;
 
 				if(my_ajax.status!=200){
-					if(typeof(error_function)=="function"){
-						try{
-							error_function(0,cur);
-						}catch(e){
-							if(cur.parameter.debug_mode_flag){
-								alert("this.call_server:my_ajax.status!=200:error_function exception	"+my_ajax.status);
-								alert(e.toString());
-							}else{
-								console.log("this.call_server:my_ajax.status!=200:error_function exception	"+my_ajax.status);
-								console.log(e.toString());
-							}
-						}
-					}else if(cur.parameter.debug_mode_flag){
-						alert("this.call_server:my_ajax.status!=200:no error_function:	"+my_ajax.status);
-					}else{
-						console.log("this.call_server:my_ajax.status!=200:no error_function:	"+my_ajax.status);
-					};
+					if(typeof(error_function)=="function")
+						error_function(0,cur);
 					return;
 				};
+				
+				if(typeof(response_function)!="function")
+					return;
 				
 				var response_data;
 				switch(response_type_string){
@@ -1009,56 +937,15 @@ function construct_render_routine(my_process_bar_id,my_gl,
 					break;
 				};
 				
-				if(typeof(response_function)=="function"){
-					try{
-						response_function(response_data,cur);
-					}catch(e){
-						if(typeof(error_function)=="function"){
-							try{
-								error_function(1,cur,e,response_data);
-							}catch(e){
-								if(cur.parameter.debug_mode_flag){
-									alert("this.call_server:response_function exception:error_function exception	"+my_ajax.status);
-									alert(e.toString());
-								}else{
-									console.log("this.call_server:response_function exception:error_function exception	"+my_ajax.status);
-									console.log(e.toString());
-								}
-							}
-						}else if(cur.parameter.debug_mode_flag){
-							alert("this.call_server:response_function exception	"+my_ajax.responseText);
-							alert(e.toString());
-						}else{
-							console.log("this.call_server:response_function exception	"+my_ajax.responseText);
-							console.log(e.toString());
-						}
-					}
-				}
+				response_function(response_data,cur);
 				return;
 			};
 			my_ajax.open("GET",request_string,true);
 			my_ajax.send(upload_data);
 			this.current.calling_server_number++;
 		}catch(e){
-			if(typeof(error_function)=="function"){
-				try{
-					error_function(2,this,e,request_string);
-				}catch(e){
-					if(cur.parameter.debug_mode_flag){
-						alert("this.call_server:ajax fail:error_function exception	"+my_ajax.status);
-						alert(e.toString());
-					}else{
-						console.log("this.call_server:ajax fail:error_function exception	"+my_ajax.status);
-						console.log(e.toString());
-					}
-				};
-			}else if(cur.parameter.debug_mode_flag){
-				alert("this.call_server:ajax fail:	"+my_ajax.responseText);
-				alert(e.toString());
-			}else{
-				console.log("this.call_server:ajax fail:	"+my_ajax.responseText);
-				console.log(e.toString());
-			}
+			if(typeof(error_function)=="function")
+				error_function(1,this,e,request_string);
 		};
 	};
 	this.create_part_request_string=function(render_id_or_part_name,part_id_or_driver_id,part_parameter)
@@ -1143,7 +1030,6 @@ function construct_render_routine(my_process_bar_id,my_gl,
 
 				if(typeof(component_object)=="boolean")
 					return component_object?false:true;
-				
 				var event_component_id=component_object.component_id;
 				if((event_component_id<0)||(event_component_id>=(render.component_event_processor.length)))
 					return false;
@@ -1152,109 +1038,38 @@ function construct_render_routine(my_process_bar_id,my_gl,
 					return false;
 				if(cep==null)
 					return false;
-				if(typeof(cep.set_event_component)!="function")
-					return false;
-				try{
+				if(typeof(cep.set_event_component)=="function")
 					cep.set_event_component(event_component_id,render);
-     			}catch(e){
-     				if(render.parameter.debug_mode_flag){
-     					alert("Execute set_event_component processor error,component id is "+event_component_id.toString());
-     					alert(e.toString());
-     				}else{
-     					console.log("Execute set_event_component processor error,component id is "+event_component_id.toString());
-     					console.log(e.toString());
-     				};
-     			};
 				return false;
-			},"render.set_event_component() error"
-		);
+			});
 	};
 	this.upload_string=function(str_content,str_url,complete_function,error_function)
 	{
 		if(this.terminate_flag)
 			return;
-		
 		try{
 			var my_ajax=new XMLHttpRequest(),cur=this;
-
 			my_ajax.onreadystatechange=function()
 			{
 				if(my_ajax.readyState!=4)
 					return;
-				
 				if(cur.terminate_flag)
 					return;
-				
 				if(my_ajax.status!=200){
-					if(typeof(error_function)=="function"){
-						try{
-							error_function(0,cur);
-						}catch(e){
-							if(cur.parameter.debug_mode_flag){
-								alert("this.upload_string:my_ajax.status!=200:error_function exception	"+my_ajax.status);
-								alert(e.toString());
-							}else{
-								console.log("this.upload_string:my_ajax.status!=200:error_function exception	"+my_ajax.status);
-								console.log(e.toString());
-							}
-						};
-					}else if(cur.parameter.debug_mode_flag){
-						alert("this.upload_string:my_ajax.status!=200	"+my_ajax.status);
-						alert(e.toString());
-					}else{
-						console.log("this.upload_string:my_ajax.status!=200	"+my_ajax.status);
-						console.log(e.toString());
-					}
+					if(typeof(error_function)=="function")
+						error_function(0,cur);
 					return;
 				}
-				
-				if(typeof(complete_function)=="function"){
-					try{
-						complete_function(cur,my_ajax.responseText);
-					}catch(e){
-						if(typeof(error_function)=="function"){
-							try{
-								error_function(1,cur,e,my_ajax.responseText);
-							}catch(e){
-								if(cur.parameter.debug_mode_flag){
-									alert("this.upload_string:complete_function exception:error_function exception	"+my_ajax.status);
-									alert(e.toString());
-								}else{
-									console.log("this.upload_string:complete_function exception:error_function exception	"+my_ajax.status);
-									console.log(e.toString());
-								}
-							};
-						}else if(cur.parameter.debug_mode_flag){
-							alert("this.upload_string:complete_function exception	"+my_ajax.responseText);
-							alert(e.toString());
-						}else{
-							console.log("this.upload_string:complete_function exception	"+my_ajax.responseText);
-							console.log(e.toString());
-						}
-					}
-				}
+				if(typeof(complete_function)=="function")
+					complete_function(cur,my_ajax.responseText);
 			};
 			my_ajax.open("POST",str_url,true);
 			my_ajax.setRequestHeader("Content-type","text/plain");
 			my_ajax.send(str_content);
 			return true;
 		}catch(e){
-			if(typeof(error_function)=="function"){
-				try{
-					error_function(2,this,e,str_url);
-				}catch(e){
-					if(cur.parameter.debug_mode_flag){
-						alert("upload_string fail:error_function exception	"+my_ajax.status);
-						alert(e.toString());
-					}else{
-						console.log("upload_string fail:error_function exception	"+my_ajax.status);
-						console.log(e.toString());
-					}
-				};
-			}else if(cur.parameter.debug_mode_flag)
-				alert("upload_string fail!"+e.toString());
-			else
-				console.log("upload_string fail!"+e.toString());	
+			if(typeof(error_function)=="function")
+				error_function(2,this,e,str_url);
 			return false;
 		};
 	};
@@ -1264,84 +1079,27 @@ function construct_render_routine(my_process_bar_id,my_gl,
 			return;
 		try{
 			var my_ajax=new XMLHttpRequest(),cur=this;
-
 			my_ajax.onreadystatechange=function()
 			{
-				if(my_ajax.readyState!=4)
-					return;
-				
 				if(cur.terminate_flag)
 					return;
-				
+				if(my_ajax.readyState!=4)
+					return;
 				if(my_ajax.status!=200){
-					if(typeof(error_function)=="function"){
-						try{
-							error_function(0,cur);
-						}catch(e){
-							if(cur.parameter.debug_mode_flag){
-								alert("this.upload_canvas_image:my_ajax.status!=200:error_function exception	"+my_ajax.status);
-								alert(e.toString());
-							}else{
-								console.log("this.upload_canvas_image:my_ajax.status!=200:error_function exception	"+my_ajax.status);
-								console.log(e.toString());
-							}
-						};
-					}else if(cur.parameter.debug_mode_flag){
-						alert("this.upload_canvas_image:my_ajax.status!=200	"+my_ajax.status);
-						alert(e.toString());
-					}else{
-						console.log("this.upload_canvas_image:my_ajax.status!=200	"+my_ajax.status);
-						console.log(e.toString());
-					}
+					if(typeof(error_function)=="function")
+						error_function(0,cur);
 					return;
 				}
-				if(typeof(complete_function)=="function"){
-					try{
-						complete_function(cur,my_ajax.responseText);
-					}catch(e){
-						if(typeof(error_function)=="function"){
-							try{
-								error_function(1,cur,e,my_ajax.responseText);
-							}catch(e){
-								if(cur.parameter.debug_mode_flag){
-									alert("this.upload_canvas_image:complete_function exception:error_function exception	"+my_ajax.status);
-									alert(e.toString());
-								}else{
-									console.log("this.upload_canvas_image:complete_function exception:error_function exception	"+my_ajax.status);
-									console.log(e.toString());
-								}
-							}
-						}else if(cur.parameter.debug_mode_flag){
-							alert("this.upload_canvas_image:complete_function exception	"+my_ajax.responseText);
-							alert(e.toString());
-						}else{
-							console.log("this.upload_canvas_image:complete_function exception	"+my_ajax.responseText);
-							console.log(e.toString());
-						}
-					}
-				}
+				if(typeof(complete_function)=="function")
+					complete_function(cur,my_ajax.responseText);
 			};
 			my_ajax.open("POST",png_url,true);
 			my_ajax.setRequestHeader("Content-type","image/png");
 			my_ajax.send(uploaded_canvas.toDataURL());
 			return true;
 		}catch(e){
-			if(typeof(error_function)=="function"){
-				try{
-					error_function(2,this,e,png_url);
-				}catch(e){
-					if(cur.parameter.debug_mode_flag){
-						alert("upload_canvas_image fail:error_function exception	"+my_ajax.status);
-						alert(e.toString());
-					}else{
-						console.log("upload_canvas_image fail:error_function exception	"+my_ajax.status);
-						console.log(e.toString());
-					}
-				};
-			}else if(cur.parameter.debug_mode_flag)
-				alert("upload_canvas_image fail!"+e.toString());
-			else
-				console.log("upload_canvas_image fail!"+e.toString());
+			if(typeof(error_function)=="function")
+				error_function(2,this,e,png_url);
 			return false;
 		};
 	};

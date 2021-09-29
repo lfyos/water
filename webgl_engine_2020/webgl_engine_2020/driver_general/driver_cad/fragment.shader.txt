@@ -1,4 +1,4 @@
-uniform vec4  scale_vector;
+uniform float  transparency_value;
 uniform int   flag;
 
 in vec4 frag_position,frag_material,frag_id,frag_texture,frag_color;
@@ -49,33 +49,32 @@ void main(void)
 			frag_data[3]=code_float(gl_FragCoord.z*2.0-1.0);
 		}
 	}else{
-		float color_alfa=scale_vector.w;
 		if(my_frag_type==0)
-			frag_data[0]=vec4(frag_color.rgb,color_alfa);
+			frag_data[0]=vec4(frag_color.rgb,transparency_value);
 		else if(my_frag_type==1){
-			frag_data[0]=vec4(0.0,0.0,0.0,color_alfa);
+			frag_data[0]=vec4(0.0,0.0,0.0,transparency_value);
 			if(system_info.pickup_component_id==my_component_id)
 				if(system_info.pickup_body_id==my_body_id)
 					if(system_info.pickup_face_id==my_face_id){
 						gl_FragDepth-=0.001;
-						frag_data[0]=vec4(0.0,0.0,1.0,color_alfa);
+						frag_data[0]=vec4(0.0,0.0,1.0,transparency_value);
 					}
 		}else if(my_frag_type==2){
-			frag_data[0]=vec4(1.0,1.0,0.0,color_alfa);
+			frag_data[0]=vec4(1.0,1.0,0.0,transparency_value);
 			if(system_info.pickup_component_id==my_component_id)
 				if(system_info.pickup_body_id==my_body_id)
 					if(system_info.pickup_face_id==my_face_id){
 						gl_FragDepth-=0.001;
-						frag_data[0]=vec4(0.0,1.0,0.0,color_alfa);
+						frag_data[0]=vec4(0.0,1.0,0.0,transparency_value);
 						if(system_info.pickup_loop_id==my_loop_id)
 							if(system_info.pickup_edge_id==my_edge_id)
 								if(system_info.pickup_point_id==my_point_id){
 									gl_FragDepth-=0.001;
-									frag_data[0]=vec4(1.0,0.0,0.0,color_alfa);
+									frag_data[0]=vec4(1.0,0.0,0.0,transparency_value);
 								}
 					}
 		}else
-			frag_data[0]=vec4(0.2,0.2,0.2,color_alfa);
+			frag_data[0]=vec4(0.2,0.2,0.2,transparency_value);
 	}
 }
 

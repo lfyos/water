@@ -48,20 +48,15 @@ function construct_uniform_block_object(my_gl)
 		
 	};
 	
-	this.bind_system=function(pickup,current_time,canvas_width,canvas_height)
+	this.bind_system=function(pickup,current_time,canvas_width,canvas_height,
+			camera_object_parameter,component_location,computer)
 	{
 		var t=current_time;
 		var nanosecond=t%1000;		t=Math.floor((t-nanosecond)/1000);
 		var microsecond=t%1000;		t=Math.floor((t-microsecond)/1000);
 		var da=new Date();			da.setTime(t);
-		
-		var float_data=[
-			pickup.depth,
-			pickup.value
-		];
-		
-		var int_data=[
 
+		var int_data=[
 			pickup.component_id,
 			pickup.render_id,
 			pickup.part_id,
@@ -86,10 +81,25 @@ function construct_uniform_block_object(my_gl)
 			canvas_width,
 			canvas_height
 		];
-		this.gl.bindBuffer		(this.gl.UNIFORM_BUFFER,this.system_buffer_object	);
-		this.gl.bufferSubData	(this.gl.UNIFORM_BUFFER,0,					 		new Float32Array(float_data),0);
-		this.gl.bufferSubData	(this.gl.UNIFORM_BUFFER,float_data.length*4,		new Int32Array	(int_data),	 0);
-//		this.gl.bindBufferBase	(this.gl.UNIFORM_BUFFER,this.system_bind_point_id,	this.system_buffer_object);
+		
+		var float_data=[
+			pickup.depth,
+			pickup.value,
+			0,0
+		];
+		
+		for(var i=0,ni=camera_object_parameter.length;i<ni;i++)
+			if(camera_object_parameter[i].light_camera_flag){
+				var light_component_id	=camera_object_parameter[i].component_id;
+				var light_distance		=camera_object_parameter[i].distance;
+				var light_matrix		=component_location.get_component_location_routine(light_component_id);
+				var light_position		=computer.caculate_coordinate(light_matrix,0,0,light_distance);
+				float_data.push(light_position[0],light_position[1],light_position[2],light_position[3]);
+			}
+		
+		this.gl.bindBuffer		(this.gl.UNIFORM_BUFFER,this.system_buffer_object);
+		this.gl.bufferSubData	(this.gl.UNIFORM_BUFFER,0,					new Int32Array(int_data),	0);
+		this.gl.bufferSubData	(this.gl.UNIFORM_BUFFER,int_data.length*4,	new Float32Array(float_data),0);
 	};
 	
 	this.get_target_project_matrix=function(target_id)
@@ -215,6 +225,6 @@ function construct_uniform_block_object(my_gl)
 		this.gl.bindBuffer		(this.gl.UNIFORM_BUFFER,this.pass_buffer_object	);
 		this.gl.bufferSubData	(this.gl.UNIFORM_BUFFER,0,					 	new Float32Array(float_data),0);
 		this.gl.bufferSubData	(this.gl.UNIFORM_BUFFER,float_data.length*4,	new Int32Array(int_data),	 0);
-//		this.gl.bindBufferBase	(this.gl.UNIFORM_BUFFER,this.pass_bind_point_id,this.pass_buffer_object);
+
 	};
 }

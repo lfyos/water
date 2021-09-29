@@ -1,0 +1,156 @@
+
+uniform system_information
+{
+	int pickup_component_id;
+	int pickup_render_id;
+	int pickup_part_id;
+	int pickup_body_id;
+	int pickup_face_id;
+	int pickup_vertex_id;
+	int pickup_loop_id;
+	int pickup_edge_id;
+	int pickup_point_id;
+
+	int year;
+	int month;
+	int day;
+	int hour;
+	int minute;
+	int second;
+	int millisecond;
+	int microsecond;
+	int nanosecond;
+	
+	int canvas_width;
+	int canvas_height;
+	
+	float pickup_depth;
+	float pickup_value;
+	
+	float tmp_0,tmp_1;
+	
+	vec4 light_position[4];
+
+}system_info;
+
+uniform target_information 
+{
+	mat4 projection_matrix;
+	mat4 negative_projection_matrix;
+	mat4 other_projection_matrix;
+	mat4 other_negative_projection_matrix;
+	mat4 screen_move_matrix;
+	mat4 lookat_matrix;
+	mat4 negative_lookat_matrix;
+	mat4 camera_location;
+	mat4 clip_plane_matrix;
+
+	vec4 left_plane;
+	vec4 right_plane;
+	vec4 up_plane;
+	vec4 down_plane;
+	vec4 near_plane;
+	vec4 far_plane;
+	vec4 center_plane;
+	
+	vec4 clip_plane;
+	
+	vec4 original_far_center_point;
+	vec4 original_center_point;
+	vec4 original_near_center_point;
+	vec4 original_eye_point;
+		
+	vec4 far_center_point;
+	vec4 center_point;
+	vec4 near_center_point;
+	vec4 eye_point;
+
+	vec4 left_down_near_point;
+	vec4 left_up_near_point;
+	vec4 right_down_near_point;
+	vec4 right_up_near_point;
+	
+	vec4 left_down_center_point;
+	vec4 left_up_center_point;
+	vec4 right_down_center_point;
+	vec4 right_up_center_point;
+	
+	vec4 left_down_far_point;
+	vec4 left_up_far_point;
+	vec4 right_down_far_point;
+	vec4 right_up_far_point;
+
+	float target_aspect_value;
+	float half_fovy_tanl;
+	float near_value_ratio;
+	float far_value_ratio;
+			
+	float distance;
+	float near_value;
+	float far_value;
+	float center_point_depth;
+	
+	int projection_type_flag;
+
+	int target_width;
+	int target_height;
+	int draw_buffer_id;
+
+}target_info;
+
+uniform pass_information 
+{
+	vec4	clear_color;
+	int		method_id;
+	int		pass_id;
+	int		clear_flag;
+	ivec4	viewport;
+}pass_info;
+
+uniform component_information 
+{
+	mat4	model_matrix;
+	int		component_id;
+}component_info;
+
+vec4 code_integer(int my_id)
+{
+	float step	=128.0;
+	float dlt	=0.25;
+	float color	=float(my_id+1)+dlt;
+	
+	float red_color,green_color,blue_color,alf_color;
+	
+	color=color/step;		red_color	=fract(color);		color=floor(color)+dlt;
+	color=color/step;		green_color	=fract(color);		color=floor(color)+dlt;
+	color=color/step;		blue_color	=fract(color);		color=floor(color)+dlt;
+	color=color/step;		alf_color	=fract(color);		color=floor(color)+dlt;
+
+	return vec4(red_color/2.0,green_color/2.0,blue_color/2.0,alf_color/2.0);
+}
+
+vec4 code_float(float value)
+{
+	float red_color,green_color,blue_color,alf_color;
+	
+	value=(value<-1.0)?-1.0:(value>1.0)?1.0:value;	
+	value=(value+1.0)/2.0;
+	
+	value=128.0*value;
+	red_color=(floor(value)+0.01)/256.0;
+	value=fract(value);
+	
+	value=128.0*value;
+	green_color=(floor(value)+0.01)/256.0;
+	value=fract(value);
+	
+	value=128.0*value;
+	blue_color=(floor(value)+0.01)/256.0;
+	value=fract(value);
+	
+	value=128.0*value;
+	alf_color=(floor(value)+0.01)/256.0;
+	value=fract(value);
+	
+	return vec4(red_color,green_color,blue_color,alf_color);
+}

@@ -66,8 +66,7 @@ function body_onload()
 							render.debug_call_processor.reload_control_panel();
 						}
 						return true;
-					},"init in draw.jsp"
-				);
+					});
 			
 			document.getElementById("my_processor_bar").setAttribute("hidden",true);
 			document.getElementById("my_canvas").		removeAttribute("hidden");
@@ -112,7 +111,7 @@ function body_onload()
 			canvas_2d_context.fillStyle		="rgb(255,0,0)";
 			canvas_2d_context.fillText(
 					process_bar_caption+":"+display_value,
-					canvas.width/2.0, canvas.height/2.0);
+					canvas.width/2.0,canvas.height/2.0);
 
 			return true;
 		}

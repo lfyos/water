@@ -108,8 +108,7 @@ function construct_render_utility(my_render_instance)
 	    			texture_object.image.src=my_src;
 	    			cur.buffer_object.current_loading_mesh_number++;
 					return false;
-	    		},"wait loading texture image!"
-	    );
+	    		});
 	    texture_object.state="waiting";
 		return texture_object;
 	};
