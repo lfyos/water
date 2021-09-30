@@ -16,8 +16,7 @@ void main(void)
 	int my_edge_id		=int(round(frag_texture.y));
 	int my_point_id		=my_vertex_id;
 	
-	bool clip_flag		=((flag&1)!=0)?true:false;
-	bool discard_flag	=((flag&2)!=0)?true:false;
+	bool clip_flag		=((flag&1024)!=0)?true:false;
 	
 	gl_FragDepth=gl_FragCoord.z;
 
@@ -28,11 +27,6 @@ void main(void)
 		if(dot(target_info.clip_plane,frag_position)>0.0)
 			discard;
 	}
-	
-	if(discard_flag)
-		if(system_info.pickup_component_id==my_component_id)
-			if((system_info.pickup_body_id!=my_body_id)||(system_info.pickup_face_id!=my_face_id))
-				discard;
 
 	switch(my_frag_type){
 	case 0://face
@@ -40,35 +34,47 @@ void main(void)
 		break;
 	case 1://line
 		frag_data[0]=vec4(0.0,0.0,0.0,transparency_value);
-		if(system_info.pickup_component_id==my_component_id)
-			if(system_info.pickup_body_id==my_body_id)
-				if(system_info.pickup_face_id==my_face_id){
-					gl_FragDepth-=0.001;
-					frag_data[0]=vec4(0.0,0.0,1.0,transparency_value);
-				}
-		break;
-	case 2://point
-		frag_data[0]=vec4(1.0,1.0,0.0,transparency_value);
-		if(system_info.pickup_component_id==my_component_id)
-			if(system_info.pickup_body_id==my_body_id)
+		if(system_info.pickup_component_id==my_component_id){
+			frag_data[0]=vec4(0.0,0.0,1.0,transparency_value);
+			if(system_info.pickup_body_id==my_body_id){
+				frag_data[0]=vec4(0.0,0.5,0.5,transparency_value);
 				if(system_info.pickup_face_id==my_face_id){
 					gl_FragDepth-=0.001;
 					frag_data[0]=vec4(0.0,1.0,0.0,transparency_value);
-					if(system_info.pickup_loop_id==my_loop_id)
-						if(system_info.pickup_edge_id==my_edge_id)
+				}
+			}
+		}
+		break;
+	case 2://point
+		if(distance(gl_PointCoord,vec2(0.5,0.5))>0.5)
+			discard;
+		frag_data[0]=vec4(1.0,1.0,0.0,transparency_value);
+		if(system_info.pickup_component_id==my_component_id){
+			frag_data[0]=vec4(0.0,0.0,1.0,transparency_value);
+			if(system_info.pickup_body_id==my_body_id){
+				frag_data[0]=vec4(0.0,0.5,0.5,transparency_value);
+				if(system_info.pickup_face_id==my_face_id){
+					gl_FragDepth-=0.001;
+					frag_data[0]=vec4(0.0,1.0,0.0,transparency_value);
+					if(system_info.pickup_loop_id==my_loop_id){
+						frag_data[0]=vec4(0.35,0.65,0.0,transparency_value);
+						if(system_info.pickup_edge_id==my_edge_id){
+							frag_data[0]=vec4(0.65,0.35,0.0,transparency_value);
 							if(system_info.pickup_point_id==my_point_id){
 								gl_FragDepth-=0.001;
 								frag_data[0]=vec4(1.0,0.0,0.0,transparency_value);
 							}
+						}
+					}			
 				}
-		if(distance(gl_PointCoord,vec2(0.5,0.5))>0.5)
-			discard;
+			}
+		}
 		break;
-	default://wrong type
+	default://frame
 		frag_data[0]=vec4(0.2,0.2,0.2,transparency_value);
 		break;
 	}
-	
+
 	if(pass_info.method_id==1){
 		if(pass_info.pass_id==0){
 			frag_data[0]=code_integer(my_component_id);
