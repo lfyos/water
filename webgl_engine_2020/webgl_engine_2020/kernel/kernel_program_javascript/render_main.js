@@ -53,13 +53,10 @@ function render_initialization(initialization_url,my_render,user_initialization_
 		{
 			if(my_ajax.readyState!=4)
 				return;
-			
 			if(render.terminate_flag)
 				return;
-			
 			if(my_ajax.status!=200){
 				processs_bar_object.show_process_bar_function=null;
-				
 				if(render.parameter.debug_mode_flag){
 					alert("Loading system_initialization_function response status error: "+my_ajax.status.toString());
 					alert(initialization_url);
@@ -70,21 +67,7 @@ function render_initialization(initialization_url,my_render,user_initialization_
 				return;
 			};
 			
-			var response_data;
-			try{
-				response_data=eval(my_ajax.responseText);
-			}catch(e){
-				processs_bar_object.show_process_bar_function=null;
-				
-				if(render.parameter.debug_mode_flag){
-					alert("Parse response_fun_array error: "+e.toString());
-					alert(my_ajax.responseText);
-				}else{
-					console.log("Parse response_fun_array error: "+e.toString());
-					console.log(my_ajax.responseText);
-				};
-				return;
-			};
+			var response_data					=eval(my_ajax.responseText);
 			var sorted_component_name_id		=response_data[0];
 			var	part_component_id_and_driver_id	=response_data[1];
 			var response_fun_array				=response_data[2];
@@ -144,12 +127,11 @@ function render_initialization(initialization_url,my_render,user_initialization_
 		my_ajax.send(null);
 	}catch(e){
 		processs_bar_object.show_process_bar_function=null;
-		
 		if(render.parameter.debug_mode_flag){
-			alert("Loading system_initialization_function fail: "+e.toString());
+			alert("render_initialization fail: "+e.toString());
 			alert(initialization_url);
 		}else{
-			console.log("Loading system_initialization_function fail: "+e.toString());
+			console.log("render_initialization fail: "+e.toString());
 			console.log(initialization_url);
 		}
 	};
@@ -212,7 +194,6 @@ function request_create_engine(create_engine_sleep_time_length_scale,
 			
 			if(my_ajax.status!=200){
 				processs_bar_object.show_process_bar_function=null;
-				
 				alert("Initialization response status error: "+my_ajax.status.toString());
 				return;
 			};
@@ -255,9 +236,7 @@ function request_create_engine(create_engine_sleep_time_length_scale,
 		my_ajax.send(null);
 	}catch(e){
 		processs_bar_object.show_process_bar_function=null;
-		
-		alert("System Initialization fail!");
-		alert(my_ajax.responseText);
+		alert("request_create_engine fail!");
 		alert(e.toString());
 	};
 }
@@ -282,7 +261,6 @@ function render_show_process_bar(process_bar_url,processs_bar_object)
 		{
 			if(my_ajax.readyState!=4)
 				return;
-			
 			if(my_ajax.status!=200)
 				return;
 			var response_data;
@@ -299,16 +277,16 @@ function render_show_process_bar(process_bar_url,processs_bar_object)
 						response_data.id))
 					if(processs_bar_object.show_process_bar_interval>0)
 						setTimeout(
-								function()
-								{
-									render_show_process_bar(process_bar_url,processs_bar_object);
-								},
-								processs_bar_object.show_process_bar_interval);
+							function()
+							{
+								render_show_process_bar(process_bar_url,processs_bar_object);
+							},processs_bar_object.show_process_bar_interval);
 		};
 		my_ajax.open("GET",process_bar_url+"&process_bar="+processs_bar_object.process_bar_id,true);
 		my_ajax.send(null);
 	}catch(e){
-		;
+		alert("render_show_process_bar fail!");
+		alert(e.toString());
 	};
 }
 
@@ -363,22 +341,11 @@ function render_main(create_engine_sleep_time_length_scale,
 		{
 			if(my_ajax.readyState!=4)
 				return;
-			
 			if(my_ajax.status!=200){
 				alert("Create process bar response status error: "+my_ajax.status.toString());
 				return;
 			};
-			try{
-				processs_bar_object.process_bar_id=JSON.parse(my_ajax.responseText);
-			}catch(e){
-				alert("Create process bar JSON.parse error:  "+e.toString());
-				alert(my_ajax.responseText);
-				return;
-			}
-			if(typeof(processs_bar_object.process_bar_id)!="number"){
-				alert("Create process bar :  process bar id is NOT number	:	"+processs_bar_object.process_bar_id);
-				return;
-			}
+			processs_bar_object.process_bar_id=JSON.parse(my_ajax.responseText);
 			render_show_process_bar(process_bar_url,processs_bar_object);
 			request_create_engine(create_engine_sleep_time_length_scale,
 				create_engine_sleep_time_length,create_engine_max_sleep_time_length,
@@ -390,7 +357,6 @@ function render_main(create_engine_sleep_time_length_scale,
 		my_ajax.send(null);
 	}catch(e){
 		alert("System Initialization fail!");
-		alert(my_ajax.responseText);
 		alert(e.toString());
 	};
 };

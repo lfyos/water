@@ -26,7 +26,6 @@ uniform system_information
 	
 	float pickup_depth;
 	float pickup_value;
-	
 	float tmp_0,tmp_1;
 	
 	vec4 light_position[8];

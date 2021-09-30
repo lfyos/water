@@ -98,7 +98,7 @@ function construct_uniform_block_object(my_gl)
 			}
 		
 		this.gl.bindBuffer		(this.gl.UNIFORM_BUFFER,this.system_buffer_object);
-		this.gl.bufferSubData	(this.gl.UNIFORM_BUFFER,0,					new Int32Array(int_data),	0);
+		this.gl.bufferSubData	(this.gl.UNIFORM_BUFFER,0,					new Int32Array(int_data),	 0);
 		this.gl.bufferSubData	(this.gl.UNIFORM_BUFFER,int_data.length*4,	new Float32Array(float_data),0);
 	};
 	
@@ -225,6 +225,5 @@ function construct_uniform_block_object(my_gl)
 		this.gl.bindBuffer		(this.gl.UNIFORM_BUFFER,this.pass_buffer_object	);
 		this.gl.bufferSubData	(this.gl.UNIFORM_BUFFER,0,					 	new Float32Array(float_data),0);
 		this.gl.bufferSubData	(this.gl.UNIFORM_BUFFER,float_data.length*4,	new Int32Array(int_data),	 0);
-
 	};
 }

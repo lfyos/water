@@ -42,31 +42,26 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 	if(method_id!=0)
 		return;
 
-	for(var i=0,n=component_data_array.length;i<n;i++){
+	for(var my_length,i=0,ni=component_data_array.length;i<ni;i++){
 		var buffer_id=component_data_array[i];
-		
 		if(typeof(data_buffer[buffer_id].audio)=="undefined"){
 			data_buffer[buffer_id].audio			=document.createElement("audio");
 			data_buffer[buffer_id].audio.autoplay	="autoplay";
 			data_buffer[buffer_id].audio.controls	="controls";
 			data_buffer[buffer_id].audio.hidden		="hidden";
-			
 			data_buffer[buffer_id].audio.should_response_flag=false;
 		}
 		if(data_buffer[buffer_id].audio.should_response_flag)
-			if((data_buffer[buffer_id].audio.ended)||(data_buffer[buffer_id].audio.ended)){
+			if(data_buffer[buffer_id].audio.ended){
 				data_buffer[buffer_id].audio.should_response_flag=false;
-				render.call_server_component(
-					data_buffer[buffer_id].audio.component_id,
-					data_buffer[buffer_id].audio.driver_id,
-					[["operation","ended"],["fresh",Math.random()]]);
+				render.call_server_component(data_buffer[buffer_id].audio.component_id,
+					data_buffer[buffer_id].audio.driver_id,[["operation","ended"],["fresh",Math.random()]]);
 			}
-		var my_length;
 		if((my_length=data_buffer[buffer_id].length)>0){
 			var component_id=data_buffer[buffer_id][my_length-1][0];
-			var driver_id=data_buffer[buffer_id][my_length-1][1];
+			var driver_id	=data_buffer[buffer_id][my_length-1][1];
+			
 			data_buffer[buffer_id].length=0;
-
 			data_buffer[buffer_id].audio.should_response_flag=true;
 			data_buffer[buffer_id].audio.component_id=component_id;
 			data_buffer[buffer_id].audio.driver_id=driver_id;

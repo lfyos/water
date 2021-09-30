@@ -52,8 +52,13 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			gl.uniform1i(gl.getUniformLocation(shader_program,name[i]),i);
 	
 		shader_program.mode_uniform=gl.getUniformLocation(shader_program,"mode");
+		
+		shader_object.destroy=function(gl,shader_program,shader_object,program_id)
+		{
+			gl.deleteSampler(shader_program.sampler);
+		}
 	}
-	
+
 	if(method_id!=0)
 		return;
 	
@@ -77,8 +82,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 						part_buffer_object.texture_image[buffer_id][i]);
 				else
 					part_buffer_object.texture_image[buffer_id][i]=utility.load_server_component_image(
-						component_id,driver_id,
-						[["random",Math.random().toString()],["operation","file"],["file",file_name[i]]],
+						component_id,driver_id,[["random",Math.random().toString()],["operation","file"],["file",file_name[i]]],
 						part_buffer_object.texture_image[buffer_id][i]);
 			}
 		}
@@ -100,6 +104,18 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			}
 			gl.bindSampler(i,shader_program.sampler);
 		}
+		
+		if(typeof(part_buffer_object.destroy)!="function")
+			part_buffer_object.destroy=function(gl,part_buffer_object,render_id,part_id,type_id)
+			{
+				if(typeof(part_buffer_object.texture_image)!="undefined")
+					for(var i=0,ni=part_buffer_object.texture_image.length;i<ni;i++)
+						if(typeof(part_buffer_object.texture_image[i])!="undefined")
+							for(var j=0,nj=part_buffer_object.texture_image[i].length;j<nj;j++)
+								if(typeof(part_buffer_object.texture_image[i][j])!="undefined")
+									gl.deleteTexture(part_buffer_object.texture_image[i][j]);
+			}
+
 		return (unready_number==0)?true:false;
  	}
 
