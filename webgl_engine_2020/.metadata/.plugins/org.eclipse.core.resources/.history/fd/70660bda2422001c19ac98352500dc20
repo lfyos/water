@@ -1,0 +1,99 @@
+#define MAX_LIGHT_NUMBER 4
+uniform material_information
+{
+	vec4 color,ambient,diffuse,specular,emission;
+	float shininess,vertex_color_type,fragment_color_type,temp;
+	
+	vec4 light_color_factor[MAX_LIGHT_NUMBER];
+}material_info;
+
+uniform vec4 draw_par;
+
+in vec4 frag_position,frag_material,frag_id,frag_texture,frag_color;
+
+layout (location = 0) out vec4 frag_data[4];
+
+void main(void)
+{
+	int my_frag_type	=int(round(frag_id.w));
+	int my_component_id	=component_info.component_id;
+	int my_body_id		=int(round(frag_id.x));
+	int my_face_id		=int(round(frag_id.y));
+	int my_vertex_id	=int(round(frag_id.z));
+	int my_loop_id		=int(round(frag_texture.x));
+	int my_edge_id		=int(round(frag_texture.y));
+	int my_point_id		=my_vertex_id;
+	
+	bool clip_flag		=((flag&1)!=0)?true:false;
+	
+	gl_FragDepth=gl_FragCoord.z;
+
+	if(clip_flag){
+		if(dot(target_info.clip_plane,frag_position)<0.0)
+			discard;
+	}else{
+		if(dot(target_info.clip_plane,frag_position)>0.0)
+			discard;
+	}
+
+	switch(my_frag_type){
+	case 0://face
+		frag_data[0]=vec4(frag_color.rgb,transparency_value);
+		break;
+	case 1://line
+		frag_data[0]=vec4(0.0,0.0,0.0,transparency_value);
+		if(system_info.pickup_component_id==my_component_id){
+			frag_data[0]=vec4(0.0,0.0,1.0,transparency_value);
+			if(system_info.pickup_body_id==my_body_id){
+				frag_data[0]=vec4(0.0,0.5,0.5,transparency_value);
+				if(system_info.pickup_face_id==my_face_id){
+					gl_FragDepth-=0.001;
+					frag_data[0]=vec4(0.0,1.0,0.0,transparency_value);
+				}
+			}
+		}
+		break;
+	case 2://point
+		if(distance(gl_PointCoord,vec2(0.5,0.5))>0.5)
+			discard;
+		frag_data[0]=vec4(1.0,1.0,0.0,transparency_value);
+		if(system_info.pickup_component_id==my_component_id){
+			frag_data[0]=vec4(0.0,0.0,1.0,transparency_value);
+			if(system_info.pickup_body_id==my_body_id){
+				frag_data[0]=vec4(0.0,0.5,0.5,transparency_value);
+				if(system_info.pickup_face_id==my_face_id){
+					gl_FragDepth-=0.001;
+					frag_data[0]=vec4(0.0,1.0,0.0,transparency_value);
+					if(system_info.pickup_loop_id==my_loop_id){
+						frag_data[0]=vec4(0.35,0.65,0.0,transparency_value);
+						if(system_info.pickup_edge_id==my_edge_id){
+							frag_data[0]=vec4(0.65,0.35,0.0,transparency_value);
+							if(system_info.pickup_point_id==my_point_id){
+								gl_FragDepth-=0.001;
+								frag_data[0]=vec4(1.0,0.0,0.0,transparency_value);
+							}
+						}
+					}			
+				}
+			}
+		}
+		break;
+	default://frame
+		frag_data[0]=vec4(0.2,0.2,0.2,transparency_value);
+		break;
+	}
+
+	if(pass_info.method_id==1){
+		if(pass_info.pass_id==0){
+			frag_data[0]=code_integer(my_component_id);
+			frag_data[1]=code_integer(my_body_id);
+			frag_data[2]=code_integer(my_face_id);
+			frag_data[3]=code_integer(my_point_id);
+		}else{
+			frag_data[0]=code_integer((my_frag_type==0)?-1:my_loop_id);
+			frag_data[1]=code_integer((my_frag_type==0)?-1:my_edge_id);
+			frag_data[2]=code_float(gl_FragCoord.z*2.0-1.0);
+			frag_data[3]=code_float(gl_FragCoord.z*2.0-1.0);
+		}
+	}
+}

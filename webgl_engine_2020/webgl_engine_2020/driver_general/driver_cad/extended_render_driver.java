@@ -29,7 +29,7 @@ public class extended_render_driver extends render_driver
 	public extended_render_driver()
 	{
 		super(	
-				"create_frame.txt",
+				"voxel.txt",
 				"javascript.draw.txt",
 				"vertex.shader.txt",
 				"fragment.shader.txt",

@@ -56,7 +56,7 @@ public class extended_part_driver extends part_driver
 			part p,String type_str,int body_id,int face_id,int loop_id,int edge_id,
 			String material_x,String material_y,String material_z,String material_w)
 	{
-		return 0;
+		return Integer.decode(material_w);
 	}
 	public part_rude create_part_mesh_and_buffer_object_head(part p,
 			file_writer buffer_object_file_writer,part_container_for_part_search pcps,
@@ -70,6 +70,7 @@ public class extended_part_driver extends part_driver
 					p.directory_name+p.material_file_name,	p.file_charset		));
 			buffer_object_file_writer.println("		}");
 		}
+		
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,
@@ -94,6 +95,12 @@ public class extended_part_driver extends part_driver
 	}
 	public String[] response_event(part p,engine_kernel ek,client_information ci)
 	{
-		return super.response_event(p,ek,ci);
+//		return super.response_event(p,ek,ci);
+		String file_name=ci.request_response.get_parameter("file");
+		return (file_name==null)?null:new String[] 
+				{
+					p.directory_name+file_reader.separator(file_name),
+					ek.system_par.local_data_charset
+				};
 	}
 }

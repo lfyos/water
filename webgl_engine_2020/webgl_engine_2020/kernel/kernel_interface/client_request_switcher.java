@@ -148,10 +148,9 @@ public class client_request_switcher
 				break;
 			}
 			int creation_engine_lock_number=test_creation_engine_lock_number(1);
-			if(creation_engine_lock_number<system_par.create_engine_concurrent_number) {
+			if(creation_engine_lock_number<system_par.create_engine_concurrent_number)
 				ret_val.ecr=ret_val.client.execute_create_call(ei,ret_val.client,request_response,statistics_interface);
-				debug_information.switch_log_file();
-			}else{
+			else{
 				ret_val.ecr=new engine_call_result(null,null,null,null,null,"*");
 				request_response.println("false");
 				ret_val.client.get_process_bar(request_response).set_process_bar(true,"wait_for_other_exit",1,2);

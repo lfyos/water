@@ -72,6 +72,7 @@ public class extended_instance_driver extends instance_driver
 			print  ("[",comp.component_id).
 			print  (",",transparency_value).
 			print  (",",close_clip_plane_number).
+			print  (",",display_parameter.display_value_id).
 			print  (effective_selected_flag?",1]":",0]");
 	}
 	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)

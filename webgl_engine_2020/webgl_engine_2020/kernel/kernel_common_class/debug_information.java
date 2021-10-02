@@ -1,43 +1,14 @@
 package kernel_common_class;
 
-import java.io.File;
-import java.util.Date;
-import kernel_file_manager.file_writer;
-
 public class debug_information 
 {
-	private static file_writer fw=null;
-	private static long id=0;
-	private static String file_name="";
-	
-	public static void switch_log_file()
-	{
-		if(fw!=null)
-			fw.close();
-		
-		fw=new file_writer(file_name+(id++)+".txt",null);
-		fw.println((new Date()).toString());
-		fw.println();
-	}
-	public static void mount_log_file(String my_file_name)
-	{
-		file_name=new String(my_file_name);
-		if(file_name.charAt(file_name.length()-1)!=File.separatorChar)
-			file_name+=File.separatorChar;
-		file_writer.make_directory(file_name);
-		switch_log_file();
-	}
 	public static void print(String x)
 	{
 		System.out.print(x);
-		if(fw!=null)
-			fw.print(x);
 	}
 	public static void println()
 	{
 		System.out.println();
-		if(fw!=null)
-			fw.println();
 	}
 	public static void println(String x)
 	{

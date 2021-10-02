@@ -303,13 +303,13 @@ public class obj_converter
 				"			/* face_loop_number						*/	1",
 				"			/* face_loop  0  loop_edge_number		*/	2",
 				"",
-				"				/*	face_loop_edge  0  data			*/",
-				"				/*	curve_type		*/	segment		/* parameter_number  */  0 /* parameter */",
+				"				/*	face_loop_edge  0  data				*/",
+				"				/*	curve_type		*/	segment		/*	parameter_number	*/	0	/*	parameter	*/",
 				"				start_not_effective",
 				"				end_not_effective",
 				
-				"				/*  parameter_point_extra_data		*/	1",
-				"				/*	parameter_point_material		*/  0    0    0    "+edge_material,
+				"				/*  parameter_point_extra_data			*/		1",
+				"				/*	parameter_point_material			*/  	0    0    0    "+edge_material,
 
 				"				/*	box definition						*/		"+((edge_box==null)?"nobox":(
 									edge_box.p[0].x+"	"+edge_box.p[0].y+"	"+edge_box.p[0].z+"	"+
@@ -322,6 +322,8 @@ public class obj_converter
 				"				/*	curve_type	*/  render_point_set	/* parameter_number  */  0 /* parameter */",
 				"				start_not_effective",
 				"				end_not_effective",
+				
+				"				/*  curve_point_extra_data				*/		1",
 				"				/*	curve point material				*/      0    0    0    "+point_material,
 				"				/*	box definition						*/		"+((point_box==null)?"nobox":(
 										point_box.p[0].x+"	"+point_box.p[0].y+"	"+point_box.p[0].z+"	"+

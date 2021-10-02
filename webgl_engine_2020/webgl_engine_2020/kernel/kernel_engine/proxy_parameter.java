@@ -4,7 +4,6 @@ import java.io.File;
 
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
-import kernel_common_class.debug_information;
 import kernel_common_class.sorter;
 
 public class proxy_parameter extends sorter<proxy_information,String>
@@ -33,7 +32,6 @@ public class proxy_parameter extends sorter<proxy_information,String>
 			
 			file_writer fw=new file_writer(proxy_configure_file_name,proxy_configure_file_charset);
 			
-			fw.println("engine_log");
 			fw.println("extract_data_root_directory");
 			fw.println("proxy_root_directory");
 			
@@ -44,8 +42,7 @@ public class proxy_parameter extends sorter<proxy_information,String>
 			fw.close();
 		}
 		file_reader f=new file_reader(proxy_configure_file_name,proxy_configure_file_charset);
-		
-		debug_information.mount_log_file(		f.directory_name+file_reader.separator(f.get_string()));
+
 		extract_data_root_directory				=f.directory_name+file_reader.separator(f.get_string());
 		proxy_data_root_directory_name			=f.directory_name+file_reader.separator(f.get_string());
 		

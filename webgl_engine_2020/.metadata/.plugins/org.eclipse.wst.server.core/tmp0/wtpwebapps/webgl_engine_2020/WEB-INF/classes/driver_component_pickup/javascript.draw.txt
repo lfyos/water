@@ -81,13 +81,6 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		render.pickup.vertex_id		=render.utility.decode_integer_from_pixel(pixels[12],pixels[13],pixels[14],pixels[15]);
 		render.pickup.loop_id		=render.utility.decode_integer_from_pixel(pixels[16],pixels[17],pixels[18],pixels[19]);
 		render.pickup.edge_id		=render.utility.decode_integer_from_pixel(pixels[20],pixels[21],pixels[22],pixels[23]);
-		
-		render.pickup.body_value	=render.utility.decode_float_from_pixel(pixels[ 4],pixels[ 5],pixels[ 6],pixels[ 7]);
-		render.pickup.face_value	=render.utility.decode_float_from_pixel(pixels[ 8],pixels[ 9],pixels[10],pixels[11]);
-		render.pickup.vertex_value	=render.utility.decode_float_from_pixel(pixels[12],pixels[13],pixels[14],pixels[15]);
-		render.pickup.loop_value	=render.utility.decode_float_from_pixel(pixels[16],pixels[17],pixels[18],pixels[19]);
-		render.pickup.edge_value	=render.utility.decode_float_from_pixel(pixels[20],pixels[21],pixels[22],pixels[23]);
-		
 		render.pickup.point_id		=render.pickup.vertex_id;
 		render.pickup.depth			=render.utility.decode_float_from_pixel(pixels[24],pixels[25],pixels[26],pixels[27]);
 		render.pickup.value			=render.utility.decode_float_from_pixel(pixels[28],pixels[29],pixels[30],pixels[31]);

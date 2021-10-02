@@ -100,13 +100,6 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		loop			:	-2,
 		edge			:	-2,
 		vertex			:	-2,
-		
-		body_value		:	-2,
-		face_value		:	-2,
-		loop_value		:	-2,
-		edge_value		:	-2,
-		vertex_value	:	-2,
-		
 		point			:	-2,
 		
 		depth			:	-2,
@@ -580,59 +573,42 @@ function construct_render_routine(my_process_bar_id,my_gl,
 			this.view_bak.y=this.view.y;
 			request_string+="&y="+(this.view.y.toString());
 		};
+		
 		var id,value;
-		id=this.pickup.component_id;
-		if(this.view_bak.component!=id){
+
+		if(this.view_bak.component!=(id=this.pickup.component_id)){
 			this.view_bak.component=id;
 			request_string+="&component="+id.toString();
 		};
-		id=this.pickup.body_id;
-		value=this.pickup.body_value;
-		if((this.view_bak.body!=id)||(Math.abs(this.view_bak.body_value-value)>min_value)){
+		if(this.view_bak.body!=(id=this.pickup.body_id)){
 			this.view_bak.body=id;
-			this.view_bak.body_value=value;
-			request_string+="&body="+value.toString()+";"+id.toString();
+			request_string+="&body="+id.toString();
 		};
-		id=this.pickup.face_id;
-		value=this.pickup.face_value;
-		if((this.view_bak.face!=id)||(Math.abs(this.view_bak.face_value-value)>min_value)){
+		if(this.view_bak.face!=(id=this.pickup.face_id)){
 			this.view_bak.face=id;
-			this.view_bak.face_value=value;
-			request_string+="&face="+value.toString()+";"+id.toString();
+			request_string+="&face="+id.toString();
 		};
-		id=this.pickup.loop_id;
-		value=this.pickup.loop_value;
-		if((this.view_bak.loop!=id)||(Math.abs(this.view_bak.loop_value-value)>min_value)){
+		if(this.view_bak.loop!=(id=this.pickup.loop_id)){
 			this.view_bak.loop=id;
-			this.view_bak.loop_value=value;
-			request_string+="&loop="+value.toString()+";"+id.toString();
+			request_string+="&loop="+id.toString();
 		};
-		id=this.pickup.edge_id;
-		value=this.pickup.edge_value;
-		if((this.view_bak.edge!=id)||(Math.abs(this.view_bak.edge_value-value)>min_value)){
+		if(this.view_bak.edge!=(id=this.pickup.edge_id)){
 			this.view_bak.edge=id;
-			this.view_bak.edge_value=value;
-			request_string+="&edge="+value.toString()+";"+id.toString();
+			request_string+="&edge="+id.toString();
 		};
-		id=this.pickup.vertex_id;
-		value=this.pickup.vertex_value;
-		if((this.view_bak.vertex!=id)||(Math.abs(this.view_bak.vertex_value-value)>min_value)){
+		if(this.view_bak.vertex!=(id=this.pickup.vertex_id)){
 			this.view_bak.vertex=id;
-			this.view_bak.vertex_value=value;
-			request_string+="&vertex="+value.toString()+";"+id.toString();
+			request_string+="&vertex="+id.toString();
 		};
-		id=this.pickup.point_id;
-		if(this.view_bak.point!=id){
+		if(this.view_bak.point!=(id=this.pickup.point_id)){
 			this.view_bak.point=id;
 			request_string+="&point="+id.toString();
-		};
-		value=this.pickup.depth;	
-		if(Math.abs(this.view_bak.depth-value)>min_value){
+		};	
+		if(Math.abs(this.view_bak.depth-(value=this.pickup.depth))>min_value){
 			this.view_bak.depth=value;
 			request_string+="&depth="+(new Number(value)).toPrecision(6);
 		}
-		value=this.pickup.value;
-		if(Math.abs(this.view_bak.value-value)>min_value){
+		if(Math.abs(this.view_bak.value-(value=this.pickup.value))>min_value){
 			this.view_bak.value=value;
 			request_string+="&value="+(new Number(value)).toPrecision(6);
 		};

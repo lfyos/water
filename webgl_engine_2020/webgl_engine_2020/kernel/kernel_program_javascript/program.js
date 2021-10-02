@@ -13,6 +13,13 @@ function construct_program_object(my_gl,my_parameter)
 			if(this.render_program[program_id]==null)
 				continue;
 			
+			if(typeof(this.render_program[program_id].shader_program.destroy)=="function"){
+				this.render_program[program_id].shader_program.destroy(this.gl,
+						this.render_program[program_id].shader_program,
+						this.render_program[program_id],program_id);
+				this.render_program[program_id].shader_program.destroy=null;
+			}
+			
 			if(typeof(this.render_program[program_id].destroy)=="function"){
 				this.render_program[program_id].destroy(this.gl,
 						this.render_program[program_id].shader_program,

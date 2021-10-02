@@ -2,29 +2,32 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="frag_material"/>
+		<item key="selection" value="body_value"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="body_value"/>
+			<item value="&#x09;&#x09;"/>
+			<item value="frag_position"/>
+			<item value="model_matrix_data"/>
+			<item value="draw_par_uniform"/>
+			<item value="display_value_id"/>
+			<item value="*4.0"/>
+			<item value="draw_par"/>
+			<item value="render_parameter"/>
+			<item value="driver_opengl_fixed_pipeline"/>
+			<item value="render_method"/>
+			<item value="flag"/>
+			<item value="transparency_value"/>
 			<item value="frag_material"/>
 			<item value="vertex_material"/>
-			<item value="frag_position"/>
-			<item value="my_component_id"/>
-			<item value="flag"/>
-			<item value="selected_flag"/>
-			<item value="transparency_flag"/>
-			<item value="discard_flag"/>
-			<item value="transparency_value"/>
-			<item value="transparency_value_uniform"/>
-			<item value="clip_plane_array"/>
-			<item value="gl_FragDepth"/>
-			<item value="clip_flag"/>
-			<item value="real_frag_position"/>
-			<item value="material_color"/>
 		</list>
 		<list key="replacehistory">
+			<item value="&#x09;"/>
+			<item value=""/>
+			<item value="color_parameter"/>
 			<item value="transparency_value"/>
 			<item value="if"/>
 			<item value="vertex_array_object[0]"/>
@@ -32,21 +35,18 @@
 			<item value="+client_id"/>
 			<item value="destroy"/>
 			<item value="alert"/>
-			<item value=""/>
 			<item value="cur.render.last_event_time"/>
 			<item value="get_component_object_by_component_name"/>
 			<item value="component_array_sorted_by_id"/>
 			<item value="component_array_sorted_by_name"/>
 			<item value="display_component_root"/>
-			<item value="removeEventListener"/>
-			<item value="client"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item key="DIALOG_WIDTH" value="335"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="1389"/>
-		<item key="DIALOG_Y_ORIGIN" value="549"/>
+		<item key="DIALOG_X_ORIGIN" value="1507"/>
+		<item key="DIALOG_Y_ORIGIN" value="129"/>
 	</section>
 </section>
