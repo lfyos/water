@@ -6,6 +6,16 @@
 		"vertex_id",
 		"vertex_texture",
 		"vertex_color"
+	],
+	[
+		"vertex_location",
+		"vertex_normal",
+		"vertex_material",
+		"vertex_id",
+		"",
+		"",
+		"vertex_texture",
+		"vertex_color"
 	]
 ],
 
@@ -45,14 +55,20 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
 	
-	
-	function draw_part(primitive_type,part_buffer_object,selected_flag)
+	function draw_part(primitive_type,part_buffer_object,vertex_array_id,selected_flag)
 	{
 		for(var i=0,ni=part_buffer_object.region_data.length;i<ni;i++){
 			var p=part_buffer_object.region_data[i];
-			var material_id=selected_flag?(part_material[0].material.length-1):(p.material_id);
+			var material_number=part_material[0].material.length-1;
+			var material_id=selected_flag?material_number:(p.material_id%material_number);
+			
+			gl.activeTexture(gl.TEXTURE0);
+			gl.bindTexture(gl.TEXTURE_2D,part_material[0].material[material_id].texture_object);
+			gl.bindSampler(0,shader_program.sampler);
+			gl.uniform1i(shader_program.texture_object_uniform,0);
+			
 			gl.bindBufferBase(gl.UNIFORM_BUFFER,0,part_material[0].material[material_id].buffer_object);
-			gl.bindVertexArray(p.vertex_array_object[0]);
+			gl.bindVertexArray(p.vertex_array_object[vertex_array_id]);
 			gl.drawArrays(primitive_type,0,p.item_number);
 		}
 	}
@@ -68,50 +84,59 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			var component_id			=data_buffer[buffer_id][0][0];
 			var transparency_value		=data_buffer[buffer_id][0][1];
 			var close_clip_plane_number	=data_buffer[buffer_id][0][2];
-			var selected_flag			=data_buffer[buffer_id][0][3];
-			
+			var display_value_id		=data_buffer[buffer_id][0][3];
+			var selected_flag			=data_buffer[buffer_id][0][4];
+
+			if(transparency_flag^(transparency_value<1.0))
+				continue;
 			if((display_bitmap&my_display_bitmap)==0)
 				if((pickup.component_id!=component_id)||exit_flag)
 					continue;
+
 			var model_matrix_data=component_location.get_component_location(component_id);
-			gl.uniform4f(shader_program.draw_par_uniform,transparency_value,0,0,0);
 			
 			switch(primitive_type){
 			case gl.TRIANGLES:
-				if(transparency_flag^(transparency_value<1.0))
-					continue;
 				if(close_clip_plane_number>0){
 					gl.enable(gl.STENCIL_TEST);
 					gl.stencilFunc(gl.ALWAYS,0x01,0x01);
 			 		gl.stencilOp(gl.KEEP,gl.INVERT,gl.INVERT);
-			 		draw_part(primitive_type,part_buffer_object,selected_flag);
+			 		gl.uniform4f(shader_program.draw_par_uniform,transparency_value,0,0,display_value_id%9);
+			 		draw_part(primitive_type,part_buffer_object,Math.floor(display_value_id/9),selected_flag);
 			 		
 			 		gl.stencilFunc(gl.NOTEQUAL,0x00,0x01);
 					gl.stencilOp(gl.KEEP,gl.ZERO,gl.ZERO);
-					gl.uniform4f(shader_program.draw_par_uniform,transparency_value,1,0,0);
-					draw_part(primitive_type,part_buffer_object,selected_flag);
+					gl.uniform4f(shader_program.draw_par_uniform,transparency_value,1,0,display_value_id%9);
+					draw_part(primitive_type,part_buffer_object,Math.floor(display_value_id/9),selected_flag);
 					gl.disable(gl.STENCIL_TEST);
 					break;
 				}
 			case gl.LINES:
 			case gl.POINTS:
-				draw_part(primitive_type,part_buffer_object,selected_flag);
+				gl.disable(gl.STENCIL_TEST);
+				gl.uniform4f(shader_program.draw_par_uniform,transparency_value,0,0,display_value_id%9);
+				draw_part(primitive_type,part_buffer_object,Math.floor(display_value_id/9),selected_flag);
 				break;
 			}
 		}
 	}
 
 	if(do_render_number.engine_render==0){
+		gl.uniformBlockBinding(shader_program,gl.getUniformBlockIndex(shader_program,"material_information"),0);
+		shader_program.draw_par_uniform			=gl.getUniformLocation(shader_program,"draw_par");
+		shader_program.texture_object_uniform	=gl.getUniformLocation(shader_program,"texture_object");
+		
 		shader_program.sampler=gl.createSampler();
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MAG_FILTER,	gl.LINEAR);
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MIN_FILTER,	gl.LINEAR);
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_S,		gl.MIRRORED_REPEAT);
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_T,		gl.MIRRORED_REPEAT);
 		
-		gl.uniformBlockBinding(shader_program,gl.getUniformBlockIndex(shader_program,"material_information"),0);
-		shader_program.draw_par_uniform	=gl.getUniformLocation(shader_program,"draw_par");
-		
-		
+		shader_program.destroy=function(gl,shader_program,shader_object,program_id)
+		{
+			gl.deleteSampler(shader_program.sampler);
+			shader_program.destroy=null;
+		}
 	}
 	
 	if(do_render_number.engine_part==0){
@@ -123,8 +148,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 				p.vertex_color_type=0;
 			if(typeof(p.fragment_color_type)=="undefined")
 				p.fragment_color_type=0;
-			if(typeof(p.render_parameter)=="undefined")
-				p.render_parameter=[0.0,0.0,0.0,1.0];
+			if(typeof(p.color_parameter)=="undefined")
+				p.color_parameter=[0.0,0.0,0.0,1.0];
 			if(typeof(p.texture_parameter)=="undefined")
 				p.texture_parameter=[0.0,0.0,0.0,1.0];
 			if(typeof(p.texture_file)=="undefined")
@@ -134,7 +159,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 				
 			buffer_data=[p.vertex_color_type,p.fragment_color_type,0,p.shininess];
 			
-			buffer_data=buffer_data.concat( p.render_parameter);
+			buffer_data=buffer_data.concat( p.color_parameter);
 			buffer_data=buffer_data.concat( p.texture_parameter);
 			
 			buffer_data=buffer_data.concat( p.color);
@@ -153,17 +178,19 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			if(p.texture_file==null)
 				p.texture_object=null;
 			else
-				p.texture_object=utility.this.load_server_part_image(render_id,part_id,["file",p.texture_file]);
+				p.texture_object=utility.load_server_part_image(render_id,part_id,[["file",p.texture_file]]);
 		}
 		part_buffer_object.destroy=function(gl,part_buffer_object,render_id,part_id)
 		{
-			for(var i=0,ni=part_material[0].material.length;i<ni;i++)
+			for(var i=0,ni=part_material[0].material.length;i<ni;i++){
 				gl.deleteBuffer(part_material[0].material[i].buffer_object);
+				if(part_material[0].material[i].texture_object!=null)
+					gl.deleteTexture(part_material[0].material[i].texture_object);
+			}
+			part_buffer_object.destroy=null;
 		}
 	}
-	
-	gl.disable(gl.STENCIL_TEST);
-	
+
 	switch(method_id){
 	case 0://render scene before depth rendering
 		break;

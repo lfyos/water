@@ -89,10 +89,13 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 
 			if(transparency_flag^(transparency_value<1.0))
 				continue;
-			if((display_bitmap&my_display_bitmap)==0)
+			
+			var discard_flag=0;	
+			if((display_bitmap&my_display_bitmap)==0){
 				if((pickup.component_id!=component_id)||exit_flag)
 					continue;
-
+				discard_flag=2;	
+			}
 			var model_matrix_data=component_location.get_component_location(component_id);
 			
 			switch(primitive_type){
@@ -114,7 +117,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			case gl.LINES:
 			case gl.POINTS:
 				gl.disable(gl.STENCIL_TEST);
-				gl.uniform4f(shader_program.draw_par_uniform,transparency_value,0,0,display_value_id%9);
+				gl.uniform4f(shader_program.draw_par_uniform,transparency_value,discard_flag,0,display_value_id%9);
 				draw_part(primitive_type,part_buffer_object,Math.floor(display_value_id/9),selected_flag);
 				break;
 			}
