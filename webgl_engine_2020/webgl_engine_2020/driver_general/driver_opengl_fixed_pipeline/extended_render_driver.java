@@ -36,7 +36,7 @@ public class extended_render_driver extends render_driver
 		super.destroy();
 		release_all();
 	}
-	public String[] get_part_list(boolean giveup_part_load_flag,
+	public String[] get_part_list(boolean giveup_part_load_flag,int part_type_id,
 			file_reader render_fr,String load_sub_directory_name,String par_list_file_name,
 			part_parameter part_par,system_parameter system_par,client_request_response request_response)
 	{
@@ -60,7 +60,8 @@ public class extended_render_driver extends render_driver
 		part_directory_name=file_reader.separator(part_directory_name);
 		if(part_directory_name.charAt(part_directory_name.length()-1)!=File.separatorChar)
 			part_directory_name+=File.separator;
-		part_directory_name+=load_sub_directory_name;
+		if(part_type_id==2)
+			part_directory_name+=load_sub_directory_name;
 		
 		if((light_file_name=render_fr.get_string())==null)
 			return null;

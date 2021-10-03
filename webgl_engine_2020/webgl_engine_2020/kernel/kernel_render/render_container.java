@@ -266,7 +266,7 @@ public class render_container
 
 			String get_part_list_result[]=null;
 			try{
-				get_part_list_result=my_render_driver.get_part_list(giveup_part_load_flag,
+				get_part_list_result=my_render_driver.get_part_list(giveup_part_load_flag,part_type_id,
 					f_render_list,load_sub_directory_name,par_list_file_name,part_par,system_par,request_response);
 			}catch(Exception e){
 				debug_information.println("Execute get_part_list fail:		",e.toString());

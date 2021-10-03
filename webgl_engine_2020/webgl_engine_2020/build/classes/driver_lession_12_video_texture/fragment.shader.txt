@@ -19,6 +19,6 @@ void main(void)
 	else
 		frag_data=texture(texture_sampler,p.xy);
 		
-	if(dot(frag_data.rgb,frag_data.rgb)<(3.0*0.1*0.1))
-		discard;
+//	if(dot(frag_data.rgb,frag_data.rgb)<(3.0*0.1*0.1))
+//		discard;
 }
