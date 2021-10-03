@@ -1,10 +1,10 @@
 			
 			"selected_material"			:
 			{
-				"vertex_color_type"		:	1,
+				"vertex_color_type"		:	2,
 				"fragment_color_type"	:	0,
 				
-				"render_parameter"		:	[0.0,	0.0,	0.0,	1.0],
+				"color_parameter"		:	[0.0,	0.0,	0.0,	1.0],
 				"texture_parameter"		:	[0.0,	0.0,	0.0,	1.0],
 			
 				"texture_file"			:	null,

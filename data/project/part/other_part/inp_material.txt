@@ -1,8 +1,0 @@
-/*		texture_directory_name				*/		../../
-
-/*		transparency_scale,emission_scale	*/		1.0		1.0
-
-/*		top_box_part_material_file_name		*/		top_box_part_material.txt
-
-/*		do_clip_close_flag					*/		true
-/*		part_clip_mode						*/		false

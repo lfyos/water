@@ -10,11 +10,9 @@ public class system_parameter_information extends jason_creator
 	public void print()
 	{	
 		print("data_root_directory_name",				sp.data_root_directory_name);
-		print("extract_data_root_directory",			sp.proxy_par.extract_data_root_directory);
 		print("proxy_data_root_directory_name",			sp.proxy_par.proxy_data_root_directory_name);
 		
 		print("compress_data_root_directory_name",		sp.proxy_par.compress_data_root_directory_name);
-		print("compress_extract_data_root_directory",	sp.proxy_par.compress_extract_data_root_directory);
 		print("compress_proxy_data_root_directory_name",sp.proxy_par.compress_proxy_data_root_directory_name);
 		
 		print("shader_file_name",						sp.shader_file_name);

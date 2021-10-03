@@ -1,41 +1,26 @@
-/*	global_ambient			*/			0.1		0.1		0.1
-
-
-/*	light_number			*/			4
-
-/*	camera_id											*/	4
-/*	light_type											*/	0
-/*	red			green			blue					*/	0.10	0.10	0.10
-/*	direction_x	direction_y		direction_z				*/	1		1		1
-/*	Ambient		Diffuse			Specular	Shininess	*/	0.10	0.75	1.50	8.00
-/*	k0			k1				k2						*/	0.20	0.00	0.00
-/*	spot_angle	spot_exponent							*/	0		1
-
-
-/*	camera_id											*/	5
-/*	light_type											*/	0
-/*	red			green			blue					*/	0.10	0.10	0.10
-/*	direction_x	direction_y		direction_z				*/	1		1		1
-/*	Ambient		Diffuse			Specular	Shininess	*/	0.10	0.75	1.50	8.00
-/*	k0			k1				k2						*/	0.20	0.00	0.00
-/*	spot_angle	spot_exponent							*/	0		1
-
-
-
-/*	camera_id											*/	6
-/*	light_type											*/	0
-/*	red			green			blue					*/	0.10	0.10	0.10
-/*	direction_x	direction_y		direction_z				*/	1		1		1
-/*	Ambient		Diffuse			Specular	Shininess	*/	0.10	0.75	1.50	8.00
-/*	k0			k1				k2						*/	0.20	0.00	0.00
-/*	spot_angle	spot_exponent							*/	0		1
-
-
-
-/*	camera_id											*/	7
-/*	light_type											*/	0
-/*	red			green			blue					*/	0.10	0.10	0.10
-/*	direction_x	direction_y		direction_z				*/	1		1		1
-/*	Ambient		Diffuse			Specular	Shininess	*/	0.10	0.75	1.50	8.00
-/*	k0			k1				k2						*/	0.20	0.00	0.00
-/*	spot_angle	spot_exponent							*/	0		1
+			
+			"selected_material"			:
+			{
+				"vertex_color_type"		:	2,
+				"fragment_color_type"	:	0,
+				
+				"color_parameter"		:	[0.0,	0.0,	0.0,	1.0],
+				"texture_parameter"		:	[0.0,	0.0,	0.0,	1.0],
+			
+				"texture_file"			:	null,
+				
+				"color"					:	[0.25,	1.25,	2.5,	1.0],
+				"ambient"				:	[0.2,	0.2,	0.2,	1.0],
+				"diffuse"				:	[1.0,	1.0,	1.0,	1.0],
+				"specular"				:	[1.0,	1.0,	1.0,	1.0],
+				"emission"				:	[0.0,	0.0,	0.0,	1.0],
+				"shininess"				:	16.0
+			},
+			
+			"light_color_factor"		:
+			[
+				0.20,	0.20,	0.20,	1.0,
+				0.20,	0.20,	0.20,	1.0,
+				0.20,	0.20,	0.20,	1.0,
+				0.20,	0.20,	0.20,	1.0
+			],

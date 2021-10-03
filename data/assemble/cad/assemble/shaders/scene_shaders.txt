@@ -1,1 +1,1 @@
-driver_cad.extended_render_driver		render.list
+driver_opengl_fixed_pipeline.extended_render_driver		render.list

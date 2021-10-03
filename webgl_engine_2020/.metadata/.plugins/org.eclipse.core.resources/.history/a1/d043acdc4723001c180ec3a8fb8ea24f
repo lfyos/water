@@ -1,0 +1,93 @@
+package driver_cad;
+
+import kernel_part.part;
+import kernel_part.part_parameter;
+
+import java.io.File;
+
+import kernel_common_class.zip_file;
+import kernel_driver.part_driver;
+import kernel_driver.render_driver;
+import kernel_engine.system_parameter;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
+import kernel_network.client_request_response;
+
+public class extended_render_driver extends render_driver
+{
+	private String file_charset,part_directory_name,light_file_name;
+	
+	private void release_all()
+	{
+		file_charset=null;
+		part_directory_name=null;
+		light_file_name=null;
+	}
+	public extended_render_driver()
+	{
+		super(	
+				"voxel.txt",
+				"javascript.draw.txt",
+				"vertex.shader.txt",
+				"fragment.shader.txt",
+				"geometry.shader.txt",
+				"tess_control.shader.txt",
+				"tess_evalue.shader.txt");
+		release_all();
+	}
+	public void destroy()
+	{
+		super.destroy();
+		release_all();
+	}
+	public String[] get_part_list(boolean giveup_part_load_flag,file_reader render_fr,
+			String load_sub_directory_name,String par_list_file_name,String extract_file_directory,
+			part_parameter part_par,system_parameter system_par,client_request_response request_response)
+	{
+		file_charset=render_fr.get_charset();
+		
+		String assemble_directory_type;
+		if((assemble_directory_type=render_fr.get_string())==null)
+			assemble_directory_type="relative";
+		
+		switch(assemble_directory_type){
+		default:
+			part_directory_name=assemble_directory_type;
+			break;
+		case "absulate":
+			part_directory_name=render_fr.get_string();
+			break;
+		case "relative":
+			part_directory_name=render_fr.directory_name+render_fr.get_string();
+			break;
+		case "environment":
+			String environment_directory_name;
+			part_directory_name=render_fr.get_string();
+			if((environment_directory_name=System.getenv(part_directory_name))!=null)
+				part_directory_name=environment_directory_name;
+			break;
+		}
+		part_directory_name=file_reader.separator(part_directory_name);
+		if(part_directory_name.charAt(part_directory_name.length()-1)!=File.separatorChar)
+			part_directory_name+=File.separator;
+
+		part_directory_name+=load_sub_directory_name;
+		light_file_name		=render_fr.directory_name+par_list_file_name;
+		
+		zip_file.unzip_directory(part_directory_name,
+				"cad render driver wait for doing unzip_directory:	"+part_directory_name);
+		file_writer.file_touch(part_directory_name,false);
+		
+		String movement_assemble_file_name=part_directory_name+"movement.assemble";
+		String original_movement_assemble_file_name=render_fr.directory_name+"movement.assemble";
+		if((new File(original_movement_assemble_file_name).lastModified())>=(new File(movement_assemble_file_name).lastModified()))
+			file_writer.file_copy(original_movement_assemble_file_name,movement_assemble_file_name);
+		return new String[]{part_directory_name+"part.list",render_fr.get_charset()};
+	}
+	public part_driver create_part_driver(file_reader part_fr,part p,
+			system_parameter system_par,client_request_response request_response)
+	{
+		return new extended_part_driver(p,part_directory_name,part_file_charset,
+				light_file_name,file_charset,system_par,request_response);
+	}
+}

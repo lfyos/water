@@ -25,7 +25,6 @@ public class extended_component_driver  extends component_driver
 //		String component_directory_name=comp.component_directory_name;
 //		String scene_directory_name=ek.scene_directory_name;
 //		String parameter_directory_name=ek.scene_par.directory_name;
-		
 		return;
 	}
 	public String [][]assemble_file_name_and_file_charset(file_reader fr,

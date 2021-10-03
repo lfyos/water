@@ -20,19 +20,10 @@ public class component_core_5 extends component_core_4
 			engine_kernel ek,client_request_response request_response,
 			file_reader fr,part_container_for_part_search pcfps,
 			change_name change_part_name,change_name mount_component_name,
-			change_name reverse_mount_component_name,part_type_string_sorter type_string_sorter,
+			part_type_string_sorter type_string_sorter,
 			boolean part_list_flag,long default_display_bitmap,int max_child_number)
 	{
-		for(int search_id,range_id[];;){
-			if((search_id=mount_component_name.search(component_name))<0)
-				if((range_id=mount_component_name.range(component_name))!=null)
-					for(int i=range_id[0],ni=range_id[1];i<=ni;i++) {
-						String str=reverse_mount_component_name.data_array[i][1];
-						if((search_id=mount_component_name.search(str))>=0)
-							break;
-					}
-			if(search_id<0)
-				break;
+		for(int search_id;(search_id=mount_component_name.search(component_name))>=0;){
 			String assemble_file_name=file_reader.separator(mount_component_name.data_array[search_id][1]);
 			mount_component_name.delete(search_id);
 			
@@ -60,8 +51,8 @@ public class component_core_5 extends component_core_4
 					try{
 						append_child(1,new component[]{
 							new component(token_string,ek,request_response,mount_fr,pcfps,
-									change_part_name,mount_component_name,reverse_mount_component_name,
-									type_string_sorter,part_list_flag,default_display_bitmap,max_child_number)});
+									change_part_name,mount_component_name,type_string_sorter,
+									part_list_flag,default_display_bitmap,max_child_number)});
 					}catch(Exception e) {
 						debug_information.println("Create scene fail: "+e.toString()+"	",
 								directory_name_array[i]+assemble_file_name);
@@ -76,15 +67,14 @@ public class component_core_5 extends component_core_4
 			engine_kernel ek,client_request_response request_response,
 			file_reader fr,part_container_for_part_search pcfps,
 			change_name change_part_name,change_name mount_component_name,
-			change_name reverse_mount_component_name,part_type_string_sorter type_string_sorter,
+			part_type_string_sorter type_string_sorter,
 			boolean part_list_flag,long default_display_bitmap,int max_child_number)
 	{
-		super(token_string,ek,request_response,fr,pcfps,
-			change_part_name,mount_component_name,reverse_mount_component_name,
-			type_string_sorter,part_list_flag,default_display_bitmap,max_child_number);
-
-		install_mount_component(token_string,ek,request_response,fr,pcfps,
-				change_part_name,mount_component_name,reverse_mount_component_name,
+		super(token_string,ek,request_response,fr,pcfps,change_part_name,mount_component_name,
 				type_string_sorter,part_list_flag,default_display_bitmap,max_child_number);
+		
+		install_mount_component(token_string,ek,request_response,fr,pcfps,
+				change_part_name,mount_component_name,type_string_sorter,
+				part_list_flag,default_display_bitmap,max_child_number);
 	}
 }

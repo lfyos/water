@@ -1,19 +1,22 @@
 [
-	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
-	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
-	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
-	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
-	
-	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
-	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
-	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
-	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
-	
-	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
-	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
-	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"],
-	["vertex_location","vertex_normal","vertex_material","vertex_id","vertex_texture"]
-	
+	[
+		"vertex_location",
+		"vertex_normal",
+		"vertex_material",
+		"vertex_id",
+		"vertex_texture",
+		"vertex_color"
+	],
+	[
+		"vertex_location",
+		"vertex_normal",
+		"vertex_material",
+		"vertex_id",
+		"",
+		"",
+		"vertex_texture",
+		"vertex_color"
+	]
 ],
 
 function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
@@ -52,241 +55,194 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
 	
-	function create_vertex_array(p)
+	function draw_part(primitive_type,part_buffer_object,vertex_array_id,selected_flag)
 	{
-		for(var i=0,ni=p.vertex_array_object.length;i<ni;i++){
-			gl.bindVertexArray(p.vertex_array_object[i]);
-			gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer_object);
-		
-			var offset=20,attribute_id;
-			
-			attribute_id=gl.getAttribLocation (shader_program,"vertex_unit");
-			if(p.item_size<=offset)
-				gl.disableVertexAttribArray	(attribute_id);
-			else{
-				gl.vertexAttribPointer		(attribute_id,1,gl.FLOAT,false,p.item_size*4,offset*4);
-				gl.enableVertexAttribArray	(attribute_id);
-				offset++;
-			}
-			
-			attribute_id=gl.getAttribLocation (shader_program,"vertex_value");
-			if(i==0){
-				gl.disableVertexAttribArray	(attribute_id);
-			}else{
-				offset+=i-1;
-				if(p.item_size<=offset)
-					gl.disableVertexAttribArray	(attribute_id);
-				else{
-					gl.vertexAttribPointer		(attribute_id,1,gl.FLOAT,false,p.item_size*4,offset*4);
-					gl.enableVertexAttribArray	(attribute_id);
-					offset++;
-				}
-			}
-		}
-	}
-	
-	function draw_primitive(primitive_type,
-		part_buffer_object,display_value_id,material,my_do_clip_close,draw_flag)
-	{
-		gl.uniform1i(shader_program.draw_flag_uniform,draw_flag);
 		for(var i=0,ni=part_buffer_object.region_data.length;i<ni;i++){
 			var p=part_buffer_object.region_data[i];
-			var my_material=material[p.material_id%material.length];
-			if(my_material.do_clip_close|my_do_clip_close){
-				if(typeof(p.opengl_flag)=="undefined"){
-					p.opengl_flag=true;
-					create_vertex_array(p);
-				}
-				gl.bindTexture(gl.TEXTURE_2D,my_material.texture_object);
-				gl.bindBufferBase(gl.UNIFORM_BUFFER,0,my_material.uniform_block_buffer_object);
-				gl.bindVertexArray(p.vertex_array_object[display_value_id%(p.vertex_array_object.length)]);
-				gl.drawArrays(primitive_type,0,p.item_number);
-			}
+			var material_number=part_material[0].material.length-1;
+			var material_id=selected_flag?material_number:(p.material_id%material_number);
+			
+			gl.activeTexture(gl.TEXTURE0);
+			gl.bindTexture(gl.TEXTURE_2D,part_material[0].material[material_id].texture_object);
+			gl.bindSampler(0,shader_program.sampler);
+			gl.uniform1i(shader_program.texture_object_uniform,0);
+			
+			gl.bindBufferBase(gl.UNIFORM_BUFFER,0,part_material[0].material[material_id].buffer_object);
+			gl.bindVertexArray(p.vertex_array_object[vertex_array_id]);
+			gl.drawArrays(primitive_type,0,p.item_number);
 		}
 	}
-	
-	function do_render(display_code,part_buffer_object,primitive_type)
-	{		
-		var material;
-		
-		if((material=part_material[0].material).length<=0)
-			return;
-		
+	function draw_primitive(my_display_bitmap,primitive_type,part_buffer_object,transparency_flag,exit_flag)
+	{
 		for(var i=0,ni=component_data_array.length;i<ni;i++){
-			var buffer_id					=component_data_array[i][0];
-			var my_display_code				=component_data_array[i][1];
-			var my_display_flag				=component_data_array[i][2];
-
+			var buffer_id		=component_data_array[i][0];
+			var display_bitmap	=component_data_array[i][1];
+			
 			while(data_buffer[buffer_id].length>1)
 				data_buffer[buffer_id].shift();
-			
-			var my_close_clip_plane_number	= data_buffer[buffer_id][0][0];
-			var display_value_id			= data_buffer[buffer_id][0][1];
-			var effective_selected_flag		=(data_buffer[buffer_id][0][2]>0)?2:0;
-			
-			if(primitive_type!=gl.TRIANGLES)
-				display_value_id=0;
-			
-			var component_id=part_component_id_and_driver_id[buffer_id][0];
-			var discard_flag=1;
-			
-			if((my_display_code&display_code)==0){
-				if(render.pickup.component_id!=component_id)
+
+			var component_id			=data_buffer[buffer_id][0][0];
+			var transparency_value		=data_buffer[buffer_id][0][1];
+			var close_clip_plane_number	=data_buffer[buffer_id][0][2];
+			var display_value_id		=data_buffer[buffer_id][0][3];
+			var selected_flag			=data_buffer[buffer_id][0][4];
+
+			if(transparency_flag^(transparency_value<1.0))
+				continue;
+			if((display_bitmap&my_display_bitmap)==0)
+				if((pickup.component_id!=component_id)||exit_flag)
 					continue;
-				if(my_display_flag<1)		//don't do other render for pickup component.
-					continue;				//except for main display and selection display.
-				if((display_code&4)!=0)		//don't display depth for pickup component,display it directly.
-					continue;				//otherwise rendered depth will hide normal color display. 
-				discard_flag=0;
-			}
+
+			var model_matrix_data=component_location.get_component_location(component_id);
 			
-			component_location.get_component_location(component_id);
-			
-			var clip_flag=0,do_close_flag=false;
-			if(my_close_clip_plane_number>0){
-				clip_flag=4;
-				if(primitive_type==gl.TRIANGLES){
-					gl.enable(gl.STENCIL_TEST); 
+			switch(primitive_type){
+			case gl.TRIANGLES:
+				if(close_clip_plane_number>0){
+					gl.enable(gl.STENCIL_TEST);
 					gl.stencilFunc(gl.ALWAYS,0x01,0x01);
-		 			gl.stencilOp(gl.KEEP,gl.INVERT,gl.INVERT);
-		 			do_close_flag=true;
-	 			}
-			}
-			
-			draw_primitive(primitive_type,part_buffer_object,display_value_id,material,true,
-					discard_flag+effective_selected_flag+clip_flag+(display_value_id>0?16:0));
-
-			if(do_close_flag){
-				gl.stencilFunc(gl.NOTEQUAL,0x00,0x01);
-				gl.stencilOp(gl.KEEP,gl.ZERO,gl.ZERO);
-				
-				clip_flag=8;
-				draw_primitive(primitive_type,part_buffer_object,display_value_id,material,false,
-					discard_flag+effective_selected_flag+clip_flag+(display_value_id>0?16:0));
-
+			 		gl.stencilOp(gl.KEEP,gl.INVERT,gl.INVERT);
+			 		gl.uniform4f(shader_program.draw_par_uniform,transparency_value,0,0,display_value_id%9);
+			 		draw_part(primitive_type,part_buffer_object,Math.floor(display_value_id/9),selected_flag);
+			 		
+			 		gl.stencilFunc(gl.NOTEQUAL,0x00,0x01);
+					gl.stencilOp(gl.KEEP,gl.ZERO,gl.ZERO);
+					gl.uniform4f(shader_program.draw_par_uniform,transparency_value,1,0,display_value_id%9);
+					draw_part(primitive_type,part_buffer_object,Math.floor(display_value_id/9),selected_flag);
+					gl.disable(gl.STENCIL_TEST);
+					break;
+				}
+			case gl.LINES:
+			case gl.POINTS:
 				gl.disable(gl.STENCIL_TEST);
+				gl.uniform4f(shader_program.draw_par_uniform,transparency_value,0,0,display_value_id%9);
+				draw_part(primitive_type,part_buffer_object,Math.floor(display_value_id/9),selected_flag);
+				break;
 			}
 		}
 	}
 
 	if(do_render_number.engine_render==0){
-		shader_program.sampler=gl.createSampler();
-		gl.samplerParameteri(shader_program.sampler,gl.TEXTURE_MAG_FILTER,	gl.LINEAR);
-		gl.samplerParameteri(shader_program.sampler,gl.TEXTURE_MIN_FILTER,	gl.LINEAR);
-		gl.samplerParameteri(shader_program.sampler,gl.TEXTURE_WRAP_S,		gl.MIRRORED_REPEAT);
-		gl.samplerParameteri(shader_program.sampler,gl.TEXTURE_WRAP_T,		gl.MIRRORED_REPEAT);
-		
-		shader_program.default_texture_object=utility.load_texture_image();
-		gl.uniform1i(gl.getUniformLocation(shader_program,"texture_sampler"),0);
-
 		gl.uniformBlockBinding(shader_program,gl.getUniformBlockIndex(shader_program,"material_information"),0);
-		gl.uniformBlockBinding(shader_program,gl.getUniformBlockIndex(shader_program,"light_information"),	 1);
-		gl.uniformBlockBinding(shader_program,gl.getUniformBlockIndex(shader_program,"light_position"),	 	 2);
+		shader_program.draw_par_uniform			=gl.getUniformLocation(shader_program,"draw_par");
+		shader_program.texture_object_uniform	=gl.getUniformLocation(shader_program,"texture_object");
 		
-		shader_program.draw_flag_uniform	=gl.getUniformLocation(shader_program,"draw_flag");
+		shader_program.sampler=gl.createSampler();
+		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MAG_FILTER,	gl.LINEAR);
+		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MIN_FILTER,	gl.LINEAR);
+		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_S,		gl.MIRRORED_REPEAT);
+		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_T,		gl.MIRRORED_REPEAT);
 		
-		gl.uniform1i(shader_program.draw_flag_uniform,	1);
-	};
-	
-	var max_light_number=8;
+		shader_program.destroy=function(gl,shader_program,shader_object,program_id)
+		{
+			gl.deleteSampler(shader_program.sampler);
+			shader_program.destroy=null;
+		}
+	}
 	
 	if(do_render_number.engine_part==0){
-		var light=part_material[0].light,light_data=new Array();
-		for(var i=0,ni=light.length;(i<ni)&&(i<max_light_number);i++)
-			light_data=light_data.concat(light[i].parameter);
-		while(light_data.length<(max_light_number*16))
-			light_data.push(-1,0,0,1,	0,0,0,1,	0,0,0,1,	0,0,0,1);
-		light_data=light_data.concat(part_material[0].global_ambient);
-		
-		var my_light_uniform_block_buffer_object=gl.createBuffer();
-		gl.bindBuffer(gl.UNIFORM_BUFFER,my_light_uniform_block_buffer_object);
-		gl.bufferData(gl.UNIFORM_BUFFER,new Float32Array(light_data),gl.STATIC_DRAW);
-		part_material[0].light_parameter_uniform_block_buffer_object=my_light_uniform_block_buffer_object;
-		
-		light_data=new Array();
-		for(var i=0;i<max_light_number;i++)
-			light_data.push(0,0,0,1);
-		my_light_uniform_block_buffer_object=gl.createBuffer();
-		gl.bindBuffer(gl.UNIFORM_BUFFER,my_light_uniform_block_buffer_object);
-		gl.bufferData(gl.UNIFORM_BUFFER,new Float32Array(light_data),gl.DYNAMIC_DRAW);
-		part_material[0].light_position_uniform_block_buffer_object=my_light_uniform_block_buffer_object;
-
-		var material=part_material[0].material;
-		for(var i=0,ni=material.length;i<ni;i++){
-			if(material[i].texture_file==null)
-				material[i].texture_object=shader_program.default_texture_object;
+		part_material[0].material.push(part_material[0].selected_material);
+		for(var i=0,ni=part_material[0].material.length;i<ni;i++){
+			var p=part_material[0].material[i],buffer_data;
+			
+			if(typeof(p.vertex_color_type)=="undefined")
+				p.vertex_color_type=0;
+			if(typeof(p.fragment_color_type)=="undefined")
+				p.fragment_color_type=0;
+			if(typeof(p.color_parameter)=="undefined")
+				p.color_parameter=[0.0,0.0,0.0,1.0];
+			if(typeof(p.texture_parameter)=="undefined")
+				p.texture_parameter=[0.0,0.0,0.0,1.0];
+			if(typeof(p.texture_file)=="undefined")
+				p.texture_file=null;
+			if(typeof(p.color)=="undefined")
+				p.color=[0,0,0,1];
+				
+			buffer_data=[p.vertex_color_type,p.fragment_color_type,0,p.shininess];
+			
+			buffer_data=buffer_data.concat( p.color_parameter);
+			buffer_data=buffer_data.concat( p.texture_parameter);
+			
+			buffer_data=buffer_data.concat( p.color);
+			
+			buffer_data=buffer_data.concat( p.ambient);
+			buffer_data=buffer_data.concat( p.diffuse);
+			buffer_data=buffer_data.concat( p.specular);
+			buffer_data=buffer_data.concat( p.emission);
+			
+			buffer_data=buffer_data.concat(part_material[0].light_color_factor);
+			
+			p.buffer_object=gl.createBuffer();
+			gl.bindBuffer(gl.UNIFORM_BUFFER,p.buffer_object);
+			gl.bufferData(gl.UNIFORM_BUFFER,new Float32Array(buffer_data),gl.STATIC_DRAW);
+			
+			if(p.texture_file==null)
+				p.texture_object=null;
 			else
-				material[i].texture_object=utility.load_server_part_image(
-						render_id,part_id,[["file",material[i].texture_file]]);
-			material[i].uniform_block_buffer_object=gl.createBuffer();
-			gl.bindBuffer(gl.UNIFORM_BUFFER,material[i].uniform_block_buffer_object);
-			gl.bufferData(gl.UNIFORM_BUFFER,new Float32Array(material[i].parameter),gl.STATIC_DRAW);
+				p.texture_object=utility.load_server_part_image(render_id,part_id,[["file",p.texture_file]]);
 		}
-	}
-	
-	if(do_render_number.render_part==0){
-		var light=part_material[0].light,light_data=new Array();
-		for(var i=0,ni=light.length;i<ni;i++){
-			var light_component_id	=camera_object_parameter[light[i].camera_id].component_id;
-			var light_distance		=camera_object_parameter[light[i].camera_id].distance;
-			var light_matrix		=component_location.get_component_location_routine(light_component_id);
-			var light_position		=computer.caculate_coordinate(light_matrix,0,0,light_distance);
-			light_data.push(light_position[0],light_position[1],light_position[2],light_position[3]);
+		part_buffer_object.destroy=function(gl,part_buffer_object,render_id,part_id)
+		{
+			for(var i=0,ni=part_material[0].material.length;i<ni;i++){
+				gl.deleteBuffer(part_material[0].material[i].buffer_object);
+				if(part_material[0].material[i].texture_object!=null)
+					gl.deleteTexture(part_material[0].material[i].texture_object);
+			}
+			part_buffer_object.destroy=null;
 		}
-		gl.bindBuffer(gl.UNIFORM_BUFFER,part_material[0].light_position_uniform_block_buffer_object);
-		gl.bufferSubData(gl.UNIFORM_BUFFER,0,new Float32Array(light_data),0);
 	}
 
-	gl.bindBufferBase(gl.UNIFORM_BUFFER,1,part_material[0].light_parameter_uniform_block_buffer_object);
-	gl.bindBufferBase(gl.UNIFORM_BUFFER,2,part_material[0].light_position_uniform_block_buffer_object);
-	
-	gl.disable(gl.STENCIL_TEST);
-	
-	gl.activeTexture(gl.TEXTURE0);
-	gl.bindSampler(0,shader_program.sampler);
-	
 	switch(method_id){
 	case 0://render scene before depth rendering
 		break;
 	case 1://render scene for component selection
-		do_render(2+8+16+32,part_buffer_object.point,	gl.POINTS);
-		do_render(2+8+16+32,part_buffer_object.face,	gl.TRIANGLES);
+		gl.polygonOffset(1,1);
+		gl.enable(gl.POLYGON_OFFSET_FILL);
+		draw_primitive(2+32,		gl.TRIANGLES,	part_buffer_object.face, 	false,	false);
+		gl.disable(gl.POLYGON_OFFSET_FILL);
+		draw_primitive(2+32,		gl.POINTS,		part_buffer_object.point,	false,	false);
 		break;
 	case 2://render scene for shadow depth
-		if(part_material[0].transparency_flag)
-			break;
-		do_render(2+8+16,	part_buffer_object.face,	gl.TRIANGLES);
+		gl.polygonOffset(1,1);
+		gl.enable(gl.POLYGON_OFFSET_FILL);
+		draw_primitive(2,			gl.TRIANGLES,	part_buffer_object.face, 	false,	true);
+		gl.disable(gl.POLYGON_OFFSET_FILL);	
 		break;
 	case 3://render depth only,no color rendering
-		if(part_material[0].transparency_flag)
-			break;
-		gl.colorMask(false,false,false,false);
-		do_render(4,		part_buffer_object.face,	gl.TRIANGLES);
-		gl.colorMask(true,true,true,true);
-		break;
-	case 4://render scene after depth rendering
+		gl.colorMask(false,false,false,false);	
 		
 		gl.polygonOffset(1,1);
 		gl.enable(gl.POLYGON_OFFSET_FILL);
-		do_render(8,		part_buffer_object.frame,	gl.LINES);
-		do_render(16,		part_buffer_object.edge,	gl.LINES);
-		do_render(32,		part_buffer_object.point,	gl.POINTS);
+		draw_primitive(4,			gl.TRIANGLES,	part_buffer_object.face, 	false,	true);
 		gl.disable(gl.POLYGON_OFFSET_FILL);
 			
-		if(!(part_material[0].transparency_flag))
-			do_render(2,	part_buffer_object.face,	gl.TRIANGLES);
+		gl.colorMask(true,true,true,true);
+
+		break;
+	case 4://render scene after depth rendering
+		gl.polygonOffset(1,1);
+		gl.enable(gl.POLYGON_OFFSET_FILL);
+		draw_primitive(2,			gl.TRIANGLES,	part_buffer_object.face, 	false,	false);
+		gl.disable(gl.POLYGON_OFFSET_FILL);
+		
+		draw_primitive(8,			gl.LINES,		part_buffer_object.frame,	false,	true);
+		draw_primitive(16,			gl.LINES,		part_buffer_object.edge,	false,	false);
+		draw_primitive(32,			gl.POINTS,		part_buffer_object.point,	false,	false);
 		
 		break;
 	case 5://render scene for blending
-		if(!(part_material[0].transparency_flag))
-			break;
 		gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
 		gl.enable(gl.BLEND);
 		gl.depthMask(false);
-		do_render(2,		part_buffer_object.face,	gl.TRIANGLES);	
+	
+		gl.polygonOffset(1,1);
+		gl.enable(gl.POLYGON_OFFSET_FILL);
+		draw_primitive(2,			gl.TRIANGLES,	part_buffer_object.face, 	true,	true);
+		gl.disable(gl.POLYGON_OFFSET_FILL);
+		
 		gl.disable(gl.BLEND);
-		gl.depthMask(true);
-
+		gl.depthMask(true);	
 		break;
-	}
+	default:
+		return;
+	}	
 }

@@ -1,98 +1,115 @@
+#define MAX_LIGHT_NUMBER 4
 uniform material_information
 {
-	float render_method,parameter_0,parameter_1,parameter_2,parameter_3;
-	float ambient,diffuse,specular,shininess,transparency,emission;
-	float texture_move_x,texture_move_y,texture_scale_cos,texture_scale_sin;
-	
-	float clip_mode;
+	float vertex_color_type,fragment_color_type,temp,shininess;
+	vec4 color_parameter,texture_parameter;
+	vec4 color,ambient,diffuse,specular,emission;
+	vec4 light_color_factor[MAX_LIGHT_NUMBER];
 }material_info;
+uniform vec4 draw_par;
+uniform sampler2D texture_object;
 
-uniform int draw_flag;
-
-uniform sampler2D texture_sampler;
-
-in	vec4  frag_location,	frag_normal,	frag_material,		frag_id,	frag_texture;
-in  float frag_unit,		frag_value;
-
-in	vec4  frag_color,		frag_clip_world_location;
+in vec4 frag_position,frag_material,frag_id,frag_texture,frag_color;
+in float render_value;
 
 layout (location = 0) out vec4 frag_data[4];
 
 void main(void)
 {
-	if(round(frag_id.w)==2.0)
-		if(distance(gl_PointCoord,vec2(0.5,0.5))>0.5){
-			discard;
-			return;
-		}
-	if((draw_flag&12)==4){
-		if(dot(target_info.clip_plane,frag_clip_world_location)>0.0){
-			discard;
-			return;
-		}
-	}else if((draw_flag&12)==8){
-		if(dot(target_info.clip_plane,frag_clip_world_location)<0.0){
-			discard;
-			return;
-		}
-	}
+	int my_frag_type		=int(round(frag_id.w));
+	int my_component_id		=component_info.component_id;
+	int my_body_id			=int(round(frag_id.x));
+	int my_face_id			=int(round(frag_id.y));
+	int my_vertex_id		=int(round(frag_id.z));
+	int my_loop_id			=int(round(frag_texture.x));
+	int my_edge_id			=int(round(frag_texture.y));
+	int my_point_id			=my_vertex_id;
 	
-	if(frag_color.w<0.5){
-		discard;
-		return;
-	}
-	int primitive_type=int(round(frag_id.w));
-	int render_method=int(round(material_info.render_method));
-	vec4 texture_color=texture(texture_sampler,vec2(
-			material_info.texture_move_x
-				+( frag_texture.x)*(material_info.texture_scale_cos)
-				+(frag_texture.y)*(material_info.texture_scale_sin),
-			material_info.texture_move_y
-				+(-frag_texture.x)*(material_info.texture_scale_sin)
-				+(frag_texture.y)*(material_info.texture_scale_cos)));
+	float transparency_value=draw_par.x;
+	bool clip_flag			=((int(draw_par.y)&1)!=0)?true:false;
+	
+	gl_FragDepth=gl_FragCoord.z;
 
-	if(primitive_type==0){			//if face fragment
-		if(render_method==3){		//if do discard by texture alf value
-			if(texture_color.w<material_info.parameter_0){
+	if(clip_flag){
+		if(dot(target_info.clip_plane,frag_position)<0.0)
+			discard;
+	}else{
+		if(dot(target_info.clip_plane,frag_position)>0.0)
+			discard;
+	}
+	switch(my_frag_type){
+	case 0://face
+		switch(int(material_info.fragment_color_type)){
+		default:
+		case 0:
+			frag_data[0]=vec4(frag_color.rgb,transparency_value);
+			break;
+		case 1:
+			frag_data[0]=vec4(texture(texture_object,frag_texture.xy).rgb,transparency_value);
+			break;
+		case 2:
+			frag_data[0]=texture(texture_object,frag_texture.xy);
+			if(frag_data[0].a<material_info.color_parameter.x)
 				discard;
-				return;
-			}
-		}
-	}
-	
-	if(pass_info.method_id==1){	
-		int primitive_type=int(round(frag_id.w));
-		
-		if(pass_info.pass_id==0){
-			frag_data[0]=code_integer(component_info.component_id);
-			frag_data[1]=code_integer(int(round(frag_id.x)));
-			frag_data[2]=code_integer(int(round(frag_id.y)));
-			frag_data[3]=code_integer(int(round(frag_id.z)));
-		}else{
-			frag_data[0]=code_integer((primitive_type==0)?-1:int(round(frag_texture.x)));
-			frag_data[1]=code_integer((primitive_type==0)?-1:int(round(frag_texture.y)));
-			frag_data[2]=code_float(gl_FragCoord.z*2.0-1.0);
-			frag_data[3]=code_float(0.0);
-		}
-		return;	
-	}
-
-	switch (render_method){
-	case 2:
-	case 3:
-		if((primitive_type==0)&&((draw_flag&2)==0)){
-			frag_data[0]=vec4(texture_color.rgb,1.0);
+			else
+				frag_data[0].a=transparency_value;
 			break;
 		}
-	default:
-		frag_data[0]=vec4(frag_color.rgb,1.0);
+		break;
+	case 1://line
+		frag_data[0]=vec4(0.0,0.0,0.0,transparency_value);
+		if(system_info.pickup_component_id==my_component_id){
+			frag_data[0]=vec4(0.0,0.0,1.0,transparency_value);
+			if(system_info.pickup_body_id==my_body_id){
+				frag_data[0]=vec4(0.0,0.5,0.5,transparency_value);
+				if(system_info.pickup_face_id==my_face_id){
+					gl_FragDepth-=0.001;
+					frag_data[0]=vec4(0.0,1.0,0.0,transparency_value);
+				}
+			}
+		}
+		break;
+	case 2://point
+		if(distance(gl_PointCoord,vec2(0.5,0.5))>0.5)
+			discard;
+		frag_data[0]=vec4(1.0,1.0,0.0,transparency_value);
+		if(system_info.pickup_component_id==my_component_id){
+			frag_data[0]=vec4(0.0,0.0,1.0,transparency_value);
+			if(system_info.pickup_body_id==my_body_id){
+				frag_data[0]=vec4(0.0,0.5,0.5,transparency_value);
+				if(system_info.pickup_face_id==my_face_id){
+					gl_FragDepth-=0.001;
+					frag_data[0]=vec4(0.0,1.0,0.0,transparency_value);
+					if(system_info.pickup_loop_id==my_loop_id){
+						frag_data[0]=vec4(0.35,0.65,0.0,transparency_value);
+						if(system_info.pickup_edge_id==my_edge_id){
+							frag_data[0]=vec4(0.65,0.35,0.0,transparency_value);
+							if(system_info.pickup_point_id==my_point_id){
+								gl_FragDepth-=0.001;
+								frag_data[0]=vec4(1.0,0.0,0.0,transparency_value);
+							}
+						}
+					}			
+				}
+			}
+		}
+		break;
+	default://frame
+		frag_data[0]=vec4(0.2,0.2,0.2,transparency_value);
 		break;
 	}
-	
-	if(pass_info.method_id==5){
-		if((frag_data[0].w=1.0-material_info.transparency)<0.0)
-			frag_data[0].w=0.0;
-		if(frag_data[0].w>1.0)
-			frag_data[0].w=1.0;
+
+	if(pass_info.method_id==1){
+		if(pass_info.pass_id==0){
+			frag_data[0]=code_integer(my_component_id);
+			frag_data[1]=code_integer(my_body_id);
+			frag_data[2]=code_integer(my_face_id);
+			frag_data[3]=code_integer(my_point_id);
+		}else{
+			frag_data[0]=code_integer((my_frag_type==0)?-1:my_loop_id);
+			frag_data[1]=code_integer((my_frag_type==0)?-1:my_edge_id);
+			frag_data[2]=code_float(gl_FragCoord.z*2.0-1.0);
+			frag_data[3]=code_float(render_value/4.0);
+		}
 	}
 }

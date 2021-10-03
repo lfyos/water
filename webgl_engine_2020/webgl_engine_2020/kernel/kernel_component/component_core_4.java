@@ -72,21 +72,9 @@ public class component_core_4 extends component_core_3
 				"component_name:	"+component_name);
 			return null;
 		}
-		if(ret_val.length<2){
+		if(ret_val.length<=0){
 			debug_information.println(
-				"Component driver assemble_file_name_and_file_charset error(ret_val.length<2):	",
-				"component_name:	"+component_name);
-			return null;
-		}
-		if((ret_val[0]==null)||(ret_val[1]==null)){
-			debug_information.println(
-				"Component driver assemble_file_name_and_file_charset error((ret_val[0]==null)||(ret_val[1]==null)):	",
-				"component_name:	"+component_name);
-			return null;
-		}
-		if((ret_val[0].length<=0)||(ret_val[1].length<=0)){
-			debug_information.println(
-				"Component driver assemble_file_name_and_file_charset error((ret_val[0].length<=0)||(ret_val[1].length<=0)):	",
+				"Component driver assemble_file_name_and_file_charset error(ret_val.length<=0):	",
 				"component_name:	"+component_name);
 			return null;
 		}
@@ -126,21 +114,13 @@ public class component_core_4 extends component_core_3
 		}
 		if(type_string.indexOf("sub")>=0)
 			my_file_name=ek.scene_par.scene_sub_directory+my_file_name;
-		
 		if(type_string.indexOf("absolute")>0)
-			return new String[][] 
-					{
-						new String[] {my_file_name	 },
-						new String[] {charset_name_array[3]}
-					};
-		for(int i=0,ni=my_directory_name_array.length;i<ni;i++) {
+			return new String[][]{new String[]{my_file_name,charset_name_array[3]}};
+			
+		for(int i=0,ni=my_directory_name_array.length;i<ni;i++)
 			if(new File(my_directory_name_array[i]+my_file_name).exists()) 
-				return new String[][] 
-						{
-							new String[] {my_directory_name_array[i]+my_file_name	 },
-							new String[] {charset_name_array[i]}
-						};
-		}
+				return new String[][]{new String[] {my_directory_name_array[i]+my_file_name,charset_name_array[i]}};
+
 		debug_information.println("file mount file NOT exits:	",
 				"my_file_name:	"+my_file_name+"component_name:	"+component_name);
 		return null;
@@ -175,21 +155,9 @@ public class component_core_4 extends component_core_3
 				"component_name:	"+component_name);
 			return null;
 		}
-		if(ret_val.length<2) {
+		if(ret_val.length<=0) {
 			debug_information.println(
-				"Part_driver driver assemble_file_name_and_file_charset error(ret_val.length<2):	",
-				"component_name:	"+component_name);
-			return null;
-		}
-		if((ret_val[0]!=null)&&(ret_val[1]!=null)) {
-			debug_information.println(
-				"Part_driver driver assemble_file_name_and_file_charset error(ret_val.length<2):	",
-				"component_name:	"+component_name);
-			return null;
-		}
-		if((ret_val[0].length<=0)&&(ret_val[1].length<=0)){
-			debug_information.println(
-				"Part_driver driver assemble_file_name_and_file_charset error((ret_val[0].length<=0)&&(ret_val[1].length<=0)):	",
+				"Part_driver driver assemble_file_name_and_file_charset error(ret_val.length<=0):	",
 				"component_name:	"+component_name);
 			return null;
 		}
@@ -245,21 +213,9 @@ public class component_core_4 extends component_core_3
 					"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
 			return null;
 		}
-		if(ret_val.length<2) {
+		if(ret_val.length<=0) {
 			debug_information.println(
-					"external_part_driver driver assemble_file_name_and_file_charset error(ret_val.length<2):	",
-					"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
-			return null;
-		}
-		if((ret_val[0]==null)||(ret_val[1]==null)){
-			debug_information.println(
-					"external_part_driver driver assemble_file_name_and_file_charset error((ret_val[0]==null)||(ret_val[1]==null)):	",
-					"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
-			return null;
-		}
-		if((ret_val[0].length<=0)||(ret_val[1].length<=0)) {
-			debug_information.println(
-					"external_part_driver driver assemble_file_name_and_file_charset error((ret_val[0].length<=0)||(ret_val[1].length<=0)):	",
+					"external_part_driver driver assemble_file_name_and_file_charset error(ret_val.length<=0):	",
 					"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
 			return null;
 		}
@@ -268,7 +224,7 @@ public class component_core_4 extends component_core_3
 	private void append_children(file_reader fr,String token_string,engine_kernel ek,
 			client_request_response request_response,part_container_for_part_search pcfps,
 			change_name change_part_name,change_name mount_component_name,
-			change_name reverse_mount_component_name,part_type_string_sorter type_string_sorter,
+			part_type_string_sorter type_string_sorter,
 			boolean part_list_flag,long default_display_bitmap,int max_child_number)
 	{
 		children=new component[0];
@@ -293,8 +249,7 @@ public class component_core_4 extends component_core_3
 					component my_children[]=new component[create_child_number];
 					for(int i=0;i<create_child_number;i++)
 						my_children[i]=new component(token_string,ek,request_response,
-							fr,pcfps,change_part_name,mount_component_name,
-							reverse_mount_component_name,type_string_sorter,
+							fr,pcfps,change_part_name,mount_component_name,type_string_sorter,
 							part_list_flag,default_display_bitmap,max_child_number);
 					append_child(create_child_number,my_children);
 				}
@@ -329,6 +284,7 @@ public class component_core_4 extends component_core_3
 			case "charset_change_part_name":
 			case "absolute_change_part_name":
 			case "absolute_charset_change_part_name":
+			{
 				String file_name_array[]=new String[1];
 				if((file_name_array[0]=fr.get_string())==null)
 					file_name_array=new String[0];
@@ -342,31 +298,16 @@ public class component_core_4 extends component_core_3
 				else
 					change_part_name=new change_name(file_name_array,null,fr.get_string());
 				continue;
+			}
 			case "mount_on_component":
 			{
-				int search_id;
-				String component_name=fr.get_string(),file_name=fr.get_string();
-				if((search_id=file_name.indexOf(':'))<=0)
+				String mount_on_component_component_name=fr.get_string();
+				String mount_on_component_file_name		=fr.get_string();
+				if(mount_on_component_component_name==null)
 					continue;
-				String file_charset=file_name.substring(0,search_id);
-				file_name=file_name.substring(search_id+1);
-				switch(file_charset) {
-				case "this_charset":
-					file_charset=fr.get_charset();
-					break;
-				}
-				if((search_id=file_name.indexOf(':'))<=0)
+				if(mount_on_component_file_name==null)
 					continue;
-				String directory_type=file_name.substring(0,search_id);
-				file_name=file_name.substring(search_id+1);
-				switch(directory_type) {
-				case "this_directory":
-					directory_type="absolute_directory";
-					file_name=fr.directory_name+file_reader.separator(file_name);
-					break;
-				}
-				mount_component_name.insert(
-					new String[] {component_name,file_charset+":"+directory_type+":"+file_name});
+				mount_component_name.insert(new String[]{mount_on_component_component_name,mount_on_component_file_name});
 				continue;
 			}
 			case "mount":
@@ -386,17 +327,23 @@ public class component_core_4 extends component_core_3
 				assemble_file_name_array=part_driver_mount_array(fr,ek,request_response);
 				break;
 			case "external_part_driver_mount":
-				assemble_file_name_array=external_part_driver_mount_array(
-						change_part_name,fr,pcfps,ek,request_response);
+				assemble_file_name_array=external_part_driver_mount_array(change_part_name,fr,pcfps,ek,request_response);
 				break;
 			}
 			if(assemble_file_name_array==null)
 				continue;
-			component my_children[]=new component[assemble_file_name_array[0].length];
 			int create_child_number=0;
-			for(int i=0,ni=assemble_file_name_array[0].length;i<ni;i++) {
-				String assemble_file_name	=assemble_file_name_array[0][i];
-				String assemble_file_charset=assemble_file_name_array[1][i];
+			component my_children[]=new component[assemble_file_name_array.length];
+			for(int i=0,ni=assemble_file_name_array.length;i<ni;i++) {
+				if(assemble_file_name_array[i]==null)
+					continue;
+				if(assemble_file_name_array[i].length<2)
+					continue;
+				String assemble_file_name,assemble_file_charset;
+				if((assemble_file_name=assemble_file_name_array[i][0])==null)
+					continue;
+				if((assemble_file_charset=assemble_file_name_array[i][1])==null)
+					continue;
 				file_reader mount_fr=new file_reader(assemble_file_name,assemble_file_charset);
 				if(mount_fr.eof()){
 					debug_information.println(
@@ -408,7 +355,7 @@ public class component_core_4 extends component_core_3
 					try{
 						my_children[create_child_number]=new component(
 							token_string,ek,request_response,mount_fr,pcfps,change_part_name,
-							mount_component_name,reverse_mount_component_name,type_string_sorter,
+							mount_component_name,type_string_sorter,
 							part_list_flag,default_display_bitmap,max_child_number);
 						create_child_number++;
 					}catch(Exception e) {
@@ -427,15 +374,13 @@ public class component_core_4 extends component_core_3
 			engine_kernel ek,client_request_response request_response,
 			file_reader fr,part_container_for_part_search pcfps,
 			change_name change_part_name,change_name mount_component_name,
-			change_name reverse_mount_component_name,part_type_string_sorter type_string_sorter,
+			part_type_string_sorter type_string_sorter,
 			boolean part_list_flag,long default_display_bitmap,int max_child_number)
 	{
-		super(token_string,ek,request_response,fr,pcfps,
-			change_part_name,mount_component_name,reverse_mount_component_name,
+		super(token_string,ek,request_response,fr,pcfps,change_part_name,mount_component_name,
 			type_string_sorter,part_list_flag,default_display_bitmap,max_child_number);
 
-		append_children(fr,token_string,ek,request_response,pcfps,
-			change_part_name,mount_component_name,reverse_mount_component_name,
+		append_children(fr,token_string,ek,request_response,pcfps,change_part_name,mount_component_name,
 			type_string_sorter,part_list_flag,default_display_bitmap,max_child_number);
 	}
 }

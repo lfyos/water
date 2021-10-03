@@ -20,13 +20,11 @@ import kernel_transformation.point;
 public class extended_part_driver extends part_driver
 {
 	private String light_file_name;
-	private int part_group_id;
 	
-	public extended_part_driver(String my_light_file_name,int my_part_group_id)
+	public extended_part_driver(String my_light_file_name)
 	{
 		super();
 		light_file_name	=new String(my_light_file_name);
-		part_group_id	=my_part_group_id;
 	}
 	public void destroy()
 	{	
@@ -42,7 +40,7 @@ public class extended_part_driver extends part_driver
 	public part_driver clone(part parent,part p,
 			system_parameter system_par,client_request_response request_response)
 	{
-		return new extended_part_driver(light_file_name,part_group_id);
+		return new extended_part_driver(light_file_name);
 	}
 	public int caculate_material_id(
 			part p,String type_str,int body_id,int face_id,int loop_id,int edge_id,
@@ -72,7 +70,7 @@ public class extended_part_driver extends part_driver
 			append_file(buffer_object_file_writer,"\t\t",p.directory_name+"gltf.material",		charset);
 			append_file(buffer_object_file_writer,"\t\t",p.directory_name+p.material_file_name,	charset);
 			append_file(buffer_object_file_writer,"\t\t",light_file_name,						charset);
-			buffer_object_file_writer.println("\t\t\t\"part_group\"	:	",part_group_id);
+//			buffer_object_file_writer.println("\t\t\t\"part_group\"	:	",part_group_id);
 			buffer_object_file_writer.println("\t\t}");
 		}
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);

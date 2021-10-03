@@ -1,220 +1,96 @@
-#define MAX_LIGHT_NUMBER 8
-
-uniform light_information
-{
-	mat4 parameter[MAX_LIGHT_NUMBER];
-	vec4 global_ambient;
-}light_info;
-
-uniform light_position
-{
-	vec4 position[MAX_LIGHT_NUMBER];
-}light_pos;
-
+#define MAX_LIGHT_NUMBER 4
 uniform material_information
 {
-	float render_method,parameter_0,parameter_1,parameter_2,parameter_3;
-	float ambient,diffuse,specular,shininess,transparency,emission;
-	float texture_move_x,texture_move_y,texture_scale_cos,texture_scale_sin;
-	
-	float clip_mode;
+	float vertex_color_type,fragment_color_type,temp,shininess;
+	vec4 color_parameter,texture_parameter;
+	vec4 color,ambient,diffuse,specular,emission;
+	vec4 light_color_factor[MAX_LIGHT_NUMBER];
 }material_info;
+uniform vec4 draw_par;
+uniform sampler2D texture_object;
 
-uniform int draw_flag;
+in	vec4 vertex_location,vertex_normal,vertex_material,vertex_id,vertex_texture,vertex_color;
+out vec4 frag_position,frag_material,frag_id,frag_texture,frag_color;
+out float render_value;
 
-in	vec4  vertex_location,	vertex_normal,	vertex_material,	vertex_id,	vertex_texture;
-in	float vertex_unit,		vertex_value;
-
-out	vec4  frag_location,	frag_normal,	frag_material,		frag_id,	frag_texture;
-out float frag_unit,		frag_value;
-
-out vec4 frag_color,		frag_clip_world_location;
-
-void face_caculate_one_color(vec4 my_material_color,
-	vec3 vertex_position,vec3 vertex_direction,vec3 vertex_to_eye_direction, int light_id)
-{
-	mat4 p=light_info.parameter[light_id];
-	
-	int  light_type			=int(p[0][0]);
-	if((light_type<0)||(light_type>2))
-		return;
-	
-	vec4 light_color		=my_material_color*		 vec4(p[0][1],p[0][2],p[0][3],1.0);
-	vec3 light_direction	=						 vec3(p[1][0],p[1][1],p[1][2]);
-	
-	float light_ambient		=material_info.ambient*	 p[1][3];
-	float light_diffuse		=material_info.diffuse*	 p[2][0];
-	float light_specular	=material_info.specular* p[2][1];
-	float light_shininess	=material_info.shininess*p[2][2];
-	
-	float light_k0			=p[2][3];
-	float light_k1			=p[3][0];
-	float light_k2			=p[3][1];
-
-	float spot_angle_cos	=p[3][2];
-	float spot_exponent		=p[3][3];
-	
-	vec3 vertex_to_light_direction=light_pos.position[light_id].xyz/light_pos.position[light_id].w-vertex_position;
-	float vertex_to_light_length=length(vertex_to_light_direction);
-	vertex_to_light_direction/=vertex_to_light_length;
-	float attenuation=1.0/(light_k0+(light_k1+light_k2*vertex_to_light_length)*vertex_to_light_length);
-	if(light_type==2){
-		light_direction=normalize(light_direction);
-		float my_spot_angle_cos=dot(-vertex_to_light_direction,light_direction);
-		if((my_spot_angle_cos<=0.0)||(my_spot_angle_cos<=spot_angle_cos))
-			return;
-		attenuation*=pow(my_spot_angle_cos,spot_exponent);
-	}
-	
-	if(light_type==1)
-		vertex_to_light_direction=normalize(-light_direction);
-	
-	frag_color+=attenuation*light_ambient*light_color;
-
-	float pp=max(0.0,dot(vertex_to_light_direction,vertex_direction));
-	frag_color+=attenuation*pp*light_diffuse*light_color;
-	
-	pp=max(0.0,dot(normalize(vertex_to_light_direction+vertex_to_eye_direction),vertex_direction));
-	pp=pow(pp,light_shininess);
-	frag_color+=attenuation*pp*light_specular*light_color;
-}
-
-void face_caculate_all_color(vec4 my_material_color)
-{
-	vec3 vertex_position,vertex_direction,vertex_to_eye_direction;
-	
-	vec4 p=component_info.model_matrix*vec4(vertex_location.xyz,1.0);
-	if((draw_flag&12)==8){
-		p=target_info.clip_plane_matrix*p;
-		vertex_position=p.xyz/p.w;
-		vertex_direction=normalize(target_info.clip_plane.xyz);
-	}else{
-		vertex_position=p.xyz/p.w;
-		p=component_info.model_matrix*vec4(vertex_location.xyz+vertex_normal.xyz,1.0);
-		vertex_direction=normalize(p.xyz/p.w-vertex_position);
-	}
-	
-	vertex_to_eye_direction=normalize(target_info.eye_point.xyz/target_info.eye_point.w-vertex_position);
-	
-	frag_color =vertex_material*material_info.emission;
-	frag_color+=vertex_material*light_info.global_ambient;
-	
-	for(int i=0;i<MAX_LIGHT_NUMBER;i++)
-		face_caculate_one_color(my_material_color,
-			vertex_position,vertex_direction,vertex_to_eye_direction,i);
-
-	frag_color.w=1.0;
-}
-
-void caculate_face_color_switch()
-{
-	if((draw_flag&2)!=0){
-		frag_color=vec4(1.0,0.0,0.0,1.0);
-		return;
-	}
-	
-	int render_method=int(round(material_info.render_method));
-
-	if(render_method==0){
-		face_caculate_all_color(vertex_material);
-		return;
-	}
-	if(render_method==1){
-		face_caculate_all_color(vec4(material_info.parameter_0,
-				material_info.parameter_1,material_info.parameter_2,1.0));
-		return;
-	}
-	frag_color=vec4(0.0,0.0,0.0,1.0);
-	return;
-}
-void caculate_color()
-{
-	int primitive_type=int(round(vertex_id.w));
-	if(primitive_type==0){	//face
-		if((draw_flag&16)==0)
-			caculate_face_color_switch();
-		else{
-			float render_value=vertex_value*4.0;		
-			if(render_value<=1.0)
-				frag_color=vec4(vec3(0.0,0.0,1.0)*(1.0-render_value)+vec3(0.0,1.0,1.0)*(render_value-0.0),1.0);
-			else if(render_value<=2.0)
-				frag_color=vec4(vec3(0.0,1.0,1.0)*(2.0-render_value)+vec3(0.0,1.0,0.0)*(render_value-1.0),1.0);
-			else if(render_value<=3.0)
-				frag_color=vec4(vec3(0.0,1.0,0.0)*(3.0-render_value)+vec3(1.0,1.0,0.0)*(render_value-2.0),1.0);
-			else
-				frag_color=vec4(vec3(1.0,1.0,0.0)*(4.0-render_value)+vec3(1.0,0.0,0.0)*(render_value-3.0),1.0);
-		}
-		return;
-	}
-	if(primitive_type==1){	//edge
-		if(	  (system_info.pickup_component_id<0)
-			||(system_info.pickup_component_id!=component_info.component_id)
-			||(system_info.pickup_body_id!=int(round(vertex_id.x)))||(system_info.pickup_body_id<0)
-			||(system_info.pickup_face_id!=int(round(vertex_id.y)))||(system_info.pickup_face_id<0)){
-				frag_color=vec4(0.0,0.0,0.0,float(draw_flag&1));
-				return;
-			}
-		if(   (system_info.pickup_loop_id !=int(round(vertex_texture.x)))||(system_info.pickup_loop_id<0)
-			||(system_info.pickup_edge_id !=int(round(vertex_texture.y)))||(system_info.pickup_edge_id<0)){
-				frag_color=vec4(0.0,1.0,0.0,1.0);
-				return;
-			}
-		frag_color=vec4(1.0,0.0,0.0,1.0);
-		return;
-	}
-	
-	if(primitive_type==2){	//point
-		if(int(round(vertex_id.z))==0){
-			frag_color=vec4(1.0,0.0,0.0,float(system_info.millisecond)/1000.0);
-			return;
-		}
-		if(	  (system_info.pickup_component_id<0)
-			||(system_info.pickup_component_id!=component_info.component_id)
-			||(system_info.pickup_body_id!=int(round(vertex_id.x)))||(system_info.pickup_body_id<0)
-			||(system_info.pickup_face_id!=int(round(vertex_id.y)))||(system_info.pickup_face_id<0)){
-				frag_color=vec4(0.0,1.0,0.0,float(draw_flag&1));
-				return;
-			}
-		if(	  (system_info.pickup_loop_id !=int(round(vertex_texture.x)))||(system_info.pickup_loop_id<0)
-			||(system_info.pickup_edge_id !=int(round(vertex_texture.y)))||(system_info.pickup_edge_id<0)
-			||(system_info.pickup_point_id!=int(round(vertex_id.z     )))||(system_info.pickup_point_id<0)){
-				frag_color=vec4(0.0,1.0,0.0,1.0);
-				return;
-			}
-				
-		frag_color=vec4(1.0,0.0,0.0,1.0);
-		return;
-	};
-	
-	//frame
-	frag_color=vec4(0.0,0.0,0.0,float(draw_flag&1));
-	
-	return;
-}
 void main(void)
 {
-	gl_PointSize	=16.0;
+	gl_PointSize=16.0;
+
+	bool clip_flag		=((int(draw_par.y)&1)!=0)?true:false;
+	int display_value_id=int(draw_par.w);
+
+	frag_material		=vertex_material;
+	frag_id				=vertex_id;
+	frag_texture		=vertex_texture;
+	frag_color			=vertex_color;
+	render_value		=0.0;
+
+	frag_position=component_info.model_matrix*vec4(vertex_location.xyz,1.0);
+	vec4 real_frag_position=clip_flag?(target_info.clip_plane_matrix*frag_position):frag_position;
+	gl_Position=target_info.projection_matrix*real_frag_position;
+
+	if(display_value_id>0){
+		switch(display_value_id){
+		default:render_value=0.0;				break;
+		case 1:	render_value=vertex_texture.x;	break;
+		case 2:	render_value=vertex_texture.y;	break;
+		case 3:	render_value=vertex_texture.z;	break;
+		case 4:	render_value=vertex_texture.w;	break;
+		case 5:	render_value=vertex_color.x  ;	break;
+		case 6:	render_value=vertex_color.y  ;	break;
+		case 7:	render_value=vertex_color.z  ;	break;
+		case 8:	render_value=vertex_color.w  ;	break;
+		}
+				
+		if((render_value*=4.0)<=1.0)
+			frag_color=vec4(vec3(0.0,0.0,1.0)*(1.0-render_value)+vec3(0.0,1.0,1.0)*(render_value-0.0),1.0);
+		else if(render_value<=2.0)
+			frag_color=vec4(vec3(0.0,1.0,1.0)*(2.0-render_value)+vec3(0.0,1.0,0.0)*(render_value-1.0),1.0);
+		else if(render_value<=3.0)
+			frag_color=vec4(vec3(0.0,1.0,0.0)*(3.0-render_value)+vec3(1.0,1.0,0.0)*(render_value-2.0),1.0);
+		else
+			frag_color=vec4(vec3(1.0,1.0,0.0)*(4.0-render_value)+vec3(1.0,0.0,0.0)*(render_value-3.0),1.0);	
+		return;
+	}
 	
-	frag_location	=vertex_location;
-	frag_normal		=vertex_normal;
-	frag_material	=vertex_material;
-	frag_id			=vertex_id;
-	frag_texture	=vertex_texture;
-	frag_unit		=vertex_unit;
-	frag_value		=vertex_value;
-
-	vec4 world_location=component_info.model_matrix*vec4(vertex_location.xyz,1.0);
-
-	if((draw_flag&12)==8)
-		gl_Position=target_info.clip_plane_matrix*world_location;
-	else
-		gl_Position=world_location;
-	gl_Position=target_info.projection_matrix*gl_Position;
-		
-	if(material_info.clip_mode>0.0)
-		frag_clip_world_location=world_location;
-	else
-		frag_clip_world_location=component_info.model_matrix*vec4(vertex_texture.xyz,1.0);
-		
-	caculate_color();
+	vec3 position_value=real_frag_position.xyz/real_frag_position.w;
+	vec3 to_eye_value=normalize((target_info.eye_point.xyz/target_info.eye_point.w)-position_value);
+	vec3 normal_value;
+	if(clip_flag)
+		normal_value=normalize(target_info.clip_plane.xyz);
+	else{
+		vec4 normal_position=vertex_location+vertex_normal;
+		normal_position=component_info.model_matrix*vec4(normal_position.xyz,1.0);
+		normal_value=normalize((normal_position.xyz/normal_position.w)-position_value);
+	}
+	frag_color=vec4(0.0,0.0,0.0,0.0);
+	for(int i=0;i<MAX_LIGHT_NUMBER;i++){
+		float p;
+		vec4 light_value	=material_info.ambient;
+		vec3 to_light_value	=system_info.light_position[i].xyz/system_info.light_position[i].w;
+			 to_light_value	=normalize(to_light_value-position_value);
+		if((p=dot(to_light_value,normal_value))>0.0){
+			light_value+=material_info.diffuse*p;
+			if((p=dot(normalize(to_light_value+to_eye_value),normal_value))>0.0)
+				light_value+=material_info.specular*pow(p,material_info.shininess);
+		}
+		frag_color+=material_info.light_color_factor[i]*light_value;
+	}
+	switch(int(material_info.vertex_color_type)){
+	case 0:
+		frag_color*=vertex_color;
+		break;
+	case 1:
+		frag_color*=vertex_material;
+		break;
+	case 2:
+		frag_color*=material_info.color;
+		break;
+	default:
+		frag_color=vertex_color;
+		break;
+	}
+	frag_color =vec4(frag_color.rgb+material_info.emission.rgb,1.0);
+	return;
 }

@@ -1,17 +1,28 @@
-/*	material number	*/  2
-
-
-/*	Material NO.0		*/
-/*	caculate_color_method										*/		2
-/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
-/*	ambient,diffuse,specular,shininess,transparency,emission	*/		0.25		0.5		0.75		4.0		0.0		0.0
-/*	texture file name											*/		wood.jpg
-/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
-
-
-/*	Material NO.1		*/
-/*	caculate_color_method										*/		2
-/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
-/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
-/*	texture file name											*/		leather.jpg
-/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
+			"material"	:	[
+				{
+					"vertex_color_type"		:	1,
+					"fragment_color_type"	:	1,
+					"color_parameter"		:	[0.0,	0.0,	0.0,	1.0],
+					"texture_parameter"		:	[0.0,	0.0,	1.0,	0.0],
+					"texture_file"			:	"wood.jpg",
+					"color"					:	[0.0,	0.0,	0.0,	1],
+					"ambient"				:	[0.25,	0.25,	0.25,	1],
+					"diffuse"				:	[0.5,	0.5,	0.5,	1],
+					"specular"				:	[0.75,	0.75,	0.75,	1],
+					"emission"				:	[0.0,	0.0,	0.0,	1],
+					"shininess"				:	4.0
+				},
+				{
+					"vertex_color_type"		:	1,
+					"fragment_color_type"	:	1,
+					"color_parameter"		:	[0.0,	0.0,	0.0,	1.0],
+					"texture_parameter"		:	[0.0,	0.0,	1.0,	0.0],
+					"texture_file"			:	"leather.jpg",
+					"color"					:	[0.0,	0.0,	0.0,	1],
+					"ambient"				:	[1.0,	1.0,	1.0,	1],
+					"diffuse"				:	[1.0,	1.0,	1.0,	1],
+					"specular"				:	[0.5,	0.5,	0.5,	1],
+					"emission"				:	[0.0,	0.0,	0.0,	1],
+					"shininess"				:	0.4
+				}
+			]

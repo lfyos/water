@@ -2,44 +2,44 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="body_value"/>
+		<item key="selection" value="driver_opengl_fixed_pipeline"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
-			<item value="body_value"/>
-			<item value="&#x09;&#x09;"/>
-			<item value="frag_position"/>
-			<item value="model_matrix_data"/>
-			<item value="draw_par_uniform"/>
-			<item value="display_value_id"/>
-			<item value="*4.0"/>
-			<item value="draw_par"/>
-			<item value="render_parameter"/>
+			<item value="driver_cad"/>
+			<item value="&quot;vertex_color_type&quot;&#x09;&#x09;:&#x09;1,"/>
+			<item value="&quot;fragment_color_type&quot;&#x09;:&#x09;1,"/>
+			<item value="&quot;color_parameter&quot;&#x09;&#x09;:&#x09;[0.0,"/>
+			<item value="water_all\\data\\"/>
+			<item value="0.15"/>
+			<item value="0.125"/>
+			<item value="0.175"/>
+			<item value="0.20"/>
+			<item value="0.25"/>
+			<item value="light_color_factor"/>
 			<item value="driver_opengl_fixed_pipeline"/>
-			<item value="render_method"/>
-			<item value="flag"/>
-			<item value="transparency_value"/>
-			<item value="frag_material"/>
-			<item value="vertex_material"/>
+			<item value="create_normal"/>
+			<item value="gltf"/>
+			<item value="f."/>
 		</list>
 		<list key="replacehistory">
-			<item value="&#x09;"/>
+			<item value="driver_opengl_fixed_pipeline"/>
+			<item value="&quot;vertex_color_type&quot;&#x09;&#x09;:&#x09;2,"/>
+			<item value="&quot;vertex_color_type&quot;&#x09;&#x09;:&#x09;1,"/>
+			<item value="&quot;fragment_color_type&quot;&#x09;:&#x09;2,"/>
+			<item value="&quot;color_parameter&quot;&#x09;&#x09;:&#x09;[0.1,"/>
 			<item value=""/>
+			<item value="0.20"/>
+			<item value="0.15"/>
+			<item value="0.125"/>
+			<item value="0.175"/>
+			<item value="driver_cad"/>
+			<item value="fr."/>
+			<item value="&#x09;"/>
 			<item value="color_parameter"/>
 			<item value="transparency_value"/>
-			<item value="if"/>
-			<item value="vertex_array_object[0]"/>
-			<item value="vertex_array_object"/>
-			<item value="+client_id"/>
-			<item value="destroy"/>
-			<item value="alert"/>
-			<item value="cur.render.last_event_time"/>
-			<item value="get_component_object_by_component_name"/>
-			<item value="component_array_sorted_by_id"/>
-			<item value="component_array_sorted_by_name"/>
-			<item value="display_component_root"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

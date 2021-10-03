@@ -1,57 +1,93 @@
-/*	material number	*/  7
-
-
-/*	Material NO.0		*/
-/*	caculate_color_method										*/		2
-/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
-/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
-/*	texture file name											*/		20131204061352682684.jpg
-/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
-
-
-/*	Material NO.1		*/
-/*	caculate_color_method										*/		2
-/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
-/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
-/*	texture file name											*/		20131204061352682213.jpg
-/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
-
-
-/*	Material NO.2		*/
-/*	caculate_color_method										*/		2
-/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
-/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
-/*	texture file name											*/		20131204061352682231.jpg
-/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
-
-
-/*	Material NO.3		*/
-/*	caculate_color_method										*/		2
-/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
-/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
-/*	texture file name											*/		20131204061352683436.jpg
-/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
-
-
-/*	Material NO.4		*/
-/*	caculate_color_method										*/		2
-/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
-/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
-/*	texture file name											*/		20131204061352683796.jpg
-/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
-
-
-/*	Material NO.5		*/
-/*	caculate_color_method										*/		2
-/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
-/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
-/*	texture file name											*/		20131204061352683753.jpg
-/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
-
-
-/*	Material NO.6		*/
-/*	caculate_color_method										*/		0
-/*	caculate_color_parameter									*/		0.0		0.0		0.0		0.0
-/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
-/*	texture file name											*/		notexture
-/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
+			"material"	:	[
+				{
+					"vertex_color_type"		:	1,
+					"fragment_color_type"	:	2,
+					"color_parameter"		:	[0.1,	0.0,	0.0,	1.0],
+					"texture_parameter"		:	[0.0,	0.0,	1.0,	0.0],
+					"texture_file"			:	"20131204061352682684.jpg",
+					"color"					:	[0.0,	0.0,	0.0,	1],
+					"ambient"				:	[1.0,	1.0,	1.0,	1],
+					"diffuse"				:	[1.0,	1.0,	1.0,	1],
+					"specular"				:	[0.5,	0.5,	0.5,	1],
+					"emission"				:	[0.0,	0.0,	0.0,	1],
+					"shininess"				:	0.4
+				},
+				{
+					"vertex_color_type"		:	1,
+					"fragment_color_type"	:	2,
+					"color_parameter"		:	[0.1,	0.0,	0.0,	1.0],
+					"texture_parameter"		:	[0.0,	0.0,	1.0,	0.0],
+					"texture_file"			:	"20131204061352682213.jpg",
+					"color"					:	[0.0,	0.0,	0.0,	1],
+					"ambient"				:	[1.0,	1.0,	1.0,	1],
+					"diffuse"				:	[1.0,	1.0,	1.0,	1],
+					"specular"				:	[0.5,	0.5,	0.5,	1],
+					"emission"				:	[0.0,	0.0,	0.0,	1],
+					"shininess"				:	0.4
+				},
+				{
+					"vertex_color_type"		:	1,
+					"fragment_color_type"	:	2,
+					"color_parameter"		:	[0.1,	0.0,	0.0,	1.0],
+					"texture_parameter"		:	[0.0,	0.0,	1.0,	0.0],
+					"texture_file"			:	"20131204061352682231.jpg",
+					"color"					:	[0.0,	0.0,	0.0,	1],
+					"ambient"				:	[1.0,	1.0,	1.0,	1],
+					"diffuse"				:	[1.0,	1.0,	1.0,	1],
+					"specular"				:	[0.5,	0.5,	0.5,	1],
+					"emission"				:	[0.0,	0.0,	0.0,	1],
+					"shininess"				:	0.4
+				},
+				{
+					"vertex_color_type"		:	1,
+					"fragment_color_type"	:	2,
+					"color_parameter"		:	[0.1,	0.0,	0.0,	1.0],
+					"texture_parameter"		:	[0.0,	0.0,	1.0,	0.0],
+					"texture_file"			:	"20131204061352683436.jpg",
+					"color"					:	[0.0,	0.0,	0.0,	1],
+					"ambient"				:	[1.0,	1.0,	1.0,	1],
+					"diffuse"				:	[1.0,	1.0,	1.0,	1],
+					"specular"				:	[0.5,	0.5,	0.5,	1],
+					"emission"				:	[0.0,	0.0,	0.0,	1],
+					"shininess"				:	0.4
+				},
+				{
+					"vertex_color_type"		:	1,
+					"fragment_color_type"	:	2,
+					"color_parameter"		:	[0.1,	0.0,	0.0,	1.0],
+					"texture_parameter"		:	[0.0,	0.0,	1.0,	0.0],
+					"texture_file"			:	"20131204061352683796.jpg",
+					"color"					:	[0.0,	0.0,	0.0,	1],
+					"ambient"				:	[1.0,	1.0,	1.0,	1],
+					"diffuse"				:	[1.0,	1.0,	1.0,	1],
+					"specular"				:	[0.5,	0.5,	0.5,	1],
+					"emission"				:	[0.0,	0.0,	0.0,	1],
+					"shininess"				:	0.4
+				},
+				{
+					"vertex_color_type"		:	1,
+					"fragment_color_type"	:	2,
+					"color_parameter"		:	[0.1,	0.0,	0.0,	1.0],
+					"texture_parameter"		:	[0.0,	0.0,	1.0,	0.0],
+					"texture_file"			:	"20131204061352683753.jpg",
+					"color"					:	[0.0,	0.0,	0.0,	1],
+					"ambient"				:	[1.0,	1.0,	1.0,	1],
+					"diffuse"				:	[1.0,	1.0,	1.0,	1],
+					"specular"				:	[0.5,	0.5,	0.5,	1],
+					"emission"				:	[0.0,	0.0,	0.0,	1],
+					"shininess"				:	0.4
+				},
+				{
+					"vertex_color_type"		:	1,
+					"fragment_color_type"	:	0,
+					"color_parameter"		:	[0.1,	0.0,	0.0,	1.0],
+					"texture_parameter"		:	[0.0,	0.0,	1.0,	0.0],
+					"texture_file"			:	null,
+					"color"					:	[0.0,	0.0,	0.0,	1],
+					"ambient"				:	[1.0,	1.0,	1.0,	1],
+					"diffuse"				:	[1.0,	1.0,	1.0,	1],
+					"specular"				:	[0.5,	0.5,	0.5,	1],
+					"emission"				:	[0.0,	0.0,	0.0,	1],
+					"shininess"				:	0.4
+				}
+			]

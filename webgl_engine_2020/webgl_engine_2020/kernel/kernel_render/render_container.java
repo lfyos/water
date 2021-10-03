@@ -3,13 +3,11 @@ package kernel_render;
 import java.io.File;
 
 import kernel_common_class.debug_information;
-import kernel_common_class.exclusive_file_mutex;
 import kernel_driver.render_driver;
 import kernel_engine.part_type_string_sorter;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_engine.part_package;
-import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_interface.client_process_bar;
 import kernel_network.client_request_response;
@@ -237,7 +235,7 @@ public class render_container
 		file_reader f_render_list=new file_reader(render_list_file_name,file_system_charset);
 		render ren=new render(my_render_driver);
 		
-		for(int extract_id=0;!(f_render_list.eof());extract_id++){
+		while(!(f_render_list.eof())){
 			String str;
 			String part_type_string			=f_render_list.get_string();
 			String assemble_part_name		=f_render_list.get_string();
@@ -254,9 +252,6 @@ public class render_container
 			
 			part_parameter part_par=new part_parameter(part_type_string,
 				assemble_part_name,part_parameter_file_name,f_render_list.get_charset());
-			
-			String extract_file_directory=file_directory.extract_file_directory(
-				part_type_id,(renders==null)?0:(renders.length),extract_id,system_par,scene_par);
 
 			boolean giveup_part_load_flag=false;
 			if(my_part_type_string_sorter==null)
@@ -267,17 +262,12 @@ public class render_container
 			}else
 				str="";
 
-			exclusive_file_mutex efm=exclusive_file_mutex.lock(
-					extract_file_directory+"extract_file.lock",
-					"1.wait for extract scene files:	"+par_list_file_name);
-
 			debug_information.println("		part list file:	",par_list_file_name+"			"+str);
 
 			String get_part_list_result[]=null;
 			try{
-				get_part_list_result=my_render_driver.get_part_list(
-					giveup_part_load_flag,f_render_list,load_sub_directory_name,par_list_file_name,
-					extract_file_directory,part_par,system_par,request_response);
+				get_part_list_result=my_render_driver.get_part_list(giveup_part_load_flag,
+					f_render_list,load_sub_directory_name,par_list_file_name,part_par,system_par,request_response);
 			}catch(Exception e){
 				debug_information.println("Execute get_part_list fail:		",e.toString());
 				debug_information.println("Driver name:		",	driver_name);
@@ -299,8 +289,6 @@ public class render_container
 					else
 						part_list_file_charset=f_render_list.get_charset();
 				}
-			
-			efm.unlock();
 
 			if(giveup_part_load_flag||(par_list_file_name==null))
 				continue;

@@ -1,25 +1,41 @@
-/*	material number	*/  3
-
-
-/*	Material NO.0		*/
-/*	caculate_color_method										*/		0
-/*	caculate_color_parameter									*/		0		0.752941		0		1
-/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		0.7		0.2		0.2		0.0		0.0
-/*	texture file name											*/		notexture
-/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
-
-
-/*	Material NO.1		*/
-/*	caculate_color_method										*/		0
-/*	caculate_color_parameter									*/		0.909804		0.443137		0.0313725		1
-/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
-/*	texture file name											*/		notexture
-/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
-
-
-/*	Material NO.2		*/
-/*	caculate_color_method										*/		0
-/*	caculate_color_parameter									*/		0.682353		0.780392		0		1
-/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1.0		1.0		0.5		0.4		0.0		0.0
-/*	texture file name											*/		notexture
-/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0.0		0.0		0.0		1.0
+			"material"	:	[
+				{
+					"vertex_color_type"		:	1,
+					"fragment_color_type"	:	0,
+					"color_parameter"		:	[0.0,	0.0,	0.0,	1.0],
+					"texture_parameter"		:	[0.0,	0.0,	1.0,	0.0],
+					"texture_file"			:	null,
+					"color"					:	[0.0,	0.752941,	0.0,	1],
+					"ambient"				:	[1.0,	1.0,	1.0,	1],
+					"diffuse"				:	[0.7,	0.7,	0.7,	1],
+					"specular"				:	[0.2,	0.2,	0.2,	1],
+					"emission"				:	[0.0,	0.0,	0.0,	1],
+					"shininess"				:	0.2
+				},
+				{
+					"vertex_color_type"		:	1,
+					"fragment_color_type"	:	0,
+					"color_parameter"		:	[0.0,	0.0,	0.0,	1.0],
+					"texture_parameter"		:	[0.0,	0.0,	1.0,	0.0],
+					"texture_file"			:	null,
+					"color"					:	[0.909804,	0.443137,	0.0313725,	1],
+					"ambient"				:	[1.0,	1.0,	1.0,	1],
+					"diffuse"				:	[1.0,	1.0,	1.0,	1],
+					"specular"				:	[0.5,	0.5,	0.5,	1],
+					"emission"				:	[0.0,	0.0,	0.0,	1],
+					"shininess"				:	0.4
+				},
+				{
+					"vertex_color_type"		:	1,
+					"fragment_color_type"	:	0,
+					"color_parameter"		:	[0.0,	0.0,	0.0,	1.0],
+					"texture_parameter"		:	[0.0,	0.0,	1.0,	0.0],
+					"texture_file"			:	null,
+					"color"					:	[0.682353,	0.780392,	0.0,	1],
+					"ambient"				:	[1.0,	1.0,	1.0,	1],
+					"diffuse"				:	[1.0,	1.0,	1.0,	1],
+					"specular"				:	[0.5,	0.5,	0.5,	1],
+					"emission"				:	[0.0,	0.0,	0.0,	1],
+					"shininess"				:	0.4
+				}
+			]

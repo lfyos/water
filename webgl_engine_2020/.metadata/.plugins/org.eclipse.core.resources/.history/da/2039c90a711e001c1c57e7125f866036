@@ -1,9 +1,0 @@
-package kernel_common_class;
-
-public class jason_string 
-{
-	public static String change_str(String str)
-	{
-		return "\""+(str.replace("\\","\\\\").replace("\n","\\n\\r").replace("\"","\\\"").replace("\r","\\n\\r"))+"\"";
-	}
-}

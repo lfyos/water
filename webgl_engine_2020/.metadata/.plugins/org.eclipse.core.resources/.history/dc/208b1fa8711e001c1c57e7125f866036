@@ -1,9 +1,0 @@
-package kernel_common_class;
-
-public class jason_string 
-{
-	public static String get_jason_string(String str)
-	{
-		return "\""+(str.replace("\\","\\\\").replace("\n","\\n\\r").replace("\"","\\\"").replace("\r","\\n\\r"))+"\"";
-	}
-}

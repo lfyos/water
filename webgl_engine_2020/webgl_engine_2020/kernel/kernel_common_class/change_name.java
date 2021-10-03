@@ -179,19 +179,11 @@ public class change_name extends sorter<String[],String>
 			return;
 		}
 		data_array=new String[cn.data_array.length][];
-		for(int i=0,ni=cn.data_array.length;i<ni;i++) {
-			data_array[i]=new String[]{
-				new String(cn.data_array[i][0]),
-				new String(cn.data_array[i][1])
+		for(int i=0,ni=cn.data_array.length;i<ni;i++)
+			data_array[i]=new String[]
+			{
+				do_reversion_flag?new String(cn.data_array[i][1]):new String(cn.data_array[i][0]),
+				do_reversion_flag?new String(cn.data_array[i][0]):new String(cn.data_array[i][1]),
 			};
-		}
-		if(do_reversion_flag){
-			for(int i=0,ni=cn.data_array.length;i<ni;i++) {
-				String str=data_array[i][0];
-				data_array[i][0]=data_array[i][1];
-				data_array[i][1]=str;
-			}
-			do_sort(new String[data_array.length][]);
-		}
 	}
 }

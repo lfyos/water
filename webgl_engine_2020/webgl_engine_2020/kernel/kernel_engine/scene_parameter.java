@@ -81,19 +81,19 @@ public class scene_parameter
 			if(scene_sub_directory.charAt(scene_sub_directory.length()-1)!=File.separatorChar)
 				scene_sub_directory+=File.separator;
 		
-		file_reader f=new file_reader(my_parameter_file_name,my_parameter_charset);
+		file_reader fr=new file_reader(my_parameter_file_name,my_parameter_charset);
 		
-		if((f.error_flag())||(f.eof()))
+		if((fr.error_flag())||(fr.eof()))
 			debug_information.println("Open assemble configure file fail : ",my_parameter_file_name);
 		
-		directory_name=f.directory_name;
-		parameter_charset=f.get_charset();
-		if((parameter_last_modified_time=f.lastModified_time)<system_par.last_modified_time)
+		directory_name=fr.directory_name;
+		parameter_charset=fr.get_charset();
+		if((parameter_last_modified_time=fr.lastModified_time)<system_par.last_modified_time)
 			parameter_last_modified_time=system_par.last_modified_time;
 		if(parameter_last_modified_time<my_scene_list_file_last_modified_time)
 			parameter_last_modified_time=my_scene_list_file_last_modified_time;
 
-		if((type_proxy_directory_name=f.get_string())==null)
+		if((type_proxy_directory_name=fr.get_string())==null)
 			type_proxy_directory_name="no_directory";
 		else
 			type_proxy_directory_name=file_reader.separator(type_proxy_directory_name);
@@ -121,120 +121,120 @@ public class scene_parameter
 			scene_proxy_directory_name+=str_array[i];
 		}
 
-		if((type_shader_file_name=f.get_string())==null)
+		if((type_shader_file_name=fr.get_string())==null)
 			type_shader_file_name="";
 		else
 			type_shader_file_name=file_reader.separator(type_shader_file_name);
 		
-		if((scene_shader_file_name=f.get_string())==null)
+		if((scene_shader_file_name=fr.get_string())==null)
 			scene_shader_file_name="";
 		else
 			scene_shader_file_name=file_reader.separator(scene_shader_file_name);
 		
-		if((camera_file_name=f.get_string())==null)
+		if((camera_file_name=fr.get_string())==null)
 			camera_file_name="";
 		else
 			camera_file_name=file_reader.separator(camera_file_name);
 		
-		if((change_part_file_name=f.get_string())==null)
+		if((change_part_file_name=fr.get_string())==null)
 			change_part_file_name="";
 		else
 			change_part_file_name=file_reader.separator(change_part_file_name);
 		
-		if((change_component_file_name=f.get_string())==null)
+		if((change_component_file_name=fr.get_string())==null)
 			change_component_file_name="";
 		else
 			change_component_file_name=file_reader.separator(change_component_file_name);
 		
-		if((mount_component_file_name=f.get_string())==null)
+		if((mount_component_file_name=fr.get_string())==null)
 			mount_component_file_name="";
 		else
 			mount_component_file_name=file_reader.separator(mount_component_file_name);
 		
-		if((type_string_file_name=f.get_string())==null)
+		if((type_string_file_name=fr.get_string())==null)
 			type_string_file_name="";
 		else
 			type_string_file_name=file_reader.separator(type_string_file_name);
 		
-		f.close();
+		fr.close();
 		
-		f=new file_reader(my_extra_parameter_file_name,my_extra_parameter_charset);
-		if(parameter_last_modified_time<f.lastModified_time)
-			parameter_last_modified_time=f.lastModified_time;
+		fr=new file_reader(my_extra_parameter_file_name,my_extra_parameter_charset);
+		if(parameter_last_modified_time<fr.lastModified_time)
+			parameter_last_modified_time=fr.lastModified_time;
 		
 		scene_last_modified_time=parameter_last_modified_time;
 		
-		extra_directory_name=f.directory_name;
-		extra_parameter_charset=f.get_charset();
+		extra_directory_name=fr.directory_name;
+		extra_parameter_charset=fr.get_charset();
 
-		if((inserted_component_name=f.get_string())==null)
+		if((inserted_component_name=fr.get_string())==null)
 			inserted_component_name="";
-		if((inserted_part_name=f.get_string())==null)
+		if((inserted_part_name=fr.get_string())==null)
 			inserted_part_name="";
 		inserted_component_and_part_id=0;
-		max_child_number=f.get_int();
+		max_child_number=fr.get_int();
 		
-		if((scene_cors_string=f.get_string())==null)
+		if((scene_cors_string=fr.get_string())==null)
 			scene_cors_string="*";
 		else{
 			scene_cors_string=file_reader.separator(scene_cors_string);
-			if((new File(str=f.directory_name+scene_cors_string)).exists()) {
+			if((new File(str=fr.directory_name+scene_cors_string)).exists()) {
 				scene_cors_string="";
-				for(file_reader cors_f=new file_reader(str,f.get_charset());;) {
-					if(cors_f.eof()){
-						cors_f.close();
+				for(file_reader cors_fr=new file_reader(str,fr.get_charset());;) {
+					if(cors_fr.eof()){
+						cors_fr.close();
 						break;
 					}
-					if((str=cors_f.get_line())!=null)
+					if((str=cors_fr.get_line())!=null)
 						if((str=str.trim()).length()>0)
 							scene_cors_string+=str;
 				}
 			}
 		}
-		if((multiparameter_number=f.get_int())<1)
+		if((multiparameter_number=fr.get_int())<1)
 			multiparameter_number=1;
 		
-		if((initial_parameter_channel_id=f.get_int())<0)
+		if((initial_parameter_channel_id=fr.get_int())<0)
 			initial_parameter_channel_id=0;
 		initial_parameter_channel_id%=multiparameter_number;
 		
-		default_display_bitmap=f.get_long();
+		default_display_bitmap=fr.get_long();
 		
-		if((component_collector_stack_file_name=f.get_string())==null)
+		if((component_collector_stack_file_name=fr.get_string())==null)
 			component_collector_stack_file_name="";
 		else
 			component_collector_stack_file_name=file_reader.separator(component_collector_stack_file_name);
 		
-		component_collector_parameter_channel_id=new int[f.get_int()];
+		component_collector_parameter_channel_id=new int[fr.get_int()];
 		for(int i=0,ni=component_collector_parameter_channel_id.length;i<ni;i++)
-			component_collector_parameter_channel_id[i]=f.get_int();
+			component_collector_parameter_channel_id[i]=fr.get_int();
 		
-		if((max_component_collector_number=f.get_int())<=0)
+		if((max_component_collector_number=fr.get_int())<=0)
 			max_component_collector_number=1;
-		if((max_camera_return_stack_number=f.get_int())<=0)
+		if((max_camera_return_stack_number=fr.get_int())<=0)
 			max_camera_return_stack_number=1;
-		if((max_modifier_container_number=f.get_int())<=0)
+		if((max_modifier_container_number=fr.get_int())<=0)
 			max_modifier_container_number=1;
 	
-		create_top_part_assembly_precision2		=f.get_double();
+		create_top_part_assembly_precision2		=fr.get_double();
 		create_top_part_assembly_precision2		*=create_top_part_assembly_precision2;
-		create_top_part_discard_precision2		=f.get_double();
+		create_top_part_discard_precision2		=fr.get_double();
 		create_top_part_discard_precision2		*=create_top_part_discard_precision2;
-		discard_top_part_component_precision2	=f.get_double();
+		discard_top_part_component_precision2	=fr.get_double();
 		discard_top_part_component_precision2	*=discard_top_part_component_precision2;
 		
-		touch_time_length					=f.get_long();
+		touch_time_length					=fr.get_long();
 		
-		most_component_delete_number		=f.get_int();
-		most_component_append_number		=f.get_int();
-		most_update_parameter_number		=f.get_int();
-		most_update_location_number			=f.get_int();
+		most_component_delete_number		=fr.get_int();
+		most_component_append_number		=fr.get_int();
+		most_update_parameter_number		=fr.get_int();
+		most_update_location_number			=fr.get_int();
 		
-		display_precision					=f.get_int();
+		display_precision					=fr.get_int();
 
-		display_assemble_depth				=f.get_int();
+		display_assemble_depth				=fr.get_int();
 
-		if((str=f.get_string())==null)
+		if((str=fr.get_string())==null)
 			component_sort_type=0;
 		else if((str=str.toLowerCase().trim()).compareTo("xyz")==0)
 			component_sort_type=0;
@@ -251,17 +251,17 @@ public class scene_parameter
 		else
 			component_sort_type=0;
 
-		component_sort_min_distance				=f.get_double();
+		component_sort_min_distance				=fr.get_double();
 		
-		proxy_response_length					=f.get_long();
-		compress_response_length				=f.get_long();
+		proxy_response_length					=fr.get_long();
+		compress_response_length				=fr.get_long();
 		
-		not_do_ancestor_render_flag				=f.get_boolean();
-		do_discard_lod_flag						=f.get_boolean();
-		do_selection_lod_flag					=f.get_boolean();
-		scene_fast_load_flag					=f.get_boolean();
+		not_do_ancestor_render_flag				=fr.get_boolean();
+		do_discard_lod_flag						=fr.get_boolean();
+		do_selection_lod_flag					=fr.get_boolean();
+		scene_fast_load_flag					=fr.get_boolean();
 		
-		f.close();
+		fr.close();
 
 		return;
 	}

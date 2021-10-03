@@ -244,17 +244,16 @@ public class component_container
 			
 			debug_information.println();
 			debug_information.println("Begin loading scene");
-			change_name reverse_mount_component_name=new change_name(change_component_name,true);
+			
 			try{
-				root_component=new component("",ek,request_response,scene_f,ek.part_cont,change_part_name,
-					my_mount_component_name,reverse_mount_component_name,my_type_string_sorter,
+				root_component=new component("",ek,request_response,scene_f,ek.part_cont,
+					change_part_name,my_mount_component_name,my_type_string_sorter,
 					false,default_display_bitmap,ek.scene_par.max_child_number);
 			}catch(Exception e){
 				root_component=null;
 				debug_information.println("Create scene from file exception:",scene_f.directory_name+scene_f.file_name);
 				e.printStackTrace();
 			}
-			reverse_mount_component_name.destroy();
 			
 			debug_information.println("End loading assemble");
 			debug_information.println();

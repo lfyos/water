@@ -106,11 +106,7 @@ public class extended_part_driver extends part_driver
 					new File(p.directory_name+p.mesh_file_name).getParent())+File.separatorChar;
 		String file_name=directory_name+file_reader.separator(fr.get_string());
 		
-		return new String[][]
-		{
-			new String[]{file_name},
-			new String[]{p.file_charset}
-		};
+		return new String[][]{new String[]{file_name,p.file_charset}};
 	}
 	public String[] response_event(part p,engine_kernel ek,client_information ci)
 	{		

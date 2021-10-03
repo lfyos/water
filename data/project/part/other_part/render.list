@@ -1,8 +1,7 @@
-chengguangqing		any_assemble_part_name		parameter.txt		part_inp\part.list				light.txt		inp_material.txt
+chengguangqing	any_assemble_part_name	parameter.txt	part_inp\part.list	relative	light.txt
+test	any_assemble_part_name	parameter.txt	part_stl\part.list	relative	light.txt
+test	any_assemble_part_name	parameter.txt	part_obj\part.list	relative	light.txt
+test	any_assemble_part_name	parameter.txt	part_obj\part.1000.list	relative	light.txt
+test	any_assemble_part_name	parameter.txt	part_obj\boat.list	relative	light.txt
+liyixuan	any_assemble_part_name	parameter.txt	part_liyixuan\part.list	relative	light.txt
 
-test				any_assemble_part_name		parameter.txt		part_stl\part.list				light.txt		material.txt
-test				any_assemble_part_name		parameter.txt		part_obj\part.list				light.txt		material.txt
-test				any_assemble_part_name		parameter.txt		part_obj\part.1000.list			light.txt		material.txt
-test				any_assemble_part_name		parameter.txt		part_obj\boat.list				light.txt		material.txt
-
-liyixuan			any_assemble_part_name		parameter.txt		part_liyixuan\part.list			light.txt		material.txt
