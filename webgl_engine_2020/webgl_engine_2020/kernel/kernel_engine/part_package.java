@@ -60,8 +60,6 @@ public class part_package
 			public int package_compare(part s,part t)
 			{
 				int ret_val;
-				if((s.part_par.combine_to_part_package_flag)^(t.part_par.combine_to_part_package_flag))
-					return s.part_par.combine_to_part_package_flag?-1:1;
 				if((ret_val=s.part_type_id-t.part_type_id)!=0)
 					return ret_val;
 				if((ret_val=s.part_par.part_type_string.compareTo(t.part_par.part_type_string))!=0)
@@ -73,9 +71,17 @@ public class part_package
 			public int compare_part(part pi,part pj)
 			{
 				int ret_val;
-				if((ret_val=package_compare(pi,pj))==0)
-					ret_val=super.compare_part(pi,pj);
-				return ret_val;
+				if((ret_val=package_compare(pi,pj))!=0)
+					return ret_val;
+				long length_i=pi.boftal.buffer_object_head_length;
+				long length_j=pj.boftal.buffer_object_head_length;
+				if(length_i!=length_j)
+					return (length_i<length_j)?-1:1;
+				if((ret_val=pi.permanent_render_id-pi.permanent_render_id)!=0)
+					return ret_val;
+				if((ret_val=pi.permanent_part_id-pi.permanent_part_id)!=0)
+					return ret_val;
+				return 0;
 			}
 			private int caculate_part_package_id()
 			{
@@ -83,8 +89,6 @@ public class part_package
 				long my_package_length=0;
 				
 				for(int i=0,ni=data_array.length;i<ni;i++) {
-					if(!(data_array[i].part_par.combine_to_part_package_flag))
-						continue;
 					data_array[i].part_package_id=package_number;
 					if(data_array[i].boftal==null)
 						debug_information.println("Find null boftal:	",
@@ -100,10 +104,6 @@ public class part_package
 				}
 				if(my_package_length>0)
 					package_number++;
-				
-				for(int i=0,ni=data_array.length;i<ni;i++)
-					if(!(data_array[i].part_par.combine_to_part_package_flag))
-						data_array[i].part_package_id=package_number++;
 				return package_number;
 			}
 			public part_package_collector(render_container rc)
@@ -139,9 +139,7 @@ public class part_package
 					for(int i=0,package_id=0;i<package_number;i++){
 						if(process_bar!=null)
 							process_bar.set_process_bar((i<=0),process_bar_title,i,package_number);
-						if(part_package[i].length==1) {
-							part_package[i][0].part_par.combine_to_part_package_flag=false;
-							
+						if(part_package[i].length==1){
 							String my_package_file_name=file_directory.part_file_directory(
 									part_package[i][0],system_par,scene_par)+"mesh.head.gzip_text";
 							File f=new File(my_package_file_name);

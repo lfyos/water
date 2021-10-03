@@ -18,10 +18,7 @@
 /*	max_part_load_thread_number			*/		8
 
 /*	do_create_bottom_box_flag			*/		true
-/*	combine_to_part_package_flag		*/		true
-/*	free_part_memory_flag				*/		true
-/*	engine_boftal_flag					*/		true
 /*	do_load_lock_flag					*/		false
 
-/*	clear_buffer_head_file_flag			*/		true
+/*	clear_buffer_head_file_flag			*/		false
 /*	clear_model_file_flag				*/		false	false	false	false	false	false	false	false

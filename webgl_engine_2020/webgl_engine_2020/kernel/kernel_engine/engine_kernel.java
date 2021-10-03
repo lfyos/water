@@ -43,16 +43,22 @@ public class engine_kernel
 	public nanosecond_timer					current_time;
 	
 	public modifier_container				modifier_cont[];
+	
+	public part_lru_manager					part_lru;
 
 	public long 							do_selection_version;
 	
-	private part_loader_container 			part_loader_cont;
+	public part_loader_container 			part_loader_cont;
 
 	private double							create_top_part_expand_ratio,create_top_part_left_ratio;
 	private long							program_last_time;
 
 	public void destroy()
 	{
+		if(part_lru!=null) {
+			part_lru.destroy();
+			part_lru=null;
+		}
 		if(modifier_cont!=null) {
 			for(int i=0,ni=modifier_cont.length;i<ni;i++)
 				if(modifier_cont[i]!=null){
@@ -126,6 +132,8 @@ public class engine_kernel
 		modifier_cont			=new modifier_container[scene_par.max_modifier_container_number];
 		for(int i=0;i<modifier_cont.length;i++)
 			modifier_cont[i]	=new modifier_container(current_time.nanoseconds());
+		
+		part_lru				=null;					
 		
 		do_selection_version	=1;
 		
@@ -353,6 +361,8 @@ public class engine_kernel
 		process_bar.set_process_bar(true,"load_termination", 1, 1);
 		
 		part_cont_for_delete_file.delete_part_file(system_par, scene_par);
+		
+		part_lru=new part_lru_manager(render_cont.renders,scene_par.part_lru_in_list_number);
 		
 		return;
 	}

@@ -248,7 +248,7 @@ public class engine_kernel_link_list
 		ec.client_information.request_response=my_request_response;
 
 		String file_name[];
-		if((file_name=dispatch_request_main.get_engine_result(ek,ec.client_information,delay_time_length))!=null) {
+		if((file_name=dispatch_request_main.get_engine_result(delay_time_length,ek,ec.client_information))!=null) {
 			if(file_name.length<=0)
 				file_name=null;
 			else if(file_name[0]==null)

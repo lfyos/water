@@ -1,0 +1,85 @@
+package kernel_engine;
+
+import kernel_part.part;
+import kernel_render.render;
+
+class part_bidirection_link_list
+{
+	public part p;
+	public boolean in_list_flag;
+	public part_bidirection_link_list front,back;
+	
+	public part_bidirection_link_list(part my_p)
+	{
+		p=my_p;
+		in_list_flag=false;
+		front=null;
+		back=null;
+	}
+}
+public class part_lru_manager 
+{
+	private int in_list_number,max_in_list_number;
+	private part_bidirection_link_list first,last;
+	private part_bidirection_link_list part_array[][];
+	
+	public void touch(int render_id,int part_id)
+	{
+		part_bidirection_link_list pbll=part_array[render_id][part_id];
+		
+		if(pbll.in_list_flag) {
+			in_list_number--;
+			if(first==pbll) {
+				if(last==pbll) {
+					first=null;
+					last=null;
+				}else{
+					first=first.back;
+					first.front=null;
+				}
+			}else {
+				if(last==pbll) {
+					last=last.front;
+					last.back=null;
+				}else{
+					pbll.front.back=pbll.back;
+					pbll.back.front=pbll.front;
+				}
+			}
+		}
+		pbll.front=null;
+		pbll.back=null;
+		
+		in_list_number++;
+		if(first==null) {
+			first=pbll;
+			last=pbll;
+		}else {
+			pbll.back=first;
+			first=pbll;
+		}
+		
+		
+	}
+	
+	public part_lru_manager(render r[],int my_max_in_list_number)
+	{
+		in_list_number=0;
+		max_in_list_number=my_max_in_list_number;
+		first=null;
+		last=null;
+		
+		int render_number=0;
+		if(r!=null)
+			render_number=r.length;
+		part_array=new part_bidirection_link_list[render_number][];
+		for(int render_id=0;render_id<render_number;render_id++) {
+			int part_number=0;
+			if(r[render_id].parts!=null)
+				part_number=r[render_id].parts.length;
+			part_array[render_id]=new part_bidirection_link_list[part_number];
+			for(int part_id=0;part_id<part_number;part_id++)
+				part_array[render_id][part_id]=new part_bidirection_link_list(r[render_id].parts[part_id]);
+		}
+	}
+}

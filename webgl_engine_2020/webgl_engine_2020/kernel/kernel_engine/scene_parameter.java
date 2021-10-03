@@ -21,6 +21,8 @@ public class scene_parameter
 	public String change_part_file_name,change_component_file_name,mount_component_file_name;
 	public String type_string_file_name;
 	
+	public int part_lru_in_list_number;
+	
 	public String inserted_component_name,inserted_part_name;
 	public int inserted_component_and_part_id,max_child_number;
 	
@@ -167,6 +169,8 @@ public class scene_parameter
 		extra_directory_name=fr.directory_name;
 		extra_parameter_charset=fr.get_charset();
 
+		part_lru_in_list_number=fr.get_int();
+		
 		if((inserted_component_name=fr.get_string())==null)
 			inserted_component_name="";
 		if((inserted_part_name=fr.get_string())==null)

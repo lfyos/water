@@ -12,7 +12,7 @@ import kernel_driver.instance_driver;
 public class dispatch_component_request
 {
 	static public String[] do_dispatch(int main_call_id,
-			engine_kernel ek,client_information ci,long delay_time_length)
+			long delay_time_length,engine_kernel ek,client_information ci)
 	{
 		String str;
 		component comp;

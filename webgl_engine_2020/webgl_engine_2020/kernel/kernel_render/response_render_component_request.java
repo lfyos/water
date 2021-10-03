@@ -243,7 +243,8 @@ public class response_render_component_request
 			int request_package[]=pml.get_request_package(ek.process_part_sequence);
 			if(request_package==null)
 				break;
-			int part_type_id=request_package[0],part_package_id=request_package[1];
+			int part_type_id	=request_package[0];
+			int part_package_id	=request_package[1];
 			
 			String package_file_name;
 			int package_render_part_id[][];
@@ -275,7 +276,8 @@ public class response_render_component_request
 			String package_proxy_url;
 			if((package_proxy_url=ci.get_file_proxy_url(package_file_name,ek.system_par))==null)
 				package_proxy_url=ci.get_request_url_header()
-					+"&command=buffer&operation=buffer_package&package="+part_type_id+"_"+part_package_id;
+					+"&command=buffer&operation=buffer_package&package="
+					+part_type_id+"_"+part_package_id;
 
 			ci.request_response.print((i<=requesting_number)?"[\"":",[\"",package_proxy_url).
 								print("\",",package_length).

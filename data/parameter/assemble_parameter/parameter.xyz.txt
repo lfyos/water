@@ -1,3 +1,5 @@
+/*	part_lru_in_list_number						*/		20
+
 /*	inserted_component_name						*/		inserted_component_name
 /*	inserted_part_name							*/		inserted_part_name
 /*	max_child_number							*/		16

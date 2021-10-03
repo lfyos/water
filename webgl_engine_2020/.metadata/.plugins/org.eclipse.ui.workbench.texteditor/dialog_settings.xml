@@ -2,12 +2,16 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="frag_texture"/>
+		<item key="selection" value="100"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="100"/>
+			<item value="multiparameter_number"/>
+			<item value="lock_file_name"/>
+			<item value="inp_part_"/>
 			<item value="frag_texture"/>
 			<item value="discard_flag"/>
 			<item value="driver_cad"/>
@@ -19,10 +23,6 @@
 			<item value="0.125"/>
 			<item value="0.175"/>
 			<item value="0.20"/>
-			<item value="0.25"/>
-			<item value="light_color_factor"/>
-			<item value="driver_opengl_fixed_pipeline"/>
-			<item value="create_normal"/>
 		</list>
 		<list key="replacehistory">
 			<item value="driver_opengl_fixed_pipeline"/>

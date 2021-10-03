@@ -1,7 +1,6 @@
 package kernel_engine;
 
 import java.io.File;
-import java.io.FileWriter;
 
 import kernel_render.render;
 import kernel_part.part;
@@ -45,15 +44,14 @@ public class engine_boftal_creator extends sorter <part,String>
 			if(renders[render_id]!=null)
 				if(renders[render_id].parts!=null)
 					for(int part_id=0,part_number=renders[render_id].parts.length;part_id<part_number;part_id++)
-						if((p=renders[render_id].parts[part_id]).part_par.engine_boftal_flag)
-							switch(p.part_type_id) {
-							case 1:
-							case 2:
-								number++;
-								if(p.boftal.buffer_object_head_last_modify_time>=last_time) 
-									should_not_create_flag=false;
-								break;
-							}
+						switch(((p=renders[render_id].parts[part_id])).part_type_id){
+						case 1:
+						case 2:
+							number++;
+							if(p.boftal.buffer_object_head_last_modify_time>=last_time) 
+								should_not_create_flag=false;
+							break;
+						}
 		if(should_not_create_flag) {
 			debug_information.println("Test engine boftal file end, unnecessary to create new file.");
 			return;
@@ -69,17 +67,14 @@ public class engine_boftal_creator extends sorter <part,String>
 			if(renders[render_id]!=null)
 				if(renders[render_id].parts!=null)
 					for(int part_id=0,part_number=renders[render_id].parts.length;part_id<part_number;part_id++)
-						if((p=renders[render_id].parts[part_id]).part_par.engine_boftal_flag)
-							switch(p.part_type_id) {
-							case 1:
-							case 2:
-								data_array[number++]=p;
-								break;
-							}
-		
+						switch(((p=renders[render_id].parts[part_id])).part_type_id) {
+						case 1:
+						case 2:
+							data_array[number++]=p;
+							break;
+						}
 		do_sort(-1,new part[number]);
-		
-		
+
 		int cut_directory_length=system_par.proxy_par.proxy_data_root_directory_name.length();
 		file_writer fw=new  file_writer(file_name,file_charset);
 		fw.println(number);
@@ -97,25 +92,6 @@ public class engine_boftal_creator extends sorter <part,String>
 					fw.println(str);
 			fr.close();
 			fw.println();
-						
-			if(scene_par!=null)
-				if(scene_par.scene_fast_load_flag)
-					if(data_array[i].part_par.engine_boftal_flag)
-						if(data_array[i].part_par.free_part_memory_flag)
-							switch(data_array[i].part_type_id){
-							case 2:
-								File f;
-								if((f=new File(boftal_file_name)).length()>0){
-									long t=f.lastModified();
-									try{
-										new FileWriter(boftal_file_name).close();
-									}catch(Exception e) {
-										;
-									}
-									f.setLastModified(t);
-								}
-								break;
-							}
 		}
 		
 		fw.close();

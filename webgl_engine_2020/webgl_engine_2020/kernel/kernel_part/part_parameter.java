@@ -13,10 +13,9 @@ public class part_parameter
 	public long		create_face_buffer_object_bitmap,create_edge_buffer_object_bitmap,create_point_buffer_object_bitmap;
 	public int 		max_component_data_buffer_number,max_part_load_thread_number;
 	
-	public boolean	do_create_bottom_box_flag,combine_to_part_package_flag;
-	public boolean	free_part_memory_flag,engine_boftal_flag,do_load_lock_flag;
+	public boolean	do_create_bottom_box_flag,do_load_lock_flag;
 	public boolean	clear_buffer_head_file_flag,clear_model_file_flag[];
-
+	
 	public part_parameter(
 			String	my_part_type_string,
 			String	my_assemble_part_name,
@@ -46,9 +45,6 @@ public class part_parameter
 			int		my_max_part_load_thread_number,
 			
 			boolean	my_do_create_bottom_box_flag,
-			boolean my_combine_to_part_package_flag,
-			boolean my_free_part_memory_flag,
-			boolean my_engine_boftal_flag,
 			boolean my_do_load_lock_flag,
 			
 			boolean my_clear_buffer_head_file_flag,
@@ -81,9 +77,6 @@ public class part_parameter
 		max_part_load_thread_number		=(my_max_part_load_thread_number<=0)	?1:my_max_part_load_thread_number;
 		
 		do_create_bottom_box_flag		=my_do_create_bottom_box_flag;
-		combine_to_part_package_flag	=my_combine_to_part_package_flag;
-		free_part_memory_flag			=my_free_part_memory_flag;
-		engine_boftal_flag				=my_engine_boftal_flag;
 		do_load_lock_flag				=my_do_load_lock_flag;
 		
 		clear_buffer_head_file_flag		=my_clear_buffer_head_file_flag;
@@ -123,9 +116,6 @@ public class part_parameter
 				max_part_load_thread_number,
 
 				do_create_bottom_box_flag,
-				combine_to_part_package_flag,
-				free_part_memory_flag,
-				engine_boftal_flag,
 				do_load_lock_flag,
 				
 				clear_buffer_head_file_flag,
@@ -163,9 +153,6 @@ public class part_parameter
 				max_part_load_thread_number,
 
 				false,
-				combine_to_part_package_flag,
-				free_part_memory_flag,
-				engine_boftal_flag,
 				do_load_lock_flag,
 				
 				clear_buffer_head_file_flag,
@@ -207,9 +194,6 @@ public class part_parameter
 		max_part_load_thread_number			=((max_part_load_thread_number=f.get_int())<=0)?1:max_part_load_thread_number;
 		
 		do_create_bottom_box_flag			=f.get_boolean();
-		combine_to_part_package_flag		=f.get_boolean();
-		free_part_memory_flag				=f.get_boolean();
-		engine_boftal_flag					=f.get_boolean();
 		do_load_lock_flag					=f.get_boolean();
 		
 		clear_buffer_head_file_flag			=f.get_boolean();
@@ -224,7 +208,6 @@ public class part_parameter
 			f.get_boolean(),
 			f.get_boolean()
 		};
-		
 		f.close();
 	}
 }

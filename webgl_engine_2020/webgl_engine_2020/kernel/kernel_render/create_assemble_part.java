@@ -187,9 +187,6 @@ public class create_assemble_part
 				
 				false,
 				
-				p.part_par.combine_to_part_package_flag,
-				p.part_par.free_part_memory_flag,
-				p.part_par.engine_boftal_flag,
 				p.part_par.do_load_lock_flag,
 				
 				p.part_par.clear_buffer_head_file_flag,

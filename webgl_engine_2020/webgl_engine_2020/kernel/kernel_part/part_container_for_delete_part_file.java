@@ -37,7 +37,7 @@ public class part_container_for_delete_part_file extends part_container
 					}
 			}
 
-			if((pll.p.part_par.clear_buffer_head_file_flag)&&(pll.p.part_par.combine_to_part_package_flag)){
+			if(pll.p.part_par.clear_buffer_head_file_flag){
 				String part_temporary_file_directory=file_directory.part_file_directory(pll.p,system_par,scene_par);
 				String file_name=part_temporary_file_directory+"mesh.head.gzip_text";
 				if((f=new File(file_name)).exists())
