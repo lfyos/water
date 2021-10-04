@@ -2,7 +2,6 @@ package kernel_engine;
 
 import java.io.File;
 
-import kernel_render.render;
 import kernel_part.part;
 import kernel_common_class.debug_information;
 import kernel_common_class.sorter;
@@ -27,77 +26,54 @@ public class engine_boftal_creator extends sorter <part,String>
 		String dir_s=file_directory.part_file_directory(s,system_par,scene_par);
 		return dir_s.compareTo(t);
 	}
-	public engine_boftal_creator(String file_name,String file_charset,render renders[],
+	
+	public engine_boftal_creator(String file_name,String file_charset,part part_array[],
 		system_parameter my_system_par,scene_parameter my_scene_par,client_process_bar process_bar)
 	{
+		boolean unnecessary_create_flag=true;
+		long last_time=new File(file_name).lastModified();
+		for(int i=0,ni=part_array.length;i<ni;i++)
+			if(part_array[i].boftal.buffer_object_head_last_modify_time>=last_time) {
+				unnecessary_create_flag=false;
+				break;
+			}
+		if(unnecessary_create_flag)
+			return;
+		
+		debug_information.println("Create engine boftal file: start.....");
+
 		system_par=my_system_par;
 		scene_par=my_scene_par;
+		data_array=new part[part_array.length];
+		for(int i=0,ni=data_array.length;i<ni;i++) 
+			data_array[i]=part_array[i];
 		
-		debug_information.println("Create engine boftal file: test.....");
-		
-		part p;
-		String str;
-		int number=0;
-		boolean should_not_create_flag=true;
-		long last_time=new File(file_name).lastModified();
-		for(int render_id=0,render_number=renders.length;render_id<render_number;render_id++)
-			if(renders[render_id]!=null)
-				if(renders[render_id].parts!=null)
-					for(int part_id=0,part_number=renders[render_id].parts.length;part_id<part_number;part_id++)
-						switch(((p=renders[render_id].parts[part_id])).part_type_id){
-						case 1:
-						case 2:
-							number++;
-							if(p.boftal.buffer_object_head_last_modify_time>=last_time) 
-								should_not_create_flag=false;
-							break;
-						}
-		if(should_not_create_flag) {
-			debug_information.println("Test engine boftal file end, unnecessary to create new file.");
-			return;
-		}
-		
-		debug_information.println("Create engine boftal file: create .....");
-		
-		process_bar.set_process_bar(true, "create_buffer_object_file", 0, number);
-		
-		data_array=new part[number];
-		number=0;
-		for(int render_id=0,render_number=renders.length;render_id<render_number;render_id++)
-			if(renders[render_id]!=null)
-				if(renders[render_id].parts!=null)
-					for(int part_id=0,part_number=renders[render_id].parts.length;part_id<part_number;part_id++)
-						switch(((p=renders[render_id].parts[part_id])).part_type_id) {
-						case 1:
-						case 2:
-							data_array[number++]=p;
-							break;
-						}
-		do_sort(-1,new part[number]);
+		do_sort(-1,new part[data_array.length]);
+
+		process_bar.set_process_bar(true, "create_buffer_object_file", 0,data_array.length);
 
 		int cut_directory_length=system_par.proxy_par.proxy_data_root_directory_name.length();
 		file_writer fw=new  file_writer(file_name,file_charset);
-		fw.println(number);
+		fw.println(data_array.length);
 		
-		for(int i=0;i<number;i++) {
-			process_bar.set_process_bar(false, "create_buffer_object_file", i, number);
+		for(int i=0,ni=data_array.length;i<ni;i++) {
+			process_bar.set_process_bar(false, "create_buffer_object_file", i, ni);
 
 			String part_temporary_file_directory=file_directory.part_file_directory(data_array[i],system_par,scene_par);
 			String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
 			fw.println(part_temporary_file_directory.substring(cut_directory_length));
 
 			file_reader fr=new file_reader(boftal_file_name,fw.get_charset());
-			while(!(fr.eof()))
+			for(String str;!(fr.eof());)
 				if((str=fr.get_string())!=null)
 					fw.println(str);
 			fr.close();
 			fw.println();
 		}
-		
 		fw.close();
 		
-		process_bar.set_process_bar(false, "create_buffer_object_file",number,number);
+		process_bar.set_process_bar(false, "create_buffer_object_file",data_array.length,data_array.length);
 		
-		debug_information.println("Create engine boftal file: finished");
+		debug_information.println("Create engine boftal file: finished!");
 	}
 }

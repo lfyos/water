@@ -64,24 +64,12 @@ public class part_package
 					return ret_val;
 				if((ret_val=s.part_par.part_type_string.compareTo(t.part_par.part_type_string))!=0)
 					return ret_val;
-				if((ret_val=s.part_par.process_sequence_id-t.part_par.process_sequence_id)!=0)
-					return ret_val;
 				return 0;
 			}
 			public int compare_part(part pi,part pj)
 			{
 				int ret_val;
-				if((ret_val=package_compare(pi,pj))!=0)
-					return ret_val;
-				long length_i=pi.boftal.buffer_object_head_length;
-				long length_j=pj.boftal.buffer_object_head_length;
-				if(length_i!=length_j)
-					return (length_i<length_j)?-1:1;
-				if((ret_val=pi.permanent_render_id-pi.permanent_render_id)!=0)
-					return ret_val;
-				if((ret_val=pi.permanent_part_id-pi.permanent_part_id)!=0)
-					return ret_val;
-				return 0;
+				return ((ret_val=package_compare(pi,pj))!=0)?ret_val:super.compare_part(pi,pj);
 			}
 			private int caculate_part_package_id()
 			{

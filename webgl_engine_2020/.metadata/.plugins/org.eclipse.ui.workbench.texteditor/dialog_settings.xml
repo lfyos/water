@@ -2,12 +2,18 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="100"/>
+		<item key="selection" value="/*&#x09;part_lru_in_list_number&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;50"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="/*&#x09;part_lru_in_list_number&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;20"/>
+			<item value="part_loader_container"/>
+			<item value="null"/>
+			<item value="@@@@"/>
+			<item value="create_buffer_object_file"/>
+			<item value="body_face_direct"/>
 			<item value="100"/>
 			<item value="multiparameter_number"/>
 			<item value="lock_file_name"/>
@@ -17,14 +23,9 @@
 			<item value="driver_cad"/>
 			<item value="&quot;vertex_color_type&quot;&#x09;&#x09;:&#x09;1,"/>
 			<item value="&quot;fragment_color_type&quot;&#x09;:&#x09;1,"/>
-			<item value="&quot;color_parameter&quot;&#x09;&#x09;:&#x09;[0.0,"/>
-			<item value="water_all\\data\\"/>
-			<item value="0.15"/>
-			<item value="0.125"/>
-			<item value="0.175"/>
-			<item value="0.20"/>
 		</list>
 		<list key="replacehistory">
+			<item value="/*&#x09;part_lru_in_list_number&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;50"/>
 			<item value="driver_opengl_fixed_pipeline"/>
 			<item value="&quot;vertex_color_type&quot;&#x09;&#x09;:&#x09;2,"/>
 			<item value="&quot;vertex_color_type&quot;&#x09;&#x09;:&#x09;1,"/>
@@ -39,7 +40,6 @@
 			<item value="fr."/>
 			<item value="&#x09;"/>
 			<item value="color_parameter"/>
-			<item value="transparency_value"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

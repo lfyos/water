@@ -289,8 +289,7 @@ public class part
 		return ret_val;
 	}
 	public String load_mesh_and_create_buffer_object(part copy_from_part,long last_modified_time,
-			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
-			buffer_object_file_modify_time_and_length_container boftal_container)
+			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps)
 	{
 		String str;
 		

@@ -1,6 +1,7 @@
 package kernel_part;
 
 import java.io.File;
+import java.io.FileWriter;
 
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
@@ -36,12 +37,21 @@ public class part_container_for_delete_part_file extends part_container
 							f.delete();
 					}
 			}
-
 			if(pll.p.part_par.clear_buffer_head_file_flag){
 				String part_temporary_file_directory=file_directory.part_file_directory(pll.p,system_par,scene_par);
-				String file_name=part_temporary_file_directory+"mesh.head.gzip_text";
-				if((f=new File(file_name)).exists())
+				if((f=new File(part_temporary_file_directory+"mesh.head.gzip_text")).exists())
 					f.delete();
+				if(scene_par!=null)
+					if((pll.p.part_type_id==2)&&(scene_par.scene_fast_load_flag))
+						if((f=new File(part_temporary_file_directory+"mesh.boftal")).exists()){
+							long t=f.lastModified();
+							try{
+								new FileWriter(f).close();
+							}catch(Exception e) {
+								;
+							}
+							f.setLastModified(t);
+						}
 			}
 		}
 	}

@@ -268,6 +268,7 @@ public class engine_kernel
 		part_container_for_delete_part_file part_cont_for_delete_file=new part_container_for_delete_part_file();
 		
 		buffer_object_file_modify_time_and_length_container boftal_container;
+		
 		boftal_container=new buffer_object_file_modify_time_and_length_container(process_bar,
 			scene_par.scene_proxy_directory_name+"engine.boftal",system_par.local_data_charset);
 		
@@ -297,10 +298,7 @@ public class engine_kernel
 				boftal_container,"load_second_class_part",process_bar,part_cont_for_delete_file);
 		
 		render_cont.type_part_package=new part_package(process_bar,"create_first_class_package",render_cont,1,system_par,scene_par);
-		
-		new engine_boftal_creator(scene_par.scene_proxy_directory_name+"engine.boftal",
-				system_par.local_data_charset,render_cont.renders,system_par,scene_par,process_bar);
-		
+
 		process_bar.set_process_bar(true,"load_component", 1, 2);
 		component_cont=new component_container(scene_f,
 				this,scene_par.default_display_bitmap,request_response,
@@ -329,15 +327,20 @@ public class engine_kernel
 		component_cont.root_component.reset_component(component_cont);
 		
 		load_create_assemble_part(request_response,part_cont_for_delete_file,part_cont,boftal_container);
+		
 		part_cont.execute_append();
 		render_cont.load_part((1<<2),4,part_loader_cont,system_par,scene_par,part_cont,
 				boftal_container,"load_third_class_part",process_bar,part_cont_for_delete_file);
+		
 		boftal_container.destroy();
 		
 		render_cont.scene_part_package=new part_package(process_bar,"create_second_class_package",render_cont,2,system_par,scene_par);
 		
 		component_cont.original_part_number	=new compress_render_container(
 				render_cont,part_cont,component_cont.root_component).original_part_number;
+		
+		part_cont.destroy();
+		part_cont=new part_container_for_part_search(render_cont.part_array(true,-1));
 
 		component_cont.do_component_caculator(true);
 		component_cont.cacuate_part_face_number(render_cont.renders);
@@ -358,12 +361,18 @@ public class engine_kernel
 			(new File(scene_par.type_proxy_directory_name)).setLastModified(current_time);
 			(new File(scene_par.scene_proxy_directory_name)).setLastModified(current_time);
 		}
+		
+		String boftal_file_name=scene_par.scene_proxy_directory_name+"engine.boftal";
+		String boftal_file_charset=system_par.local_data_charset;
+		new engine_boftal_creator(boftal_file_name,boftal_file_charset,
+				part_cont.data_array,system_par,scene_par,process_bar);
+
+		part_lru=new part_lru_manager(render_cont.renders,scene_par.part_lru_in_list_number);
+		
 		process_bar.set_process_bar(true,"load_termination", 1, 1);
 		
 		part_cont_for_delete_file.delete_part_file(system_par, scene_par);
-		
-		part_lru=new part_lru_manager(render_cont.renders,scene_par.part_lru_in_list_number);
-		
+
 		return;
 	}
 	public void load(client_request_response request_response,client_process_bar process_bar)
