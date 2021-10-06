@@ -9,18 +9,22 @@ public class part_rude
 {
 	public void free_memory()
 	{
-		for(int i=0,ni=body_number();i<ni;i++)
-			if(body_array[i]!=null){
-				body_array[i].destroy();
-				body_array[i]=null;
-			}
-		body_array=null;
+		if(body_array!=null) {
+			for(int i=0,ni=body_number();i<ni;i++)
+				if(body_array[i]!=null){
+					body_array[i].destroy();
+					body_array[i]=null;
+				}
+			body_array=null;
+		}
 	}
 	public void destroy()
 	{
 		origin_vertex_extra_data=null;
 		origin_material=null;
 		default_material=null;
+		default_vertex_extra_string=null;
+		default_normal_extra_string=null;
 		default_attribute_double=null;
 		default_attribute_string=null;
 		part_box=null;

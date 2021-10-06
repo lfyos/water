@@ -1,5 +1,6 @@
 package kernel_engine;
 
+import kernel_common_class.debug_information;
 import kernel_part.part;
 import kernel_render.render;
 
@@ -37,32 +38,23 @@ public class part_lru_manager
 
 	public boolean touch(int render_id,int part_id)
 	{
+		boolean ret_val;
 		part_bidirection_link_list pbll=part_array[render_id][part_id];
-		boolean ret_val=true;
 		
 		if(pbll.in_list_flag) {
-			ret_val=false;
-			
-			in_list_number--;
-			pbll.in_list_flag=false;
-			if(first==pbll) {
-				if(last==pbll) {
-					first=null;
-					last=null;
-				}else{
-					first=first.back;
-					first.front=null;
-				}
-			}else {
-				if(last==pbll) {
-					last=last.front;
-					last.back=null;
-				}else{
-					pbll.front.back=pbll.back;
-					pbll.back.front=pbll.front;
-				}
+			if(first==pbll) 
+				return false;
+			if(last==pbll) {
+				last=last.front;
+				last.back=null;
+			}else{
+				pbll.front.back=pbll.back;
+				pbll.back.front=pbll.front;
 			}
-		}
+			in_list_number--;
+			ret_val=false;
+		}else
+			ret_val=true;
 		
 		in_list_number++;
 		pbll.in_list_flag=true;
@@ -83,7 +75,7 @@ public class part_lru_manager
 		if((pbll=last)==first) {
 			first=null;
 			last=null;
-		}else {
+		}else{
 			last=last.front;
 			last.back=null;
 		}
@@ -92,9 +84,12 @@ public class part_lru_manager
 		pbll.front=null;
 		pbll.back=null;
 		
-		if(pbll.p.part_mesh!=null)
+		if(pbll.p.part_mesh!=null) {
 			pbll.p.part_mesh.free_memory();
-		
+			debug_information.println(
+					"Unload part:	user name:"+pbll.p.user_name+"	system name:"+pbll.p.system_name,
+					"	mesh file:"		+pbll.p.directory_name+pbll.p.mesh_file_name);
+		}
 		return ret_val;
 	}
 	public void destroy()

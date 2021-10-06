@@ -86,14 +86,23 @@ public class extended_part_driver extends part_driver
 	public String[] response_event(part p,engine_kernel ek,client_information ci)
 	{
 //		return super.response_event(p,ek,ci);
-		String file_name;
+		String directory_name,file_name,path_name,file_url;
 		if((file_name=ci.request_response.get_parameter("file"))==null)
 			return null;
-		file_name=(new File(p.directory_name+p.material_file_name).getParent())+File.separator+file_name;
 		file_name=file_reader.separator(file_name);
+		directory_name=new File(p.directory_name+p.material_file_name).getParent();
+		path_name=file_reader.separator(directory_name)+File.separator+file_name;
+		if(new File(path_name).exists())
+			return new String[]{path_name,p.file_charset};
 		
-		debug_information.println(file_name);
-		
-		return new String[]{file_name,p.file_charset};
+		path_name=ek.system_par.proxy_par.proxy_data_root_directory_name+file_name;
+		if(!(new File(path_name).exists())) 
+			debug_information.println("File does NOT exist :	",path_name);
+		else if((file_url=ci.get_file_proxy_url(path_name,ek.system_par))==null)
+			debug_information.println("File has NO proxy url :	",path_name);
+		else
+			ci.request_response.implementor.redirect_url(
+					file_url,ek.system_par.file_download_cors_string);
+		return null;
 	}
 }

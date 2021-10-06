@@ -162,10 +162,10 @@ public class part
 	public part_rude call_part_driver_for_load_part_mesh(file_writer head_fw,
 			part_container_for_part_search pcps,system_parameter system_par,scene_parameter scene_par)
 	{
-		part_rude my_part_mesh=null;
+		debug_information.println("Load part:	user name:"+user_name,
+				"	system name:"+system_name+"	mesh file:"		+directory_name+mesh_file_name);
 		
-		debug_information.println("Begin call_part_driver_for_load_part_mesh:	",
-				(directory_name+mesh_file_name)+"		"+directory_name+material_file_name);
+		part_rude my_part_mesh=null;
 		try{
 			my_part_mesh=driver.create_part_mesh_and_buffer_object_head(this,head_fw,pcps,system_par,scene_par);
 		}catch(Exception e){
@@ -176,8 +176,6 @@ public class part
 			debug_information.println("Material_file_name:",			directory_name+material_file_name);
 			e.printStackTrace();
 		}
-		debug_information.println("End call_part_driver_for_load_part_mesh:	",
-				(directory_name+mesh_file_name)+"		"+directory_name+material_file_name);
 		
 		return my_part_mesh;
 	}
@@ -315,6 +313,7 @@ public class part
 				"\t"+system_name+"\t"+user_name+"\t"+e.toString());
 			e.printStackTrace();
 		}
+		
 		if(part_mesh!=null)
 			part_mesh.free_memory();
 		

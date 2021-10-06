@@ -23,6 +23,9 @@ public class part_container_for_part_search extends sorter<part,String>
 	}
 	public void execute_append()
 	{
+		if(append_part_number<=0)
+			return;
+		
 		part my_parts[]=new part[append_part_number];
 		for(int i=0;i<append_part_number;i++) {
 			my_parts[i]=append_part_array[i];
@@ -133,6 +136,8 @@ public class part_container_for_part_search extends sorter<part,String>
 	
 	public part[] search_part(String my_part_system_name)
 	{
+		execute_append();
+		
 		int search_id[]=range(my_part_system_name);
 		if(search_id==null)
 			return null;

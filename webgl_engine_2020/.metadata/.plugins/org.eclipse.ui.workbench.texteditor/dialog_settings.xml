@@ -2,12 +2,15 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value=""/>
+		<item key="selection" value="texture_parameter"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="texture_parameter"/>
+			<item value="frag_texture"/>
+			<item value="pbll.p."/>
 			<item value="Create engine boftal file: finished!"/>
 			<item value="&quot;system_root_component&quot;"/>
 			<item value="part_list_root_component"/>
@@ -20,17 +23,14 @@
 			<item value="extended_render_driver"/>
 			<item value="clip"/>
 			<item value="/*&#x09;part_lru_in_list_number&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;20"/>
-			<item value="part_loader_container"/>
-			<item value="null"/>
-			<item value="@@@@"/>
 		</list>
 		<list key="replacehistory">
+			<item value=""/>
 			<item value="system_root_component"/>
 			<item value="&quot;part_list_root_component&quot;"/>
 			<item value="relative&#x09;light.txt&#x09;null&#x09;null"/>
 			<item value="&#x09;light.txt&#x09;null&#x09;null"/>
 			<item value=";"/>
-			<item value=""/>
 			<item value="/*&#x09;part_lru_in_list_number&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;50"/>
 			<item value="driver_opengl_fixed_pipeline"/>
 			<item value="&quot;vertex_color_type&quot;&#x09;&#x09;:&#x09;2,"/>
@@ -46,7 +46,7 @@
 		<item key="DIALOG_WIDTH" value="346"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="72"/>
-		<item key="DIALOG_Y_ORIGIN" value="151"/>
+		<item key="DIALOG_X_ORIGIN" value="1065"/>
+		<item key="DIALOG_Y_ORIGIN" value="380"/>
 	</section>
 </section>

@@ -13,7 +13,6 @@
 <fullyQualifiedTypeName name="format_convert.gltf_converter"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="kernel_file_manager.file_directory"/>
 <fullyQualifiedTypeName name="kernel_common_class.zip_file"/>
 <fullyQualifiedTypeName name="kernel_render.render_target"/>
 <fullyQualifiedTypeName name="kernel_render.target_viewport"/>
@@ -59,5 +58,6 @@
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="kernel_file_manager.file_writer"/>
 <fullyQualifiedTypeName name="kernel_part.part"/>
+<fullyQualifiedTypeName name="kernel_file_manager.file_directory"/>
 <fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 </qualifiedTypeNameHistroy>

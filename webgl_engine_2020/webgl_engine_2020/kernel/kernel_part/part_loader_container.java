@@ -185,14 +185,6 @@ public class part_loader_container
 						if(my_part.part_mesh==null)
 							my_part.part_mesh=my_boftal.simple_part_mesh;
 						my_part.boftal=my_boftal;
-						my_boftal.simple_part_mesh=null;
-						
-						debug_information.println("Fast load part in boftal_container(1):",
-								 "	user name:"				+my_part.user_name
-								+"	system name:"			+my_part.system_name
-								+"	permanent_render_id:"	+my_part.permanent_render_id
-								+"	permanent_part_id:"		+my_part.permanent_part_id);
-						
 						return true;
 					}
 					boftal_container=null;
@@ -216,39 +208,29 @@ public class part_loader_container
 					system_par.proxy_par.proxy_data_root_directory_name.length());
 			my_part.boftal=boftal_container.search_boftal(boftal_token_str,boftal_last_modify_time);
 			boftal_container=null;
-			
-			debug_information.println("Fast load part in boftal_container(2):",
-					 "	user name:"				+my_part.user_name
-					+"	system name:"			+my_part.system_name
-					+"	permanent_render_id:"	+my_part.permanent_render_id
-					+"	permanent_part_id:"		+my_part.permanent_part_id);
 		}
 		if(my_part.boftal==null) {
 			file_reader fr=new file_reader(
 				part_temporary_file_directory+"mesh.boftal",system_par.local_data_charset);
 			my_part.boftal=new buffer_object_file_modify_time_and_length(fr);
 			fr.close();
-			
-			debug_information.println("Fast load part from mesh.boftal file:",
-					 "	user name:"				+my_part.user_name
-					+"	system name:"			+my_part.system_name
-					+"	permanent_render_id:"	+my_part.permanent_render_id
-					+"	permanent_part_id:"		+my_part.permanent_part_id);
 		}
 		if(my_part.part_mesh==null)
 			my_part.part_mesh=my_part.boftal.simple_part_mesh;
-		my_part.boftal.simple_part_mesh=null;
 
 		return true;
 	}
 	public void load_part_mesh_head_only(part my_part,
 			part_container_for_part_search my_pcps,system_parameter my_system_par,scene_parameter my_scene_par)
 	{
-		if(my_part.is_normal_part()) {
+		if(my_part.is_normal_part()){
 			exclusive_file_mutex efm=null;
-			if(my_part.part_par.do_load_lock_flag)
-				efm=exclusive_file_mutex.lock(file_directory.part_file_directory(my_part,my_system_par,my_scene_par)+"part.lock",
-					"wait for load_mesh_and_create_buffer_object_and_material_file:	"+my_part.directory_name+my_part.mesh_file_name);
+			if(my_part.part_par.do_load_lock_flag) {
+				String my_directory_name=file_directory.part_file_directory(my_part,my_system_par,my_scene_par);
+				String msg="wait for load_mesh_and_create_buffer_object_and_material_file:	";
+				msg+=my_part.directory_name+my_part.mesh_file_name;
+				efm=exclusive_file_mutex.lock(my_directory_name+"part.lock",msg);
+			}
 			if(my_part.part_mesh!=null)
 				my_part.part_mesh.destroy();
 			my_part.part_mesh=my_part.call_part_driver_for_load_part_mesh(null,my_pcps,my_system_par,my_scene_par);
@@ -256,6 +238,7 @@ public class part_loader_container
 				efm.unlock();
 		}
 	}
+	
 	public part_loader[] load(part my_part,part my_copy_from_part,long last_modified_time,
 			system_parameter system_par,scene_parameter scene_par,part_container part_cont_for_delete_file,
 			part_loader already_loaded_part[],part_container_for_part_search pcps,
@@ -266,7 +249,15 @@ public class part_loader_container
 		
 		if(fast_load_routine(last_modified_time,part_temporary_file_directory,
 			my_part,my_copy_from_part,system_par,scene_par,pcps,boftal_container))
-				return already_loaded_part;
+		{
+			if(my_part.part_mesh!=null)
+				my_part.part_mesh.free_memory();
+
+			debug_information.println(
+					"Fast load part:	user name:"+my_part.user_name+"	system name:"+my_part.system_name,
+					"	mesh file:"		+my_part.directory_name+my_part.mesh_file_name);
+			return already_loaded_part;
+		}
 		
 		exclusive_file_mutex efm=exclusive_file_mutex.lock(lock_file_name,
 				"wait for load_mesh_and_create_buffer_object_and_material_file:	"

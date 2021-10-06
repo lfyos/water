@@ -38,18 +38,29 @@ void main(void)
 		if(dot(target_info.clip_plane,frag_position)>0.0)
 			discard;
 	}
+	
 	switch(my_frag_type){
 	case 0://face
+		float mov_x_value=material_info.texture_parameter.x;
+		float mov_y_value=material_info.texture_parameter.y;
+		float cos_value  =material_info.texture_parameter.z;
+		float sin_value  =material_info.texture_parameter.w;
+		
 		switch(int(material_info.fragment_color_type)){
 		default:
 		case 0:
 			frag_data[0]=vec4(frag_color.rgb,transparency_value);
 			break;
 		case 1:
-			frag_data[0]=vec4(texture(texture_object,frag_texture.xy).rgb,transparency_value);
+			frag_data[0]  =texture(texture_object,vec2(
+				mov_x_value+cos_value*frag_texture.x+sin_value*frag_texture.y,
+				mov_y_value-sin_value*frag_texture.x+cos_value*frag_texture.y));
+			frag_data[0].a=transparency_value;
 			break;
 		case 2:
-			frag_data[0]=texture(texture_object,frag_texture.xy);
+			frag_data[0]=texture(texture_object,vec2(
+				mov_x_value+cos_value*frag_texture.x+sin_value*frag_texture.y,
+				mov_y_value-sin_value*frag_texture.x+cos_value*frag_texture.y));
 			if(frag_data[0].a<material_info.color_parameter.x)
 				discard;
 			else
