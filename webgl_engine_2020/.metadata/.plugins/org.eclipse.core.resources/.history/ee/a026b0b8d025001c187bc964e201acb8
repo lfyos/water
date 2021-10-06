@@ -1,0 +1,43 @@
+package kernel_maintain;
+
+import kernel_common_class.debug_information;
+import kernel_file_manager.file_reader;
+
+public class test_3
+{
+	public static void main(String args[])
+	{
+		debug_information.println("Begin");
+		
+		for(file_reader f1=new file_reader("E:\\water_all\\data\\users\\users\\NoName\\assemble.txt",null);;) {
+			if(f1.eof()) {	
+				f1.close();
+				break;
+			}
+			
+			String file_name=f1.get_string();
+			if(file_name==null)
+				continue;
+			file_name=f1.directory_name+file_name;
+			for(file_reader f2=new file_reader(file_reader.separator(file_name),null);;) {
+				if(f2.eof()) {	
+					f2.close();
+					break;
+				}
+				f2.get_string();
+				f2.get_string();
+				file_name=f2.get_string();
+				f2.get_string();
+				f2.get_string();
+				f2.get_string();
+				if(f2.get_string()==null)
+					continue;
+				file_name=file_reader.separator(f2.directory_name+file_name);
+				
+				debug_information.println(file_name);
+				
+			}
+		}
+		debug_information.println("End");
+	}
+}

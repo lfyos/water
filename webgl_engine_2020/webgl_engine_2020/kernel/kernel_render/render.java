@@ -1,9 +1,12 @@
 package kernel_render;
 
 import java.io.File;
+
+import kernel_common_class.change_name;
 import kernel_common_class.debug_information;
 import kernel_driver.render_driver;
 import kernel_engine.system_parameter;
+import kernel_engine.scene_parameter;
 import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
 import kernel_part.part;
@@ -13,25 +16,11 @@ import kernel_part.part_parameter;
 
 public class render
 {
-	public Class<?>driver_class;
-	
-	public String javascript_decode,javascript_draw;
-	public String vertex_shader,fragment_shader,geometry_shader,tess_control_shader,tess_evalue_shader;
-	
+	public render_driver driver;
 	public part parts[];
 	
 	public void destroy()
 	{
-		driver_class		=null;
-		
-		javascript_decode	=null;
-		javascript_draw		=null;
-		vertex_shader		=null;
-		fragment_shader		=null;
-		geometry_shader		=null;
-		tess_control_shader	=null;
-		tess_evalue_shader	=null;
-		
 		if(parts!=null) {
 			for(int i=0,ni=parts.length;i<ni;i++) 
 				if(parts[i]!=null){
@@ -40,22 +29,16 @@ public class render
 				}
 			parts=null;
 		}
+		if(driver!=null){
+			driver.destroy();
+			driver=null;
+		}
 	}
-	public render(render r,system_parameter system_par,client_request_response request_response)
+	public render(render r,client_request_response request_response,
+				system_parameter system_par,scene_parameter scene_par)
 	{	
-		driver_class		=r.driver_class;
+		driver=r.driver.clone(r,request_response,system_par,scene_par);
 		
-		javascript_decode	=new String(r.javascript_decode);
-		javascript_draw		=new String(r.javascript_draw);
-		
-		vertex_shader		=new String(r.vertex_shader);
-		fragment_shader		=new String(r.fragment_shader);
-		
-		geometry_shader		=new String(r.geometry_shader);
-		
-		tess_control_shader	=new String(r.tess_control_shader);
-		tess_evalue_shader	=new String(r.tess_evalue_shader);
-
 		if(r.parts==null)
 			parts=null;
 		else if(r.parts.length<=0)
@@ -63,26 +46,33 @@ public class render
 		else{
 			parts=new part[r.parts.length];
 			for(int i=0,ni=r.parts.length;i<ni;i++)
-				parts[i]=new part(r.parts[i],system_par,request_response);
+				parts[i]=new part(r.parts[i],request_response,system_par,scene_par);
 		}
 	}
-	
-	public render(render_driver my_driver)
+	public render(String driver_name,client_request_response request_response,
+			system_parameter system_par,scene_parameter scene_par)
 	{
-		driver_class=my_driver.getClass();
-		
-		javascript_decode	=new String(my_driver.javascript_decode);
-		javascript_draw		=new String(my_driver.javascript_draw);
-		
-		vertex_shader		=new String(my_driver.vertex_shader);
-		fragment_shader		=new String(my_driver.fragment_shader);
-		
-		geometry_shader		=new String(my_driver.geometry_shader);
-		
-		tess_control_shader	=new String(my_driver.tess_control_shader);
-		tess_evalue_shader	=new String(my_driver.tess_evalue_shader);
-		
+		driver=null;
 		parts=null;
+		
+		Object render_driver_object;
+		try{
+			render_driver_object=Class.forName(driver_name).getConstructor().newInstance();
+		}catch(Exception e){
+			debug_information.println("Create render driver fail:		",e.toString());
+			debug_information.println("Driver name is ",driver_name);
+			e.printStackTrace();
+			return;
+		}
+		if(!(render_driver_object instanceof render_driver)){
+			debug_information.println("render driver class name error:		",driver_name);
+			return;
+	    }
+		render_driver original_driver=(render_driver)render_driver_object;
+		driver=original_driver.clone(null,request_response,system_par,scene_par);
+		original_driver.destroy();
+
+		return;
 	}
 	public void delete_last_part()
 	{
@@ -124,11 +114,11 @@ public class render
 		
 		return;
 	}
-	public void add_part(part_container_for_part_search pcps,
-			render_driver r_driver,int part_type_id,int add_render_id,
-			part_parameter part_par,system_parameter system_par,
+	public void add_part(
+			part_container_for_part_search pcps,render_driver r_driver,int part_type_id,
+			int add_render_id,part_parameter part_par,system_parameter system_par,
 			String file_name,String file_charset,String pre_buffer_object_file_name,
-			client_request_response request_response)
+			change_name mount_component_name_and_assemble_file_name,client_request_response request_response)
 	{
 		file_reader f=new file_reader(file_name,file_charset);
 		if(f.error_flag()) {
@@ -173,7 +163,8 @@ public class render
 						(description_file_name==null)	?"":description_file_name,		
 						(audio_file_name==null)			?"":audio_file_name);
 				try{
-					my_part.driver=r_driver.create_part_driver(f,my_part,system_par,request_response);
+					my_part.driver=r_driver.create_part_driver(f,my_part,system_par,
+							mount_component_name_and_assemble_file_name,request_response);
 				}catch(Exception e){
 					my_part.driver=null;
 					debug_information.println("Create part driver fail:",e.toString());

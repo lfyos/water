@@ -2,51 +2,51 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="/*&#x09;part_lru_in_list_number&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;50"/>
+		<item key="selection" value=""/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="Create engine boftal file: finished!"/>
+			<item value="&quot;system_root_component&quot;"/>
+			<item value="part_list_root_component"/>
+			<item value="End loading assemble"/>
+			<item value="&quot;display_component_root&quot;"/>
+			<item value="relative&#x09;light.txt"/>
+			<item value="&#x09;light.txt"/>
+			<item value=");"/>
+			<item value="new String("/>
+			<item value="extended_render_driver"/>
+			<item value="clip"/>
 			<item value="/*&#x09;part_lru_in_list_number&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;20"/>
 			<item value="part_loader_container"/>
 			<item value="null"/>
 			<item value="@@@@"/>
-			<item value="create_buffer_object_file"/>
-			<item value="body_face_direct"/>
-			<item value="100"/>
-			<item value="multiparameter_number"/>
-			<item value="lock_file_name"/>
-			<item value="inp_part_"/>
-			<item value="frag_texture"/>
-			<item value="discard_flag"/>
-			<item value="driver_cad"/>
-			<item value="&quot;vertex_color_type&quot;&#x09;&#x09;:&#x09;1,"/>
-			<item value="&quot;fragment_color_type&quot;&#x09;:&#x09;1,"/>
 		</list>
 		<list key="replacehistory">
+			<item value="system_root_component"/>
+			<item value="&quot;part_list_root_component&quot;"/>
+			<item value="relative&#x09;light.txt&#x09;null&#x09;null"/>
+			<item value="&#x09;light.txt&#x09;null&#x09;null"/>
+			<item value=";"/>
+			<item value=""/>
 			<item value="/*&#x09;part_lru_in_list_number&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;50"/>
 			<item value="driver_opengl_fixed_pipeline"/>
 			<item value="&quot;vertex_color_type&quot;&#x09;&#x09;:&#x09;2,"/>
 			<item value="&quot;vertex_color_type&quot;&#x09;&#x09;:&#x09;1,"/>
 			<item value="&quot;fragment_color_type&quot;&#x09;:&#x09;2,"/>
 			<item value="&quot;color_parameter&quot;&#x09;&#x09;:&#x09;[0.1,"/>
-			<item value=""/>
 			<item value="0.20"/>
 			<item value="0.15"/>
 			<item value="0.125"/>
-			<item value="0.175"/>
-			<item value="driver_cad"/>
-			<item value="fr."/>
-			<item value="&#x09;"/>
-			<item value="color_parameter"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_WIDTH" value="335"/>
+		<item key="DIALOG_WIDTH" value="346"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="1507"/>
-		<item key="DIALOG_Y_ORIGIN" value="129"/>
+		<item key="DIALOG_X_ORIGIN" value="72"/>
+		<item key="DIALOG_Y_ORIGIN" value="151"/>
 	</section>
 </section>

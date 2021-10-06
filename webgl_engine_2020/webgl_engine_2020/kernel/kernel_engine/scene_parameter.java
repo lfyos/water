@@ -10,8 +10,7 @@ public class scene_parameter
 {
 	public String change_part_string,change_component_string,mount_component_string,part_type_string;
 
-	public String directory_name,extra_directory_name;
-	public String parameter_charset,extra_parameter_charset;
+	public String directory_name,parameter_charset;
 	public long parameter_last_modified_time,scene_last_modified_time;
 	
 	public String scene_sub_directory;
@@ -65,7 +64,7 @@ public class scene_parameter
 			long my_scene_list_file_last_modified_time)
 	{
 		String str;
-		
+
 		if((change_part_string=request_response.get_parameter("change_part"))==null)
 			change_part_string="";
 		else
@@ -166,9 +165,6 @@ public class scene_parameter
 		
 		scene_last_modified_time=parameter_last_modified_time;
 		
-		extra_directory_name=fr.directory_name;
-		extra_parameter_charset=fr.get_charset();
-
 		part_lru_in_list_number=fr.get_int();
 		
 		if((inserted_component_name=fr.get_string())==null)

@@ -2,8 +2,8 @@ package kernel_render;
 
 import java.io.File;
 
+import kernel_common_class.change_name;
 import kernel_common_class.debug_information;
-import kernel_driver.render_driver;
 import kernel_engine.part_type_string_sorter;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
@@ -24,6 +24,10 @@ import kernel_part.part_container_for_part_search;
 
 public class render_container
 {
+	public render renders[];
+	public part_package system_part_package,type_part_package,scene_part_package;
+	public change_name mount_component_name_and_assemble_file_name;
+	
 	public void destroy()
 	{
 		if(renders!=null) {
@@ -46,11 +50,11 @@ public class render_container
 			scene_part_package.destroy();
 			scene_part_package=null;
 		}
+		if(mount_component_name_and_assemble_file_name!=null) {
+			mount_component_name_and_assemble_file_name.destroy();
+			mount_component_name_and_assemble_file_name=null;
+		}
 	}
-
-	public render renders[];
-	public part_package system_part_package,type_part_package,scene_part_package;
-	
 	public part[] part_array(boolean part_mesh_flag,int part_type_id)
 	{
 		int effective_part_number=0;
@@ -158,7 +162,7 @@ public class render_container
 	}
 	
 	public void create_bottom_box_part(part_container_for_part_search pcps,
-			client_request_response request_response,system_parameter system_par)
+			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
 		for(int i=0,j=0,part_number=pcps.get_number();i<part_number;i=j){
 			for(j=i;j<part_number;j++)
@@ -190,7 +194,7 @@ public class render_container
 			add_part.part_from_id			=p.part_id;
 			add_part.permanent_part_from_id	=p.permanent_part_id;
 			try {
-				add_part.driver=p.driver.clone(p,add_part,system_par,request_response);
+				add_part.driver=p.driver.clone(p,add_part,request_response,system_par,scene_par);
 				pcps.append_one_part(add_part);
 			}catch(Exception e) {
 				debug_information.println("Execte part driver clone() fail");
@@ -211,29 +215,18 @@ public class render_container
 			String driver_name,String load_sub_directory_name,
 			String render_list_file_name,String file_system_charset,String shader_file_name,
 			int part_type_id,part_type_string_sorter my_part_type_string_sorter,
-			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
+			system_parameter system_par,scene_parameter scene_par,
+			client_request_response request_response)
 	{
-		Object obj;
-		try{
-			obj=Class.forName(driver_name).getConstructor().newInstance();
-		}catch(Exception e){
-			debug_information.println("Create render driver fail:		",e.toString());
-			debug_information.println("Driver name is ",driver_name);
-			e.printStackTrace();
+		render ren;
+		if((ren=new render(driver_name,request_response,system_par,scene_par)).driver==null)
 			return;
-		}
-		if(!(obj instanceof render_driver)){
-			debug_information.println("render driver class name error:		",driver_name);
-			return;
-	    }
-		render_driver my_render_driver=(render_driver)obj;
-    
+		
 		debug_information.print  ("Driver name:	",			driver_name);
 		debug_information.print  ("		render list file:	",	render_list_file_name);
 		debug_information.println(file_reader.is_exist(render_list_file_name)?"":"		not exist");
 		
 		file_reader f_render_list=new file_reader(render_list_file_name,file_system_charset);
-		render ren=new render(my_render_driver);
 		
 		while(!(f_render_list.eof())){
 			String str;
@@ -266,8 +259,9 @@ public class render_container
 
 			String get_part_list_result[]=null;
 			try{
-				get_part_list_result=my_render_driver.get_part_list(giveup_part_load_flag,part_type_id,
-					f_render_list,load_sub_directory_name,par_list_file_name,part_par,system_par,request_response);
+				get_part_list_result=ren.driver.get_part_list(giveup_part_load_flag,part_type_id,
+					f_render_list,load_sub_directory_name,par_list_file_name,part_par,system_par,
+					scene_par,mount_component_name_and_assemble_file_name,request_response);
 			}catch(Exception e){
 				debug_information.println("Execute get_part_list fail:		",e.toString());
 				debug_information.println("Driver name:		",	driver_name);
@@ -308,52 +302,40 @@ public class render_container
 						part_f.setLastModified(f_render_list.lastModified_time);
 				
 				int render_id=(renders==null)?0:renders.length;
-				ren.add_part(pcps,my_render_driver,part_type_id,render_id,
-					part_par,system_par,par_list_file_name,part_list_file_charset,
-					"part_mesh_"+Integer.toString(render_id)+"_",request_response);
+				ren.add_part(pcps,ren.driver,part_type_id,render_id,part_par,system_par,
+					par_list_file_name,part_list_file_charset,"part_mesh_"+Integer.toString(render_id)+"_",
+					mount_component_name_and_assemble_file_name,request_response);
 			}
 			debug_information.print  ("end load part list file:	",	par_list_file_name);
 			debug_information.println(par_list_file_flag?"":"	not exist");
 		}
 
 		f_render_list.close();
-		
-		try {
-			my_render_driver.destroy();
-		}catch(Exception e){
-			debug_information.println("Destroy render driver fail:		",e.toString());
-			debug_information.println("Driver name is ",driver_name);
-			e.printStackTrace();
-		}
-		
-		my_render_driver=null;
-		
-		if(ren.parts==null)
-			return;
-		if(ren.parts.length<=0)
-			return;
-		if(renders==null)
-			renders=new render[1];
-		else{
-			render []tmp_renders=renders;
-			renders=new render[tmp_renders.length+1];
-			for(int i=0;i<tmp_renders.length;i++)
-				renders[i]=tmp_renders[i];
-		}
-		renders[renders.length-1]=ren;
+
+		if(ren.parts!=null)
+			if(ren.parts.length>0){
+				if(renders==null)
+					renders=new render[1];
+				else{
+					render bak[]=renders;
+					renders=new render[bak.length+1];
+					for(int i=0;i<bak.length;i++)
+						renders[i]=bak[i];
+				}
+				renders[renders.length-1]=ren;
+				return;
+			}
+		ren.destroy();
 		return;
 	}
-	public void load_shader(part_container_for_part_search pcps,
-		long last_modify_time,String shader_file_name,
-		String shader_file_charset,String load_sub_directory_name,int part_type_id,
-		part_type_string_sorter my_part_type_string_sorter,system_parameter system_par,
+	public void load_shader(part_container_for_part_search pcps,long last_modify_time,
+		String shader_file_name,String shader_file_charset,String load_sub_directory_name,
+		int part_type_id,part_type_string_sorter my_part_type_string_sorter,system_parameter system_par,
 		scene_parameter scene_par,client_request_response request_response)
 	{
-		{
-			File f=new File(shader_file_name);
-			if(f.lastModified()<last_modify_time)
-				f.setLastModified(last_modify_time);
-		}
+		File f;
+		if((f=new File(shader_file_name)).lastModified()<last_modify_time)
+			f.setLastModified(last_modify_time);
 		
 		file_reader f_shader=new file_reader(shader_file_name,shader_file_charset);
 		if(f_shader.error_flag()) {
@@ -370,16 +352,13 @@ public class render_container
 			String render_list_file_name=(str=f_shader.get_string())==null?"":file_reader.separator(str.trim());
 			if(render_list_file_name.compareTo("")==0)
 				continue;
-			{
-				File render_f=new File(f_shader.directory_name+render_list_file_name);
-				if(render_f.exists())
-					if(f_shader.lastModified_time>render_f.lastModified())
-						render_f.setLastModified(f_shader.lastModified_time);
-			}
+			if((f=new File(f_shader.directory_name+render_list_file_name)).exists())
+				if(f_shader.lastModified_time>f.lastModified())
+					f.setLastModified(f_shader.lastModified_time);
 			load_one_shader(pcps,driver_name,load_sub_directory_name,
 				f_shader.directory_name+render_list_file_name,f_shader.get_charset(),
-				f_shader.directory_name+f_shader.file_name,part_type_id,
-				my_part_type_string_sorter,system_par,scene_par,request_response);
+				f_shader.directory_name+f_shader.file_name,part_type_id,my_part_type_string_sorter,
+				system_par,scene_par,request_response);
 		}
 		debug_information.println();
 		debug_information.println("End shader and part initialization");
@@ -392,19 +371,22 @@ public class render_container
 		system_part_package		=new part_package();
 		type_part_package		=new part_package();
 		scene_part_package		=new part_package();
+		mount_component_name_and_assemble_file_name=new change_name();
 	}
-	public render_container(render_container ren_con,
-			system_parameter system_par,client_request_response request_response)
+	public render_container(render_container ren_con,client_request_response request_response,
+			system_parameter system_par,scene_parameter scene_par)
 	{
 		renders=new render[0];
 		if(ren_con.renders!=null)
 			if(ren_con.renders.length>0){
 				renders=new render[ren_con.renders.length];
 				for(int i=0,n=ren_con.renders.length;i<n;i++)
-					renders[i]=new render(ren_con.renders[i],system_par,request_response);
+					renders[i]=new render(ren_con.renders[i],request_response,system_par,scene_par);
 			}
 		system_part_package	=new part_package(ren_con.system_part_package);
 		type_part_package	=new part_package(ren_con.type_part_package);
 		scene_part_package	=new part_package(ren_con.scene_part_package);
+		mount_component_name_and_assemble_file_name=new change_name(
+				ren_con.mount_component_name_and_assemble_file_name,false);
 	}
 }

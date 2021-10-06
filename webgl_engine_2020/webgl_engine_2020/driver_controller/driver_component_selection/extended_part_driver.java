@@ -37,7 +37,8 @@ public class extended_part_driver extends part_driver
 	{
 	}
 	public part_driver clone(part parent,part p,
-			system_parameter system_par,client_request_response request_response)
+			client_request_response request_response,
+			system_parameter system_par,scene_parameter scene_par)
 	{
 		return new extended_part_driver(material_file_name);
 	}

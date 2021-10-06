@@ -153,7 +153,10 @@ public class change_name extends sorter<String[],String>
 			do_sort(-1,bak);
 		}
 	}
-	
+	public change_name()
+	{
+		init(null,null);
+	}
 	public change_name(common_reader f_array[],String change_string)
 	{
 		init(f_array,change_string);

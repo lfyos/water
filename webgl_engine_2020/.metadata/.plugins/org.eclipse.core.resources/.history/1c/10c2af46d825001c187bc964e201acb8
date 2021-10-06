@@ -1,0 +1,81 @@
+package kernel_maintain;
+
+import kernel_common_class.debug_information;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
+
+public class test_3
+{
+	private static void process(String file_name,String begin_str,String end_str)
+	{
+		String file_array[]=new String[] {
+				null,null,null,null,null,null,null,null,null,null,null,
+				null,null,null,null,null,null,null,null,null,null,null,
+				null,null,null,null,null,null,null,null,null,null,null,
+				null,null,null,null,null,null,null,null,null,null,null,
+				null,null,null,null,null,null,null,null,null,null,null
+		};
+		file_reader fr=new file_reader(file_name,null);
+		for(int i=0;i<18;i++)
+			fr.get_string();
+		int number=0;
+		while(!(fr.eof())) {
+			String str1=fr.get_string();
+			fr.get_string();
+			String str2=fr.get_string();
+			if(str2!=null)
+				if(str1.trim().toLowerCase().compareTo("part_list")==0)
+					file_array[number++]=str2;
+		}
+		fr.close();
+		
+		debug_information.println(number+"	"+file_name);
+/*		
+		file_writer fw=new file_writer(file_name,null);
+		
+		fw.println(begin_str);
+		
+		for(int i=0;i<file_array.length;i++)
+			if(file_array[i]!=null)
+				fw.println("				part_list			mount		",file_array[i]);
+		
+		fw.println(end_str);
+		fw.close();
+*/		
+	}
+	public static void main(String args[])
+	{
+		debug_information.println("Begin");
+		
+		String charset=null;
+		String begin_str=file_reader.get_text("c:\\temp\\begin.txt",charset);
+		String end_str=file_reader.get_text("c:\\temp\\end.txt",charset);
+		
+		for(file_reader f1=new file_reader("E:\\water_all\\data\\users\\users\\NoName\\assemble.txt",null);;) {
+			if(f1.eof()) {	
+				f1.close();
+				break;
+			}
+			
+			String file_name=f1.get_string();
+			if(file_name==null)
+				continue;
+			file_name=file_reader.separator(f1.directory_name+file_name);
+			for(file_reader f2=new file_reader(file_name,null);;) {
+				if(f2.eof()) {	
+					f2.close();
+					break;
+				}
+				f2.get_string();
+				f2.get_string();
+				file_name=f2.get_string();
+				f2.get_string();
+				f2.get_string();
+				f2.get_string();
+				if(f2.get_string()!=null)
+					process(file_reader.separator(f2.directory_name+file_name),begin_str,end_str);
+			}
+		}
+		debug_information.println("End");
+	}
+}

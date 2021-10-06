@@ -293,7 +293,7 @@ public class create_assemble_part
 			add_part.permanent_part_from_id	=assemble_part.permanent_part_id;
 				
 			try{
-				add_part.driver=assemble_part.driver.clone(assemble_part,add_part,system_par,request_response);
+				add_part.driver=assemble_part.driver.clone(assemble_part,add_part,request_response,system_par,scene_par);
 			}catch(Exception e) {
 				debug_information.println("Execte part clone() fail",e.toString());
 				debug_information.println("Part user name:",	add_part.user_name);

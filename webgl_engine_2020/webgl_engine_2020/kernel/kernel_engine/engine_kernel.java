@@ -1,7 +1,6 @@
 package kernel_engine;
 
 import java.io.File;
-import java.util.Date;
 
 import kernel_camera.camera_container;
 import kernel_common_class.change_name;
@@ -272,7 +271,13 @@ public class engine_kernel
 		boftal_container=new buffer_object_file_modify_time_and_length_container(process_bar,
 			scene_par.scene_proxy_directory_name+"engine.boftal",system_par.local_data_charset);
 		
-		render_cont=new render_container(render_cont,system_par,request_response);
+		render_cont=new render_container(render_cont,request_response,system_par,scene_par);
+		render_cont.mount_component_name_and_assemble_file_name.append(
+			new change_name(
+				new String[]{
+						scene_par.directory_name+scene_par.mount_component_file_name,
+						scene_f.directory_name	+scene_par.mount_component_file_name
+				},scene_par.mount_component_string,scene_par.parameter_charset));
 		part_cont=new part_container_for_part_search(render_cont.part_array(true,-1));
 
 		part_type_string_sorter my_part_type_string_sorter=new part_type_string_sorter(
@@ -283,7 +288,8 @@ public class engine_kernel
 		
 		render_cont.load_shader(part_cont,scene_par.parameter_last_modified_time,
 				scene_par.directory_name+scene_par.type_shader_file_name,
-				scene_par.parameter_charset,"",1,null,system_par,scene_par,request_response);
+				scene_par.parameter_charset,"",1,null,
+				system_par,scene_par,request_response);
 		render_cont.load_shader(part_cont,scene_par.scene_last_modified_time,
 				scene_directory_name+scene_par.scene_shader_file_name,scene_charset,
 				scene_par.scene_sub_directory, 2,my_part_type_string_sorter,
@@ -292,7 +298,7 @@ public class engine_kernel
 		render_cont.load_part((1<<1)+(1<<2),1,part_loader_cont,system_par,scene_par,part_cont,
 				boftal_container,"load_first_class_part",process_bar,part_cont_for_delete_file);
 
-		render_cont.create_bottom_box_part(part_cont,request_response,system_par);
+		render_cont.create_bottom_box_part(part_cont,request_response,system_par,scene_par);
 		part_cont.execute_append();
 		render_cont.load_part((1<<1)+(1<<2),2,part_loader_cont,system_par,scene_par,part_cont,
 				boftal_container,"load_second_class_part",process_bar,part_cont_for_delete_file);
@@ -312,11 +318,6 @@ public class engine_kernel
 								scene_par.directory_name+scene_par.change_component_file_name,
 								scene_f.directory_name	+scene_par.change_component_file_name
 						},scene_par.change_component_string,scene_par.parameter_charset),
-				new change_name(
-						new String[]{
-								scene_par.directory_name+scene_par.mount_component_file_name,
-								scene_f.directory_name	+scene_par.mount_component_file_name
-						},scene_par.mount_component_string,scene_par.parameter_charset),
 				my_part_type_string_sorter);
 		
 		scene_f.close();
@@ -355,24 +356,16 @@ public class engine_kernel
 		program_last_time=copy_program.copy_shader_programs(render_cont,system_par,scene_par);
 		
 		new engine_initialization(this,request_response,process_bar);
-
-		{
-			long current_time=(new Date()).getTime();
-			(new File(scene_par.type_proxy_directory_name)).setLastModified(current_time);
-			(new File(scene_par.scene_proxy_directory_name)).setLastModified(current_time);
-		}
 		
-		String boftal_file_name=scene_par.scene_proxy_directory_name+"engine.boftal";
-		String boftal_file_charset=system_par.local_data_charset;
-		new engine_boftal_creator(boftal_file_name,boftal_file_charset,
-				part_cont.data_array,system_par,scene_par,process_bar);
-
+		new engine_boftal_creator(scene_par.scene_proxy_directory_name+"engine.boftal",
+				system_par.local_data_charset,part_cont.data_array,system_par,scene_par,process_bar);
+		
 		part_lru=new part_lru_manager(render_cont.renders,scene_par.part_lru_in_list_number);
+		
+		part_cont_for_delete_file.delete_part_file(system_par, scene_par);
 		
 		process_bar.set_process_bar(true,"load_termination", 1, 1);
 		
-		part_cont_for_delete_file.delete_part_file(system_par, scene_par);
-
 		return;
 	}
 	public void load(client_request_response request_response,client_process_bar process_bar)

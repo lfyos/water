@@ -14,9 +14,7 @@ public class scene_parameter_information extends jason_creator
 		print("part_type_string",							sp.part_type_string);
 		
 		print("directory_name",								sp.directory_name);
-		print("extra_directory_name",						sp.extra_directory_name);
 		print("parameter_charset",							sp.parameter_charset);
-		print("extra_parameter_charset",					sp.extra_parameter_charset);
 		print("parameter_last_modified_time",				sp.parameter_last_modified_time);
 		print("scene_last_modified_time",					sp.scene_last_modified_time);
 		

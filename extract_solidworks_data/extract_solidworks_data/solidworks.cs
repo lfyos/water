@@ -105,14 +105,15 @@ namespace extract_solidworks_data
         public solidworks()
         {
             StreamReader config = new StreamReader(
-                AppDomain.CurrentDomain.BaseDirectory + "\\config.txt",
-                System.Text.Encoding.GetEncoding("gb2312"));
+                AppDomain.CurrentDomain.BaseDirectory + "config.txt",
+                System.Text.Encoding.GetEncoding("GBK"));
             string charset              =   config.ReadLine().Trim();
             int tessellation_quality    =   int.Parse(config.ReadLine().Trim());
             double ChordTolerance       =   double.Parse(config.ReadLine().Trim());
             double LengthTolerance      =   double.Parse(config.ReadLine().Trim());
             config.Close();
 
+            Console.WriteLine("Configure file :" + AppDomain.CurrentDomain.BaseDirectory + "config.txt");
             Console.WriteLine("Extract_solidworks_data: charset:"               + charset);
             Console.WriteLine("Extract_solidworks_data: tessellation_quality:"  + tessellation_quality);
             Console.WriteLine("Extract_solidworks_data: ChordTolerance:"        + ChordTolerance);

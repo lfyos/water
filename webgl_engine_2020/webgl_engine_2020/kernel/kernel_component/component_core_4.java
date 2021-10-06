@@ -224,8 +224,7 @@ public class component_core_4 extends component_core_3
 	private void append_children(file_reader fr,String token_string,engine_kernel ek,
 			client_request_response request_response,part_container_for_part_search pcfps,
 			change_name change_part_name,change_name mount_component_name,
-			part_type_string_sorter type_string_sorter,
-			boolean part_list_flag,long default_display_bitmap,int max_child_number)
+			part_type_string_sorter type_string_sorter,long default_display_bitmap,int max_child_number)
 	{
 		children=new component[0];
 		for(String str,assemble_file_name_array[][];;){
@@ -250,7 +249,7 @@ public class component_core_4 extends component_core_3
 					for(int i=0;i<create_child_number;i++)
 						my_children[i]=new component(token_string,ek,request_response,
 							fr,pcfps,change_part_name,mount_component_name,type_string_sorter,
-							part_list_flag,default_display_bitmap,max_child_number);
+							uniparameter.part_list_flag,default_display_bitmap,max_child_number);
 					append_child(create_child_number,my_children);
 				}
 				return;
@@ -261,10 +260,10 @@ public class component_core_4 extends component_core_3
 				initialization.create_initialization(fr,str);
 				continue;
 			case "part_list":
-				part_list_flag=true;
+				uniparameter.part_list_flag=true;
 				continue;
 			case "not_part_list":
-				part_list_flag=false;
+				uniparameter.part_list_flag=false;
 				continue;
 			case "blank_token_string":
 				token_string="";
@@ -356,7 +355,7 @@ public class component_core_4 extends component_core_3
 						my_children[create_child_number]=new component(
 							token_string,ek,request_response,mount_fr,pcfps,change_part_name,
 							mount_component_name,type_string_sorter,
-							part_list_flag,default_display_bitmap,max_child_number);
+							uniparameter.part_list_flag,default_display_bitmap,max_child_number);
 						create_child_number++;
 					}catch(Exception e) {
 						debug_information.println("Create scene from ",assemble_file_name+" fail");
@@ -381,6 +380,6 @@ public class component_core_4 extends component_core_3
 			type_string_sorter,part_list_flag,default_display_bitmap,max_child_number);
 
 		append_children(fr,token_string,ek,request_response,pcfps,change_part_name,mount_component_name,
-			type_string_sorter,part_list_flag,default_display_bitmap,max_child_number);
+			type_string_sorter,default_display_bitmap,max_child_number);
 	}
 }

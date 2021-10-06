@@ -1,1 +1,2 @@
-common		any_assemble_part_name		high_priority.txt		part.list
+common		any_assemble_part_name			high_priority.txt				part.list		
+			interface_root_component		assemble\interface.assemble

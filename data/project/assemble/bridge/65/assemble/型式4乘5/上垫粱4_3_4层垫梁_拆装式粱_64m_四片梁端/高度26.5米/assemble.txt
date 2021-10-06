@@ -1,8 +1,18 @@
 /*	1:name	*/	system_root_component
-/*	1:type	*/	system_root_part
-/*	1:location	*/	1	0	0	0	0	1	0	0	0	0	1	0	0	0	0	1
-		not_part_list		mount		default.assemble
-		not_part_list		mount		movement.assemble
-		part_list			mount		..\..\..\element\head\ÉÏµæÁ»4_3_4²ãµæÁº_²ð×°Ê½Á»_64m_ËÄÆ¬Áº¶Ë.SLDASM.assemble
-		part_list			mount		..\..\..\element\body\4_5_26.5.SLDASM.assemble
-/*	1:child_number	*/	0
+/*	1:type	*/	undefined_part
+/*	1:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+/*	1:child_number	*/	2	
+		/*	2:name			*/	part_list_component		
+		/*	2:type			*/	undefined_part
+		/*	2:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+				part_list			mount		..\..\..\element\head\ÉÏµæÁ»4_3_4²ãµæÁº_²ð×°Ê½Á»_64m_ËÄÆ¬Áº¶Ë.SLDASM.assemble
+				part_list			mount		..\..\..\element\body\4_5_26.5.SLDASM.assemble
+
+		/*	2:child_number	*/	0
+		
+		/*	2:name			*/	not_part_list_component
+		/*	2:type			*/	undefined_part
+		/*	2:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+				not_part_list		mount	interface.assemble
+				not_part_list		mount	movement.assemble
+		/*	2:child_number	*/	0

@@ -1,1 +1,4 @@
-  cad		any_assemble_part_name	 	cad_parameter.txt		part.list		environment		liufuyan_sigma_directory	light.txt
+  cad		any_assemble_part_name	 	cad_parameter.txt				part.list
+  			environment					liufuyan_sigma_directory  		
+  			light.txt		  			part_list_component				not_part_list_component
+  			

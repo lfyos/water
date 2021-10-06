@@ -71,13 +71,14 @@ public class component_core_6 extends component_core_5
 		super(token_string,ek,request_response,fr,pcfps,
 			change_part_name,mount_component_name,type_string_sorter,
 			part_list_flag,default_display_bitmap,max_child_number);
+		
 		if(children!=null){
 			if(children.length<=0)
 				children=null;
 			else if((children.length>max_child_number)&&(max_child_number>2))
 				decrease_children_number(token_string,ek,request_response,fr,pcfps,
 					change_part_name,mount_component_name,type_string_sorter,
-					part_list_flag,default_display_bitmap,max_child_number);
+					uniparameter.part_list_flag,default_display_bitmap,max_child_number);
 		}
 		for(int i=0,ni=children_number();i<ni;i++)
 			if(uniparameter.file_last_modified_time<children[i].uniparameter.file_last_modified_time)

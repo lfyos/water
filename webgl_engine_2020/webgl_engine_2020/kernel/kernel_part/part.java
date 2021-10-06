@@ -354,7 +354,8 @@ public class part
 		
 		boftal					=new buffer_object_file_modify_time_and_length();
 	}
-	public part(part p,system_parameter system_par,client_request_response request_response)
+	public part(part p,client_request_response request_response,
+			system_parameter system_par,scene_parameter scene_par)
 	{
 		top_box_part_flag		=p.top_box_part_flag;
 		part_type_id			=p.part_type_id;
@@ -390,7 +391,7 @@ public class part
 		boftal=p.boftal;
 
 		try{
-			driver=p.driver.clone(p,this,system_par,request_response);
+			driver=p.driver.clone(p,this,request_response,system_par,scene_par);
 		}catch(Exception e){
 			driver=null;
 			debug_information.println("Part clone fail");

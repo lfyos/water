@@ -18,13 +18,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Can&apos;t Find component by name in component_request_dispatch of dispatch_component_request"/>
+			<item key="textPattern" value="Fast load part:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
 				<item value="*java"/>
-				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -33,13 +30,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Parse response_fun_array error: "/>
+			<item key="textPattern" value="Engine load exception:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
 				<item value="*java"/>
-				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -48,7 +42,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="initialization.gzip_text"/>
+			<item key="textPattern" value="public render_driver clone()"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -60,7 +54,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="proxy_initialization.gzip_text"/>
+			<item key="textPattern" value="public String[] get_part_list(boolean giveup_part_load_flag,"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -72,7 +66,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="public String[] get_part_list(boolean giveup_part_load_flag,"/>
+			<item key="textPattern" value="End create initialization file"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -97,57 +91,18 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="End create part package"/>
+			<item key="textPattern" value="Can&apos;t Find component by name in component_request_dispatch of dispatch_component_request"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
 				<item value="*java"/>
+				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
 		</section>
 		<section name="HISTORY8">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Begin loading part meshes"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.js"/>
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY9">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="append_routine_function"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-				<item value="*.js"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY2">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Engine load exception:"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*java"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY3">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
@@ -159,11 +114,47 @@
 			<list key="workingSets">
 			</list>
 		</section>
+		<section name="HISTORY9">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="initialization.gzip_text"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY2">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="extended_render_driver ret_val"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY3">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="&#x09;public render_driver clone(render parent_render,render this_render,"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
 		<section name="HISTORY0">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="End create initialization file"/>
+			<item key="textPattern" value="Finish date and time:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -175,7 +166,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Fast load part:"/>
+			<item key="textPattern" value="directory_component_name can NOT find a component"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -209,13 +200,13 @@
 	</section>
 	<section name="ReplaceDialog2">
 		<list key="replace_with">
+			<item value="&#x09;public render_driver clone(render parent_render,"/>
 			<item value="public String[] get_part_list(boolean giveup_part_load_flag,int part_type_id,"/>
 			<item value="public part_rude create_part_mesh_and_buffer_object_head"/>
 			<item value="create_part_mesh_and_buffer_object_head"/>
 			<item value="public void initialize_component_driver(component comp,int driver_id,"/>
 			<item value=""/>
 			<item value="return super.response_event(p,ek,ci);"/>
-			<item value="public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)"/>
 		</list>
 	</section>
 	<section name="SearchDialog">

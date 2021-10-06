@@ -44,7 +44,8 @@ public class extended_part_driver extends part_driver
 	{
 	}
 	public part_driver clone(part parent,part p,
-			system_parameter system_par,client_request_response request_response)
+			client_request_response request_response,
+			system_parameter system_par,scene_parameter scene_par)
 	{
 		return new extended_part_driver(p,light_file_name,light_file_charset,system_par,request_response);
 	}
@@ -80,11 +81,7 @@ public class extended_part_driver extends part_driver
 	public String [][]assemble_file_name_and_file_charset(file_reader fr,part p,
 			engine_kernel ek,client_request_response request_response)
 	{
-		String assemble_file_name=p.directory_name+fr.get_string();
-		if(new File(assemble_file_name).exists())
-			return new String[][]{new String[]{assemble_file_name,p.file_charset}};
-		else
-			return null;
+		return null;
 	}
 	public String[] response_event(part p,engine_kernel ek,client_information ci)
 	{

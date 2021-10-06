@@ -1,0 +1,23 @@
+package kernel_maintain;
+
+import kernel_common_class.debug_information;
+import kernel_file_manager.file_reader;
+
+public class test_3
+{
+	public static void main(String args[])
+	{
+		debug_information.println("Begin");
+		
+		for(file_reader fr=new file_reader("E:\\water_all\\data\\users\\users\\NoName\\assemble.txt",null);;) {
+			if(fr.eof()) {	
+				fr.close();
+				break;
+			}
+			
+			
+		
+		}
+		debug_information.println("End");
+	}
+}

@@ -24,29 +24,29 @@ public class program_file_reader
 		switch(type_name) {
 		default:
 		case "decode":
-			file_name=r.javascript_decode;
+			file_name=r.driver.javascript_decode;
 			break;
 		case "draw":
-			file_name=r.javascript_draw;
+			file_name=r.driver.javascript_draw;
 			break;
 		case "vertex":
-			file_name=r.vertex_shader;
+			file_name=r.driver.vertex_shader;
 			break;
 		case "fragment":
-			file_name=r.fragment_shader;
+			file_name=r.driver.fragment_shader;
 			break;
 		case "geometry":
-			file_name=r.geometry_shader;
+			file_name=r.driver.geometry_shader;
 			break;
 		case "tess_control":
-			file_name=r.tess_control_shader;
+			file_name=r.driver.tess_control_shader;
 			break;
 		case "tess_evalue":
-			file_name=r.tess_evalue_shader;
+			file_name=r.driver.tess_evalue_shader;
 			break;
 		}
 		file_name=file_reader.separator(file_name);
-		if((reader=class_file_reader.get_reader(file_name,r.driver_class))!=null)
+		if((reader=class_file_reader.get_reader(file_name,r.driver.getClass()))!=null)
 			if(reader.error_flag()){
 				reader.close();
 				reader=null;

@@ -30,35 +30,49 @@ public class engine_boftal_creator extends sorter <part,String>
 	public engine_boftal_creator(String file_name,String file_charset,part part_array[],
 		system_parameter my_system_par,scene_parameter my_scene_par,client_process_bar process_bar)
 	{
-		boolean unnecessary_create_flag=true;
+		int part_number=0;
+		boolean exit_flag=true;
 		long last_time=new File(file_name).lastModified();
-		for(int i=0,ni=part_array.length;i<ni;i++)
-			if(part_array[i].boftal.buffer_object_head_last_modify_time>=last_time) {
-				unnecessary_create_flag=false;
+		for(int i=0,ni=part_array.length;(i<ni);i++)
+			switch(part_array[i].part_type_id) {
+			case 1:
+			case 2:
+				part_number++;
+				if(part_array[i].boftal.buffer_object_head_last_modify_time>=last_time)
+					exit_flag=false;
+				break;
+			default:
 				break;
 			}
-		if(unnecessary_create_flag)
+		if(exit_flag) 
 			return;
-		
-		debug_information.println("Create engine boftal file: start.....");
 
+		debug_information.println("Create engine boftal file: start.....");
+		debug_information.println("Total part number:"+part_array.length,",created part number:"+part_number);
+		
 		system_par=my_system_par;
 		scene_par=my_scene_par;
-		data_array=new part[part_array.length];
-		for(int i=0,ni=data_array.length;i<ni;i++) 
-			data_array[i]=part_array[i];
+		data_array=new part[part_number];
+		part_number=0;
+		for(int i=0,ni=part_array.length;i<ni;i++)
+			switch(part_array[i].part_type_id) {
+			case 1:
+			case 2:
+				data_array[part_number++]=part_array[i];
+				break;
+			}
 		
-		do_sort(-1,new part[data_array.length]);
+		do_sort(-1,new part[part_number]);
 
-		process_bar.set_process_bar(true, "create_buffer_object_file", 0,data_array.length);
+		process_bar.set_process_bar(true, "create_buffer_object_file", 0,part_number);
 
 		int cut_directory_length=system_par.proxy_par.proxy_data_root_directory_name.length();
 		file_writer fw=new  file_writer(file_name,file_charset);
 		fw.println(data_array.length);
 		
-		for(int i=0,ni=data_array.length;i<ni;i++) {
-			process_bar.set_process_bar(false, "create_buffer_object_file", i, ni);
-
+		for(int i=0;i<part_number;i++) {
+			process_bar.set_process_bar(false, "create_buffer_object_file", i, part_number);
+			
 			String part_temporary_file_directory=file_directory.part_file_directory(data_array[i],system_par,scene_par);
 			String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
 			fw.println(part_temporary_file_directory.substring(cut_directory_length));
@@ -69,10 +83,10 @@ public class engine_boftal_creator extends sorter <part,String>
 					fw.println(str);
 			fr.close();
 			fw.println();
-		}
+		}		
 		fw.close();
 		
-		process_bar.set_process_bar(false, "create_buffer_object_file",data_array.length,data_array.length);
+		process_bar.set_process_bar(false, "create_buffer_object_file",part_number,part_number);
 		
 		debug_information.println("Create engine boftal file: finished!");
 	}

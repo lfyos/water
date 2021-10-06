@@ -432,8 +432,6 @@
 /*			下面为4乘6样式各种上垫梁和墩身身高83墩			*/
 
 
-83_green_4_6_6.0_64_32_32				4乘6样式83墩6.0米墩身_64粱_32米+32米跨度			assemble\4乘6样式83墩\4乘6样式83墩_64粱_32+32跨度\4乘6样式83墩_64粱_32+32跨度_6.0米墩身\assemble.txt					8	8	parameter.绿色.txt	parameter.yzx.txt
-83_green_4_6_6.5_64_32_32				4乘6样式83墩6.5米墩身_64粱_32米+32米跨度			assemble\4乘6样式83墩\4乘6样式83墩_64粱_32+32跨度\4乘6样式83墩_64粱_32+32跨度_6.5米墩身\assemble.txt					8	8	parameter.绿色.txt	parameter.yzx.txt
 83_green_4_6_7.0_64_32_32				4乘6样式83墩7.0米墩身_64粱_32米+32米跨度			assemble\4乘6样式83墩\4乘6样式83墩_64粱_32+32跨度\4乘6样式83墩_64粱_32+32跨度_7.0米墩身\assemble.txt					8	8	parameter.绿色.txt	parameter.yzx.txt
 83_green_4_6_7.5_64_32_32				4乘6样式83墩7.5米墩身_64粱_32米+32米跨度			assemble\4乘6样式83墩\4乘6样式83墩_64粱_32+32跨度\4乘6样式83墩_64粱_32+32跨度_7.5米墩身\assemble.txt					8	8	parameter.绿色.txt	parameter.yzx.txt
 83_green_4_6_8.0_64_32_32				4乘6样式83墩8.0米墩身_64粱_32米+32米跨度			assemble\4乘6样式83墩\4乘6样式83墩_64粱_32+32跨度\4乘6样式83墩_64粱_32+32跨度_8.0米墩身\assemble.txt					8	8	parameter.绿色.txt	parameter.yzx.txt
@@ -455,8 +453,6 @@
 
 
 
-83_green_4_6_6.0_64_32_32_stand				4乘6样式83墩6.0米墩身_64粱_32米+32米跨度（支架）			assemble\4乘6样式83墩\4乘6样式83墩_64粱_32+32跨度（支架）\4乘6样式83墩_64粱_32+32跨度（支架）_6.0米墩身\assemble.txt					8	8	parameter.绿色.txt	parameter.yzx.txt
-83_green_4_6_6.5_64_32_32_stand				4乘6样式83墩6.5米墩身_64粱_32米+32米跨度（支架）			assemble\4乘6样式83墩\4乘6样式83墩_64粱_32+32跨度（支架）\4乘6样式83墩_64粱_32+32跨度（支架）_6.5米墩身\assemble.txt					8	8	parameter.绿色.txt	parameter.yzx.txt
 83_green_4_6_7.0_64_32_32_stand				4乘6样式83墩7.0米墩身_64粱_32米+32米跨度（支架）			assemble\4乘6样式83墩\4乘6样式83墩_64粱_32+32跨度（支架）\4乘6样式83墩_64粱_32+32跨度（支架）_7.0米墩身\assemble.txt					8	8	parameter.绿色.txt	parameter.yzx.txt
 83_green_4_6_7.5_64_32_32_stand				4乘6样式83墩7.5米墩身_64粱_32米+32米跨度（支架）			assemble\4乘6样式83墩\4乘6样式83墩_64粱_32+32跨度（支架）\4乘6样式83墩_64粱_32+32跨度（支架）_7.5米墩身\assemble.txt					8	8	parameter.绿色.txt	parameter.yzx.txt
 83_green_4_6_8.0_64_32_32_stand				4乘6样式83墩8.0米墩身_64粱_32米+32米跨度（支架）			assemble\4乘6样式83墩\4乘6样式83墩_64粱_32+32跨度（支架）\4乘6样式83墩_64粱_32+32跨度（支架）_8.0米墩身\assemble.txt					8	8	parameter.绿色.txt	parameter.yzx.txt
@@ -479,8 +475,6 @@
 
 
 
-83_green_4_6_6.0_bridge_24_24				4乘6样式83墩6.0米墩身_拆装粱_24米+24米跨度			assemble\4乘6样式83墩\4乘6样式83墩_拆装粱_24+24跨度\4乘6样式83墩_拆装粱_24+24跨度_6.0米墩身\assemble.txt			8	8	parameter.绿色.txt	parameter.yzx.txt
-83_green_4_6_6.5_bridge_24_24				4乘6样式83墩6.5米墩身_拆装粱_24米+24米跨度			assemble\4乘6样式83墩\4乘6样式83墩_拆装粱_24+24跨度\4乘6样式83墩_拆装粱_24+24跨度_6.5米墩身\assemble.txt			8	8	parameter.绿色.txt	parameter.yzx.txt
 83_green_4_6_7.0_bridge_24_24				4乘6样式83墩7.0米墩身_拆装粱_24米+24米跨度			assemble\4乘6样式83墩\4乘6样式83墩_拆装粱_24+24跨度\4乘6样式83墩_拆装粱_24+24跨度_7.0米墩身\assemble.txt			8	8	parameter.绿色.txt	parameter.yzx.txt
 83_green_4_6_7.5_bridge_24_24				4乘6样式83墩7.5米墩身_拆装粱_24米+24米跨度			assemble\4乘6样式83墩\4乘6样式83墩_拆装粱_24+24跨度\4乘6样式83墩_拆装粱_24+24跨度_7.5米墩身\assemble.txt			8	8	parameter.绿色.txt	parameter.yzx.txt
 83_green_4_6_8.0_bridge_24_24				4乘6样式83墩8.0米墩身_拆装粱_24米+24米跨度			assemble\4乘6样式83墩\4乘6样式83墩_拆装粱_24+24跨度\4乘6样式83墩_拆装粱_24+24跨度_8.0米墩身\assemble.txt			8	8	parameter.绿色.txt	parameter.yzx.txt
@@ -501,8 +495,6 @@
 
 
 
-83_green_4_6_6.0_bridge_32_32_stand				4乘6样式83墩6.0米墩身_拆装粱_32米+32米跨度			assemble\4乘6样式83墩\4乘6样式83墩_拆装粱_32+32跨度（支架）\4乘6样式83墩_拆装粱_32+32跨度（支架）_6.0米墩身\assemble.txt			8	8	parameter.绿色.txt	parameter.yzx.txt
-83_green_4_6_6.5_bridge_32_32_stand				4乘6样式83墩6.5米墩身_拆装粱_32米+32米跨度			assemble\4乘6样式83墩\4乘6样式83墩_拆装粱_32+32跨度（支架）\4乘6样式83墩_拆装粱_32+32跨度（支架）_6.5米墩身\assemble.txt			8	8	parameter.绿色.txt	parameter.yzx.txt
 83_green_4_6_7.0_bridge_32_32_stand				4乘6样式83墩7.0米墩身_拆装粱_32米+32米跨度			assemble\4乘6样式83墩\4乘6样式83墩_拆装粱_32+32跨度（支架）\4乘6样式83墩_拆装粱_32+32跨度（支架）_7.0米墩身\assemble.txt			8	8	parameter.绿色.txt	parameter.yzx.txt
 83_green_4_6_7.5_bridge_32_32_stand				4乘6样式83墩7.5米墩身_拆装粱_32米+32米跨度			assemble\4乘6样式83墩\4乘6样式83墩_拆装粱_32+32跨度（支架）\4乘6样式83墩_拆装粱_32+32跨度（支架）_7.5米墩身\assemble.txt			8	8	parameter.绿色.txt	parameter.yzx.txt
 83_green_4_6_8.0_bridge_32_32_stand				4乘6样式83墩8.0米墩身_拆装粱_32米+32米跨度			assemble\4乘6样式83墩\4乘6样式83墩_拆装粱_32+32跨度（支架）\4乘6样式83墩_拆装粱_32+32跨度（支架）_8.0米墩身\assemble.txt			8	8	parameter.绿色.txt	parameter.yzx.txt

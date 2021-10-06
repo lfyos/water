@@ -1,0 +1,115 @@
+package driver_opengl_fixed_pipeline;
+
+import java.io.File;
+
+import kernel_common_class.change_name;
+import kernel_part.part;
+import kernel_driver.part_driver;
+import kernel_driver.render_driver;
+import kernel_part.part_parameter;
+import kernel_render.render;
+import kernel_engine.scene_parameter;
+import kernel_engine.system_parameter;
+import kernel_file_manager.file_reader;
+import kernel_network.client_request_response;
+
+public class extended_render_driver extends render_driver
+{
+	private String light_file_name,light_file_charset;
+	
+	private void release_all()
+	{
+		light_file_name=null;
+		light_file_charset=null;
+	}
+	public extended_render_driver()
+	{
+		super(	
+				"voxel.txt",
+				"javascript.draw.txt",
+				"vertex.shader.txt",
+				"fragment.shader.txt",
+				"geometry.shader.txt",
+				"tess_control.shader.txt",
+				"tess_evalue.shader.txt");
+		release_all();
+	}
+	public void destroy()
+	{
+		super.destroy();
+		release_all();
+	}
+	public render_driver clone(render parent_render,
+			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
+	{
+		return new extended_render_driver();
+	}
+	public String[] get_part_list(boolean giveup_part_load_flag,int part_type_id,
+			file_reader render_fr,String load_sub_directory_name,String par_list_file_name,
+			part_parameter part_par,system_parameter system_par,scene_parameter scene_par,
+			change_name mount_component_name,client_request_response request_response)
+	{
+		String part_directory_name,assemble_directory_type=render_fr.get_string();
+		switch((assemble_directory_type==null)?"":assemble_directory_type){
+		default:
+			return null;
+		case "absulate":
+			part_directory_name=render_fr.get_string();
+			break;
+		case "relative":
+			part_directory_name=render_fr.directory_name;
+			break;
+		case "environment":
+			String environment_directory_name;
+			part_directory_name=render_fr.get_string();
+			if((environment_directory_name=System.getenv(part_directory_name))!=null)
+				part_directory_name=environment_directory_name;
+			break;
+		}
+		part_directory_name=file_reader.separator(part_directory_name);
+		if(part_directory_name.charAt(part_directory_name.length()-1)!=File.separatorChar)
+			part_directory_name+=File.separator;
+		if(part_type_id==2)
+			part_directory_name+=load_sub_directory_name;
+		
+		par_list_file_name=part_directory_name+file_reader.separator(par_list_file_name);
+		
+		part_directory_name=new File(par_list_file_name).getParent();
+		if(part_directory_name.charAt(part_directory_name.length()-1)!=File.separatorChar)
+			part_directory_name+=File.separator;
+		
+		light_file_name=render_fr.directory_name+file_reader.separator(render_fr.get_string());
+		light_file_charset=render_fr.get_charset();
+		
+		String part_list_component_name,not_part_list_component_name;
+		if((part_list_component_name=render_fr.get_string())==null)
+			return null;
+		if(part_list_component_name.toLowerCase().compareTo("null")==0)
+			part_list_component_name=null;
+		if((not_part_list_component_name=render_fr.get_string())==null)
+			return null;
+		if(not_part_list_component_name.toLowerCase().compareTo("null")==0)
+			not_part_list_component_name=null;
+		
+		File light_f=new File(light_file_name),		part_f=new File(par_list_file_name);
+		long light_last_time=light_f.lastModified(),part_last_time=part_f.lastModified();
+		
+		if(light_last_time>part_last_time)
+			part_f.setLastModified(light_last_time);
+		
+		if(mount_component_name!=null) {
+			if(not_part_list_component_name!=null)
+				mount_component_name.insert(new String[]
+					{not_part_list_component_name,	part_directory_name+"movement.assemble"});
+			if(part_list_component_name!=null)
+				mount_component_name.insert(new String[] 
+					{part_list_component_name,		part_directory_name+"assemble.assemble"});
+		}
+		return new String[]{par_list_file_name,render_fr.get_charset()};
+	}
+	public part_driver create_part_driver(file_reader part_fr,part p,
+			system_parameter system_par,client_request_response request_response)
+	{
+		return new extended_part_driver(p,light_file_name,light_file_charset,system_par,request_response);
+	}
+}

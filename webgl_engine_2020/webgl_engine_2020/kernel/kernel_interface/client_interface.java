@@ -2,6 +2,7 @@ package kernel_interface;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.locks.ReentrantLock;
 
 import kernel_security.delay_manager;
@@ -355,13 +356,16 @@ public class client_interface
 		debug_information.println();
 		debug_information.println("\n#####################################################################################################");
 		
+		long start_time=new Date().getTime();
+		
 		Calendar now = Calendar.getInstance();  
-		debug_information.print  ("Request date and time 		:	",now.get(Calendar.YEAR));  
+		debug_information.print  ("Engine creation start time	:	",now.get(Calendar.YEAR));  
 		debug_information.print  ("-",(now.get(Calendar.MONTH) + 1));  
 		debug_information.print  ("-",now.get(Calendar.DAY_OF_MONTH));  
 		debug_information.print  ("/",now.get(Calendar.HOUR_OF_DAY));  
 		debug_information.print  (":",now.get(Calendar.MINUTE));  
-		debug_information.println(":",now.get(Calendar.SECOND));
+		debug_information.print  (":",now.get(Calendar.SECOND));
+		debug_information.println(":",now.get(Calendar.MILLISECOND));
 		
 		debug_information.println("Request Client ID		:	",	request_response.implementor.get_client_id());
 		debug_information.println("Request user name		:	",	request_response.get_parameter("user_name"));
@@ -371,19 +375,23 @@ public class client_interface
 		debug_information.println("shader_file_name		:	",				system_par.shader_file_name);
 		debug_information.println("user_file_name			:	",			system_par.user_file_name);
 		debug_information.println("default_parameter_directory	:	",		system_par.default_parameter_directory);
-		debug_information.println("proxy_data_root_directory_name:		",	system_par.proxy_par.proxy_data_root_directory_name);
+		debug_information.println("proxy_data_root_directory_name	:	",	system_par.proxy_par.proxy_data_root_directory_name);
 		
 		engine_call_result ret_val=create_engine_routine(session,ei,client,
 				my_client_interface_lock,request_response,delay_time_length,statistics_interface);
 		
 		now = Calendar.getInstance();  
+		long end_time=new Date().getTime();
+		
 		debug_information.println();
-		debug_information.print  ("Finish date and time:\t",now.get(Calendar.YEAR));  
+		debug_information.print  ("Engine creation finish time	:	",now.get(Calendar.YEAR));  
 		debug_information.print  ("-",(now.get(Calendar.MONTH) + 1));  
 		debug_information.print  ("-",now.get(Calendar.DAY_OF_MONTH));  
 		debug_information.print  ("/",now.get(Calendar.HOUR_OF_DAY));  
 		debug_information.print  (":",now.get(Calendar.MINUTE));  
-		debug_information.println(":",now.get(Calendar.SECOND));
+		debug_information.print  (":",now.get(Calendar.SECOND));
+		debug_information.print  (":",now.get(Calendar.MILLISECOND));
+		debug_information.println("		Time length(millisecond)	:	",end_time-start_time);
  
 		debug_information.println("\n#####################################################################################################");
 		debug_information.println();

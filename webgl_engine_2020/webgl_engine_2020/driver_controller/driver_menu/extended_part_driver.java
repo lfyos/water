@@ -36,7 +36,8 @@ public class extended_part_driver extends part_driver
 	{
 	}
 	public part_driver clone(part parent,part p,
-			system_parameter system_par,client_request_response request_response)
+			client_request_response request_response,
+			system_parameter system_par,scene_parameter scene_par)
 	{
 		return new extended_part_driver();
 	}
@@ -102,11 +103,7 @@ public class extended_part_driver extends part_driver
 	public String [][]assemble_file_name_and_file_charset(file_reader fr,part p,
 			engine_kernel ek,client_request_response request_response)
 	{
-		String directory_name=file_reader.separator(
-					new File(p.directory_name+p.mesh_file_name).getParent())+File.separatorChar;
-		String file_name=directory_name+file_reader.separator(fr.get_string());
-		
-		return new String[][]{new String[]{file_name,p.file_charset}};
+		return null;
 	}
 	public String[] response_event(part p,engine_kernel ek,client_information ci)
 	{		

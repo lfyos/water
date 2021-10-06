@@ -32,12 +32,11 @@
 					};
 					render.user_call_processor.get_component_tree=function()
 					{
-						var p=render.get_component_object_by_component_name("display_component_root");
-						return p.component_children[0].component_children[0];
+						return render.get_component_object_by_component_name("system_root_component").component_children[0];
 					};
 					render.user_call_processor.set_all_transparant_except_selection=function()
 					{
-						var component_name=encodeURIComponent(encodeURIComponent("display_component_root"));
+						var component_name=encodeURIComponent(encodeURIComponent("system_root_component"));
 						render.call_server_component("manipulator_component","all",
 							[["event_method","transparency"],["transparency",0.05],["component_name",component_name]],
 							function(response_data,render)
@@ -48,7 +47,7 @@
 					};
 					render.user_call_processor.set_all_untransparant=function()
 					{
-						var component_name=encodeURIComponent(encodeURIComponent("display_component_root"));
+						var component_name=encodeURIComponent(encodeURIComponent("system_root_component"));
 						render.call_server_component("manipulator_component","all",
 							[["event_method","transparency"],["transparency",1.0],["component_name",component_name]]);
 					};
@@ -76,7 +75,7 @@
 					
 					render.user_call_processor.reset_all=function()
 					{
-						var component_name=encodeURIComponent(encodeURIComponent("display_component_root"));
+						var component_name=encodeURIComponent(encodeURIComponent("system_root_component"));
 						render.call_server_component("manipulator_component","all",
 							[["event_method","transparency"],["transparency",1.0],["component",component_name]],
 							function()
