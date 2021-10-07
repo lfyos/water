@@ -1,14 +1,12 @@
 package driver_location_modifier;
 
+import kernel_part.part;
 import kernel_component.component;
 import kernel_driver.component_driver;
 import kernel_driver.instance_driver;
 import kernel_engine.engine_kernel;
 import kernel_network.client_request_response;
-import kernel_part.part;
-
 import kernel_transformation.location;
-import kernel_file_manager.file_reader;
 
 public class extended_component_driver  extends component_driver
 {
@@ -37,11 +35,6 @@ public class extended_component_driver  extends component_driver
 //		String parameter_directory_name=ek.scene_par.directory_name;
 		
 		return;
-	}
-	public String [][]assemble_file_name_and_file_charset(file_reader fr,
-			engine_kernel ek,client_request_response request_response)
-	{
-		return null;
 	}
 	public instance_driver create_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)

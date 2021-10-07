@@ -56,31 +56,7 @@ public class component_core_4 extends component_core_3
 				children[j]=my_children[i];
 		}
 	}
-	private String [][]component_driver_mount_array(file_reader fr,
-			engine_kernel ek,client_request_response request_response)
-	{
-		String ret_val[][];
-		if(driver_number()<=0){
-			debug_information.println(
-				"Component driver assemble_file_name_and_file_charset error(driver_number()<=0):	",
-				"component_name:	"+component_name);
-			return null;
-		}
-		if((ret_val=driver_array[0].assemble_file_name_and_file_charset(fr,ek,request_response))==null){
-			debug_information.println(
-				"Component driver assemble_file_name_and_file_charset error(return value is null):	",
-				"component_name:	"+component_name);
-			return null;
-		}
-		if(ret_val.length<=0){
-			debug_information.println(
-				"Component driver assemble_file_name_and_file_charset error(ret_val.length<=0):	",
-				"component_name:	"+component_name);
-			return null;
-		}
-		return ret_val;
-	}
-	private String[][]file_mount_array(String type_string,file_reader fr,engine_kernel ek)
+	private String[][]file_mount(file_reader fr,engine_kernel ek)
 	{
 		String my_file_name;
 		if((my_file_name=fr.get_string())==null) {
@@ -101,22 +77,12 @@ public class component_core_4 extends component_core_3
 				ek.scene_par.directory_name					+"assemble_default"+File.separatorChar,
 				ek.system_par.default_parameter_directory	+"assemble_default"+File.separatorChar
 		};
-		String charset_name_array[]=new String[] {
+		String charset_name_array[]=new String[]{
 				fr.get_charset(),
 				ek.scene_charset,
 				ek.scene_par.parameter_charset,
 				ek.system_par.local_data_charset
 		};
-		if((type_string.indexOf("charset")>=0)) {
-			charset_name_array[0]=fr.get_string();
-			for(int i=1,ni=charset_name_array.length;i<ni;i++)
-				charset_name_array[i]=charset_name_array[0];
-		}
-		if(type_string.indexOf("sub")>=0)
-			my_file_name=ek.scene_par.scene_sub_directory+my_file_name;
-		if(type_string.indexOf("absolute")>0)
-			return new String[][]{new String[]{my_file_name,charset_name_array[3]}};
-			
 		for(int i=0,ni=my_directory_name_array.length;i<ni;i++)
 			if(new File(my_directory_name_array[i]+my_file_name).exists()) 
 				return new String[][]{new String[] {my_directory_name_array[i]+my_file_name,charset_name_array[i]}};
@@ -125,7 +91,7 @@ public class component_core_4 extends component_core_3
 				"my_file_name:	"+my_file_name+"component_name:	"+component_name);
 		return null;
 	}
-	private String [][]part_driver_mount_array(file_reader fr,
+	private String [][]part_driver_mount(file_reader fr,
 			engine_kernel ek,client_request_response request_response)
 	{
 		String ret_val[][];
@@ -163,7 +129,7 @@ public class component_core_4 extends component_core_3
 		}
 		return ret_val;	
 	}
-	private String [][]external_part_driver_mount_array(change_name change_part_name,
+	private String [][]external_part_driver_mount(change_name change_part_name,
 			file_reader fr,part_container_for_part_search pcfps,
 			engine_kernel ek,client_request_response request_response)
 	{
@@ -226,13 +192,12 @@ public class component_core_4 extends component_core_3
 			change_name change_part_name,change_name mount_component_name,
 			part_type_string_sorter type_string_sorter,long default_display_bitmap,int max_child_number)
 	{
-		children=new component[0];
-		for(String str,assemble_file_name_array[][];;){
+		for(children=null;!(fr.eof());){
+			String str,assemble_file_name_array[][]=null;
 			if((str=fr.get_string())==null)
-				return;
+				continue;
 			switch(str=str.toLowerCase()){
 			default:
-			{
 				int create_child_number;
 				try {
 					create_child_number=Integer.decode(str);
@@ -253,7 +218,6 @@ public class component_core_4 extends component_core_3
 					append_child(create_child_number,my_children);
 				}
 				return;
-			}
 			case "token_program":
 			case "file_program":
 			case "charset_file_program":
@@ -280,55 +244,32 @@ public class component_core_4 extends component_core_3
 				max_child_number=fr.get_int();
 				continue;
 			case "change_part_name":
-			case "charset_change_part_name":
-			case "absolute_change_part_name":
-			case "absolute_charset_change_part_name":
-			{
 				String file_name_array[]=new String[1];
 				if((file_name_array[0]=fr.get_string())==null)
 					file_name_array=new String[0];
 				else if(file_name_array[0].length()<=0)
 					file_name_array=new String[0];
-				else if(str.indexOf("absolute")<0)
-					file_name_array[0]=fr.directory_name+file_name_array[0];
-				
-				if(str.indexOf("charset")<0)
-					change_part_name=new change_name(file_name_array,null,fr.get_charset());
-				else
-					change_part_name=new change_name(file_name_array,null,fr.get_string());
+				change_part_name=new change_name(file_name_array,
+					ek.scene_par.change_part_string,fr.get_charset());
 				continue;
-			}
 			case "mount_on_component":
-			{
 				String mount_on_component_component_name=fr.get_string();
 				String mount_on_component_file_name		=fr.get_string();
-				if(mount_on_component_component_name==null)
-					continue;
-				if(mount_on_component_file_name==null)
-					continue;
-				mount_component_name.insert(new String[]{mount_on_component_component_name,mount_on_component_file_name});
+				if((mount_on_component_component_name!=null)&&(mount_on_component_file_name!=null))
+					mount_component_name.insert(new String[]{
+						mount_on_component_component_name,mount_on_component_file_name});
 				continue;
-			}
 			case "mount":
-			case "charset_mount":
-			case "absolute_mount":
-			case "charset_absolute_mount":
-			case "sub_mount":
-			case "sub_charset_mount":
-			case "sub_absolute_mount":
-			case "sub_charset_absolute_mount":
-				assemble_file_name_array=file_mount_array(str,fr,ek);
-				break;
-			case "component_driver_mount":
-				assemble_file_name_array=component_driver_mount_array(fr,ek,request_response);
+				assemble_file_name_array=file_mount(fr,ek);
 				break;
 			case "part_driver_mount":
-				assemble_file_name_array=part_driver_mount_array(fr,ek,request_response);
+				assemble_file_name_array=part_driver_mount(fr,ek,request_response);
 				break;
 			case "external_part_driver_mount":
-				assemble_file_name_array=external_part_driver_mount_array(change_part_name,fr,pcfps,ek,request_response);
+				assemble_file_name_array=external_part_driver_mount(change_part_name,fr,pcfps,ek,request_response);
 				break;
 			}
+
 			if(assemble_file_name_array==null)
 				continue;
 			int create_child_number=0;

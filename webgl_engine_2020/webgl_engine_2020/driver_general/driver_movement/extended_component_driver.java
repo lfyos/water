@@ -69,11 +69,6 @@ public class extended_component_driver extends component_driver
 		debug_information.println("End loading movement information\t",design_file_name);
 		return;
 	}
-	public String [][]assemble_file_name_and_file_charset(file_reader fr,
-			engine_kernel ek,client_request_response request_response)
-	{
-		return null;
-	}
 	public instance_driver create_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{

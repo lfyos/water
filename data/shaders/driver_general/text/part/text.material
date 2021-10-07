@@ -2,5 +2,8 @@
 			"normal_font_color"		:	[0.30,0.30,0.30,1.00],
 			"pickup_font_color"		:	[1.00,0.75,0.15,1.00],
 			"text_font"				:	"32px Microsoft YaHei",
-			"text_adjust"			:	5
+			"text_align"			:	"left",
+			"text_baseline"			:	"bottom",
+			"adjust_x"				:	0,
+			"adjust_y"				:	0
 		}

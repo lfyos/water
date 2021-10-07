@@ -238,17 +238,11 @@ public class extended_component_driver  extends component_driver
 		part p=comp.driver_array[driver_id].component_part;
 		initialize_radar(p.directory_name+p.material_file_name,p.file_charset,ek);
 	}
-	public String [][]assemble_file_name_and_file_charset(file_reader fr,
-			engine_kernel ek,client_request_response request_response)
-	{
-		return null;
-	}
 	public instance_driver create_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
 		return new extended_instance_driver(comp,driver_id,ek);
 	}
-	
 	public String[] response_event(engine_kernel ek,client_information ci)
 	{
 		location loca;

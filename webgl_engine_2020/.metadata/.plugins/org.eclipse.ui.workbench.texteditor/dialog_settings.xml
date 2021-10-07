@@ -2,27 +2,27 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="texture_parameter"/>
+		<item key="selection" value="text_width_height"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="text_width_height"/>
+			<item value="text_line_canvas_height"/>
+			<item value="component_id"/>
+			<item value="direction_id"/>
+			<item value="method_id_uniform"/>
+			<item value="component_id_uniform"/>
+			<item value="view_or_model_coordinate_flag"/>
+			<item value="update_component_render_version"/>
+			<item value="start_time"/>
+			<item value="text_adjust"/>
+			<item value="component_driver_mount_array"/>
 			<item value="texture_parameter"/>
 			<item value="frag_texture"/>
 			<item value="pbll.p."/>
 			<item value="Create engine boftal file: finished!"/>
-			<item value="&quot;system_root_component&quot;"/>
-			<item value="part_list_root_component"/>
-			<item value="End loading assemble"/>
-			<item value="&quot;display_component_root&quot;"/>
-			<item value="relative&#x09;light.txt"/>
-			<item value="&#x09;light.txt"/>
-			<item value=");"/>
-			<item value="new String("/>
-			<item value="extended_render_driver"/>
-			<item value="clip"/>
-			<item value="/*&#x09;part_lru_in_list_number&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;20"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
@@ -46,7 +46,7 @@
 		<item key="DIALOG_WIDTH" value="346"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="1065"/>
-		<item key="DIALOG_Y_ORIGIN" value="380"/>
+		<item key="DIALOG_X_ORIGIN" value="76"/>
+		<item key="DIALOG_Y_ORIGIN" value="281"/>
 	</section>
 </section>

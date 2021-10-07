@@ -51,7 +51,8 @@ public class extended_part_driver extends part_driver
 		if(buffer_object_file_writer!=null)
 			buffer_object_file_writer.println(file_reader.get_text(
 				p.directory_name+p.material_file_name,p.file_charset));
-		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
+		return super.create_part_mesh_and_buffer_object_head(
+				p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,
 			part my_component_part,engine_kernel ek,client_request_response request_response)

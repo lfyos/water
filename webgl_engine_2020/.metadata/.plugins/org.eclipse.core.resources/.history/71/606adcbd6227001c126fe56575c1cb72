@@ -1,0 +1,162 @@
+[
+	[
+		"vertex_location",
+		"",
+		"",
+		"",
+		"vertex_texture"
+	]
+],
+
+function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
+			render_buffer_id,	component_data_array,	project_matrix,			do_render_number,	render)
+{
+	var gl								=render.gl;
+	var shader_object					=render.render_program.render_program[render_id];
+	var shader_program					=shader_object.shader_program;
+	var part_buffer_object				=render.buffer_object.buffer_object[render_id][part_id];
+	
+	var component_location				=render.component_location_data;
+	
+	var data_buffer						=render.data_buffer[render_id][part_id];
+	var pickup							=render.pickup;
+
+	var permanent_render_id				=render.permanent_render_part_id[render_id][part_id].permanent_render_id;
+	var permanent_part_id				=render.permanent_render_part_id[render_id][part_id].permanent_part_id;
+	
+	var part_information				=render.part_information[render_id][part_id].information;
+	var part_material					=render.part_information[render_id][part_id].material;
+	var part_property					=render.part_information[render_id][part_id].property;
+	var part_component_id_and_driver_id	=render.part_information[render_id][part_id].part_component_id_and_driver_id;
+	var instance_initialize_data		=render.part_information[render_id][part_id].instance_initialize_data;
+	var part_initialize_data			=render.part_information[render_id][part_id].part_initialize_data;
+	
+	var clip_plane						=render.clip_plane_array[render_buffer_id];
+	var clip_plane_matrix				=render.clip_plane_matrix_array[render_buffer_id];
+	
+	var camera_object_parameter			=render.camera.camera_object_parameter;
+	var camera_render_parameter			=render.camera.camera_render_parameter[render_buffer_id];
+	var camera_id						=camera_render_parameter.camera_id;
+	var camera_component_id				=camera_object_parameter[camera_id].component_id;
+	
+	var utility							=render.utility;
+	var computer						=render.computer;
+	var current_time					=render.current_time;
+	var modifier_current_time			=render.modifier_current_time;
+	
+	
+	if(do_render_number.engine_render==0){
+		shader_program.canvas=document.createElement("canvas");
+		
+		shader_program.sampler=gl.createSampler();
+		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MAG_FILTER,	gl.LINEAR);
+		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MIN_FILTER,	gl.LINEAR);
+		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_S,		gl.CLAMP_TO_EDGE);
+		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_T,		gl.CLAMP_TO_EDGE);
+					
+		shader_program.projection_matrix_uniform	=gl.getUniformLocation(shader_program,"projection_matrix");
+		shader_program.width_heigh_uniform			=gl.getUniformLocation(shader_program,"width_heigh");
+		shader_program.font_color_uniform			=gl.getUniformLocation(shader_program,"font_color");
+		shader_program.texture_sampler_uniform		=gl.getUniformLocation(shader_program,"texture_sampler");
+		shader_program.component_id_uniform			=gl.getUniformLocation(shader_program,"component_id");
+		shader_program.method_id_uniform			=gl.getUniformLocation(shader_program,"method_id");
+		shader_program.direction_id_uniform			=gl.getUniformLocation(shader_program,"direction_id");
+	}
+	
+	var text_material=part_material[0];
+	part_buffer_object=part_buffer_object.face;
+	
+	if(do_render_number.engine_part==0){
+		part_buffer_object.text_texture					=new Array();
+		part_buffer_object.text_width_height			=new Array();
+		part_buffer_object.direction_id					=new Array();
+		part_buffer_object.view_or_model_coordinate_flag=new Array();
+	}
+	
+	if(method_id>1)
+		return;
+	
+	for(var i=0,ni=component_data_array.length;i<ni;i++){
+		var buffer_id	=component_data_array[i][0];
+		var component_id=part_component_id_and_driver_id[buffer_id][0];
+		
+		while(data_buffer[buffer_id].length>0){
+			var my_buffer_data=data_buffer[buffer_id].shift();
+			if(data_buffer[buffer_id].length<=0){
+				if(typeof(part_buffer_object.text_texture[buffer_id])!="undefined")
+					gl.deleteTexture(part_buffer_object.text_texture[buffer_id]);
+					
+				var text_array						=my_buffer_data[0];
+				
+				var canvas_width					=my_buffer_data[1][0];
+				var canvas_height					=my_buffer_data[1][1];
+				var text_line_canvas_height			=my_buffer_data[1][2];
+				
+				var text_width_height				=my_buffer_data[2];
+	
+				var component_id					=my_buffer_data[3];
+				
+				var view_or_model_coordinate_flag	=(my_buffer_data[4]>0)?true:false;
+	
+				var my_canvas	= shader_program.canvas;
+	    		my_canvas.width	= canvas_width;
+	       		my_canvas.height= canvas_height;
+	       		
+	       		var my_ctx=my_canvas.getContext("2d");
+				my_ctx.fillStyle	="black";
+				my_ctx.fillRect(0,0,canvas_width,canvas_height);
+				my_ctx.fillStyle	="rgb(255,255,255)";
+				my_ctx.font			=text_material.text_font;
+				my_ctx.textAlign	=text_material.text_align;
+				my_ctx.textBaseline	=text_material.text_baseline;
+				
+				var height_place=canvas_height+text_material.adjust_y;
+				for(var j=text_array.length-1;j>=0;j--,height_place-=text_line_canvas_height)
+					my_ctx.fillText(text_array[j],text_material.adjust_x,height_place);
+				
+				part_buffer_object.text_texture[buffer_id]=gl.createTexture();
+				
+				gl.activeTexture(gl.TEXTURE0);
+				gl.bindTexture(gl.TEXTURE_2D,part_buffer_object.text_texture[buffer_id]);
+			    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+			    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_BASE_LEVEL,0);
+		    	gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAX_LEVEL, 0);
+		      	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE,my_canvas);
+		      	
+		      	part_buffer_object.text_width_height[buffer_id]				=text_width_height;
+		      	part_buffer_object.component_id[buffer_id]					=component_id;
+		      	part_buffer_object.view_or_model_coordinate_flag[buffer_id]	=view_or_model_coordinate_flag;
+		      }
+		}
+		var component_id					=part_buffer_object.component_id[buffer_id];
+		var view_or_model_coordinate_flag	=part_buffer_object.view_or_model_coordinate_flag[buffer_id];
+		
+		if(view_or_model_coordinate_flag){
+			gl.uniformMatrix4fv(shader_program.projection_matrix_uniform,false,
+				new Float32Array([1,0,0,0,	0,1,0,0,	0,0,1,0,	0,0,0,1]));
+		}else
+			gl.uniformMatrix4fv(shader_program.projection_matrix_uniform,false,project_matrix.matrix);
+
+		component_location.get_component_location(component_id);
+		
+		gl.uniform2fv(shader_program.width_heigh_uniform,	new Float32Array(part_buffer_object.text_width_height[buffer_id]));	
+		gl.uniform4fv(shader_program.font_color_uniform,	new Float32Array(
+			(render.pickup.component_id!=component_id)?(text_material.normal_font_color):(text_material.pickup_font_color)));
+		
+		gl.activeTexture(gl.TEXTURE0);
+		gl.bindTexture(gl.TEXTURE_2D,part_buffer_object.text_texture[buffer_id]);
+		gl.bindSampler(0,shader_program.sampler);
+		gl.uniform1i(shader_program.texture_sampler_uniform,0);
+			
+		gl.uniform1i(shader_program.component_id_uniform,component_id);
+		gl.uniform1i(shader_program.method_id_uniform,method_id);
+		gl.uniform1i(shader_program.direction_id_uniform,direction_id);
+		
+		for(var j=0,nj=part_buffer_object.region_data.length;j<nj;j++){
+			var p=part_buffer_object.region_data[j];
+			gl.bindVertexArray(p.vertex_array_object[0]);
+			gl.drawArrays(gl.TRIANGLES,0,p.item_number);
+		}
+		gl.bindVertexArray(null);
+	}
+}
