@@ -4,6 +4,8 @@ package driver_camera_operation;
 import kernel_common_class.change_name;
 import kernel_driver.part_driver;
 import kernel_driver.render_driver;
+import kernel_engine.client_information;
+import kernel_engine.engine_kernel;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
@@ -28,6 +30,12 @@ public class extended_render_driver extends render_driver
 	public void destroy()
 	{
 		super.destroy();
+	}
+	public void initialize_render_driver(int render_id,engine_kernel ek,client_request_response request_response)
+	{
+	}
+	public void response_init_render_data(int render_id,engine_kernel ek,client_information ci)
+	{
 	}
 	public render_driver clone(render parent_render,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)

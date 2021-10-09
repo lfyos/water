@@ -7,9 +7,10 @@ function construct_render_routine(my_process_bar_id,my_gl,
     this.channel					   +="&process_bar="+my_process_bar_id;
     this.channel					   +="&language="	+my_language_name;
     
-	var	my_part_initialize_data			=response_data[1];
-	var	my_instance_initialize_data		=response_data[2];
-	var	render_data						=response_data[3];
+    var	my_render_initialize_data		=response_data[1];
+	var	my_part_initialize_data			=response_data[2];
+	var	my_instance_initialize_data		=response_data[3];
+	var	render_data						=response_data[4];
 	
 	var component_number				=render_data[0];
 	var render_number					=render_data[1];
@@ -19,6 +20,13 @@ function construct_render_routine(my_process_bar_id,my_gl,
     this.title							=render_data[5];
     this.parameter						=render_data[6];
     
+    this.render_initialize_data=new Array();
+    for(var i=0,ni=my_render_initialize_data.length-1;i<ni;i+=2){
+		var my_data		=my_render_initialize_data[i+0];
+		var render_id	=my_render_initialize_data[i+1];
+		this.render_initialize_data[render_id]=my_data;
+	};
+
 	this.part_initialize_data=new Array();
 	for(var i=0,ni=my_part_initialize_data.length-1;i<ni;i+=3){
 		var my_data		=my_part_initialize_data[i+0];

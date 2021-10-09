@@ -2,12 +2,15 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="text_width_height"/>
+		<item key="selection" value="part_initialize_data"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="part_initialize_data"/>
+			<item value="my_part_initialize_data"/>
+			<item value="response_data"/>
 			<item value="text_width_height"/>
 			<item value="text_line_canvas_height"/>
 			<item value="component_id"/>
@@ -20,9 +23,6 @@
 			<item value="text_adjust"/>
 			<item value="component_driver_mount_array"/>
 			<item value="texture_parameter"/>
-			<item value="frag_texture"/>
-			<item value="pbll.p."/>
-			<item value="Create engine boftal file: finished!"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
@@ -46,7 +46,7 @@
 		<item key="DIALOG_WIDTH" value="346"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="76"/>
-		<item key="DIALOG_Y_ORIGIN" value="281"/>
+		<item key="DIALOG_X_ORIGIN" value="253"/>
+		<item key="DIALOG_Y_ORIGIN" value="446"/>
 	</section>
 </section>

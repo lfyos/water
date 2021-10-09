@@ -42,7 +42,7 @@ public class extended_part_driver extends part_driver
 	public void initialize_part_driver(part p,engine_kernel ek,client_request_response request_response)
 	{
 	}
-	public void response_init_data(part p,engine_kernel ek,client_information ci)
+	public void response_init_part_data(part p,engine_kernel ek,client_information ci)
 	{	
 	}
 	public part_driver clone(part parent,part p,

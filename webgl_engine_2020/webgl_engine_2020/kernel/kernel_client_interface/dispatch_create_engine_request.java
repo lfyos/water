@@ -12,7 +12,35 @@ import kernel_common_class.jason_string;
 
 public class dispatch_create_engine_request
 {
-	static private void do_part_response_init_data(engine_kernel ek,client_information ci)
+	static private void do_response_init_render_data(engine_kernel ek,client_information ci)
+	{
+		debug_information.println();
+		debug_information.println("Begin render response_init_data");
+		int render_initialize_number=0;
+		ci.request_response.print("[");
+		for(int render_id=0,render_number=ek.render_cont.renders.length;render_id<render_number;render_id++){
+			if(ek.render_cont.renders[render_id].driver==null)
+				continue;
+			long old_length=ci.request_response.output_data_length;
+			try {
+				ek.render_cont.renders[render_id].driver.response_init_render_data(render_id,ek,ci);
+			}catch(Exception e){
+				debug_information.println("Render driver response_init_data fail:	",e.toString());
+				debug_information.println("Driver name:		",
+					ek.render_cont.renders[render_id].driver.getClass().getName());
+				debug_information.println("render_id:		",render_id);
+				e.printStackTrace();
+			}
+			if(ci.request_response.output_data_length!=old_length){
+				ci.request_response.print(",",render_id);
+				ci.request_response.print(",");
+				render_initialize_number++;
+			}
+		}
+		ci.request_response.print("0]");
+		debug_information.println("End render response_init_data: ",render_initialize_number);
+	}
+	static private void do_response_init_part_data(engine_kernel ek,client_information ci)
 	{
 		debug_information.println();
 		debug_information.println("Begin part response_init_data");
@@ -26,7 +54,7 @@ public class dispatch_create_engine_request
 				long old_length=ci.request_response.output_data_length;
 				part my_p=ek.render_cont.renders[render_id].parts[part_id];
 				try {
-					my_p.driver.response_init_data(my_p,ek,ci);
+					my_p.driver.response_init_part_data(my_p,ek,ci);
 				}catch(Exception e){
 					debug_information.println("Part driver response_init_data fail:	",e.toString());
 					
@@ -49,7 +77,7 @@ public class dispatch_create_engine_request
 		ci.request_response.print("0]");
 		debug_information.println("End part response_init_data: ",part_initialize_number);
 	}
-	static private int do_instance_response_init_data(engine_kernel ek,client_information ci)
+	static private int do_response_init_instance_data(engine_kernel ek,client_information ci)
 	{
 		debug_information.println();
 		debug_information.println("Begin instance response_init_data");
@@ -67,7 +95,7 @@ public class dispatch_create_engine_request
 					long old_length=ci.request_response.output_data_length;
 					
 					try {
-						i_d.response_init_data(ek,ci);
+						i_d.response_init_instance_data(ek, ci);
 					}catch(Exception e) {
 						debug_information.println("instance driver response_init_data fail:	",e.toString());
 						debug_information.println("instance name:",comp_array[i].component_name);
@@ -96,18 +124,21 @@ public class dispatch_create_engine_request
 	{
 		ci.statistics_client.register_system_call_execute_number(main_call_id,0);
 
-		ci.request_response.print("[ "+ci.channel_id+" ,");	//parameter	0
+		ci.request_response.print("[ "+ci.channel_id+" ,");				//parameter	0
 		
-		do_part_response_init_data(ek,ci);								//parameter	1
+		do_response_init_render_data(ek,ci);							//parameter	1
 		ci.request_response.print(",");
 		
-		int total_component_number=do_instance_response_init_data(ek,ci);//parameter2
-
-		ci.request_response.print(",[",total_component_number);			//parameter	3	0
-		ci.request_response.print(",",ek.render_cont.renders.length);	//parameter	3	1
-		ci.request_response.print(",",ek.modifier_cont.length);			//parameter	3	2
+		do_response_init_part_data(ek,ci);								//parameter	2
+		ci.request_response.print(",");
 		
-		ci.request_response.print(",[");								//parameter	3	3
+		int total_component_number=do_response_init_instance_data(ek,ci);//parameter3
+
+		ci.request_response.print(",[",total_component_number);			//parameter	4	0
+		ci.request_response.print(",",ek.render_cont.renders.length);	//parameter	4	1
+		ci.request_response.print(",",ek.modifier_cont.length);			//parameter	4	2
+		
+		ci.request_response.print(",[");								//parameter	4	3
 			if(ek.camera_cont.camera_array!=null)
 				for(int i=0,n=ek.camera_cont.camera_array.length;i<n;i++){
 					component eye_comp=ek.camera_cont.camera_array[i].eye_component;
@@ -115,11 +146,11 @@ public class dispatch_create_engine_request
 				}
 		ci.request_response.print("]");
 			
-		ci.request_response.print(",\"",	ek.link_name);			//parameter	3	4
+		ci.request_response.print(",\"",	ek.link_name);			//parameter	4	4
 		ci.request_response.print("\",",	jason_string.change_string(
-				ek.title+ek.scene_par.scene_sub_directory));		//parameter	2	6
+				ek.title+ek.scene_par.scene_sub_directory));		//parameter	4	5
 	
-		ci.request_response.print(",{");							//parameter	3	5
+		ci.request_response.print(",{");							//parameter	4	6
 			
 		ci.request_response.print( "\"max_loading_number\":",
 			ci.creation_parameter.max_client_loading_number);
@@ -136,7 +167,7 @@ public class dispatch_create_engine_request
 		String initialization_url=ek.scene_par.scene_proxy_directory_name+"initialization.gzip_text";
 		if((initialization_url=ci.get_file_proxy_url(initialization_url,ek.system_par))==null)
 			initialization_url=ci.get_request_url_header()+"&command=initialization";
-		ci.request_response.print(initialization_url,"\"");	//parameter	4   last
+		ci.request_response.print(initialization_url,"\"");			//parameter	5   last
 		
 		ci.request_response.print("]");
 

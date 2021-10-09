@@ -512,6 +512,7 @@ function construct_buffer_object(my_gl,my_parameter)
 		p.part_component_id_and_driver_id	=my_part_component_id_and_driver_id;
 		p.instance_initialize_data			=new Array();
 		p.part_initialize_data				=my_render.part_initialize_data[render_id][part_id];
+		p.render_initialize_data			=my_render.render_initialize_data[render_id];
 		
 		for(var buffer_id=0,buffer_number=my_part_component_id_and_driver_id.length;buffer_id<buffer_number;buffer_id++){
 			var my_component_id					 =my_part_component_id_and_driver_id[buffer_id][0];

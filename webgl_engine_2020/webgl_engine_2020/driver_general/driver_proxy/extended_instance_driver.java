@@ -34,7 +34,7 @@ public class extended_instance_driver extends instance_driver
 		proxy_url			=null;
 		proxy_encode_flag	=null;
 	}
-	public void response_init_data(engine_kernel ek,client_information ci)
+	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
 		proxy_url=new String[0];
 		proxy_encode_flag=new boolean[0];

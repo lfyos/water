@@ -41,7 +41,7 @@ public class extended_instance_driver  extends instance_driver
 		
 		f.close();
 	}
-	public void response_init_data(engine_kernel ek,client_information ci)
+	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
 
 	}

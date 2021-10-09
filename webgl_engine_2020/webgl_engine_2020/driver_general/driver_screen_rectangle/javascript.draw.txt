@@ -26,6 +26,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 	var part_component_id_and_driver_id	=render.part_information[render_id][part_id].part_component_id_and_driver_id;
 	var instance_initialize_data		=render.part_information[render_id][part_id].instance_initialize_data;
 	var part_initialize_data			=render.part_information[render_id][part_id].part_initialize_data;
+	var render_initialize_data			=render.part_information[render_id][part_id].render_initialize_data;
 	
 	var clip_plane						=render.clip_plane_array[render_buffer_id];
 	var clip_plane_matrix				=render.clip_plane_matrix_array[render_buffer_id];

@@ -36,7 +36,7 @@ public class extended_instance_driver extends instance_driver
 		camera_modifier_id=my_camera_modifier_id;
 		change_type_flag=true;
 	}
-	public void response_init_data(engine_kernel ek,client_information ci)
+	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
 		
 	}

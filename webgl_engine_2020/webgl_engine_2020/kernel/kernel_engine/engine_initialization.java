@@ -26,6 +26,11 @@ public class engine_initialization
 			sort_component_array=new component[] {};
 		
 		debug_information.println();
+		debug_information.println("Begin initialize_render_driver");
+		render_driver_initialize(ek,request_response,process_bar);
+		debug_information.println("End initialize_render_driver");		
+		
+		debug_information.println();
 		debug_information.println("Begin initialize_part_driver");
 		part_driver_initialize(ek,request_response,process_bar);
 		debug_information.println("End initialize_part_driver");
@@ -45,6 +50,28 @@ public class engine_initialization
 				sort_component_array[i].initialization.destroy();
 				sort_component_array[i].initialization=null;
 			};
+	}
+	private void render_driver_initialize(engine_kernel ek,
+			client_request_response request_response,client_process_bar process_bar)
+	{
+		int render_number=ek.render_cont.renders.length;
+		process_bar.set_process_bar(true,"render_driver_initialization", 0, render_number);
+		
+		for(int render_id=0;render_id<render_number;render_id++){
+			process_bar.set_process_bar(false,"render_driver_initialization", render_id, render_number);
+			if(ek.render_cont.renders[render_id].driver==null)
+				continue;
+			try {
+				ek.render_cont.renders[render_id].driver.initialize_render_driver(render_id,ek,request_response);
+			}catch(Exception e){
+				debug_information.println("Render driver initialize_part_driver fail:	",e.toString());
+				debug_information.println("Render class name:		",	
+						ek.render_cont.renders[render_id].driver.getClass().getName());
+				debug_information.println("render_id:		",	render_id);
+				e.printStackTrace();
+			}
+		}
+		process_bar.set_process_bar(false,"render_driver_initialization", render_number, render_number);
 	}
 	private void part_driver_initialize(engine_kernel ek,
 			client_request_response request_response,client_process_bar process_bar)

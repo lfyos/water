@@ -6,6 +6,8 @@ import kernel_render.render;
 import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
 import kernel_common_class.change_name;
+import kernel_engine.client_information;
+import kernel_engine.engine_kernel;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 
@@ -23,6 +25,12 @@ public class render_driver
 		geometry_shader		=null;
 		tess_control_shader	=null;
 		tess_evalue_shader	=null;
+	}
+	public void initialize_render_driver(int render_id,engine_kernel ek,client_request_response request_response)
+	{
+	}
+	public void response_init_render_data(int render_id,engine_kernel ek,client_information ci)
+	{
 	}
 	public render_driver clone(render parent_render,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)

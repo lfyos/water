@@ -38,7 +38,7 @@ public class extended_instance_driver extends instance_driver
 		change_type_flag	=my_change_type_flag;
 		camera_modifier_id	=my_camera_modifier_id;
 	}
-	public void response_init_data(engine_kernel ek,client_information ci)
+	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
 	}
 	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,

@@ -50,7 +50,7 @@ public class extended_instance_driver extends instance_driver
 		abandon_camera_display_flag=my_abandon_camera_display_flag;
 		abandon_selected_display_flag=my_abandon_selected_display_flag;
 	}
-	public void response_init_data(engine_kernel ek,client_information ci)
+	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
 
 	}

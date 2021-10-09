@@ -31,7 +31,7 @@ public class extended_instance_driver  extends instance_driver
 		do_render_number=-1;
 		pickup_area_length=0.001;
 	}
-	public void response_init_data(engine_kernel ek,client_information ci)
+	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{		
 		part p=comp.driver_array[driver_id].component_part;
 		file_reader f=new file_reader(p.directory_name+p.material_file_name,p.file_charset);

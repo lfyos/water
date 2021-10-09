@@ -19,7 +19,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="public render_driver clone()"/>
+			<item key="textPattern" value="directory_component_name can NOT find a component"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -31,7 +31,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="End create initialization file"/>
+			<item key="textPattern" value="extended_render_driver ret_val"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -43,7 +43,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="extended_render_driver ret_val"/>
+			<item key="textPattern" value="End call_part_driver_for_load_part_mesh:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -55,7 +55,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;engine.boftal&quot;"/>
+			<item key="textPattern" value="End create initialization file"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -67,7 +67,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&#x09;public render_driver clone(render parent_render,render this_render,"/>
+			<item key="textPattern" value="Finish date and time:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -92,7 +92,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="initialization.gzip_text"/>
+			<item key="textPattern" value="Fast load part:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -104,7 +104,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Fast load part:"/>
+			<item key="textPattern" value="&#x09;public render_driver clone(render parent_render,render this_render,"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -116,7 +116,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Engine load exception:"/>
+			<item key="textPattern" value="public render_driver clone()"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -128,7 +128,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Finish date and time:"/>
+			<item key="textPattern" value="public void response_init_data(engine_kernel ek,client_information ci)"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -140,7 +140,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="directory_component_name can NOT find a component"/>
+			<item key="textPattern" value="gettime"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -152,7 +152,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="gettime"/>
+			<item key="textPattern" value="public void response_init_data(int render_id,engine_kernel ek,client_information ci)"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -164,7 +164,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="End call_part_driver_for_load_part_mesh:"/>
+			<item key="textPattern" value="public void response_init_data(part p,engine_kernel ek,client_information ci)"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -198,13 +198,13 @@
 	</section>
 	<section name="ReplaceDialog2">
 		<list key="replace_with">
+			<item value="public void response_init_render_data(int render_id,engine_kernel ek,client_information ci)"/>
+			<item value="public void response_init_part_data(part p,engine_kernel ek,client_information ci)"/>
+			<item value="public void response_init_instance_data(engine_kernel ek,client_information ci)"/>
 			<item value="&#x09;public render_driver clone(render parent_render,"/>
 			<item value="public String[] get_part_list(boolean giveup_part_load_flag,int part_type_id,"/>
 			<item value="public part_rude create_part_mesh_and_buffer_object_head"/>
 			<item value="create_part_mesh_and_buffer_object_head"/>
-			<item value="public void initialize_component_driver(component comp,int driver_id,"/>
-			<item value=""/>
-			<item value="return super.response_event(p,ek,ci);"/>
 		</list>
 	</section>
 	<section name="SearchDialog">

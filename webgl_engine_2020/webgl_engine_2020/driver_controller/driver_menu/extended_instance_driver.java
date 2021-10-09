@@ -52,7 +52,7 @@ public class extended_instance_driver extends instance_driver
 		show_hide_flag=true;
 		operate_component_id=-1;
 	}
-	public void response_init_data(engine_kernel ek,client_information ci)
+	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
 	}
 	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,

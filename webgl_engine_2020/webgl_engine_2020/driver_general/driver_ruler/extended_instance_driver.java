@@ -21,7 +21,7 @@ public class extended_instance_driver extends instance_driver
 		super(my_comp,my_driver_id);
 		region_data=my_region_data;
 	}
-	public void response_init_data(engine_kernel ek,client_information ci)
+	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
 	}
 	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
