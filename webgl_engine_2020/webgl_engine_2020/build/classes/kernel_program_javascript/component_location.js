@@ -57,13 +57,14 @@ function construct_component_location_object(component_number,my_computer,my_gl)
 		this.component							=null;
 		this.component_buffer_object			=null;
 
-		this.destroy							=null;
 		this.modify_one_component_location		=null;
 		this.decode_location					=null;
 		this.modify_component_location			=null;
 		this.get_one_component_location			=null;
 		this.get_component_location_routine		=null;
 		this.get_component_location				=null;	
+		
+		this.destroy							=null;
 	}
 	this.modify_one_component_location=function(component_id,loca)
 	{

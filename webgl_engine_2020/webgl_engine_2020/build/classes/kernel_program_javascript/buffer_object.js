@@ -110,13 +110,18 @@ function construct_buffer_object(my_gl,my_parameter)
 			this.buffer_object[render_id]=null;
 		}
 		
+		var p=[this.buffer_object,this.request_render_part_id,this.buffer_head_request_queue];
+		for(var i=0,ni=p.length;i<ni;i++){
+			for(var j=0,nj=p[i].length;j<nj;j++)
+				p[i][j]=null;
+			p[i]=null;
+		}
+		
 		this.gl									=null;
 		this.parameter							=null;
 		this.buffer_object						=null;
 		this.request_render_part_id				=null;
 		this.buffer_head_request_queue			=null;
-	
-		this.destroy							=null;
 		
 		this.create_empty_buffer_object			=null;
 		this.save_data_into_buffer_object		=null;
@@ -131,6 +136,7 @@ function construct_buffer_object(my_gl,my_parameter)
 		this.request_buffer_head_package		=null;
 		this.process_buffer_head_request_queue	=null;
 		
+		this.destroy=null;
 	};
 	
 	this.create_empty_buffer_object=function(

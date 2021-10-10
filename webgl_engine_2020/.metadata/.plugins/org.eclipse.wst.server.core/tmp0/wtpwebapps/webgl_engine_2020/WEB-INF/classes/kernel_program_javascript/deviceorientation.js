@@ -155,8 +155,8 @@ function construct_deviceorientation(my_computer)
 	
 	this.destroy=function()
 	{
-		window.addEventListener("deviceorientation",deviceorientation_fun,	true);
-		window.addEventListener("devicemotion",		devicemotion_fun,		true);
+		window.removeEventListener("deviceorientation",deviceorientation_fun,	true);
+		window.removeEventListener("devicemotion",		devicemotion_fun,		true);
 		
 		if(this.gps!=null){
 			navigator.geolocation.clearWatch(this.gps.watch_id);
@@ -177,7 +177,7 @@ function construct_deviceorientation(my_computer)
 		
 		deviceorientation_fun					=null;
 		devicemotion_fun						=null;
-		my_deviceorientation					=null;		
+		my_deviceorientation					=null;	
 	};
 	
 	window.addEventListener("deviceorientation",deviceorientation_fun,	true);

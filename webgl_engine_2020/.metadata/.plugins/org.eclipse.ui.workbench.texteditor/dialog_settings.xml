@@ -2,29 +2,30 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="part_initialize_data"/>
+		<item key="selection" value="append"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
-			<item value="part_initialize_data"/>
-			<item value="my_part_initialize_data"/>
-			<item value="response_data"/>
-			<item value="text_width_height"/>
-			<item value="text_line_canvas_height"/>
-			<item value="component_id"/>
-			<item value="direction_id"/>
-			<item value="method_id_uniform"/>
-			<item value="component_id_uniform"/>
-			<item value="view_or_model_coordinate_flag"/>
-			<item value="update_component_render_version"/>
-			<item value="start_time"/>
-			<item value="text_adjust"/>
-			<item value="component_driver_mount_array"/>
-			<item value="texture_parameter"/>
+			<item value="append"/>
+			<item value="scene_mousedown"/>
+			<item value="onreadystatechange"/>
+			<item value="readyState"/>
+			<item value="ajax"/>
+			<item value="setTimeout"/>
+			<item value="destroy"/>
+			<item value="shader_program"/>
+			<item value="my_canvas"/>
+			<item value="construct_event_listener"/>
+			<item value="system_event_processor"/>
+			<item value="function "/>
+			<item value=".event_component"/>
+			<item value=".component_event_processor"/>
+			<item value=".target_buffer"/>
 		</list>
 		<list key="replacehistory">
+			<item value="shader_object"/>
 			<item value=""/>
 			<item value="system_root_component"/>
 			<item value="&quot;part_list_root_component&quot;"/>
@@ -39,14 +40,13 @@
 			<item value="&quot;color_parameter&quot;&#x09;&#x09;:&#x09;[0.1,"/>
 			<item value="0.20"/>
 			<item value="0.15"/>
-			<item value="0.125"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item key="DIALOG_WIDTH" value="346"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="253"/>
-		<item key="DIALOG_Y_ORIGIN" value="446"/>
+		<item key="DIALOG_X_ORIGIN" value="1465"/>
+		<item key="DIALOG_Y_ORIGIN" value="526"/>
 	</section>
 </section>

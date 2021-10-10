@@ -1,9 +1,6 @@
 function construct_event_listener(my_render)
 {
 	this.render=my_render;
-	
-	if(typeof(this.render.system_event_processor)!="object")
-		this.render.system_event_processor=new Object();
 
 	this.set_render_view=function(event)
 	{
@@ -948,6 +945,23 @@ function construct_event_listener(my_render)
 				this.render.canvas.removeEventListener(	"contextmenu", 			contextmenu_fun);
 			}
 
+		cur						=null;
+		mousemove_fun			=null;
+		mousedown_fun			=null;
+		mouseup_fun				=null;
+		dblclick_fun			=null;
+		mousewheel_fun			=null;
+		touchstart_fun			=null;
+		touchend_fun			=null;
+		touchmove_fun			=null;
+		keydown_fun				=null;
+		keypress_fun			=null;
+		keyup_fun				=null;
+		contextmenu_fun			=null;
+		gamepadconnected_fun	=null;
+		gamepaddisconnected_fun	=null;
+
+
 		this.set_render_view											=null;
 		this.set_mobile_render_view										=null;
 		this.caculate_pickup_event_processor							=null;
@@ -955,18 +969,23 @@ function construct_event_listener(my_render)
 		this.render.system_event_processor.pickupmousemove				=null;
 		this.render.system_event_processor.mousemove					=null;
 		this.mousemove_event_listener									=null;
+		
 		this.render.system_event_processor.pickupmousedown				=null;
 		this.render.system_event_processor.mousedown					=null;
 		this.mousedown_event_listener									=null;
+		
 		this.render.system_event_processor.pickupmouseup				=null;
 		this.render.system_event_processor.mouseup						=null;
 		this.mouseup_event_listener										=null;
+		
 		this.render.system_event_processor.pickupdblclick				=null;
 		this.render.system_event_processor.dblclick						=null;
 		this.dblclick_event_listener									=null;
+		
 		this.render.system_event_processor.pickupmousewheel				=null;
 		this.render.system_event_processor.mousewheel					=null;
 		this.mousewheel_event_listener									=null;
+		
 		this.render.system_event_processor.pickuptouchstart				=null;
 		this.render.system_event_processor.touchstart					=null;
 		this.touchstart_event_listener									=null;
@@ -987,18 +1006,21 @@ function construct_event_listener(my_render)
 		this.render.system_event_processor.pickupkeyup					=null;
 		this.render.system_event_processor.keyup						=null;
 		this.keyup_event_listener										=null;
+		
 		this.render.system_event_processor.pickupcontextmenu			=null;
 		this.render.system_event_processor.contextmenu					=null;
 		this.contextmenu_event_listener									=null;
+		
 		this.render.system_event_processor.pickupgamepadconnected		=null;
 		this.render.system_event_processor.gamepadconnected				=null;
 		this.gamepadconnected_event_listener							=null;
+		
 		this.render.system_event_processor.pickupgamepaddisconnected	=null;
 		this.render.system_event_processor.gamepaddisconnected			=null;
 		this.gamepaddisconnected_event_listener							=null;
 		
 		this.destroy													=null;
 		
-		this.render=null;
+		this.render														=null;
 	}
 };

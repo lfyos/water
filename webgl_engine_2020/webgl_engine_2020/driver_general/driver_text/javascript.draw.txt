@@ -46,13 +46,14 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 	var modifier_current_time			=render.modifier_current_time;
 		
 	if(do_render_number.engine_render==0){
-		shader_program.canvas=document.createElement("canvas");
-		
 		shader_program.sampler=gl.createSampler();
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MAG_FILTER,	gl.LINEAR);
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MIN_FILTER,	gl.LINEAR);
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_S,		gl.CLAMP_TO_EDGE);
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_T,		gl.CLAMP_TO_EDGE);
+		
+		shader_program.canvas	=document.createElement("canvas");
+		shader_program.ctx		=shader_program.canvas.getContext("2d");
 					
 		shader_program.projection_matrix_uniform	=gl.getUniformLocation(shader_program,"projection_matrix");
 		shader_program.width_heigh_uniform			=gl.getUniformLocation(shader_program,"width_heigh");
@@ -62,14 +63,15 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		
 		shader_program.destroy=function(gl,shader_program,render_object,program_id)
 		{
-			shader_program.canvas=null;
 			gl.deleteSampler(shader_program.sampler);
-			shader_program.sampler=null;
+			shader_program.sampler	=null;
+			shader_program.canvas	=null;
+			shader_program.ctx		=null;
 		}
 	}
 	
-	var text_material=part_material[0];
-	part_buffer_object=part_buffer_object.face;
+	var text_material	=part_material[0];
+	part_buffer_object	=part_buffer_object.face;
 	
 	if(do_render_number.engine_part==0){
 		part_buffer_object.text_texture					=new Array();
@@ -110,11 +112,15 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			var view_or_model_coordinate_flag	=(my_buffer_data[3]>0)?true:false;
 			var direction_id					= my_buffer_data[4];
 	
-			var my_canvas	= shader_program.canvas;
-	    	my_canvas.width	= canvas_width;
-	       	my_canvas.height= text_array.length*canvas_height;
+			var my_canvas	=shader_program.canvas;
+			var my_ctx		=shader_program.ctx;
+				
+	    	my_canvas.width	=canvas_width;
+	       	my_canvas.height=text_array.length*canvas_height;
 	       	
-	       	var my_ctx=my_canvas.getContext("2d");
+	       	my_ctx.width	=my_canvas.width;
+	       	my_ctx.height	=my_canvas.height;
+
 			my_ctx.fillStyle	="black";
 			my_ctx.fillRect(0,0,canvas_width,canvas_height);
 			my_ctx.fillStyle	="rgb(255,255,255)";
@@ -131,7 +137,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
 		    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_BASE_LEVEL,0);
 	    	gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAX_LEVEL, 0);
-	      	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE,my_canvas);
+	      	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, my_canvas);
 	      	
 	      	part_buffer_object.text_width_height[buffer_id]				=text_width_height;
 	      	part_buffer_object.view_or_model_coordinate_flag[buffer_id]	=view_or_model_coordinate_flag;

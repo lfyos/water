@@ -18,18 +18,25 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 	
 	this.destroy=function()
 	{
+		for(var i=0,ni=this.camera_object_parameter.length;i<ni;i++)
+			this.camera_object_parameter[i]=null;
 		this.camera_object_parameter				=null;
+		
+		for(var i=0,ni=this.camera_render_parameter.length;i<ni;i++)
+			this.camera_render_parameter[i]=null;
 		this.camera_render_parameter				=null;
+		
 		this.component_location_data				=null;
 		this.computer								=null;
-		
-		this.destroy								=null;
+
 		this.modify_camera_data						=null;
 		this.compute_frustem_projection_matrix		=null;
 		this.compute_orthographic_projection_matrix	=null;
 		this.compute_screen_move_matrix				=null;
 		this.compute_lookat_matrix					=null;
 		this.compute_camera_data					=null;	
+		
+		this.destroy								=null;
 	}
 	
 	this.modify_camera_data=function(render_buffer_id,camera_data_from_server)

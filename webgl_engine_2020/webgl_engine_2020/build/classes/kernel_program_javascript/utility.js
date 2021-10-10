@@ -6,7 +6,6 @@ function construct_render_utility(my_render_instance)
 	{
 		this.render_instance=null;
 		
-		this.destroy=null;
 		this.get_pinpoint=null;
 		this.destroy_texture_image=null;
 		this.load_texture_image=null;
@@ -22,6 +21,7 @@ function construct_render_utility(my_render_instance)
 		this.decode_integer_from_pixel=null;
 		this.decode_float_from_pixel=null;
 		
+		this.destroy=null;
 	}
 	
 	this.get_pinpoint=function()

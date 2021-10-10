@@ -86,8 +86,8 @@ public class part_lru_manager
 		
 		if(pbll.p.part_mesh!=null) {
 			pbll.p.part_mesh.free_memory();
-			debug_information.println(
-					"Unload part:	user name:"+pbll.p.user_name+"	system name:"+pbll.p.system_name,
+			debug_information.println("Unload part:	user name:"+pbll.p.user_name,
+					"	system name:"	+pbll.p.system_name+
 					"	mesh file:"		+pbll.p.directory_name+pbll.p.mesh_file_name);
 		}
 		return ret_val;

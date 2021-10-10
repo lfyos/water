@@ -37,4 +37,14 @@ function construct_modifier_time_parameter(modifier_container_number)
 		var p=this.modifier_time_parameter[index_id];
 		return p.speed*(this.webserver_current_time-p.timer_adjust_value);
 	};
+	
+	this.destroy=function()
+	{
+		this.delay_time_length		=null;
+		this.webserver_current_time	=null;
+		this.modifier_time_parameter=null;
+		this.modify_parameter		=null;
+		this.caculate_current_time	=null;
+		this.destroy				=null;
+	};
 };

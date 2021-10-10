@@ -65,11 +65,11 @@
 					}
 					render.system_event_processor.pickupmousedown=function(event,pickup_component_id,render)
 					{
-						setTimeout(
+						render.append_routine_function(
 							function()
 							{
 								render.user_call_processor.scene_mousedown(pickup_component_id,event);
-							},50);
+							});
 						return false;
 					}
 					render.system_event_processor.mousedown=function(event,render)	
