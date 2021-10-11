@@ -27,7 +27,7 @@ public class system_parameter
 	public double create_engine_sleep_time_length_scale;
 	public long create_engine_sleep_time_length,create_engine_max_sleep_time_length;
 	
-	public long file_buffer_expire_time_length;
+	public long show_process_bar_interval,file_buffer_expire_time_length;
 	
 	public int max_client_interface_number;
 	
@@ -71,6 +71,7 @@ public class system_parameter
 		create_engine_sleep_time_length			=sp.create_engine_sleep_time_length;
 		create_engine_max_sleep_time_length		=sp.create_engine_max_sleep_time_length;
 		
+		show_process_bar_interval				=sp.show_process_bar_interval;
 		file_buffer_expire_time_length			=sp.file_buffer_expire_time_length;
 		
 		max_client_interface_number		=sp.max_client_interface_number;
@@ -185,6 +186,7 @@ public class system_parameter
 		create_engine_sleep_time_length			=f.get_long();
 		create_engine_max_sleep_time_length		=f.get_long();
 		
+		show_process_bar_interval				=f.get_long();
 		file_buffer_expire_time_length			=f.get_long();
 		
 		max_client_interface_number				=f.get_int();

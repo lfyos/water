@@ -33,7 +33,6 @@ public class compress_render_container
 			for(int i=0,ni=my_part.length;i<ni;i++)
 				my_part[i]=bak[i];
 		}
-		
 		for(int i=0,ni=my_part.length,permanent_part_from_id;i<ni;i++){
 			my_part[i].part_id=i;
 			my_part[i].part_from_id=-1;
@@ -54,8 +53,10 @@ public class compress_render_container
 	}
 	private int compress_render()
 	{
-		if(render_cont.renders==null)
+		if(render_cont.renders==null) {
+			render_cont.renders=new render[0];
 			return 0;
+		}
 		int render_number=0,total_original_part_number=0;
 		for(int i=0,ni=render_cont.renders.length;i<ni;i++)
 			if(render_cont.renders[i].parts!=null){
@@ -64,7 +65,7 @@ public class compress_render_container
 					render_cont.renders[render_number++]=render_cont.renders[i];
 			}
 		if(render_number==0){
-			render_cont.renders=null;
+			render_cont.renders=new render[0];
 			return total_original_part_number;
 		}
 		if(render_cont.renders.length!=render_number){

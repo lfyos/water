@@ -2,44 +2,44 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="append"/>
+		<item key="selection" value="my_height"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
-			<item value="append"/>
-			<item value="scene_mousedown"/>
-			<item value="onreadystatechange"/>
-			<item value="readyState"/>
-			<item value="ajax"/>
-			<item value="setTimeout"/>
-			<item value="destroy"/>
-			<item value="shader_program"/>
-			<item value="my_canvas"/>
-			<item value="construct_event_listener"/>
-			<item value="system_event_processor"/>
-			<item value="function "/>
-			<item value=".event_component"/>
-			<item value=".component_event_processor"/>
-			<item value=".target_buffer"/>
+			<item value="my_height"/>
+			<item value="my_width"/>
+			<item value="&quot;GBK&quot;"/>
+			<item value="request_response.get_charset()"/>
+			<item value="turnon_control_panel"/>
+			<item value="resize"/>
+			<item value="body_onresize"/>
+			<item value="my_processor_bar"/>
+			<item value="request_create_engine"/>
+			<item value="render_initialization"/>
+			<item value="process_bar_id"/>
+			<item value="my_process_bar_id"/>
+			<item value="processs_bar_object"/>
+			<item value="process_bar_url"/>
+			<item value="deleteTexture"/>
 		</list>
 		<list key="replacehistory">
-			<item value="shader_object"/>
+			<item value="&quot;UTF-8&quot;"/>
+			<item value="&quot;GBK&quot;"/>
+			<item value="0"/>
+			<item value="this.gl."/>
 			<item value=""/>
+			<item value="this.canvas."/>
+			<item value="this.ctx"/>
+			<item value="0&#x09;0&#x09;1&#x09;1"/>
+			<item value="shader_object"/>
 			<item value="system_root_component"/>
 			<item value="&quot;part_list_root_component&quot;"/>
 			<item value="relative&#x09;light.txt&#x09;null&#x09;null"/>
 			<item value="&#x09;light.txt&#x09;null&#x09;null"/>
 			<item value=";"/>
 			<item value="/*&#x09;part_lru_in_list_number&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;50"/>
-			<item value="driver_opengl_fixed_pipeline"/>
-			<item value="&quot;vertex_color_type&quot;&#x09;&#x09;:&#x09;2,"/>
-			<item value="&quot;vertex_color_type&quot;&#x09;&#x09;:&#x09;1,"/>
-			<item value="&quot;fragment_color_type&quot;&#x09;:&#x09;2,"/>
-			<item value="&quot;color_parameter&quot;&#x09;&#x09;:&#x09;[0.1,"/>
-			<item value="0.20"/>
-			<item value="0.15"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

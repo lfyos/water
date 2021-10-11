@@ -23,6 +23,7 @@
 /*	create_engine_sleep_time_length,unit:macrosecond						*/		1000
 /*	create_engine_max_sleep_time_length									 	*/		60000
 
+/*	show_process_bar_interval,	unit:millisecond							*/		1000
 /*	file_buffer_expire_time_length,	unit:second								*/		365000000
 
 /*	max_client_interface_number												*/		100

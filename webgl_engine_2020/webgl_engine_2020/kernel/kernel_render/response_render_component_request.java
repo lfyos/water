@@ -81,22 +81,21 @@ public class response_render_component_request
 	{
 		render_target target_array[]=ci.target_container.get_render_target(
 			ek.component_cont.root_component,ek.scene_par.initial_parameter_channel_id);
-		{
-			int target_number=ci.target_container.get_render_target_number();
-			if(ci.target_component_collector_array.length<target_number){
-				component_collector bak_collector[]=ci.target_component_collector_array;
-				camera_result		bak_camera_result[]=ci.target_camera_result_array;
-				ci.target_component_collector_array=new component_collector[target_number];
-				ci.target_camera_result_array=new camera_result[target_number];
-				
-				for(int i=0,ni=bak_collector.length;i<ni;i++) {
-					ci.target_component_collector_array[i]=bak_collector[i];
-					ci.target_camera_result_array[i]=bak_camera_result[i];
-				}
-				for(int i=bak_collector.length;i<target_number;i++){
-					ci.target_component_collector_array[i]=null;
-					ci.target_camera_result_array[i]=null;
-				}
+
+		int target_number=ci.target_container.get_render_target_number();
+		if(ci.target_component_collector_array.length<target_number){
+			component_collector bak_collector[]=ci.target_component_collector_array;
+			camera_result		bak_camera_result[]=ci.target_camera_result_array;
+			ci.target_component_collector_array=new component_collector[target_number];
+			ci.target_camera_result_array=new camera_result[target_number];
+			
+			for(int i=0,ni=bak_collector.length;i<ni;i++) {
+				ci.target_component_collector_array[i]=bak_collector[i];
+				ci.target_camera_result_array[i]=bak_camera_result[i];
+			}
+			for(int i=bak_collector.length;i<target_number;i++){
+				ci.target_component_collector_array[i]=null;
+				ci.target_camera_result_array[i]=null;
 			}
 		}
 

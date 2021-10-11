@@ -57,15 +57,19 @@ public class client_request_switcher
 	}
 	private void process_bar(client_request_response request_response,client_interface client)
 	{
-		String str;
+		String str,language_str;
 		client_process_bar process_bar;
 		if((str=request_response.get_parameter("command"))==null)
 			return;
 		switch(str){
 		case "request":
 			process_bar=client.request_process_bar();
-			request_response.println(process_bar.process_bar_id);
 			process_bar.set_process_bar(true,"start_create_scene", 0, 1);
+			
+			request_response.println("{");
+			request_response.println("	\"process_bar_id\"				:	",process_bar.process_bar_id+",");
+			request_response.println("	\"show_process_bar_interval\"	:	",system_par.show_process_bar_interval);
+			request_response.println("}");
 			break;
 		case "release":
 			if((str=request_response.get_parameter("process_bar"))!=null)
@@ -74,8 +78,8 @@ public class client_request_switcher
 		case "data":
 			if((process_bar=client.get_process_bar(request_response))==null)
 				break;
-			str=request_response.get_parameter("language");
-			str=process_bar.process_title+"+"+((str==null)?"english":str);
+			language_str=request_response.get_parameter("language");
+			str=process_bar.process_title+"+"+((language_str==null)?"english":language_str);
 			str=system_par.language_change_name.search_change_name(str,process_bar.process_title);
 			long current_time=nanosecond_timer.absolute_nanoseconds();
 			long time_length=current_time-process_bar.start_time;
@@ -83,12 +87,12 @@ public class client_request_switcher
 
 			request_response.println("{");
 			request_response.print  ("	\"caption\":		\"",	str							).println("\",");
-			request_response.print  ("	\"title\":			\"",	process_bar.process_title	).println("\",");
 			request_response.print  ("	\"current\":		",		process_bar.current_process	).println(",");
 			request_response.print  ("	\"max\":			",  	process_bar.max_process		).println(",");
 			request_response.print  ("	\"time_length\":	",  	time_length/1000000			).println(",");
 			request_response.print  ("	\"engine_time_length\":	",  engine_time_length/1000000	).println(",");
-			request_response.print  ("	\"id\":				",		process_bar.process_bar_id	).println("");
+			request_response.print  ("	\"time_unit\":		\"",  	system_par.language_change_name.
+				search_change_name("unit+"+((language_str==null)?"english":language_str),"unit")).println("\"");
 			request_response.println("}");
 			break;	
 		}

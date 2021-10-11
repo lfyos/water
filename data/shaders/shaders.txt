@@ -3,12 +3,12 @@
 /*	render_1	*/	driver_background.extended_render_driver					driver_general\background\render.list
 /*	render_2	*/	driver_caption.extended_render_driver						driver_general\caption\render.list	
 /*	render_3	*/	driver_coordinate.extended_render_driver					driver_general\coordinate\render.list
-/*	render_4	*/	driver_trace_primitive.extended_render_driver				driver_general\driver_trace_primitive\render.list
+/*	render_4	*/	driver_trace_primitive.extended_render_driver				driver_general\trace_primitive\render.list
 /*	render_5	*/	driver_movement.extended_render_driver						driver_general\movement\render.list
 /*	render_6	*/	driver_proxy.extended_render_driver							driver_general\proxy\render.list
-/*	render_6	*/	driver_render_target_register.extended_render_driver		driver_general\render_target_register\render.list
-/*	render_8	*/	driver_ruler.extended_render_driver							driver_general\ruler\render.list
-/*	render_9	*/	driver_screen_rectangle.extended_render_driver				driver_general\screen_rectangle\render.list
+/*	render_7	*/	driver_render_target_register.extended_render_driver		driver_general\render_target_register\render.list
+/*	render_7	*/	driver_ruler.extended_render_driver							driver_general\ruler\render.list
+/*	render_0	*/	driver_screen_rectangle.extended_render_driver				driver_general\screen_rectangle\render.list
 /*	render_10	*/	driver_show_component_box.extended_render_driver			driver_general\show_component_box\render.list 
 /*	render_11	*/	driver_show_target.extended_render_driver					driver_general\show_target\render.list  
 /*	render_12	*/	driver_tag.extended_render_driver							driver_general\tag\render.list	
@@ -62,4 +62,3 @@
 
 /*	########################	driver_project_boat_2011	#######################		*/
 /*	render_49	*/	driver_opengl_fixed_pipeline.extended_render_driver								..\project\boat\part\render.list
-

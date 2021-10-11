@@ -1,9 +1,7 @@
-function redraw(render,processs_bar_object)
+function redraw(render)
 {
-	if(render.terminate_flag){
-		processs_bar_object.show_process_bar_function=null;
+	if(render.terminate_flag)
 		return;
-	}
 	var redraw_object={
 			touch_time:			0,
 			interval_length:	1,
@@ -11,10 +9,9 @@ function redraw(render,processs_bar_object)
 	};
 	function render_routine()
 	{
-		if(render.terminate_flag){
-			processs_bar_object.show_process_bar_function=null;
+		if(render.terminate_flag)
 			clearInterval(redraw_object.clear_interval_id);
-		}else{
+		else{
 			var my_current_time=(new Date()).getTime();
 			redraw_object.interval_length=my_current_time-redraw_object.touch_time;
 			redraw_object.touch_time=my_current_time;
@@ -26,10 +23,9 @@ function redraw(render,processs_bar_object)
 	};
 	function touch_routine()
 	{
-		if(render.terminate_flag){
-			processs_bar_object.show_process_bar_function=null;
+		if(render.terminate_flag)
 			clearInterval(redraw_object.clear_interval_id);
-		}else{
+		else{
 			var my_current_time=(new Date()).getTime();
 			var my_interval_length=my_current_time-redraw_object.touch_time;
 			if(my_interval_length>(render.parameter.engine_touch_time_length/1000000)){
@@ -45,7 +41,7 @@ function redraw(render,processs_bar_object)
 	render_routine();
 };
 
-function render_initialization(initialization_url,my_render,user_initialization_function,processs_bar_object)
+function render_initialization(initialization_url,my_render,user_initialization_function)
 {
 	try{
 		var my_ajax=new XMLHttpRequest(),render=my_render;
@@ -56,7 +52,6 @@ function render_initialization(initialization_url,my_render,user_initialization_
 			if(render.terminate_flag)
 				return;
 			if(my_ajax.status!=200){
-				processs_bar_object.show_process_bar_function=null;
 				if(render.parameter.debug_mode_flag){
 					alert("Loading system_initialization_function response status error: "+my_ajax.status.toString());
 					alert(initialization_url);
@@ -113,20 +108,11 @@ function render_initialization(initialization_url,my_render,user_initialization_
 			if(typeof(user_initialization_function)=="function")
 				user_initialization_function(render);
 			
-			redraw(render,processs_bar_object);
-			
-			if(processs_bar_object.show_process_bar_termination_flag)
-				setTimeout(
-					function()
-					{
-						processs_bar_object.show_process_bar_function=null;
-					},
-					processs_bar_object.show_process_bar_interval);
+			redraw(render);
 		};
 		my_ajax.open("GET",initialization_url,true);
 		my_ajax.send(null);
 	}catch(e){
-		processs_bar_object.show_process_bar_function=null;
 		if(render.parameter.debug_mode_flag){
 			alert("render_initialization fail: "+e.toString());
 			alert(initialization_url);
@@ -191,9 +177,8 @@ function request_create_engine(create_engine_sleep_time_length_scale,
 		{
 			if(my_ajax.readyState!=4)
 				return;
-			
 			if(my_ajax.status!=200){
-				processs_bar_object.show_process_bar_function=null;
+				processs_bar_object.process_bar_id=null;
 				alert("Initialization response status error: "+my_ajax.status.toString());
 				return;
 			};
@@ -201,16 +186,16 @@ function request_create_engine(create_engine_sleep_time_length_scale,
 			try{
 				response_data=JSON.parse(my_ajax.responseText);
 			}catch(e){
-				processs_bar_object.show_process_bar_function=null;
-				
+				processs_bar_object.process_bar_id=null;
 				alert("Web server error, or Create Too many scenes:  "+e.toString());
 				alert(my_ajax.responseText);
 				return;
 			}
 			if(typeof(response_data)=="boolean"){
-				if(response_data)
+				if(response_data){
+					processs_bar_object.process_bar_id=null;
 					alert("Web server error, get_client_interface fail!");
-				else{
+				}else{
 					var new_create_engine_sleep_time_length=create_engine_sleep_time_length;
 					new_create_engine_sleep_time_length*=create_engine_sleep_time_length_scale;
 					if(new_create_engine_sleep_time_length>create_engine_max_sleep_time_length)
@@ -229,31 +214,33 @@ function request_create_engine(create_engine_sleep_time_length_scale,
 			var render,initialization_url=response_data.pop();
 			render=new construct_render_routine(processs_bar_object.process_bar_id,
 				my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,response_data);
-			render_initialization(initialization_url,render,my_user_initialization_function,processs_bar_object);
+			render_initialization(initialization_url,render,my_user_initialization_function);
+			
+			processs_bar_object.process_bar_id=null;
+			
 			return;
 		};
 		my_ajax.open("GET",request_url+"&process_bar="+processs_bar_object.process_bar_id,true);
 		my_ajax.send(null);
 	}catch(e){
-		processs_bar_object.show_process_bar_function=null;
+		processs_bar_object.process_bar_id=null;
 		alert("request_create_engine fail!");
 		alert(e.toString());
 	};
 }
 
-function render_show_process_bar(process_bar_url,processs_bar_object)
+function render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render)
 {
-	if(typeof(processs_bar_object.process_bar_id)!="number")
+	do{
+		if(typeof(processs_bar_object.process_bar_id)=="number")
+			if(typeof(processs_bar_object.show_process_bar_interval)=="number")
+				if(processs_bar_object.process_bar_id>=0)
+					if(processs_bar_object.show_process_bar_interval>0)
+						break;
+		process_bar_render.destroy();
 		return;
-	if(typeof(processs_bar_object.show_process_bar_interval)!="number")
-		return;
-	if(processs_bar_object.process_bar_id<0)
-		return;
-	if(processs_bar_object.show_process_bar_interval<=0)
-		return;
-	if(typeof(processs_bar_object.show_process_bar_function)!="function")
-		return;
-
+	}while(false);
+	
 	var my_ajax;
 	try{
 		my_ajax=new XMLHttpRequest();
@@ -261,30 +248,31 @@ function render_show_process_bar(process_bar_url,processs_bar_object)
 		{
 			if(my_ajax.readyState!=4)
 				return;
-			if(my_ajax.status!=200)
-				return;
-			var response_data;
-			try{
-				response_data=JSON.parse(my_ajax.responseText);
-			}catch(e){
-				return;
-			}
-			if(typeof(processs_bar_object.show_process_bar_function)=="function")
-				if(processs_bar_object.show_process_bar_function(
-						response_data.caption,		response_data.title,
-						response_data.current,		response_data.max,
-						response_data.time_length,	response_data.engine_time_length,
-						response_data.id))
-					if(processs_bar_object.show_process_bar_interval>0)
-						setTimeout(
-							function()
-							{
-								render_show_process_bar(process_bar_url,processs_bar_object);
-							},processs_bar_object.show_process_bar_interval);
+			if(my_ajax.status==200)
+				try{
+					var response_data=JSON.parse(my_ajax.responseText);
+					setTimeout(
+						function()
+						{
+							render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render);
+						},processs_bar_object.show_process_bar_interval);
+					
+					process_bar_render.set_process_bar_data(response_data.caption,
+								response_data.current,		response_data.max,
+								response_data.time_length,	response_data.engine_time_length,
+								response_data.time_unit);
+					process_bar_render.draw_process_bar();
+					return;
+				}catch(e){
+					;
+				}
+			process_bar_render.destroy();
+			return;
 		};
 		my_ajax.open("GET",process_bar_url+"&process_bar="+processs_bar_object.process_bar_id,true);
 		my_ajax.send(null);
 	}catch(e){
+		process_bar_render.destroy();
 		alert("render_show_process_bar fail!");
 		alert(e.toString());
 	};
@@ -293,8 +281,7 @@ function render_show_process_bar(process_bar_url,processs_bar_object)
 function render_main(create_engine_sleep_time_length_scale,
 	create_engine_sleep_time_length,create_engine_max_sleep_time_length,
 	my_canvas,my_url,my_user_name,my_pass_word,my_language_name,
-	my_scene_name,my_link_name,my_initialization_parameter,my_user_initialization_function,
-	my_show_process_bar_interval,my_show_process_bar_termination_flag,my_show_process_bar_function)
+	my_scene_name,my_link_name,my_initialization_parameter,my_user_initialization_function)
 {
 	my_user_name						=(typeof(my_user_name						 )!="string"  )?"NoName"	:(my_user_name.trim());
 	my_pass_word						=(typeof(my_pass_word					 	 )!="string"  )?"NoPassword":(my_pass_word.trim());
@@ -314,17 +301,10 @@ function render_main(create_engine_sleep_time_length_scale,
 				var parameter_value	=parameter_item[1].toString().trim();
 				request_url+="&"+parameter_name+"="+parameter_value;
 			};
-	var processs_bar_object={
-			process_bar_id						:-1,
-			show_process_bar_interval			:(typeof(my_show_process_bar_interval		 )!="number"  )?-1			:my_show_process_bar_interval,
-			show_process_bar_termination_flag	:(typeof(my_show_process_bar_termination_flag)!="boolean" )?true		:my_show_process_bar_termination_flag,
-			show_process_bar_function			:(typeof(my_show_process_bar_function		 )!="function")?null		:my_show_process_bar_function
-	};
-	
+
 	var my_gl;
 	if((my_gl=create_webgl_context(my_canvas))==null)
     	return; 
-  
 	var max_draw_buffers=my_gl.getParameter(my_gl.MAX_DRAW_BUFFERS); 
 	var max_color_attatchments=my_gl.getParameter(my_gl.MAX_COLOR_ATTACHMENTS);
 	if((max_draw_buffers<4)||(max_color_attatchments<4)){
@@ -345,8 +325,11 @@ function render_main(create_engine_sleep_time_length_scale,
 				alert("Create process bar response status error: "+my_ajax.status.toString());
 				return;
 			};
-			processs_bar_object.process_bar_id=JSON.parse(my_ajax.responseText);
-			render_show_process_bar(process_bar_url,processs_bar_object);
+			var processs_bar_object=JSON.parse(my_ajax.responseText);
+			
+			render_show_process_bar(process_bar_url,processs_bar_object,
+					new construct_process_bar(my_gl,my_canvas.width,my_canvas.height));
+			
 			request_create_engine(create_engine_sleep_time_length_scale,
 				create_engine_sleep_time_length,create_engine_max_sleep_time_length,
 				request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,

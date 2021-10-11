@@ -1,0 +1,7 @@
+in	vec4 vertex_location,vertex_texture;
+out	vec4 frag_texture;
+void main(void)
+{
+	frag_texture=vertex_texture;
+	gl_Position=vertex_location;
+}

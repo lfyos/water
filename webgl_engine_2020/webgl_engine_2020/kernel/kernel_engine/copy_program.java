@@ -93,6 +93,7 @@ public class copy_program
 
 		long common_shader_last_time=common_shader_reader.lastModified_time;
 		long ret_val=common_shader_last_time;
+		
 		for(int i=0,ni=render_cont.renders.length;i<ni;i++) {
 			if(render_cont.renders[i].parts==null)
 				continue;

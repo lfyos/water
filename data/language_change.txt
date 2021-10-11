@@ -1,6 +1,8 @@
 load+english									load
 load+chinese									装入
 
+unit+english									second
+unit+chinese									秒
 
 wait_for_other_exit+english						1.wait_for_other_scene_create_exit
 wait_for_other_exit+chinese						1.等待其它场景创建结束
