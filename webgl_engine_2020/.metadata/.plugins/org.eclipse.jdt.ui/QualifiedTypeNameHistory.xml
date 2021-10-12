@@ -49,7 +49,6 @@
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="kernel_common_class.exclusive_file_mutex"/>
 <fullyQualifiedTypeName name="convert_old_part_rude_2021_07_01.part_rude"/>
-<fullyQualifiedTypeName name="kernel_interface.client_process_bar"/>
 <fullyQualifiedTypeName name="kernel_common_class.sorter"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
 <fullyQualifiedTypeName name="kernel_interface.client_switch_server"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="kernel_part.part"/>
 <fullyQualifiedTypeName name="kernel_file_manager.file_directory"/>
 <fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
+<fullyQualifiedTypeName name="kernel_interface.client_process_bar"/>
 </qualifiedTypeNameHistroy>

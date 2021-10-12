@@ -149,7 +149,7 @@ public class engine_interface
 			original_render.system_part_package=new part_package(null,null,original_render,part_type_id,system_par,null);
 			debug_information.println("End create system_part_package");
 			
-			part_cont_for_delete_file.delete_part_file(system_par,null);
+			part_cont_for_delete_file.delete_part_file(null,system_par,null);
 		}
 		
 		if(clear_expire_engine_kernel_routine(system_par))

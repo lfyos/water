@@ -1,2 +1,2 @@
 /*	get_jar_file_name_charset	*/		UTF-8
-/*	webpage_charset				*/		GBK
+/*	webpage_charset				*/		UTF-8

@@ -262,7 +262,6 @@ function render_show_process_bar(process_bar_url,processs_bar_object,process_bar
 								response_data.current,		response_data.max,
 								response_data.time_length,	response_data.engine_time_length,
 								response_data.time_unit);
-					process_bar_render.draw_process_bar();
 					return;
 				}catch(e){
 					;
@@ -326,8 +325,10 @@ function render_main(create_engine_sleep_time_length_scale,
 				alert("Create process bar response status error: "+my_ajax.status.toString());
 				return;
 			};
-			var process_bar_render=new construct_process_bar(my_gl,my_canvas.width,my_canvas.height);
+			
 			var processs_bar_object=JSON.parse(my_ajax.responseText);
+			var process_bar_render=new construct_process_bar(my_gl,
+					my_canvas.width,my_canvas.height,processs_bar_object.show_process_bar_interval);
 			
 			render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render);
 			

@@ -7,13 +7,30 @@ import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_directory;
+import kernel_interface.client_process_bar;
 
 public class part_container_for_delete_part_file extends part_container
 {
-	public void delete_part_file(system_parameter system_par,scene_parameter scene_par)
+	public void delete_part_file(client_process_bar cpb,
+			system_parameter system_par,scene_parameter scene_par)
 	{
-		File f;
-		for(part_link_list pll=get_part_list();pll!=null;pll=pll.next) {
+		if(cpb!=null)
+			cpb.set_process_bar(true, "delete_part_file", 0,1);
+		
+		int number=0;
+		part_link_list pll=get_part_list();
+		for(part_link_list p=pll;p!=null;p=p.next)
+			number++;
+		if(number<=0)
+			number=1;
+		
+		if(cpb!=null)
+			cpb.set_process_bar(true, "delete_part_file", 0,number);
+		
+		for(int i=0;pll!=null;pll=pll.next,i++) {
+			if(cpb!=null)
+				cpb.set_process_bar(false, "delete_part_file", i,number);
+			
 			if(pll.p.part_par==null)
 				continue;
 			
@@ -29,10 +46,11 @@ public class part_container_for_delete_part_file extends part_container
 				pll.p.mesh_file_name+".edge.gzip"
 			};
 
-			for(int i=0,ni=clear_file_name_array.length;i<ni;i++) {
-				if(pll.p.part_par.clear_model_file_flag[i])
-					if(clear_file_name_array[i]!=null){
-						String file_name=pll.p.directory_name+file_reader.separator(clear_file_name_array[i]);
+			File f;
+			for(int j=0,nj=clear_file_name_array.length;j<nj;j++) {
+				if(pll.p.part_par.clear_model_file_flag[j])
+					if(clear_file_name_array[j]!=null){
+						String file_name=pll.p.directory_name+file_reader.separator(clear_file_name_array[j]);
 						if((f=new File(file_name)).exists())
 							f.delete();
 					}
@@ -54,5 +72,7 @@ public class part_container_for_delete_part_file extends part_container
 						}
 			}
 		}
+		if(cpb!=null)
+			cpb.set_process_bar(false, "delete_part_file", number,number);
 	}
 }

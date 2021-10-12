@@ -1,10 +1,12 @@
-function construct_process_bar(my_gl,my_width,my_height)
+function construct_process_bar(my_gl,my_width,my_height,my_show_process_bar_interval)
 {
 	this.gl				=my_gl;
 	this.canvas			=document.createElement("canvas");
 	this.canvas.width	=my_width;
 	this.canvas.height	=my_height;
 	this.ctx			=this.canvas.getContext("2d");
+	
+	this.show_process_bar_interval=my_show_process_bar_interval;
 	
 	var my_vertex_program=
 		"#version 300 es"													+"\n"+
@@ -91,6 +93,15 @@ function construct_process_bar(my_gl,my_width,my_height)
   	
 	this.texture_sampler_uniform=this.gl.getUniformLocation(this.shader_program,"progress_bar_texture");
 	
+	this.process_bar_caption			="";
+	this.process_bar_current			=0;
+	this.process_bar_current_last		=0;
+	this.process_bar_max				=1;
+	this.process_bar_time_length		=0;
+	this.process_bar_engine_time_length	=0;
+	this.time_unit						="";
+	this.set_time						=new Date().getTime();
+	
 	this.destroy=function()
 	{
 		if(this.gl==null)
@@ -121,6 +132,49 @@ function construct_process_bar(my_gl,my_width,my_height)
 	
 	this.draw_process_bar=function()
 	{
+		if(this.gl==null)
+			return;
+		
+		var p=(new Date().getTime()-this.set_time)/this.show_process_bar_interval;
+		
+		if(p<0.0)
+			p=0.0;
+		else if(p>1.0){
+			this.process_bar_current_last=this.process_bar_current;
+			p=1.0;
+		}
+		p=(this.process_bar_current_last*(1.0-p)+this.process_bar_current*p)/this.process_bar_max;
+
+		this.ctx.fillStyle="rgb(255,255,255)";
+		this.ctx.beginPath();
+		this.ctx.moveTo(0,					0);
+		this.ctx.lineTo(this.canvas.width,	0);
+		this.ctx.lineTo(this.canvas.width,	this.canvas.height);
+		this.ctx.lineTo(0,					this.canvas.height);
+		this.ctx.lineTo(0,					0);
+		this.ctx.fill();
+		
+		this.ctx.fillStyle="rgb(127,127,127)";
+		this.ctx.beginPath();
+		this.ctx.moveTo(0,									0);
+		this.ctx.lineTo(Math.round(this.canvas.width*p),	0);
+		this.ctx.lineTo(Math.round(this.canvas.width*p),	this.canvas.height);
+		this.ctx.lineTo(0,									this.canvas.height);
+		this.ctx.lineTo(0,									0);
+		this.ctx.fill();
+
+		if((p=(Math.round(1000.0*p)/10.0).toString()).indexOf(".")<0)
+			p+=".0";
+		var display_value=this.process_bar_caption+":"+p+"%,";
+		display_value+=(Math.round(this.process_bar_time_length/1000.0)).toString()+this.time_unit+",";
+		display_value+=(Math.round(this.process_bar_engine_time_length/1000.0)).toString()+this.time_unit;
+		
+		this.ctx.font			="bold 64px Arial";
+		this.ctx.textBaseline	="middle";
+		this.ctx.fillStyle		="rgb(192,192,192)";
+		this.ctx.textAlign		="center";		
+		this.ctx.fillText(display_value,this.canvas.width/2.0,this.canvas.height/2.0);
+		
 		this.gl.clearColor(0,0,0,1);
 		this.gl.clearDepth(1.0);
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT|this.gl.DEPTH_BUFFER_BIT);
@@ -137,42 +191,38 @@ function construct_process_bar(my_gl,my_width,my_height)
 		
 		this.gl.bindVertexArray(this.vertex_array_object);
 		this.gl.drawArrays(this.gl.TRIANGLES,0,6);
+		
+		var cur=this;
+		window.requestAnimationFrame(
+			function()
+			{
+				cur.draw_process_bar();
+			});
 	};
 	
-	this.set_process_bar_data=function(
-			process_bar_caption,process_bar_current,process_bar_max,
-			process_bar_time_length,process_bar_engine_time_length,
-			time_unit)
+	this.set_process_bar_data=function(	my_process_bar_caption,
+			my_process_bar_current,		my_process_bar_max,
+			my_process_bar_time_length,	my_process_bar_engine_time_length,
+			my_time_unit)
 	{
-		this.ctx.fillStyle="rgb(255,255,255)";
-		this.ctx.beginPath();
-		this.ctx.moveTo(0,					0);
-		this.ctx.lineTo(this.canvas.width,	0);
-		this.ctx.lineTo(this.canvas.width,	this.canvas.height);
-		this.ctx.lineTo(0,					this.canvas.height);
-		this.ctx.lineTo(0,					0);
-		this.ctx.fill();
+		this.process_bar_current_last		=this.process_bar_current;
 		
-		this.ctx.fillStyle="rgb(127,127,127)";
-		this.ctx.beginPath();
-		this.ctx.moveTo(0,																	0);
-		this.ctx.lineTo(Math.round(this.canvas.width*process_bar_current/process_bar_max),	0);
-		this.ctx.lineTo(Math.round(this.canvas.width*process_bar_current/process_bar_max),	this.canvas.height);
-		this.ctx.lineTo(0,																	this.canvas.height);
-		this.ctx.lineTo(0,																	0);
-		this.ctx.fill();
-
-		var display_value=process_bar_caption+":";
+		this.process_bar_caption			=my_process_bar_caption;
+		this.process_bar_current			=my_process_bar_current;
+		this.process_bar_max				=my_process_bar_max;
+		this.process_bar_time_length		=my_process_bar_time_length;
+		this.process_bar_engine_time_length	=my_process_bar_engine_time_length;
+		this.time_unit						=my_time_unit;
 		
-		process_bar_current=1000.0*process_bar_current/process_bar_max;
-		display_value+=(Math.round(process_bar_current)/10.0).toString()+"%,";
-		display_value+=(Math.round(process_bar_time_length/1000.0)).toString()+time_unit+",";
-		display_value+=(Math.round(process_bar_engine_time_length/1000.0)).toString()+time_unit;
+		if(this.process_bar_current<0)
+			this.process_bar_current=0;
+		else if(this.process_bar_current>this.process_bar_max)
+			this.process_bar_current=this.process_bar_max;
+		if(this.process_bar_current_last>this.process_bar_current)
+			this.process_bar_current_last=this.process_bar_current;;
 		
-		this.ctx.font			="bold 64px Arial";
-		this.ctx.textAlign		="center";
-		this.ctx.textBaseline	="middle";
-		this.ctx.fillStyle		="rgb(192,192,192)";
-		this.ctx.fillText(display_value,this.canvas.width/2.0,this.canvas.height/2.0);
+		this.set_time						=new Date().getTime();
 	};
+	
+	this.draw_process_bar();
 }

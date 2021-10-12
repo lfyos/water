@@ -362,7 +362,7 @@ public class engine_kernel
 		
 		part_lru=new part_lru_manager(render_cont.renders,scene_par.part_lru_in_list_number);
 		
-		part_cont_for_delete_file.delete_part_file(system_par, scene_par);
+		part_cont_for_delete_file.delete_part_file(process_bar,system_par, scene_par);
 		
 		process_bar.set_process_bar(true,"load_termination", 1, 1);
 		
