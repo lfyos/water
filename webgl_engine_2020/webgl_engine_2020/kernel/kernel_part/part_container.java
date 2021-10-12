@@ -2,7 +2,7 @@ package kernel_part;
 
 public class part_container
 {
-	public int number;
+	private int number;
 	private part_link_list pll;
 	public part_container()
 	{
@@ -20,5 +20,9 @@ public class part_container
 		pll=null;
 		number=0;
 		return ret_val;
+	}
+	public int get_number()
+	{
+		return number;
 	}
 }

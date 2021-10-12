@@ -264,7 +264,8 @@ public class engine_kernel
 				scene_par.scene_last_modified_time=scene_f.lastModified_time;
 		}
 		
-		part_container_for_delete_part_file part_cont_for_delete_file=new part_container_for_delete_part_file();
+		part_container_for_delete_part_file part_cont_for_delete_file;
+		part_cont_for_delete_file=new part_container_for_delete_part_file();
 		
 		buffer_object_file_modify_time_and_length_container boftal_container;
 		
@@ -303,7 +304,8 @@ public class engine_kernel
 		render_cont.load_part((1<<1)+(1<<2),2,part_loader_cont,system_par,scene_par,part_cont,
 				boftal_container,"load_second_class_part",process_bar,part_cont_for_delete_file);
 		
-		render_cont.type_part_package=new part_package(process_bar,"create_first_class_package",render_cont,1,system_par,scene_par);
+		render_cont.type_part_package=new part_package(process_bar,
+				"create_first_class_package",render_cont,1,system_par,scene_par);
 
 		process_bar.set_process_bar(true,"load_component", 1, 2);
 		component_cont=new component_container(scene_f,
@@ -335,7 +337,8 @@ public class engine_kernel
 		
 		boftal_container.destroy();
 		
-		render_cont.scene_part_package=new part_package(process_bar,"create_second_class_package",render_cont,2,system_par,scene_par);
+		render_cont.scene_part_package=new part_package(process_bar,
+				"create_second_class_package",render_cont,2,system_par,scene_par);
 		
 		component_cont.original_part_number	=new compress_render_container(
 				render_cont,part_cont,component_cont.root_component).original_part_number;
@@ -355,10 +358,11 @@ public class engine_kernel
 		process_bar.set_process_bar(true,"create_shader", 1, 2);
 		program_last_time=copy_program.copy_shader_programs(render_cont,system_par,scene_par);
 		
-		new engine_initialization(this,request_response,process_bar);
+		long engine_last_time=get_file_last_modified_time();
+		new engine_initialization(engine_last_time,this,request_response,process_bar);
 		
-		new engine_boftal_creator(scene_par.scene_proxy_directory_name+"engine.boftal",
-				system_par.local_data_charset,part_cont.data_array,system_par,scene_par,process_bar);
+		new engine_boftal_creator(engine_last_time,scene_par.scene_proxy_directory_name+"engine.boftal",
+					system_par.local_data_charset,part_cont.data_array,system_par,scene_par,process_bar);
 		
 		part_lru=new part_lru_manager(render_cont.renders,scene_par.part_lru_in_list_number);
 		

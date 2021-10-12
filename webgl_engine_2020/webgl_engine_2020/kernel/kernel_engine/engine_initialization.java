@@ -19,7 +19,7 @@ public class engine_initialization
 {
 	private component sort_component_array[];
 	
-	public engine_initialization(engine_kernel ek,
+	public engine_initialization(long engine_last_time,engine_kernel ek,
 			client_request_response request_response,client_process_bar process_bar)
 	{
 		if((sort_component_array=ek.component_cont.get_sort_component_array())==null)
@@ -42,7 +42,7 @@ public class engine_initialization
 		
 		debug_information.println();
 		debug_information.println("Begin create initialization file");
-		file_initialize(ek,process_bar);
+		file_initialize(ek,engine_last_time,process_bar);
 		debug_information.println("End create initialization file");
 		
 		for(int i=0,ni=sort_component_array.length;i<ni;i++)
@@ -128,11 +128,14 @@ public class engine_initialization
 		process_bar.set_process_bar(false,"component_driver_initialization",number,number);
 	}
 	
-	private void file_initialize(engine_kernel ek,client_process_bar process_bar)
+	private void file_initialize(engine_kernel ek,long engine_last_time, client_process_bar process_bar)
 	{
+		long my_last_time;
 		String destination_file_name=ek.scene_par.scene_proxy_directory_name+"initialization.gzip_text";
-		long my_last_time,last_time=ek.get_file_last_modified_time();
-
+		if(ek.scene_par.scene_fast_load_flag)
+			if(new File(destination_file_name).lastModified()>=engine_last_time)
+				return;
+		
 		int collect_init_comp_number=0;
 		component init_comp[]=new component[sort_component_array.length];
 		for(int i=0,ni=sort_component_array.length;i<ni;i++)
@@ -168,14 +171,14 @@ public class engine_initialization
 							}
 						}
 					}
-					if(last_time<(my_last_time=f.lastModified()))
-						last_time=my_last_time;
+					if(engine_last_time<(my_last_time=f.lastModified()))
+						engine_last_time=my_last_time;
 				}
 			}
 		}
 		process_bar.set_process_bar(false,"file_initialization_0",collect_init_comp_number, collect_init_comp_number);
 		
-		if((new File(destination_file_name)).lastModified()>last_time)
+		if((new File(destination_file_name)).lastModified()>engine_last_time)
 			return;
 		
 		int number=sort_component_array.length;

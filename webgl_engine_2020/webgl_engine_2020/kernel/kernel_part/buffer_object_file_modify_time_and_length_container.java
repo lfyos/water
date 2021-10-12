@@ -52,6 +52,7 @@ public class buffer_object_file_modify_time_and_length_container
 		}
 		fr.close();
 	}
+	
 	public buffer_object_file_modify_time_and_length search_boftal(
 			String boftal_token,long my_boftal_last_modify_time)
 	{
