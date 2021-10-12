@@ -8,7 +8,7 @@
 /*	language_change_file_name												*/		language_change.txt
 /*	switch_server_url_file_name												*/		switch_server_url.txt
 
-/*	max_loading_number														*/		8
+/*	max_loading_number														*/		16
 /*	max_material_id															*/		100
 
 /*	response_block_size														*/		65536
