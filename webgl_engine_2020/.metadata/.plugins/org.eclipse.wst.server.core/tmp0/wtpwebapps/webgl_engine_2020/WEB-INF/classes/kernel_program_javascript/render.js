@@ -1,5 +1,5 @@
-function construct_render_routine(my_process_bar_id,my_gl,
-	my_user_name,my_pass_word,my_canvas,my_url,my_language_name,response_data)
+function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcontext,
+	my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,response_data)
 {
 	this.channel						=response_data[0].toString().trim();
     this.channel					   +="&user_name="	+my_user_name;
@@ -51,6 +51,8 @@ function construct_render_routine(my_process_bar_id,my_gl,
 	this.last_event_time			=this.engine_start_time;
 	this.terminate_flag				=false;
 	this.process_bar_id				=my_process_bar_id;
+	this.text_canvas				=my_text_canvas;
+	this.text_2dcontext				=my_text_2dcontext;
 	this.gl							=my_gl;
 	this.url						=my_url;
 	this.url_and_channel			=my_url+"?channel="+this.channel;
@@ -806,6 +808,8 @@ function construct_render_routine(my_process_bar_id,my_gl,
 		this.engine_start_time						=null;
 		this.last_event_time						=null;
 		this.process_bar_id							=null;
+		this.text_canvas							=null;
+		this.text_2dcontext							=null;
 		this.gl										=null;
 		this.url									=null;
 		this.url_and_channel						=null;

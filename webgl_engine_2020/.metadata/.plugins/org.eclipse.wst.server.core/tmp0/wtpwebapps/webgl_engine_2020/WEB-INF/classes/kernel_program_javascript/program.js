@@ -60,8 +60,7 @@ function construct_program_object(my_gl,my_parameter)
 		   		console.log(my_vertex_program);
 		   	}
 		}
-		
-		
+
 		var my_fragment=this.gl.createShader(this.gl.FRAGMENT_SHADER);
 		this.gl.shaderSource(my_fragment,my_fragment_program);
 		this.gl.compileShader(my_fragment);

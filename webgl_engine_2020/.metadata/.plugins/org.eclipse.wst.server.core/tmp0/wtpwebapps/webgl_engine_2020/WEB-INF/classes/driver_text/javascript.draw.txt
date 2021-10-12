@@ -51,10 +51,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MIN_FILTER,	gl.LINEAR);
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_S,		gl.CLAMP_TO_EDGE);
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_T,		gl.CLAMP_TO_EDGE);
-		
-		shader_program.canvas	=document.createElement("canvas");
-		shader_program.ctx		=shader_program.canvas.getContext("2d");
-					
+							
 		shader_program.projection_matrix_uniform	=gl.getUniformLocation(shader_program,"projection_matrix");
 		shader_program.width_heigh_uniform			=gl.getUniformLocation(shader_program,"width_heigh");
 		shader_program.direction_id_uniform			=gl.getUniformLocation(shader_program,"direction_id");
@@ -65,8 +62,6 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		{
 			gl.deleteSampler(shader_program.sampler);
 			shader_program.sampler	=null;
-			shader_program.canvas	=null;
-			shader_program.ctx		=null;
 		}
 	}
 	
@@ -112,9 +107,9 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			var view_or_model_coordinate_flag	=(my_buffer_data[3]>0)?true:false;
 			var direction_id					= my_buffer_data[4];
 	
-			var my_canvas	=shader_program.canvas;
-			var my_ctx		=shader_program.ctx;
-				
+			var my_canvas	=render.text_canvas;
+			var my_ctx		=render.text_2dcontext;
+			
 	    	my_canvas.width	=canvas_width;
 	       	my_canvas.height=text_array.length*canvas_height;
 	       	

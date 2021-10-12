@@ -51,8 +51,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	this.last_event_time			=this.engine_start_time;
 	this.terminate_flag				=false;
 	this.process_bar_id				=my_process_bar_id;
-	this.text_canvas				=my_text_canvas;
-	this.text_2dcontext				=my_text_2dcontext;
 	this.gl							=my_gl;
 	this.url						=my_url;
 	this.url_and_channel			=my_url+"?channel="+this.channel;
@@ -808,8 +806,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.engine_start_time						=null;
 		this.last_event_time						=null;
 		this.process_bar_id							=null;
-		this.text_canvas							=null;
-		this.text_2dcontext							=null;
 		this.gl										=null;
 		this.url									=null;
 		this.url_and_channel						=null;

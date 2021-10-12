@@ -2,12 +2,17 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="my_height"/>
+		<item key="selection" value="render.text_canvas"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="shader_program.canvas"/>
+			<item value="shader_program.ctx"/>
+			<item value="my_process_bar_id"/>
+			<item value="construct_render_routine"/>
+			<item value="construct_process_bar"/>
 			<item value="my_height"/>
 			<item value="my_width"/>
 			<item value="&quot;GBK&quot;"/>
@@ -18,13 +23,10 @@
 			<item value="my_processor_bar"/>
 			<item value="request_create_engine"/>
 			<item value="render_initialization"/>
-			<item value="process_bar_id"/>
-			<item value="my_process_bar_id"/>
-			<item value="processs_bar_object"/>
-			<item value="process_bar_url"/>
-			<item value="deleteTexture"/>
 		</list>
 		<list key="replacehistory">
+			<item value="render.text_canvas"/>
+			<item value="render.text_2dcontext"/>
 			<item value="&quot;UTF-8&quot;"/>
 			<item value="&quot;GBK&quot;"/>
 			<item value="0"/>
@@ -38,15 +40,13 @@
 			<item value="&quot;part_list_root_component&quot;"/>
 			<item value="relative&#x09;light.txt&#x09;null&#x09;null"/>
 			<item value="&#x09;light.txt&#x09;null&#x09;null"/>
-			<item value=";"/>
-			<item value="/*&#x09;part_lru_in_list_number&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;50"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item key="DIALOG_WIDTH" value="346"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="1465"/>
-		<item key="DIALOG_Y_ORIGIN" value="526"/>
+		<item key="DIALOG_X_ORIGIN" value="1479"/>
+		<item key="DIALOG_Y_ORIGIN" value="200"/>
 	</section>
 </section>

@@ -46,11 +46,6 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 	var modifier_current_time			=render.modifier_current_time;
 	
 	if(do_render_number.engine_render==0){
-		shader_program.canvas		= document.createElement("canvas");
-	    shader_program.canvas.width	= 80;
-	    shader_program.canvas.height= 48;
-	    shader_program.ctx=shader_program.canvas.getContext("2d");
-
 	    shader_program.sampler=gl.createSampler();
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MAG_FILTER,	gl.LINEAR);
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MIN_FILTER,	gl.LINEAR);
@@ -75,14 +70,17 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 	gl.bindTexture(gl.TEXTURE_2D,part_buffer_object.texture_object);
 	gl.bindSampler(0,shader_program.sampler);	
 	
-	shader_program.ctx.fillStyle="black";
-	shader_program.ctx.fillRect(0,0,shader_program.canvas.width,shader_program.canvas.height);
+	render.text_canvas.width= 80;
+	render.text_canvas.height= 48;
+	
+	render.text_2dcontext.fillStyle="black";
+	render.text_2dcontext.fillRect(0,0,render.text_canvas.width,render.text_canvas.height);
 		
-	shader_program.ctx.fillStyle="rgb(255,255,255)";
-	shader_program.ctx.font="64px Courier New";
-	shader_program.ctx.fillText((new Date()).getSeconds().toString(),0,shader_program.canvas.height-4);
+	render.text_2dcontext.fillStyle="rgb(255,255,255)";
+	render.text_2dcontext.font="64px Courier New";
+	render.text_2dcontext.fillText((new Date()).getSeconds().toString(),0,render.text_canvas.height-4);
 		
-	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE,shader_program.canvas);  
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE,render.text_canvas);  
 	
 	part_buffer_object=part_buffer_object.face;
 	for(var i=0,ni=component_data_array.length;i<ni;i++){

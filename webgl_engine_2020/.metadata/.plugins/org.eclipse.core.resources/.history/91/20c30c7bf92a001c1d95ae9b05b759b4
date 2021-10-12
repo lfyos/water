@@ -808,8 +808,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.engine_start_time						=null;
 		this.last_event_time						=null;
 		this.process_bar_id							=null;
-		this.text_canvas							=null;
-		this.text_2dcontext							=null;
 		this.gl										=null;
 		this.url									=null;
 		this.url_and_channel						=null;

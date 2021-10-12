@@ -168,7 +168,7 @@ function create_webgl_context(my_canvas)
 function request_create_engine(create_engine_sleep_time_length_scale,
 	create_engine_sleep_time_length,create_engine_max_sleep_time_length,
 	request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,
-	my_user_initialization_function,processs_bar_object)
+	my_user_initialization_function,processs_bar_object,process_bar_render)
 {
 	var my_ajax;
 	try{
@@ -205,14 +205,15 @@ function request_create_engine(create_engine_sleep_time_length_scale,
 						{
 							request_create_engine(create_engine_sleep_time_length_scale,
 								new_create_engine_sleep_time_length,create_engine_max_sleep_time_length,
-								request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,
-								my_language_name,my_user_initialization_function,processs_bar_object);
+								request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,
+								my_user_initialization_function,processs_bar_object,process_bar_render);
 						},create_engine_sleep_time_length);
 				};
 				return;
 			}
 			var render,initialization_url=response_data.pop();
-			render=new construct_render_routine(processs_bar_object.process_bar_id,
+			render=new construct_render_routine(
+				processs_bar_object.process_bar_id,process_bar_render.canvas,process_bar_render.ctx,
 				my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,response_data);
 			render_initialization(initialization_url,render,my_user_initialization_function);
 			
@@ -325,15 +326,15 @@ function render_main(create_engine_sleep_time_length_scale,
 				alert("Create process bar response status error: "+my_ajax.status.toString());
 				return;
 			};
+			var process_bar_render=new construct_process_bar(my_gl,my_canvas.width,my_canvas.height);
 			var processs_bar_object=JSON.parse(my_ajax.responseText);
 			
-			render_show_process_bar(process_bar_url,processs_bar_object,
-					new construct_process_bar(my_gl,my_canvas.width,my_canvas.height));
+			render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render);
 			
 			request_create_engine(create_engine_sleep_time_length_scale,
 				create_engine_sleep_time_length,create_engine_max_sleep_time_length,
 				request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,
-				my_user_initialization_function,processs_bar_object);
+				my_user_initialization_function,processs_bar_object,process_bar_render);
 			return;
 		};
 		my_ajax.open("GET",my_url+"?channel=process_bar&command=request",true);
