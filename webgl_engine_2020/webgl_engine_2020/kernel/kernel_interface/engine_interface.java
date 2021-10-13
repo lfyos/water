@@ -146,7 +146,8 @@ public class engine_interface
 					system_par,null,pcps,null,null,null,part_cont_for_delete_file);
 			
 			debug_information.println("Begin create system_part_package");
-			original_render.system_part_package=new part_package(null,null,original_render,part_type_id,system_par,null);
+			original_render.system_part_package=new part_package(
+					true,null,null,original_render,part_type_id,system_par,null);
 			debug_information.println("End create system_part_package");
 			
 			part_cont_for_delete_file.delete_part_file(null,system_par,null);

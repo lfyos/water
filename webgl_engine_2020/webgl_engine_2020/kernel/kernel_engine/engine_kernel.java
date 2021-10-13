@@ -255,6 +255,11 @@ public class engine_kernel
 		debug_information.println("change_component_string		:	",	scene_par.change_component_string);
 		debug_information.println("part_type_string		:	"		 ,	scene_par.part_type_string);
 		debug_information.println("scene_sub_directory		:	"	 ,	scene_par.scene_sub_directory);
+		
+		boolean not_real_scene_fast_load_flag=true;
+		if(scene_par.scene_fast_load_flag)
+			if(new File(scene_par.scene_proxy_directory_name+"initialization.gzip_text").exists())
+				not_real_scene_fast_load_flag=false;
 
 		file_reader scene_f=new file_reader(scene_directory_name+scene_file_name,scene_charset);
 		if(!(scene_f.error_flag())){
@@ -304,7 +309,7 @@ public class engine_kernel
 		render_cont.load_part((1<<1)+(1<<2),2,part_loader_cont,system_par,scene_par,part_cont,
 				boftal_container,"load_second_class_part",process_bar,part_cont_for_delete_file);
 		
-		render_cont.type_part_package=new part_package(process_bar,
+		render_cont.type_part_package=new part_package(not_real_scene_fast_load_flag,process_bar,
 				"create_first_class_package",render_cont,1,system_par,scene_par);
 
 		process_bar.set_process_bar(true,"load_component", 1, 2);
@@ -337,7 +342,7 @@ public class engine_kernel
 		
 		boftal_container.destroy();
 		
-		render_cont.scene_part_package=new part_package(process_bar,
+		render_cont.scene_part_package=new part_package(not_real_scene_fast_load_flag,process_bar,
 				"create_second_class_package",render_cont,2,system_par,scene_par);
 		
 		component_cont.original_part_number	=new compress_render_container(
@@ -355,15 +360,15 @@ public class engine_kernel
 			scene_f.get_charset(),component_cont,system_par,scene_par,render_cont.renders);
 		load_camera();
 
-		process_bar.set_process_bar(true,"create_shader", 1, 2);
-		program_last_time=copy_program.copy_shader_programs(render_cont,system_par,scene_par);
-		
-		long engine_last_time=get_file_last_modified_time();
-		new engine_initialization(engine_last_time,this,request_response,process_bar);
-		
-		new engine_boftal_creator(engine_last_time,scene_par.scene_proxy_directory_name+"engine.boftal",
+		if(not_real_scene_fast_load_flag){
+			process_bar.set_process_bar(true,"create_shader",1,2);
+			program_last_time=copy_program.copy_shader_programs(render_cont,system_par,scene_par);
+			new engine_initialization(true,this,request_response,process_bar);
+			new engine_boftal_creator(scene_par.scene_proxy_directory_name+"engine.boftal",
 					system_par.local_data_charset,part_cont.data_array,system_par,scene_par,process_bar);
-		
+		}else
+			new engine_initialization(false,this,request_response,process_bar);
+
 		part_lru=new part_lru_manager(render_cont.renders,scene_par.part_lru_in_list_number);
 		
 		part_cont_for_delete_file.delete_part_file(process_bar,system_par, scene_par);

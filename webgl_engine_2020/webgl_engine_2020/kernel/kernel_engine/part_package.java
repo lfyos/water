@@ -52,7 +52,7 @@ public class part_package
 			package_flag[i]=pp.package_flag[i];
 	}
 	
-	public part_package(
+	public part_package(boolean not_real_scene_fast_load_flag,
 			client_process_bar process_bar,String process_bar_title,render_container rc,
 			int part_type_id,system_parameter system_par,scene_parameter scene_par)
 	{
@@ -132,10 +132,11 @@ public class part_package
 						break;
 					if(!(scene_par.scene_fast_load_flag))
 						break;
+					if(not_real_scene_fast_load_flag)
+						break;
 					if(!(new File(package_data_file_name).exists()))
 						break;
 					file_reader fr=new file_reader(package_data_file_name,system_par.network_data_charset);
-					
 					for(int i=0;i<package_number;i++) {
 						package_length[i]	=fr.get_long();
 						package_last_time[i]=fr.get_long();
@@ -233,6 +234,8 @@ public class part_package
 					if(scene_par==null)
 						break;
 					if(!(scene_par.scene_fast_load_flag))
+						break;
+					if(not_real_scene_fast_load_flag)
 						break;
 					long package_data_last_time=new File(package_data_file_name).lastModified();
 					for(int i=0;i<package_number;i++)

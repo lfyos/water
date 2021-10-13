@@ -2,12 +2,14 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="4"/>
+		<item key="selection" value="缓冲"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="load_buffer_object_file_information"/>
+			<item value="缓冲"/>
 			<item value="4"/>
 			<item value="canvas_scene_url"/>
 			<item value="create_engine_sleep_time_length"/>
@@ -21,8 +23,6 @@
 			<item value="my_width"/>
 			<item value="&quot;GBK&quot;"/>
 			<item value="request_response.get_charset()"/>
-			<item value="turnon_control_panel"/>
-			<item value="resize"/>
 		</list>
 		<list key="replacehistory">
 			<item value="render.text_canvas"/>
@@ -43,10 +43,10 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_WIDTH" value="346"/>
+		<item key="DIALOG_WIDTH" value="690"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
-		<item key="DIALOG_X_ORIGIN" value="1479"/>
+		<item key="DIALOG_X_ORIGIN" value="1135"/>
 		<item key="DIALOG_Y_ORIGIN" value="200"/>
 	</section>
 </section>

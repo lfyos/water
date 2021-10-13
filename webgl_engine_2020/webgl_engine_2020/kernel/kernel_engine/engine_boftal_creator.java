@@ -27,15 +27,10 @@ public class engine_boftal_creator extends sorter <part,String>
 		return dir_s.compareTo(t);
 	}
 	
-	public engine_boftal_creator(
-		long engine_last_time,String file_name,String file_charset,part part_array[],
+	public engine_boftal_creator(String file_name,String file_charset,part part_array[],
 		system_parameter my_system_par,scene_parameter my_scene_par,client_process_bar process_bar)
 	{
 		long boftal_last_time=new File(file_name).lastModified();
-		if(my_scene_par.scene_fast_load_flag)
-			if(engine_last_time<boftal_last_time)
-				return;
-		
 		int part_number=0;
 		boolean exit_flag=true;
 		for(int i=0,ni=part_array.length;(i<ni);i++)

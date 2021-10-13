@@ -4,6 +4,7 @@ load+chinese									装入
 unit+english									second
 unit+chinese									秒
 
+
 wait_for_other_exit+english						1.wait_for_other_scene_create_exit
 wait_for_other_exit+chinese						1.等待其它场景创建结束
 
@@ -28,8 +29,8 @@ load_second_class_part+chinese					7.装入第二类零件数据
 load_third_class_part+english					8.load_third_parts
 load_third_class_part+chinese					8.装入第三类零件数据
 
-load_component+english							19.load_components 
-load_component+chinese							19.装入组件数据
+load_component+english							9.load_components 
+load_component+chinese							9.装入组件数据
 
 create_first_class_package+english				10.create_first_class_packages
 create_first_class_package+chinese				10.生成第一类下载数据包
