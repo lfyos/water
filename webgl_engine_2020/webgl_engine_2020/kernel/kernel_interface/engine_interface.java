@@ -133,8 +133,8 @@ public class engine_interface
 			part_container_for_delete_part_file part_cont_for_delete_file=new part_container_for_delete_part_file();
 			original_render=new render_container();
 			part_container_for_part_search pcps=new part_container_for_part_search(new part[]{});
-			original_render.load_shader(pcps,
-				system_par.last_modified_time,system_par.data_root_directory_name+system_par.shader_file_name,
+			original_render.load_shader(true,pcps,system_par.last_modified_time,
+				system_par.data_root_directory_name+system_par.shader_file_name,
 				system_par.local_data_charset,"",part_type_id,null,system_par,null,request_response);
 			pcps.execute_append();
 			original_render.load_part(1<<part_type_id,1,part_loader_cont,

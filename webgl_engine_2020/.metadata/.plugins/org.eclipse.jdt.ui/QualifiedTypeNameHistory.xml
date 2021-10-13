@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="kernel_driver.component_driver"/>
 <fullyQualifiedTypeName name="kernel_common_class.download_file_from_webserver"/>
 <fullyQualifiedTypeName name="java.io.InputStream"/>
 <fullyQualifiedTypeName name="java.net.Socket"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="kernel_file_manager.file_directory"/>
 <fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 <fullyQualifiedTypeName name="kernel_interface.client_process_bar"/>
+<fullyQualifiedTypeName name="kernel_part.part_link_list"/>
 </qualifiedTypeNameHistroy>

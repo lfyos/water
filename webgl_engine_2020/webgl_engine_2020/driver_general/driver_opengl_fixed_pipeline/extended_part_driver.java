@@ -23,9 +23,7 @@ public class extended_part_driver extends part_driver
 {
 	private String light_file_name,light_file_charset;
 	
-	public extended_part_driver(part p,
-			String my_light_file_name,String my_light_file_charset,
-			system_parameter system_par,client_request_response request_response)
+	public extended_part_driver(part p,String my_light_file_name,String my_light_file_charset)
 	{
 		super();
 		light_file_name=my_light_file_name;
@@ -47,7 +45,7 @@ public class extended_part_driver extends part_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(p,light_file_name,light_file_charset,system_par,request_response);
+		return new extended_part_driver(p,light_file_name,light_file_charset);
 	}
 	public int caculate_material_id(
 			part p,String type_str,int body_id,int face_id,int loop_id,int edge_id,

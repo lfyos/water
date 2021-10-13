@@ -207,13 +207,16 @@ public class part_loader_container
 			String boftal_token_str=part_temporary_file_directory.substring(
 					system_par.proxy_par.proxy_data_root_directory_name.length());
 			my_part.boftal=boftal_container.search_boftal(boftal_token_str,boftal_last_modify_time);
-			boftal_container=null;
 		}
 		if(my_part.boftal==null) {
 			file_reader fr=new file_reader(
 				part_temporary_file_directory+"mesh.boftal",system_par.local_data_charset);
 			my_part.boftal=new buffer_object_file_modify_time_and_length(fr);
 			fr.close();
+			
+			debug_information.println("Load part mesh.boftal:	user name:"+
+					my_part.user_name+"	system name:"+my_part.system_name,
+					"	mesh file:"	 +my_part.directory_name+my_part.mesh_file_name);
 		}
 		if(my_part.part_mesh==null)
 			my_part.part_mesh=my_part.boftal.simple_part_mesh;
@@ -252,10 +255,6 @@ public class part_loader_container
 		{
 			if(my_part.part_mesh!=null)
 				my_part.part_mesh.free_memory();
-
-			debug_information.println(
-					"Fast load part:	user name:"+my_part.user_name+"	system name:"+my_part.system_name,
-					"	mesh file:"		+my_part.directory_name+my_part.mesh_file_name);
 			return already_loaded_part;
 		}
 		

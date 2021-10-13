@@ -302,6 +302,9 @@ public class create_assemble_part
 				debug_information.println("Material_file_name:",add_part.directory_name+add_part.material_file_name);
 				debug_information.println("Temp directory:",	file_directory.part_file_directory(add_part,system_par,scene_par));
 				e.printStackTrace();
+				
+				render_cont.renders[assemble_part.render_id].delete_last_part();
+				continue;
 			}
 			already_loaded_part=part_loader_cont.load(add_part,render_cont.get_copy_from_part(add_part),
 						last_modified_time,system_par,scene_par,part_cont_for_delete_file,already_loaded_part,pcps,boftal_container);
@@ -316,6 +319,9 @@ public class create_assemble_part
 					+"	part_from_id:"	+add_part.part_from_id	+"	permanent_part_from_id:"+add_part.permanent_part_from_id);
 			debug_information.println(add_part_number+".add top part		material:"		+add_part.directory_name+add_part.material_file_name);
 		}
+		
+		for(int i=0,ni=render_cont.renders.length;i<ni;i++)
+			render_cont.renders[i].compress_part();
 		
 		if(add_part_number<=0)
 			top_box_part=null;
