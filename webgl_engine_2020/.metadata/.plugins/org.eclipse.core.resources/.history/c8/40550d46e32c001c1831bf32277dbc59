@@ -85,13 +85,9 @@ public class extended_render_driver extends render_driver
 		if(part_directory_name.charAt(part_directory_name.length()-1)!=File.separatorChar)
 			part_directory_name+=File.separator;
 		
+		light_file_name=render_fr.directory_name+file_reader.separator(render_fr.get_string());
 		light_file_charset=render_fr.get_charset();
-		light_file_name=file_reader.separator(render_fr.get_string());
-		if(new File(part_directory_name+light_file_name).exists())
-			light_file_name=part_directory_name+light_file_name;
-		else 
-			light_file_name=render_fr.directory_name+light_file_name;
-
+		
 		String part_list_component_name,not_part_list_component_name;
 		if((part_list_component_name=render_fr.get_string())==null)
 			return null;
@@ -101,6 +97,12 @@ public class extended_render_driver extends render_driver
 			return null;
 		if(not_part_list_component_name.toLowerCase().compareTo("null")==0)
 			not_part_list_component_name=null;
+		
+		File light_f=new File(light_file_name),		part_f=new File(par_list_file_name);
+		long light_last_time=light_f.lastModified(),part_last_time=part_f.lastModified();
+		
+		if(light_last_time>part_last_time)
+			part_f.setLastModified(light_last_time);
 		
 		if(mount_component_name_and_assemble_file_name!=null) {
 			if(not_part_list_component_name!=null)

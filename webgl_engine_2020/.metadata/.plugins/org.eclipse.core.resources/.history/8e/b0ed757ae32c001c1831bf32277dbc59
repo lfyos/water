@@ -85,13 +85,18 @@ public class extended_render_driver extends render_driver
 		if(part_directory_name.charAt(part_directory_name.length()-1)!=File.separatorChar)
 			part_directory_name+=File.separator;
 		
-		light_file_charset=render_fr.get_charset();
 		light_file_name=file_reader.separator(render_fr.get_string());
-		if(new File(part_directory_name+light_file_name).exists())
+		
+		File part_f=new File(par_list_file_name);
+		File light_f=new File(part_directory_name+light_file_name);
+		if(light_f.exists())
 			light_file_name=part_directory_name+light_file_name;
-		else 
+		else {
 			light_file_name=render_fr.directory_name+light_file_name;
-
+			light_f=new File(light_file_name);
+		}
+		light_file_charset=render_fr.get_charset();
+		
 		String part_list_component_name,not_part_list_component_name;
 		if((part_list_component_name=render_fr.get_string())==null)
 			return null;
