@@ -2,6 +2,8 @@
 <section name="Workbench">
 	<section name="">
 		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
+		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
+		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
 	</section>
 	<section name="SearchDialog.ScopePart">
 		<item key="scope" value="0"/>
@@ -17,7 +19,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="new Date()"/>
+			<item key="textPattern" value="Time length(millisecond)"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -29,7 +31,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Third class fast load part:"/>
+			<item key="textPattern" value="new Date()"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -41,7 +43,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Load component time length:"/>
+			<item key="textPattern" value="Create engine temp data time length:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -53,12 +55,9 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;create_shader&quot;"/>
+			<item key="textPattern" value="&quot;load_buffer_object_file_information&quot;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.js"/>
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
 				<item value="*java"/>
 			</list>
 			<list key="workingSets">
@@ -68,7 +67,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Time length(millisecond)"/>
+			<item key="textPattern" value="Load component time length:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -93,7 +92,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="fast_"/>
+			<item key="textPattern" value="&quot;create_shader&quot;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.js"/>
@@ -108,7 +107,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Fast load part:"/>
+			<item key="textPattern" value="Third class fast load part:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -120,7 +119,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;load_buffer_object_file_information&quot;"/>
+			<item key="textPattern" value="Fast load part:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -132,7 +131,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Load shader time length:"/>
+			<item key="textPattern" value="Create second part package time length:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -144,7 +143,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Create engine temp data time length:"/>
+			<item key="textPattern" value="Load shader time length:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -156,7 +155,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Load engine.boftal time length:"/>
+			<item key="textPattern" value="public String[] get_part_list(boolean giveup_part_load_flag,"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -168,7 +167,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Create second part package time length:"/>
+			<item key="textPattern" value="Load engine.boftal time length:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -202,13 +201,13 @@
 	</section>
 	<section name="ReplaceDialog2">
 		<list key="replace_with">
+			<item value="public String[] get_part_list("/>
 			<item value="public void response_init_render_data(int render_id,engine_kernel ek,client_information ci)"/>
 			<item value="public void response_init_part_data(part p,engine_kernel ek,client_information ci)"/>
 			<item value="public void response_init_instance_data(engine_kernel ek,client_information ci)"/>
 			<item value="&#x09;public render_driver clone(render parent_render,"/>
 			<item value="public String[] get_part_list(boolean giveup_part_load_flag,int part_type_id,"/>
 			<item value="public part_rude create_part_mesh_and_buffer_object_head"/>
-			<item value="create_part_mesh_and_buffer_object_head"/>
 		</list>
 	</section>
 	<section name="SearchDialog">
@@ -226,7 +225,6 @@
 		<item key="DIALOG_Y_ORIGIN" value="242"/>
 	</section>
 	<section name="">
-		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
 		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
 		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
 	</section>

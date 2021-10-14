@@ -60,7 +60,7 @@ public class part_container_for_delete_part_file extends part_container
 				if((f=new File(part_temporary_file_directory+"mesh.head.gzip_text")).exists())
 					f.delete();
 				if(scene_par!=null)
-					if((pll.p.part_type_id==2)&&(scene_par.scene_fast_load_flag))
+					if(pll.p.part_type_id==2)
 						if((f=new File(part_temporary_file_directory+"mesh.boftal")).exists()){
 							long t=f.lastModified();
 							try{

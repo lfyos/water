@@ -22,9 +22,9 @@ public class client_process_bar
 			String my_process_title,long my_current_process,long my_max_process)
 	{
 		if(reset_time_flag)
-			start_time		=nanosecond_timer.absolute_nanoseconds();
+			start_time	=nanosecond_timer.absolute_nanoseconds();
 		process_title	=my_process_title;
-		max_process		=my_max_process;
+		max_process		=(my_max_process<1)?1:my_max_process;
 		current_process	=my_current_process;
 	}
 }

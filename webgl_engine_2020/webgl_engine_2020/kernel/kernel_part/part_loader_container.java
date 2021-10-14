@@ -170,25 +170,23 @@ public class part_loader_container
 		}
 	}
 	
-	private boolean fast_load_routine(long last_modified_time,
+	private boolean fast_load_routine(boolean not_real_scene_fast_load_flag,long last_modified_time,
 			String part_temporary_file_directory,part my_part,part my_copy_from_part,
 			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
 			buffer_object_file_modify_time_and_length_container boftal_container)
 	{
-		if(scene_par!=null)
-			if(scene_par.scene_fast_load_flag)
-				if(boftal_container!=null){
-					buffer_object_file_modify_time_and_length my_boftal;
-					String boftal_token_str=part_temporary_file_directory.substring(
-							system_par.proxy_par.proxy_data_root_directory_name.length());
-					if((my_boftal=boftal_container.search_boftal(boftal_token_str,0))!=null){
-						if(my_part.part_mesh==null)
-							my_part.part_mesh=my_boftal.simple_part_mesh;
-						my_part.boftal=my_boftal;
-						return true;
-					}
-					boftal_container=null;
-				}
+		if((scene_par!=null)&&(boftal_container!=null)&&(!not_real_scene_fast_load_flag)){
+			buffer_object_file_modify_time_and_length my_boftal;
+			String boftal_token_str=part_temporary_file_directory.substring(
+					system_par.proxy_par.proxy_data_root_directory_name.length());
+			if((my_boftal=boftal_container.search_boftal(boftal_token_str,0))!=null){
+				if(my_part.part_mesh==null)
+					my_part.part_mesh=my_boftal.simple_part_mesh;
+				my_part.boftal=my_boftal;
+				return true;
+			}
+			boftal_container=null;
+		}	
 		String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
 		long boftal_last_modify_time=new File(boftal_file_name).lastModified();
 		if(boftal_last_modify_time<=last_modified_time) 
@@ -242,7 +240,8 @@ public class part_loader_container
 		}
 	}
 	
-	public part_loader[] load(part my_part,part my_copy_from_part,long last_modified_time,
+	public part_loader[] load(part my_part,part my_copy_from_part,
+			boolean not_real_scene_fast_load_flag,long last_modified_time,
 			system_parameter system_par,scene_parameter scene_par,part_container part_cont_for_delete_file,
 			part_loader already_loaded_part[],part_container_for_part_search pcps,
 			buffer_object_file_modify_time_and_length_container boftal_container)
@@ -250,7 +249,8 @@ public class part_loader_container
 		String part_temporary_file_directory=file_directory.part_file_directory(my_part,system_par,scene_par);
 		String lock_file_name=file_reader.separator(part_temporary_file_directory+"part.lock");
 		
-		if(fast_load_routine(last_modified_time,part_temporary_file_directory,
+		if(fast_load_routine(
+			not_real_scene_fast_load_flag,last_modified_time,part_temporary_file_directory,
 			my_part,my_copy_from_part,system_par,scene_par,pcps,boftal_container))
 		{
 			if(my_part.part_mesh!=null)

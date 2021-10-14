@@ -86,13 +86,13 @@ public class client_request_switcher
 			long engine_time_length=current_time-process_bar.original_time;
 
 			request_response.println("{");
-			request_response.print  ("	\"caption\":		\"",	str							).println("\",");
-			request_response.print  ("	\"current\":		",		process_bar.current_process	).println(",");
-			request_response.print  ("	\"max\":			",  	process_bar.max_process		).println(",");
-			request_response.print  ("	\"time_length\":	",  	time_length/1000000			).println(",");
-			request_response.print  ("	\"engine_time_length\":	",  engine_time_length/1000000	).println(",");
+			request_response.print  ("	\"caption\":		\"",	str							).							 println("\",");
+			request_response.print  ("	\"current\":		",		process_bar.current_process	).							 println(",");
+			request_response.print  ("	\"max\":			",  	(process_bar.max_process<1)?1:(process_bar.max_process)).println(",");
+			request_response.print  ("	\"time_length\":	",  	time_length/1000000			).							 println(",");
+			request_response.print  ("	\"engine_time_length\":	",  engine_time_length/1000000	).							 println(",");
 			request_response.print  ("	\"time_unit\":		\"",  	system_par.language_change_name.
-				search_change_name("unit+"+((language_str==null)?"english":language_str),"unit")).println("\"");
+				search_change_name("unit+"+((language_str==null)?"english":language_str),"unit")).							 println("\"");
 			request_response.println("}");
 			break;	
 		}

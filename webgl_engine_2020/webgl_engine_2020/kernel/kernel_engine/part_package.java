@@ -130,8 +130,6 @@ public class part_package
 				case 2:
 					if(scene_par==null)
 						break;
-					if(!(scene_par.scene_fast_load_flag))
-						break;
 					if(not_real_scene_fast_load_flag)
 						break;
 					if(!(new File(package_data_file_name).exists()))
@@ -232,8 +230,6 @@ public class part_package
 				case 1:
 				case 2:
 					if(scene_par==null)
-						break;
-					if(!(scene_par.scene_fast_load_flag))
 						break;
 					if(not_real_scene_fast_load_flag)
 						break;

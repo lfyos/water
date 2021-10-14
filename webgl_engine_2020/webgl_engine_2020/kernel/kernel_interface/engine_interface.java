@@ -135,14 +135,14 @@ public class engine_interface
 			part_container_for_part_search pcps=new part_container_for_part_search(new part[]{});
 			original_render.load_shader(true,pcps,system_par.last_modified_time,
 				system_par.data_root_directory_name+system_par.shader_file_name,
-				system_par.local_data_charset,"",part_type_id,null,system_par,null,request_response);
+				system_par.local_data_charset,"",part_type_id,system_par,null,request_response);
 			pcps.execute_append();
-			original_render.load_part(1<<part_type_id,1,part_loader_cont,
+			original_render.load_part(true,1<<part_type_id,1,part_loader_cont,
 					system_par,null,pcps,null,null,null,part_cont_for_delete_file);
 			
 			original_render.create_bottom_box_part(pcps,request_response,system_par,null);
 			pcps.execute_append();
-			original_render.load_part(1<<part_type_id,2,part_loader_cont,
+			original_render.load_part(true,1<<part_type_id,2,part_loader_cont,
 					system_par,null,pcps,null,null,null,part_cont_for_delete_file);
 			
 			debug_information.println("Begin create system_part_package");

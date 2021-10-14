@@ -22,7 +22,7 @@ public class part_type_string_sorter extends sorter<String,String>
 			return part_type_string_number;
 		if(part_type_string_number>=data_array.length) {
 			String bak[]=data_array;
-			data_array=new String[bak.length+100];
+			data_array=new String[bak.length*2];
 			for(int j=0,nj=bak.length;j<nj;j++)
 				data_array[j]=bak[j];
 		}

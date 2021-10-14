@@ -220,13 +220,15 @@ public class engine_kernel
 		}	
 	}
 	
-	private void load_create_assemble_part(client_request_response request_response,
+	private void load_create_assemble_part(
+			client_request_response request_response,boolean not_real_scene_fast_load_flag,
 			part_container part_cont_for_delete_file,part_container_for_part_search all_part_part_cont,
 			buffer_object_file_modify_time_and_length_container boftal_container)
 	{	
 		if((create_top_part_expand_ratio>=1.0)&&(create_top_part_left_ratio>=1.0)){
 			if(component_cont.root_component!=null){
-				part top_box_part[]=(new create_assemble_part(part_cont_for_delete_file,
+				part top_box_part[]=(new create_assemble_part(
+						not_real_scene_fast_load_flag,part_cont_for_delete_file,
 						request_response,component_cont.root_component,
 						create_top_part_expand_ratio,create_top_part_left_ratio,
 						scene_par.create_top_part_assembly_precision2,
@@ -244,24 +246,10 @@ public class engine_kernel
 	}
 	private void load_routine(client_request_response request_response,client_process_bar process_bar)
 	{
-		debug_information.println();
-		debug_information.println("type_shader_file_name 		:	",	scene_par.directory_name+scene_par.type_shader_file_name);
-		debug_information.println("scene_shader_file_name		:	",	scene_directory_name	+scene_par.scene_shader_file_name);		
-		debug_information.println("camera_file_name		:	"		 ,	scene_par.directory_name+scene_par.camera_file_name);
-		debug_information.println("change_part_file_name		:	",	scene_par.directory_name+scene_par.change_part_file_name);
-		debug_information.println("change_component_file_name	:	",	scene_par.directory_name+scene_par.change_component_file_name);
-		debug_information.println("type_proxy_directory_name	:	",	scene_par.type_proxy_directory_name);
-		debug_information.println("scene_proxy_directory_name	:	",	scene_par.scene_proxy_directory_name);
-		debug_information.println("change_part_string		:	"	 ,	scene_par.change_part_string);
-		debug_information.println("change_component_string		:	",	scene_par.change_component_string);
-		debug_information.println("part_type_string		:	"		 ,	scene_par.part_type_string);
-		debug_information.println("scene_sub_directory		:	"	 ,	scene_par.scene_sub_directory);
-		
 		long start_time,current_time;
 		boolean not_real_scene_fast_load_flag=true;
-		if(scene_par.scene_fast_load_flag)
-			if(new File(scene_par.scene_proxy_directory_name+"initialization.gzip_text").exists())
-				not_real_scene_fast_load_flag=false;
+		if(new File(scene_par.scene_proxy_directory_name+"initialization.gzip_text").exists())
+			not_real_scene_fast_load_flag=false;
 
 		file_reader scene_f=new file_reader(scene_directory_name+scene_file_name,scene_charset);
 		if(!(scene_f.error_flag())){
@@ -290,29 +278,23 @@ public class engine_kernel
 				},scene_par.mount_component_string,scene_par.parameter_charset));
 		part_cont=new part_container_for_part_search(render_cont.part_array(true,-1));
 
-		part_type_string_sorter my_part_type_string_sorter=new part_type_string_sorter(
-				new String[]{
-						scene_par.directory_name+scene_par.type_string_file_name,
-						scene_directory_name	+scene_par.type_string_file_name
-				},scene_par.part_type_string,scene_par.parameter_charset);
-		
 		start_time=new Date().getTime();
 		render_cont.load_shader(not_real_scene_fast_load_flag,
 				part_cont,scene_par.parameter_last_modified_time,
 				scene_par.directory_name+scene_par.type_shader_file_name,
-				scene_par.parameter_charset,"",1,null,system_par,scene_par,request_response);
+				scene_par.parameter_charset,"",1,system_par,scene_par,request_response);
 		render_cont.load_shader(not_real_scene_fast_load_flag,
 				part_cont,scene_par.scene_last_modified_time,
 				scene_directory_name+scene_par.scene_shader_file_name,scene_charset,
-				scene_par.scene_sub_directory, 2,my_part_type_string_sorter,
-				system_par,scene_par,request_response);
+				scene_par.scene_sub_directory, 2,system_par,scene_par,request_response);
 		part_cont.execute_append();
 		debug_information.println("Load shaders time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		
 		start_time=current_time;
-		render_cont.load_part((1<<1)+(1<<2),1,part_loader_cont,system_par,scene_par,part_cont,
+		render_cont.load_part(not_real_scene_fast_load_flag,
+				(1<<1)+(1<<2),1,part_loader_cont,system_par,scene_par,part_cont,
 				boftal_container,"load_first_class_part",process_bar,part_cont_for_delete_file);
 		debug_information.println("Load first class part time length:	",
 				(current_time=new Date().getTime())-start_time);
@@ -321,7 +303,8 @@ public class engine_kernel
 		
 		render_cont.create_bottom_box_part(part_cont,request_response,system_par,scene_par);
 		part_cont.execute_append();
-		render_cont.load_part((1<<1)+(1<<2),2,part_loader_cont,system_par,scene_par,part_cont,
+		render_cont.load_part(not_real_scene_fast_load_flag,
+				(1<<1)+(1<<2),2,part_loader_cont,system_par,scene_par,part_cont,
 				boftal_container,"load_second_class_part",process_bar,part_cont_for_delete_file);
 		debug_information.println("Load second class part time length:	",
 				(current_time=new Date().getTime())-start_time);
@@ -336,8 +319,8 @@ public class engine_kernel
 		start_time=current_time;
 
 		process_bar.set_process_bar(true,"load_component", 1, 2);
-		component_cont=new component_container(scene_f,
-				this,scene_par.default_display_bitmap,request_response,
+		component_cont=new component_container(
+				scene_f,this,scene_par.default_display_bitmap,request_response,
 				new change_name(
 						new String[]{
 								scene_par.directory_name+scene_par.change_part_file_name,
@@ -348,21 +331,26 @@ public class engine_kernel
 								scene_par.directory_name+scene_par.change_component_file_name,
 								scene_f.directory_name	+scene_par.change_component_file_name
 						},scene_par.change_component_string,scene_par.parameter_charset),
-				my_part_type_string_sorter);
+				new part_type_string_sorter(
+						new String[]{
+								scene_par.directory_name+scene_par.type_string_file_name,
+								scene_directory_name	+scene_par.type_string_file_name
+						},scene_par.part_type_string,scene_par.parameter_charset));
 		
 		scene_f.close();
 		process_bar.set_process_bar(false,"load_component", 2, 2);
 		debug_information.println("Load components time length:	",new Date().getTime()-start_time);
 		debug_information.println();
-		
-		
+
 		component_cont.do_component_caculator(false);
 		component_cont.root_component.reset_component(component_cont);
 		
 		start_time=new Date().getTime();
-		load_create_assemble_part(request_response,part_cont_for_delete_file,part_cont,boftal_container);	
+		load_create_assemble_part(request_response,not_real_scene_fast_load_flag,
+				part_cont_for_delete_file,part_cont,boftal_container);	
 		part_cont.execute_append();
-		render_cont.load_part((1<<2),4,part_loader_cont,system_par,scene_par,part_cont,
+		render_cont.load_part(not_real_scene_fast_load_flag,
+				(1<<2),4,part_loader_cont,system_par,scene_par,part_cont,
 				boftal_container,"load_third_class_part",process_bar,part_cont_for_delete_file);
 		debug_information.println("Create top assemble time length:	",
 				(current_time=new Date().getTime())-start_time);
@@ -421,6 +409,20 @@ public class engine_kernel
 		String my_lock_name=scene_par.scene_proxy_directory_name+"engine.lock";
 		exclusive_file_mutex efm=exclusive_file_mutex.lock(my_lock_name,
 				"wait for load engine kernel:	"+scene_par.scene_proxy_directory_name);
+		
+		debug_information.println();
+		debug_information.println("type_shader_file_name 		:	",	scene_par.directory_name+scene_par.type_shader_file_name);
+		debug_information.println("scene_shader_file_name		:	",	scene_directory_name	+scene_par.scene_shader_file_name);		
+		debug_information.println("camera_file_name		:	"		 ,	scene_par.directory_name+scene_par.camera_file_name);
+		debug_information.println("change_part_file_name		:	",	scene_par.directory_name+scene_par.change_part_file_name);
+		debug_information.println("change_component_file_name	:	",	scene_par.directory_name+scene_par.change_component_file_name);
+		debug_information.println("type_proxy_directory_name	:	",	scene_par.type_proxy_directory_name);
+		debug_information.println("scene_proxy_directory_name	:	",	scene_par.scene_proxy_directory_name);
+		debug_information.println("change_part_string		:	"	 ,	scene_par.change_part_string);
+		debug_information.println("change_component_string		:	",	scene_par.change_component_string);
+		debug_information.println("part_type_string		:	"		 ,	scene_par.part_type_string);
+		debug_information.println("scene_sub_directory		:	"	 ,	scene_par.scene_sub_directory);
+		
 		try {
 			load_routine(request_response,process_bar);
 		}catch(Exception e) {

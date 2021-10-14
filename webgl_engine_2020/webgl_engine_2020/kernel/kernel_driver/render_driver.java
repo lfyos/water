@@ -55,8 +55,8 @@ public class render_driver
 		tess_control_shader	=my_tess_control_shader;
 		tess_evalue_shader	=my_tess_evalue_shader;
 	}
-	public String[] get_part_list(boolean giveup_part_load_flag,
-			int part_type_id,file_reader render_fr,String load_sub_directory_name,String par_list_file_name,
+	public String[] get_part_list(int part_type_id,
+			file_reader render_fr,String load_sub_directory_name,String par_list_file_name,
 			part_parameter part_par,system_parameter system_par,scene_parameter scene_par,
 			change_name mount_component_name_and_assemble_file_name,client_request_response request_response)
 	{

@@ -53,7 +53,7 @@ public class scene_parameter
 	public int component_sort_type;
 	public double component_sort_min_distance;
 	
-	public boolean not_do_ancestor_render_flag,do_discard_lod_flag,do_selection_lod_flag,scene_fast_load_flag;
+	public boolean not_do_ancestor_render_flag,do_discard_lod_flag,do_selection_lod_flag;
 	
 	public long proxy_response_length,compress_response_length;
 	
@@ -259,7 +259,6 @@ public class scene_parameter
 		not_do_ancestor_render_flag				=fr.get_boolean();
 		do_discard_lod_flag						=fr.get_boolean();
 		do_selection_lod_flag					=fr.get_boolean();
-		scene_fast_load_flag					=fr.get_boolean();
 		
 		fr.close();
 

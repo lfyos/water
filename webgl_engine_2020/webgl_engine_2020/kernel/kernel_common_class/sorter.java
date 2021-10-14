@@ -186,10 +186,7 @@ public class sorter <DATA_TYPE,KEY_TYPE>
 	}
 	public int get_number()
 	{
-		if(data_array==null)
-			return 0;
-		else
-			return data_array.length;
+		return (data_array==null)?0:(data_array.length);
 	}
 	public void do_sort(int sort_type_id,DATA_TYPE buffer_array[])
 	{
