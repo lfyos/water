@@ -22,10 +22,10 @@ namespace extract_solidworks_data
 
         public void save(StreamWriter material_writer)
         {
-            material_writer.WriteLine("/*	material number	*/  "+(ma.Length));
+            material_writer.WriteLine("         \"material\"	:	[");
             for (int i = 0, ni = ma.Length; i < ni; i++)
-                ma[i].save(material_writer);
-            material_writer.WriteLine();
+                ma[i].save(material_writer,i==(ni-1));
+            material_writer.WriteLine("         ]");
         }
         public material get(double[] color_parameter, Texture my_texture)
         {
@@ -41,8 +41,6 @@ namespace extract_solidworks_data
 
             ma[ma.Length - 1] = my_m;
             ma[ma.Length - 1].meterial_id = ma.Length - 1;
-
-            
 
             return ma[ma.Length - 1];
         }

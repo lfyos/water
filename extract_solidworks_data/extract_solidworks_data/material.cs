@@ -21,37 +21,40 @@ namespace extract_solidworks_data
 
         public string texture_file;
         public double scale_factor,rotate_angle,trans_x, trans_y;
-        
 
-        public void save(StreamWriter material_writer)
+        public void save(StreamWriter material_writer,Boolean last_flag)
         {
-            string texture_file_name;
+            string pre_str = "                  ";
+            Boolean texture_flag = (string.Compare(texture_file, "") == 0);
 
-            if (string.Compare(texture_file, "") == 0)
-            {
-                material_writer.WriteLine("     /*	    caculate_color_method                                       */      0");
-                texture_file_name = "notexture";
-            }
-            else
-            {
-                material_writer.WriteLine("     /*	    caculate_color_method                                       */      2");
-                int index_id;
-                if ((index_id = texture_file.IndexOf('\\')) >= 0)
-                    texture_file_name = texture_file.Substring(index_id + 1);
-                else if ((index_id = texture_file.IndexOf('/')) >= 0)
-                    texture_file_name = texture_file.Substring(index_id + 1);
-                else
-                    texture_file_name = texture_file;
-            }
+            material_writer.WriteLine("               {");
 
-            material_writer.WriteLine("     /*		caculate_color_parameter									*/      "
-                + red + "   " + green + "   " + blue + "   1") ;
-            material_writer.WriteLine("     /*	    ambient,diffuse,specular,shininess,transparency,emission    */      "
-                + ambient + "   " + diffuse + "     " + specular + "    " + shininess + "   " + transparency + "    " + emission);
-            material_writer.WriteLine("     /*	    texture file name                                           */      " + texture_file_name);
-            material_writer.WriteLine("     /*	    texture_move_x,texture_move_y,texture_alf,texture_scale     */      "
-                + trans_x + "   " + trans_y + "  " + rotate_angle + "    " + scale_factor);
-            material_writer.WriteLine();
+           material_writer.WriteLine(pre_str+"\"vertex_color_type\"    :	1,");
+            material_writer.WriteLine(pre_str + "\"fragment_color_type\"  :	" + (texture_flag ? 0 : 1) + ",");
+
+            material_writer.WriteLine(pre_str + "\"color_parameter\"      :	[0,0,0,0],");
+
+            material_writer.WriteLine(pre_str + "\"texture_parameter\"    :	[" + trans_x + "," + trans_y + ","
+                 + scale_factor * Math.Cos(rotate_angle * Math.PI /180.0) + ","
+                 + scale_factor * Math.Sin(rotate_angle * Math.PI /180.0) + "],");
+
+            material_writer.WriteLine(pre_str + "\"texture_file\"         :	" + (texture_flag ? "null" : ("\"" + 
+                texture_file.Replace("\\", "/").Replace("\n", "").Replace("\"", "").Replace("\r", "") + "\"")) + ",");
+
+            material_writer.WriteLine(pre_str + "\"color\"                :	["
+                + red + "," + green + "," + blue + ",1]," );
+            material_writer.WriteLine(pre_str + "\"ambient\"              :	[" 
+                + ambient + "," + ambient + "," + ambient + ",1],");
+            material_writer.WriteLine(pre_str + "\"diffuse\"              :	[" 
+                + diffuse + "," + diffuse + "," + diffuse + ",1],");
+            material_writer.WriteLine(pre_str + "\"specular\"             :	[" 
+                + specular + "," + specular + "," + specular + ",1],");
+            material_writer.WriteLine(pre_str + "\"emission\"             :	[" 
+                + emission + "," + emission + "," + emission + ",1],");
+            material_writer.WriteLine(pre_str + "\"shininess\"            :	" 
+                + shininess);
+
+            material_writer.WriteLine("               }"+(last_flag?"":","));
         }
         private void init()
         {
@@ -102,6 +105,7 @@ namespace extract_solidworks_data
                         rotate_angle = my_texture.Angle;
                         trans_x = my_texture.TransX;
                         trans_y = my_texture.TransY;
+
                         return;
                     };
             texture_file = "";

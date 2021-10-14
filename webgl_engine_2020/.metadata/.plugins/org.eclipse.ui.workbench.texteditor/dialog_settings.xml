@@ -2,12 +2,19 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="Time length"/>
+		<item key="selection" value="0.2"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="0.2"/>
+			<item value="0.8"/>
+			<item value="0.4"/>
+			<item value="0.4,&#x09;0.4,&#x09;0.4,&#x09;0.8,"/>
+			<item value="color_parameter"/>
+			<item value="texture_parameter"/>
+			<item value="vertex_color_type"/>
 			<item value="time length"/>
 			<item value="print  "/>
 			<item value="class part time length"/>
@@ -16,15 +23,13 @@
 			<item value="part_package"/>
 			<item value="Load component time length:"/>
 			<item value="Engine load time length:"/>
-			<item value="load_buffer_object_file_information"/>
-			<item value="缓冲"/>
-			<item value="4"/>
-			<item value="canvas_scene_url"/>
-			<item value="create_engine_sleep_time_length"/>
-			<item value="finish"/>
-			<item value="shader_program.canvas"/>
 		</list>
 		<list key="replacehistory">
+			<item value="0.4"/>
+			<item value="1"/>
+			<item value="0.2"/>
+			<item value="0.2,&#x09;0.2,&#x09;0.2,&#x09;1,"/>
+			<item value="0.1"/>
 			<item value="[part_id]"/>
 			<item value="render.text_canvas"/>
 			<item value="render.text_2dcontext"/>
@@ -35,11 +40,6 @@
 			<item value=""/>
 			<item value="this.canvas."/>
 			<item value="this.ctx"/>
-			<item value="0&#x09;0&#x09;1&#x09;1"/>
-			<item value="shader_object"/>
-			<item value="system_root_component"/>
-			<item value="&quot;part_list_root_component&quot;"/>
-			<item value="relative&#x09;light.txt&#x09;null&#x09;null"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
