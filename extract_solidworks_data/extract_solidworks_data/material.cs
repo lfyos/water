@@ -34,9 +34,8 @@ namespace extract_solidworks_data
 
             material_writer.WriteLine(pre_str + "\"color_parameter\"      :	[0,0,0,0],");
 
-            material_writer.WriteLine(pre_str + "\"texture_parameter\"    :	[" + trans_x + "," + trans_y + ","
-                 + scale_factor * Math.Cos(rotate_angle * Math.PI /180.0) + ","
-                 + scale_factor * Math.Sin(rotate_angle * Math.PI /180.0) + "],");
+            material_writer.WriteLine(pre_str + "\"texture_parameter\"    :	["
+                + trans_x + "," + trans_y + "," + rotate_angle + "," + scale_factor + "],");
 
             material_writer.WriteLine(pre_str + "\"texture_file\"         :	" + (texture_flag ? "null" : ("\"" + 
                 texture_file.Replace("\\", "/").Replace("\n", "").Replace("\"", "").Replace("\r", "") + "\"")) + ",");

@@ -160,11 +160,13 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 				p.texture_file=null;
 			if(typeof(p.color)=="undefined")
 				p.color=[0,0,0,1];
-				
+
 			buffer_data=[p.vertex_color_type,p.fragment_color_type,0,p.shininess];
 			
 			buffer_data=buffer_data.concat( p.color_parameter);
-			buffer_data=buffer_data.concat( p.texture_parameter);
+			buffer_data=buffer_data.concat([p.texture_parameter[0],p.texture_parameter[1],
+				Math.cos((p.texture_parameter[2])*(Math.PI/180.0))*(p.texture_parameter[3]),
+				Math.sin((p.texture_parameter[2])*(Math.PI/180.0))*(p.texture_parameter[3])]);
 			
 			buffer_data=buffer_data.concat( p.color);
 			

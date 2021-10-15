@@ -3,7 +3,7 @@
 					"vertex_color_type"		:	1,
 					"fragment_color_type"	:	1,
 					"color_parameter"		:	[0.0,	0.0,	0.0,	1.0],
-					"texture_parameter"		:	[0.0,	0.0,	0.3495279221869413,	0.01918422601200053],
+					"texture_parameter"		:	[0.0,	0.0,	3.14159,	0.350054],
 					"texture_file"			:	"images/textures/wood/grain2.jpg",
 					"color"					:	[0.729412,	0.356863,	0.0235294,	1],
 					"ambient"				:	[1.0,	1.0,	1.0,	1],

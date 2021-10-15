@@ -1,35 +1,28 @@
-
 			"material"	:	[
 				{
 					"vertex_color_type"		:	1,
 					"fragment_color_type"	:	2,
-					
 					"color_parameter"		:	[0.1,	0.0,	0.0,	1.0],
 					"texture_parameter"		:	[0.0,	0.0,	0.0,	1.0],
-				
 					"texture_file"			:	"2013102904221223475.png",
-					
-					"color"					:	[0.1,	0.5,	1.0,	1.0],
-					"ambient"				:	[0.2,	0.2,	0.2,	1.0],
-					"diffuse"				:	[1.0,	1.0,	1.0,	1.0],
-					"specular"				:	[1.0,	1.0,	1.0,	1.0],
-					"emission"				:	[0.0,	0.0,	0.0,	1.0],
-					"shininess"				:	16.0
+					"color"					:	[0.1,	0.0,	0.0,	1],
+					"ambient"				:	[1.0,	1.0,	1.0,	1],
+					"diffuse"				:	[1.0,	1.0,	1.0,	1],
+					"specular"				:	[0.5,	0.5,	0.5,	1],
+					"emission"				:	[0.0,	0.0,	0.0,	1],
+					"shininess"				:	0.4
 				},
 				{
 					"vertex_color_type"		:	1,
 					"fragment_color_type"	:	2,
-					
 					"color_parameter"		:	[0.1,	0.0,	0.0,	1.0],
 					"texture_parameter"		:	[0.0,	0.0,	0.0,	1.0],
-				
 					"texture_file"			:	"20131029042212218766.jpg",
-					
-					"color"					:	[0.1,	0.5,	1.0,	1.0],
-					"ambient"				:	[0.2,	0.2,	0.2,	1.0],
-					"diffuse"				:	[1.0,	1.0,	1.0,	1.0],
-					"specular"				:	[1.0,	1.0,	1.0,	1.0],
-					"emission"				:	[0.0,	0.0,	0.0,	1.0],
-					"shininess"				:	16.0
+					"color"					:	[0.1,	0.0,	0.0,	1],
+					"ambient"				:	[1.0,	1.0,	1.0,	1],
+					"diffuse"				:	[1.0,	1.0,	1.0,	1],
+					"specular"				:	[0.5,	0.5,	0.5,	1],
+					"emission"				:	[0.0,	0.0,	0.0,	1],
+					"shininess"				:	0.4
 				}
 			]

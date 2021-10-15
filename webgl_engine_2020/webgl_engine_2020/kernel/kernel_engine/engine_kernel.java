@@ -254,7 +254,7 @@ public class engine_kernel
 		debug_information.println("Load engine.boftal time length	:	",new Date().getTime()-start_time);
 		debug_information.println();
 		
-		boolean not_real_scene_fast_load_flag=(boftal_container.get_boftal_number()<=0);
+		boolean not_real_scene_fast_load_flag=system_par.debug_mode_flag||(boftal_container.get_boftal_number()<=0);
 		
 		file_reader scene_f=new file_reader(scene_directory_name+scene_file_name,scene_charset);
 		if(!(scene_f.error_flag())){
