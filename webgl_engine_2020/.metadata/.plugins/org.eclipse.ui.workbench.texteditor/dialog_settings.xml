@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="0.2"/>
+		<item key="selection" value=""/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="/*&#x09;fast_load_flag&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;no"/>
 			<item value="0.4"/>
 			<item value="0.2"/>
 			<item value="0.8"/>
@@ -22,9 +23,9 @@
 			<item value="Load shaders time length:"/>
 			<item value="part_package"/>
 			<item value="Load component time length:"/>
-			<item value="Engine load time length:"/>
 		</list>
 		<list key="replacehistory">
+			<item value=""/>
 			<item value="0.2"/>
 			<item value="0.4"/>
 			<item value="1"/>
@@ -37,7 +38,6 @@
 			<item value="&quot;GBK&quot;"/>
 			<item value="0"/>
 			<item value="this.gl."/>
-			<item value=""/>
 			<item value="this.canvas."/>
 			<item value="this.ctx"/>
 		</list>

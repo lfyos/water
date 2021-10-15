@@ -84,9 +84,8 @@ namespace extract_solidworks_data
                 new assemble(doc, collector, target_directory_name).root_tree_node.write("", assemble_writer);
             else if (doc.GetType() == (int)(swDocumentTypes_e.swDocPART))
             {
-                collector.register(doc,1);
                 assemble_writer.WriteLine("solidworks_root_component");
-                assemble_writer.WriteLine("solidworks_part_0");
+                assemble_writer.WriteLine(collector.register(doc, 1));
                 assemble_writer.WriteLine("1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0");
                 assemble_writer.WriteLine("0");
             }

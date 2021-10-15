@@ -55,6 +55,7 @@ void main(void)
 			frag_data[0]  =texture(texture_object,vec2(
 				mov_x_value+cos_value*frag_texture.x+sin_value*frag_texture.y,
 				mov_y_value-sin_value*frag_texture.x+cos_value*frag_texture.y));
+
 			frag_data[0].a=transparency_value;
 			break;
 		case 2:

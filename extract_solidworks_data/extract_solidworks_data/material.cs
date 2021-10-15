@@ -99,7 +99,13 @@ namespace extract_solidworks_data
 
             if (my_texture != null)
                 if ((texture_file = my_texture.MaterialName.Trim()) != null)
-                    if(string.Compare(texture_file.Trim(),"")!=0){
+                    if(string.Compare(texture_file,"")!=0){
+                        string pre_str;
+                        if (texture_file.IndexOf(pre_str = "<SystemTexture>/") == 0)
+                            texture_file = texture_file.Substring(pre_str.Length);
+                        if (texture_file.IndexOf(pre_str = "<SystemTexture>\\") == 0)
+                            texture_file = texture_file.Substring(pre_str.Length);
+
                         blend_flag = my_texture.BlendColor;
                         scale_factor = my_texture.ScaleFactor;
                         rotate_angle = my_texture.Angle;
@@ -113,34 +119,35 @@ namespace extract_solidworks_data
 
         public bool compare(material p)
         {
-            if (p.ambient != ambient)
+            double min_value = 0.0001;
+            if (Math.Abs(p.ambient - ambient) > min_value)
                 return false;
-            if (p.diffuse != diffuse)
+            if (Math.Abs(p.diffuse - diffuse) > min_value)
                 return false;
-            if (p.specular != specular)
+            if (Math.Abs(p.specular - specular) > min_value)
                 return false;
-            if (p.shininess != shininess)
+            if (Math.Abs(p.shininess - shininess) > min_value)
                 return false;
-            if (p.transparency != transparency)
+            if (Math.Abs(p.transparency - transparency) > min_value)
                 return false;
-            if (p.emission != emission)
+            if (Math.Abs(p.emission - emission) > min_value)
                 return false;
 
             if (p.blend_flag ^ blend_flag)
                 return false;
 
-            if (string.Compare(p.texture_file.Trim(),texture_file.Trim())==0)
+            if (string.Compare(p.texture_file, texture_file) != 0)
                 return false;
 
-            if (p.scale_factor != scale_factor)
+            if (Math.Abs(p.scale_factor - scale_factor) > min_value)
                 return false;
-            if (p.rotate_angle != rotate_angle)
+            if (Math.Abs(p.rotate_angle - rotate_angle) > min_value)
                 return false;
-            if (p.trans_x!= trans_x)
+            if (Math.Abs(p.trans_x - trans_x) > min_value)
                 return false;
-            if (p.trans_y != trans_y)
+            if (Math.Abs(p.trans_y - trans_y) > min_value)
                 return false;
-           
+
             return true;
         }
     }

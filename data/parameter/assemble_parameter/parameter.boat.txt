@@ -40,4 +40,5 @@
 
 /*	not_do_ancestor_render_flag					*/		no
 /*	do_discard_lod_flag							*/		no
-/*	do_selection_lod_flag						*/		no
+/*	do_selection_lod_flag						*/		yes
+

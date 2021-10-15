@@ -25,6 +25,11 @@ public class buffer_object_file_modify_time_and_length_container
 		}
 	}
 	
+	public int get_boftal_number()
+	{
+		return (boftal_array==null)?0:(boftal_array.length);
+	}
+	
 	public buffer_object_file_modify_time_and_length_container(
 			client_process_bar process_bar,String my_boftal_file_name,String boftal_file_charset)
 	{
