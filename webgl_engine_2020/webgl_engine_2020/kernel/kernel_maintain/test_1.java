@@ -10,7 +10,7 @@ public class test_1 extends travel_through_directory
 	{
 		String str=file_reader.get_text(file_name, "GBK");
 		if(str!=null) {
-			if(str.indexOf("scene_mousedown")>=0)
+			if(str.indexOf("debug_mode_flag")>=0)
 				debug_information.println(file_name);
 		}
 	}

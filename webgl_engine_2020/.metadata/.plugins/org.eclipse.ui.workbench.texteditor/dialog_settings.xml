@@ -2,12 +2,17 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value=""/>
+		<item key="selection" value="debug_mode_flag"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="debug_mode_flag"/>
+			<item value="debug_"/>
+			<item value="exit_flag"/>
+			<item value="discard_flag"/>
+			<item value="0.2,"/>
 			<item value="/*&#x09;fast_load_flag&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;no"/>
 			<item value="0.4"/>
 			<item value="0.2"/>
@@ -18,13 +23,9 @@
 			<item value="vertex_color_type"/>
 			<item value="time length"/>
 			<item value="print  "/>
-			<item value="class part time length"/>
-			<item value="[i]"/>
-			<item value="Load shaders time length:"/>
-			<item value="part_package"/>
-			<item value="Load component time length:"/>
 		</list>
 		<list key="replacehistory">
+			<item value="0.15,"/>
 			<item value=""/>
 			<item value="0.2"/>
 			<item value="0.4"/>
@@ -39,7 +40,6 @@
 			<item value="0"/>
 			<item value="this.gl."/>
 			<item value="this.canvas."/>
-			<item value="this.ctx"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

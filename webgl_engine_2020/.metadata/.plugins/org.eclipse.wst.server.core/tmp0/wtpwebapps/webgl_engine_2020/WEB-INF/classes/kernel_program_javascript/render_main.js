@@ -52,13 +52,8 @@ function render_initialization(initialization_url,my_render,user_initialization_
 			if(render.terminate_flag)
 				return;
 			if(my_ajax.status!=200){
-				if(render.parameter.debug_mode_flag){
-					alert("Loading system_initialization_function response status error: "+my_ajax.status.toString());
-					alert(initialization_url);
-				}else{
-					console.log("Loading system_initialization_function response status error: "+my_ajax.status.toString());
-					console.log(initialization_url);
-				}
+				console.log("Loading system_initialization_function response status error: "+my_ajax.status.toString());
+				console.log(initialization_url);
 				return;
 			};
 			
@@ -113,13 +108,8 @@ function render_initialization(initialization_url,my_render,user_initialization_
 		my_ajax.open("GET",initialization_url,true);
 		my_ajax.send(null);
 	}catch(e){
-		if(render.parameter.debug_mode_flag){
-			alert("render_initialization fail: "+e.toString());
-			alert(initialization_url);
-		}else{
-			console.log("render_initialization fail: "+e.toString());
-			console.log(initialization_url);
-		}
+		console.log("render_initialization fail: "+e.toString());
+		console.log(initialization_url);
 	};
 };
 

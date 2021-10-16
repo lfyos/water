@@ -335,15 +335,11 @@ function construct_buffer_object(my_gl,my_parameter)
 					frame_processed_buffer_object_data=decode_function("frame",
 						part_information,part_material,part_property,p,this.parameter);
 			}catch(e){
-				var str1="Execute decode_function() fail:"+e.toString();
-				var str2="request_str:"+request_str
+				console.log("Execute decode_function() fail:"+e.toString());
+				console.log("request_str:"+request_str
 						+",request_file_id:"+request_file_id.toString()
 						+",begin_material_id:"+begin_material_id.toString()
-						+",end_material_id:"+end_material_id.toString();
-				if(this.parameter.debug_mode_flag)
-					{alert(str1);alert(str2);}
-				else
-					{console.log(str1);console.log(str2);}
+						+",end_material_id:"+end_material_id.toString());
 				continue;
 			}
 			if(processed_buffer_object_data.region_data.length>0)
@@ -424,11 +420,7 @@ function construct_buffer_object(my_gl,my_parameter)
 						decode_function,part_information,part_material,part_property,request_file_id);
 				return 0;
 			}
-			if(this.parameter.debug_mode_flag){
-				alert("Loading Buffer Object Data part_file_proxy_url error");
-			}else{
-				console.log("Loading Buffer Object Data part_file_proxy_url error");
-			}
+			console.log("Loading Buffer Object Data part_file_proxy_url error");
 			return 0;
 		}
 		
@@ -454,12 +446,9 @@ function construct_buffer_object(my_gl,my_parameter)
 				object_pointer.loaded_number--;
 				
 				if(my_ajax.status!=200){
-					var str1="Loading Buffer Object Data response status error: "+my_ajax.status.toString();
-					var str2="request_str:"+request_str+",request_file_id:"+request_file_id.toString();
-					if(cur.parameter.debug_mode_flag)
-						{alert(str1);alert(str2);alert(data_url);}
-					else
-						{console.log(str1);console.log(str2);console.log(data_url);}
+					console.log("Loading Buffer Object Data response status error: "+my_ajax.status.toString());
+					console.log("request_str:"+request_str+",request_file_id:"+request_file_id.toString());
+					console.log(data_url);
 					return;
 				}
 				
@@ -471,13 +460,8 @@ function construct_buffer_object(my_gl,my_parameter)
 				try{
 					my_response_data=new Float32Array(my_ajax.response);
 				}catch(e){
-					if(cur.parameter.debug_mode_flag){
-						alert("Parse buffer data error, "+e.toString());
-						alert(data_url);
-					}else{
-						console.log("Parse buffer data error, "+e.toString());
-						console.log(data_url);
-					}
+					console.log("Parse buffer data error, "+e.toString());
+					console.log(data_url);
 					return;
 				}
 				
@@ -491,11 +475,7 @@ function construct_buffer_object(my_gl,my_parameter)
 			my_ajax.send(null);
 			this.current_loading_mesh_number++;
 		}catch(e){
-			if(this.parameter.debug_mode_flag){
-				alert("Loading Buffer Object Data ajax error: "+e.toString());
-			}else{
-				console.log("Loading Buffer Object Data ajax error: "+e.toString());
-			}
+			console.log("Loading Buffer Object Data ajax error: "+e.toString());
 		};
 		return 1;
 	};
@@ -568,28 +548,17 @@ function construct_buffer_object(my_gl,my_parameter)
 					return;
 				cur.current_loading_mesh_number--;
 				if(my_ajax.status!=200){
-					if(cur.parameter.debug_mode_flag){
-						alert("this.request_buffer_head_package response status error: "+my_ajax.status.toString());
-						alert(package_proxy_url);
-					}else{
-						console.log("this.request_buffer_head_package response status error: "+my_ajax.status.toString());
-						console.log(package_proxy_url);
-					}
+					console.log("this.request_buffer_head_package response status error: "+my_ajax.status.toString());
+					console.log(package_proxy_url);
 					return;
 				}
 				var head_data_array;
 				try{
 					head_data_array=JSON.parse(my_ajax.responseText);
 				}catch(e){
-					if(cur.parameter.debug_mode_flag){
-						alert("this.request_buffer_head_package JSON.parse error: "+e.toString());
-						alert("package_proxy_url: "+package_proxy_url);
-						alert(my_ajax.responseText);
-					}else{
-						console.log("this.request_buffer_head_package JSON.parse error: "+e.toString());
-						console.log("package_proxy_url: "+package_proxy_url);
-						console.log(my_ajax.responseText);
-					}
+					console.log("this.request_buffer_head_package JSON.parse error: "+e.toString());
+					console.log("package_proxy_url: "+package_proxy_url);
+					console.log(my_ajax.responseText);
 					return;
 				}
 				if(package_flag)
@@ -602,13 +571,8 @@ function construct_buffer_object(my_gl,my_parameter)
 			
 			this.current_loading_mesh_number++;
 		}catch(e){
-			if(this.parameter.debug_mode_flag){
-				alert("this.request_buffer_head_package fail: "+e.toString());
-				alert("package_proxy_url: "+package_proxy_url);
-			}else{
-				console.log("this.request_buffer_head_package fail: "+e.toString());
-				console.log("package_proxy_url: "+package_proxy_url);
-			}
+			console.log("this.request_buffer_head_package fail: "+e.toString());
+			console.log("package_proxy_url: "+package_proxy_url);
 		}
 	}
 	

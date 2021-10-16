@@ -35,5 +35,3 @@
 /*	max_buffer_object_head_package_length									*/		8000000
 	
 /*	file_download_cors_string												*/		*
-
-/*	debug_mode_flag															*/		true

@@ -66,44 +66,25 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 				
 				if(my_ajax.status!=200){
 					data_buffer.can_do_register_flag=true;
-					if(render.parameter.debug_mode_flag){
-						alert("Proxy status is wrong:"+my_ajax.status.toString());
-						alert(my_url);
-						alert(my_proxy);
-						alert(file_name);
-						alert(stamp_string);
-						alert(original_url);
-						alert(my_encode_flag);
-					}else{
-						console.log("Proxy status is wrong:"+my_ajax.status.toString());
-						console.log(my_url);
-						console.log(my_proxy);
-						console.log(file_name);
-						console.log(stamp_string);
-						console.log(original_url);
-						console.log(my_encode_flag);
-					}
+					console.log("Proxy status is wrong:"+my_ajax.status.toString());
+					console.log(my_url);
+					console.log(my_proxy);
+					console.log(file_name);
+					console.log(stamp_string);
+					console.log(original_url);
+					console.log(my_encode_flag);
+					
 					return;
 				}
 				if(my_ajax.responseText.substring(0,version_string.length)!=version_string){
 					data_buffer.can_do_register_flag=true;
-					
-					if(render.parameter.debug_mode_flag){
-						alert("Proxy version is different:"+my_ajax.responseText+":"+version_string);
-						alert(my_url);
-					}else{
-						console.log("Proxy version is different:"+my_ajax.responseText+":"+version_string);
-						console.log(my_url);
-					}
+					console.log("Proxy version is different:"+my_ajax.responseText+":"+version_string);
+					console.log(my_url);
 					return;
 				}
 				if(((new Date()).getTime()-start_time)>time_length){
 					data_buffer.can_do_register_flag=true;
-					
-					if(render.parameter.debug_mode_flag)
-						alert("Too long proxy latency!");
-					else
-						console.log("Too long proxy latency!");
+					console.log("Too long proxy latency!");
 					return;
 				}
 				render.call_server_component(component_id,driver_id,
@@ -129,10 +110,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 			data_buffer.can_do_register_flag=false;
 			
 		}catch(e){
-			if(render.parameter.debug_mode_flag)
-				alert(e.toString());
-			else
-				console.log(e.toString());
+			console.log(e.toString());
 		};
 	}
 	

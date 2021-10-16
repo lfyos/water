@@ -37,8 +37,6 @@ public class system_parameter
 	
 	public String file_download_cors_string;
 	
-	public boolean debug_mode_flag;
-	
 	public change_name language_change_name,content_type_change_name;
 	public proxy_parameter proxy_par;
 	public switch_engine_server	switch_server;
@@ -84,8 +82,6 @@ public class system_parameter
 		max_buffer_object_head_package_length=sp.max_buffer_object_head_package_length;
 		
 		file_download_cors_string		=new String(sp.file_download_cors_string);
-		
-		debug_mode_flag					=sp.debug_mode_flag;
 		
 		content_type_change_name		=new change_name(sp.content_type_change_name,false);
 		language_change_name			=new change_name(sp.language_change_name,false);
@@ -202,8 +198,6 @@ public class system_parameter
 		String my_file_name=f.directory_name+file_download_cors_string;
 		if(new File(my_file_name).exists())
 			file_download_cors_string=file_reader.get_text(my_file_name,f.get_charset()).trim();
-		
-		debug_mode_flag							=f.get_boolean();
 		
 		f.close();
 		

@@ -77,13 +77,9 @@ function construct_event_listener(my_render)
 					if(ep.pickupmousemove(event,this.render.pickup.component_id,this.render))
 						return;
 				}catch(e){
-					if(this.render.parameter.debug_mode_flag){
-						alert("Execute pickupmousemove processor error,component id is "+this.render.pickup.component_id.toString());
-						alert(e.toString());
-					}else{
-						console.log("Execute pickupmousemove processor error,component id is "+this.render.pickup.component_id.toString());
-						console.log(e.toString());
-					}
+					console.log("Execute pickupmousemove processor error,component id is "
+						+this.render.pickup.component_id.toString());
+					console.log(e.toString());
 					return;
 				}
 		}
@@ -96,13 +92,8 @@ function construct_event_listener(my_render)
 				if(ep.mousemove(event,component_id,this.render))
 					return;
 			}catch(e){
-				if(this.render.parameter.debug_mode_flag){
-					alert("Execute mousemove processor error,component id is "+component_id.toString());
-					alert(e.toString());
-				}else{
-					console.log("Execute mousemove processor error,component id is "+component_id.toString());
-					console.log(e.toString());
-				}
+				console.log("Execute mousemove processor error,component id is "+component_id.toString());
+				console.log(e.toString());
 				return;
 			}
 		}
@@ -132,13 +123,8 @@ function construct_event_listener(my_render)
 					if(ep.pickupmousedown(event,this.render.pickup.component_id,this.render))
 						return;
 				}catch(e){
-					if(this.render.parameter.debug_mode_flag){
-						alert("Execute pickupmousedown processor error,component id is "+this.render.pickup.component_id.toString());
-						alert(e.toString());
-					}else{
-						console.log("Execute pickupmousedown processor error,component id is "+this.render.pickup.component_id.toString());
-						console.log(e.toString());
-					}
+					console.log("Execute pickupmousedown processor error,component id is "+this.render.pickup.component_id.toString());
+					console.log(e.toString());
 					return;
 				}
 		}
@@ -151,13 +137,8 @@ function construct_event_listener(my_render)
 				if(ep.mousedown(event,component_id,this.render))
 					return;
 			}catch(e){
-				if(this.render.parameter.debug_mode_flag){
-					alert("Execute mousedown processor error,component id is "+component_id.toString());
-					alert(e.toString());
-				}else{
-					console.log("Execute mousedown processor error,component id is "+component_id.toString());
-					console.log(e.toString());
-				}
+				console.log("Execute mousedown processor error,component id is "+component_id.toString());
+				console.log(e.toString());
 				return;
 			}	
 		}
@@ -186,13 +167,8 @@ function construct_event_listener(my_render)
 					if(ep.pickupmouseup(event,this.render.pickup.component_id,this.render))
 						return;
 				}catch(e){
-					if(this.render.parameter.debug_mode_flag){
-						alert("Execute pickupmouseup processor error,component id is "+this.render.pickup.component_id.toString());
-						alert(e.toString());
-					}else{
-						console.log("Execute pickupmouseup processor error,component id is "+this.render.pickup.component_id.toString());
-						console.log(e.toString());
-					}
+					console.log("Execute pickupmouseup processor error,component id is "+this.render.pickup.component_id.toString());
+					console.log(e.toString());
 					return;
 				}
 		}
@@ -205,13 +181,8 @@ function construct_event_listener(my_render)
 				if(ep.mouseup(event,component_id,this.render))
 					return;
 			}catch(e){
-				if(this.render.parameter.debug_mode_flag){
-					alert("Execute mouseup processor error,component id is "+component_id.toString());
-					alert(e.toString());
-				}else{
-					console.log("Execute mouseup processor error,component id is "+component_id.toString());
-					console.log(e.toString());
-				}
+				console.log("Execute mouseup processor error,component id is "+component_id.toString());
+				console.log(e.toString());
 				return;
 			}
 		}
@@ -240,13 +211,8 @@ function construct_event_listener(my_render)
 					if(ep.pickupdblclick(event,this.render.pickup.component_id,this.render))
 						return;
 				}catch(e){
-					if(this.render.parameter.debug_mode_flag){
-						alert("Execute pickupdblclick processor error,component id is "+this.render.pickup.component_id.toString());
-						alert(e.toString());
-					}else{
-						console.log("Execute pickupdblclick processor error,component id is "+this.render.pickup.component_id.toString());
-						console.log(e.toString());
-					}
+					console.log("Execute pickupdblclick processor error,component id is "+this.render.pickup.component_id.toString());
+					console.log(e.toString());
 					return;
 				}
 		}
@@ -259,13 +225,8 @@ function construct_event_listener(my_render)
 				if(ep.dblclick(event,component_id,this.render))
 					return;
 			}catch(e){
-				if(this.render.parameter.debug_mode_flag){
-					alert("Execute dblclick processor error,component id is "+component_id.toString());
-					alert(e.toString());
-				}else{
-					console.log("Execute dblclick processor error,component id is "+component_id.toString());
-					console.log(e.toString());
-				}
+				console.log("Execute dblclick processor error,component id is "+component_id.toString());
+				console.log(e.toString());
 				return;
 			}
 		}
@@ -293,13 +254,8 @@ function construct_event_listener(my_render)
 					if(ep.pickupmousewheel(event,this.render.pickup.component_id,this.render))
 						return;
 				}catch(e){
-					if(this.render.parameter.debug_mode_flag){
-						alert("Execute pickupmousewheel processor error,component id is "+this.render.pickup.component_id.toString());
-						alert(e.toString());
-					}else{
-						console.log("Execute pickupmousewheel processor error,component id is "+this.render.pickup.component_id.toString());
-						console.log(e.toString());
-					}
+					console.log("Execute pickupmousewheel processor error,component id is "+this.render.pickup.component_id.toString());
+					console.log(e.toString());
 					return;
 				}
 		}
@@ -312,13 +268,8 @@ function construct_event_listener(my_render)
 				if(ep.mousewheel(event,component_id,this.render))
 					return;
 			}catch(e){
-				if(this.render.parameter.debug_mode_flag){
-					alert("Execute mousewheel processor error,component id is "+component_id.toString());
-					alert(e.toString());
-				}else{
-					console.log("Execute mousewheel processor error,component id is "+component_id.toString());
-					console.log(e.toString());
-				}
+				console.log("Execute mousewheel processor error,component id is "+component_id.toString());
+				console.log(e.toString());
 				return;
 			}
 		}
@@ -346,13 +297,9 @@ function construct_event_listener(my_render)
 					if(ep.pickuptouchstart(event,this.render.pickup.component_id,this.render))
 						return;
 				}catch(e){
-					if(this.render.parameter.debug_mode_flag){
-						alert("Execute pickuptouchstart processor error,component id is "+this.render.pickup.component_id.toString());
-						alert(e.toString());
-					}else{
-						console.log("Execute pickuptouchstart processor error,component id is "+this.render.pickup.component_id.toString());
-						console.log(e.toString());
-					}
+					console.log("Execute pickuptouchstart processor error,component id is "
+						+this.render.pickup.component_id.toString());
+					console.log(e.toString());
 					return;
 				}
 		};
@@ -365,13 +312,8 @@ function construct_event_listener(my_render)
 				if(ep.touchstart(event,component_id,this.render))
 					return;
 			}catch(e){
-				if(this.render.parameter.debug_mode_flag){
-					alert("Execute touchstart processor error,component id is "+component_id.toString());
-					alert(e.toString());
-				}else{
-					console.log("Execute touchstart processor error,component id is "+component_id.toString());
-					console.log(e.toString());
-				}
+				console.log("Execute touchstart processor error,component id is "+component_id.toString());
+				console.log(e.toString());
 				return;
 			}
 		}
@@ -399,15 +341,9 @@ function construct_event_listener(my_render)
 					if(ep.pickuptouchend(event,this.render.pickup.component_id,this.render))
 						return;
 				}catch(e){
-					if(this.render.parameter.debug_mode_flag){
-						alert("Execute pickuptouchend processor error,component id is "
+					console.log("Execute pickuptouchend processor error,component id is "
 								+this.render.pickup.component_id.toString());
-						alert(e.toString());
-					}else{
-						console.log("Execute pickuptouchend processor error,component id is "
-								+this.render.pickup.component_id.toString());
-						console.log(e.toString());
-					}
+					console.log(e.toString());
 					return;
 				}
 		}
@@ -420,13 +356,8 @@ function construct_event_listener(my_render)
 				if(ep.touchend(event,component_id,this.render))
 					return;
 			}catch(e){
-				if(this.render.parameter.debug_mode_flag){
-					alert("Execute touchend processor error,component id is "+component_id.toString());
-					alert(e.toString());
-				}else{
-					console.log("Execute touchend processor error,component id is "+component_id.toString());
-					console.log(e.toString());
-				}
+				console.log("Execute touchend processor error,component id is "+component_id.toString());
+				console.log(e.toString());
 				return;
 			}
 		}
@@ -455,15 +386,9 @@ function construct_event_listener(my_render)
 							event,this.render.pickup.component_id,this.render))
 						return;
 				}catch(e){
-					if(this.render.parameter.debug_mode_flag){
-						alert("Execute pickuptouchmove processor error,component id is "
+					console.log("Execute pickuptouchmove processor error,component id is "
 								+this.render.pickup.component_id.toString());
-						alert(e.toString());
-					}else{
-						console.log("Execute pickuptouchmove processor error,component id is "
-								+this.render.pickup.component_id.toString());
-						console.log(e.toString());
-					}
+					console.log(e.toString());
 					return;
 				}
 		}
@@ -476,13 +401,8 @@ function construct_event_listener(my_render)
 				if(ep.touchmove(event,component_id,this.render))
 					return;
 			}catch(e){
-				if(this.render.parameter.debug_mode_flag){
-					alert("Execute touchmove processor error,component id is "+component_id.toString());
-					alert(e.toString());
-				}else{
-					console.log("Execute touchmove processor error,component id is "+component_id.toString());
-					console.log(e.toString());
-				}
+				console.log("Execute touchmove processor error,component id is "+component_id.toString());
+				console.log(e.toString());
 				return;
 			}
 		}
@@ -510,13 +430,8 @@ function construct_event_listener(my_render)
 					if(ep.pickupkeydown(event,this.render.pickup.component_id,this.render))
 						return;
 				}catch(e){
-					if(this.render.parameter.debug_mode_flag){
-						alert("Execute pickupkeydown processor error,component id is "+this.render.pickup.component_id.toString());
-						alert(e.toString());
-					}else{
-						console.log("Execute pickupkeydown processor error,component id is "+this.render.pickup.component_id.toString());
-						console.log(e.toString());
-					}
+					console.log("Execute pickupkeydown processor error,component id is "+this.render.pickup.component_id.toString());
+					console.log(e.toString());
 					return;
 				}
 		}
@@ -529,13 +444,8 @@ function construct_event_listener(my_render)
 				if(ep.keydown(event,component_id,this.render))
 					return;
 			}catch(e){
-				if(this.render.parameter.debug_mode_flag){
-					alert("Execute keydown processor error,component id is "+component_id.toString());
-					alert(e.toString());
-				}else{
-					console.log("Execute keydown processor error,component id is "+component_id.toString());
-					console.log(e.toString());
-				}
+				console.log("Execute keydown processor error,component id is "+component_id.toString());
+				console.log(e.toString());
 				return;
 			}
 		}
@@ -562,13 +472,8 @@ function construct_event_listener(my_render)
 					if(ep.pickupkeypress(event,this.render.pickup.component_id,this.render))
 						return;
 				}catch(e){
-					if(this.render.parameter.debug_mode_flag){
-						alert("Execute pickupkeypress processor error,component id is "+this.render.pickup.component_id.toString());
-						alert(e.toString());
-					}else{
-						console.log("Execute pickupkeypress processor error,component id is "+this.render.pickup.component_id.toString());
-						console.log(e.toString());
-					}
+					console.log("Execute pickupkeypress processor error,component id is "+this.render.pickup.component_id.toString());
+					console.log(e.toString());
 					return;
 				};
 		}
@@ -581,13 +486,8 @@ function construct_event_listener(my_render)
 				if(ep.keypress(event,component_id,this.render))
 					return;
 			}catch(e){
-				if(this.render.parameter.debug_mode_flag){
-					alert("Execute keypress processor error,component id is "+component_id.toString());
-					alert(e.toString());
-				}else{
-					console.log("Execute keypress processor error,component id is "+component_id.toString());
-					console.log(e.toString());
-				}
+				console.log("Execute keypress processor error,component id is "+component_id.toString());
+				console.log(e.toString());
 				return;
 			}
 		}
@@ -615,15 +515,9 @@ function construct_event_listener(my_render)
 					if(ep.pickupkeyup(event,this.render.pickup.component_id,this.render))
 						return;
 				}catch(e){
-					if(this.render.parameter.debug_mode_flag){
-						alert("Execute pickupkeyup processor error,component id is "
+					console.log("Execute pickupkeyup processor error,component id is "
 								+this.render.pickup.component_id.toString());
-						alert(e.toString());
-					}else{
-						console.log("Execute pickupkeyup processor error,component id is "
-								+this.render.pickup.component_id.toString());
-						console.log(e.toString());
-					}
+					console.log(e.toString());
 					return;
 				}
 		}
@@ -636,13 +530,8 @@ function construct_event_listener(my_render)
 				if(ep.keyup(event,component_id,this.render))
 					return;
 			}catch(e){
-				if(this.render.parameter.debug_mode_flag){
-					alert("Execute keyup processor error,component id is "+component_id.toString());
-					alert(e.toString());
-				}else{
-					console.log("Execute keyup processor error,component id is "+component_id.toString());
-					console.log(e.toString());
-				}
+				console.log("Execute keyup processor error,component id is "+component_id.toString());
+				console.log(e.toString());
 				return;
 			}
 		}
@@ -670,13 +559,8 @@ function construct_event_listener(my_render)
 					if(ep.pickupcontextmenu(event,this.render.pickup.component_id,this.render))
 						return;
 				}catch(e){
-					if(this.render.parameter.debug_mode_flag){
-						alert("Execute pickupcontextmenu processor error,component id is "+this.render.pickup.component_id.toString());
-						alert(e.toString());
-					}else{
-						console.log("Execute pickupcontextmenuprocessor error,component id is "+this.render.pickup.component_id.toString());
-						console.log(e.toString());
-					}
+					console.log("Execute pickupcontextmenuprocessor error,component id is "+this.render.pickup.component_id.toString());
+					console.log(e.toString());
 					return;
 				}
 		}
@@ -689,13 +573,8 @@ function construct_event_listener(my_render)
 				if(ep.contextmenu(event,component_id,this.render))
 					return;
 			}catch(e){
-				if(this.render.parameter.debug_mode_flag){
-					alert("Execute contextmenu processor error,component id is "+component_id.toString());
-					alert(e.toString());
-				}else{
-					console.log("Execute contextmenu processor error,component id is "+component_id.toString());
-					console.log(e.toString());
-				}
+				console.log("Execute contextmenu processor error,component id is "+component_id.toString());
+				console.log(e.toString());
 				return;
 			}	
 		}
@@ -723,15 +602,9 @@ function construct_event_listener(my_render)
 							event,this.render.pickup.component_id,this.render))
 						return;
 				}catch(e){
-					if(this.render.parameter.debug_mode_flag){
-						alert("Execute pickupgamepadconnected processor error,component id is "
+					console.log("Execute pickupgamepadconnected processor error,component id is "
 								+this.render.pickup.component_id.toString());
-						alert(e.toString());
-					}else{
-						console.log("Execute pickupgamepadconnected processor error,component id is "
-								+this.render.pickup.component_id.toString());
-						console.log(e.toString());
-					}
+					console.log(e.toString());
 					return;
 				}
 		}
@@ -744,13 +617,8 @@ function construct_event_listener(my_render)
 				if(ep.gamepadconnected(event,component_id,this.render))
 					return;
 			}catch(e){
-				if(this.render.parameter.debug_mode_flag){
-					alert("Execute gamepadconnected processor error,component id is "+component_id.toString());
-					alert(e.toString());
-				}else{
-					console.log("Execute gamepadconnected processor error,component id is "+component_id.toString());
-					console.log(e.toString());
-				}
+				console.log("Execute gamepadconnected processor error,component id is "+component_id.toString());
+				console.log(e.toString());
 				return;
 			}
 		}
@@ -778,15 +646,9 @@ function construct_event_listener(my_render)
 							event,this.render.pickup.component_id,this.render))
 						return;
 				}catch(e){
-					if(this.render.parameter.debug_mode_flag){
-						alert("Execute pickupgamepaddisconnected processor error,component id is "
+					console.log("Execute pickupgamepaddisconnected processor error,component id is "
 								+this.render.pickup.component_id.toString());
-						alert(e.toString());
-					}else{
-						console.log("Execute pickupgamepaddisconnected processor error,component id is "
-								+this.render.pickup.component_id.toString());
-						console.log(e.toString());
-					}
+					console.log(e.toString());
 					return;
 				}
 		}
@@ -799,13 +661,8 @@ function construct_event_listener(my_render)
 				if(ep.gamepaddisconnected(event,component_id,this.render))
 					return;
 			}catch(e){
-				if(this.render.parameter.debug_mode_flag){
-					alert("Execute gamepaddisconnected processor error,component id is "+component_id.toString());
-					alert(e.toString());
-				}else{
-					console.log("Execute gamepaddisconnected processor error,component id is "+component_id.toString());
-					console.log(e.toString());
-				}
+				console.log("Execute gamepaddisconnected processor error,component id is "+component_id.toString());
+				console.log(e.toString());
 				return;
 			}
 		}

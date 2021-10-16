@@ -34,7 +34,6 @@ public class system_parameter_information extends jason_creator
 		print("max_engine_part_edge_number",			sp.max_engine_part_edge_number);
 		
 		print("file_download_cors_string",				sp.file_download_cors_string);
-		print("debug_mode_flag",						sp.debug_mode_flag);
 		
 		return;
 	}

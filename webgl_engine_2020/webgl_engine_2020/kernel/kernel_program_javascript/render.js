@@ -280,13 +280,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 				this.clip_plane_matrix_array[render_buffer_id]			=this.computer.create_move_rotate_matrix(0,0,0,0,0,0);
 			};
 		}catch(e){
-			if(this.parameter.debug_mode_flag){
-				alert("get_component_render_parameter fail");
-				alert(e.toString());
-			}else{
-				console.log("get_component_render_parameter fail");
-				console.log(e.toString());
-			};
+			alert("get_component_render_parameter fail:	"+e.toString());
 			return -1;
 		};
 	    return render_buffer_id;
@@ -328,9 +322,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			console.log("\n\n\n\nparse_web_server_response_data fail:"+e.toString());
 			console.log(responseText);
 			console.log("\n\n\n\n");
-			
-			if(this.parameter.debug_mode_flag)
-				alert("parse_web_server_response_data fail:"+e.toString());
 
 			return;
 		};
@@ -665,10 +656,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 				if(cur.terminate_flag)
 					return;
 				if(my_ajax.status!=200){
-					if(cur.parameter.debug_mode_flag)
-						alert("render_request:my_ajax.status!=200 fail:"+my_ajax.status);
-					else
-						console.log("render_request:my_ajax.status!=200 fail:"+my_ajax.status);
+					console.log("render_request:my_ajax.status!=200 fail:"+my_ajax.status);
 					return;
 				};
 				cur.parse_web_server_response_data(my_ajax.responseText,my_ajax.browser_start_time);
@@ -681,13 +669,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			my_ajax.send(null);
 			my_ajax.browser_start_time=(new Date()).getTime();
 		}catch(e){
-			if(this.parameter.debug_mode_flag){
-				alert("render_request error fail");
-				alert(e.toString());
-			}else{
-				console.log("render_request error fail");
-				console.log(e.toString());
-			};
+			console.log("render_request error fail:	"+e.toString());
 		};
 		return true;
 	};

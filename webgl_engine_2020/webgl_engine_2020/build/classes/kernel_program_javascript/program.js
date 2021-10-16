@@ -50,30 +50,18 @@ function construct_program_object(my_gl,my_parameter)
 		this.gl.shaderSource(my_vertex,my_vertex_program);
 		this.gl.compileShader(my_vertex);
 		if (!(this.gl.getShaderParameter(my_vertex,this.gl.COMPILE_STATUS))){
-		   	if(this.parameter.debug_mode_flag){
-		   		alert("vertex shader program: "+permanent_render_id.toString());
-		   		alert(this.gl.getShaderInfoLog(my_vertex));
-		   		alert(my_vertex_program);
-		   	}else{
-		   		console.log("vertex shader program: "+permanent_render_id.toString());
-		   		console.log(this.gl.getShaderInfoLog(my_vertex));
-		   		console.log(my_vertex_program);
-		   	}
+		   console.log("vertex shader program: "+permanent_render_id.toString());
+		   console.log(this.gl.getShaderInfoLog(my_vertex));
+		   console.log(my_vertex_program);
 		}
 
 		var my_fragment=this.gl.createShader(this.gl.FRAGMENT_SHADER);
 		this.gl.shaderSource(my_fragment,my_fragment_program);
 		this.gl.compileShader(my_fragment);
 		if(!(this.gl.getShaderParameter(my_fragment,this.gl.COMPILE_STATUS))){
-		   	if(this.parameter.debug_mode_flag){
-				alert("fragment shader program: "+permanent_render_id.toString());
-				alert(this.gl.getShaderInfoLog(my_fragment));
-				alert(my_fragment_program);
-		   	}else{
-		  		console.log("fragment shader program: "+permanent_render_id.toString());
-		  		console.log(this.gl.getShaderInfoLog(my_fragment));
-		  		console.log(my_fragment_program);
-		   	}
+		   	console.log("fragment shader program: "+permanent_render_id.toString());
+		  	console.log(this.gl.getShaderInfoLog(my_fragment));
+		  	console.log(my_fragment_program);
 		}
 		
 		var my_shader_program=this.gl.createProgram();
@@ -86,13 +74,8 @@ function construct_program_object(my_gl,my_parameter)
 		this.gl.deleteShader(my_fragment);
 
 	    if(this.gl.getProgramParameter(my_shader_program,this.gl.LINK_STATUS)==null){
-	       	if(this.parameter.debug_mode_flag){
-				alert("Could not link shaders: "+permanent_render_id.toString());
-				alert(this.gl.getProgramInfoLog(my_shader_program));
-	       	}else{
-	       		console.log("Could not link shaders: "+permanent_render_id.toString());
-	       		console.log(this.gl.getProgramInfoLog(my_shader_program));
-	       	}
+	       	console.log("Could not link shaders: "+permanent_render_id.toString());
+	       	console.log(this.gl.getProgramInfoLog(my_shader_program));
 	    }
 	    
 	    var system_index_id		=this.gl.getUniformBlockIndex(my_shader_program,"system_information");
