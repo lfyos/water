@@ -1,6 +1,0 @@
-in vec4 vertex_location;
-
-void main(void)
-{
-	gl_Position=vertex_location;
-}

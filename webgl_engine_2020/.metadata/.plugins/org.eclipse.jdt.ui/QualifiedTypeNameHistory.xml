@@ -52,12 +52,12 @@
 <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
 <fullyQualifiedTypeName name="kernel_interface.client_switch_server"/>
 <fullyQualifiedTypeName name="kernel_common_class.jason_string"/>
-<fullyQualifiedTypeName name="kernel_file_manager.file_reader"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="kernel_file_manager.file_writer"/>
 <fullyQualifiedTypeName name="kernel_part.part"/>
-<fullyQualifiedTypeName name="kernel_file_manager.file_directory"/>
-<fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 <fullyQualifiedTypeName name="kernel_interface.client_process_bar"/>
 <fullyQualifiedTypeName name="kernel_part.part_link_list"/>
+<fullyQualifiedTypeName name="kernel_file_manager.file_directory"/>
+<fullyQualifiedTypeName name="kernel_file_manager.file_reader"/>
+<fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 </qualifiedTypeNameHistroy>

@@ -774,9 +774,17 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			this.routine_array,
 		    this.target_buffer
 		];
-		for(var i=0,ni=p.length;i<ni;i++)
-			for(var j=0,nj=p[i].length;j<nj;j++)
+		for(var i=0,ni=p.length;i<ni;i++){
+			for(var j=0,nj=p[i].length;j<nj;j++){
+				if(typeof(p[i][j])=="object")
+					if(typeof(p[i][j].destroy)=="function"){
+						p[i][j].destroy(this.gl,p[i][j],j);
+						p[i][j].destroy=null;
+					}
 				p[i][j]=null;
+			}
+			p[i].length=0;
+		}
 		
 		this.channel								=null;
 	    this.link_name								=null;

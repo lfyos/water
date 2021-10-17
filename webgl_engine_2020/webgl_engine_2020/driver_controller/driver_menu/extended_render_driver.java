@@ -46,16 +46,14 @@ public class extended_render_driver extends render_driver
 			part_parameter part_par,system_parameter system_par,scene_parameter scene_par,
 			change_name mount_component_name_and_assemble_file_name,client_request_response request_response)
 	{
-		String install_component_name=render_fr.get_string();
-		String install_file_name=render_fr.get_string();
-		install_file_name=render_fr.directory_name+file_reader.separator(install_file_name);
-		mount_component_name_and_assemble_file_name.insert(new String[] {install_component_name,install_file_name});
-		
 		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
 	}
 	public part_driver create_part_driver(file_reader part_fr,part p,system_parameter system_par,
 			change_name mount_component_name_and_assemble_file_name,client_request_response request_response)
 	{
-		return new extended_part_driver();
+		file_reader fm=new file_reader(p.directory_name+p.material_file_name,p.file_charset);
+		part_driver ret_val=new extended_part_driver(fm.get_double(),fm.get_double(),fm.get_double(),fm.get_double());
+		fm.close();
+		return ret_val;
 	}
 }

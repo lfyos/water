@@ -1,6 +1,6 @@
 menu_part
 	menu_part
-	part\part.mesh
-	part\part.material
-	part\part.description
-	part\part.mp3
+	menu_part\part.mesh
+	menu_part\part.material
+	menu_part\part.description
+	menu_part\part.mp3

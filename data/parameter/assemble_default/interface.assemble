@@ -9,5 +9,6 @@
 	
 		not_part_list		mount		common.assemble
 		not_part_list		mount		background.assemble
+		not_part_list		external_part_driver_mount		menu_part	assemble\interface.assemble
 		
 	/* 1children number */	0

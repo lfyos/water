@@ -63,7 +63,10 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 	part_buffer_object=part_buffer_object.face;
 
 	for(var i=0,ni=component_data_array.length;i<ni;i++){
-		var buffer_id=component_data_array[i];
+		var buffer_id	=component_data_array[i];
+		var component_id=part_component_id_and_driver_id[buffer_id][0];
+		var driver_id	=part_component_id_and_driver_id[buffer_id][1];
+		
 		var clear_adjust_number=0;
 		while(data_buffer[buffer_id].length>1){
 			data_buffer[buffer_id].shift();
@@ -71,24 +74,22 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		}
 
 		var p=data_buffer[buffer_id][0];
-			
-		var component_id		=p[0];
-		var operate_component_id=p[1];
-		var operate_x			=p[2];
-		var operate_y			=p[3];
-		var operate_z			=p[4];
-		var x0					=p[5];
-		var y0					=p[6];
-		var dx					=p[7];
-		var dy					=p[8];
-		var url					=p[9];
+		var operate_component_id=p[0];
+		var operate_x			=p[1];
+		var operate_y			=p[2];
+		var operate_z			=p[3];
+		var x0					=p[4];
+		var y0					=p[5];
+		var dx					=p[6];
+		var dy					=p[7];
 		
 		
 		var model_matrix_data=component_location.get_component_location(component_id);
+		
 		var ep=render.component_event_processor[component_id];
 		if(typeof(ep)!="object")
 			continue;
-			
+
 		if(typeof(ep.pickupmousedown)!="function"){
 			ep.mousedown_flag=false;
 			ep.adjust_x=0;
@@ -168,7 +169,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		ep.y=(render.view.y-y0)/dy;
 		
 		if(typeof(ep.texture_object)=="undefined")
-			ep.texture_object=utility.load_texture_image(url);
+			ep.texture_object=utility.load_texture_image(instance_initialize_data[buffer_id]);
 		
 		gl.activeTexture(gl.TEXTURE0);
 		gl.bindTexture(gl.TEXTURE_2D,ep.texture_object);
