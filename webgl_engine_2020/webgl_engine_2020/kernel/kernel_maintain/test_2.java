@@ -9,8 +9,10 @@ public class test_2
 	{
 		debug_information.println("Begin");
 		
-		file_writer.delete_comment("E:\\water_all\\data\\project\\part\\other_part\\part_obj\\grass\\part_1\\part.obj.mesh.face", null);
-		file_writer.delete_comment("E:\\water_all\\data\\project\\part\\other_part\\part_obj\\grass\\part_3\\part.obj.mesh.face", null);
+		for(int i=0;i<=10;i++)
+			file_writer.delete_comment(
+				"E:\\water_all\\data\\project\\part\\other_part\\part_obj\\garden\\part_"+i+"\\part.obj.mesh.face", null);
+		
 		
 		debug_information.println("End");
 	}
