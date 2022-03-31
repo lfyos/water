@@ -1,0 +1,1210 @@
+version	2015.10
+
+/*	name			*/	运动信息
+/*	audio			*/	没有配音
+/*	description		*/	根节点
+/*	sequence/parallel	*/	sequence
+/*	direction		*/	no_direction
+/*	camera scale		*/	upper	1.0
+/*	children number		*/	11
+
+        /*	name			*/	00001:安放枕木基础
+        /*	audio			*/	没有配音
+        /*	description		*/	A型活动墩拼组前，应布置简易基础，在纵梁下方布置垫枕。垫梁组由垫梁P8、间隔撑P10拼组而成，垫梁P8螺栓孔相对较少的翼缘板朝上放置。垫梁组中心线与桥轴线间距设计值为2.25m，现场安放时此距离应略大于2.25m，以便于后续横联桁构的安装。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	2
+        
+                /*	name			*/	00001:安放枕木基础/00001
+                /*	audio			*/	sound\A型活动墩1.mp3
+                /*	description		*/	A型活动墩拼组前，应布置简易基础，在纵梁下方布置垫枕。垫梁组由垫梁P8、间隔撑P10拼组而成，垫梁P8螺栓孔相对较少的翼缘板朝上放置。垫梁组中心线与桥轴线间距设计值为2.25m，现场安放时此距离应略大于2.25m，以便于后续横联桁构的安装。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00001:安放枕木基础/00001/00001
+                        /*	audio			*/	sound\A型活动墩1.mp3
+                        /*	description		*/	A型活动墩拼组前，应布置简易基础，在纵梁下方布置垫枕。垫梁组由垫梁P8、间隔撑P10拼组而成，垫梁P8螺栓孔相对较少的翼缘板朝上放置。垫梁组中心线与桥轴线间距设计值为2.25m，现场安放时此距离应略大于2.25m，以便于后续横联桁构的安装。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩拼组垫木-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.5 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00001:安放枕木基础/00002
+                /*	audio			*/	sound\A型活动墩1.mp3
+                /*	description		*/	A型活动墩拼组前，应布置简易基础，在纵梁下方布置垫枕。垫梁组由垫梁P8、间隔撑P10拼组而成，垫梁P8螺栓孔相对较少的翼缘板朝上放置。垫梁组中心线与桥轴线间距设计值为2.25m，现场安放时此距离应略大于2.25m，以便于后续横联桁构的安装。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00001:安放枕木基础/00002/00001
+                        /*	audio			*/	sound\A型活动墩1.mp3
+                        /*	description		*/	A型活动墩拼组前，应布置简易基础，在纵梁下方布置垫枕。垫梁组由垫梁P8、间隔撑P10拼组而成，垫梁P8螺栓孔相对较少的翼缘板朝上放置。垫梁组中心线与桥轴线间距设计值为2.25m，现场安放时此距离应略大于2.25m，以便于后续横联桁构的安装。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩1-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.5 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00001:安放枕木基础/00002/00002
+                        /*	audio			*/	sound\A型活动墩1.mp3
+                        /*	description		*/	A型活动墩拼组前，应布置简易基础，在纵梁下方布置垫枕。垫梁组由垫梁P8、间隔撑P10拼组而成，垫梁P8螺栓孔相对较少的翼缘板朝上放置。垫梁组中心线与桥轴线间距设计值为2.25m，现场安放时此距离应略大于2.25m，以便于后续横联桁构的安装。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.5 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00002:安装1号、4号立柱桁架组
+        /*	audio			*/	没有配音
+        /*	description		*/	安装1号、4号立柱桁架组，立柱桁架组由立柱P0(安装在垫梁近中心位置)、立柱P1、斜杆P2、撑杆P3拼组而成。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00002:安装1号、4号立柱桁架组/00001
+                /*	audio			*/	sound\A型活动墩2.mp3
+                /*	description		*/	安装1号、4号立柱桁架组，立柱桁架组由立柱P0(安装在垫梁近中心位置)、立柱P1、斜杆P2、撑杆P3拼组而成。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	4
+                
+                        /*	name			*/	00002:安装1号、4号立柱桁架组/00001/00001
+                        /*	audio			*/	sound\A型活动墩2.mp3
+                        /*	description		*/	安装1号、4号立柱桁架组，立柱桁架组由立柱P0(安装在垫梁近中心位置)、立柱P1、斜杆P2、撑杆P3拼组而成。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩2-3
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.5 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00002:安装1号、4号立柱桁架组/00001/00002
+                        /*	audio			*/	sound\A型活动墩2.mp3
+                        /*	description		*/	安装1号、4号立柱桁架组，立柱桁架组由立柱P0(安装在垫梁近中心位置)、立柱P1、斜杆P2、撑杆P3拼组而成。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩2-2-7
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.5 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        A型活动墩2-2-7/p0-2
+                        0
+                        10
+                        A型活动墩1-2/垫梁P8-2
+                        0
+                        2
+                        
+                        /*	name			*/	00002:安装1号、4号立柱桁架组/00001/00003
+                        /*	audio			*/	sound\A型活动墩2.mp3
+                        /*	description		*/	安装1号、4号立柱桁架组，立柱桁架组由立柱P0(安装在垫梁近中心位置)、立柱P1、斜杆P2、撑杆P3拼组而成。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩2-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.5 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00002:安装1号、4号立柱桁架组/00001/00004
+                        /*	audio			*/	sound\A型活动墩2.mp3
+                        /*	description		*/	安装1号、4号立柱桁架组，立柱桁架组由立柱P0(安装在垫梁近中心位置)、立柱P1、斜杆P2、撑杆P3拼组而成。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩2-5
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.5 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00003:安装1号横联桁构P5
+        /*	audio			*/	没有配音
+        /*	description		*/	将横联桁构P5安装在两侧立柱P0下端,现场拼组时，可将横联斜杆P4用单螺栓预装在横联桁构P5上。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00003:安装1号横联桁构P5/00001
+                /*	audio			*/	sound\A型活动墩3.mp3
+                /*	description		*/	将横联桁构P5安装在两侧立柱P0下端,现场拼组时，可将横联斜杆P4用单螺栓预装在横联桁构P5上。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00003:安装1号横联桁构P5/00001/00001
+                        /*	audio			*/	sound\A型活动墩3.mp3
+                        /*	description		*/	将横联桁构P5安装在两侧立柱P0下端,现场拼组时，可将横联斜杆P4用单螺栓预装在横联桁构P5上。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩3-3
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.5 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        A型活动墩3-3/P5-1
+                        0
+                        17
+                        A型活动墩2-2-7/p0-2
+                        0
+                        28
+                        
+        /*	name			*/	00004:安装1号、2号纵梁PB0
+        /*	audio			*/	没有配音
+        /*	description		*/	安装1号、2号纵梁PB0。注意事项：①纵梁PB0一侧用螺栓连接在纵梁P0上，另一侧用枕木支垫水平。②此处完毕后将纵梁导板PB1安装在纵梁上，1个纵梁上安装2块。(5)安装2#、3#立柱桁架组(同步骤2)(6)安装2#横联桁构P5(同步骤3)(7)安装横梁撑杆P6P6连接在2组横联桁构P5的下端。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	2
+        
+                /*	name			*/	00004:安装1号、2号纵梁PB0/00001
+                /*	audio			*/	sound\A型活动墩4.mp3
+                /*	description		*/	安装1号、2号纵梁PB0。注意事项：①纵梁PB0一侧用螺栓连接在纵梁P0上，另一侧用枕木支垫水平。②此处完毕后将纵梁导板PB1安装在纵梁上，1个纵梁上安装2块。(5)安装2#、3#立柱桁架组(同步骤2)(6)安装2#横联桁构P5(同步骤3)(7)安装横梁撑杆P6P6连接在2组横联桁构P5的下端。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00004:安装1号、2号纵梁PB0/00001/00001
+                        /*	audio			*/	sound\A型活动墩4.mp3
+                        /*	description		*/	安装1号、2号纵梁PB0。注意事项：①纵梁PB0一侧用螺栓连接在纵梁P0上，另一侧用枕木支垫水平。②此处完毕后将纵梁导板PB1安装在纵梁上，1个纵梁上安装2块。(5)安装2#、3#立柱桁架组(同步骤2)(6)安装2#横联桁构P5(同步骤3)(7)安装横梁撑杆P6P6连接在2组横联桁构P5的下端。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩4-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.5 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        A型活动墩4-1/PB0-2
+                        0
+                        67
+                        A型活动墩2-2-7/p0-2
+                        0
+                        91
+                        
+                        /*	name			*/	00004:安装1号、2号纵梁PB0/00001/00002
+                        /*	audio			*/	sound\A型活动墩4.mp3
+                        /*	description		*/	安装1号、2号纵梁PB0。注意事项：①纵梁PB0一侧用螺栓连接在纵梁P0上，另一侧用枕木支垫水平。②此处完毕后将纵梁导板PB1安装在纵梁上，1个纵梁上安装2块。(5)安装2#、3#立柱桁架组(同步骤2)(6)安装2#横联桁构P5(同步骤3)(7)安装横梁撑杆P6P6连接在2组横联桁构P5的下端。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩4-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.5 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00004:安装1号、2号纵梁PB0/00002
+                /*	audio			*/	sound\A型活动墩4.mp3
+                /*	description		*/	安装1号、2号纵梁PB0。注意事项：①纵梁PB0一侧用螺栓连接在纵梁P0上，另一侧用枕木支垫水平。②此处完毕后将纵梁导板PB1安装在纵梁上，1个纵梁上安装2块。(5)安装2#、3#立柱桁架组(同步骤2)(6)安装2#横联桁构P5(同步骤3)(7)安装横梁撑杆P6P6连接在2组横联桁构P5的下端。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	6
+                
+                        /*	name			*/	00004:安装1号、2号纵梁PB0/00002/00001
+                        /*	audio			*/	sound\A型活动墩4.mp3
+                        /*	description		*/	安装1号、2号纵梁PB0。注意事项：①纵梁PB0一侧用螺栓连接在纵梁P0上，另一侧用枕木支垫水平。②此处完毕后将纵梁导板PB1安装在纵梁上，1个纵梁上安装2块。(5)安装2#、3#立柱桁架组(同步骤2)(6)安装2#横联桁构P5(同步骤3)(7)安装横梁撑杆P6P6连接在2组横联桁构P5的下端。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00004:安装1号、2号纵梁PB0/00002/00002
+                        /*	audio			*/	sound\A型活动墩4.mp3
+                        /*	description		*/	安装1号、2号纵梁PB0。注意事项：①纵梁PB0一侧用螺栓连接在纵梁P0上，另一侧用枕木支垫水平。②此处完毕后将纵梁导板PB1安装在纵梁上，1个纵梁上安装2块。(5)安装2#、3#立柱桁架组(同步骤2)(6)安装2#横联桁构P5(同步骤3)(7)安装横梁撑杆P6P6连接在2组横联桁构P5的下端。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-5
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00004:安装1号、2号纵梁PB0/00002/00003
+                        /*	audio			*/	sound\A型活动墩4.mp3
+                        /*	description		*/	安装1号、2号纵梁PB0。注意事项：①纵梁PB0一侧用螺栓连接在纵梁P0上，另一侧用枕木支垫水平。②此处完毕后将纵梁导板PB1安装在纵梁上，1个纵梁上安装2块。(5)安装2#、3#立柱桁架组(同步骤2)(6)安装2#横联桁构P5(同步骤3)(7)安装横梁撑杆P6P6连接在2组横联桁构P5的下端。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-8
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00004:安装1号、2号纵梁PB0/00002/00004
+                        /*	audio			*/	sound\A型活动墩4.mp3
+                        /*	description		*/	安装1号、2号纵梁PB0。注意事项：①纵梁PB0一侧用螺栓连接在纵梁P0上，另一侧用枕木支垫水平。②此处完毕后将纵梁导板PB1安装在纵梁上，1个纵梁上安装2块。(5)安装2#、3#立柱桁架组(同步骤2)(6)安装2#横联桁构P5(同步骤3)(7)安装横梁撑杆P6P6连接在2组横联桁构P5的下端。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-6
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00004:安装1号、2号纵梁PB0/00002/00005
+                        /*	audio			*/	sound\A型活动墩4.mp3
+                        /*	description		*/	安装1号、2号纵梁PB0。注意事项：①纵梁PB0一侧用螺栓连接在纵梁P0上，另一侧用枕木支垫水平。②此处完毕后将纵梁导板PB1安装在纵梁上，1个纵梁上安装2块。(5)安装2#、3#立柱桁架组(同步骤2)(6)安装2#横联桁构P5(同步骤3)(7)安装横梁撑杆P6P6连接在2组横联桁构P5的下端。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-7
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00004:安装1号、2号纵梁PB0/00002/00006
+                        /*	audio			*/	sound\A型活动墩4.mp3
+                        /*	description		*/	安装1号、2号纵梁PB0。注意事项：①纵梁PB0一侧用螺栓连接在纵梁P0上，另一侧用枕木支垫水平。②此处完毕后将纵梁导板PB1安装在纵梁上，1个纵梁上安装2块。(5)安装2#、3#立柱桁架组(同步骤2)(6)安装2#横联桁构P5(同步骤3)(7)安装横梁撑杆P6P6连接在2组横联桁构P5的下端。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-4
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00005:安装2号、3号立柱桁架组
+        /*	audio			*/	没有配音
+        /*	description		*/	将2#、3#立柱桁架组安装在垫梁组上,并与纵梁PBO相连。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	2
+        
+                /*	name			*/	00005:安装2号、3号立柱桁架组/00001
+                /*	audio			*/	sound\A型活动墩5.mp3
+                /*	description		*/	将2#、3#立柱桁架组安装在垫梁组上,并与纵梁PBO相连。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00005:安装2号、3号立柱桁架组/00001/00001
+                        /*	audio			*/	sound\A型活动墩5.mp3
+                        /*	description		*/	将2#、3#立柱桁架组安装在垫梁组上,并与纵梁PBO相连。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩2-6
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        A型活动墩2-6/p0-2
+                        0
+                        33
+                        A型活动墩4-1/PB0-2
+                        0
+                        82
+                        
+                        /*	name			*/	00005:安装2号、3号立柱桁架组/00001/00002
+                        /*	audio			*/	sound\A型活动墩5.mp3
+                        /*	description		*/	将2#、3#立柱桁架组安装在垫梁组上,并与纵梁PBO相连。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩2-2-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name			*/	00005:安装2号、3号立柱桁架组/00002
+                /*	audio			*/	sound\A型活动墩5.mp3
+                /*	description		*/	将2#、3#立柱桁架组安装在垫梁组上,并与纵梁PBO相连。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00005:安装2号、3号立柱桁架组/00002/00001
+                        /*	audio			*/	sound\A型活动墩5.mp3
+                        /*	description		*/	将2#、3#立柱桁架组安装在垫梁组上,并与纵梁PBO相连。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.5 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00005:安装2号、3号立柱桁架组/00002/00002
+                        /*	audio			*/	sound\A型活动墩5.mp3
+                        /*	description		*/	将2#、3#立柱桁架组安装在垫梁组上,并与纵梁PBO相连。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                内垫木-6
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	visible
+                        /*	end state	*/	invisible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.5 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name			*/	00006:安装2号横联桁构P5
+        /*	audio			*/	没有配音
+        /*	description		*/	安装2#横联桁构P5，步骤同第三步。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00006:安装2号横联桁构P5/00001
+                /*	audio			*/	sound\A型活动墩6.mp3
+                /*	description		*/	安装2#横联桁构P5，步骤同第三步。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00006:安装2号横联桁构P5/00001/00001
+                        /*	audio			*/	sound\A型活动墩6.mp3
+                        /*	description		*/	安装2#横联桁构P5，步骤同第三步。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩3-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.5 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        A型活动墩3-1/P5-1
+                        0
+                        273
+                        A型活动墩2-6/p0-2
+                        0
+                        2
+                        
+        /*	name			*/	00007:安装横梁撑杆P6
+        /*	audio			*/	没有配音
+        /*	description		*/	P6连接在2组横联桁构P5的下端。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00007:安装横梁撑杆P6/00001
+                /*	audio			*/	sound\A型活动墩7.mp3
+                /*	description		*/	P6连接在2组横联桁构P5的下端。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00007:安装横梁撑杆P6/00001/00001
+                        /*	audio			*/	sound\A型活动墩7.mp3
+                        /*	description		*/	P6连接在2组横联桁构P5的下端。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                P6-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.5 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        P6-1
+                        0
+                        0
+                        A型活动墩3-3/P5-1
+                        0
+                        33
+                        
+        /*	name			*/	00008:安装横梁组
+        /*	audio			*/	没有配音
+        /*	description		*/	安装横梁组，横梁组由横梁PA0、斜杆PA0-1、直杆PA0-2、节点板PA0-3、弧形支座拼组而成。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00008:安装横梁组/00001
+                /*	audio			*/	sound\A型活动墩8.mp3
+                /*	description		*/	安装横梁组，横梁组由横梁PA0、斜杆PA0-1、直杆PA0-2、节点板PA0-3、弧形支座拼组而成。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name			*/	00008:安装横梁组/00001/00001
+                        /*	audio			*/	sound\A型活动墩8.mp3
+                        /*	description		*/	安装横梁组，横梁组由横梁PA0、斜杆PA0-1、直杆PA0-2、节点板PA0-3、弧形支座拼组而成。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩5-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        A型活动墩5-2/PA0-2
+                        0
+                        6
+                        A型活动墩4-1/PB0-2
+                        0
+                        19
+                        
+        /*	name			*/	00009:安装1号、2号吊梁组
+        /*	audio			*/	没有配音
+        /*	description		*/	安装1#、2#吊梁组，吊梁组由牛腿P11、吊梁P12组成。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00009:安装1号、2号吊梁组/00001
+                /*	audio			*/	sound\A型活动墩9.mp3
+                /*	description		*/	安装1#、2#吊梁组，吊梁组由牛腿P11、吊梁P12组成。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00009:安装1号、2号吊梁组/00001/00001
+                        /*	audio			*/	sound\A型活动墩9.mp3
+                        /*	description		*/	安装1#、2#吊梁组，吊梁组由牛腿P11、吊梁P12组成。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩6-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00009:安装1号、2号吊梁组/00001/00002
+                        /*	audio			*/	sound\A型活动墩9.mp3
+                        /*	description		*/	安装1#、2#吊梁组，吊梁组由牛腿P11、吊梁P12组成。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩6-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -0.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        A型活动墩6-1/P11-1
+                        0
+                        39
+                        A型活动墩2-6/p0-2
+                        0
+                        159
+                        
+        /*	name			*/	00010:安装5吨拉链葫芦
+        /*	audio			*/	没有配音
+        /*	description		*/	安装5吨拉链葫芦。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00010:安装5吨拉链葫芦/00001
+                /*	audio			*/	sound\A型活动墩10.mp3
+                /*	description		*/	安装5吨拉链葫芦。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	4
+                
+                        /*	name			*/	00010:安装5吨拉链葫芦/00001/00001
+                        /*	audio			*/	sound\A型活动墩10.mp3
+                        /*	description		*/	安装5吨拉链葫芦。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩7-3
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00010:安装5吨拉链葫芦/00001/00002
+                        /*	audio			*/	sound\A型活动墩10.mp3
+                        /*	description		*/	安装5吨拉链葫芦。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩7-2
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00010:安装5吨拉链葫芦/00001/00003
+                        /*	audio			*/	sound\A型活动墩10.mp3
+                        /*	description		*/	安装5吨拉链葫芦。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩7-4
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00010:安装5吨拉链葫芦/00001/00004
+                        /*	audio			*/	sound\A型活动墩10.mp3
+                        /*	description		*/	安装5吨拉链葫芦。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩7-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.5 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        A型活动墩7-1/P12挂环-1
+                        0
+                        3
+                        A型活动墩6-1/p12-1
+                        0
+                        12
+                        
+        /*	name			*/	00011:安装托梁组
+        /*	audio			*/	没有配音
+        /*	description		*/	安装托梁组，托梁组：由托梁PA1、吊梁P9组成。
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00011:安装托梁组/00001
+                /*	audio			*/	sound\A型活动墩11.mp3
+                /*	description		*/	安装托梁组，托梁组：由托梁PA1、吊梁P9组成。
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00011:安装托梁组/00001/00001
+                        /*	audio			*/	sound\A型活动墩11.mp3
+                        /*	description		*/	安装托梁组，托梁组：由托梁PA1、吊梁P9组成。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩8-5
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	1
+                        没有标记
+                        A型活动墩8-5/PA1-1
+                        0
+                        1
+                        A型活动墩5-2/PA0-2
+                        0
+                        6
+                        
+                        /*	name			*/	00011:安装托梁组/00001/00002
+                        /*	audio			*/	sound\A型活动墩11.mp3
+                        /*	description		*/	安装托梁组，托梁组：由托梁PA1、吊梁P9组成。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                A型活动墩8-4
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 -1.0 0.0 0.0 1.0 
+                            
+                            /*	time length	*/	 1.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        

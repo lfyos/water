@@ -1,0 +1,83 @@
+/*	version								*/	2021.07.15
+/*	origin material						*/	0	0	0	1
+/*	default material					*/	0.0	0.5	0.0	0
+/*	origin  vertex_location_extra_data	*/	1
+/*	default vertex_location_extra_data	*/	1
+/*	default vertex_normal_extra_data	*/	1
+/*	max_attribute_number				*/	0
+
+/*	body_number		*/	1
+	/*  body    0  name    */  <镜向钢丝绳2>-<<钢丝绳2>-<拉伸1>>	/*  face_number */	3
+	/*  body 0 face 0  name	*/	<镜向钢丝绳2>-<<钢丝绳2>-<拉伸1>>的第0个表面
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	3.36143	-1.99019	3.9935E-14	8.70808E-4	1.0	-9.34656E-15	0.01
+	/*  total_face_primitive_number	*/  48
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	3.35143	-1.9902	-0.01	3.37709	4.50981	0.01
+
+	/*  loop number		*/	2
+		/*  body:0 face:0 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	3.36143	-1.99019	3.9935E-14	-8.70808E-4	-1.0	9.34656E-15	0.01
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	3.35151	-1.9902	-0.00999616	3.37138	-1.99019	0.01
+			/*  total_edge_primitive_number		*/	24
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:0 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	3.36709	4.5098	-2.08176E-14	-8.70808E-4	-1.0	9.34656E-15	0.01
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	3.35718	4.5098	-0.00999616	3.37704	4.50981	0.01
+			/*  total_edge_primitive_number		*/	24
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 1  name	*/	<镜向钢丝绳2>-<<钢丝绳2>-<拉伸1>>的第1个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-8.70808E-4	-1.0	9.34656E-15	3.36143	-1.99019	3.9935E-14
+	/*  total_face_primitive_number	*/  22
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	3.35143	-1.9902	-0.01	3.37143	-1.99018	0.01
+
+	/*  loop number		*/	1
+		/*  body:0 face:1 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	3.36143	-1.99019	3.9935E-14	-8.70808E-4	-1.0	9.34656E-15	0.01
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	3.35151	-1.9902	-0.00999616	3.37138	-1.99019	0.01
+			/*  total_edge_primitive_number		*/	24
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 2  name	*/	<镜向钢丝绳2>-<<钢丝绳2>-<拉伸1>>的第2个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-8.70808E-4	-1.0	9.34656E-15	3.36709	4.5098	-2.08176E-14
+	/*  total_face_primitive_number	*/  22
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	3.35709	4.5098	-0.01	3.37709	4.50981	0.01
+
+	/*  loop number		*/	1
+		/*  body:0 face:2 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	3.36709	4.5098	-2.08176E-14	-8.70808E-4	-1.0	9.34656E-15	0.01
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	3.35718	4.5098	-0.00999616	3.37704	4.50981	0.01
+			/*  total_edge_primitive_number		*/	24
+			/*  total_point_primitive_number	*/	1
+
+
+
+

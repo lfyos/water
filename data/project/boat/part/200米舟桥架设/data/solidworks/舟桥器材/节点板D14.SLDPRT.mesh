@@ -1,0 +1,843 @@
+/*	version								*/	2021.07.15
+/*	origin material						*/	0	0	0	1
+/*	default material					*/	0.0	0.5	0.0	0
+/*	origin  vertex_location_extra_data	*/	1
+/*	default vertex_location_extra_data	*/	1
+/*	default vertex_normal_extra_data	*/	1
+/*	max_attribute_number				*/	0
+
+/*	body_number		*/	1
+	/*  body    0  name    */  拉伸2	/*  face_number */	15
+	/*  body 0 face 0  name	*/	拉伸2的第0个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.787033	-0.0	0.616911	-0.32	0.01	0.0607934
+	/*  total_face_primitive_number	*/  14
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-0.32	0.0	-0.0986769	-0.195	0.01	0.0607934
+
+	/*  loop number		*/	1
+		/*  body:0 face:0 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.32	0.0	0.0607934	-0.616911	-0.0	0.787033
+			start_effective		-0.195	0.0	-0.0986769	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.32	0.0	0.0607934	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.32	0.0	-0.0986769	-0.195	0.0	0.0607934
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.32	0.01	0.0607934	-0.0	-1.0	-0.0
+			start_effective		-0.32	0.01	0.0607934	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.32	0.0	0.0607934	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.32	0.0	0.0607934	-0.32	0.01	0.0607934
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.32	0.01	0.0607934	-0.616911	-0.0	0.787033
+			start_effective		-0.195	0.01	-0.0986769	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.32	0.01	0.0607934	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.32	0.01	-0.0986769	-0.195	0.01	0.0607934
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.195	0.01	-0.0986769	-0.0	-1.0	-0.0
+			start_effective		-0.195	0.01	-0.0986769	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.195	0.0	-0.0986769	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.195	0.0	-0.0986769	-0.195	0.01	-0.0986769
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 1  name	*/	拉伸2的第1个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.881492	0.0	-0.472198	-0.296458	0.01	0.104742
+	/*  total_face_primitive_number	*/  6
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-0.32	0.0	0.0607934	-0.296458	0.01	0.104742
+
+	/*  loop number		*/	1
+		/*  body:0 face:1 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.296458	0.0	0.104742	0.472198	-0.0	0.881492
+			start_effective		-0.32	0.0	0.0607934	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.296458	0.0	0.104742	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.32	0.0	0.0607934	-0.296458	0.0	0.104742
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.296458	0.01	0.104742	-0.0	-1.0	-0.0
+			start_effective		-0.296458	0.01	0.104742	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.296458	0.0	0.104742	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.296458	0.0	0.104742	-0.296458	0.01	0.104742
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.296458	0.01	0.104742	0.472198	-0.0	0.881492
+			start_effective		-0.32	0.01	0.0607934	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.296458	0.01	0.104742	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.32	0.01	0.0607934	-0.296458	0.01	0.104742
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.32	0.01	0.0607934	-0.0	-1.0	-0.0
+			start_effective		-0.32	0.01	0.0607934	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.32	0.0	0.0607934	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.32	0.0	0.0607934	-0.32	0.01	0.0607934
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 2  name	*/	拉伸2的第2个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.121696	0.0	-0.992567	-0.095971	0.01	0.129323
+	/*  total_face_primitive_number	*/  12
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-0.296458	0.0	0.104742	-0.095971	0.01	0.129323
+
+	/*  loop number		*/	1
+		/*  body:0 face:2 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.095971	0.0	0.129323	0.992567	-0.0	0.121696
+			start_effective		-0.296458	0.0	0.104742	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.095971	0.0	0.129323	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.296458	0.0	0.104742	-0.095971	0.0	0.129323
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.095971	0.01	0.129323	-0.0	-1.0	-0.0
+			start_effective		-0.095971	0.01	0.129323	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.095971	0.0	0.129323	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.095971	0.0	0.129323	-0.095971	0.01	0.129323
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.095971	0.01	0.129323	0.992567	-0.0	0.121696
+			start_effective		-0.296458	0.01	0.104742	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.095971	0.01	0.129323	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.296458	0.01	0.104742	-0.095971	0.01	0.129323
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.296458	0.01	0.104742	-0.0	-1.0	-0.0
+			start_effective		-0.296458	0.01	0.104742	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.296458	0.0	0.104742	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.296458	0.0	0.104742	-0.296458	0.01	0.104742
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 3  name	*/	拉伸2的第3个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-0.887093	0.0	-0.46159	5.44866E-18	0.01	-0.0551158
+	/*  total_face_primitive_number	*/  12
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-0.095971	-3.46945E-18	-0.0551158	5.44866E-18	0.01	0.129323
+
+	/*  loop number		*/	1
+		/*  body:0 face:3 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	5.44866E-18	0.0	-0.0551158	0.46159	-0.0	-0.887093
+			start_effective		-0.095971	0.0	0.129323	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		5.44866E-18	0.0	-0.0551158	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.095971	0.0	-0.0551158	5.44866E-18	0.0	0.129323
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	5.44866E-18	0.01	-0.0551158	-0.0	-1.0	-0.0
+			start_effective		5.44866E-18	0.01	-0.0551158	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		5.44866E-18	0.0	-0.0551158	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	5.44866E-18	0.0	-0.0551158	5.44866E-18	0.01	-0.0551158
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	5.44866E-18	0.01	-0.0551158	0.46159	-0.0	-0.887093
+			start_effective		-0.095971	0.01	0.129323	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		5.44866E-18	0.01	-0.0551158	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.095971	0.01	-0.0551158	5.44866E-18	0.01	0.129323
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.095971	0.01	0.129323	-0.0	-1.0	-0.0
+			start_effective		-0.095971	0.01	0.129323	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.095971	0.0	0.129323	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.095971	0.0	0.129323	-0.095971	0.01	0.129323
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 4  name	*/	拉伸2的第4个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-1.0	0.0	1.25081E-16	0.0	0.01	-0.0986769
+	/*  total_face_primitive_number	*/  4
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.0	0.0	-0.0986769	5.44866E-18	0.01	-0.0551158
+
+	/*  loop number		*/	1
+		/*  body:0 face:4 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	-0.0986769	-1.25081E-16	-0.0	-1.0
+			start_effective		5.44866E-18	0.0	-0.0551158	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0	-0.0986769	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.0	-0.0986769	5.44866E-18	0.0	-0.0551158
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.01	-0.0986769	-0.0	-1.0	-0.0
+			start_effective		0.0	0.01	-0.0986769	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0	-0.0986769	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.0	-0.0986769	0.0	0.01	-0.0986769
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.01	-0.0986769	-1.25081E-16	-0.0	-1.0
+			start_effective		5.44866E-18	0.01	-0.0551158	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.01	-0.0986769	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.01	-0.0986769	5.44866E-18	0.01	-0.0551158
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	5.44866E-18	0.01	-0.0551158	-0.0	-1.0	-0.0
+			start_effective		5.44866E-18	0.01	-0.0551158	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		5.44866E-18	0.0	-0.0551158	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	5.44866E-18	0.0	-0.0551158	5.44866E-18	0.01	-0.0551158
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 5  name	*/	拉伸2的第5个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	1.0	-0.195	0.01	-0.0986769
+	/*  total_face_primitive_number	*/  12
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-0.195	0.0	-0.0986769	0.0	0.01	-0.0986769
+
+	/*  loop number		*/	1
+		/*  body:0 face:5 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.195	0.0	-0.0986769	-1.0	-0.0	-0.0
+			start_effective		0.0	0.0	-0.0986769	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.195	0.0	-0.0986769	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.195	0.0	-0.0986769	0.0	0.0	-0.0986769
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.195	0.01	-0.0986769	-0.0	-1.0	-0.0
+			start_effective		-0.195	0.01	-0.0986769	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.195	0.0	-0.0986769	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.195	0.0	-0.0986769	-0.195	0.01	-0.0986769
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.195	0.01	-0.0986769	-1.0	-0.0	-0.0
+			start_effective		0.0	0.01	-0.0986769	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.195	0.01	-0.0986769	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.195	0.01	-0.0986769	0.0	0.01	-0.0986769
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.01	-0.0986769	-0.0	-1.0	-0.0
+			start_effective		0.0	0.01	-0.0986769	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0	-0.0986769	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.0	-0.0986769	0.0	0.01	-0.0986769
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 6  name	*/	拉伸2的第6个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	1.0	0.0	-0.32	0.01	0.0607934
+	/*  total_face_primitive_number	*/  276
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-0.32	0.01	-0.0986769	0.0	0.01	0.129323
+
+	/*  loop number		*/	8
+		/*  body:0 face:6 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.211298	0.01	0.0307628	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.223276	0.01	0.0187729	-0.199301	0.01	0.0427628
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:6 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.27741	0.01	0.0661776	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.289388	0.01	0.0541878	-0.265413	0.01	0.0781776
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:6 loop 2 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.115778	0.01	0.0915644	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.127756	0.01	0.0795745	-0.103781	0.01	0.103564
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:6 loop 3 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.081159	0.01	0.0250324	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0931363	0.01	0.0130425	-0.0691616	0.01	0.0370324
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:6 loop 4 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.175	0.01	-0.0636769	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.186977	0.01	-0.0756668	-0.163003	0.01	-0.0516769
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:6 loop 5 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.105	0.01	-0.0636769	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.116977	0.01	-0.0756668	-0.0930025	0.01	-0.0516769
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:6 loop 6 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.035	0.01	-0.0636769	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0469773	0.01	-0.0756668	-0.0230025	0.01	-0.0516769
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:6 loop 7 edge number	*/	6
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.32	0.01	0.0607934	-0.616911	-0.0	0.787033
+			start_effective		-0.195	0.01	-0.0986769	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.32	0.01	0.0607934	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.32	0.01	-0.0986769	-0.195	0.01	0.0607934
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.296458	0.01	0.104742	0.472198	-0.0	0.881492
+			start_effective		-0.32	0.01	0.0607934	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.296458	0.01	0.104742	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.32	0.01	0.0607934	-0.296458	0.01	0.104742
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.095971	0.01	0.129323	0.992567	-0.0	0.121696
+			start_effective		-0.296458	0.01	0.104742	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.095971	0.01	0.129323	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.296458	0.01	0.104742	-0.095971	0.01	0.129323
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	5.44866E-18	0.01	-0.0551158	0.46159	-0.0	-0.887093
+			start_effective		-0.095971	0.01	0.129323	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		5.44866E-18	0.01	-0.0551158	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.095971	0.01	-0.0551158	5.44866E-18	0.01	0.129323
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.01	-0.0986769	-1.25081E-16	-0.0	-1.0
+			start_effective		5.44866E-18	0.01	-0.0551158	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.01	-0.0986769	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.01	-0.0986769	5.44866E-18	0.01	-0.0551158
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.5   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.195	0.01	-0.0986769	-1.0	-0.0	-0.0
+			start_effective		0.0	0.01	-0.0986769	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.195	0.01	-0.0986769	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.195	0.01	-0.0986769	0.0	0.01	-0.0986769
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 7  name	*/	拉伸2的第7个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	1.0	0.0	-0.32	0.0	0.0607934
+	/*  total_face_primitive_number	*/  276
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-0.32	0.0	-0.0986769	0.0	0.0	0.129323
+
+	/*  loop number		*/	8
+		/*  body:0 face:7 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.211298	0.0	0.0307628	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.223276	0.0	0.0187729	-0.199301	0.0	0.0427628
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:7 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.27741	0.0	0.0661776	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.289388	0.0	0.0541878	-0.265413	0.0	0.0781776
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:7 loop 2 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.115778	0.0	0.0915644	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.127756	0.0	0.0795745	-0.103781	0.0	0.103564
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:7 loop 3 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.081159	0.0	0.0250324	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0931363	0.0	0.0130425	-0.0691616	0.0	0.0370324
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:7 loop 4 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.175	0.0	-0.0636769	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.186977	0.0	-0.0756668	-0.163003	0.0	-0.0516769
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:7 loop 5 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.105	0.0	-0.0636769	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.116977	0.0	-0.0756668	-0.0930025	0.0	-0.0516769
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:7 loop 6 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.035	0.0	-0.0636769	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0469773	0.0	-0.0756668	-0.0230025	0.0	-0.0516769
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:7 loop 7 edge number	*/	6
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.32	0.0	0.0607934	-0.616911	-0.0	0.787033
+			start_effective		-0.195	0.0	-0.0986769	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.32	0.0	0.0607934	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.32	0.0	-0.0986769	-0.195	0.0	0.0607934
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.195	0.0	-0.0986769	-1.0	-0.0	-0.0
+			start_effective		0.0	0.0	-0.0986769	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.195	0.0	-0.0986769	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.195	0.0	-0.0986769	0.0	0.0	-0.0986769
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	-0.0986769	-1.25081E-16	-0.0	-1.0
+			start_effective		5.44866E-18	0.0	-0.0551158	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0	-0.0986769	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.0	-0.0986769	5.44866E-18	0.0	-0.0551158
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	5.44866E-18	0.0	-0.0551158	0.46159	-0.0	-0.887093
+			start_effective		-0.095971	0.0	0.129323	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		5.44866E-18	0.0	-0.0551158	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.095971	0.0	-0.0551158	5.44866E-18	0.0	0.129323
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.095971	0.0	0.129323	0.992567	-0.0	0.121696
+			start_effective		-0.296458	0.0	0.104742	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.095971	0.0	0.129323	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.296458	0.0	0.104742	-0.095971	0.0	0.129323
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.5   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.296458	0.0	0.104742	0.472198	-0.0	0.881492
+			start_effective		-0.32	0.0	0.0607934	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.296458	0.0	0.104742	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.32	0.0	0.0607934	-0.296458	0.0	0.104742
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 8  name	*/	拉伸2的第8个表面
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	-0.035	0.0	-0.0636769	-0.0	1.0	-0.0	0.012
+	/*  total_face_primitive_number	*/  48
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-0.047	0.0	-0.0756769	-0.023	0.01	-0.0516769
+
+	/*  loop number		*/	2
+		/*  body:0 face:8 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.035	0.0	-0.0636769	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0469773	0.0	-0.0756668	-0.0230025	0.0	-0.0516769
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:8 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.035	0.01	-0.0636769	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0469773	0.01	-0.0756668	-0.0230025	0.01	-0.0516769
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 9  name	*/	拉伸2的第9个表面
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	-0.105	0.0	-0.0636769	-0.0	1.0	-0.0	0.012
+	/*  total_face_primitive_number	*/  52
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-0.117	0.0	-0.0756769	-0.093	0.01	-0.0516769
+
+	/*  loop number		*/	2
+		/*  body:0 face:9 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.105	0.0	-0.0636769	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.116977	0.0	-0.0756668	-0.0930025	0.0	-0.0516769
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:9 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.105	0.01	-0.0636769	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.116977	0.01	-0.0756668	-0.0930025	0.01	-0.0516769
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 10  name	*/	拉伸2的第10个表面
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	-0.175	0.0	-0.0636769	-0.0	1.0	-0.0	0.012
+	/*  total_face_primitive_number	*/  48
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-0.187	0.0	-0.0756769	-0.163	0.01	-0.0516769
+
+	/*  loop number		*/	2
+		/*  body:0 face:10 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.175	0.0	-0.0636769	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.186977	0.0	-0.0756668	-0.163003	0.0	-0.0516769
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:10 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.175	0.01	-0.0636769	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.186977	0.01	-0.0756668	-0.163003	0.01	-0.0516769
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 11  name	*/	拉伸2的第11个表面
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	-0.081159	0.0	0.0250324	-0.0	1.0	-0.0	0.012
+	/*  total_face_primitive_number	*/  52
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-0.093159	0.0	0.0130324	-0.069159	0.01	0.0370324
+
+	/*  loop number		*/	2
+		/*  body:0 face:11 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.081159	0.0	0.0250324	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0931363	0.0	0.0130425	-0.0691616	0.0	0.0370324
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:11 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.081159	0.01	0.0250324	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0931363	0.01	0.0130425	-0.0691616	0.01	0.0370324
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 12  name	*/	拉伸2的第12个表面
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	-0.115778	0.0	0.0915644	-0.0	1.0	-0.0	0.012
+	/*  total_face_primitive_number	*/  52
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-0.127778	0.0	0.0795644	-0.103778	0.01	0.103564
+
+	/*  loop number		*/	2
+		/*  body:0 face:12 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.115778	0.0	0.0915644	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.127756	0.0	0.0795745	-0.103781	0.0	0.103564
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:12 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.115778	0.01	0.0915644	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.127756	0.01	0.0795745	-0.103781	0.01	0.103564
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 13  name	*/	拉伸2的第13个表面
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	-0.27741	0.0	0.0661776	-0.0	1.0	-0.0	0.012
+	/*  total_face_primitive_number	*/  48
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-0.28941	0.0	0.0541776	-0.26541	0.01	0.0781776
+
+	/*  loop number		*/	2
+		/*  body:0 face:13 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.27741	0.0	0.0661776	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.289388	0.0	0.0541878	-0.265413	0.0	0.0781776
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:13 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.27741	0.01	0.0661776	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.289388	0.01	0.0541878	-0.265413	0.01	0.0781776
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 14  name	*/	拉伸2的第14个表面
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	-0.211298	0.0	0.0307628	-0.0	1.0	-0.0	0.012
+	/*  total_face_primitive_number	*/  48
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-0.223298	0.0	0.0187628	-0.199298	0.01	0.0427628
+
+	/*  loop number		*/	2
+		/*  body:0 face:14 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.211298	0.0	0.0307628	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.223276	0.0	0.0187729	-0.199301	0.0	0.0427628
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:14 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.211298	0.01	0.0307628	0.0	1.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.223276	0.01	0.0187729	-0.199301	0.01	0.0427628
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+
+
