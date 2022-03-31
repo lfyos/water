@@ -1,0 +1,5 @@
+AM113_033_fraxinus	wire_006135113	part.mtl	0	0		0.025
+AM113_033_fraxinus	wire_006135113	part.mtl	1	0.025	1
+AM113_033_fraxinus	no_usemtl		part.mtl	1	0		1
+no_group			no_usemtl		part.mtl	1	0		1
+
