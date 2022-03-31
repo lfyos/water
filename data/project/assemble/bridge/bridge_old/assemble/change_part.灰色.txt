@@ -1,0 +1,44 @@
+parts\3号\3号.sldprt						bridge\灰色杆件\弦杆_编号_3.SLDPRT
+parts\5号甲\5号甲.sldprt					bridge\灰色杆件\腹杆_编号_5甲_原编号_5.SLDPRT
+parts\6号\6号.SLDPRT						bridge\灰色杆件\腹杆_编号_6.SLDPRT 
+parts\8号甲\8号甲.SLDPRT					bridge\灰色杆件\立杆_编号_8甲_原编号_8.SLDPRT
+parts\9号甲\9号甲.SLDPRT					bridge\灰色杆件\端立杆_编号_9甲_原编号_9.SLDPRT 
+parts\10号甲\10号甲.SLDPRT				bridge\灰色杆件\平联斜杆_编号_10甲_原编号_10.SLDPRT
+parts\11号\11号.SLDPRT					bridge\灰色杆件\横联斜杆_编号_11.SLDPRT
+parts\12号\12号.SLDPRT					bridge\灰色杆件\支杆_编号_12_原编号_12甲.SLDPRT
+parts\13号\13号.sldprt					bridge\灰色杆件\短弦杆_编号_13.SLDPRT
+parts\14号甲\14号甲.sldprt				bridge\灰色杆件\大拼接板_编号_14甲_原编号_14.SLDPRT
+parts\16号\16号.sldprt					bridge\灰色杆件\拼接板_编号_16.SLDPRT
+parts\21号\21号.sldprt					bridge\灰色杆件\填板_编号_21.SLDPRT
+parts\22号甲\22号甲.sldprt				bridge\灰色杆件\结点板_编号_22甲.SLDPRT
+parts\24号\24号.SLDPRT					bridge\灰色杆件\短弦杆_编号_24.SLDPRT
+
+parts\218号\218号.SLDPRT					bridge\灰色杆件\结点板_编号_218_原编号_18.SLDPRT
+parts\219号\219号.SLDPRT					bridge\灰色杆件\小结点板_编号_219_原编号_19.SLDPRT
+
+parts\251号\251号.sldprt					bridge\灰色杆件\加强支杆_编号_251_原编号_101.SLDPRT
+parts\252号\252号.SLDPRT					bridge\灰色杆件\小填板_编号_252_原编号_102.SLDPRT
+parts\253号\253号.SLDPRT					bridge\灰色杆件\横联交叉填板_编号_253_原编号_103.SLDPRT
+parts\254号\254号.sldprt					bridge\灰色杆件\顶梁_编号_254_原编号_104.SLDPRT
+										
+parts\255号\255号.sldprt					bridge\灰色杆件\连接角_编号_255_原编号_105.SLDPRT
+parts\259号\259号.SLDPRT					bridge\灰色杆件\填板_编号_259_原编号_109.SLDPRT
+
+
+parts\501号\501号.sldprt					bridge\灰色杆件\弦杆_编号_501_原编号_1.SLDPRT
+parts\502号\502号.sldprt					bridge\灰色杆件\弦杆_编号_502_原编号_2.SLDPRT
+parts\507号\507号.sldprt					bridge\灰色杆件\腹杆_编号_507_原编号_7.SLDPRT
+parts\520号\520号.SLDPRT					bridge\灰色杆件\填板_编号_520_原编号_20.SLDPRT
+
+parts\29甲螺栓\29甲螺栓.SLDPRT				bridge\灰色杆件\螺栓_29甲.SLDPRT
+parts\29乙螺栓\29乙螺栓.SLDPRT				bridge\灰色杆件\螺栓_29乙.SLDPRT
+parts\30螺栓\30螺栓.SLDPRT				bridge\灰色杆件\螺栓_30.SLDPRT
+parts\31螺栓\31螺栓.SLDPRT				bridge\灰色杆件\螺栓_31.SLDPRT
+parts\32螺栓\32螺栓.SLDPRT				bridge\灰色杆件\螺栓_32.SLDPRT
+
+parts\33号栓钉\33号栓钉.SLDPRT				bridge\灰色杆件\栓钉_33.SLDPRT
+parts\34号栓钉\34号栓钉.SLDPRT				bridge\灰色杆件\栓钉_34.SLDPRT
+parts\35号栓钉\35栓钉.SLDPRT				bridge\灰色杆件\栓钉_35.SLDPRT
+parts\36号栓钉\36号栓钉.SLDPRT				bridge\灰色杆件\栓钉_36.SLDPRT
+
+枕木\枕木.sldprt							bridge\灰色杆件\枕木.SLDPRT

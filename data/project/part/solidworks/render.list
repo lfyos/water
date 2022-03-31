@@ -1,0 +1,58 @@
+bridge_color	any_assemble_part_name	solidworks\big.txt				bridge\color.大件.list			null	null
+bridge_color	any_assemble_part_name	solidworks\big.coarse.txt		bridge\color.coarse.大件.list	null	null
+bridge_color	any_assemble_part_name	solidworks\small.txt			bridge\color.小件.list			null	null
+bridge_color	any_assemble_part_name	solidworks\high_priority.txt	bridge\color.no_box.list		null	null
+
+bridge_grey		any_assemble_part_name	solidworks\big.txt				bridge\grey.大件.list			null	null
+bridge_grey		any_assemble_part_name	solidworks\big.coarse.txt		bridge\grey.coarse.大件.list		null	null
+bridge_grey		any_assemble_part_name	solidworks\small.txt			bridge\grey.小件.list			null	null
+bridge_grey		any_assemble_part_name	solidworks\high_priority.txt	bridge\grey.no_box.list			null	null
+
+bridge_green	any_assemble_part_name	solidworks\big.txt				bridge\green.大件.list			null	null
+bridge_green	any_assemble_part_name	solidworks\big.coarse.txt		bridge\green.coarse.大件.list	null	null
+bridge_green	any_assemble_part_name	solidworks\small.txt			bridge\green.小件.list			null	null
+bridge_green	any_assemble_part_name	solidworks\high_priority.txt	bridge\green.no_box.list		null	null
+
+64_color		any_assemble_part_name	solidworks\parameter.txt		64\color.list					null	null
+64_green		any_assemble_part_name	solidworks\parameter.txt		64\green.list					null	null
+
+87_color		any_assemble_part_name	solidworks\big.txt				87\color.大件.list				null	null
+87_color		any_assemble_part_name	solidworks\middle.txt			87\color.中件.list				null	null
+87_color		any_assemble_part_name	solidworks\small.txt			87\color.小件.list				null	null
+
+87_green		any_assemble_part_name	solidworks\big.txt				87\green.大件.list				null	null
+87_green		any_assemble_part_name	solidworks\middle.txt			87\green.中件.list				null	null
+87_green		any_assemble_part_name	solidworks\small.txt			87\green.小件.list				null	null
+
+65_color		any_assemble_part_name	solidworks\big.txt				65\color.大件.list				null	null
+65_color		any_assemble_part_name	solidworks\middle.txt			65\color.中件.list				null	null
+65_color		any_assemble_part_name	solidworks\small.txt			65\color.小件.list				null	null
+
+65_green		any_assemble_part_name	solidworks\big.txt				65\green.大件.list				null	null
+65_green		any_assemble_part_name	solidworks\middle.txt			65\green.中件.list				null	null
+65_green		any_assemble_part_name	solidworks\small.txt			65\green.小件.list				null	null
+
+83_color		any_assemble_part_name	solidworks\big.txt				83\color.大件.list				null	null
+83_color		any_assemble_part_name	solidworks\middle.txt			83\color.中件.list				null	null
+83_color		any_assemble_part_name	solidworks\small.txt			83\color.小件.list				null	null
+83_color		any_assemble_part_name	solidworks\big.coarse.txt		83\color.coarse.大件.list		null	null
+83_color		any_assemble_part_name	solidworks\middle.coarse.txt	83\color.coarse.中件.list		null	null
+
+83_green		any_assemble_part_name	solidworks\big.txt				83\green.大件.list				null	null
+83_green		any_assemble_part_name	solidworks\middle.txt			83\green.中件.list				null	null
+83_green		any_assemble_part_name	solidworks\small.txt			83\green.小件.list				null	null
+83_green		any_assemble_part_name	solidworks\big.coarse.txt		83\green.coarse.大件.list		null	null
+
+83_green		any_assemble_part_name	solidworks\middle.coarse.txt	83\green.coarse.中件.list		null	null
+83_grey			any_assemble_part_name	solidworks\big.txt				83\grey.大件.list				null	null
+83_grey			any_assemble_part_name	solidworks\middle.txt			83\grey.中件.list				null	null
+83_grey			any_assemble_part_name	solidworks\small.txt			83\grey.小件.list				null	null
+83_grey			any_assemble_part_name	solidworks\big.coarse.txt		83\grey.coarse.大件.list			null	null
+83_grey			any_assemble_part_name	solidworks\middle.coarse.txt	83\grey.coarse.中件.list			null	null
+
+mount			any_assemble_part_name	solidworks\parameter.txt		mount\mount.list				null	null
+mount			any_assemble_part_name	solidworks\parameter.txt		mount\railway.list				null	null
+mount			any_assemble_part_name	solidworks\parameter.txt		mount\拆装梁枕木.list				null	null
+mount			any_assemble_part_name	solidworks\parameter.txt		mount\64.list					null	null
+mount			any_assemble_part_name	solidworks\parameter.txt		mount\64枕木.list				null	null
+

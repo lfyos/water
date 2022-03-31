@@ -1,0 +1,400 @@
+version	2015.10
+
+/*	name				*/	movement
+/*	audio				*/	sound.mp3
+/*	description			*/	description
+/*	sequence/parallel	*/	sequence
+/*	direction			*/	no_direction
+/*	camera scale		*/	upper	1.0
+/*	children number		*/	13
+
+        /*	name				*/	拼装三号弦杆yyy
+        /*	audio				*/	刘福岩的配音文件
+        /*	description			*/	刘福岩的描述
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	0
+        
+        component_start
+        
+                梁端_上4米_下2米-2/上弦3号弦杆及四个8甲立杆的组合-1/两根3号构成的上弦杆及251号加强支杆-1/两个3号弦杆的组合-1/弦杆_编号_3-2
+                
+        component_end
+        
+        
+        /*	start state	*/	invisible
+        /*	end state	*/	visible
+        /*	step number	*/	1
+        
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 6.123233995736766E-17 0.0 -1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 6.123233995736766E-17 0.0 2.0 2.0 0.0 1.0 
+            
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+            
+        
+        /*	match number	*/	0
+        
+        /*	name				*/	拼装三号弦杆yyy
+        /*	audio				*/	刘福岩的配音文件
+        /*	description			*/	刘福岩的描述
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	0
+        
+        component_start
+        
+                两片梁16.00米-1/上弦3号弦杆及四个8甲立杆的组合-3/两根3号构成的上弦杆及251号加强支杆-1/两个3号弦杆的组合-1/弦杆_编号_3-1
+                
+        component_end
+        
+        
+        /*	start state	*/	invisible
+        /*	end state	*/	visible
+        /*	step number	*/	1
+        
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 6.123233995736766E-17 0.0 -1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 6.123233995736766E-17 0.0 2.0 2.0 0.0 1.0 
+            
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+            
+        
+        /*	match number	*/	0
+        
+        /*	name				*/	拼装三号弦杆yyy
+        /*	audio				*/	刘福岩的配音文件
+        /*	description			*/	刘福岩的描述
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	0
+        
+        component_start
+        
+                两片梁16.00米-1/上弦3号弦杆及四个8甲立杆的组合-3/两根3号构成的上弦杆及251号加强支杆-1/两个3号弦杆的组合-1/弦杆_编号_3-2
+                
+        component_end
+        
+        
+        /*	start state	*/	invisible
+        /*	end state	*/	visible
+        /*	step number	*/	1
+        
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 6.123233995736766E-17 0.0 -1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 6.123233995736766E-17 0.0 2.0 2.0 0.0 1.0 
+            
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+            
+        
+        /*	match number	*/	0
+        
+        /*	name				*/	拼装三号弦杆yyy
+        /*	audio				*/	刘福岩的配音文件
+        /*	description			*/	刘福岩的描述
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	0
+        
+        component_start
+        
+                两片梁16.00米-1/上弦3号弦杆及四个8甲立杆的组合-3/两根3号构成的上弦杆及251号加强支杆-1/两个3号弦杆的组合-5/弦杆_编号_3-1
+                
+        component_end
+        
+        
+        /*	start state	*/	invisible
+        /*	end state	*/	visible
+        /*	step number	*/	1
+        
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 6.123233995736766E-17 0.0 -1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 6.123233995736766E-17 0.0 2.0 2.0 0.0 1.0 
+            
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+            
+        
+        /*	match number	*/	0
+        
+        /*	name				*/	拼装三号弦杆yyy
+        /*	audio				*/	刘福岩的配音文件
+        /*	description			*/	刘福岩的描述
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	0
+        
+        component_start
+        
+                两片梁16.00米-1/上弦3号弦杆及四个8甲立杆的组合-3/两根3号构成的上弦杆及251号加强支杆-1/两个3号弦杆的组合-5/弦杆_编号_3-2
+                
+        component_end
+        
+        
+        /*	start state	*/	invisible
+        /*	end state	*/	visible
+        /*	step number	*/	1
+        
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 6.123233995736766E-17 0.0 -1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 6.123233995736766E-17 0.0 2.0 2.0 0.0 1.0 
+            
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+            
+        
+        /*	match number	*/	0
+        
+        /*	name				*/	拼装三号弦杆yyy
+        /*	audio				*/	刘福岩的配音文件
+        /*	description			*/	刘福岩的描述
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	0
+        
+        component_start
+        
+                两片梁16.00米-1/上弦3号弦杆及四个8甲立杆的组合-1/两根3号构成的上弦杆及251号加强支杆-1/两个3号弦杆的组合-1/弦杆_编号_3-2
+                
+        component_end
+        
+        
+        /*	start state	*/	invisible
+        /*	end state	*/	visible
+        /*	step number	*/	1
+        
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 6.123233995736766E-17 0.0 -1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 6.123233995736766E-17 0.0 2.0 2.0 0.0 1.0 
+            
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+            
+        
+        /*	match number	*/	0
+        
+        /*	name				*/	拼装三号弦杆yyy
+        /*	audio				*/	刘福岩的配音文件
+        /*	description			*/	刘福岩的描述
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	0
+        
+        component_start
+        
+                两片梁16.00米-1/上弦3号弦杆及四个8甲立杆的组合-1/两根3号构成的上弦杆及251号加强支杆-1/两个3号弦杆的组合-1/弦杆_编号_3-1
+                
+        component_end
+        
+        
+        /*	start state	*/	invisible
+        /*	end state	*/	visible
+        /*	step number	*/	1
+        
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 6.123233995736766E-17 0.0 -1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 6.123233995736766E-17 0.0 2.0 2.0 0.0 1.0 
+            
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+            
+        
+        /*	match number	*/	0
+        
+        /*	name				*/	拼装三号弦杆yyy
+        /*	audio				*/	刘福岩的配音文件
+        /*	description			*/	刘福岩的描述
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	0
+        
+        component_start
+        
+                两片梁16.00米-1/上弦3号弦杆及四个8甲立杆的组合-1/两根3号构成的上弦杆及251号加强支杆-1/两个3号弦杆的组合-5/弦杆_编号_3-1
+                
+        component_end
+        
+        
+        /*	start state	*/	invisible
+        /*	end state	*/	visible
+        /*	step number	*/	1
+        
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 6.123233995736766E-17 0.0 -1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 6.123233995736766E-17 0.0 2.0 2.0 0.0 1.0 
+            
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+            
+        
+        /*	match number	*/	0
+        
+        /*	name				*/	拼装三号弦杆yyy
+        /*	audio				*/	刘福岩的配音文件
+        /*	description			*/	刘福岩的描述
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	0
+        
+        component_start
+        
+                两片梁16.00米-1/上弦3号弦杆及四个8甲立杆的组合-1/两根3号构成的上弦杆及251号加强支杆-1/两个3号弦杆的组合-5/弦杆_编号_3-2
+                
+        component_end
+        
+        
+        /*	start state	*/	invisible
+        /*	end state	*/	visible
+        /*	step number	*/	1
+        
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 6.123233995736766E-17 0.0 -1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 6.123233995736766E-17 0.0 2.0 2.0 0.0 1.0 
+            
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+            
+        
+        /*	match number	*/	0
+        
+        /*	name				*/	拼装三号弦杆yyy
+        /*	audio				*/	刘福岩的配音文件
+        /*	description			*/	刘福岩的描述
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	0
+        
+        component_start
+        
+                梁端_上4米_下2米-1/上弦3号弦杆及四个8甲立杆的组合-1/两根3号构成的上弦杆及251号加强支杆-1/两个3号弦杆的组合-5/弦杆_编号_3-1
+                
+        component_end
+        
+        
+        /*	start state	*/	invisible
+        /*	end state	*/	visible
+        /*	step number	*/	1
+        
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 6.123233995736766E-17 0.0 -1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 6.123233995736766E-17 0.0 2.0 2.0 0.0 1.0 
+            
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+            
+        
+        /*	match number	*/	0
+        
+        /*	name				*/	拼装三号弦杆yyy
+        /*	audio				*/	刘福岩的配音文件
+        /*	description			*/	刘福岩的描述
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	0
+        
+        component_start
+        
+                梁端_上4米_下2米-1/上弦3号弦杆及四个8甲立杆的组合-1/两根3号构成的上弦杆及251号加强支杆-1/两个3号弦杆的组合-5/弦杆_编号_3-2
+                
+        component_end
+        
+        
+        /*	start state	*/	invisible
+        /*	end state	*/	visible
+        /*	step number	*/	1
+        
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 6.123233995736766E-17 0.0 -1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 6.123233995736766E-17 0.0 2.0 2.0 0.0 1.0 
+            
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+            
+        
+        /*	match number	*/	0
+        
+        /*	name				*/	拼装三号弦杆yyy
+        /*	audio				*/	刘福岩的配音文件
+        /*	description			*/	刘福岩的描述
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	0
+        
+        component_start
+        
+                梁端_上4米_下2米-1/上弦3号弦杆及四个8甲立杆的组合-1/两根3号构成的上弦杆及251号加强支杆-1/两个3号弦杆的组合-1/弦杆_编号_3-2
+                
+        component_end
+        
+        
+        /*	start state	*/	invisible
+        /*	end state	*/	visible
+        /*	step number	*/	1
+        
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 6.123233995736766E-17 0.0 -1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 6.123233995736766E-17 0.0 2.0 2.0 0.0 1.0 
+            
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+            
+        
+        /*	match number	*/	0
+        
+        /*	name				*/	拼装三号弦杆yyy
+        /*	audio				*/	刘福岩的配音文件
+        /*	description			*/	刘福岩的描述
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	0
+        
+        component_start
+        
+                梁端_上4米_下2米-1/上弦3号弦杆及四个8甲立杆的组合-1/两根3号构成的上弦杆及251号加强支杆-1/两个3号弦杆的组合-1/弦杆_编号_3-1
+                
+        component_end
+        
+        
+        /*	start state	*/	invisible
+        /*	end state	*/	visible
+        /*	step number	*/	1
+        
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 6.123233995736766E-17 0.0 -1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 6.123233995736766E-17 0.0 2.0 2.0 0.0 1.0 
+            
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+            
+        
+        /*	match number	*/	0
+        

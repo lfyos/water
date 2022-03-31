@@ -1,0 +1,18 @@
+/*	1:name	*/	system_root_component
+/*	1:type	*/	undefined_part
+/*	1:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+/*	1:child_number	*/	2	
+		/*	2:name			*/	part_list_component		
+		/*	2:type			*/	undefined_part
+		/*	2:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+				part_list			mount		..\..\..\element\3乘4墩身\3乘4样式83墩9.0米墩身.SLDASM.assemble
+				part_list			mount		..\..\..\element\3乘4上垫梁\83墩_3乘4样式上垫梁_64粱_24+24跨度.SLDASM.assemble
+
+		/*	2:child_number	*/	0
+		
+		/*	2:name			*/	not_part_list_component
+		/*	2:type			*/	undefined_part
+		/*	2:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+				not_part_list		mount	interface.assemble
+				not_part_list		mount	movement.assemble
+		/*	2:child_number	*/	0

@@ -1,0 +1,203 @@
+1：标准三角
+	绿色\基本杆件\1：标准三角.SLDPRT
+	green\1：标准三角.SLDPRT.mesh
+	green\1：标准三角.SLDPRT.material
+	声音和描述\1：标准三角.SLDPRT.description
+	声音和描述\1.SLDPRT.mp3
+
+10：2米低支点端构架
+	绿色\基本杆件\10：2米低支点端构架.SLDPRT
+	green\10：2米低支点端构架.SLDPRT.mesh
+	green\10：2米低支点端构架.SLDPRT.material
+	声音和描述\10：2米低支点端构架.SLDPRT.description
+	声音和描述\10.SLDPRT.mp3
+
+11：3米低支点端构架
+	绿色\基本杆件\11：3米低支点端构架.SLDPRT
+	green\11：3米低支点端构架.SLDPRT.mesh
+	green\11：3米低支点端构架.SLDPRT.material
+	声音和描述\11：3米低支点端构架.SLDPRT.description
+	声音和描述\11.SLDPRT.mp3
+
+21：加强三角
+	绿色\基本杆件\21：加强三角.SLDPRT
+	green\21：加强三角.SLDPRT.mesh
+	green\21：加强三角.SLDPRT.material
+	声音和描述\21：加强三角.SLDPRT.description
+	声音和描述\21.SLDPRT.mp3
+
+23：加强弦杆
+	绿色\基本杆件\23：加强弦杆.SLDPRT
+	green\23：加强弦杆.SLDPRT.mesh
+	green\23：加强弦杆.SLDPRT.material
+	声音和描述\23：加强弦杆.SLDPRT.description
+	声音和描述\23.SLDPRT.mp3
+
+2：端构架
+	绿色\基本杆件\2：端构架.SLDPRT
+	green\2：端构架.SLDPRT.mesh
+	green\2：端构架.SLDPRT.material
+	声音和描述\2：端构架.SLDPRT.description
+	声音和描述\2.SLDPRT.mp3
+
+3：标准弦杆
+	绿色\基本杆件\3：标准弦杆.SLDPRT
+	green\3：标准弦杆.SLDPRT.mesh
+	green\3：标准弦杆.SLDPRT.material
+	声音和描述\3：标准弦杆.SLDPRT.description
+	声音和描述\3.SLDPRT.mp3
+
+4：端弦杆
+	绿色\基本杆件\4：端弦杆.SLDPRT
+	green\4：端弦杆.SLDPRT.mesh
+	green\4：端弦杆.SLDPRT.material
+	声音和描述\4：端弦杆.SLDPRT.description
+	声音和描述\4.SLDPRT.mp3
+
+5：斜弦杆
+	绿色\基本杆件\5：斜弦杆.SLDPRT
+	green\5：斜弦杆.SLDPRT.mesh
+	green\5：斜弦杆.SLDPRT.material
+	声音和描述\5：斜弦杆.SLDPRT.description
+	声音和描述\5.SLDPRT.mp3
+
+6：撑杆
+	绿色\基本杆件\6：撑杆.SLDPRT
+	green\6：撑杆.SLDPRT.mesh
+	green\6：撑杆.SLDPRT.material
+	声音和描述\6：撑杆.SLDPRT.description
+	声音和描述\6.SLDPRT.mp3
+
+7：1.5米辅助端构架
+	绿色\基本杆件\7：1.5米辅助端构架.SLDPRT
+	green\7：1.5米辅助端构架.SLDPRT.mesh
+	green\7：1.5米辅助端构架.SLDPRT.material
+	声音和描述\7：1.5米辅助端构架.SLDPRT.description
+	声音和描述\7.SLDPRT.mp3
+
+8：2.5米辅助端构架
+	绿色\基本杆件\8：2.5米辅助端构架.SLDPRT
+	green\8：2.5米辅助端构架.SLDPRT.mesh
+	green\8：2.5米辅助端构架.SLDPRT.material
+	声音和描述\8：2.5米辅助端构架.SLDPRT.description
+	声音和描述\8.SLDPRT.mp3
+
+9：3米辅助端构架
+	绿色\基本杆件\9：3米辅助端构架.SLDPRT
+	green\9：3米辅助端构架.SLDPRT.mesh
+	green\9：3米辅助端构架.SLDPRT.material
+	声音和描述\9：3米辅助端构架.SLDPRT.description
+	声音和描述\9.SLDPRT.mp3
+
+一号U型螺栓
+	绿色\基本杆件\一号U型螺栓.SLDPRT
+	green\一号U型螺栓.SLDPRT.mesh
+	green\一号U型螺栓.SLDPRT.material
+	声音和描述\一号U型螺栓.SLDPRT.description
+	声音和描述\bolt_u_1.SLDPRT.mp3
+
+一号U型螺栓垫片
+	绿色\基本杆件\一号U型螺栓垫片.SLDPRT
+	green\一号U型螺栓垫片.SLDPRT.mesh
+	green\一号U型螺栓垫片.SLDPRT.material
+	声音和描述\一号U型螺栓垫片.SLDPRT.description
+	声音和描述\bolt_u_1.SLDPRT.mp3
+
+三号U型螺栓
+	绿色\基本杆件\三号U型螺栓.SLDPRT
+	green\三号U型螺栓.SLDPRT.mesh
+	green\三号U型螺栓.SLDPRT.material
+	声音和描述\三号U型螺栓.SLDPRT.description
+	声音和描述\bolt_u_3.SLDPRT.mp3
+
+三号U型螺栓垫片
+	绿色\基本杆件\三号U型螺栓垫片.SLDPRT
+	green\三号U型螺栓垫片.SLDPRT.mesh
+	green\三号U型螺栓垫片.SLDPRT.material
+	声音和描述\三号U型螺栓垫片.SLDPRT.description
+	声音和描述\bolt_u_3.SLDPRT.mp3
+
+二号U型螺栓
+	绿色\基本杆件\二号U型螺栓.SLDPRT
+	green\二号U型螺栓.SLDPRT.mesh
+	green\二号U型螺栓.SLDPRT.material
+	声音和描述\二号U型螺栓.SLDPRT.description
+	声音和描述\bolt_u_2.SLDPRT.mp3
+
+二号U型螺栓垫片
+	绿色\基本杆件\二号U型螺栓垫片.SLDPRT
+	green\二号U型螺栓垫片.SLDPRT.mesh
+	green\二号U型螺栓垫片.SLDPRT.material
+	声音和描述\二号U型螺栓垫片.SLDPRT.description
+	声音和描述\bolt_u_2.SLDPRT.mp3
+
+垫枕
+	绿色\基本杆件\垫枕.SLDPRT
+	green\垫枕.SLDPRT.mesh
+	green\垫枕.SLDPRT.material
+	声音和描述\垫枕.SLDPRT.description
+	声音和描述\垫枕.SLDPRT.mp3
+
+撑杆销拴
+	绿色\基本杆件\撑杆销拴.SLDPRT
+	green\撑杆销拴.SLDPRT.mesh
+	green\撑杆销拴.SLDPRT.material
+	声音和描述\撑杆销拴.SLDPRT.description
+	声音和描述\jackstay_pin.SLDPRT.mp3
+
+撑杆销拴垫圈
+	绿色\基本杆件\撑杆销拴垫圈.SLDPRT
+	green\撑杆销拴垫圈.SLDPRT.mesh
+	green\撑杆销拴垫圈.SLDPRT.material
+	声音和描述\撑杆销拴垫圈.SLDPRT.description
+	声音和描述\jackstay_pin.SLDPRT.mp3
+
+横联套管
+	绿色\基本杆件\横联套管.SLDPRT
+	green\横联套管.SLDPRT.mesh
+	green\横联套管.SLDPRT.material
+	声音和描述\横联套管.SLDPRT.description
+	声音和描述\link_pipe.SLDPRT.mp3
+
+横联套管螺栓
+	绿色\基本杆件\横联套管螺栓.SLDPRT
+	green\横联套管螺栓.SLDPRT.mesh
+	green\横联套管螺栓.SLDPRT.material
+	声音和描述\横联套管螺栓.SLDPRT.description
+	声音和描述\link_pipe_bolt.SLDPRT.mp3
+
+联结系槽钢
+	绿色\基本杆件\联结系槽钢.SLDPRT
+	green\联结系槽钢.SLDPRT.mesh
+	green\联结系槽钢.SLDPRT.material
+	声音和描述\联结系槽钢.SLDPRT.description
+	声音和描述\channel_steel.SLDPRT.mp3
+
+六四梁螺母
+	绿色\基本杆件\六四梁螺母.SLDPRT
+	green\六四梁螺母.SLDPRT.mesh
+	green\六四梁螺母.SLDPRT.material
+	声音和描述\六四梁螺母.SLDPRT.description
+	声音和描述\nut.SLDPRT.mp3
+
+钢枕
+	绿色\基本杆件\钢枕.SLDPRT
+	green\钢枕.SLDPRT.mesh
+	green\钢枕.SLDPRT.material
+	声音和描述\钢枕.SLDPRT.description
+	声音和描述\sleeper.SLDPRT.mp3
+
+钢销
+	绿色\基本杆件\钢销.SLDPRT
+	green\钢销.SLDPRT.mesh
+	green\钢销.SLDPRT.material
+	声音和描述\钢销.SLDPRT.description
+	声音和描述\pin.SLDPRT.mp3
+
+钢销销子
+	绿色\基本杆件\钢销销子.SLDPRT
+	green\钢销销子.SLDPRT.mesh
+	green\钢销销子.SLDPRT.material
+	声音和描述\钢销销子.SLDPRT.description
+	声音和描述\pin.SLDPRT.mp3
+

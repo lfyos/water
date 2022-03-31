@@ -1,0 +1,2 @@
+
+bridge_gray_old_32		32米标准式拆装式桁粱		assemble/32/assemble.txt	0	0	parameter.灰色.txt	parameter.xyz.txt
