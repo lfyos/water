@@ -1,0 +1,4 @@
+
+mount_64			六四式军用粱整体架设		mount_64/mount/assemble.txt			8	8	parameter.txt	parameter.xyz.txt
+
+mount_bridge		拆装式桁粱整体架设		mount/mount/assemble.txt			8	8	parameter.txt	parameter.xyz.txt
