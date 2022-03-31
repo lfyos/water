@@ -1,0 +1,26 @@
+			"display_on_pickup"					:
+			{
+				"face"	:	true,
+				"frame"	:	true,
+				"edge"	:	false,
+				"point"	:	false
+			},
+			"selected_material"			:
+			{
+				"vertex_color_type"		:	2,
+				
+				"color"					:	[2.5,	0.0,	0.0,	1.0],
+				"ambient"				:	[0.2,	0.2,	0.2,	1.0],
+				"diffuse"				:	[1.0,	1.0,	1.0,	1.0],
+				"specular"				:	[1.0,	1.0,	1.0,	1.0],
+				"emission"				:	[0.0,	0.0,	0.0,	1.0],
+				"shininess"				:	16.0
+			},
+			
+			"light_color_factor"		:
+			[
+				0.20,	0.20,	0.20,	1.0,
+				0.20,	0.20,	0.20,	1.0,
+				0.20,	0.20,	0.20,	1.0,
+				0.20,	0.20,	0.20,	1.0
+			],
