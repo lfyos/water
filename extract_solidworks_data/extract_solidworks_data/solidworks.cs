@@ -13,7 +13,8 @@ namespace extract_solidworks_data
 {
     class solidworks
     {
-        private string do_extract(string charset,int tessellation_quality,double ChordTolerance,double LengthTolerance)
+        private string do_extract(string charset,int tessellation_quality,
+            double ChordTolerance,double LengthTolerance, double color_scale)
         {
             Console.WriteLine("Starting Solidworks......");
 
@@ -78,7 +79,8 @@ namespace extract_solidworks_data
             FileStream assemble_stream = new FileStream(target_directory_name + "assemble.assemble", FileMode.Create, FileAccess.Write);
             StreamWriter assemble_writer = new StreamWriter(assemble_stream, Encoding.GetEncoding(charset));
 
-            part_collector collector = new part_collector(target_directory_name, charset, ChordTolerance, LengthTolerance);
+            part_collector collector = new part_collector(target_directory_name, charset,
+                ChordTolerance, LengthTolerance, color_scale);
 
             if (doc.GetType() == (int)(swDocumentTypes_e.swDocASSEMBLY))
                 new assemble(doc, collector, target_directory_name).root_tree_node.write("", assemble_writer);
@@ -103,6 +105,9 @@ namespace extract_solidworks_data
         }
         public solidworks()
         {
+            Console.WriteLine("Input color scale:   ");
+            double color_scale = double.Parse(Console.ReadLine().Trim());
+
             StreamReader config = new StreamReader(
                 AppDomain.CurrentDomain.BaseDirectory + "config.txt",
                 System.Text.Encoding.GetEncoding("GBK"));
@@ -118,7 +123,7 @@ namespace extract_solidworks_data
             Console.WriteLine("Extract_solidworks_data: ChordTolerance:"        + ChordTolerance);
             Console.WriteLine("Extract_solidworks_data: LengthTolerance:"       + LengthTolerance);
             Console.WriteLine("End extract_solidworks_data from "               +
-                do_extract(charset, tessellation_quality, ChordTolerance,LengthTolerance));
+                do_extract(charset, tessellation_quality, ChordTolerance,LengthTolerance, color_scale));
         }
     }
 }

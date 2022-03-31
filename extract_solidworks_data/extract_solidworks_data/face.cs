@@ -123,6 +123,7 @@ namespace extract_solidworks_data
             int normal_number = normal.Length;
             int texture_number = texture.Length;
             triangle_number = ((vertex_number < normal_number) ? vertex_number : normal_number) / 9;
+            triangle_number = (triangle_number < (texture_number / 6)) ? triangle_number : (texture_number / 6);
 
             if (triangle_number <= 0)
             {
@@ -165,7 +166,7 @@ namespace extract_solidworks_data
             face_writer.WriteLine();
             face_writer.WriteLine("/*   body_id:"+body_id+",face_id:"+face_id+ ",triangle_number:"+ triangle_number+"   */");
 
-            for (int i = 0; i < triangle_number; i++)
+            for (int i = 0,texture_length= texture.Length; i < triangle_number; i++)
             {
                 face_writer.WriteLine();
                 face_writer.WriteLine("/*	triangle:"+i+",material	*/  "
@@ -178,10 +179,10 @@ namespace extract_solidworks_data
 
                 for (int j = 0; j < 3; j++)
                 {
-                    double px = vertex[9 * i + 3 * j + 0], py = vertex[9 * i + 3 * j + 1], pz = vertex[9 * i + 3 * j + 2];
-                    double nx = normal[9 * i + 3 * j + 0], ny = normal[9 * i + 3 * j + 1], nz = normal[9 * i + 3 * j + 2];
+                    double px = vertex [9 * i + 3 * j + 0], py = vertex [9 * i + 3 * j + 1], pz = vertex[9 * i + 3 * j + 2];
+                    double nx = normal [9 * i + 3 * j + 0], ny = normal [9 * i + 3 * j + 1], nz = normal[9 * i + 3 * j + 2];
                     double tx = texture[6 * i + 2 * j + 0], ty = texture[6 * i + 2 * j + 1], tz = 0;
-
+ 
                     min_x = (min_x < px) ? min_x : px;
                     min_y = (min_y < py) ? min_y : py;
                     min_z = (min_z < pz) ? min_z : pz;

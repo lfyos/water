@@ -95,5 +95,53 @@ namespace extract_solidworks_data
 						p.a[i][j] += a[i][k] * b.a[k][j];
 			return p;
 		}
+		public static location move_rotate(double mx, double my, double mz, double rx, double ry, double rz)
+		{
+			if ((rx == 0) && (ry == 0) && (rz == 0))
+				return new location(new double[]
+					{
+					1,  0,  0,  0,
+					0,  1,  0,  0,
+					0,  0,  1,  0,
+					mx, my, mz, 1
+					});
+			double cos_alf		= Math.Cos(rx * Math.PI / 180),	sin_alf		= Math.Sin(rx * Math.PI / 180);
+			double cos_belta	= Math.Cos(ry * Math.PI / 180), sin_belta	= Math.Sin(ry * Math.PI / 180);
+			double cos_gamma	= Math.Cos(rz * Math.PI / 180), sin_gamma	= Math.Sin(rz * Math.PI / 180);
+			double []p = new double[]
+			{
+			 cos_gamma*cos_belta,								//	0:	a[0][0]
+			 sin_gamma*cos_belta,								//	1:	a[1][0]
+			-sin_belta,											//	2:	a[2][0]
+			 0,													//	3:	a[3][0]
+				
+			-sin_gamma*cos_alf+cos_gamma*sin_belta*sin_alf,		//	4:	a[0][1]
+			 cos_gamma*cos_alf+sin_gamma*sin_belta*sin_alf,		//	5:	a[1][1]
+			 cos_belta*sin_alf,									//	6:	a[2][1]
+			 0,													//	7:	a[3][1]
+					
+			 sin_gamma*sin_alf+cos_gamma*sin_belta*cos_alf,		//	8:	a[0][2]
+			-cos_gamma*sin_alf+sin_gamma*sin_belta*cos_alf,		//	9:	a[1][2]
+			 cos_belta*cos_alf,									//	10:	a[2][2]
+			 0,													//	11:	a[3][2]
+				
+			 mx,												//	12:	a[0][3]
+			 my,												//	13:	a[1][3]
+			 mz,												//	14:	a[2][3]
+			 1                                                  //	15:	a[3][3]
+			};
+			return new location(p);
+		}
+		public static location scale(double sx, double sy, double sz)
+		{
+			return new location(
+					new double[]
+							{
+							sx, 0,  0,  0,
+							0,  sy, 0,  0,
+							0,  0,  sz, 0,
+							0,  0,  0,  1
+							});
+		}
 	}
 }

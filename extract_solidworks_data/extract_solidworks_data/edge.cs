@@ -148,13 +148,8 @@ namespace extract_solidworks_data
             {
                 data = null;
             }
-            if (data == null)
-            {
-                edge_writer.WriteLine(0);
-                return 0;
-            }
-
-            int edge_primitive_number = data.Length / 3;
+           
+            int edge_primitive_number =(data == null)?0: (data.Length / 3);
 
             edge_writer.WriteLine();
             edge_writer.WriteLine("/*   body_id:" + body_id
@@ -166,7 +161,11 @@ namespace extract_solidworks_data
 
             for (int i = 0; i < edge_primitive_number; i++)
             {
-                double x = data[3 * i + 0], y = data[3 * i + 1], z = data[3 * i + 2];
+                double x = (data == null) ? 0 : (data[3 * i + 0]);
+                double y = (data == null) ? 0 : (data[3 * i + 1]);
+                double z = (data == null) ? 0 : (data[3 * i + 2]);
+
+
                 edge_writer.Write("     /*  NO."+i+"    vertex location  */   " + x + " " + y + " " + z+ "  1   ");
                 edge_writer.WriteLine("/*   tessellation_material  */"
                         + "    " + default_material.red + "    " + default_material.green

@@ -29,17 +29,32 @@ namespace extract_solidworks_data
 
             material_writer.WriteLine("               {");
 
-           material_writer.WriteLine(pre_str+"\"vertex_color_type\"    :	1,");
+            material_writer.WriteLine(pre_str + "\"vertex_color_type\"    :	2,");
+            material_writer.WriteLine(pre_str + "\"vertex_color_parameter\":[0,0,0,0],");
+
             material_writer.WriteLine(pre_str + "\"fragment_color_type\"  :	" + (texture_flag ? 0 : 1) + ",");
+            material_writer.WriteLine(pre_str + "\"texture\"              :	[");
+            if (!texture_flag)
+            {
+                material_writer.WriteLine(pre_str + "   {");
+                material_writer.WriteLine(pre_str + "       \"texture_file\" :	\"" +
+                    texture_file.Replace("\\", "/").Replace("\n", "").Replace("\"", "").Replace("\r", "") + "\",");
+                material_writer.WriteLine(pre_str + "       \"u_wrapmode\" 	:	\"mirrored_repeat\",");
+                material_writer.WriteLine(pre_str + "       \"v_wrapmode\"	:	\"mirrored_repeat\",");
+                material_writer.WriteLine(pre_str + "       \"mag_filter\"	:	\"linear\",");
+                material_writer.WriteLine(pre_str + "       \"min_filter\"	:	\"linear\",");
 
-            material_writer.WriteLine(pre_str + "\"color_parameter\"      :	[0,0,0,0],");
+                material_writer.Write    (pre_str + "       \"matrix\"		:	[");
+                double []data = new double[] { trans_x, trans_y, rotate_angle, scale_factor, scale_factor };
 
-            material_writer.WriteLine(pre_str + "\"texture_parameter\"    :	["
-                + trans_x + "," + trans_y + "," + rotate_angle + "," + scale_factor + "],");
+                material_writer.Write(data[0]);
+                for (int k = 1, nk = data.Length; k < nk; k++)
+                    material_writer.Write(","+data[k]);
+                material_writer.WriteLine("]");
 
-            material_writer.WriteLine(pre_str + "\"texture_file\"         :	" + (texture_flag ? "null" : ("\"" + 
-                texture_file.Replace("\\", "/").Replace("\n", "").Replace("\"", "").Replace("\r", "") + "\"")) + ",");
-
+                material_writer.WriteLine(pre_str + "   }");
+            }
+            material_writer.WriteLine(pre_str + "],");
             material_writer.WriteLine(pre_str + "\"color\"                :	["
                 + red + "," + green + "," + blue + ",1]," );
             material_writer.WriteLine(pre_str + "\"ambient\"              :	[" 

@@ -14,3 +14,4 @@ E:\water_all\extract_solidworks_data\extract_solidworks_data\obj\Release\extract
 E:\water_all\extract_solidworks_data\extract_solidworks_data\obj\Release\extract_solidworks_data.csproj.CopyComplete
 E:\water_all\extract_solidworks_data\extract_solidworks_data\obj\Release\extract_solidworks_data.exe
 E:\water_all\extract_solidworks_data\extract_solidworks_data\obj\Release\extract_solidworks_data.pdb
+E:\water_all\extract_solidworks_data\extract_solidworks_data\obj\Release\extract_solidworks_data.csproj.AssemblyReference.cache

@@ -15,7 +15,7 @@ namespace extract_solidworks_data
     class part_collector
     {
         private string directory_name,charset;
-        private double ChordTolerance, LengthTolerance;
+        private double ChordTolerance, LengthTolerance,color_scale;
 
         private string []path_name;
         private string[] part_name;
@@ -23,13 +23,14 @@ namespace extract_solidworks_data
         private FileStream part_list_stream;
         private StreamWriter part_list_writer;
 
-        public part_collector(
-            string my_directory_name, string my_charset, double my_ChordTolerance, double my_LengthTolerance)
+        public part_collector(string my_directory_name, string my_charset,
+            double my_ChordTolerance, double my_LengthTolerance, double my_color_scale)
         {
             directory_name = my_directory_name;
             charset = my_charset;
             ChordTolerance = my_ChordTolerance;
             LengthTolerance = my_LengthTolerance;
+            color_scale = my_color_scale;
             path_name = new string[0];
             part_name = new string[0];
 
@@ -78,7 +79,13 @@ namespace extract_solidworks_data
                 part_name[i] = bak[i];
             part_name[part_name.Length - 1] = my_part_name;
 
-            part_list_writer.WriteLine(         my_part_name);
+            string my_last_str = ".sldprt", my_part_user_name= my_part_name;
+            int my_last_str_length= my_last_str.Length, my_part_name_length= my_part_name.Length;
+            if (my_last_str_length < my_part_name_length)
+                if (my_part_name.Substring(my_part_name_length - my_last_str_length).ToLower().CompareTo(my_last_str) == 0)
+                    my_part_user_name = my_part_name.Substring(0, my_part_name_length - my_last_str_length);
+
+            part_list_writer.WriteLine(my_part_user_name);
             part_list_writer.WriteLine("    " + my_part_name);
             part_list_writer.WriteLine("    " + my_part_name + ".mesh");
             part_list_writer.WriteLine("    " + my_part_name + ".material");
@@ -94,7 +101,7 @@ namespace extract_solidworks_data
             new part(my_doc, charset,
                 directory_name + my_part_name + ".mesh",
                 directory_name + my_part_name + ".material",
-                ChordTolerance, LengthTolerance);
+                ChordTolerance, LengthTolerance,color_scale);
 
             return my_part_name;
         }
