@@ -1,0 +1,24 @@
+proxy_root_directory\
+gzip_data_root_directory\
+gzip_proxy_root_directory\
+
+/*
+http://localhost:8080/graphics_engine/interface.jsp					true
+http://localhost/graphics_engine/interface.jsp						true
+https://localhost/graphics_engine/interface.jsp						true
+
+http://192.168.0.102:8080/graphics_engine/interface.jsp				true
+http://192.168.0.102/graphics_engine/interface.jsp					true
+https://192.168.0.102/graphics_engine/interface.jsp					true
+
+http://calconline.sigma-simtech.com:9999/wgl/interface.jsp			false
+http://calconline.sigma-simtech.com:9999/wgl/interface.jsp?channel=proxy&file=
+	true
+	sigma\proxy_directory_name\
+	sigma\gzip_directory_name\
+	UTF-8
+	8192000
+*/
+
+
+
