@@ -1,0 +1,5 @@
+AM113_031_Tilia		wire_177148027	part.mtl		0		0			0.025
+AM113_031_Tilia		wire_177148027	part.mtl		1		0.025		1
+
+no_group			no_usemtl		part.mtl		2		0			1
+AM113_031_Tilia		no_usemtl		part.mtl		2		0			1
