@@ -1,0 +1,15 @@
+Color002_06	wire_252252000	part.mtl	0	0	1
+Color002_07	wire_252252000	part.mtl	0	0	1
+Color003_06	wire_000252000	part.mtl	0	0	1
+Loft01	wire_228214153	part.mtl	1	0	1
+Loft02	wire_177026088	part.mtl	1	0	1
+Loft03	wire_224087143	part.mtl	1	0	1
+Loft04	wire_177088026	part.mtl	1	0	1
+no_group	no_usemtl	part.mtl	2	0	1
+Loft01	no_usemtl	part.mtl	2	0	1
+Loft02	wire_228214153	part.mtl	2	0	1
+Loft03	wire_177026088	part.mtl	2	0	1
+Loft04	wire_224087143	part.mtl	2	0	1
+Color003_06	wire_177088026	part.mtl	2	0	1
+Color002_07	wire_000252000	part.mtl	2	0	1
+
