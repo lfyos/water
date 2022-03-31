@@ -20,17 +20,13 @@ import kernel_transformation.point;
 
 public class extended_part_driver extends part_driver
 {
-	private String init_file_name,init_file_charset;
 	private double x0,y0,scale;
 	private int camera_modifier_id;
 	
-	public extended_part_driver(String my_init_file_name,String my_init_file_charset,
-			double my_x0,double my_y0,double my_scale,int my_camera_modifier_id)
+	public extended_part_driver(double my_x0,double my_y0,double my_scale,int my_camera_modifier_id)
 	{
 		super();
 		
-		init_file_name=my_init_file_name;
-		init_file_charset=my_init_file_charset;
 		x0=my_x0;
 		y0=my_y0;
 		scale=my_scale;
@@ -39,8 +35,6 @@ public class extended_part_driver extends part_driver
 	public void destroy()
 	{	
 		super.destroy();
-		init_file_name=null;
-		init_file_charset=null;
 	}
 	public void initialize_part_driver(part p,engine_kernel ek,client_request_response request_response)
 	{
@@ -52,7 +46,7 @@ public class extended_part_driver extends part_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(init_file_name,init_file_charset,x0,y0,scale,camera_modifier_id);
+		return new extended_part_driver(x0,y0,scale,camera_modifier_id);
 	}
 	public int caculate_material_id(
 			part p,String type_str,int body_id,int face_id,int loop_id,int edge_id,
@@ -87,7 +81,7 @@ public class extended_part_driver extends part_driver
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,
 			part my_component_part,engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_component_driver(my_component_part,camera_modifier_id,init_file_name,init_file_charset);
+		return new extended_component_driver(my_component_part,camera_modifier_id);
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int loop_id,int edge_id,int point_id,

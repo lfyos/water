@@ -233,12 +233,13 @@ function construct_buffer_object(my_gl,my_parameter)
 			my_region_data.vertex_array_object[i]=this.gl.createVertexArray();
 			this.gl.bindVertexArray(my_region_data.vertex_array_object[i]);
 			this.gl.bindBuffer(this.gl.ARRAY_BUFFER,my_region_data.buffer_object);
-			for(var j=0,nj=attribute_map[i].length;j<nj;j++){
+			for(var attribute_id,j=0,nj=attribute_map[i].length;j<nj;j++){
 				if(attribute_map[i][j]==null)
 					continue;
 				if(attribute_map[i][j]=="")
 					continue;
-				var attribute_id=this.gl.getAttribLocation (shader_program,attribute_map[i][j]);
+				if((attribute_id=this.gl.getAttribLocation(shader_program,attribute_map[i][j]))<0)
+					continue;
 				if((j*16)>=(my_region_data.item_size*4))
 					this.gl.disableVertexAttribArray(attribute_id);
 				else{
@@ -335,8 +336,8 @@ function construct_buffer_object(my_gl,my_parameter)
 					frame_processed_buffer_object_data=decode_function("frame",
 						part_information,part_material,part_property,p,this.parameter);
 			}catch(e){
-				console.log("Execute decode_function() fail:"+e.toString());
-				console.log("request_str:"+request_str
+				alert("Execute decode_function() fail:"+e.toString());
+				alert("request_str:"+request_str
 						+",request_file_id:"+request_file_id.toString()
 						+",begin_material_id:"+begin_material_id.toString()
 						+",end_material_id:"+end_material_id.toString());
@@ -420,7 +421,7 @@ function construct_buffer_object(my_gl,my_parameter)
 						decode_function,part_information,part_material,part_property,request_file_id);
 				return 0;
 			}
-			console.log("Loading Buffer Object Data part_file_proxy_url error");
+			alert("Loading Buffer Object Data part_file_proxy_url error");
 			return 0;
 		}
 		
@@ -446,9 +447,9 @@ function construct_buffer_object(my_gl,my_parameter)
 				object_pointer.loaded_number--;
 				
 				if(my_ajax.status!=200){
-					console.log("Loading Buffer Object Data response status error: "+my_ajax.status.toString());
-					console.log("request_str:"+request_str+",request_file_id:"+request_file_id.toString());
-					console.log(data_url);
+					alert("Loading Buffer Object Data response status error: "+my_ajax.status.toString());
+					alert("request_str:"+request_str+",request_file_id:"+request_file_id.toString());
+					alert(data_url);
 					return;
 				}
 				
@@ -460,8 +461,8 @@ function construct_buffer_object(my_gl,my_parameter)
 				try{
 					my_response_data=new Float32Array(my_ajax.response);
 				}catch(e){
-					console.log("Parse buffer data error, "+e.toString());
-					console.log(data_url);
+					alert("Parse buffer data error, "+e.toString());
+					alert(data_url);
 					return;
 				}
 				
@@ -475,7 +476,7 @@ function construct_buffer_object(my_gl,my_parameter)
 			my_ajax.send(null);
 			this.current_loading_mesh_number++;
 		}catch(e){
-			console.log("Loading Buffer Object Data ajax error: "+e.toString());
+			alert("Loading Buffer Object Data ajax error: "+e.toString());
 		};
 		return 1;
 	};
@@ -548,17 +549,17 @@ function construct_buffer_object(my_gl,my_parameter)
 					return;
 				cur.current_loading_mesh_number--;
 				if(my_ajax.status!=200){
-					console.log("this.request_buffer_head_package response status error: "+my_ajax.status.toString());
-					console.log(package_proxy_url);
+					alert("this.request_buffer_head_package response status error: "+my_ajax.status.toString());
+					alert(package_proxy_url);
 					return;
 				}
 				var head_data_array;
 				try{
 					head_data_array=JSON.parse(my_ajax.responseText);
 				}catch(e){
-					console.log("this.request_buffer_head_package JSON.parse error: "+e.toString());
-					console.log("package_proxy_url: "+package_proxy_url);
+					alert("this.request_buffer_head_package JSON.parse error: "+e.toString());
 					console.log(my_ajax.responseText);
+					console.log("package_proxy_url: "+package_proxy_url);
 					return;
 				}
 				if(package_flag)
@@ -571,7 +572,7 @@ function construct_buffer_object(my_gl,my_parameter)
 			
 			this.current_loading_mesh_number++;
 		}catch(e){
-			console.log("this.request_buffer_head_package fail: "+e.toString());
+			alert("this.request_buffer_head_package fail: "+e.toString());
 			console.log("package_proxy_url: "+package_proxy_url);
 		}
 	}

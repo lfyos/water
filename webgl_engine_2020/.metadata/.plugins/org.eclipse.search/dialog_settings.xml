@@ -17,10 +17,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Load shader time length:"/>
+			<item key="textPattern" value="upload_file"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
 				<item value="*java"/>
+				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -29,10 +32,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Create engine temp data time length:"/>
+			<item key="textPattern" value="upload_part_list"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
 				<item value="*java"/>
+				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -41,10 +47,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Load engine.boftal time length:"/>
+			<item key="textPattern" value="save_list"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
 				<item value="*java"/>
+				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -53,7 +62,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="new Date()"/>
+			<item key="textPattern" value="&quot;request_length&quot;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -65,10 +74,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Create second part package time length:"/>
+			<item key="textPattern" value="download_list"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
 				<item value="*java"/>
+				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -90,7 +102,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Third class fast load part:"/>
+			<item key="textPattern" value="initialization_function"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -102,10 +114,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Load component time length:"/>
+			<item key="textPattern" value="upload_list"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
 				<item value="*java"/>
+				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -114,10 +129,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Time length(millisecond)"/>
+			<item key="textPattern" value="readAsDataURL"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
 				<item value="*java"/>
+				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -126,7 +144,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="debug_mode_flag"/>
+			<item key="textPattern" value="&quot;part_list"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.js"/>
@@ -141,9 +159,12 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="public String[] get_part_list(boolean giveup_part_load_flag,"/>
+			<item key="textPattern" value="part_list"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.js"/>
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
 				<item value="*java"/>
 			</list>
 			<list key="workingSets">
@@ -153,7 +174,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;process_bar&quot;"/>
+			<item key="textPattern" value="&quot;last_component&quot;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.jsp"/>
@@ -168,7 +189,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="operate_component_id"/>
+			<item key="textPattern" value="alt"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.jsp"/>
@@ -205,13 +226,13 @@
 	</section>
 	<section name="ReplaceDialog2">
 		<list key="replace_with">
+			<item value="super.create_shader_data(fw, rr, system_par, scene_par);"/>
+			<item value="public void create_shader_data(file_writer fw,render rr,system_parameter system_par,scene_parameter scene_par)"/>
 			<item value="public String[] get_part_list("/>
 			<item value="public void response_init_render_data(int render_id,engine_kernel ek,client_information ci)"/>
 			<item value="public void response_init_part_data(part p,engine_kernel ek,client_information ci)"/>
 			<item value="public void response_init_instance_data(engine_kernel ek,client_information ci)"/>
 			<item value="&#x09;public render_driver clone(render parent_render,"/>
-			<item value="public String[] get_part_list(boolean giveup_part_load_flag,int part_type_id,"/>
-			<item value="public part_rude create_part_mesh_and_buffer_object_head"/>
 		</list>
 	</section>
 	<section name="SearchDialog">
@@ -231,6 +252,5 @@
 	<section name="">
 		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
 		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
-		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
 	</section>
 </section>

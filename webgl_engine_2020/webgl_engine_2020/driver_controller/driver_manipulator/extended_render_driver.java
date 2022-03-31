@@ -9,6 +9,7 @@ import kernel_engine.engine_kernel;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
 import kernel_network.client_request_response;
 import kernel_part.part;
 import kernel_part.part_parameter;
@@ -17,8 +18,6 @@ import kernel_render.render;
 
 public class extended_render_driver extends render_driver
 {
-	private change_name language_change_name;
-	
 	public extended_render_driver()
 	{
 		super(	"discard_all.txt",
@@ -28,15 +27,10 @@ public class extended_render_driver extends render_driver
 				"geometry.shader.txt",
 				"tess_control.shader.txt",
 				"tess_evalue.shader.txt");
-		language_change_name=null;
 	}
 	public void destroy()
 	{
 		super.destroy();
-		if(language_change_name!=null) {
-			language_change_name.destroy();
-			language_change_name=null;
-		}
 	}
 	public void initialize_render_driver(int render_id,engine_kernel ek,client_request_response request_response)
 	{
@@ -47,24 +41,22 @@ public class extended_render_driver extends render_driver
 	public render_driver clone(render parent_render,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		extended_render_driver ret_val=new extended_render_driver();
-		if(language_change_name==null)
-			ret_val.language_change_name=null;
-		else
-			ret_val.language_change_name=new change_name(language_change_name,false);
-		return ret_val;
+		return new extended_render_driver();
 	}
-	public String[] get_part_list(int part_type_id,
-			file_reader render_fr,String load_sub_directory_name,String par_list_file_name,
+	public String[] get_render_list(int part_type_id,
+			file_reader shader_fr,String load_sub_directory_name,
+			system_parameter system_par,scene_parameter scene_par,
+			change_name mount_component_name_and_assemble_file_name,
+			client_request_response request_response)
+	{
+		String render_list_file_name=file_reader.separator(shader_fr.get_string());
+		return new String[] {shader_fr.directory_name+render_list_file_name,shader_fr.get_charset()};
+	}
+	public String[] get_part_list(int part_type_id,file_reader render_fr,String load_sub_directory_name,
 			part_parameter part_par,system_parameter system_par,scene_parameter scene_par,
 			change_name mount_component_name_and_assemble_file_name,client_request_response request_response)
 	{
-		if(language_change_name!=null)
-			language_change_name.destroy();
-		language_change_name=new change_name(
-			new String[]{render_fr.directory_name+render_fr.get_string()},
-			null,render_fr.get_charset());
-		
+		String par_list_file_name=file_reader.separator(render_fr.get_string());
 		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
 	}
 	public part_driver create_part_driver(file_reader part_fr,part p,system_parameter system_par,
@@ -76,7 +68,10 @@ public class extended_render_driver extends render_driver
 		boolean save_component_name_or_id_flag=f.get_boolean();
 		f.close();
 		
-		return new extended_part_driver(language_change_name,
-				camera_modifier_id,touch_time_length,save_component_name_or_id_flag);
+		return new extended_part_driver(camera_modifier_id,touch_time_length,save_component_name_or_id_flag);
+	}
+	public void create_shader_data(file_writer fw,render rr,system_parameter system_par,scene_parameter scene_par)
+	{
+		super.create_shader_data(fw, rr, system_par, scene_par);
 	}
 }

@@ -1,33 +1,31 @@
 package driver_caption;
 
-import kernel_part.part;
-import driver_text.text_item;
 import kernel_camera.camera_result;
 import kernel_common_class.format_change;
+import kernel_common_class.jason_string;
 import kernel_component.component;
 import kernel_component.component_collector;
 import kernel_driver.instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
+import kernel_part.part;
 
 
-public class extended_instance_driver  extends instance_driver
+public class extended_instance_driver extends instance_driver
 {
-	private String bak_display_information;
-	private int text_component_id;
-	private long last_time,time_step;
-	private String fps_string,fps_name;
-	
+	private String display_information;
+	private long time_step,last_time;
+	private String fps_name,fps_string;
+
 	public void destroy()
 	{
 		super.destroy();
 	}
-	public extended_instance_driver(component my_comp,int my_driver_id,int my_text_component_id)
+	public extended_instance_driver(component my_comp,int my_driver_id)
 	{
 		super(my_comp,my_driver_id);
-		bak_display_information="";
-		text_component_id=my_text_component_id;
+		display_information="";
 		last_time=0;
 		fps_string="";
 		
@@ -43,7 +41,6 @@ public class extended_instance_driver  extends instance_driver
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
-
 	}
 	private String pickup_string(client_information ci,int display_precision)
 	{
@@ -133,39 +130,19 @@ public class extended_instance_driver  extends instance_driver
 		if(!(cr.target.main_display_target_flag))
 			return true;
 
-		String new_display_information=pickup_string(ci,ek.scene_par.display_precision);
+		String new_display_information;
+		if((new_display_information=pickup_string(ci,ek.scene_par.display_precision)).isEmpty())
+			if((new_display_information=ci.message_display.get_display_message()).isEmpty())
+				if(ek.collector_stack.get_top_collector()!=null)
+					if((new_display_information=ek.collector_stack.get_top_collector().description)==null)
+						new_display_information="";
 		
-		if(new_display_information.isEmpty())
-			new_display_information=ci.message_display.get_display_message();
-		
-		if(new_display_information.isEmpty())
-			if(ek.collector_stack.get_top_collector()!=null)
-				if((new_display_information=ek.collector_stack.get_top_collector().description)==null)
-					new_display_information="";
 		new_display_information+=caculate_fps_string(ek,ci);
-		if(new_display_information.compareTo(bak_display_information)==0)
-			return true;
-		
-		bak_display_information=new String(new_display_information);
-		
-		extended_component_driver ccd=(extended_component_driver)(comp.driver_array[driver_id]);
-		text_item t_item=new text_item();
-		
-		t_item.canvas_width			=ccd.canvas_width;
-		t_item.canvas_height		=ccd.canvas_height;
-		t_item.text_square_width	=ccd.text_square_width;
-		t_item.text_square_height	=ccd.text_square_height;
-		
-		t_item.display_information	=new String[]
-			{
-				new String(new_display_information.trim())
-			};
-		component text_comp=ek.component_cont.get_component(text_component_id);
-		if(text_comp!=null)
-			for(int i=0,ni=text_comp.driver_number();i<ni;i++)
-				if(text_comp.driver_array[i] instanceof driver_text.extended_component_driver)
-					((driver_text.extended_component_driver)(text_comp.driver_array[i])).set_text(t_item);
-		return true;
+		if(new_display_information.compareTo(display_information)!=0){
+			display_information=new_display_information;
+			update_component_parameter_version(0);
+		}
+		return false;
 	}
 	public void create_render_parameter(
 			int render_buffer_id,int parameter_channel_id,int data_buffer_id,
@@ -175,7 +152,7 @@ public class extended_instance_driver  extends instance_driver
 	}
 	public void create_component_parameter(engine_kernel ek,client_information ci)
 	{
-		ci.request_response.print(comp.component_id);
+		ci.request_response.print(jason_string.change_string(display_information));
 	}
 	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
 	{

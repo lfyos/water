@@ -22,7 +22,6 @@ import kernel_transformation.point;
 
 final class my_create_grid extends create_grid
 {
-	private int width,height;
 	public double[][]vertex_data_modifier(double old_vertex_data[][])
 	{
 		double new_vertex_data[][]=new double[old_vertex_data.length][];
@@ -35,13 +34,9 @@ final class my_create_grid extends create_grid
 		}
 		return new_vertex_data;
 	}
-	public my_create_grid(String file_name,int my_width,int my_height,String file_system_charset)
+	public my_create_grid(String file_name,int my_width,int my_height,String file_charset)
 	{
-		width=my_width;
-		height=my_height;
-		do_create(file_name,true,width,height,
-				new String[] {"vertex","normal","texture"},
-				file_system_charset);
+		super(file_name,file_charset,my_width,my_height,new String[] {"vertex","normal","texture"});
 	}
 }
 public class extended_part_driver extends part_driver
@@ -79,12 +74,11 @@ public class extended_part_driver extends part_driver
 		if(buffer_object_file_writer!=null) {
 			String file_name=p.directory_name+p.mesh_file_name;
 			long t=(new File(file_name)).lastModified();
-	
 			int width=128,height=64;
 			new my_create_grid(file_name,width,height,p.file_charset);
-			file_writer.file_copy_with_brother(file_name,buffer_object_file_writer.directory_name);
-			
 			(new File(file_name)).setLastModified(t);
+			file_writer.file_copy(new File(file_name).getParent()+File.separatorChar+"texture.png", 
+					buffer_object_file_writer.directory_name+"texture.png");
 		}
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}

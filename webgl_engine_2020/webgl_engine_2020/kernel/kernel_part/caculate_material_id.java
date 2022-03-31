@@ -16,6 +16,12 @@ public class caculate_material_id
 				material_x,material_y,material_z,material_w);
 		}catch(Exception e) {
 			debug_information.println("Execte part caculate_material_id() fail",e.toString());
+			
+			debug_information.print ("body_id:",body_id);
+			debug_information.print (",face_id:",face_id);
+			debug_information.print (",loop_id:",loop_id);
+			debug_information.println(",edge_id:",edge_id);
+			
 			debug_information.println("Part user name:",	p.user_name);
 			debug_information.println("Part system name:",	p.system_name);
 			debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);

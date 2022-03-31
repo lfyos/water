@@ -3,8 +3,8 @@ function redraw(render)
 	if(render.terminate_flag)
 		return;
 	var redraw_object={
-			touch_time:			0,
-			interval_length:	1,
+			touch_time:			 0,
+			interval_length:	 1,
 			clear_interval_id:	-1	
 	};
 	function render_routine()
@@ -52,8 +52,8 @@ function render_initialization(initialization_url,my_render,user_initialization_
 			if(render.terminate_flag)
 				return;
 			if(my_ajax.status!=200){
-				console.log("Loading system_initialization_function response status error: "+my_ajax.status.toString());
-				console.log(initialization_url);
+				alert("Loading system_initialization_function response status error: "+my_ajax.status.toString());
+				alert(initialization_url);
 				return;
 			};
 			
@@ -67,17 +67,45 @@ function render_initialization(initialization_url,my_render,user_initialization_
 					sorted_component_name_id,part_component_id_and_driver_id);
 			
 			for(var i=0,ni=program_data.length;i<ni;i++){
-				var permanent_render_id	=program_data[i][0];
-				var decode_function		=program_data[i][1];
-				var attribute_map		=program_data[i][2];
-				var draw_function		=program_data[i][3];
+				var render_name			=program_data[i][0];
+				var permanent_render_id	=program_data[i][1];
+				var decode_function;
+				try{
+					decode_function=(eval("["+(program_data[i][2])+"]"))[0];
+				}catch(e){
+					decode_function=function(request_type_string,
+						part_information,part_material,part_property,buffer_object_data,my_parameter)
+					{
+						return {
+									region_box	:	buffer_object_data.region_box,
+									item_size	:	buffer_object_data.region_data.length/buffer_object_data.item_number,
+									region_data	:	new Array()
+						};
+					};
+					console.log("Error decode_function:	"+permanent_render_id+"		"+e.toString());
+					console.log(program_data[i][2]);
+				}
+				var attribute_map,draw_function;
+				try{
+					draw_function=(eval("["+(program_data[i][3])+"]"));
+					attribute_map=draw_function[0];
+					draw_function=draw_function[1];
+				}catch(e){
+					attribute_map=[];
+					draw_function=function(){};
+					console.log("Error draw_function:	"+permanent_render_id+"		"+e.toString());
+					console.log(program_data[i][3]);
+				}
+				
 				var vertex_program		=program_data[i][4];
 				var fragment_program	=program_data[i][5];
 				var geometry_program	=program_data[i][6];
 				var tess_control_Program=program_data[i][7];
 				var tess_evalueprogram	=program_data[i][8];
+				var shader_data			=program_data[i][9];
 				
 				render.render_program.compile_program(i,
+						render_name,
 						permanent_render_id,
 						decode_function,
 						attribute_map,
@@ -86,20 +114,51 @@ function render_initialization(initialization_url,my_render,user_initialization_
 						fragment_program,
 						geometry_program,
 						tess_control_Program,
-						tess_evalueprogram);
+						tess_evalueprogram,
+						shader_data);
 			};
+			render.render_program.create_sorted_render_program_id();
 			
 			for(var i=0,ni=response_fun_array.length;i<ni;i++){
 				if(typeof(response_fun_array[i])!="object")
 					continue;
-				
 				var component_id=response_fun_array[i].component_id;
 				var component_name=response_fun_array[i].component_name;
 				var init_function=response_fun_array[i].initialization_function;
-				if(typeof(init_function)=="function")
+				if(typeof(init_function)!="string"){
+					console.log("component init_function program is not string:	"+component_name+"		"+component_id);
+					console.log(response_fun_array[i].initialization_function);
+					continue;
+				}
+				if((init_function=init_function.trim()).length<=0){
+					console.log("component init_function program is empty:	"+component_name+"		"+component_id);
+					console.log(response_fun_array[i].initialization_function);
+					continue;
+				}
+				try{
+					init_function=(eval("["+init_function+"]"))[0];
+				}catch(e){
+					console.log("Error compile component init_function:	"
+						+component_name+"		"+component_id+"		"+e.toString());
+					console.log(response_fun_array[i].initialization_function);
+					continue;
+				}
+				if(typeof(init_function)!="function"){
+					console.log("component init_function is NOT FUNCTION:	"
+						+component_name+"		"+component_id+"		"+e.toString());
+					console.log(response_fun_array[i].initialization_function);
+					continue;
+				}
+				try{
 					init_function(component_name,component_id,render);
-			};
-			
+				}catch(e){
+					console.log("Error execute component init_function:	"
+						+component_name+"		"+component_id+"		"+e.toString());
+					console.log(response_fun_array[i].initialization_function);
+					continue;
+				}
+			}
+
 			if(typeof(user_initialization_function)=="function")
 				user_initialization_function(render);
 			
@@ -108,8 +167,8 @@ function render_initialization(initialization_url,my_render,user_initialization_
 		my_ajax.open("GET",initialization_url,true);
 		my_ajax.send(null);
 	}catch(e){
-		console.log("render_initialization fail: "+e.toString());
-		console.log(initialization_url);
+		alert("render_initialization fail: "+e.toString());
+		alert(initialization_url);
 	};
 };
 
@@ -171,7 +230,7 @@ function request_create_engine(create_engine_sleep_time_length_scale,
 				processs_bar_object.process_bar_id=null;
 				alert("Initialization response status error: "+my_ajax.status.toString());
 				return;
-			};
+			}
 			var response_data;
 			try{
 				response_data=JSON.parse(my_ajax.responseText);
@@ -181,46 +240,58 @@ function request_create_engine(create_engine_sleep_time_length_scale,
 				alert(my_ajax.responseText);
 				return;
 			}
-			if(typeof(response_data)=="boolean"){
-				if(response_data){
+			if(typeof(response_data)=="object"){
+				if(response_data==null){
 					processs_bar_object.process_bar_id=null;
-					alert("Web server error, get_client_interface fail!");
-				}else{
-					var new_create_engine_sleep_time_length=create_engine_sleep_time_length;
-					new_create_engine_sleep_time_length*=create_engine_sleep_time_length_scale;
-					if(new_create_engine_sleep_time_length>create_engine_max_sleep_time_length)
-						new_create_engine_sleep_time_length=create_engine_max_sleep_time_length;
-					setTimeout(
-						function()
-						{
-							request_create_engine(create_engine_sleep_time_length_scale,
-								new_create_engine_sleep_time_length,create_engine_max_sleep_time_length,
-								request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,
-								my_user_initialization_function,processs_bar_object,process_bar_render);
-						},create_engine_sleep_time_length);
-				};
+					alert("Web server error, response_data==null!");
+					return;
+				}
+				var render,initialization_url=response_data.pop();
+				render=new construct_render_routine(
+					processs_bar_object.process_bar_id,process_bar_render.canvas,process_bar_render.ctx,
+					my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,response_data);
+				render_initialization(initialization_url,render,my_user_initialization_function);
+				
+				processs_bar_object.process_bar_id=null;
 				return;
 			}
-			var render,initialization_url=response_data.pop();
-			render=new construct_render_routine(
-				processs_bar_object.process_bar_id,process_bar_render.canvas,process_bar_render.ctx,
-				my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,response_data);
-			render_initialization(initialization_url,render,my_user_initialization_function);
-			
-			processs_bar_object.process_bar_id=null;
-			
+			if(typeof(response_data)!="boolean"){
+				processs_bar_object.process_bar_id=null;
+				alert("Web server error, response_data type is NOT boolean!");
+				return;
+			}
+			if(response_data){
+				processs_bar_object.process_bar_id=null;
+				alert("Web server error, get_client_interface fail!");
+				return;
+			}
+			var new_create_engine_sleep_time_length=create_engine_sleep_time_length;
+			new_create_engine_sleep_time_length*=create_engine_sleep_time_length_scale;
+			if(new_create_engine_sleep_time_length>create_engine_max_sleep_time_length){
+				processs_bar_object.process_bar_id=null;
+				alert("Web server error,try too many times to create scene!");
+				return;
+			}
+			setTimeout(
+				function()
+				{
+					request_create_engine(create_engine_sleep_time_length_scale,
+						new_create_engine_sleep_time_length,create_engine_max_sleep_time_length,
+						request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,
+						my_user_initialization_function,processs_bar_object,process_bar_render);
+				},create_engine_sleep_time_length);
 			return;
-		};
+		}
 		my_ajax.open("GET",request_url+"&process_bar="+processs_bar_object.process_bar_id,true);
 		my_ajax.send(null);
 	}catch(e){
 		processs_bar_object.process_bar_id=null;
 		alert("request_create_engine fail!");
 		alert(e.toString());
-	};
+	}
 }
 
-function render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render)
+function render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render,my_canvas)
 {
 	do{
 		if(typeof(processs_bar_object.process_bar_id)=="number")
@@ -245,13 +316,12 @@ function render_show_process_bar(process_bar_url,processs_bar_object,process_bar
 					setTimeout(
 						function()
 						{
-							render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render);
+							render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render,my_canvas);
 						},processs_bar_object.show_process_bar_interval);
-					
 					process_bar_render.set_process_bar_data(response_data.caption,
 								response_data.current,		response_data.max,
 								response_data.time_length,	response_data.engine_time_length,
-								response_data.time_unit);
+								response_data.time_unit,	my_canvas);
 					return;
 				}catch(e){
 					;
@@ -271,7 +341,8 @@ function render_show_process_bar(process_bar_url,processs_bar_object,process_bar
 function render_main(create_engine_sleep_time_length_scale,
 	create_engine_sleep_time_length,create_engine_max_sleep_time_length,
 	my_canvas,my_url,my_user_name,my_pass_word,my_language_name,
-	my_scene_name,my_link_name,my_initialization_parameter,my_user_initialization_function)
+	my_scene_name,my_link_name,my_initialization_parameter,
+	my_user_initialization_function,my_user_progress_bar_function)
 {
 	my_user_name						=(typeof(my_user_name						 )!="string"  )?"NoName"	:(my_user_name.trim());
 	my_pass_word						=(typeof(my_pass_word					 	 )!="string"  )?"NoPassword":(my_pass_word.trim());
@@ -317,11 +388,9 @@ function render_main(create_engine_sleep_time_length_scale,
 			};
 			
 			var processs_bar_object=JSON.parse(my_ajax.responseText);
-			var process_bar_render=new construct_process_bar(my_gl,
+			var process_bar_render=new construct_process_bar(my_gl,my_user_progress_bar_function,
 					my_canvas.width,my_canvas.height,processs_bar_object.show_process_bar_interval);
-			
-			render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render);
-			
+			render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render,my_canvas);
 			request_create_engine(create_engine_sleep_time_length_scale,
 				create_engine_sleep_time_length,create_engine_max_sleep_time_length,
 				request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,

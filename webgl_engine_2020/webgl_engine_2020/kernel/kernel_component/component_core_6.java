@@ -14,14 +14,22 @@ public class component_core_6 extends component_core_5
 		super.destroy();
 	}
 	private void decrease_children_number(String token_string,engine_kernel ek,
-			client_request_response request_response,
-			file_reader fr,part_container_for_part_search pcfps,
-			change_name change_part_name,change_name mount_component_name,
-			part_type_string_sorter type_string_sorter,
-			boolean part_list_flag,long default_display_bitmap,int max_child_number)
+			client_request_response request_response,part_container_for_part_search pcfps,
+			file_reader fr,change_name change_part_name,change_name mount_component_name,
+			part_type_string_sorter type_string_sorter,long default_display_bitmap)
 	{
-		if(max_child_number<=2)
+		if(children==null)
 			return;
+		if(children.length<=0) {
+			children=null;
+			return;
+		}
+		int max_child_number=ek.scene_par.max_child_number;
+		if(children.length<=max_child_number)
+			return;
+		if(ek.scene_par.max_child_number<=2)
+			return;
+		
 		for(int child_number;(child_number=children.length)>max_child_number;){
 			if((child_number=(int)(Math.sqrt(child_number)))>max_child_number)
 				child_number=max_child_number;
@@ -53,7 +61,7 @@ public class component_core_6 extends component_core_5
 				});
 				children[i]=new component(token_string,ek,request_response,fr,pcfps,
 					change_part_name,mount_component_name,type_string_sorter,
-					part_list_flag,default_display_bitmap,max_child_number);
+					uniparameter.normalize_location_flag,uniparameter.part_list_flag,default_display_bitmap);
 
 				children[i].children=new component[(bak_children.length-collect_number)/(ni-i)];
 				for(int j=0,nj=children[i].children.length;j<nj;j++)
@@ -61,25 +69,18 @@ public class component_core_6 extends component_core_5
 			}
 		}
 	}
+	
 	public component_core_6(String token_string,
 			engine_kernel ek,client_request_response request_response,
 			file_reader fr,part_container_for_part_search pcfps,
 			change_name change_part_name,change_name mount_component_name,
-			part_type_string_sorter type_string_sorter,
-			boolean part_list_flag,long default_display_bitmap,int max_child_number)
+			part_type_string_sorter type_string_sorter,boolean normalize_location_flag,
+			boolean part_list_flag,long default_display_bitmap)
 	{
-		super(token_string,ek,request_response,fr,pcfps,
-			change_part_name,mount_component_name,type_string_sorter,
-			part_list_flag,default_display_bitmap,max_child_number);
-		
-		if(children!=null){
-			if(children.length<=0)
-				children=null;
-			else if((children.length>max_child_number)&&(max_child_number>2))
-				decrease_children_number(token_string,ek,request_response,fr,pcfps,
-					change_part_name,mount_component_name,type_string_sorter,
-					uniparameter.part_list_flag,default_display_bitmap,max_child_number);
-		}
+		super(token_string,ek,request_response,fr,pcfps,change_part_name,mount_component_name,
+			type_string_sorter,normalize_location_flag,part_list_flag,default_display_bitmap);
+		decrease_children_number(token_string,ek,request_response,pcfps,fr,
+			change_part_name,mount_component_name,type_string_sorter,default_display_bitmap);
 		for(int i=0,ni=children_number();i<ni;i++)
 			if(uniparameter.file_last_modified_time<children[i].uniparameter.file_last_modified_time)
 				uniparameter.file_last_modified_time=children[i].uniparameter.file_last_modified_time;

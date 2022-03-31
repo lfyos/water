@@ -22,5 +22,5 @@ public interface primitive_interface
 	public String get_point_extra_data(int body_id,int face_id,int loop_id,int edge_id,int point_id);
 	public String[] get_point_material(int body_id,int face_id,int loop_id,int edge_id,int point_id);
 	
-	public void destroy(long my_max_compress_file_length,int my_response_block_size);
+	public void destroy();
 }

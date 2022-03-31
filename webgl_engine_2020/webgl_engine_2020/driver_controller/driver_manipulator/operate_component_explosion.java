@@ -85,7 +85,7 @@ public class operate_component_explosion
 					}
 				return;
 			}
-			comp_array.add_selected_component(ek.component_cont.root_component);
+			comp_array.add_selected_component(ek.component_cont.root_component,false);
 			if(comp_array.component_number<=0)
 				comp_array.add_component(ek.component_cont.root_component);	
 			if(comp_array.component_number<=0)

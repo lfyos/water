@@ -6,7 +6,13 @@ public class jason_string
 	{
 		if(str==null)
 			return "\"\"";
-		str=str.replace("\\","\\\\").replace("\n","\\n\\r").replace("\"","\\\"").replace("\r","\\n\\r");
+		str=str.replace("\\","\\\\").
+				replace("\n","\\n\\r").
+				replace("\"","\\\"").
+				replace("\r","\\n\\r").
+				replace("\t","\\t")
+				
+				;
 		return "\""+str+"\"";
 	}
 }

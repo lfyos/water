@@ -151,22 +151,15 @@ public class client_interface
 			return true;
 		if((ek=ecn.ek_ci.engine_kernel_link_list.ek)!=null){
 			session.statistics_user.user_engine_kernel_number--;
-			if(ek.component_cont!=null){
+			if(ek.component_cont!=null)
 				if(ek.component_cont.root_component!=null)
 					session.statistics_user.user_engine_component_number-=ek.component_cont.root_component.component_id+1;
-				session.statistics_user.user_engine_part_face_number-=ek.component_cont.part_face_number;
-				session.statistics_user.user_engine_part_edge_number-=ek.component_cont.part_edge_number;
-			}
 		}
 		debug_information.println("Execute destroy_ek_ci_node");
 		debug_information.print  ("kernel_number:",session.statistics_user.user_engine_kernel_number);
 		debug_information.println("/",session.statistics_user.user_max_engine_kernel_number);
 		debug_information.print  ("component_number:",session.statistics_user.user_engine_component_number);
 		debug_information.println("/",session.statistics_user.user_max_engine_component_number);
-		debug_information.print  ("face_number:",session.statistics_user.user_engine_part_face_number);
-		debug_information.println("/",session.statistics_user.user_max_engine_part_face_number);
-		debug_information.print  ("edge_number:",session.statistics_user.user_engine_part_edge_number);
-		debug_information.println("/",session.statistics_user.user_max_engine_part_edge_number);
 		
 		if(ecn.ek_ci.client_information!=null) {
 			ecn.ek_ci.engine_kernel_link_list.destroy_client_information(ecn.ek_ci.client_information);
@@ -236,16 +229,6 @@ public class client_interface
 		if(session.statistics_user.user_engine_component_number>session.statistics_user.user_max_engine_component_number) {
 			debug_information.print  ("Create too many component\t\t:\t",session.statistics_user.user_engine_component_number);
 			debug_information.println("/",session.statistics_user.user_max_engine_component_number);
-			return null;
-		}
-		if(session.statistics_user.user_engine_part_face_number>session.statistics_user.user_max_engine_part_face_number) {
-			debug_information.print  ("Create too many face\t\t:\t",session.statistics_user.user_engine_part_face_number);
-			debug_information.println("/",session.statistics_user.user_max_engine_part_face_number);
-			return null;
-		}
-		if(session.statistics_user.user_engine_part_edge_number>session.statistics_user.user_max_engine_part_edge_number) {
-			debug_information.print  ("Create too many edge\t\t:\t",session.statistics_user.user_engine_part_edge_number);
-			debug_information.println("/",session.statistics_user.user_max_engine_part_edge_number);
 			return null;
 		}
 		
@@ -318,8 +301,6 @@ public class client_interface
 			if(create_ekll.ek.component_cont!=null) {
 				if(create_ekll.ek.component_cont.root_component!=null)
 					session.statistics_user.user_engine_component_number+=create_ekll.ek.component_cont.root_component.component_id+1;
-				session.statistics_user.user_engine_part_face_number+=create_ekll.ek.component_cont.part_face_number;
-				session.statistics_user.user_engine_part_edge_number+=create_ekll.ek.component_cont.part_edge_number;
 			}
 		}
 		debug_information.println(request_response.implementor.get_client_id());
@@ -327,10 +308,6 @@ public class client_interface
 		debug_information.println("/",session.statistics_user.user_max_engine_kernel_number);
 		debug_information.print  ("Current created component number is ",session.statistics_user.user_engine_component_number);
 		debug_information.println("/",session.statistics_user.user_max_engine_component_number);
-		debug_information.print  ("Current created face number is ",session.statistics_user.user_engine_part_face_number);
-		debug_information.println("/",session.statistics_user.user_max_engine_part_face_number);
-		debug_information.print  ("Current created edge number is ",session.statistics_user.user_engine_part_edge_number);
-		debug_information.println("/",session.statistics_user.user_max_engine_part_edge_number);
 		
 		ek_ci_node ecn=new ek_ci_node((ec.client_information==null)
 				?(-(request_response.request_time)):(ec.client_information.channel_id));

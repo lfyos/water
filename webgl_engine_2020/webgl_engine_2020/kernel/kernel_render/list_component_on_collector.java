@@ -11,7 +11,6 @@ import kernel_part.part;
 import kernel_transformation.box;
 import kernel_driver.instance_driver;
 
-
 public class list_component_on_collector
 {
 	public	component_collector collector;
@@ -23,7 +22,7 @@ public class list_component_on_collector
 	
 	private int no_driver_component_number;
 	
-	private boolean register(int slot_id,int render_buffer_id,component comp,int driver_id)
+	private boolean register(int render_buffer_id,component comp,int driver_id)
 	{
 		part my_part;
 		instance_driver in_dr;
@@ -73,17 +72,15 @@ public class list_component_on_collector
 				ci.statistics_client.top_box_component_number++;
 			if(my_part.is_bottom_box_part())
 				ci.statistics_client.bottom_box_component_number++;
-			if(slot_id<0)
-				slot_id=0;
-			if(slot_id>=ci.statistics_client.lod_component_number.length){
+			if(driver_id>=ci.statistics_client.lod_component_number.length){
 				int bak[]=ci.statistics_client.lod_component_number;
-				ci.statistics_client.lod_component_number=new int[slot_id+1];
+				ci.statistics_client.lod_component_number=new int[driver_id+1];
 				for(int i=0,n=bak.length;i<n;i++)
 					ci.statistics_client.lod_component_number[i]=bak[i];
 				for(int i=bak.length,n=ci.statistics_client.lod_component_number.length;i<n;i++)
 					ci.statistics_client.lod_component_number[i]=0;
-				ci.statistics_client.lod_component_number[slot_id]++;
 			}
+			ci.statistics_client.lod_component_number[driver_id]++;
 			if(comp.clip.clip_plane!=null)
 				ci.statistics_client.clip_plane_component_number++;
 		}
@@ -135,7 +132,7 @@ public class list_component_on_collector
 					if(comp.children_number()>0)
 						if(comp.driver_array[i].component_part.part_par.assembly_precision2<=lod_precision2)
 							return false;
-					if(register(i+1,render_buffer_id,comp,i))
+					if(register(render_buffer_id,comp,i))
 						return true;
 				}
 			return true;
@@ -173,7 +170,7 @@ public class list_component_on_collector
 		int driver_number	=comp.driver_number();
 		if(children_number<=0){
 			for(int i=0;i<driver_number;i++)
-				if(register(i+1,render_buffer_id,comp,i))
+				if(register(render_buffer_id,comp,i))
 					return;
 			no_driver_component_number++;
 			if(add_number_flag)
@@ -193,7 +190,7 @@ public class list_component_on_collector
 		if(comp.get_can_display_assembly_flag(parameter_channel_id))
 			for(int i=0;i<driver_number;i++)
 				if(comp.driver_array[i].component_part.is_normal_part())
-					if(register(i+1,render_buffer_id,comp,i)){
+					if(register(render_buffer_id,comp,i)){
 						no_driver_component_number=old_no_driver_component_number;
 						return;
 					}
@@ -219,6 +216,7 @@ public class list_component_on_collector
 		collector									=new component_collector(ek.render_cont.renders);
 		
 		no_driver_component_number=0;
+		
 		if(ci.parameter.high_or_low_precision_flag){
 			camera_lod_precision_scale=cam_result.cam.parameter.high_precision_scale;
 			for(component p=ci.parameter.comp;p!=null;p=ek.component_cont.get_component(p.parent_component_id))
@@ -226,19 +224,18 @@ public class list_component_on_collector
 		}else
 			camera_lod_precision_scale=cam_result.cam.parameter.low_precision_scale;
 		
-		if(cam_result.target.driver_id==null){
-			for(int i=0,ni=cam_result.target.comp.length;i<ni;i++)
-				if(cam_result.target.comp[i]!=null)
-					collect(render_buffer_id,cam_result.target.comp[i],parameter_channel_id,0);
-		}else{
-			int comp_number		=cam_result.target.comp.length;
-			int driver_number	=cam_result.target.driver_id.length;
-			for(int i=0,ni=(comp_number<driver_number)?comp_number:driver_number;i<ni;i++)
-				if(cam_result.target.comp[i]!=null)
-					if(cam_result.target.driver_id[i]>=0)
-						register(cam_result.target.driver_id[i]+1,render_buffer_id,
-								cam_result.target.comp[i],cam_result.target.driver_id[i]);
-		}
+		component my_comp;
+		for(int my_driver_id,i=0,ni=cam_result.target.comp.length;i<ni;i++)
+			if((my_comp=cam_result.target.comp[i])!=null){
+				if(cam_result.target.driver_id!=null)
+					if(i<cam_result.target.driver_id.length)
+						if((my_driver_id=cam_result.target.driver_id[i])>=0) {
+							register(render_buffer_id,my_comp,my_driver_id);
+							continue;
+						}
+				collect(render_buffer_id,my_comp,parameter_channel_id,0);
+			}
+		
 		if(ci.parameter.high_or_low_precision_flag)
 			for(component p=ci.parameter.comp;p!=null;p=ek.component_cont.get_component(p.parent_component_id))
 				p.selected_component_family_flag=false;

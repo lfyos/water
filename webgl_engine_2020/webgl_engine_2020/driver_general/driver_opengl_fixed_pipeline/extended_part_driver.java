@@ -21,19 +21,13 @@ import kernel_transformation.point;
 
 public class extended_part_driver extends part_driver
 {
-	private String light_file_name,light_file_charset;
-	
-	public extended_part_driver(part p,String my_light_file_name,String my_light_file_charset)
+	public extended_part_driver(part p)
 	{
 		super();
-		light_file_name=my_light_file_name;
-		light_file_charset=my_light_file_charset;
 	}
 	public void destroy()
 	{	
 		super.destroy();
-
-		light_file_name=null;
 	}
 	public void initialize_part_driver(part p,engine_kernel ek,client_request_response request_response)
 	{
@@ -45,23 +39,26 @@ public class extended_part_driver extends part_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(p,light_file_name,light_file_charset);
+		return new extended_part_driver(p);
 	}
 	public int caculate_material_id(
 			part p,String type_str,int body_id,int face_id,int loop_id,int edge_id,
 			String material_x,String material_y,String material_z,String material_w)
 	{
-		return Integer.decode(material_w);
+		return (int)(Math.round(Double.parseDouble(material_w)));
 	}
 	public part_rude create_part_mesh_and_buffer_object_head(part p,
 			file_writer buffer_object_file_writer,part_container_for_part_search pcps,
 			system_parameter system_par,scene_parameter scene_par)
 	{
 		if(buffer_object_file_writer!=null) {
-			buffer_object_file_writer.println("		{");
-			buffer_object_file_writer.println(file_reader.get_text(light_file_name,light_file_charset));
-			buffer_object_file_writer.println(file_reader.get_text(p.directory_name+p.material_file_name,p.file_charset));
-			buffer_object_file_writer.println("		}");
+			if(!(new File(p.directory_name+p.material_file_name).exists()))
+				buffer_object_file_writer.println("		null");
+			else{
+				buffer_object_file_writer.println("		{");
+				buffer_object_file_writer.println(file_reader.get_text(p.directory_name+p.material_file_name,p.file_charset));
+				buffer_object_file_writer.println("		}");
+			}
 		}
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}
@@ -87,6 +84,13 @@ public class extended_part_driver extends part_driver
 		String directory_name,file_name,path_name,file_url;
 		if((file_name=ci.request_response.get_parameter("file"))==null)
 			return null;
+		try{
+			file_name=java.net.URLDecoder.decode(file_name,ek.system_par.network_data_charset);
+			file_name=java.net.URLDecoder.decode(file_name,ek.system_par.network_data_charset);
+		}catch(Exception e){
+			return null;
+		}
+		
 		file_name=file_reader.separator(file_name);
 		directory_name=new File(p.directory_name+p.material_file_name).getParent();
 		path_name=file_reader.separator(directory_name)+File.separator+file_name;
@@ -99,8 +103,7 @@ public class extended_part_driver extends part_driver
 		else if((file_url=ci.get_file_proxy_url(path_name,ek.system_par))==null)
 			debug_information.println("File has NO proxy url :	",path_name);
 		else
-			ci.request_response.implementor.redirect_url(
-					file_url,ek.system_par.file_download_cors_string);
+			ci.request_response.implementor.redirect_url(file_url,ek.system_par.file_download_cors_string);
 		return null;
 	}
 }

@@ -156,7 +156,7 @@ public class part
 	}
 	public void destroy_primitive_interface(primitive_interface p_i,system_parameter system_par)
 	{
-		p_i.destroy(part_par.max_compress_file_length,system_par.response_block_size);
+		p_i.destroy();
 	}
 	
 	public part_rude call_part_driver_for_load_part_mesh(file_writer head_fw,
@@ -202,7 +202,8 @@ public class part
 		head_fw.println("\t\t\"user_name\"\t\t:\t",jason_string.change_string(user_name)+",");
 		head_fw.println("\t\t\"system_name\"\t:\t",jason_string.change_string(system_name)+",");
 		head_fw.println("\t\t\"mesh_file\"\t\t:\t",jason_string.change_string(directory_name+mesh_file_name)+",");
-		head_fw.println("\t\t\"material_file\"\t:\t",jason_string.change_string(directory_name+material_file_name));
+		head_fw.println("\t\t\"material_file\"\t:\t",jason_string.change_string(directory_name+material_file_name)+",");
+		head_fw.println("\t\t\"this_file\"\t\t:\t",jason_string.change_string(head_fw.directory_name+head_fw.file_name));
 		
 		head_fw.println("\t},");
 		

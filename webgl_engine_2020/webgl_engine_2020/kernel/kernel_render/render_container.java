@@ -212,32 +212,20 @@ public class render_container
 		for(int i=0,ni=renders.length;i<ni;i++)
 			renders[i].compress_part();
 	}
-	
 	private void load_one_shader(boolean not_real_scene_fast_load_flag,
-			part_container_for_part_search pcps,String driver_name,String load_sub_directory_name,
-			String render_list_file_name,String file_system_charset,String shader_file_name,
+			part_container_for_part_search pcps,String load_sub_directory_name,
+			String driver_name,String render_list_file_name,String file_system_charset,String shader_file_name,
 			int part_type_id,system_parameter system_par,scene_parameter scene_par,
-			client_request_response request_response)
+			render ren,client_request_response request_response)
 	{
-		render ren;
-		if((ren=new render(driver_name,request_response,system_par,scene_par)).driver==null)
-			return;
-		
-		debug_information.print  ("Driver name:	",			driver_name);
-		debug_information.print  ("		render list file:	",	render_list_file_name);
-		debug_information.println(file_reader.is_exist(render_list_file_name)?"":"		not exist");
-		
 		file_reader f_render_list=new file_reader(render_list_file_name,file_system_charset);
-		
 		while(!(f_render_list.eof())){
 			String str;
 			String part_type_string			=f_render_list.get_string();
 			String assemble_part_name		=f_render_list.get_string();
 			String part_parameter_file_name	=(str=f_render_list.get_string())==null?"":str;
-			String par_list_file_name		=(str=f_render_list.get_string())==null?"":str;
-			if((par_list_file_name=file_reader.separator(par_list_file_name)).compareTo("")==0)
+			if((part_parameter_file_name=file_reader.separator(part_parameter_file_name)).compareTo("")==0)
 				continue;
-			part_parameter_file_name=file_reader.separator(part_parameter_file_name);
 			if(file_reader.is_exist(f_render_list.directory_name+part_parameter_file_name))
 				part_parameter_file_name=f_render_list.directory_name+part_parameter_file_name;
 			else
@@ -252,33 +240,47 @@ public class render_container
 			part_parameter part_par=new part_parameter(part_type_string,
 				assemble_part_name,part_parameter_file_name,f_render_list.get_charset());
 
-			debug_information.println("		part list file:	",par_list_file_name+"			");
-
 			String get_part_list_result[];
 			try{
 				get_part_list_result=ren.driver.get_part_list(part_type_id,
-					f_render_list,load_sub_directory_name,par_list_file_name,part_par,system_par,
-					scene_par,mount_component_name_and_assemble_file_name,request_response);
+					f_render_list,load_sub_directory_name,part_par,system_par,scene_par,
+					mount_component_name_and_assemble_file_name,request_response);
 			}catch(Exception e){
 				debug_information.println("Execute get_part_list fail:		",e.toString());
 				debug_information.println("Driver name:		",	driver_name);
 				debug_information.println("Shader file:		",	shader_file_name);
-				debug_information.println("List file:		",	
-						f_render_list.directory_name+f_render_list.file_name);
+				debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
 								
 				e.printStackTrace();
 				continue;
 			}
-			if(get_part_list_result==null) 
+			if(get_part_list_result==null) {
+				debug_information.println("part list file is NULL");
+				debug_information.println("Driver name:		",	driver_name);
+				debug_information.println("Shader file:		",	shader_file_name);
+				debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
 				continue;
-			if(get_part_list_result.length<=0)
+			}
+			if(get_part_list_result.length<=0) {
+				debug_information.println("get_part_list_result.length<=0");
+				debug_information.println("Driver name:		",	driver_name);
+				debug_information.println("Shader file:		",	shader_file_name);
+				debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
 				continue;
-			if(get_part_list_result[0]==null)
-				continue;
+			}
+			if(get_part_list_result[0]==null) {
+				debug_information.println("get_part_list_result[0]==null");
+				debug_information.println("Driver name:		",	driver_name);
+				debug_information.println("Shader file:		",	shader_file_name);
+				debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
+			}
 			
 			File par_list_f;			
 			if(!((par_list_f=new File(get_part_list_result[0])).exists())) {
 				debug_information.println("part list file:	",get_part_list_result[0]+"	not exist");
+				debug_information.println("Driver name:		",	driver_name);
+				debug_information.println("Shader file:		",	shader_file_name);
+				debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
 				continue;
 			}
 			if(par_list_f.lastModified()<f_render_list.lastModified_time)
@@ -339,16 +341,43 @@ public class render_container
 		debug_information.println("Begin shader and part initialization,file name is ",shader_file_name);
 
 		for(String str;!(f_shader.eof());){
-			String driver_name=(str=f_shader.get_string())==null?"":str.trim();			
-			String render_list_file_name=(str=f_shader.get_string())==null?"":file_reader.separator(str.trim());
-			if(render_list_file_name.compareTo("")==0)
+			String render_name=(str=f_shader.get_string())==null?"":str.trim();
+			String driver_name=(str=f_shader.get_string())==null?"":str.trim();	
+			debug_information.print  ("render name:	",	render_name);
+			debug_information.print  ("Driver name:	",	driver_name);
+			
+			render ren=new render(render_name,driver_name,request_response,system_par,scene_par);
+			if(ren.driver==null) {
+				debug_information.print  ("ren.driver==null		",driver_name);
 				continue;
-			if((f=new File(f_shader.directory_name+render_list_file_name)).exists())
-				if(f_shader.lastModified_time>f.lastModified())
-					f.setLastModified(f_shader.lastModified_time);
-			load_one_shader(not_real_scene_fast_load_flag,pcps,driver_name,load_sub_directory_name,
-				f_shader.directory_name+render_list_file_name,f_shader.get_charset(),
-				f_shader.directory_name+f_shader.file_name,part_type_id,system_par,scene_par,request_response);
+			}
+			String render_list_file_name[]=ren.driver.get_render_list(part_type_id,
+					f_shader, load_sub_directory_name, system_par,scene_par,
+					mount_component_name_and_assemble_file_name, request_response);
+			if(render_list_file_name==null) {
+				debug_information.print  ("render list file is NULL	",	driver_name);
+				continue;
+			}
+			if(render_list_file_name.length<2) {
+				debug_information.print  ("render_list_file_name.length<2	",	driver_name);
+				continue;
+			}
+			if(render_list_file_name[0]==null) {
+				debug_information.print  ("render_list_file_name[0]==null	",	driver_name);
+				continue;
+			}
+			render_list_file_name[0]=file_reader.separator(render_list_file_name[0]);
+			if(!((f=new File(render_list_file_name[0])).exists())) {
+				debug_information.println(render_list_file_name[0],"		not exist");
+				continue;
+			}
+			if(f_shader.lastModified_time>f.lastModified())
+				f.setLastModified(f_shader.lastModified_time);
+
+			load_one_shader(not_real_scene_fast_load_flag,pcps,load_sub_directory_name,
+				driver_name,render_list_file_name[0],render_list_file_name[1],
+				f_shader.directory_name+f_shader.file_name,
+				part_type_id,system_par,scene_par,ren,request_response);
 		}
 		
 		debug_information.println();

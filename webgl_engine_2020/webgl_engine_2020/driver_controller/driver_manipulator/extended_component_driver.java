@@ -1,7 +1,6 @@
 package driver_manipulator;
 
 import kernel_part.part;
-import kernel_common_class.change_name;
 import kernel_component.component;
 import kernel_driver.component_driver;
 import kernel_driver.instance_driver;
@@ -10,7 +9,6 @@ import kernel_network.client_request_response;
 
 public class extended_component_driver  extends component_driver
 {
-	private change_name language_change_name;
 	private String audio_component_name;
 	private int camera_modifier_id;
 	private long touch_time_length;
@@ -19,15 +17,13 @@ public class extended_component_driver  extends component_driver
 	public void destroy()
 	{
 		super.destroy();
-		language_change_name=null;
 	}
-	public extended_component_driver(part my_component_part,
-			change_name my_language_change_name,String my_audio_component_name,
+	public extended_component_driver(
+			part my_component_part,String my_audio_component_name,
 			int my_camera_modifier_id,long my_touch_time_length,
 			boolean my_save_component_name_or_id_flag)
 	{
 		super(my_component_part);
-		language_change_name=my_language_change_name;
 		audio_component_name=my_audio_component_name;
 		camera_modifier_id=my_camera_modifier_id;
 		touch_time_length=my_touch_time_length;
@@ -52,8 +48,7 @@ public class extended_component_driver  extends component_driver
 				if(audio_comp.driver_array[0] instanceof driver_audio.extended_component_driver)
 					audio_component_id=audio_comp.component_id;
 		
-		return new extended_instance_driver(
-				comp,driver_id,language_change_name,audio_component_id,
+		return new extended_instance_driver(comp,driver_id,audio_component_id,
 				camera_modifier_id,touch_time_length,save_component_name_or_id_flag);
 	}
 }

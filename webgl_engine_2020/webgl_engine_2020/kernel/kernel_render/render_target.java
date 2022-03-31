@@ -97,9 +97,11 @@ public class render_target
 						return new double[]
 							{
 								my_viewport_x,my_viewport_y,
-								aspect*tv.width/tv.height,view_id
+								aspect*tv.width/tv.height,
+								tv.width/tv.height,
+								view_id
 							};
-			};
+			}
 		return null;
 	}
 }

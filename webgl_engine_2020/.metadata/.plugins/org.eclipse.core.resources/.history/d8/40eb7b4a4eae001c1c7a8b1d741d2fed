@@ -1,0 +1,26 @@
+package kernel_maintain;
+
+import kernel_common_class.debug_information;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.travel_through_directory;
+
+public class test_1 extends travel_through_directory
+{
+	public void operate_file(String file_name)
+	{
+		String str=file_reader.get_text(file_name, "GBK");
+		if(str!=null) {
+			if(str.indexOf("组件拼装拼装编辑组件")>=0)
+				debug_information.println(file_name);
+		}
+	}
+	public static void main(String args[])
+	{
+		debug_information.println("Begin");
+
+		new test_1().do_travel("E:\\water_all\\data\\shaders\\driver_controller\\", false);
+//		new test_1().do_travel("E:\\water_all\\webgl_engine_2020\\webgl_engine_2020\\", false);
+
+		debug_information.println("End");
+	}
+}

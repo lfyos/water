@@ -95,7 +95,6 @@ public class part_driver
 	{
 		return new component_driver(my_component_part);
 	}
-	
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int loop_id,int edge_id,int point_id,
 			point p0,point p1)

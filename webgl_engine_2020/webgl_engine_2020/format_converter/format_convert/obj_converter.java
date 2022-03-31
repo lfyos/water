@@ -599,7 +599,6 @@ public class obj_converter
 		write_out_edge		(target_file_name,target_charset);
 		write_out_point		(target_file_name,target_charset);
 		write_out_mesh		(target_file_name,target_charset);
-		
 	}
 	
 	public static void main(String args[])

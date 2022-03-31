@@ -1,0 +1,48 @@
+package driver_menu;
+
+import kernel_component.component;
+import kernel_driver.component_driver;
+import kernel_driver.instance_driver;
+import kernel_engine.engine_kernel;
+import kernel_network.client_request_response;
+import kernel_part.part;
+
+public class extended_component_driver  extends component_driver
+{
+	private boolean menu_type;
+	private String file_name,file_charset;
+	private double dx,dy;
+	
+	public void destroy()
+	{
+		super.destroy();
+		file_name=null;
+	}
+	public extended_component_driver(part my_component_part,
+			String my_file_name,String my_file_charset,boolean my_menu_type,double my_dx,double my_dy)
+	{
+		super(my_component_part);
+
+		file_name=my_file_name;
+		file_charset=my_file_charset;
+		menu_type=my_menu_type;
+		dx=my_dx;
+		dy=my_dy;
+	}
+	public void initialize_component_driver(component comp,int driver_id,
+			engine_kernel ek,client_request_response request_response)
+	{
+//		String component_directory_name=comp.component_directory_name;
+//		String scene_directory_name=ek.scene_directory_name;
+//		String parameter_directory_name=ek.scene_par.directory_name;
+
+		comp.uniparameter.display_part_name_or_component_name_flag=false;
+		
+		return;
+	}
+	public instance_driver create_instance_driver(component comp,int driver_id,
+			engine_kernel ek,client_request_response request_response)
+	{
+		return new extended_instance_driver(comp,driver_id,menu_type,file_name,file_charset,dx,dy);
+	}
+}

@@ -68,7 +68,7 @@ public class operate_show_hide_component
 			comp_cont.add_component(my_comp);
 			selected_operation_flag=false;
 		}else{
-			comp_cont.add_selected_component(ek.component_cont.root_component);
+			comp_cont.add_selected_component(ek.component_cont.root_component,false);
 			selected_operation_flag=true;
 		}
 		if(comp_cont.component_number>0)

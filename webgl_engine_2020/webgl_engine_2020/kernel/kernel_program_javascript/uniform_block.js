@@ -48,24 +48,28 @@ function construct_uniform_block_object(my_gl)
 		this.destroy					=null;
 	};
 	
-	this.bind_system=function(pickup,current_time,canvas_width,canvas_height,
-			camera_object_parameter,component_location,computer)
+	this.bind_system=function(render)
 	{
-		var t=current_time;
+		var t=render.current_time;
 		var nanosecond=t%1000;		t=Math.floor((t-nanosecond)/1000);
 		var microsecond=t%1000;		t=Math.floor((t-microsecond)/1000);
 		var da=new Date();			da.setTime(t);
 
 		var int_data=[
-			pickup.component_id,
-			pickup.render_id,
-			pickup.part_id,
-			pickup.body_id,
-			pickup.face_id,
-			pickup.vertex_id,
-			pickup.loop_id,
-			pickup.edge_id,
-			pickup.point_id,
+			render.pickup.component_id,
+			render.pickup.render_id,
+			render.pickup.part_id,
+			render.pickup.body_id,
+			render.pickup.face_id,
+			render.pickup.vertex_id,
+			render.pickup.loop_id,
+			render.pickup.edge_id,
+			render.pickup.point_id,
+			
+			render.highlight.component_id,
+			render.highlight.body_id,
+			render.highlight.face_id,
+			0,
 			
 			da.getFullYear(),
 			da.getMonth(),
@@ -78,22 +82,24 @@ function construct_uniform_block_object(my_gl)
 			microsecond,
 			nanosecond,
 			
-			canvas_width,
-			canvas_height
+			render.canvas.width,
+			render.canvas.height
 		];
 		
 		var float_data=[
-			pickup.depth,
-			pickup.value,
+			render.pickup.depth,
+			render.pickup.value,
 			0,0
 		];
 		
+		var camera_object_parameter=render.camera.camera_object_parameter;
+		var component_location=render.component_location_data;
 		for(var i=0,ni=camera_object_parameter.length;i<ni;i++)
 			if(camera_object_parameter[i].light_camera_flag){
 				var light_component_id	=camera_object_parameter[i].component_id;
 				var light_distance		=camera_object_parameter[i].distance;
 				var light_matrix		=component_location.get_component_location_routine(light_component_id);
-				var light_position		=computer.caculate_coordinate(light_matrix,0,0,light_distance);
+				var light_position		=render.computer.caculate_coordinate(light_matrix,0,0,light_distance);
 				float_data.push(light_position[0],light_position[1],light_position[2],light_position[3]);
 			}
 		
@@ -124,6 +130,7 @@ function construct_uniform_block_object(my_gl)
 				:project_matrix.negative_frustem_matrix,
 				
 			project_matrix.screen_move_matrix,
+			project_matrix.negative_screen_move_matrix,
 			
 			project_matrix.lookat_matrix,
 			project_matrix.negative_lookat_matrix,
@@ -212,15 +219,18 @@ function construct_uniform_block_object(my_gl)
 			clear_color[3]
 		];
 		var int_data=[
-			method_id,
-			pass_id,
-			
-			clear_flag,
-			
 			viewport[0],
 			viewport[1],
 			viewport[2],
-			viewport[3]
+			viewport[3],
+			viewport[4],
+			viewport[5],
+			
+			method_id,
+			pass_id,
+			clear_flag,
+
+			0,0,0
 		];
 		this.gl.bindBuffer		(this.gl.UNIFORM_BUFFER,this.pass_buffer_object	);
 		this.gl.bufferSubData	(this.gl.UNIFORM_BUFFER,0,					 	new Float32Array(float_data),0);

@@ -20,15 +20,6 @@ import kernel_part.part_container_for_part_search;
 import kernel_transformation.box;
 import kernel_transformation.point;
 
-final class my_create_grid extends create_grid
-{
-	public my_create_grid(String file_name,int width,int height,String file_system_charset)
-	{
-		do_create(file_name,true,width,height,
-				new String[] {"vertex","normal","texture"},
-				file_system_charset);
-	}
-}
 public class extended_part_driver extends part_driver
 {
 	private int grid_width,grid_height;
@@ -79,7 +70,7 @@ public class extended_part_driver extends part_driver
 			String file_name=p.directory_name+p.mesh_file_name;
 			long t=(new File(file_name)).lastModified();
 	
-			new my_create_grid(file_name,grid_width,grid_height,p.file_charset);
+			new create_grid(file_name,p.file_charset,grid_width,grid_height,new String[] {"vertex","normal"});
 			
 			(new File(file_name)).setLastModified(t);
 			
@@ -99,8 +90,10 @@ public class extended_part_driver extends part_driver
 			
 			buffer_object_file_writer.println("\t\t}");
 	
-			file_writer.file_copy_with_brother(
-					p.directory_name+p.mesh_file_name,buffer_object_file_writer.directory_name);
+			file_writer.file_copy(new File(file_name).getParent()+File.separatorChar+"heightmap.jpg", 
+					buffer_object_file_writer.directory_name+"heightmap.jpg");
+			file_writer.file_copy(new File(file_name).getParent()+File.separatorChar+"surface.jpg", 
+					buffer_object_file_writer.directory_name+"surface.jpg");
 		}
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}

@@ -1,6 +1,7 @@
 package driver_render_target_register;
 
 import kernel_camera.camera_result;
+import kernel_common_class.debug_information;
 import kernel_component.component;
 import kernel_component.component_collector;
 import kernel_driver.instance_driver;
@@ -17,10 +18,14 @@ public class extended_instance_driver extends instance_driver
 {
 	private int target_id;
 	private render_target_parameter	target_parameter[];
+	private component  render_component_array[];
+	private int render_driver_id_array[];
 	
 	public void destroy()
 	{
 		super.destroy();
+		render_component_array=null;
+		render_driver_id_array=null;
 	}
 	public extended_instance_driver(component my_comp,int my_driver_id)
 	{
@@ -35,6 +40,9 @@ public class extended_instance_driver extends instance_driver
 		for(int i=0;i<ni;i++)
 			target_parameter[i]=new render_target_parameter(f);
 		f.close();
+		
+		render_component_array=new component[] {};
+		render_driver_id_array=new int[] {};
 	}
 	private void write_target_parameter()
 	{
@@ -68,6 +76,15 @@ public class extended_instance_driver extends instance_driver
 					j=nj;
 				}
 			}
+		component	my_component_array[]=new component[render_component_array.length+1];
+		int			my_driver_id_array[]=new int[my_component_array.length];
+		my_component_array[0]=ek.component_cont.root_component;
+		my_driver_id_array[0]=-1;
+		for(int i=0,j=1,ni=render_component_array.length;i<ni;i++,j++) {
+			my_component_array[j]=render_component_array[i];
+			 my_driver_id_array[j]=render_driver_id_array[i];
+		}
+		
 		render_target main_rt=null;
 		for(int i=0,ni=target_parameter.length;i<ni;i++){
 			double aspect_value=ci.parameter.aspect;
@@ -79,7 +96,7 @@ public class extended_instance_driver extends instance_driver
 			
 			render_target rt=new render_target(comp.component_name+"/"+Integer.toString(i),
 				target_parameter[i].camera_id,target_parameter[i].parameter_channel_id,
-				new component[]{ek.component_cont.root_component},null,ci.clip_plane,0,0,1,
+				my_component_array,my_driver_id_array,ci.clip_plane,0,0,1,
 				new box(center_x-aspect_value,center_y-1.0,-1.0,center_x+aspect_value,center_y+1.0,1.0),
 				target_parameter[i].viewport);
 			
@@ -87,7 +104,6 @@ public class extended_instance_driver extends instance_driver
 				rt.main_display_target_flag=(main_view_part_id==i)?true:false;
 			else
 				rt.main_display_target_flag=(i==0)?true:false;
-			
 			ci.target_container.register_target(rt,-1,main_rt);
 			if(main_rt==null){
 				main_rt=rt;
@@ -95,7 +111,6 @@ public class extended_instance_driver extends instance_driver
 			}
 		}
 	}
-	
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
 	}
@@ -186,6 +201,49 @@ public class extended_instance_driver extends instance_driver
 			if(viewport_id>=target_parameter[target_id].viewport.length)
 				return null;
 			ci.request_response.print(target_parameter[target_id].viewport[viewport_id].clear_color);
+			break;
+		case "clear_render_component":
+			render_component_array=new component[] {};
+			render_driver_id_array=new int[] {};
+			break;
+		case "append_render_component":
+			{
+				component bak_comp[]=render_component_array,append_comp=null;
+				int bak_driver_id[]=render_driver_id_array,append_driver_id=0;
+				if((str=ci.request_response.get_parameter("component_id"))!=null)
+					if((append_comp=ek.component_cont.get_component(Integer.decode(str)))==null){
+						debug_information.println("Can't Find component by ID in append_render_component\t:\t",str);
+						break;
+					}
+				if((str=ci.request_response.get_parameter("component_name"))!=null){
+					try {
+							str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+							str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					}catch(Exception e) {
+							debug_information.println("Can't decode component name in append_render_component\t:\t",str);
+							break;
+					}
+					if((append_comp=ek.component_cont.search_component(str))==null){
+						debug_information.println("Can't Find component by name in append_render_component\t:\t",str);
+						break;
+					}
+				}
+				if(append_comp==null)
+					break;
+				if((str=ci.request_response.get_parameter("driver_id"))!=null)
+					if((str=str.trim()).length()>0)
+						append_driver_id=Integer.decode(str);
+
+				render_component_array=new component[bak_comp.length+1];
+				render_driver_id_array=new int[render_component_array.length];
+				
+				for(int i=0,ni=bak_comp.length;i<ni;i++) {
+					render_component_array[i]=bak_comp[i];
+					render_driver_id_array[i]=bak_driver_id[i];
+				}
+				render_component_array[render_component_array.length-1]=append_comp;
+				render_driver_id_array[render_component_array.length-1]=append_driver_id;
+			}
 			break;
 		}
 		return null;

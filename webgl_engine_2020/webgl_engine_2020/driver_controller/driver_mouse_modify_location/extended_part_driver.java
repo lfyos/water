@@ -1,5 +1,6 @@
 package driver_mouse_modify_location;
 
+import kernel_common_class.jason_string;
 import kernel_component.component;
 import kernel_driver.component_driver;
 
@@ -19,30 +20,46 @@ import kernel_transformation.point;
 
 public class extended_part_driver extends part_driver
 {
-	private String material_file_name;
+	private String material_file_name,mark_component_name,movement_component_name,movement_abstract_menu_component_name;
 	
-	public extended_part_driver(String my_material_file_name)
+	public extended_part_driver(String my_material_file_name,
+			String my_mark_component_name,String my_movement_component_name,
+			String my_movement_abstract_menu_component_name)
 	{
 		super();
-		material_file_name	=new String(my_material_file_name);
+		material_file_name				=new String(my_material_file_name);
+		mark_component_name				=new String(my_mark_component_name);
+		movement_component_name			=new String(my_movement_component_name);
+		movement_abstract_menu_component_name=new String(my_movement_abstract_menu_component_name);
 	}
 	public void destroy()
 	{	
 		super.destroy();
-		if(material_file_name!=null)
-			material_file_name=null;
+		material_file_name=null;
+		mark_component_name=null;
+		movement_component_name=null;
 	}
 	public void initialize_part_driver(part p,engine_kernel ek,client_request_response request_response)
-	{
+	{	
 	}
 	public void response_init_part_data(part p,engine_kernel ek,client_information ci)
 	{
+		ci.request_response.println("{");
+		ci.request_response.print("\"mark_component_name\":		",
+				jason_string.change_string(mark_component_name)).println(",");
+		ci.request_response.print("\"movement_component_name\":	",
+				jason_string.change_string(movement_component_name)).println(",");
+		ci.request_response.print("\"movement_abstract_menu_component_name\":	",
+				jason_string.change_string(movement_abstract_menu_component_name));
+		ci.request_response.println("}");
 	}
 	public part_driver clone(part parent,part p,
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(material_file_name);
+		return new extended_part_driver(material_file_name,
+				mark_component_name,movement_component_name,
+				movement_abstract_menu_component_name);
 	}
 	public int caculate_material_id(
 			part p,String type_str,int body_id,int face_id,int loop_id,int edge_id,

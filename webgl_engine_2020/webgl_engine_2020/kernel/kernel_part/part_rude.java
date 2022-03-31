@@ -183,24 +183,25 @@ public class part_rude
 		default_attribute_double	=pr.default_attribute_double;
 		default_attribute_string	=pr.default_attribute_string;
 		
-		for(int i=0;i<my_box_number;i++) {
-			if(default_attribute_string.length<pr.default_attribute_string.length) {
-				String bak[]=default_attribute_string;
-				default_attribute_string=new String[pr.default_attribute_string.length];
-				for(int j=0,nj=bak.length;j<nj;j++)
-					default_attribute_string[j]=bak[j];
-				for(int j=bak.length,nj=pr.default_attribute_string.length;j<nj;j++)
-					default_attribute_string[j]=pr.default_attribute_string[j];
+		for(int i=0;i<my_box_number;i++) 
+			if((pr=my_reference_part[i].part_mesh)!=null){
+				if(default_attribute_string.length<pr.default_attribute_string.length) {
+					String bak[]=default_attribute_string;
+					default_attribute_string=new String[pr.default_attribute_string.length];
+					for(int j=0,nj=bak.length;j<nj;j++)
+						default_attribute_string[j]=bak[j];
+					for(int j=bak.length,nj=pr.default_attribute_string.length;j<nj;j++)
+						default_attribute_string[j]=pr.default_attribute_string[j];
+				}
+				if(default_attribute_double.length<pr.default_attribute_double.length) {
+					double bak[]=default_attribute_double;
+					default_attribute_double=new double[pr.default_attribute_double.length];
+					for(int j=0,nj=bak.length;j<nj;j++)
+						default_attribute_double[j]=bak[j];
+					for(int j=bak.length,nj=pr.default_attribute_double.length;j<nj;j++)
+						default_attribute_double[j]=pr.default_attribute_double[j];
+				}
 			}
-			if(default_attribute_double.length<pr.default_attribute_double.length) {
-				double bak[]=default_attribute_double;
-				default_attribute_double=new double[pr.default_attribute_double.length];
-				for(int j=0,nj=bak.length;j<nj;j++)
-					default_attribute_double[j]=bak[j];
-				for(int j=bak.length,nj=pr.default_attribute_double.length;j<nj;j++)
-					default_attribute_double[j]=pr.default_attribute_double[j];
-			}
-		}
 		body_array=new body[]{new body(my_box_number,my_reference_part,my_box_loca,my_box_array)};
 		caculate_rp_box_and_primitive_number();
 		return;

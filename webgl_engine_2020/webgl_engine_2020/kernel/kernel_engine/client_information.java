@@ -148,14 +148,10 @@ public class client_information
 		String language_str=request_response.get_parameter("language");
 		language_str=(language_str==null)?"english":(language_str.trim());
 		
-		String process_bar_str=request_response.get_parameter("process_bar");
-		process_bar_str=(process_bar_str==null)?"-1":(process_bar_str.trim());
-		
 		String url_header;
 		url_header =request_response.implementor.get_url();
-		url_header+="?channel="		+Long.toString(channel_id);
-		url_header+="&user_name="	+user_name					+"&language=" +language_str;
-		url_header+="&process_bar="	+process_bar_str;
+		url_header+="?channel="+Long.toString(channel_id);
+		url_header+="&user_name="+user_name+"&language=" +language_str;
 		
 		return url_header;
 	}
@@ -298,7 +294,7 @@ public class client_information
 		statistics_client	=new client_statistics();
 		statistics_interface=my_statistics_interface;
 		statistics_user		=my_statistics_user;
-		engine_current_number=new int[] {0,0,0};
+		engine_current_number=new int[] {0,0};
 		
 		request_response	=my_request_response;
 		

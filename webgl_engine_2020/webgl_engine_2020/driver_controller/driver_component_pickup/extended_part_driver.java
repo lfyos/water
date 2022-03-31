@@ -19,25 +19,29 @@ import kernel_transformation.point;
 
 public class extended_part_driver extends part_driver
 {
-	public extended_part_driver()
+	private double pickup_area_length,id_keeep_time_length;
+	public extended_part_driver(double my_pickup_area_length,double my_id_keeep_time_length)
 	{
 		super();
+		pickup_area_length=my_pickup_area_length;
+		id_keeep_time_length=my_id_keeep_time_length;
 	}
 	public void destroy()
 	{	
 		super.destroy();
 	}
 	public void initialize_part_driver(part p,engine_kernel ek,client_request_response request_response)
-	{
+	{	
 	}
 	public void response_init_part_data(part p,engine_kernel ek,client_information ci)
 	{
+		ci.request_response.print(id_keeep_time_length);
 	}
 	public part_driver clone(part parent,part p,
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver();
+		return new extended_part_driver(pickup_area_length,id_keeep_time_length);
 	}
 	public int caculate_material_id(
 			part p,String type_str,int body_id,int face_id,int loop_id,int edge_id,
@@ -54,7 +58,7 @@ public class extended_part_driver extends part_driver
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,
 			part my_component_part,engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_component_driver(my_component_part);
+		return new extended_component_driver(my_component_part,pickup_area_length);
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int loop_id,int edge_id,int point_id,

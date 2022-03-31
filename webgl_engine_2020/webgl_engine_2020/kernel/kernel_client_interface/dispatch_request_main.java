@@ -42,8 +42,10 @@ public class dispatch_request_main
 			return dispatch_component_request.do_dispatch(5,delay_time_length,ek,ci);
 		case "modifier":
 			return dispatch_modifier_request.do_dispatch(6,ek, ci);
+		case "collector":
+			return dispatch_collector_request.do_dispatch(7, ek, ci);
 		case "information":
-			return dispatch_information_request.do_dispatch(7,ek,ci);
+			return dispatch_information_request.do_dispatch(8,ek,ci);
 		case "termination":
 			ci.request_response.request_time=0;
 			return null;

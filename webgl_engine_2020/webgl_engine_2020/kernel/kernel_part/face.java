@@ -32,8 +32,7 @@ public class face
 	}
 	private void caculate_box()
 	{
-		face_box=null;
-		
+		face_box=null;	
 		if(fa_face!=null)
 			if(fa_face.face_face_box!=null)
 				face_box=new box(fa_face.face_face_box);
@@ -43,7 +42,7 @@ public class face
 					face_box=fa_curve.curve_box;
 				else
 					face_box=face_box.add(fa_curve.curve_box);
-			}		
+			}
 	}
 	public face(face s)
 	{
@@ -65,7 +64,7 @@ public class face
 	public face(part my_reference_part,location my_face_loca,box my_face_box)
 	{
 		name="no_name";
-		
+		int double_attribute_number=0,string_attribute_number=0;
 		String my_extra_data=null,my_material[]=null;
 		if(my_reference_part!=null)
 			if(my_reference_part.part_mesh!=null) {
@@ -74,15 +73,20 @@ public class face
 				if(my_reference_part.part_mesh.default_material!=null)
 					if(my_reference_part.part_mesh.default_material.length>=4)
 						my_material=my_reference_part.part_mesh.default_material;
+				if(my_reference_part.part_mesh.default_attribute_double!=null)
+					double_attribute_number=my_reference_part.part_mesh.default_attribute_double.length;
+				if(my_reference_part.part_mesh.default_attribute_string!=null)
+					string_attribute_number=my_reference_part.part_mesh.default_attribute_string.length;
 			}
 		if(my_extra_data==null)
 			my_extra_data="1";
 		if(my_material==null)
 			my_material=new String[] {"0","0","0","0"};
-		
 		fa_curve=new face_curve(my_face_loca,my_face_box,my_extra_data,my_material);
-		fa_face=new face_face(fa_curve.curve_box);
+		fa_face=new face_face(fa_curve.curve_box,
+				(double_attribute_number<string_attribute_number)
+				?double_attribute_number:string_attribute_number);
 		reference_part=my_reference_part;
 		caculate_box();
 	}
-};
+}

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/webgl_engine_2020/format_converter/old_convert/cadex_converter.java"/>
+<listEntry value="/webgl_engine_2020/format_converter/format_convert/cadex_converter.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
 </listAttribute>
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="old_convert.cadex_converter"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="format_convert.cadex_converter"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="C:\tmp\枕木.SLDPRT   C:\temp  E:\cad"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="webgl_engine_2020"/>
 </launchConfiguration>

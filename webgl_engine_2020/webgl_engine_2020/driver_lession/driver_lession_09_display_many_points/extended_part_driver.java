@@ -71,14 +71,19 @@ public class extended_part_driver extends part_driver
 					}
 					return new_vertex_data;
 				}
+				public my_create_grid(String file_name,String file_charset,int my_width,int my_height,String attribute_name[])
+				{
+					super(file_name,file_charset,my_width,my_height,attribute_name);
+				}
 			};
 			
 			String file_name=p.directory_name+p.mesh_file_name;
 			long t=(new File(file_name)).lastModified();
 			
-			(new my_create_grid()).do_create(file_name,false,32,32,new String[] {"vertex","normal"},p.file_charset);
+			new my_create_grid(file_name,p.file_charset,32,32,new String[] {"vertex","normal"});
 			
-			file_writer.file_copy_with_brother(file_name,buffer_object_file_writer.directory_name);
+			file_writer.file_copy(new File(file_name).getParent()+File.separatorChar+"texture.jpg", 
+					buffer_object_file_writer.directory_name+"texture.jpg");
 			
 			(new File(file_name)).setLastModified(t);
 		}

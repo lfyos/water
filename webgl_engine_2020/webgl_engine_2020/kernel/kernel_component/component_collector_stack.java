@@ -16,11 +16,16 @@ import kernel_engine.scene_parameter;
 public class component_collector_stack
 {
 	public String component_collector_stack_file_name,component_collector_stack_file_charset;
+	
 	private int parameter_channel_id[];
 	private long version;
 	public long get_collector_version()
 	{
 		return version;
+	}
+	public long update_collector_version()
+	{
+		return ++version;
 	}
 	private component_collector collector[];
 	private int collector_pointer;
@@ -35,7 +40,6 @@ public class component_collector_stack
 				}
 		collector=null;
 	}
-	
 	private void set_hide_flag(component comp,boolean hide_flag,component_container component_cont)
 	{
 		int child_number;
@@ -65,9 +69,12 @@ public class component_collector_stack
 							set_hide_flag(p.comp,hide_flag,component_cont);
 	}
 	public component_collector push_collector(system_parameter system_par,scene_parameter scene_par,
-			component_collector push_collector,component_container component_cont,render []renders)
+			component_collector push_collector,component_container component_cont,render renders[])
 	{
 		part p;
+		
+		push_collector.sort_component_list(scene_par.component_sort_type,scene_par.component_sort_min_distance);
+		
 		if(push_collector.part_number==1)
 			for(int render_id=0,exit_flag=1;(exit_flag>0)&&(render_id<push_collector.component_collector.length);render_id++)
 				if(push_collector.component_collector[render_id]!=null)
@@ -93,7 +100,8 @@ public class component_collector_stack
 								}
 
 		set_hide_flag(get_top_collector(),true,component_cont);
-		push_collector.list_id=version++;
+		
+		push_collector.list_id=update_collector_version();
 		collector[collector_pointer]=push_collector;
 		collector_pointer=(1+collector_pointer)%(collector.length);
 		set_hide_flag(push_collector,false,component_cont);
@@ -112,6 +120,8 @@ public class component_collector_stack
 	}
 	public component_collector pop(component_container component_cont,boolean pop_all_flag)
 	{
+		update_collector_version();
+		
 		component_collector ret_val=get_top_collector();
 		set_hide_flag(ret_val,true,component_cont);
 		
@@ -124,7 +134,6 @@ public class component_collector_stack
 			collector[collector_pointer]=null;
 			set_hide_flag(get_top_collector(),false,component_cont);
 		}
-		version++;
 		return ret_val;
 	}
 	public component_collector get_top_collector()
@@ -145,20 +154,16 @@ public class component_collector_stack
 		for(int i=0;i<collector.length;i++)
 			if(collector[i]!=null)
 				collector_number++;
-		if(collector_number<=0)
-			return null;
 		component_collector ret_val[]=new component_collector[collector_number];
-		for(int i=0,j=collector_pointer-1;i<ret_val.length;j--){
-			j=(collector.length+j)%(collector.length);
-			if(collector[j]!=null)
-				ret_val[i++]=collector[j];
-		}
+		if(collector_number>0)
+			for(int s_pointer=collector_pointer,d_pointer=0,i=0,ni=collector.length;i<ni;i++)
+				if(collector[s_pointer=(s_pointer-1+collector.length)%collector.length]!=null)
+					ret_val[d_pointer++]=collector[s_pointer];
 		return ret_val;
 	}
-	public component_collector delete_collector(
-			long list_id,component_container component_cont)
+	public component_collector delete_collector(long list_id,component_container component_cont)
 	{
-		version++;
+		update_collector_version();
 		if(list_id<0){
 			collector_pointer=0;
 			for(int i=0,ni=collector.length;i<ni;i++)
@@ -181,23 +186,24 @@ public class component_collector_stack
 		}
 		return null;
 	}
-
 	private static final String no_title_string="__no_title__"; 
 	
-	public void save(common_writer fw,
-			component_container component_cont,boolean save_component_name_or_id_flag)
+	public void save(common_writer fw,component_container component_cont,
+			boolean only_top_list_flag,boolean save_component_name_or_id_flag)
 	{
+		fw.println("/*	save_component_name_or_id_flag 	*/		",save_component_name_or_id_flag?"true":"false");
+		fw.println();
+		
 		component_collector p[]=get_all_collector();
 		
 		if(p==null)
 			return;
-		
-		fw.println("/*	save_component_name_or_id_flag 	*/		",save_component_name_or_id_flag?"true":"false");
-		fw.println();
-		
+		if(p.length<=0)
+			return;
+
 		component_array ca=new component_array(component_cont.root_component.component_id+1);
 		
-		for(int i=p.length-1;i>=0;i--){
+		for(int i=only_top_list_flag?0:(p.length-1);i>=0;i--){
 			ca.clear_compoment();
 			ca.add_collector(p[i]);
 			
@@ -234,6 +240,8 @@ public class component_collector_stack
 	public void load(common_reader f,component_container component_cont,
 			system_parameter system_par,scene_parameter scene_par,render []renders)
 	{
+		update_collector_version();
+		
 		boolean save_component_name_or_id_flag=f.get_boolean();
 		
 		component_array ca=new component_array(component_cont.root_component.component_id+1);
@@ -269,11 +277,9 @@ public class component_collector_stack
 						get_top_collector().title=title;
 			}
 		}
-		
-		version++;
 	}
-	public component_collector_stack(String scene_directory_name,String my_component_collector_stack_file_charset,
-			component_container component_cont,system_parameter system_par,scene_parameter scene_par,render []renders)
+	public component_collector_stack(component_container component_cont,
+			system_parameter system_par,scene_parameter scene_par,render []renders)
 	{
 		version=1;
 		parameter_channel_id=scene_par.component_collector_parameter_channel_id;
@@ -287,8 +293,10 @@ public class component_collector_stack
 			if(component_cont.root_component!=null)
 				set_hide_flag(component_cont.root_component,true,component_cont);
 
-		component_collector_stack_file_name=scene_directory_name+scene_par.component_collector_stack_file_name;
-		component_collector_stack_file_charset=my_component_collector_stack_file_charset;
+		component_collector_stack_file_charset	 =system_par.local_data_charset;
+		component_collector_stack_file_name		 =scene_par.scene_proxy_directory_name;
+		component_collector_stack_file_name		+=scene_par.component_collector_stack_file_name;
+
 		file_reader f=new file_reader(component_collector_stack_file_name,component_collector_stack_file_charset);
 		load(f,component_cont,system_par,scene_par,renders);
 		f.close();

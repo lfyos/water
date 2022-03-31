@@ -62,7 +62,7 @@ function construct_render_utility(my_render_instance)
 		var gl =this.render_instance.gl;
 		var texture_object=old_texture_object;
 
-		if((typeof(texture_object)!="object")||(texture_object==null))
+		if((typeof(texture_object)=="undefined")||(texture_object==null))
 			texture_object=gl.createTexture();
 
 		gl.bindTexture	(gl.TEXTURE_2D,			texture_object);
@@ -72,7 +72,7 @@ function construct_render_utility(my_render_instance)
     	gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,new Uint8Array([0,0,0,255]));
     	gl.bindTexture	(gl.TEXTURE_2D,			null);
 
-    	if((my_src==null)||(typeof(my_src)!="string")){
+    	if((my_src==null)||(typeof(my_src)=="undefined")){
     		texture_object.image=null;
     		texture_object.state="done";
     		return texture_object;
@@ -101,7 +101,7 @@ function construct_render_utility(my_render_instance)
 	    		function(my_render)
 	    		{
 	    			if(cur.terminate_flag)
-	    				return;
+	    				return true;
 	    			if(cur.buffer_object.test_busy()<=0)
 	    				return true;
 	    			texture_object.state="loading";

@@ -26,8 +26,7 @@ public class extended_instance_driver extends instance_driver
 	{
 		super.destroy();
 	}
-	public extended_instance_driver(
-			component my_comp,int my_driver_id,
+	public extended_instance_driver(component my_comp,int my_driver_id,
 			int my_screen_rectangle_component_id,int my_audio_component_id,int my_camera_modifier_id)
 	{
 		super(my_comp,my_driver_id);

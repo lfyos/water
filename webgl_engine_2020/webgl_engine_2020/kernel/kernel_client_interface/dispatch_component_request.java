@@ -1,13 +1,12 @@
 package kernel_client_interface;
 
-import kernel_common_class.debug_information;
-import kernel_component.component;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
-import kernel_render.response_render_component_request;
-
 import kernel_part.part;
+import kernel_component.component;
+import kernel_engine.engine_kernel;
 import kernel_driver.instance_driver;
+import kernel_engine.client_information;
+import kernel_common_class.debug_information;
+import kernel_render.response_render_component_request;
 
 public class dispatch_component_request
 {

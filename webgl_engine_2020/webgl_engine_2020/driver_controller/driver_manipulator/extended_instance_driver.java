@@ -1,7 +1,6 @@
 package driver_manipulator;
 
 import kernel_camera.camera_result;
-import kernel_common_class.change_name;
 import kernel_component.component;
 import kernel_component.component_collector;
 import kernel_driver.instance_driver;
@@ -10,7 +9,6 @@ import kernel_engine.engine_kernel;
 
 public class extended_instance_driver extends instance_driver
 {
-	private change_name language_change_name;
 	private int audio_component_id,camera_modifier_id;
 	private long touch_time_length;
 	private boolean save_component_name_or_id_flag;
@@ -20,12 +18,11 @@ public class extended_instance_driver extends instance_driver
 		super.destroy();
 	}
 	public extended_instance_driver(component my_comp,int my_driver_id,
-			change_name my_language_change_name,int my_audio_component_id,
-			int my_camera_modifier_id,long my_touch_time_length,
-			boolean my_save_component_name_or_id_flag)
+			int my_audio_component_id,int my_camera_modifier_id,
+			long my_touch_time_length,boolean my_save_component_name_or_id_flag)
 	{
 		super(my_comp,my_driver_id);
-		language_change_name=my_language_change_name;
+		
 		audio_component_id=my_audio_component_id;
 		camera_modifier_id=my_camera_modifier_id;
 		touch_time_length=my_touch_time_length;
@@ -63,6 +60,10 @@ public class extended_instance_driver extends instance_driver
 		case "check_component":
 			check_component.check(ek,ci);
 			break;
+		case "last_component":
+			ci.request_response.println(
+				((my_comp=ek.component_cont.search_component())==null)?-1:(my_comp.component_id));
+			break;
 		case "transparency":
 			operate_component_transparent.do_transparency(ek, ci);
 			break;
@@ -94,8 +95,8 @@ public class extended_instance_driver extends instance_driver
 			if((my_comp=ek.component_cont.get_component(audio_component_id))!=null)
 				if(my_comp.driver_number()>0)
 					if(my_comp.driver_array[0] instanceof driver_audio.extended_component_driver) {
-						operate_part_list.part_list_request(save_component_name_or_id_flag,
-							comp,ek,ci,camera_modifier_id,language_change_name,
+						operate_part_list.part_list_request(
+							save_component_name_or_id_flag,comp,ek,ci,camera_modifier_id,
 							(driver_audio.extended_component_driver)(my_comp.driver_array[0]));
 						return null;
 					}

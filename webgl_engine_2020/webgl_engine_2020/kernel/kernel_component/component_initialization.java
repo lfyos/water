@@ -66,8 +66,7 @@ public class component_initialization
 				}
 			return;
 		}
-		if(my_initialization_program.replaceAll("[\b\f\n\r\t ]","").trim().length()<=0)
-			return;
+
 		if(initialization_program==null){
 			initialization_program			=new String[]{my_initialization_program};
 			initialization_program_charset	=new String[]{my_initialization_program_charset};

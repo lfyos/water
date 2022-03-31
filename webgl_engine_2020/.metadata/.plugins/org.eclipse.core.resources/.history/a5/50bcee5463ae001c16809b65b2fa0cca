@@ -1,0 +1,150 @@
+package driver_menu;
+
+import java.io.File;
+
+import kernel_camera.camera_result;
+import kernel_component.component;
+import kernel_component.component_collector;
+import kernel_driver.instance_driver;
+import kernel_engine.client_information;
+import kernel_engine.engine_kernel;
+import kernel_file_manager.file_directory;
+import kernel_file_manager.file_reader;
+import kernel_part.part;
+
+public class extended_instance_driver extends instance_driver
+{
+	private boolean menu_type;
+	private String file_name;
+	private double x0,y0,dx,dy;
+	private boolean show_hide_flag;
+	
+	public void destroy()
+	{
+		super.destroy();
+		file_name=null;
+	}
+	public extended_instance_driver(component my_comp,int my_driver_id,
+			boolean my_menu_type,String my_file_name,double my_dx,double my_dy)
+	{
+		super(my_comp,my_driver_id);
+		
+		menu_type=my_menu_type;
+		file_name=my_file_name;
+		
+		x0=0;
+		y0=0;
+		dx=my_dx;
+		dy=my_dy;
+		
+		show_hide_flag=true;
+	}
+	public void response_init_instance_data(engine_kernel ek,client_information ci)
+	{
+		if(file_name==null) {
+			ci.request_response.print("null");
+			return;
+		}
+		part p=comp.driver_array[driver_id].component_part;
+		String my_directory_name=new File(p.directory_name+p.mesh_file_name).getParent();
+		my_directory_name=file_reader.separator(my_directory_name+File.separatorChar);
+		int my_directory_name_length=my_directory_name.length();
+		if(file_name.length()>my_directory_name_length)
+			if(file_name.substring(0,my_directory_name_length).compareTo(my_directory_name)==0) {
+				my_directory_name=file_directory.part_file_directory(
+					comp.driver_array[driver_id].component_part,ek.system_par,ek.scene_par);
+				String url=my_directory_name+file_name.substring(my_directory_name_length);
+				if((url=ci.get_file_proxy_url(url,ek.system_par))!=null) {
+					ci.request_response.print  ("\"",url);
+					ci.request_response.print  ("\"");
+					return;
+				}
+			}
+		ci.request_response.print  ("\"",ci.get_component_request_url_header(comp.component_id,driver_id));
+		ci.request_response.print  ("&operation=file\"");
+		return;	
+	}
+	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
+			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
+	{
+		if(show_hide_flag)
+			return true;
+		if(cr.target.main_display_target_flag) 
+			return false;
+		if(cr.target.selection_target_flag)
+			return false;
+		return true;
+	}
+	public void create_render_parameter(
+			int render_buffer_id,int parameter_channel_id,int data_buffer_id,
+			engine_kernel ek,client_information ci,camera_result cr)
+	{
+		ci.request_response.print("[",data_buffer_id).print(cr.target.main_display_target_flag?",true]":",false]");
+	}
+	public void create_component_parameter(engine_kernel ek,client_information ci)
+	{
+		double p[],my_x0=x0,my_x1=x0+dx,my_y0=y0,my_y1=y0+dy;
+		if((p=ci.display_camera_result.caculate_view_coordinate(ci))!=null) {
+			my_x0*=p[2];
+			my_x1*=p[2];
+		}
+		ci.request_response.
+				print("[",my_x0).		print(",",my_y0).
+				print(",",my_x1-my_x0).	print(",",my_y1-my_y0).
+				print("]");
+	}
+	private void get_parameter(engine_kernel ek,client_information ci)
+	{
+		String str;
+
+		show_hide_flag=false;
+		update_component_parameter_version(0);
+		
+		if((str=ci.request_response.get_parameter("dx"))!=null)
+			dx=Double.parseDouble(str);
+		if((str=ci.request_response.get_parameter("dy"))!=null)
+			dy=Double.parseDouble(str);
+		
+		if((str=ci.request_response.get_parameter("x0"))!=null) 
+			x0=Double.parseDouble(str);
+		if((str=ci.request_response.get_parameter("y0"))!=null)
+			y0=Double.parseDouble(str);
+		
+		if((str=ci.request_response.get_parameter("center"))!=null) {
+			switch(str.trim().toLowerCase()){
+			case "center":
+				double p[]=ci.display_camera_result.caculate_view_coordinate(ci);
+				if(p==null)
+					break;
+				x0=p[0]-dx/2.0;
+				y0=p[1]-dy/2.0;
+				break;
+			}
+		}
+	}
+
+	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
+	{
+		String str=ci.request_response.get_parameter("operation");
+		
+		switch((str==null)?"":(str.toLowerCase())){
+		case "file":
+			return new String[]{file_name,null};
+		case "adjust":
+			update_component_parameter_version(0);
+			if((str=ci.request_response.get_parameter("x"))!=null) 
+				x0+=Double.parseDouble(str);
+			if((str=ci.request_response.get_parameter("y"))!=null)
+				y0+=Double.parseDouble(str);
+			return null;
+		case "hide":
+			show_hide_flag=true;
+			return null;
+		case "show":
+			get_parameter(ek,ci);
+			return null;
+		default:
+			return null;
+		}
+	}
+}

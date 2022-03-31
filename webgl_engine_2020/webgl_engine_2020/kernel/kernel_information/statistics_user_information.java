@@ -12,23 +12,15 @@ public class statistics_user_information  extends jason_creator
 	{
 		print("user_engine_kernel_number",			ci.statistics_user.user_engine_kernel_number);
 		print("user_engine_component_number",		ci.statistics_user.user_engine_component_number);
-		print("user_engine_part_face_number",		ci.statistics_user.user_engine_part_face_number);
-		print("user_engine_part_edge_number",		ci.statistics_user.user_engine_part_edge_number);
 		
 		print("user_max_engine_kernel_number",		ci.statistics_user.user_max_engine_kernel_number);
 		print("user_max_engine_component_number",	ci.statistics_user.user_max_engine_component_number);
-		print("user_max_engine_part_face_number",	ci.statistics_user.user_max_engine_part_face_number);
-		print("user_max_engine_part_edge_number",	ci.statistics_user.user_max_engine_part_edge_number);
 		
 		print("engine_kernel_number",				ci.engine_current_number[0]);
 		print("engine_component_number",			ci.engine_current_number[1]);
-		print("engine_part_face_number",			ci.engine_current_number[2]);
-		print("engine_part_edge_number",			ci.engine_current_number[3]);
 		
 		print("max_engine_kernel_number",			ek.system_par.max_engine_kernel_number);
 		print("max_engine_component_number",		ek.system_par.max_engine_component_number);
-		print("max_engine_part_face_number",		ek.system_par.max_engine_part_face_number);
-		print("max_engine_part_edge_number",		ek.system_par.max_engine_part_edge_number);
 	}
 	public statistics_user_information(engine_kernel my_ek,client_information my_ci)
 	{

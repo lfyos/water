@@ -259,6 +259,110 @@ public class extended_instance_driver extends instance_driver
 			}
 		return null;
 	}
+	private void locate(engine_kernel ek,client_information ci)
+	{
+		String str;
+		locate_camera lc=(new locate_camera(ci.display_camera_result.cam));
+		double scale_value=-1.0;
+		if((str=ci.request_response.get_parameter("scale"))!=null)
+			if((scale_value=Double.parseDouble(str))<const_value.min_value)
+				scale_value=-1.0;
+		component locate_comp=null;
+		if((str=ci.request_response.get_parameter("component_name"))!=null)
+			locate_comp=ek.component_cont.search_component(str);
+		if((str=ci.request_response.get_parameter("component_id"))!=null)
+			locate_comp=ek.component_cont.get_component(Integer.decode(str));
+		if(locate_comp!=null){
+			boolean mandatory_movement_flag=true,mandatory_scale_flag=true;
+			if((str=ci.request_response.get_parameter("mandatory_movement"))!=null)
+				switch(str.toLowerCase()) {
+				case "no":
+				case "false":
+					mandatory_movement_flag=false;
+					break;
+				}
+			if((str=ci.request_response.get_parameter("mandatory_scale"))!=null)
+				switch(str.toLowerCase()) {
+				case "no":
+				case "false":
+					mandatory_scale_flag=false;
+					break;
+				}
+			box my_box,body_box,face_box;
+			while(true) {
+				if((my_box=locate_comp.get_component_box(false))==null)
+					if((my_box=locate_comp.get_component_box(true))==null){
+						point pp=locate_comp.absolute_location.multiply(new point(0,0,0));
+						my_box=new box(pp,pp);
+						break;
+					}
+				if(my_box.distance2()<const_value.min_value2) {
+					my_box=null;
+					break;
+				}
+				if(locate_comp.driver_number()<=0)
+					break;
+				if(locate_comp.driver_array[0].component_part==null)
+					break;
+				part_rude pr;
+				if((pr=locate_comp.driver_array[0].component_part.part_mesh)==null)
+					break;
+				if((str=ci.request_response.get_parameter("body_id"))==null)
+					break;
+				int body_id=-1,face_id=-1;
+				try{
+					body_id=Integer.parseInt(str);
+					if((str=ci.request_response.get_parameter("face_id"))!=null)
+						face_id=Integer.parseInt(str);
+				}catch(Exception e){
+					break;
+				}
+				if((body_id<0)||(body_id>=pr.body_number()))
+					break;
+				if((face_id>=0)&&(face_id<pr.body_array[body_id].face_number()))
+					if((face_box=pr.body_array[body_id].face_array[face_id].face_box)!=null){
+						my_box=locate_comp.absolute_location.multiply(face_box);
+						if(my_box.distance2()<const_value.min_value2) {
+							my_box=null;
+							break;
+						}
+						break;
+					}
+				if((body_box=pr.body_array[body_id].body_box)!=null) {
+					my_box=locate_comp.absolute_location.multiply(body_box);
+					if(my_box.distance2()<const_value.min_value2) {
+						my_box=null;
+						break;
+					}
+				}
+				break;
+			}
+			lc.locate_on_components(ek.modifier_cont[camera_modifier_id],
+					my_box,null,scale_value,ci.parameter.aspect,
+					true,mandatory_movement_flag,mandatory_scale_flag);
+			return;
+		}
+		point p0=null,p1=null;
+		
+		if((str=ci.request_response.get_parameter("clear_pickup"))!=null)
+			switch(str.toLowerCase()) {
+			case "yes":
+			case "true":
+				ci.parameter.comp=null;
+				break;
+			}
+		if(ci.parameter.comp!=null){
+			location loca=ci.selection_camera_result.negative_matrix;
+			loca=ci.parameter.comp.absolute_location.negative().multiply(loca);
+			p0=loca.multiply(new point(0,0,ci.parameter.depth));
+			p1=loca.multiply(new point(0,0,ci.parameter.depth+1.0));
+		}
+		lc.locate_on_components(ek.modifier_cont[camera_modifier_id],
+				ek.component_cont,ci.display_camera_result,ci.parameter,null,
+				scale_value,ci.parameter.aspect,
+				ek.modifier_cont[camera_modifier_id].get_timer().get_current_time(),
+				true,true,true,p0,p1);
+	}
 	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
 	{
 		String str;
@@ -334,47 +438,7 @@ public class extended_instance_driver extends instance_driver
 			camera_rotate(ek,ci);
 			return null;
 		case "locate":
-			if((str=ci.request_response.get_parameter("clear_pickup"))!=null)
-				switch(str.toLowerCase()) {
-				case "yes":
-				case "true":
-					ci.parameter.comp=null;
-					break;
-				}
-			locate_camera lc=(new locate_camera(ci.display_camera_result.cam));
-			scale_value=-1.0;
-			if((str=ci.request_response.get_parameter("scale"))!=null)
-				if((scale_value=Double.parseDouble(str))<const_value.min_value)
-					scale_value=-1.0;
-			component locate_comp=null;
-			if((str=ci.request_response.get_parameter("component_name"))!=null)
-				locate_comp=ek.component_cont.search_component(str);
-			if((str=ci.request_response.get_parameter("component_id"))!=null)
-				locate_comp=ek.component_cont.get_component(Integer.decode(str));
-			if(locate_comp!=null){
-				box my_box;
-				if((my_box=locate_comp.get_component_box(false))==null)
-					if((my_box=locate_comp.get_component_box(true))==null){
-						point pp=locate_comp.absolute_location.multiply(new point(0,0,0));
-						my_box=new box(pp,pp);
-					}
-				lc.locate_on_components(ek.modifier_cont[camera_modifier_id],
-						my_box,null,scale_value,ci.parameter.aspect,true,true,true);
-				locate_comp.modify_location(locate_comp.move_location,ek.component_cont);
-				return null;
-			}
-			point p0=null,p1=null;
-			if(ci.parameter.comp!=null){
-				location loca=ci.selection_camera_result.negative_matrix;
-				loca=ci.parameter.comp.absolute_location.negative().multiply(loca);
-				p0=loca.multiply(new point(0,0,ci.parameter.depth));
-				p1=loca.multiply(new point(0,0,ci.parameter.depth+1.0));
-			}
-			lc.locate_on_components(ek.modifier_cont[camera_modifier_id],
-					ek.component_cont,ci.display_camera_result,ci.parameter,null,
-					scale_value,ci.parameter.aspect,
-					ek.modifier_cont[camera_modifier_id].get_timer().get_current_time(),
-					true,true,true,p0,p1);
+			locate(ek,ci);
 			return null;
 		case "retreat":
 			ci.display_camera_result.cam.pop_restore_stack(ek.modifier_cont[camera_modifier_id]);

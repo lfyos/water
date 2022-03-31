@@ -4,6 +4,7 @@ import kernel_camera.locate_camera;
 import kernel_common_class.change_name;
 import kernel_common_class.const_value;
 import kernel_common_class.common_reader;
+import kernel_common_class.component_collector_jason_component;
 import kernel_common_class.upload_web_page;
 import kernel_component.component;
 import kernel_component.component_array;
@@ -25,9 +26,8 @@ public class operate_part_list
 		String str;
 		int render_id=-1,part_id=-1,component_id=-1;
 		component_collector collector;
-		
+		component_link_list cll;
 		component_array comp_con=new component_array(ek.component_cont.root_component.component_id+1);
-		component_collector loaded_part_collector=new component_collector(ek.render_cont.renders);
 		
 		if((collector=ek.collector_stack.get_top_collector())==null)
 			return;
@@ -39,32 +39,41 @@ public class operate_part_list
 			part_id=Integer.decode(str);
 		if((str=ci.request_response.get_parameter("component_id"))!=null)
 			component_id=Integer.decode(str);
-		for(int i=0,ni=collector.component_collector.length;i<ni;i++){
-			if(collector.component_collector[i]!=null)
+		
+		component_selection cs=new component_selection(ek);
+		if(component_id>=0) {
+			component my_comp;
+			if((my_comp=ek.component_cont.get_component(component_id))==null)
+				return;
+			comp_con.add_component(my_comp);
+			switch(select_type_id){
+			case 1:
+				cs.set_selected_flag(my_comp,ek.component_cont);
+				break;
+			case 2:
+				cs.clear_selected_flag(my_comp,ek.component_cont);
+				break;
+			case 3:
+				cs.switch_selected_flag(my_comp,ek.component_cont);
+				break;
+			default:
+				return;
+			}
+		}else {
+			for(int i=0,ni=collector.component_collector.length;i<ni;i++){
+				if(collector.component_collector[i]==null)
+					continue;
+				if(render_id>=0)
+					if(i!=render_id)
+						continue;
 				for(int j=0,nj=collector.component_collector[i].length;j<nj;j++){
-					component_selection cs=new component_selection(ek);
-					component_link_list cll=collector.component_collector[i][j];
+					if((cll=collector.component_collector[i][j])==null)
+						continue;
+					if(part_id>=0)
+						if(j!=part_id)
+							continue;
 					for(;cll!=null;cll=cll.next_list_item){
-						if(cll.comp.driver_number()<=0)
-							continue;
-						if(cll.comp.driver_array[0].component_part==null)
-							continue;
-						if(!(cll.comp.uniparameter.part_list_flag))
-							continue;
-						if(render_id>=0)
-							if(i!=render_id)
-								continue;
-						if(part_id>=0)
-							if(j!=part_id)
-								continue;
-						if(component_id>=0)
-							if(cll.comp.component_id!=component_id)
-								continue;
 						comp_con.add_component(cll.comp);
-						for(int k=0,nk=cll.comp.driver_number();k<nk;k++)
-							if(cll.comp.children_number()<=0)
-								if(cll.comp.driver_array[k].component_part.mesh_file_name!=null)
-									loaded_part_collector.register_component(cll.comp,k);
 						switch(select_type_id){
 						case 1:
 							cs.set_selected_flag(cll.comp,ek.component_cont);
@@ -80,45 +89,32 @@ public class operate_part_list
 						}
 					}
 				}
+			}
 		}
+		
 		acd.set_audio(null);
 		
-		if(select_type_id==2)
-			return;
-		if(comp_con.component_number<=0)
-			return;
 		if(ci.display_camera_result.cam.parameter.movement_flag)
-			(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
-				ek.modifier_cont[camera_modifier_id],comp_con.get_box(),null,
-				ci.display_camera_result.cam.parameter.scale_value,ci.parameter.aspect,true,true,
-				ci.display_camera_result.cam.parameter.scale_value>const_value.min_value);
+			if(comp_con.component_number>0)
+				if(select_type_id!=2)
+					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
+						ek.modifier_cont[camera_modifier_id],comp_con.get_box(),null,
+						ci.display_camera_result.cam.parameter.scale_value,ci.parameter.aspect,true,true,
+						ci.display_camera_result.cam.parameter.scale_value>const_value.min_value);
 		return;
 	}
-	public static void part_list_request(boolean save_component_name_or_id_flag,
-			component comp,engine_kernel ek,client_information ci,int camera_modifier_id,
-			change_name language_change_name,driver_audio.extended_component_driver acd)
+	public static void part_list_request(
+			boolean save_component_name_or_id_flag,component comp,
+			engine_kernel ek,client_information ci,
+			int camera_modifier_id,driver_audio.extended_component_driver acd)
 	{
 		String str;
 		component_collector collector=null;
 		component_array comp_cont;
-		component_selection cs;
-		common_reader cr;
 		
 		if((str=ci.request_response.get_parameter("operation"))==null)
 			return;
-		
 		switch(str.toLowerCase()){
-		case "webpage":
-			if((str=ci.request_response.get_parameter("list_type"))==null)
-				str="simple";
-			(new component_collector_web_page(ci,				ek.collector_stack.get_top_collector(),
-					ek.collector_stack.get_all_collector(),		str,ci.channel_id,comp.component_id,
-					ek.scene_par.component_sort_type,			ek.scene_par.component_sort_min_distance,
-					language_change_name)).create_web_page();
-			return;
-		case "part_list_jason_part":
-			new component_collector_jason_part(ek.collector_stack.get_top_collector(),ci,ek);
-			return;
 		case "part_list_jason_component":
 			str=ci.request_response.get_parameter("flag");
 			switch((str==null)?"true":(str.toLowerCase().trim())){
@@ -130,23 +126,6 @@ public class operate_part_list
 			}
 			new component_collector_jason_component(
 				str.compareTo("true")==0,ek.collector_stack.get_top_collector(),ci,ek);
-			return;
-		case "upload_webpage":
-			str="command=component&method=event";
-			str+="&event_component_id="+Integer.toString(comp.component_id);
-			str+="&event_driver_id=all&event_method=part_list&operation=";
-			(new upload_web_page(ci,language_change_name,"text",ci.request_response.get_charset(),
-				str+"upload",str+"webpage&list_type=collector")).create_web_page();
-			return;
-		case "upload":
-			cr=new common_reader(
-				ci.request_response.implementor.get_content_stream(),ci.request_response.get_charset());
-			ek.collector_stack.load(cr,ek.component_cont,
-					ek.system_par,ek.scene_par,ek.render_cont.renders);
-			cr.close();			
-			acd.set_audio(null);
-			if((collector=ek.collector_stack.get_top_collector())!=null)
-				acd.set_audio(collector.audio_file_name);
 			return;
 		case "selection":
 			if((str=ci.request_response.get_parameter("selection"))==null)
@@ -178,11 +157,18 @@ public class operate_part_list
 			default:
 				return;
 			case "title":
+			{
+				int flag=0;
 				if((str=ci.request_response.get_parameter("title"))!=null)
 					try{
 						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
 						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-						collector.title=str;
+						str=(str==null)?"":str;
+						collector.title=(collector.title==null)?"":collector.title;
+						if(collector.title.compareTo(str)!=0) {
+							collector.title=str;
+							flag++;
+						}
 					}catch(Exception e){
 						;
 					}
@@ -190,44 +176,61 @@ public class operate_part_list
 					try{
 						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
 						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-						collector.description=str;
+						str=(str==null)?"":str;
+						collector.description=(collector.description==null)?"":collector.description;
+						if(collector.description.compareTo(str)!=0) {
+							collector.description=str;
+							flag++;
+						}
 					}catch(Exception e){
 						;
 					}
+				if(flag>0)
+					ek.collector_stack.update_collector_version();
 				return;
+			}
 			case "delete":
 				ek.collector_stack.delete_collector(collector.list_id,ek.component_cont);
 				if((collector=ek.collector_stack.get_top_collector())!=null)
 					acd.set_audio(collector.audio_file_name);
 				return;
 			case "top":
-				ek.collector_stack.push_collector(ek.system_par,ek.scene_par,
-					ek.collector_stack.delete_collector(collector.list_id,ek.component_cont),
-					ek.component_cont,ek.render_cont.renders);
-				acd.set_audio(collector.audio_file_name);
-				
+				collector=ek.collector_stack.delete_collector(collector.list_id,ek.component_cont);
+				if(collector!=null){
+					long old_id=collector.list_id;
+					ek.collector_stack.push_collector(ek.system_par,
+						ek.scene_par,collector,ek.component_cont,ek.render_cont.renders);
+					collector.list_id=old_id;
+					acd.set_audio(collector.audio_file_name);
+				}
 				return;
 			case "select":
-				comp_cont=new component_array(ek.component_cont.root_component.component_id+1);
-				comp_cont.add_collector(collector);
-				cs=new component_selection(ek);	
-				cs.set_component_container_selected(comp_cont,ek.component_cont);
-				break;
+				{
+					comp_cont=new component_array(ek.component_cont.root_component.component_id+1);
+					comp_cont.add_collector(collector);
+					component_selection cs=new component_selection(ek);	
+					cs.set_component_container_selected(comp_cont,ek.component_cont);
+					break;
+				}
 			case "unselect":
-				comp_cont=new component_array(
-						ek.component_cont.root_component.component_id+1);
-				comp_cont.add_collector(collector);
-				cs=new component_selection(ek);	
-				for(int i=0,ni=comp_cont.component_number;i<ni;i++)
-					cs.clear_selected_flag(comp_cont.comp[i],ek.component_cont);
-				return;
+				{
+					comp_cont=new component_array(
+							ek.component_cont.root_component.component_id+1);
+					comp_cont.add_collector(collector);
+					component_selection cs=new component_selection(ek);	
+					for(int i=0,ni=comp_cont.component_number;i<ni;i++)
+						cs.clear_selected_flag(comp_cont.comp[i],ek.component_cont);
+					return;
+				}
 			case "swap":
-				comp_cont=new component_array(ek.component_cont.root_component.component_id+1);
-				comp_cont.add_collector(collector);
-				cs=new component_selection(ek);	
-				for(int i=0,ni=comp_cont.component_number;i<ni;i++)
-					cs.switch_selected_flag(comp_cont.comp[i],ek.component_cont);
-				break;
+				{
+					comp_cont=new component_array(ek.component_cont.root_component.component_id+1);
+					comp_cont.add_collector(collector);
+					component_selection cs=new component_selection(ek);	
+					for(int i=0,ni=comp_cont.component_number;i<ni;i++)
+						cs.switch_selected_flag(comp_cont.comp[i],ek.component_cont);
+					break;
+				}
 			}
 			if(comp_cont.component_number>0)
 				if(ci.display_camera_result.cam.parameter.movement_flag)
@@ -267,7 +270,7 @@ public class operate_part_list
 				if(comp_cont.component_number<=0)
 					return;
 			}else{
-				comp_cont.add_selected_component(ek.component_cont.root_component);
+				comp_cont.add_selected_component(ek.component_cont.root_component,false);
 				if(comp_cont.component_number<=0)
 					comp_cont.add_component(ek.component_cont.root_component);
 			}
@@ -308,11 +311,13 @@ public class operate_part_list
 			file_writer fw=new file_writer(
 					ek.collector_stack.component_collector_stack_file_name,
 					ek.collector_stack.component_collector_stack_file_charset);
-			ek.collector_stack.save(fw,ek.component_cont,save_component_name_or_id_flag);
+			ek.collector_stack.save(fw,ek.component_cont,
+				ci.request_response.get_boolean("top",false),save_component_name_or_id_flag);
 			fw.close();
 			return;
 		case "load":
-			cr=new file_reader(
+		{
+			file_reader cr=new file_reader(
 					ek.collector_stack.component_collector_stack_file_name,
 					ek.collector_stack.component_collector_stack_file_charset);
 			ek.collector_stack.load(cr,ek.component_cont,ek.system_par,ek.scene_par,ek.render_cont.renders);
@@ -321,8 +326,38 @@ public class operate_part_list
 			if((collector=ek.collector_stack.get_top_collector())!=null)
 				acd.set_audio(collector.audio_file_name);
 			return;
+		}
 		case "download":
-			ek.collector_stack.save(ci.request_response,ek.component_cont,save_component_name_or_id_flag);
+			ek.collector_stack.save(ci.request_response,ek.component_cont,
+				ci.request_response.get_boolean("top",false),save_component_name_or_id_flag);
+			return;
+		case "upload":
+		{
+			common_reader cr=new common_reader(ci.request_response.implementor.get_content_stream(),ci.request_response.get_charset());
+			ek.collector_stack.load(cr,ek.component_cont,ek.system_par,ek.scene_par,ek.render_cont.renders);
+			cr.close();			
+			acd.set_audio(null);
+			if((collector=ek.collector_stack.get_top_collector())!=null)
+				acd.set_audio(collector.audio_file_name);
+			return;
+		}
+		case "upload_webpage":
+			String my_upload_url=ci.get_request_url_header();
+			my_upload_url+="&command=component&method=event&event_method=part_list&operation=upload";
+			my_upload_url+="&event_driver_id=all&event_component_id="+Integer.toString(comp.component_id);
+			
+			if((str=ci.request_response.get_parameter("change_name"))==null)
+				str="";
+			if((str=str.trim()).length()>0){
+				try{
+					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+				}catch(Exception e){
+					;
+				}
+			}
+			new upload_web_page(ci,new change_name(null,str,null),"text/plain",
+					ci.request_response.get_charset(),my_upload_url).create_web_page();
 			return;
 		default:
 			return;

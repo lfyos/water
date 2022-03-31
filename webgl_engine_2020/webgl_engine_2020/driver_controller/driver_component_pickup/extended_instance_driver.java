@@ -1,7 +1,7 @@
 package driver_component_pickup;
 
-import kernel_part.part;
 import kernel_camera.camera_result;
+import kernel_common_class.debug_information;
 import kernel_component.component;
 import kernel_component.component_collector;
 import kernel_driver.instance_driver;
@@ -11,7 +11,6 @@ import kernel_render.render_target;
 import kernel_render.target_viewport;
 import kernel_transformation.box;
 import kernel_transformation.point;
-import kernel_file_manager.file_reader;
 
 
 public class extended_instance_driver  extends instance_driver
@@ -19,28 +18,34 @@ public class extended_instance_driver  extends instance_driver
 	private int target_id;
 	private long do_render_number;
 	private double pickup_area_length;
+	
+	private component  pickup_component_array[];
+	private int pickup_driver_id_array[];
 
 	public void destroy()
 	{
 		super.destroy();
+		pickup_component_array=null;
+		pickup_driver_id_array=null;
 	}
-	public extended_instance_driver(component my_comp,int my_driver_id)
+	public extended_instance_driver(component my_comp,int my_driver_id,double my_pickup_area_length)
 	{
 		super(my_comp,my_driver_id);
 		target_id=-1;
 		do_render_number=-1;
-		pickup_area_length=0.001;
+		pickup_area_length=my_pickup_area_length;
+		
+		pickup_component_array=new component[] {};
+		pickup_driver_id_array=new int[] {};
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
-	{		
-		part p=comp.driver_array[driver_id].component_part;
-		file_reader f=new file_reader(p.directory_name+p.material_file_name,p.file_charset);
-		pickup_area_length=f.get_double();
-		f.close();
+	{
 	}
 	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
 			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
 	{
+		render_target rt;
+		
 		if(ci.display_camera_result==null)
 			return true;
 		if(ci.display_camera_result.target.target_id!=cr.target.target_id)
@@ -50,7 +55,6 @@ public class extended_instance_driver  extends instance_driver
 		if(do_render_number!=0)
 			viewport=ci.display_camera_result.caculate_view_coordinate(ci);
 		if(viewport==null){
-			render_target rt;
 			if((rt=ci.target_container.get_target(comp.component_name))!=null)
 				ci.target_container.register_target(rt,0,null);
 			return true;
@@ -59,9 +63,18 @@ public class extended_instance_driver  extends instance_driver
 		box view_volume_box=ci.display_camera_result.target.view_volume_box;
 		point center=view_volume_box.center(),diff=view_volume_box.p[1].sub(center);
 
-		render_target rt=new render_target(comp.component_name,
+		component	my_component_array[]=new component[pickup_component_array.length+1];
+		int			my_driver_id_array[]=new int[my_component_array.length];
+		my_component_array[0]=ek.component_cont.root_component;
+		my_driver_id_array[0]=-1;
+		for(int i=0,j=1,ni=pickup_component_array.length;i<ni;i++,j++) {
+			my_component_array[j]=pickup_component_array[i];
+			 my_driver_id_array[j]=pickup_driver_id_array[i];
+		}
+		
+		rt=new render_target(comp.component_name,
 			ci.display_camera_result.target.camera_id,parameter_channel_id,
-			new component[]{ek.component_cont.root_component},null,ci.clip_plane,2,1,4,
+			my_component_array,my_driver_id_array,ci.clip_plane,2,1,4,
 			
 			new box(	center.x+diff.x*xm-pickup_area_length,
 						center.y+diff.y*ym-pickup_area_length,	view_volume_box.p[0].z,
@@ -84,6 +97,7 @@ public class extended_instance_driver  extends instance_driver
 			target_id=new_target_id;
 			update_component_parameter_version(0);
 		}
+		
 		return (do_render_number==0)?true:false;
 	}
 	public void create_render_parameter(
@@ -112,6 +126,49 @@ public class extended_instance_driver  extends instance_driver
 			break;
 		case "on_off":
 			ci.request_response.print((do_render_number!=0)?"1":"-1");
+			break;
+		case "clear_pickup_component":
+			pickup_component_array=new component[] {};
+			pickup_driver_id_array=new int[] {};
+			break;
+		case "append_pickup_component":
+			{
+				component bak_comp[]=pickup_component_array,append_comp=null;
+				int bak_driver_id[]=pickup_driver_id_array,append_driver_id=0;
+				if((str=ci.request_response.get_parameter("component_id"))!=null)
+					if((append_comp=ek.component_cont.get_component(Integer.decode(str)))==null){
+						debug_information.println("Can't Find component by ID in append_render_component\t:\t",str);
+						break;
+					}
+				if((str=ci.request_response.get_parameter("component_name"))!=null){
+					try {
+							str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+							str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					}catch(Exception e) {
+							debug_information.println("Can't decode component name in append_render_component\t:\t",str);
+							break;
+					}
+					if((append_comp=ek.component_cont.search_component(str))==null){
+						debug_information.println("Can't Find component by name in append_render_component\t:\t",str);
+						break;
+					}
+				}
+				if(append_comp==null)
+					break;
+				if((str=ci.request_response.get_parameter("driver_id"))!=null)
+					if((str=str.trim()).length()>0)
+						append_driver_id=Integer.decode(str);
+
+				pickup_component_array=new component[bak_comp.length+1];
+				pickup_driver_id_array=new int[pickup_component_array.length];
+				
+				for(int i=0,ni=bak_comp.length;i<ni;i++) {
+					pickup_component_array[i]=bak_comp[i];
+					pickup_driver_id_array[i]=bak_driver_id[i];
+				}
+				pickup_component_array[pickup_component_array.length-1]=append_comp;
+				pickup_driver_id_array[pickup_component_array.length-1]=append_driver_id;
+			}
 			break;
 		}
 		return null;

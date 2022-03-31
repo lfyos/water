@@ -8,13 +8,16 @@ public class part_parameter
 	public long 	last_modified_time;
 	
 	public int		process_sequence_id;
-	public long		max_file_head_length,max_file_data_length,max_buffer_object_data_length,max_compress_file_length;
+	public long		max_file_head_length,max_file_data_length,max_buffer_object_data_length;
 	public double	lod_precision_scale,assembly_precision2,discard_precision2,bottom_box_discard_precision2;
 	public long		create_face_buffer_object_bitmap,create_edge_buffer_object_bitmap,create_point_buffer_object_bitmap;
 	public int 		max_component_data_buffer_number,max_part_load_thread_number;
 	
 	public boolean	do_create_bottom_box_flag,do_load_lock_flag;
 	public boolean	clear_buffer_head_file_flag,clear_model_file_flag[];
+	
+	public double	location_match_direction[];
+	public boolean	symmetry_flag[]; 
 	
 	public part_parameter(
 			String	my_part_type_string,
@@ -29,7 +32,6 @@ public class part_parameter
 			long	my_max_file_head_length,
 			long	my_max_file_data_length,
 			long	my_max_buffer_object_data_length,
-			long	my_max_compress_file_length,
 			
 			double	my_lod_precision_scale,
 			
@@ -48,7 +50,9 @@ public class part_parameter
 			boolean my_do_load_lock_flag,
 			
 			boolean my_clear_buffer_head_file_flag,
-			boolean my_clear_model_file_flag[])
+			boolean my_clear_model_file_flag[],
+			double	my_location_match_direction[],
+			boolean	my_symmetry_flag[])
 	{
 		part_type_string				=my_part_type_string;
 		assemble_part_name				=my_assemble_part_name;
@@ -62,7 +66,6 @@ public class part_parameter
 		max_file_head_length			=my_max_file_head_length;
 		max_file_data_length			=my_max_file_data_length;
 		max_buffer_object_data_length	=my_max_buffer_object_data_length;
-		max_compress_file_length		=my_max_compress_file_length;
 		
 		lod_precision_scale				=my_lod_precision_scale;
 		assembly_precision2				=my_assembly_precision2;
@@ -83,6 +86,12 @@ public class part_parameter
 		clear_model_file_flag			=new boolean[my_clear_model_file_flag.length];
 		for(int i=0,ni=clear_model_file_flag.length;i<ni;i++)
 			clear_model_file_flag[i]=my_clear_model_file_flag[i];
+		location_match_direction=new double[my_location_match_direction.length];
+		for(int i=0,ni=location_match_direction.length;i<ni;i++)
+			location_match_direction[i]=my_location_match_direction[i];
+		symmetry_flag=new boolean[my_symmetry_flag.length];
+		for(int i=0,ni=symmetry_flag.length;i<ni;i++)
+			symmetry_flag[i]=my_symmetry_flag[i];
 	}
 	
 	public part_parameter clone()
@@ -100,7 +109,6 @@ public class part_parameter
 				max_file_head_length,
 				max_file_data_length,
 				max_buffer_object_data_length,
-				max_compress_file_length,
 				
 				lod_precision_scale,
 				
@@ -119,7 +127,9 @@ public class part_parameter
 				do_load_lock_flag,
 				
 				clear_buffer_head_file_flag,
-				clear_model_file_flag);
+				clear_model_file_flag,
+				location_match_direction,
+				symmetry_flag);
 	}
 	
 	public part_parameter box_part_parameter()
@@ -137,7 +147,6 @@ public class part_parameter
 				max_file_head_length,
 				max_file_data_length,
 				max_buffer_object_data_length,
-				max_compress_file_length,
 				
 				lod_precision_scale,
 				
@@ -156,7 +165,9 @@ public class part_parameter
 				do_load_lock_flag,
 				
 				clear_buffer_head_file_flag,
-				clear_model_file_flag);
+				clear_model_file_flag,
+				location_match_direction,
+				symmetry_flag);
 	}
 	
 	public part_parameter(
@@ -177,7 +188,6 @@ public class part_parameter
 		max_file_head_length				=f.get_long();
 		max_file_data_length				=f.get_long();
 		max_buffer_object_data_length		=f.get_long();
-		max_compress_file_length			=f.get_long();
 		
 		lod_precision_scale					=f.get_double();
 		
@@ -208,6 +218,15 @@ public class part_parameter
 			f.get_boolean(),
 			f.get_boolean()
 		};
+		symmetry_flag=new boolean[f.get_int()];
+		location_match_direction=new double[symmetry_flag.length*3];
+		
+		for(int i=0,j=0,ni=symmetry_flag.length;i<ni;i++) {
+			symmetry_flag[i]=f.get_boolean();
+			location_match_direction[j++]=f.get_double();
+			location_match_direction[j++]=f.get_double();
+			location_match_direction[j++]=f.get_double();
+		}
 		f.close();
 	}
 }

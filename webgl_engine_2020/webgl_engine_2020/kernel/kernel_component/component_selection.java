@@ -104,6 +104,11 @@ public class component_selection
 		component my_comp;
 		if((my_comp=component_cont.search_component())==null)
 			return;
+		for(component comp=my_comp;comp!=null;comp=component_cont.get_component(comp.parent_component_id))
+			if(comp.uniparameter.selected_flag) {
+				switch_selected_flag(my_comp,component_cont);
+				break;
+			}
 		if(my_comp.children==null)
 			set_selected_flag(my_comp,component_cont);
 		else if(my_comp.children.length<=0)
@@ -112,11 +117,10 @@ public class component_selection
 			int last_id=0;
 			long last_time=my_comp.children[0].uniparameter.selected_time;
 			for(int i=1,ni=my_comp.children.length;i<ni;i++)
-				if(last_time<(my_comp.children[i].uniparameter.selected_time)){
+				if(my_comp.children[i].uniparameter.selected_time>last_time){
 					last_id=i;
 					last_time=my_comp.children[last_id].uniparameter.selected_time;
 				}
-			do_clear_selected_flag(my_comp);	
 			do_set_selected_flag(my_comp.children[last_id],component_cont);
 		}
 	}

@@ -10,7 +10,7 @@ public class scene_parameter
 {
 	public String change_part_string,change_component_string,mount_component_string,part_type_string;
 
-	public String directory_name,parameter_charset;
+	public String directory_name,extra_directory_name,parameter_charset,extra_parameter_charset;
 	public long parameter_last_modified_time,scene_last_modified_time;
 	
 	public String scene_sub_directory;
@@ -156,10 +156,16 @@ public class scene_parameter
 			type_string_file_name="";
 		else
 			type_string_file_name=file_reader.separator(type_string_file_name);
-		
+
 		fr.close();
 		
 		fr=new file_reader(my_extra_parameter_file_name,my_extra_parameter_charset);
+		if((fr.error_flag())||(fr.eof()))
+			debug_information.println("Open assemble extra configure file fail : ",my_extra_parameter_file_name);
+		
+		extra_directory_name=fr.directory_name;
+		extra_parameter_charset=fr.get_charset();
+
 		if(parameter_last_modified_time<fr.lastModified_time)
 			parameter_last_modified_time=fr.lastModified_time;
 		

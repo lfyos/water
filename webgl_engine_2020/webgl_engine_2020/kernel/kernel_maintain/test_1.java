@@ -8,20 +8,20 @@ public class test_1 extends travel_through_directory
 {
 	public void operate_file(String file_name)
 	{
-		String str=file_reader.get_text(file_name, "GBK");
+		String str=file_reader.get_text(file_name,"GBK");
 		if(str!=null) {
-			if(str.indexOf("show")>=0)
-				debug_information.println(file_name);
+			if(str.indexOf("load_collector")>=0)
+				debug_information.println("load_collector		",file_name);
+			if(str.indexOf("collector_url")>=0)
+				debug_information.println("collector_url		",file_name);
 		}
 	}
 	public static void main(String args[])
 	{
 		debug_information.println("Begin");
-		
-	//	new test_1().do_travel("E:\\water_all\\webgl_engine_2020\\webgl_engine_2020\\", false);
-	//	new test_1().do_travel("E:\\water_all\\data\\", false);
-		
-		new test_1().do_travel("E:\\water_all\\data\\parameter\\", false);
+
+		new test_1().do_travel("E:\\water_all\\data\\", false);
+		new test_1().do_travel("E:\\water_all\\webgl_engine_2020\\webgl_engine_2020\\", false);
 
 		debug_information.println("End");
 	}

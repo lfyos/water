@@ -1,8 +1,8 @@
-
-in vec4 vertex_location;
+in	vec4 vertex_location,vertex_normal,vertex_material,vertex_id,vertex_texture;
+out vec4 frag_texture;
 
 void main(void)
 {
-	gl_Position=target_info.projection_matrix*(component_info.model_matrix*vertex_location);
+	frag_texture=vertex_texture;
+	gl_Position=vertex_location;
 }
-

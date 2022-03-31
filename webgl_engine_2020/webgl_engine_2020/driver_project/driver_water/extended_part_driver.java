@@ -59,11 +59,15 @@ public class extended_part_driver extends part_driver{
 			String file_name=p.directory_name+p.mesh_file_name;
 			long t=(new File(file_name)).lastModified();
 			
-			(new create_grid()).do_create(file_name,true,64,64,new String[]{"vertex","normal"},p.file_charset);
+			new create_grid(file_name,p.file_charset,64,64,new String[]{"vertex","normal"});
 			
 			(new File(file_name)).setLastModified(t);
 			
-			file_writer.file_copy_with_brother(file_name,buffer_object_file_writer.directory_name);
+			String my_directory_name=new File(file_name).getParent()+File.separatorChar;
+
+			file_writer.file_copy(my_directory_name+"earth.png",buffer_object_file_writer.directory_name+"earth.png");
+			file_writer.file_copy(my_directory_name+"grass.png",buffer_object_file_writer.directory_name+"grass.png");
+			file_writer.file_copy(my_directory_name+"water.png",buffer_object_file_writer.directory_name+"water.png");
 		}
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}

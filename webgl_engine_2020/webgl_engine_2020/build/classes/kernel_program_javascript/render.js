@@ -93,8 +93,8 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	};
 	this.view=
 	{
-		x		:	0.0,
-		y		:	0.0,
+		x		:	-0.0,
+		y		:	-0.0,
 		
         aspect	:	1.0
 	};
@@ -138,11 +138,18 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	this.uniform_block				=new construct_uniform_block_object(this.gl);
 	this.deviceorientation			=new construct_deviceorientation(this.computer);
 	this.utility					=new construct_render_utility(this);
+	this.collector_loader			=new construct_collector_loader_object();
 	
 	this.engine_do_render_number	=new Array();
 
 	this.data_buffer				=new Array();
+	
 	this.pickup						=new construct_pickup_object();
+	this.pickup_array				=[
+		this.pickup.fork(),this.pickup.fork(),this.pickup.fork(),this.pickup.fork(),this.pickup.fork(),
+		this.pickup.fork(),this.pickup.fork(),this.pickup.fork(),this.pickup.fork(),this.pickup.fork()
+	];
+	this.highlight					=this.pickup.fork();
 	
 	this.data_time_length			=1;
 	this.render_time_length			=1;
@@ -169,9 +176,11 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			var my_component_name		=sorted_component_name_id[i][0];
 			var my_component_id	 		=sorted_component_name_id[i][1];
 			var my_component_children	=sorted_component_name_id[i][2];
+			
 			var p={
 					component_name		:	my_component_name,
 					component_id		:	my_component_id,
+					component_parent	:	null,
 					component_children	:	my_component_children
 			};
 			this.component_array_sorted_by_name[i]=p;
@@ -179,12 +188,16 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		};
 		for(var i=0;i<component_number;i++){
 			var p=this.component_array_sorted_by_id[i];
-			var my_component_children=new Array();
-			for(var j=0,nj=p.component_children.length;j<nj;j++)
-				my_component_children.push(this.component_array_sorted_by_id[p.component_children[j]]);
+			var my_component_children=new Array(p.component_children.length);
+			for(var j=0,nj=my_component_children.length;j<nj;j++)
+				my_component_children[j]=this.component_array_sorted_by_id[p.component_children[j]];
 			p.component_children=my_component_children;
 		};
-		
+		for(var i=0;i<component_number;i++){
+			var p=this.component_array_sorted_by_id[i];
+			for(var j=0,nj=p.component_children.length;j<nj;j++)
+				p.component_children[j].component_parent=p;
+		};
 		var component_render_id_and_part_id=new Array(component_number);
 		for(var i=0;i<component_number;i++)
 			component_render_id_and_part_id[i]=new Array();
@@ -201,7 +214,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			for(var part_id=0;part_id<part_number;part_id++){
 				if(typeof(this.data_buffer[render_id][part_id])=="undefined")
 					this.data_buffer[render_id][part_id]=new Array();
-				
+
 				var id_array=part_component_id_and_driver_id[render_id][part_id];
 				var permanent_part_id=id_array.pop();
 				var permanent_render_id=id_array.pop();
@@ -319,9 +332,11 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		}catch(e){
 			this.can_do_render_request_flag	=false;
 			
-			console.log("\n\n\n\nparse_web_server_response_data fail:"+e.toString());
 			console.log(responseText);
-			console.log("\n\n\n\n");
+			console.log();
+			console.log(e.toString());
+			
+			alert("parse_web_server_response_data fail:"+e.toString());
 
 			return;
 		};
@@ -350,7 +365,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.data_time_length=(new Date()).getTime()-start_time;
 	};
 	this.render_component=function(render_list,render_buffer_id,parameter_channel_id,
-				method_id,pass_id,project_matrix,render_do_render_number,pass_do_render_number)
+				method_id,pass_id,project_matrix,viewport,render_do_render_number,pass_do_render_number)
 	{
 		for(var last_render_id=-1,i=0,ni=render_list.length;i<ni;i++){
 			var render_id			 =render_list[i][0];
@@ -401,7 +416,16 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		    draw_function(
 		    	method_id,  			pass_id,			parameter_channel_id,
 		    	render_id,				part_id,			render_buffer_id,
-		    	component_render_data,	project_matrix,
+		    	component_render_data,	project_matrix,		
+		    	{
+		    		viewport_x0		:	viewport[0],
+		    		viewport_y0		:	viewport[1],
+		    		viewport_width	:	viewport[2],
+		    		viewport_height	:	viewport[3],
+		    		target_width	:	viewport[4],
+		    		target_height	:	viewport[5],
+		    		target_flag		:	viewport[6]
+		    	},
 		    	{
 		    		engine_render	:	(this.engine_do_render_number[render_id].render_do_render_number)++,
 		    		engine_part		:	(this.engine_do_render_number[render_id].part_do_render_number[part_id])++,
@@ -411,7 +435,8 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			    		
 		    		pass_render		:	(pass_do_render_number[render_id].render_do_render_number)++,
 		    		pass_part		:	(pass_do_render_number[render_id].part_do_render_number[part_id])++
-		    	},this);
+		    	},
+		    	this);
 		};
 	};
 	this.render_routine=function()
@@ -420,9 +445,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			return;
 
 		var render_do_render_number=new Array();
-		this.uniform_block.bind_system(
-				this.pickup,this.current_time,this.canvas.width,this.canvas.height,
-				this.camera.camera_object_parameter,this.component_location_data,this.computer);
+		this.uniform_block.bind_system(this);
 		this.gl.depthRange(0.0,1.0);
 
 		for(var i=0,ni=this.render_data.length,draw_buffer_id=0;i<ni;i++){
@@ -505,7 +528,8 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 					Math.round((viewport[viewport_id][0]+1.0)*width /2.0),
 					Math.round((viewport[viewport_id][1]+1.0)*height/2.0),
 					Math.round((viewport[viewport_id][2]    )*width /2.0),
-					Math.round((viewport[viewport_id][3]    )*height/2.0)
+					Math.round((viewport[viewport_id][3]    )*height/2.0),
+					width,height,(render_framebuffer==null)?true:false
 				];
 				
 				my_viewport[2]=(my_viewport[2]<1)?1:(my_viewport[2]);
@@ -536,7 +560,8 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 				this.uniform_block.bind_pass(method_id,pass_id,my_clear_flag,my_viewport,my_clear_color);
 
 				this.render_component(render_list,render_buffer_id,parameter_channel_id,
-					method_id,pass_id,project_matrix,render_do_render_number,pass_do_render_number);
+					method_id,pass_id,project_matrix,my_viewport,
+					render_do_render_number,pass_do_render_number);
 			};
 			if((target_id>=0)&&(target_id<(this.target_processor.length)))
 				if(typeof(this.target_processor[target_id])=="object")
@@ -622,31 +647,29 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			request_string+="_"+				this.buffer_object.loading_part_id.toString();
 		};
 		{
-			var max_request_number;
+			var requesting_number,max_request_number;
 			if((max_request_number=this.do_render_request_response_number)<=0)
 				max_request_number=1;
 			else if(max_request_number>this.parameter.max_loading_number)
 				max_request_number=this.parameter.max_loading_number;
 
-			var requesting_number=max_request_number;
-			do{
-				if((this.render_request_start_time-this.last_event_time)<=this.parameter.download_minimal_time_length)
-					if((this.render_request_start_time-this.engine_start_time)>this.parameter.download_start_time_length)
-						break;
-				requesting_number =this.buffer_object.current_loading_mesh_number;
-				requesting_number+=this.buffer_object.request_render_part_id.length;
-				requesting_number+=this.buffer_object.buffer_head_request_queue.length;
-			}while(false);
-			
+			requesting_number =this.buffer_object.current_loading_mesh_number;
+			requesting_number+=this.buffer_object.request_render_part_id.length;
+			requesting_number+=this.buffer_object.buffer_head_request_queue.length;
+			if((this.render_request_start_time-this.last_event_time)<=this.parameter.download_minimal_time_length)
+				if((this.render_request_start_time-this.engine_start_time)>this.parameter.download_start_time_length)
+					requesting_number=max_request_number;
 			request_string+="&requesting_number="+requesting_number+"_"+max_request_number;
 		};
 		
-		request_string+="&data_time="		+this.data_time_length.toString();
-		request_string+="&render_time="		+this.render_time_length.toString();
-		request_string+="&read_time="		+this.pickup.read_time_length.toString();
-		request_string+="&render_interval="	+this.render_interval_length.toString();
-		request_string+="&length="			+request_string.length.toString();
-	
+		request_string+="&data_time="		+(this.data_time_length.toString());
+		request_string+="&render_time="		+(this.render_time_length.toString());
+		request_string+="&read_time="		+(this.pickup.read_time_length.toString());
+		request_string+="&render_interval="	+(this.render_interval_length.toString());
+		request_string+="&precision="		+(this.event_listener.mouse_down_flag?"false":"true");
+		request_string+="&length=";
+		request_string+=request_string.length.toString();
+
 		try{
 			var cur=this,my_ajax=new XMLHttpRequest();
 			my_ajax.onreadystatechange=function()
@@ -656,7 +679,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 				if(cur.terminate_flag)
 					return;
 				if(my_ajax.status!=200){
-					console.log("render_request:my_ajax.status!=200 fail:"+my_ajax.status);
+					alert("render_request:my_ajax.status!=200 fail:"+my_ajax.status);
 					return;
 				};
 				cur.parse_web_server_response_data(my_ajax.responseText,my_ajax.browser_start_time);
@@ -669,7 +692,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			my_ajax.send(null);
 			my_ajax.browser_start_time=(new Date()).getTime();
 		}catch(e){
-			console.log("render_request error fail:	"+e.toString());
+			alert("render_request error fail:	"+e.toString());
 		};
 		return true;
 	};
@@ -755,6 +778,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			;
 		}
 
+		this.collector_loader.destroy();
 		this.utility.destroy();
 		this.uniform_block.destroy();
 		this.event_listener.destroy();
@@ -774,6 +798,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			this.routine_array,
 		    this.target_buffer
 		];
+		
 		for(var i=0,ni=p.length;i<ni;i++){
 			for(var j=0,nj=p[i].length;j<nj;j++){
 				if(typeof(p[i][j])=="object")
@@ -786,6 +811,20 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			p[i].length=0;
 		}
 		
+		for(var i=0,ni=component_array_sorted_by_name.length;i<ni;i++)
+			this.component_array_sorted_by_name[i]=null;
+		this.component_array_sorted_by_name=null;
+		
+		for(var i=0,ni=component_array_sorted_by_id.length;i<ni;i++){
+			this.component_array_sorted_by_id[i].component_name		=null;
+			this.component_array_sorted_by_id[i].component_id		=-1;
+			this.component_array_sorted_by_id[i].component_parent	=null;
+			for(var j=0,nj=this.component_array_sorted_by_id[i].component_children.length;j<nj;j++)
+				this.component_array_sorted_by_id[i].component_children[j]=null;
+			this.component_array_sorted_by_id[i].component_children=null;
+			this.component_array_sorted_by_id[i]=null;
+		}
+
 		this.channel								=null;
 	    this.link_name								=null;
 	    this.title									=null;
@@ -848,6 +887,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.uniform_block							=null;
 		this.deviceorientation						=null;
 		this.utility								=null;
+		this.collector_loader						=null;
 		
 		this.engine_do_render_number				=null;
 
@@ -865,7 +905,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		
 		this.do_execute_render_number				=null;
 		this.do_render_request_response_number		=null;
-		this.collector_stack_version				=null;
+		this.collector_stack_version				=0;
 
 		this.process_part_component_id_and_driver_id=null;
 		this.get_component_buffer_parameter			=null;
@@ -880,6 +920,8 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.append_routine_function				=null;
 		this.process_routine_function				=null;
 		this.do_render								=null;
+		this.get_component_event_processor			=null;
+		this.get_component_call_processor			=null;
 		this.get_component_object_by_component_id	=null;
 		this.get_component_object_by_component_name	=null;
 		this.get_component_processor				=null;
@@ -897,6 +939,44 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.upload_scene_image						=null;
 	};
 	
+	this.get_component_event_processor=function(my_component_name_or_id)
+	{
+		switch(typeof(my_component_name_or_id)){
+		case "string":
+			my_component_name_or_id=this.get_component_object_by_component_name(my_component_name_or_id);
+			if(my_component_name_or_id==null)
+				return null;
+			my_component_name_or_id=my_component_name_or_id.component_id;
+			break;
+		case "number":
+			break;
+		default:
+			return null;
+		}
+		if((my_component_name_or_id<0)||(my_component_name_or_id>=this.component_event_processor.length))
+			return null;
+		else
+			return this.component_event_processor[my_component_name_or_id];
+	};
+	this.get_component_call_processor=function(my_component_name_or_id)
+	{
+		switch(typeof(my_component_name_or_id)){
+		case "string":
+			my_component_name_or_id=this.get_component_object_by_component_name(my_component_name_or_id);
+			if(my_component_name_or_id==null)
+				return null;
+			my_component_name_or_id=my_component_name_or_id.component_id;
+			break;
+		case "number":
+			break;
+		default:
+			return null;
+		}
+		if((my_component_name_or_id<0)||(my_component_name_or_id>=this.component_call_processor.length))
+			return null;
+		else
+			return this.component_call_processor[my_component_name_or_id];
+	};
 	this.get_component_object_by_component_id=function(my_component_id)
 	{
 		if(my_component_id<0)
@@ -905,7 +985,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			return null;
 		return this.component_array_sorted_by_id[my_component_id];
 	};
-	
 	this.get_component_object_by_component_name=function(my_component_name)
 	{
 		for(var begin_pointer=0,end_pointer=this.component_array_sorted_by_name.length-1;begin_pointer<=end_pointer;){
@@ -945,8 +1024,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	this.call_server=function(request_string,
 			response_function,error_function,response_type_string,upload_data)
 	{
-		var cur=this;
-		
 		if(this.terminate_flag)
 			return;
 		
@@ -955,7 +1032,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		if(typeof(upload_data)=="undefined")
 			upload_data=null;
 		try{
-			var my_ajax=new XMLHttpRequest();
+			var my_ajax=new XMLHttpRequest(),cur=this;
 			my_ajax.responseType=response_type_string;
 			my_ajax.onreadystatechange=function()
 			{
@@ -988,8 +1065,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 					response_data=my_ajax.responseText;
 					break;
 				};
-				
-				response_function(response_data,cur);
+				response_function(response_data,cur,my_ajax.responseText);
 				return;
 			};
 			my_ajax.open("GET",request_string,true);
@@ -1075,25 +1151,14 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	};
 	this.set_event_component=function(event_component_name)
 	{
-		this.append_routine_function(
-			function(render)
-			{
-				var component_object=render.get_component_processor(event_component_name);
-
-				if(typeof(component_object)=="boolean")
-					return component_object?false:true;
-				var event_component_id=component_object.component_id;
-				if((event_component_id<0)||(event_component_id>=(render.component_event_processor.length)))
-					return false;
-				var cep=render.component_event_processor[event_component_id];
-				if(typeof(cep)!="object")
-					return false;
-				if(cep==null)
-					return false;
-				if(typeof(cep.set_event_component)=="function")
-					cep.set_event_component(event_component_id,render);
-				return false;
-			});
+		var cep,component_object,event_component_id
+		if((component_object=render.get_component_processor(event_component_name))!=null)
+			if((event_component_id=component_object.component_id)>=0)
+				if(event_component_id<render.component_event_processor.length)
+					if(typeof(cep=render.component_event_processor[event_component_id])=="object")
+						if(cep!=null)
+							if(typeof(cep.set_event_component)=="function")
+								cep.set_event_component(event_component_id,render);
 	};
 	this.upload_string=function(str_content,str_url,complete_function,error_function)
 	{
