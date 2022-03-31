@@ -1,0 +1,19 @@
+package kernel_maintain;
+
+import kernel_common_class.debug_information;
+import kernel_file_manager.file_writer;
+
+public class test_2
+{
+	public static void main(String args[])
+	{
+		debug_information.println("Begin");
+		
+		for(int i=0;i<9;i++)
+			file_writer.delete_comment(
+				"E:\\water_all\\data\\project\\boat\\part\\200Ã×ÖÛÇÅ¼ÜÉè\\data\\solidworks\\ÖÛÇÅÆ÷²Ä\\±ê×¼Áº½Ú.SLDASM.mesh.face", null);
+		
+		
+		debug_information.println("End");
+	}
+}

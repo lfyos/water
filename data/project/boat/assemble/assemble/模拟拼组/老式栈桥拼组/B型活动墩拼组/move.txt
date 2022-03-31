@@ -1,0 +1,86 @@
+version	2015.10
+
+/*	name			*/	运动信息
+/*	audio			*/	没有配音
+/*	description		*/	根节点
+/*	sequence/parallel	*/	sequence
+/*	direction		*/	no_direction
+/*	camera scale		*/	upper	1.0
+/*	children number		*/	1
+
+        /*	name			*/	00050
+        /*	audio			*/	没有配音
+        /*	description		*/	没有字幕文件
+        /*	sequence/parallel	*/	sequence
+        /*	direction		*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name			*/	00050/00001
+                /*	audio			*/	没有配音文件
+                /*	description		*/	没有字幕文件
+                /*	sequence/parallel	*/	parallel
+                /*	direction		*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name			*/	00050/00001/00001
+                        /*	audio			*/	没有配音文件
+                        /*	description		*/	没有字幕文件
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                P12配合体-3/p12-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.5 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name			*/	00050/00001/00002
+                        /*	audio			*/	没有配音文件
+                        /*	description		*/	没有字幕文件
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction		*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                P12配合体-1/p12-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.5 0.0 1.0 
+                            
+                            /*	time length	*/	 1.0E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        

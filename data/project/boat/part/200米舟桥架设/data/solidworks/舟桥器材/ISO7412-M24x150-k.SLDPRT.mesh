@@ -1,0 +1,2331 @@
+/*	version								*/	2021.07.15
+/*	origin material						*/	0	0	0	1
+/*	default material					*/	0.86	0.8	0.909804	0
+/*	origin  vertex_location_extra_data	*/	1
+/*	default vertex_location_extra_data	*/	1
+/*	default vertex_normal_extra_data	*/	1
+/*	max_attribute_number				*/	0
+
+/*	body_number		*/	1
+	/*  body    0  name    */  ThdSchPat	/*  face_number */	60
+	/*  body 0 face 0  name	*/	ThdSchPat的第0个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	1.0	0.0	-0.0	0.014	0.023094	0.0
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.014	-0.02	-0.02	0.014	0.02	0.02
+
+	/*  loop number		*/	2
+		/*  body:0 face:0 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.014	0.0	0.0	-1.0	-0.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.014	-0.0119975	-0.012	0.014	0.0119773	0.0119899
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:0 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.014	0.0	0.0	1.0	0.0	-0.0	0.02
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.014	-0.0199197	-0.02	0.014	0.0199911	0.0199643
+			/*  total_edge_primitive_number		*/	33
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 1  name	*/	ThdSchPat的第1个表面
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	-1.0	-0.0	-0.0	0.012
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.014	-0.012	-0.012	0.117338	0.012	0.012
+
+	/*  loop number		*/	2
+		/*  body:0 face:1 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.117338	1.47581E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.117338	-0.012	-0.0119773	0.117338	0.0119899	0.0119975
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:1 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.014	0.0	0.0	-1.0	-0.0	0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.014	-0.0119975	-0.012	0.014	0.0119773	0.0119899
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 2  name	*/	ThdSchPat的第2个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	1.0	0.0	0.0	0.0132	0.02	0.0
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.0132	3.46945E-18	-0.02	0.0132	0.0173205	-0.01
+
+	/*  loop number		*/	1
+		/*  body:0 face:2 loop 0 edge number	*/	3
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.011547	-0.02	-0.0	0.5	0.866025
+			start_effective		0.0132	0.011547	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	0.011547	-0.02	0.0132	0.0173205	-0.01
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0132	0.0	0.0	-1.0	-0.0	-0.0	0.02
+			start_effective		0.0132	0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	3.00463E-18	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	2.44921E-18	-0.02	0.0132	0.0173205	-0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.011547	-0.02	-0.0	1.0	1.50231E-16
+			start_effective		0.0132	3.00463E-18	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.011547	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	3.00463E-18	-0.02	0.0132	0.011547	-0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 3  name	*/	ThdSchPat的第3个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	1.0	0.0	0.0	0.0132	0.02	0.0
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.0132	0.0173205	-0.01	0.0132	0.023094	0.01
+
+	/*  loop number		*/	1
+		/*  body:0 face:3 loop 0 edge number	*/	3
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.011547	-0.02	-0.0	0.5	0.866025
+			start_effective		0.0132	0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.023094	0.0	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	0.0173205	-0.01	0.0132	0.023094	3.46945E-18
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.023094	0.0	0.0	-0.5	0.866025
+			start_effective		0.0132	0.023094	0.0	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	0.0173205	0.0	0.0132	0.023094	0.01
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0132	0.0	0.0	-1.0	-0.0	-0.0	0.02
+			start_effective		0.0132	0.0173205	0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	0.0173205	-0.01	0.0132	0.0199413	0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 4  name	*/	ThdSchPat的第4个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	1.0	0.0	0.0	0.0132	0.02	0.0
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.0132	0.0	0.01	0.0132	0.0173205	0.02
+
+	/*  loop number		*/	1
+		/*  body:0 face:4 loop 0 edge number	*/	3
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.023094	0.0	0.0	-0.5	0.866025
+			start_effective		0.0132	0.0173205	0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.011547	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	0.011547	0.01	0.0132	0.0173205	0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.011547	0.02	0.0	-1.0	-1.50231E-16
+			start_effective		0.0132	0.011547	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.0	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	0.0	0.02	0.0132	0.011547	0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0132	0.0	0.0	-1.0	-0.0	-0.0	0.02
+			start_effective		0.0132	0.0	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	0.0	0.01	0.0132	0.0173205	0.02
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 5  name	*/	ThdSchPat的第5个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	1.0	0.0	0.0	0.0132	0.02	0.0
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.0132	-0.0173205	0.01	0.0132	-3.46945E-18	0.02
+
+	/*  loop number		*/	1
+		/*  body:0 face:5 loop 0 edge number	*/	3
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.011547	0.02	0.0	-1.0	-1.50231E-16
+			start_effective		0.0132	0.0	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	-0.011547	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.011547	0.02	0.0132	0.0	0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	-0.023094	0.0	0.0	-0.5	-0.866025
+			start_effective		0.0132	-0.011547	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	-0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.0173205	0.01	0.0132	-0.011547	0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0132	0.0	0.0	-1.0	-0.0	-0.0	0.02
+			start_effective		0.0132	-0.0173205	0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.0	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.0173205	0.01	0.0132	0.0	0.02
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 6  name	*/	ThdSchPat的第6个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	1.0	0.0	0.0	0.0132	0.02	0.0
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.0132	-0.023094	-0.01	0.0132	-0.0173205	0.01
+
+	/*  loop number		*/	1
+		/*  body:0 face:6 loop 0 edge number	*/	3
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	-0.023094	0.0	0.0	-0.5	-0.866025
+			start_effective		0.0132	-0.0173205	0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	-0.023094	3.46945E-18	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.023094	1.09977E-18	0.0132	-0.0173205	0.01
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	-0.011547	-0.02	0.0	0.5	-0.866025
+			start_effective		0.0132	-0.023094	3.46945E-18	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	-0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.023094	-0.01	0.0132	-0.0173205	1.38778E-17
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0132	0.0	0.0	-1.0	-0.0	-0.0	0.02
+			start_effective		0.0132	-0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	-0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.0199413	-0.01	0.0132	-0.0173205	0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 7  name	*/	ThdSchPat的第7个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	1.0	0.0	0.0	0.0132	0.02	0.0
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.0132	-0.0173205	-0.02	0.0132	3.46945E-18	-0.01
+
+	/*  loop number		*/	1
+		/*  body:0 face:7 loop 0 edge number	*/	3
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	-0.011547	-0.02	0.0	0.5	-0.866025
+			start_effective		0.0132	-0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	-0.011547	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.0173205	-0.02	0.0132	-0.011547	-0.01
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.011547	-0.02	-0.0	1.0	1.50231E-16
+			start_effective		0.0132	-0.011547	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	3.00463E-18	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.011547	-0.02	0.0132	3.46945E-18	-0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0132	0.0	0.0	-1.0	-0.0	-0.0	0.02
+			start_effective		0.0132	3.00463E-18	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	-0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.0173205	-0.02	0.0132	3.00463E-18	-0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 8  name	*/	ThdSchPat的第8个表面
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	-1.0	-0.0	-0.0	0.02
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.0132	-0.02	-0.02	0.014	0.02	0.02
+
+	/*  loop number		*/	2
+		/*  body:0 face:8 loop 0 edge number	*/	6
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0132	0.0	0.0	-1.0	-0.0	-0.0	0.02
+			start_effective		0.0132	0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	3.00463E-18	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	2.44921E-18	-0.02	0.0132	0.0173205	-0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0132	0.0	0.0	-1.0	-0.0	-0.0	0.02
+			start_effective		0.0132	0.0173205	0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	0.0173205	-0.01	0.0132	0.0199413	0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0132	0.0	0.0	-1.0	-0.0	-0.0	0.02
+			start_effective		0.0132	0.0	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	0.0	0.01	0.0132	0.0173205	0.02
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0132	0.0	0.0	-1.0	-0.0	-0.0	0.02
+			start_effective		0.0132	-0.0173205	0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.0	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.0173205	0.01	0.0132	0.0	0.02
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0132	0.0	0.0	-1.0	-0.0	-0.0	0.02
+			start_effective		0.0132	-0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	-0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.0199413	-0.01	0.0132	-0.0173205	0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+			/*  Edge NO.5   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0132	0.0	0.0	-1.0	-0.0	-0.0	0.02
+			start_effective		0.0132	3.00463E-18	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	-0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.0173205	-0.02	0.0132	3.00463E-18	-0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:8 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.014	0.0	0.0	1.0	0.0	-0.0	0.02
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.014	-0.0199197	-0.02	0.014	0.0199911	0.0199643
+			/*  total_edge_primitive_number		*/	33
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 9  name	*/	ThdSchPat的第9个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	1.0	0.0	-0.0	0.0	0.023094	0.0
+	/*  total_face_primitive_number	*/  16
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.0	-0.0196888	-0.02	0.0	0.0196888	0.02
+
+	/*  loop number		*/	1
+		/*  body:0 face:9 loop 0 edge number	*/	6
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	1.0	0.0	-0.0	0.02
+			start_effective		0.0	3.00463E-18	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	3.00463E-18	-0.02	0.0	0.0173205	-0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	1.0	0.0	-0.0	0.02
+			start_effective		0.0	-0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	3.00463E-18	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-0.0173205	-0.02	0.0	3.00463E-18	-0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	1.0	0.0	-0.0	0.02
+			start_effective		0.0	-0.0173205	0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	-0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-0.0199413	-0.01	0.0	-0.0173205	0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	1.0	0.0	-0.0	0.02
+			start_effective		0.0	-3.00463E-18	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	-0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-0.0173205	0.01	0.0	2.44921E-18	0.02
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	-1.0	-0.0	-0.0	0.02
+			start_effective		0.0	-3.00463E-18	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-3.00463E-18	0.01	0.0	0.0173205	0.02
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+			/*  Edge NO.5   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	1.0	0.0	-0.0	0.02
+			start_effective		0.0	0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.0173205	-0.01	0.0	0.0199413	0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 10  name	*/	ThdSchPat的第10个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.0	0.0	0.0	-1.0	-0.0	-0.0	0.02	1.0472
+	/*  total_face_primitive_number	*/  8
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-3.74477E-19	0.0173205	-0.01	0.00178633	0.023094	0.01
+
+	/*  loop number		*/	1
+		/*  body:0 face:10 loop 0 edge number	*/	3
+			/*  Edge NO.0   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.0	0.0173205	0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	0.023094	7.45655E-19	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.0173205	-1.38477E-17	0.00178633	0.023094	0.01
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.00178633	0.023094	7.45655E-19	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-1.50231E-18	0.0173205	-0.01	0.00178633	0.023094	2.24774E-17
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	1.0	0.0	-0.0	0.02
+			start_effective		0.0	0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.0173205	-0.01	0.0	0.0199413	0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 11  name	*/	ThdSchPat的第11个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.0	0.0	0.0	-1.0	-0.0	-0.0	0.02	1.0472
+	/*  total_face_primitive_number	*/  7
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.0	2.44921E-18	0.01	0.00178633	0.0173205	0.02
+
+	/*  loop number		*/	1
+		/*  body:0 face:11 loop 0 edge number	*/	3
+			/*  Edge NO.0   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.0	-3.00463E-18	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	0.011547	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-5.47469E-18	0.02	0.00178633	0.011547	0.02
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.00178633	0.011547	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.011547	0.01	0.00178633	0.0173205	0.02
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	-1.0	-0.0	-0.0	0.02
+			start_effective		0.0	-3.00463E-18	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-3.00463E-18	0.01	0.0	0.0173205	0.02
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 12  name	*/	ThdSchPat的第12个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.0	0.0	0.0	-1.0	-0.0	-0.0	0.02	1.0472
+	/*  total_face_primitive_number	*/  8
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-3.54676E-19	-0.0173205	0.01	0.00178633	2.44921E-18	0.02
+
+	/*  loop number		*/	1
+		/*  body:0 face:12 loop 0 edge number	*/	3
+			/*  Edge NO.0   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.00178633	-0.011547	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	-3.00463E-18	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-0.011547	0.02	0.00178633	-3.00463E-18	0.02
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	1.0	0.0	-0.0	0.02
+			start_effective		0.0	-3.00463E-18	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	-0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-0.0173205	0.01	0.0	2.44921E-18	0.02
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.0	-0.0173205	0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	-0.011547	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-1.00154E-18	-0.0173205	0.01	0.00178633	-0.011547	0.02
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+
+
+	/*  body 0 face 13  name	*/	ThdSchPat的第13个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.0	0.0	0.0	-1.0	-0.0	-0.0	0.02	1.0472
+	/*  total_face_primitive_number	*/  8
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-2.00309E-18	-0.023094	-0.01	0.00178633	-0.0173205	0.01
+
+	/*  loop number		*/	1
+		/*  body:0 face:13 loop 0 edge number	*/	3
+			/*  Edge NO.0   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.00178633	-0.023094	1.57679E-18	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	-0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-1.00154E-18	-0.023094	-1.86714E-17	0.00178633	-0.0173205	0.01
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	1.0	0.0	-0.0	0.02
+			start_effective		0.0	-0.0173205	0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	-0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-0.0199413	-0.01	0.0	-0.0173205	0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.0	-0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	-0.023094	1.57679E-18	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-0.023094	-0.01	0.00178633	-0.0173205	1.30157E-17
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+
+
+	/*  body 0 face 14  name	*/	ThdSchPat的第14个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.0	0.0	0.0	-1.0	-0.0	-0.0	0.02	1.0472
+	/*  total_face_primitive_number	*/  8
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.0	0.0	-0.02	0.00178633	0.0173205	-0.01
+
+	/*  loop number		*/	1
+		/*  body:0 face:14 loop 0 edge number	*/	3
+			/*  Edge NO.0   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.0	0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	0.011547	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-1.50231E-18	0.011547	-0.02	0.00178633	0.0173205	-0.01
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.00178633	0.011547	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	3.00463E-18	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	3.00463E-18	-0.02	0.00178633	0.011547	-0.02
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	1.0	0.0	-0.0	0.02
+			start_effective		0.0	3.00463E-18	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	3.00463E-18	-0.02	0.0	0.0173205	-0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 15  name	*/	ThdSchPat的第15个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.0	0.0	0.0	-1.0	-0.0	-0.0	0.02	1.0472
+	/*  total_face_primitive_number	*/  7
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-3.0641E-18	-0.0173205	-0.02	0.00178633	3.00463E-18	-0.01
+
+	/*  loop number		*/	1
+		/*  body:0 face:15 loop 0 edge number	*/	3
+			/*  Edge NO.0   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.00178633	-0.011547	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	-0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-0.0173205	-0.02	0.00178633	-0.011547	-0.01
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0	0.0	0.0	1.0	0.0	-0.0	0.02
+			start_effective		0.0	-0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	3.00463E-18	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-0.0173205	-0.02	0.0	3.00463E-18	-0.01
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	1
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.0	3.00463E-18	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	-0.011547	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-0.011547	-0.02	0.00178633	7.53298E-18	-0.02
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+
+
+	/*  body 0 face 16  name	*/	ThdSchPat的第16个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	-1.50231E-16	1.0	0.014	0.011547	-0.02
+	/*  total_face_primitive_number	*/  8
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.0	-0.011547	-0.02	0.0132	0.011547	-0.02
+
+	/*  loop number		*/	1
+		/*  body:0 face:16 loop 0 edge number	*/	6
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.011547	-0.02	-0.0	1.0	1.50231E-16
+			start_effective		0.0132	-0.011547	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	3.00463E-18	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.011547	-0.02	0.0132	3.46945E-18	-0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.014	-0.011547	-0.02	-1.0	-0.0	-0.0
+			start_effective		0.0132	-0.011547	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	-0.011547	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.00178633	-0.011547	-0.02	0.0132	-0.011547	-0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.0	3.00463E-18	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	-0.011547	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-0.011547	-0.02	0.00178633	7.53298E-18	-0.02
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.00178633	0.011547	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	3.00463E-18	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	3.00463E-18	-0.02	0.00178633	0.011547	-0.02
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.014	0.011547	-0.02	-1.0	-0.0	-0.0
+			start_effective		0.0132	0.011547	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	0.011547	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.00178633	0.011547	-0.02	0.0132	0.011547	-0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.5   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.011547	-0.02	-0.0	1.0	1.50231E-16
+			start_effective		0.0132	3.00463E-18	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.011547	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	3.00463E-18	-0.02	0.0132	0.011547	-0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 17  name	*/	ThdSchPat的第17个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-0.0	0.866025	0.5	0.014	-0.011547	-0.02
+	/*  total_face_primitive_number	*/  9
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-6.93889E-18	-0.023094	-0.02	0.0132	-0.011547	1.38778E-17
+
+	/*  loop number		*/	1
+		/*  body:0 face:17 loop 0 edge number	*/	6
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	-0.011547	-0.02	0.0	0.5	-0.866025
+			start_effective		0.0132	-0.023094	3.46945E-18	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	-0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.023094	-0.01	0.0132	-0.0173205	1.38778E-17
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.014	-0.023094	0.0	-1.0	-0.0	-0.0
+			start_effective		0.0132	-0.023094	3.46945E-18	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	-0.023094	1.57679E-18	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.00178633	-0.023094	0.0	0.0132	-0.023094	3.46945E-18
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.0	-0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	-0.023094	1.57679E-18	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-0.023094	-0.01	0.00178633	-0.0173205	1.30157E-17
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.00178633	-0.011547	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	-0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-0.0173205	-0.02	0.00178633	-0.011547	-0.01
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.014	-0.011547	-0.02	-1.0	-0.0	-0.0
+			start_effective		0.0132	-0.011547	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	-0.011547	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.00178633	-0.011547	-0.02	0.0132	-0.011547	-0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.5   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	-0.011547	-0.02	0.0	0.5	-0.866025
+			start_effective		0.0132	-0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	-0.011547	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.0173205	-0.02	0.0132	-0.011547	-0.01
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 18  name	*/	ThdSchPat的第18个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.866025	-0.5	0.014	-0.023094	0.0
+	/*  total_face_primitive_number	*/  9
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	-6.93889E-18	-0.023094	1.09977E-18	0.0132	-0.011547	0.02
+
+	/*  loop number		*/	1
+		/*  body:0 face:18 loop 0 edge number	*/	6
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	-0.023094	0.0	0.0	-0.5	-0.866025
+			start_effective		0.0132	-0.011547	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	-0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.0173205	0.01	0.0132	-0.011547	0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.014	-0.011547	0.02	-1.0	-0.0	-0.0
+			start_effective		0.0132	-0.011547	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	-0.011547	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.00178633	-0.011547	0.02	0.0132	-0.011547	0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.0	-0.0173205	0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	-0.011547	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-1.00154E-18	-0.0173205	0.01	0.00178633	-0.011547	0.02
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.00178633	-0.023094	1.57679E-18	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	-0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-1.00154E-18	-0.023094	-1.86714E-17	0.00178633	-0.0173205	0.01
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.014	-0.023094	0.0	-1.0	-0.0	-0.0
+			start_effective		0.0132	-0.023094	3.46945E-18	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	-0.023094	1.57679E-18	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.00178633	-0.023094	0.0	0.0132	-0.023094	3.46945E-18
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.5   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	-0.023094	0.0	0.0	-0.5	-0.866025
+			start_effective		0.0132	-0.0173205	0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	-0.023094	3.46945E-18	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.023094	1.09977E-18	0.0132	-0.0173205	0.01
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 19  name	*/	ThdSchPat的第19个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	1.50231E-16	-1.0	0.014	0.011547	0.02
+	/*  total_face_primitive_number	*/  8
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.0	-0.011547	0.02	0.0132	0.011547	0.02
+
+	/*  loop number		*/	1
+		/*  body:0 face:19 loop 0 edge number	*/	6
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.011547	0.02	0.0	-1.0	-1.50231E-16
+			start_effective		0.0132	0.011547	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.0	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	0.0	0.02	0.0132	0.011547	0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.014	0.011547	0.02	-1.0	-0.0	-0.0
+			start_effective		0.0132	0.011547	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	0.011547	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.00178633	0.011547	0.02	0.0132	0.011547	0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.0	-3.00463E-18	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	0.011547	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-5.47469E-18	0.02	0.00178633	0.011547	0.02
+			/*  total_edge_primitive_number		*/	7
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.00178633	-0.011547	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	-3.00463E-18	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	-0.011547	0.02	0.00178633	-3.00463E-18	0.02
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.014	-0.011547	0.02	-1.0	-0.0	-0.0
+			start_effective		0.0132	-0.011547	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	-0.011547	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.00178633	-0.011547	0.02	0.0132	-0.011547	0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.5   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.011547	0.02	0.0	-1.0	-1.50231E-16
+			start_effective		0.0132	0.0	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	-0.011547	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	-0.011547	0.02	0.0132	0.0	0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 20  name	*/	ThdSchPat的第20个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	-0.866025	-0.5	0.014	0.023094	0.0
+	/*  total_face_primitive_number	*/  9
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.0	0.011547	0.0	0.0132	0.023094	0.02
+
+	/*  loop number		*/	1
+		/*  body:0 face:20 loop 0 edge number	*/	6
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.023094	0.0	0.0	-0.5	0.866025
+			start_effective		0.0132	0.023094	0.0	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	0.0173205	0.0	0.0132	0.023094	0.01
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.014	0.023094	0.0	-1.0	-0.0	-0.0
+			start_effective		0.0132	0.023094	0.0	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	0.023094	7.45655E-19	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.00178633	0.023094	0.0	0.0132	0.023094	7.45655E-19
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.0	0.0173205	0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	0.023094	7.45655E-19	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.0173205	-1.38477E-17	0.00178633	0.023094	0.01
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.00178633	0.011547	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0173205	0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.011547	0.01	0.00178633	0.0173205	0.02
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.014	0.011547	0.02	-1.0	-0.0	-0.0
+			start_effective		0.0132	0.011547	0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	0.011547	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.00178633	0.011547	0.02	0.0132	0.011547	0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.5   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.023094	0.0	0.0	-0.5	0.866025
+			start_effective		0.0132	0.0173205	0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.011547	0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	0.011547	0.01	0.0132	0.0173205	0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 21  name	*/	ThdSchPat的第21个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	-0.866025	0.5	0.014	0.011547	-0.02
+	/*  total_face_primitive_number	*/  9
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.0	0.011547	-0.02	0.0132	0.023094	3.46945E-18
+
+	/*  loop number		*/	1
+		/*  body:0 face:21 loop 0 edge number	*/	6
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.011547	-0.02	-0.0	0.5	0.866025
+			start_effective		0.0132	0.011547	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	0.011547	-0.02	0.0132	0.0173205	-0.01
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.014	0.011547	-0.02	-1.0	-0.0	-0.0
+			start_effective		0.0132	0.011547	-0.02	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	0.011547	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.00178633	0.011547	-0.02	0.0132	0.011547	-0.02
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.0	0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	0.011547	-0.02	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-1.50231E-18	0.011547	-0.02	0.00178633	0.0173205	-0.01
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/
+			start_effective		0.00178633	0.023094	7.45655E-19	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0173205	-0.01	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-1.50231E-18	0.0173205	-0.01	0.00178633	0.023094	2.24774E-17
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.014	0.023094	0.0	-1.0	-0.0	-0.0
+			start_effective		0.0132	0.023094	0.0	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.00178633	0.023094	7.45655E-19	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.00178633	0.023094	0.0	0.0132	0.023094	7.45655E-19
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.5   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0132	0.011547	-0.02	-0.0	0.5	0.866025
+			start_effective		0.0132	0.0173205	-0.01	1.0	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0132	0.023094	0.0	1.0	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0132	0.0173205	-0.01	0.0132	0.023094	3.46945E-18
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 22  name	*/	ThdSchPat的第22个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.120662	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.119	-0.0114112	-0.0114112	0.12025	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:22 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.12025	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.12025	-0.0114112	-0.0113926	0.12025	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:22 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.119	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.119	-0.009626	-0.00958184	0.119	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 23  name	*/	ThdSchPat的第23个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.119	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.117338	-0.012	-0.012	0.119	0.012	0.012
+
+	/*  loop number		*/	2
+		/*  body:0 face:23 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.117338	1.47581E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.117338	-0.012	-0.0119773	0.117338	0.0119899	0.0119975
+			/*  total_edge_primitive_number		*/	26
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:23 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.119	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.119	-0.009626	-0.00958184	0.119	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 24  name	*/	ThdSchPat的第24个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.1215	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.12025	-0.0114112	-0.0114112	0.1215	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:24 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1215	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1215	-0.009626	-0.00958184	0.1215	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:24 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.12025	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.12025	-0.0114112	-0.0113926	0.12025	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 25  name	*/	ThdSchPat的第25个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.123162	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.1215	-0.0114112	-0.0114112	0.12275	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:25 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.12275	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.12275	-0.0114112	-0.0113926	0.12275	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:25 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1215	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1215	-0.009626	-0.00958184	0.1215	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 26  name	*/	ThdSchPat的第26个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.124	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.12275	-0.0114112	-0.0114112	0.124	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:26 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.124	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	-0.009626	-0.00958184	0.124	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:26 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.12275	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.12275	-0.0114112	-0.0113926	0.12275	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 27  name	*/	ThdSchPat的第27个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.125662	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.124	-0.0114112	-0.0114112	0.12525	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:27 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.12525	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.12525	-0.0114112	-0.0113926	0.12525	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:27 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.124	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	-0.009626	-0.00958184	0.124	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 28  name	*/	ThdSchPat的第28个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.1265	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.12525	-0.0114112	-0.0114112	0.1265	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:28 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1265	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1265	-0.009626	-0.00958184	0.1265	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:28 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.12525	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.12525	-0.0114112	-0.0113926	0.12525	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 29  name	*/	ThdSchPat的第29个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.128162	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.1265	-0.0114112	-0.0114112	0.12775	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:29 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.12775	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.12775	-0.0114112	-0.0113926	0.12775	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:29 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1265	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1265	-0.009626	-0.00958184	0.1265	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 30  name	*/	ThdSchPat的第30个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.129	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.12775	-0.0114112	-0.0114112	0.129	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:30 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.129	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.129	-0.009626	-0.00958184	0.129	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:30 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.12775	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.12775	-0.0114112	-0.0113926	0.12775	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 31  name	*/	ThdSchPat的第31个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.130662	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.129	-0.0114112	-0.0114112	0.13025	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:31 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.13025	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.13025	-0.0114112	-0.0113926	0.13025	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:31 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.129	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.129	-0.009626	-0.00958184	0.129	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 32  name	*/	ThdSchPat的第32个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.1315	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.13025	-0.0114112	-0.0114112	0.1315	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:32 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1315	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1315	-0.009626	-0.00958184	0.1315	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:32 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.13025	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.13025	-0.0114112	-0.0113926	0.13025	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 33  name	*/	ThdSchPat的第33个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.133162	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.1315	-0.0114112	-0.0114112	0.13275	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:33 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.13275	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.13275	-0.0114112	-0.0113926	0.13275	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:33 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1315	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1315	-0.009626	-0.00958184	0.1315	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 34  name	*/	ThdSchPat的第34个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.134	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.13275	-0.0114112	-0.0114112	0.134	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:34 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.134	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.134	-0.009626	-0.00958184	0.134	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:34 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.13275	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.13275	-0.0114112	-0.0113926	0.13275	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 35  name	*/	ThdSchPat的第35个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.135662	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.134	-0.0114112	-0.0114112	0.13525	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:35 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.13525	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.13525	-0.0114112	-0.0113926	0.13525	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:35 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.134	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.134	-0.009626	-0.00958184	0.134	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 36  name	*/	ThdSchPat的第36个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.1365	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.13525	-0.0114112	-0.0114112	0.1365	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:36 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1365	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1365	-0.009626	-0.00958184	0.1365	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:36 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.13525	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.13525	-0.0114112	-0.0113926	0.13525	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 37  name	*/	ThdSchPat的第37个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.138162	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.1365	-0.0114112	-0.0114112	0.13775	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:37 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.13775	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.13775	-0.0114112	-0.0113926	0.13775	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:37 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1365	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1365	-0.009626	-0.00958184	0.1365	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 38  name	*/	ThdSchPat的第38个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.139	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.13775	-0.0114112	-0.0114112	0.139	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:38 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.139	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.139	-0.009626	-0.00958184	0.139	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:38 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.13775	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.13775	-0.0114112	-0.0113926	0.13775	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 39  name	*/	ThdSchPat的第39个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.140662	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.139	-0.0114112	-0.0114112	0.14025	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:39 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.14025	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.14025	-0.0114112	-0.0113926	0.14025	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:39 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.139	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.139	-0.009626	-0.00958184	0.139	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 40  name	*/	ThdSchPat的第40个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.1415	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.14025	-0.0114112	-0.0114112	0.1415	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:40 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1415	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1415	-0.009626	-0.00958184	0.1415	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:40 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.14025	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.14025	-0.0114112	-0.0113926	0.14025	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 41  name	*/	ThdSchPat的第41个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.143162	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.1415	-0.0114112	-0.0114112	0.14275	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:41 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.14275	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.14275	-0.0114112	-0.0113926	0.14275	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:41 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1415	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1415	-0.009626	-0.00958184	0.1415	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 42  name	*/	ThdSchPat的第42个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.144	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.14275	-0.0114112	-0.0114112	0.144	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:42 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.144	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.144	-0.009626	-0.00958184	0.144	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:42 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.14275	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.14275	-0.0114112	-0.0113926	0.14275	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 43  name	*/	ThdSchPat的第43个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.145662	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.144	-0.0114112	-0.0114112	0.14525	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:43 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.14525	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.14525	-0.0114112	-0.0113926	0.14525	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:43 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.144	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.144	-0.009626	-0.00958184	0.144	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 44  name	*/	ThdSchPat的第44个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.1465	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.14525	-0.0114112	-0.0114112	0.1465	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:44 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1465	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1465	-0.009626	-0.00958184	0.1465	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:44 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.14525	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.14525	-0.0114112	-0.0113926	0.14525	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 45  name	*/	ThdSchPat的第45个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.148162	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.1465	-0.0114112	-0.0114112	0.14775	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:45 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.14775	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.14775	-0.0114112	-0.0113926	0.14775	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:45 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1465	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1465	-0.009626	-0.00958184	0.1465	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 46  name	*/	ThdSchPat的第46个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.149	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.14775	-0.0114112	-0.0114112	0.149	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:46 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.149	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.149	-0.009626	-0.00958184	0.149	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:46 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.14775	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.14775	-0.0114112	-0.0113926	0.14775	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 47  name	*/	ThdSchPat的第47个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.150662	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.149	-0.0114112	-0.0114112	0.15025	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:47 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.15025	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.15025	-0.0114112	-0.0113926	0.15025	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:47 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.149	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.149	-0.009626	-0.00958184	0.149	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 48  name	*/	ThdSchPat的第48个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.1515	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.15025	-0.0114112	-0.0114112	0.1515	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:48 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1515	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1515	-0.009626	-0.00958184	0.1515	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:48 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.15025	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.15025	-0.0114112	-0.0113926	0.15025	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 49  name	*/	ThdSchPat的第49个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.153162	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.1515	-0.0114112	-0.0114112	0.15275	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:49 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.15275	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.15275	-0.0114112	-0.0113926	0.15275	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:49 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1515	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1515	-0.009626	-0.00958184	0.1515	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 50  name	*/	ThdSchPat的第50个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.154	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.15275	-0.0114112	-0.0114112	0.154	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:50 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.154	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.154	-0.009626	-0.00958184	0.154	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:50 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.15275	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.15275	-0.0114112	-0.0113926	0.15275	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 51  name	*/	ThdSchPat的第51个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.155662	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.154	-0.0114112	-0.0114112	0.15525	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:51 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.15525	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.15525	-0.0114112	-0.0113926	0.15525	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:51 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.154	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.154	-0.009626	-0.00958184	0.154	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 52  name	*/	ThdSchPat的第52个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.1565	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.15525	-0.0114112	-0.0114112	0.1565	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:52 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1565	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1565	-0.009626	-0.00958184	0.1565	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:52 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.15525	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.15525	-0.0114112	-0.0113926	0.15525	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 53  name	*/	ThdSchPat的第53个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.158162	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.1565	-0.0114112	-0.0114112	0.15775	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:53 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.15775	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.15775	-0.0114112	-0.0113926	0.15775	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:53 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1565	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1565	-0.009626	-0.00958184	0.1565	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 54  name	*/	ThdSchPat的第54个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.159	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.15775	-0.0114112	-0.0114112	0.159	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:54 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.159	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.159	-0.009626	-0.00958184	0.159	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:54 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.15775	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.15775	-0.0114112	-0.0113926	0.15775	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 55  name	*/	ThdSchPat的第55个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.160662	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.159	-0.0114112	-0.0114112	0.16025	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:55 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.16025	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.16025	-0.0114112	-0.0113926	0.16025	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:55 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.159	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.159	-0.009626	-0.00958184	0.159	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 56  name	*/	ThdSchPat的第56个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.1615	1.49616E-17	0.0	1.0	1.22461E-16	0.0	0.009626	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.16025	-0.0114112	-0.0114112	0.1615	0.0114112	0.0114112
+
+	/*  loop number		*/	2
+		/*  body:0 face:56 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1615	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1615	-0.009626	-0.00958184	0.1615	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:56 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.16025	1.51147E-17	0.0	-1.0	-1.22461E-16	-0.0	0.0114112
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.16025	-0.0114112	-0.0113926	0.16025	0.0114029	0.0114091
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 57  name	*/	ThdSchPat的第57个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.163162	1.51652E-17	0.0	-1.0	-1.22461E-16	-0.0	0.012	0.959931
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.1615	-0.0110964	-0.0110964	0.16253	0.0110964	0.0110964
+
+	/*  loop number		*/	2
+		/*  body:0 face:57 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.1615	1.49616E-17	0.0	-1.0	-1.22461E-16	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.1615	-0.009626	-0.00958184	0.1615	0.00962098	0.0095471
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:57 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.16253	0.0	0.0	1.0	1.22461E-16	0.0	0.0110964
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.16253	-0.0110583	-0.0110107	0.16253	0.0110964	0.0110869
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 58  name	*/	ThdSchPat的第58个表面
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-1.0	-0.0	-0.0	0.164	0.0	0.0
+	/*  total_face_primitive_number	*/  10
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.164	-0.009626	-0.009626	0.164	0.009626	0.009626
+
+	/*  loop number		*/	1
+		/*  body:0 face:58 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.164	0.0	0.0	-1.0	-0.0	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.164	-0.00958184	-0.00962098	0.164	0.0095471	0.009626
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 59  name	*/	ThdSchPat的第59个表面
+	/*  face type	*/	cone	/*  parameter number	*/	8	/*  parameter	*/	0.164	0.0	0.0	1.0	0.0	0.0	0.009626	0.785398
+	/*  total_face_primitive_number	*/  24
+	/*  face_attribute_number		*/  0
+	/*  face_face_box               */	0.16253	-0.0110964	-0.0110964	0.164	0.0110964	0.0110964
+
+	/*  loop number		*/	2
+		/*  body:0 face:59 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.16253	0.0	0.0	1.0	1.22461E-16	0.0	0.0110964
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.16253	-0.0110583	-0.0110107	0.16253	0.0110964	0.0110869
+			/*  total_edge_primitive_number		*/	25
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:59 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.164	0.0	0.0	-1.0	-0.0	-0.0	0.009626
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.164	-0.00958184	-0.00962098	0.164	0.0095471	0.009626
+			/*  total_edge_primitive_number		*/	23
+			/*  total_point_primitive_number	*/	1
+
+
+
+

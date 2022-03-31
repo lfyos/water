@@ -9,9 +9,9 @@ public class test_2
 	{
 		debug_information.println("Begin");
 		
-		for(int i=0;i<9;i++)
+	
 			file_writer.delete_comment(
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_"+i+"\\part.inp.mesh.face", null);
+				"E:\\water_all\\data\\project\\boat\\part\\200Ã×ÖÛÇÅ¼ÜÉè\\data\\solidworks\\ÖÛÇÅÆ÷²Ä\\±ê×¼Áº½Ú.SLDASM.mesh.face", null);
 		
 		
 		debug_information.println("End");
