@@ -1,0 +1,169 @@
+function(component_name,component_id,render)
+{
+	render.component_event_processor[component_id]=
+	{
+		list_type				:	"simple",
+		list_id					:	-1,
+		collector_stack_version	:	0,
+		collector_list_object	:	new Array(),
+		request_array			:	new Array(),
+		item_number				:	1,
+		update_flag				:	true,
+
+		update_canvas_texture	:	function(render_id,part_id,buffer_id,
+			component_id,driver_id,instance_initialize_data,part_material,shader_data,render)
+		{
+			var ep=render.component_event_processor[component_id];
+			if(render.collector_stack_version!=ep.collector_stack_version){
+				ep.update_flag=true;
+				ep.collector_stack_version=render.collector_stack_version;
+				ep.hightlight=[-1,-1,-1,-1];
+				
+				var simple_list_flag,single_collector_flag;
+				switch(ep.list_type){
+				case "collector":
+					simple_list_flag=true;
+					single_collector_flag=false;
+					break;
+				case "complex":
+				case "simple":
+				default:
+					simple_list_flag=false;
+					single_collector_flag=true;
+					break;
+				};
+				render.collector_loader.load_collector(
+					simple_list_flag,single_collector_flag,false,
+					function(response_data,response_text)
+					{
+						ep.collector_list_object=response_data;
+						ep.update_flag=false;
+						ep.id_base=0;
+					},render);
+			}
+			if(ep.update_flag)
+				return false;
+			ep.update_flag=true;
+			ep.request_array=new Array();
+			
+			var  str,p,list_type_flag=true;
+			ep.item_number	=instance_initialize_data.canvas_height/instance_initialize_data.canvas_step;
+
+			render.text_canvas.width			=instance_initialize_data.canvas_width;
+			render.text_canvas.height			=instance_initialize_data.canvas_height;
+		
+			render.text_2dcontext.fillStyle		=instance_initialize_data.backgroundStyle;
+			render.text_2dcontext.fillRect(0,0,render.text_canvas.width,render.text_canvas.height);
+					
+			render.text_2dcontext.fillStyle		=instance_initialize_data.fillStyle;
+			render.text_2dcontext.font			=instance_initialize_data.font;
+			render.text_2dcontext.textBaseline	=instance_initialize_data.textBaseline;
+			render.text_2dcontext.textAlign		=instance_initialize_data.textAlign;
+			
+			if((p=ep.collector_list_object).length<=0)
+				return true;
+
+			switch(ep.list_type){
+			case "collector":
+				for(var i=0;(i<ep.item_number)&&((ep.id_base+i)<p.length);i++){
+					str =p[ep.id_base+i].list_id.toString();
+					str+=".数目"+(p[ep.id_base+i].render_number);
+					str+="/"+(p[ep.id_base+i].part_number);
+					str+="/"+(p[ep.id_base+i].component_number);
+					str+=":"+(p[ep.id_base+i].title);
+					render.text_2dcontext.fillText(str,0,instance_initialize_data.canvas_step*i);
+				}
+				return true;
+			case "complex":
+				list_type_flag=false;
+				break;
+			case "simple":
+			default:
+				list_type_flag=true;
+				break;
+			};
+			
+			var my_text_array=new Array();
+			var my_request_array=new Array();
+		
+			my_text_array.push(p[0].title);
+			my_request_array.push([-1,-1,-1]);
+			
+			my_text_array.push("共"+(p[0].part_number)+"类"+(p[0].component_number)+"件");
+			my_request_array.push([-1,-1,-1]);
+			
+			if(typeof(p[0].render_list)=="undefined")
+				p[0].render_list=new Array();
+			for(var index_id=0,i=0,ni=p[0].render_list.length;i<ni;i++)
+				for(var pr=p[0].render_list[i],j=0,nj=pr.part_list.length;j<nj;j++){
+					var pp=pr.part_list[j];
+					my_text_array.push((++index_id)+" "+pp.user_name+" "+pp.part_component_number+"件");
+					my_request_array.push([pr.render_id,pp.part_id,-1]);
+					if(list_type_flag)
+						continue;
+					for(var k=0,nk=pp.component_list.length;k<nk;k++){
+						my_text_array.push("  "+(k+1)+" "+pp.user_name);
+						my_request_array.push([pr.render_id,pp.part_id,pp.component_list[k].component_id]);
+					}
+				}
+			for(var i=0;(i<ep.item_number)&&((ep.id_base+i)<my_text_array.length);i++){
+				render.text_2dcontext.fillText(my_text_array[ep.id_base+i],0,instance_initialize_data.canvas_step*i);
+				ep.request_array[i]=my_request_array[ep.id_base+i];
+			}
+			return true;
+		},
+		pickupmousewheel		:	function(event,component_id,render)
+		{
+			var ep=render.component_event_processor[component_id];
+			
+			var mouse_wheel_number=0;
+			if(typeof(event.wheelDelta)=="number")
+				mouse_wheel_number+=event.wheelDelta/200.0;		//for chrome,opera
+			else if(typeof(event.detail)=="number")
+				mouse_wheel_number-=event.detail/5;				//for firefox
+			else
+				return;
+			
+			var skip_array=[1,	5,	10,	50,	100,	500,	1000,	5000];
+
+			ep.id_base-=mouse_wheel_number*skip_array[(event.ctrlKey?1:0)+(event.shiftKey?2:0)+(event.altKey?4:0)];
+			ep.id_base=(ep.id_base<0)?0:Math.round(ep.id_base);
+			ep.update_flag=false;
+			return;
+		},
+		pickupmouseselect		:	function(event,component_id,render)
+		{
+			var ep=render.component_event_processor[component_id];
+			var function_id=Math.floor((1.0-ep.y)*ep.item_number);
+			var p=ep.collector_list_object;
+
+			switch(ep.list_type){
+			case "collector":
+				var my_id=Math.round(ep.id_base+function_id);
+				if((my_id>=0)&&(my_id<p.length)){
+					ep.list_id=p[my_id].list_id;
+					render.system_call_processor.set_menu_show("列表功能操作组件");
+				}
+				break;
+			case "complex":
+			case "simple":
+			default:
+				if((function_id<0)||(function_id>=ep.request_array.length))
+					break;
+				var render_id	=ep.request_array[function_id][0];
+				var part_id		=ep.request_array[function_id][1];
+				var component_id=ep.request_array[function_id][2];
+				
+				if(event.ctrlKey)
+					render.system_call_processor.collector_list_select_component(render_id,part_id,component_id);
+				else if(event.shiftKey)
+					render.system_call_processor.collector_list_unselect_component(render_id,part_id,component_id);
+				else
+					render.system_call_processor.collector_list_swap_component(render_id,part_id,component_id);
+				break;
+			}		
+			ep.hightlight=[0,1.0-function_id/ep.item_number-1.0/ep.item_number,		1.0,1.0-function_id/ep.item_number];
+		}
+	}
+}
+		

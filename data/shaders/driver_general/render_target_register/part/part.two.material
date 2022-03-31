@@ -4,25 +4,23 @@
 	/*	camera_id				*/	0
 	/*	center_x,center_y		*/	0	0
 	
-	/*	view_port_number	*/	5
+	/*	view_port_number	*/	4
 
 	/*	view_port	0	*/	-1.0	-1.0	2.0		1.0		0	true	0.0	0.0	0.0	1.0
 	/*	view_port	1	*/	-1.0	-1.0	2.0		1.0		3	false
 	/*	view_port	2	*/	-1.0	-1.0	2.0		1.0		4	false
 	/*	view_port	3	*/	-1.0	-1.0	2.0		1.0		5	false
-	/*	view_port	4	*/	-1.0	-1.0	2.0		1.0		6	false
 
 	
 	/*	parameter_channel_id	*/	2
 	/*	camera_id				*/	0
 	/*	center_x,center_y		*/	0	0
 	
-	/*	view_port_number	*/	5
+	/*	view_port_number	*/	4
 
 	/*	view_port	0	*/	-1.0	0.0		2.0		1.0		0	true	0.0	0.0	0.0	1.0
 	/*	view_port	1	*/	-1.0	0.0		2.0		1.0		3	false
 	/*	view_port	2	*/	-1.0	0.0		2.0		1.0		4	false
 	/*	view_port	3	*/	-1.0	0.0		2.0		1.0		5	false
-	/*	view_port	4	*/	-1.0	0.0		2.0		1.0		6	false
 	
 	

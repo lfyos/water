@@ -1,0 +1,60 @@
+	/* 1name			*/	组件拼装交互界面组件
+	/* 1type			*/	undefined_part
+	/* 1location		*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+	/* 1children number */	6
+	
+		/* 2name		*/	组件拼装功能设计运动组件
+		/* 2type		*/	interface_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+			
+			true			8		0.5		1.0		mount_design_render_data.txt
+			file_program							mount_design_program.txt
+			
+		/* 2child_number	*/	0
+
+		/* 2name		*/	组件拼装拼装编辑组件
+		/* 2type		*/	interface_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+			
+			true			0		0.45	1.8		mount_edit_render_data.txt	
+			file_program							mount_edit_program.txt
+				
+		/* 2child_number	*/	0
+	
+		/* 2name		*/	组件拼装拼装查询组件
+		/* 2type		*/	interface_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+			
+			true			8		0.4		0.1		mount_search_render_data.txt	
+			file_program							mount_search_program.txt
+				
+		/* 2child_number	*/	0
+
+		/* 2name		*/	组件拼装拼装提取组件
+		/* 2type		*/	interface_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+			
+			true			8		0.2		0.1		mount_extract_render_data.txt
+			file_program							mount_extract_program.txt
+				
+		/* 2child_number	*/	0
+
+
+		/* 2name		*/	组件拼装功能控制组件
+		/* 2type		*/	interface_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+			
+			false			9		0.35	1.0		mount_control_panel.png
+			file_program							mount_control_panel.txt
+			
+		/* 2child_number	*/	0
+		
+		/* 2name		*/	组件拼装功能设计组件
+		/* 2type		*/	interface_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+			
+			false			9		0.3		0.6		mount_design_panel.png
+			file_program							mount_design_panel.txt
+			
+		/* 2child_number	*/	0
+		

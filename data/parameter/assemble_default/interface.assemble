@@ -2,13 +2,10 @@
 	/* 1type		*/         undefined_part
 	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 	
-		file_program	initialization\initialization.txt
-		file_program	initialization\system_call_processor.txt
-		file_program	initialization\user_function.txt
-		file_program	initialization\debug.txt
+		file_program	initialization
 	
 		not_part_list		mount		common.assemble
 		not_part_list		mount		background.assemble
-		not_part_list		external_part_driver_mount		menu_part	assemble\interface.assemble
-		
+		not_part_list		mount		menu\root_menu.assemble
+
 	/* 1children number */	0

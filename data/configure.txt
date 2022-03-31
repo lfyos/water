@@ -1,5 +1,7 @@
 /*	local_data_charset														*/		GBK
 /*	network_data_charset													*/		UTF-8
+/*	text_class_charset		text_jar_file_charset							*/		GBK		GBK
+/*	js_class_charset		js_jar_file_charset								*/		UTF-8	UTF-8
 
 /*	user_file_name															*/		users/users.txt
 /*	shader_file_name														*/		shaders/shaders.txt
@@ -17,10 +19,10 @@
 /*	download_start_time_length		unit:nanosecond							*/		 5000000000
 /*	download_minimal_time_length	unit:nanosecond							*/		 2000000000
 
-/*	create_engine_concurrent_number											*/		3
-/*	create_engine_sleep_time_length_scale									*/		1.5
-/*	create_engine_sleep_time_length,unit:macrosecond						*/		1000
-/*	create_engine_max_sleep_time_length									 	*/		60000
+/*	create_engine_concurrent_number											*/		15
+/*	create_engine_sleep_time_length_scale									*/		1.25
+/*	create_engine_sleep_time_length,unit:macrosecond						*/		10000
+/*	create_engine_max_sleep_time_length									 	*/		600000
 
 /*	show_process_bar_interval,	unit:millisecond							*/		1000
 /*	file_buffer_expire_time_length,	unit:second								*/		365000000
@@ -29,9 +31,9 @@
 
 /*	max_engine_kernel_number												*/		300
 /*	max_engine_component_number												*/		3000000
-/*	max_engine_part_face_number												*/		300000
-/*	max_engine_part_edge_number												*/		1000000
 
 /*	max_buffer_object_head_package_length									*/		8000000
 	
 /*	file_download_cors_string												*/		*
+
+/*	process_modifier_times													*/		5

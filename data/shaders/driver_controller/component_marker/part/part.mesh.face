@@ -1,0 +1,14 @@
+/*	body:0	face:0	*/
+
+/*	material			*/	0.0	0.0	0.0	1.0
+/*	vertex number		*/	3
+/*		0.location		*/	-1.0	0.5		0.0		1.0		/*	0.normal	*/	1.0	1.0	1.0	1.0		/*	0.attribute:0	*/	0.0	0.0	0.0	1.0
+/*		1.location		*/	 1.0	0.5		0.0		1.0		/*	1.normal	*/	1.0	1.0	1.0	1.0		/*	1.attribute:0	*/	1.0	0.0	0.0	1.0
+/*		2.location		*/	 1.0	0.575	0.0		1.0		/*	2.normal	*/	1.0	1.0	1.0	1.0		/*	2.attribute:0	*/	1.0	1.0	0.0	1.0
+
+/*	material			*/	0.0	0.0	0.0	1.0
+/*	vertex number		*/	3
+/*		0.location		*/	 1.0	0.575	0.0		1.0		/*	0.normal	*/	1.0	1.0	1.0	1.0		/*	0.attribute:0	*/	1.0	1.0	0.0	1.0
+/*		1.location		*/	-1.0	0.575	0.0		1.0		/*	1.normal	*/	1.0	1.0	1.0	1.0		/*	1.attribute:0	*/	0.0	1.0	0.0	1.0
+/*		2.location		*/	-1.0	0.5		0.0		1.0		/*	2.normal	*/	1.0	1.0	1.0	1.0		/*	2.attribute:0	*/	0.0	0.0	0.0	1.0
+

@@ -1,0 +1,29 @@
+/*	version										*/	2021.07.15
+/*	origin material								*/	0	0	0	0
+/*	default material							*/	1	0	0	0
+/*	origin  vertex_location_extra_data			*/	1
+/*	default vertex_location_extra_data			*/	1
+/*	default vertex_normal_extra_data			*/	1
+/*	max_attribute_number						*/	1
+	/*	texture attribute	*/  0   0   0   1
+
+/*	body_number									*/	1
+	/*  body    0  name							*/	my_body_0				/*	face_number					*/	1
+	
+	/*  body 0 face 0  name						*/	my_body_0_face_0
+	/*  face type								*/	unknown					/*	parameter number			*/	0	/*  parameter	*/
+	/*  total_face_primitive_number				*/  2
+	/*  face_attribute_number					*/  1
+		
+	/*  face_face_box							*/	nobox
+	
+	/*  face loop number						*/	1
+         /*  body 0 face 0 loop 0 edge number	*/  1
+			
+			/*  curve type						*/  unkown					/*	parameter number			*/	0	/*  parameter  */
+			start_effective  0   0   0   1									/*	start_point_material		*/	0	0	0	1
+			end_effective    1   0   0   1									/*	end_point_material			*/	0	0	0	1
+			/*  parameter_point_extra_data		*/	1						/*  parameter_point_material	*/	0	0	0	1
+			/*  box definition					*/	nobox
+			/*  total_edge_primitive_number		*/	6
+			/*  total_point_primitive_number	*/	0

@@ -1,0 +1,39 @@
+function(component_name,component_id,render)
+{
+	render.component_event_processor[component_id]={
+		pickupmouseselect	:	function(event,component_id,render)
+		{
+			var ep=render.component_event_processor[component_id];
+			var function_id=Math.floor((1.0-ep.y)*7.0);
+
+			switch(function_id){
+			case 0:
+				render.get_component_event_processor("组件拼装功能设计运动组件").active_list();
+				break;
+			case 1:
+				render.get_component_event_processor("组件拼装拼装编辑组件").active_list(true);
+				break;
+			case 2:
+				window.open(
+					render.create_component_request_string(
+							"movement_manager","all",[["operation","design"],["move_method","jason"]]),
+					"_blank");
+				break;
+			case 3:
+				render.call_server_component("movement_manager","all",[["operation","design"],["move_method","save"]]);
+				break;
+			case 4:
+				render.call_server_component("movement_manager","all",[["operation","design"],["move_method","reload"]]);
+				break;
+			case 5:
+				render.call_server_component("movement_manager","all",[["operation","design"],["move_method","retreat"]]);
+				break;
+			default:
+				render.system_call_processor.set_menu_show("交互界面主菜单");
+				function_id=6;
+				break;
+			}
+			ep.hightlight=[0,1.0-function_id/7.0-1.0/7.0,1.0,1.0-function_id/7.0];
+		}
+	}
+}

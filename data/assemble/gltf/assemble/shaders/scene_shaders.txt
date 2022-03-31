@@ -1,1 +1,1 @@
-driver_gltf.extended_render_driver		render.list
+gltf	driver_gltf.extended_render_driver		render.list

@@ -1,0 +1,84 @@
+/* 1name		*/	列表功能根组件
+/* 1type		*/	undefined_part
+/* 1location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+/* 1child_number	*/	3
+
+	/* 2name		*/	列表功能选择组件
+	/* 2type		*/	interface_part
+	/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+					
+		false 	9	0.2		1.75	operate_list_menu.png
+	
+		file_program	operate_list_menu.txt
+	
+	/* 2child_number	*/	0
+
+	/* 2name		*/	列表功能显示组件
+	/* 2type		*/	interface_part
+	/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+					
+		true	1	0.25	2.0		collector_display_render_data.txt
+		
+		file_program	collector_display_render_program.txt
+		
+	/* 2child_number	*/	0
+	
+	/* 2name		*/	列表功能操作组件
+	/* 2type		*/	interface_part
+	/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+					
+		false 	0	0.2		0.6		operate.png
+		
+		token_program	列表功能操作组件
+					
+		function(component_name,component_id,render)
+		{
+			render.component_event_processor[component_id]=
+			{
+				pickupmouseselect		:	function(event,component_id,render)
+				{
+					var ep=render.component_event_processor[component_id];
+					var display_ep=render.component_event_processor[
+							render.get_component_object_by_component_name("列表功能显示组件").component_id];
+					var function_id=Math.floor((1.0-ep.y)*6.0);
+					
+					switch(function_id){
+					case 0:
+						render.system_call_processor.collector_list_select_list(display_ep.list_id);
+						break;
+					case 1:
+						render.system_call_processor.collector_list_unselect_list(display_ep.list_id);
+						break;
+					case 2:
+						render.system_call_processor.collector_list_swap_list(display_ep.list_id);
+						break;
+					case 3:
+						render.system_call_processor.collector_list_top_list(display_ep.list_id);
+						break;
+					case 4:
+						if(confirm("删除列表?"))
+							render.system_call_processor.collector_list_delete_list(display_ep.list_id);
+						break;
+					case 5:
+						var title,description;
+						for(var i=0,ni=display_ep.collector_list_object.length;i<ni;i++)
+							if(display_ep.collector_list_object[i].list_id==display_ep.list_id){
+								if((title=prompt("请输入列表标题",display_ep.collector_list_object[i].title))==null)
+									break;
+								if((description=prompt("请输入列表描述",display_ep.collector_list_object[i].description))==null)
+									break;
+								render.system_call_processor.collector_list_title_list(display_ep.list_id,title,description);
+								break;
+							}
+						break;
+					default:
+						return;
+					}
+					render.system_call_processor.set_menu_hide(component_id);
+				}
+			}
+		}
+		列表功能操作组件
+
+	/* 2child_number	*/	0
+	

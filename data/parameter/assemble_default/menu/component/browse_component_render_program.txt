@@ -1,0 +1,151 @@
+function(component_name,component_id,render)
+{
+	render.component_event_processor[component_id]={
+		browse_type_flag			:	true,
+		update_flag					:	false,
+		component_id				:	-1,
+		instance_initialize_data	:	null,
+		
+		active_list					:	function()
+		{
+			render.call_server_component("manipulator_component","all",[["event_method","last_component"]],
+				function(response_data,render)
+				{
+					var ep=render.component_event_processor[component_id];
+					ep.browse_type_flag=true;
+					ep.update_flag=false;					
+					if((ep.component_id=response_data)>=0)
+						render.system_call_processor.set_menu_show(component_id);
+				});
+		},
+		pickupmouseselect			:	function(event,component_id,render)
+		{
+			var ep=render.component_event_processor[component_id];
+			if(ep.instance_initialize_data==null)
+				return;
+			if(typeof(ep.instance_initialize_data)!="object")
+				return;
+			var number=ep.instance_initialize_data.canvas_height/ep.instance_initialize_data.canvas_step;
+			var p,function_id=Math.floor((1.0-ep.y)*number);
+
+			if(function_id<0)
+				return;
+			switch(function_id){
+			case 0:
+				if(ep.component_id<0)
+					return;
+				if(ep.component_id>=render.component_array_sorted_by_id.length)
+					return;
+				if((p=render.component_array_sorted_by_id[ep.component_id].component_parent)==null)
+					return;
+
+				ep.browse_type_flag=true;
+				ep.update_flag=false;
+				ep.component_id=p.component_id;
+				
+				render.system_call_processor.select_component("select_component",[["component_id",ep.component_id]]);
+				break;
+			case 1:
+				ep.browse_type_flag^=true; 
+				ep.update_flag=false;
+				render.system_call_processor.select_component("swap_component",[["component_id",ep.component_id]]);
+				break;
+			default:
+				if(ep.browse_type_flag){
+					if(ep.component_id<0)
+						return;
+					if(ep.component_id>=render.component_array_sorted_by_id.length)
+						return;
+					if((p=render.component_array_sorted_by_id[ep.component_id].component_children)==null)
+						return;
+					if((function_id-2)>=p.length)
+						return;
+					var  my_component_id=ep.component_id,child_component_id=p[function_id-2].component_id;
+					ep.update_flag=false;
+					ep.component_id=child_component_id;
+					
+					render.system_call_processor.select_component("clear_component",[["component_id",my_component_id]],
+						function(response_data,render)
+						{
+							render.system_call_processor.select_component("select_component",[["component_id",child_component_id]]);
+						});
+					break;
+				}
+				return;
+			}
+			render.call_server_component("camera_operation_component","all",
+					[["operation","locate"],["component_id",ep.component_id],["scale",1.0],
+					 ["mandatory_movement","false"],["mandatory_scale","false"]]);
+			return;
+		},
+		
+		update_canvas_texture		:	function(render_id,part_id,buffer_id,
+			component_id,driver_id,instance_initialize_data,part_material,shader_data,render)
+		{
+			var ep=render.component_event_processor[component_id];
+			ep.instance_initialize_data=instance_initialize_data;
+			if(ep.update_flag)
+				return false;
+			ep.update_flag=true;
+			
+			render.text_canvas.width	=instance_initialize_data.canvas_width;
+			render.text_canvas.height	=instance_initialize_data.canvas_height;
+		
+			render.text_2dcontext.fillStyle=instance_initialize_data.backgroundStyle;
+			render.text_2dcontext.fillRect(0,0,render.text_canvas.width,render.text_canvas.height);
+					
+			render.text_2dcontext.fillStyle		=instance_initialize_data.fillStyle;
+			render.text_2dcontext.font			=instance_initialize_data.font;
+			render.text_2dcontext.textBaseline	=instance_initialize_data.textBaseline;
+			render.text_2dcontext.textAlign		=instance_initialize_data.textAlign;
+			
+			var str,pos,p=render.component_array_sorted_by_id[ep.component_id];
+			if(p.component_parent!=null){
+				str=p.component_parent.component_name;
+				if((pos=Math.round((render.text_canvas.width-render.text_2dcontext.measureText(str).width)/2.0))<0)
+					pos=0;
+				render.text_2dcontext.fillText(str,pos,0);
+			}
+			str_len=render.text_2dcontext.measureText(p.component_name).width;
+			if((pos=Math.round((render.text_canvas.width-str_len)/2.0))<0)
+				pos=0;
+			render.text_2dcontext.fillText(p.component_name,pos,instance_initialize_data.canvas_step);
+			
+			if(ep.browse_type_flag){
+				for(var i=0,ni=p.component_children.length;i<ni;i++){
+					if((i+2)>=(render.text_canvas.height/instance_initialize_data.canvas_step))
+						break;
+					str=p.component_children[i].component_name;
+					render.text_2dcontext.fillText(str,0,instance_initialize_data.canvas_step*(i+2));
+				}
+			}else{
+				p=render.component_render_id_and_part_id[ep.component_id];
+				pos=instance_initialize_data.canvas_step;
+				for(var driver_id=0,driver_number=p.length;driver_id<driver_number;driver_id++){
+					var render_id=p[driver_id][0],part_id=p[driver_id][1],buffer_id=p[driver_id][2];
+					var permanent_render_id	=render.permanent_render_part_id[render_id][part_id].permanent_render_id;
+					var permanent_part_id	=render.permanent_render_part_id[render_id][part_id].permanent_part_id;
+					var part_information	=render.part_information[render_id][part_id].information;
+					var part_property		=render.part_information[render_id][part_id].property;
+					
+					str=(driver_id+1)+".";
+					if(part_property.normal_part_flag)
+						str+="ÆÕÍ¨Áã¼þ:";
+					if(part_property.bottom_box_flag)
+						str+="µ×²ã°üÎ§ºÐ:";
+					if(part_property.top_box_flag)
+						str+="¶¥²ã°üÎ§ºÐ:";
+					str+="render_id:"+permanent_render_id+"/"+render_id;
+					str+=",part_id:"+permanent_part_id+"/"+part_id;
+					
+					render.text_2dcontext.fillText(str,0,pos+=instance_initialize_data.canvas_step);
+					render.text_2dcontext.fillText(part_information.user_name,
+						instance_initialize_data.canvas_step,pos+=instance_initialize_data.canvas_step);
+					render.text_2dcontext.fillText(part_information.system_name,
+						instance_initialize_data.canvas_step,pos+=instance_initialize_data.canvas_step);
+				}
+			}
+			return true;
+		}
+	}
+}

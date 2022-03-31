@@ -12,3 +12,11 @@ render_target_register_part_two
 	part\part.description
 	part\part.mp3
 	
+	
+render_target_register_part_five
+	render_target_register_part_five
+	part\part.mesh
+	part\part.five.material
+	part\part.description
+	part\part.mp3
+	
