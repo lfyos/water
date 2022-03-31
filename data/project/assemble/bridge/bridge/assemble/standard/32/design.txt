@@ -1,0 +1,39 @@
+
+no_tag
+基本杆件\弦杆_编号_501_原编号_1.SLDPRT
+两片梁32.00米-1/上弦501弦杆及四个8甲立杆的组合-3/两根501构成的上弦杆及251号加强支杆-1/两个501弦杆的组合-1/弦杆_编号_501_原编号_1-1
+
+/*	name			*/	no_tag
+/*	audio			*/	no_sound
+/*	description		*/	no_description
+/*	sequence/parallel	*/	sequence
+/*	direction		*/	no_direction
+/*	camera scale		*/	upper	1.0
+/*	children number		*/	0
+
+component_start
+
+        两片梁32.00米-1/上弦501弦杆及四个8甲立杆的组合-3/两根501构成的上弦杆及251号加强支杆-1/两个501弦杆的组合-1/弦杆_编号_501_原编号_1-1
+        
+component_end
+
+
+/*	start state	*/	invisible
+/*	end state	*/	visible
+/*	step number	*/	2
+
+    /*	time length	*/	 1.0E9
+    /*	parameter number */	 0	/* parameter */	
+    /*	location	*/	 6.123233995736766E-17 0.0 -1.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 6.123233995736766E-17 0.0 0.0 1.0 0.0 1.0 
+    
+    /*	time length	*/	 1.0E9
+    /*	parameter number */	 0	/* parameter */	
+    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 1.0 0.0 1.0 
+    
+    /*	time length	*/	 1.0E9
+    /*	parameter number */	 0	/* parameter */	
+    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+    
+
+/*	match number	*/	0
+

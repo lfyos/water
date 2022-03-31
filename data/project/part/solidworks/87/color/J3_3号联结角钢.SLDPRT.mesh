@@ -1,0 +1,1924 @@
+/*	version								*/	2021.07.15
+/*	origin material						*/	0	0	0	1
+/*	default material					*/	0.184314	0.533333	1	0
+/*	origin  vertex_location_extra_data	*/	1
+/*	default vertex_location_extra_data	*/	1
+/*	default vertex_normal_extra_data	*/	1
+/*	max_attribute_number				*/	1
+/*		0.attribute:	*/	0.78673	0.547449	0.0	1.0
+
+/*	body_number		*/	1
+	/*  body    0  name    */  Extrude5	/*  face_number */	31
+	/*  body 0 face 0  name	*/	Extrude5_0_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	-1.0	0.0	-0.0575	0.012	0.195
+	/*  total_face_primitive_number	*/  118
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0575	0.012	0.012	0.4175	0.012	0.195
+
+	/*  loop number		*/	5
+		/*  body:0 face:0 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.371732	0.012	0.148126	0.0	1.0	-0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.356261	0.012	0.132638	0.387229	0.012	0.163626
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:0 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.301586	0.012	0.0917382	0.0	1.0	-0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.286115	0.012	0.0762511	0.317083	0.012	0.107238
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:0 loop 2 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0584137	0.012	0.0917382	-0.0	-1.0	0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0429169	0.012	0.0762511	0.0738848	0.012	0.107238
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:0 loop 3 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.0117323	0.012	0.148126	-0.0	-1.0	0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0272291	0.012	0.132638	0.0037388	0.012	0.163626
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:0 loop 4 edge number	*/	16
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.012	0.183	-0.0	-0.0	-1.0
+			start_effective		0.236	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.236	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.236	0.012	0.012	0.236	0.012	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.012	0.183	1.0	-4.62593E-15	-0.0
+			start_effective		0.224	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.236	0.012	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.012	0.183	0.236	0.012	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.224	0.012	0.183	-0.0	-0.0	-1.0
+			start_effective		0.224	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.012	0.012	0.224	0.012	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	0.012	0.012	-1.0	-0.0	-0.0
+			start_effective		0.224	0.012	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.136	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.136	0.012	0.012	0.224	0.012	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.136	0.012	0.183	-0.0	-0.0	-1.0
+			start_effective		0.136	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.136	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.136	0.012	0.012	0.136	0.012	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.5   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.124	0.012	0.183	1.0	0.0	0.0
+			start_effective		0.124	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.136	0.012	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.012	0.183	0.136	0.012	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.6   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.124	0.012	0.183	-0.0	-0.0	-1.0
+			start_effective		0.124	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.012	0.012	0.124	0.012	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.7   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	0.012	0.012	-1.0	-0.0	-0.0
+			start_effective		0.124	0.012	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-4.16334E-17	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-5.55112E-17	0.012	0.012	0.124	0.012	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.8   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.00594187	0.012	0.00683315	0.754606	0.0	-0.656179
+			start_effective		-0.0575	0.012	0.062	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-4.16334E-17	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	0.012	0.012	-2.34188E-17	0.012	0.062
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.9   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	0.012	0.195	-0.0	-0.0	-1.0
+			start_effective		-0.0575	0.012	0.165	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0575	0.012	0.062	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	0.012	0.062	-0.0575	0.012	0.165
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.10   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.11125	0.012	0.11125	-0.707107	0.0	-0.707107
+			start_effective		-0.0275	0.012	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0575	0.012	0.165	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	0.012	0.165	-0.0275	0.012	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.11   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	0.012	0.195	-1.0	-0.0	-0.0
+			start_effective		0.3875	0.012	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0275	0.012	0.195	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0275	0.012	0.195	0.3875	0.012	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.12   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.29125	0.012	0.29125	0.707107	0.0	-0.707107
+			start_effective		0.3875	0.012	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.4175	0.012	0.165	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.3875	0.012	0.165	0.4175	0.012	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.13   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.4175	0.012	0.195	-0.0	-0.0	-1.0
+			start_effective		0.4175	0.012	0.165	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.4175	0.012	0.062	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.4175	0.012	0.062	0.4175	0.012	0.165
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.14   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.149064	0.012	-0.171423	-0.754606	0.0	-0.656179
+			start_effective		0.4175	0.012	0.062	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.36	0.012	0.012	0.4175	0.012	0.062
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.15   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	0.012	0.012	-1.0	-0.0	-0.0
+			start_effective		0.36	0.012	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.236	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.236	0.012	0.012	0.36	0.012	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 1  name	*/	Extrude5_1_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	-1.0	0.0	0.14	0.012
+	/*  total_face_primitive_number	*/  88
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-4.16334E-17	0.012	0.012	0.36	0.14	0.012
+
+	/*  loop number		*/	4
+		/*  body:0 face:1 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.28	0.095	0.012	0.0	0.0	1.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.264513	0.0795289	0.012	0.2955	0.110497	0.012
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:1 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.08	0.095	0.012	0.0	0.0	1.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0645128	0.0795289	0.012	0.0955	0.110497	0.012
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:1 loop 2 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.18	0.095	0.012	0.0	0.0	1.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.164513	0.0795289	0.012	0.1955	0.110497	0.012
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:1 loop 3 edge number	*/	12
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.128	0.012	1.67491E-15	1.0	-0.0
+			start_effective		0.236	0.012	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.236	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.236	0.012	0.012	0.236	0.128	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	0.012	0.012	-1.0	-0.0	-0.0
+			start_effective		0.36	0.012	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.236	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.236	0.012	0.012	0.36	0.012	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.36	0.0	0.012	0.0	1.0	0.0
+			start_effective		0.36	0.012	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.14	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.36	0.012	0.012	0.36	0.14	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.14	0.012	-1.0	-0.0	-0.0
+			start_effective		0.36	0.14	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.14	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.14	0.012	0.36	0.14	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	0.012	-0.0	-1.0	-0.0
+			start_effective		0.0	0.14	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-4.16334E-17	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-4.16334E-17	0.012	0.012	0.0	0.14	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.5   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	0.012	0.012	-1.0	-0.0	-0.0
+			start_effective		0.124	0.012	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-4.16334E-17	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-5.55112E-17	0.012	0.012	0.124	0.012	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.6   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.124	0.128	0.012	1.19636E-16	-1.0	0.0
+			start_effective		0.124	0.128	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.012	0.012	0.124	0.128	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.7   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.124	0.128	0.012	-1.0	-0.0	-0.0
+			start_effective		0.136	0.128	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.128	0.012	0.136	0.128	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.8   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.136	0.128	0.012	-0.0	1.0	-0.0
+			start_effective		0.136	0.012	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.136	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.136	0.012	0.012	0.136	0.128	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.9   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	0.012	0.012	-1.0	-0.0	-0.0
+			start_effective		0.224	0.012	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.136	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.136	0.012	0.012	0.224	0.012	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.10   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.224	0.128	0.012	-1.67491E-15	-1.0	0.0
+			start_effective		0.224	0.128	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.012	0.012	0.224	0.128	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.11   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.128	0.012	-1.0	0.0	0.0
+			start_effective		0.236	0.128	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.128	0.012	0.236	0.128	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 2  name	*/	Extrude5_2_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	1.0	0.0	0.0	0.0	0.012
+	/*  total_face_primitive_number	*/  112
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0575	-7.70372E-34	0.0	0.4175	0.0	0.195
+
+	/*  loop number		*/	5
+		/*  body:0 face:2 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.371732	0.0	0.148126	0.0	1.0	0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.356261	0.0	0.132638	0.387229	0.0	0.163626
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:2 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.301586	0.0	0.0917382	0.0	1.0	0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.286115	0.0	0.0762511	0.317083	0.0	0.107238
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:2 loop 2 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0584137	0.0	0.0917382	-0.0	-1.0	-0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0429169	0.0	0.0762511	0.0738848	0.0	0.107238
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:2 loop 3 edge number	*/	10
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	-7.70372E-34	0.195	-0.0	-0.0	-1.0
+			start_effective		-0.0575	0.0	0.165	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0575	-7.70372E-34	0.062	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	-7.70372E-34	0.062	-0.0575	0.0	0.165
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	5.69144E-19	0.0	0.012	0.754606	0.0	-0.656179
+			start_effective		-0.0575	-7.70372E-34	0.062	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-4.16334E-17	0.0	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	-7.70372E-34	0.012	-2.34622E-17	0.0	0.062
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	0.012	-0.0	-0.0	-1.0
+			start_effective		-4.16334E-17	0.0	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-4.16334E-17	0.0	0.0	0.0	0.0	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	0.0	1.0	0.0	0.0
+			start_effective		0.0	0.0	0.0	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.0	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.0	0.0	0.36	0.0	0.0
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.36	0.0	0.012	-0.0	-0.0	-1.0
+			start_effective		0.36	0.0	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.0	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.36	0.0	0.0	0.36	0.0	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.5   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.155005	0.0	-0.166256	-0.754606	0.0	-0.656179
+			start_effective		0.4175	0.0	0.062	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.0	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.36	0.0	0.012	0.4175	0.0	0.062
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.6   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.4175	0.0	0.195	-0.0	-0.0	-1.0
+			start_effective		0.4175	0.0	0.165	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.4175	0.0	0.062	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.4175	0.0	0.062	0.4175	0.0	0.165
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.7   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.28525	0.0	0.29725	0.707107	0.0	-0.707107
+			start_effective		0.3875	0.0	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.4175	0.0	0.165	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.3875	0.0	0.165	0.4175	0.0	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.8   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	-7.70372E-34	0.195	1.0	1.62184E-33	0.0
+			start_effective		-0.0275	0.0	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.3875	0.0	0.195	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0275	-7.21717E-34	0.195	0.3875	0.0	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.9   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.10525	0.0	0.11725	-0.707107	0.0	-0.707107
+			start_effective		-0.0275	0.0	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0575	0.0	0.165	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	0.0	0.165	-0.0275	0.0	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+		/*  body:0 face:2 loop 4 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.0117323	0.0	0.148126	-0.0	-1.0	-0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0272291	0.0	0.132638	0.0037388	0.0	0.163626
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 3  name	*/	Extrude5_3_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-1.0	0.0	0.0	0.4175	0.012	0.195
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.4175	0.0	0.062	0.4175	0.012	0.165
+
+	/*  loop number		*/	1
+		/*  body:0 face:3 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.4175	-0.171	0.165	-0.0	1.0	-0.0
+			start_effective		0.4175	0.0	0.165	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.4175	0.012	0.165	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.4175	0.0	0.165	0.4175	0.012	0.165
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.4175	0.0	0.195	-0.0	-0.0	-1.0
+			start_effective		0.4175	0.0	0.165	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.4175	0.0	0.062	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.4175	0.0	0.062	0.4175	0.0	0.165
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.4175	-0.171	0.062	-0.0	1.0	-0.0
+			start_effective		0.4175	0.0	0.062	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.4175	0.012	0.062	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.4175	0.0	0.062	0.4175	0.012	0.062
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.4175	0.012	0.195	-0.0	-0.0	-1.0
+			start_effective		0.4175	0.012	0.165	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.4175	0.012	0.062	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.4175	0.012	0.062	0.4175	0.012	0.165
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 4  name	*/	Extrude5_4_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-0.0	0.0	1.0	-0.0575	-7.70372E-34	0.195
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0275	0.0	0.195	0.3875	0.012	0.195
+
+	/*  loop number		*/	1
+		/*  body:0 face:4 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0275	-0.171	0.195	-0.0	1.0	-0.0
+			start_effective		-0.0275	0.0	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0275	0.012	0.195	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0275	0.0	0.195	-0.0275	0.012	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	-7.70372E-34	0.195	1.0	1.62184E-33	0.0
+			start_effective		-0.0275	0.0	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.3875	0.0	0.195	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0275	-7.21717E-34	0.195	0.3875	0.0	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.3875	-7.70372E-34	0.195	0.0	1.0	0.0
+			start_effective		0.3875	0.0	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.3875	0.012	0.195	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.3875	0.0	0.195	0.3875	0.012	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	0.012	0.195	-1.0	-0.0	-0.0
+			start_effective		0.3875	0.012	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0275	0.012	0.195	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0275	0.012	0.195	0.3875	0.012	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 5  name	*/	Extrude5_5_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	-1.0	0.0	0.14	0.0
+	/*  total_face_primitive_number	*/  80
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.0	0.0	0.0	0.36	0.14	0.0
+
+	/*  loop number		*/	4
+		/*  body:0 face:5 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.18	0.095	0.0	0.0	0.0	1.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.164513	0.0795289	0.0	0.1955	0.110497	0.0
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:5 loop 1 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	0.0	-0.0	-1.0	-0.0
+			start_effective		0.0	0.14	0.0	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.0	0.0	0.0	0.14	0.0
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.14	0.0	-1.0	-0.0	-0.0
+			start_effective		0.36	0.14	0.0	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.14	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.14	0.0	0.36	0.14	0.0
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.36	0.0	0.0	0.0	1.0	0.0
+			start_effective		0.36	0.0	0.0	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.14	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.36	0.0	0.0	0.36	0.14	0.0
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	0.0	1.0	0.0	0.0
+			start_effective		0.0	0.0	0.0	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.0	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.0	0.0	0.36	0.0	0.0
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+		/*  body:0 face:5 loop 2 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.08	0.095	0.0	0.0	0.0	1.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0645128	0.0795289	0.0	0.0955	0.110497	0.0
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:5 loop 3 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.28	0.095	0.0	0.0	0.0	1.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.264513	0.0795289	0.0	0.2955	0.110497	0.0
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 6  name	*/	Extrude5_6_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	1.0	0.0	0.0	0.0	0.0	0.012
+	/*  total_face_primitive_number	*/  3
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-4.16334E-17	0.0	0.0	0.0	0.14	0.012
+
+	/*  loop number		*/	1
+		/*  body:0 face:6 loop 0 edge number	*/	5
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	0.0	-0.0	-1.0	-0.0
+			start_effective		0.0	0.14	0.0	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.0	0.0	0.0	0.14	0.0
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	0.012	-0.0	-0.0	-1.0
+			start_effective		-4.16334E-17	0.0	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.0	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-4.16334E-17	0.0	0.0	0.0	0.0	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	0.012	-0.0	-1.0	-0.0
+			start_effective		-4.16334E-17	0.012	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-4.16334E-17	0.0	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-4.16334E-17	0.0	0.012	0.0	0.012	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	0.012	-0.0	-1.0	-0.0
+			start_effective		0.0	0.14	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-4.16334E-17	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-4.16334E-17	0.012	0.012	0.0	0.14	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.14	0.012	-0.0	-0.0	-1.0
+			start_effective		0.0	0.14	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.14	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.14	0.0	0.0	0.14	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 7  name	*/	Extrude5_7_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-1.0	0.0	0.0	0.36	0.0	0.012
+	/*  total_face_primitive_number	*/  3
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.36	0.0	0.0	0.36	0.14	0.012
+
+	/*  loop number		*/	1
+		/*  body:0 face:7 loop 0 edge number	*/	5
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.36	0.0	0.0	0.0	1.0	0.0
+			start_effective		0.36	0.0	0.0	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.14	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.36	0.0	0.0	0.36	0.14	0.0
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.36	0.14	0.012	-0.0	-0.0	-1.0
+			start_effective		0.36	0.14	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.14	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.36	0.14	0.0	0.36	0.14	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.36	0.0	0.012	0.0	1.0	0.0
+			start_effective		0.36	0.012	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.14	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.36	0.012	0.012	0.36	0.14	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.36	0.0	0.012	0.0	1.0	0.0
+			start_effective		0.36	0.0	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.36	0.0	0.012	0.36	0.012	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.36	0.0	0.012	-0.0	-0.0	-1.0
+			start_effective		0.36	0.0	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.0	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.36	0.0	0.0	0.36	0.0	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 8  name	*/	Extrude5_8_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	-1.0	0.0	0.0	0.14	0.012
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.0	0.14	0.0	0.36	0.14	0.012
+
+	/*  loop number		*/	1
+		/*  body:0 face:8 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.14	0.0	-1.0	-0.0	-0.0
+			start_effective		0.36	0.14	0.0	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.14	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.14	0.0	0.36	0.14	0.0
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.14	0.012	-0.0	-0.0	-1.0
+			start_effective		0.0	0.14	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.14	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.14	0.0	0.0	0.14	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.14	0.012	-1.0	-0.0	-0.0
+			start_effective		0.36	0.14	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.0	0.14	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0	0.14	0.012	0.36	0.14	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.36	0.14	0.012	-0.0	-0.0	-1.0
+			start_effective		0.36	0.14	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.14	0.0	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.36	0.14	0.0	0.36	0.14	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 9  name	*/	Extrude5_9_face
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	0.08	0.095	0.012	-0.0	-0.0	-1.0	0.0155
+	/*  total_face_primitive_number	*/  48
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.0645	0.0795	0.0	0.0955	0.1105	0.012
+
+	/*  loop number		*/	2
+		/*  body:0 face:9 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.08	0.095	0.012	0.0	0.0	1.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0645128	0.0795289	0.012	0.0955	0.110497	0.012
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:9 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.08	0.095	0.0	0.0	0.0	1.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0645128	0.0795289	0.0	0.0955	0.110497	0.0
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 10  name	*/	Extrude5_10_face
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	0.18	0.095	0.012	-0.0	-0.0	-1.0	0.0155
+	/*  total_face_primitive_number	*/  48
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.1645	0.0795	0.0	0.1955	0.1105	0.012
+
+	/*  loop number		*/	2
+		/*  body:0 face:10 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.18	0.095	0.012	0.0	0.0	1.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.164513	0.0795289	0.012	0.1955	0.110497	0.012
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:10 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.18	0.095	0.0	0.0	0.0	1.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.164513	0.0795289	0.0	0.1955	0.110497	0.0
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 11  name	*/	Extrude5_11_face
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	0.28	0.095	0.012	-0.0	-0.0	-1.0	0.0155
+	/*  total_face_primitive_number	*/  48
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.2645	0.0795	0.0	0.2955	0.1105	0.012
+
+	/*  loop number		*/	2
+		/*  body:0 face:11 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.28	0.095	0.012	0.0	0.0	1.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.264513	0.0795289	0.012	0.2955	0.110497	0.012
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:11 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.28	0.095	0.0	0.0	0.0	1.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.264513	0.0795289	0.0	0.2955	0.110497	0.0
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 12  name	*/	Extrude5_12_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	1.0	0.0	-0.0	-0.0575	0.012	0.195
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0575	-7.70372E-34	0.062	-0.0575	0.012	0.165
+
+	/*  loop number		*/	1
+		/*  body:0 face:12 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	0.012	0.195	-0.0	-0.0	-1.0
+			start_effective		-0.0575	0.012	0.165	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0575	0.012	0.062	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	0.012	0.062	-0.0575	0.012	0.165
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	0.012	0.062	0.0	-1.0	0.0
+			start_effective		-0.0575	0.012	0.062	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0575	-7.70372E-34	0.062	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	-7.70372E-34	0.062	-0.0575	0.012	0.062
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	-7.70372E-34	0.195	-0.0	-0.0	-1.0
+			start_effective		-0.0575	0.0	0.165	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0575	-7.70372E-34	0.062	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	-7.70372E-34	0.062	-0.0575	0.0	0.165
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	0.012	0.165	0.0	1.0	0.0
+			start_effective		-0.0575	0.0	0.165	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0575	0.012	0.165	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	0.0	0.165	-0.0575	0.012	0.165
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 13  name	*/	Extrude5_13_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.656179	0.0	-0.754606	0.149064	-0.171	-0.171423
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.36	0.0	0.012	0.4175	0.012	0.062
+
+	/*  loop number		*/	1
+		/*  body:0 face:13 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.155005	0.0	-0.166256	-0.754606	0.0	-0.656179
+			start_effective		0.4175	0.0	0.062	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.0	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.36	0.0	0.012	0.4175	0.0	0.062
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.36	0.0	0.012	0.0	1.0	0.0
+			start_effective		0.36	0.0	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.36	0.0	0.012	0.36	0.012	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.149064	0.012	-0.171423	-0.754606	0.0	-0.656179
+			start_effective		0.4175	0.012	0.062	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.36	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.36	0.012	0.012	0.4175	0.012	0.062
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.4175	-0.171	0.062	-0.0	1.0	-0.0
+			start_effective		0.4175	0.0	0.062	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.4175	0.012	0.062	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.4175	0.0	0.062	0.4175	0.012	0.062
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 14  name	*/	Extrude5_14_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.707107	0.0	0.707107	0.29125	-0.171	0.29125
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.3875	0.0	0.165	0.4175	0.012	0.195
+
+	/*  loop number		*/	1
+		/*  body:0 face:14 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.28525	0.0	0.29725	0.707107	0.0	-0.707107
+			start_effective		0.3875	0.0	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.4175	0.0	0.165	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.3875	0.0	0.165	0.4175	0.0	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.4175	-0.171	0.165	-0.0	1.0	-0.0
+			start_effective		0.4175	0.0	0.165	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.4175	0.012	0.165	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.4175	0.0	0.165	0.4175	0.012	0.165
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.29125	0.012	0.29125	0.707107	0.0	-0.707107
+			start_effective		0.3875	0.012	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.4175	0.012	0.165	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.3875	0.012	0.165	0.4175	0.012	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.3875	-7.70372E-34	0.195	0.0	1.0	0.0
+			start_effective		0.3875	0.0	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.3875	0.012	0.195	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.3875	0.0	0.195	0.3875	0.012	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 15  name	*/	Extrude5_15_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.707107	0.0	-0.707107	-0.11125	-0.171	0.11125
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0575	0.0	0.165	-0.0275	0.012	0.195
+
+	/*  loop number		*/	1
+		/*  body:0 face:15 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0275	-0.171	0.195	-0.0	1.0	-0.0
+			start_effective		-0.0275	0.0	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0275	0.012	0.195	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0275	0.0	0.195	-0.0275	0.012	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.11125	0.012	0.11125	-0.707107	0.0	-0.707107
+			start_effective		-0.0275	0.012	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0575	0.012	0.165	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	0.012	0.165	-0.0275	0.012	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	0.012	0.165	0.0	1.0	0.0
+			start_effective		-0.0575	0.0	0.165	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0575	0.012	0.165	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	0.0	0.165	-0.0575	0.012	0.165
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.10525	0.0	0.11725	-0.707107	0.0	-0.707107
+			start_effective		-0.0275	0.0	0.195	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0575	0.0	0.165	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	0.0	0.165	-0.0275	0.0	0.195
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 16  name	*/	Extrude5_16_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.656179	0.0	0.754606	0.00594187	-0.171	0.00683315
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0575	-7.70372E-34	0.012	-4.16334E-17	0.012	0.062
+
+	/*  loop number		*/	1
+		/*  body:0 face:16 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	-0.0575	0.012	0.062	0.0	-1.0	0.0
+			start_effective		-0.0575	0.012	0.062	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-0.0575	-7.70372E-34	0.062	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	-7.70372E-34	0.062	-0.0575	0.012	0.062
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.00594187	0.012	0.00683315	0.754606	0.0	-0.656179
+			start_effective		-0.0575	0.012	0.062	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-4.16334E-17	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	0.012	0.012	-2.34188E-17	0.012	0.062
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.0	0.0	0.012	-0.0	-1.0	-0.0
+			start_effective		-4.16334E-17	0.012	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-4.16334E-17	0.0	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-4.16334E-17	0.0	0.012	0.0	0.012	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	5.69144E-19	0.0	0.012	0.754606	0.0	-0.656179
+			start_effective		-0.0575	-7.70372E-34	0.062	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		-4.16334E-17	0.0	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0575	-7.70372E-34	0.012	-2.34622E-17	0.0	0.062
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 17  name	*/	Extrude5_17_face
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	0.0584137	-0.171	0.0917382	-0.0	1.0	-0.0	0.0155
+	/*  total_face_primitive_number	*/  48
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.0429137	0.0	0.0762382	0.0739136	0.012	0.107238
+
+	/*  loop number		*/	2
+		/*  body:0 face:17 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0584137	0.012	0.0917382	-0.0	-1.0	0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0429169	0.012	0.0762511	0.0738848	0.012	0.107238
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:17 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.0584137	0.0	0.0917382	-0.0	-1.0	-0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.0429169	0.0	0.0762511	0.0738848	0.0	0.107238
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 18  name	*/	Extrude5_18_face
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	-0.0117323	-0.171	0.148126	-0.0	1.0	-0.0	0.0155
+	/*  total_face_primitive_number	*/  48
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	-0.0272323	0.0	0.132626	0.00376768	0.012	0.163626
+
+	/*  loop number		*/	2
+		/*  body:0 face:18 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.0117323	0.012	0.148126	-0.0	-1.0	0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0272291	0.012	0.132638	0.0037388	0.012	0.163626
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:18 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	-0.0117323	0.0	0.148126	-0.0	-1.0	-0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	-0.0272291	0.0	0.132638	0.0037388	0.0	0.163626
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 19  name	*/	Extrude5_19_face
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	0.301586	-0.171	0.0917382	-0.0	1.0	-0.0	0.0155
+	/*  total_face_primitive_number	*/  48
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.286086	0.0	0.0762382	0.317086	0.012	0.107238
+
+	/*  loop number		*/	2
+		/*  body:0 face:19 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.301586	0.012	0.0917382	0.0	1.0	-0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.286115	0.012	0.0762511	0.317083	0.012	0.107238
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:19 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.301586	0.0	0.0917382	0.0	1.0	0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.286115	0.0	0.0762511	0.317083	0.0	0.107238
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 20  name	*/	Extrude5_20_face
+	/*  face type	*/	cylinder	/*  parameter number	*/	7	/*  parameter	*/	0.371732	-0.171	0.148126	-0.0	1.0	-0.0	0.0155
+	/*  total_face_primitive_number	*/  48
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.356232	0.0	0.132626	0.387232	0.012	0.163626
+
+	/*  loop number		*/	2
+		/*  body:0 face:20 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.371732	0.012	0.148126	0.0	1.0	-0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.356261	0.012	0.132638	0.387229	0.012	0.163626
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+		/*  body:0 face:20 loop 1 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  circle	/*  parameter number	*/	7	/*  parameter	*/	0.371732	0.0	0.148126	0.0	1.0	0.0	0.0155
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.356261	0.0	0.132638	0.387229	0.0	0.163626
+			/*  total_edge_primitive_number		*/	29
+			/*  total_point_primitive_number	*/	1
+
+
+
+	/*  body 0 face 21  name	*/	Extrude5_21_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	1.0	1.19636E-16	-0.0	0.124	0.128	0.183
+	/*  total_face_primitive_number	*/  3
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.124	0.012	0.012	0.124	0.128	0.183
+
+	/*  loop number		*/	1
+		/*  body:0 face:21 loop 0 edge number	*/	5
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.124	0.128	0.183	1.19636E-16	-1.0	0.0
+			start_effective		0.124	0.024	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.012	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.012	0.183	0.124	0.024	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.124	0.024	0.183	7.3044E-17	-0.547391	0.836877
+			start_effective		0.124	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.024	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.024	0.024	0.124	0.128	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.124	0.128	0.183	-0.0	-0.0	-1.0
+			start_effective		0.124	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.128	0.012	0.124	0.128	0.024
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.124	0.128	0.012	1.19636E-16	-1.0	0.0
+			start_effective		0.124	0.128	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.012	0.012	0.124	0.128	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.124	0.012	0.183	-0.0	-0.0	-1.0
+			start_effective		0.124	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.012	0.012	0.124	0.012	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 22  name	*/	Extrude5_22_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-1.0	0.0	0.0	0.136	0.128	0.183
+	/*  total_face_primitive_number	*/  3
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.136	0.012	0.012	0.136	0.128	0.183
+
+	/*  loop number		*/	1
+		/*  body:0 face:22 loop 0 edge number	*/	5
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.136	0.128	0.183	-0.0	-0.0	-1.0
+			start_effective		0.136	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.136	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.136	0.128	0.012	0.136	0.128	0.024
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.136	0.0551623	0.135358	5.55781E-33	-0.547391	0.836877
+			start_effective		0.136	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.136	0.024	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.136	0.024	0.024	0.136	0.128	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.136	0.128	0.183	-0.0	1.0	-0.0
+			start_effective		0.136	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.136	0.024	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.136	0.012	0.183	0.136	0.024	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.136	0.012	0.183	-0.0	-0.0	-1.0
+			start_effective		0.136	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.136	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.136	0.012	0.012	0.136	0.012	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.136	0.128	0.012	-0.0	1.0	-0.0
+			start_effective		0.136	0.012	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.136	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.136	0.012	0.012	0.136	0.128	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 23  name	*/	Extrude5_23_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	-1.0	0.0	0.124	0.128	0.183
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.124	0.128	0.012	0.136	0.128	0.024
+
+	/*  loop number		*/	1
+		/*  body:0 face:23 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.124	0.128	0.183	-0.0	-0.0	-1.0
+			start_effective		0.124	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.128	0.012	0.124	0.128	0.024
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.307	0.128	0.024	-1.0	-1.19636E-16	-0.0
+			start_effective		0.136	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.128	0.024	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.128	0.024	0.136	0.128	0.024
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.136	0.128	0.183	-0.0	-0.0	-1.0
+			start_effective		0.136	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.136	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.136	0.128	0.012	0.136	0.128	0.024
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.124	0.128	0.012	-1.0	-0.0	-0.0
+			start_effective		0.136	0.128	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.128	0.012	0.136	0.128	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 24  name	*/	Extrude5_24_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-0.0	0.0	1.0	0.124	0.012	0.183
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.124	0.012	0.183	0.136	0.024	0.183
+
+	/*  loop number		*/	1
+		/*  body:0 face:24 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.307	0.024	0.183	-1.0	-1.19636E-16	-0.0
+			start_effective		0.136	0.024	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.024	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.024	0.183	0.136	0.024	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.124	0.128	0.183	1.19636E-16	-1.0	0.0
+			start_effective		0.124	0.024	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.012	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.012	0.183	0.124	0.024	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.124	0.012	0.183	1.0	0.0	0.0
+			start_effective		0.124	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.136	0.012	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.012	0.183	0.136	0.012	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.136	0.128	0.183	-0.0	1.0	-0.0
+			start_effective		0.136	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.136	0.024	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.136	0.012	0.183	0.136	0.024	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 25  name	*/	Extrude5_25_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-1.0	1.67491E-15	0.0	0.236	0.128	0.183
+	/*  total_face_primitive_number	*/  3
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.236	0.012	0.012	0.236	0.128	0.183
+
+	/*  loop number		*/	1
+		/*  body:0 face:25 loop 0 edge number	*/	5
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.128	0.183	-0.0	-0.0	-1.0
+			start_effective		0.236	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.236	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.236	0.128	0.012	0.236	0.128	0.024
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.0551623	0.135358	-9.16828E-16	-0.547391	0.836877
+			start_effective		0.236	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.236	0.024	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.236	0.024	0.024	0.236	0.128	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.128	0.183	1.67491E-15	1.0	-0.0
+			start_effective		0.236	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.236	0.024	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.236	0.012	0.183	0.236	0.024	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.012	0.183	-0.0	-0.0	-1.0
+			start_effective		0.236	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.236	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.236	0.012	0.012	0.236	0.012	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.128	0.012	1.67491E-15	1.0	-0.0
+			start_effective		0.236	0.012	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.236	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.236	0.012	0.012	0.236	0.128	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 26  name	*/	Extrude5_26_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	0.0	-1.0	0.0	0.236	0.128	0.183
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.224	0.128	0.012	0.236	0.128	0.024
+
+	/*  loop number		*/	1
+		/*  body:0 face:26 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.224	0.128	0.183	-0.0	-0.0	-1.0
+			start_effective		0.224	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.128	0.012	0.224	0.128	0.024
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.307	0.128	0.024	-1.0	-1.19636E-16	-0.0
+			start_effective		0.236	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.128	0.024	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.128	0.024	0.236	0.128	0.024
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.128	0.183	-0.0	-0.0	-1.0
+			start_effective		0.236	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.236	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.236	0.128	0.012	0.236	0.128	0.024
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.128	0.012	-1.0	0.0	0.0
+			start_effective		0.236	0.128	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.128	0.012	0.236	0.128	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 27  name	*/	Extrude5_27_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	1.0	-1.67491E-15	0.0	0.224	0.128	0.183
+	/*  total_face_primitive_number	*/  3
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.224	0.012	0.012	0.224	0.128	0.183
+
+	/*  loop number		*/	1
+		/*  body:0 face:27 loop 0 edge number	*/	5
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.224	0.128	0.183	-1.67491E-15	-1.0	0.0
+			start_effective		0.224	0.024	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.012	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.012	0.183	0.224	0.024	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.224	0.0551623	0.135358	9.16828E-16	0.547391	-0.836877
+			start_effective		0.224	0.024	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.128	0.024	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.024	0.024	0.224	0.128	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.224	0.128	0.183	-0.0	-0.0	-1.0
+			start_effective		0.224	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.128	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.128	0.012	0.224	0.128	0.024
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.224	0.128	0.012	-1.67491E-15	-1.0	0.0
+			start_effective		0.224	0.128	0.012	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.012	0.012	0.224	0.128	0.012
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.4   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.224	0.012	0.183	-0.0	-0.0	-1.0
+			start_effective		0.224	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.012	0.012	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.012	0.012	0.224	0.012	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 28  name	*/	Extrude5_28_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	-0.0	0.0	-1.0	0.236	0.012	0.183
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.224	0.012	0.183	0.236	0.024	0.183
+
+	/*  loop number		*/	1
+		/*  body:0 face:28 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.128	0.183	1.67491E-15	1.0	-0.0
+			start_effective		0.236	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.236	0.024	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.236	0.012	0.183	0.236	0.024	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.024	0.183	-1.0	-1.19636E-16	0.0
+			start_effective		0.236	0.024	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.024	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.024	0.183	0.236	0.024	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.224	0.128	0.183	-1.67491E-15	-1.0	0.0
+			start_effective		0.224	0.024	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.012	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.012	0.183	0.224	0.024	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.012	0.183	1.0	-4.62593E-15	-0.0
+			start_effective		0.224	0.012	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.236	0.012	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.012	0.183	0.236	0.012	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 29  name	*/	Extrude5_29_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	1.00121E-16	-0.836877	-0.547391	0.307	0.024	0.183
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.224	0.024	0.024	0.236	0.128	0.183
+
+	/*  loop number		*/	1
+		/*  body:0 face:29 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.307	0.128	0.024	-1.0	-1.19636E-16	-0.0
+			start_effective		0.236	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.128	0.024	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.128	0.024	0.236	0.128	0.024
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.224	0.0551623	0.135358	9.16828E-16	0.547391	-0.836877
+			start_effective		0.224	0.024	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.128	0.024	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.024	0.024	0.224	0.128	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.024	0.183	-1.0	-1.19636E-16	0.0
+			start_effective		0.236	0.024	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.224	0.024	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.224	0.024	0.183	0.236	0.024	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.236	0.0551623	0.135358	-9.16828E-16	-0.547391	0.836877
+			start_effective		0.236	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.236	0.024	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.236	0.024	0.024	0.236	0.128	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+	/*  body 0 face 30  name	*/	Extrude5_30_face
+	/*  face type	*/	plane	/*  parameter number	*/	6	/*  parameter	*/	1.00121E-16	-0.836877	-0.547391	0.307	0.024	0.183
+	/*  total_face_primitive_number	*/  2
+	/*  face_attribute_number		*/  1
+	/*  face_face_box               */	0.124	0.024	0.024	0.136	0.128	0.183
+
+	/*  loop number		*/	1
+		/*  body:0 face:30 loop 0 edge number	*/	4
+			/*  Edge NO.0   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.307	0.128	0.024	-1.0	-1.19636E-16	-0.0
+			start_effective		0.136	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.128	0.024	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.128	0.024	0.136	0.128	0.024
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.1   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.124	0.024	0.183	7.3044E-17	-0.547391	0.836877
+			start_effective		0.124	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.024	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.024	0.024	0.124	0.128	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.2   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.307	0.024	0.183	-1.0	-1.19636E-16	-0.0
+			start_effective		0.136	0.024	0.183	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.124	0.024	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.124	0.024	0.183	0.136	0.024	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+			/*  Edge NO.3   */
+			/*  curve type	*/  line	/*  parameter number	*/	6	/*  parameter	*/	0.136	0.0551623	0.135358	5.55781E-33	-0.547391	0.836877
+			start_effective		0.136	0.128	0.024	1	/*	start_point_material	*/	0	0	0	1
+			end_effective		0.136	0.024	0.183	1	/*	end_point_material		*/	0	0	0	1
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	0	0	0	1
+			/*  box definition  */	0.136	0.024	0.024	0.136	0.128	0.183
+			/*  total_edge_primitive_number		*/	2
+			/*  total_point_primitive_number	*/	3
+
+
+
+

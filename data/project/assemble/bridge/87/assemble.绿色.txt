@@ -1,0 +1,184 @@
+/* part */
+
+87_green_part      			所有杆件--八七型铁路应急抢修钢梁		assemble/part/all_part/assemble.txt				0	0	parameter.绿色.txt	parameter.zyx.txt
+
+
+/*  上承式八七型梁   */
+
+87_green_standard_40      40米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_40/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_41      41米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_41/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_42      42米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_42/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_43      43米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_43/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_44      44米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_44/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_45      45米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_45/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_46      46米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_46/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_47      47米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_47/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_48      48米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_48/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_49      49米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_49/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+
+87_green_standard_50      50米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_50/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_51      51米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_51/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_52      52米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_52/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_53      53米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_53/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_54      54米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_54/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_55      55米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_55/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_56      56米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_56/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_57      57米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_57/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_58      58米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_58/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_59      59米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_59/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+
+87_green_standard_60      60米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_60/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_61      61米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_61/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_62      62米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_62/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_63      63米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_63/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_standard_64      64米上承式八七型铁路应急抢修钢梁		assemble/hold/no_low_64/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+
+
+
+
+
+
+/*  鱼腹式八七型梁   */
+
+87_green_fish_40      40米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_40/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_41      41米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_41/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_42      42米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_42/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_43      43米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_43/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_44      44米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_44/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_45      45米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_45/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_46      46米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_46/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_47      47米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_47/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_48      48米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_48/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_49      49米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_49/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+
+87_green_fish_50      50米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_50/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_51      51米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_51/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_52      52米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_52/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_53      53米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_53/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_54      54米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_54/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_55      55米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_55/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_56      56米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_56/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_57      57米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_57/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_58      58米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_58/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_59      59米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_59/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+
+87_green_fish_60      60米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_60/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_61      61米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_61/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_62      62米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_62/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_63      63米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_63/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_fish_64      64米鱼腹式八七型铁路应急抢修钢梁		assemble/hold/fish_64/assemble.txt			8	8	parameter.绿色.txt	parameter.zyx.txt
+
+
+
+
+
+
+
+
+
+
+
+/*  低鱼腹式八七型梁   */
+
+87_green_low_fish_40      40米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_40/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_41      41米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_41/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_42      42米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_42/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_43      43米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_43/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_44      44米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_44/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_45      45米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_45/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_46      46米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_46/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_47      47米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_47/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_48      48米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_48/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_49      49米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_49/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+
+87_green_low_fish_50      50米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_50/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_51      51米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_51/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_52      52米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_52/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_53      53米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_53/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_54      54米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_54/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_55      55米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_55/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_56      56米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_56/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_57      57米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_57/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_58      58米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_58/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_59      59米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_59/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+
+87_green_low_fish_60      60米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_60/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_61      61米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_61/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_62      62米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_62/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_63      63米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_63/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_low_fish_64      64米低鱼腹式八七型铁路应急抢修钢梁		assemble/hold/low_fish_64/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+
+
+
+
+
+
+
+
+/*  半穿式八七型梁   */
+
+87_green_half_through_40      40米半穿式八七型铁路应急抢修钢梁		assemble/half_through/40/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_half_through_41      41米半穿式八七型铁路应急抢修钢梁		assemble/half_through/41/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_half_through_42      42米半穿式八七型铁路应急抢修钢梁		assemble/half_through/42/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_half_through_43      43米半穿式八七型铁路应急抢修钢梁		assemble/half_through/43/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_half_through_44      44米半穿式八七型铁路应急抢修钢梁		assemble/half_through/44/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_half_through_45      45米半穿式八七型铁路应急抢修钢梁		assemble/half_through/45/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_half_through_46      46米半穿式八七型铁路应急抢修钢梁		assemble/half_through/46/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_half_through_47      47米半穿式八七型铁路应急抢修钢梁		assemble/half_through/47/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_half_through_48      48米半穿式八七型铁路应急抢修钢梁		assemble/half_through/48/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_half_through_49      49米半穿式八七型铁路应急抢修钢梁		assemble/half_through/49/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+
+87_green_half_through_50      50米半穿式八七型铁路应急抢修钢梁		assemble/half_through/50/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_half_through_51      51米半穿式八七型铁路应急抢修钢梁		assemble/half_through/51/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_half_through_52      52米半穿式八七型铁路应急抢修钢梁		assemble/half_through/52/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_half_through_53      53米半穿式八七型铁路应急抢修钢梁		assemble/half_through/53/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_half_through_54      54米半穿式八七型铁路应急抢修钢梁		assemble/half_through/54/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_half_through_55      55米半穿式八七型铁路应急抢修钢梁		assemble/half_through/55/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_half_through_56      56米半穿式八七型铁路应急抢修钢梁		assemble/half_through/56/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+
+
+
+
+
+
+/*  穿式八七型梁   */
+
+87_green_through_64		     64米穿式八七型铁路应急抢修钢梁			assemble/whole_through/64/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_65		     65米穿式八七型铁路应急抢修钢梁			assemble/whole_through/65/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_66		     66米穿式八七型铁路应急抢修钢梁			assemble/whole_through/66/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_67		     67米穿式八七型铁路应急抢修钢梁			assemble/whole_through/67/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_68		     68米穿式八七型铁路应急抢修钢梁			assemble/whole_through/68/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_69		     69米穿式八七型铁路应急抢修钢梁			assemble/whole_through/69/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+
+87_green_through_70		     70米穿式八七型铁路应急抢修钢梁			assemble/whole_through/70/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_71		     71米穿式八七型铁路应急抢修钢梁			assemble/whole_through/71/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_72		     72米穿式八七型铁路应急抢修钢梁			assemble/whole_through/72/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_73		     73米穿式八七型铁路应急抢修钢梁			assemble/whole_through/73/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_74		     74米穿式八七型铁路应急抢修钢梁			assemble/whole_through/74/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_75		     75米穿式八七型铁路应急抢修钢梁			assemble/whole_through/75/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_76		     76米穿式八七型铁路应急抢修钢梁			assemble/whole_through/76/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_77		     77米穿式八七型铁路应急抢修钢梁			assemble/whole_through/77/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_78		     78米穿式八七型铁路应急抢修钢梁			assemble/whole_through/78/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_79		     79米穿式八七型铁路应急抢修钢梁			assemble/whole_through/79/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+
+87_green_through_80		     80米穿式八七型铁路应急抢修钢梁			assemble/whole_through/80/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_81		     81米穿式八七型铁路应急抢修钢梁			assemble/whole_through/81/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_82		     82米穿式八七型铁路应急抢修钢梁			assemble/whole_through/82/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_83		     83米穿式八七型铁路应急抢修钢梁			assemble/whole_through/83/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_84		     84米穿式八七型铁路应急抢修钢梁			assemble/whole_through/84/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_85		     85米穿式八七型铁路应急抢修钢梁			assemble/whole_through/85/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_86		     86米穿式八七型铁路应急抢修钢梁			assemble/whole_through/86/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_87		     87米穿式八七型铁路应急抢修钢梁			assemble/whole_through/87/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_88		     88米穿式八七型铁路应急抢修钢梁			assemble/whole_through/88/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_89		     89米穿式八七型铁路应急抢修钢梁			assemble/whole_through/89/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+
+87_green_through_90		     90米穿式八七型铁路应急抢修钢梁			assemble/whole_through/90/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_91		     91米穿式八七型铁路应急抢修钢梁			assemble/whole_through/91/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_92		     92米穿式八七型铁路应急抢修钢梁			assemble/whole_through/92/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_93		     93米穿式八七型铁路应急抢修钢梁			assemble/whole_through/93/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_94		     94米穿式八七型铁路应急抢修钢梁			assemble/whole_through/94/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_95		     95米穿式八七型铁路应急抢修钢梁			assemble/whole_through/95/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+87_green_through_96		     96米穿式八七型铁路应急抢修钢梁			assemble/whole_through/96/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt
+
+
+87_green_through_240		 240米穿式八七型铁路应急抢修钢梁			assemble/whole_through/240/assemble.txt		8	8	parameter.绿色.txt	parameter.zyx.txt

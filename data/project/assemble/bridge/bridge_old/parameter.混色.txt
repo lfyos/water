@@ -1,0 +1,8 @@
+/*	proxy_directory_name					*/		bridge_old
+/*	shader_file_name						*/		shaders/type_shaders.txt	shaders/scene_shaders.txt
+/*	camera_file_name						*/		orthongraphics/camera.txt
+/*	change_part_file_name					*/		assemble/change_part.»ìÉ«.txt
+/*	change_component_file_name				*/		assemble/change_component.»ìÉ«.txt
+/*	mount_component_file_name				*/		assemble/mount_component.txt
+/*	part_type_string_file_name				*/		part_type_string.txt
+

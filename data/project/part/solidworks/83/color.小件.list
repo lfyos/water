@@ -1,0 +1,21 @@
+10：M65螺栓
+	混色\基本杆件\10：M65螺栓.SLDPRT
+	color\10：M65螺栓.SLDPRT.mesh
+	color\10：M65螺栓.SLDPRT.material
+	声音和描述\10：M65螺栓.SLDPRT.description
+	声音和描述\10.SLDPRT.mp3
+
+11：M50螺栓
+	混色\基本杆件\11：M50螺栓.SLDPRT
+	color\11：M50螺栓.SLDPRT.mesh
+	color\11：M50螺栓.SLDPRT.material
+	声音和描述\11：M50螺栓.SLDPRT.description
+	声音和描述\11.SLDPRT.mp3
+
+12：螺母
+	混色\基本杆件\12：螺母.SLDPRT
+	color\12：螺母.SLDPRT.mesh
+	color\12：螺母.SLDPRT.material
+	声音和描述\12：螺母.SLDPRT.description
+	声音和描述\12.SLDPRT.mp3
+
