@@ -1,0 +1,41 @@
+/*	lod_precision_scale	*/  1.0
+/*	Number:	*/  4
+
+
+/*	NO.0 material data	*/
+/*		material_data		*/	0.15    0.15    0.15    1    1    0.5    0.4    0    0        1.0    0.0    0.0
+/*		texture_file		*/	1.jpg
+/*		texture_rotate		*/	0
+/*		texture_scale		*/	1
+/*		texture_mixture		*/	nomixture
+/*		texture_parameter	*/	0	0	0	0
+
+
+
+/*	NO.1 material data	*/
+
+/*		material_data		*/	1    1    1    0.25    0.50    0.75    4    0    0        1.0    0.0    0.0
+/*		texture_file		*/	GH04.jpg
+/*		texture_rotate		*/	0
+/*		texture_scale		*/	1
+/*		texture_mixture		*/	nomixture
+/*		texture_parameter	*/	0	0	0	0
+
+
+/*	NO.2 material data	*/
+/*		material_data		*/	1    1    1    0.25    0.50    0.75    4    0    0        1.0    0.0    0.0
+/*		texture_file		*/	notexture
+/*		texture_rotate		*/	0
+/*		texture_scale		*/	1
+/*		texture_mixture		*/	nomixture
+/*		texture_parameter	*/	0	0	0	0
+
+
+
+/*	NO.3 material data	*/
+/*		material_data		*/	1	1    0.15   1    1    0.5    0.4    0    0        1.0    0.0    0.0
+/*		texture_file		*/	notexture
+/*		texture_rotate		*/	0
+/*		texture_scale		*/	1
+/*		texture_mixture		*/	nomixture
+/*		texture_parameter	*/	0	0	0	0
