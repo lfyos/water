@@ -223,7 +223,8 @@ public class caculate_part_items
 		local_normal=local_p1.sub(local_p0);
 	}
 	
-	private point caculate_focus_point_from_abc(double a,double b,double c,point p_default,String name)
+	private point caculate_focus_point_from_abc(
+			double a,double b,double c,point p_default,String name)
 	{
 		double dlt=b*b-4*a*c;
 		

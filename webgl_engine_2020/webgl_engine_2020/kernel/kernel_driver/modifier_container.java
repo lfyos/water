@@ -4,7 +4,6 @@ import kernel_driver.modifier_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 
-
 public class modifier_container
 {
 	private modifier_container_timer timer;
@@ -18,7 +17,6 @@ public class modifier_container
 	{
 		if(timer!=null)
 			timer=null;
-
 		if(modifier_driver_array!=null) {
 			for(int i=0, ni=modifier_driver_array.length;i<ni;i++)
 				if(modifier_driver_array[i]!=null){
@@ -86,7 +84,7 @@ public class modifier_container
 			modifier_id=left_child;
 		}
 	}
-	private int recurse_process(int modifier_id,int delete_number,
+	private int recurse_collect_delete_modifiers(int modifier_id,int delete_number,
 			modifier_driver_holder my_delete_modifier_driver_array[],long my_current_time,
 			engine_kernel ek,client_information ci)
 	{
@@ -96,10 +94,9 @@ public class modifier_container
 			if(my_current_time<modifier_driver_array[modifier_id].md.start_time)
 				return delete_number;
 			if(my_current_time<modifier_driver_array[modifier_id].md.terminate_time){
-				modifier_driver_array[modifier_id].md.modify(my_current_time,ek,ci);
-				delete_number=recurse_process(modifier_id+modifier_id+1,
+				delete_number=recurse_collect_delete_modifiers(modifier_id+modifier_id+1,
 					delete_number,my_delete_modifier_driver_array,my_current_time,ek,ci);
-				delete_number=recurse_process(modifier_id+modifier_id+2,
+				delete_number=recurse_collect_delete_modifiers(modifier_id+modifier_id+2,
 					delete_number,my_delete_modifier_driver_array,my_current_time,ek,ci);
 				return delete_number;
 			}
@@ -108,6 +105,18 @@ public class modifier_container
 			modifier_driver_array[modifier_number]=null;
 			adjust_heap(modifier_id);
 		}
+	}
+	private void recurse_execute_modifier_modify(
+			int modifier_id,long my_current_time,engine_kernel ek,client_information ci)
+	{
+		if((modifier_number<=0)||(modifier_id<0)||(modifier_id>=modifier_number))
+			return;
+		if(my_current_time<modifier_driver_array[modifier_id].md.start_time)
+			return;
+		modifier_driver_array[modifier_id].md.modify(my_current_time,ek,ci);
+		clear_modifier_flag|=modifier_driver_array[modifier_id].md.get_clear_modifier_flag();
+		recurse_execute_modifier_modify(modifier_id+modifier_id+1,my_current_time,ek,ci);
+		recurse_execute_modifier_modify(modifier_id+modifier_id+2,my_current_time,ek,ci);
 	}
 	private boolean test_can_not_start(
 			int modifier_id,long my_current_time,engine_kernel ek,client_information ci)
@@ -118,14 +127,11 @@ public class modifier_container
 			return false;
 		if(my_current_time<modifier_driver_array[modifier_id].md.start_time)
 			return false;
-		if(modifier_driver_array[modifier_id].md.can_start(my_current_time,ek,ci)){
-			if(test_can_not_start(modifier_id+modifier_id+1,my_current_time,ek,ci))
-				return true;
-			if(test_can_not_start(modifier_id+modifier_id+2,my_current_time,ek,ci))
-				return true;
-			return false;
-		}
-		return true;
+		boolean my_ret_val	 =modifier_driver_array[modifier_id].md.can_start(my_current_time,ek,ci)?false:true;
+		boolean left_ret_val =test_can_not_start(modifier_id+modifier_id+1,my_current_time,ek,ci);
+		boolean right_ret_val=test_can_not_start(modifier_id+modifier_id+2,my_current_time,ek,ci);
+		clear_modifier_flag|=modifier_driver_array[modifier_id].md.get_clear_modifier_flag();
+		return my_ret_val||left_ret_val||right_ret_val;
 	}
 	private void sort_modifiers(int begin_modifier_id,int end_modifier_id,
 			modifier_driver_holder sort_modifier_driver_array[],
@@ -161,64 +167,85 @@ public class modifier_container
 				sort_modifier_driver_array[i]=temp_modifier_driver_array[j];
 		}
 	}
+	private boolean clear_modifier_flag;
 	public void process(engine_kernel ek,client_information ci)
 	{
-		if(modifier_number<=0){
-			modifier_driver_sequence_id=0;
-			modifier_number=0;
-		}
-		if((modifier_number+insert_modifier_number)>=modifier_driver_array.length){
-			modifier_driver_holder bak[]=modifier_driver_array;
-			modifier_driver_array=new modifier_driver_holder[modifier_number+insert_modifier_number];
-			for(int j=0,n=bak.length;j<n;j++)
-				modifier_driver_array[j]=bak[j];
-			for(int j=bak.length,n=modifier_driver_array.length;j<n;j++)
-				modifier_driver_array[j]=null;
-		}
-		for(int i=0;i<insert_modifier_number;i++)
-			if(insert_modifier_driver_array[i]!=null){
-				modifier_driver_array[modifier_number]=insert_modifier_driver_array[i];
-				insert_modifier_driver_array[i]=null;
-				adjust_heap(modifier_number++);
-			}
-		insert_modifier_number=0;
-		
-		long my_current_time=timer.caculate_current_time(ek.current_time);
-		
-		if(test_can_not_start(0,my_current_time,ek,ci))
-			timer.modify_speed(timer.get_speed(),ek.current_time);
-		else{
-			if(insert_modifier_driver_array.length<modifier_number){
-				insert_modifier_driver_array=new modifier_driver_holder[modifier_number];
-				for(int i=0,ni=insert_modifier_driver_array.length;i<ni;i++)
-					insert_modifier_driver_array[i]=null;
-			}
-			int delete_number=recurse_process(0,0,
-					insert_modifier_driver_array,my_current_time,ek,ci);
-			if(delete_number>0){
-				if(temp_modifier_driver_array.length<delete_number){
-					temp_modifier_driver_array=new modifier_driver_holder[delete_number];
-					for(int i=0;i<delete_number;i++)
-						temp_modifier_driver_array[i]=null;
-				}
-				sort_modifiers(0,delete_number-1,insert_modifier_driver_array,temp_modifier_driver_array);
-				for(int i=0;i<delete_number;i++)
-					insert_modifier_driver_array[i].md.last_modify(my_current_time,ek,ci,true);
-				for(int i=0;i<delete_number;i++){
-					insert_modifier_driver_array[i].md.destroy();
-					insert_modifier_driver_array[i].md=null;
-					insert_modifier_driver_array[i]=null;
-				}
-				for(int i=0;i<delete_number;i++)
-					temp_modifier_driver_array[i]=null;
-			}
-			timer.mark_current_time(ek.current_time);
-		}
+		process_routine(ek,ci);
+		if(clear_modifier_flag)
+			clear_modifier_routine(ek,ci);
+		clear_modifier_flag=false;
 	}
 	public void clear_modifier(engine_kernel ek,client_information ci)
 	{
-		process(ek,ci);
+		process_routine(ek,ci);
+		clear_modifier_routine(ek,ci);
+		clear_modifier_flag=false;
+	}	
+	private void process_routine(engine_kernel ek,client_information ci)
+	{
+		long my_current_time=timer.caculate_current_time(ek.current_time);
 		
+		for(int i=0,ni=ek.system_par.process_modifier_times;i<ni;i++){
+			if(modifier_number<=0){
+				modifier_driver_sequence_id=0;
+				modifier_number=0;
+			}
+			if((modifier_number+insert_modifier_number)>=modifier_driver_array.length){
+				modifier_driver_holder bak[]=modifier_driver_array;
+				modifier_driver_array=new modifier_driver_holder[modifier_number+insert_modifier_number];
+				for(int j=0,nj=bak.length;j<nj;j++)
+					modifier_driver_array[j]=bak[j];
+				for(int j=bak.length,nj=modifier_driver_array.length;j<nj;j++)
+					modifier_driver_array[j]=null;
+			}
+			for(int j=0;j<insert_modifier_number;j++)
+				if(insert_modifier_driver_array[j]!=null){
+					modifier_driver_array[modifier_number]=insert_modifier_driver_array[j];
+					insert_modifier_driver_array[j]=null;
+					adjust_heap(modifier_number++);
+				}
+			insert_modifier_number=0;
+			if(test_can_not_start(0,my_current_time,ek,ci)) {
+				timer.modify_speed(timer.get_speed(),ek.current_time);
+				return;
+			}
+			if(temp_modifier_driver_array.length<modifier_number){
+				temp_modifier_driver_array=new modifier_driver_holder[modifier_number];
+				for(int j=0,nj=temp_modifier_driver_array.length;j<nj;j++)
+					temp_modifier_driver_array[j]=null;
+			}
+			int delete_number=recurse_collect_delete_modifiers(0,0,
+					temp_modifier_driver_array,my_current_time,ek,ci);
+			if(delete_number<=0)
+				break;
+			if(insert_modifier_driver_array.length<delete_number){
+				insert_modifier_driver_array=new modifier_driver_holder[delete_number];
+				for(int j=0;j<delete_number;j++)
+					insert_modifier_driver_array[j]=null;
+			}
+			sort_modifiers(0,delete_number-1,
+					temp_modifier_driver_array,insert_modifier_driver_array);
+			for(int j=0;j<delete_number;j++)
+				insert_modifier_driver_array[j]=null;
+			
+			for(int j=0;j<delete_number;j++){
+				temp_modifier_driver_array[j].md.last_modify(my_current_time,ek,ci,true);
+				clear_modifier_flag|=temp_modifier_driver_array[j].md.get_clear_modifier_flag();
+			}
+			for(int j=0;j<delete_number;j++){
+				temp_modifier_driver_array[j].md.destroy();
+				temp_modifier_driver_array[j].md=null;
+				temp_modifier_driver_array[j]=null;
+			}
+			if(insert_modifier_number<=0)
+				break;
+		}
+		recurse_execute_modifier_modify(0,my_current_time,ek,ci);
+		timer.mark_current_time(ek.current_time);
+		return;	
+	}
+	private void clear_modifier_routine(engine_kernel ek,client_information ci)
+	{
 		if(temp_modifier_driver_array.length<modifier_number){
 			temp_modifier_driver_array=new modifier_driver_holder[modifier_number];
 			for(int i=0;i<modifier_number;i++)
@@ -228,9 +255,10 @@ public class modifier_container
 		
 		long my_current_time=timer.caculate_current_time(ek.current_time);
 		
-		for(int i=0;i<modifier_number;i++)
+		for(int i=0;i<modifier_number;i++) {
 			modifier_driver_array[i].md.last_modify(my_current_time,ek,ci,false);
-		
+			clear_modifier_flag|=modifier_driver_array[i].md.get_clear_modifier_flag();
+		}
 		for(int i=0;i<modifier_number;i++){
 			modifier_driver_array[i].md.destroy();
 			modifier_driver_array[i].md=null;
@@ -279,5 +307,7 @@ public class modifier_container
 		insert_modifier_number=0;
 		modifier_number=0;
 		modifier_driver_sequence_id=0;
+		
+		clear_modifier_flag=false;
 	}
 }

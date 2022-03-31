@@ -10,7 +10,7 @@ public class operate_selection
 {
 	public static void selection_request(int parameter_channel_id,engine_kernel ek,client_information ci)
 	{
-		String str;
+		String str,component_str;
 
 		if(ci.display_camera_result.target==null)
 			return;
@@ -48,39 +48,49 @@ public class operate_selection
 		case "latest":
 			cs.set_selected_flag(ek.component_cont.search_component(),ek.component_cont);
 			break;
-		case "switch":
-		case "component":
-			component my_comp=null;
-			boolean flag=(str.compareTo("component")==0)?true:false;
-			if((str=ci.request_response.get_parameter("component"))!=null) {
-				try{
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-				}catch(Exception e) {
-					str=null;
-				}
-				if(str!=null)
-					my_comp=ek.component_cont.search_component(str);
-			}else if((str=ci.request_response.get_parameter("component_id"))!=null) {
-				try{
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-				}catch(Exception e) {
-					str=null;
-				}
-				if(str!=null)
-					my_comp=ek.component_cont.get_component(Integer.decode(str));
-			}
-			if(flag)
-				cs.set_selected_flag(my_comp,ek.component_cont);
-			else
-				cs.switch_selected_flag(my_comp,ek.component_cont);	
-			break;
 		case "part_list":
 			cs.set_collector_selected(ek.collector_stack.get_top_collector(),ek.component_cont);
 			break;
-		case "clear":
+		case "clear_all":
 			cs.clear_selected_flag(ek.component_cont);
+			break;
+		case "clear_component":
+		case "swap_component":
+		case "select_component":
+			component my_comp=null;
+			if((component_str=ci.request_response.get_parameter("component"))!=null) {
+				try{
+					component_str=java.net.URLDecoder.decode(component_str,ek.system_par.network_data_charset);
+					component_str=java.net.URLDecoder.decode(component_str,ek.system_par.network_data_charset);
+				}catch(Exception e) {
+					component_str=null;
+				}
+				if(component_str!=null)
+					my_comp=ek.component_cont.search_component(component_str);
+			}else if((component_str=ci.request_response.get_parameter("component_id"))!=null) {
+				try{
+					component_str=java.net.URLDecoder.decode(component_str,ek.system_par.network_data_charset);
+					component_str=java.net.URLDecoder.decode(component_str,ek.system_par.network_data_charset);
+				}catch(Exception e) {
+					component_str=null;
+				}
+				if(component_str!=null)
+					my_comp=ek.component_cont.get_component(Integer.decode(component_str));
+			}
+			if(my_comp==null)
+				if((my_comp=ek.component_cont.search_component())==null)
+					break;
+			switch(str) {
+			case "clear_component":
+				cs.clear_selected_flag(my_comp,ek.component_cont);
+				break;
+			case "swap_component":
+				cs.switch_selected_flag(my_comp,ek.component_cont);	
+				break;
+			case "select_component":
+				cs.set_selected_flag(my_comp,ek.component_cont);
+				break;
+			}
 			break;
 		}
 	}

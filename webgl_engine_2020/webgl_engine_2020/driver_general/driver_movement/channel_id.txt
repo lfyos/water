@@ -1,7 +1,0 @@
-
-	/*	display_parameter_channel_id	*/		2	2	3
-	/*	hide_parameter_channel_id		*/		2 	4	5
-	/*	box_parameter_channel_id		*/		2
-	
-	/*	movement_modifier_id			*/		1
-	

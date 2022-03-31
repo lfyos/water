@@ -41,7 +41,7 @@ public class operate_component_transparent
 						comp_array.add_component(my_comp);
 					break;
 				}
-				comp_array.add_selected_component(ek.component_cont.root_component);
+				comp_array.add_selected_component(ek.component_cont.root_component,false);
 				if(comp_array.component_number<=0) {
 					str=ci.request_response.get_parameter("flag");
 					switch((str==null)?"":str) {

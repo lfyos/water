@@ -13,22 +13,13 @@ import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_network.client_request_response;
-import kernel_part.create_grid;
 import kernel_part.part;
+import kernel_part.create_grid;
 import kernel_part.part_rude;
 import kernel_part.part_container_for_part_search;
 import kernel_transformation.box;
 import kernel_transformation.point;
 
-final class my_create_grid extends create_grid
-{
-	public my_create_grid(String file_name,int width,int height,String file_system_charset)
-	{
-		do_create(file_name,true,width,height,
-				new String[] {"vertex","normal","texture"},
-				file_system_charset);
-	}
-}
 public class extended_part_driver extends part_driver
 {
 	public extended_part_driver(part p,system_parameter system_par,client_request_response request_response)
@@ -64,7 +55,7 @@ public class extended_part_driver extends part_driver
 		if(buffer_object_file_writer!=null) {
 			String file_name=p.directory_name+p.mesh_file_name;
 			long t=(new File(file_name)).lastModified();
-			new my_create_grid(p.directory_name+p.mesh_file_name,64,64,p.file_charset);
+			new create_grid(file_name,p.file_charset,64,64,new String[] {"vertex","normal","texture"});
 			(new File(file_name)).setLastModified(t);
 		}
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);

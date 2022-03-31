@@ -21,6 +21,15 @@ function construct_computation_object()
 				result[i]+=s[i+4*j]*p[j];
 		return [result[0]/result[3],result[1]/result[3],result[2]/result[3],1.0];
 	};
+	this.create_scale_matrix=function(sx,sy,sz)
+	{
+		return [
+			sx,	 0,	 0,	 0,
+			 0,	sy,	 0,	 0,
+			 0,	 0,	sz,	 0,
+			 0,	 0,	 0,	 1
+		];
+	};
 	this.create_move_rotate_matrix=function(mx,my,mz,rx,ry,rz)
 	{
 		if(rx==0)

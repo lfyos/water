@@ -15,12 +15,16 @@ import kernel_part.part_parameter;
 
 public class render
 {
+	public String render_name;
 	public render_driver driver;
 	public part parts[];
 	private int part_number;
 	
 	public void destroy()
 	{
+		if(render_name!=null)
+			render_name=null;
+		
 		if(parts!=null) {
 			for(int i=0,ni=parts.length;i<ni;i++) 
 				if(parts[i]!=null){
@@ -38,6 +42,7 @@ public class render
 	public render(render r,client_request_response request_response,
 				system_parameter system_par,scene_parameter scene_par)
 	{	
+		render_name=r.render_name;
 		part_number=r.part_number;
 		driver=r.driver.clone(r,request_response,system_par,scene_par);
 		
@@ -54,24 +59,26 @@ public class render
 					parts[i]=null;
 		}
 	}
-	public render(String driver_name,client_request_response request_response,
+	public render(String my_render_name,String my_driver_name,
+			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
+		render_name=my_render_name;
 		part_number=0;
 		driver=null;
 		parts=null;
 		
 		Object render_driver_object;
 		try{
-			render_driver_object=Class.forName(driver_name).getConstructor().newInstance();
+			render_driver_object=Class.forName(my_driver_name).getConstructor().newInstance();
 		}catch(Exception e){
 			debug_information.println("Create render driver fail:		",e.toString());
-			debug_information.println("Driver name is ",driver_name);
+			debug_information.println("Driver name is ",my_driver_name);
 			e.printStackTrace();
 			return;
 		}
 		if(!(render_driver_object instanceof render_driver)){
-			debug_information.println("render driver class name error:		",driver_name);
+			debug_information.println("render driver class name error:		",my_driver_name);
 			return;
 	    }
 		render_driver original_driver=(render_driver)render_driver_object;

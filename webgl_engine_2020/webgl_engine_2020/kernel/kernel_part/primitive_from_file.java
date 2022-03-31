@@ -96,10 +96,8 @@ public class primitive_from_file implements primitive_interface
 		return ret_val;
 	}
 	
-	public void destroy(long my_max_compress_file_length,int my_response_block_size)
+	public void destroy()
 	{
-		File f,gf;
-		
 		if(face_file!=null) {
 			face_file.close();
 			face_file=null;
@@ -111,47 +109,6 @@ public class primitive_from_file implements primitive_interface
 		if(point_file!=null) {
 			point_file.close();
 			point_file=null;
-		}
-		
-		if(my_max_compress_file_length<=0)
-			return;
-		
-		if((f=new File(face_file_name)).exists()){
-			if(f.length()<=my_max_compress_file_length){
-				if((gf=new File(gzip_face_file_name)).exists())
-					gf.delete();
-			}else{
-				long last_time=f.lastModified();
-				if(!((gf=new File(gzip_face_file_name)).exists()))
-					compress_file_data.do_compress(f,gf,my_response_block_size,"gzip");
-				f.delete();
-				new File(gzip_face_file_name).setLastModified(last_time);
-			}
-		}
-		if((f=new File(edge_file_name)).exists()){
-			if(f.length()<=my_max_compress_file_length){
-				if((gf=new File(gzip_edge_file_name)).exists())
-					gf.delete();
-			}else{
-				long last_time=f.lastModified();
-				if(!((gf=new File(gzip_edge_file_name)).exists()))
-					compress_file_data.do_compress(f,gf,my_response_block_size,"gzip");
-				f.delete();
-				new File(gzip_edge_file_name).setLastModified(last_time);
-			}
-		}
-		
-		if((f=new File(point_file_name)).exists()){
-			if(f.length()<=my_max_compress_file_length){
-				if((gf=new File(gzip_point_file_name)).exists())
-					gf.delete();
-			}else{
-				long last_time=f.lastModified();
-				if(!((gf=new File(gzip_point_file_name)).exists()))
-					compress_file_data.do_compress(f,gf,my_response_block_size,"gzip");
-				f.delete();
-				new File(gzip_point_file_name).setLastModified(last_time);
-			}
 		}
 	}
 	public primitive_from_file(String my_file_name,String my_file_charset,int my_response_block_size)
@@ -171,18 +128,21 @@ public class primitive_from_file implements primitive_interface
 				long last_time=gf.lastModified();
 				compress_file_data.do_uncompress(f,gf,my_response_block_size, "gzip");
 				new File(face_file_name).setLastModified(last_time);
+				gf.delete();
 			}
 		if(!((f=new File(edge_file_name)).exists()))
 			if((gf=new File(gzip_edge_file_name)).exists()) {
 				long last_time=gf.lastModified();
 				compress_file_data.do_uncompress(f, gf, my_response_block_size, "gzip");
 				new File(edge_file_name).setLastModified(last_time);
+				gf.delete();
 			}
 		if(!((f=new File(point_file_name)).exists()))
 			if((gf=new File(gzip_point_file_name)).exists()) {
 				long last_time=gf.lastModified();
 				compress_file_data.do_uncompress(f, gf, my_response_block_size, "gzip");
 				new File(point_file_name).setLastModified(last_time);
+				gf.delete();
 			}
 		face_file	=new file_reader(face_file_name, file_charset);
 		edge_file	=new file_reader(edge_file_name, file_charset);

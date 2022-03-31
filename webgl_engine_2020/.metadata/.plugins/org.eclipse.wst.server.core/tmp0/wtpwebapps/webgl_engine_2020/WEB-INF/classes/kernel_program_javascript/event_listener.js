@@ -1,6 +1,8 @@
 function construct_event_listener(my_render)
 {
 	this.render=my_render;
+	this.mouse_down_flag=false;
+	this.mouse_down_flag_array=[false,false,false,false,false];
 
 	this.set_render_view=function(event)
 	{
@@ -8,9 +10,14 @@ function construct_event_listener(my_render)
 		var left=rect.left,top=rect.top,right=rect.right,bottom=rect.bottom;
 		var width=right-left,height=bottom-top;
 		var x=event.clientX-left,y=event.clientY-top;
-		this.render.view.x =2.0*x/width-1.0;
-		this.render.view.y =1.0-2.0*y/height;
-		
+		if((this.render.view.x=2.0*x/width-1.0)<-1.0)
+			this.render.view.x=-1.0;
+		else if(this.render.view.x >1.0)
+			this.render.view.x=1.0;
+		if((this.render.view.y=1.0-2.0*y/height)<-1.0)
+			this.render.view.y=-1.0;
+		else if(this.render.view.y>1.0)
+			this.render.view.y=1.0;
 		this.render.canvas.focus();
 	};
 	this.set_mobile_render_view=function(event)
@@ -19,8 +26,14 @@ function construct_event_listener(my_render)
 			var btn=this.render.canvas;
 			var x=event.touches[0].clientX-btn.offsetLeft;
 			var y=btn.clientHeight-(event.touches[0].clientY-btn.offsetTop);	
-			this.render.view.x=2.0*((x/btn.clientWidth )-0.5);
-			this.render.view.y=2.0*((y/btn.clientHeight)-0.5);
+			if((this.render.view.x=2.0*((x/btn.clientWidth )-0.5))<-1.0)
+				this.render.view.x=-1.0;
+			else if(this.render.view.x >1.0)
+				this.render.view.x=1.0;
+			if((this.render.view.y=2.0*((y/btn.clientHeight)-0.5))<-1.0)
+				this.render.view.y=-1.0;
+			else if(this.render.view.y>1.0)
+				this.render.view.y=1.0;
 		}
 		this.render.canvas.focus();
 	};
@@ -59,7 +72,6 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
-			
 		var ep,component_id;
 		event.preventDefault();
 		this.set_render_view(event);
@@ -70,33 +82,17 @@ function construct_event_listener(my_render)
 					return;
 		if(this.render.system_event_processor.mousemove(event,this.render))
 			return;
-
-		if((ep=this.caculate_pickup_event_processor())!=null){
+		if((ep=this.caculate_pickup_event_processor())!=null)
 			if(typeof(ep.pickupmousemove)=="function")
-				try{
-					if(ep.pickupmousemove(event,this.render.pickup.component_id,this.render))
-						return;
-				}catch(e){
-					console.log("Execute pickupmousemove processor error,component id is "
-						+this.render.pickup.component_id.toString());
-					console.log(e.toString());
+				if(ep.pickupmousemove(event,this.render.pickup.component_id,this.render))
 					return;
-				}
-		}
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
 		ep=this.render.component_event_processor[component_id];
-		if(typeof(ep.mousemove)=="function"){
-			try{
-				if(ep.mousemove(event,component_id,this.render))
-					return;
-			}catch(e){
-				console.log("Execute mousemove processor error,component id is "+component_id.toString());
-				console.log(e.toString());
+		if(typeof(ep.mousemove)=="function")
+			if(ep.mousemove(event,component_id,this.render))
 				return;
-			}
-		}
 	};
 	this.render.system_event_processor.pickupmousedown	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.mousedown		=function(event,render)						{return false;};
@@ -104,7 +100,11 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
-
+		this.mouse_down_flag_array[event.button]=true;
+		this.mouse_down_flag=false;
+		for(var i=0,ni=this.mouse_down_flag_array.length;i<ni;i++)
+			this.mouse_down_flag|=this.mouse_down_flag_array[i];
+		
 		var ep,component_id;
 
 		event.preventDefault();
@@ -117,31 +117,20 @@ function construct_event_listener(my_render)
 						return;
 		if(this.render.system_event_processor.mousedown(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null){
+
+		if((ep=this.caculate_pickup_event_processor())!=null)
 			if(typeof(ep.pickupmousedown)=="function")
-				try{
-					if(ep.pickupmousedown(event,this.render.pickup.component_id,this.render))
-						return;
-				}catch(e){
-					console.log("Execute pickupmousedown processor error,component id is "+this.render.pickup.component_id.toString());
-					console.log(e.toString());
+				if(ep.pickupmousedown(event,this.render.pickup.component_id,this.render))
 					return;
-				}
-		}
+		
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
 		ep=this.render.component_event_processor[component_id];			
-		if(typeof(ep.mousedown)=="function"){
-			try{
-				if(ep.mousedown(event,component_id,this.render))
-					return;
-			}catch(e){
-				console.log("Execute mousedown processor error,component id is "+component_id.toString());
-				console.log(e.toString());
+		if(typeof(ep.mousedown)=="function")
+			if(ep.mousedown(event,component_id,this.render))
 				return;
-			}	
-		}
+		
 	};
 	this.render.system_event_processor.pickupmouseup	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.mouseup			=function(event,render)						{return false;};
@@ -149,6 +138,10 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.mouse_down_flag_array[event.button]=false;
+		this.mouse_down_flag=false;
+		for(var i=0,ni=this.mouse_down_flag_array.length;i<ni;i++)
+			this.mouse_down_flag|=this.mouse_down_flag_array[i];
 		
 		var ep,component_id;
 		
@@ -161,31 +154,17 @@ function construct_event_listener(my_render)
 					return;
 		if(this.render.system_event_processor.mouseup(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null){
+		if((ep=this.caculate_pickup_event_processor())!=null)
 			if(typeof(ep.pickupmouseup)=="function")
-				try{
-					if(ep.pickupmouseup(event,this.render.pickup.component_id,this.render))
-						return;
-				}catch(e){
-					console.log("Execute pickupmouseup processor error,component id is "+this.render.pickup.component_id.toString());
-					console.log(e.toString());
+				if(ep.pickupmouseup(event,this.render.pickup.component_id,this.render))
 					return;
-				}
-		}
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
 		ep=this.render.component_event_processor[component_id];
-		if(typeof(ep.mouseup)=="function"){
-			try{
-				if(ep.mouseup(event,component_id,this.render))
-					return;
-			}catch(e){
-				console.log("Execute mouseup processor error,component id is "+component_id.toString());
-				console.log(e.toString());
+		if(typeof(ep.mouseup)=="function")
+			if(ep.mouseup(event,component_id,this.render))
 				return;
-			}
-		}
 	};
 	this.render.system_event_processor.pickupdblclick	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.dblclick			=function(event,render)						{return false;};
@@ -193,7 +172,7 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
-		
+	
 		var ep,component_id;
 		
 		event.preventDefault();
@@ -205,31 +184,17 @@ function construct_event_listener(my_render)
 					return;
 		if(this.render.system_event_processor.dblclick(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null){
+		if((ep=this.caculate_pickup_event_processor())!=null)
 			if(typeof(ep.pickupdblclick)=="function")
-				try{
-					if(ep.pickupdblclick(event,this.render.pickup.component_id,this.render))
-						return;
-				}catch(e){
-					console.log("Execute pickupdblclick processor error,component id is "+this.render.pickup.component_id.toString());
-					console.log(e.toString());
+				if(ep.pickupdblclick(event,this.render.pickup.component_id,this.render))
 					return;
-				}
-		}
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
 		ep=this.render.component_event_processor[component_id];	
-		if(typeof(ep.dblclick)=="function"){
-			try{
-				if(ep.dblclick(event,component_id,this.render))
-					return;
-			}catch(e){
-				console.log("Execute dblclick processor error,component id is "+component_id.toString());
-				console.log(e.toString());
+		if(typeof(ep.dblclick)=="function")
+			if(ep.dblclick(event,component_id,this.render))
 				return;
-			}
-		}
 	};
 	this.render.system_event_processor.pickupmousewheel	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.mousewheel		=function(event,render)						{return false;};
@@ -248,39 +213,151 @@ function construct_event_listener(my_render)
 					return;
 		if(this.render.system_event_processor.mousewheel(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null){
+		if((ep=this.caculate_pickup_event_processor())!=null)
 			if(typeof(ep.pickupmousewheel)=="function")
-				try{
-					if(ep.pickupmousewheel(event,this.render.pickup.component_id,this.render))
-						return;
-				}catch(e){
-					console.log("Execute pickupmousewheel processor error,component id is "+this.render.pickup.component_id.toString());
-					console.log(e.toString());
+				if(ep.pickupmousewheel(event,this.render.pickup.component_id,this.render))
 					return;
-				}
-		}
+
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
 		ep=this.render.component_event_processor[component_id];			
-		if(typeof(ep.mousewheel)=="function"){
-			try{
-				if(ep.mousewheel(event,component_id,this.render))
-					return;
-			}catch(e){
-				console.log("Execute mousewheel processor error,component id is "+component_id.toString());
-				console.log(e.toString());
+		if(typeof(ep.mousewheel)=="function")
+			if(ep.mousewheel(event,component_id,this.render))
 				return;
-			}
-		}
 	};
+	
+	this.render.system_event_processor.pickupmouseover	=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.mouseover		=function(event,render)						{return false;};
+	this.mouseover_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+		
+		var ep,component_id;
+		event.preventDefault();
+		this.set_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupmouseover(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.mouseover(event,this.render))
+			return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupmouseover)=="function")
+				if(ep.pickupmouseover(event,this.render.pickup.component_id,this.render))
+					return;
+
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
+			return;
+		this.render.event_component.mouse.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];			
+		if(typeof(ep.mouseover)=="function")
+			if(ep.mouseover(event,component_id,this.render))
+				return;
+	};
+	
+	this.render.system_event_processor.pickupmouseout=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.mouseout		=function(event,render)						{return false;};
+	this.mouseout_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+		
+		var ep,component_id;
+		event.preventDefault();
+		this.set_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupmouseout(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.mouseout(event,this.render))
+			return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupmouseout)=="function")
+				if(ep.pickupmouseout(event,this.render.pickup.component_id,this.render))
+					return;
+
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
+			return;
+		this.render.event_component.mouse.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];			
+		if(typeof(ep.mouseout)=="function")
+			if(ep.mouseout(event,component_id,this.render))
+				return;
+	};
+	
+	this.render.system_event_processor.pickupmouseenter	=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.mouseenter		=function(event,render)						{return false;};
+	this.mouseenter_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+		
+		var ep,component_id;
+		event.preventDefault();
+		this.set_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupmouseenter(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.mouseenter(event,this.render))
+			return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupmouseenter)=="function")
+				if(ep.pickupmouseenter(event,this.render.pickup.component_id,this.render))
+					return;
+
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
+			return;
+		this.render.event_component.mouse.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];			
+		if(typeof(ep.mouseenter)=="function")
+			if(ep.mouseenter(event,component_id,this.render))
+				return;
+	};
+	
+	this.render.system_event_processor.pickupmouseleave	=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.mouseleave		=function(event,render)						{return false;};
+	this.mouseleave_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+		
+		var ep,component_id;
+		event.preventDefault();
+		this.set_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupmouseleave(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.mouseleave(event,this.render))
+			return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupmouseleave)=="function")
+				if(ep.pickupmouseleave(event,this.render.pickup.component_id,this.render))
+					return;
+
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
+			return;
+		this.render.event_component.mouse.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];			
+		if(typeof(ep.mouseleave)=="function")
+			if(ep.mouseleave(event,component_id,this.render))
+				return;
+	};	
+
 	this.render.system_event_processor.pickuptouchstart	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.touchstart		=function(event,render)						{return false;};
 	this.touchstart_event_listener=function (event)
 	{
 		if(this.render.terminate_flag)
 			return;
-		
+
 		var ep,component_id;
 		event.preventDefault();
 		this.set_mobile_render_view(event);
@@ -291,32 +368,18 @@ function construct_event_listener(my_render)
 					return;
 		if(this.render.system_event_processor.touchstart(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null){
+		if((ep=this.caculate_pickup_event_processor())!=null)
 			if(typeof(ep.pickuptouchstart)=="function")
-				try{
-					if(ep.pickuptouchstart(event,this.render.pickup.component_id,this.render))
-						return;
-				}catch(e){
-					console.log("Execute pickuptouchstart processor error,component id is "
-						+this.render.pickup.component_id.toString());
-					console.log(e.toString());
+				if(ep.pickuptouchstart(event,this.render.pickup.component_id,this.render))
 					return;
-				}
-		};
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.touch))<0)
 			return;
 		this.render.event_component.touch.component_name=component_id;
 		ep=this.render.component_event_processor[component_id];	
-		if(typeof(ep.touchstart)=="function"){
-			try{
-				if(ep.touchstart(event,component_id,this.render))
-					return;
-			}catch(e){
-				console.log("Execute touchstart processor error,component id is "+component_id.toString());
-				console.log(e.toString());
+		if(typeof(ep.touchstart)=="function")
+			if(ep.touchstart(event,component_id,this.render))
 				return;
-			}
-		}
+
 	};
 	this.render.system_event_processor.pickuptouchend	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.touchend			=function(event,render)						{return false;};
@@ -324,7 +387,7 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
-		
+	
 		var ep,component_id;
 		event.preventDefault();
 		this.set_mobile_render_view(event);
@@ -335,32 +398,19 @@ function construct_event_listener(my_render)
 					return;
 		if(this.render.system_event_processor.touchend(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null){
+		if((ep=this.caculate_pickup_event_processor())!=null)
 			if(typeof(ep.pickuptouchend)=="function")
-				try{
-					if(ep.pickuptouchend(event,this.render.pickup.component_id,this.render))
-						return;
-				}catch(e){
-					console.log("Execute pickuptouchend processor error,component id is "
-								+this.render.pickup.component_id.toString());
-					console.log(e.toString());
+				if(ep.pickuptouchend(event,this.render.pickup.component_id,this.render))
 					return;
-				}
-		}
+
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.touch))<0)
 			return;
 		this.render.event_component.touch.component_name=component_id;
 		ep=this.render.component_event_processor[component_id];	
-		if(typeof(ep.touchend)=="function"){
-			try{
-				if(ep.touchend(event,component_id,this.render))
-					return;
-			}catch(e){
-				console.log("Execute touchend processor error,component id is "+component_id.toString());
-				console.log(e.toString());
+		if(typeof(ep.touchend)=="function")
+			if(ep.touchend(event,component_id,this.render))
 				return;
-			}
-		}
+
 	};
 	this.render.system_event_processor.pickuptouchmove	=function(event,render,pickup_component_id){return false;};
 	this.render.system_event_processor.touchmove		=function(event,render){return false;};
@@ -368,7 +418,7 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
-		
+	
 		var ep,component_id;
 		event.preventDefault();
 		this.set_mobile_render_view(event);
@@ -379,33 +429,18 @@ function construct_event_listener(my_render)
 					return;
 		if(this.render.system_event_processor.touchmove(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null){
+		if((ep=this.caculate_pickup_event_processor())!=null)
 			if(typeof(ep.pickuptouchmove)=="function")
-				try{
-					if(ep.pickuptouchmove(
-							event,this.render.pickup.component_id,this.render))
-						return;
-				}catch(e){
-					console.log("Execute pickuptouchmove processor error,component id is "
-								+this.render.pickup.component_id.toString());
-					console.log(e.toString());
+				if(ep.pickuptouchmove(event,this.render.pickup.component_id,this.render))
 					return;
-				}
-		}
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.touch))<0)
 			return;
 		this.render.event_component.touch.component_name=component_id;
 		ep=this.render.component_event_processor[component_id];	
-		if(typeof(ep.touchmove)=="function"){
-			try{
-				if(ep.touchmove(event,component_id,this.render))
-					return;
-			}catch(e){
-				console.log("Execute touchmove processor error,component id is "+component_id.toString());
-				console.log(e.toString());
+		if(typeof(ep.touchmove)=="function")
+			if(ep.touchmove(event,component_id,this.render))
 				return;
-			}
-		}
+
 	};
 	
 	this.render.system_event_processor.pickupkeydown	=function(event,render,pickup_component_id){return false;};
@@ -414,7 +449,7 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
-		
+	
 		var ep,component_id;
 		event.preventDefault();
 		
@@ -424,31 +459,19 @@ function construct_event_listener(my_render)
 					return;
 		if(this.render.system_event_processor.keydown(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null){
+		if((ep=this.caculate_pickup_event_processor())!=null)
 			if(typeof(ep.pickupkeydown)=="function")
-				try{
-					if(ep.pickupkeydown(event,this.render.pickup.component_id,this.render))
-						return;
-				}catch(e){
-					console.log("Execute pickupkeydown processor error,component id is "+this.render.pickup.component_id.toString());
-					console.log(e.toString());
+				if(ep.pickupkeydown(event,this.render.pickup.component_id,this.render))
 					return;
-				}
-		}
+
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.keyboard))<0)
 			return;
 		this.render.event_component.keyboard.component_name=component_id;
 		ep=this.render.component_event_processor[component_id];	
-		if(typeof(ep.keydown)=="function"){
-			try{
-				if(ep.keydown(event,component_id,this.render))
-					return;
-			}catch(e){
-				console.log("Execute keydown processor error,component id is "+component_id.toString());
-				console.log(e.toString());
+		if(typeof(ep.keydown)=="function")
+			if(ep.keydown(event,component_id,this.render))
 				return;
-			}
-		}
+
 	};
 	this.render.system_event_processor.pickupkeypress	=function(event,render,pickup_component_id){return false;};
 	this.render.system_event_processor.keypress			=function(event,render){return false;};
@@ -456,7 +479,7 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
-		
+	
 		var ep,component_id;
 		event.preventDefault();
 
@@ -466,31 +489,18 @@ function construct_event_listener(my_render)
 					return;
 		if(this.render.system_event_processor.keypress(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null){
+		if((ep=this.caculate_pickup_event_processor())!=null)
 			if(typeof(ep.pickupkeypress)=="function")
-				try{
-					if(ep.pickupkeypress(event,this.render.pickup.component_id,this.render))
-						return;
-				}catch(e){
-					console.log("Execute pickupkeypress processor error,component id is "+this.render.pickup.component_id.toString());
-					console.log(e.toString());
+				if(ep.pickupkeypress(event,this.render.pickup.component_id,this.render))
 					return;
-				};
-		}
+		
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.keyboard))<0)
 			return;
 		this.render.event_component.keyboard.component_name=component_id;
 		ep=this.render.component_event_processor[component_id];	
-		if(typeof(ep.keypress)=="function"){
-			try{
-				if(ep.keypress(event,component_id,this.render))
-					return;
-			}catch(e){
-				console.log("Execute keypress processor error,component id is "+component_id.toString());
-				console.log(e.toString());
+		if(typeof(ep.keypress)=="function")
+			if(ep.keypress(event,component_id,this.render))
 				return;
-			}
-		}
 	};
 	
 	this.render.system_event_processor.pickupkeyup	=function(event,render,pickup_component_id){return false;};
@@ -499,42 +509,41 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
-		
 		var ep,component_id;
 		event.preventDefault();
 		
+		switch(event.keyCode){
+		case 48://0
+		case 49://1
+		case 50://2
+		case 51://3
+		case 52://4
+		case 53://5
+		case 54://6
+		case 55://7
+		case 56://8
+		case 57://9
+			this.render.pickup_array[event.keyCode-48]=this.render.pickup.fork();
+			break;
+		}
+
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
 				if(this.render.system_event_processor.pickupkeyup(event,this.render.pickup.component_id,this.render))
 					return;
 		if(this.render.system_event_processor.keyup(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null){
+		if((ep=this.caculate_pickup_event_processor())!=null)
 			if(typeof(ep.pickupkeyup)=="function")
-				try{
-					if(ep.pickupkeyup(event,this.render.pickup.component_id,this.render))
-						return;
-				}catch(e){
-					console.log("Execute pickupkeyup processor error,component id is "
-								+this.render.pickup.component_id.toString());
-					console.log(e.toString());
+				if(ep.pickupkeyup(event,this.render.pickup.component_id,this.render))
 					return;
-				}
-		}
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.keyboard))<0)
 			return;
 		this.render.event_component.keyboard.component_name=component_id;
 		ep=this.render.component_event_processor[component_id];	
-		if(typeof(ep.keyup)=="function"){
-			try{
-				if(ep.keyup(event,component_id,this.render))
-					return;
-			}catch(e){
-				console.log("Execute keyup processor error,component id is "+component_id.toString());
-				console.log(e.toString());
+		if(typeof(ep.keyup)=="function")
+			if(ep.keyup(event,component_id,this.render))
 				return;
-			}
-		}
 	};
 	this.render.system_event_processor.pickupcontextmenu=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.contextmenu		=function(event,render)						{return false;};
@@ -542,7 +551,7 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
-		
+	
 		var ep,component_id;
 
 		event.preventDefault();
@@ -553,31 +562,17 @@ function construct_event_listener(my_render)
 					return;
 		if(this.render.system_event_processor.contextmenu(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null){
+		if((ep=this.caculate_pickup_event_processor())!=null)
 			if(typeof(ep.pickupcontextmenu)=="function")
-				try{
-					if(ep.pickupcontextmenu(event,this.render.pickup.component_id,this.render))
-						return;
-				}catch(e){
-					console.log("Execute pickupcontextmenuprocessor error,component id is "+this.render.pickup.component_id.toString());
-					console.log(e.toString());
+				if(ep.pickupcontextmenu(event,this.render.pickup.component_id,this.render))
 					return;
-				}
-		}
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
 		ep=this.render.component_event_processor[component_id];
-		if(typeof(ep.contextmenu)=="function"){
-			try{
-				if(ep.contextmenu(event,component_id,this.render))
-					return;
-			}catch(e){
-				console.log("Execute contextmenu processor error,component id is "+component_id.toString());
-				console.log(e.toString());
+		if(typeof(ep.contextmenu)=="function")
+			if(ep.contextmenu(event,component_id,this.render))
 				return;
-			}	
-		}
 	};
 	this.render.system_event_processor.pickupgamepadconnected	=function(event,render,pickup_component_id){return false;};
 	this.render.system_event_processor.gamepadconnected			=function(event,render){return false;};
@@ -585,7 +580,7 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
-		
+	
 		var ep,component_id;
 		event.preventDefault();
 		
@@ -595,33 +590,18 @@ function construct_event_listener(my_render)
 					return;
 		if(this.render.system_event_processor.gamepadconnected(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null){
+		if((ep=this.caculate_pickup_event_processor())!=null)
 			if(typeof(ep.pickupgamepadconnected)=="function")
-				try{
-					if(ep.pickupgamepadconnected(
-							event,this.render.pickup.component_id,this.render))
-						return;
-				}catch(e){
-					console.log("Execute pickupgamepadconnected processor error,component id is "
-								+this.render.pickup.component_id.toString());
-					console.log(e.toString());
+				if(ep.pickupgamepadconnected(event,this.render.pickup.component_id,this.render))
 					return;
-				}
-		}
+
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.gamepad))<0)
 			return;
 		this.render.event_component.gamepad.component_name=component_id;
 		ep=this.render.component_event_processor[component_id];	
-		if(typeof(ep.gamepadconnected)=="function"){
-			try{
-				if(ep.gamepadconnected(event,component_id,this.render))
-					return;
-			}catch(e){
-				console.log("Execute gamepadconnected processor error,component id is "+component_id.toString());
-				console.log(e.toString());
+		if(typeof(ep.gamepadconnected)=="function")
+			if(ep.gamepadconnected(event,component_id,this.render))
 				return;
-			}
-		}
 	};
 	this.render.system_event_processor.pickupgamepaddisconnected	=function(event,render,pickup_component_id){return false;};
 	this.render.system_event_processor.gamepaddisconnected			=function(event,render){return false;};
@@ -629,7 +609,7 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
-		
+
 		var ep,component_id;
 		event.preventDefault();
 		
@@ -639,33 +619,18 @@ function construct_event_listener(my_render)
 					return;
 		if(this.render.system_event_processor.gamepaddisconnected(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null){
+		if((ep=this.caculate_pickup_event_processor())!=null)
 			if(typeof(ep.pickupgamepaddisconnected)=="function")
-				try{
-					if(ep.pickupgamepaddisconnected(
-							event,this.render.pickup.component_id,this.render))
-						return;
-				}catch(e){
-					console.log("Execute pickupgamepaddisconnected processor error,component id is "
-								+this.render.pickup.component_id.toString());
-					console.log(e.toString());
+				if(ep.pickupgamepaddisconnected(event,this.render.pickup.component_id,this.render))
 					return;
-				}
-		}
+
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.gamepad))<0)
 			return;
 		this.render.event_component.gamepad.component_name=component_id;
 		ep=this.render.component_event_processor[component_id];	
-		if(typeof(ep.gamepaddisconnected)=="function"){
-			try{
-				if(ep.gamepaddisconnected(event,component_id,this.render))
-					return;
-			}catch(e){
-				console.log("Execute gamepaddisconnected processor error,component id is "+component_id.toString());
-				console.log(e.toString());
+		if(typeof(ep.gamepaddisconnected)=="function")
+			if(ep.gamepaddisconnected(event,component_id,this.render))
 				return;
-			}
-		}
 	};
 
 	var cur=this;
@@ -699,6 +664,30 @@ function construct_event_listener(my_render)
 		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.mousewheel_event_listener(event);
+	};
+	function mouseleave_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.mouseleave_event_listener(event);
+	};
+	function mouseenter_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.mouseenter_event_listener(event);
+	};
+	function mouseout_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.mouseout_event_listener(event);
+	};
+	function mouseover_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.mouseover_event_listener(event);
 	};
 	function touchstart_fun(event)
 	{
@@ -761,6 +750,10 @@ function construct_event_listener(my_render)
 	this.render.canvas.addEventListener(	"dblclick",				dblclick_fun,			false);
 	this.render.canvas.addEventListener(	"mousewheel",			mousewheel_fun,			false);
 	this.render.canvas.addEventListener(	"DOMMouseScroll",		mousewheel_fun,			false);
+	this.render.canvas.addEventListener(	"mouseleave",			mouseleave_fun,			false);
+	this.render.canvas.addEventListener(	"mouseenter",			mouseenter_fun,			false);
+	this.render.canvas.addEventListener(	"mouseout",				mouseout_fun,			false);
+	this.render.canvas.addEventListener(	"mouseover",			mouseover_fun,			false);
 	
 	this.render.canvas.addEventListener(	"touchstart",			touchstart_fun,			false);
 	this.render.canvas.addEventListener(	"touchend",				touchend_fun,			false);
@@ -790,6 +783,10 @@ function construct_event_listener(my_render)
 				this.render.canvas.removeEventListener(	"dblclick",				dblclick_fun);
 				this.render.canvas.removeEventListener(	"mousewheel",			mousewheel_fun);
 				this.render.canvas.removeEventListener(	"DOMMouseScroll",		mousewheel_fun);
+				this.render.canvas.removeEventListener(	"mouseleave",			mouseleave_fun);
+				this.render.canvas.removeEventListener(	"mouseenter",			mouseenter_fun);
+				this.render.canvas.removeEventListener(	"mouseout",				mouseout_fun);
+				this.render.canvas.removeEventListener(	"mouseover",			mouseover_fun);
 				
 				this.render.canvas.removeEventListener(	"touchstart",			touchstart_fun);
 				this.render.canvas.removeEventListener(	"touchend",				touchend_fun);
@@ -808,6 +805,11 @@ function construct_event_listener(my_render)
 		mouseup_fun				=null;
 		dblclick_fun			=null;
 		mousewheel_fun			=null;
+		mouseleave_fun			=null;
+		mouseenter_fun			=null;
+		mouseout_fun			=null;
+		mouseover_fun			=null;
+		
 		touchstart_fun			=null;
 		touchend_fun			=null;
 		touchmove_fun			=null;
@@ -842,6 +844,22 @@ function construct_event_listener(my_render)
 		this.render.system_event_processor.pickupmousewheel				=null;
 		this.render.system_event_processor.mousewheel					=null;
 		this.mousewheel_event_listener									=null;
+
+		this.render.system_event_processor.pickupmouseleave				=null;
+		this.render.system_event_processor.mouseleave					=null;
+		this.mouseleave_event_listener									=null;
+		
+		this.render.system_event_processor.pickupmouseenter				=null;
+		this.render.system_event_processor.mouseenter					=null;
+		this.mouseenter_event_listener									=null;
+		
+		this.render.system_event_processor.pickupmouseout				=null;
+		this.render.system_event_processor.mouseout						=null;
+		this.mouseout_event_listener									=null;
+		
+		this.render.system_event_processor.pickupmouseover				=null;
+		this.render.system_event_processor.mouseover					=null;
+		this.mouseover_event_listener									=null;
 		
 		this.render.system_event_processor.pickuptouchstart				=null;
 		this.render.system_event_processor.touchstart					=null;

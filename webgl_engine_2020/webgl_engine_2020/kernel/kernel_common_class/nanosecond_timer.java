@@ -18,6 +18,6 @@ public class nanosecond_timer
 	}
 	public nanosecond_timer()
 	{
-		current_time=absolute_nanoseconds();
+		refresh_timer();
 	}
 }

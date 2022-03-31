@@ -18,6 +18,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="E:/water_all/library/fastjson-1.2.68.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExA3DSJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExACISJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExAdvGeomJava.jar"/>
@@ -26,27 +27,34 @@
 	<classpathentry kind="lib" path="C:/cadex/java/CadExColladaJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExCoreJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExCreoJava.jar"/>
+	<classpathentry kind="lib" path="C:/cadex/java/CadExDS3DXMLJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExDWGJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExDXFJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExFBXJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExGLTFJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExIFCJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExIGESJava.jar"/>
+	<classpathentry kind="lib" path="C:/cadex/java/CadExINVJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExJTJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExMeshJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExNXJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExOBJJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExParaJava.jar"/>
+	<classpathentry kind="lib" path="C:/cadex/java/CadExPLYJava.jar"/>
+	<classpathentry kind="lib" path="C:/cadex/java/CadExPRCJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExRhinoJava.jar"/>
+	<classpathentry kind="lib" path="C:/cadex/java/CadExSLDEJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExSLDJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExSTEPJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExSTLJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExU3DJava.jar"/>
+	<classpathentry kind="lib" path="C:/cadex/java/CadExUSDJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExViewD3DJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExViewJava.jar"/>
+	<classpathentry kind="lib" path="C:/cadex/java/CadExViewOpenGlJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExVRMLJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExX3DJava.jar"/>
+	<classpathentry kind="lib" path="C:/cadex/java/CadExX3DPDFJava.jar"/>
 	<classpathentry kind="lib" path="C:/cadex/java/CadExX3MFJava.jar"/>
-	<classpathentry kind="lib" path="E:/water_all/library/fastjson-1.2.68.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -43,7 +43,7 @@ public class operate_show_hide_parameter
 		}
 		
 		if(comp_cont.component_number<=0)
-			comp_cont.add_selected_component(ek.component_cont.root_component);
+			comp_cont.add_selected_component(ek.component_cont.root_component,false);
 		
 		if(comp_cont.component_number<=0)
 			comp_cont.add_component(ek.component_cont.root_component);

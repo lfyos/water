@@ -19,7 +19,7 @@ public class graphics_buffer_object_for_edge
 					face_loop fl=fa.fa_curve.f_loop[loop_id];
 					for(int edge_id=0,edge_number=fl.edge_number();edge_id<edge_number;edge_id++){
 						face_edge fe=fl.edge[edge_id];
-						int step=1;
+						int step;
 						switch(fe.curve_type) {
 						case "pickup_point_set":
 						case "render_point_set":
@@ -27,6 +27,9 @@ public class graphics_buffer_object_for_edge
 						case "segment":
 							step=2;
 							break;
+						default:
+							step=1;
+							break;	
 						}
 						String curve_type_id=Integer.toString(curve_type.curve_type_id(fe.curve_type));
 						
@@ -36,20 +39,17 @@ public class graphics_buffer_object_for_edge
 						
 						for(int i=0,ni=fe.total_edge_primitive_number-1;i<ni;i+=step){
 							if((step==2)||(i==0)) {
-								tessellation_location_0		=p_i.get_edge_location_data	(body_id,face_id,loop_id,edge_id,0);
-								tessellation_extra_data_0	=p_i.get_edge_extra_data	(body_id,face_id,loop_id,edge_id,0);
-								tessellation_material_0		=p_i.get_edge_material		(body_id,face_id,loop_id,edge_id,0);
-								tessellation_location_1		=p_i.get_edge_location_data	(body_id,face_id,loop_id,edge_id,1);
-								tessellation_extra_data_1	=p_i.get_edge_extra_data	(body_id,face_id,loop_id,edge_id,1);
-								tessellation_material_1		=p_i.get_edge_material		(body_id,face_id,loop_id,edge_id,1);
+								tessellation_location_0		=p_i.get_edge_location_data	(body_id,face_id,loop_id,edge_id,i+0);
+								tessellation_extra_data_0	=p_i.get_edge_extra_data	(body_id,face_id,loop_id,edge_id,i+0);
+								tessellation_material_0		=p_i.get_edge_material		(body_id,face_id,loop_id,edge_id,i+0);
 							}else{
 								tessellation_location_0		=tessellation_location_1;
 								tessellation_extra_data_0	=tessellation_extra_data_1;
 								tessellation_material_0		=tessellation_material_1;
-								tessellation_location_1		=p_i.get_edge_location_data	(body_id,face_id,loop_id,edge_id,i+1);
-								tessellation_extra_data_1	=p_i.get_edge_extra_data	(body_id,face_id,loop_id,edge_id,i+1);
-								tessellation_material_1		=p_i.get_edge_material		(body_id,face_id,loop_id,edge_id,i+1);
 							}
+							tessellation_location_1			=p_i.get_edge_location_data	(body_id,face_id,loop_id,edge_id,i+1);
+							tessellation_extra_data_1		=p_i.get_edge_extra_data	(body_id,face_id,loop_id,edge_id,i+1);
+							tessellation_material_1			=p_i.get_edge_material		(body_id,face_id,loop_id,edge_id,i+1);
 							
 							int material_id=caculate_material_id.caculate(
 									my_part.driver,max_material_id,my_part,"edge",body_id,face_id,loop_id,edge_id,

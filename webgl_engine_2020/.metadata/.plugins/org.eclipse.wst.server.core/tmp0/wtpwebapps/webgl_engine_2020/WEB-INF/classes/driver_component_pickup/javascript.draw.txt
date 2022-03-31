@@ -2,12 +2,14 @@
 	
 ],
 
-function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
-			render_buffer_id,	component_data_array,	project_matrix,			do_render_number,	render)
+function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
+			render_buffer_id,	component_data_array,	project_matrix,			view_port,	do_render_number,
+			render)
 {
 	var gl								=render.gl;
 	var shader_object					=render.render_program.render_program[render_id];
 	var shader_program					=shader_object.shader_program;
+	var shader_data						=shader_object.shader_data;
 	var part_buffer_object				=render.buffer_object.buffer_object[render_id][part_id];
 	
 	var component_location				=render.component_location_data;
@@ -75,6 +77,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		gl.bindFramebuffer(gl.FRAMEBUFFER,tp.frame);
 		gl.readBuffer(gl.COLOR_ATTACHMENT0);
 		gl.readPixels(0,0,8,1,gl.RGBA,gl.UNSIGNED_BYTE,pixels);
+		
 		render.pickup.component_id	=render.utility.decode_integer_from_pixel(pixels[ 0],pixels[ 1],pixels[ 2],pixels[ 3]);
 			
 		render.pickup.body_id		=render.utility.decode_integer_from_pixel(pixels[ 4],pixels[ 5],pixels[ 6],pixels[ 7]);
@@ -107,7 +110,252 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 						render.pickup.buffer_id	=p[0][2];
 					}
 		}
-		render.pickup.read_time_length=(new Date()).getTime()-start_time;
+		render.pickup.pickup_time=(new Date()).getTime();
+		render.pickup.read_time_length=render.pickup.pickup_time-start_time;
+
+		var ep;
+		
+		if(render.pickup.compare(tp.pickup)){
+			tp.pickup=render.pickup.fork();
+			return;
+		}
+		if((render.pickup.pickup_time-tp.pickup.pickup_time)<part_initialize_data)
+			return;
+		var old_pickup=tp.last_pickup;
+		tp.last_pickup=render.pickup.fork();
+		
+		if(render.pickup.component_id!=old_pickup.component_id){
+			do{
+				if(old_pickup.component_id<0)
+					break;
+				if(typeof(ep=render.component_event_processor[old_pickup.component_id])!="object")
+					break;
+				if(typeof(ep.pickupleave_component)=="function")
+					ep.pickupleave_component(render.pickup,old_pickup,render);
+				if(old_pickup.body_id<0)
+					break;
+				if(typeof(ep.pickupleave_body)=="function")
+					ep.pickupleave_body(render.pickup,old_pickup,render);
+				if(old_pickup.face_id<0)
+					break;
+				if(typeof(ep.pickupleave_face)=="function")
+					ep.pickupleave_face(render.pickup,old_pickup,render);
+				if(old_pickup.loop_id<0)
+					break;
+				if(typeof(ep.pickupleave_loop)=="function")
+					ep.pickupleave_loop(render.pickup,old_pickup,render);
+				if(old_pickup.edge_id<0)
+					break;
+				if(typeof(ep.pickupleave_edge)=="function")
+					ep.pickupleave_edge(render.pickup,old_pickup,render);
+				if(old_pickup.point_id<0)
+					break;
+				if(typeof(ep.pickupleave_point)=="function")
+					ep.pickupleave_point(render.pickup,old_pickup,render);
+			}while(false);
+			
+			do{
+				if(render.pickup.component_id<0)
+					break;
+				if(typeof(ep=render.component_event_processor[render.pickup.component_id])!="object")
+					break;
+				if(typeof(ep.pickupenter_component)=="function")
+					ep.pickupenter_component(render.pickup,old_pickup,render);
+				if(render.pickup.body_id<0)
+					break;
+				if(typeof(ep.pickupenter_body)=="function")
+					ep.pickupenter_body(render.pickup,old_pickup,render);
+				if(render.pickup.face_id<0)
+					break;
+				if(typeof(ep.pickupenter_face)=="function")
+					ep.pickupenter_face(render.pickup,old_pickup,render);
+				if(render.pickup.loop_id<0)
+					break;
+				if(typeof(ep.pickupenter_loop)=="function")
+					ep.pickupenter_loop(render.pickup,old_pickup,render);
+				if(render.pickup.edge_id<0)
+					break;
+				if(typeof(ep.pickupenter_edge)=="function")
+					ep.pickupenter_edge(render.pickup,old_pickup,render);
+				if(render.pickup.point_id<0)
+					break;
+				if(typeof(ep.pickupenter_point)=="function")
+					ep.pickupenter_point(render.pickup,old_pickup,render);
+			}while(false);
+		}else if(render.pickup.body_id!=old_pickup.body_id){
+			do{
+				if((old_pickup.component_id<0)||(old_pickup.body_id<0))
+					break;
+				if(typeof(ep=render.component_event_processor[old_pickup.component_id])!="object")
+					break;
+				if(typeof(ep.pickupleave_body)=="function")
+					ep.pickupleave_body(render.pickup,old_pickup,render);
+				if(old_pickup.face_id<0)
+					break;
+				if(typeof(ep.pickupleave_face)=="function")
+					ep.pickupleave_face(render.pickup,old_pickup,render);
+				if(old_pickup.loop_id<0)
+					break;
+				if(typeof(ep.pickupleave_loop)=="function")
+					ep.pickupleave_loop(render.pickup,old_pickup,render);
+				if(old_pickup.edge_id<0)
+					break;
+				if(typeof(ep.pickupleave_edge)=="function")
+					ep.pickupleave_edge(render.pickup,old_pickup,render);
+				if(old_pickup.point_id<0)
+					break;
+				if(typeof(ep.pickupleave_point)=="function")
+					ep.pickupleave_point(render.pickup,old_pickup,render);
+			}while(false);
+			
+			do{
+				if((render.pickup.component_id<0)||(render.pickup.body_id<0))
+					break;
+				if(typeof(ep=render.component_event_processor[render.pickup.component_id])!="object")
+					break;
+				if(typeof(ep.pickupenter_body)=="function")
+					ep.pickupenter_body(render.pickup,old_pickup,render);
+				if(render.pickup.face_id<0)
+					break;
+				if(typeof(ep.pickupenter_face)=="function")
+					ep.pickupenter_face(render.pickup,old_pickup,render);
+				if(render.pickup.loop_id<0)
+					break;
+				if(typeof(ep.pickupenter_loop)=="function")
+					ep.pickupenter_loop(render.pickup,old_pickup,render);
+				if(render.pickup.edge_id<0)
+					break;
+				if(typeof(ep.pickupenter_edge)=="function")
+					ep.pickupenter_edge(render.pickup,old_pickup,render);
+				if(render.pickup.point_id<0)
+					break;
+				if(typeof(ep.pickupenter_point)=="function")
+					ep.pickupenter_point(render.pickup,old_pickup,render);
+			}while(false);
+		}else if(render.pickup.face_id!=old_pickup.face_id){
+			do{
+				if((old_pickup.component_id<0)||(old_pickup.body_id<0)||(old_pickup.face_id<0))
+					break;
+				if(typeof(ep=render.component_event_processor[old_pickup.component_id])!="object")
+					break;
+				if(typeof(ep.pickupleave_face)=="function")
+					ep.pickupleave_face(render.pickup,old_pickup,render);
+				if(old_pickup.loop_id<0)
+					break;
+				if(typeof(ep.pickupleave_loop)=="function")
+					ep.pickupleave_loop(render.pickup,old_pickup,render);
+				if(old_pickup.edge_id<0)
+					break;
+				if(typeof(ep.pickupleave_edge)=="function")
+					ep.pickupleave_edge(render.pickup,old_pickup,render);
+				if(old_pickup.point_id<0)
+					break;
+				if(typeof(ep.pickupleave_point)=="function")
+					ep.pickupleave_point(render.pickup,old_pickup,render);
+			}while(false);
+			do{
+				if((render.pickup.component_id<0)||(render.pickup.body_id<0)||(render.pickup.face_id<0))
+					break;
+				if(typeof(ep=render.component_event_processor[render.pickup.component_id])!="object")
+					break;
+				if(typeof(ep.pickupenter_face)=="function")
+					ep.pickupenter_face(render.pickup,old_pickup,render);
+				if(render.pickup.loop_id<0)
+					break;
+				if(typeof(ep.pickupenter_loop)=="function")
+					ep.pickupenter_loop(render.pickup,old_pickup,render);
+				if(render.pickup.edge_id<0)
+					break;
+				if(typeof(ep.pickupenter_edge)=="function")
+					ep.pickupenter_edge(render.pickup,old_pickup,render);
+				if(render.pickup.point_id<0)
+					break;
+				if(typeof(ep.pickupenter_point)=="function")
+					ep.pickupenter_point(render.pickup,old_pickup,render);
+			}while(false);
+		}else if(render.pickup.loop_id!=old_pickup.loop_id){
+			do{
+				if((old_pickup.component_id<0)||(old_pickup.body_id<0)||(old_pickup.face_id<0)||(old_pickup.loop_id<0))
+					break;
+				if(typeof(ep=render.component_event_processor[old_pickup.component_id])!="object")
+					break;
+				if(typeof(ep.pickupleave_loop)=="function")
+					ep.pickupleave_loop(render.pickup,old_pickup,render);
+				if(old_pickup.edge_id<0)
+					break;
+				if(typeof(ep.pickupleave_edge)=="function")
+					ep.pickupleave_edge(render.pickup,old_pickup,render);
+				if(old_pickup.point_id<0)
+					break;
+				if(typeof(ep.pickupleave_point)=="function")
+					ep.pickupleave_point(render.pickup,old_pickup,render);
+			}while(false);
+			
+			do{
+				if((render.pickup.component_id<0)||(render.pickup.body_id<0)||(render.pickup.face_id<0)||(render.pickup.loop_id<0))
+					break;
+				if(typeof(ep=render.component_event_processor[render.pickup.component_id])!="object")
+					break;
+				if(typeof(ep.pickupenter_loop)=="function")
+					ep.pickupenter_loop(render.pickup,old_pickup,render);
+				if(render.pickup.edge_id<0)
+					break;
+				if(typeof(ep.pickupenter_edge)=="function")
+					ep.pickupenter_edge(render.pickup,old_pickup,render);
+				if(render.pickup.point_id<0)
+					break;
+				if(typeof(ep.pickupenter_point)=="function")
+					ep.pickupenter_point(render.pickup,old_pickup,render);
+			}while(false);
+		}else if(render.pickup.edge_id!=old_pickup.edge_id){
+			do{
+				if((old_pickup.component_id<0)||(old_pickup.body_id<0)
+					||(old_pickup.face_id<0)||(old_pickup.loop_id<0)||(old_pickup.edge_id<0))
+						break;
+				if(typeof(ep=render.component_event_processor[old_pickup.component_id])!="object")
+					break;
+				if(typeof(ep.pickupleave_edge)=="function")
+					ep.pickupleave_edge(render.pickup,old_pickup,render);
+				if(old_pickup.point_id<0)
+					break;
+				if(typeof(ep.pickupleave_point)=="function")
+					ep.pickupleave_point(render.pickup,old_pickup,render);
+			}while(false);
+			
+			do{
+				if((render.pickup.component_id<0)||(render.pickup.body_id<0)
+					||(render.pickup.face_id<0)||(render.pickup.loop_id<0)||(render.pickup.edge_id<0))
+						break;
+				if(typeof(ep=render.component_event_processor[render.pickup.component_id])!="object")
+					break;
+				if(typeof(ep.pickupenter_edge)=="function")
+					ep.pickupenter_edge(render.pickup,old_pickup,render);
+				if(render.pickup.point_id<0)
+					break;
+				if(typeof(ep.pickupenter_point)=="function")
+					ep.pickupenter_point(render.pickup,old_pickup,render);
+			}while(false);
+		}else if(render.pickup.point_id!=old_pickup.point_id){
+			do{
+				if((old_pickup.component_id<0)||(old_pickup.body_id<0)||(old_pickup.face_id<0)
+					||(old_pickup.loop_id<0)||(old_pickup.edge_id<0)||(old_pickup.point_id<0))
+						break;
+				if(typeof(ep=render.component_event_processor[old_pickup.component_id])!="object")
+					break;
+				if(typeof(ep.pickupleave_point)=="function")
+					ep.pickupleave_point(render.pickup,old_pickup,render);
+			}while(false);
+			
+			do{
+				if((render.pickup.component_id<0)||(render.pickup.body_id<0)||(render.pickup.face_id<0)
+					||(render.pickup.loop_id<0)||(render.pickup.edge_id<0))
+						break;
+				if(typeof(ep=render.component_event_processor[render.pickup.component_id])!="object")
+					break;
+				if(typeof(ep.pickupenter_point)=="function")
+					ep.pickupenter_point(render.pickup,old_pickup,render);
+			}while(false);
+		}
 	}
 	
 	for(var i=0,n=component_data_array.length;i<n;i++){
@@ -118,7 +366,15 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,			part_id,
 		if(typeof(render.target_processor[target_id])=="undefined")
 			render.target_processor[target_id]=
 			{
-				after_target_render	:	pickup_driver_after_target_render
+				pickup				:	render.pickup.fork(),
+				last_pickup			:	render.pickup.fork(),
+				after_target_render	:	pickup_driver_after_target_render,
+				destroy				:	function(gl,tp,target_id)
+				{
+					tp.pickup=null;
+					tp.last_pickup=null;
+					tp.after_target_render=null;
+				}
 			}
 	}
 }

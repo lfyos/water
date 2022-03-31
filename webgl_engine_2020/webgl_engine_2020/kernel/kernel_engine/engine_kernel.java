@@ -8,6 +8,7 @@ import kernel_common_class.change_name;
 import kernel_common_class.nanosecond_timer;
 import kernel_component.component;
 import kernel_component.component_collector_stack;
+import kernel_create_top_assemble_part.create_assemble_part;
 import kernel_driver.modifier_container;
 import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
@@ -17,7 +18,6 @@ import kernel_part.part;
 import kernel_part.part_container_for_part_search;
 import kernel_part.part_container;
 import kernel_part.part_container_for_delete_part_file;
-import kernel_render.create_assemble_part;
 import kernel_driver.component_driver;
 import kernel_part.part_loader_container;
 import kernel_common_class.debug_information;
@@ -177,10 +177,11 @@ public class engine_kernel
 	}
 	private void load_camera()
 	{
-		String camera_file_name=scene_par.directory_name+scene_par.camera_file_name;
-		if(!(new File(camera_file_name).exists()))
-			camera_file_name=system_par.default_parameter_directory
-				+"camera_parameter"+File.separator+scene_par.camera_file_name;
+		String camera_file_name;
+		if(!(new File(camera_file_name=scene_par.directory_name+scene_par.camera_file_name).exists()))
+			if(!(new File(camera_file_name=scene_par.extra_directory_name+scene_par.camera_file_name).exists()))
+				camera_file_name=system_par.default_parameter_directory+"camera_parameter"+File.separator+scene_par.camera_file_name;
+		
 		file_reader f_camera=new file_reader(camera_file_name,scene_par.parameter_charset);
 		if(f_camera.error_flag()){
 			camera_cont=null;
@@ -274,6 +275,7 @@ public class engine_kernel
 			new change_name(
 				new String[]{
 						scene_par.directory_name+scene_par.mount_component_file_name,
+						scene_par.extra_directory_name+scene_par.mount_component_file_name,
 						scene_f.directory_name	+scene_par.mount_component_file_name
 				},scene_par.mount_component_string,scene_par.parameter_charset));
 		part_cont=new part_container_for_part_search(render_cont.part_array(true,-1));
@@ -288,16 +290,14 @@ public class engine_kernel
 				scene_directory_name+scene_par.scene_shader_file_name,scene_charset,
 				scene_par.scene_sub_directory, 2,system_par,scene_par,request_response);
 		part_cont.execute_append();
-		debug_information.println("Load shaders time length:	",
-				(current_time=new Date().getTime())-start_time);
+		debug_information.println("Load shaders time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		
 		start_time=current_time;
 		render_cont.load_part(not_real_scene_fast_load_flag,
 				(1<<1)+(1<<2),1,part_loader_cont,system_par,scene_par,part_cont,
 				boftal_container,"load_first_class_part",process_bar,part_cont_for_delete_file);
-		debug_information.println("Load first class part time length:	",
-				(current_time=new Date().getTime())-start_time);
+		debug_information.println("Load first class part time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		
 		start_time=current_time;
@@ -306,15 +306,13 @@ public class engine_kernel
 		render_cont.load_part(not_real_scene_fast_load_flag,
 				(1<<1)+(1<<2),2,part_loader_cont,system_par,scene_par,part_cont,
 				boftal_container,"load_second_class_part",process_bar,part_cont_for_delete_file);
-		debug_information.println("Load second class part time length:	",
-				(current_time=new Date().getTime())-start_time);
+		debug_information.println("Load second class part time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 
 		start_time=current_time;
 		render_cont.type_part_package=new part_package(not_real_scene_fast_load_flag,process_bar,
 				"create_first_class_package",render_cont,1,system_par,scene_par);
-		debug_information.println("Create first part package time length:	",
-				(current_time=new Date().getTime())-start_time);
+		debug_information.println("Create first part package time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		
 		start_time=current_time;
@@ -323,16 +321,19 @@ public class engine_kernel
 				scene_f,this,scene_par.default_display_bitmap,request_response,
 				new change_name(
 						new String[]{
+								scene_par.extra_directory_name+scene_par.change_part_file_name,
 								scene_par.directory_name+scene_par.change_part_file_name,
 								scene_f.directory_name	+scene_par.change_part_file_name
 						},scene_par.change_part_string,scene_par.parameter_charset),
 				new change_name(
 						new String[]{
+								scene_par.extra_directory_name+scene_par.change_component_file_name,
 								scene_par.directory_name+scene_par.change_component_file_name,
 								scene_f.directory_name	+scene_par.change_component_file_name
 						},scene_par.change_component_string,scene_par.parameter_charset),
 				new part_type_string_sorter(
 						new String[]{
+								scene_par.extra_directory_name+scene_par.type_string_file_name,
 								scene_par.directory_name+scene_par.type_string_file_name,
 								scene_directory_name	+scene_par.type_string_file_name
 						},scene_par.part_type_string,scene_par.parameter_charset));
@@ -352,8 +353,7 @@ public class engine_kernel
 		render_cont.load_part(not_real_scene_fast_load_flag,
 				(1<<2),4,part_loader_cont,system_par,scene_par,part_cont,
 				boftal_container,"load_third_class_part",process_bar,part_cont_for_delete_file);
-		debug_information.println("Create top assemble time length:	",
-				(current_time=new Date().getTime())-start_time);
+		debug_information.println("Create top assemble time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		start_time=current_time;
 		
@@ -362,8 +362,7 @@ public class engine_kernel
 		render_cont.scene_part_package=new part_package(not_real_scene_fast_load_flag,process_bar,
 				"create_second_class_package",render_cont,2,system_par,scene_par);
 		
-		debug_information.println("Create second part package time length:	",
-				(current_time=new Date().getTime())-start_time);
+		debug_information.println("Create second part package time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		start_time=current_time;
 		
@@ -374,24 +373,22 @@ public class engine_kernel
 		part_cont=new part_container_for_part_search(render_cont.part_array(true,-1));
 
 		component_cont.do_component_caculator(true);
-		component_cont.cacuate_part_face_number(render_cont.renders);
 		
 		process_part_sequence=new part_process_sequence(render_cont,component_cont.root_component);
 
-		collector_stack=new component_collector_stack(scene_directory_name,
-			scene_f.get_charset(),component_cont,system_par,scene_par,render_cont.renders);
+		collector_stack=new component_collector_stack(component_cont,system_par,scene_par,render_cont.renders);
 		load_camera();
 
 		start_time=new Date().getTime();
 		if(not_real_scene_fast_load_flag){
 			process_bar.set_process_bar(true,"create_shader",1,2);
 			program_last_time=copy_program.copy_shader_programs(render_cont,system_par,scene_par);
-			new engine_initialization(true,this,request_response,process_bar);
+			new engine_initialization(true,program_last_time,this,request_response,process_bar);
 			new engine_boftal_creator(boftal_file_name,system_par.local_data_charset,
 					part_cont.data_array,system_par,scene_par,process_bar);
 			debug_information.println("Create engine temp data time length:	",		new Date().getTime()-start_time);
 		}else {
-			new engine_initialization(false,this,request_response,process_bar);
+			new engine_initialization(false,program_last_time,this,request_response,process_bar);
 			debug_information.println("Doing engine_initialization time length:	",	new Date().getTime()-start_time);
 		}
 		debug_information.println();

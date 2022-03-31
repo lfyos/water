@@ -7,18 +7,13 @@ import kernel_component.component_array;
 import kernel_component.component_caculator;
 import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
-import kernel_render.render;
 import kernel_transformation.box;
-import kernel_part.face;
-import kernel_part.face_loop;
-import kernel_part.part;
 
 public class component_container 
 {
 	public component root_component;
 	
-	public int original_part_number,part_face_number,part_edge_number;
-	public int part_component_number,exist_part_component_number,top_assemble_component_number;
+	public int original_part_number,part_component_number,exist_part_component_number,top_assemble_component_number;
 	public int render_component_id_and_driver_id[][][],part_component_id_and_driver_id[][][][];
 	public long total_face_primitive_number,total_edge_primitive_number,total_point_primitive_number;
 	
@@ -107,7 +102,7 @@ public class component_container
 		component_array effective_comp_container=new component_array(root_component.component_id+1);
 
 		effective_comp_container.clear_compoment();
-		effective_comp_container.add_selected_component(root_component);
+		effective_comp_container.add_selected_component(root_component,false);
 		if((effective_box=effective_comp_container.get_box())!=null)	
 			return effective_box;
 		
@@ -165,43 +160,7 @@ public class component_container
 				total_face_primitive_number+","+total_edge_primitive_number+","+total_point_primitive_number+"]");
 		}
 	}
-	public void cacuate_part_face_number(render renders[])
-	{
-		part p;
-		face f;
-		part_face_number=0;
-		part_edge_number=0;
-		if(renders==null)
-			return;
-		for(int render_id=0,render_number=renders.length;render_id<render_number;render_id++) {
-			if(renders[render_id]==null)
-				continue;
-			if(renders[render_id].parts==null)
-				continue;
-			for(int part_id=0,part_number=renders[render_id].parts.length;part_id<part_number;part_id++) {
-				if((p=renders[render_id].parts[part_id])==null)
-					continue;
-				if(p.part_mesh==null)
-					continue;
-				for(int body_id=0,body_number=p.part_mesh.body_number();body_id<body_number;body_id++) {
-					if(p.part_mesh.body_array[body_id]==null)
-						continue;
-					int face_number=p.part_mesh.body_array[body_id].face_number();
-					for(int face_id=0;face_id<face_number;face_id++){
-						if((f=p.part_mesh.body_array[body_id].face_array[face_id])==null)
-							continue;
-						for(int loop_id=0,loop_number=f.fa_curve.face_loop_number();loop_id<loop_number;loop_id++) {
-							face_loop fl=f.fa_curve.f_loop[loop_id];
-							if(fl==null)
-								continue;
-							part_edge_number+=fl.edge_number();
-						}
-					}
-					part_face_number+=face_number;
-				}
-			}
-		}
-	}
+	
 	public component_container(file_reader scene_f,engine_kernel ek,
 			long default_display_bitmap,client_request_response request_response,
 			change_name my_change_part_name,change_name my_change_component_name,
@@ -211,8 +170,6 @@ public class component_container
 			root_component=null;
 			
 			original_part_number				=0;
-			part_face_number					=0;
-			part_edge_number					=0;
 			
 			part_component_number				=0;
 			exist_part_component_number			=0;
@@ -243,8 +200,8 @@ public class component_container
 
 			try{
 				root_component=new component("",ek,request_response,scene_f,ek.part_cont,change_part_name,
-					ek.render_cont.mount_component_name_and_assemble_file_name,
-					my_type_string_sorter,true,default_display_bitmap,ek.scene_par.max_child_number);
+					ek.render_cont.mount_component_name_and_assemble_file_name,my_type_string_sorter,
+					false,true,default_display_bitmap);
 			}catch(Exception e){
 				root_component=null;
 				debug_information.println("Create scene from file exception:",scene_f.directory_name+scene_f.file_name);

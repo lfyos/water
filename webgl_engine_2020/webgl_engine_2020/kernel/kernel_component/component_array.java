@@ -71,7 +71,7 @@ public class component_array
 	public boolean add_component(component new_comp)
 	{
 		box my_box;
-		if(component_number<(comp.length))
+		if(component_number<comp.length)
 			if(new_comp!=null){
 				if((my_box=new_comp.get_component_box(false))==null)
 					my_box=new_comp.get_component_box(true);
@@ -88,15 +88,18 @@ public class component_array
 			}
 		return false;
 	}
-	public int add_selected_component(component new_comp)
+	public int add_selected_component(component new_comp,boolean do_one_child_flag)
 	{
-		if(new_comp!=null){
-			if(new_comp.uniparameter.effective_selected_flag)
+		if(new_comp==null)
+			return component_number;
+		int child_number=new_comp.children_number();
+		if(new_comp.uniparameter.effective_selected_flag)
+			if((child_number!=1)||do_one_child_flag) {
 				add_component(new_comp);
-			else
-				for(int i=0,ni=new_comp.children_number();i<ni;i++)
-					add_selected_component(new_comp.children[i]);
-		}
+				return component_number;
+			}
+		for(int i=0;i<child_number;i++)
+			add_selected_component(new_comp.children[i],do_one_child_flag);
 		return component_number;
 	}
 	public int add_collector(component_collector my_collector)
@@ -213,7 +216,7 @@ public class component_array
 			for(int i=0,ni=expand_comp.children_number();i<ni;i++)
 				add_component(expand_comp.children[i]);
 		return expand_comp;
-	}	
+	}
 	public component_array(int max_component_number)
 	{
 		init(max_component_number);

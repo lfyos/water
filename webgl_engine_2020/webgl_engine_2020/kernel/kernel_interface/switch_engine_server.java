@@ -29,7 +29,6 @@ public class switch_engine_server
 		if((number=server_url_array.length)<=0)
 			return null;
 		index_id%=number;
-		
 		return server_url_array[index_id++];
 	}
 }

@@ -10,21 +10,20 @@ public class score
 		debug_information.println("Begin");
 		
 		file_reader f=new file_reader("c:\\temp\\z.txt",null);
-		while(!(f.eof())) {
-			int number=f.get_int();
+		for(int j=1;!(f.eof());j++) {
+//			int number=f.get_int();
+			int number=j;
 			int id=f.get_int();
 			String name=f.get_string();
+			String school=f.get_string();
 			if(f.eof())
 				break;
-			
-				f.get_string();
-				f.get_string();
 			String str=f.get_string();
-				f.get_string();
 			
 			debug_information.print  (number);
 			debug_information.print  ("\t",id);
 			debug_information.print  ("\t",name);
+			debug_information.print  ("\t",school);
 			
 			int score[]= {0,0,0,0,0,0,0,0,0,0},my_score=0,step=5;
 			

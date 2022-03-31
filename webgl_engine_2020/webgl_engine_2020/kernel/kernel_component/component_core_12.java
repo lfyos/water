@@ -24,11 +24,10 @@ public class component_core_12  extends component_core_11
 	}
 	public boolean caculate_assembly_flag(int parameter_channel_id)
 	{
-		int my_children_number=children_number();
+		int my_children_number;
 		boolean old_value=can_display_assembly_flag[parameter_channel_id];
-		
 		can_display_assembly_flag[parameter_channel_id]=true;
-		if(my_children_number<=0)
+		if((my_children_number=children_number())<=0)
 			return !old_value;
 		
 		long my_display_bitmap=multiparameter[parameter_channel_id].display_bitmap;
@@ -43,9 +42,9 @@ public class component_core_12  extends component_core_11
 			}
 		}
 		for(int i=0;i<my_children_number;i++){
-			boolean c_flag=children[i].get_effective_display_flag(parameter_channel_id);
-			c_flag&=children[i].get_can_display_assembly_flag(parameter_channel_id);
-			can_display_assembly_flag[parameter_channel_id]&=c_flag;
+			boolean children_flag=children[i].get_effective_display_flag(parameter_channel_id);
+			children_flag&=children[i].get_can_display_assembly_flag(parameter_channel_id);
+			can_display_assembly_flag[parameter_channel_id]&=children_flag;
 		}
 		return (can_display_assembly_flag[parameter_channel_id])^old_value;
 	}
@@ -53,12 +52,11 @@ public class component_core_12  extends component_core_11
 			engine_kernel ek,client_request_response request_response,
 			file_reader fr,part_container_for_part_search pcfps,
 			change_name change_part_name,change_name mount_component_name,
-			part_type_string_sorter type_string_sorter,
-			boolean part_list_flag,long default_display_bitmap,int max_child_number)
+			part_type_string_sorter type_string_sorter,boolean normalize_location_flag,
+			boolean part_list_flag,long default_display_bitmap)
 	{
-		super(token_string,ek,request_response,fr,pcfps,
-			change_part_name,mount_component_name,type_string_sorter,
-			part_list_flag,default_display_bitmap,max_child_number);
+		super(token_string,ek,request_response,fr,pcfps,change_part_name,mount_component_name,
+			type_string_sorter,normalize_location_flag,part_list_flag,default_display_bitmap);
 
 		selected_component_family_flag	=false;
 		can_display_assembly_set_flag	=true;

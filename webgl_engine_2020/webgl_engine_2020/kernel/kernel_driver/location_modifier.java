@@ -90,7 +90,6 @@ public class location_modifier extends modifier_driver
 	}
 	public boolean can_start(long my_current_time,engine_kernel ek,client_information ci)
 	{
-		super.can_start(my_current_time,ek,ci);
-		return true;
+		return super.can_start(my_current_time,ek,ci);
 	}
 }

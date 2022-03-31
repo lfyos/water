@@ -109,11 +109,8 @@ public class client_request_switcher
 					function_name="construct_render_object";
 				else if(function_name.compareTo("construct_render_object_routine")==0)
 					function_name="construct_render_object";
-				
-				str+="?channel=javascript&function_name="+function_name;
-				request_response.implementor.redirect_url(str,"*");
-				ret_val.ecr=new engine_call_result(null,null,null,null,null,"*");
-
+				request_response.implementor.redirect_url(
+					str+"?channel=javascript&function_name="+function_name,"*");
 				break;
 			}
 		case "javascript":
@@ -127,7 +124,8 @@ public class client_request_switcher
 			ret_val.ecr=download_readme_file.download_driver_readme(request_response,
 					system_par.data_root_directory_name+system_par.shader_file_name,
 					system_par.local_data_charset,system_par.file_download_cors_string,
-					Long.toString(system_par.file_buffer_expire_time_length));
+					Long.toString(system_par.file_buffer_expire_time_length),
+					system_par.text_class_charset,system_par.text_jar_file_charset);
 			break;
 		case "clear":
 			if((ret_val.client=client_container.get_client_interface(request_response,system_par))!=null)
@@ -184,9 +182,11 @@ public class client_request_switcher
 	synchronized private void create_system_parameter(network_implementation network_implementor,
 			String data_configure_environment_variable,String proxy_configure_environment_variable)
 	{
-		if(system_par==null)
+		if(system_par==null) {
 			system_par=new system_parameter(network_implementor.get_application_directory(),
 					data_configure_environment_variable,proxy_configure_environment_variable);
+			program_javascript=new javascript_program(system_par.js_class_charset,system_par.js_jar_file_charset);
+		}
 	}
 	public void process_system_call(network_implementation network_implementor,
 			String data_configure_environment_variable,String proxy_configure_environment_variable)
@@ -251,7 +251,7 @@ public class client_request_switcher
 		system_par					=null;
 		
 		ei							=new engine_interface();
-		program_javascript			=new javascript_program();
+		program_javascript			=null;
 		client_container			=new client_interface_container();
 		download_proxy				=new proxy_downloader();
 		statistics_interface		=new interface_statistics();

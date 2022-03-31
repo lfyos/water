@@ -15,6 +15,7 @@ public class system_parameter
 	public long last_modified_time;
 	
 	public String local_data_charset,network_data_charset;
+	public String text_class_charset,text_jar_file_charset,js_class_charset,js_jar_file_charset;
 	public String user_file_name,shader_file_name,default_parameter_directory;
 	
 	public int max_loading_number,max_material_id;
@@ -31,11 +32,13 @@ public class system_parameter
 	
 	public int max_client_interface_number;
 	
-	public int max_engine_kernel_number,max_engine_component_number,max_engine_part_face_number,max_engine_part_edge_number;
+	public int max_engine_kernel_number,max_engine_component_number;
 	
 	public long max_buffer_object_head_package_length;
 	
 	public String file_download_cors_string;
+	
+	public int process_modifier_times;
 	
 	public change_name language_change_name,content_type_change_name;
 	public proxy_parameter proxy_par;
@@ -49,7 +52,10 @@ public class system_parameter
 
 		local_data_charset				=new String(sp.local_data_charset);
 		network_data_charset			=new String(sp.network_data_charset);
-
+		text_class_charset				=new String(sp.text_class_charset);
+		text_jar_file_charset			=new String(sp.text_jar_file_charset);
+		js_class_charset				=new String(sp.js_class_charset);
+		js_jar_file_charset				=new String(sp.js_jar_file_charset);
 		user_file_name					=new String(sp.user_file_name);
 		shader_file_name				=new String(sp.shader_file_name);
 		default_parameter_directory		=new String(sp.default_parameter_directory);
@@ -76,12 +82,12 @@ public class system_parameter
 		
 		max_engine_kernel_number		=sp.max_engine_kernel_number;
 		max_engine_component_number		=sp.max_engine_component_number;
-		max_engine_part_face_number		=sp.max_engine_part_face_number;
-		max_engine_part_edge_number		=sp.max_engine_part_edge_number;
 		
 		max_buffer_object_head_package_length=sp.max_buffer_object_head_package_length;
 		
 		file_download_cors_string		=new String(sp.file_download_cors_string);
+		
+		process_modifier_times			=sp.process_modifier_times;
 		
 		content_type_change_name		=new change_name(sp.content_type_change_name,false);
 		language_change_name			=new change_name(sp.language_change_name,false);
@@ -134,6 +140,26 @@ public class system_parameter
 			network_data_charset=Charset.defaultCharset().name();
 		if(network_data_charset.compareTo("default_charset")==0)
 			network_data_charset=Charset.defaultCharset().name();
+		
+		if((text_class_charset=f.get_string())==null)
+			text_class_charset=Charset.defaultCharset().name();
+		if(text_class_charset.compareTo("default_charset")==0)
+			text_class_charset=Charset.defaultCharset().name();
+		
+		if((text_jar_file_charset=f.get_string())==null)
+			text_jar_file_charset=Charset.defaultCharset().name();
+		if(text_jar_file_charset.compareTo("default_charset")==0)
+			text_jar_file_charset=Charset.defaultCharset().name();
+		
+		if((js_class_charset=f.get_string())==null)
+			js_class_charset=Charset.defaultCharset().name();
+		if(js_class_charset.compareTo("default_charset")==0)
+			js_class_charset=Charset.defaultCharset().name();
+		
+		if((js_jar_file_charset=f.get_string())==null)
+			js_jar_file_charset=Charset.defaultCharset().name();
+		if(js_jar_file_charset.compareTo("default_charset")==0)
+			js_jar_file_charset=Charset.defaultCharset().name();
 
 		if((user_file_name=f.get_string())==null)
 			user_file_name="";
@@ -189,8 +215,6 @@ public class system_parameter
 		
 		max_engine_kernel_number				=f.get_int();
 		max_engine_component_number				=f.get_int();
-		max_engine_part_face_number				=f.get_int();
-		max_engine_part_edge_number				=f.get_int();
 
 		max_buffer_object_head_package_length	=f.get_long();
 		
@@ -199,13 +223,15 @@ public class system_parameter
 		if(new File(my_file_name).exists())
 			file_download_cors_string=file_reader.get_text(my_file_name,f.get_charset()).trim();
 		
+		process_modifier_times					=f.get_int();
+		
 		f.close();
 		
 		proxy_par=new proxy_parameter(proxy_configure_file_name,local_data_charset);
 		language_change_name=new change_name(
 				new String[]{data_root_directory_name+language_change_file_name},
 				null,local_data_charset);
-		content_type_change_name=get_content_type_change_name.get_change_name();
+		content_type_change_name=get_content_type_change_name.get_change_name(text_class_charset,text_jar_file_charset);
 		
 		switch_server=new switch_engine_server(
 				data_root_directory_name+switch_server_url_file_name,local_data_charset);

@@ -214,9 +214,13 @@ public class camera_result
 		point p0=comp_negative_loca.multiply(negative_matrix.multiply(new point(0,0,parameter.depth+0.0)));
 		point p1=comp_negative_loca.multiply(negative_matrix.multiply(new point(0,0,parameter.depth+1.0)));
 
-		return parameter.comp.driver_array[driver_id].component_part.secure_caculate_part_box(
+		box my_box=parameter.comp.driver_array[driver_id].component_part.secure_caculate_part_box(
 					parameter.comp,driver_id,parameter.body_id,parameter.face_id,parameter.loop_id,
-					parameter.edge_id,parameter.point_id,p0,p1).center();
+					parameter.edge_id,parameter.point_id,p0,p1);
+		if(my_box==null)
+			return null;
+		
+		return my_box.center();
 	}
 	
 	public boolean clipper_test(component comp,component_container component_cont,int parameter_channel_id)

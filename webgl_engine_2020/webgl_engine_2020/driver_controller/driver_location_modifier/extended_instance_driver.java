@@ -10,11 +10,10 @@ import kernel_engine.engine_kernel;
 import kernel_network.client_request_response;
 import kernel_transformation.location;
 
-
 public class extended_instance_driver extends instance_driver
 {
 	private long last_parameter_version;
-	
+
 	public void destroy()
 	{
 		super.destroy();

@@ -3,6 +3,7 @@ package driver_camera_operation;
 import kernel_camera.camera;
 import kernel_camera.locate_camera;
 import kernel_common_class.const_value;
+import kernel_common_class.debug_information;
 import kernel_component.component;
 import kernel_driver.component_driver;
 import kernel_driver.instance_driver;
@@ -17,21 +18,15 @@ import kernel_transformation.point;
 public class extended_component_driver  extends component_driver
 {
 	private int camera_modifier_id;
-	private String init_file_name,init_file_charset;
 	
 	public void destroy()
 	{
 		super.destroy();
-		init_file_name=null;
 	}
-	public extended_component_driver(
-			part my_component_part,int my_camera_modifier_id,
-			String my_init_file_name,String my_init_file_charset)
+	public extended_component_driver(part my_component_part,int my_camera_modifier_id)
 	{
 		super(my_component_part);
 		camera_modifier_id=my_camera_modifier_id;
-		init_file_name=my_init_file_name;
-		init_file_charset=my_init_file_charset;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
@@ -44,30 +39,40 @@ public class extended_component_driver  extends component_driver
 		camera cam_array[];
 		int box_parameter_channel_id;
 		
-		if((cam_array=ek.camera_cont.camera_array)==null)
+		if((cam_array=ek.camera_cont.camera_array)==null) {
+			debug_information.println("((cam_array=ek.camera_cont.camera_array)==null)");
 			return;
-		if(cam_array.length<=0)
+		}
+		if(cam_array.length<=0) {
+			debug_information.println("(cam_array.length<=0)");
 			return;
-		file_reader fr=new file_reader(
-			component_part.directory_name+init_file_name,init_file_charset);
+		}
+		String file_name=component_part.directory_name+component_part.material_file_name;
+		file_reader fr=new file_reader(file_name,component_part.file_charset);
 		if(fr.error_flag()){
 			fr.close();
+			debug_information.println("camera init file NOT exist!	",file_name);
 			return;
 		}
 		if((box_parameter_channel_id=fr.get_int())<0){
 			fr.close();
+			debug_information.println("Find box_parameter_channel_id less than zero	",box_parameter_channel_id);
 			return;
 		}
 		if(ek.scene_par.multiparameter_number<=box_parameter_channel_id){
 			fr.close();
+			debug_information.println("(ek.scene_par.multiparameter_number<=box_parameter_channel_id)	",
+					ek.scene_par.multiparameter_number+"/"+box_parameter_channel_id);
 			return;
 		}
 		if((my_box=ek.component_cont.get_effective_box(box_parameter_channel_id))==null) {
 			fr.close();
+			debug_information.println("((my_box=ek.component_cont.get_effective_box(box_parameter_channel_id))==null)");
 			return;
 		}
 		if(my_box.distance2()<const_value.min_value2) {
 			fr.close();
+			debug_information.println("(my_box.distance2()<const_value.min_value2)");
 			return;
 		}
 		

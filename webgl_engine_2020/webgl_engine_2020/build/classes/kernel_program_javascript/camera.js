@@ -308,12 +308,13 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 		project_matrix.near_value			=(project_matrix.near_value_ratio)*(project_matrix.distance);
 		project_matrix.far_value			=(project_matrix.far_value_ratio)*(project_matrix.distance);	
 		
-		project_matrix.screen_move_matrix	=screen_move_matrix.matrix;
+		project_matrix.screen_move_matrix			=screen_move_matrix.matrix;
+		project_matrix.negative_screen_move_matrix	=screen_move_matrix.negative_matrix;
 		
 		project_matrix.lookat_matrix		=lookat_matrix.matrix;
 		project_matrix.negative_lookat_matrix=lookat_matrix.negative_matrix;
-		project_matrix.camera_location		=lookat_matrix.camera_location;
 		
+		project_matrix.camera_location		=lookat_matrix.camera_location;
 				
 		project_matrix.frustem_matrix=this.computer.matrix_multiplication(
 				screen_move_matrix.matrix,frustem_projection_matrix.matrix);		

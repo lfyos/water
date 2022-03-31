@@ -25,12 +25,14 @@ public class component_information extends jason_creator
 				pi[i]=new part_information(comp.driver_array[i].component_part,ci);
 			
 		}
-		print("component_name",	component_name);
-		print("component_id",	component_id);
-		print("child_number",	child_number);
-		print("driver_number",	driver_number);
+		print("component_name",			component_name);
+		print("component_id",			component_id);
+		print("relative_location",		comp.relative_location.get_location_data());
+		print("move_location",			comp.move_location.get_location_data());
+		print("child_number",			child_number);
+		print("driver_number",			driver_number);
 		print("dynamic_location_flag",	dynamic_location_flag);
-		print("part",			pi);
+		print("part",					pi);
 	}
 	public component_information(component my_comp,client_information my_ci)
 	{

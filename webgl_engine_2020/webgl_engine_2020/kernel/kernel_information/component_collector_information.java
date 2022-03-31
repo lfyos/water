@@ -12,11 +12,13 @@ public class component_collector_information extends jason_creator
 		print("render_number",				cc.render_number);
 		print("part_number",				cc.part_number);
 		print("component_number",			cc.component_number);
+		print("render_part_number",			cc.render_part_number);
+		print("render_component_number",	cc.render_component_number);
+		print("part_component_number",		cc.part_component_number);
+		
 		print("total_face_primitive_number",cc.total_face_primitive_number);
 		print("total_edge_primitive_number",cc.total_edge_primitive_number);
 		print("total_point_primitive_number",cc.total_point_primitive_number);
-		print("render_component_number",	cc.render_component_number);
-		print("part_component_number",		cc.part_component_number);
 
 		print("list_id",					cc.list_id);
 		

@@ -13,7 +13,6 @@ import kernel_engine.engine_kernel;
 import kernel_transformation.point;
 import kernel_transformation.location;
 
-
 public class extended_instance_driver extends instance_driver
 {
 	private double view_range[],low_precision_scale,mouse_rotate_scale;
@@ -23,6 +22,7 @@ public class extended_instance_driver extends instance_driver
 	public void destroy()
 	{
 		super.destroy();
+		view_range=null;
 	}
 	public extended_instance_driver(component my_comp,int my_driver_id,double my_view_range[],
 			double my_low_precision_scale,double my_mouse_rotate_scale,boolean my_rotate_type_flag,
@@ -149,7 +149,6 @@ public class extended_instance_driver extends instance_driver
 	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
 	{
 		String str;
-
 		if(ci.display_camera_result==null)
 			return null;
 		if((str=ci.request_response.get_parameter("operate_component_id"))==null)
@@ -160,8 +159,6 @@ public class extended_instance_driver extends instance_driver
 		int camera_component_id=ci.display_camera_result.cam.eye_component.component_id;
 		switch(str){
 		case "mousedown":
-		{
-			ci.parameter.high_or_low_precision_flag=false;
 			if(operate_component!=null)
 				if(operate_component.component_id==camera_component_id)
 					ci.display_camera_result.cam.mark_restore_stack();
@@ -175,9 +172,7 @@ public class extended_instance_driver extends instance_driver
 					select_component_id=search_component.component_id;
 			ci.request_response.print(select_component_id);
 			return null;
-		}
 		case "mouseup":
-		{
 			get_data(true,operate_component,ek,ci);
 			if(operate_component!=null){
 				operate_component.uniparameter.do_response_location_flag=true;
@@ -188,15 +183,12 @@ public class extended_instance_driver extends instance_driver
 						ci.display_camera_result.cam.eye_component.move_location,
 						ci.display_camera_result.cam.parameter);
 			}
-			ci.parameter.high_or_low_precision_flag=true;
 			return null;
-		}
 		case "mousemove":
 			get_data(false,operate_component,ek,ci);
 			return null;
 		case "dblclick":
 		case "touchend":
-		{
 			if(operate_component!=null)
 				if(operate_component.component_id==camera_component_id){
 					if(str.compareTo("touchend")==0) {
@@ -222,7 +214,6 @@ public class extended_instance_driver extends instance_driver
 							true,true,true,p0,p1);
 					return null;
 				}
-			
 			component_array c_a=new component_array(ek.component_cont.root_component.component_id+1);
 			if(operate_component!=null){
 				if(operate_component.component_id!=ek.component_cont.root_component.component_id)
@@ -234,7 +225,7 @@ public class extended_instance_driver extends instance_driver
 					if(ci.parameter.comp!=null)
 						c_a.add_component(ci.parameter.comp);
 				if(c_a.component_number<=0)
-					c_a.add_selected_component(ek.component_cont.root_component);
+					c_a.add_selected_component(ek.component_cont.root_component,false);
 				if(c_a.component_number<=0)
 					add_in_list_component(ek.component_cont.root_component,c_a);
 			}
@@ -243,7 +234,6 @@ public class extended_instance_driver extends instance_driver
 			for(int i=0,ni=c_a.component_number;i<ni;i++)
 				reset_component_location(c_a.comp[i],start_time,ek,ci);
 			return null;
-		}
 		default:
 			return null;
 		}

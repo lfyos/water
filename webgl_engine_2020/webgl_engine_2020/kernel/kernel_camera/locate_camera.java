@@ -273,8 +273,7 @@ public class locate_camera
 	{
 		if(locate(component_cont,display_camera_result,par,dir,p0,p1)!=null){
 			scale(my_scale_value,my_aspect_value);
-			locate_on_components(modifier_cont,switch_camera_flag,
-					mandatory_movement_flag,mandatory_scale_flag);
+			locate_on_components(modifier_cont,switch_camera_flag,mandatory_movement_flag,mandatory_scale_flag);
 		}
 	}
 }

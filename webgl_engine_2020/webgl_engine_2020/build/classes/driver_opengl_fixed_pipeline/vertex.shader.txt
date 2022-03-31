@@ -1,13 +1,16 @@
-#define MAX_LIGHT_NUMBER 4
+#define MAX_LIGHT_NUMBER	4
+#define MAX_TEXTURE_NUMBER	4
+
 uniform material_information
 {
 	float vertex_color_type,fragment_color_type,temp,shininess;
-	vec4 color_parameter,texture_parameter;
-	vec4 color,ambient,diffuse,specular,emission;
-	vec4 light_color_factor[MAX_LIGHT_NUMBER];
+	vec4  vertex_color_parameter,color,ambient,diffuse,specular,emission;
+	mat4  texture_matrix[MAX_TEXTURE_NUMBER]; 
+	vec4  light_color_factor[MAX_LIGHT_NUMBER];
 }material_info;
+
 uniform vec4 draw_par;
-uniform sampler2D texture_object;
+uniform sampler2D texture_object_0,texture_object_1,texture_object_2,texture_object_3;
 
 in	vec4 vertex_location,vertex_normal,vertex_material,vertex_id,vertex_texture,vertex_color;
 out vec4 frag_position,frag_material,frag_id,frag_texture,frag_color;
@@ -22,8 +25,8 @@ void main(void)
 
 	frag_material		=vertex_material;
 	frag_id				=vertex_id;
-	frag_texture		=vertex_texture;
 	frag_color			=vertex_color;
+	frag_texture		=vertex_texture;
 	render_value		=0.0;
 
 	frag_position=component_info.model_matrix*vec4(vertex_location.xyz,1.0);

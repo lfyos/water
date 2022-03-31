@@ -37,45 +37,43 @@ public class component_core_8 extends component_core_7
 		}
 		return effective_display_flag[parameter_channel_id]^old_effective_display_flag;
 	}
-	public int modify_display_flag(int parameter_channel_id[],
+	public void modify_display_flag(int parameter_channel_id[],
 		boolean new_display_flag,component_container component_cont)
 	{
-		int buffer_channel_number=0;
-		int buffer_channel_id[]=new int[parameter_channel_id.length];
+		int buffer_channel_number=0,buffer_channel_id[]=new int[parameter_channel_id.length];
 		for(int i=0,ni=parameter_channel_id.length;i<ni;i++)
 			if(display_flag[parameter_channel_id[i]]^new_display_flag){
 				display_flag[parameter_channel_id[i]]=new_display_flag;
 				buffer_channel_id[buffer_channel_number++]=parameter_channel_id[i];
 			}
-		if(buffer_channel_number>0)
-			for(component p=(component)this;p!=null;) {
-				for(int i=0;i<buffer_channel_number;i++){
-					boolean flag=false;
-					flag|=p.caculate_effective_display_flag(buffer_channel_id[i]);
-					flag|=p.caculate_assembly_flag(buffer_channel_id[i]);
-					if(!flag)
-						return i;
-				}
-				p=component_cont.get_component(p.parent_component_id);
+		if(buffer_channel_number<=0)
+			return;
+		for(component p=(component)this;p!=null;) {
+			int modify_number=0;
+			for(int i=0;i<buffer_channel_number;i++){
+				if(p.caculate_effective_display_flag(buffer_channel_id[i]))
+					modify_number++;
+				if(p.caculate_assembly_flag(buffer_channel_id[i]))
+					modify_number++;
 			}
-		return buffer_channel_number;
+			p=(modify_number<=0)?null:component_cont.get_component(p.parent_component_id);
+		}
 	}
-	
+
 	public component_core_8(String token_string,
 			engine_kernel ek,client_request_response request_response,
 			file_reader fr,part_container_for_part_search pcfps,
 			change_name change_part_name,change_name mount_component_name,
-			part_type_string_sorter type_string_sorter,
-			boolean part_list_flag,long default_display_bitmap,int max_child_number)
+			part_type_string_sorter type_string_sorter,boolean normalize_location_flag,
+			boolean part_list_flag,long default_display_bitmap)
 	{
-		super(token_string,ek,request_response,fr,pcfps,
-			change_part_name,mount_component_name,type_string_sorter,
-			part_list_flag,default_display_bitmap,max_child_number);
-		
-		int n=multiparameter.length;
-		display_flag			=new boolean[n];
-		effective_display_flag	=new boolean[n];
-		for(int i=0;i<n;i++) {
+		super(token_string,ek,request_response,fr,pcfps,change_part_name,
+			mount_component_name,type_string_sorter,normalize_location_flag,
+			part_list_flag,default_display_bitmap);
+
+		display_flag			=new boolean[multiparameter.length];
+		effective_display_flag	=new boolean[multiparameter.length];
+		for(int i=0,ni=multiparameter.length;i<ni;i++) {
 			display_flag[i]=true;
 			effective_display_flag[i]=true;
 		}

@@ -20,8 +20,7 @@ public class component_core_5 extends component_core_4
 			engine_kernel ek,client_request_response request_response,
 			file_reader fr,part_container_for_part_search pcfps,
 			change_name change_part_name,change_name mount_component_name,
-			part_type_string_sorter type_string_sorter,
-			long default_display_bitmap,int max_child_number)
+			part_type_string_sorter type_string_sorter,long default_display_bitmap)
 	{
 		for(int search_id;(search_id=mount_component_name.search(component_name))>=0;){
 			String assemble_file_name=file_reader.separator(mount_component_name.data_array[search_id][1]);
@@ -49,10 +48,11 @@ public class component_core_5 extends component_core_4
 							directory_name_array[i]+assemble_file_name);
 					debug_information.println("assemble_file_charset:	",charset_name_array[i]);
 					try{
-						append_child(1,new component[]{
+						append_child(new component[]{
 							new component(token_string,ek,request_response,mount_fr,pcfps,
 									change_part_name,mount_component_name,type_string_sorter,
-									uniparameter.part_list_flag,default_display_bitmap,max_child_number)});
+									uniparameter.normalize_location_flag,uniparameter.part_list_flag,
+									default_display_bitmap)});
 					}catch(Exception e) {
 						debug_information.println("Create scene fail: "+e.toString()+"	",
 								directory_name_array[i]+assemble_file_name);
@@ -68,14 +68,13 @@ public class component_core_5 extends component_core_4
 			engine_kernel ek,client_request_response request_response,
 			file_reader fr,part_container_for_part_search pcfps,
 			change_name change_part_name,change_name mount_component_name,
-			part_type_string_sorter type_string_sorter,
-			boolean part_list_flag,long default_display_bitmap,int max_child_number)
+			part_type_string_sorter type_string_sorter,boolean normalize_location_flag,
+			boolean part_list_flag,long default_display_bitmap)
 	{
-		super(token_string,ek,request_response,fr,pcfps,change_part_name,mount_component_name,
-				type_string_sorter,part_list_flag,default_display_bitmap,max_child_number);
-		
+		super(token_string,ek,request_response,fr,pcfps,change_part_name,
+				mount_component_name,type_string_sorter,normalize_location_flag,
+				part_list_flag,default_display_bitmap);
 		install_mount_component(token_string,ek,request_response,fr,pcfps,
-				change_part_name,mount_component_name,type_string_sorter,
-				default_display_bitmap,max_child_number);
+			change_part_name,mount_component_name,type_string_sorter,default_display_bitmap);
 	}
 }

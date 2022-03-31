@@ -1,10 +1,41 @@
-function construct_process_bar(my_gl,my_width,my_height,my_show_process_bar_interval)
+function construct_process_bar(my_gl,my_user_progress_bar_function,my_width,my_height,my_show_process_bar_interval)
 {
-	this.gl				=my_gl;
-	this.canvas			=document.createElement("canvas");
-	this.canvas.width	=my_width;
-	this.canvas.height	=my_height;
-	this.ctx			=this.canvas.getContext("2d");
+	this.gl						=my_gl;
+	this.progress_bar_function	=my_user_progress_bar_function;
+	this.canvas					=document.createElement("canvas");
+	this.canvas.width			=my_width;
+	this.canvas.height			=my_height;
+	this.ctx					=this.canvas.getContext("2d");
+
+	if(typeof(this.progress_bar_function)!="function")
+		this.progress_bar_function	=function(
+				process_bar_canvas,				//绘制进度条的画布canvas
+				progress_bar_ctx,				//绘制进度条的2D上下文
+				process_bar_caption,			//进度条当前进度标题，该标题和语言有关，目前系统中仅仅配置了中文和英文相关标题
+				progress_bar_value,				//进度条当前进度，取值范围0.00~1.00
+				process_bar_time_length,		//进度条当前进度经过的时间，单位是毫秒
+				process_bar_engine_time_length,	//进度条所有进度经过的时间，单位是毫秒
+				time_unit)						//和语言有关时间单位标题，比如中文是秒，英文是second
+		{
+			var p_separator=Math.round(process_bar_canvas.width*progress_bar_value);
+			progress_bar_ctx.fillStyle="rgb(127,127,127)";
+			progress_bar_ctx.fillRect(0,			0,	p_separator,				process_bar_canvas.height);
+			progress_bar_ctx.fillStyle="rgb(255,255,255)";
+			progress_bar_ctx.fillRect(p_separator,	0,	process_bar_canvas.width,	process_bar_canvas.height);
+			
+			if((progress_bar_value=(Math.round(1000.0*progress_bar_value)/10.0).toString()).indexOf(".")<0)
+				progress_bar_value+=".0";
+			var display_value=process_bar_caption+":"+progress_bar_value+"%,";
+			display_value+=(Math.round(process_bar_time_length/1000.0)).toString()+time_unit+",";
+			display_value+=(Math.round(process_bar_engine_time_length/1000.0)).toString()+time_unit;
+			
+			progress_bar_ctx.font			="bold 48px Arial";
+			progress_bar_ctx.textBaseline	="middle";
+			progress_bar_ctx.fillStyle		="rgb(192,192,192)";
+			progress_bar_ctx.textAlign		="center";		
+			progress_bar_ctx.fillText(display_value,process_bar_canvas.width/2.0,process_bar_canvas.height/2.0);
+			return;
+		};
 	
 	this.show_process_bar_interval=my_show_process_bar_interval;
 	
@@ -107,8 +138,8 @@ function construct_process_bar(my_gl,my_width,my_height,my_show_process_bar_inte
 		if(this.gl==null)
 			return;
 
-		this.canvas			=null;
-		this.ctx			=null;
+		this.canvas	=null;
+		this.ctx	=null;
 		
 		this.gl.deleteProgram(this.shader_program);
 		this.shader_program=null;
@@ -136,48 +167,25 @@ function construct_process_bar(my_gl,my_width,my_height,my_show_process_bar_inte
 			return;
 		
 		var p=(new Date().getTime()-this.set_time)/this.show_process_bar_interval;
-		
 		if(p<0.0)
 			p=0.0;
 		else if(p>1.0){
 			this.process_bar_current_last=this.process_bar_current;
 			p=1.0;
 		}
-		p=(this.process_bar_current_last*(1.0-p)+this.process_bar_current*p)/this.process_bar_max;
-
+		
 		this.ctx.fillStyle="rgb(255,255,255)";
-		this.ctx.beginPath();
-		this.ctx.moveTo(0,					0);
-		this.ctx.lineTo(this.canvas.width,	0);
-		this.ctx.lineTo(this.canvas.width,	this.canvas.height);
-		this.ctx.lineTo(0,					this.canvas.height);
-		this.ctx.lineTo(0,					0);
-		this.ctx.fill();
+		this.ctx.fillRect(0,0,this.canvas.width,this.canvas.height);
 		
-		this.ctx.fillStyle="rgb(127,127,127)";
-		this.ctx.beginPath();
-		this.ctx.moveTo(0,									0);
-		this.ctx.lineTo(Math.round(this.canvas.width*p),	0);
-		this.ctx.lineTo(Math.round(this.canvas.width*p),	this.canvas.height);
-		this.ctx.lineTo(0,									this.canvas.height);
-		this.ctx.lineTo(0,									0);
-		this.ctx.fill();
+		this.progress_bar_function(this.canvas,this.ctx,this.process_bar_caption,
+			(this.process_bar_current_last*(1.0-p)+this.process_bar_current*p)/this.process_bar_max,
+			this.process_bar_time_length,this.process_bar_engine_time_length,this.time_unit);
 
-		if((p=(Math.round(1000.0*p)/10.0).toString()).indexOf(".")<0)
-			p+=".0";
-		var display_value=this.process_bar_caption+":"+p+"%,";
-		display_value+=(Math.round(this.process_bar_time_length/1000.0)).toString()+this.time_unit+",";
-		display_value+=(Math.round(this.process_bar_engine_time_length/1000.0)).toString()+this.time_unit;
-		
-		this.ctx.font			="bold 64px Arial";
-		this.ctx.textBaseline	="middle";
-		this.ctx.fillStyle		="rgb(192,192,192)";
-		this.ctx.textAlign		="center";		
-		this.ctx.fillText(display_value,this.canvas.width/2.0,this.canvas.height/2.0);
-		
 		this.gl.clearColor(0,0,0,1);
 		this.gl.clearDepth(1.0);
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT|this.gl.DEPTH_BUFFER_BIT);
+		
+		this.gl.viewport(0,0,this.canvas.width,this.canvas.height);
 
 		this.gl.useProgram(this.shader_program);
 
@@ -203,7 +211,7 @@ function construct_process_bar(my_gl,my_width,my_height,my_show_process_bar_inte
 	this.set_process_bar_data=function(	my_process_bar_caption,
 			my_process_bar_current,		my_process_bar_max,
 			my_process_bar_time_length,	my_process_bar_engine_time_length,
-			my_time_unit)
+			my_time_unit,				my_canvas)
 	{
 		this.process_bar_current_last		=this.process_bar_current;
 		
@@ -220,9 +228,10 @@ function construct_process_bar(my_gl,my_width,my_height,my_show_process_bar_inte
 			this.process_bar_current=this.process_bar_max;
 		if(this.process_bar_current_last>this.process_bar_current)
 			this.process_bar_current_last=this.process_bar_current;;
-		
+		this.canvas.width					=my_canvas.width;
+		this.canvas.height					=my_canvas.height;
 		this.set_time						=new Date().getTime();
 	};
-	
+
 	this.draw_process_bar();
 }

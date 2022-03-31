@@ -97,11 +97,11 @@ public class primitive_from_box implements primitive_interface
 				if(rp.part_mesh.default_attribute_double!=null)
 					if(attribute_id>=0)
 						if((3*attribute_id+2)<rp.part_mesh.default_attribute_double.length)
-					return new double[] {
-							rp.part_mesh.default_attribute_double[3*attribute_id+0],
-							rp.part_mesh.default_attribute_double[3*attribute_id+1],
-							rp.part_mesh.default_attribute_double[3*attribute_id+2],
-					};
+							return new double[] {
+									rp.part_mesh.default_attribute_double[3*attribute_id+0],
+									rp.part_mesh.default_attribute_double[3*attribute_id+1],
+									rp.part_mesh.default_attribute_double[3*attribute_id+2]
+							};
 		return new double[] {0,0,0};
 	}
 	public String get_primitive_vertex_attribute_extra_data(int body_id,int face_id,int primitive_id,int vertex_id,int attribute_id)
@@ -112,7 +112,7 @@ public class primitive_from_box implements primitive_interface
 				if(rp.part_mesh.default_attribute_string!=null)
 					if(attribute_id>=0)
 						if(attribute_id<rp.part_mesh.default_attribute_string.length)
-					return rp.part_mesh.default_attribute_string[attribute_id];
+							return rp.part_mesh.default_attribute_string[attribute_id];
 		return "1";
 	}
 	public double[]get_edge_location_data(int body_id,int face_id,int loop_id,int edge_id,int point_id)
@@ -165,7 +165,7 @@ public class primitive_from_box implements primitive_interface
 		
 		return default_primitive_material;
 	}
-	public void destroy(long my_max_compress_file_length,int my_response_block_size)
+	public void destroy()
 	{
 		body_array=null;
 	}

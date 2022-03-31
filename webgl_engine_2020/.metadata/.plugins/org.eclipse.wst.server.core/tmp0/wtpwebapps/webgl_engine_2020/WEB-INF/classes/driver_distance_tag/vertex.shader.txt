@@ -1,0 +1,24 @@
+uniform mat4 par;
+
+in  vec4 vertex_location,vertex_normal,vertex_material,vertex_id,vertex_texture;
+out vec4 frag_id,frag_texture;
+
+void main(void)
+{
+	gl_PointSize=16.0;
+	
+	frag_id		=vertex_id;
+	frag_texture=vertex_texture;
+	gl_Position =vec4(par[0].xyz,1.0);
+	gl_Position+=vertex_location.x*vec4(par[1].xyz,0.0);
+	gl_Position+=vertex_location.y*vec4(par[2].xyz,0.0);
+	gl_Position =target_info.projection_matrix*gl_Position;
+	
+	vec4 left_right	=target_info.right_down_center_point-target_info.left_down_center_point;
+	vec4 down_up	=target_info.left_up_center_point	-target_info.left_down_center_point;
+	if(dot(par[1].xyz,left_right.xyz)<=0.0)
+		frag_texture.x=1.0-frag_texture.x;
+	if(dot(par[2].xyz,down_up.xyz)<=0.0)
+		frag_texture.y=1.0-frag_texture.y;
+	frag_texture.x*=par[2].w;
+}

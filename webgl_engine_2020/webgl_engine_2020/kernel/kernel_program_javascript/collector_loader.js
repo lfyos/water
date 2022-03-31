@@ -1,0 +1,99 @@
+function construct_collector_loader_object()
+{
+	this.collector_data=new Array(8);
+	
+	for(var i=0,ni=this.collector_data.length;i<ni;i++)		
+		this.collector_data[i]={
+			collector_stack_version		:	0,
+			collector_stack_data		:	null,
+			collector_stack_text		:	null,
+			is_loading_collector_flag	:	false,
+			fun_array					:	new Array()
+		};
+	this.destroy=function()
+	{
+		for(var i=0,ni=this.collector_data.length;i<ni;i++){
+			this.collector_data[i].collector_stack_data=null;
+			this.collector_data[i].collector_stack_text=null;
+			for(var j=0,nj=this.collector_data[i].fun_array.length;j<nj;j++)
+				this.collector_data[i].fun_array[j]=null;
+			this.collector_data[i].fun_array=null;
+			this.collector_data[i]=null;
+		};
+		this.collector_data=null;
+		this.load_collector_stack=null;
+	};
+	this.clear_epcd=function(epcd)
+	{
+		epcd.is_loading_collector_flag=false;
+		epcd.collector_stack_data=null;
+		epcd.collector_stack_text=null;
+		for(var i=0,ni=epcd.fun_array.length;i<ni;i++)
+			epcd.fun_array[i]=null;
+		epcd.fun_array=new Array();
+	};
+	this.collector_url=function(simple_list_flag,single_collector_flag,location_flag,render)
+	{
+		return render.url_and_channel+"&command=collector"
+					+"&simple="		+(simple_list_flag		?"true":"false")
+					+"&single="		+(single_collector_flag	?"true":"false")
+					+"&location="	+(location_flag			?"true":"false");
+	};
+	this.load_collector=function(simple_list_flag,single_collector_flag,location_flag,fun,render)
+	{
+		var cur=this;
+		var epcd=this.collector_data[(simple_list_flag?0:1)+(single_collector_flag?0:2)+(location_flag?0:4)];
+
+		if(epcd.is_loading_collector_flag){
+			epcd.fun_array.push(fun);
+			return;
+		}
+		if(render.collector_stack_version==epcd.collector_stack_version){
+			fun(epcd.collector_stack_data,epcd.collector_stack_text);
+			return;
+		}
+		epcd.is_loading_collector_flag=true;
+		epcd.collector_stack_version=render.collector_stack_version;
+		
+		try{
+			var my_ajax=new XMLHttpRequest();
+			my_ajax.onreadystatechange=function()
+			{
+				if(render.terminate_flag)
+					return;
+				if(my_ajax.readyState!=4)
+					return;
+				epcd.is_loading_collector_flag=false;
+				if(my_ajax.status!=200){
+					cur.clear_epcd(epcd);
+					alert("this.load_collector_stack my_ajax.status error"+my_ajax.status.toString());
+					return;
+				}
+				if(render.collector_stack_version!=epcd.collector_stack_version){
+					cur.load_collector(simple_list_flag,single_collector_flag,location_flag,fun,render);
+					return;
+				}
+				epcd.collector_stack_text=my_ajax.responseText;
+				try{
+					epcd.collector_stack_data=response_data=JSON.parse(epcd.collector_stack_text);
+				}catch(e){
+					cur.clear_epcd(epcd);
+					alert("this.load_collector_stack JSON.parse error:	"+e.toString());
+					return;
+				}
+				epcd.fun_array.push(fun);
+				for(var i=0,ni=epcd.fun_array.length;i<ni;i++){
+					epcd.fun_array[i](epcd.collector_stack_data,epcd.collector_stack_text);
+					epcd.fun_array[i]=null;
+				}
+				epcd.fun_array=new Array();
+				return;
+			};
+			my_ajax.open("GET",this.collector_url(simple_list_flag,single_collector_flag,location_flag,render),true);
+			my_ajax.send(null);
+		}catch(e){
+			this.clear_epcd(epcd);
+			alert("this.load_collector_stack fail:	"+e.toString());
+		};
+	};
+}

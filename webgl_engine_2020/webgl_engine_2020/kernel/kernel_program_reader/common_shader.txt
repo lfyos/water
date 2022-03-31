@@ -1,6 +1,6 @@
 
 uniform system_information
-{
+{	
 	int pickup_component_id;
 	int pickup_render_id;
 	int pickup_part_id;
@@ -10,6 +10,11 @@ uniform system_information
 	int pickup_loop_id;
 	int pickup_edge_id;
 	int pickup_point_id;
+	
+	int highlight_component_id;
+	int highlight_body_id;
+	int highlight_face_id;
+	int tmp_int_0;
 
 	int year;
 	int month;
@@ -18,6 +23,7 @@ uniform system_information
 	int minute;
 	int second;
 	int millisecond;
+	
 	int microsecond;
 	int nanosecond;
 	
@@ -26,7 +32,7 @@ uniform system_information
 	
 	float pickup_depth;
 	float pickup_value;
-	float tmp_0,tmp_1;
+	float tmp_float_0,tmp_float_1;
 	
 	vec4 light_position[8];
 
@@ -36,11 +42,16 @@ uniform target_information
 {
 	mat4 projection_matrix;
 	mat4 negative_projection_matrix;
+	
 	mat4 other_projection_matrix;
 	mat4 other_negative_projection_matrix;
+	
 	mat4 screen_move_matrix;
+	mat4 negative_screen_move_matrix;
+	
 	mat4 lookat_matrix;
 	mat4 negative_lookat_matrix;
+	
 	mat4 camera_location;
 	mat4 clip_plane_matrix;
 
@@ -100,10 +111,15 @@ uniform target_information
 uniform pass_information 
 {
 	vec4	clear_color;
+	ivec4	viewport;
+	int		target_width;
+	int		target_height;
+	
 	int		method_id;
 	int		pass_id;
 	int		clear_flag;
-	ivec4	viewport;
+	int		tmp0,tmp1,tmp2;
+	
 }pass_info;
 
 uniform component_information 

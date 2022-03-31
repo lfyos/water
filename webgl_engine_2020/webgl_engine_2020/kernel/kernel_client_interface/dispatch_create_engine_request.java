@@ -32,8 +32,7 @@ public class dispatch_create_engine_request
 				e.printStackTrace();
 			}
 			if(ci.request_response.output_data_length!=old_length){
-				ci.request_response.print(",",render_id);
-				ci.request_response.print(",");
+				ci.request_response.print(",",render_id).print(",");
 				render_initialize_number++;
 			}
 		}

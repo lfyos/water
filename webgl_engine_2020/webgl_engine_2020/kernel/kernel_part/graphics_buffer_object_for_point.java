@@ -133,7 +133,7 @@ public class graphics_buffer_object_for_point
 			String my_file_name,String my_file_charset,String curve_type_id,
 			long my_create_buffer_object_bitmap,int max_material_id,long max_file_data_length)
 	{
-		for(int point_i=0;point_i<fe.total_point_primitive_number;point_i++){
+		for(int point_i=0,point_number=fe.total_point_primitive_number;point_i<point_number;point_i++){
 			double my_location_data[]		=p_i.get_point_location_data(body_id,face_id,loop_id,edge_id,point_i);
 			String my_location_extra_data	=p_i.get_point_extra_data	(body_id,face_id,loop_id,edge_id,point_i);
 			String my_material[]			=p_i.get_point_material		(body_id,face_id,loop_id,edge_id,point_i);

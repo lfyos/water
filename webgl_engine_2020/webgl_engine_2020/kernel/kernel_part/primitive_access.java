@@ -209,12 +209,12 @@ public class primitive_access implements primitive_interface
 		return point_material;
 	};
 
-	public void destroy(long my_max_compress_file_length,int my_response_block_size)
+	public void destroy()
 	{
 		clear();
 		
 		if(pi!=null) {
-			pi.destroy(my_max_compress_file_length, my_response_block_size);
+			pi.destroy();
 			pi=null;
 		}
 		

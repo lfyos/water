@@ -31,8 +31,8 @@ public class client_parameter
 		vertex_id	=-1;
 		point_id	=-1;
 		
-		x			=-1.0;
-		y			=-1.0;
+		x			=0;
+		y			=0;
 		aspect		=1.0;
 		
 		depth=1.0;
@@ -105,6 +105,18 @@ public class client_parameter
 			ci.statistics_client.render_interval_length=1;
 		else if((ci.statistics_client.render_interval_length=1000000*Long.decode(str))<=0)
 			ci.statistics_client.render_interval_length=1;
+		
+		switch(((str=ci.request_response.get_parameter("precision"))==null)?"":(str.toLowerCase())) {
+		default:
+		case "true":
+		case "yes":
+			high_or_low_precision_flag=true;
+			break;
+		case "false":
+		case "no":
+			high_or_low_precision_flag=false;
+			break;
+		}
 
 		part my_part;
 		if(comp!=null)

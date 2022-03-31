@@ -64,13 +64,13 @@ public class face_face
 		
 		face_face_box=s.face_face_box;
 	}
-	public face_face(box b)
+	public face_face(box b,int my_attribute_number)
 	{
 		face_type="unknown";
 		face_parameter=null;
 		
 		total_face_primitive_number=12;
-		attribute_number=0;
+		attribute_number=my_attribute_number;
 		
 		face_face_box=new box(b);
 	}

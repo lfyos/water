@@ -11,11 +11,14 @@ public class program_file_reader
 	public program_file_reader()
 	{	
 	}
-	public static common_reader get_system_program_reader(String type_name)
+	public static common_reader get_system_program_reader(
+			String type_name,String class_charset,String jar_file_charset)
 	{
-		return class_file_reader.get_reader(type_name+"_shader.txt",program_file_reader.class);
+		return class_file_reader.get_reader(type_name+"_shader.txt",
+				program_file_reader.class,class_charset,jar_file_charset);
 	}
-	public static common_reader get_render_program_reader(render r,String type_name)
+	public static common_reader get_render_program_reader(render r,
+			String type_name,String class_charset,String jar_file_charset)
 	{
 		common_reader reader=null;
 		
@@ -46,7 +49,8 @@ public class program_file_reader
 			break;
 		}
 		file_name=file_reader.separator(file_name);
-		if((reader=class_file_reader.get_reader(file_name,r.driver.getClass()))!=null)
+		reader=class_file_reader.get_reader(file_name,r.driver.getClass(),class_charset,jar_file_charset);
+		if(reader!=null)
 			if(reader.error_flag()){
 				reader.close();
 				reader=null;
@@ -54,7 +58,8 @@ public class program_file_reader
 		if(reader!=null)
 			return reader;
 		
-		if((reader=program_default_file_reader.get_default_reader(type_name+"_"+file_name))!=null)
+		reader=program_default_file_reader.get_default_reader(type_name+"_"+file_name,class_charset,jar_file_charset);
+		if(reader!=null)
 			if(reader.error_flag()){
 				reader.close();
 				reader=null;

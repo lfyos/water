@@ -141,8 +141,31 @@ public class client_request_response extends common_writer
 			}
 		return implementor.get_parameter(name);
 	}
-	public long[] response_network_data(
-			String compress_response_header,engine_call_result ecr,system_parameter system_par)
+	public boolean get_boolean(String name,boolean default_value)
+	{
+		String str=get_parameter(name);
+		switch((str==null)?"":(str.trim().toLowerCase())) {
+		case "yes":
+		case "true":
+			return true;
+		case "no":
+		case "false":
+			return false;
+		default:
+			return default_value;
+		}
+	}
+	public int get_int(String name)
+	{
+		String str=get_parameter(name);
+		return (str==null)?0:Integer.parseInt(str);
+	}
+	public double get_double(String name)
+	{
+		String str=get_parameter(name);
+		return (str==null)?0:Double.parseDouble(str);
+	}
+	public long[] response_network_data(String compress_response_header,engine_call_result ecr,system_parameter system_par)
 	{
 		try{
 			output_stream.close();
@@ -165,12 +188,10 @@ public class client_request_response extends common_writer
 				ret_val[1]+=data_buf.length;
 			}
 		}
-		
 		implementor.set_response_http_header(
-				"public long[] response_network_data(engine_call_result ecr,system_parameter system_par)",
-				system_par.network_data_charset,response_content_type,
-				compress_response_header,ecr.cors_string,ecr.date_string,
-				Long.toString(system_par.file_buffer_expire_time_length));
+			"public long[] response_network_data(String compress_response_header,engine_call_result ecr,system_parameter system_par)",
+			get_charset(),response_content_type,compress_response_header,ecr.cors_string,ecr.date_string,
+			Long.toString(system_par.file_buffer_expire_time_length));
 		implementor.response_binary_data("response_network_data error",data_buf,data_buf.length);
 		implementor.terminate_response_binary_data("Error 3 in response_network_data");
 		

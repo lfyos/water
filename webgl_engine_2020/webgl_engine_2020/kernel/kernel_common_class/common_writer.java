@@ -7,39 +7,6 @@ import java.nio.charset.Charset;
 
 public class common_writer 
 {
-	private byte writer_recorder[][];
-	private int writer_recorder_number;
-	
-	public void set_recorder()
-	{
-		writer_recorder=new byte[1000][];
-		writer_recorder_number=0;
-	}
-	
-	public byte[]get_recorder()
-	{
-		if(writer_recorder==null)
-			return null;
-		int number=0;
-		for(int i=0;i<writer_recorder_number;i++)
-			number+=writer_recorder[i].length;
-		byte ret_val[]=new byte[number];
-		number=0;
-		for(int i=0;i<writer_recorder_number;i++)
-			for(int j=0,nj=writer_recorder[i].length;j<nj;j++)
-				ret_val[number++]=writer_recorder[i][j];
-		return ret_val;
-	}
-	private void append_recorder(byte data[])
-	{
-		if(writer_recorder.length<=writer_recorder_number) {
-			byte bak[][]=writer_recorder;
-			writer_recorder=new byte[writer_recorder.length+1000][];
-			for(int i=0,ni=bak.length;i<ni;i++)
-				writer_recorder[i]=bak[i];
-		}
-		writer_recorder[writer_recorder_number++]=data;
-	}
 	public common_writer flush()
 	{
 		return this;
@@ -60,8 +27,6 @@ public class common_writer
 			if(data!=null){
 				write_routine(data,0,data.length);
 				output_data_length+=data.length;
-				if(writer_recorder!=null)
-					append_recorder(data);
 			}
 		}
 		return this;
@@ -85,9 +50,6 @@ public class common_writer
 		separator_str=my_separator_str;
 		end_str=my_end_str;
 		newline_str="\n";
-		
-		writer_recorder=null;
-		writer_recorder_number=0;
 	}
 	public common_writer set_pace(int new_space_number)
 	{
@@ -295,13 +257,6 @@ public class common_writer
 		if(length>0){
 			output_data_length+=length;
 			write_routine(data,offset,length);
-			
-			if(writer_recorder!=null) {
-				byte append_data[]=new byte[length];
-				for(int i=0,j=offset;i<length;i++,j++)
-					append_data[i]=data[j];
-				append_recorder(append_data);
-			}
 		}
 		return this;
 	}

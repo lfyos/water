@@ -21,7 +21,7 @@ public class web_page
 		(out=my_ci.request_response).response_content_type="text/html";
 
 		request_url_header=my_ci.get_request_url_header();
-		title=language_change(my_title);
+		title=my_title;
 		info="";
 	}
 	public String language_change(String id_str)
@@ -42,7 +42,7 @@ public class web_page
 	{
 		if(info!=null){
 			out.println("<p style=\"text-align:center;vertical-align:center\">");
-			out.println(info);
+			out.println(language_change(info));
 			out.println("</p>");
 		}
 	}
@@ -57,7 +57,7 @@ public class web_page
 		out.print  (out.implementor.get_request_charset());
 		out.println("\">");
 		out.println("<title>");
-		out.println(title);
+		out.println(language_change(title));
 		out.println("</title>");
 		
 		create_head();

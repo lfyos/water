@@ -54,7 +54,8 @@ public class download_readme_file
 	
 	public static engine_call_result  download_driver_readme(
 			client_request_response request_response,String shader_file_name,
-			String shader_file_system_charset,String file_download_cors_string,String max_age_string)
+			String shader_file_system_charset,String file_download_cors_string,String max_age_string,
+			String class_charset,String jar_file_charset)
 	{
 		String package_name,driver_name;
 		if((package_name=request_response.get_parameter("package"))==null)
@@ -76,7 +77,8 @@ public class download_readme_file
 			return null;
 		}
 
-		common_reader reader=class_file_reader.get_reader("readme.txt",my_class);
+		common_reader reader=class_file_reader.get_reader(
+				"readme.txt",my_class,class_charset,jar_file_charset);
 		if(reader==null) {
 			debug_information.println(
 					"Create common_reader fail in download_readme_file:		",path_name);

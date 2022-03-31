@@ -16,9 +16,9 @@ public class extended_component_driver extends component_driver
 	public void destroy()
 	{
 		super.destroy();
+		view_range=null;
 	}
-	public extended_component_driver(
-			part my_component_part,double my_view_range[],
+	public extended_component_driver(part my_component_part,double my_view_range[],
 			double my_low_precision_scale,double my_mouse_rotate_scale,
 			boolean my_rotate_type_flag,boolean my_exchange_point_flag,
 			boolean my_change_type_flag,int my_camera_modifier_id)
@@ -39,7 +39,6 @@ public class extended_component_driver extends component_driver
 //		String component_directory_name=comp.component_directory_name;
 //		String scene_directory_name=ek.scene_directory_name;
 //		String parameter_directory_name=ek.scene_par.directory_name;
-
 	}
 	public instance_driver create_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)

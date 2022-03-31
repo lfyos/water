@@ -32,11 +32,11 @@ public class component_core_0
 			engine_kernel ek,client_request_response request_response,
 			file_reader fr,part_container_for_part_search pcfps,
 			change_name change_part_name,change_name mount_component_name,
-			part_type_string_sorter type_string_sorter,
-			boolean part_list_flag,long default_display_bitmap,int max_child_number)
+			part_type_string_sorter type_string_sorter,boolean normalize_location_flag,
+			boolean part_list_flag,long default_display_bitmap)
 	{
 		clip=new component_clip();
-		uniparameter=new component_uniparameter(fr.lastModified_time,part_list_flag);
+		uniparameter=new component_uniparameter(fr.lastModified_time,normalize_location_flag,part_list_flag);
 		multiparameter=new component_multiparameter[ek.scene_par.multiparameter_number];
 		for(int i=0,ni=multiparameter.length;i<ni;i++)
 			multiparameter[i]=new component_multiparameter(default_display_bitmap);

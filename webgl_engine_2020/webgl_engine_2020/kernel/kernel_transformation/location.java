@@ -199,7 +199,6 @@ public class location
 			else
 				dz=dx.cross(dy);
 		}
-		
 		if(dx.distance2()>const_value.min_value2)
 			if(dy.distance2()>const_value.min_value2)
 				if(dz.distance2()>const_value.min_value2)
@@ -347,7 +346,7 @@ public class location
 				mr[i]=Double.parseDouble(str.substring(0,index_id));
 				str=str.substring(index_id+ch_length);
 			}
-			return move_rotate(mr[0],mr[1],mr[2],mr[3],mr[4],mr[5]);
+			return move_rotate(mr);
 		}
 		return new location();
 	}
@@ -357,18 +356,14 @@ public class location
 	}
 	public static location move_rotate(double mx,double my,double mz,double rx,double ry,double rz)
 	{
-		if(rx==0)
-			if(ry==0)
-				if(rz==0)
-					return new location(
-							new double[]
-									{
-										1,	0,	0,	0,
-										0,	1,	0,	0,
-										0,	0,	1,	0,
-										mx,	my,	mz,	1
-									});
-
+		if((rx==0)&&(ry==0)&&(rz==0))
+			return new location(new double[]
+				{
+					1,	0,	0,	0,
+					0,	1,	0,	0,
+					0,	0,	1,	0,
+					mx,	my,	mz,	1
+				});
 		double cos_alf	=Math.cos(rx*Math.PI/180),	sin_alf	 =Math.sin(rx*Math.PI/180);
 		double cos_belta=Math.cos(ry*Math.PI/180),	sin_belta=Math.sin(ry*Math.PI/180);
 		double cos_gamma=Math.cos(rz*Math.PI/180),	sin_gamma=Math.sin(rz*Math.PI/180);
