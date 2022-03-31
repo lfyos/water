@@ -1,0 +1,4 @@
+		{
+			"render_depth_base"	:	0.0000,
+			"render_depth_step"	:	0.0001
+		}

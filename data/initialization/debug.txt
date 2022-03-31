@@ -1,118 +1,55 @@
 				function(component_name,component_id,render)
 				{
 					render.debug_call_processor.canvas_scene_url="";
-					
-					render.debug_call_processor.resize=function()
-					{
-						var part_list;
-						if((part_list=document.getElementById("my_part_list"))!=null)
-							if(!(part_list.hidden)){
-								render.debug_call_processor.turnon_control_panel(part_list.src);
-								return;
-							}
-						render.debug_call_processor.turnoff_control_panel();
-					}
-					render.debug_call_processor.reload_control_panel=function()
-					{
-						var part_list;
-						if((part_list=document.getElementById("my_part_list"))!=null)
-							part_list.src=render.debug_call_processor.canvas_scene_url;
-					}
-					render.debug_call_processor.turnon_control_panel=function(my_canvas_scene_url)
-					{
-						render.debug_call_processor.canvas_scene_url=my_canvas_scene_url;
-						
-						var width	=window.innerWidth *0.975;
-						var height	=window.innerHeight*0.925;
-						if(width>=height){
-							render.canvas.width =width*0.70;
-							render.canvas.height=height;
-							var part_list;
-							if((part_list=document.getElementById("my_part_list"))!=null){
-								part_list.width	=width*0.30;
-								part_list.height=height;
-								part_list.removeAttribute("hidden");
-								part_list.src=render.debug_call_processor.canvas_scene_url;
-							}
-						}else{
-							render.canvas.width =width;
-							render.canvas.height=width;
-									
-							var part_list;
-							if((part_list=document.getElementById("my_part_list"))!=null){
-								part_list.width	=width;
-								part_list.height=height-width;
-									
-								part_list.removeAttribute("hidden");
 
-								part_list.src=render.debug_call_processor.canvas_scene_url;
-							}
-						}
-					}
-					render.debug_call_processor.turnoff_control_panel=function()
-					{
-						var width			=window.innerWidth *0.975;
-						var height			=window.innerHeight*0.925;
-				
-						render.canvas.width=width;
-						render.canvas.height=height;
-							
-						var part_list;
-						if((part_list=document.getElementById("my_part_list"))!=null){
-							part_list.setAttribute("hidden",true);
-							part_list.src="";
-						}
-					}
 					render.system_event_processor.pickupmousedown=function(event,pickup_component_id,render)
 					{
-						render.append_routine_function(
-							function()
-							{
-								render.user_call_processor.scene_mousedown(pickup_component_id,event);
-							});
+						render.call_server_component(
+							"show_select_component_box_component","all",[["component_id",pickup_component_id]]);
+						render.user_call_processor.scene_mousedown(pickup_component_id,event);
 						return false;
 					}
-					render.system_event_processor.mousedown=function(event,render)	
-					{
-						render.call_server_component(
-							"show_select_component_box_component","all",
-							[["component_id",render.pickup.component_id]]);
-						return false;
-					};
-					render.system_event_processor.pickupcontextmenu=function(event,pickup_component_id,render)
-					{
-						var p=render.get_component_object_by_component_name("movement_manager");
-						render.debug_call_processor.turnon_control_panel(
-							render.component_call_processor[p.component_id].mount_extract_url());
-						return false;
-					};
 					render.system_event_processor.keydown=function(event,render)
 					{
+						var component_name_array=[
+							"camera_operation_component"
+						];
+						if(render.pickup.component_id>=0)
+							for(var p,i=0,ni=component_name_array.length;i<ni;i++)
+								if((p=render.get_component_object_by_component_name(component_name_array[i]))!=null)
+									if(p.component_id==render.pickup.component_id)
+										return false;
+						
 						switch(event.keyCode){
 						case 27://Esc
-							render.system_call_processor.select_component("clear");
+							render.system_call_processor.select_component("clear_all");
 							break;
 						case 13://Enter
 							if(render.pickup.component_id>=0)
 								render.system_call_processor.select_component(
-									(event.shiftKey||event.ctrlKey||event.altKey)?"switch":"component",
+									(event.shiftKey||event.ctrlKey||event.altKey)?"swap_component":"select_component",
 									[["component_id",render.pickup.component_id]]);
 							break;
 						case 37://left arrow
-						case 39://right arrow
-						{
-							var my_component_id=render.get_component_object_by_component_name("movement_manager").component_id;
-							var mcp=render.component_call_processor[my_component_id];
-							
-							if(event.keyCode==37)
-								mcp.mount_backward(1000);
-							else
-								mcp.mount_forward(1000);
-							
-							render.debug_call_processor.turnon_control_panel(
-								render.system_call_processor.collector_list_webpage_url("simple"));
+							render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
+								function(response_data,render)
+								{
+									var par=[["operation","movement"],["move_method","continue"],["direct","backward"]];
+									if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
+										par.push(["single_step","true"]);
+									render.call_server_component("movement_manager","all",par);
+								});
 							break;
-						}
+						case 39://right arrow
+							render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
+								function(response_data,render)
+								{
+									var par=[["operation","movement"],["move_method","continue"],["direct","forward"]];
+									if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
+										par.push(["single_step","true"]);
+									render.call_server_component("movement_manager","all",par);
+								});
+							break;
 						case 38://up arrow
 							render.system_call_processor.select_component("parent");
 							break;
@@ -120,9 +57,7 @@
 							render.system_call_processor.select_component("child");
 							break;
 						case 32://space
-							var my_component_id=render.get_component_object_by_component_name("movement_manager").component_id;
-							var mcp=render.component_call_processor[my_component_id];
-							mcp.mount_stop();
+							render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]]);
 							break;
 						case 90://z
 						case 88://x
@@ -152,18 +87,13 @@
 							render.set_event_component("component_selection_component");
 							break;
 						case 78://n
-							render.event_component.mouse.	component_name	="tag_controller";
-							render.event_component.keyboard.component_name	="tag_controller";
-							render.event_component.mouse.	function_id		=function_id;
-							render.event_component.keyboard.function_id		=function_id;
-							render.set_event_component("tag_controller");
-							break;
-						case 77://m
-							render.event_component.mouse.	component_name	="text_token_component";
-							render.event_component.keyboard.component_name	="text_token_component";
+							render.event_component.mouse.	component_name	="distance_tag_component";
+							render.event_component.keyboard.component_name	="distance_tag_component";
 							render.event_component.mouse.	function_id		=0;
 							render.event_component.keyboard.function_id		=0;
-							render.set_event_component("text_token_component");
+							render.set_event_component("distance_tag_component");
+							break;	
+						case 77://m
 							break;
 						case 112://F1
 							render.user_call_processor.set_all_transparant_except_selection();
@@ -172,14 +102,12 @@
 							render.user_call_processor.set_all_untransparant();
 							break;
 						case 114://F3
-							window.open(render.system_call_processor.component_check_url(),"_blank");
+							render.system_call_processor.turnonoff_sound(true);
 							break;
 						case 115://F4
-							var p=render.user_call_processor.get_component_tree();
-							alert(p.component_name);
-							alert(p.component_id);
-							alert(p.component_children.length);
+							render.system_call_processor.turnonoff_sound(false);
 							break;
+							
 						case 116://F5
 							break;
 						case 117://F6
@@ -193,12 +121,11 @@
 						case 121://F10
 							break;
 						case 122://F11
+							render.highlight=render.pickup.fork();
 							break;
 						case 123://F12
-							render.system_call_processor.set_menu_show_me_only("交互界面主菜单");
+							render.system_call_processor.set_menu_show("交互界面主菜单");
 							break;
-
-
 						case 49://1
 						case 50://2
 						case 51://3
@@ -209,6 +136,7 @@
 						case 56://8
 						case 57://9
 						case 48://0
+							break;
 						case 81://q
 						case 87://w
 						case 69://e
@@ -220,7 +148,6 @@
 						case 79://o
 						case 80://p
 							break;
-							
 						default:
 							break;
 						};

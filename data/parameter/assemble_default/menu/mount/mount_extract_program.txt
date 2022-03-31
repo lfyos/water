@@ -1,0 +1,69 @@
+function(component_name,component_id,render)
+{
+	render.component_event_processor[component_id]={
+		update_flag			:	false,
+		extract_data		:
+		{
+				component_id	:	-1,
+				movement		:	[]
+		},
+		active_list			:	function(response_data,component_id,render)
+		{
+			var ep=render.component_event_processor[component_id];
+			if((ep.extract_data=response_data).movement.length>0){
+				ep.update_flag=false;
+				render.system_call_processor.set_menu_show(component_id,[["operation","show"],
+						["center","center"],["dy",ep.extract_data.movement.length*0.1]]);
+			}
+		},
+		pickupmouseselect	:	function(event,component_id,render)
+		{
+			var ep=render.component_event_processor[component_id];
+			var function_id=Math.floor(ep.extract_data.movement.length*(1.0-ep.y));
+			if((function_id<0)||(function_id>=ep.extract_data.movement.length))
+				return;	
+			if(event.shiftKey||event.ctrlKey||event.altKey){
+				render.call_server_component("movement_manager","all",
+					[["operation","design"],["move_method","deletedesignbuffer"],
+					 ["buffer",ep.extract_data.movement[function_id].buffer_id]]);
+				if(ep.extract_data.movement.length<=1)
+					render.system_call_processor.set_menu_hide(component_id);
+				else{
+					ep.extract_data.movement[function_id]=ep.extract_data.movement[ep.extract_data.movement.length-1];
+					ep.extract_data.movement.length--;
+					ep.active_list(ep.extract_data,component_id,render);
+				}
+			}else{
+				render.call_server_component("movement_manager","all",
+					[["operation","design"],["move_method","fromdesignbuffer"],
+					 ["buffer",ep.extract_data.movement[function_id].buffer_id],
+					 ["component",ep.extract_data.component_id]]);
+				render.system_call_processor.set_menu_hide(component_id);
+			}
+		},
+		update_canvas_texture	:	function(render_id,part_id,buffer_id,
+			component_id,driver_id,instance_initialize_data,part_material,shader_data,render)
+		{
+			var ep=render.component_event_processor[component_id];
+			if(ep.update_flag)
+				return false;
+			ep.update_flag=true;
+			
+			render.text_canvas.width	=instance_initialize_data.canvas_width;
+			render.text_canvas.height	=instance_initialize_data.canvas_step*ep.extract_data.movement.length;
+		
+			render.text_2dcontext.fillStyle=instance_initialize_data.backgroundStyle;
+			render.text_2dcontext.fillRect(0,0,render.text_canvas.width,render.text_canvas.height);
+					
+			render.text_2dcontext.fillStyle		=instance_initialize_data.fillStyle;
+			render.text_2dcontext.font			=instance_initialize_data.font;
+			render.text_2dcontext.textBaseline	=instance_initialize_data.textBaseline;
+			render.text_2dcontext.textAlign		=instance_initialize_data.textAlign;
+			
+			for(var i=0,ni=ep.extract_data.movement.length;i<ni;i++)
+				render.text_2dcontext.fillText(
+					"  "+ep.extract_data.movement[i].node_name,0,instance_initialize_data.canvas_step*i);
+			return true;
+		}
+	}
+}

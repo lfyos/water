@@ -1,0 +1,232 @@
+function(component_name,component_id,render)
+{
+	render.component_event_processor[component_id]={
+		update_flag			:	true,
+		
+		active_list			:	function()
+		{
+			render.call_server_component("movement_manager","all",
+				[["operation","design"],["move_method","get_location"],["coordinate","component"]],
+				function(response_data,render)
+				{
+					var ep=render.component_event_processor[component_id];
+					ep.update_flag	=false;
+					ep.response_data=response_data;
+					render.system_call_processor.set_menu_show(component_id,[]);
+				});
+		},
+		
+		pickupmouseselect	:	function(event,component_id,render)
+		{
+			var ep=render.component_event_processor[component_id];
+			var p=ep.response_data;
+			
+			var move_all		=[0.10,	0.80,		0.20,	0.86];
+			var move_x			=[0.25,	0.80,		0.9,	0.85];	
+			var move_y			=[0.25,	0.75,		0.9,	0.80];	
+			var move_z			=[0.25,	0.70,		0.9,	0.75];
+			
+			var rotate_all		=[0.10,	0.60,		0.20,	0.66];
+			var rotate_x		=[0.25,	0.60,		0.9,	0.65];	
+			var rotate_y		=[0.25,	0.55,		0.9,	0.60];	
+			var rotate_z		=[0.25,	0.50,		0.9,	0.55];	
+			
+			var time_length		=[0.25,	0.40,		0.9,	0.45];	
+			
+			var start_state_flag	=[0.20,		0.25,		0.35,	0.31];	
+			var terminate_state_flag=[0.50,		0.25,		0.65,	0.31];	
+			var coordinate			=[0.825,	0.25,		0.95,	0.31];	
+
+			var add_point			=[0.10,		0.10,		0.35,	0.16];	
+			var delete_point		=[0.40,		0.10,		0.65,	0.16];	
+			var add_movement		=[0.675,	0.10,		0.96,	0.16];	
+
+			var area_array=[
+					move_all,			move_x,				move_y,				move_z,
+					rotate_all,			rotate_x,			rotate_y,			rotate_z,
+					coordinate,			
+					
+					time_length,		start_state_flag,	terminate_state_flag,
+
+					add_point,			delete_point,		add_movement
+			];
+			
+			ep.hightlight=[-2,-2,-1,-1];
+			
+			for(var i=0,ni=area_array.length;i<ni;i++){
+				var x0=area_array[i][0],y0=area_array[i][1],x1=area_array[i][2],y1=area_array[i][3];
+				if((ep.x<x0)||(ep.x>x1)||(ep.y<y0)||(ep.y>y1))
+					continue;
+				
+				ep.hightlight=area_array[i];
+				
+				var new_value,par=null;
+				switch(i){
+				default:
+					ep.hightlight=[-2,-2,-1,-1];
+					return;	
+				case 0:
+					p.mx=0;	p.my=0;	p.mz=0;
+					par=[["move_method","set_location"],["mx",p.mx],["my",p.my],["mz",p.mz],["rx",p.rx],["ry",p.ry],["rz",p.rz]];
+					break;
+				case 1:
+					if((new_value=prompt("X方向平移",p.mx))==null)
+						return;
+					p.mx=parseFloat(new_value);
+					par=[["move_method","set_location"],["mx",p.mx],["my",p.my],["mz",p.mz],["rx",p.rx],["ry",p.ry],["rz",p.rz]];
+					break;
+				case 2:
+					if((new_value=prompt("Y方向平移",p.my))==null)
+						return;
+					p.my=parseFloat(new_value);
+					par=[["move_method","set_location"],["mx",p.mx],["my",p.my],["mz",p.mz],["rx",p.rx],["ry",p.ry],["rz",p.rz]];
+					break;
+				case 3:
+					if((new_value=prompt("Z方向平移",p.mz))==null)
+						return;
+					p.mz=parseFloat(new_value);
+					par=[["move_method","set_location"],["mx",p.mx],["my",p.my],["mz",p.mz],["rx",p.rx],["ry",p.ry],["rz",p.rz]];
+					break;
+				case 4:
+					p.rx=0;	p.ry=0;	p.rz=0;
+					par=[["move_method","set_location"],["mx",p.mx],["my",p.my],["mz",p.mz],["rx",p.rx],["ry",p.ry],["rz",p.rz]];
+					break;
+				case 5:
+					if((new_value=prompt("X方向旋转(弧度)",p.rx))==null)
+						return;
+					p.rx=parseFloat(new_value);
+					par=[["move_method","set_location"],["mx",p.mx],["my",p.my],["mz",p.mz],["rx",p.rx],["ry",p.ry],["rz",p.rz]];
+					break;
+				case 6:
+					if((new_value=prompt("Y方向旋转(弧度)",p.ry))==null)
+						return;
+					p.ry=parseFloat(new_value);
+					par=[["move_method","set_location"],["mx",p.mx],["my",p.my],["mz",p.mz],["rx",p.rx],["ry",p.ry],["rz",p.rz]];
+					break;
+				case 7:
+					if((new_value=prompt("Z方向旋转(弧度)",p.rz))==null)
+						return;
+					p.rz=parseFloat(new_value);
+					par=[["move_method","set_location"],["mx",p.mx],["my",p.my],["mz",p.mz],["rx",p.rx],["ry",p.ry],["rz",p.rz]];
+					break;
+				case 8:
+					switch(p.coordinate){
+					case "component":
+						p.coordinate="camera";
+						break;
+					case "camera":
+						p.coordinate="view";
+						break;
+					case "view":
+					default:
+						p.coordinate="component";
+						break;
+					}
+					ep.update_flag=false;
+					return;
+				case 9:
+					if((new_value=prompt("运动时间",Math.round(p.time_length/1000/1000)))==null)
+						return;
+					p.time_length=parseFloat(new_value)*1000*1000;
+					ep.update_flag=false;
+					return;
+				case 10:
+					p.start_state_flag^=true;
+					ep.update_flag=false;
+					return;
+				case 11:
+					p.terminate_state_flag^=true;
+					ep.update_flag=false;
+					return;
+				case 12://add_point,
+					par=[["move_method","add_point"],["t",p.time_length]];
+					break;
+				case 13://delete_point,
+					par=[["move_method","delete_point"]];
+					break;
+				case 14://add_movement
+					render.system_call_processor.set_menu_hide(component_id);
+					par=[["move_method","add_movement"],
+						 ["start",		p.start_state_flag		?"true":"false"],
+						 ["terminate",	p.terminate_state_flag	?"true":"false"]];
+					break;
+				}
+				
+				par=par.concat([["operation","design"],["coordinate",p.coordinate],["component_id",p.component_id]]);
+				render.call_server_component("movement_manager","all",par,
+					function(response_data,render)
+					{
+						ep.update_flag	=false;
+						ep.response_data.movement_number=response_data.movement_number;
+					});
+				return;
+			}
+		},
+		
+		draw_item				:	function(render,x,y,str)
+		{
+			render.text_2dcontext.fillText(str,render.text_canvas.width*x,render.text_canvas.height*(1.0-y));
+		},
+		
+		draw_canvas				:	function(ep,render)
+		{
+			var p=ep.response_data;
+			
+			ep.draw_item(render,	0.30,	0.95,	"拼装设计[运动点数:"+p.movement_number+"]");
+			
+			ep.draw_item(render,	0.10,	0.85,	"平移");
+			ep.draw_item(render,	0.25,	0.85,	"x: "+p.mx);
+			ep.draw_item(render,	0.25,	0.80,	"y: "+p.my);
+			ep.draw_item(render,	0.25,	0.75,	"z: "+p.mz);
+				
+			ep.draw_item(render,	0.10,	0.65,	"旋转");
+			ep.draw_item(render,	0.25,	0.65,	"x: "+p.rx);
+			ep.draw_item(render,	0.25,	0.60,	"y: "+p.ry);
+			ep.draw_item(render,	0.25,	0.55,	"z: "+p.rz);	
+								
+			ep.draw_item(render,	0.10,	0.45,	"时间 ");
+			ep.draw_item(render,	0.25,	0.45,	"t: "+Math.round(p.time_length/1000/1000));	
+			
+			
+			ep.draw_item(render,	0.10,	0.30,	"起始");
+			ep.draw_item(render,	0.20,	0.30,	p.start_state_flag?"隐藏":"显示");	
+			
+			ep.draw_item(render,	0.40,	0.30,	"终止");
+			ep.draw_item(render,	0.50,	0.30,	p.terminate_state_flag?"隐藏":"显示");
+			
+			
+			ep.draw_item(render,	0.675,	0.30,	"坐标系");
+			ep.draw_item(render,	0.825,	0.30,	(p.coordinate=="component"	)?"组件":
+										(p.coordinate=="view"		)?"视口":
+										(p.coordinate=="camera"		)?"相机":"未知");	
+
+			ep.draw_item(render,	0.10,	0.15,	"添加运动点");
+			ep.draw_item(render,	0.40,	0.15,	"删除运动点");
+			ep.draw_item(render,	0.675,	0.15,	"添加运动步骤");
+		},
+		
+		update_canvas_texture	:	function(render_id,part_id,buffer_id,
+			component_id,driver_id,instance_initialize_data,part_material,shader_data,render)
+		{
+			var ep=render.component_event_processor[component_id];
+			if(ep.update_flag)
+				return false;
+			ep.update_flag=true;
+			
+			render.text_canvas.width	=instance_initialize_data.canvas_width;
+			render.text_canvas.height	=instance_initialize_data.canvas_height;
+		
+			render.text_2dcontext.fillStyle=instance_initialize_data.backgroundStyle;
+			render.text_2dcontext.fillRect(0,0,render.text_canvas.width,render.text_canvas.height);
+					
+			render.text_2dcontext.fillStyle		=instance_initialize_data.fillStyle;
+			render.text_2dcontext.font			=instance_initialize_data.font;
+			render.text_2dcontext.textBaseline	=instance_initialize_data.textBaseline;
+			render.text_2dcontext.textAlign		=instance_initialize_data.textAlign;
+			
+			ep.draw_canvas(ep,render);
+
+			return true;
+		}
+	}
+}

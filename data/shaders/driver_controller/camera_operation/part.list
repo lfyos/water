@@ -5,6 +5,5 @@
 	part\part.description
 	part\part.mp3
 	
-	/*	init_file_name				x		y		scale	camera_modifier_id	*/		
-		part/init_file_name.txt		0.85	0.75	15.0	0
+	/*	x	y	scale	camera_modifier_id	*/	0.85	0.75	15.0	0
 		

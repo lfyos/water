@@ -1,0 +1,10 @@
+function(component_name,component_id,render)
+{
+	render.sigma={
+		set_grid_parameter	:	function(value)
+		{
+			render.call_server_component("grid_component","all",
+				[["value",encodeURIComponent(encodeURIComponent(value))]]);
+		}
+	};
+}

@@ -1,19 +1,40 @@
-/*	version								*/	2021.07.15
-/*	origin material						*/	0	0	0	1
-/*	default material					*/	0	0	0	2
-/*	origin  vertex_location_extra_data	*/	1
+/*	version					*/	2021.07.15
+/*	origin material			*/	0	0	0	0
+/*	default material		*/	0	0	0	0
+/*	origin extra_data		            */	1
 /*	default vertex_location_extra_data	*/	1
 /*	default vertex_normal_extra_data	*/	1
-/*	max_attribute_number				*/	0
+/*	max_attribute_number	*/  0
 
-/*	body_number		*/		1
-   /* body  0  name   */  grid_body   /*   face_number   */  1
-     /* face  0  name   */  grid_face
-         /* face_type   */  unknown  /*   parameter_number   */  0 /*   parameter  */ 
-         /* total_face_primitive_number */ 1089
-         /* face_attribute_number 		*/ 0
-         /* face_face_box				*/  -1.9290162696017181 -1.841068339898017 -2.035125007571865  1.9964075502265397 1.913433349985668 2.019255389252857 
-        
-         /* face_loop_number   */ 0
-        
-        
+/*  body_number	*/	1
+/*  body_name		*/	grid_body	/*	face_number	*/	1
+/*  	face  name	*/  grid_face
+/*		face type	*/  unknown		/*  parameter number	*/	0	/*	prameter	*/
+/*		total_face_primitive_number	*/	2048
+/*		face_attribute_number		*/  0
+/*		face_face_box               */	-1.9672283292304031	-1.8400499717142766	-2.065872077526472	2.034691234686231	1.9366161323150342	2.030843765198588
+
+/*  	face loop number					*/  1
+/*		Loop NO.0	edge number				*/  2
+/*			Loop NO.0  Edge NO.0			*/
+/*			curve type						*/	segment	/*	parameter number	*/	0	/*	parameter	*/
+			start_not_effective
+			end_not_effective
+/*			parameter_point_extra_data		*/	1
+/*			parameter_point_material    	*/	0	0	0	0
+/*			face_edge_box               	*/	-1.9672283292304031	-1.8400499717142766	-2.065872077526472	2.034691234686231	1.9366161323150342	2.030843765198588
+/*			total_edge_primitive_number		*/	4224
+/*			total_point_primitive_number	*/	0
+
+
+/*			Loop NO.0  Edge NO.1			*/
+/*			curve type						*/	render_point_set	/*	parameter number	*/	0	/*	parameter	*/
+			start_not_effective
+			end_not_effective
+/*			parameter_point_extra_data		*/	1
+/*			parameter_point_material   		*/	0	0	0	0
+/*			face_edge_box               	*/	-1.9672283292304031	-1.8400499717142766	-2.065872077526472	2.034691234686231	1.9366161323150342	2.030843765198588
+/*			total_edge_primitive_number		*/	0
+/*			total_point_primitive_number	*/	1089
+
+

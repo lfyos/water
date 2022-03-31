@@ -1,0 +1,148 @@
+	/* 1name		*/        设置系统信息组件
+	/* 1type		*/         undefined_part
+	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+	/* 1children number */		2
+	
+			/* 2name		*/	设置系统信息功能选择组件
+			/* 2type		*/	interface_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				false	9	0.2		1.0		parameter.png
+
+				token_program	设置系统信息功能选择组件
+				
+				function(component_name,component_id,render)
+				{		
+					render.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,render)
+						{
+							var ep=render.component_event_processor[component_id];
+							var str,function_id=Math.floor((1.0-ep.y)*10.0);
+							
+							switch(function_id){
+							case 0:
+								return;
+							case 1:	//打开配音
+								render.system_call_processor.turnonoff_sound(true);
+								break;
+							case 2:	//关闭配音
+								render.system_call_processor.turnonoff_sound(false);
+								break;
+							case 3:
+								return;
+							case 4:
+								render.system_call_processor.turnonoff_level_of_detail(true, true);
+								break;
+							case 5:
+								render.system_call_processor.turnonoff_level_of_detail(true, false);
+								break;
+							case 6:	
+								render.system_call_processor.turnonoff_level_of_detail(false,false);
+								break;							
+							case 7:
+								var high_precision_scale,low_precision_scale;
+								if((high_precision_scale=prompt("鼠标抬起时的层次细节参数"))==null)
+									break;
+								if((low_precision_scale=prompt("鼠标按下时的层次细节参数"))==null)
+									break;	
+								render.system_call_processor.set_level_of_detail_parameter(high_precision_scale,low_precision_scale);
+								break;
+							case 8:
+								render.system_call_processor.set_menu_show("查询系统信息功能选择组件");
+								break;
+							default:
+								render.system_call_processor.set_menu_show("交互界面主菜单");
+								function_id=9;
+								break;
+							}							
+							ep.hightlight=[0,1.0-function_id/10.0-1.0/10.0,		1.0,1.0-function_id/10.0];
+						}
+					};					
+				}
+				设置系统信息功能选择组件
+
+			/* 2child_number	*/	0
+
+			
+			/* 2name		*/	查询系统信息功能选择组件
+			/* 2type		*/	interface_part
+			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				false	8		0.2		1.8		system_info.png
+
+				token_program	查询系统信息功能选择组件
+				
+				function(component_name,component_id,render)
+				{
+					render.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,render)
+						{
+							var ep=render.component_event_processor[component_id];
+							var function_id=Math.floor((1.0-ep.y)*19.0);
+							
+							switch(function_id){
+							case 0://系统信息
+								return;
+							case 1://复位系统信息
+								window.open(render.system_call_processor.system_information_url(true),"_blank");
+								break;
+							case 2://提取系统信息
+								window.open(render.system_call_processor.system_information_url(false),"_blank");
+								break;
+							case 3://杆件信息
+								return;
+							case 4://顺序排列杆件
+								window.open(render.system_call_processor.part_information_url(0),"_blank");
+								break;
+							case 5://排序排列杆件
+								window.open(render.system_call_processor.part_information_url(0),"_blank");
+								break;
+							case 6://阵列排列杆件	
+								window.open(render.system_call_processor.part_information_url(0),"_blank");
+								break;
+							case 7://组件信息
+								return;
+							case 8://组件树
+								window.open(render.system_call_processor.component_information_url("tree"),"_blank");
+								break;
+							case 9://选中组件(1)
+								window.open(render.system_call_processor.component_information_url("selected&child_flag=true"),"_blank");
+								break;
+							case 10://选中组件(2)
+								window.open(render.system_call_processor.component_information_url("selected&child_flag=false"),"_blank");
+								break;
+							case 11://排序组件
+								window.open(render.system_call_processor.component_information_url("sorted"),"_blank");
+								break;
+							case 12://收集器信息
+								return;
+							case 13://列表收集器
+								window.open(render.system_call_processor.collector_information_url(0),"_blank");
+								break;
+							case 14://显示收集器
+								window.open(render.system_call_processor.collector_information_url(1),"_blank");
+								break;
+							case 15://选择收集器
+								window.open(render.system_call_processor.collector_information_url(2),"_blank");
+								break;
+							case 16://渲染目标收集器	
+								window.open(render.system_call_processor.collector_information_url(3),"_blank");
+								break;
+							case 17://相机信息
+								window.open(render.system_call_processor.camera_information_url(),"_blank");
+								break;
+							case 18:
+								render.system_call_processor.set_menu_show("设置系统信息功能选择组件");
+								function_id=18;
+								break;
+							}
+							ep.hightlight=[0,1.0-function_id/19.0-1.0/19.0,		1.0,1.0-function_id/19.0];
+						}
+					};
+				}
+				查询系统信息功能选择组件
+
+			/* 2child_number	*/	0
+
+			
+			

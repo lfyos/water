@@ -1,0 +1,97 @@
+function(component_name,component_id,render)
+{
+	render.component_event_processor[component_id]={
+		pickupmouseselect	:	function(event,component_id,render)
+		{
+			var ep=render.component_event_processor[component_id];
+			var function_id=Math.floor((1.0-ep.y)*11.0);
+
+			switch(function_id){
+			case 0:
+				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
+					function(response_data,render)
+					{
+						var par=[["operation","movement"],["move_method","continue"],["direct","forward"]];
+						if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
+							par.push(["single_step","true"]);
+						render.call_server_component("movement_manager","all",par);
+					});
+				break;
+			case 1:
+				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
+					function(response_data,render)
+					{
+						var par=[["operation","movement"],["move_method","continue"],["direct","backward"]];
+						if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
+							par.push(["single_step","true"]);
+						render.call_server_component("movement_manager","all",par);
+					});
+				break;
+			case 2:
+				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]]);
+				break;
+			case 3:
+				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
+					function(response_data,render)
+					{
+						render.call_server_component("movement_manager","all",
+							[["operation","movement"],["move_method","search_jason"]],
+							function(response_data,render)
+							{
+								if(response_data.length<=0)
+									return;
+								var my_component_id=render.get_component_object_by_component_name("组件拼装拼装查询组件").component_id;
+								render.component_event_processor[my_component_id].active_list(response_data,my_component_id,render);
+							});
+					});
+				break;
+			case 4:
+				window.open(render.create_component_request_string("movement_manager","all",
+					[["operation","virtual_mount"],["virtual_mount","suspend_jason"]]),"_blank");
+				break;
+			case 5:
+				render.call_server_component("movement_manager","all",
+					[["operation","virtual_mount"],["virtual_mount","reset"],
+					 ["component_part_selection","true"],["component_virtual_mount","true"]]);
+				break;
+			case 6:
+				render.call_server_component("movement_manager","all",
+					[["operation","virtual_mount"],["virtual_mount","reset"],
+					 ["component_face_match","true"]]);
+				break;
+			case 7:
+				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
+					function(response_data,render)
+					{
+						var my_component_id=render.get_component_object_by_component_name("组件拼装拼装编辑组件").component_id;
+						render.component_event_processor[my_component_id].active_list(false);
+					});
+				break;
+			case 8:
+				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
+					function(response_data,render)
+					{
+						var speed;
+						if((speed=prompt("请输入拼装速度"))!=null)
+							render.call_server(render.url_and_channel+"&command=modifier&method=set_speed&speed="+speed);
+					});
+				break;
+			case 9:
+				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
+					function(response_data,render)
+					{
+						var precision;
+						if((precision=prompt("请输入拼装精度"))!=null)
+							render.call_server_component("movement_manager","all",
+								[["operation","parameter"],["parameter","set_precision"],["value",precision]]);
+					});
+				break;
+			default:
+				render.system_call_processor.set_menu_show("交互界面主菜单");
+				function_id=10;
+				break;
+			}
+			ep.hightlight=[0,1.0-function_id/11.0-1.0/11.0,1.0,1.0-function_id/11.0];
+		}
+	}
+}
