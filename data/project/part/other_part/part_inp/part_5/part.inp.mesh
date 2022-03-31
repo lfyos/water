@@ -1,0 +1,20 @@
+/*	version					*/	2021.07.15
+/*	origin material			*/	0	0	0	1
+/*	default material		*/	0	0	0	0
+/*	origin  vertex_location_extra_data	*/	1
+/*	default vertex_location_extra_data	*/	1
+/*	default vertex_normal_extra_data	*/	1
+/*	max_attribute_number	*/	2
+							2435.93	9694.076666666666	339.782	1,28316
+							0.61608157663357	0.9655973770579824	0.09250736681786577	0.754286168900911,0.5201360614337989,0.7026299753232413,0.231835873228409,0.4917118252467969,0.4585444282508618,0.6399795037836311,0.698844067768879
+
+/*	body_number		*/	1
+/*	body 0 name		*/	inp_body	/*	face_number	*/	1
+/* 	face 0 name					*/  inp_face
+/*		face_type					*/  unknown	/*	parameter_number	*/	0	/*	parameter	*/
+/*		total_face_primitive_number	*/	28316
+/*		face_attribute_number		*/	2
+/*		face_face_box				*/	-10308.0	-12500.0	0.0	10308.0	10036.0	10036.0
+
+/*		face_loop_number			*/	0
+

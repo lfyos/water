@@ -1,0 +1,65 @@
+	
+inp_part_0
+	inp_part_0
+	part_0\part.inp.mesh
+	part.material
+	part_0\part.description
+	part_0\part.mp3
+
+inp_part_1
+	inp_part_1
+	part_1\part.inp.mesh
+	part.material
+	part_1\part.description
+	part_1\part.mp3
+
+inp_part_2
+	inp_part_2
+	part_2\part.inp.mesh
+	part.material
+	part_2\part.description
+	part_2\part.mp3
+
+inp_part_3
+	inp_part_3
+	part_3\part.inp.mesh
+	part.material
+	part_3\part.description
+	part_3\part.mp3
+		
+inp_part_4
+	inp_part_4
+	part_4\part.inp.mesh
+	part.material
+	part_4\part.description
+	part_4\part.mp3
+	
+inp_part_5
+	inp_part_5
+	part_5\part.inp.mesh
+	part.material
+	part_5\part.description
+	part_5\part.mp3
+
+inp_part_6
+	inp_part_6
+	part_6\part.inp.mesh
+	part.material
+	part_6\part.description
+	part_6\part.mp3
+	
+inp_part_7
+	inp_part_7
+	part_7\part.inp.mesh
+	part.material
+	part_7\part.description
+	part_7\part.mp3
+
+inp_part_8
+	inp_part_8
+	part_8\part.inp.mesh
+	part.material
+	part_8\part.description
+	part_8\part.mp3
+
+	
