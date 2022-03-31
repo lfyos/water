@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{bb09068b-a3ed-4615-93c5-8483abe84a19}</ProjectGuid>
+    <ProjectGuid>{0fb435b8-e2e6-4232-9306-d70d057fdcb1}</ProjectGuid>
     <RootNamespace>extractassimpdata</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -72,23 +72,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\software\assimp-5.0.1\build\include;D:\software\assimp-5.0.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\water_all\extract_assimp_data\x64\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>D:\software\assimp-5.0.1\build\include;D:\software\assimp-5.0.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\water_all\extract_assimp_data\x64\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\software\assimp-5.0.1\build\include;D:\software\assimp-5.0.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\water_all\extract_assimp_data\x64\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\software\assimp-5.2.0\build\include;E:\software\assimp-5.2.0\include</IncludePath>
+    <LibraryPath>E:\software\assimp-5.2.0\build\lib\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>D:\software\assimp-5.0.1\build\include;D:\software\assimp-5.0.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\water_all\extract_assimp_data\x64\Release;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\software\assimp-5.2.0\build\include;E:\software\assimp-5.2.0\include</IncludePath>
+    <LibraryPath>E:\software\assimp-5.2.0\build\lib\Release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -96,7 +92,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -125,11 +120,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>assimp-vc142-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -149,10 +145,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="assimp_box.cpp" />
+    <ClCompile Include="default_parameter.cpp" />
+    <ClCompile Include="extract_assemble_data.cpp" />
     <ClCompile Include="extract_assimp_data.cpp" />
+    <ClCompile Include="extract_material_data.cpp" />
+    <ClCompile Include="extract_mesh_data.cpp" />
+    <ClCompile Include="location.cpp" />
+    <ClCompile Include="mesh_set.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="extract_assimp_data.h" />
+    <ClInclude Include="assimp_box.h" />
+    <ClInclude Include="default_parameter.h" />
+    <ClInclude Include="extract_assemble_data.h" />
+    <ClInclude Include="extract_material_data.h" />
+    <ClInclude Include="extract_mesh_data.h" />
+    <ClInclude Include="location.h" />
+    <ClInclude Include="mesh_set.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

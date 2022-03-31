@@ -18,9 +18,48 @@
     <ClCompile Include="extract_assimp_data.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="extract_mesh_data.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="extract_material_data.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="assimp_box.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="location.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="extract_assemble_data.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="default_parameter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh_set.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="extract_assimp_data.h">
+    <ClInclude Include="extract_mesh_data.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="extract_material_data.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp_box.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="location.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="extract_assemble_data.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="default_parameter.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh_set.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

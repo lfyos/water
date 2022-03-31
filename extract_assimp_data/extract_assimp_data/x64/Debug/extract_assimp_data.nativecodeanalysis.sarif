@@ -1,0 +1,660 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "算术溢出: 使用 4 字节值上的运算符 + ，然后将结果转换到 8 字节值。在调用运算符 + 之前将值强制转换为宽类型可避免溢出(io.2)。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/software/assimp-5.2.0/include/assimp/types.h"
+                },
+                "region": {
+                  "startLine": 361,
+                  "startColumn": 13,
+                  "endLine": 361,
+                  "endColumn": 22
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "?Append@aiString@@QEAAXPEBD@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "算术溢出: 使用 4 字节值上的运算符 + ，然后将结果转换到 8 字节值。在调用运算符 + 之前将值强制转换为宽类型可避免溢出(io.2)。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/software/assimp-5.2.0/include/assimp/types.h"
+                },
+                "region": {
+                  "startLine": 365,
+                  "startColumn": 36,
+                  "endLine": 365,
+                  "endColumn": 42
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "?Append@aiString@@QEAAXPEBD@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "枚举类型“aiLightSourceType”未设定范围。相比于 \"enum\"，首选 \"enum class\" (Enum.3)。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/software/assimp-5.2.0/include/assimp/light.h"
+                },
+                "region": {
+                  "startLine": 241,
+                  "startColumn": 35,
+                  "endLine": 241,
+                  "endColumn": 36
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "??0aiLight@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "枚举类型“aiPropertyTypeInfo”未设定范围。相比于 \"enum\"，首选 \"enum class\" (Enum.3)。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/software/assimp-5.2.0/include/assimp/material.h"
+                },
+                "region": {
+                  "startLine": 664,
+                  "startColumn": 20,
+                  "endLine": 664,
+                  "endColumn": 21
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "??0aiMaterialProperty@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "枚举类型“aiReturn”未设定范围。相比于 \"enum\"，首选 \"enum class\" (Enum.3)。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/software/assimp-5.2.0/include/assimp/material.h"
+                },
+                "region": {
+                  "startLine": 1542,
+                  "startColumn": 12,
+                  "endLine": 1542,
+                  "endColumn": 83
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "aiGetMaterialFloat",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "枚举类型“aiTextureType”未设定范围。相比于 \"enum\"，首选 \"enum class\" (Enum.3)。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/software/assimp-5.2.0/include/assimp/material.inl"
+                },
+                "region": {
+                  "startLine": 65,
+                  "startColumn": 38,
+                  "endLine": 65,
+                  "endColumn": 38
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "?GetTexture@aiMaterial@@QEBA?AW4aiReturn@@W4aiTextureType@@IPEAUaiString@@PEAW4aiTextureMapping@@PEAIPEAMPEAW4aiTextureOp@@PEAW4aiTextureMapMode@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "枚举类型“aiTextureMapping”未设定范围。相比于 \"enum\"，首选 \"enum class\" (Enum.3)。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/software/assimp-5.2.0/include/assimp/material.inl"
+                },
+                "region": {
+                  "startLine": 65,
+                  "startColumn": 38,
+                  "endLine": 65,
+                  "endColumn": 38
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "?GetTexture@aiMaterial@@QEBA?AW4aiReturn@@W4aiTextureType@@IPEAUaiString@@PEAW4aiTextureMapping@@PEAIPEAMPEAW4aiTextureOp@@PEAW4aiTextureMapMode@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "枚举类型“aiTextureOp”未设定范围。相比于 \"enum\"，首选 \"enum class\" (Enum.3)。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/software/assimp-5.2.0/include/assimp/material.inl"
+                },
+                "region": {
+                  "startLine": 65,
+                  "startColumn": 38,
+                  "endLine": 65,
+                  "endColumn": 38
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "?GetTexture@aiMaterial@@QEBA?AW4aiReturn@@W4aiTextureType@@IPEAUaiString@@PEAW4aiTextureMapping@@PEAIPEAMPEAW4aiTextureOp@@PEAW4aiTextureMapMode@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "枚举类型“aiTextureMapMode”未设定范围。相比于 \"enum\"，首选 \"enum class\" (Enum.3)。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/software/assimp-5.2.0/include/assimp/material.inl"
+                },
+                "region": {
+                  "startLine": 65,
+                  "startColumn": 38,
+                  "endLine": 65,
+                  "endColumn": 38
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "?GetTexture@aiMaterial@@QEBA?AW4aiReturn@@W4aiTextureType@@IPEAUaiString@@PEAW4aiTextureMapping@@PEAIPEAMPEAW4aiTextureOp@@PEAW4aiTextureMapMode@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "枚举类型“aiAnimBehaviour”未设定范围。相比于 \"enum\"，首选 \"enum class\" (Enum.3)。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/software/assimp-5.2.0/include/assimp/anim.h"
+                },
+                "region": {
+                  "startLine": 325,
+                  "startColumn": 24,
+                  "endLine": 325,
+                  "endColumn": 25
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "??0aiNodeAnim@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26812",
+          "message": {
+            "text": "枚举类型“aiMetadataType”未设定范围。相比于 \"enum\"，首选 \"enum class\" (Enum.3)。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/software/assimp-5.2.0/include/assimp/metadata.h"
+                },
+                "region": {
+                  "startLine": 93,
+                  "startColumn": 18,
+                  "endLine": 93,
+                  "endColumn": 19
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "??0aiMetadataEntry@@QEAA@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6262",
+          "message": {
+            "text": "函数使用了堆栈的“104700”个字节: 超过了 /analyze:stacksize '16384'。 请考虑将某些数据移到堆中。"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///E:/water_all/extract_assimp_data/extract_assimp_data/extract_assimp_data.cpp"
+                },
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 5,
+                  "endLine": 16,
+                  "endColumn": 5
+                }
+              },
+              "logicalLocations": [
+                {
+                  "decoratedName": "main",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.29.30133.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "commandLine": "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX86\\x64\\c1xx.dll\" -ACf{1F7B090C-16DB-4822-966A-A93D26ED4681} -ACpmspft140.dll -Alint -D_PREFAST_ -D_AST_FE_ -Analyze -zm0x002EC1B0 -il C:\\Users\\PETERH~1\\AppData\\Local\\Temp\\_CL_ea8b85c3ast -typedil -f extract_assimp_data.cpp -Ze -D_MSC_EXTENSIONS -Zp16 -pc \\:/ -D_MSC_VER=1929 -D_MSC_FULL_VER=192930133 -D_MSC_BUILD=0 -D_M_AMD64=100 -ZILP448 -D_M_X64=100 -D_WIN64 -D_WIN32 -GR -D_CPPRTTI -nologo -W 3 -diagnostics:column -D_GUARDOVERFLOW_CRT_ALLOCATORS=1 -Ot -DCODE_ANALYSIS -D_DEBUG -D_CONSOLE -D_UNICODE -DUNICODE -EHs -D_CPPUNWIND -EHc -D__MSVC_RUNTIME_CHECKS -RTCs -RTCu -MDd -D_DEBUG -D_MT -D_DLL -GS -D_M_FP_PRECISE -permissive- -Zc:wchar_t -Zc:forScope -std:c++20 -Fox64\\Debug\\extract_assimp_data.obj -Fdx64\\Debug\\vc142.pdb -external:W 3 -Gd -analyze:projectdirectory E:\\water_all\\extract_assimp_data\\extract_assimp_data -analyze:rulesetdirectory ;C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Team Tools\\Static Analysis Tools\\\\Rule Sets; -analyze:ruleset C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Team Tools\\Static Analysis Tools\\Rule Sets\\NativeRecommendedRules.ruleset -analyze:quiet -analyze:plugin C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\bin\\HostX86\\x86\\EspXEngine.dll -FC -errorreport:prompt -I E:\\software\\assimp-5.2.0\\build\\include -I E:\\software\\assimp-5.2.0\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\atlmfc\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\VS\\include -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\shared -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\winrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\cppwinrt -I C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um -external:I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\include -external:I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\atlmfc\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\atlmfc\\include -external:I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\VS\\include -I C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\VS\\include -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\ucrt -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\um -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\shared -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\shared -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\winrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\winrt -external:I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\cppwinrt -I C:\\Program Files (x86)\\Windows Kits\\10\\Include\\10.0.19041.0\\cppwinrt -external:I C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um -I C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\Include\\um",
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///E:/software/assimp-5.2.0/include/assimp/types.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "5dc0ddca75e0af973b9df49f53d3f2b0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///E:/software/assimp-5.2.0/include/assimp/light.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "b6bc87f9a885a013ee114dbf15a9b737"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///E:/software/assimp-5.2.0/include/assimp/material.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "268d62257cf4a52aabb5d518d244f3e4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///E:/software/assimp-5.2.0/include/assimp/material.inl"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "7d73df4bdf45b69fc5937fe6795e53b7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///E:/software/assimp-5.2.0/include/assimp/anim.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "c2735533f7526d931a4ee1d328bf6073"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///E:/software/assimp-5.2.0/include/assimp/metadata.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "a40f9c33a2826c6804f508d607c42afc"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///E:/water_all/extract_assimp_data/extract_assimp_data/extract_assimp_data.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "md5": "8327893bd04772d2474e5c374fe35f08"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/importer.hpp"
+          },
+          "hashes": {
+            "md5": "6b50dd1fe815c94e1dbf5d59c2ecd107"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/defs.h"
+          },
+          "hashes": {
+            "md5": "5c6f9d7570d97ee6bc4ec165f9936ab2"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/build/include/assimp/config.h"
+          },
+          "hashes": {
+            "md5": "eb71f5eeeaa5f64354c7e30b5789ec92"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/vector2.h"
+          },
+          "hashes": {
+            "md5": "673d8dc70a2ea6b1c747c029add51fb2"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/vector3.h"
+          },
+          "hashes": {
+            "md5": "5b443ced7d700f9844e3565e68ecef13"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/color4.h"
+          },
+          "hashes": {
+            "md5": "39b43ff06cee4c995ada5ce0848ae8c9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/matrix3x3.h"
+          },
+          "hashes": {
+            "md5": "f548c259a90c722ae496191d508b67f8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/matrix4x4.h"
+          },
+          "hashes": {
+            "md5": "aaa8ff5caa56d474109aeeefad27c4b6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/quaternion.h"
+          },
+          "hashes": {
+            "md5": "c4f4ede18aa491dfa72dcb347b7a8a88"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/vector2.inl"
+          },
+          "hashes": {
+            "md5": "820c23caa7add8c013a627b56e9f7f6d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/vector3.inl"
+          },
+          "hashes": {
+            "md5": "98cd1dc7718b723140ccb523d484f99c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/color4.inl"
+          },
+          "hashes": {
+            "md5": "a6a596c68d0bec03a46abd1b3c43f989"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/matrix3x3.inl"
+          },
+          "hashes": {
+            "md5": "a2e390f8de301302fbd5b5bc83dd83b7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/matrix4x4.inl"
+          },
+          "hashes": {
+            "md5": "5b161551f49e85e8349ad938c0dec344"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/mathfunctions.h"
+          },
+          "hashes": {
+            "md5": "19a46b153919d18aee16e6a4797bbdfc"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/quaternion.inl"
+          },
+          "hashes": {
+            "md5": "d697f87c9e6456714bab099fa37d17fd"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/scene.h"
+          },
+          "hashes": {
+            "md5": "71b1201867110afa6aa4ebb0d5b3fd51"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/texture.h"
+          },
+          "hashes": {
+            "md5": "dbacde2ec340c0dd83ddc904d6b7b04b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/compiler/pushpack1.h"
+          },
+          "hashes": {
+            "md5": "d00d9486294af4cb38c16957aba493f8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/compiler/poppack1.h"
+          },
+          "hashes": {
+            "md5": "895eb01e5dccec48ae0f6f35617531ff"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/mesh.h"
+          },
+          "hashes": {
+            "md5": "eb6273315f0355b15271df975b83153c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/aabb.h"
+          },
+          "hashes": {
+            "md5": "95ed68cda59f9e660ad1e510179c8183"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/camera.h"
+          },
+          "hashes": {
+            "md5": "2a8063e3a42336838bd120f935b4fd03"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/software/assimp-5.2.0/include/assimp/postprocess.h"
+          },
+          "hashes": {
+            "md5": "40b13c227859e81968e8a745626089c8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/water_all/extract_assimp_data/extract_assimp_data/extract_mesh_data.h"
+          },
+          "hashes": {
+            "md5": "5e2d3f9eefda095b6a427b6f9f11b8e0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/water_all/extract_assimp_data/extract_assimp_data/assimp_box.h"
+          },
+          "hashes": {
+            "md5": "3199356a095aecd7a5361392218fd0d3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/water_all/extract_assimp_data/extract_assimp_data/location.h"
+          },
+          "hashes": {
+            "md5": "3b107ba55b6420b720eae8928e736731"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/water_all/extract_assimp_data/extract_assimp_data/extract_material_data.h"
+          },
+          "hashes": {
+            "md5": "4e688b02b753d2994155da4bb6a76825"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///e:/water_all/extract_assimp_data/extract_assimp_data/extract_assemble_data.h"
+          },
+          "hashes": {
+            "md5": "c4e0222481eeb495e6024932a2309a84"
+          }
+        }
+      ]
+    }
+  ]
+}

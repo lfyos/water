@@ -1,7 +1,9 @@
-﻿  extract_assimp_data.cpp
-  正在生成代码
-  1 of 15 functions ( 6.7%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  已完成代码的生成
-  extract_assimp_data.vcxproj -> E:\water_all\extract_assimp_data\x64\Release\extract_assimp_data.exe
+﻿extract_assimp_data.obj : error LNK2001: 无法解析的外部符号 "public: struct aiScene const * __cdecl Assimp::Importer::ReadFile(char const *,unsigned int)" (?ReadFile@Importer@Assimp@@QEAAPEBUaiScene@@PEBDI@Z)
+extract_assimp_data.obj : error LNK2001: 无法解析的外部符号 "public: __cdecl Assimp::Importer::~Importer(void)" (??1Importer@Assimp@@QEAA@XZ)
+extract_assimp_data.obj : error LNK2001: 无法解析的外部符号 "public: __cdecl Assimp::Importer::Importer(void)" (??0Importer@Assimp@@QEAA@XZ)
+extract_material_data.obj : error LNK2001: 无法解析的外部符号 aiGetMaterialTextureCount
+extract_material_data.obj : error LNK2001: 无法解析的外部符号 aiGetMaterialColor
+extract_material_data.obj : error LNK2001: 无法解析的外部符号 aiGetMaterialProperty
+extract_material_data.obj : error LNK2001: 无法解析的外部符号 aiGetMaterialTexture
+extract_material_data.obj : error LNK2001: 无法解析的外部符号 aiGetMaterialUVTransform
+E:\water_all\extract_assimp_data\x64\Release\extract_assimp_data.exe : fatal error LNK1120: 8 个无法解析的外部命令
