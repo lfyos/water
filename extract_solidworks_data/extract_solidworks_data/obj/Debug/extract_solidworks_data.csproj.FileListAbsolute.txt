@@ -24,8 +24,15 @@ E:\water_all\extract_solidworks_data\extract_solidworks_data\bin\Debug\extract_s
 E:\water_all\extract_solidworks_data\extract_solidworks_data\bin\Debug\extract_solidworks_data.exe
 E:\water_all\extract_solidworks_data\extract_solidworks_data\bin\Debug\extract_solidworks_data.pdb
 E:\water_all\extract_solidworks_data\extract_solidworks_data\bin\Debug\SolidWorks.Interop.sldworks.dll
-E:\water_all\extract_solidworks_data\extract_solidworks_data\obj\Debug\extract_solidworks_data.csproj.AssemblyReference.cache
 E:\water_all\extract_solidworks_data\extract_solidworks_data\obj\Debug\extract_solidworks_data.csproj.CoreCompileInputs.cache
 E:\water_all\extract_solidworks_data\extract_solidworks_data\obj\Debug\extract_solidworks_data.csproj.CopyComplete
 E:\water_all\extract_solidworks_data\extract_solidworks_data\obj\Debug\extract_solidworks_data.exe
 E:\water_all\extract_solidworks_data\extract_solidworks_data\obj\Debug\extract_solidworks_data.pdb
+E:\water\extract_solidworks_data\extract_solidworks_data\bin\Debug\extract_solidworks_data.exe.config
+E:\water\extract_solidworks_data\extract_solidworks_data\bin\Debug\extract_solidworks_data.exe
+E:\water\extract_solidworks_data\extract_solidworks_data\bin\Debug\extract_solidworks_data.pdb
+E:\water\extract_solidworks_data\extract_solidworks_data\bin\Debug\SolidWorks.Interop.sldworks.dll
+E:\water\extract_solidworks_data\extract_solidworks_data\obj\Debug\extract_solidworks_data.csproj.CoreCompileInputs.cache
+E:\water\extract_solidworks_data\extract_solidworks_data\obj\Debug\extract_solidworks_data.csproj.CopyComplete
+E:\water\extract_solidworks_data\extract_solidworks_data\obj\Debug\extract_solidworks_data.exe
+E:\water\extract_solidworks_data\extract_solidworks_data\obj\Debug\extract_solidworks_data.pdb

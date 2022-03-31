@@ -59,13 +59,9 @@ namespace extract_solidworks_data
                 face_array = (object[])(b.GetFaces());
             }catch(Exception )
             {
-                face_array = null; 
+                face_array = new object[0]; 
             }
-            if (face_array == null)
-            {
-                mesh_writer.WriteLine(0);
-                return;
-            }
+         
             mesh_writer.WriteLine(face_array.Length);
 
             for (int i = 0, ni = face_array.Length; i < ni; i++)

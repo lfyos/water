@@ -18,7 +18,7 @@ namespace extract_solidworks_data
         private double default_color_red, default_color_green, default_color_blue, default_color_material;
         public part(IModelDoc2 doc,string charset,
             string mesh_file_name,string material_file_name,
-            double ChordTolerance,double LengthTolerance)
+            double ChordTolerance,double LengthTolerance,double color_scale)
         {
             box_exist_flag = false;
 
@@ -40,11 +40,16 @@ namespace extract_solidworks_data
             double[] material_value = (double[])(part_doc.MaterialPropertyValues);
             if (material_value == null)
                 default_material = new material();
-            else if (doc.Extension == null)
-                default_material = new material(material_value, null);
             else
-                default_material = new material(material_value, doc.Extension.GetTexture(""));
-
+            {
+                material_value[0] *= color_scale;
+                material_value[1] *= color_scale;
+                material_value[2] *= color_scale;
+                if (doc.Extension == null)
+                    default_material = new material(material_value, null);
+                else
+                    default_material = new material(material_value, doc.Extension.GetTexture(""));
+            }
             material_container material_cont = new material_container(default_material);
             
             FileStream mesh_stream      = new FileStream(mesh_file_name, FileMode.Create, FileAccess.Write);
@@ -65,45 +70,40 @@ namespace extract_solidworks_data
                 body_array = (object[])(part_doc.GetBodies2((int)(swBodyType_e.swSolidBody), true));
             }catch(Exception)
             {
-                body_array = null;
+                body_array = new object[0];
             }
 
-            if (body_array == null)
-                mesh_writer.WriteLine("/*  body_number */	0");
-            else
+            mesh_writer.WriteLine("/*  body_number */	" + body_array.Length);
+
+            for (int i = 0, ni = body_array.Length; i < ni; i++)
             {
-                mesh_writer.WriteLine("/*  body_number */	" + body_array.Length);
+                body b = new body((Body2)(body_array[i]), i, ChordTolerance, LengthTolerance,
+                        mesh_writer, face_writer, edge_writer, default_material, material_cont);
 
-                for (int i = 0, ni = body_array.Length; i < ni; i++)
+                if (!(b.box_exist_flag))
+                    continue;
+                if (box_exist_flag)
                 {
-                    body b= new body((Body2)(body_array[i]), i, ChordTolerance, LengthTolerance,
-                            mesh_writer, face_writer, edge_writer, default_material, material_cont);
-
-                    if (!(b.box_exist_flag))
+                    double my_volume = (max_x - min_x) * (max_y - min_y) * (max_z - min_z);
+                    double face_volume = (b.max_x - b.min_x) * (b.max_y - b.min_y) * (b.max_z - b.min_z);
+                    if (Math.Abs(my_volume) >= Math.Abs(face_volume))
                         continue;
-                    if (box_exist_flag)
-                    {
-                        double my_volume = (max_x - min_x) * (max_y - min_y) * (max_z - min_z);
-                        double face_volume = (b.max_x - b.min_x) * (b.max_y - b.min_y) * (b.max_z - b.min_z);
-                        if (Math.Abs(my_volume) >= Math.Abs(face_volume))
-                            continue;
-                    }
-
-                    box_exist_flag = b.box_exist_flag;
-
-                    min_x = b.min_x;
-                    min_y = b.min_y;
-                    min_z = b.min_z;
-
-                    max_x = b.max_x;
-                    max_y = b.max_y;
-                    max_z = b.max_z;
-
-                    default_color_red = b.default_color_red;
-                    default_color_green = b.default_color_green;
-                    default_color_blue = b.default_color_blue;
-                    default_color_material = b.default_color_material;
                 }
+
+                box_exist_flag = b.box_exist_flag;
+
+                min_x = b.min_x;
+                min_y = b.min_y;
+                min_z = b.min_z;
+
+                max_x = b.max_x;
+                max_y = b.max_y;
+                max_z = b.max_z;
+
+                default_color_red = b.default_color_red;
+                default_color_green = b.default_color_green;
+                default_color_blue = b.default_color_blue;
+                default_color_material = b.default_color_material;
             }
 
             material_cont.save(material_writer);
