@@ -1,9 +1,0 @@
-/*	material number	*/  1
-
-/*	Material NO.0		*/
-/*	caculate_color_method										*/		2
-/*	caculate_color_parameter									*/		1		1		1		1
-/*	ambient,diffuse,specular,shininess,transparency,emission	*/		1		1		0.5		0.3125		0		0
-/*	texture file name											*/		架梁\基本杆件\铁路路基石子贴图.jpg
-/*	texture_move_x,texture_move_y,texture_alf,texture_scale		*/		0		0		0		0.4
-/*	need do closing operation when clipping						*/		true
