@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="">
-		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
+		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
+		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
 	</section>
 	<section name="SearchDialog.ScopePart">
 		<item key="scope" value="0"/>
@@ -17,7 +18,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="upload_file"/>
+			<item key="textPattern" value="download_list"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.jsp"/>
@@ -32,7 +33,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="upload_part_list"/>
+			<item key="textPattern" value="upload_file"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.jsp"/>
@@ -47,7 +48,22 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="save_list"/>
+			<item key="textPattern" value="part_list"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.js"/>
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY10">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="readAsDataURL"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.jsp"/>
@@ -58,23 +74,11 @@
 			<list key="workingSets">
 			</list>
 		</section>
-		<section name="HISTORY10">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;request_length&quot;"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*java"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
 		<section name="HISTORY5">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="download_list"/>
+			<item key="textPattern" value="save_list"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.jsp"/>
@@ -102,7 +106,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="initialization_function"/>
+			<item key="textPattern" value="&quot;request_length&quot;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -114,7 +118,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="upload_list"/>
+			<item key="textPattern" value="upload_part_list"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.jsp"/>
@@ -129,7 +133,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="readAsDataURL"/>
+			<item key="textPattern" value="upload_list"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.jsp"/>
@@ -144,13 +148,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;part_list"/>
+			<item key="textPattern" value="alt"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.js"/>
 				<item value="*.jsp"/>
 				<item value="*.txt"/>
 				<item value="*java"/>
+				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -159,7 +163,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="part_list"/>
+			<item key="textPattern" value="&quot;part_list"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.js"/>
@@ -174,7 +178,7 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;last_component&quot;"/>
+			<item key="textPattern" value="&quot;top&quot;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.jsp"/>
@@ -189,13 +193,13 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="alt"/>
+			<item key="textPattern" value="&quot;last_component&quot;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.js"/>
 				<item value="*.jsp"/>
 				<item value="*.txt"/>
 				<item value="*java"/>
-				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -250,6 +254,7 @@
 		<item key="DIALOG_Y_ORIGIN" value="242"/>
 	</section>
 	<section name="">
+		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
 		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
 		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
 	</section>

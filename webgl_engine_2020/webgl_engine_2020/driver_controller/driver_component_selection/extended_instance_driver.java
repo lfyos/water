@@ -142,8 +142,8 @@ public class extended_instance_driver extends instance_driver
 		if(control_code==0) 
 			return;
 		
-		ek.collector_stack.push_collector(ek.system_par,ek.scene_par,
-				collector,ek.component_cont,ek.render_cont.renders);
+		ek.collector_stack.push_collector(true,
+			ek.system_par,ek.scene_par,collector,ek.component_cont,ek.render_cont.renders);
 		collector.title=Long.toString(collector.list_id);
 		
 		return;

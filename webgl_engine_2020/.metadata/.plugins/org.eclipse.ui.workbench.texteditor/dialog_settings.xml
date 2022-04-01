@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="send_location_to_webserver"/>
+		<item key="selection" value="6"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="ep.item_number"/>
 			<item value="send_location_to_webserver"/>
 			<item value="contextmenu"/>
 			<item value="set_mouse_for_tag"/>
@@ -22,9 +23,9 @@
 			<item value="travel_operate_or_flag"/>
 			<item value="p."/>
 			<item value="draw_canvas"/>
-			<item value="ep"/>
 		</list>
 		<list key="replacehistory">
+			<item value="6"/>
 			<item value="interface_part"/>
 			<item value="instance_initialize_data"/>
 			<item value="ep.instance_initialize_data"/>
@@ -39,7 +40,6 @@
 			<item value="/* 2"/>
 			<item value="symmetry_flag&#x09;&#x09;"/>
 			<item value="symmetry_flag&#x09;&#x09;&#x09;"/>
-			<item value="my_permanent_render_id"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

@@ -68,14 +68,15 @@ public class component_collector_stack
 						for(component_link_list p=my_collector.component_collector[i][j];p!=null;p=p.next_list_item)
 							set_hide_flag(p.comp,hide_flag,component_cont);
 	}
-	public component_collector push_collector(system_parameter system_par,scene_parameter scene_par,
+	public component_collector push_collector(
+			boolean set_part_information_flag,system_parameter system_par,scene_parameter scene_par,
 			component_collector push_collector,component_container component_cont,render renders[])
 	{
 		part p;
 		
 		push_collector.sort_component_list(scene_par.component_sort_type,scene_par.component_sort_min_distance);
 		
-		if(push_collector.part_number==1)
+		if(set_part_information_flag&&(push_collector.part_number==1))
 			for(int render_id=0,exit_flag=1;(exit_flag>0)&&(render_id<push_collector.component_collector.length);render_id++)
 				if(push_collector.component_collector[render_id]!=null)
 					for(int part_id=0;(exit_flag>0)&&(part_id<push_collector.component_collector[render_id].length);part_id++)
@@ -116,7 +117,7 @@ public class component_collector_stack
 		comp_array.remove_not_in_part_list_component(part_list_flag_effective_flag);
 		component_collector push_collector=new component_collector(renders);
 		push_collector.register_component(comp_array);
-		return push_collector(system_par,scene_par,push_collector,component_cont,renders);
+		return push_collector(true,system_par,scene_par,push_collector,component_cont,renders);
 	}
 	public component_collector pop(component_container component_cont,boolean pop_all_flag)
 	{

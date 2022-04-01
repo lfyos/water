@@ -41,6 +41,7 @@
 					var display_ep=render.component_event_processor[
 							render.get_component_object_by_component_name("列表功能显示组件").component_id];
 					var function_id=Math.floor((1.0-ep.y)*6.0);
+					ep.hightlight=[-1,-1,-1,-1];
 					
 					switch(function_id){
 					case 0:
@@ -54,10 +55,14 @@
 						break;
 					case 3:
 						render.system_call_processor.collector_list_top_list(display_ep.list_id);
-						break;
+						render.system_call_processor.set_menu_hide(component_id);
+						return;
 					case 4:
-						if(confirm("删除列表?"))
+						if(confirm("删除列表?")){
 							render.system_call_processor.collector_list_delete_list(display_ep.list_id);
+							render.system_call_processor.set_menu_hide(component_id);
+							return;
+						}
 						break;
 					case 5:
 						var title,description;
@@ -68,13 +73,14 @@
 								if((description=prompt("请输入列表描述",display_ep.collector_list_object[i].description))==null)
 									break;
 								render.system_call_processor.collector_list_title_list(display_ep.list_id,title,description);
-								break;
+								render.system_call_processor.set_menu_hide(component_id);
+								return;
 							}
 						break;
 					default:
 						return;
 					}
-					render.system_call_processor.set_menu_hide(component_id);
+					ep.hightlight=[0,1.0-function_id/6-1.0/6,		1.0,1.0-function_id/6];
 				}
 			}
 		}

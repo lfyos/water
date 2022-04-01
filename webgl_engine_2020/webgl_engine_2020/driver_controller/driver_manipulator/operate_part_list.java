@@ -198,8 +198,8 @@ public class operate_part_list
 				collector=ek.collector_stack.delete_collector(collector.list_id,ek.component_cont);
 				if(collector!=null){
 					long old_id=collector.list_id;
-					ek.collector_stack.push_collector(ek.system_par,
-						ek.scene_par,collector,ek.component_cont,ek.render_cont.renders);
+					ek.collector_stack.push_collector(false,ek.system_par,ek.scene_par,
+								collector,ek.component_cont,ek.render_cont.renders);
 					collector.list_id=old_id;
 					acd.set_audio(collector.audio_file_name);
 				}
@@ -297,7 +297,7 @@ public class operate_part_list
 			}
 			for(int i=cc.length-1;i>=0;i--)
 				if(cc[i]!=null)
-					ek.collector_stack.push_collector(ek.system_par,
+					ek.collector_stack.push_collector(false,ek.system_par,
 						ek.scene_par,cc[i],ek.component_cont,ek.render_cont.renders);
 			acd.set_audio(null);
 			if((collector=ek.collector_stack.get_top_collector())!=null)
