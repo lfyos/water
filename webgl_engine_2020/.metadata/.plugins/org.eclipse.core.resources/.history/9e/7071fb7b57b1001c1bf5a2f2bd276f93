@@ -100,15 +100,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				},
 				pickupdblclick		:	function(event,component_id,render)
 				{
-					if(render.pickup.body_id<0)
-						return true;
-					switch(event.button){
-					case 0:	
-						render.call_server_component(component_id,"all",
-							[["operation","modify"],["id",render.pickup.body_id]]);
-						return true;
-					}
-					return false;
+					return true;
 				},
 				pickupcontextmenu	:	function(event,component_id,render)
 				{
@@ -120,6 +112,9 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 						return true;
 					switch(event.button){
 					case 0:
+						render.call_server_component(component_id,"all",
+							[["operation","modify"],["id",render.pickup.body_id]]);
+						return true;
 					case 1:
 						break;
 					case 2:

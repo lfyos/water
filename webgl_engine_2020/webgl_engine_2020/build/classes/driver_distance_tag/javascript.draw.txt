@@ -105,8 +105,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					switch(event.button){
 					case 0:	
 						render.call_server_component(component_id,"all",
-							[["operation","modify"],["id",render.pickup.body_id],
-							 ["function",render.event_component.mouse.function_id]]);
+							[["operation","modify"],["id",render.pickup.body_id]]);
 						return true;
 					}
 					return false;

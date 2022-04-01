@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="interface_part"/>
+		<item key="selection" value="send_location_to_webserver"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="send_location_to_webserver"/>
+			<item value="contextmenu"/>
+			<item value="set_mouse_for_tag"/>
 			<item value="menu_part"/>
 			<item value="id_base"/>
 			<item value="base"/>
@@ -20,9 +23,6 @@
 			<item value="p."/>
 			<item value="draw_canvas"/>
 			<item value="ep"/>
-			<item value="index_id"/>
-			<item value="load_collector"/>
-			<item value="list_type_flag"/>
 		</list>
 		<list key="replacehistory">
 			<item value="interface_part"/>
