@@ -160,18 +160,18 @@ function construct_render_utility(my_render_instance)
     	texture_object.video.loop		="loop";
     	texture_object.video.volume		=1.0;
     	texture_object.video.crossOrigin="Anonymous";
-    	
-    	texture_object.video.oncanplay=function()
-		{
-    		texture_object.video.play();
-    		texture_object.state="playing";
-		};
+  
     	if(my_src==null)
     		texture_object.state="done";
     	else{
     		texture_object.state="loading";
     		texture_object.video.src=my_src;
-    	}	
+    	}
+     	texture_object.video.oncanplay=function()
+		{
+    		texture_object.video.play();
+    		texture_object.state="playing";
+		}
     	return texture_object;
 	};
 	this.load_server_part_video=function(

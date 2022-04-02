@@ -1,14 +1,8 @@
-uniform vec4 color;
-
 in vec4 frag_location,frag_material,frag_id;
 
 layout (location = 0) out vec4 frag_data;
 
 void main(void)
 {
-	frag_data=vec4(color.w*color.rgb+(1.0-color.w)*frag_material.rgb,1.0);
-	if(frag_material.w>=0.5)
-		frag_data=vec4(1.0,0.0,0.0,1.0);
-	else
-		frag_data=vec4(0.0,1.0,0.0,1.0);
+	frag_data=vec4(frag_material.rgb,1.0);
 }

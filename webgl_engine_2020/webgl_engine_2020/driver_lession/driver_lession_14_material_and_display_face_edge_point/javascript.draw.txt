@@ -70,13 +70,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		gl.bindVertexArray(null);
 	}
 	
-	if(do_render_number.engine_render==0){
-		shader_program.color_uniform=gl.getUniformLocation(shader_program,"color");
-	}
-	
 	switch(method_id){
 	case 0:
-		gl.uniform4fv(shader_program.color_uniform,new Float32Array([1.0,1.0,1.0,0.0]));
 		do_render(gl.TRIANGLES,part_buffer_object.face,2);
 		break;
 	case 1:
@@ -85,18 +80,12 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		break;
 	case 3:
 		gl.colorMask(false,false,false,false);	
-		gl.uniform4fv(shader_program.color_uniform,new Float32Array([1.0,1.0,1.0,1.0]));
 		do_render(gl.TRIANGLES,part_buffer_object.face,4);
 		gl.colorMask(true,true,true,true);
 		break;
 	case 4:
-		gl.uniform4fv(shader_program.color_uniform,new Float32Array([1.0,0.0,0.0,1.0]));
 		do_render(gl.LINES,part_buffer_object.frame,8);
-		
-		gl.uniform4fv(shader_program.color_uniform,new Float32Array([0.0,1.0,0.0,1.0]));
 		do_render(gl.LINES,part_buffer_object.edge,16);
-		
-		gl.uniform4fv(shader_program.color_uniform,new Float32Array([0.0,0.0,1.0,1.0]));
 		do_render(gl.POINTS,part_buffer_object.point,32);
 		
 		break;
