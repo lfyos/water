@@ -48,6 +48,10 @@ public class movement_jason
 			cw.println(child_space+"\"component_id\"		:	-1,");
 			cw.println(child_space+"\"follow_component_name\"	:	[],");
 			cw.println(child_space+"\"follow_component_id\"	:	[],");
+			
+			cw.println(child_space+"\"start_state_flag\"	:	",		"false,");
+			cw.println(child_space+"\"terminate_state_flag\"	:	",	"false,");
+			cw.println(child_space+"\"movement_time_length\"	:	[],");
 		}else{
 			cw.println(child_space+"\"component_name\"	:	",
 					jason_string.change_string(t.move.moved_component_name)+",");
@@ -63,6 +67,15 @@ public class movement_jason
 			if(t.move.follow_component_id!=null)
 				for(int i=0,ni=t.move.follow_component_id.length;i<ni;i++)
 					cw.print((i==0)?"":",",t.move.follow_component_id[i]);
+			cw.println("],");
+			
+			cw.println(child_space+"\"start_state_flag\"	:	",		t.move.start_state_flag?"true,":"false,");
+			cw.println(child_space+"\"terminate_state_flag\"	:	",	t.move.terminate_state_flag?"true,":"false,");
+			
+			cw.print  (child_space+"\"movement_time_length\"	:	[");
+			if(t.move.movement!=null)
+				for(int i=0,ni=t.move.movement.length;i<ni;i++)
+					cw.print((i==0)?"":",",t.move.movement[i].time_length);
 			cw.println("],");
 		}
 		

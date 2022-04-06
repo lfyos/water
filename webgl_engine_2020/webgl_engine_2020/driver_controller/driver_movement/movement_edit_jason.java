@@ -31,7 +31,7 @@ public class movement_edit_jason
 		movement_jason.set_current_movement_flag(manager.root_movement,manager.parameter.current_movement_id,false);
 		
 		ci.request_response.println("{");
-		ci.request_response.print  ("	\"buffer_number\"	:	",
+		ci.request_response.print  ("	\"buffer_number\"		:	",
 			(manager.buffer_movement==null)?0:(manager.buffer_movement.length)).println(",");
 		
 		if(searcher.result==null){

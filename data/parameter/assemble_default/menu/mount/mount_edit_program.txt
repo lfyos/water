@@ -296,7 +296,7 @@ function(component_name,component_id,render)
 				return;
 			case 20://"18.需要选择杆件":"18.不需选择杆件"
 				if(!(ep.type_flag))
-					break;
+					return;
 				var str="set";
 				if(ep.movement_data.children.length>0)
 					str="clear";
@@ -317,26 +317,26 @@ function(component_name,component_id,render)
 						if(ep.movement_data.children.length>0)
 							ep.travel_operate_flag=true;
 					});
-				break;
+				return;
 			case 21://"19.需要表面配合":"19.不需表面配合"
 				if(!(ep.type_flag))
-					break;
+					return;
 				var par=[["component_face_match","clear"]];
 				
 				if(ep.movement_data.children.length<=0)
 					if(confirm("增加表面配合(OK)/删除表面配合(Cancel)")){
 						if(render.pickup_array[0].component_id<0)
-							break;
+							return;
 						if(render.pickup_array[0].body_id<0)
-							break;
+							return;
 						if(render.pickup_array[0].face_id<0)
-							break;
+							return;
 						if(render.pickup_array[1].component_id<0)
-							break;
+							return;
 						if(render.pickup_array[1].body_id<0)
-							break;
+							return;
 						if(render.pickup_array[1].face_id<0)
-							break;
+							return;
 						par=[["component_face_match",		"add"],	
 							 ["source_component_id",		render.pickup_array[0].component_id],
 							 ["source_body_id",				render.pickup_array[0].body_id],
@@ -355,9 +355,33 @@ function(component_name,component_id,render)
 						if(ep.movement_data.children.length>0)
 							ep.travel_operate_flag=true;
 					});
-				break;
+				return;
+			case 22://"20.调整拼装所需时间",
+				if(ep.type_flag){
+					var scale_value; 
+					if((scale_value=prompt("输入调整拼装所需时间倍数"))==null)
+						return;
+					if((scale_value=scale_value.trim())=="")
+						return;	
+					render.call_server_component("movement_manager","all",[["operation","design"],
+						["move_method","modify_time_length"],["id",ep.movement_data.movement_tree_id],["scale",scale_value]],
+						function(response_data,render)
+						{
+							ep.update_flag=false;
+							ep.movement_data=response_data;
+						});
+				}
+				return;
+			case 23://"21.当前拼装Jason数据"
+				if(ep.type_flag)
+					window.open(
+						render.create_component_request_string("movement_manager","all",
+							[["operation","design"],["move_method","edit_jason"],
+							 ["id",ep.movement_data.movement_tree_id]]),
+						"_blank");
+				return;
 			default:
-				break;
+				return;
 			}
 		},
 		pickupmouseselect		:	function(event,component_id,render)
@@ -455,7 +479,10 @@ function(component_name,component_id,render)
 										
 								(ep.movement_data.children.length>0)?"19.非叶结点清除所有表面配合":
 								(component_face_match_number<=0)	?"19.叶子结点不需表面配合":
-									("19.叶子结点需要表面配合("+component_face_match_number.toString()+")")
+									("19.叶子结点需要表面配合("+component_face_match_number.toString()+")"),
+									
+								"20.调整拼装所需时间",
+								"21.当前拼装Jason数据"
 					];
 					render.text_2dcontext.fillText(
 						"    拼装ID:"+(ep.movement_data.movement_tree_id)+",缓冲个数:"+(ep.movement_data.buffer_number),

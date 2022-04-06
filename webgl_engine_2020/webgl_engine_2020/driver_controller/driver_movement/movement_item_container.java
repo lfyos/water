@@ -20,8 +20,6 @@ public class movement_item_container
 	public movement_item  movement[];
 	public box start_box,terminate_box;
 	
-	public long target_time;
-	
 	public void destroy()
 	{
 		moved_component_name=null;

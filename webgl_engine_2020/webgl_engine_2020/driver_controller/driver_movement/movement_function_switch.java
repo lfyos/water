@@ -10,6 +10,7 @@ import kernel_common_class.debug_information;
 import kernel_common_class.jason_string;
 import kernel_common_class.upload_web_page;
 import kernel_common_class.change_name;
+import kernel_common_class.const_value;
 import kernel_component.component;
 import kernel_component.component_array;
 import kernel_engine.client_information;
@@ -915,6 +916,16 @@ public class movement_function_switch
 		}
 		return searcher.result.movement_tree_id;
 	}
+	private void scale_time_length(movement_tree t,double scale_value)
+	{
+		if(t.move!=null)
+			if(t.move.movement!=null)
+				for(int i=0,ni=t.move.movement.length;i<ni;i++)
+					t.move.movement[i].time_length*=scale_value;
+		if(t.children!=null)
+			for(int i=0,ni=t.children.length;i<ni;i++)
+				scale_time_length(t.children[i],scale_value);
+	}
 	private String[] design_request_dispatch(int movement_component_id,int movement_driver_id)
 	{
 		String str;
@@ -924,6 +935,20 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("move_method"))==null)
 			return null;
 		switch(str.trim().toLowerCase()){
+		case "modify_time_length":
+			push();
+			if(manager.root_movement!=null)
+				if((str=ci.request_response.get_parameter("id"))!=null){
+					movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
+					if(searcher.result!=null){
+						double scale_value;
+						if((str=ci.request_response.get_parameter("scale"))!=null)
+							if((scale_value=Double.parseDouble(str))>const_value.min_value)
+								scale_time_length(searcher.result,scale_value);
+					}
+				}
+			new movement_edit_jason(locate_camera(),ci,manager);
+			return null;
 		case "download_audio":
 		{
 			if(manager.root_movement==null)
