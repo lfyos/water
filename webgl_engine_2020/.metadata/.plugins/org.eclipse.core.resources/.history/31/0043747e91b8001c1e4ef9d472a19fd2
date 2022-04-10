@@ -158,7 +158,7 @@ function construct_render_utility(my_render_instance)
     	texture_object.video.autoplay	="autoplay";
     	texture_object.video.controls	="controls";
     	texture_object.video.loop		="loop";
-    	texture_object.video.muted		="muted";
+    	texture_object.video.muted		=true;
     	texture_object.video.volume		=1.0;
     	texture_object.video.crossOrigin="Anonymous";
   

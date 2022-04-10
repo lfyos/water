@@ -155,10 +155,10 @@ function construct_render_utility(my_render_instance)
     	gl.bindTexture	(gl.TEXTURE_2D,null);
 
     	texture_object.video			=document.createElement("video");
-    	texture_object.video.autoplay	="autoplay";
+//    	texture_object.video.autoplay	="autoplay";
     	texture_object.video.controls	="controls";
     	texture_object.video.loop		="loop";
-    	texture_object.video.muted		="muted";
+    	texture_object.video.muted		=true;
     	texture_object.video.volume		=1.0;
     	texture_object.video.crossOrigin="Anonymous";
   
@@ -172,6 +172,12 @@ function construct_render_utility(my_render_instance)
 		{
     		texture_object.video.play();
     		texture_object.state="playing";
+    		
+    		try{
+    			texture_object.video.muted=false;
+    		}catch(e){
+    			;
+    		}
 		}
     	return texture_object;
 	};
