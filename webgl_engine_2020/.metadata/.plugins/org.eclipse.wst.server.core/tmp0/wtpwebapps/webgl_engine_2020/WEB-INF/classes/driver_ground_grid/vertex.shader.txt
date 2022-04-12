@@ -1,9 +1,0 @@
-in vec4 vertex_location;
-
-uniform mat4 par;
-
-void main(void)
-{
-	gl_Position =vec4((vertex_location.y-0.5)*par[0].w,	0.0,	(vertex_location.x-0.5)*par[0].w,	1.0);
-	gl_Position =target_info.projection_matrix*gl_Position;
-}

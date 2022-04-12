@@ -1,0 +1,17 @@
+		{
+			"near_value"	:	2.5,
+			"far_value"		:	10.0,
+			"frag_depth"	:	0.999,
+			
+			"render_data"	:	[
+				{
+					"scale"		:	100,
+					"color"		:	[0.8,0.8,0.8]
+				},
+				{
+					"scale"		:	10000,
+					"color"		:	[1.0,1.0,1.0]
+				}
+			]
+		}
+		

@@ -46,7 +46,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	if(do_render_number.engine_render==0){
 		shader_program.par_uniform=gl.getUniformLocation(shader_program,"par");
 	}
-	
+
 	if(method_id!=5)
 		return;
 
@@ -61,13 +61,14 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		while(data_buffer[buffer_id].length>1)
 			data_buffer[buffer_id].shift();
 
-		for(var par_id=0,par_number=data_buffer[buffer_id][0].length;par_id<par_number;par_id++){
-			var p=data_buffer[buffer_id][0][par_id];
+		for(var par_id=0,par_number=part_material[0].render_data.length;par_id<par_number;par_id++){
+			var p=part_material[0].render_data[par_id];
+			var grid_size=p.scale*data_buffer[buffer_id][0];
 			gl.uniformMatrix4fv(shader_program.par_uniform,false,new Float32Array([	
-					p[0],p[1],p[2],p[3],
-					part_material[0].near_value,part_material[0].far_value,0,1,
-					0,0,0,1,
-					0,0,0,1	]));
+					p.color[0],					p.color[1],					p.color[2],					grid_size,
+					part_material[0].near_value,part_material[0].far_value,	part_material[0].frag_depth,1,
+					0,0,0,1,		0,0,0,1]));
+					
 			for(var j=0,nj=part_buffer_object.region_data.length;j<nj;j++){
 				p=part_buffer_object.region_data[j];
 				gl.bindVertexArray(p.vertex_array_object[0]);

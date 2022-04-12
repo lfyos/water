@@ -354,12 +354,13 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 		project_matrix.near_center_point		=this.computer.caculate_coordinate(project_matrix.negative_lookat_matrix,0,0,-(project_matrix.near_value));
 		project_matrix.eye_point				=this.computer.caculate_coordinate(project_matrix.negative_lookat_matrix,0,0,0);
 		
-	 	project_matrix.center_point_depth		=this.computer.caculate_coordinate(project_matrix.matrix,project_matrix.center_point[0],project_matrix.center_point[1],project_matrix.center_point[2])[2];
+	 	var center_point_depth					=this.computer.caculate_coordinate(project_matrix.matrix,
+	 			project_matrix.center_point[0],project_matrix.center_point[1],project_matrix.center_point[2])[2];
 		
-		project_matrix.left_down_center_point	=this.computer.caculate_coordinate(project_matrix.negative_matrix,-1,-1,project_matrix.center_point_depth);
-		project_matrix.left_up_center_point		=this.computer.caculate_coordinate(project_matrix.negative_matrix,-1, 1,project_matrix.center_point_depth);
-		project_matrix.right_down_center_point	=this.computer.caculate_coordinate(project_matrix.negative_matrix, 1,-1,project_matrix.center_point_depth);
-		project_matrix.right_up_center_point	=this.computer.caculate_coordinate(project_matrix.negative_matrix, 1, 1,project_matrix.center_point_depth);
+		project_matrix.left_down_center_point	=this.computer.caculate_coordinate(project_matrix.negative_matrix,-1,-1,center_point_depth);
+		project_matrix.left_up_center_point		=this.computer.caculate_coordinate(project_matrix.negative_matrix,-1, 1,center_point_depth);
+		project_matrix.right_down_center_point	=this.computer.caculate_coordinate(project_matrix.negative_matrix, 1,-1,center_point_depth);
+		project_matrix.right_up_center_point	=this.computer.caculate_coordinate(project_matrix.negative_matrix, 1, 1,center_point_depth);
 
 		project_matrix.left_down_near_point		=this.computer.caculate_coordinate(project_matrix.negative_matrix,-1,-1,-1);
 		project_matrix.left_up_near_point		=this.computer.caculate_coordinate(project_matrix.negative_matrix,-1, 1,-1);

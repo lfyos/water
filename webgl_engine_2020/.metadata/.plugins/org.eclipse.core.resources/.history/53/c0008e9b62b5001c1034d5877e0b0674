@@ -1,9 +1,0 @@
-package driver_movement;
-
-public class movement_scale_time_length 
-{
-	static public void scale_time_length(movement_tree t)
-	{
-		
-	}
-}

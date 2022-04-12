@@ -219,6 +219,13 @@ function(component_name,component_id,render)
 			solidworks_shader_data.shader_data[0].display_on_pickup.frame	=true;
 			solidworks_shader_data.shader_data[0].display_on_pickup.edge	=(on_off_flag?false:true);
 			solidworks_shader_data.shader_data[0].display_on_pickup.point	=(on_off_flag?false:true);
+		},
+		
+		scale_mount_time_length	:	function(movement_tree_id,time_length_scale_value)
+		{
+			render.call_server_component("movement_manager","all",
+				[["operation","design"],	["move_method","modify_time_length"],
+				 ["id",movement_tree_id],	["scale",time_length_scale_value]]);
 		}
 	};
 }

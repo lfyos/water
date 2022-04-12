@@ -16,11 +16,11 @@
 				not_part_list	mount	interface.assemble
 		/*	2:child_number	*/	0
 		
-		/*	2:name			*/	grid_component
-		/*	2:type			*/	grid_part
+		/*	2:name			*/	ground_grid_component
+		/*	2:type			*/	ground_grid_part
 		/*	2:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
-				part_list_component
-				100		0.8	0.8	0.8		0.9	0.9	0.9		1	1	1		
+				/*	root_component_name		*/		part_list_component
+
 				not_part_list
 		/*	2:child_number	*/	0
 		

@@ -1,4 +1,3 @@
-ground_grid		driver_ground_grid.extended_render_driver				grid\render.list
-
-sigma			driver_opengl_fixed_pipeline.extended_render_driver		cad\render.list		
-						environment			liufuyan_sigma_directory	shader_material.txt		light.txt
+sigma		driver_opengl_fixed_pipeline.extended_render_driver		cad\render.list		
+			
+			environment			liufuyan_sigma_directory	shader_material.txt		light.txt

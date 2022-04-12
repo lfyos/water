@@ -186,8 +186,6 @@ function construct_uniform_block_object(my_gl)
 			project_matrix.distance,
 			project_matrix.near_value,
 			project_matrix.far_value,
-			
-			project_matrix.center_point_depth
 		];
 
 		var int_data=[

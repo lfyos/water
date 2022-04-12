@@ -1,8 +1,0 @@
-package driver_movement;
-
-import kernel_common_class.const_value;
-
-public class movement_scale_time_length 
-{
-	static public 
-}

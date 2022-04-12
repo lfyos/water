@@ -98,7 +98,6 @@ uniform target_information
 	float distance;
 	float near_value;
 	float far_value;
-	float center_point_depth;
 	
 	int projection_type_flag;
 
