@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;webgl_engine_2020&apos;&#x0D;&#x0A;- Original project: &apos;webgl_engine_2020&apos;&#x0D;&#x0A;- Original element: &apos;webgl_engine_2020/driver_general/driver_sky_box&apos;" description="Delete element" element1="/driver_general&lt;driver_sky_box" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1600993107709" subPackages="false" version="1.0"/>
+</session>

@@ -1,0 +1,129 @@
+<%@page import="java.io.File"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"    pageEncoding="UTF-8"%>
+
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta http-equiv="Pragma" content="no-cache">
+
+
+<title>
+上传列表
+</title>
+<script type="text/javascript">
+
+function display_status()
+{
+	try{
+		var url="interface.jsp?user_name=NoName&pass_word=NoPassword&channel=upload&command=status";
+		var my_ajax=new XMLHttpRequest();
+		my_ajax.onreadystatechange=function()
+		{
+			if(my_ajax.readyState!=4)
+				return;
+			if(my_ajax.status!=200)
+				return;
+			document.getElementById("status").value=my_ajax.responseText;
+		}
+		my_ajax.open("GET",url,true);
+		my_ajax.send(null);
+	}catch(e){
+		;
+	};
+}
+function do_upload()
+{
+	var fi=document.getElementById("file"),reader=new FileReader();
+	
+	if(fi.files.length<=0){
+		alert("请选择上传文件");
+		return;
+	};
+	var file_name=fi.files[0].name;
+	
+	reader.onloadend=function()
+	{
+		var url="interface.jsp?user_name=NoName&pass_word=NoPassword&channel=upload&command=upload&file=";
+		var my_ajax=new XMLHttpRequest();
+		my_ajax.onreadystatechange=function()
+		{
+			if(my_ajax.readyState!=4)
+				return;
+			if(my_ajax.status!=200){
+				alert("上传失败");
+				return;
+			}
+			
+			if(my_ajax.responseText=="success")
+				window.open("chinese/draw.jsp?scene_name=cad&sub_directory="+file_name,"_self");
+			else
+				alert("数据格式转换失败,您换另一种数据存储格式试试!");
+		};
+		my_ajax.open("POST",url+file_name,true);
+		my_ajax.send(reader.result);
+	};
+	reader.readAsArrayBuffer(fi.files[0]);
+	setInterval(display_status,1000);
+}
+
+</script>
+</head>
+
+<body>
+
+<div align="center" >
+
+<br/><br/><br/><br/><table>
+<tr><td><input type="file"		id="file"					name="file"		></td></tr>
+<tr><td><input type="button"	onclick="do_upload();"		value="文件上传后打开网页显示"	></td></tr>
+</table>
+
+<output id="status" name="status"></output><br/>
+
+<br/><br/><p>
+已经上传文件如下所示，打开如下网页即可显示。
+</p>
+<%
+			String upload_sub_directory_name="D:\\cad";
+
+			response.setCharacterEncoding("UTF-8");
+
+			upload_sub_directory_name=upload_sub_directory_name.replace('\\',File.separatorChar);
+			upload_sub_directory_name=upload_sub_directory_name.replace('/', File.separatorChar);
+			if(upload_sub_directory_name.charAt(upload_sub_directory_name.length()-1)!=File.separatorChar)
+				upload_sub_directory_name+=File.separator;
+			
+			String directory_name;
+			if(upload_sub_directory_name.charAt(0)!='.') 
+				directory_name=upload_sub_directory_name;
+			else{
+				int index_id;
+				directory_name=application.getRealPath(request.getServletPath());
+				directory_name=directory_name.replace('\\',File.separatorChar);
+				directory_name=directory_name.replace('/', File.separatorChar);
+				if((index_id=directory_name.lastIndexOf(File.separator))>=0)
+					directory_name=directory_name.substring(0,index_id+1);
+				directory_name+=upload_sub_directory_name;
+			}
+			File f;
+			if((f=new File(directory_name)).exists())
+				if(f.isDirectory()){
+					String file_list[]=f.list();
+					if(file_list!=null)
+						for(int i=0,ni=file_list.length;i<ni;i++)
+							if(new File(directory_name+file_list[i]).isDirectory())
+								try{
+									out.print  ("<a href=\"chinese/draw.jsp?scene_name=cad&sub_directory=");
+									out.println(file_list[i]+"\"  target=\"_self\">"+file_list[i]+"</a><br/>");
+								}catch(Exception e) {
+									;
+								}
+				}
+%>
+
+</div>
+
+</body>
+</html>

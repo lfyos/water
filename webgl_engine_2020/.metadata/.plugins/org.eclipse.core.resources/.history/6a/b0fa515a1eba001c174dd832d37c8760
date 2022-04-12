@@ -1,0 +1,14 @@
+layout (location = 0) out vec4 frag_data;
+in vec4 place;
+uniform mat4 par;
+
+void main(void)
+{
+	float frag_distance;
+	gl_FragDepth=0.999;	
+	frag_data=vec4(par[0].rgb,
+		((frag_distance=dot(target_info.center_plane,place))>=0.0)
+		?pow(1.0-frag_distance/(target_info.distance -target_info.near_value),par[1].x),
+		:pow(1.0+frag_distance/(target_info.far_value-target_info.distance),par[1].y));
+}
+ 

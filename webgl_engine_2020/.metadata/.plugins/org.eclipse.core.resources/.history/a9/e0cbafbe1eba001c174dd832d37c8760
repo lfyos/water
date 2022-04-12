@@ -1,0 +1,9 @@
+in vec4 vertex_location;
+out vec4 frag_place;
+uniform mat4 par;
+
+void main(void)
+{
+	frag_place=vec4((vertex_location.y-0.5)*par[0].w,0.0,(vertex_location.x-0.5)*par[0].w,1.0);
+	gl_Position =target_info.projection_matrix*frag_place;
+}

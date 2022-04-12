@@ -1,0 +1,24 @@
+uniform sampler2D texture_sampler;
+uniform float video_aspect;
+
+in vec4 frag_texture;
+
+layout (location = 0) out vec4 frag_data;
+
+void main(void)
+{
+	vec4 p=frag_texture;
+	
+	if(video_aspect>=1.0)
+		p.y*=video_aspect;
+	else
+		p.x/=video_aspect;
+	p=(p+vec4(1.0,1.0,0.0,0.0))/2.0;
+	if((p.x<0.0)||(p.x>1.0)||(p.y<0.0)||(p.y>1.0))
+		discard;
+	else
+		frag_data=texture(texture_sampler,p.xy);
+		
+//	if(dot(frag_data.rgb,frag_data.rgb)<(3.0*0.1*0.1))
+//		discard;
+}

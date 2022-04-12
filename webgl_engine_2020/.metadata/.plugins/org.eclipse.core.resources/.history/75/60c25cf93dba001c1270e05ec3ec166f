@@ -1,0 +1,57 @@
+package driver_ground_grid;
+
+import kernel_common_class.const_value;
+import kernel_component.component;
+import kernel_driver.component_driver;
+import kernel_driver.instance_driver;
+import kernel_engine.engine_kernel;
+import kernel_network.client_request_response;
+import kernel_part.part;
+import kernel_transformation.box;
+
+public class extended_component_driver  extends component_driver
+{
+	private String root_component_name;
+	private double root_box_distance;
+	public void destroy()
+	{
+		super.destroy();
+		root_component_name=null;
+	}
+	public extended_component_driver(part my_component_part,String my_root_component_name)
+	{
+		super(my_component_part);
+		root_component_name=my_root_component_name;
+		root_box_distance=1.0;
+	}
+	public void initialize_component_driver(component comp,int driver_id,
+			engine_kernel ek,client_request_response request_response)
+	{
+//		String component_directory_name=comp.component_directory_name;
+//		String scene_directory_name=ek.scene_directory_name;
+//		String parameter_directory_name=ek.scene_par.directory_name;
+		
+		component root_comp;
+		if((root_comp=ek.component_cont.search_component(root_component_name))==null)
+			return;
+		box root_box;
+		if((root_box=root_comp.get_component_box(true))==null)
+			return;
+		double my_root_box_distance;
+		if((my_root_box_distance=root_box.distance())<const_value.min_value)
+			return;
+		if(my_root_box_distance<=1.0) {
+			while(my_root_box_distance>(root_box_distance/10))
+				root_box_distance/=10;
+		}else {
+			while(my_root_box_distance<=root_box_distance)
+				my_root_box_distance*=10;
+		}
+		return;
+	}
+	public instance_driver create_instance_driver(component comp,int driver_id,
+			engine_kernel ek,client_request_response request_response)
+	{
+		return new extended_instance_driver(comp,driver_id,root_component_name);
+	}
+}

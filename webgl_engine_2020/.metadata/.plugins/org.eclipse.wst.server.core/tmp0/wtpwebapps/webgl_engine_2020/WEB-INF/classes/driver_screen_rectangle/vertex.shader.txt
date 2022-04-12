@@ -1,0 +1,9 @@
+
+in vec4 vertex_location;
+
+uniform   vec4 rectangle_data;
+
+void main(void)
+{
+	gl_Position=vec4(rectangle_data.xy+(rectangle_data.zw-rectangle_data.xy)*(vertex_location.xy),-0.999,1.0);
+}

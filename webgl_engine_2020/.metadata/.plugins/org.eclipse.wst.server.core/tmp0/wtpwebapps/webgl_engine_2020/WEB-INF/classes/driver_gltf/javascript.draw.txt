@@ -1,0 +1,270 @@
+[
+	[
+	]
+],
+
+function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
+			render_buffer_id,	component_data_array,	project_matrix,			view_port,	do_render_number,
+			render)
+{
+	var gl								=render.gl;
+	var shader_object					=render.render_program.render_program[render_id];
+	var shader_program					=shader_object.shader_program;
+	var shader_data						=shader_object.shader_data;
+	var part_buffer_object				=render.buffer_object.buffer_object[render_id][part_id];
+	
+	var component_location				=render.component_location_data;
+	
+	var data_buffer						=render.data_buffer[render_id][part_id];
+	var pickup							=render.pickup;
+
+	var permanent_render_id				=render.permanent_render_part_id[render_id][part_id].permanent_render_id;
+	var permanent_part_id				=render.permanent_render_part_id[render_id][part_id].permanent_part_id;
+	
+	var part_information				=render.part_information[render_id][part_id].information;
+	var part_material					=render.part_information[render_id][part_id].material;
+	var part_property					=render.part_information[render_id][part_id].property;
+	var part_component_id_and_driver_id	=render.part_information[render_id][part_id].part_component_id_and_driver_id;
+	var instance_initialize_data		=render.part_information[render_id][part_id].instance_initialize_data;
+	var part_initialize_data			=render.part_information[render_id][part_id].part_initialize_data;
+	var render_initialize_data			=render.part_information[render_id][part_id].render_initialize_data;
+	
+	var clip_plane						=render.clip_plane_array[render_buffer_id];
+	var clip_plane_matrix				=render.clip_plane_matrix_array[render_buffer_id];
+	
+	var camera_object_parameter			=render.camera.camera_object_parameter;
+	var camera_render_parameter			=render.camera.camera_render_parameter[render_buffer_id];
+	var camera_id						=camera_render_parameter.camera_id;
+	var camera_component_id				=camera_object_parameter[camera_id].component_id;
+	
+	var utility							=render.utility;
+	var computer						=render.computer;
+	var current_time					=render.current_time;
+	var modifier_current_time			=render.modifier_current_time;
+	
+	function bind_vertex_array(region_data,attribute_data,gl,shader_program)
+	{
+		var attribute_id;
+		
+		if(typeof(region_data.vertex_array_flag)=="boolean"){
+			gl.bindVertexArray(region_data.vertex_array_object[0]);
+			return;
+		}
+		region_data.vertex_array_flag=true;
+		
+		gl.bindVertexArray(region_data.vertex_array_object[0]);
+		gl.bindBuffer(gl.ARRAY_BUFFER,p.buffer_object);
+
+		attribute_id=gl.getAttribLocation (shader_program,"vertex_location");
+		gl.vertexAttribPointer		(attribute_id,4,gl.FLOAT,false,region_data.item_size*4,attribute_data.attribute[0].POSITION*16);
+		gl.enableVertexAttribArray	(attribute_id);
+				
+		attribute_id=gl.getAttribLocation (shader_program,"vertex_normal");
+		if(typeof(attribute_data.attribute[0].NORMAL)=="undefined")
+			gl.disableVertexAttribArray	(attribute_id);
+		else{
+			gl.vertexAttribPointer		(attribute_id,4,gl.FLOAT,false,region_data.item_size*4,attribute_data.attribute[0].NORMAL*16);
+			gl.enableVertexAttribArray	(attribute_id);
+		}
+				
+		attribute_id=gl.getAttribLocation (shader_program,"vertex_id");
+		if(typeof(attribute_data.attribute[0].NORMAL)=="undefined")
+			gl.disableVertexAttribArray	(attribute_id);
+		else{
+			gl.vertexAttribPointer		(attribute_id,4,gl.FLOAT,false,region_data.item_size*4,attribute_data.attribute[0].NORMAL*16+32);
+			gl.enableVertexAttribArray	(attribute_id);
+		}
+		
+		attribute_id=gl.getAttribLocation (shader_program,"vertex_texture");
+		if(typeof(attribute_data.attribute[0].TEXCOORD_0)=="undefined")
+			gl.disableVertexAttribArray	(attribute_id);
+		else{
+			gl.vertexAttribPointer		(attribute_id,4,gl.FLOAT,false,region_data.item_size*4,attribute_data.attribute[0].TEXCOORD_0*16+32);
+			gl.enableVertexAttribArray	(attribute_id);
+		}
+		return;
+	}
+	
+	function bind_material_uniformblock(material_data,part_group_id,material_id,shader_program,gl)
+	{
+		if(typeof(shader_program.material_uniformblock_buffer)=="undefined")
+			shader_program.material_uniformblock_buffer=new Array();
+		if(typeof(shader_program.material_uniformblock_buffer[part_group_id])=="undefined")
+			shader_program.material_uniformblock_buffer[part_group_id]=new Array();
+		if(typeof(shader_program.material_uniformblock_buffer[part_group_id][material_id])=="undefined"){
+			shader_program.material_uniformblock_buffer[part_group_id][material_id]=gl.createBuffer();
+			gl.bindBuffer(gl.UNIFORM_BUFFER,shader_program.material_uniformblock_buffer[part_group_id][material_id]);
+			gl.bufferData(gl.UNIFORM_BUFFER,new Float32Array(
+				[
+					material_data.base_color_factor[0],
+					material_data.base_color_factor[1],
+					material_data.base_color_factor[2],
+					material_data.base_color_factor[3],
+					
+					material_data.normal_factor[0],
+					material_data.normal_factor[1],
+					material_data.normal_factor[2],
+					material_data.normal_factor[3],
+
+					material_data.occlusion_factor[0],
+					material_data.occlusion_factor[1],
+					material_data.occlusion_factor[2],
+					material_data.occlusion_factor[3],
+					
+					material_data.emissive_factor[0],
+					material_data.emissive_factor[1],
+					material_data.emissive_factor[2],
+					material_data.emissive_factor[3],
+					
+					material_data.metallic_factor,
+					material_data.roughness_factor,
+					
+					material_data.base_color_factor_texture_id,
+					material_data.metallic_roughness_factor_texture_id,
+					material_data.normal_texture_id,
+					material_data.occlusion_texture_id,
+					material_data.emissive_texture_id
+				]),gl.STATIC_DRAW);
+		}
+		gl.bindBufferBase(gl.UNIFORM_BUFFER,0,shader_program.material_uniformblock_buffer[part_group_id][material_id]);
+	}
+	
+	function draw_primitive(my_display_bitmap,part_buffer_object,transparency_flag)
+	{
+		for(var i=0,ni=component_data_array.length;i<ni;i++){
+			var buffer_id		=component_data_array[i][0];
+			var display_bitmap	=component_data_array[i][1];
+
+			while(data_buffer[buffer_id].length>1)
+				data_buffer[buffer_id].shift();
+			
+			if((display_bitmap&my_display_bitmap)==0)
+				continue;
+
+			var component_id		=data_buffer[buffer_id][0][0];
+			var select_flag			=data_buffer[buffer_id][0][1];
+			var clip_flag			=data_buffer[buffer_id][0][2];
+			var transparency_value	=data_buffer[buffer_id][0][3];
+			
+			if(transparency_flag^(transparency_value<1.0))
+				continue;
+	
+			var model_matrix_data=component_location.get_component_location(component_id);
+			
+			gl.uniform1f(shader_program.transparency_value_uniform,transparency_value);
+			
+			for(var j=0;j<2;j+=clip_flag?1:2){
+				if(!clip_flag){
+					gl.disable(gl.STENCIL_TEST);
+					gl.uniform1i(shader_program.render_code_uniform,0);
+				}else if(j==0){
+					gl.enable(gl.STENCIL_TEST); 
+					gl.stencilFunc(gl.ALWAYS,0x01,0x01);
+			 		gl.stencilOp(gl.KEEP,gl.INVERT,gl.INVERT);
+			 		
+			 		gl.uniform1i(shader_program.render_code_uniform,2);
+				}else{
+					gl.enable(gl.STENCIL_TEST);
+					gl.stencilFunc(gl.NOTEQUAL,0x00,0x01);
+					gl.stencilOp(gl.KEEP,gl.ZERO,gl.ZERO);
+					
+					gl.uniform1i(shader_program.render_code_uniform,4);
+				}
+				for(var k=0,nk=part_buffer_object.region_data.length;k<nk;k++){
+					var p=part_buffer_object.region_data[k];
+					var part_group_id=part_material[0].part_group;
+					var attribute_data=part_material[0].attribute[p.material_id];
+					
+					var material_data,material_id=attribute_data.material;
+					if(select_flag){
+						material_id=part_material[0].material.length;
+						material_data=part_material[0].selection_material;
+					}else if((material_id<0)||(material_id>=part_material[0].material.length)){
+						material_id=part_material[0].material.length+1;
+						material_data=part_material[0].default_material;
+					}else
+						material_data=part_material[0].material[material_id];
+
+					bind_material_uniformblock(material_data,part_group_id,material_id,shader_program,gl);
+					bind_vertex_array(p,attribute_data,gl,shader_program);
+					
+					switch(attribute_data.mode){
+					case 0:
+						if(j==0)
+							gl.drawArrays(gl.POINTS,0,p.item_number);
+						break;
+					case 1:
+						if(j==0)
+							gl.drawArrays(gl.LINES,0,p.item_number);
+						break;
+					case 4:
+						gl.drawArrays(gl.TRIANGLES,0,p.item_number);
+						break;
+					}
+				}
+			}
+		}
+		gl.bindVertexArray(null);
+		gl.disable(gl.STENCIL_TEST);
+	}
+	
+	if(do_render_number.engine_render==0){
+		shader_program.render_code_uniform			=gl.getUniformLocation(shader_program,"render_code");
+		shader_program.transparency_value_uniform	=gl.getUniformLocation(shader_program,"transparency_value");
+
+		shader_program.light_position_uniform_block_buffer_object=gl.createBuffer();
+		gl.bindBuffer(gl.UNIFORM_BUFFER,shader_program.light_position_uniform_block_buffer_object);
+		gl.bufferData(gl.UNIFORM_BUFFER,part_material[0].light.length*(4+4+4)*4,gl.DYNAMIC_DRAW);
+
+		gl.uniformBlockBinding(shader_program,gl.getUniformBlockIndex(shader_program,"material_information"),0);
+		gl.uniformBlockBinding(shader_program,gl.getUniformBlockIndex(shader_program,"light_position"),	 	 1);
+		
+		gl.bindBufferBase(gl.UNIFORM_BUFFER,1,shader_program.light_position_uniform_block_buffer_object);
+	}
+	
+	if(do_render_number.render_render==0){
+		var light=part_material[0].light,light_data=new Array(),color_data=new Array(),shininess_data=new Array();
+		for(var i=0,ni=light.length;i<ni;i++){
+			var light_component_id	=camera_object_parameter[light[i].camera_id].component_id;
+			var light_distance		=camera_object_parameter[light[i].camera_id].distance;
+			var light_matrix		=component_location.get_component_location_routine(light_component_id);
+			var light_position		=computer.caculate_coordinate(light_matrix,0,0,light_distance);
+			light_data.push(light_position[0],			light_position[1],			light_position[2],			light_position[3]);
+			color_data.push(light[i].color_factor[0],	light[i].color_factor[1],	light[i].color_factor[2],	light[i].color_factor[3]);
+			shininess_data.push(light[i].shininess);
+		}	
+		gl.bindBuffer(gl.UNIFORM_BUFFER,shader_program.light_position_uniform_block_buffer_object);
+		gl.bufferSubData(gl.UNIFORM_BUFFER,0,new Float32Array(light_data.concat(color_data).concat(shininess_data)),0);
+	}
+	
+	switch(method_id){
+	case 0://render scene before depth rendering
+		break;
+	case 1://render scene for component selection
+		draw_primitive(2,part_buffer_object.face,false);
+		break;
+	case 2://render scene for shadow depth
+		draw_primitive(2,part_buffer_object.face,false);
+		break;
+	case 3://render depth only,no color rendering
+		gl.colorMask(false,false,false,false);
+		draw_primitive(4,part_buffer_object.face,false);
+		gl.colorMask(true,true,true,true);
+		break;
+	case 4://render scene after depth rendering
+		draw_primitive(2,part_buffer_object.face,false);
+		break;
+	case 5://render scene for blending
+		gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+		gl.enable(gl.BLEND);
+		gl.depthMask(false);
+	
+		draw_primitive(2,part_buffer_object.face,true);
+		
+		gl.disable(gl.BLEND);
+		gl.depthMask(true);
+		break;
+	default:
+		return;
+	}
+}

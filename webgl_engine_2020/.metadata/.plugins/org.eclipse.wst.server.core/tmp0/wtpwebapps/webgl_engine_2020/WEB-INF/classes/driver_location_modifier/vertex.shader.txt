@@ -1,0 +1,7 @@
+
+in vec4 vertex_location;
+
+void main(void)
+{
+	gl_Position=target_info.projection_matrix*(component_info.model_matrix*vertex_location);
+}

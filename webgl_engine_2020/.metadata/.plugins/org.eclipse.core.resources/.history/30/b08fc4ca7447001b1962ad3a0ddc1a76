@@ -1,0 +1,285 @@
+package kernel_part;
+
+import kernel_file_manager.file_writer;
+import kernel_transformation.point;
+import kernel_transformation.point_set;
+
+
+public class face_write_out
+{
+	private void write_out_face(face_face fa_face,file_writer f,
+			double scale_value,boolean simple_flag,boolean write_out_face_flag)
+	{
+		f.set_pace(8);
+		f.print(" /* face_type   */  ");
+		f.print(fa_face.face_type);
+
+		f.print("  /*   parameter_number   */  ");		
+		f.print(fa_face.face_parameter_number());		
+		f.print(" /*   parameter  */ ");
+		for(int i=0;i<fa_face.face_parameter_number();i++){
+			f.print("   ");
+			f.print(fa_face.face_parameter[i]);
+		}
+		f.println();
+		f.println();
+
+		if(simple_flag){
+			f.println(" simple ");
+			f.println(" /* face_attribute_number */ ",fa_face.attribute_number);
+			f.println(" /* total_primitive_number */ ",fa_face.total_primitive_number);
+			f.print(" /* box_material */ ");
+			for(int i=0,ni=fa_face.box_material.length;i<ni;i++)
+				f.print(" ",fa_face.box_material[i]);
+			f.println();
+			
+			f.print(" /* box_definition */ ");
+			if(fa_face.face_face_box==null)
+				f.println("	nobox");
+			else{
+				fa_face.face_face_box.write_out(f);
+				f.println();
+			}
+			return;
+		}
+		f.println(" /* face_attribute_number */ ",fa_face.attribute_number);
+		f.println();
+		
+		int vertices_point_number=0;
+		if(write_out_face_flag&&(fa_face.mesh!=null))
+			vertices_point_number=fa_face.mesh.vertices.point_number();
+		
+		f.print(" /* face_vertex_number   */  ");	f.print(vertices_point_number);
+		f.set_pace(12);
+		for(int i=0;i<vertices_point_number;i++){
+			double data[]		=fa_face.mesh.vertices.get_vertex_location  (i);
+			String extra_data	=fa_face.mesh.vertices.get_vertex_extra_data(i);
+			
+			f.print(" /* face_vertex  ");
+			f.print(i);
+			f.print("  is  */  ");
+			
+			f.print  (							data[0]/scale_value);
+			f.print  ("   ",	data[1]/scale_value);	
+			f.print  ("   ",	data[2]/scale_value);
+			f.println("   ",	extra_data);
+		}
+		
+		f.set_pace(8);
+		
+		int normals_point_number=0;
+		if(write_out_face_flag&&(fa_face.mesh!=null))
+			normals_point_number=fa_face.mesh.normals.point_number();
+		
+		f.print(" /* face_normal_number      */  ");	f.print(normals_point_number);
+		f.set_pace(12);
+		for(int i=0;i<normals_point_number;i++){
+			double data[]		=fa_face.normals.get_vertex_location(i);
+			String extra_data	=fa_face.normals.get_vertex_extra_data(i);
+			
+			f.print(" /* face_normal  ");
+			f.print(i);
+			f.print  ("  is  */  ");
+			
+			f.print  (							data[0]);
+			f.print  ("   ",	data[1]);	
+			f.print  ("   ",	data[2]);
+			f.println("   ",	extra_data);
+		}
+		
+		for(int i=0;i<(fa_face.attribute_number);i++){
+			f.set_pace(8);
+			point_set ps=fa_face.attributes[i];
+			
+			f.print(" /* face_attribute   ");
+			f.print(i);
+			f.print("  attribute_vertex_number  */  ");
+			
+			int attribute_point_number=write_out_face_flag?ps.point_number():0;
+			
+			f.print(attribute_point_number);
+			f.set_pace(12);
+			for(int j=0;j<attribute_point_number;j++){
+				double data[]		=ps.get_vertex_location(j);
+				String extra_data	=ps.get_vertex_extra_data(j);
+				
+				f.print(" /* face_attribute_vertex  ");
+				f.print(j);
+				f.print("  is  */  ");
+				
+				f.print  (							data[0]);
+				f.print  ("   ",	data[1]);	
+				f.print  ("   ",	data[2]);
+				f.println("   ",	extra_data);
+			}
+		}
+		f.set_pace(8);
+		
+		int primitive_number=write_out_face_flag?fa_face.primitives.vertex.length:0;
+		f.print(" /* face_primitive_number  */  ");		f.print(primitive_number);
+		f.set_pace(12);
+		
+		for(int i=0;i<primitive_number;i++){
+			
+			f.print(" /* face_primitive  ");
+			f.print(i);
+			f.print("  material      */ ");
+			
+			for(int j=0,nj=fa_face.primitives.material[i].length;j<nj;j++)
+				f.print("   ",fa_face.primitives.material[i][j]);
+			f.println();
+			
+			f.print(" /* face_primitive  ");
+			f.print(i);
+			f.print("  vertex_index  */ ");
+			
+			for(int j=0,nj=fa_face.primitives.vertex[i].length;j<nj;j++)
+				f.print("   ",fa_face.primitives.vertex[i][j]);
+			f.println("   -1");
+			
+            f.print(" /* face_primitive  ");
+            f.print(i);
+            f.print("  normal_index  */ ");
+		
+			for(int j=0,nj=fa_face.primitives.normal[i].length;j<nj;j++)
+				f.print  ("   ",fa_face.primitives.normal[i][j]);
+			f.println("   -1");
+			
+			for(int j=0,nj=fa_face.attribute_number;j<nj;j++){
+				
+				f.print(" /* face_primitive  ");
+				f.print(i);
+				f.print("  attribute  ");
+				f.print(j);	 
+				f.print(" attribute_index   */  ");				
+				
+				for(int k=0,nk=fa_face.primitives.attribute[j][i].length;k<nk;k++)
+					f.print  ("   ",fa_face.primitives.attribute[j][i][k]);
+				f.println("   -1");
+			}
+			f.println();
+		}
+		f.println();
+	}
+	private void write_out_curve(face_curve fa_curve,file_writer f,double scale_value,
+			boolean simple_flag,boolean write_out_curve_flag)
+	{
+		point p;
+
+		f.set_pace(8);
+	
+		f.print(" /* face_loop_number   */ ");
+		
+		int face_loop_number=write_out_curve_flag?fa_curve.face_loop_number():0;
+		
+		f.println(face_loop_number);
+		
+		for(int i=0;i<face_loop_number;i++){
+			f.set_pace(8);
+			face_loop fl=fa_curve.f_loop[i];
+			
+			f.print(" /* face_loop  ");
+			f.print(i);
+			f.print  ("  loop_edge_number    */    ");
+			
+			f.println(fl.edge_number());
+			for(int j=0;j<(fl.edge_number());j++){
+				f.set_pace(12);
+				f.print(" /* face_loop_edge  ");
+				f.print(j);
+				f.print("  data   */   ");
+				
+				f.set_pace(16);
+				face_edge fe=fl.edge[j];
+				
+				f.print("/* curve_type    */  ");
+				f.println(fe.curve_type);
+				
+				f.print("/* parameter_number  */  ");	
+				f.print(fe.curve_parameter_number());
+				f.print(" /* parameter */ ");	
+				for(int k=0;k<(fe.curve_parameter_number());k++){
+					f.print("   ");	f.print(fe.curve_parameter[k]);
+				}
+				f.println();
+				f.print("/* curve point material */  ");
+				for(int k=0,nk=fe.parameter_point_material.length;k<nk;k++)
+					f.print("    ",fe.parameter_point_material[k]);			
+				f.println();
+				
+				p=fe.start_point;
+				f.print(fe.start_effective_flag?"start_effective":"start_not_effective");
+				
+				if(fe.start_effective_flag){
+					f.print("   ");	f.print(p.x/scale_value);		
+					f.print("   ");	f.print(p.y/scale_value);		
+					f.print("   ");	f.print(p.z/scale_value);
+					f.print("   ");	f.print(fe.start_extra_data);
+					f.print("  /*  material  */  ");
+					for(int k=0,nk=fe.start_point_material.length;k<nk;k++)
+						f.print("    ",fe.start_point_material[k]);
+				}
+				f.println();
+
+				p=fe.end_point;
+				f.print(fe.end_effective_flag?"end_effective":"end_not_effective");
+				
+				if(fe.end_effective_flag){
+					f.print("   ");	f.print(p.x/scale_value);		
+					f.print("   ");	f.print(p.y/scale_value);		
+					f.print("   ");	f.print(p.z/scale_value);
+					f.print("   ");	f.print(fe.end_extra_data);
+					f.print("  /*  material  */  ");
+					for(int k=0,nk=fe.end_point_material.length;k<nk;k++)
+						f.print("    ",fe.end_point_material[k]);
+				}
+				f.println();
+
+				if(simple_flag){
+					f.print("/* box definition  */	");	
+					
+					if(fe.edge_box==null)
+						f.println("nobox ");
+					else{
+						f.print  ("box	");
+						fe.edge_box.write_out(f);
+						f.println();
+					}
+				}else{
+					int tessellation_point_number=fe.tessellation_point_number();
+					f.println("/* edge_vertex_number  */	",tessellation_point_number);
+					
+					for(int k=0;k<tessellation_point_number;k++){
+						point tessellation_location		=fe.get_tessellation_point(k);
+						String tessellation_extra_data	=fe.get_tessellation_extra_data(k);
+						String tessellation_material[]	=fe.get_tessellation_material(k);
+						
+						f.print("/* edge_vertex    ",k).print("    location   */");
+						
+						f.print  ("   ",tessellation_location.x/scale_value);
+						f.print  ("   ",tessellation_location.y/scale_value);		
+						f.print  ("   ",tessellation_location.z/scale_value);
+						f.print  ("   ",tessellation_extra_data);
+						f.print  ("	/*	tessellation material	*/");	
+						
+						for(int kk=0,nkk=tessellation_material.length;kk<nkk;kk++)
+							f.print("	",tessellation_material[kk]);			
+						
+						f.println();
+					}
+				}
+			}
+		}
+	}
+	int body_id,face_id;
+	public face_write_out(
+			face fa,file_writer f,double scale_value,boolean simple_flag,
+			boolean write_out_face_flag,boolean write_out_curve_flag,int my_body_id,int my_face_id)
+	{
+		body_id=my_body_id;
+		face_id=my_face_id;
+		
+		write_out_face(		fa.fa_face,		f,	scale_value,simple_flag,	write_out_face_flag);
+		write_out_curve(	fa.fa_curve,	f,	scale_value,simple_flag,	write_out_curve_flag);
+	}
+}
