@@ -55,16 +55,12 @@ class clip_plane_modifier extends modifier_driver
 }
 public class operate_clip_plane
 {
-	public static void clip_plane_request(int camera_modifier_id,engine_kernel ek,client_information ci)
+	public static void clip_plane_request(engine_kernel ek,client_information ci)
 	{
 		String str;
 		if((str=ci.request_response.get_parameter("event_operation"))==null)
 			return;
-		if(camera_modifier_id>=ek.modifier_cont.length)
-			camera_modifier_id=ek.modifier_cont.length-1;
-		if(camera_modifier_id<0)
-			camera_modifier_id=0;
-		long my_start_time=ek.modifier_cont[camera_modifier_id].get_timer().get_current_time();
+		long my_start_time=ek.modifier_cont.get_timer().get_current_time();
 		long my_terminate_time=ci.display_camera_result.cam.parameter.switch_time_length+my_start_time;
 		
 		box my_box;
@@ -91,7 +87,7 @@ public class operate_clip_plane
 								target_pl.D-=diff;
 						}
 			}
-			ek.modifier_cont[camera_modifier_id].add_modifier(
+			ek.modifier_cont.add_modifier(
 				new clip_plane_modifier(true,source_pl,target_pl,my_start_time,my_terminate_time));
 			break;
 		case "on":
@@ -115,7 +111,7 @@ public class operate_clip_plane
 							}
 				}
 			}
-			ek.modifier_cont[camera_modifier_id].add_modifier(
+			ek.modifier_cont.add_modifier(
 				new clip_plane_modifier(false,source_pl,target_pl,my_start_time,my_terminate_time));
 			break;
 		}

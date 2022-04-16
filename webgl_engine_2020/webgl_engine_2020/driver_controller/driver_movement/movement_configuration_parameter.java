@@ -8,8 +8,8 @@ public class movement_configuration_parameter
 {
 	public String movement_file_charset,movement_file_name,design_file_name;
 	public String temporary_file_directory,sound_pre_string;
-	public int camera_modifier_id,movement_modifier_id;
-	public int component_id,location_component_id,audio_component_id,virtual_mount_root_component_id,mouse_modify_location_component_id; 
+	public int component_id,location_component_id,audio_component_id;
+	public int virtual_mount_root_component_id,mouse_modify_location_component_id; 
 
 	public void destroy()
 	{
@@ -32,18 +32,14 @@ public class movement_configuration_parameter
 			String my_movement_file_charset,String my_movement_file_name,
 			String my_design_file_name,String my_temporary_file_directory,String my_sound_pre_string,
 			String location_component_name,String audio_component_name,
-			String mouse_modify_location_component_name,String virtual_mount_root_component_name,
-			int my_camera_modifier_id,int my_movement_modifier_id)
+			String mouse_modify_location_component_name,String virtual_mount_root_component_name)
 	{
 		movement_file_charset=my_movement_file_charset;
 		movement_file_name=my_movement_file_name;
 		design_file_name=my_design_file_name;
 		temporary_file_directory=my_temporary_file_directory;
 		sound_pre_string=my_sound_pre_string;
-		
-		camera_modifier_id=my_camera_modifier_id;
-		movement_modifier_id=my_movement_modifier_id;
-				
+	
 		component_id=my_comp.component_id;
 		
 		location_component_id=-1;

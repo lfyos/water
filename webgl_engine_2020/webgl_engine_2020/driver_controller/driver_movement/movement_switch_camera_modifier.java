@@ -124,8 +124,6 @@ public class movement_switch_camera_modifier extends modifier_driver
 		information_string	=my_information_string;
 		sound_file_name		=my_sound_file_name;
 	}
-
-	private int camera_modifier_id;
 	public boolean can_start(long my_current_time,engine_kernel ek,client_information ci)
 	{
 		if(super.can_start(my_current_time,ek,ci))
@@ -198,10 +196,9 @@ public class movement_switch_camera_modifier extends modifier_driver
 			for(int i=0,n=ek.camera_cont.camera_array.length;i<n;i++)
 				if(ek.camera_cont.camera_array[i].parameter.movement_flag)
 					(new locate_camera(ek.camera_cont.camera_array[i])).locate_on_components(
-							ek.modifier_cont[camera_modifier_id],b,
-							ek.camera_cont.camera_array[i].parameter.direction_flag?dir:null,
-							(ek.camera_cont.camera_array[i].parameter.scale_value<=0)?-1.0:scale_value,
-							ci.parameter.aspect,true,false,false);
+						ek.modifier_cont,b,ek.camera_cont.camera_array[i].parameter.direction_flag?dir:null,
+						(ek.camera_cont.camera_array[i].parameter.scale_value<=0)?-1.0:scale_value,
+						ci.parameter.aspect,true,false,false);
 		}
 		component comp;
 		component_array comp_array=new component_array(
@@ -233,14 +230,13 @@ public class movement_switch_camera_modifier extends modifier_driver
 		super.last_modify(my_current_time,ek,ci,terminated_flag);
 	}
 	public movement_switch_camera_modifier(boolean my_single_step_flag,long current_time,
-			int my_camera_modifier_id,int my_audio_component_id,int my_parameter_channel_id)
+			int my_audio_component_id,int my_parameter_channel_id)
 	{
 		super(current_time,Long.MAX_VALUE);
 		
 		single_step_flag=my_single_step_flag;
 		switch_camera_number=0;
-		
-		camera_modifier_id	=my_camera_modifier_id;
+
 		audio_component_id	=my_audio_component_id;
 		parameter_channel_id=my_parameter_channel_id;
 		

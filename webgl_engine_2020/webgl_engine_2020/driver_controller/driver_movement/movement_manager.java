@@ -70,8 +70,7 @@ public class movement_manager
 						min_box_volume*mount_precision*mount_precision*mount_precision);
 			}
 	}
-	public void create_render_modifier(boolean single_step_flag,
-			int movement_modifier_container_id,int audio_component_id,
+	public void create_render_modifier(boolean single_step_flag,int audio_component_id,
 			int location_component_id,modifier_container movement_modifier_cont,
 			component_container component_cont,boolean direction_flag,
 			long camera_switch_time_length,String sound_pre_string)
@@ -88,10 +87,8 @@ public class movement_manager
 				component_cont,direction_flag,camera_switch_time_length);
 		movement_switch_camera_modifier swcm=new movement_switch_camera_modifier(
 				single_step_flag,movement_modifier_cont.get_timer().get_current_time(),
-				config_parameter.camera_modifier_id,audio_component_id,
-				move_channel_id.display_parameter_channel_id[0]);
-		root_movement.register_modifier(
-				suspend,move_channel_id,config_parameter.movement_modifier_id,location_component_id,
+				audio_component_id,move_channel_id.display_parameter_channel_id[0]);
+		root_movement.register_modifier(suspend,move_channel_id,location_component_id,
 				component_cont,parameter,movement_modifier_cont,swcm,directory_name,sound_pre_string,
 				t.start_time-camera_switch_time_length,camera_switch_time_length,null,0,1.0,mount_direction_flag);
 		movement_modifier_cont.add_modifier(swcm);
@@ -281,7 +278,7 @@ public class movement_manager
 		suspend=new movement_suspend(ek,my_config_parameter.virtual_mount_root_component_id);
 		
 		config_parameter=my_config_parameter;
-		init(ek.modifier_cont[config_parameter.movement_modifier_id],ek.component_cont,
+		init(ek.modifier_cont,ek.component_cont,
 				config_parameter.movement_file_name,1000,config_parameter.movement_file_charset);
 	}
 }

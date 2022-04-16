@@ -10,19 +10,17 @@ import kernel_part.part;
 public class extended_component_driver extends component_driver
 {
 	private String screen_rectangle_component_name,audio_component;
-	private int camera_modifier_id;
 
 	public void destroy()
 	{
 		super.destroy();
 	}
 	public extended_component_driver(part my_component_part,
-			String my_screen_rectangle_component_name,String my_audio_component,int my_camera_modifier_id)
+			String my_screen_rectangle_component_name,String my_audio_component)
 	{
 		super(my_component_part);
 		screen_rectangle_component_name=my_screen_rectangle_component_name;
 		audio_component=my_audio_component;
-		camera_modifier_id=my_camera_modifier_id;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
@@ -46,6 +44,6 @@ public class extended_component_driver extends component_driver
 					audio_component_id=my_comp.component_id;
 		
 		return new extended_instance_driver(comp,driver_id,
-				screen_rectangle_component_id,audio_component_id,camera_modifier_id);
+				screen_rectangle_component_id,audio_component_id);
 	}
 }

@@ -47,7 +47,6 @@ public class scene_parameter_information extends jason_creator
 		print("max_component_collector_number",				sp.max_component_collector_number);
 
 		print("max_camera_return_stack_number",				sp.max_camera_return_stack_number);
-		print("max_modifier_container_number",				sp.max_modifier_container_number);
 		
 		print("create_top_part_assembly_precision2",		sp.create_top_part_assembly_precision2);
 		print("create_top_part_discard_precision2",			sp.create_top_part_discard_precision2);

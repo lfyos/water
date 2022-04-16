@@ -10,7 +10,7 @@ import kernel_transformation.location;
 public class location_modifier_modifier extends modifier_driver
 {
 	public int component_id;
-	public int location_component_id,modifier_container_id;
+	public int location_component_id;
 	public location start_location,terminate_location;
 	public double p;
 	
@@ -30,7 +30,7 @@ public class location_modifier_modifier extends modifier_driver
 	}
 	
 	public location_modifier_modifier(
-			int my_component_id,			int my_location_component_id,				int my_modifier_container_id,
+			int my_component_id,			int my_location_component_id,
 			long my_start_time,				location my_start_location,
 			long my_terminate_time,			location my_terminate_location,
 			int my_follow_component_id[],	location my_follow_component_location[])
@@ -39,7 +39,6 @@ public class location_modifier_modifier extends modifier_driver
 
 		component_id					=my_component_id;
 		location_component_id			=my_location_component_id;
-		modifier_container_id			=my_modifier_container_id;
 		start_location					=new location(my_start_location);
 		terminate_location				=new location(my_terminate_location);
 		follow_component_id				=my_follow_component_id;
@@ -96,9 +95,8 @@ public class location_modifier_modifier extends modifier_driver
 					for(int i=0,ni=location_comp.driver_number();i<ni;i++)
 						if(location_comp.driver_array[i] instanceof extended_component_driver){
 							((extended_component_driver)(location_comp.driver_array[i])).register(
-								ek,modifier_container_id,component_id,
-								start_time,terminate_time,start_location,terminate_location,
-								follow_component_id,follow_component_location);
+								ek,component_id,start_time,terminate_time,
+								start_location,terminate_location,follow_component_id,follow_component_location);
 						break;
 					}
 	}

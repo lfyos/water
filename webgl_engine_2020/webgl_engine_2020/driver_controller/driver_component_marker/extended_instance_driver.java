@@ -14,7 +14,6 @@ import kernel_transformation.box;
 
 public class extended_instance_driver extends instance_driver
 {
-	private int camera_modifier_id;
 	private component_marker_container cmc;
 	
 	public void destroy()
@@ -22,12 +21,10 @@ public class extended_instance_driver extends instance_driver
 		super.destroy();
 		cmc=null;
 	}
-	public extended_instance_driver(component my_comp,int my_driver_id,
-			component_marker_container my_cmc,int my_camera_modifier_id)
+	public extended_instance_driver(component my_comp,int my_driver_id,component_marker_container my_cmc)
 	{
 		super(my_comp,my_driver_id);
 		cmc=my_cmc;
-		camera_modifier_id=my_camera_modifier_id;
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
@@ -125,7 +122,7 @@ public class extended_instance_driver extends instance_driver
 				break;
 			case "locate":
 				new locate_camera(ek.camera_cont.camera_array[ci.display_camera_result.target.camera_id]).
-						locate_on_components(ek.modifier_cont[camera_modifier_id],
+						locate_on_components(ek.modifier_cont,
 							new box(operate_comp.absolute_location.multiply(
 									operate_cm.marker_x,operate_cm.marker_y,operate_cm.marker_z)),
 							null,-1.0,ci.parameter.aspect,true,false,false);

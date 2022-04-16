@@ -17,8 +17,7 @@ public class extended_instance_driver extends instance_driver
 {
 	private double view_range[],low_precision_scale,mouse_rotate_scale;
 	private boolean rotate_type_flag,exchange_point_flag,change_type_flag;
-	private int camera_modifier_id;
-	
+
 	public void destroy()
 	{
 		super.destroy();
@@ -26,7 +25,7 @@ public class extended_instance_driver extends instance_driver
 	}
 	public extended_instance_driver(component my_comp,int my_driver_id,double my_view_range[],
 			double my_low_precision_scale,double my_mouse_rotate_scale,boolean my_rotate_type_flag,
-			boolean my_exchange_point_flag,boolean my_change_type_flag,int my_camera_modifier_id)
+			boolean my_exchange_point_flag,boolean my_change_type_flag)
 	{
 		super(my_comp,my_driver_id);
 
@@ -36,7 +35,6 @@ public class extended_instance_driver extends instance_driver
 		rotate_type_flag	=my_rotate_type_flag;
 		exchange_point_flag	=my_exchange_point_flag;
 		change_type_flag	=my_change_type_flag;
-		camera_modifier_id	=my_camera_modifier_id;
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
@@ -129,11 +127,10 @@ public class extended_instance_driver extends instance_driver
 		for(int i=0,ni=comp.children_number();i<ni;i++)
 			reset_component_location(comp.children[i],start_time,ek,ci);
 		
-		if(comp.move_location.is_not_identity_matrix()){
-			location_modifier lm=new location_modifier(comp,start_time,comp.move_location,
-					ci.display_camera_result.cam.parameter.switch_time_length+start_time,new location(),true,true);
-			ek.modifier_cont[camera_modifier_id].add_modifier(lm);
-		}
+		if(comp.move_location.is_not_identity_matrix())
+			ek.modifier_cont.add_modifier(
+				new location_modifier(comp,start_time,comp.move_location,
+					ci.display_camera_result.cam.parameter.switch_time_length+start_time,new location(),true,true));
 	}
 	private static void add_in_list_component(component comp,component_array comp_array)
 	{
@@ -178,8 +175,7 @@ public class extended_instance_driver extends instance_driver
 				operate_component.uniparameter.do_response_location_flag=true;
 				operate_component.modify_location(operate_component.move_location,ek.component_cont);
 				if(operate_component.component_id==camera_component_id)
-					ci.display_camera_result.cam.push_restore_stack(
-						ek.modifier_cont[camera_modifier_id],false,
+					ci.display_camera_result.cam.push_restore_stack(ek.modifier_cont,false,
 						ci.display_camera_result.cam.eye_component.move_location,
 						ci.display_camera_result.cam.parameter);
 			}
@@ -207,11 +203,9 @@ public class extended_instance_driver extends instance_driver
 						p1=loca.multiply(new point(0,0,ci.parameter.depth+1.0));
 					}
 					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
-							ek.modifier_cont[camera_modifier_id],ek.component_cont,
-							ci.display_camera_result,ci.parameter,null,
+							ek.modifier_cont,ek.component_cont,ci.display_camera_result,ci.parameter,null,
 							ci.display_camera_result.cam.parameter.scale_value,ci.parameter.aspect,
-							ek.modifier_cont[camera_modifier_id].get_timer().get_current_time(),
-							true,true,true,p0,p1);
+							ek.modifier_cont.get_timer().get_current_time(),true,true,true,p0,p1);
 					return null;
 				}
 			component_array c_a=new component_array(ek.component_cont.root_component.component_id+1);
@@ -230,7 +224,7 @@ public class extended_instance_driver extends instance_driver
 					add_in_list_component(ek.component_cont.root_component,c_a);
 			}
 			c_a.make_to_ancestor(ek.component_cont);
-			long start_time=ek.modifier_cont[camera_modifier_id].get_timer().get_current_time();
+			long start_time=ek.modifier_cont.get_timer().get_current_time();
 			for(int i=0,ni=c_a.component_number;i<ni;i++)
 				reset_component_location(c_a.comp[i],start_time,ek,ci);
 			return null;

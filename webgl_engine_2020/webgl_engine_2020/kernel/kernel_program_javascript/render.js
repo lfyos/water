@@ -14,11 +14,10 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	
 	var component_number				=render_data[0];
 	var render_number					=render_data[1];
-	var modifier_container_number		=render_data[2];
-	var camera_component_id				=render_data[3];
-    this.link_name						=render_data[4];
-    this.title							=render_data[5];
-    this.parameter						=render_data[6];
+	var camera_component_id				=render_data[2];
+    this.link_name						=render_data[3];
+    this.title							=render_data[4];
+    this.parameter						=render_data[5];
     
     this.render_initialize_data=new Array();
     for(var i=0,ni=my_render_initialize_data.length-1;i<ni;i+=2){
@@ -131,7 +130,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 
 	this.component_location_data	=new construct_component_location_object(component_number,this.computer,this.gl);
 	this.component_render_data		=new construct_component_render_object(render_number);
-	this.modifier_time_parameter	=new construct_modifier_time_parameter(modifier_container_number);
+	this.modifier_time_parameter	=new construct_modifier_time_parameter();
 	this.render_program				=new construct_program_object	(this.gl,this.parameter);
 	this.buffer_object				=new construct_buffer_object	(this.gl,this.parameter);
 	this.camera						=new construct_camera_object	(camera_component_id,this.component_location_data,this.computer);
@@ -156,9 +155,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	this.render_interval_length		=1;
 	
 	this.current_time				=0;
-	this.modifier_current_time		=new Array(modifier_container_number);
-	for(var i=0;i<modifier_container_number;i++)
-		this.modifier_current_time[i]=0;
+	this.modifier_current_time		=0;
 	
 	this.browser_current_time		=0;
 	
@@ -341,12 +338,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			return;
 		};
 		this.collector_stack_version=response_data[0].shift();
-		var p=this.modifier_time_parameter.modify_parameter(response_data[0]);
-		for(var i=0,ni=p.length;i<ni;i++)
-			if(p[i].update_flag){
-				p[i].update_flag=false;
-				this.modifier_current_time[i]=this.modifier_time_parameter.caculate_current_time(i);
-			};
+		this.modifier_current_time=this.modifier_time_parameter.modify_parameter(response_data[0]);
 		this.browser_current_time=(browser_start_time+start_time)/2.0;
 		this.render_data=new Array();
 		for(var i=0,ni=response_data[1].length;i<ni;i++){
@@ -724,17 +716,11 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 				this.current_time=new_current_time;
 			else
 				this.current_time++;
-			for(var i=0,ni=this.modifier_current_time.length;i<ni;i++){
-				new_current_time =this.modifier_time_parameter.caculate_current_time(i);
-				new_current_time+=this.modifier_time_parameter.modifier_time_parameter[i].speed*pass_time;
-				
-				if(typeof(this.modifier_current_time[i])=="undefined")
-					this.modifier_current_time[i]=new_current_time;
-				else if(this.modifier_current_time[i]<new_current_time)
-					this.modifier_current_time[i]=new_current_time;
-				else
-					this.modifier_current_time[i]++;
-			};
+			new_current_time =this.modifier_time_parameter.caculate_current_time()+pass_time;
+			if(this.modifier_current_time<new_current_time)
+				this.modifier_current_time=new_current_time;
+			else
+				this.modifier_current_time[i]++;
 		};
 		
 		this.process_routine_function();

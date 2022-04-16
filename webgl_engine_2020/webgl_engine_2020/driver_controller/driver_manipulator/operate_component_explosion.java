@@ -39,7 +39,7 @@ public class operate_component_explosion
 		return comp.move_location.multiply(
 				location.move_rotate(direction.x,direction.y,direction.z,0,0,0));
 	}
-	public static void do_explosion(int camera_modifier_id,long touch_time_length,engine_kernel ek,client_information ci)
+	public static void do_explosion(long touch_time_length,engine_kernel ek,client_information ci)
 	{
 		String str;
 		component_array comp_array=new component_array(ek.component_cont.root_component.component_id+1);
@@ -127,7 +127,7 @@ public class operate_component_explosion
 		}
 		
 		for(int i=0,ni=comp_array.component_number;i<ni;i++) {
-			modifier_container_timer timer=ek.modifier_cont[camera_modifier_id].get_timer();
+			modifier_container_timer timer=ek.modifier_cont.get_timer();
 			long start_time=timer.get_current_time();
 			long terminate_time=ci.display_camera_result.cam.parameter.switch_time_length+start_time;
 			
@@ -142,7 +142,7 @@ public class operate_component_explosion
 						start_time,comp_array.comp[i].move_location,
 						terminate_time,new_move_location,true,true);
 			lm.touch_time_length=touch_time_length;
-			ek.modifier_cont[camera_modifier_id].add_modifier(lm);
+			ek.modifier_cont.add_modifier(lm);
 		}
 	}
 }

@@ -18,10 +18,8 @@ import kernel_file_manager.file_writer;
 
 public class operate_part_list 
 {
-	private static void part_list_selection(
-			int select_type_id,int camera_modifier_id,
-			engine_kernel ek,client_information ci,
-			driver_audio.extended_component_driver acd)
+	private static void part_list_selection(int select_type_id,
+			engine_kernel ek,client_information ci,driver_audio.extended_component_driver acd)
 	{
 		String str;
 		int render_id=-1,part_id=-1,component_id=-1;
@@ -98,15 +96,14 @@ public class operate_part_list
 			if(comp_con.component_number>0)
 				if(select_type_id!=2)
 					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
-						ek.modifier_cont[camera_modifier_id],comp_con.get_box(),null,
+						ek.modifier_cont,comp_con.get_box(),null,
 						ci.display_camera_result.cam.parameter.scale_value,ci.parameter.aspect,true,true,
 						ci.display_camera_result.cam.parameter.scale_value>const_value.min_value);
 		return;
 	}
 	public static void part_list_request(
 			boolean save_component_name_or_id_flag,component comp,
-			engine_kernel ek,client_information ci,
-			int camera_modifier_id,driver_audio.extended_component_driver acd)
+			engine_kernel ek,client_information ci,driver_audio.extended_component_driver acd)
 	{
 		String str;
 		component_collector collector=null;
@@ -132,13 +129,13 @@ public class operate_part_list
 				return;
 			switch(str.toLowerCase()){
 			case "select":
-				part_list_selection(1,camera_modifier_id,ek,ci,acd);
+				part_list_selection(1,ek,ci,acd);
 				return;
 			case "unselect":
-				part_list_selection(2,camera_modifier_id,ek,ci,acd);
+				part_list_selection(2,ek,ci,acd);
 				return;
 			case "swap":
-				part_list_selection(3,camera_modifier_id,ek,ci,acd);
+				part_list_selection(3,ek,ci,acd);
 				return;
 			default:
 				return;
@@ -235,7 +232,7 @@ public class operate_part_list
 			if(comp_cont.component_number>0)
 				if(ci.display_camera_result.cam.parameter.movement_flag)
 					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
-						ek.modifier_cont[camera_modifier_id],comp_cont.get_box(),null,
+						ek.modifier_cont,comp_cont.get_box(),null,
 						ci.display_camera_result.cam.parameter.scale_value,ci.parameter.aspect,true,true,
 						ci.display_camera_result.cam.parameter.scale_value>const_value.min_value);
 			return;

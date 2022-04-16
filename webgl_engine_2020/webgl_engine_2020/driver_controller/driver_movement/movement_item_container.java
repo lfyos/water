@@ -50,7 +50,7 @@ public class movement_item_container
 	}
 	
 	public void register_modifier(movement_suspend suspend,
-			movement_channel_id move_channel_id,int movement_modifier_id,int location_component_id,
+			movement_channel_id move_channel_id,int location_component_id,
 			component_container component_cont,modifier_container modifier_cont)
 	{
 		component moved_component=component_cont.get_component(moved_component_id);
@@ -69,12 +69,12 @@ public class movement_item_container
 					set_parameter_channel_id=move_channel_id.display_parameter_channel_id;
 				}
 				modifier_cont.add_modifier(
-					new movement_move_modifier(		suspend,
-						moved_component,			movement_modifier_id,					location_component_id,
-						clear_parameter_channel_id,	set_parameter_channel_id,				modify_parameter_channel_id,
-						movement[i].start_time,		movement[i].start_parameter,			movement[i].start_location,
-						movement[i].terminate_time,	movement[i].terminate_parameter,		movement[i].terminate_location,
-						follow_component_id,		follow_component_location));
+					new movement_move_modifier(
+							suspend,					moved_component,					location_component_id,
+							clear_parameter_channel_id,	set_parameter_channel_id,			modify_parameter_channel_id,
+							movement[i].start_time,		movement[i].start_parameter,		movement[i].start_location,
+							movement[i].terminate_time,	movement[i].terminate_parameter,	movement[i].terminate_location,
+							follow_component_id,		follow_component_location));
 			}
 	}
 	public void reverse()

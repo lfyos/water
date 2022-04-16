@@ -25,7 +25,7 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 	}
 	
 	public movement_move_modifier(movement_suspend my_suspend,component my_comp,
-			int my_movement_modifier_container_id,int my_location_component_id,
+			int my_location_component_id,
 				
 			int my_clear_parameter_channel_id[],
 			int my_set_parameter_channel_id[],
@@ -36,7 +36,7 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 			int my_follow_component_id[],location my_follow_component_location[])
 	{
 		super(	my_comp.component_id,
-				my_location_component_id,my_movement_modifier_container_id,
+				my_location_component_id,
 				my_start_time,my_start_location,
 				my_terminate_time,my_terminate_location,
 				my_follow_component_id,my_follow_component_location);

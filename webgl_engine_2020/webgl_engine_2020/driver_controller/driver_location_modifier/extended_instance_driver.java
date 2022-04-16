@@ -58,9 +58,7 @@ public class extended_instance_driver extends instance_driver
 		for(int print_number=0;p!=null;p=p.next)
 			if(last_parameter_version<=p.parameter_version){
 				ci.request_response.print(((print_number++)<=0)?"[":",[",p.component_id);
-				
-				ci.request_response.print(",",	p.modifier_container_id);
-				ci.request_response.print(",",	ek.modifier_cont[p.modifier_container_id].get_timer().get_version());
+				ci.request_response.print(",",	ek.modifier_cont.get_timer().get_version());
 	
 				ci.request_response.print(",",	p.start_time);
 				ci.request_response.print(",");

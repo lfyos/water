@@ -63,12 +63,11 @@ public class extended_render_driver extends render_driver
 			change_name mount_component_name_and_assemble_file_name,client_request_response request_response)
 	{
 		file_reader f=new file_reader(p.directory_name+p.material_file_name,part_fr.get_charset());
-		int camera_modifier_id=f.get_int();
 		long touch_time_length=f.get_long();
 		boolean save_component_name_or_id_flag=f.get_boolean();
 		f.close();
 		
-		return new extended_part_driver(camera_modifier_id,touch_time_length,save_component_name_or_id_flag);
+		return new extended_part_driver(touch_time_length,save_component_name_or_id_flag);
 	}
 	public void create_shader_data(file_writer fw,render rr,system_parameter system_par,scene_parameter scene_par)
 	{

@@ -42,7 +42,7 @@ public class engine_kernel
 	
 	public nanosecond_timer					current_time;
 	
-	public modifier_container				modifier_cont[];
+	public modifier_container				modifier_cont;
 	
 	public part_lru_manager					part_lru;
 
@@ -60,11 +60,7 @@ public class engine_kernel
 			part_lru=null;
 		}
 		if(modifier_cont!=null) {
-			for(int i=0,ni=modifier_cont.length;i<ni;i++)
-				if(modifier_cont[i]!=null){
-					modifier_cont[i].destroy();
-					modifier_cont[i]=null;
-				}
+			modifier_cont.destroy();
 			modifier_cont=null;
 		}
 		if(component_cont!=null){
@@ -129,9 +125,7 @@ public class engine_kernel
 		
 		current_time			=new nanosecond_timer();
 
-		modifier_cont			=new modifier_container[scene_par.max_modifier_container_number];
-		for(int i=0;i<modifier_cont.length;i++)
-			modifier_cont[i]	=new modifier_container(current_time.nanoseconds());
+		modifier_cont			=new modifier_container(current_time.nanoseconds());
 		
 		part_lru				=null;					
 		

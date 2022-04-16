@@ -60,7 +60,7 @@ public class movement_tree {
 	public long start_time,terminate_time;
 
 	public void register_modifier(movement_suspend suspend,
-			movement_channel_id move_channel_id,int movement_modifier_id,int location_component_id,
+			movement_channel_id move_channel_id,int location_component_id,
 			component_container component_cont,movement_parameter parameter,
 			modifier_container modifier_cont,movement_switch_camera_modifier swcm,
 			String directory_name,String sound_pre_string,
@@ -86,7 +86,7 @@ public class movement_tree {
 		if(children!=null){
 			for(int i=0,ni=children.length;i<ni;i++)
 				children[i].register_modifier(
-					suspend,move_channel_id,movement_modifier_id,location_component_id,
+					suspend,move_channel_id,location_component_id,
 					component_cont,parameter,modifier_cont,swcm,directory_name,
 					sound_pre_string,system_start_time,camera_switch_time,
 					my_direction,my_scale_type,my_scale_value,direction_flag);	
@@ -101,7 +101,7 @@ public class movement_tree {
 			return;
 
 		move.register_modifier(suspend,move_channel_id,
-				movement_modifier_id,location_component_id,component_cont,modifier_cont);
+				location_component_id,component_cont,modifier_cont);
 		
 		if((start_time!=terminate_time)&&(system_start_time<terminate_time)){
 			location my_start_location=move.movement[0].start_location;

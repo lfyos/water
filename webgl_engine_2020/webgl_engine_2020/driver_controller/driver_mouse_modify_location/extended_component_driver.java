@@ -11,7 +11,6 @@ public class extended_component_driver extends component_driver
 {
 	private double view_range[],low_precision_scale,mouse_rotate_scale;
 	private boolean rotate_type_flag,exchange_point_flag,change_type_flag;
-	private int camera_modifier_id;
 	
 	public void destroy()
 	{
@@ -20,8 +19,7 @@ public class extended_component_driver extends component_driver
 	}
 	public extended_component_driver(part my_component_part,double my_view_range[],
 			double my_low_precision_scale,double my_mouse_rotate_scale,
-			boolean my_rotate_type_flag,boolean my_exchange_point_flag,
-			boolean my_change_type_flag,int my_camera_modifier_id)
+			boolean my_rotate_type_flag,boolean my_exchange_point_flag,boolean my_change_type_flag)
 	{
 		super(my_component_part);
 		
@@ -31,7 +29,6 @@ public class extended_component_driver extends component_driver
 		rotate_type_flag	=my_rotate_type_flag;
 		exchange_point_flag	=my_exchange_point_flag;
 		change_type_flag	=my_change_type_flag;
-		camera_modifier_id	=my_camera_modifier_id;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
@@ -43,8 +40,8 @@ public class extended_component_driver extends component_driver
 	public instance_driver create_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_instance_driver(
-				comp,driver_id,view_range,low_precision_scale,mouse_rotate_scale,
-				rotate_type_flag,exchange_point_flag,change_type_flag,camera_modifier_id);
+		return new extended_instance_driver(comp,driver_id,
+				view_range,low_precision_scale,mouse_rotate_scale,
+				rotate_type_flag,exchange_point_flag,change_type_flag);
 	}
 }

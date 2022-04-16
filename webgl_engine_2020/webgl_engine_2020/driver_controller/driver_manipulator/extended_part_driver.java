@@ -19,15 +19,12 @@ import kernel_transformation.point;
 
 public class extended_part_driver extends part_driver
 {
-	private int camera_modifier_id;
 	private long touch_time_length;
 	private boolean save_component_name_or_id_flag;
 	
-	public extended_part_driver(int my_camera_modifier_id,
-			long my_touch_time_length,boolean my_save_component_name_or_id_flag)
+	public extended_part_driver(long my_touch_time_length,boolean my_save_component_name_or_id_flag)
 	{
 		super();
-		camera_modifier_id=my_camera_modifier_id;
 		touch_time_length=my_touch_time_length;
 		save_component_name_or_id_flag=my_save_component_name_or_id_flag;
 	}
@@ -45,7 +42,7 @@ public class extended_part_driver extends part_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(camera_modifier_id,touch_time_length,save_component_name_or_id_flag);
+		return new extended_part_driver(touch_time_length,save_component_name_or_id_flag);
 	}
 	public int caculate_material_id(
 			part p,String type_str,int body_id,int face_id,int loop_id,int edge_id,
@@ -63,7 +60,7 @@ public class extended_part_driver extends part_driver
 			part my_component_part,engine_kernel ek,client_request_response request_response)
 	{
 		return new extended_component_driver(my_component_part,fr.get_string(),
-					camera_modifier_id,touch_time_length,save_component_name_or_id_flag);
+					touch_time_length,save_component_name_or_id_flag);
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int loop_id,int edge_id,int point_id,

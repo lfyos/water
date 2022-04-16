@@ -48,8 +48,6 @@ public class extended_component_driver extends component_driver
 		String audio_component_name					=fr.get_string();
 		String mouse_modify_location_component_name	=fr.get_string();
 		String virtual_mount_root_component_name	=fr.get_string();
-		int camera_modifier_id						=fr.get_int();
-		int movement_modifier_id					=fr.get_int();
 		fr.close();
 		
 		debug_information.println("Begin loading movement information\t",component_directory_name+movement_file_name);
@@ -61,8 +59,7 @@ public class extended_component_driver extends component_driver
 						component_directory_name+temporary_file_directory,
 						sound_pre_string,
 						location_component_name,audio_component_name,
-						mouse_modify_location_component_name,virtual_mount_root_component_name,
-						camera_modifier_id,movement_modifier_id));
+						mouse_modify_location_component_name,virtual_mount_root_component_name));
 		debug_information.println("End loading movement information\t",component_directory_name+design_file_name);
 		
 		return;

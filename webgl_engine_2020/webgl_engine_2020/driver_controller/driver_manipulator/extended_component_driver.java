@@ -10,7 +10,6 @@ import kernel_network.client_request_response;
 public class extended_component_driver  extends component_driver
 {
 	private String audio_component_name;
-	private int camera_modifier_id;
 	private long touch_time_length;
 	private boolean save_component_name_or_id_flag;
 	
@@ -20,12 +19,10 @@ public class extended_component_driver  extends component_driver
 	}
 	public extended_component_driver(
 			part my_component_part,String my_audio_component_name,
-			int my_camera_modifier_id,long my_touch_time_length,
-			boolean my_save_component_name_or_id_flag)
+			long my_touch_time_length,boolean my_save_component_name_or_id_flag)
 	{
 		super(my_component_part);
 		audio_component_name=my_audio_component_name;
-		camera_modifier_id=my_camera_modifier_id;
 		touch_time_length=my_touch_time_length;
 		save_component_name_or_id_flag=my_save_component_name_or_id_flag;
 	}
@@ -49,6 +46,6 @@ public class extended_component_driver  extends component_driver
 					audio_component_id=audio_comp.component_id;
 		
 		return new extended_instance_driver(comp,driver_id,audio_component_id,
-				camera_modifier_id,touch_time_length,save_component_name_or_id_flag);
+				touch_time_length,save_component_name_or_id_flag);
 	}
 }

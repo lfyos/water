@@ -5,5 +5,3 @@
 /*		audio_component_name					*/		audio_component
 /*		mouse_modify_location_component_name	*/		mouse_modify_location_component
 /*		virtual_mount_root_component_name		*/		virtual_mount_root_component
-/*		camera_modifier_id						*/		1
-/*		movement_modifier_id					*/		2

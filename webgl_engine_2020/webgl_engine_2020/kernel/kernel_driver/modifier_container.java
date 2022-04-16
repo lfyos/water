@@ -205,10 +205,8 @@ public class modifier_container
 					adjust_heap(modifier_number++);
 				}
 			insert_modifier_number=0;
-			if(test_can_not_start(0,my_current_time,ek,ci)) {
-				timer.modify_speed(timer.get_speed(),ek.current_time);
+			if(test_can_not_start(0,my_current_time,ek,ci))
 				return;
-			}
 			if(temp_modifier_driver_array.length<modifier_number){
 				temp_modifier_driver_array=new modifier_driver_holder[modifier_number];
 				for(int j=0,nj=temp_modifier_driver_array.length;j<nj;j++)

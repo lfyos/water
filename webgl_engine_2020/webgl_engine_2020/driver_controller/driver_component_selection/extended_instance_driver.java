@@ -19,7 +19,7 @@ import kernel_transformation.point;
 
 public class extended_instance_driver extends instance_driver
 {
-	private int screen_rectangle_component_id,audio_component_id,camera_modifier_id;
+	private int screen_rectangle_component_id,audio_component_id;
 	private boolean change_type_flag;
 	
 	public void destroy()
@@ -27,12 +27,11 @@ public class extended_instance_driver extends instance_driver
 		super.destroy();
 	}
 	public extended_instance_driver(component my_comp,int my_driver_id,
-			int my_screen_rectangle_component_id,int my_audio_component_id,int my_camera_modifier_id)
+			int my_screen_rectangle_component_id,int my_audio_component_id)
 	{
 		super(my_comp,my_driver_id);
 		screen_rectangle_component_id=my_screen_rectangle_component_id;
 		audio_component_id=my_audio_component_id;
-		camera_modifier_id=my_camera_modifier_id;
 		change_type_flag=true;
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
@@ -134,8 +133,7 @@ public class extended_instance_driver extends instance_driver
 			if((comp_cont=collector.get_component_array())!=null)
 				if((my_box=comp_cont.get_box())!=null)
 					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
-							ek.modifier_cont[camera_modifier_id],my_box,null,
-							ci.display_camera_result.cam.parameter.scale_value,
+							ek.modifier_cont,my_box,null,ci.display_camera_result.cam.parameter.scale_value,
 							ci.parameter.aspect,true,true,true);
 			break;
 		}
@@ -177,11 +175,9 @@ public class extended_instance_driver extends instance_driver
 		case 2:
 		case 3:
 			(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
-					ek.modifier_cont[camera_modifier_id],
-					ek.component_cont,ci.display_camera_result,ci.parameter,null,
+					ek.modifier_cont,ek.component_cont,ci.display_camera_result,ci.parameter,null,
 					ci.display_camera_result.cam.parameter.scale_value,ci.parameter.aspect,
-					ek.modifier_cont[camera_modifier_id].get_timer().get_current_time(),
-					true,true,true,null,null);
+					ek.modifier_cont.get_timer().get_current_time(),true,true,true,null,null);
 			break;
 		}
 		if(control_code==0)

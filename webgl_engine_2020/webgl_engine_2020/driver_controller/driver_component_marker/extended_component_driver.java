@@ -11,7 +11,6 @@ public class extended_component_driver  extends component_driver
 {
 	private String directory_comp_name,file_name;
 	private component_marker_container cmc;
-	private int camera_modifier_id;
 	public void destroy()
 	{
 		super.destroy();
@@ -20,13 +19,11 @@ public class extended_component_driver  extends component_driver
 		cmc=null;
 	}
 	public extended_component_driver(part my_component_part,
-			String my_directory_comp_name,String my_file_name,
-			int my_camera_modifier_id)
+			String my_directory_comp_name,String my_file_name)
 	{
 		super(my_component_part);
 		directory_comp_name=my_directory_comp_name;
 		file_name=my_file_name;
-		camera_modifier_id=my_camera_modifier_id;
 		cmc=null;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
@@ -42,6 +39,6 @@ public class extended_component_driver  extends component_driver
 	public instance_driver create_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_instance_driver(comp,driver_id,cmc,camera_modifier_id);
+		return new extended_instance_driver(comp,driver_id,cmc);
 	}
 }

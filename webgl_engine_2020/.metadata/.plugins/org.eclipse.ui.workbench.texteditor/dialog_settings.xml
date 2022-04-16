@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="projection_type_flag"/>
+		<item key="selection" value="modifier_current_time"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="modifier_current_time"/>
+			<item value="ek.modifier_cont[0].clear_modifier(ek,ci);"/>
+			<item value="ek.modifier_cont[0]"/>
+			<item value="camera_modifier_id"/>
+			<item value="[camera_modifier_id]"/>
+			<item value="modifier_time_parameter"/>
+			<item value="modifier_container_number"/>
+			<item value="location_data"/>
+			<item value="modifier_container_id"/>
+			<item value="manager.config_parameter.movement_modifier_id"/>
+			<item value="/*&#x09;max_modifier_container_number&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;3"/>
+			<item value="speed"/>
+			<item value="parse_web_server_response_data"/>
+			<item value="set_target_background_color"/>
 			<item value="projection_type_flag"/>
-			<item value="center_plane"/>
-			<item value="jason"/>
-			<item value="&quot;edit_jason&quot;"/>
-			<item value="open"/>
-			<item value="load_server_part_video"/>
-			<item value="ep.item_number"/>
-			<item value="send_location_to_webserver"/>
-			<item value="contextmenu"/>
-			<item value="set_mouse_for_tag"/>
-			<item value="menu_part"/>
-			<item value="id_base"/>
-			<item value="base"/>
-			<item value="part_material"/>
-			<item value="type_flag"/>
 		</list>
 		<list key="replacehistory">
+			<item value="ek.modifier_cont.clear_modifier(ek,ci);"/>
+			<item value="ek.modifier_cont"/>
+			<item value=""/>
+			<item value="0"/>
+			<item value="/*&#x09;max_modifier_container_number&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;1"/>
 			<item value="6"/>
 			<item value="interface_part"/>
 			<item value="instance_initialize_data"/>
@@ -34,18 +39,13 @@
 			<item value="gl."/>
 			<item value="i_i_data"/>
 			<item value="set_menu_show"/>
-			<item value=""/>
 			<item value="display_on_pickup"/>
-			<item value=".display_on_focus."/>
-			<item value="/* 2"/>
-			<item value="symmetry_flag&#x09;&#x09;"/>
-			<item value="symmetry_flag&#x09;&#x09;&#x09;"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="-9"/>
-		<item key="DIALOG_Y_ORIGIN" value="324"/>
-		<item key="DIALOG_WIDTH" value="359"/>
+		<item key="DIALOG_X_ORIGIN" value="123"/>
+		<item key="DIALOG_Y_ORIGIN" value="255"/>
+		<item key="DIALOG_WIDTH" value="313"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 	</section>

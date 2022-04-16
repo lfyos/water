@@ -170,27 +170,16 @@ public class response_render_component_request
 		ci.request_response.print("[",ek.collector_stack.get_collector_version());
 		ci.request_response.print(",",delay_time_length);
 		ci.request_response.print(",",my_current_time_difference);
-		ci.request_response.print(",[");
 
-		for(int i=0,j=0,ni=ek.modifier_cont.length;i<ni;i++) {
-			modifier_container_timer timer=ek.modifier_cont[i].get_timer();
-			long my_version=timer.get_version();
-			modifier_parameter_buffer old_p,new_p;
-			if((old_p=ci.render_buffer.modifier_parameter[i])==null)
-				old_p=new modifier_parameter_buffer(0,0,1);
-			else if(old_p.timer_version==my_version)
-					continue;
-			new_p=new modifier_parameter_buffer(my_version,timer.get_timer_adjust_value(),timer.get_speed());
-			ci.render_buffer.modifier_parameter[i]=new_p;
-			
-			ci.request_response.print(((j++)<=0)?"[":",[",i);
-			ci.request_response.print(",",new_p.timer_version-old_p.timer_version);
-			ci.request_response.print(",",new_p.timer_adjust_value-old_p.timer_adjust_value);
-			if(old_p.speed!=new_p.speed)
-				ci.request_response.print(",",new_p.speed);
-			ci.request_response.print("]");
-		}
-		ci.request_response.print("]]");
+		modifier_container_timer timer=ek.modifier_cont.get_timer();
+
+		modifier_parameter_buffer old_p=ci.render_buffer.modifier_parameter;
+		modifier_parameter_buffer new_p=new modifier_parameter_buffer(timer.get_version(),timer.get_timer_adjust_value());
+		ci.request_response.print(",",new_p.timer_version-old_p.timer_version);
+		ci.request_response.print(",",new_p.timer_adjust_value-old_p.timer_adjust_value);
+		ci.request_response.print("]");
+		
+		ci.render_buffer.modifier_parameter=new_p;
 	}
 	private static int response_buffer_object_proxy_request(part p,engine_kernel ek,client_information ci)
 	{

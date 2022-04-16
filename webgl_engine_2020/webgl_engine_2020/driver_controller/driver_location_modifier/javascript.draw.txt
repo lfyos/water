@@ -54,25 +54,24 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				var location_data		=data_buffer[buffer_id][transfer_index][move_index];
 				
 				var component_id			=location_data[0];
-				var modifier_container_id	=location_data[1];
-				var modifier_timer_version	=location_data[2];
-				var start_time				=location_data[3];
-				var start_location			=location_data[4];
-				var terminate_time			=location_data[5];
-				var terminate_location		=location_data[6];
+				var modifier_timer_version	=location_data[1];
+				var start_time				=location_data[2];
+				var start_location			=location_data[3];
+				var terminate_time			=location_data[4];
+				var terminate_location		=location_data[5];
 				
 				if(start_location.length<16){
 					start_location=component_location.decode_location(start_location);
-					location_data[4]=start_location;
+					location_data[3]=start_location;
 				}
 				if(terminate_location.length<16){
 					terminate_location=component_location.decode_location(terminate_location);
-					location_data[6]=terminate_location;
+					location_data[5]=terminate_location;
 				}
-				var p=render.modifier_time_parameter.modifier_time_parameter;
-				if(p[modifier_container_id].timer_version!=modifier_timer_version)
+
+				if(render.modifier_time_parameter.timer_version!=modifier_timer_version)
 					continue;
-				p=(modifier_current_time[modifier_container_id]-start_time)/(terminate_time-start_time);
+				var p=(modifier_current_time-start_time)/(terminate_time-start_time);
 				if(p>1.0)
 					continue;
 				if(p<0.0)
@@ -97,7 +96,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				component_location.modify_one_component_location(component_id,loca);
 				loca=component_location.get_component_location(component_id);
 					
-				for(var i=7,ni=location_data.length;i<ni;i+=2){
+				for(var i=6,ni=location_data.length;i<ni;i+=2){
 					var follow_component_id	=location_data[i+0];
 					var follow_loca			=location_data[i+1];
 					if(follow_loca.length<16){
