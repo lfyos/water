@@ -1,0 +1,73 @@
+package driver_movement;
+
+import kernel_camera.camera_result;
+import kernel_component.component;
+import kernel_component.component_collector;
+import kernel_driver.instance_driver;
+import kernel_engine.client_information;
+import kernel_engine.engine_kernel;
+import kernel_transformation.location;
+import kernel_transformation.point;
+
+public class extended_instance_driver extends instance_driver
+{
+	private boolean suspend_status;
+
+	public void destroy()
+	{
+		super.destroy();
+	}
+	public extended_instance_driver(component my_comp,int my_driver_id)
+	{
+		super(my_comp,my_driver_id);
+		suspend_status=true;
+	}
+	public void response_init_instance_data(engine_kernel ek,client_information ci)
+	{
+	}
+	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
+			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
+	{
+		movement_manager m=((extended_component_driver)(comp.driver_array[driver_id])).get_movement_manager(
+				comp, driver_id, ek, ci);
+		component follow_mouse_comp;
+		if(cr.target.selection_target_flag) {
+			if(m.suspend.follow_mouse_component_id>=0)
+				if((follow_mouse_comp=ek.component_cont.get_component(m.suspend.follow_mouse_component_id))!=null)
+					if(follow_mouse_comp.component_box!=null) {
+						location loca=follow_mouse_comp.absolute_location.negative();
+						point p0=loca.multiply(follow_mouse_comp.component_box.center());
+						point p1=ci.selection_camera_result.center_point;
+						p1=ci.selection_camera_result.matrix.multiply(p1);
+						p1=ci.selection_camera_result.negative_matrix.multiply(0,0,p1.z);
+						p1=loca.multiply(p1);
+						loca=location.move_rotate(p1.x-p0.x, p1.y-p0.y, p1.z-p0.z, 0, 0, 0);
+						loca=follow_mouse_comp.move_location.multiply(loca);
+						follow_mouse_comp.modify_location(loca,ek.component_cont);
+					}
+		}
+		if(cr.target.main_display_target_flag){
+			boolean new_suspend_status=(m.suspend.get_suspend_match_number()>0)||(m.suspend.get_suspend_component_number()>0);
+			if(new_suspend_status^suspend_status){
+				update_component_parameter_version(0);
+				suspend_status=new_suspend_status;
+			}
+		}
+		return cr.target.main_display_target_flag?false:true;
+	}
+	public void create_render_parameter(
+			int render_buffer_id,int parameter_channel_id,int data_buffer_id,
+			engine_kernel ek,client_information ci,camera_result cr)
+	{
+		ci.request_response.print(data_buffer_id);
+	}
+	public void create_component_parameter(engine_kernel ek,client_information ci)
+	{
+		ci.request_response.print(suspend_status?"true":"false");
+	}
+	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
+	{
+		movement_function_switch mfs=new movement_function_switch(ek,ci,m);
+		return mfs.get_engine_result(parameter_channel_id,comp.component_id,driver_id);
+	}
+}

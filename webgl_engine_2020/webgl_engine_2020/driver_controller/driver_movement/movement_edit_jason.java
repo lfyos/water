@@ -4,7 +4,8 @@ import kernel_engine.client_information;
 
 public class movement_edit_jason 
 {
-	public movement_edit_jason(long movement_tree_id,client_information ci,movement_manager manager)
+	public movement_edit_jason(long movement_tree_id,
+			long switch_time_length,client_information ci,movement_manager manager)
 	{
 		if(manager.root_movement==null) {
 			ci.request_response.println("null");
@@ -31,19 +32,24 @@ public class movement_edit_jason
 		movement_jason.set_current_movement_flag(manager.root_movement,manager.parameter.current_movement_id,false);
 		
 		ci.request_response.println("{");
+
 		ci.request_response.print  ("	\"buffer_number\"		:	",
 			(manager.buffer_movement==null)?0:(manager.buffer_movement.length)).println(",");
+		
+		ci.request_response.println("	\"switch_time_length\"	:	",switch_time_length+",");
 		
 		if(searcher.result==null){
 			ci.request_response.println("}");
 			return;
 		}
 
-		movement_jason.create_tree_node_jason(searcher.result, ci.request_response, "\t",",");
+		movement_jason.create_tree_node_jason(
+				searcher.result, ci.request_response, "\t",",",switch_time_length);
 	
 		if(searcher.result_parent!=null) {
 			ci.request_response.println("	\"parent\"	:	{");
-			movement_jason.create_tree_node_jason(searcher.result_parent, ci.request_response, "\t\t","");
+			movement_jason.create_tree_node_jason(
+					searcher.result_parent, ci.request_response, "\t\t","",switch_time_length);
 			ci.request_response.println("	},");
 		}
 
@@ -51,7 +57,8 @@ public class movement_edit_jason
 		if(searcher.result_children!=null)
 			for(int i=0,ni=searcher.result_children.length;i<ni;i++){
 				ci.request_response.println("		{");
-				movement_jason.create_tree_node_jason(searcher.result_children[i],ci.request_response,"\t\t\t","");
+				movement_jason.create_tree_node_jason(
+						searcher.result_children[i],ci.request_response,"\t\t\t","",switch_time_length);
 				ci.request_response.println("		}",(i==(ni-1))?"":",");
 			}
 		ci.request_response.println("	]");

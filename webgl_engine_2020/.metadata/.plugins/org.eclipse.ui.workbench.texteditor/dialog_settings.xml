@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="modifier_current_time"/>
+		<item key="selection" value="terminate_time"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="jason"/>
+			<item value="terminate_time"/>
 			<item value="modifier_current_time"/>
 			<item value="ek.modifier_cont[0].clear_modifier(ek,ci);"/>
 			<item value="ek.modifier_cont[0]"/>
@@ -21,8 +23,6 @@
 			<item value="/*&#x09;max_modifier_container_number&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;3"/>
 			<item value="speed"/>
 			<item value="parse_web_server_response_data"/>
-			<item value="set_target_background_color"/>
-			<item value="projection_type_flag"/>
 		</list>
 		<list key="replacehistory">
 			<item value="ek.modifier_cont.clear_modifier(ek,ci);"/>

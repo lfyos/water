@@ -57,7 +57,7 @@ public class movement_tree {
 
 	public movement_tree children[];
 	
-	public long start_time,terminate_time;
+	public long start_time,terminate_time,mount_only_time_length;
 
 	public void register_modifier(movement_suspend suspend,
 			movement_channel_id move_channel_id,int location_component_id,
@@ -284,22 +284,28 @@ public class movement_tree {
 			if(children.length>0){
 				start_time=my_start_time;
 				terminate_time=my_start_time;
+				mount_only_time_length=0;
 				if(sequence_flag)
-					for(int i=0;i<(children.length);i++)
+					for(int i=0,ni=children.length;i<ni;i++){
 						terminate_time=children[i].caculate_time(
 								component_cont,terminate_time,camera_time_length,min_volume);
+						mount_only_time_length+=children[i].mount_only_time_length;
+					}
 				else
-					for(int i=0;i<(children.length);i++){
+					for(int i=0,ni=children.length;i<ni;i++){
 						long children_time=children[i].caculate_time(
 								component_cont,start_time,camera_time_length,min_volume);
 						if(children_time>terminate_time)
 							terminate_time=children_time;
+						if(mount_only_time_length<children[i].mount_only_time_length)
+							mount_only_time_length=children[i].mount_only_time_length;
 					}
 				start_time=children[0].start_time;
 				return terminate_time;
 			}
 		start_time=my_start_time;
 		terminate_time=my_start_time;
+		mount_only_time_length=0;
 		if(move==null)
 			return terminate_time;
 		if(move.movement==null)
@@ -309,10 +315,10 @@ public class movement_tree {
 		if((component_cont.get_component(move.moved_component_id))==null)
 			return terminate_time;
 		start_time=my_start_time+camera_time_length;
-		
 		double comp_min_volume=caculate_component_minmal_volume(component_cont);
 		if((comp_min_volume>=min_volume)||(comp_min_volume<=(const_value.min_value2*const_value.min_value))){
 			terminate_time=move.caculate_time(component_cont,start_time,false);
+			mount_only_time_length=terminate_time-start_time;
 			return terminate_time;
 		}else{
 			terminate_time=move.caculate_time(component_cont,start_time,true);

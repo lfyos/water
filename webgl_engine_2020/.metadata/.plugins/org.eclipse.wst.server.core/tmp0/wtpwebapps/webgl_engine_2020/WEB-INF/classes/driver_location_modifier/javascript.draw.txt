@@ -51,7 +51,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		for(var transfer_index=0;transfer_index<transfer_length;transfer_index++){
 			var new_move_length=0,move_length=data_buffer[buffer_id][transfer_index].length;
 			for(var move_index=0;move_index<move_length;move_index++){
-				var location_data		=data_buffer[buffer_id][transfer_index][move_index];
+				var location_data=data_buffer[buffer_id][transfer_index][move_index];
 				
 				var component_id			=location_data[0];
 				var modifier_timer_version	=location_data[1];

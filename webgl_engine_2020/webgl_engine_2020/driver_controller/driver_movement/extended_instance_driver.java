@@ -11,18 +11,15 @@ import kernel_transformation.point;
 
 public class extended_instance_driver extends instance_driver
 {
-	private movement_manager m;
 	private boolean suspend_status;
 
 	public void destroy()
 	{
 		super.destroy();
-		m=null;
 	}
-	public extended_instance_driver(component my_comp,int my_driver_id,movement_manager my_m)
+	public extended_instance_driver(component my_comp,int my_driver_id)
 	{
 		super(my_comp,my_driver_id);
-		m=my_m;
 		suspend_status=true;
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
@@ -31,10 +28,12 @@ public class extended_instance_driver extends instance_driver
 	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
 			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
 	{
+		extended_component_driver ecd=(extended_component_driver)(comp.driver_array[driver_id]);
+		movement_suspend suspend=ecd.get_movement_manager(comp,driver_id,ek,ci).suspend;
 		component follow_mouse_comp;
 		if(cr.target.selection_target_flag) {
-			if(m.suspend.follow_mouse_component_id>=0)
-				if((follow_mouse_comp=ek.component_cont.get_component(m.suspend.follow_mouse_component_id))!=null)
+			if(suspend.follow_mouse_component_id>=0)
+				if((follow_mouse_comp=ek.component_cont.get_component(suspend.follow_mouse_component_id))!=null)
 					if(follow_mouse_comp.component_box!=null) {
 						location loca=follow_mouse_comp.absolute_location.negative();
 						point p0=loca.multiply(follow_mouse_comp.component_box.center());
@@ -48,7 +47,7 @@ public class extended_instance_driver extends instance_driver
 					}
 		}
 		if(cr.target.main_display_target_flag){
-			boolean new_suspend_status=(m.suspend.get_suspend_match_number()>0)||(m.suspend.get_suspend_component_number()>0);
+			boolean new_suspend_status=(suspend.get_suspend_match_number()>0)||(suspend.get_suspend_component_number()>0);
 			if(new_suspend_status^suspend_status){
 				update_component_parameter_version(0);
 				suspend_status=new_suspend_status;
@@ -68,7 +67,9 @@ public class extended_instance_driver extends instance_driver
 	}
 	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
 	{
-		movement_function_switch mfs=new movement_function_switch(ek,ci,m);
+		extended_component_driver ecd=(extended_component_driver)(comp.driver_array[driver_id]);
+		movement_manager manager=ecd.get_movement_manager(comp,driver_id,ek,ci);
+		movement_function_switch mfs=new movement_function_switch(ek,ci,manager);
 		return mfs.get_engine_result(parameter_channel_id,comp.component_id,driver_id);
 	}
 }

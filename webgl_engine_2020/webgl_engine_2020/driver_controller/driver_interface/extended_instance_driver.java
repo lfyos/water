@@ -103,7 +103,7 @@ public class extended_instance_driver extends instance_driver
 		if((str=ci.request_response.get_parameter("center"))!=null) {
 			switch(str.trim().toLowerCase()){
 			case "center":
-				x0=p[0]-dx/2.0;
+				x0=p[0];
 				y0=p[1]-dy/2.0;
 				break;
 			}

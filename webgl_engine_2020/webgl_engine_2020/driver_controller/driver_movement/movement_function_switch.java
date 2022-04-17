@@ -923,18 +923,22 @@ public class movement_function_switch
 			return null;
 		switch(str.trim().toLowerCase()){
 		case "modify_time_length":
-			push();
 			if(manager.root_movement!=null)
 				if((str=ci.request_response.get_parameter("id"))!=null){
 					movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
 					if(searcher.result!=null){
 						double scale_value;
 						if((str=ci.request_response.get_parameter("scale"))!=null)
-							if((scale_value=Double.parseDouble(str))>const_value.min_value)
+							if((scale_value=Double.parseDouble(str))>const_value.min_value) {
+								push();
 								scale_time_length(searcher.result,scale_value);
+								manager.movement_start(ek.modifier_cont,
+										searcher.result.movement_tree_id,
+										ek.component_cont,true,switch_time_length);
+							}
 					}
 				}
-			new movement_edit_jason(locate_camera(),ci,manager);
+			new movement_edit_jason(locate_camera(),switch_time_length,ci,manager);
 			return null;
 		case "download_audio":
 		{
@@ -1018,21 +1022,20 @@ public class movement_function_switch
 			if((str=ci.request_response.get_parameter("restore"))!=null)
 				if(str.toLowerCase().compareTo("true")==0)
 					push();
-			new movement_edit_jason(component_part_selection(),ci,manager);
+			new movement_edit_jason(component_part_selection(),switch_time_length,ci,manager);
 			return null;
 		case "component_face_match":
 			if((str=ci.request_response.get_parameter("restore"))!=null)
 				if(str.toLowerCase().compareTo("true")==0)
 					push();
-			new movement_edit_jason(component_face_match(),ci,manager);
+			new movement_edit_jason(component_face_match(),switch_time_length,ci,manager);
 			return null;
 		case "edit_jason":
-			new movement_edit_jason(-1,ci,manager);
+			new movement_edit_jason(-1,switch_time_length,ci,manager);
 			return null;
 		case "jason":
-			movement_jason.create_jason(
-				manager.parameter.current_movement_id,
-				manager.root_movement,ci.request_response);
+			movement_jason.create_jason(manager.parameter.current_movement_id,
+				manager.root_movement,ci.request_response,switch_time_length);
 			return null;
 		case "get_location":
 			new movement_get_location(ek,ci,manager);
@@ -1050,66 +1053,66 @@ public class movement_function_switch
 			new movement_get_location(ek,ci,manager);
 			return null;
 		case "add_movement":
-			new movement_add_movement(ek,ci,manager);
+			new movement_add_movement(switch_time_length,ek,ci,manager);
 			new movement_get_location(ek,ci,manager);
 			return null;
 		case "delete":
 			push();
-			new movement_edit_jason(delete_move(),ci,manager);
+			new movement_edit_jason(delete_move(),switch_time_length,ci,manager);
 			return null;
 		case "up":
 			push();
-			new movement_edit_jason(updown_move(manager.mount_direction_flag?true:false),ci,manager);
+			new movement_edit_jason(updown_move(manager.mount_direction_flag?true:false),switch_time_length,ci,manager);
 			ci.request_response.println();
 			return null;
 		case "down":
 			push();
-			new movement_edit_jason(updown_move(manager.mount_direction_flag?false:true),ci,manager);
+			new movement_edit_jason(updown_move(manager.mount_direction_flag?false:true),switch_time_length,ci,manager);
 			return null;
 		case "reverse":
 			push();
-			new movement_edit_jason(reverse_move(),ci,manager);
+			new movement_edit_jason(reverse_move(),switch_time_length,ci,manager);
 			return null;
 		case "fromchild":
 			push();
-			new movement_edit_jason(fromchild(),ci,manager);
+			new movement_edit_jason(fromchild(),switch_time_length,ci,manager);
 			return null;
 		case "frombuffer":
 			push();
-			new movement_edit_jason(frombuffer(),ci,manager);
+			new movement_edit_jason(frombuffer(),switch_time_length,ci,manager);
 			return null;
 		case "tobuffer":
 			push();
-			new movement_edit_jason(tobuffer(),ci,manager);
+			new movement_edit_jason(tobuffer(),switch_time_length,ci,manager);
 			return null;
 		case "follow":
 			push();
-			new movement_edit_jason(do_follow(),ci,manager);
+			new movement_edit_jason(do_follow(),switch_time_length,ci,manager);
 			return null;
 		case "view_direction":
 			push();
-			new movement_edit_jason(view_direction(),ci,manager);
+			new movement_edit_jason(view_direction(),switch_time_length,ci,manager);
 			return null;
 		case "view_box":
 			push();
-			new movement_edit_jason(view_box(),ci,manager);
+			new movement_edit_jason(view_box(),switch_time_length,ci,manager);
 			return null;
 		case "locate_camera":
-			new movement_edit_jason(locate_camera(),ci,manager);
+			new movement_edit_jason(locate_camera(),switch_time_length,ci,manager);
 			return null;
 		case "collector":
 			ci.request_response.println(push_component_collector()?"true":"false");
 			return null;
 		case "sequence":
 			push();
-			new movement_edit_jason(set_sequence_flag(true),ci,manager);
+			new movement_edit_jason(set_sequence_flag(true),switch_time_length,ci,manager);
 			return null;
 		case "synchronization":
 			push();
-			new movement_edit_jason(set_sequence_flag(false),ci,manager);
+			new movement_edit_jason(set_sequence_flag(false),switch_time_length,ci,manager);
 			return null;
 		case "update":
-			new movement_edit_jason(do_update(),ci,manager);
+			new movement_edit_jason(do_update(),switch_time_length,ci,manager);
 			return null;
 		case "todesignbuffer":			
 			ci.request_response.println("\"",todesignbuffer()+"\"");

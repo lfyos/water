@@ -1,12 +1,12 @@
 package driver_movement;
 
-import kernel_camera.camera_parameter;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 
 public class movement_add_movement extends movement_design_base
 {
-	public movement_add_movement(engine_kernel ek,client_information ci,movement_manager manager)
+	public movement_add_movement(long switch_time_length,
+			engine_kernel ek,client_information ci,movement_manager manager)
 	{
 		super(ek,ci,manager);
 
@@ -22,9 +22,6 @@ public class movement_add_movement extends movement_design_base
 		manager.designed_move.move.movement=new movement_item[bak.length-1];
 		for(int i=0,ni=bak.length-1;i<ni;i++)
 			manager.designed_move.move.movement[i]=bak[i];
-
-		camera_parameter cam_par=ci.display_camera_result.cam.parameter;
-		long switch_time_length=cam_par.movement_flag?cam_par.switch_time_length:0;
 		
 		if(manager.root_movement==null)
 			manager.root_movement=new movement_tree(manager.id_creator);

@@ -357,19 +357,27 @@ function(component_name,component_id,render)
 					});
 				return;
 			case 22://"20.调整拼装所需时间",
-				if(ep.type_flag){
-					var scale_value; 
-					if((scale_value=prompt("输入调整拼装所需时间倍数"))==null)
+				if(ep.type_flag){				
+					var mew_time_length; 
+					if((mew_time_length=prompt("输入新的拼装时间：毫秒"))==null)
 						return;
-					if((scale_value=scale_value.trim())=="")
-						return;	
+					if((mew_time_length=mew_time_length.trim())=="")
+						return;						
+					if(isNaN(mew_time_length=parseFloat(mew_time_length)))
+						return;
+					var switch_camera_time_length=ep.movement_data.time_length-ep.movement_data.mount_only_time_length;
+					if((mew_time_length*=1000000)<=switch_camera_time_length){
+						alert("您输入的拼装时间太短，不足以切换相机！");
+						return;
+					}					
 					render.call_server_component("movement_manager","all",[["operation","design"],
-						["move_method","modify_time_length"],["id",ep.movement_data.movement_tree_id],["scale",scale_value]],
+						["move_method","modify_time_length"],["id",ep.movement_data.movement_tree_id],
+						["scale",(mew_time_length-switch_camera_time_length)/ep.movement_data.mount_only_time_length]],
 						function(response_data,render)
 						{
 							ep.update_flag=false;
 							ep.movement_data=response_data;
-						});
+						});						
 				}
 				return;
 			case 23://"21.当前拼装Jason数据"
@@ -481,8 +489,9 @@ function(component_name,component_id,render)
 								(component_face_match_number<=0)	?"19.叶子结点不需表面配合":
 									("19.叶子结点需要表面配合("+component_face_match_number.toString()+")"),
 									
-								"20.调整拼装所需时间",
-								"21.当前拼装Jason数据"
+								"20.拼装时间:"+Math.round(ep.movement_data.mount_only_time_length/1000000)
+									+"/"+Math.round(ep.movement_data.time_length/1000000),
+								"21.拼装Jason数据"
 					];
 					render.text_2dcontext.fillText(
 						"    拼装ID:"+(ep.movement_data.movement_tree_id)+",缓冲个数:"+(ep.movement_data.buffer_number),

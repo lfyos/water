@@ -21,17 +21,20 @@ public class movement_jason
 			t.current_movement_flag|=t.children[i].current_movement_flag;
 		return;
 	}
-	public static void create_tree_node_jason(movement_tree t,common_writer cw,String child_space,String follow_str)
+	public static void create_tree_node_jason(movement_tree t,
+			common_writer cw,String child_space,String follow_str,long switch_time_length)
 	{
 		cw.println(child_space+"\"movement_tree_id\"	:	",	t.movement_tree_id								+",");
+		
+		cw.println(child_space+"\"time_length\"		:	",		(t.terminate_time-t.start_time+switch_time_length)+",");
+		cw.println(child_space+"\"mount_only_time_length\":	",	t.mount_only_time_length+",");
+		
 		cw.println(child_space+"\"node_name\"		:	",		jason_string.change_string(t.node_name)			+",");
 		cw.println(child_space+"\"description\"		:	",		jason_string.change_string(t.description)		+",");
 		cw.println(child_space+"\"sound_file_name\"	:	",		jason_string.change_string(t.sound_file_name)	+",");
 		cw.println(child_space+"\"sequence_flag\"		:	",	t.sequence_flag?"true,":"false,");
 		cw.println(child_space+"\"current_movement_flag\" :	",	t.current_movement_flag?"true,":"false,");
-		
-		cw.println(child_space+"\"time_length\"		:	",		(t.terminate_time-t.start_time)+",");
-		
+
 		cw.print  (child_space+"\"direction\"		:	[");
 		if(t.direction!=null){
 			double p[]=t.direction.get_location_data();
@@ -126,28 +129,29 @@ public class movement_jason
 		cw.println(child_space+"]",follow_str);
 		return;
 	}
-	private static void create_jason(movement_tree t,common_writer cw,String space,String follow_string)
+	private static void create_jason(movement_tree t,common_writer cw,
+			String space,String follow_string,long switch_time_length)
 	{
 		String child_space=space+"\t\t";
 		cw.println(space,"{");
 		
-		create_tree_node_jason(t,cw,space+"\t",",");
+		create_tree_node_jason(t,cw,space+"\t",",",switch_time_length);
 		
 		cw.println(space+"\t\"children\"		:	[");
 		if(t.children!=null)
 			for(int i=0,ni=t.children.length;i<ni;i++)
-				create_jason(t.children[i],cw,child_space,(i==(ni-1))?"":",");
+				create_jason(t.children[i],cw,child_space,(i==(ni-1))?"":",",switch_time_length);
 		cw.println(space,"\t]");
 
 		cw.println(space,"}"+follow_string);
 	}
-	public static void create_jason(long current_movement_tree_id,movement_tree t,common_writer cw)
+	public static void create_jason(long current_movement_tree_id,movement_tree t,common_writer cw,long switch_time_length)
 	{
 		if(t==null)
 			cw.println("null");
 		else {
 			set_current_movement_flag(t,current_movement_tree_id,false);
-			create_jason(t,cw,"","");
+			create_jason(t,cw,"","",switch_time_length);
 			cw.println();
 		}
 	}

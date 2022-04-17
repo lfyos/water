@@ -125,11 +125,13 @@ public class movement_manager
 				set_direction(component_cont,modifier_cont,new_mount_direction_flag,camera_switch_time_length);
 				double mount_precision=parameter.movement_precision;
 				double min_box_volume=root_movement.caculate_component_minmal_volume(component_cont);
-				root_movement.caculate_time(component_cont,0,camera_switch_time_length,min_box_volume*mount_precision*mount_precision*mount_precision);
+				root_movement.caculate_time(component_cont,0,camera_switch_time_length,
+						min_box_volume*mount_precision*mount_precision*mount_precision);
 				
 				long time_distance=modifier_cont.get_timer().get_current_time()-tree.start_time+camera_switch_time_length;
 				
-				root_movement.caculate_time(component_cont,time_distance,camera_switch_time_length,min_box_volume*mount_precision*mount_precision*mount_precision);
+				root_movement.caculate_time(component_cont,time_distance,
+						camera_switch_time_length,min_box_volume*mount_precision*mount_precision*mount_precision);
 								
 				for(ct=tree;ct.children!=null;ct=ct.children[0])
 					if(ct.children.length<=0)
@@ -242,7 +244,8 @@ public class movement_manager
 			return root_movement;
 		ff.close();
 		
-		init(modifier_cont,loader,f.directory_name+f.file_name,camera_switch_time_length,file_system_charset);
+		init(modifier_cont,loader,
+				f.directory_name+f.file_name,camera_switch_time_length,file_system_charset);
 		
 		file_writer.file_delete(f.directory_name+f.file_name);
 		
@@ -259,12 +262,14 @@ public class movement_manager
 		return (movement_stack[index_id]!=null)?true:false;
 	}
 	
-	public movement_manager(engine_kernel ek,movement_configuration_parameter my_config_parameter)
+	public movement_manager(engine_kernel ek,
+			long camera_switch_time_length,movement_configuration_parameter my_config_parameter)
 	{
 		create_file_id=0;
 		id_creator=new movement_tree_id_creator();
 		
-		move_channel_id=new movement_channel_id(ek.system_par.text_class_charset,ek.system_par.text_jar_file_charset);
+		move_channel_id=new movement_channel_id(
+				ek.system_par.text_class_charset,ek.system_par.text_jar_file_charset);
 		parameter=new movement_parameter();
 		
 		mount_direction_flag=true;
@@ -278,7 +283,7 @@ public class movement_manager
 		suspend=new movement_suspend(ek,my_config_parameter.virtual_mount_root_component_id);
 		
 		config_parameter=my_config_parameter;
-		init(ek.modifier_cont,ek.component_cont,
-				config_parameter.movement_file_name,1000,config_parameter.movement_file_charset);
+		init(ek.modifier_cont,ek.component_cont,config_parameter.movement_file_name,
+					camera_switch_time_length,config_parameter.movement_file_charset);
 	}
 }
