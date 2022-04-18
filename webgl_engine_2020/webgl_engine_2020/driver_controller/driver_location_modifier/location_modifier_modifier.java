@@ -95,8 +95,9 @@ public class location_modifier_modifier extends modifier_driver
 					for(int i=0,ni=location_comp.driver_number();i<ni;i++)
 						if(location_comp.driver_array[i] instanceof extended_component_driver){
 							((extended_component_driver)(location_comp.driver_array[i])).register(
-								ek,component_id,start_time,terminate_time,
-								start_location,terminate_location,follow_component_id,follow_component_location);
+								ek,component_id,terminate_time-start_time,
+								start_location,terminate_location,
+								follow_component_id,follow_component_location);
 						break;
 					}
 	}

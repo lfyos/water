@@ -18,7 +18,7 @@ import kernel_file_manager.file_writer;
 
 public class operate_part_list 
 {
-	private static void part_list_selection(int select_type_id,
+	private static void part_list_selection(int modifier_container_id,int select_type_id,
 			engine_kernel ek,client_information ci,driver_audio.extended_component_driver acd)
 	{
 		String str;
@@ -96,13 +96,13 @@ public class operate_part_list
 			if(comp_con.component_number>0)
 				if(select_type_id!=2)
 					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
-						ek.modifier_cont,comp_con.get_box(),null,
+						ek.modifier_cont[modifier_container_id],comp_con.get_box(),null,
 						ci.display_camera_result.cam.parameter.scale_value,ci.parameter.aspect,true,true,
 						ci.display_camera_result.cam.parameter.scale_value>const_value.min_value);
 		return;
 	}
 	public static void part_list_request(
-			boolean save_component_name_or_id_flag,component comp,
+			int modifier_container_id,boolean save_component_name_or_id_flag,component comp,
 			engine_kernel ek,client_information ci,driver_audio.extended_component_driver acd)
 	{
 		String str;
@@ -129,13 +129,13 @@ public class operate_part_list
 				return;
 			switch(str.toLowerCase()){
 			case "select":
-				part_list_selection(1,ek,ci,acd);
+				part_list_selection(modifier_container_id,1,ek,ci,acd);
 				return;
 			case "unselect":
-				part_list_selection(2,ek,ci,acd);
+				part_list_selection(modifier_container_id,2,ek,ci,acd);
 				return;
 			case "swap":
-				part_list_selection(3,ek,ci,acd);
+				part_list_selection(modifier_container_id,3,ek,ci,acd);
 				return;
 			default:
 				return;
@@ -232,7 +232,7 @@ public class operate_part_list
 			if(comp_cont.component_number>0)
 				if(ci.display_camera_result.cam.parameter.movement_flag)
 					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
-						ek.modifier_cont,comp_cont.get_box(),null,
+						ek.modifier_cont[modifier_container_id],comp_cont.get_box(),null,
 						ci.display_camera_result.cam.parameter.scale_value,ci.parameter.aspect,true,true,
 						ci.display_camera_result.cam.parameter.scale_value>const_value.min_value);
 			return;

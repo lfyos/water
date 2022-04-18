@@ -9,7 +9,7 @@ import kernel_engine.engine_kernel;
 
 public class extended_instance_driver extends instance_driver
 {
-	private int audio_component_id;
+	private int audio_component_id,modifier_container_id;
 	private long touch_time_length;
 	private boolean save_component_name_or_id_flag;
 	
@@ -18,11 +18,13 @@ public class extended_instance_driver extends instance_driver
 		super.destroy();
 	}
 	public extended_instance_driver(component my_comp,int my_driver_id,
-			int my_audio_component_id,long my_touch_time_length,boolean my_save_component_name_or_id_flag)
+			int my_audio_component_id,int my_modifier_container_id,
+			long my_touch_time_length,boolean my_save_component_name_or_id_flag)
 	{
 		super(my_comp,my_driver_id);
 		
 		audio_component_id=my_audio_component_id;
+		modifier_container_id=my_modifier_container_id;
 		touch_time_length=my_touch_time_length;
 		save_component_name_or_id_flag=my_save_component_name_or_id_flag;
 	}
@@ -66,7 +68,7 @@ public class extended_instance_driver extends instance_driver
 			operate_component_transparent.do_transparency(ek, ci);
 			break;
 		case "explosion":
-			operate_component_explosion.do_explosion(touch_time_length,ek, ci);
+			operate_component_explosion.do_explosion(modifier_container_id,touch_time_length,ek, ci);
 			break;
 		case "display_value":
 			operate_display_value.set_display_value_request(ek, ci);
@@ -93,13 +95,14 @@ public class extended_instance_driver extends instance_driver
 			if((my_comp=ek.component_cont.get_component(audio_component_id))!=null)
 				if(my_comp.driver_number()>0)
 					if(my_comp.driver_array[0] instanceof driver_audio.extended_component_driver) {
-						operate_part_list.part_list_request(save_component_name_or_id_flag,comp,
+						operate_part_list.part_list_request(
+							modifier_container_id,save_component_name_or_id_flag,comp,
 							ek,ci,(driver_audio.extended_component_driver)(my_comp.driver_array[0]));
 						return null;
 					}
 			break;
 		case "clip":
-			operate_clip_plane.clip_plane_request(ek, ci);
+			operate_clip_plane.clip_plane_request(modifier_container_id,ek, ci);
 			break;
 		}
 		return null;

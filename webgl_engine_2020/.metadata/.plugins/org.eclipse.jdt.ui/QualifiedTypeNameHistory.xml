@@ -39,7 +39,6 @@
 <fullyQualifiedTypeName name="kernel_interface.client_process_bar"/>
 <fullyQualifiedTypeName name="kernel_part.part_link_list"/>
 <fullyQualifiedTypeName name="kernel_part.create_grid"/>
-<fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="kernel_network.network_parameter"/>
 <fullyQualifiedTypeName name="kernel_file_manager.travel_through_directory"/>
 <fullyQualifiedTypeName name="kernel_engine.component_container"/>
@@ -59,5 +58,6 @@
 <fullyQualifiedTypeName name="kernel_common_class.change_name"/>
 <fullyQualifiedTypeName name="kernel_common_class.jason_string"/>
 <fullyQualifiedTypeName name="kernel_common_class.const_value"/>
+<fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 </qualifiedTypeNameHistroy>

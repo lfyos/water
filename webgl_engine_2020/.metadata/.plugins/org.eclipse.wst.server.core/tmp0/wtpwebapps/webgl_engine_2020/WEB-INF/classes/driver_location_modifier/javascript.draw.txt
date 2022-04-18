@@ -47,6 +47,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var component_length=component_data_array.length;
 	for(var component_index=0;component_index<component_length;component_index++){
 		var buffer_id=component_data_array[component_index];
+		var modifier_container_id=instance_initialize_data[buffer_id];
 		var new_transfer_length=0,transfer_length=data_buffer[buffer_id].length;
 		for(var transfer_index=0;transfer_index<transfer_length;transfer_index++){
 			var new_move_length=0,move_length=data_buffer[buffer_id][transfer_index].length;
@@ -54,28 +55,24 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				var location_data=data_buffer[buffer_id][transfer_index][move_index];
 				
 				var component_id			=location_data[0];
-				var modifier_timer_version	=location_data[1];
-				var start_time				=location_data[2];
-				var start_location			=location_data[3];
-				var terminate_time			=location_data[4];
-				var terminate_location		=location_data[5];
+				var start_time				=location_data[1];
+				var start_location			=location_data[2];
+				var terminate_time			=location_data[3];
+				var terminate_location		=location_data[4];
 				
 				if(start_location.length<16){
 					start_location=component_location.decode_location(start_location);
-					location_data[3]=start_location;
+					location_data[2]=start_location;
 				}
 				if(terminate_location.length<16){
 					terminate_location=component_location.decode_location(terminate_location);
-					location_data[5]=terminate_location;
+					location_data[4]=terminate_location;
 				}
+				
+				var p=(modifier_current_time[modifier_container_id]-start_time)/(terminate_time-start_time);
+				var not_terminated_flag=(p<1.0)?true:false;
+				p=(p<=0.0)?0.0:(p>=1.0)?1.0:p;
 
-				if(render.modifier_time_parameter.timer_version!=modifier_timer_version)
-					continue;
-				var p=(modifier_current_time-start_time)/(terminate_time-start_time);
-				if(p>1.0)
-					continue;
-				if(p<0.0)
-					p=0.0;
 				var loca=new Array();
 				for(var i=0,ni=start_location.length;i<ni;i++)
 					loca[i]=start_location[i]*(1.0-p)+terminate_location[i]*p;
@@ -96,7 +93,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				component_location.modify_one_component_location(component_id,loca);
 				loca=component_location.get_component_location(component_id);
 					
-				for(var i=6,ni=location_data.length;i<ni;i+=2){
+				for(var i=5,ni=location_data.length;i<ni;i+=2){
 					var follow_component_id	=location_data[i+0];
 					var follow_loca			=location_data[i+1];
 					if(follow_loca.length<16){
@@ -107,7 +104,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					component_location.modify_one_component_location(follow_component_id,follow_loca);
 					component_location.component[follow_component_id].caculate_location_flag=true;
 				}
-				data_buffer[buffer_id][transfer_index][new_move_length++]=location_data;
+				if(not_terminated_flag)
+					data_buffer[buffer_id][transfer_index][new_move_length++]=location_data;
 			}
 			if((data_buffer[buffer_id][transfer_index].length=new_move_length)>0)
 				data_buffer[buffer_id][new_transfer_length++]=data_buffer[buffer_id][transfer_index];

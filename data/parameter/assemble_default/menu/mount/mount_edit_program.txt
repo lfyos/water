@@ -210,7 +210,7 @@ function(component_name,component_id,render)
 						});
 				return;
 			case 12://10.上传拼装配音
-				if(ep.type_flag)
+				if(ep.type_flag&&(ep.movement_data.children.length<=0))
 					window.open(
 						render.create_component_request_string("movement_manager","all",[["operation","design"],
 							["move_method","upload_audio_webpage"],["id",ep.movement_data.movement_tree_id],
@@ -471,7 +471,8 @@ function(component_name,component_id,render)
 							break;
 						}
 					str_array=[	" 1.跳转拼装步骤",	" 2.拼装步骤删除",	" 3.设置跟随组件",	" 4.拼装步骤上移",	" 5.拼装步骤下移",
-								" 6.解散下层拼装",	" 7.存入拼装缓存",	" 8.提取拼装缓存",	" 9.修改拼装信息",	"10.上传拼装配音",
+								" 6.解散下层拼装",	" 7.存入拼装缓存",	" 8.提取拼装缓存",	" 9.修改拼装信息",	
+								(ep.movement_data.children.length>0)?"10.不能上传配音":"10.上传拼装配音",
 								"11.打开拼装配音",	"12.放入右键缓存",	"13.选中拼装组件",	"14.倒排拼装步骤",
 										
 								(ep.movement_data.direction.length<=0)?"15.指定拼装视角":"15.删除拼装视角",	

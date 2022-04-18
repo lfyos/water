@@ -135,7 +135,8 @@ public class dispatch_create_engine_request
 
 		ci.request_response.print(",[",total_component_number);			//parameter	4	0
 		ci.request_response.print(",",ek.render_cont.renders.length);	//parameter	4	1
-		ci.request_response.print(",[");								//parameter	4	2
+		ci.request_response.print(",",ek.modifier_cont.length);			//parameter	4	2
+		ci.request_response.print(",[");								//parameter	4	3
 			if(ek.camera_cont.camera_array!=null)
 				for(int i=0,n=ek.camera_cont.camera_array.length;i<n;i++){
 					component eye_comp=ek.camera_cont.camera_array[i].eye_component;
@@ -143,11 +144,11 @@ public class dispatch_create_engine_request
 				}
 		ci.request_response.print("]");
 			
-		ci.request_response.print(",\"",	ek.link_name);			//parameter	4	3
+		ci.request_response.print(",\"",	ek.link_name);			//parameter	4	4
 		ci.request_response.print("\",",	jason_string.change_string(
-				ek.title+ek.scene_par.scene_sub_directory));		//parameter	4	4
+				ek.title+ek.scene_par.scene_sub_directory));		//parameter	4	5
 	
-		ci.request_response.print(",{");							//parameter	4	5
+		ci.request_response.print(",{");							//parameter	4	6
 			
 		ci.request_response.print( "\"max_loading_number\":",
 			ci.creation_parameter.max_client_loading_number);

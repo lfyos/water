@@ -17,13 +17,15 @@ import kernel_transformation.point;
 
 public class extended_component_driver  extends component_driver
 {
+	private int modifier_container_id;
 	public void destroy()
 	{
 		super.destroy();
 	}
-	public extended_component_driver(part my_component_part)
+	public extended_component_driver(part my_component_part,int my_modifier_container_id)
 	{
 		super(my_component_part);
+		modifier_container_id=my_modifier_container_id;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
@@ -31,7 +33,7 @@ public class extended_component_driver  extends component_driver
 //		String component_directory_name=comp.component_directory_name;
 //		String scene_directory_name=ek.scene_directory_name;
 //		String parameter_directory_name=ek.scene_par.directory_name;
-		
+
 		box my_box;
 		camera cam_array[];
 		int box_parameter_channel_id;
@@ -95,6 +97,6 @@ public class extended_component_driver  extends component_driver
 	public instance_driver create_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_instance_driver(comp,driver_id);
+		return new extended_instance_driver(comp,driver_id,modifier_container_id);
 	}
 }

@@ -10,6 +10,7 @@ import kernel_network.client_request_response;
 public class extended_component_driver  extends component_driver
 {
 	private String audio_component_name;
+	private int modifier_container_id;
 	private long touch_time_length;
 	private boolean save_component_name_or_id_flag;
 	
@@ -18,11 +19,12 @@ public class extended_component_driver  extends component_driver
 		super.destroy();
 	}
 	public extended_component_driver(
-			part my_component_part,String my_audio_component_name,
+			part my_component_part,String my_audio_component_name,int my_modifier_container_id,
 			long my_touch_time_length,boolean my_save_component_name_or_id_flag)
 	{
 		super(my_component_part);
 		audio_component_name=my_audio_component_name;
+		modifier_container_id=my_modifier_container_id;
 		touch_time_length=my_touch_time_length;
 		save_component_name_or_id_flag=my_save_component_name_or_id_flag;
 	}
@@ -45,7 +47,8 @@ public class extended_component_driver  extends component_driver
 				if(audio_comp.driver_array[0] instanceof driver_audio.extended_component_driver)
 					audio_component_id=audio_comp.component_id;
 		
-		return new extended_instance_driver(comp,driver_id,audio_component_id,
+		return new extended_instance_driver(
+				comp,driver_id,audio_component_id,modifier_container_id,
 				touch_time_length,save_component_name_or_id_flag);
 	}
 }

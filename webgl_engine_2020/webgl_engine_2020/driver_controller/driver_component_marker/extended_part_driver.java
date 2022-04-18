@@ -58,7 +58,7 @@ public class extended_part_driver extends part_driver
 	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,
 			part my_component_part,engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_component_driver(my_component_part,fr.get_string(),fr.get_string());
+		return new extended_component_driver(my_component_part,fr.get_string(),fr.get_string(),fr.get_int());
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int loop_id,int edge_id,int point_id,

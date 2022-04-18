@@ -12,7 +12,7 @@ public class buffer_container
 	
 	public part_mesh_loader 			mesh_loader;
 	public current_information_buffer	current_buffer;
-	public modifier_parameter_buffer	modifier_parameter;
+	public modifier_parameter_buffer	modifier_parameter[];
 	public long response_current_time_pointer;
 	
 	public void destroy()
@@ -59,7 +59,9 @@ public class buffer_container
 		clip_buffer			=new clip_plane_buffer();
 		mesh_loader			=new part_mesh_loader(ek.render_cont);
 		current_buffer		=new current_information_buffer();
-		modifier_parameter	=new modifier_parameter_buffer(0,0);
+		modifier_parameter	=new modifier_parameter_buffer[ek.scene_par.max_modifier_container_number];
+		for(int i=0;i<ek.scene_par.max_modifier_container_number;i++)
+		modifier_parameter[i]=new modifier_parameter_buffer(0);
 		response_current_time_pointer=0;
 	}
 }

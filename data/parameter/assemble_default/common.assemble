@@ -111,6 +111,7 @@
 		/* 2name		*/         location_modifier_component
 		/* 2type		*/         location_modifier_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+								/*	modifier_container_id	*/	0
 		/* 2children number */		0
 			
 		/*	11	*/
@@ -118,6 +119,7 @@
 		/* 2type		*/         manipulator_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 							/*		audio_component						*/		audio_component
+							/*		modifier_container_id				*/		0
 		/* 2children number */		0
 				
 		/*	12	*/
@@ -138,6 +140,7 @@
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 									/* 		screen_rectangle_component	*/			screen_rectangle_component
 									/*		audio_component				*/			audio_component
+									/*		modifier_container_id		*/			0
 		/* 2children number */		0
 				
 		/*	15	*/
@@ -164,8 +167,9 @@
 		/* 2name		*/			component_marker_component
 		/* 2type		*/			component_marker_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
-						/*	directory_comp_name	*/	movement_manager
-						/*	file_name			*/	component_marker.txt
+						/*	directory_comp_name		*/	movement_manager
+						/*	file_name				*/	component_marker.txt
+						/*	modifier_container_id	*/	0
 		/* 2children number */     0
 
 		/*	19	*/

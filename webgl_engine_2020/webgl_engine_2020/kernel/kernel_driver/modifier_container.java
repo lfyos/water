@@ -183,8 +183,7 @@ public class modifier_container
 	}	
 	private void process_routine(engine_kernel ek,client_information ci)
 	{
-		long my_current_time=timer.caculate_current_time(ek.current_time);
-		
+		long my_current_time=timer.get_current_time();
 		for(int i=0,ni=ek.system_par.process_modifier_times;i<ni;i++){
 			if(modifier_number<=0){
 				modifier_driver_sequence_id=0;
@@ -205,8 +204,10 @@ public class modifier_container
 					adjust_heap(modifier_number++);
 				}
 			insert_modifier_number=0;
-			if(test_can_not_start(0,my_current_time,ek,ci))
+			if(test_can_not_start(0,my_current_time,ek,ci)) {
+				timer.modify_current_time(my_current_time,ek.current_time);
 				return;
+			}
 			if(temp_modifier_driver_array.length<modifier_number){
 				temp_modifier_driver_array=new modifier_driver_holder[modifier_number];
 				for(int j=0,nj=temp_modifier_driver_array.length;j<nj;j++)
@@ -239,7 +240,7 @@ public class modifier_container
 				break;
 		}
 		recurse_execute_modifier_modify(0,my_current_time,ek,ci);
-		timer.mark_current_time(ek.current_time);
+		timer.caculate_current_time(ek.current_time);
 		return;	
 	}
 	private void clear_modifier_routine(engine_kernel ek,client_information ci)

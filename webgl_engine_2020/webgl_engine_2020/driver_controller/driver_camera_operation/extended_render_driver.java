@@ -62,7 +62,8 @@ public class extended_render_driver extends render_driver
 	public part_driver create_part_driver(file_reader part_fr,part p,system_parameter system_par,
 			change_name mount_component_name_and_assemble_file_name,client_request_response request_response)
 	{
-		return new extended_part_driver(part_fr.get_double(),part_fr.get_double(),part_fr.get_double());
+		return new extended_part_driver(
+				part_fr.get_double(),part_fr.get_double(),part_fr.get_double(),part_fr.get_int());
 	}
 	public void create_shader_data(file_writer fw,render rr,system_parameter system_par,scene_parameter scene_par)
 	{

@@ -1,5 +1,6 @@
 package driver_movement;
 
+import java.io.File;
 import kernel_driver.modifier_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
@@ -84,10 +85,11 @@ public class movement_focus_modifier extends modifier_driver
 						component_id,follow_component_id[i],scale_value,direction,
 						start_location.multiply(follow_component_location[i]),
 						terminate_location.multiply(follow_component_location[i]),
-						node_name,description,sound_file_name);
+						node_name,description,null);
 			}
 		swcm.register_move_component(component_id,component_id,scale_value,direction,
-				start_location,terminate_location,node_name,description,sound_file_name);
+				start_location,terminate_location,node_name,description,
+				new File(sound_file_name).exists()?sound_file_name:null);
 		suspend.register_match_and_component(match,component_id,follow_component_id,ek.component_cont);
 	}
 	public boolean can_start(long my_current_time,engine_kernel ek,client_information ci)

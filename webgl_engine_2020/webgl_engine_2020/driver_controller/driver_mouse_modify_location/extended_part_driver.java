@@ -85,7 +85,7 @@ public class extended_part_driver extends part_driver
 					material_fr.get_double(),material_fr.get_double()
 				},
 				material_fr.get_double(),	material_fr.get_double(),	material_fr.get_boolean(),
-				material_fr.get_boolean(),	material_fr.get_boolean());
+				material_fr.get_boolean(),	material_fr.get_boolean(),	material_fr.get_int());
 		material_fr.close();
 		return ret_val;
 	}

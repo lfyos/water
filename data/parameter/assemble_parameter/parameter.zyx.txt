@@ -15,6 +15,7 @@
 /*	max_component_collector_number				*/		50
 
 /*	max_camera_return_stack_number				*/		100
+/*	max_modifier_container_number				*/		5
 
 /*	create_top_part_assembly_precision			*/		0.25
 /*	create_top_part_discard_precision			*/		0.05

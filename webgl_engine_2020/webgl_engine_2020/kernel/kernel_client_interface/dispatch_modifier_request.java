@@ -9,15 +9,31 @@ public class dispatch_modifier_request
 {
 	public static String[] do_dispatch(int main_call_id,engine_kernel ek,client_information ci)
 	{
-		String str;
+		String str,modifier_str;
+		
 		if((str=ci.request_response.get_parameter("method"))==null){
 			debug_information.println("method is NULL in do_dispatch() of dispatch_modifier_request");
+			return null;
+		}
+		if((modifier_str=ci.request_response.get_parameter("modifier"))==null){
+			debug_information.println("modifier is NULL in do_dispatch() of dispatch_modifier_request");
+			return null;
+		}
+		int modifier_id;
+		try {
+			modifier_id=Integer.decode(modifier_str);
+		}catch(Exception e) {
+			debug_information.println("modifier is wrong in do_dispatch() of dispatch_modifier_request:	",modifier_str);
+			return null;
+		}
+		if((modifier_id<0)||(modifier_id>=ek.modifier_cont.length)){
+			debug_information.println("modifier id is wrong in do_dispatch() of dispatch_modifier_request:	",modifier_id);
 			return null;
 		}
 		switch(str){
 		case "clear":
 			ci.statistics_client.register_system_call_execute_number(main_call_id,0);
-			ek.modifier_cont.clear_modifier(ek,ci);
+			ek.modifier_cont[modifier_id].clear_modifier(ek,ci);
 			return null;
 		case "set_time":
 			ci.statistics_client.register_system_call_execute_number(main_call_id,1);
@@ -26,7 +42,7 @@ public class dispatch_modifier_request
 				return null;
 			}
 			long new_current_time=Long.decode(str);
-			ek.modifier_cont.get_timer().modify_current_time(new_current_time,ek.current_time);
+			ek.modifier_cont[modifier_id].get_timer().modify_current_time(new_current_time,ek.current_time);
 			return null;
 		}
 		return null;

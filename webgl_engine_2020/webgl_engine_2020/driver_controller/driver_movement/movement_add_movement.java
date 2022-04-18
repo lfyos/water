@@ -29,7 +29,7 @@ public class movement_add_movement extends movement_design_base
 		if(manager.root_movement.children==null)
 			manager.root_movement.children=new movement_tree[] {manager.designed_move};
 		else{
-			manager.movement_start(ek.modifier_cont,
+			manager.movement_start(ek.modifier_cont[manager.config_parameter.modifier_container_id],
 					manager.root_movement.movement_tree_id,ek.component_cont,true,switch_time_length);
 			movement_tree tmp[]=new movement_tree[manager.root_movement.children.length+1];
 			for(int i=0;i<(manager.root_movement.children.length);i++)
@@ -38,6 +38,6 @@ public class movement_add_movement extends movement_design_base
 			manager.root_movement.children=tmp;
 		}
 		manager.designed_move=null;
-		manager.reset(ek.modifier_cont,ek.component_cont,switch_time_length);
+		manager.reset(ek.modifier_cont[manager.config_parameter.modifier_container_id],ek.component_cont,switch_time_length);
 	}
 }

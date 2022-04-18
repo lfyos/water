@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="terminate_time"/>
+		<item key="selection" value="modifier_container_id"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="modifier_container_id"/>
+			<item value="location_data"/>
+			<item value="modifier_timer_version"/>
+			<item value="modifier_current_time"/>
+			<item value="timer_version"/>
+			<item value="location"/>
+			<item value="select"/>
+			<item value="marker"/>
+			<item value="modifier_container_number"/>
+			<item value="modify_parameter"/>
+			<item value="caculate_current_time"/>
 			<item value="jason"/>
 			<item value="terminate_time"/>
-			<item value="modifier_current_time"/>
 			<item value="ek.modifier_cont[0].clear_modifier(ek,ci);"/>
 			<item value="ek.modifier_cont[0]"/>
-			<item value="camera_modifier_id"/>
-			<item value="[camera_modifier_id]"/>
-			<item value="modifier_time_parameter"/>
-			<item value="modifier_container_number"/>
-			<item value="location_data"/>
-			<item value="modifier_container_id"/>
-			<item value="manager.config_parameter.movement_modifier_id"/>
-			<item value="/*&#x09;max_modifier_container_number&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;3"/>
-			<item value="speed"/>
-			<item value="parse_web_server_response_data"/>
 		</list>
 		<list key="replacehistory">
 			<item value="ek.modifier_cont.clear_modifier(ek,ci);"/>
@@ -43,8 +43,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="123"/>
-		<item key="DIALOG_Y_ORIGIN" value="255"/>
+		<item key="DIALOG_X_ORIGIN" value="132"/>
+		<item key="DIALOG_Y_ORIGIN" value="199"/>
 		<item key="DIALOG_WIDTH" value="313"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>

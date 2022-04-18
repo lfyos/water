@@ -35,7 +35,7 @@ public class scene_parameter
 	public int component_collector_parameter_channel_id[];
 	public int max_component_collector_number;
 
-	public int max_camera_return_stack_number;
+	public int max_camera_return_stack_number,max_modifier_container_number;
 	
 	public double create_top_part_assembly_precision2;
 	public double create_top_part_discard_precision2;
@@ -219,6 +219,8 @@ public class scene_parameter
 			max_component_collector_number=1;
 		if((max_camera_return_stack_number=fr.get_int())<=0)
 			max_camera_return_stack_number=1;
+		if((max_modifier_container_number=fr.get_int())<=0)
+			max_modifier_container_number=1;
 	
 		create_top_part_assembly_precision2		=fr.get_double();
 		create_top_part_assembly_precision2		*=create_top_part_assembly_precision2;
