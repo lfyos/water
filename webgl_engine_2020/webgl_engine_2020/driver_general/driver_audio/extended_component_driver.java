@@ -49,6 +49,9 @@ public class extended_component_driver  extends component_driver
 	}
 	public void set_audio(String new_audio_file_name)
 	{
+		if(new_audio_file_name!=null)
+			new_audio_file_name=file_reader.separator(new_audio_file_name);
+
 		if(audio_file_name==null){
 			if(new_audio_file_name!=null){
 				if(file_reader.is_exist(new_audio_file_name)){

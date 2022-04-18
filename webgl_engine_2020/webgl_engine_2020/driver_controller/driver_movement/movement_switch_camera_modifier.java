@@ -8,6 +8,7 @@ import kernel_engine.component_container;
 import kernel_driver.modifier_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
+import kernel_file_manager.file_reader;
 import kernel_transformation.box;
 import kernel_transformation.location;
 import kernel_common_class.debug_information;
@@ -122,7 +123,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 		
 		title_string		=my_title_string;
 		information_string	=my_information_string;
-		sound_file_name		=(my_sound_file_name==null)?sound_file_name:my_sound_file_name;
+		sound_file_name		=(my_sound_file_name==null)?sound_file_name:file_reader.separator(my_sound_file_name);
 	}
 	public boolean can_start(long my_current_time,engine_kernel ek,client_information ci)
 	{
@@ -170,7 +171,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 		if((acd=get_acd(ek))!=null)
 			if(acd.get_state())
 				if((play_audio_file_name=acd.get_audio_file_name())!=null)
-					if(play_audio_file_name.compareTo(sound_file_name)!=0)
+					if(sound_file_name.compareTo(play_audio_file_name)!=0)
 						return acd.get_terminate_flag();
 		return true;
 	}

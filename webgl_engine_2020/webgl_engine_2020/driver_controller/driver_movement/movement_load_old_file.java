@@ -58,7 +58,7 @@ public class movement_load_old_file {
 				if(min_tag_array[j].compareTo("")!=0)
 					min_node.node_name+=":"+min_tag_array[j];
 				min_node.description		=move_array[j].description;
-				min_node.sound_file_name	=move_array[j].sound_file_name;
+				min_node.sound_file_name	=file_reader.separator(move_array[j].sound_file_name);
 				min_node.sequence_flag		=false;
 
 				if(main_node.children==null){
@@ -116,6 +116,9 @@ public class movement_load_old_file {
 		
 		if((ret_val.sound_file_name=f.get_string())==null)
 			ret_val.sound_file_name="";
+		else
+			ret_val.sound_file_name=file_reader.separator(ret_val.sound_file_name);
+		
 		if((ret_val.description=f.get_string())==null)
 			ret_val.description="";
 		ret_val.sequence_flag	=false;	

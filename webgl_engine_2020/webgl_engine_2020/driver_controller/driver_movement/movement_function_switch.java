@@ -354,7 +354,7 @@ public class movement_function_switch
 				try{
 					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
 					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-					searcher.result.sound_file_name=str;
+					searcher.result.sound_file_name=file_reader.separator(str);
 					if(recursive_flag)
 						do_update_children(searcher.result,true,false);
 				}catch(Exception e){
@@ -753,7 +753,7 @@ public class movement_function_switch
 			return true;
 		collector.title=searcher.result.node_name;
 		collector.description=searcher.result.description;
-		collector.audio_file_name=manager.directory_name+searcher.result.sound_file_name;
+		collector.audio_file_name=file_reader.separator(manager.directory_name+searcher.result.sound_file_name);
 		if(acd!=null)
 			acd.set_audio(collector.audio_file_name);
 		return false;

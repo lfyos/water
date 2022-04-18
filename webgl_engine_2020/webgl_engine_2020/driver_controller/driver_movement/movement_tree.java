@@ -134,10 +134,9 @@ public class movement_tree {
 			if(terminate_time>start_time){
 				movement_focus_modifier fm=new movement_focus_modifier(suspend,match,
 					moved_component.component_id,move.follow_component_id,move.follow_component_location,
-					start_time-camera_switch_time,swcm,movement_tree_id,
-					my_scale_value,my_direction,my_start_location,my_terminate_location,
-					node_name,description,directory_name+sound_pre_string+sound_file_name,
-					parameter);
+					start_time-camera_switch_time,swcm,movement_tree_id,my_scale_value,
+					my_direction,my_start_location,my_terminate_location,node_name,description,
+					file_reader.separator(directory_name+sound_pre_string+sound_file_name),parameter);
 				modifier_cont.add_modifier(fm);
 			}
 		}
@@ -466,7 +465,7 @@ public class movement_tree {
 		
 		f.set_pace(space_number);
 		f.print("/*	name				*/	");		f.println(node_name);
-		f.print("/*	audio				*/	");		f.println(sound_file_name);
+		f.print("/*	audio				*/	");		f.println(file_reader.separator(sound_file_name));
 		f.print("/*	description			*/	");		f.println(description);
 		
 		f.print("/*	sequence/parallel	*/	");	f.println(((children==null)||sequence_flag)?"sequence":"parallel");
@@ -522,6 +521,8 @@ public class movement_tree {
 			node_name="";
 		if((sound_file_name=f.get_string())==null)
 			sound_file_name="";
+		else
+			sound_file_name=file_reader.separator(sound_file_name);
 	
 		if((description=f.get_string())==null)
 			description="";

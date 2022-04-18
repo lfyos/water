@@ -4,9 +4,9 @@ import kernel_camera.camera_result;
 import kernel_component.component;
 import kernel_component.component_collector;
 import kernel_driver.instance_driver;
-
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
+import kernel_file_manager.file_reader;
 
 public class extended_instance_driver extends instance_driver
 {
@@ -49,7 +49,9 @@ public class extended_instance_driver extends instance_driver
 		
 		switch(str) {
 		case "audio":
-			return new String[] {acd.get_audio_file_name(),null};
+			str=acd.get_audio_file_name();
+			str=(str==null)?null:file_reader.separator(str);
+			return new String[] {str,null};
 		case "ended":
 			acd.mark_terminate_flag();
 			break;
