@@ -20,6 +20,7 @@
 		/*	2:type			*/	ground_grid_part
 		/*	2:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
 				/*	root_component_name		*/		part_list_component
+				/*	init_on_off_flag		*/		false
 
 				not_part_list
 		/*	2:child_number	*/	0

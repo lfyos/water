@@ -1,10 +1,17 @@
 				function(component_name,component_id,render)
 				{
+					render.system_event_processor.pickupmousedown=function(event,pickup_component_id,render)
+					{
+						render.call_server_component(
+								"show_select_component_box_component","all",[["component_id",pickup_component_id]]);
+						render.user_call_processor.scene_mousedown(pickup_component_id,event);
+						return false;
+					};
 					render.user_call_processor.scene_mousedown=function(component_id,event)
 					{
 					
 					};
-					render.user_call_processor.tree_mousedown=function(component_id,event)
+					render.user_event_processor.tree_mousedown=function(component_id,event)
 					{
 						if(typeof(event)!="object")
 							event={
@@ -18,16 +25,16 @@
 							event.ctrlKey=false;
 						if(typeof(event.altKey)!="boolean")
 							event.altKey=false;
-							
+
 						if(event.ctrlKey)							
 							render.system_call_processor.select_component(
-								event.shiftKey?"switch":"component",[["component_id",component_id]]);
+								event.shiftKey?"swap_component":"select_component",[["component_id",component_id]]);
 						else
-							render.system_call_processor.select_component("clear",[],
+							render.system_call_processor.select_component("clear_all",[],
 								function()
 								{
 									render.system_call_processor.select_component(
-										event.shiftKey?"switch":"component",[["component_id",component_id]]);
+										event.shiftKey?"swap_component":"select_component",[["component_id",component_id]]);
 								});
 					};
 					render.user_call_processor.get_component_tree=function()
@@ -75,13 +82,13 @@
 					
 					render.user_call_processor.reset_all=function()
 					{
-						var component_name=encodeURIComponent(encodeURIComponent("system_root_component"));
 						render.call_server_component("manipulator_component","all",
-							[["event_method","transparency"],["transparency",1.0],["component",component_name]],
+							[["event_method","selection"],["event_operation","clear_all"]],	
 							function()
 							{
+								var component_name=encodeURIComponent(encodeURIComponent("system_root_component"));
 								render.call_server_component("manipulator_component","all",
-									[["event_method","selection"],["event_operation","clear"]],	
+									[["event_method","transparency"],["transparency",1.0],["component",component_name]],
 									function()
 									{
 										render.call_server_component("manipulator_component","all",
@@ -92,7 +99,13 @@
 													[["event_method","part_list"],["operation","create"]],
 													function()
 													{
-														render.user_call_processor.reset_view();
+														render.call_server_component("manipulator_component","all",
+															[["event_method","explosion"],["explosion","reset"],["component_name",component_name]],
+															function(response_data,render,response_text)
+															{
+																setTimeout(
+																	function(){render.user_call_processor.reset_view();},response_data/1000000);
+															});
 													});
 											});
 									});

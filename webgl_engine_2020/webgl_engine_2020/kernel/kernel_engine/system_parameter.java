@@ -233,8 +233,7 @@ public class system_parameter
 				null,local_data_charset);
 		content_type_change_name=get_content_type_change_name.get_change_name(text_class_charset,text_jar_file_charset);
 		
-		switch_server=new switch_engine_server(
-				data_root_directory_name+switch_server_url_file_name,local_data_charset);
+		switch_server=new switch_engine_server(data_root_directory_name+switch_server_url_file_name,local_data_charset);
 		
 		return;
 	}

@@ -13,15 +13,18 @@ public class extended_component_driver  extends component_driver
 {
 	private String root_component_name;
 	private double root_box_distance;
+	private boolean init_on_off_flag;
 	public void destroy()
 	{
 		super.destroy();
 		root_component_name=null;
 	}
-	public extended_component_driver(part my_component_part,String my_root_component_name)
+	public extended_component_driver(part my_component_part,
+			String my_root_component_name,boolean my_init_on_off_flag)
 	{
 		super(my_component_part);
 		root_component_name=my_root_component_name;
+		init_on_off_flag=my_init_on_off_flag;
 		root_box_distance=-1.0;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
@@ -50,6 +53,6 @@ public class extended_component_driver  extends component_driver
 	public instance_driver create_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_instance_driver(comp,driver_id,root_box_distance);
+		return new extended_instance_driver(comp,driver_id,root_box_distance,init_on_off_flag);
 	}
 }

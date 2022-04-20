@@ -15,11 +15,12 @@ public class extended_instance_driver extends instance_driver
 	{
 		super.destroy();
 	}
-	public extended_instance_driver(component my_comp,int my_driver_id,double my_root_box_distance)
+	public extended_instance_driver(component my_comp,int my_driver_id,
+			double my_root_box_distance,boolean init_on_off_flag)
 	{
 		super(my_comp,my_driver_id);
 		root_box_distance=my_root_box_distance;
-		on_off_flag=true;
+		on_off_flag=init_on_off_flag;
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{

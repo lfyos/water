@@ -1,14 +1,5 @@
 				function(component_name,component_id,render)
 				{
-					render.debug_call_processor.canvas_scene_url="";
-
-					render.system_event_processor.pickupmousedown=function(event,pickup_component_id,render)
-					{
-						render.call_server_component(
-							"show_select_component_box_component","all",[["component_id",pickup_component_id]]);
-						render.user_call_processor.scene_mousedown(pickup_component_id,event);
-						return false;
-					}
 					render.system_event_processor.keydown=function(event,render)
 					{
 						var component_name_array=[

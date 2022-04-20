@@ -440,13 +440,6 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 			return;
 		case 2:	
 			if(event.ctrlKey||event.shiftKey||event.altKey){
-				var value;
-				if(render.pickup.component_id>=0)
-					if((value=prompt("输入标注文字"))!=null)
-						if((value=value.trim()).length>0)
-							render.call_server_component(part_initialize_data.mark_component_name,"all",
-								[["operation","append"],["value",encodeURIComponent(encodeURIComponent(value))]]);
-			}else{
 				render.call_server_component(part_initialize_data.movement_component_name,"all",
 					[["operation","design"],["move_method","listdesignbuffer"]],
 					function(response_data,render)
@@ -460,6 +453,13 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 							}
 						}
 					});
+			}else{
+				var value;
+				if(render.pickup.component_id>=0)
+					if((value=prompt("输入标注文字"))!=null)
+						if((value=value.trim()).length>0)
+							render.call_server_component(part_initialize_data.mark_component_name,"all",
+								[["operation","append"],["value",encodeURIComponent(encodeURIComponent(value))]]);
 			}
 			return;
 		default:

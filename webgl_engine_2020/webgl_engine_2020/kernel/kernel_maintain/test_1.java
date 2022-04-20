@@ -10,10 +10,8 @@ public class test_1 extends travel_through_directory
 	{
 		String str=file_reader.get_text(file_name,"GBK");
 		if(str!=null) {
-			if(str.indexOf("load_collector")>=0)
-				debug_information.println("load_collector		",file_name);
-			if(str.indexOf("collector_url")>=0)
-				debug_information.println("collector_url		",file_name);
+			if(str.indexOf("Arial")>=0)
+				debug_information.println("Arial		",file_name);
 		}
 	}
 	public static void main(String args[])
