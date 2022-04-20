@@ -1,4 +1,4 @@
-			"display_on_pickup"					:
+			"pickup_exit_display_flag"	:
 			{
 				"face"	:	true,
 				"frame"	:	true,

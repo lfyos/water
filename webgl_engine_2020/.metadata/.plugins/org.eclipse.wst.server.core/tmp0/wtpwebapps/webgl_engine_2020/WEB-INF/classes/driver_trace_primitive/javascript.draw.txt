@@ -41,6 +41,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
 	
+	
+	
 	function pixels_to_id(pixels)
 	{
 		var ids=new Array(Math.floor(pixels.length/4));

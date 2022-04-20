@@ -5,7 +5,6 @@ import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_transformation.location;
 
-
 public class camera_modifier extends location_modifier
 {
 	private camera cam;
@@ -18,7 +17,7 @@ public class camera_modifier extends location_modifier
 		start_parameter=null;
 		terminate_parameter=null;
 	}
-	
+
 	public camera_modifier(camera my_cam,
 			location my_terminate_location,camera_parameter my_terminate_parameter,long start_time)
 	{

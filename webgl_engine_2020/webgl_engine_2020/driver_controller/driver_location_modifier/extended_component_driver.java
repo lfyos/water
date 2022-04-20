@@ -42,7 +42,6 @@ public class extended_component_driver  extends component_driver
 	{
 		return new extended_instance_driver(comp,driver_id,modifier_container_id);
 	}
-	
 	public void register(engine_kernel ek,	int my_component_id,long time_length,
 			location my_start_location,		location my_terminate_location,
 			int my_follow_component_id[],	location my_follow_component_location[])

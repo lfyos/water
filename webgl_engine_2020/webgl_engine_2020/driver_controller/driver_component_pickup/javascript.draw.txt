@@ -41,6 +41,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
 	
+	
+	
 	function pickup_driver_after_target_render(
 		target_id,render_target_id,width,height,render_target_number,render)
 	{
@@ -62,32 +64,45 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		    
 		    gl.bindFramebuffer(gl.FRAMEBUFFER,render.target[render_target_id].frame);
 		};
-		gl.activeTexture(gl.TEXTURE0);
-		gl.bindTexture(gl.TEXTURE_2D,tp.texture);
-		
-		for(var i=0;i<4;i++){
-			gl.readBuffer(gl.COLOR_ATTACHMENT0+i);
-			gl.copyTexSubImage2D(gl.TEXTURE_2D,0,i+0,0,0,0,1,1);
-			gl.copyTexSubImage2D(gl.TEXTURE_2D,0,i+4,0,1,0,1,1);
+
+		if(!(render.event_listener.mouse_inside_canvas_flag)){
+			render.pickup.component_id	=-1;
+			render.pickup.body_id		=-1;
+			render.pickup.face_id		=-1;
+			render.pickup.vertex_id		=-1;
+			render.pickup.loop_id		=-1;
+			render.pickup.edge_id		=-1;
+			render.pickup.point_id		=-1;
+			render.pickup.depth			=-1;
+			render.pickup.value			=-1;
+		}else{
+			gl.activeTexture(gl.TEXTURE0);
+			gl.bindTexture(gl.TEXTURE_2D,tp.texture);
+			
+			for(var i=0;i<4;i++){
+				gl.readBuffer(gl.COLOR_ATTACHMENT0+i);
+				gl.copyTexSubImage2D(gl.TEXTURE_2D,0,i+0,0,0,0,1,1);
+				gl.copyTexSubImage2D(gl.TEXTURE_2D,0,i+4,0,1,0,1,1);
+			}
+			gl.bindTexture(gl.TEXTURE_2D,null);
+				
+			var pixels=new Uint8Array(32);
+						
+			gl.bindFramebuffer(gl.FRAMEBUFFER,tp.frame);
+			gl.readBuffer(gl.COLOR_ATTACHMENT0);
+			gl.readPixels(0,0,8,1,gl.RGBA,gl.UNSIGNED_BYTE,pixels);
+			
+			render.pickup.component_id	=render.utility.decode_integer_from_pixel(pixels[ 0],pixels[ 1],pixels[ 2],pixels[ 3]);
+				
+			render.pickup.body_id		=render.utility.decode_integer_from_pixel(pixels[ 4],pixels[ 5],pixels[ 6],pixels[ 7]);
+			render.pickup.face_id		=render.utility.decode_integer_from_pixel(pixels[ 8],pixels[ 9],pixels[10],pixels[11]);
+			render.pickup.vertex_id		=render.utility.decode_integer_from_pixel(pixels[12],pixels[13],pixels[14],pixels[15]);
+			render.pickup.loop_id		=render.utility.decode_integer_from_pixel(pixels[16],pixels[17],pixels[18],pixels[19]);
+			render.pickup.edge_id		=render.utility.decode_integer_from_pixel(pixels[20],pixels[21],pixels[22],pixels[23]);
+			render.pickup.point_id		=render.pickup.vertex_id;
+			render.pickup.depth			=render.utility.decode_float_from_pixel(pixels[24],pixels[25],pixels[26],pixels[27]);
+			render.pickup.value			=render.utility.decode_float_from_pixel(pixels[28],pixels[29],pixels[30],pixels[31]);
 		}
-		gl.bindTexture(gl.TEXTURE_2D,null);
-			
-		var pixels=new Uint8Array(32);
-					
-		gl.bindFramebuffer(gl.FRAMEBUFFER,tp.frame);
-		gl.readBuffer(gl.COLOR_ATTACHMENT0);
-		gl.readPixels(0,0,8,1,gl.RGBA,gl.UNSIGNED_BYTE,pixels);
-		
-		render.pickup.component_id	=render.utility.decode_integer_from_pixel(pixels[ 0],pixels[ 1],pixels[ 2],pixels[ 3]);
-			
-		render.pickup.body_id		=render.utility.decode_integer_from_pixel(pixels[ 4],pixels[ 5],pixels[ 6],pixels[ 7]);
-		render.pickup.face_id		=render.utility.decode_integer_from_pixel(pixels[ 8],pixels[ 9],pixels[10],pixels[11]);
-		render.pickup.vertex_id		=render.utility.decode_integer_from_pixel(pixels[12],pixels[13],pixels[14],pixels[15]);
-		render.pickup.loop_id		=render.utility.decode_integer_from_pixel(pixels[16],pixels[17],pixels[18],pixels[19]);
-		render.pickup.edge_id		=render.utility.decode_integer_from_pixel(pixels[20],pixels[21],pixels[22],pixels[23]);
-		render.pickup.point_id		=render.pickup.vertex_id;
-		render.pickup.depth			=render.utility.decode_float_from_pixel(pixels[24],pixels[25],pixels[26],pixels[27]);
-		render.pickup.value			=render.utility.decode_float_from_pixel(pixels[28],pixels[29],pixels[30],pixels[31]);
 		
 		if(render.pickup.loop_id>=0)
 			render.pickup.vertex_id=-1;

@@ -44,6 +44,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var modifier_current_time			=render.modifier_current_time;
 	
 	
+	
+	
 	if(do_render_number.engine_render==0){
 		shader_program.rectangle_data_uniform=gl.getUniformLocation(shader_program,"rectangle_data");
 	}

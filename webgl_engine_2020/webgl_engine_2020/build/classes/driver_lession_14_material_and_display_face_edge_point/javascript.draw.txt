@@ -46,6 +46,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
 	
+	
+	
 	function do_render(render_mode,part_buffer_object,my_display_bitmap)
 	{
 		for(var i=0,ni=component_data_array.length;i<ni;i++){

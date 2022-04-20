@@ -41,6 +41,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
 	
+	
+	
 	if(method_id==0)
 		for(var i=0,n=component_data_array.length;i<n;i++){
 			var buffer_id=component_data_array[i];

@@ -58,6 +58,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
 	
+	
+	
 	function draw_part(primitive_type,part_buffer_object,vertex_array_id,selected_flag)
 	{
 		for(var i=0,ni=part_buffer_object.region_data.length;i<ni;i++){
@@ -344,7 +346,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	case 2://render scene for shadow depth
 		gl.polygonOffset(1,1);
 		gl.enable(gl.POLYGON_OFFSET_FILL);
-		draw_primitive(2,			gl.TRIANGLES,	part_buffer_object.face, 	false,	true,	shader_data[0].display_on_pickup.face);
+		draw_primitive(2,			gl.TRIANGLES,	part_buffer_object.face, 	false,	true,	shader_data[0].pickup_exit_display_flag.face);
 		gl.disable(gl.POLYGON_OFFSET_FILL);	
 		break;
 	case 3://render depth only,no color rendering
@@ -352,7 +354,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		
 		gl.polygonOffset(1,1);
 		gl.enable(gl.POLYGON_OFFSET_FILL);
-		draw_primitive(4,			gl.TRIANGLES,	part_buffer_object.face, 	false,	true,	shader_data[0].display_on_pickup.face);
+		draw_primitive(4,			gl.TRIANGLES,	part_buffer_object.face, 	false,	true,	shader_data[0].pickup_exit_display_flag.face);
 		gl.disable(gl.POLYGON_OFFSET_FILL);
 			
 		gl.colorMask(true,true,true,true);
@@ -361,12 +363,12 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	case 4://render scene after depth rendering
 		gl.polygonOffset(1,1);
 		gl.enable(gl.POLYGON_OFFSET_FILL);
-		draw_primitive(2,			gl.TRIANGLES,	part_buffer_object.face, 	false,	true,	shader_data[0].display_on_pickup.face);
+		draw_primitive(2,			gl.TRIANGLES,	part_buffer_object.face, 	false,	true,	shader_data[0].pickup_exit_display_flag.face);
 		gl.disable(gl.POLYGON_OFFSET_FILL);
 		
-		draw_primitive(8,			gl.LINES,		part_buffer_object.frame,	false,	true,	shader_data[0].display_on_pickup.frame);
-		draw_primitive(16,			gl.LINES,		part_buffer_object.edge,	false,	true,	shader_data[0].display_on_pickup.edge);
-		draw_primitive(32,			gl.POINTS,		part_buffer_object.point,	false,	true,	shader_data[0].display_on_pickup.point);
+		draw_primitive(8,			gl.LINES,		part_buffer_object.frame,	false,	true,	shader_data[0].pickup_exit_display_flag.frame);
+		draw_primitive(16,			gl.LINES,		part_buffer_object.edge,	false,	true,	shader_data[0].pickup_exit_display_flag.edge);
+		draw_primitive(32,			gl.POINTS,		part_buffer_object.point,	false,	true,	shader_data[0].pickup_exit_display_flag.point);
 		
 		break;
 	case 5://render scene for blending
@@ -376,7 +378,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	
 		gl.polygonOffset(1,1);
 		gl.enable(gl.POLYGON_OFFSET_FILL);
-		draw_primitive(2,			gl.TRIANGLES,	part_buffer_object.face, 	true,	true,	shader_data[0].display_on_pickup.face);
+		draw_primitive(2,			gl.TRIANGLES,	part_buffer_object.face, 	true,	true,	shader_data[0].pickup_exit_display_flag.face);
 		gl.disable(gl.POLYGON_OFFSET_FILL);
 		
 		gl.disable(gl.BLEND);

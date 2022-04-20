@@ -1,6 +1,7 @@
 function construct_event_listener(my_render)
 {
 	this.render=my_render;
+	this.mouse_inside_canvas_flag=true;
 	this.mouse_down_flag=false;
 	this.mouse_down_flag_array=[false,false,false,false,false];
 
@@ -233,6 +234,7 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.mouse_inside_canvas_flag=true;
 		
 		var ep,component_id;
 		event.preventDefault();
@@ -258,13 +260,14 @@ function construct_event_listener(my_render)
 				return;
 	};
 	
-	this.render.system_event_processor.pickupmouseout=function(event,pickup_component_id,render)	{return false;};
-	this.render.system_event_processor.mouseout		=function(event,render)						{return false;};
+	this.render.system_event_processor.pickupmouseout	=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.mouseout			=function(event,render)						{return false;};
 	this.mouseout_event_listener=function (event)
 	{
 		if(this.render.terminate_flag)
 			return;
-		
+		this.mouse_inside_canvas_flag=false;
+
 		var ep,component_id;
 		event.preventDefault();
 		this.set_render_view(event);
@@ -295,6 +298,7 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.mouse_inside_canvas_flag=true;
 		
 		var ep,component_id;
 		event.preventDefault();
@@ -326,6 +330,7 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.mouse_inside_canvas_flag=false;
 		
 		var ep,component_id;
 		event.preventDefault();

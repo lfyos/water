@@ -47,6 +47,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
 	
+	
+	
 	if(do_render_number.engine_render==0){
 		shader_program.sampler=gl.createSampler();
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MAG_FILTER,	gl.LINEAR);

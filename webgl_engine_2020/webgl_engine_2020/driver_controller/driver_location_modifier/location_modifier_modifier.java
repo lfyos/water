@@ -88,18 +88,21 @@ public class location_modifier_modifier extends modifier_driver
 			p=(p<0.0)?0.0:(p>1.0)?1.0:p;
 		}
 		component location_comp=ek.component_cont.get_component(location_component_id);
-		if(set_location(location.mix_location(
-				start_location,terminate_location,p),(location_comp==null)?true:false,ek))
-			if((do_modify_number++)==0)
-				if(location_comp!=null)
-					for(int i=0,ni=location_comp.driver_number();i<ni;i++)
-						if(location_comp.driver_array[i] instanceof extended_component_driver){
-							((extended_component_driver)(location_comp.driver_array[i])).register(
-								ek,component_id,terminate_time-start_time,
-								start_location,terminate_location,
-								follow_component_id,follow_component_location);
-						break;
-					}
+		if(!(set_location(location.mix_location(
+				start_location,terminate_location,p),(location_comp==null)?true:false,ek)))
+			return;
+		if(location_comp==null)
+			return;
+		if((do_modify_number++)!=0)
+			return;
+		for(int i=0,ni=location_comp.driver_number();i<ni;i++) {
+			if(!(location_comp.driver_array[i] instanceof extended_component_driver))
+				continue;
+			extended_component_driver ecd=(extended_component_driver)(location_comp.driver_array[i]);
+			ecd.register(ek,component_id,terminate_time-start_time,
+				start_location,terminate_location,follow_component_id,follow_component_location);
+			return;
+		}
 	}
 	public void last_modify(long my_current_time,engine_kernel ek,client_information ci,boolean terminated_flag)
 	{
