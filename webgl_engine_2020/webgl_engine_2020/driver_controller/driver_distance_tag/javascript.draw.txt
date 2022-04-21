@@ -165,8 +165,11 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		
 		var my_data_buffer=data_buffer[buffer_id][0];
 		for(var j=0,nj=my_data_buffer.length;j<nj;j++){
-			var my_text_str;
-			if((my_text_str=my_data_buffer[j][0])!=null){
+			if(method_id==1)
+				if(my_data_buffer[j][0]>0)
+					continue;
+			var my_text_str
+			if((my_text_str=my_data_buffer[j][1])!=null){
 				render.text_canvas.width			=part_material[0].canvas_width;
 				render.text_canvas.height			=part_material[0].canvas_height;
 				render.text_2dcontext.fillStyle		="rgb(0,0,0)";
@@ -191,15 +194,15 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				gl.bindTexture(gl.TEXTURE_2D,ep.texture_object[j]);
 				gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,render.text_canvas);
 				
-				my_data_buffer[j][0]=null;
+				my_data_buffer[j][1]=null;
 			}
 			gl.activeTexture(gl.TEXTURE0);
 			gl.bindTexture(gl.TEXTURE_2D,ep.texture_object[j]);
 			gl.bindSampler(0,shader_program.sampler);
 			
-			var p0=[my_data_buffer[j][1],	my_data_buffer[j][2],	my_data_buffer[j][3],	1];
-			var dx=[my_data_buffer[j][4],	my_data_buffer[j][5],	my_data_buffer[j][6],	1];
-			var dy=[my_data_buffer[j][7],	my_data_buffer[j][8],	my_data_buffer[j][9],	1];
+			var p0=[my_data_buffer[j][ 2],	my_data_buffer[j][ 3],	my_data_buffer[j][ 4],	1];
+			var dx=[my_data_buffer[j][ 5],	my_data_buffer[j][ 6],	my_data_buffer[j][ 7],	1];
+			var dy=[my_data_buffer[j][ 8],	my_data_buffer[j][ 9],	my_data_buffer[j][10],	1];
 			gl.uniformMatrix4fv(shader_program.par_uniform,false,new Float32Array([	
 				p0[0],p0[1],p0[2],component_id,
 				dx[0],dx[1],dx[2],j,

@@ -1,0 +1,259 @@
+[
+	[
+		"vertex_location",
+		"vertex_normal",
+		"vertex_material",
+		"vertex_id",
+		"vertex_texture"
+	]
+],
+
+function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
+			render_buffer_id,	component_data_array,	project_matrix,			view_port,	do_render_number,
+			render)
+{
+	var gl								=render.gl;
+	var shader_object					=render.render_program.render_program[render_id];
+	var shader_program					=shader_object.shader_program;
+	var shader_data						=shader_object.shader_data;
+	var part_buffer_object				=render.buffer_object.buffer_object[render_id][part_id];
+	
+	var component_location				=render.component_location_data;
+	
+	var data_buffer						=render.data_buffer[render_id][part_id];
+	var pickup							=render.pickup;
+
+	var permanent_render_id				=render.permanent_render_part_id[render_id][part_id].permanent_render_id;
+	var permanent_part_id				=render.permanent_render_part_id[render_id][part_id].permanent_part_id;
+	
+	var part_information				=render.part_information[render_id][part_id].information;
+	var part_material					=render.part_information[render_id][part_id].material;
+	var part_property					=render.part_information[render_id][part_id].property;
+	var part_component_id_and_driver_id	=render.part_information[render_id][part_id].part_component_id_and_driver_id;
+	var instance_initialize_data		=render.part_information[render_id][part_id].instance_initialize_data;
+	var part_initialize_data			=render.part_information[render_id][part_id].part_initialize_data;
+	var render_initialize_data			=render.part_information[render_id][part_id].render_initialize_data;
+	
+	var clip_plane						=render.clip_plane_array[render_buffer_id];
+	var clip_plane_matrix				=render.clip_plane_matrix_array[render_buffer_id];
+	
+	var camera_object_parameter			=render.camera.camera_object_parameter;
+	var camera_render_parameter			=render.camera.camera_render_parameter[render_buffer_id];
+	var camera_id						=camera_render_parameter.camera_id;
+	var camera_component_id				=camera_object_parameter[camera_id].component_id;
+	
+	var utility							=render.utility;
+	var computer						=render.computer;
+	var current_time					=render.current_time;
+	var modifier_current_time			=render.modifier_current_time;
+	
+	
+	
+	if(do_render_number.engine_render==0){
+		shader_program.sampler=gl.createSampler();
+		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MAG_FILTER,	gl.LINEAR);
+		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MIN_FILTER,	gl.LINEAR);
+		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_S,		gl.MIRRORED_REPEAT);
+		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_T,		gl.MIRRORED_REPEAT);
+		gl.uniform1i(gl.getUniformLocation(shader_program,"texture_sampler"),0);
+		
+		shader_program.destroy=function(gl,shader_program,shader_object,program_id)
+		{
+			gl.deleteSampler(shader_program.sampler);
+			shader_program.sampler=null;
+		};
+		shader_program.texture_sampler_uniform	=gl.getUniformLocation(shader_program,"texture_sampler");
+		shader_program.par_uniform				=gl.getUniformLocation(shader_program,"par");
+	}
+	
+	switch(method_id){
+	case 0:
+	case 1:
+		break;
+	default:
+		return;
+	}
+
+	for(var i=0,ni=component_data_array.length;i<ni;i++){
+		var buffer_id	=component_data_array[i];
+		var component_id=part_component_id_and_driver_id[buffer_id][0];
+		var driver_id	=part_component_id_and_driver_id[buffer_id][1];
+		var model_matrix_data=component_location.get_component_location(component_id);
+		
+		while(data_buffer[buffer_id].length>1)
+			data_buffer[buffer_id].shift();
+
+		var ep=render.component_event_processor[component_id];
+		if(typeof(ep)=="undefined"){
+			ep={
+				function_id			:	0,
+				mousemove_flag		:	false,
+				texture_object		:	new Array(),
+				
+				destroy				:	function(gl,ep,component_id)
+				{
+					for(var i=0,ni=ep.texture_object.length;i<ni;i++)
+						if(typeof(ep.texture_object[i])!="undefined"){
+							if(ep.texture_object[i]!=null)
+								gl.deleteTexture(ep.texture_object[i]);
+							ep.texture_object[i]=null;
+						}
+					ep.texture_object=new Array();
+				},
+				pickupdblclick		:	function(event,component_id,render)
+				{
+					if(render.pickup.body_id<0)
+						return true;
+					switch(event.button){
+					case 0:	
+						render.call_server_component(component_id,"all",
+							[["operation","modify"],["id",render.pickup.body_id]]);
+						return true;
+					}
+					return false;
+				},
+				pickupcontextmenu	:	function(event,component_id,render)
+				{
+					return true;
+				},
+				pickupmousedown		:	function(event,component_id,render)
+				{
+					if(render.pickup.body_id<0)
+						return true;
+					switch(event.button){
+					case 0:
+					case 1:
+						break;
+					case 2:
+						render.call_server_component(component_id,"all",
+								[["operation","delete"],["id",render.pickup.body_id]]);
+						return true;
+					}
+					return false;
+				},
+				mousemove			:	function(event,component_id,render)
+				{	
+					var ep=render.component_event_processor[component_id];
+					if(ep.mousemove_flag){
+						ep.mousemove_flag=false;
+						render.call_server_component(component_id,"all",
+							[["operation","touch"],["function",render.event_component.mouse.function_id]],
+						function(response_data,render)
+						{
+							ep.mousemove_flag=true;
+						});
+					}
+					return true;
+				},
+				mousedown			:	function(event,component_id,render)
+				{
+					switch(event.button){
+					case 0:
+						render.call_server_component(component_id,"all",[["operation","mark"],
+							["function",render.event_component.mouse.function_id]]);
+						render.component_event_processor[component_id].mousemove_flag=true;
+						break;
+					case 1:
+					case 2:
+						break;
+					}
+					return true;
+				}
+			}
+			render.component_event_processor[component_id]=ep;
+		}
+		
+		var my_data_buffer=data_buffer[buffer_id][0];
+		for(var j=0,nj=my_data_buffer.length;j<nj;j++){
+			if((my_data_buffer[j][0]>0)&&(method_id==1))
+				continue;
+			var my_text_str
+			if((my_text_str=my_data_buffer[j][1])!=null){
+				render.text_canvas.width			=part_material[0].canvas_width;
+				render.text_canvas.height			=part_material[0].canvas_height;
+				render.text_2dcontext.fillStyle		="rgb(0,0,0)";
+				render.text_2dcontext.fillRect(0,0,render.text_canvas.width,render.text_canvas.height);
+
+				render.text_2dcontext.font			=part_material[0].font;
+				render.text_2dcontext.textBaseline	="middle";
+				render.text_2dcontext.textAlign		="left";
+				render.text_2dcontext.fillStyle		="rgb(255,255,255)";
+				render.text_2dcontext.fillText(my_text_str,0,Math.round(render.text_canvas.height/2.0));
+				
+				gl.activeTexture(gl.TEXTURE0);
+				if(typeof(ep.texture_object[j])=="undefined")
+					ep.texture_object[j]=utility.load_texture_image();
+				
+				ep.texture_object[j].tag_texture_width =render.text_2dcontext.measureText(my_text_str).width;
+				if(ep.texture_object[j].tag_texture_width>render.text_canvas.width)
+					ep.texture_object[j].tag_texture_width=render.text_canvas.width;
+				ep.texture_object[j].tag_texture_height =render.text_canvas.height;
+				ep.texture_object[j].tag_texture_scale=ep.texture_object[j].tag_texture_width/render.text_canvas.width;
+				
+				gl.bindTexture(gl.TEXTURE_2D,ep.texture_object[j]);
+				gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,render.text_canvas);
+				
+				my_data_buffer[j][1]=null;
+			}
+			gl.activeTexture(gl.TEXTURE0);
+			gl.bindTexture(gl.TEXTURE_2D,ep.texture_object[j]);
+			gl.bindSampler(0,shader_program.sampler);
+			
+			var p0=[my_data_buffer[j][ 2],	my_data_buffer[j][ 3],	my_data_buffer[j][ 4],	1];
+			var dx=[my_data_buffer[j][ 5],	my_data_buffer[j][ 6],	my_data_buffer[j][ 7],	1];
+			var dy=[my_data_buffer[j][ 8],	my_data_buffer[j][ 9],	my_data_buffer[j][10],	1];
+			gl.uniformMatrix4fv(shader_program.par_uniform,false,new Float32Array([	
+				p0[0],p0[1],p0[2],component_id,
+				dx[0],dx[1],dx[2],j,
+				dy[0],dy[1],dy[2],ep.texture_object[j].tag_texture_scale,
+				part_material[0].color[0],
+				part_material[0].color[1],
+				part_material[0].color[2],
+				part_material[0].color[3]]));
+
+			for(var k=0,nk=part_buffer_object.edge.region_data.length;k<nk;k++){
+				var p=part_buffer_object.edge.region_data[k];
+				gl.bindVertexArray(p.vertex_array_object[0]);
+				gl.drawArrays(gl.LINES,0,p.item_number);
+			}
+
+			for(var k=0,nk=part_buffer_object.point.region_data.length;k<nk;k++){
+				var p=part_buffer_object.point.region_data[k];
+				gl.bindVertexArray(p.vertex_array_object[0]);
+				gl.drawArrays(gl.POINTS,0,p.item_number);
+			}
+			var pp,p_up,p_down;
+			p0=computer.add_operation(computer.add_operation(p0,dy),computer.scale_operation(dx,0.5));
+
+			pp=computer.caculate_coordinate(project_matrix.matrix,p0[0],p0[1],p0[2]);
+			pp=computer.caculate_coordinate(project_matrix.negative_screen_move_matrix,pp[0],pp[1],pp[2]);
+			
+			p_up	=computer.caculate_coordinate(project_matrix.screen_move_matrix,pp[0], 1,pp[2]);
+			p_up	=computer.caculate_coordinate(project_matrix.negative_matrix,p_up[0],p_up[1],p_up[2]);
+			
+			p_down	=computer.caculate_coordinate(project_matrix.screen_move_matrix,pp[0],-1,pp[2]);
+			p_down	=computer.caculate_coordinate(project_matrix.negative_matrix,p_down[0],p_down[1],p_down[2]);
+			
+			var canvas_height=computer.distance(computer.sub_operation(p_up,p_down))*(part_material[0].tag_text_scale);
+			
+			dx=computer.expand_operation(dx,canvas_height*(ep.texture_object[j].tag_texture_width /render.canvas.height));
+			dy=computer.expand_operation(dy,canvas_height*(ep.texture_object[j].tag_texture_height/render.canvas.height));
+
+			gl.uniformMatrix4fv(shader_program.par_uniform,false,new Float32Array([	
+				p0[0],p0[1],p0[2],component_id,
+				dx[0],dx[1],dx[2],j,
+				dy[0],dy[1],dy[2],ep.texture_object[j].tag_texture_scale,
+				part_material[0].color[0],
+				part_material[0].color[1],
+				part_material[0].color[2],
+				part_material[0].color[3]]));	
+
+			for(var k=0,nk=part_buffer_object.face.region_data.length;k<nk;k++){
+				var p=part_buffer_object.face.region_data[k];
+				gl.bindVertexArray(p.vertex_array_object[0]);
+				gl.drawArrays(gl.TRIANGLES,0,p.item_number);
+			}
+		}
+	}
+	gl.bindVertexArray(null);
+}

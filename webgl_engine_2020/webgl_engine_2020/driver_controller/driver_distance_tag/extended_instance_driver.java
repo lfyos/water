@@ -45,11 +45,12 @@ public class extended_instance_driver extends instance_driver
 	{
 		ci.request_response.print("[");
 		for(int i=0,ni=tag_array.distance_tag_array.length;i<ni;i++) {
-			String str=jason_string.change_string(tag_array.distance_tag_array[i].tag_str);
 			point p0=tag_array.distance_tag_array[i].p0;
 			point dx=tag_array.distance_tag_array[i].px.sub(p0);
 			point dy=tag_array.distance_tag_array[i].py.sub(p0);
-			ci.request_response.print("[",str).
+			ci.request_response.print(
+					(tag_array.distance_tag_array[i].state!=2)?"[1,":"[0,",
+					jason_string.change_string(tag_array.distance_tag_array[i].tag_str)).
 				print(",",p0.x).print(",",p0.y).print(",",p0.z).
 				print(",",dx.x).print(",",dx.y).print(",",dx.z).
 				print(",",dy.x).print(",",dy.y).print(",",dy.z);
