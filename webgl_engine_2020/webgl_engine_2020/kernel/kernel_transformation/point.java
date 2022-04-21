@@ -100,7 +100,6 @@ public class point {
 	public point cross(point b)
 	{
 		double x1=b.x,	y1=b.y,	z1=b.z;
-
 		return new point(y*z1-y1*z,z*x1-x*z1,x*y1-y*x1);
 	}
 	public point  mix(point b,double p)
