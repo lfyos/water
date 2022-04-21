@@ -73,6 +73,10 @@ public class extended_instance_driver extends instance_driver
 			if(tag_array.touch_distance_tag(ek,ci))
 				return null;
 			break;
+		case "switch":
+			if(tag_array.switch_distance_tag(ek,ci))
+				return null;
+			break;
 		case "delete":
 			if(tag_array.delete_distance_tag(ek,ci))
 				return null;

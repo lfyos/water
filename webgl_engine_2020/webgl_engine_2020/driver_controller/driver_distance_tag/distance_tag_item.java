@@ -10,14 +10,13 @@ import kernel_component.component;
 
 public class distance_tag_item
 {
-	public int state,function_id;
+	public int state;
 	public point p0,px,py;
 	public String tag_str;
 	
 	public distance_tag_item(point my_point)
 	{
 		state=0;
-		function_id=0;
 		p0=new point(my_point);
 		px=new point(my_point);
 		py=new point(my_point);
@@ -33,6 +32,7 @@ public class distance_tag_item
 		double data[][];
 		String str,title[];
 		
+		int function_id=0;
 		if((str=ci.request_response.get_parameter("function"))!=null)
 			if((str=str.trim()).length()>0)
 				function_id=Integer.parseInt(str);

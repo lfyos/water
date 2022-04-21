@@ -88,29 +88,11 @@ function(component_name,component_id,render)
 		render.event_component.keyboard.function_id		=function_id;
 		render.set_event_component("component_selection_component");
 	};
-	render.system_call_processor.set_mouse_for_tag=function(function_id)
+	render.system_call_processor.set_mouse_for_tag=function()
 	{
-		if(function_id<0)
-			function_id=render.system_call_processor.mouse_usage[5];
-		else
-			render.system_call_processor.mouse_usage[5]=function_id;
 		render.event_component.mouse.	component_name	="distance_tag_component";
 		render.event_component.keyboard.component_name	="distance_tag_component";
-		render.event_component.mouse.	function_id		=function_id;
-		render.event_component.keyboard.function_id		=function_id;
 		render.set_event_component("distance_tag_component");
-	};
-	render.system_call_processor.set_mouse_for_text_token=function(function_id)
-	{
-		if(function_id<0)
-			function_id=render.system_call_processor.mouse_usage[6];
-		else
-			render.system_call_processor.mouse_usage[6]=function_id;
-		render.event_component.mouse.	component_name	="component_marker_component";
-		render.event_component.keyboard.component_name	="component_marker_component";
-		render.event_component.mouse.	function_id		=function_id;
-		render.event_component.keyboard.function_id		=function_id;
-		render.set_event_component("component_marker_component");
 	};
 
 //	system call for set display content

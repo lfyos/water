@@ -4,6 +4,7 @@ import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_transformation.point;
 import kernel_transformation.plane;
+import kernel_common_class.const_value;
 import kernel_component.component;
 
 public class distance_tag_array
@@ -56,31 +57,52 @@ public class distance_tag_array
 		distance_tag_array[tag_index].state=1;
 		return false;
 	}
+	public boolean switch_distance_tag(engine_kernel ek,client_information ci)
+	{
+		
+	}
 	public boolean touch_distance_tag(engine_kernel ek,client_information ci)
 	{
 		distance_tag_item p;
-		point my_point;
 		
 		for(int i=0,ni=distance_tag_array.length;i<ni;i++) {
 			switch((p=distance_tag_array[i]).state) {
 			case 0:	//input second point
-				if((my_point=ci.selection_camera_result.caculate_local_focus_point(ci.parameter))==null)
+			{
+				point my_point=ci.selection_camera_result.caculate_local_focus_point(ci.parameter);
+				if(my_point==null)
 					return true;
-				p.px=ci.parameter.comp.absolute_location.multiply(my_point);	
-				my_point=ci.display_camera_result.matrix.multiply(p.px);
+				my_point=ci.parameter.comp.absolute_location.multiply(my_point);
+				if(my_point.sub(p.p0).distance2()<const_value.min_value2)
+					return true;
+				p.px=my_point;
+				
+				my_point=ci.display_camera_result.matrix.multiply(my_point);
 				my_point=ci.display_camera_result.negative_matrix.multiply(my_point.x, 1,my_point.z).sub(
 						 ci.display_camera_result.negative_matrix.multiply(my_point.x,-1,my_point.z));
 				p.py=ci.selection_camera_result.to_me_direct.cross(p.px.sub(p.p0));
-				p.py=p.py.expand(my_point.distance()/100).add(p.p0);
+				if(p.py.distance2()>const_value.min_value2)
+					p.py=p.py.expand(my_point.distance()/1000);
+				p.py=p.py.add(p.p0);
+				
 				p.set_tag_str(operate_component_id,display_precision,ek,ci);
 				return false;
+			}
 			case 1://confirm third point
-				plane p0_pl,p_up_pl;
+			{	
+				plane p0_pl,p_pl;
 				if((p0_pl=new plane(p.p0,p.px)).error_flag)
 					return true;
-				if((p_up_pl=new plane(p.p0,p.px,p.px.add(ci.selection_camera_result.up_direct))).error_flag)
+				double up_dot_value=ci.selection_camera_result.up_direct.dot(p.px.sub(p.p0));
+				double right_dot_value=ci.selection_camera_result.right_direct.dot(p.px.sub(p.p0));
+				if(Math.abs(up_dot_value)<Math.abs(right_dot_value))
+					p_pl=new plane(p.p0,p.px,p.px.add(ci.selection_camera_result.up_direct));
+				else
+					p_pl=new plane(p.p0,p.px,p.px.add(ci.selection_camera_result.right_direct));
+				if(p_pl.error_flag)
 					return true;
-				my_point=p_up_pl.insection_point(
+				
+				point my_point=p_pl.insection_point(
 						ci.selection_camera_result.negative_matrix.multiply(new point(0,0,ci.parameter.depth+0)),
 						ci.selection_camera_result.negative_matrix.multiply(new point(0,0,ci.parameter.depth+1)));
 				if(my_point==null)
@@ -90,6 +112,7 @@ public class distance_tag_array
 				p.py=my_point;
 				p.set_tag_str(operate_component_id,display_precision,ek,ci);
 				return false;
+			}
 			default:
 				break;
 			}
@@ -110,6 +133,11 @@ public class distance_tag_array
 				if((my_point=ci.selection_camera_result.caculate_local_focus_point(ci.parameter))==null)
 					return true;
 				p.px=ci.parameter.comp.absolute_location.multiply(my_point);
+				p.py=p.p0;
+				if(p.px.sub(p.p0).distance2()<const_value.min_value2)
+					return true;
+				if(new plane(p.p0,p.px).error_flag)
+					return true;
 				p.state=1;
 				p.set_tag_str(operate_component_id,display_precision,ek,ci);
 				return false;

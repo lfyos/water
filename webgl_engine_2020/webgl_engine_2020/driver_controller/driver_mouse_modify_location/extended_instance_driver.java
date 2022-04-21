@@ -156,19 +156,20 @@ public class extended_instance_driver extends instance_driver
 		if((str=ci.request_response.get_parameter("event_operation"))==null)
 			return null;
 		int camera_component_id=ci.display_camera_result.cam.eye_component.component_id;
+
 		switch(str){
 		case "mousedown":
 			if(operate_component!=null)
 				if(operate_component.component_id==camera_component_id)
 					ci.display_camera_result.cam.mark_restore_stack();
-
 			int select_component_id=-1;
 			if(ci.parameter.comp!=null)
 				select_component_id=ci.parameter.comp.component_id;
-			component search_component=ek.component_cont.search_component();
-			if(search_component!=null)
-				if(search_component.uniparameter.selected_flag)
-					select_component_id=search_component.component_id;
+			if(select_component_id<0)
+				if((operate_component=ek.component_cont.search_component())!=null)
+					if(operate_component.component_id!=ek.component_cont.root_component.component_id)
+						if(operate_component.component_id!=camera_component_id) 
+							select_component_id=operate_component.component_id;
 			ci.request_response.print(select_component_id);
 			return null;
 		case "mouseup":
@@ -186,48 +187,47 @@ public class extended_instance_driver extends instance_driver
 		case "mousemove":
 			get_data(false,operate_component,ek,ci);
 			return null;
-		case "dblclick":
 		case "touchend":
-			if(operate_component!=null)
-				if(operate_component.component_id==camera_component_id){
-					if(str.compareTo("touchend")==0) {
-						if(ci.parameter.comp==null)
-							return null;
-						if((ci.parameter.x<view_range[0])||(ci.parameter.x>view_range[1]))
-							return null;
-						if((ci.parameter.y<view_range[2])||(ci.parameter.y>view_range[3]))
-							return null;
-					}
-					point p0=null,p1=null;
-					if(ci.parameter.comp!=null){
-						location loca=ci.selection_camera_result.negative_matrix;
-						loca=ci.parameter.comp.absolute_location.negative().multiply(loca);
-						p0=loca.multiply(new point(0,0,ci.parameter.depth));
-						p1=loca.multiply(new point(0,0,ci.parameter.depth+1.0));
-					}
-					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
-							ek.modifier_cont[modifier_container_id],ek.component_cont,
-							ci.display_camera_result,ci.parameter,null,
-							ci.display_camera_result.cam.parameter.scale_value,ci.parameter.aspect,
-							ek.modifier_cont[modifier_container_id].get_timer().get_current_time(),
-							true,true,true,p0,p1);
+		case "dblclick_view":
+			if(str.compareTo("touchend")==0) {
+				if(ci.parameter.comp==null)
 					return null;
-				}
-			component_array c_a=new component_array(ek.component_cont.root_component.component_id+1);
-			if(operate_component!=null){
-				if(operate_component.component_id!=ek.component_cont.root_component.component_id)
-					c_a.add_component(operate_component);
-			}else {
-				if((str=ci.request_response.get_parameter("priority"))==null)
-					str="pickup";
-				if(str.toLowerCase().compareTo("pickup")==0)
-					if(ci.parameter.comp!=null)
-						c_a.add_component(ci.parameter.comp);
-				if(c_a.component_number<=0)
-					c_a.add_selected_component(ek.component_cont.root_component,false);
-				if(c_a.component_number<=0)
-					add_in_list_component(ek.component_cont.root_component,c_a);
+				if((ci.parameter.x<view_range[0])||(ci.parameter.x>view_range[1]))
+					return null;
+				if((ci.parameter.y<view_range[2])||(ci.parameter.y>view_range[3]))
+					return null;
 			}
+			point p0=null,p1=null;
+			if(ci.parameter.comp!=null){
+				location loca=ci.selection_camera_result.negative_matrix;
+				loca=ci.parameter.comp.absolute_location.negative().multiply(loca);
+				p0=loca.multiply(new point(0,0,ci.parameter.depth));
+				p1=loca.multiply(new point(0,0,ci.parameter.depth+1.0));
+			}
+			(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
+					ek.modifier_cont[modifier_container_id],ek.component_cont,
+					ci.display_camera_result,ci.parameter,null,
+					ci.display_camera_result.cam.parameter.scale_value,ci.parameter.aspect,
+					ek.modifier_cont[modifier_container_id].get_timer().get_current_time(),
+					true,true,true,p0,p1);
+			return null;
+		case "dblclick_component":
+			component_array c_a=new component_array(ek.component_cont.root_component.component_id+1);
+			if((str=ci.request_response.get_parameter("priority"))==null)
+				str="pickup";
+			if(str.toLowerCase().compareTo("pickup")==0)
+				if(ci.parameter.comp!=null)
+					c_a.add_component(ci.parameter.comp);
+			if(c_a.component_number<=0) 
+				if(operate_component!=null)
+					if(operate_component.component_id!=ek.component_cont.root_component.component_id)
+						if(operate_component.component_id!=camera_component_id) 
+							c_a.add_component(operate_component);
+			if(c_a.component_number<=0)
+				c_a.add_selected_component(ek.component_cont.root_component,false);
+			if(c_a.component_number<=0)
+				add_in_list_component(ek.component_cont.root_component,c_a);
+			
 			c_a.make_to_ancestor(ek.component_cont);
 			long start_time=ek.modifier_cont[modifier_container_id].get_timer().get_current_time();
 			for(int i=0,ni=c_a.component_number;i<ni;i++)

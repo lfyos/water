@@ -57,6 +57,17 @@ public class distance_tag_array
 		distance_tag_array[tag_index].state=1;
 		return false;
 	}
+	public boolean switch_distance_tag(engine_kernel ek,client_information ci)
+	{
+		String str;
+		if((str=ci.request_response.get_parameter("id"))==null)
+			return true;
+		int tag_index=Integer.parseInt(str);
+		if((tag_index<0)||(tag_index>=distance_tag_array.length))
+			return true;
+		distance_tag_array[tag_index].set_tag_str(operate_component_id,display_precision,ek,ci);
+		return false;
+	}
 	public boolean touch_distance_tag(engine_kernel ek,client_information ci)
 	{
 		distance_tag_item p;

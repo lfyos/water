@@ -40,10 +40,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var computer						=render.computer;
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
-	
-	
-	
-	
+
 	if(method_id!=0)
 		return;
 		
@@ -513,7 +510,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	{
 		if(event.button!=0)
 			return;
-		send_to_webserver(component_id,"dblclick",render);
+		send_to_webserver(component_id,(ep.function_id<200)?"dblclick_view":"dblclick_component",render);
 	}
 	function mousewheel(event,component_id,render)
 	{

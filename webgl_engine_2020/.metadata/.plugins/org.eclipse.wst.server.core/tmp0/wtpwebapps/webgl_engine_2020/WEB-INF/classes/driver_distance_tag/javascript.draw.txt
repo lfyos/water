@@ -87,7 +87,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		if(typeof(ep)=="undefined"){
 			ep={
 				function_id			:	0,
-				mousemove_flag		:	false,
+				mousemove_flag		:	true,
 				texture_object		:	new Array(),
 				
 				destroy				:	function(gl,ep,component_id)
@@ -106,8 +106,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 						return true;
 					switch(event.button){
 					case 0:	
-						render.call_server_component(component_id,"all",
-							[["operation","modify"],["id",render.pickup.body_id]]);
+						render.call_server_component(component_id,"all",[["operation","modify"],["id",render.pickup.body_id]]);
 						return true;
 					}
 					return false;
@@ -125,11 +124,38 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					case 1:
 						break;
 					case 2:
-						render.call_server_component(component_id,"all",
-								[["operation","delete"],["id",render.pickup.body_id]]);
+						render.call_server_component(component_id,"all",[["operation","delete"],["id",render.pickup.body_id]]);
 						return true;
 					}
 					return false;
+				},
+				
+				pickupmousewheel_last_time	:	0,
+				pickupmousewheel	:	function(event,component_id,render)
+				{
+					var ep=render.component_event_processor[component_id];
+					
+					if(render.pickup.body_id<0)
+						return true;
+					var my_current_time;
+					if((my_current_time=new Date().getTime())<(this.pickupmousewheel_last_time+500))
+						return true;
+
+					if(typeof(event.wheelDelta)=="number")	//for chrome,opera
+						ep.function_id+=(event.wheelDelta<0)?1:-1;
+					else if(typeof(event.detail)=="number")	//for firefox
+						ep.function_id+=(event.detail<0)?-1:1;
+					else
+						return;
+					
+					var function_number=17;
+					ep.function_id=(ep.function_id+function_number)%function_number;
+
+					render.call_server_component(component_id,"all",
+						[["operation","switch"],["id",render.pickup.body_id],["function",ep.function_id]]);
+							
+					this.pickupmousewheel_last_time=my_current_time;
+					return true;
 				},
 				mousemove			:	function(event,component_id,render)
 				{	
@@ -137,21 +163,21 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					if(ep.mousemove_flag){
 						ep.mousemove_flag=false;
 						render.call_server_component(component_id,"all",
-							[["operation","touch"],["function",render.event_component.mouse.function_id]],
-						function(response_data,render)
-						{
-							ep.mousemove_flag=true;
-						});
+							[["operation","touch"],["function",ep.function_id]],
+							function(response_data,render)
+							{
+								ep.mousemove_flag=true;
+							});
 					}
 					return true;
 				},
 				mousedown			:	function(event,component_id,render)
 				{
+					var ep=render.component_event_processor[component_id];
 					switch(event.button){
 					case 0:
-						render.call_server_component(component_id,"all",[["operation","mark"],
-							["function",render.event_component.mouse.function_id]]);
-						render.component_event_processor[component_id].mousemove_flag=true;
+						render.call_server_component(component_id,"all",
+							[["operation","mark"],["function",ep.function_id]]);
 						break;
 					case 1:
 					case 2:

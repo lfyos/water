@@ -1,7 +1,7 @@
 	/* 1name		*/        鼠标交互界面组件
 	/* 1type		*/         undefined_part
 	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
-	/* 1children number */		7
+	/* 1children number */		6
 	
 			/* 2name		*/	鼠标功能选择组件
 			/* 2type		*/	interface_part
@@ -49,10 +49,7 @@
 									render.system_call_processor.set_menu_show("内容选择组件");
 								break;
 							case 5:
-								if(ep.x<0.5)
-									render.system_call_processor.set_mouse_for_tag(-1);
-								else
-									render.system_call_processor.set_menu_show("标注尺寸组件");
+								render.system_call_processor.set_mouse_for_tag();
 								break;
 							default:
 								function_id=6;
@@ -210,36 +207,6 @@
 					};
 				}
 				设置内容选择方式
-
-			/* 2child_number	*/	0
-			
-			
-			/* 2name		*/	标注尺寸组件
-			/* 2type		*/	interface_part
-			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
-				
-				false	8	0.25	1.8		tag.png
-				
-				token_program	设置标注尺寸方式
-				function(component_name,component_id,render)
-				{
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
-						{
-							var ep=render.component_event_processor[component_id];
-							var function_id=Math.floor((1.0-ep.y)*18);
-							if((function_id<0)||(function_id>17))
-								return;
-							if(function_id==17)
-								render.system_call_processor.set_menu_show("鼠标功能选择组件");
-							else
-								render.system_call_processor.set_mouse_for_tag(function_id);
-								
-							ep.hightlight=[0,1.0-function_id/18.0-1.0/18.0,		1.0,1.0-function_id/18.0];
-						}
-					};
-				}
-				设置标注尺寸方式
 
 			/* 2child_number	*/	0
 			
