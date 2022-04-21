@@ -5,7 +5,7 @@ out vec4 frag_id,frag_texture;
 
 void main(void)
 {
-	gl_PointSize=16.0;
+	gl_PointSize=12.0;
 	
 	frag_id		=vertex_id;
 	frag_texture=vertex_texture;
