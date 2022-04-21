@@ -27,9 +27,10 @@ void main(void)
 	}
 	switch(int(round(frag_id.w))){
 	case 0:
-		if(pass_info.method_id!=1)
-			if(length(texture(texture_sampler,frag_texture.xy).rgb)<0.75)
-				discard;
+		if(pass_info.method_id==1)
+			break;
+		if(texture(texture_sampler,frag_texture.xy).rgb.length()<0.2)
+			discard;
 		break;
 	case 1:
 		if(pass_info.method_id==1)

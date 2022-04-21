@@ -9,12 +9,9 @@ void main(void)
 {
 	gl_FragDepth=0.0;
 	
-	if(pass_info.method_id!=1){
+	if(pass_info.method_id!=1)
 		frag_data[0]=par[3];
-		frag_data[1]=par[3];
-		frag_data[2]=par[3];
-		frag_data[3]=par[3];
-	}else{
+	else{
 		frag_data[0]=code_integer(int(round(par[0].w)));		//component_id
 		frag_data[1]=code_integer(int(round(par[1].w)));		//body_id
 		if(pass_info.pass_id==0){
@@ -25,14 +22,15 @@ void main(void)
 			frag_data[3]=frag_data[2];							//value
 		}
 	}
+	
 	switch(int(round(frag_id.w))){
 	case 0:
-		if(pass_info.method_id!=1)
-			if(length(texture(texture_sampler,frag_texture.xy).rgb)<0.75)
-				discard;
+		vec3 texture_color=texture(texture_sampler,frag_texture.xy).rgb;
+		if(dot(texture_color,texture_color)<(3.0*0.25))
+			discard;
 		break;
 	case 1:
-		if(pass_info.method_id==1)
+		if(pass_info.method_id!=0)
 			discard;
 		break;
 	case 2:

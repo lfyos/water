@@ -25,14 +25,15 @@ void main(void)
 			frag_data[3]=frag_data[2];							//value
 		}
 	}
+	
 	switch(int(round(frag_id.w))){
 	case 0:
-		if(pass_info.method_id!=1)
-			if(length(texture(texture_sampler,frag_texture.xy).rgb)<0.75)
-				discard;
+		vec3 texture_color=texture(texture_sampler,frag_texture.xy).rgb;
+		if(dot(texture_color,texture_color)<(3.0*0.25))
+			discard;
 		break;
 	case 1:
-		if(pass_info.method_id==1)
+		if(pass_info.method_id!=0)
 			discard;
 		break;
 	case 2:
