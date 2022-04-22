@@ -268,7 +268,10 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				p0[0],p0[1],p0[2],component_id,
 				dx[0],dx[1],dx[2],j,
 				dy[0],dy[1],dy[2],ep.texture_object[j].tag_texture_scale,
-				0,0,0,1]));	
+				part_material[0].color[0],
+				part_material[0].color[1],
+				part_material[0].color[2],
+				part_material[0].color[3]]));	
 
 			for(var k=0,nk=part_buffer_object.face.region_data.length;k<nk;k++){
 				var p=part_buffer_object.face.region_data[k];

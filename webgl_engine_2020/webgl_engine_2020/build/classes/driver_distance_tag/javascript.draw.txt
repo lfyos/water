@@ -54,7 +54,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_S,		gl.MIRRORED_REPEAT);
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_T,		gl.MIRRORED_REPEAT);
 		gl.uniform1i(gl.getUniformLocation(shader_program,"texture_sampler"),0);
-		
+
 		shader_program.destroy=function(gl,shader_program,shader_object,program_id)
 		{
 			gl.deleteSampler(shader_program.sampler);
@@ -62,6 +62,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		};
 		shader_program.texture_sampler_uniform	=gl.getUniformLocation(shader_program,"texture_sampler");
 		shader_program.par_uniform				=gl.getUniformLocation(shader_program,"par");
+		shader_program.color_par_uniform		=gl.getUniformLocation(shader_program,"color_par");
 	}
 	
 	switch(method_id){
@@ -71,6 +72,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	default:
 		return;
 	}
+	
+	gl.uniformMatrix4fv(shader_program.color_par_uniform,false,new Float32Array(part_material[0].color));
 
 	for(var i=0,ni=component_data_array.length;i<ni;i++){
 		var buffer_id	=component_data_array[i];
@@ -231,10 +234,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				p0[0],p0[1],p0[2],component_id,
 				dx[0],dx[1],dx[2],j,
 				dy[0],dy[1],dy[2],ep.texture_object[j].tag_texture_scale,
-				part_material[0].color[0],
-				part_material[0].color[1],
-				part_material[0].color[2],
-				part_material[0].color[3]]));
+				0,0,0,1]));
 
 			for(var k=0,nk=part_buffer_object.edge.region_data.length;k<nk;k++){
 				var p=part_buffer_object.edge.region_data[k];
@@ -268,10 +268,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				p0[0],p0[1],p0[2],component_id,
 				dx[0],dx[1],dx[2],j,
 				dy[0],dy[1],dy[2],ep.texture_object[j].tag_texture_scale,
-				part_material[0].color[0],
-				part_material[0].color[1],
-				part_material[0].color[2],
-				part_material[0].color[3]]));	
+				0,0,0,1]));	
 
 			for(var k=0,nk=part_buffer_object.face.region_data.length;k<nk;k++){
 				var p=part_buffer_object.face.region_data[k];
