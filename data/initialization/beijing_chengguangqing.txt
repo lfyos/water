@@ -73,7 +73,7 @@
 									return true;
 								render.call_server_component("mouse_modify_location_component","all",
 									[
-										["event_operation",		"dblclick"],
+										["event_operation",		"dblclick_view"],
 										["operate_component_id",render.current.camera_component_id]
 									]);
 								return false;

@@ -6,7 +6,6 @@ import kernel_component.component_collector;
 import kernel_driver.instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
-import kernel_common_class.jason_string;
 import kernel_transformation.point;
 
 public class extended_instance_driver extends instance_driver
@@ -33,7 +32,7 @@ public class extended_instance_driver extends instance_driver
 	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
 			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
 	{
-		return false;
+		return (!(cr.target.main_display_target_flag||cr.target.selection_target_flag));
 	}
 	public void create_render_parameter(
 			int render_buffer_id,int parameter_channel_id,int data_buffer_id,
@@ -44,17 +43,15 @@ public class extended_instance_driver extends instance_driver
 	public void create_component_parameter(engine_kernel ek,client_information ci)
 	{
 		ci.request_response.print("[");
-		for(int i=0,ni=tag_array.distance_tag_array.length;i<ni;i++) {
-			point p0=tag_array.distance_tag_array[i].p0;
-			point dx=tag_array.distance_tag_array[i].px.sub(p0);
-			point dy=tag_array.distance_tag_array[i].py.sub(p0);
-			ci.request_response.print(
-					(tag_array.distance_tag_array[i].state!=2)?"[1,":"[0,",
-					jason_string.change_string(tag_array.distance_tag_array[i].tag_str)).
+		for(int i=0,ni=tag_array.distance_tag_array.length;i<ni;i++){
+			distance_tag_item p=tag_array.distance_tag_array[i];
+			point p0=p.p0,dx=p.px.sub(p0),dy=p.py.sub(p0);
+			ci.request_response.
+				print((p.state!=2)?"[1,":"[0,",p.tag_str).
 				print(",",p0.x).print(",",p0.y).print(",",p0.z).
 				print(",",dx.x).print(",",dx.y).print(",",dx.z).
-				print(",",dy.x).print(",",dy.y).print(",",dy.z);
-			ci.request_response.print((i!=(ni-1))?"],":"]");
+				print(",",dy.x).print(",",dy.y).print(",",dy.z).
+				print((i!=(ni-1))?"],":"]");
 		}
 		ci.request_response.print("]");
 	}

@@ -10,9 +10,7 @@ public class jason_string
 				replace("\n","\\n\\r").
 				replace("\"","\\\"").
 				replace("\r","\\n\\r").
-				replace("\t","\\t")
-				
-				;
+				replace("\t","\\t");
 		return "\""+str+"\"";
 	}
 }

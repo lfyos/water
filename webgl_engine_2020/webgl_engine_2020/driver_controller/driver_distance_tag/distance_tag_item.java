@@ -1,6 +1,7 @@
 package driver_distance_tag;
 
 import kernel_common_class.format_change;
+import kernel_common_class.jason_string;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_transformation.point;
@@ -113,5 +114,6 @@ public class distance_tag_item
 					loca.multiply(px).sub(loca.multiply(p0)).distance(),display_precision);
 			break;
 		}
+		tag_str=jason_string.change_string(tag_str);
 	}
 }
