@@ -64,6 +64,12 @@ public class extended_render_driver extends render_driver
 	{
 		return  new extended_part_driver();
 	}
+	public String create_include_shader_program(String shader_type_string,
+			//vertex,fragment,geometry,tess_control,tess_evalue
+			render rr,system_parameter system_par,scene_parameter scene_par)
+	{
+		return null;
+	}
 	public void create_shader_data(file_writer fw,render rr,system_parameter system_par,scene_parameter scene_par)
 	{
 		super.create_shader_data(fw, rr, system_par, scene_par);

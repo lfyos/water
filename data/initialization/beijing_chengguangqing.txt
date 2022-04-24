@@ -11,7 +11,7 @@
 					{
 					
 					};
-					render.user_event_processor.tree_mousedown=function(component_id,event)
+					render.user_call_processor.tree_mousedown=function(component_id,event)
 					{
 						if(typeof(event)!="object")
 							event={
@@ -65,50 +65,38 @@
 						render.append_routine_function(
 							function(render)
 							{
-								if(render.pickup.component_id>=0){
-									do_render_request_response_number=render.do_render_request_response_number;
-									return true;
-								}
 								if((render.do_render_request_response_number-do_render_request_response_number)<=2)
 									return true;
 								render.call_server_component("mouse_modify_location_component","all",
-									[
-										["event_operation",		"dblclick_view"],
-										["operate_component_id",render.current.camera_component_id]
-									]);
+									[["event_operation","dblclick_view_no_pickup"],
+									 ["operate_component_id",render.current.camera_component_id]]);
 								return false;
 							});
 					};
-					
 					render.user_call_processor.reset_all=function()
 					{
 						render.call_server_component("manipulator_component","all",
-							[["event_method","selection"],["event_operation","clear_all"]],	
-							function()
+							[["event_method","selection"],["event_operation","clear_all"]]);
+						render.call_server_component("manipulator_component","all",
+							[["event_method","transparency"],["transparency",1.0],
+							 ["component",encodeURIComponent(encodeURIComponent("system_root_component"))]]);
+						render.call_server_component("manipulator_component","all",
+							[["event_method","show_hide_component"],["event_operation","show"]]);
+						render.system_call_processor.clip_onoff_component(false);
+
+						render.call_server_component("manipulator_component","all",
+							[["event_method","explosion"],["explosion","reset"],["component_name",
+							 encodeURIComponent(encodeURIComponent("part_list_component"))]],
+							function(response_data,render,response_text)
 							{
-								var component_name=encodeURIComponent(encodeURIComponent("system_root_component"));
-								render.call_server_component("manipulator_component","all",
-									[["event_method","transparency"],["transparency",1.0],["component",component_name]],
+								setTimeout(
 									function()
 									{
+										render.user_call_processor.reset_view();
 										render.call_server_component("manipulator_component","all",
-											[["event_method","show_hide_component"],["event_operation","show"]],
-											function()
-											{
-												render.call_server_component("manipulator_component","all",
-													[["event_method","part_list"],["operation","create"]],
-													function()
-													{
-														render.call_server_component("manipulator_component","all",
-															[["event_method","explosion"],["explosion","reset"],["component_name",component_name]],
-															function(response_data,render,response_text)
-															{
-																setTimeout(
-																	function(){render.user_call_processor.reset_view();},response_data/1000000);
-															});
-													});
-											});
-									});
+											[["event_method","part_list"],["operation","create"]]);
+									},
+									response_data/1000000);
 							});
 					};
 				}

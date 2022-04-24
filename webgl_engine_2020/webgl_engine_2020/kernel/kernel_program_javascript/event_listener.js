@@ -113,8 +113,7 @@ function construct_event_listener(my_render)
 		
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
-				if(this.render.system_event_processor.pickupmousedown(
-					event,this.render.pickup.component_id,this.render))
+				if(this.render.system_event_processor.pickupmousedown(event,this.render.pickup.component_id,this.render))
 						return;
 		if(this.render.system_event_processor.mousedown(event,this.render))
 			return;
@@ -448,7 +447,7 @@ function construct_event_listener(my_render)
 
 	};
 	
-	this.render.system_event_processor.pickupkeydown	=function(event,render,pickup_component_id){return false;};
+	this.render.system_event_processor.pickupkeydown	=function(event,pickup_component_id,render){return false;};
 	this.render.system_event_processor.keydown			=function(event,render){return false;};
 	this.keydown_event_listener=function (event)
 	{
@@ -462,13 +461,13 @@ function construct_event_listener(my_render)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
 				if(this.render.system_event_processor.pickupkeydown(event,this.render.pickup.component_id,this.render))
 					return;
+
 		if(this.render.system_event_processor.keydown(event,this.render))
 			return;
 		if((ep=this.caculate_pickup_event_processor())!=null)
 			if(typeof(ep.pickupkeydown)=="function")
 				if(ep.pickupkeydown(event,this.render.pickup.component_id,this.render))
 					return;
-
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.keyboard))<0)
 			return;
 		this.render.event_component.keyboard.component_name=component_id;
@@ -476,9 +475,8 @@ function construct_event_listener(my_render)
 		if(typeof(ep.keydown)=="function")
 			if(ep.keydown(event,component_id,this.render))
 				return;
-
 	};
-	this.render.system_event_processor.pickupkeypress	=function(event,render,pickup_component_id){return false;};
+	this.render.system_event_processor.pickupkeypress	=function(event,pickup_component_id,render){return false;};
 	this.render.system_event_processor.keypress			=function(event,render){return false;};
 	this.keypress_event_listener=function (event)
 	{
@@ -508,7 +506,7 @@ function construct_event_listener(my_render)
 				return;
 	};
 	
-	this.render.system_event_processor.pickupkeyup	=function(event,render,pickup_component_id){return false;};
+	this.render.system_event_processor.pickupkeyup	=function(event,pickup_component_id,render){return false;};
 	this.render.system_event_processor.keyup		=function(event,render){return false;};
 	this.keyup_event_listener=function (event)
 	{
@@ -579,7 +577,7 @@ function construct_event_listener(my_render)
 			if(ep.contextmenu(event,component_id,this.render))
 				return;
 	};
-	this.render.system_event_processor.pickupgamepadconnected	=function(event,render,pickup_component_id){return false;};
+	this.render.system_event_processor.pickupgamepadconnected	=function(event,pickup_component_id,render){return false;};
 	this.render.system_event_processor.gamepadconnected			=function(event,render){return false;};
 	this.gamepadconnected_event_listener=function (event)
 	{
@@ -608,7 +606,7 @@ function construct_event_listener(my_render)
 			if(ep.gamepadconnected(event,component_id,this.render))
 				return;
 	};
-	this.render.system_event_processor.pickupgamepaddisconnected	=function(event,render,pickup_component_id){return false;};
+	this.render.system_event_processor.pickupgamepaddisconnected	=function(event,pickup_component_id,render){return false;};
 	this.render.system_event_processor.gamepaddisconnected			=function(event,render){return false;};
 	this.gamepaddisconnected_event_listener=function (event)
 	{

@@ -188,6 +188,8 @@ public class extended_instance_driver extends instance_driver
 			get_data(false,operate_component,ek,ci);
 			return null;
 		case "touchend":
+		case "dblclick_view_no_pickup":
+			ci.parameter.comp=null;
 		case "dblclick_view":
 			if(str.compareTo("touchend")==0) {
 				if(ci.parameter.comp==null)
@@ -205,9 +207,8 @@ public class extended_instance_driver extends instance_driver
 				p1=loca.multiply(new point(0,0,ci.parameter.depth+1.0));
 			}
 			(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
-					ek.modifier_cont[modifier_container_id],ek.component_cont,
-					ci.display_camera_result,ci.parameter,null,
-					ci.display_camera_result.cam.parameter.scale_value,ci.parameter.aspect,
+					ek.modifier_cont[modifier_container_id],ek.component_cont,ci.display_camera_result,
+					ci.parameter,null,ci.display_camera_result.cam.parameter.scale_value,ci.parameter.aspect,
 					ek.modifier_cont[modifier_container_id].get_timer().get_current_time(),
 					true,true,true,p0,p1);
 			return null;

@@ -2,15 +2,6 @@
 				{
 					render.system_event_processor.keydown=function(event,render)
 					{
-						var component_name_array=[
-							"camera_operation_component"
-						];
-						if(render.pickup.component_id>=0)
-							for(var p,i=0,ni=component_name_array.length;i<ni;i++)
-								if((p=render.get_component_object_by_component_name(component_name_array[i]))!=null)
-									if(p.component_id==render.pickup.component_id)
-										return false;
-						
 						switch(event.keyCode){
 						case 27://Esc
 							render.system_call_processor.select_component("clear_all");

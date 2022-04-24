@@ -82,8 +82,7 @@ function body_onunload()
 <button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(false,false,true),'_blank');">8.列表jason</button>
 <br/>
 
-
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_jump_hangup(10,function(jason_data,text_data){console.log(text_data);});">执行杆件挂起</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_jump_hangup(10,function(jason_data,render,text_data){console.log(text_data);});">执行杆件挂起</button>
 <button type="button" onclick="window.open(render.zhengzhou_lipengfei.virtual_mount_collector_jason_url(),'_blank');">虚拟拼装jason</button>
 <button type="button" onclick="render.zhengzhou_lipengfei.mount_reset_hangup(10);">复位杆件挂起</button>
 <br/>
@@ -97,8 +96,6 @@ function body_onunload()
 <button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\混色杆件\\槽钢_编号_262.SLDPRT',true);">添加262号槽钢(首次添加)</button>
 <button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\混色杆件\\槽钢_编号_262.SLDPRT',false);">添加262号槽钢(后续插入)</button>
 <br/>
-
-<button type="button" onclick="render.zhengzhou_lipengfei.scale_mount_time_length(prompt('拼装ID'),prompt('时间倍数'));">调整拼装速度</button>
 
 </body>
 

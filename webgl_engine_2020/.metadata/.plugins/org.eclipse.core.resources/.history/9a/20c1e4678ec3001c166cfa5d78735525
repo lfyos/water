@@ -1,0 +1,90 @@
+package kernel_driver;
+
+import kernel_part.part;
+import kernel_part.part_parameter;
+import kernel_render.render;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
+import kernel_network.client_request_response;
+import kernel_common_class.change_name;
+import kernel_engine.client_information;
+import kernel_engine.engine_kernel;
+import kernel_engine.scene_parameter;
+import kernel_engine.system_parameter;
+
+public class render_driver
+{
+	public String javascript_decode,javascript_draw;
+	public String vertex_shader,fragment_shader,geometry_shader,tess_control_shader,tess_evalue_shader;
+	
+	public void destroy()
+	{
+		javascript_decode	=null;
+		javascript_draw		=null;
+		vertex_shader		=null;
+		fragment_shader		=null;
+		geometry_shader		=null;
+		tess_control_shader	=null;
+		tess_evalue_shader	=null;
+	}
+	public void initialize_render_driver(int render_id,engine_kernel ek,client_request_response request_response)
+	{
+	}
+	public void response_init_render_data(int render_id,engine_kernel ek,client_information ci)
+	{
+	}
+	public render_driver clone(render parent_render,
+			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
+	{
+		return new render_driver(javascript_decode,javascript_draw,
+				vertex_shader,fragment_shader,geometry_shader,tess_control_shader,tess_evalue_shader);
+	}
+	public render_driver(					
+			String my_javascript_decode,	String my_javascript_draw,
+			String my_vertex_shader,		String my_fragment_shader,
+			String my_geometry_shader,	
+			String my_tess_control_shader,	String my_tess_evalue_shader)
+	{
+		javascript_decode	=my_javascript_decode;
+		javascript_draw		=my_javascript_draw;
+		
+		vertex_shader		=my_vertex_shader;
+		fragment_shader		=my_fragment_shader;
+		
+		geometry_shader		=my_geometry_shader;
+		
+		tess_control_shader	=my_tess_control_shader;
+		tess_evalue_shader	=my_tess_evalue_shader;
+	}
+	public String[] get_render_list(int part_type_id,
+			file_reader shader_fr,String load_sub_directory_name,
+			system_parameter system_par,scene_parameter scene_par,
+			change_name mount_component_name_and_assemble_file_name,
+			client_request_response request_response)
+	{
+		String render_list_file_name=file_reader.separator(shader_fr.get_string());
+		return new String[] {shader_fr.directory_name+render_list_file_name,shader_fr.get_charset()};
+	}
+	public String[] get_part_list(int part_type_id,file_reader render_fr,String load_sub_directory_name,
+			part_parameter part_par,system_parameter system_par,scene_parameter scene_par,
+			change_name mount_component_name_and_assemble_file_name,client_request_response request_response)
+	{
+		String par_list_file_name=file_reader.separator(render_fr.get_string());
+		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
+	}
+	public part_driver create_part_driver(file_reader part_fr,part p,system_parameter system_par,
+		change_name mount_component_name_and_assemble_file_name,client_request_response request_response)
+	{
+		return new part_driver();
+	}
+	public String create_include_shader_program(String shader_type_string,
+			//vertex,fragment,geometry,tess_control,tess_evalue
+			render rr,system_parameter system_par,scene_parameter scene_par)
+	{
+		return "";
+	}
+	public void create_shader_data(file_writer fw,render rr,system_parameter system_par,scene_parameter scene_par)
+	{
+		fw.println("	null");
+	}
+}

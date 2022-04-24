@@ -70,6 +70,13 @@ public class copy_program
 				common_shader_reader.close();
 			}
 			program_str+=str+"\n";str="";
+			
+			str=my_render.driver.create_include_shader_program(
+					type_name[j],my_render,system_par, scene_par);
+			if(str!=null)
+				if(str.length()>0){
+					program_str+=str+"\n";str="";
+				}
 
 			common_reader user_shader_reader=program_file_reader.get_render_program_reader(
 					my_render,type_name[j],system_par.text_class_charset,system_par.text_jar_file_charset);
