@@ -11,12 +11,14 @@ public class distance_tag_array
 {
 	public distance_tag_item distance_tag_array[];
 	private int display_precision,operate_component_id;
+	private double min_view_distance;
 	
-	public distance_tag_array(int my_display_precision)
+	public distance_tag_array(int my_display_precision,double my_min_view_distance)
 	{
 		distance_tag_array=new distance_tag_item[] {};
 		display_precision=my_display_precision;
 		operate_component_id=-1;
+		min_view_distance=my_min_view_distance;
 	}
 	public void destroy()
 	{
@@ -80,8 +82,16 @@ public class distance_tag_array
 				if(my_point==null)
 					return true;
 				my_point=ci.parameter.comp.absolute_location.multiply(my_point);
+				
 				if(my_point.sub(p.p0).distance2()<const_value.min_value2)
 					return true;
+				if(new plane(p.p0,my_point).error_flag)
+					return true;
+				point view_p0=ci.display_camera_result.matrix.multiply(p.p0);
+				point view_px=ci.display_camera_result.matrix.multiply(my_point);
+				if(view_px.sub(view_p0).distance2()<(min_view_distance*min_view_distance))
+					return true;
+				
 				p.px=my_point;
 				
 				my_point=ci.display_camera_result.matrix.multiply(my_point);
@@ -89,7 +99,7 @@ public class distance_tag_array
 						 ci.display_camera_result.negative_matrix.multiply(my_point.x,-1,my_point.z));
 				p.py=ci.selection_camera_result.to_me_direct.cross(p.px.sub(p.p0));
 				if(p.py.distance2()>const_value.min_value2)
-					p.py=p.py.expand(my_point.distance()/1000);
+					p.py=p.py.expand(my_point.distance()/100);
 				p.py=p.py.add(p.p0);
 				
 				p.set_tag_str(operate_component_id,display_precision,ek,ci);
@@ -116,6 +126,16 @@ public class distance_tag_array
 					return true;
 				if((my_point=p0_pl.project_to_plane_location().multiply(my_point))==null)
 					return true;
+				
+				if(my_point.sub(p.p0).distance2()<const_value.min_value2)
+					return true;
+				if(new plane(p.p0,my_point).error_flag)
+					return true;
+				point view_p0=ci.display_camera_result.matrix.multiply(p.p0);
+				point view_py=ci.display_camera_result.matrix.multiply(my_point);
+				if(view_py.sub(view_p0).distance2()<(min_view_distance*min_view_distance))
+					return true;
+		
 				p.py=my_point;
 				p.set_tag_str(operate_component_id,display_precision,ek,ci);
 				return false;
@@ -141,14 +161,28 @@ public class distance_tag_array
 					return true;
 				p.px=ci.parameter.comp.absolute_location.multiply(my_point);
 				p.py=p.p0;
+				
 				if(p.px.sub(p.p0).distance2()<const_value.min_value2)
 					return true;
 				if(new plane(p.p0,p.px).error_flag)
+					return true;
+				my_point=ci.display_camera_result.matrix.multiply(p.p0);
+				my_point=ci.display_camera_result.matrix.multiply(p.px).sub(my_point);
+				if(my_point.distance2()<(min_view_distance*min_view_distance))
 					return true;
 				p.state=1;
 				p.set_tag_str(operate_component_id,display_precision,ek,ci);
 				return false;
 			case 1://confirm third point
+				if(p.py.sub(p.p0).distance2()<const_value.min_value2)
+					return true;
+				if(new plane(p.p0,p.py).error_flag)
+					return true;
+				my_point=ci.display_camera_result.matrix.multiply(p.p0);
+				my_point=ci.display_camera_result.matrix.multiply(p.py).sub(my_point);
+				if(my_point.distance2()<(min_view_distance*min_view_distance))
+					return true;
+				
 				p.state=2;
 				p.set_tag_str(operate_component_id,display_precision,ek,ci);
 				return false;

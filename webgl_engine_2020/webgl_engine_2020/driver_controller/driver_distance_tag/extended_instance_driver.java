@@ -21,10 +21,10 @@ public class extended_instance_driver extends instance_driver
 			tag_array=null;
 		}
 	}
-	public extended_instance_driver(component my_comp,int my_driver_id,int display_precision)
+	public extended_instance_driver(component my_comp,int my_driver_id,int display_precision,double min_view_distance)
 	{
 		super(my_comp,my_driver_id);
-		tag_array=new distance_tag_array(display_precision);
+		tag_array=new distance_tag_array(display_precision,min_view_distance);
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{

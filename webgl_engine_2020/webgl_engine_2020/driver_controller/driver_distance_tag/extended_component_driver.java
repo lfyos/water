@@ -10,14 +10,16 @@ import kernel_part.part;
 public class extended_component_driver  extends component_driver
 {
 	private int display_precision;
+	private double min_view_distance;
 	public void destroy()
 	{
 		super.destroy();
 	}
-	public extended_component_driver(part my_component_part,int my_display_precision)
+	public extended_component_driver(part my_component_part,int my_display_precision,double my_min_view_distance)
 	{
 		super(my_component_part);
 		display_precision=my_display_precision;
+		min_view_distance=my_min_view_distance;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
@@ -31,6 +33,6 @@ public class extended_component_driver  extends component_driver
 	public instance_driver create_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_instance_driver(comp,driver_id,display_precision);
+		return new extended_instance_driver(comp,driver_id,display_precision,min_view_distance);
 	}
 }

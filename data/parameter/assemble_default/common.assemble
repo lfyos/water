@@ -177,5 +177,6 @@
 		/* 2type		*/			distance_tag_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 						/*	display_precision	*/	6
+						/*	min_view_distance	*/	0.05
 		/* 2children number */     0
 			
