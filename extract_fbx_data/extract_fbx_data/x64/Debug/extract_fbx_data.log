@@ -1,1 +1,7 @@
-﻿
+﻿  assemble.cpp
+  extract_fbx_data.cpp
+  part.cpp
+E:\water_all\extract_fbx_data\extract_fbx_data\part.cpp(338,52): error C2065: “lDisplayHeader”: 未声明的标识符
+E:\water_all\extract_fbx_data\extract_fbx_data\part.cpp(338,68): error C2065: “lMaterialIndex”: 未声明的标识符
+E:\water_all\extract_fbx_data\extract_fbx_data\part.cpp(338,5): error C3861: “FindAndDisplayTextureInfoByProperty”: 找不到标识符
+  正在生成代码...

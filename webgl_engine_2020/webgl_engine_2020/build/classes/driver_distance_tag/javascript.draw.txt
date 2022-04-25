@@ -192,7 +192,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		
 		var my_data_buffer=data_buffer[buffer_id][0];
 		for(var j=0,nj=my_data_buffer.length;j<nj;j++){
-			if(method_id==1)
+			if(method_id!=0)
 				if(my_data_buffer[j][0]>0)
 					continue;
 			var my_text_str
@@ -230,23 +230,27 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 			var p0=[my_data_buffer[j][ 2],	my_data_buffer[j][ 3],	my_data_buffer[j][ 4],	1];
 			var dx=[my_data_buffer[j][ 5],	my_data_buffer[j][ 6],	my_data_buffer[j][ 7],	1];
 			var dy=[my_data_buffer[j][ 8],	my_data_buffer[j][ 9],	my_data_buffer[j][10],	1];
-			gl.uniformMatrix4fv(shader_program.par_uniform,false,new Float32Array([	
-				p0[0],p0[1],p0[2],component_id,
-				dx[0],dx[1],dx[2],j,
-				dy[0],dy[1],dy[2],ep.texture_object[j].tag_texture_scale,
-				0,0,0,1]));
-
-			for(var k=0,nk=part_buffer_object.edge.region_data.length;k<nk;k++){
-				var p=part_buffer_object.edge.region_data[k];
-				gl.bindVertexArray(p.vertex_array_object[0]);
-				gl.drawArrays(gl.LINES,0,p.item_number);
+			
+			if(method_id==0){
+				gl.uniformMatrix4fv(shader_program.par_uniform,false,new Float32Array([	
+					p0[0],p0[1],p0[2],component_id,
+					dx[0],dx[1],dx[2],j,
+					dy[0],dy[1],dy[2],ep.texture_object[j].tag_texture_scale,
+					0,0,0,1]));
+	
+				for(var k=0,nk=part_buffer_object.edge.region_data.length;k<nk;k++){
+					var p=part_buffer_object.edge.region_data[k];
+					gl.bindVertexArray(p.vertex_array_object[0]);
+					gl.drawArrays(gl.LINES,0,p.item_number);
+				}
+	
+				for(var k=0,nk=part_buffer_object.point.region_data.length;k<nk;k++){
+					var p=part_buffer_object.point.region_data[k];
+					gl.bindVertexArray(p.vertex_array_object[0]);
+					gl.drawArrays(gl.POINTS,0,p.item_number);
+				}
 			}
-
-			for(var k=0,nk=part_buffer_object.point.region_data.length;k<nk;k++){
-				var p=part_buffer_object.point.region_data[k];
-				gl.bindVertexArray(p.vertex_array_object[0]);
-				gl.drawArrays(gl.POINTS,0,p.item_number);
-			}
+			
 			var pp,p_up,p_down;
 			p0=computer.add_operation(computer.add_operation(p0,dy),computer.scale_operation(dx,0.5));
 

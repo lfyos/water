@@ -10,7 +10,7 @@ class part
 {
 	std::string directory_name;
 	std::ofstream* part_list_f;
-	FbxClassId part_id_array[10000];
+	FbxClassId part_id_array[100000];
 	int register_number;
 public:
 	part(std::string my_directory_name);

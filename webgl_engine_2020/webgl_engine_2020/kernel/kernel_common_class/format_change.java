@@ -71,8 +71,17 @@ public class format_change
 					return pre_token+integer_str+exp_str;
 				if((fraction_str.length()+integer_length)<=precision)
 					return pre_token+integer_str+'.'+fraction_str+exp_str;
-				return pre_token+integer_str
-						+'.'+fraction_str.substring(0,precision-integer_length)+exp_str;
+				
+				if(fraction_str.charAt(precision-integer_length)<'5')
+					return pre_token+integer_str
+							+'.'+fraction_str.substring(0,precision-integer_length)+exp_str;
+
+				char fraction_char_array[]=fraction_str.substring(0,precision-integer_length).toCharArray();
+				for(int i=fraction_char_array.length-1;i>=0;i++)
+					if((++(fraction_char_array[i]))<='9')
+						return pre_token+integer_str+'.'+(new String(fraction_char_array)).substring(0,i+1)+exp_str;
+
+				return pre_token+(Integer.parseInt(integer_str)+1)+exp_str;
 			}
 		}
 	}

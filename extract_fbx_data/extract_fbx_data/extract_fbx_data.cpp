@@ -46,10 +46,11 @@ int main(int argc,char *argv[])
 
     std::string directory_name= argv[2];
 
-    part part_collector(directory_name);
+    part *part_collector=new part(directory_name);
     std::ofstream f(directory_name+"assemble.assemble");
-    assemble(&part_collector,&f,lScene->GetRootNode(),0);
+    assemble(part_collector,&f,lScene->GetRootNode(),0);
     f.close();
+    delete part_collector;
 
     lScene->Destroy();
     lImporter->Destroy(); 

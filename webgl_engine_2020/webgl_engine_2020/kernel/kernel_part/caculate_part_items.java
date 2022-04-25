@@ -127,12 +127,15 @@ public class caculate_part_items
 		my_box=(my_face.face_box!=null)?(my_face.face_box):my_box;
 		
 		my_face_curve=my_face.fa_curve;
-		my_box=(my_face_curve.curve_box!=null)?(my_face_curve.curve_box):my_box;
 		
-		if((loop_id<0)||(loop_id>=(my_face_curve.face_loop_number())))
+		if((loop_id<0)||(loop_id>=(my_face_curve.face_loop_number()))) {
+			my_box=(my_face.fa_face.face_face_box!=null)?(my_face.fa_face.face_face_box):my_box;
 			return ;
-		if((my_face_loop=my_face.fa_curve.f_loop[loop_id])==null)
-			return ;
+		}
+		if((my_face_loop=my_face.fa_curve.f_loop[loop_id])==null) {
+			my_box=(my_face.fa_face.face_face_box!=null)?(my_face.fa_face.face_face_box):my_box;
+			return;
+		}
 		my_box=(my_face_loop.loop_box!=null)?(my_face_loop.loop_box):my_box;
 		
 		if((edge_id<0)||(edge_id>=(my_face_loop.edge_number())))

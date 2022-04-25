@@ -48,7 +48,7 @@ std::string part::register_node(FbxNode* assemble_node)
 			(*part_list_f) << std::endl;
 
 			std::cout << "Begin extract mesh data for part "<< part_name <<" (NO. " << register_number<<")" << std::endl;
-			output_part_material(fm, assemble_node);
+			this->output_part_material(fm,assemble_node);
 			output_part_mesh(fm);
 			std::cout << "End extract mesh data for part " << part_name << " (NO. " << register_number<< ")" << std::endl;
 

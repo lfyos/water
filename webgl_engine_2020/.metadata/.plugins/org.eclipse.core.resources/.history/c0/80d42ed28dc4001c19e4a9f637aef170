@@ -1,0 +1,52 @@
+uniform sampler2D texture_sampler;
+uniform mat4 par,color_par;
+
+in vec4 frag_id,frag_texture;
+
+layout (location = 0) out vec4 frag_data[4];
+
+void main(void)
+{
+	gl_FragDepth=0.0;
+	
+	switch(int(round(frag_id.w))){
+	case 0:
+		switch(pass_info.method_id){
+		default:
+			discard;
+			break;
+		case 0:
+			frag_data[0]=color_par[0];
+			if(length(texture(texture_sampler,frag_texture.xy).rgb)<0.75)
+				discard;
+			break;
+		case 1:
+			frag_data[0]=code_integer(int(round(par[0].w)));		//component_id
+			frag_data[1]=code_integer(int(round(par[1].w)));		//body_id
+			if(pass_info.pass_id==0){
+				frag_data[2]=frag_data[1];							//face_id
+				frag_data[3]=frag_data[1];							//vertex_id
+			}else{
+				frag_data[2]=code_float(2.0*(gl_FragCoord.z-0.5));	//depth
+				frag_data[3]=frag_data[2];							//value
+			}
+			break;
+		}
+		break;
+	case 1:
+		frag_data[0]=color_par[1];
+		if(pass_info.method_id!=0)
+			discard;
+		break;
+	case 2:
+		frag_data[0]=color_par[(system_info.millisecond<500)?2:3];
+		if(distance(gl_PointCoord,vec2(0.5,0.5))>0.5)
+			discard;
+		if(pass_info.method_id!=0)
+			discard;
+		break;
+	default:
+		discard;
+		break;
+	}
+}
