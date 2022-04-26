@@ -75,28 +75,37 @@
 					};
 					render.user_call_processor.reset_all=function()
 					{
-						render.call_server_component("manipulator_component","all",
-							[["event_method","selection"],["event_operation","clear_all"]]);
-						render.call_server_component("manipulator_component","all",
-							[["event_method","transparency"],["transparency",1.0],
-							 ["component",encodeURIComponent(encodeURIComponent("system_root_component"))]]);
-						render.call_server_component("manipulator_component","all",
-							[["event_method","show_hide_component"],["event_operation","show"]]);
 						render.system_call_processor.clip_onoff_component(false);
-
+						
 						render.call_server_component("manipulator_component","all",
-							[["event_method","explosion"],["explosion","reset"],["component_name",
-							 encodeURIComponent(encodeURIComponent("part_list_component"))]],
+							[["event_method","selection"],["event_operation","clear_all"]],
 							function(response_data,render,response_text)
 							{
-								setTimeout(
-									function()
+								render.call_server_component("manipulator_component","all",
+									[["event_method","transparency"],["transparency",1.0],
+									 ["component",encodeURIComponent(encodeURIComponent("system_root_component"))]],
+									function(response_data,render,response_text)
 									{
-										render.user_call_processor.reset_view();
 										render.call_server_component("manipulator_component","all",
-											[["event_method","part_list"],["operation","create"]]);
-									},
-									response_data/1000000);
+											[["event_method","show_hide_component"],["event_operation","show"]],
+											function(response_data,render,response_text)
+											{
+												render.call_server_component("manipulator_component","all",
+													[["event_method","explosion"],["explosion","reset"],["component_name",
+													 encodeURIComponent(encodeURIComponent("part_list_component"))]],
+													function(response_data,render,response_text)
+													{
+														setTimeout(
+															function()
+															{
+																render.user_call_processor.reset_view();
+																render.call_server_component("manipulator_component","all",
+																	[["event_method","part_list"],["operation","create"]]);
+															},
+															response_data/1000000);
+													});
+											});
+									});
 							});
 					};
 				}

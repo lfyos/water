@@ -120,6 +120,7 @@
 						case 48://0
 							break;
 						case 81://q
+							render.user_call_processor.reset_all();
 						case 87://w
 						case 69://e
 						case 82://r
@@ -129,7 +130,6 @@
 						case 73://i
 						case 79://o
 						case 80://p
-//							render.user_call_processor.reset_all();
 							break;
 						default:
 							break;
