@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="register_collector_stack_monitor"/>
+		<item key="selection" value="render)"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="render)"/>
+			<item value="render."/>
+			<item value="render&#x09;&#x09;."/>
+			<item value="render&#x09;."/>
+			<item value="render"/>
+			<item value="this.set_event_component=function(event_component_name)"/>
 			<item value="register_collector_stack_monitor"/>
 			<item value="lod"/>
 			<item value="scale_mount_time_length"/>
@@ -17,14 +23,9 @@
 			<item value="part_initialize_data"/>
 			<item value="par[3]"/>
 			<item value="par"/>
-			<item value="selected_component_id"/>
-			<item value="mousemove_flag"/>
-			<item value="set_event_component"/>
-			<item value="function_id"/>
-			<item value="render.event_component.mouse.function_id"/>
-			<item value="tag.png"/>
 		</list>
 		<list key="replacehistory">
+			<item value="this."/>
 			<item value="ep.function_id"/>
 			<item value="ep."/>
 			<item value="pickup_exit_display_flag"/>
@@ -39,7 +40,6 @@
 			<item value="instance_initialize_data"/>
 			<item value="ep.instance_initialize_data"/>
 			<item value="travel_operate_flag"/>
-			<item value="ep.response_data."/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

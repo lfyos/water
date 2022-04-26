@@ -94,6 +94,9 @@ public class extended_part_driver extends part_driver
 		file_name=file_reader.separator(file_name);
 		directory_name=new File(p.directory_name+p.material_file_name).getParent();
 		path_name=file_reader.separator(directory_name)+File.separator+file_name;
+		
+		debug_information.println(path_name);
+		
 		if(new File(path_name).exists())
 			return new String[]{path_name,p.file_charset};
 		
@@ -104,7 +107,6 @@ public class extended_part_driver extends part_driver
 			debug_information.println("File has NO proxy url :	",path_name);
 		else
 			ci.request_response.implementor.redirect_url(file_url,ek.system_par.file_download_cors_string);
-		
 		return null;
 	}
 }

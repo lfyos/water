@@ -51,15 +51,15 @@ function body_onload()
 		function(my_render)
 		{
 			lfy_render=my_render;
-			document.title=lfy_render.title;
+			document.title=render.title;
 		});
 }
 function body_onunload()
 {
-	if(typeof(lfy_render)=="object")
-		if(lfy_render!=null)
-			if(typeof(lfy_render.terminate)=="function")
-				lfy_render.terminate();
+	if(typeof(render)=="object")
+		if(render!=null)
+			if(typeof(render.terminate)=="function")
+				render.terminate();
 }
 function body_onresize()
 {

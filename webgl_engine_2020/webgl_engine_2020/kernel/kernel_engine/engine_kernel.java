@@ -288,7 +288,7 @@ public class engine_kernel
 		render_cont.load_shader(not_real_scene_fast_load_flag,
 				part_cont,scene_par.scene_last_modified_time,
 				scene_directory_name+scene_par.scene_shader_file_name,scene_charset,
-				scene_par.scene_sub_directory, 2,system_par,scene_par,request_response);
+				scene_par.scene_sub_directory,2,system_par,scene_par,request_response);
 		part_cont.execute_append();
 		debug_information.println("Load shaders time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();

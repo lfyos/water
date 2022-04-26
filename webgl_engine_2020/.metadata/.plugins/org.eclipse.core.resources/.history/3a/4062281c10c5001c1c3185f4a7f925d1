@@ -104,7 +104,6 @@ public class extended_part_driver extends part_driver
 			debug_information.println("File has NO proxy url :	",path_name);
 		else
 			ci.request_response.implementor.redirect_url(file_url,ek.system_par.file_download_cors_string);
-		
 		return null;
 	}
 }

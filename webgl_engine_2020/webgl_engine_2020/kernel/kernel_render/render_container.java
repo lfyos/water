@@ -351,9 +351,9 @@ public class render_container
 				debug_information.print  ("ren.driver==null		",driver_name);
 				continue;
 			}
-			String render_list_file_name[]=ren.driver.get_render_list(part_type_id,
-					f_shader, load_sub_directory_name, system_par,scene_par,
-					mount_component_name_and_assemble_file_name, request_response);
+			String render_list_file_name[]=ren.driver.get_render_list(
+					part_type_id,f_shader,load_sub_directory_name,system_par,scene_par,
+					mount_component_name_and_assemble_file_name,request_response);
 			if(render_list_file_name==null) {
 				debug_information.print  ("render list file is NULL	",	driver_name);
 				continue;

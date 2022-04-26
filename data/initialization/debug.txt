@@ -129,6 +129,7 @@
 						case 73://i
 						case 79://o
 						case 80://p
+//							render.user_call_processor.reset_all();
 							break;
 						default:
 							break;

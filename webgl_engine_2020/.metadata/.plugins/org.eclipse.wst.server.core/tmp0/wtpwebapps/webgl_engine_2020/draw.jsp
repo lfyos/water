@@ -34,7 +34,7 @@
 
 <script type="text/javascript">
 
-var render;
+var lfy_render;
 
 function body_onload()
 {
@@ -50,16 +50,16 @@ function body_onload()
 		],
 		function(my_render)
 		{
-			render=my_render;
-			document.title=render.title;
+			lfy_render=my_render;
+			document.title=lfy_render.title;
 		});
 }
 function body_onunload()
 {
-	if(typeof(render)=="object")
-		if(render!=null)
-			if(typeof(render.terminate)=="function")
-				render.terminate();
+	if(typeof(lfy_render)=="object")
+		if(lfy_render!=null)
+			if(typeof(lfy_render.terminate)=="function")
+				lfy_render.terminate();
 }
 function body_onresize()
 {

@@ -32,7 +32,7 @@ public class extended_instance_driver extends instance_driver
 	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
 			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
 	{
-		return cr.target.main_display_target_flag?false:cr.target.selection_target_flag?false:true;
+		return (!(cr.target.main_display_target_flag||cr.target.selection_target_flag));
 	}
 	public void create_render_parameter(
 			int render_buffer_id,int parameter_channel_id,int data_buffer_id,

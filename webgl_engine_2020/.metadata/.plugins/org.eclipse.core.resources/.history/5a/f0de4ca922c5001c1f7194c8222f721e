@@ -1149,7 +1149,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 					if(typeof(cep=this.component_event_processor[event_component_id])=="object")
 						if(cep!=null)
 							if(typeof(cep.set_event_component)=="function")
-								cep.set_event_component(event_component_id,this);
+								cep.set_event_component(event_component_id,render);
 	};
 	this.upload_string=function(str_content,str_url,complete_function,error_function)
 	{

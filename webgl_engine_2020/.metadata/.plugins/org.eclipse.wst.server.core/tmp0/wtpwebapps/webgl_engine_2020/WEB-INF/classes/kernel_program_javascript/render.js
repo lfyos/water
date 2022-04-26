@@ -1143,13 +1143,13 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	this.set_event_component=function(event_component_name)
 	{
 		var cep,component_object,event_component_id
-		if((component_object=render.get_component_processor(event_component_name))!=null)
+		if((component_object=this.get_component_processor(event_component_name))!=null)
 			if((event_component_id=component_object.component_id)>=0)
-				if(event_component_id<render.component_event_processor.length)
-					if(typeof(cep=render.component_event_processor[event_component_id])=="object")
+				if(event_component_id<this.component_event_processor.length)
+					if(typeof(cep=this.component_event_processor[event_component_id])=="object")
 						if(cep!=null)
 							if(typeof(cep.set_event_component)=="function")
-								cep.set_event_component(event_component_id,render);
+								cep.set_event_component(event_component_id,this);
 	};
 	this.upload_string=function(str_content,str_url,complete_function,error_function)
 	{
