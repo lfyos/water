@@ -89,7 +89,7 @@
 						case 115://F4
 							render.system_call_processor.turnonoff_sound(false);
 							break;
-							
+
 						case 116://F5
 							break;
 						case 117://F6
@@ -120,7 +120,6 @@
 						case 48://0
 							break;
 						case 81://q
-							render.user_call_processor.reset_all();
 						case 87://w
 						case 69://e
 						case 82://r

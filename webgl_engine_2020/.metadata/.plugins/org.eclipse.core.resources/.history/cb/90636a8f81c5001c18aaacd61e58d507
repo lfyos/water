@@ -58,6 +58,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
 	
+	
+	
 	function draw_part(primitive_type,part_buffer_object,vertex_array_id,selected_flag)
 	{
 		for(var i=0,ni=part_buffer_object.region_data.length;i<ni;i++){

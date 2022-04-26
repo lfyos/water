@@ -83,35 +83,38 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		var ep=new Object();
 		ep.alf="0090";
 
-		ep.pickupmousedown=function(event,my_component_id,my_render_instance)
+		ep.pickupcontextmenu=function(event,my_component_id,my_render_instance)
 		{
 			var my_ep=my_render_instance.component_event_processor[my_component_id];
 			var alf=parseFloat(my_ep.alf);
 			
-			switch(event.button){
-			default:
-				break;
-			case 0:
-				my_render_instance.call_server_component(my_component_id,0,
-					[["operation","body_face_direct"],["coordinate","global"],
-					["type",event.shiftKey?"true":"false"]]);
-				break;
-			case 2:
-				if(event.ctrlKey)
-					if(event.altKey)
-						alf/=1000.0;
-					else
-						alf/=100.0;
+			if(event.ctrlKey)
+				if(event.altKey)
+					alf=alf/1000.0;
 				else
-					if(event.altKey)	
-						alf/=10.0;
-					else
-						alf/=1.0;
-				my_render_instance.call_server_component(my_component_id,0,
-					[["operation","body_face_rotate"],["coordinate","global"],
-					 ["type",event.shiftKey?"true":"false"],["alf",alf.toString()]]);
-				break;
-			}
+					alf=alf/100.0;
+			else
+				if(event.altKey)	
+					alf=alf/10.0;
+				else
+					alf=alf/1.0;
+			
+			my_render_instance.call_server_component(my_component_id,0,
+					[		["operation",	"body_face_rotate"],
+							["coordinate",	"global"],
+					    	["type",		event.shiftKey?"true":"false"],
+					    	["alf",			alf.toString()]
+					]);
+			return true;
+		};
+		ep.pickupdblclick=function(event,my_component_id,my_render_instance)
+		{
+			var my_ep=my_render_instance.component_event_processor[my_component_id];
+			my_render_instance.call_server_component(my_component_id,0,
+					[		["operation",	"body_face_direct"],
+							["coordinate",	"global"],
+					    	["type",		event.shiftKey?"true":"false"]
+					]);
 			return true;
 		};
 		ep.pickupkeyup=function(event,my_component_id,my_render_instance)

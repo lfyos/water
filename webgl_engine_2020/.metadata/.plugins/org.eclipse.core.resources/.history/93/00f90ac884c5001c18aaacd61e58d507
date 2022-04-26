@@ -93,8 +93,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				break;
 			case 0:
 				my_render_instance.call_server_component(my_component_id,0,
-					[["operation","body_face_direct"],["coordinate","global"],
-					["type",event.shiftKey?"true":"false"]]);
+					[["operation",	"body_face_direct"],["coordinate",	"global"],
+					["type",		event.shiftKey?"true":"false"]]);
 				break;
 			case 2:
 				if(event.ctrlKey)
@@ -108,8 +108,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					else
 						alf/=1.0;
 				my_render_instance.call_server_component(my_component_id,0,
-					[["operation","body_face_rotate"],["coordinate","global"],
-					 ["type",event.shiftKey?"true":"false"],["alf",alf.toString()]]);
+						[["operation",	"body_face_rotate"],["coordinate","global"],
+						 ["type",		event.shiftKey?"true":"false"], ["alf",alf.toString()]]);
 				break;
 			}
 			return true;

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="render."/>
+		<item key="selection" value="mousedown"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="mousedown"/>
+			<item value="dblclick"/>
 			<item value="render."/>
 			<item value="render)"/>
 			<item value="render&#x09;&#x09;."/>
@@ -21,8 +23,6 @@
 			<item value="keyd"/>
 			<item value="user_event_processor"/>
 			<item value="part_initialize_data"/>
-			<item value="par[3]"/>
-			<item value="par"/>
 		</list>
 		<list key="replacehistory">
 			<item value="this."/>
