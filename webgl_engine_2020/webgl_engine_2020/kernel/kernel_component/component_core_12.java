@@ -4,49 +4,61 @@ import kernel_common_class.change_name;
 import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
+import kernel_engine.component_container;
 import kernel_engine.engine_kernel;
 import kernel_engine.part_type_string_sorter;
 
 public class component_core_12  extends component_core_11
 {
-	public boolean selected_component_family_flag,can_display_assembly_set_flag;
-	
-	private boolean can_display_assembly_flag[];
+public String component_directory_name,component_file_name,component_charset;
 	
 	public void destroy()
 	{
 		super.destroy();
-		can_display_assembly_flag=null;
-	}
-	public boolean get_can_display_assembly_flag(int parameter_channel_id)
-	{
-		return can_display_assembly_flag[parameter_channel_id]&&can_display_assembly_set_flag;
-	}
-	public boolean caculate_assembly_flag(int parameter_channel_id)
-	{
-		int my_children_number;
-		boolean old_value=can_display_assembly_flag[parameter_channel_id];
-		can_display_assembly_flag[parameter_channel_id]=true;
-		if((my_children_number=children_number())<=0)
-			return !old_value;
 		
-		long my_display_bitmap=multiparameter[parameter_channel_id].display_bitmap;
-		for(int i=0;i<my_children_number;i++){
-			long child_display_bitmap=children[i].multiparameter[parameter_channel_id].display_bitmap;
-			if(	  (children[i].uniparameter.effective_selected_flag)
-				||(my_display_bitmap!=child_display_bitmap)
-				||(children[i].children_location_modify_flag))
-			{
-				can_display_assembly_flag[parameter_channel_id]=false;
-				return old_value;
+		component_directory_name=null;
+		component_file_name=null;
+		component_charset=null;
+	}
+	public void reset_component(component_container component_cont)
+	{
+		uniparameter.do_response_location_flag=true;
+		
+		should_caculate_location_flag=true;
+		caculate_one_selection(component_cont);
+		caculate_location(component_cont);
+		
+		for(int i=0,n=children_number();i<n;i++)
+			children[i].reset_component(component_cont);
+
+		caculate_children_location_modify_flag();
+		
+		for(int i=0,ni=multiparameter.length;i<ni;i++)
+			caculate_assembly_flag(i);
+		
+		should_caculate_box_flag=true;
+		caculate_box(true);
+		
+		for(int i=0,ni=multiparameter.length;i<ni;i++)
+			caculate_effective_display_flag(i);
+		
+		uniparameter.discard_precision2=-1;
+		for(int i=0,ni=driver_number();i<ni;i++)
+			if(driver_array[i].component_part.part_par.discard_precision2>0.0){
+				if(uniparameter.discard_precision2<0.0)
+					uniparameter.discard_precision2=driver_array[i].component_part.part_par.discard_precision2;
+				else if(driver_array[i].component_part.part_par.discard_precision2<uniparameter.discard_precision2)
+					uniparameter.discard_precision2=driver_array[i].component_part.part_par.discard_precision2;
+			}
+		for(int i=0,n=children_number();i<n;i++){
+			double child_discard_precision2=children[i].uniparameter.discard_precision2;
+			if(child_discard_precision2>0.0){
+				if(uniparameter.discard_precision2<0.0)
+					uniparameter.discard_precision2=child_discard_precision2;
+				else if(uniparameter.discard_precision2>child_discard_precision2)
+					uniparameter.discard_precision2=child_discard_precision2;
 			}
 		}
-		for(int i=0;i<my_children_number;i++){
-			boolean children_flag=children[i].get_effective_display_flag(parameter_channel_id);
-			children_flag&=children[i].get_can_display_assembly_flag(parameter_channel_id);
-			can_display_assembly_flag[parameter_channel_id]&=children_flag;
-		}
-		return (can_display_assembly_flag[parameter_channel_id])^old_value;
 	}
 	public component_core_12(String token_string,
 			engine_kernel ek,client_request_response request_response,
@@ -57,10 +69,8 @@ public class component_core_12  extends component_core_11
 		super(token_string,ek,request_response,fr,pcfps,change_part_name,
 			type_string_sorter,normalize_location_flag,part_list_flag,default_display_bitmap);
 
-		selected_component_family_flag	=false;
-		can_display_assembly_set_flag	=true;
-		can_display_assembly_flag		=new boolean[multiparameter.length];
-		for(int i=0,ni=can_display_assembly_flag.length;i<ni;i++)
-			can_display_assembly_flag[i]=true;
+		component_directory_name=fr.directory_name;
+		component_file_name		=fr.file_name;
+		component_charset		=fr.get_charset();
 	}
 }

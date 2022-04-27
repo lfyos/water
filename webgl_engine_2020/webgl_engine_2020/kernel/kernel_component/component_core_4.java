@@ -2,6 +2,7 @@ package kernel_component;
 
 import java.io.File;
 
+import kernel_part.part;
 import kernel_common_class.change_name;
 import kernel_common_class.debug_information;
 import kernel_engine.engine_kernel;
@@ -124,6 +125,102 @@ public class component_core_4 extends component_core_3
 				"my_file_name:	"+my_file_name+"component_name:	"+component_name);
 		return null;
 	}
+	private String [][]part_driver_mount(file_reader fr,
+			engine_kernel ek,client_request_response request_response)
+	{
+		String ret_val[][];
+		if(driver_number()<=0)  {
+			debug_information.println(
+				"Part_driver driver assemble_file_name_and_file_charset error(driver_number()<=0):	",
+				"component_name:	"+component_name);
+			return null;
+		}
+		if(driver_array[0].component_part==null) {
+			debug_information.println(
+				"Part_driver driver assemble_file_name_and_file_charset error(driver_array[0].component_part==null):	",
+				"component_name:	"+component_name);
+			return null;
+		}
+		if(driver_array[0].component_part.driver==null) {
+			debug_information.println(
+				"Part_driver driver assemble_file_name_and_file_charset error(driver_array[0].component_part.driver==null):	",
+				"component_name:	"+component_name);
+			return null;
+		}
+		if((ret_val=driver_array[0].component_part.driver.assemble_file_name_and_file_charset(
+			fr,driver_array[0].component_part,ek,request_response))==null)
+		{
+			debug_information.println(
+				"Part_driver driver assemble_file_name_and_file_charset error(ret_val==null):	",
+				"component_name:	"+component_name);
+			return null;
+		}
+		if(ret_val.length<=0) {
+			debug_information.println(
+				"Part_driver driver assemble_file_name_and_file_charset error(ret_val.length<=0):	",
+				"component_name:	"+component_name);
+			return null;
+		}
+		return ret_val;
+	}
+	private String [][]external_part_driver_mount(change_name change_part_name,
+			file_reader fr,part_container_for_part_search pcfps,
+			engine_kernel ek,client_request_response request_response)
+	{
+		String ret_val[][],external_part_name;
+		if((external_part_name=fr.get_string())==null) {
+			debug_information.println(
+				"external_part_driver driver assemble_file_name_and_file_charset error(external_part_name==null):	",
+				"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
+			return null;
+		}
+		part par[];
+		String search_part_name=change_part_name.search_change_name(external_part_name,external_part_name);
+		if((par=pcfps.search_part(search_part_name))==null){
+			search_part_name=change_part_name.search_change_name(search_part_name,search_part_name);
+			par=pcfps.search_part(search_part_name);
+		}
+		if(par==null) {
+			debug_information.println(
+				"external_part_driver driver assemble_file_name_and_file_charset error(par==null):	",
+				"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
+			return null;
+		}
+		if(par.length<1) {
+			debug_information.println(
+				"external_part_driver driver assemble_file_name_and_file_charset error(par.length<1):	",
+				"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
+			return null;
+		}
+		if(par[0].driver==null) {
+			debug_information.println(
+				"external_part_driver driver assemble_file_name_and_file_charset error(par[0].driver==null):	",
+				"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
+			return null;
+		}
+		try {
+			ret_val=par[0].driver.assemble_file_name_and_file_charset(fr,par[0],ek,request_response);
+		}catch(Exception e) {
+			debug_information.println(
+				"external_part_driver driver assemble_file_name_and_file_charset execption:	",
+				"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
+			e.printStackTrace();
+			return null;
+		}
+		if(ret_val==null) {
+			debug_information.println(
+					"external_part_driver driver assemble_file_name_and_file_charset error(ret_val==null):	",
+					"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
+			return null;
+		}
+		if(ret_val.length<=0) {
+			debug_information.println(
+					"external_part_driver driver assemble_file_name_and_file_charset error(ret_val.length<=0):	",
+					"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
+			return null;
+		}
+		return ret_val;
+	}
 	private void append_children(file_reader fr,
 			String token_string,engine_kernel ek,client_request_response request_response,
 			part_container_for_part_search pcfps,change_name change_part_name,
@@ -212,8 +309,13 @@ public class component_core_4 extends component_core_3
 				fr.insert_string(new String[] {str+ek.scene_par.scene_sub_directory+fr.get_string()});
 				assemble_file_name_array=charset_file_mount(fr,ek);
 				break;
+			case "part_driver_mount":
+				assemble_file_name_array=part_driver_mount(fr,ek,request_response);
+				break;
+			case "external_part_driver_mount":
+				assemble_file_name_array=external_part_driver_mount(change_part_name,fr,pcfps,ek,request_response);
+				break;
 			}
-
 			if(assemble_file_name_array==null)
 				continue;
 			for(int i=0,ni=assemble_file_name_array.length;i<ni;i++) {

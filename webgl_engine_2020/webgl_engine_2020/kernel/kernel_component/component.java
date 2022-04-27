@@ -7,7 +7,7 @@ import kernel_common_class.change_name;
 import kernel_engine.engine_kernel;
 import kernel_engine.part_type_string_sorter;
 
-public class component extends component_core_13
+public class component extends component_core_12
 {
 	public long render_touch_time;
 	

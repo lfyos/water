@@ -7,59 +7,84 @@ import kernel_engine.part_type_string_sorter;
 import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
+import kernel_transformation.location;
 
 public class component_core_8 extends component_core_7
 {
-	private boolean display_flag[],effective_display_flag[];
-
+private long location_version,absolute_location_version;
+	
+	public void update_location_version()
+	{
+		location_version++;
+	}
+	public long get_location_version()
+	{
+		return location_version;
+	}
+	public long get_absolute_location_version()
+	{
+		return absolute_location_version;
+	}
+	public boolean should_caculate_location_flag,should_caculate_box_flag;
+	public location move_location,parent_and_relative_location,absolute_location;
+	
 	public void destroy()
 	{
 		super.destroy();
-		display_flag=null;
-		effective_display_flag=null;
+		
+		move_location=null;
+		parent_and_relative_location=null;
+		absolute_location=null;
 	}
-	public boolean get_effective_display_flag(int parameter_channel_id)
+	public location caculate_location(component_container component_cont)
 	{
-		return effective_display_flag[parameter_channel_id];
-	}
-	public boolean caculate_effective_display_flag(int parameter_channel_id)
-	{
-		int child_number=children_number();
-		boolean old_effective_display_flag=effective_display_flag[parameter_channel_id];
-
-		if(child_number<=0)
-			effective_display_flag[parameter_channel_id]=display_flag[parameter_channel_id];
-		else{
-			effective_display_flag[parameter_channel_id]=false;
-			if(display_flag[parameter_channel_id])
-				for(int i=0;i<child_number;i++)
-					effective_display_flag[parameter_channel_id]|=children[i].get_effective_display_flag(parameter_channel_id);
-		}
-		return effective_display_flag[parameter_channel_id]^old_effective_display_flag;
-	}
-	public void modify_display_flag(int parameter_channel_id[],
-		boolean new_display_flag,component_container component_cont)
-	{
-		int buffer_channel_number=0,buffer_channel_id[]=new int[parameter_channel_id.length];
-		for(int i=0,ni=parameter_channel_id.length;i<ni;i++)
-			if(display_flag[parameter_channel_id[i]]^new_display_flag){
-				display_flag[parameter_channel_id[i]]=new_display_flag;
-				buffer_channel_id[buffer_channel_number++]=parameter_channel_id[i];
+		component parent;
+		if(should_caculate_location_flag){
+			should_caculate_location_flag=false;
+			absolute_location_version++;
+			
+			should_caculate_box_flag=true;
+			parent_and_relative_location=relative_location;
+			if((parent=component_cont.get_component(parent_component_id))!=null)
+				parent_and_relative_location=parent.absolute_location.multiply(parent_and_relative_location);	
+			if(uniparameter.cacaulate_location_flag)
+				absolute_location=move_location;
+			else
+				absolute_location=parent_and_relative_location.multiply(move_location);
+			for(int i=0,n=children_number();i<n;i++){
+				children[i].should_caculate_location_flag=true;
+				children[i].should_caculate_box_flag=true;
 			}
-		if(buffer_channel_number<=0)
+		}
+		return absolute_location;
+	}
+	
+	public void recurse_caculate_location(component_container component_cont)
+	{
+		component parent_comp;
+		if((parent_comp=component_cont.get_component(parent_component_id))!=null)
+			parent_comp.recurse_caculate_location(component_cont);
+		caculate_location(component_cont);
+	}
+	public void modify_location(location new_move_location,component_container component_cont)
+	{	
+		component parent;
+		if((parent=component_cont.get_component(parent_component_id))==null)
 			return;
-		for(component p=(component)this;p!=null;) {
-			int modify_number=0;
-			for(int i=0;i<buffer_channel_number;i++){
-				if(p.caculate_effective_display_flag(buffer_channel_id[i]))
-					modify_number++;
-				if(p.caculate_assembly_flag(buffer_channel_id[i]))
-					modify_number++;
-			}
-			p=(modify_number<=0)?null:component_cont.get_component(p.parent_component_id);
+		
+		move_location=new location(new_move_location);
+		location_version++;
+		should_caculate_location_flag=true;
+		should_caculate_box_flag=true;
+		
+		for(component p=parent;p!=null;p=component_cont.get_component(p.parent_component_id)){
+			p.should_caculate_box_flag=true;
+			p.caculate_children_location_modify_flag();
+			for(int i=0,ni=p.multiparameter.length;i<ni;i++)
+				p.caculate_assembly_flag(i);
 		}
+		caculate_location(component_cont);
 	}
-
 	public component_core_8(String token_string,
 			engine_kernel ek,client_request_response request_response,
 			file_reader fr,part_container_for_part_search pcfps,change_name change_part_name,
@@ -69,11 +94,12 @@ public class component_core_8 extends component_core_7
 		super(token_string,ek,request_response,fr,pcfps,change_part_name,
 			type_string_sorter,normalize_location_flag,part_list_flag,default_display_bitmap);
 
-		display_flag			=new boolean[multiparameter.length];
-		effective_display_flag	=new boolean[multiparameter.length];
-		for(int i=0,ni=multiparameter.length;i<ni;i++) {
-			display_flag[i]=true;
-			effective_display_flag[i]=true;
-		}
+		location_version				=1;
+		absolute_location_version		=1;
+		move_location					=new location();
+		parent_and_relative_location	=new location();
+		absolute_location				=new location();
+		should_caculate_location_flag	=true;
+		should_caculate_box_flag		=true;
 	}
 }
