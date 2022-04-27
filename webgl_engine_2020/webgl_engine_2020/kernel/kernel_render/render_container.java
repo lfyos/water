@@ -2,7 +2,6 @@ package kernel_render;
 
 import java.io.File;
 
-import kernel_common_class.change_name;
 import kernel_common_class.debug_information;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
@@ -25,7 +24,6 @@ public class render_container
 {
 	public render renders[];
 	public part_package system_part_package,type_part_package,scene_part_package;
-	public change_name mount_component_name_and_assemble_file_name;
 	
 	public void destroy()
 	{
@@ -48,10 +46,6 @@ public class render_container
 		if(scene_part_package!=null) {
 			scene_part_package.destroy();
 			scene_part_package=null;
-		}
-		if(mount_component_name_and_assemble_file_name!=null) {
-			mount_component_name_and_assemble_file_name.destroy();
-			mount_component_name_and_assemble_file_name=null;
 		}
 	}
 	public part[] part_array(boolean part_mesh_flag,int part_type_id)
@@ -243,8 +237,7 @@ public class render_container
 			String get_part_list_result[];
 			try{
 				get_part_list_result=ren.driver.get_part_list(part_type_id,
-					f_render_list,load_sub_directory_name,part_par,system_par,scene_par,
-					mount_component_name_and_assemble_file_name,request_response);
+					f_render_list,load_sub_directory_name,part_par,system_par,scene_par,request_response);
 			}catch(Exception e){
 				debug_information.println("Execute get_part_list fail:		",e.toString());
 				debug_information.println("Driver name:		",	driver_name);
@@ -287,18 +280,17 @@ public class render_container
 				par_list_f.setLastModified(f_render_list.lastModified_time);
 			
 			debug_information.println();
-			debug_information.print  ("Begin load part list file:	",	get_part_list_result[0]);
+			debug_information.println("Begin load part list file:	",	get_part_list_result[0]);
 			debug_information.println("part parameter file:		",		part_parameter_file_name);
 
 			int render_id=(renders==null)?0:renders.length;
 			ren.add_part(not_real_scene_fast_load_flag,
 				pcps,ren.driver,part_type_id,render_id,part_par,system_par,get_part_list_result[0],
 				(get_part_list_result.length>1)?get_part_list_result[1]:f_render_list.get_charset(),
-				"part_mesh_"+Integer.toString(render_id)+"_",mount_component_name_and_assemble_file_name,
-				request_response);
+				"part_mesh_"+Integer.toString(render_id)+"_",request_response);
 
 			debug_information.println();
-			debug_information.print  ("End load part list file:	",	get_part_list_result[0]);
+			debug_information.println("End load part list file:	",	get_part_list_result[0]);
 			debug_information.println("part parameter file:		",	part_parameter_file_name);
 		}
 
@@ -343,8 +335,8 @@ public class render_container
 		for(String str;!(f_shader.eof());){
 			String render_name=(str=f_shader.get_string())==null?"":str.trim();
 			String driver_name=(str=f_shader.get_string())==null?"":str.trim();	
-			debug_information.print  ("render name:	",	render_name);
-			debug_information.print  ("Driver name:	",	driver_name);
+			debug_information.println("render name:	",	render_name);
+			debug_information.println("Driver name:	",	driver_name);
 			
 			render ren=new render(render_name,driver_name,request_response,system_par,scene_par);
 			if(ren.driver==null) {
@@ -352,8 +344,7 @@ public class render_container
 				continue;
 			}
 			String render_list_file_name[]=ren.driver.get_render_list(
-					part_type_id,f_shader,load_sub_directory_name,system_par,scene_par,
-					mount_component_name_and_assemble_file_name,request_response);
+					part_type_id,f_shader,load_sub_directory_name,system_par,scene_par,request_response);
 			if(render_list_file_name==null) {
 				debug_information.print  ("render list file is NULL	",	driver_name);
 				continue;
@@ -391,7 +382,6 @@ public class render_container
 		system_part_package		=new part_package();
 		type_part_package		=new part_package();
 		scene_part_package		=new part_package();
-		mount_component_name_and_assemble_file_name=new change_name();
 	}
 	public render_container(render_container ren_con,client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
@@ -406,7 +396,5 @@ public class render_container
 		system_part_package	=new part_package(ren_con.system_part_package);
 		type_part_package	=new part_package(ren_con.type_part_package);
 		scene_part_package	=new part_package(ren_con.scene_part_package);
-		mount_component_name_and_assemble_file_name=new change_name(
-				ren_con.mount_component_name_and_assemble_file_name,false);
 	}
 }

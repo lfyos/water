@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="mousedown"/>
+		<item key="selection" value="parameter.txt"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="parameter.txt"/>
+			<item value="relative"/>
+			<item value="driver_opengl_fixed_pipeline"/>
+			<item value="&#x09;null&#x09;null"/>
+			<item value="&#x09;&#x09;null&#x09;null"/>
+			<item value="mount"/>
+			<item value="scene_sub_directory"/>
+			<item value="sub"/>
+			<item value="initialization"/>
+			<item value="&quot;normalize_location&quot;"/>
 			<item value="mousedown"/>
 			<item value="dblclick"/>
 			<item value="render."/>
 			<item value="render)"/>
 			<item value="render&#x09;&#x09;."/>
-			<item value="render&#x09;."/>
-			<item value="render"/>
-			<item value="this.set_event_component=function(event_component_name)"/>
-			<item value="register_collector_stack_monitor"/>
-			<item value="lod"/>
-			<item value="scale_mount_time_length"/>
-			<item value="system_event_processor"/>
-			<item value="keyd"/>
-			<item value="user_event_processor"/>
-			<item value="part_initialize_data"/>
 		</list>
 		<list key="replacehistory">
+			<item value="parameter.txt&#x09;relative"/>
+			<item value=""/>
 			<item value="this."/>
 			<item value="ep.function_id"/>
 			<item value="ep."/>
@@ -32,14 +34,12 @@
 			<item value="pickup_exit_flag"/>
 			<item value="ek.modifier_cont.clear_modifier(ek,ci);"/>
 			<item value="ek.modifier_cont"/>
-			<item value=""/>
 			<item value="0"/>
 			<item value="/*&#x09;max_modifier_container_number&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;1"/>
 			<item value="6"/>
 			<item value="interface_part"/>
 			<item value="instance_initialize_data"/>
 			<item value="ep.instance_initialize_data"/>
-			<item value="travel_operate_flag"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

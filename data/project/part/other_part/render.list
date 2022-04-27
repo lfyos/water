@@ -1,7 +1,7 @@
-chengguangqing	any_assemble_part_name	parameter.txt	part_inp\part.list			null	null
-test			any_assemble_part_name	parameter.txt	part_stl\part.list			null	null
-test			any_assemble_part_name	parameter.txt	part_obj\part.list			null	null
-test			any_assemble_part_name	parameter.txt	part_obj\part.1000.list		null	null
-test			any_assemble_part_name	parameter.txt	part_obj\boat.list			null	null
-liyixuan		any_assemble_part_name	parameter.txt	part_liyixuan\part.list		null	null
+chengguangqing	any_assemble_part_name	parameter.txt	relative	part_inp\part.list	
+test			any_assemble_part_name	parameter.txt	relative	part_stl\part.list	
+test			any_assemble_part_name	parameter.txt	relative	part_obj\part.list	
+test			any_assemble_part_name	parameter.txt	relative	part_obj\part.1000.list
+test			any_assemble_part_name	parameter.txt	relative	part_obj\boat.list	
+liyixuan		any_assemble_part_name	parameter.txt	relative	part_liyixuan\part.list
 

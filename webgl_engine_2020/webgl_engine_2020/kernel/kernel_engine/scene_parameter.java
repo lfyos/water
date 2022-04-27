@@ -17,7 +17,7 @@ public class scene_parameter
 	
 	public String type_proxy_directory_name,scene_proxy_directory_name;
 	public String type_shader_file_name,scene_shader_file_name,camera_file_name;
-	public String change_part_file_name,change_component_file_name,mount_component_file_name;
+	public String change_part_file_name,change_component_file_name;
 	public String type_string_file_name;
 	
 	public int part_lru_in_list_number;
@@ -146,11 +146,6 @@ public class scene_parameter
 			change_component_file_name="";
 		else
 			change_component_file_name=file_reader.separator(change_component_file_name);
-		
-		if((mount_component_file_name=fr.get_string())==null)
-			mount_component_file_name="";
-		else
-			mount_component_file_name=file_reader.separator(mount_component_file_name);
 		
 		if((type_string_file_name=fr.get_string())==null)
 			type_string_file_name="";

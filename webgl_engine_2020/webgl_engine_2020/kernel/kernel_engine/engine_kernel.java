@@ -271,13 +271,6 @@ public class engine_kernel
 		part_cont_for_delete_file=new part_container_for_delete_part_file();
 
 		render_cont=new render_container(render_cont,request_response,system_par,scene_par);
-		render_cont.mount_component_name_and_assemble_file_name.append(
-			new change_name(
-				new String[]{
-						scene_par.directory_name+scene_par.mount_component_file_name,
-						scene_par.extra_directory_name+scene_par.mount_component_file_name,
-						scene_f.directory_name	+scene_par.mount_component_file_name
-				},scene_par.mount_component_string,scene_par.parameter_charset));
 		part_cont=new part_container_for_part_search(render_cont.part_array(true,-1));
 
 		start_time=new Date().getTime();

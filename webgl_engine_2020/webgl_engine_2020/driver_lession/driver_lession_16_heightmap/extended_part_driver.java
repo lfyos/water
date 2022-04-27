@@ -115,11 +115,6 @@ public class extended_part_driver extends part_driver
 				new point(b.p[0].y*model_scale[0],	0,				b.p[0].x*model_scale[2]),
 				new point(b.p[1].y*model_scale[0],	model_scale[1],	b.p[1].x*model_scale[2]));
 	}
-	public String [][]assemble_file_name_and_file_charset(file_reader fr,part p,
-			engine_kernel ek,client_request_response request_response)
-	{
-		return null;
-	}
 	public String[] response_event(part p,engine_kernel ek,client_information ci)
 	{
 		return super.response_event(p,ek,ci);

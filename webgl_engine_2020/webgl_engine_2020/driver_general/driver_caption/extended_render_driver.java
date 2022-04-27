@@ -1,6 +1,5 @@
 package driver_caption;
 
-import kernel_common_class.change_name;
 import kernel_driver.part_driver;
 import kernel_driver.render_driver;
 import kernel_engine.client_information;
@@ -41,24 +40,21 @@ public class extended_render_driver extends render_driver
 	{
 		return new extended_render_driver();
 	}
-	public String[] get_render_list(int part_type_id,
-			file_reader shader_fr,String load_sub_directory_name,
-			system_parameter system_par,scene_parameter scene_par,
-			change_name mount_component_name_and_assemble_file_name,
-			client_request_response request_response)
+	public String[] get_render_list(int part_type_id,file_reader shader_fr,String load_sub_directory_name,
+			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
 	{
 		String render_list_file_name=file_reader.separator(shader_fr.get_string());
 		return new String[] {shader_fr.directory_name+render_list_file_name,shader_fr.get_charset()};
 	}
-	public String[] get_part_list(int part_type_id,file_reader render_fr,String load_sub_directory_name,
-			part_parameter part_par,system_parameter system_par,scene_parameter scene_par,
-			change_name mount_component_name_and_assemble_file_name,client_request_response request_response)
+	public String[] get_part_list(
+			int part_type_id,file_reader render_fr,String load_sub_directory_name,part_parameter part_par,
+			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
 	{
 		String par_list_file_name=file_reader.separator(render_fr.get_string());
 		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
 	}
-	public part_driver create_part_driver(file_reader part_fr,part p,system_parameter system_par,
-			change_name mount_component_name_and_assemble_file_name,client_request_response request_response)
+	public part_driver create_part_driver(file_reader part_fr,part p,
+			system_parameter system_par,client_request_response request_response)
 	{
 		return new extended_part_driver(p,system_par,request_response);
 	}

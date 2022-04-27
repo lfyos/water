@@ -13,10 +13,9 @@ public class component_core_6 extends component_core_5
 	{
 		super.destroy();
 	}
-	private void decrease_children_number(String token_string,engine_kernel ek,
-			client_request_response request_response,part_container_for_part_search pcfps,
-			file_reader fr,change_name change_part_name,change_name mount_component_name,
-			part_type_string_sorter type_string_sorter,long default_display_bitmap)
+	private void decrease_children_number(
+			String token_string,engine_kernel ek,client_request_response request_response,part_container_for_part_search pcfps,
+			file_reader fr,change_name change_part_name,part_type_string_sorter type_string_sorter,long default_display_bitmap)
 	{
 		if(children==null)
 			return;
@@ -59,8 +58,8 @@ public class component_core_6 extends component_core_5
 					"0","0","0","1",
 					"0"
 				});
-				children[i]=new component(token_string,ek,request_response,fr,pcfps,
-					change_part_name,mount_component_name,type_string_sorter,
+				children[i]=new component(
+					token_string,ek,request_response,fr,pcfps,change_part_name,type_string_sorter,
 					uniparameter.normalize_location_flag,uniparameter.part_list_flag,default_display_bitmap);
 
 				children[i].children=new component[(bak_children.length-collect_number)/(ni-i)];
@@ -72,15 +71,14 @@ public class component_core_6 extends component_core_5
 	
 	public component_core_6(String token_string,
 			engine_kernel ek,client_request_response request_response,
-			file_reader fr,part_container_for_part_search pcfps,
-			change_name change_part_name,change_name mount_component_name,
+			file_reader fr,part_container_for_part_search pcfps,change_name change_part_name,
 			part_type_string_sorter type_string_sorter,boolean normalize_location_flag,
 			boolean part_list_flag,long default_display_bitmap)
 	{
-		super(token_string,ek,request_response,fr,pcfps,change_part_name,mount_component_name,
+		super(token_string,ek,request_response,fr,pcfps,change_part_name,
 			type_string_sorter,normalize_location_flag,part_list_flag,default_display_bitmap);
 		decrease_children_number(token_string,ek,request_response,pcfps,fr,
-			change_part_name,mount_component_name,type_string_sorter,default_display_bitmap);
+			change_part_name,type_string_sorter,default_display_bitmap);
 		for(int i=0,ni=children_number();i<ni;i++)
 			if(uniparameter.file_last_modified_time<children[i].uniparameter.file_last_modified_time)
 				uniparameter.file_last_modified_time=children[i].uniparameter.file_last_modified_time;

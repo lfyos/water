@@ -2,7 +2,6 @@ package kernel_render;
 
 import java.io.File;
 
-import kernel_common_class.change_name;
 import kernel_common_class.debug_information;
 import kernel_driver.render_driver;
 import kernel_engine.system_parameter;
@@ -145,7 +144,7 @@ public class render
 			part_container_for_part_search pcps,render_driver r_driver,int part_type_id,
 			int add_render_id,part_parameter part_par,system_parameter system_par,
 			String file_name,String file_charset,String pre_buffer_object_file_name,
-			change_name mount_component_name_and_assemble_file_name,client_request_response request_response)
+			client_request_response request_response)
 	{
 		file_reader f=new file_reader(file_name,file_charset);
 		if(f.error_flag()) {
@@ -194,8 +193,7 @@ public class render
 				add_part(add_render_id,my_part);
 				
 				try{
-					my_part.driver=r_driver.create_part_driver(f,my_part,system_par,
-							mount_component_name_and_assemble_file_name,request_response);
+					my_part.driver=r_driver.create_part_driver(f,my_part,system_par,request_response);
 				}catch(Exception e){
 					my_part.driver=null;
 					debug_information.println("Create part driver fail:",e.toString());

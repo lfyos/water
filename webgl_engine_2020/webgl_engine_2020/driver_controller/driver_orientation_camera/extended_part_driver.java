@@ -69,11 +69,6 @@ public class extended_part_driver extends part_driver
 	{
 		return null;//super.caculate_part_box(p,comp,driver_id,body_id,face_id,loop_id,edge_id,point_id,p0,p1);
 	}
-	public String [][]assemble_file_name_and_file_charset(file_reader fr,part p,
-			engine_kernel ek,client_request_response request_response)
-	{
-		return null;
-	}
 	public String[] response_event(part p,engine_kernel ek,client_information ci)
 	{
 		if(ci.display_camera_result==null)

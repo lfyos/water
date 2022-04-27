@@ -62,12 +62,11 @@ public class component_core_13 extends component_core_12
 	}
 	public component_core_13(String token_string,
 			engine_kernel ek,client_request_response request_response,
-			file_reader fr,part_container_for_part_search pcfps,
-			change_name change_part_name,change_name mount_component_name,
+			file_reader fr,part_container_for_part_search pcfps,change_name change_part_name,
 			part_type_string_sorter type_string_sorter,boolean normalize_location_flag,
 			boolean part_list_flag,long default_display_bitmap)
 	{
-		super(token_string,ek,request_response,fr,pcfps,change_part_name,mount_component_name,
+		super(token_string,ek,request_response,fr,pcfps,change_part_name,
 			type_string_sorter,normalize_location_flag,part_list_flag,default_display_bitmap);
 
 		component_directory_name=fr.directory_name;

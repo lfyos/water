@@ -199,26 +199,14 @@ public class component_container
 			debug_information.println("Begin loading scene");
 
 			try{
-				root_component=new component("",ek,request_response,scene_f,ek.part_cont,change_part_name,
-					ek.render_cont.mount_component_name_and_assemble_file_name,my_type_string_sorter,
-					false,true,default_display_bitmap);
+				root_component=new component("",ek,request_response,scene_f,
+					ek.part_cont,change_part_name,my_type_string_sorter,false,true,default_display_bitmap);
 			}catch(Exception e){
 				root_component=null;
 				debug_information.println("Create scene from file exception:",scene_f.directory_name+scene_f.file_name);
 				e.printStackTrace();
 			}
-			
-			String p[][]=ek.render_cont.mount_component_name_and_assemble_file_name.data_array;
-			
-			if(p!=null)
-				if(p.length>0) {
-					debug_information.println();
-					for(int i=0,ni=p.length;i<ni;i++) {
-						debug_information.print  ("Unused mount file,	component name:	",p[i][0]);
-						debug_information.println("		file path:	",p[i][1]);
-					}
-					debug_information.println();
-				}
+
 			debug_information.println();
 			debug_information.println("End loading assemble");
 			debug_information.println();

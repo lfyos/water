@@ -49,15 +49,16 @@
 /*	render_43	*/	lession_19_caculate_color						driver_lession_19_caculate_color.extended_render_driver							driver_lession\lession_19_caculate_color\render.list
 
 /*	########################	driver_project		#######################		*/
-/*	render_44	*/	territory			driver_territory.extended_render_driver											..\project\part\territory\render.list
-/*	render_45	*/	water				driver_water.extended_render_driver												..\project\part\water\render.list
+/*	render_44	*/	territory	driver_territory.extended_render_driver					..\project\part\territory\render.list
+/*	render_45	*/	water		driver_water.extended_render_driver						..\project\part\water\render.list
 
-/*	render_46	*/	solidworks			driver_opengl_fixed_pipeline.extended_render_driver								..\project\part\solidworks\render.list
-											relative	./		shader_material.txt			light.txt
+/*	render_46	*/	solidworks	driver_opengl_fixed_pipeline.extended_render_driver		..\project\part\solidworks\render.list
+								..\project\part\solidworks\shader_material.txt			..\project\part\solidworks\light.txt
 
 /*	########################	various obj files		#######################		*/
-/*	render_47	*/	other_part			driver_opengl_fixed_pipeline.extended_render_driver								..\project\part\other_part\render.list
-											relative	./		shader_material.txt			light.txt
+/*	render_47	*/	other_part	driver_opengl_fixed_pipeline.extended_render_driver		..\project\part\other_part\render.list
+								..\project\part\other_part\shader_material.txt			..\project\part\other_part\light.txt
+
 /*	########################	driver_project_boat_2011	#######################		*/
-/*	render_48	*/	boat				driver_opengl_fixed_pipeline.extended_render_driver								..\project\boat\part\render.list
-											relative	./		shader_material.txt			light.txt
+/*	render_48	*/	boat		driver_opengl_fixed_pipeline.extended_render_driver		..\project\boat\part\render.list
+								..\project\boat\part\shader_material.txt				..\project\boat\part\light.txt
