@@ -5,6 +5,7 @@ import kernel_engine.engine_kernel;
 import kernel_transformation.point;
 import kernel_transformation.plane;
 import kernel_common_class.const_value;
+import kernel_component.component;
 
 public class distance_tag_array
 {
@@ -65,7 +66,7 @@ public class distance_tag_array
 		int tag_index=Integer.parseInt(str);
 		if((tag_index<0)||(tag_index>=distance_tag_array.length))
 			return true;
-		distance_tag_array[tag_index].set_tag_str(display_precision,ek,ci);
+		distance_tag_array[tag_index].set_tag_str(operate_component_id,display_precision,ek,ci);
 		return false;
 	}
 	public boolean touch_distance_tag(engine_kernel ek,client_information ci)
@@ -100,7 +101,7 @@ public class distance_tag_array
 					p.py=p.py.expand(my_point.distance()/100);
 				p.py=p.py.add(p.p0);
 				
-				p.set_tag_str(display_precision,ek,ci);
+				p.set_tag_str(operate_component_id,display_precision,ek,ci);
 				return false;
 			}
 			case 1://confirm third point
@@ -135,7 +136,7 @@ public class distance_tag_array
 					return true;
 		
 				p.py=my_point;
-				p.set_tag_str(display_precision,ek,ci);
+				p.set_tag_str(operate_component_id,display_precision,ek,ci);
 				return false;
 			}
 			default:
@@ -147,7 +148,10 @@ public class distance_tag_array
 	public boolean mark_distance_tag(engine_kernel ek,client_information ci)
 	{
 		point my_point;
+		component comp;
 		distance_tag_item p;
+
+		operate_component_id=((comp=ek.component_cont.search_component())==null)?-1:comp.component_id;
 		
 		for(int i=0,ni=distance_tag_array.length;i<ni;i++) {
 			switch((p=distance_tag_array[i]).state) {
@@ -166,7 +170,7 @@ public class distance_tag_array
 				if(my_point.distance2()<(min_view_distance*min_view_distance))
 					return true;
 				p.state=1;
-				p.set_tag_str(display_precision,ek,ci);
+				p.set_tag_str(operate_component_id,display_precision,ek,ci);
 				return false;
 			case 1://confirm third point
 				if(p.py.sub(p.p0).distance2()<const_value.min_value2)
@@ -179,7 +183,7 @@ public class distance_tag_array
 					return true;
 				
 				p.state=2;
-				p.set_tag_str(display_precision,ek,ci);
+				p.set_tag_str(operate_component_id,display_precision,ek,ci);
 				return false;
 			default:
 				break;
@@ -192,7 +196,7 @@ public class distance_tag_array
 			for(int i=0,ni=bak.length;i<ni;i++)
 				distance_tag_array[i]=bak[i];
 			p=new distance_tag_item(ci.parameter.comp.absolute_location.multiply(my_point));
-			p.set_tag_str(display_precision,ek,ci);
+			p.set_tag_str(operate_component_id,display_precision,ek,ci);
 			distance_tag_array[distance_tag_array.length-1]=p;
 		}
 		return false;

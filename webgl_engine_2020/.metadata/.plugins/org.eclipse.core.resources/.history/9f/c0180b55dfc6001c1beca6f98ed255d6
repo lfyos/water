@@ -10,14 +10,10 @@ import kernel_part.part;
 public class extended_component_driver  extends component_driver
 {
 	private distance_tag_array tag_array;
-	
 	public void destroy()
 	{
 		super.destroy();
-		if(tag_array!=null) {
-			tag_array.destroy();
-			tag_array=null;
-		}
+		tag_array.destroy();
 	}
 	public extended_component_driver(part my_component_part,distance_tag_array my_tag_array)
 	{

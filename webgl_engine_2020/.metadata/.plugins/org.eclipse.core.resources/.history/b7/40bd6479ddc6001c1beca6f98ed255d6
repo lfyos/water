@@ -15,6 +15,11 @@ public class extended_instance_driver extends instance_driver
 	public void destroy()
 	{
 		super.destroy();
+		
+		if(tag_array!=null) {
+			tag_array.destroy();
+			tag_array=null;
+		}
 	}
 	public extended_instance_driver(component my_comp,int my_driver_id,distance_tag_array my_tag_array)
 	{
@@ -78,7 +83,7 @@ public class extended_instance_driver extends instance_driver
 				return null;
 			break;
 		}
-		comp.driver_array[driver_id].update_component_parameter_version();
+		update_component_parameter_version(0);
 		return null;
 	}
 }

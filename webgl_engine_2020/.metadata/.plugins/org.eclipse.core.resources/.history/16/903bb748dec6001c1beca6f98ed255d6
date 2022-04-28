@@ -58,6 +58,8 @@ public class distance_tag_item
 		case 6://local Z direction
 			if((comp=ek.component_cont.search_component())==null)
 				break;
+			if(comp.component_id==ek.component_cont.root_component.component_id)
+				break;
 			function_id-=4;
 			title=new String[]{"LX:","LY:","LZ:"};
 			data=new double[][] {new double[] {1,0,0},new double[] {0,1,0},new double[] {0,0,1}};
@@ -94,6 +96,8 @@ public class distance_tag_item
 		case 14://local YZ plane
 		case 15://local ZX plane
 			if((comp=ek.component_cont.search_component())==null)
+				break;
+			if(comp.component_id==ek.component_cont.root_component.component_id)
 				break;
 			function_id-=13;
 			title=new String[]{"LXY:","LYZ:","LZX:"};

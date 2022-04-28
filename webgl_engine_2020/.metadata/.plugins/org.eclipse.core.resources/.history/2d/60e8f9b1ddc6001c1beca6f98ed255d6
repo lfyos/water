@@ -5,6 +5,7 @@ import kernel_engine.engine_kernel;
 import kernel_transformation.point;
 import kernel_transformation.plane;
 import kernel_common_class.const_value;
+import kernel_component.component;
 
 public class distance_tag_array
 {
@@ -147,6 +148,7 @@ public class distance_tag_array
 	public boolean mark_distance_tag(engine_kernel ek,client_information ci)
 	{
 		point my_point;
+		component comp;
 		distance_tag_item p;
 		
 		for(int i=0,ni=distance_tag_array.length;i<ni;i++) {

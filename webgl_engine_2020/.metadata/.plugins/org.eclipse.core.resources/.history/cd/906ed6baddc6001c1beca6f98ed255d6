@@ -5,6 +5,7 @@ import kernel_engine.engine_kernel;
 import kernel_transformation.point;
 import kernel_transformation.plane;
 import kernel_common_class.const_value;
+import kernel_component.component;
 
 public class distance_tag_array
 {
