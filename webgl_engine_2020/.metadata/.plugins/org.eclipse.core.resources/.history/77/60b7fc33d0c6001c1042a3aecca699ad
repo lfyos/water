@@ -177,9 +177,8 @@ public class extended_instance_driver extends instance_driver
 				ci.request_response.println("-1");
 				break;
 			}
-			ci.request_response.println(
-				cmc.append_component_marker(operate_comp,
-					marker_text,operated_point.x,operated_point.y,operated_point.z));
+			ci.request_response.println(cmc.append_component_marker(operate_comp,
+						marker_text,operated_point.x,operated_point.y,operated_point.z));
 			comp.driver_array[driver_id].update_component_parameter_version();
 			break;
 		}

@@ -11,7 +11,7 @@ import kernel_transformation.location;
 
 public class component_core_8 extends component_core_7
 {
-	private long location_version,absolute_location_version;
+private long location_version,absolute_location_version;
 	
 	public void update_location_version()
 	{
