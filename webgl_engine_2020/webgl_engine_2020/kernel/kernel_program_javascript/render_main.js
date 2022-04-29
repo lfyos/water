@@ -158,7 +158,6 @@ function render_initialization(initialization_url,my_render,user_initialization_
 					continue;
 				}
 			}
-
 			if(typeof(user_initialization_function)=="function")
 				user_initialization_function(render);
 			
@@ -344,11 +343,12 @@ function render_main(create_engine_sleep_time_length_scale,
 	my_scene_name,my_link_name,my_initialization_parameter,
 	my_user_initialization_function,my_user_progress_bar_function)
 {
-	my_user_name						=(typeof(my_user_name						 )!="string"  )?"NoName"	:(my_user_name.trim());
-	my_pass_word						=(typeof(my_pass_word					 	 )!="string"  )?"NoPassword":(my_pass_word.trim());
-	my_language_name					=(typeof(my_language_name					 )!="string"  )?"english"	:(my_language_name.trim());
-	my_scene_name						=(typeof(my_scene_name						 )!="string"  )?""			:(my_scene_name.trim());
-	my_link_name						=(typeof(my_link_name						 )!="string"  )?""			:(my_link_name.trim());
+	my_canvas		=(typeof(my_canvas			)!="string")?my_canvas	 :(document.getElementById(my_canvas));
+	my_user_name	=(typeof(my_user_name		)!="string")?"NoName"	 :(my_user_name.trim());
+	my_pass_word	=(typeof(my_pass_word		)!="string")?"NoPassword":(my_pass_word.trim());
+	my_language_name=(typeof(my_language_name	)!="string")?"english"	 :(my_language_name.trim());
+	my_scene_name	=(typeof(my_scene_name		)!="string")?""			 :(my_scene_name.trim());
+	my_link_name	=(typeof(my_link_name		)!="string")?""			 :(my_link_name.trim());
 	
 	var process_bar_url=my_url+"?channel=process_bar&command=data&language="+my_language_name;
 	var request_url=my_url+"?channel=creation&command=creation&language="	+my_language_name;

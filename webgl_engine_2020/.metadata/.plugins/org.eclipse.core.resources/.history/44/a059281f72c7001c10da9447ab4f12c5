@@ -1,0 +1,77 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta http-equiv="Pragma" content="no-cache">
+
+<title></title>
+
+<script type="text/javascript" src="./interface.jsp?function_name=construct_render_object"></script>
+<script type="text/javascript">
+
+var lfy_render;
+<%
+{
+	String str;
+	out.print  ("var user_name=\""		+(((str=request.getParameter("user_name"		 ))==null)?"NoName"		:str)+"\",");
+	out.print  ("pass_word=\""			+(((str=request.getParameter("pass_word"		 ))==null)?"NoPassword"	:str)+"\",");
+	out.print  ("language=\""			+(((str=request.getParameter("language"			 ))==null)?"chinese"	:str)+"\",");
+	out.print  ("scene_name=\""			+(((str=request.getParameter("scene_name"		 ))==null)?""			:str)+"\",");
+	out.println("link_name=\""			+(((str=request.getParameter("link_name"		 ))==null)?""			:str)+"\";");
+	out.print  ("var change_part=\""	+(((str=request.getParameter("change_part"		 ))==null)?""			:str)+"\",");
+	out.print  ("change_component=\""	+(((str=request.getParameter("change_component"	 ))==null)?""			:str)+"\",");
+	out.print  ("part_type=\""			+(((str=request.getParameter("part_type"		 ))==null)?""			:str)+"\",");
+	out.print  ("sub_directory=\""		+(((str=request.getParameter("sub_directory"	 ))==null)?""			:str)+"\",");
+	out.print  ("coordinate=\""			+(((str=request.getParameter("coordinate"		 ))==null)?"xyz"		:str)+"\",");
+	out.print  ("max_loading_number=\""	+(((str=request.getParameter("max_loading_number"))==null)?"10"			:str)+"\";");
+}
+%>
+
+function body_onload()
+{
+	construct_render_object("my_canvas",user_name,pass_word,"chinese",scene_name,link_name,
+		[
+			["change_part",				change_part			],
+			["change_component",		change_component	],
+			["part_type",				part_type			],
+			["sub_directory",			sub_directory		],
+			["coordinate",				coordinate			],
+			["max_loading_number",		max_loading_number	]
+		],
+		function(my_render)
+		{
+			lfy_render=my_render;
+			document.title=lfy_render.title;
+		});
+}
+function body_onunload()
+{
+	if(typeof(lfy_render)=="object")
+		if(lfy_render!=null)
+			if(typeof(lfy_render.terminate)=="function")
+				lfy_render.terminate();
+}
+function body_onresize()
+{
+	var canvas_object=document.getElementById("my_canvas");
+	canvas_object.width	=window.innerWidth *0.975;
+	canvas_object.height=window.innerHeight*0.925;
+}
+
+</script>
+
+</head>
+
+<body onload="body_onresize();body_onload();" onunload="body_onunload();" onresize="body_onresize();">
+
+<div align="center">
+<canvas id="my_canvas"		tabindex="0"	></canvas>
+</div>
+
+</body>
+
+</html>

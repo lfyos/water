@@ -4,35 +4,31 @@
 <script type="text/javascript" 	src="./interface.jsp?function_name=construct_render_object"></script>
 <script type="text/javascript">
 
-var render;
+var lfy_render;
 function body_onload()
 {
 	construct_render_object(
-		document.getElementById("my_canvas"),		//绘图画布
-		"NoName",									//用户名
-		"NoPassword",								//用户密码
-		"chinese",									//语言
-		"cad",										//场景名称
-		"",											//连接名称,用于多人协同操作一个场景
-		[											//初始化参数
-			["sub_directory",			"A159-SR-302A"	],		//显示内容
-			["coordinate",				"location.xyz.txt"	],	//坐标系选择
-			["change_part",				""],	//part换名
+		"my_canvas",		//Object类型的绘图画布。如果是String类型,则系统使用document.getElementById("my_canvas")将其转换为Object类型数据。
+		"NoName",			//用户名
+		"NoPassword",		//用户密码
+		"chinese",			//语言
+		"cad",				//场景名称
+		"",					//连接名称,用于多人协同操作一个场景
+		[					//初始化参数
+			["change_part",				""					],	//part换名
 			["change_component",		""					],	//component换名
 			["part_type",				""					],	//part类型
-			["max_loading_number",		10					]	//同时下载数量
+			["max_loading_number",		10					],	//同时下载数量
+			
+			["sub_directory",			"A159-SR-302A"		],	//显示内容
+			["coordinate",				"location.xyz.txt"	]	//坐标系选择
 		],
-		function(my_render)					//创建场景成功后执行的函数
+		function(my_render)	//创建场景成功后执行的函数
 		{
-			render=my_render;				//把场景变量保存到变量render中
-			document.title=render.title;	//设置网页标题
-			
-			render.system_call_processor.show_hide_component(false,"camera_operation_component");
-			render.system_call_processor.show_hide_component(false,"caption_component");
-			
-			render.system_call_processor.turnonoff_level_of_detail(false,false);
+			lfy_render=my_render;				//把场景变量保存到变量render中
+			document.title=lfy_render.title;	//设置网页标题
 		},
-		function(							//进度条绘制函数，如果不配置该函数，则使用系统内部提供的默认进度条绘制函数
+		function(			//进度条绘制函数，如果不配置该函数，则使用系统内部提供的默认进度条绘制函数
 				process_bar_canvas,				//绘制进度条的画布canvas
 				progress_bar_ctx,				//绘制进度条的2D上下文
 				process_bar_caption,			//进度条当前进度标题，该标题和语言有关，目前系统中仅仅配置了中文和英文相关标题
@@ -58,16 +54,16 @@ function body_onload()
 			progress_bar_ctx.fillStyle		="rgb(192,192,192)";
 			progress_bar_ctx.textAlign		="center";		
 			progress_bar_ctx.fillText(display_value,process_bar_canvas.width/2.0,process_bar_canvas.height/2.0);
-		}
-	);
+		});
 }
 
 function body_onunload()
 {
-	if(typeof(render)=="object")
-		if(render!=null)
-			if(typeof(render.terminate)=="function")
-				render.terminate();
+	if(typeof(lfy_render)=="object")
+		if(lfy_render!=null)
+			if(typeof(lfy_render.terminate)=="function")
+				lfy_render.terminate();
+	lfy_render=null;
 }
 
 </script>
