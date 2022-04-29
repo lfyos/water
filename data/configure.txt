@@ -9,6 +9,7 @@
 /*	language_change_file_name												*/		language_change.txt
 /*	switch_server_url_file_name												*/		switch_server_url.txt
 
+/*	normal_loading_number													*/		5
 /*	max_loading_number														*/		16
 /*	max_material_id															*/		100
 

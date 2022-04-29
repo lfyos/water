@@ -150,8 +150,7 @@ public class dispatch_create_engine_request
 	
 		ci.request_response.print(",{");							//parameter	4	6
 			
-		ci.request_response.print( "\"max_loading_number\":",
-			ci.creation_parameter.max_client_loading_number);
+		ci.request_response.print( "\"max_loading_number\":",ci.parameter.max_client_loading_number);
 			
 		ci.request_response.print(",\"total_buffer_object_data_length\":",	ek.process_part_sequence.total_buffer_object_text_data_length);
 		ci.request_response.print(",\"engine_touch_time_length\":",			ek.system_par.engine_touch_time_length);

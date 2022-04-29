@@ -237,8 +237,7 @@ public class engine_kernel_link_list
 		if(ec.client_information==null){
 			if(ek.component_cont.root_component==null){
 				debug_information.println(
-					"(ek.component_cont.root_component==null)",
-					" in function get_engine_result() of engine_container");
+					"(ek.component_cont.root_component==null) in function get_engine_result() of engine_container");
 				return null;
 			}
 			ec.client_information=new client_information(

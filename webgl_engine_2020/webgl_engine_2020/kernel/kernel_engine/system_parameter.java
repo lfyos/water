@@ -18,7 +18,7 @@ public class system_parameter
 	public String text_class_charset,text_jar_file_charset,js_class_charset,js_jar_file_charset;
 	public String user_file_name,shader_file_name,default_parameter_directory;
 	
-	public int max_loading_number,max_material_id;
+	public int normal_loading_number,max_loading_number,max_material_id;
 	
 	public int response_block_size;
 	
@@ -60,6 +60,7 @@ public class system_parameter
 		shader_file_name				=new String(sp.shader_file_name);
 		default_parameter_directory		=new String(sp.default_parameter_directory);
 		
+		normal_loading_number			=sp.normal_loading_number;
 		max_loading_number				=sp.max_loading_number;
 		max_material_id					=sp.max_material_id;
 		
@@ -193,6 +194,7 @@ public class system_parameter
 		else
 			switch_server_url_file_name=file_reader.separator(switch_server_url_file_name);	
 		
+		normal_loading_number					=f.get_int();
 		max_loading_number						=f.get_int();
 		max_material_id							=f.get_int();
 		

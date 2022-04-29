@@ -22,7 +22,6 @@ public class engine_information extends jason_creator
 		print("channel_id",ci.channel_id);
 		
 		print("client_parameter",			new client_parameter_information(ci));
-		print("client_creation_parameter",	new client_creation_parameter_information(ci));
 		print("statistics_client",			new statistics_client_information(ek,ci));
 		print("statistics_interface",		new statistics_interface_information(ci));
 		print("statistics_user",			new statistics_user_information(ek,ci));

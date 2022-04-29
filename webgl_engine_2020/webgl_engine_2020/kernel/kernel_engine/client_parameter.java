@@ -11,7 +11,7 @@ public class client_parameter
 	public double x,y,aspect,depth,value;
 	public boolean high_or_low_precision_flag;
 	
-	public int request_length;
+	public int request_length,max_client_loading_number;
 	
 	public component comp;
 	
@@ -19,10 +19,12 @@ public class client_parameter
 	{
 		comp=null;
 	}
-	public client_parameter(boolean my_do_discard_lod_flag,boolean my_do_selection_lod_flag)
+	public client_parameter(int my_max_client_loading_number,
+			boolean my_do_discard_lod_flag,boolean my_do_selection_lod_flag)
 	{
-		do_discard_lod_flag		=my_do_discard_lod_flag;
-		do_selection_lod_flag	=my_do_selection_lod_flag;
+		do_discard_lod_flag			=my_do_discard_lod_flag;
+		do_selection_lod_flag		=my_do_selection_lod_flag;
+		max_client_loading_number	=my_max_client_loading_number;
 		
 		body_id		=-1;
 		face_id		=-1;

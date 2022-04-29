@@ -44,17 +44,12 @@ public class client_information
 	
 	public display_message				message_display;
 	
-	public client_creation_parameter	creation_parameter;
-	
 	private boolean						file_proxy_url_encode_flag[];
 	private String						file_proxy_url_array[];
 	private int 						file_proxy_pointer;
 	
 	public void destroy()
 	{
-		if(creation_parameter!=null)
-			creation_parameter=null;
-		
 		if(message_display!=null)
 			message_display=null;
 			
@@ -273,6 +268,13 @@ public class client_information
 	public client_information(client_request_response my_request_response,client_process_bar my_process_bar,
 			engine_kernel ek,user_statistics my_statistics_user,interface_statistics my_statistics_interface)
 	{
+		String str;
+		int new_max_loading_number,max_client_loading_number=ek.system_par.normal_loading_number;
+		if((str=my_request_response.get_parameter("max_loading_number"))!=null)	
+			if((new_max_loading_number=Integer.decode(str))>0)
+				if(new_max_loading_number<ek.system_par.max_loading_number)
+					max_client_loading_number=new_max_loading_number;
+		
 		render_buffer					=new buffer_container(ek);
 		target_container				=new render_target_container();
 		
@@ -289,8 +291,8 @@ public class client_information
 		clip_plane			=null;
 		
 		channel_id			=System.nanoTime();
-		parameter			=new client_parameter(ek.scene_par.do_discard_lod_flag,ek.scene_par.do_selection_lod_flag);
-		
+		parameter=new client_parameter(max_client_loading_number,
+				ek.scene_par.do_discard_lod_flag,ek.scene_par.do_selection_lod_flag);
 		statistics_client	=new client_statistics();
 		statistics_interface=my_statistics_interface;
 		statistics_user		=my_statistics_user;
@@ -305,9 +307,8 @@ public class client_information
 		file_proxy_pointer	=0;
 		
 		instance_container	=new instance_driver_container(ek,request_response);
-		message_display		=new display_message();				
-		creation_parameter	=new client_creation_parameter(ek,request_response);
-		
+		message_display		=new display_message();	
+
 		return;
 	}
 }
