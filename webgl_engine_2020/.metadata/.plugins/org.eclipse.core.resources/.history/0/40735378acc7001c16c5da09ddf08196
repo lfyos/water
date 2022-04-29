@@ -64,9 +64,10 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		shader_program.par_uniform				=gl.getUniformLocation(shader_program,"par");
 		shader_program.color_par_uniform		=gl.getUniformLocation(shader_program,"color_par");
 	}
+	
 	switch(method_id){
 	case 0:
-		gl.uniformMatrix4fv(shader_program.color_par_uniform,false,new Float32Array(part_material[0].color));
+		
 		break;
 	case 1:
 		break;

@@ -46,9 +46,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var computer						=render.computer;
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
-	
-	
-	
+
 	if(do_render_number.engine_render==0){
 		shader_program.sampler=gl.createSampler();
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MAG_FILTER,	gl.LINEAR);
@@ -64,10 +62,12 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		};
 		shader_program.texture_sampler_uniform	=gl.getUniformLocation(shader_program,"texture_sampler");
 		shader_program.par_uniform				=gl.getUniformLocation(shader_program,"par");
+		shader_program.color_par_uniform		=gl.getUniformLocation(shader_program,"color_par");
 	}
-	
 	switch(method_id){
 	case 0:
+		gl.uniformMatrix4fv(shader_program.color_par_uniform,false,new Float32Array(part_material[0].color));
+		break;
 	case 1:
 		break;
 	default:
@@ -129,8 +129,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 			var marker_text			=p[j][4];
 			var marker_width		=p[j][5];
 			var marker_height		=p[j][6];
-			
-			
+
 			if(typeof(ep.marker_texture_object[j])=="undefined")
 				ep.marker_texture_object[j]=utility.load_texture_image(null);
 			gl.activeTexture(gl.TEXTURE0);

@@ -6,8 +6,9 @@ layout (location = 0) out vec4 frag_data[4];
 
 void main(void)
 {
-	int frag_type_id;
-	switch(frag_type_id=int(frag_id.w)){
+	frag_data[0]=color_par[int(frag_id.w)];
+	
+	switch(int(frag_id.w)){
 	case 2:
 		if(distance(gl_PointCoord,vec2(0.5,0.5))>0.5)
 			discard;
@@ -16,7 +17,11 @@ void main(void)
 			discard;
 		break;
 	case 0:
-		if(pass_info.method_id!=0){
+		if(pass_info.method_id==0){
+			vec4 texture_color=texture(texture_sampler,(frag_texture*par[2]).xy);
+			if(dot(texture_color.rgb,texture_color.rgb)<(3.0*0.25))
+				discard;
+		}else{
 			frag_data[0]=code_integer(int(par[3].x));				//component_id
 			frag_data[1]=code_integer(int(par[3].y));				//body_id
 			if(pass_info.pass_id==0){
@@ -26,13 +31,7 @@ void main(void)
 				frag_data[2]=code_float(2.0*(gl_FragCoord.z-0.5));	//depth
 				frag_data[3]=frag_data[2];							//value
 			}
-			return;
 		}
-		frag_data[0]=texture(texture_sampler,(frag_texture*par[2]).xy);
-		if(dot(frag_data[0].rgb,frag_data[0].rgb)<(3.0*0.25))
-			discard;
 		break;
 	}
-	frag_data[0]=color_par[frag_type_id];
-	gl_FragDepth=(frag_type_id==0)?0.0:gl_FragCoord.z;
 }
