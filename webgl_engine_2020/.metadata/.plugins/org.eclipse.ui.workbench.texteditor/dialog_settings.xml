@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="part_material"/>
+		<item key="selection" value="caculate_matrix"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="caculate_matrix"/>
+			<item value="mount_collector_url"/>
+			<item value="collector_url"/>
+			<item value="load_collector"/>
+			<item value="render"/>
+			<item value="collector_loader"/>
+			<item value="load_collector_stack"/>
 			<item value="part_material"/>
 			<item value="uniformMatrix4fv"/>
 			<item value="p_separator"/>
@@ -16,13 +23,6 @@
 			<item value="request_create_engine"/>
 			<item value="processs_bar_object.process_bar_id"/>
 			<item value="process_bar_render.destroy"/>
-			<item value="destroy"/>
-			<item value="draw_process_bar"/>
-			<item value="my_text_2dcontext"/>
-			<item value="construct_render_routine"/>
-			<item value="progress_bar_function"/>
-			<item value="my_user_progress_bar_function"/>
-			<item value="construct_process_bar"/>
 		</list>
 		<list key="replacehistory">
 			<item value="parameter.txt&#x09;relative"/>

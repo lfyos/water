@@ -39,7 +39,7 @@ function(component_name,component_id,render)
 						ep.collector_list_object=response_data;
 						ep.update_flag=false;
 						ep.id_base=0;
-					},render);
+					});
 			}
 			if(ep.update_flag)
 				return false;

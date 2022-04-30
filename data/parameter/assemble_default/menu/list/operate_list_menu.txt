@@ -75,8 +75,8 @@ function(component_name,component_id,render)
 				window.open(render.system_call_processor.collector_list_download_url(),"_blank");
 				break;
 			case 16:
-				window.open(render.collector_loader.collector_url(confirm("简单列表(YES/NO)"),
-					confirm("单一列表(YES/NO)"),confirm("位置信息(YES/NO)"),render),"_blank");
+				window.open(render.collector_loader.collector_url(
+					confirm("简单列表(YES/NO)"),confirm("单一列表(YES/NO)"),confirm("位置信息(YES/NO)")),"_blank");
 				break;
 			case 17:
 				window.open(render.system_call_processor.collector_list_jason_component_url(ep.x<=0.5),"_blank");

@@ -26,8 +26,8 @@ function body_onload()
 			render.zhengzhou_lipengfei.register_collector_stack_monitor(	//×¢²áÁÐ±í¼àÊÓÆ÷
 				function(jason_data,text_data)
 				{
-					console.clear();
-					console.log(text_data);
+//					console.clear();
+//					console.log(text_data);
 				});
 		});
 }

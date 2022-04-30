@@ -1,8 +1,9 @@
 function construct_collector_loader_object(my_render_object)
 {
 	this.render_object=my_render_object;
-	this.collector_data=new Array();
-	for(var i=0;i<8;i++)		
+	this.collector_data=new Array(8);
+	
+	for(var i=0,ni=this.collector_data.length;i<ni;i++)		
 		this.collector_data[i]={
 			collector_stack_version		:	0,
 			collector_stack_data		:	null,
@@ -12,6 +13,8 @@ function construct_collector_loader_object(my_render_object)
 		};
 	this.destroy=function()
 	{
+		this.render_object=null;
+
 		for(var i=0,ni=this.collector_data.length;i<ni;i++){
 			this.collector_data[i].collector_stack_data=null;
 			this.collector_data[i].collector_stack_text=null;
@@ -21,7 +24,6 @@ function construct_collector_loader_object(my_render_object)
 			this.collector_data[i]=null;
 		};
 		this.collector_data=null;
-		this.render_object=null;
 	};
 	this.clear_epcd=function(epcd)
 	{

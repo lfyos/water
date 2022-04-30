@@ -79,8 +79,7 @@ function(component_name,component_id,render)
 		mount_collector_url		:	function(simple_list_flag,single_collector_flag,location_flag)
 		{
 			//拼装列表url
-			return render.collector_loader.collector_url(simple_list_flag,
-						single_collector_flag,location_flag,render);
+			return render.collector_loader.collector_url(simple_list_flag,single_collector_flag,location_flag);
 		},
 		//后面是2022年1月添加的用于实现考试功能的相关函数
 		turnonoff_lod		:	function(discard_lod_flag,selection_lod_flag)
@@ -94,13 +93,14 @@ function(component_name,component_id,render)
 		collector_stack_version				:	0,
 		register_collector_stack_monitor	:	function(fun)
 		{
-			//监视拼装组件的列表
+			//监视拼装组件的列表，函数fun的格式为function(jason_data,text_data)，第一个参数是jason对象，text_data是其文本，
+			//可以通过console.log(text_data);把text_data在控制台上显示出来用于调试程序。
 			render.append_routine_function(
 				function(render)
 				{
 					if(render.collector_stack_version!=render.zhengzhou_lipengfei.collector_stack_version){
 						render.zhengzhou_lipengfei.collector_stack_version=render.collector_stack_version;
-						render.collector_loader.load_collector(false,true,false,fun,render);
+						render.collector_loader.load_collector(false,true,false,fun);
 					}
 					return true;
 				});

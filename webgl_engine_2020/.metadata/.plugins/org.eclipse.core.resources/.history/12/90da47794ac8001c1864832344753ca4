@@ -47,6 +47,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
 	
+	
+	
 	if(do_render_number.engine_render==0){
 		shader_program.model_matrix_uniform	=gl.getUniformLocation(shader_program,"model_matrix");
 		shader_program.par_uniform			=gl.getUniformLocation(shader_program,"par");
@@ -258,7 +260,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				
 			gl.uniformMatrix4fv(shader_program.model_matrix_uniform,false,new Float32Array(model_matrix_data));
 			gl.uniform4fv(shader_program.par_uniform,new Float32Array(
-					[	project_matrix.distance-project_matrix.near_value-part_scale*scale*box_distance/2.0,
+					[	
+						project_matrix.distance-project_matrix.near_value-part_scale*scale*box_distance/2.0,
 						scale*part_scale,		0,		component_id
 					]));
 

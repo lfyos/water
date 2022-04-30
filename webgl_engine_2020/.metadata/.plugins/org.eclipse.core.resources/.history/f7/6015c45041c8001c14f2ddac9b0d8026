@@ -12,6 +12,8 @@ function construct_collector_loader_object(my_render_object)
 		};
 	this.destroy=function()
 	{
+		this.render_object=null;
+
 		for(var i=0,ni=this.collector_data.length;i<ni;i++){
 			this.collector_data[i].collector_stack_data=null;
 			this.collector_data[i].collector_stack_text=null;
@@ -21,7 +23,6 @@ function construct_collector_loader_object(my_render_object)
 			this.collector_data[i]=null;
 		};
 		this.collector_data=null;
-		this.render_object=null;
 	};
 	this.clear_epcd=function(epcd)
 	{

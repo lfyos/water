@@ -138,7 +138,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	this.uniform_block				=new construct_uniform_block_object(this.gl);
 	this.deviceorientation			=new construct_deviceorientation(this.computer);
 	this.utility					=new construct_render_utility(this);
-	this.collector_loader			=new construct_collector_loader_object(this);
+	this.collector_loader			=new construct_collector_loader_object();
 	
 	this.engine_do_render_number	=new Array();
 
