@@ -40,9 +40,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var computer						=render.computer;
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
-	
-	
-	
+
 	function pickup_driver_after_target_render(
 		target_id,render_target_id,width,height,render_target_number,render)
 	{
@@ -372,7 +370,6 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 			}while(false);
 		}
 	}
-	
 	for(var i=0,n=component_data_array.length;i<n;i++){
 		var buffer_id=component_data_array[i];
 		while(data_buffer[buffer_id].length>1)

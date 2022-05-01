@@ -29,7 +29,7 @@ public class target_parameter_buffer
 			return;
 		target_parameter[target_id]=null;
 	}
-	public boolean response_parameter(		client_request_response client_interface,
+	public boolean response_parameter(	client_request_response 	client_interface,
 		int target_id,					int render_target_id,		int parameter_channel_id,
 		int framebuffer_width,			int framebuffer_height,		int render_target_number,
 		target_viewport my_viewport[])

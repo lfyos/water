@@ -370,6 +370,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 			}while(false);
 		}
 	}
+	
 	for(var i=0,n=component_data_array.length;i<n;i++){
 		var buffer_id=component_data_array[i];
 		while(data_buffer[buffer_id].length>1)

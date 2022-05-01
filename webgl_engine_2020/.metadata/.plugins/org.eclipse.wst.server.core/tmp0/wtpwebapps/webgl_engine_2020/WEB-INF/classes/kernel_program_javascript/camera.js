@@ -317,7 +317,7 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 		project_matrix.camera_location		=lookat_matrix.camera_location;
 				
 		project_matrix.frustem_matrix=this.computer.matrix_multiplication(
-				screen_move_matrix.matrix,frustem_projection_matrix.matrix);		
+				screen_move_matrix.matrix,frustem_projection_matrix.matrix);
 		project_matrix.frustem_matrix=this.computer.matrix_multiplication(
 				project_matrix.frustem_matrix,lookat_matrix.matrix);
 		
@@ -393,7 +393,7 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 		
 		project_matrix.center_plane	=this.computer.create_plane_from_two_point(
 				project_matrix.center_point,			project_matrix.eye_point);
-		
+
 		return project_matrix;
 	};
 };

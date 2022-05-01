@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="gl_Position"/>
+		<item key="selection" value="render_buffer_id"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="render_buffer_id"/>
+			<item value="render_component"/>
 			<item value="gl_Position"/>
 			<item value="gl_FragDepth"/>
 			<item value="render_instance"/>
@@ -21,8 +23,6 @@
 			<item value="mount_collector_url"/>
 			<item value="collector_url"/>
 			<item value="load_collector"/>
-			<item value="render"/>
-			<item value="collector_loader"/>
 		</list>
 		<list key="replacehistory">
 			<item value="render"/>
