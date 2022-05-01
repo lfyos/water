@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="caculate_matrix"/>
+		<item key="selection" value="gl_Position"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="gl_Position"/>
+			<item value="gl_FragDepth"/>
+			<item value="render_instance"/>
+			<item value="my_render_instance"/>
+			<item value="par"/>
+			<item value="material"/>
+			<item value="part_scale"/>
+			<item value="set_mouse_for_text_token"/>
+			<item value="keydown"/>
 			<item value="caculate_matrix"/>
 			<item value="mount_collector_url"/>
 			<item value="collector_url"/>
 			<item value="load_collector"/>
 			<item value="render"/>
 			<item value="collector_loader"/>
-			<item value="load_collector_stack"/>
-			<item value="part_material"/>
-			<item value="uniformMatrix4fv"/>
-			<item value="p_separator"/>
-			<item value="max_loading_number"/>
-			<item value="this.parameter"/>
-			<item value="request_create_engine"/>
-			<item value="processs_bar_object.process_bar_id"/>
-			<item value="process_bar_render.destroy"/>
 		</list>
 		<list key="replacehistory">
+			<item value="render"/>
+			<item value="part_material"/>
 			<item value="parameter.txt&#x09;relative"/>
 			<item value=""/>
 			<item value="this."/>
@@ -38,8 +40,6 @@
 			<item value="/*&#x09;max_modifier_container_number&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;1"/>
 			<item value="6"/>
 			<item value="interface_part"/>
-			<item value="instance_initialize_data"/>
-			<item value="ep.instance_initialize_data"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

@@ -1,44 +1,31 @@
 uniform vec4 par;
 
-in vec4 frag_id,extra_frag_id,frag_color;
+in vec4 frag_id;
 layout (location = 0) out vec4 frag_data[4];
 
 void main(void)
 {
-	if((pass_info.method_id==0)||(pass_info.method_id==4)){
-		if(int(round(frag_id.w))!=2)
-				frag_data[0]=frag_color;
-		else if(((gl_PointCoord.x-0.5)*(gl_PointCoord.x-0.5)+(gl_PointCoord.y-0.5)*(gl_PointCoord.y-0.5))>0.25)
-				discard;
-		else if(int(round(frag_id.z))!=0)
-				discard;
-		else
-				frag_data[0]=vec4(1.0,0.0,0.0,1.0);
-		return;
-	}
+	int component_id		=component_info.component_id;
+	int body_id				=int(round(frag_id.x));
+	int face_id				=int(round(frag_id.y));
+	int vertex_id			=int(round(frag_id.z));
 	
-	if(pass_info.method_id==1){
-		int component_id=int(round(par.w));
-		int body_id		=int(round(frag_id.x));
-		int face_id		=int(round(frag_id.y));
-		int vertex_id	=int(round(frag_id.z));
-		int flag		=int(round(frag_id.w));
-		int loop_id		=(flag==0)?-1:int(round(extra_frag_id.x));
-		int edge_id		=(flag==0)?-1:int(round(extra_frag_id.y));
-		float depth		=2.0*(gl_FragCoord.z-0.5);
-		float value		=0.0;
-		
-		if(pass_info.pass_id==0){
-			frag_data[0]=code_integer(component_id);
-			frag_data[1]=code_integer(body_id);
-			frag_data[2]=code_integer(face_id);
-			frag_data[3]=code_integer(vertex_id);
-		}else{
-			frag_data[0]=code_integer(loop_id);
-			frag_data[1]=code_integer(edge_id);
-			frag_data[2]=code_float(depth);
-			frag_data[3]=code_float(value);
+	switch(pass_info.method_id){
+	case 0:
+		frag_data[0]=vec4(0.25,0.25,0.25,1.0);
+		if(frag_id.w>0.5){
+			frag_data[0]=vec4(0.8,0.8,0.8,1.0);
+			if(system_info.pickup_component_id==component_id)
+				if(system_info.pickup_body_id==body_id)
+					if(system_info.pickup_face_id==face_id)
+						frag_data[0]=vec4(1.0,0.0,0.0,1.0);
 		}
+		return;
+	case 1:
+		frag_data[0]=code_integer(component_id);
+		frag_data[1]=code_integer(body_id);
+		frag_data[2]=code_integer(face_id);
+		frag_data[3]=code_integer(vertex_id);
 		return;
 	}
 	discard;

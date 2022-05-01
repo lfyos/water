@@ -94,6 +94,12 @@ function(component_name,component_id,render)
 		render.event_component.keyboard.component_name	="distance_tag_component";
 		render.set_event_component("distance_tag_component");
 	};
+	render.system_call_processor.set_mouse_for_text_token=function()
+	{
+		render.event_component.mouse.	component_name	="component_marker_component";
+		render.event_component.keyboard.component_name	="component_marker_component";
+		render.set_event_component("component_marker_component");
+	};
 
 //	system call for set display content
 	render.system_call_processor.set_target_parameter_channel=function(target_id,parameter_channel_id)

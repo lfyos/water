@@ -56,8 +56,8 @@ public class extended_render_driver extends render_driver
 	public part_driver create_part_driver(file_reader part_fr,part p,
 			system_parameter system_par,client_request_response request_response)
 	{
-		return new extended_part_driver(
-				part_fr.get_double(),part_fr.get_double(),part_fr.get_double(),part_fr.get_int());
+		return new extended_part_driver(part_fr.get_double(),
+						part_fr.get_double(),part_fr.get_double(),part_fr.get_int());
 	}
 	public String create_include_shader_program(String shader_type_string,
 			//vertex,fragment,geometry,tess_control,tess_evalue

@@ -85,6 +85,28 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		var ep=render.component_event_processor[component_id];
 		if(typeof(ep)=="undefined"){
 			ep={
+				mousedown			:	function mousedown(event,component_id,render)
+				{
+					var value;
+					if(render.pickup.component_id<0)
+						return true;
+					if((value=prompt("ÊäÈë±ê×¢ÎÄ×Ö"))==null)
+						return true;
+					if((value=value.trim()).length<=0)
+						return true;
+					render.call_server_component(component_id,"all",[["operation","append"],
+							["value",encodeURIComponent(encodeURIComponent(value))]]);
+					return true;
+				},
+				pickupkeydown		:	function(event,component_id,render)
+				{
+					switch(event.keyCode){
+					case 46://del
+					case  8://backspace
+						render.call_server_component(component_id,"all",[["operation","delete"]]);
+						break;
+					}
+				},
 				pickupdblclick		:	function(event,component_id,render)
 				{
 					return true;
@@ -97,6 +119,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 							[["operation",(event.ctrlKey||event.shiftKey||event.altKey)?"locate":"swap_select"]]);
 						break;
 					case 1:
+						break;
 					case 2:
 						render.call_server_component(component_id,"all",[["operation","delete"]]);
 						break;

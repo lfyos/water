@@ -1,0 +1,37 @@
+uniform vec4 par;
+
+in vec4 frag_id;
+layout (location = 0) out vec4 frag_data[4];
+
+void main(void)
+{
+	int component_id=int(round(par.w));
+	int body_id		=int(round(frag_id.x));
+	int face_id		=int(round(frag_id.y));
+	int vertex_id	=int(round(frag_id.z));
+	
+	gl_FragDepth=gl_FragCoord.z;
+	frag_data[0]=vec4(0.25,0.25,0.25,1.0);
+	switch(pass_info.method_id){
+	case 0:
+	case 4:
+		if(frag_id.w<0.5)
+			return;
+		gl_FragDepth-=0.001;
+		frag_data[0]=vec4(0.8,0.8,0.8,1.0);
+		if(system_info.pickup_component_id==component_id)
+			if(system_info.pickup_body_id==body_id)
+				if(system_info.pickup_face_id==face_id){
+					frag_data[0]=vec4(1.0,0.0,0.0,1.0);
+					gl_FragDepth=0.0;
+				}
+		return;
+	case 1:
+		frag_data[0]=code_integer(component_id);
+		frag_data[1]=code_integer(body_id);
+		frag_data[2]=code_integer(face_id);
+		frag_data[3]=code_integer(vertex_id);
+		return;
+	
+	}
+}

@@ -23,7 +23,8 @@ public class extended_part_driver extends part_driver
 	private double x0,y0,scale;
 	private int modifier_container_id;
 	
-	public extended_part_driver(double my_x0,double my_y0,double my_scale,int my_modifier_container_id)
+	public extended_part_driver(double my_x0,double my_y0,
+			double my_scale,int my_modifier_container_id)
 	{
 		super();
 		
@@ -75,6 +76,7 @@ public class extended_part_driver extends part_driver
 			buffer_object_file_writer.print  (",",		y0);
 			buffer_object_file_writer.print  (",",		scale);
 			buffer_object_file_writer.println(",",		box_distance);
+			buffer_object_file_writer.print  (",1");
 		}
 		return ret_val;
 	}

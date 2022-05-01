@@ -20,7 +20,6 @@ import kernel_part.part_rude;
 public class extended_instance_driver extends instance_driver
 {
 	private boolean show_flag;
-	private double left_down_x,left_down_y,right_up_x,right_up_y;
 	private int modifier_container_id;
 	public void destroy()
 	{
@@ -31,10 +30,6 @@ public class extended_instance_driver extends instance_driver
 		super(my_comp,my_driver_id);
 		modifier_container_id=my_modifier_container_id;
 		show_flag=true;
-		left_down_x=0;
-		left_down_y=0;
-		right_up_x=0;
-		right_up_y=0;
 		display_parameter.body_title="Ìו";
 		display_parameter.face_title="Ãז";
 	}
@@ -44,44 +39,20 @@ public class extended_instance_driver extends instance_driver
 	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
 			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
 	{
-		if(!show_flag)
-			return true;
-		if(!(cr.target.selection_target_flag))
-			if(cr.target.framebuffer_width>0)
-				if(cr.target.framebuffer_height>0)
-					return true;
-		if(ci.display_camera_result.target.view_volume_box.p[0].x!=left_down_x) {
-			left_down_x=ci.display_camera_result.target.view_volume_box.p[0].x;
-			update_component_parameter_version(0);
-		}
-		if(ci.display_camera_result.target.view_volume_box.p[0].y!=left_down_y) {
-			left_down_y=ci.display_camera_result.target.view_volume_box.p[0].y;
-			update_component_parameter_version(0);
-		}
-		if(ci.display_camera_result.target.view_volume_box.p[1].x!=right_up_x) {
-			right_up_x=ci.display_camera_result.target.view_volume_box.p[1].x;
-			update_component_parameter_version(0);
-		}
-		if(ci.display_camera_result.target.view_volume_box.p[1].y!=right_up_y) {
-			right_up_y=ci.display_camera_result.target.view_volume_box.p[1].y;
-			update_component_parameter_version(0);
-		}
-		return false;
+		if(show_flag)
+			if(cr.target.selection_target_flag||cr.target.main_display_target_flag)
+				return false;
+		return true;
 	}
 	public void create_render_parameter(
 			int render_buffer_id,int parameter_channel_id,int data_buffer_id,
 			engine_kernel ek,client_information ci,camera_result cr)
 	{
-		ci.request_response.print(data_buffer_id);
+		ci.request_response.print(cr.target.main_display_target_flag?data_buffer_id:(-1-data_buffer_id));
 	}
 	public void create_component_parameter(engine_kernel ek,client_information ci)
 	{
-		ci.request_response.print("[",comp.component_id);
-		ci.request_response.print(",",left_down_x);
-		ci.request_response.print(",",left_down_y);
-		ci.request_response.print(",",right_up_x);
-		ci.request_response.print(",",right_up_y);
-		ci.request_response.print("]");
+		ci.request_response.print(comp.component_id);
 	}
 	private boolean get_client_type_flag(client_information ci)
 	{

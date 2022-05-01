@@ -38,6 +38,8 @@ public class extended_component_driver  extends component_driver
 		camera cam_array[];
 		int box_parameter_channel_id;
 		
+		comp.uniparameter.cacaulate_location_flag=true;
+		
 		if((cam_array=ek.camera_cont.camera_array)==null) {
 			debug_information.println("((cam_array=ek.camera_cont.camera_array)==null)");
 			return;

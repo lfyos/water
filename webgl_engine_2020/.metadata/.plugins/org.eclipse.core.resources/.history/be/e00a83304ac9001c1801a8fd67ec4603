@@ -1,0 +1,20 @@
+uniform vec4 par;
+
+in vec4 vertex_location,vertex_material,vertex_id;
+out vec4 frag_id;
+
+void main(void)
+{
+	gl_PointSize=32.0;
+	frag_id=vertex_id;
+	
+	gl_Position=component_info.model_matrix*vec4(0.0,0.0,0,1.0);
+	gl_Position=vec4(vertex_location.xyz*par.x+gl_Position.xyz/gl_Position.w,1.0);
+	gl_Position=((target_info.projection_type_flag>0)?target_info.other_projection_matrix:target_info.projection_matrix)*gl_Position;
+	
+	if(frag_id.w>0.5)
+		if(system_info.pickup_component_id==component_info.component_id)
+			if(system_info.pickup_body_id==int(round(frag_id.x)))
+				if(system_info.pickup_face_id==int(round(frag_id.y)))
+					
+}

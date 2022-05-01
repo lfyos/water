@@ -31,8 +31,6 @@ void main(void)
 	float transparency_value=draw_par.x;
 	bool clip_flag			=((int(draw_par.y)&1)!=0)?true:false;
 	bool discard_flag		=((int(draw_par.y)&2)!=0)?true:false;
-	
-	gl_FragDepth=gl_FragCoord.z;
 
 	if(clip_flag){
 		if(dot(target_info.clip_plane,frag_position)<0.0)
@@ -77,7 +75,6 @@ void main(void)
 			if(system_info.pickup_body_id==my_body_id){
 				frag_data[0]=vec4(0.0,0.5,0.5,transparency_value);
 				if(system_info.pickup_face_id==my_face_id){
-					gl_FragDepth-=0.001;
 					frag_data[0]=vec4(0.0,1.0,0.0,transparency_value);
 					break;
 				}
@@ -95,16 +92,13 @@ void main(void)
 			if(system_info.pickup_body_id==my_body_id){
 				frag_data[0]=vec4(0.0,0.5,0.5,transparency_value);
 				if(system_info.pickup_face_id==my_face_id){
-					gl_FragDepth-=0.001;
 					frag_data[0]=vec4(0.0,1.0,0.0,transparency_value);
 					if(system_info.pickup_loop_id==my_loop_id){
 						frag_data[0]=vec4(0.35,0.65,0.0,transparency_value);
 						if(system_info.pickup_edge_id==my_edge_id){
 							frag_data[0]=vec4(0.65,0.35,0.0,transparency_value);
-							if(system_info.pickup_point_id==my_point_id){
-								gl_FragDepth-=0.001;
+							if(system_info.pickup_point_id==my_point_id)
 								frag_data[0]=vec4(1.0,0.0,0.0,transparency_value);
-							}
 						}
 					}
 					break;			

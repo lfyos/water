@@ -32,6 +32,11 @@ void main(void)
 	frag_position=component_info.model_matrix*vec4(vertex_location.xyz,1.0);
 	vec4 real_frag_position=clip_flag?(target_info.clip_plane_matrix*frag_position):frag_position;
 	gl_Position=target_info.projection_matrix*real_frag_position;
+	if(frag_id.w>0.5)
+		if(system_info.pickup_component_id==component_info.component_id)
+			if(system_info.pickup_body_id==int(round(frag_id.x)))
+				if(system_info.pickup_face_id==int(round(frag_id.y)))
+					gl_Position.z=-gl_Position.w;
 
 	if(display_value_id>0){
 		switch(display_value_id){
