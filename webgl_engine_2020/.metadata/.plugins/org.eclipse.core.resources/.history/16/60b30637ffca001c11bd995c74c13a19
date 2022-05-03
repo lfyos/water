@@ -1,5 +1,6 @@
 package driver_distance_tag;
 
+import kernel_common_class.debug_information;
 import kernel_common_class.format_change;
 import kernel_common_class.jason_string;
 import kernel_engine.client_information;
@@ -68,7 +69,6 @@ public class distance_tag_item
 			break;
 		}	
 		function_id=(function_id+17)%17;
-		int old_tag_component_id=tag_component_id;
 
 		switch(function_id) {
 		default:
@@ -104,8 +104,6 @@ public class distance_tag_item
 			tag_component_id=ci.display_camera_result.cam.eye_component.component_id;
 			break;
 		}
-		if(old_tag_component_id!=tag_component_id)
-			location_version_tag=0;
 	}
 	public void set_tag_str(int display_precision,engine_kernel ek,client_information ci)
 	{

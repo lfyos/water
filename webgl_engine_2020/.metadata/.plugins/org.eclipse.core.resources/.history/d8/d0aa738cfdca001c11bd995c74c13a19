@@ -9,7 +9,7 @@ import kernel_engine.part_type_string_sorter;
 
 public class component_core_6 extends component_core_5
 {
-	public boolean children_location_modify_flag;
+public boolean children_location_modify_flag;
 	
 	public void destroy()
 	{

@@ -68,8 +68,6 @@ public class distance_tag_item
 			break;
 		}	
 		function_id=(function_id+17)%17;
-		int old_tag_component_id=tag_component_id;
-
 		switch(function_id) {
 		default:
 		case 0:
@@ -88,7 +86,6 @@ public class distance_tag_item
 		case 8://up down direction
 		case 9://near far direction
 			tag_component_id=ci.display_camera_result.cam.eye_component.component_id;
-			break;
 		case 10://XY plane
 		case 11://YZ plane
 		case 12://ZX plane
@@ -104,13 +101,11 @@ public class distance_tag_item
 			tag_component_id=ci.display_camera_result.cam.eye_component.component_id;
 			break;
 		}
-		if(old_tag_component_id!=tag_component_id)
-			location_version_tag=0;
 	}
 	public void set_tag_str(int display_precision,engine_kernel ek,client_information ci)
 	{
 		plane pl;
-		point global_p0,global_px;
+		point dir[],global_p0,global_px;
 		location loca;
 		component comp;
 		double data[][];
@@ -151,12 +146,12 @@ public class distance_tag_item
 		case 7://left right direction
 		case 8://up down direction
 		case 9://near far direction
-			if((comp=ek.component_cont.get_component(tag_component_id))==null)
-				break;
 			title=new String[]{"LR:","UD:","NF:"};
-			data=new double[][] {new double[] {1,0,0},new double[] {0,1,0},new double[] {0,0,1}};
-			pl=new plane(comp.absolute_location.multiply(0,0,0),
-					comp.absolute_location.multiply(data[function_id-7][0],data[function_id-7][1],data[function_id-7][2]));
+			dir=new point[] {
+					ci.display_camera_result.right_direct,
+					ci.display_camera_result.up_direct,
+					ci.display_camera_result.to_me_direct};
+			pl=new plane(dir[function_id-7].x,dir[function_id-7].y,dir[function_id-7].z,0);
 			tag_str=title[function_id-7]+format_change.double_to_decimal_string(
 					Math.abs(pl.test(global_px)-pl.test(global_p0)),display_precision);
 			break;
@@ -184,9 +179,9 @@ public class distance_tag_item
 					loca.multiply(global_px).sub(loca.multiply(global_p0)).distance(),display_precision);
 			break;
 		case 16://view plane
-			if((comp=ek.component_cont.get_component(tag_component_id))==null)
-				break;
-			pl=new plane(comp.absolute_location.multiply(0,0,0),comp.absolute_location.multiply(0,0,1));
+			pl=new plane(	ci.display_camera_result.to_me_direct.x,
+							ci.display_camera_result.to_me_direct.y,
+							ci.display_camera_result.to_me_direct.z,0);
 			loca=pl.project_to_plane_location();
 			tag_str="View:"+format_change.double_to_decimal_string(
 					loca.multiply(global_px).sub(loca.multiply(global_p0)).distance(),display_precision);

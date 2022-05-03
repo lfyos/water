@@ -36,7 +36,7 @@ public class distance_tag_array
 	public void save(engine_kernel ek)
 	{
 		distance_tag_item p;
-		component directory_comp,comp_p0,comp_px;
+		component directory_comp,comp_p0,comp_px,comp_tag;
 		if((directory_comp=ek.component_cont.search_component(directory_component_name))==null)
 			return;
 		String my_distance_tag_file_name=directory_comp.component_directory_name+distance_tag_file_name;
@@ -48,8 +48,11 @@ public class distance_tag_array
 				continue;
 			if((comp_px=ek.component_cont.get_component(p.px_component_id))==null)
 				continue;
-			fw.println("/*	p0_component	*/	",comp_p0.component_name);
-			fw.println("/*	px_component	*/	",comp_px.component_name);
+			if((comp_tag=ek.component_cont.get_component(p.tag_component_id))==null)
+				continue;
+			fw.println("/*	p0_component	*/	",comp_p0. component_name);
+			fw.println("/*	px_component	*/	",comp_px. component_name);
+			fw.println("/*	tag_component	*/	",comp_tag.component_name);
 			fw.println("/*	function_id		*/	",p.function_id);
 			fw.print  ("/*	p0				*/	",p.p0.x).print("	",p.p0.y).println("	",p.p0.z);
 			fw.print  ("/*	px				*/	",p.px.x).print("	",p.px.y).println("	",p.px.z);
@@ -61,7 +64,7 @@ public class distance_tag_array
 	public void jason(engine_kernel ek,client_information ci)
 	{
 		distance_tag_item p;
-		component comp_p0,comp_px;
+		component comp_p0,comp_px,comp_tag;
 		ci.request_response.print  ("[");
 		String follow_str="";
 		for(int i=0,ni=distance_tag_array.length;i<ni;i++) {
@@ -71,12 +74,15 @@ public class distance_tag_array
 				continue;
 			if((comp_px=ek.component_cont.get_component(p.px_component_id))==null)
 				continue;
+			if((comp_tag=ek.component_cont.get_component(p.tag_component_id))==null)
+				continue;
 			ci.request_response.println(follow_str).println();follow_str=",";
 			
 			ci.request_response.println("	{");
 			ci.request_response.print  ("		\"tag_id\":	",			i).println(",");
-			ci.request_response.print  ("		\"p0_component\":	",	jason_string.change_string(comp_p0.component_name)).println(",");
-			ci.request_response.print  ("		\"px_component\":	",	jason_string.change_string(comp_px.component_name)).println(",");
+			ci.request_response.print  ("		\"p0_component\":	",	jason_string.change_string(comp_p0. component_name)).println(",");
+			ci.request_response.print  ("		\"px_component\":	",	jason_string.change_string(comp_px. component_name)).println(",");
+			ci.request_response.print  ("		\"tag_component\":",	jason_string.change_string(comp_tag.component_name)).println(",");
 			ci.request_response.print  ("		\"function_id\":	",	p.function_id).println(",");
 			ci.request_response.print  ("		\"p0\":		[",			p.p0.x).print(",	",p.p0.y).print(",	",p.p0.z).println(",	1.0],");
 			ci.request_response.print  ("		\"px\":		[",			p.px.x).print(",	",p.px.y).print(",	",p.px.z).println(",	1.0],");
@@ -94,28 +100,30 @@ public class distance_tag_array
 				return;
 		has_done_load_flag=true;
 		
-		component directory_comp,comp_p0,comp_px;
+		component directory_comp,comp_p0,comp_px,comp_tag;
 		if((directory_comp=ek.component_cont.search_component(directory_component_name))==null)
 			return;
 		distance_tag_array=new distance_tag_item[] {};
 		String my_distance_tag_file_name=directory_comp.component_directory_name+distance_tag_file_name;
 		for(file_reader fr=new file_reader(my_distance_tag_file_name,directory_comp.component_charset);;) {
-			String component_name_p0=fr.get_string();
-			String component_name_px=fr.get_string();
+			String component_name_p0 =fr.get_string();
+			String component_name_px =fr.get_string(); 
+			String component_name_tag=fr.get_string();
 			
 			if(fr.eof()) {
 				fr.close();
 				return;
 			}
-			comp_p0=ek.component_cont.search_component(component_name_p0);
-			comp_px=ek.component_cont.search_component(component_name_px);
-			
 			int function_id=fr.get_int();
 			double p0_x=fr.get_double(),p0_y=fr.get_double(),p0_z=fr.get_double();
 			double px_x=fr.get_double(),px_y=fr.get_double(),px_z=fr.get_double();
 			double py_x=fr.get_double(),py_y=fr.get_double(),py_z=fr.get_double();
 			
-			if((comp_p0==null)||(comp_px==null))
+			if((comp_p0=ek.component_cont.search_component(component_name_p0))==null)
+				continue;
+			if((comp_px=ek.component_cont.search_component(component_name_px))==null)
+				continue;
+			if((comp_tag=ek.component_cont.search_component(component_name_tag))==null)
 				continue;
 			
 			point global_p0=comp_p0.absolute_location.multiply(p0_x,p0_y,p0_z);
@@ -130,7 +138,7 @@ public class distance_tag_array
 			for(int i=0,ni=bak.length;i<ni;i++)
 				distance_tag_array[i]=bak[i];
 			distance_tag_array[bak.length]=new distance_tag_item(
-				comp_p0.component_id,comp_px.component_id,function_id,
+				comp_p0.component_id,comp_px.component_id,comp_tag.component_id,function_id,
 				p0_x,p0_y,p0_z,		px_x,px_y,px_z,		py.x,py.y,py.z);
 			distance_tag_array[bak.length].set_tag_str(display_precision,ek,ci);
 		}
@@ -185,7 +193,8 @@ public class distance_tag_array
 		int tag_index=Integer.parseInt(str);
 		if((tag_index<0)||(tag_index>=distance_tag_array.length))
 			return true;
-		distance_tag_array[tag_index].set_function(ci);
+		distance_tag_array[tag_index].set_function(ek,ci);
+		distance_tag_array[tag_index].set_tag_str(display_precision,ek,ci);
 		return false;
 	}
 	public boolean touch_distance_tag(engine_kernel ek,client_information ci)
@@ -338,7 +347,8 @@ public class distance_tag_array
 			for(int i=0,ni=bak.length;i<ni;i++)
 				distance_tag_array[i]=bak[i];
 			
-			p=new distance_tag_item(mark_point,ci.parameter.comp.component_id);
+			p=new distance_tag_item(mark_point,
+					ci.parameter.comp.component_id,ek.component_cont.root_component.component_id);
 			distance_tag_array[distance_tag_array.length-1]=p;
 		}
 		return false;
@@ -357,11 +367,15 @@ public class distance_tag_array
 						p.p0_component_id).get_absolute_location_version();
 				long new_location_version_px=ek.component_cont.get_component(
 						p.px_component_id).get_absolute_location_version();
+				long new_location_version_tag=ek.component_cont.get_component(
+						p.tag_component_id).get_absolute_location_version();
 				if(p.location_version_p0>=new_location_version_p0)
 					if(p.location_version_px>=new_location_version_px)
-						break;
+						if(p.location_version_tag>=new_location_version_tag)
+							break;
 				p.location_version_p0=new_location_version_p0;
 				p.location_version_px=new_location_version_px;
+				p.location_version_tag=new_location_version_tag;
 
 				ret_val=true;
 				component distance_comp;
