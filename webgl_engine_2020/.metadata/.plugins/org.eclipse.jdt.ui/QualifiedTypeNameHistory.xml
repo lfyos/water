@@ -42,7 +42,6 @@
 <fullyQualifiedTypeName name="kernel_network.network_parameter"/>
 <fullyQualifiedTypeName name="kernel_file_manager.travel_through_directory"/>
 <fullyQualifiedTypeName name="kernel_engine.component_container"/>
-<fullyQualifiedTypeName name="kernel_component.component"/>
 <fullyQualifiedTypeName name="kernel_file_manager.file_writer"/>
 <fullyQualifiedTypeName name="kernel_common_class.class_file_reader"/>
 <fullyQualifiedTypeName name="cadex.ModelData_TextureSet.TextureIterator"/>
@@ -57,7 +56,8 @@
 <fullyQualifiedTypeName name="kernel_common_class.change_name"/>
 <fullyQualifiedTypeName name="kernel_common_class.jason_string"/>
 <fullyQualifiedTypeName name="java.io.File"/>
-<fullyQualifiedTypeName name="kernel_file_manager.file_reader"/>
 <fullyQualifiedTypeName name="kernel_common_class.const_value"/>
+<fullyQualifiedTypeName name="kernel_component.component"/>
 <fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
+<fullyQualifiedTypeName name="kernel_file_manager.file_reader"/>
 </qualifiedTypeNameHistroy>

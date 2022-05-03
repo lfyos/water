@@ -115,7 +115,8 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		depth			:	-2,
 		value			:	-2,
 		
-		aspect			:	-1
+		aspect			:	-1,
+		in_canvas_flag	:	false
 	};
 
 	this.event_listener				=new construct_event_listener(this);
@@ -594,6 +595,10 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		if(Math.abs(this.view_bak.y-this.view.y)>min_value){
 			this.view_bak.y=this.view.y;
 			request_string+="&y="+(this.view.y.toString());
+		};
+		if(this.view_bak.in_canvas_flag^this.event_listener.mouse_inside_canvas_flag){
+			this.view_bak.in_canvas_flag=this.event_listener.mouse_inside_canvas_flag;
+			request_string+="&in_canvas="+(this.event_listener.mouse_inside_canvas_flag?"yes":"no");
 		};
 		
 		var id,value;

@@ -87,7 +87,6 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		var ep=render.component_event_processor[component_id];
 		if(typeof(ep)=="undefined"){
 			ep={
-				function_id			:	0,
 				mousemove_flag		:	true,
 				texture_object		:	new Array(),
 				
@@ -125,7 +124,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					case 1:
 						break;
 					case 2:
-						render.call_server_component(component_id,"all",[["operation","delete"],["id",render.pickup.body_id]]);
+						render.call_server_component(component_id,"all",[["operation","clear"],["id",render.pickup.body_id]]);
 						return true;
 					}
 					return false;
@@ -138,22 +137,19 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					
 					if(render.pickup.body_id<0)
 						return true;
-					var my_current_time;
+					var my_current_time,function_id=1;
 					if((my_current_time=new Date().getTime())<(this.pickupmousewheel_last_time+500))
 						return true;
 
 					if(typeof(event.wheelDelta)=="number")	//for chrome,opera
-						ep.function_id+=(event.wheelDelta<0)?1:-1;
+						function_id=(event.wheelDelta<0)?1:-1;
 					else if(typeof(event.detail)=="number")	//for firefox
-						ep.function_id+=(event.detail<0)?-1:1;
+						function_id=(event.detail<0)?-1:1;
 					else
 						return;
-					
-					var function_number=17;
-					ep.function_id=(ep.function_id+function_number)%function_number;
-
-					render.call_server_component(component_id,"all",
-						[["operation","switch"],["id",render.pickup.body_id],["function",ep.function_id]]);
+						
+					render.call_server_component(component_id,"all",[["operation","switch"],
+						["id",render.pickup.body_id],["switch",(function_id>0)?"increase":"decrease"]]);
 							
 					this.pickupmousewheel_last_time=my_current_time;
 					return true;
@@ -163,8 +159,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					var ep=render.component_event_processor[component_id];
 					if(ep.mousemove_flag){
 						ep.mousemove_flag=false;
-						render.call_server_component(component_id,"all",
-							[["operation","touch"],["function",ep.function_id]],
+						render.call_server_component(component_id,"all",[["operation","touch"]],
 							function(response_data,render)
 							{
 								ep.mousemove_flag=true;
@@ -177,8 +172,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					var ep=render.component_event_processor[component_id];
 					switch(event.button){
 					case 0:
-						render.call_server_component(component_id,"all",
-							[["operation","mark"],["function",ep.function_id]]);
+						render.call_server_component(component_id,"all",[["operation","mark"]]);
 						break;
 					case 1:
 					case 2:

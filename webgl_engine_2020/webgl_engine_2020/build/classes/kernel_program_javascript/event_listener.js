@@ -1,7 +1,7 @@
 function construct_event_listener(my_render)
 {
 	this.render=my_render;
-	this.mouse_inside_canvas_flag=true;
+	this.mouse_inside_canvas_flag=false;
 	this.mouse_down_flag=false;
 	this.mouse_down_flag_array=[false,false,false,false,false];
 
@@ -73,6 +73,8 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.mouse_inside_canvas_flag=true;
+		
 		var ep,component_id;
 		event.preventDefault();
 		this.set_render_view(event);
@@ -101,6 +103,7 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.mouse_inside_canvas_flag=true;
 		this.mouse_down_flag_array[event.button]=true;
 		this.mouse_down_flag=false;
 		for(var i=0,ni=this.mouse_down_flag_array.length;i<ni;i++)
@@ -138,6 +141,7 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.mouse_inside_canvas_flag=true;
 		this.mouse_down_flag_array[event.button]=false;
 		this.mouse_down_flag=false;
 		for(var i=0,ni=this.mouse_down_flag_array.length;i<ni;i++)
@@ -172,6 +176,7 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.mouse_inside_canvas_flag=true;
 	
 		var ep,component_id;
 		
@@ -202,6 +207,7 @@ function construct_event_listener(my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.mouse_inside_canvas_flag=true;
 		
 		var ep,component_id;
 		event.preventDefault();

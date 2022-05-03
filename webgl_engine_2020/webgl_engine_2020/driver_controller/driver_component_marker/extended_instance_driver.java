@@ -83,7 +83,7 @@ public class extended_instance_driver extends instance_driver
 				ci.request_response.print  ("		\"marker_id\":		",		p.marker_id).println(",");
 				str=jason_string.change_string(p.marker_component_name);
 				ci.request_response.print  ("		\"component_name\":	",		str).println(",");
-				ci.request_response.print  ("		\"component_id\":	",		component_id).println(",");
+				ci.request_response.print  ("		\"component_id\":		",	component_id).println(",");
 				ci.request_response.print  ("		\"marker_x\":		",		p.marker_x).println(",");
 				ci.request_response.print  ("		\"marker_y\":		",		p.marker_y).println(",");
 				ci.request_response.print  ("		\"marker_z\":		",		p.marker_z).println(",");

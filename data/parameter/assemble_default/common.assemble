@@ -176,7 +176,9 @@
 		/* 2name		*/			distance_tag_component
 		/* 2type		*/			distance_tag_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
-						/*	display_precision	*/	6
-						/*	min_view_distance	*/	0.05
+						/*	directory_component_name	*/		movement_manager
+						/*	distance_tag_file_name		*/		distance_tag.txt
+						/*	display_precision			*/		6
+						/*	min_view_distance			*/		0.05
 		/* 2children number */     0
 			

@@ -59,7 +59,7 @@ public class extended_part_driver extends part_driver
 			part my_component_part,engine_kernel ek,client_request_response request_response)
 	{
 		return new extended_component_driver(my_component_part,
-					new distance_tag_array(fr.get_int(),fr.get_double()));
+			new distance_tag_array(fr.get_string(),fr.get_string(),fr.get_int(),fr.get_double()));
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int loop_id,int edge_id,int point_id,

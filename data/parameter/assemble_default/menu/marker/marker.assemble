@@ -7,7 +7,7 @@
 	/* 2type		*/	interface_part
 	/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 					
-		false	9		0.2		0.5		marker.png
+		false	9		0.2		1.2		marker.png
 
 		token_program	文字标注选择组件
 					
@@ -18,10 +18,32 @@
 				pickupmouseselect		:	function(event,component_id,render)
 				{
 					var ep=render.component_event_processor[component_id];
-					var function_id=Math.floor((1.0-ep.y)*5.0);
+					var function_id=Math.floor((1.0-ep.y)*12.0);
 					
 					switch(function_id){
 					case 0:
+						return;
+					case 1:
+						var tar_id;
+						if((tag_id=prompt("输入尺寸标注ID"))!=null)
+							render.call_server_component("distance_tag_component","all",[["operation","clear"],["id",tag_id]]);
+						break;
+					case 2:
+						render.call_server_component("distance_tag_component","all",[["operation","clear_all"]]);
+						break;
+					case 3:
+						render.call_server_component("distance_tag_component","all",[["operation","save"]]);
+						break;
+					case 4:
+						render.call_server_component("distance_tag_component","all",[["operation","load"]]);
+						break;
+					case 5:
+						window.open(render.create_component_request_string(
+							"distance_tag_component","all",[["operation","jason"]]),"_blank");
+						break;
+					case 6:
+						return;
+					case 7:
 						var marker_text,marker_component_name,marker_x,marker_y,marker_z;
 						if((marker_text=prompt("输入标注文字"))==null)
 							break;
@@ -38,26 +60,26 @@
 							 ["component_name",	encodeURIComponent(encodeURIComponent(marker_component_name))],
 							 ["value",			encodeURIComponent(encodeURIComponent(marker_text))]]);
 						break;
-					case 1:
+					case 8:
 						var marker_id;
 						if((marker_id=prompt("输入标注序号"))==null)
 							break;
 						render.call_server_component("component_marker_component","all",
 										[["operation","clear"],["marker_id",marker_id]]);
 						break;
-					case 2:
+					case 9:
 						render.call_server_component("component_marker_component","all",[["operation","clear_all"]]);
 						break;
-					case 3:
+					case 10:
 						window.open(render.create_component_request_string(
 							"component_marker_component","all",[["operation","jason"]]),"_blank");
 						break;
 					default:
 						render.system_call_processor.set_menu_show("交互界面主菜单");
-						function_id=4;
+						function_id=11;
 						break;
 					}
-					ep.hightlight=[0,1.0-function_id/5.0-1.0/5.0,		1.0,1.0-function_id/5.0];
+					ep.hightlight=[0,1.0-function_id/12.0-1.0/12.0,		1.0,1.0-function_id/12.0];
 				}
 			}
 		}
