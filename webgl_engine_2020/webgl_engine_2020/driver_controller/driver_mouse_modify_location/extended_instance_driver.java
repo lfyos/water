@@ -202,7 +202,7 @@ public class extended_instance_driver extends instance_driver
 			point p0=null,p1=null;
 			if(ci.parameter.comp!=null){
 				location loca=ci.selection_camera_result.negative_matrix;
-				loca=ci.parameter.comp.absolute_location.negative().multiply(loca);
+				loca=ci.parameter.comp.caculate_negative_absolute_location().multiply(loca);
 				p0=loca.multiply(new point(0,0,ci.parameter.depth));
 				p1=loca.multiply(new point(0,0,ci.parameter.depth+1.0));
 			}

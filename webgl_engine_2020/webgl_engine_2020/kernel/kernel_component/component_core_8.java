@@ -27,6 +27,7 @@ public class component_core_8 extends component_core_7
 	}
 	public boolean should_caculate_location_flag,should_caculate_box_flag;
 	public location move_location,parent_and_relative_location,absolute_location;
+	private location negative_absolute_location,negative_parent_and_relative_location;
 	
 	public void destroy()
 	{
@@ -35,6 +36,20 @@ public class component_core_8 extends component_core_7
 		move_location=null;
 		parent_and_relative_location=null;
 		absolute_location=null;
+		negative_absolute_location=null;
+		negative_parent_and_relative_location=null;
+	}
+	public location caculate_negative_absolute_location()
+	{
+		if(negative_absolute_location==null)
+			negative_absolute_location=absolute_location.negative();
+		return negative_absolute_location;
+	}
+	public location caculate_negative_parent_and_relative_location()
+	{
+		if(negative_parent_and_relative_location==null)
+			negative_parent_and_relative_location=parent_and_relative_location.negative();
+		return negative_parent_and_relative_location;
 	}
 	public location caculate_location(component_container component_cont)
 	{
@@ -51,6 +66,10 @@ public class component_core_8 extends component_core_7
 				absolute_location=move_location;
 			else
 				absolute_location=parent_and_relative_location.multiply(move_location);
+			
+			negative_absolute_location=null;
+			negative_parent_and_relative_location=null;
+			
 			for(int i=0,n=children_number();i<n;i++){
 				children[i].should_caculate_location_flag=true;
 				children[i].should_caculate_box_flag=true;
@@ -94,12 +113,14 @@ public class component_core_8 extends component_core_7
 		super(token_string,ek,request_response,fr,pcfps,change_part_name,
 			type_string_sorter,normalize_location_flag,part_list_flag,default_display_bitmap);
 
-		location_version				=1;
-		absolute_location_version		=1;
-		move_location					=new location();
-		parent_and_relative_location	=new location();
-		absolute_location				=new location();
-		should_caculate_location_flag	=true;
-		should_caculate_box_flag		=true;
+		location_version						=1;
+		absolute_location_version				=1;
+		move_location							=new location();
+		parent_and_relative_location			=new location();
+		absolute_location						=new location();
+		negative_absolute_location				=null;
+		negative_parent_and_relative_location	=null;
+		should_caculate_location_flag			=true;
+		should_caculate_box_flag				=true;
 	}
 }

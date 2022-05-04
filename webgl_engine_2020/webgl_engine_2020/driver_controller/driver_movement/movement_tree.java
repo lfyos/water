@@ -244,7 +244,7 @@ public class movement_tree {
 				}
 				
 				loca=main_loca.multiply(move.follow_component_location[i]);
-				loca=follow_component.parent_and_relative_location.negative().multiply(loca);
+				loca=follow_component.caculate_negative_parent_and_relative_location().multiply(loca);
 				follow_component.uniparameter.cacaulate_location_flag=false;
 				follow_component.modify_location(loca,component_cont);
 			}

@@ -30,7 +30,7 @@ public class operate_component_explosion
 			center_point=new plane(my_center_point,pp).project_to_plane_location().multiply(center_point);
 		}
 		
-		location negative_loca=comp.absolute_location.negative();
+		location negative_loca=comp.caculate_negative_absolute_location();
 		center_point=negative_loca.multiply(center_point);
 		my_center_point=negative_loca.multiply(my_center_point);
 		

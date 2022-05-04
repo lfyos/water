@@ -59,7 +59,7 @@ public class create_part_rude
 		reference_part	=new part		[max_component_number];
 		box_loca		=new location	[max_component_number];
 		box_array		=new box		[max_component_number];
-		create_location_box_and_material(comp,comp.absolute_location.negative(),
+		create_location_box_and_material(comp,comp.caculate_negative_absolute_location(),
 				my_box.distance2()*discard_top_part_component_precision2);
 		if((box_number>1)&&(max_part!=null))
 			topbox_part_rude=new part_rude(box_number,reference_part,box_loca,box_array);

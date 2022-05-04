@@ -101,7 +101,7 @@ public class locate_camera
 			point p0=cam.eye_component.absolute_location.multiply(new point(0,0,0));
 			loca=new location(p0,p0.add(d_x),p0.add(d_y),p0.add(d_z));
 			loca=loca.multiply(location.standard_negative);
-			loca=cam.eye_component.absolute_location.negative().multiply(loca);
+			loca=cam.eye_component.caculate_negative_absolute_location().multiply(loca);
 		}
 		return cam.eye_component.move_location.multiply(loca);
 	}	
@@ -170,7 +170,7 @@ public class locate_camera
 			
 		location loca=new location(center_point,center_point.add(px),center_point.add(py),center_point.add(pz));
 		loca=loca.multiply(location.standard_negative).normalize();
-		loca=cam.eye_component.absolute_location.negative().multiply(loca);
+		loca=cam.eye_component.caculate_negative_absolute_location().multiply(loca);
 
 		move_location=move_location.multiply(loca);
 			

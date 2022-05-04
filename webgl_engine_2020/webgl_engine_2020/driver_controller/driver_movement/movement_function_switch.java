@@ -422,7 +422,7 @@ public class movement_function_switch
 				searcher.result.move.follow_component_id		=new int[comp_array.component_number];
 				searcher.result.move.follow_component_location	=new location[comp_array.component_number];
 				
-				location main_negative_loca=main_comp.absolute_location.negative();
+				location main_negative_loca=main_comp.caculate_negative_absolute_location();
 				for(int i=0,ni=comp_array.component_number;i<ni;i++){
 					location loca=main_negative_loca.multiply(comp_array.comp[i].absolute_location);
 					searcher.result.move.follow_component_name[i]		=comp_array.comp[i].component_name;

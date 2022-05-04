@@ -115,10 +115,7 @@ public class distance_tag_array
 				return;
 			}
 			int function_id=fr.get_int();
-			double p0_x=fr.get_double(),p0_y=fr.get_double(),p0_z=fr.get_double();
-			double px_x=fr.get_double(),px_y=fr.get_double(),px_z=fr.get_double();
-			double py_x=fr.get_double(),py_y=fr.get_double(),py_z=fr.get_double();
-			
+			point p0=new point(fr),px=new point(fr),py=new point(fr);
 			if((comp_p0=ek.component_cont.search_component(component_name_p0))==null)
 				continue;
 			if((comp_px=ek.component_cont.search_component(component_name_px))==null)
@@ -126,27 +123,27 @@ public class distance_tag_array
 			if((comp_tag=ek.component_cont.search_component(component_name_tag))==null)
 				continue;
 			
-			point global_p0=comp_p0.absolute_location.multiply(p0_x,p0_y,p0_z);
-			point global_px=comp_px.absolute_location.multiply(px_x,px_y,px_z);
-			point global_py=comp_p0.absolute_location.multiply(py_x,py_y,py_z);
-			point dx=global_px.sub(global_p0),dy=global_py.sub(global_p0),dz=dx.cross(dy);
-			dy=dz.cross(dx).expand(dy.distance());
-			point py=comp_p0.absolute_location.negative().multiply(global_p0.add(dy));
+			point global_p0=comp_p0.absolute_location.multiply(p0);
+			point global_px=comp_px.absolute_location.multiply(px);
+			point global_py=comp_p0.absolute_location.multiply(py);
+			double dy_length=global_py.sub(global_p0).distance();
+			global_py=new plane(global_p0,global_px).project_to_plane_location().multiply(global_py);
+			global_py=global_py.sub(global_p0).expand(dy_length).add(global_p0);
+			py=comp_p0.caculate_negative_absolute_location().multiply(global_py);
 
 			distance_tag_item bak[]=distance_tag_array;
 			distance_tag_array=new distance_tag_item[bak.length+1];
 			for(int i=0,ni=bak.length;i<ni;i++)
 				distance_tag_array[i]=bak[i];
 			distance_tag_array[bak.length]=new distance_tag_item(
-				comp_p0.component_id,comp_px.component_id,comp_tag.component_id,function_id,
-				p0_x,p0_y,p0_z,		px_x,px_y,px_z,		py.x,py.y,py.z);
+				comp_p0.component_id,comp_px.component_id,comp_tag.component_id,
+				function_id,	p0.x,p0.y,p0.z,		px.x,px.y,px.z,		py.x,py.y,py.z);
 			distance_tag_array[bak.length].set_tag_str(display_precision,ek,ci);
 		}
 	}
 	public boolean clear_all_distance_tag(engine_kernel ek,client_information ci)
 	{
 		distance_tag_array=new distance_tag_item[] {};
-		save(ek);
 		return false;
 	}
 	public boolean clear_distance_tag(engine_kernel ek,client_information ci)
@@ -162,7 +159,6 @@ public class distance_tag_array
 		for(int i=0,j=0,ni=bak.length;i<ni;i++)
 			if(tag_index!=i)
 				distance_tag_array[j++]=bak[i];
-		save(ek);
 		return false;
 	}
 	public boolean modify_distance_tag(engine_kernel ek,client_information ci)
@@ -200,7 +196,7 @@ public class distance_tag_array
 	public boolean touch_distance_tag(engine_kernel ek,client_information ci)
 	{
 		distance_tag_item p;
-		component distance_comp;
+		component comp_p0,comp_px;
 		point touch_point,global_p0,global_px,global_py,view_p0,view_px,view_py,top_point,down_point;
 		
 		for(int i=0,ni=distance_tag_array.length;i<ni;i++) {
@@ -210,8 +206,8 @@ public class distance_tag_array
 					return true;
 				if((touch_point=ci.selection_camera_result.caculate_local_focus_point(ci.parameter))==null)
 					return true;
-				distance_comp=ek.component_cont.get_component(p.p0_component_id);
-				global_p0=distance_comp.absolute_location.multiply(p.p0);
+				comp_p0=ek.component_cont.get_component(p.p0_component_id);
+				global_p0=comp_p0.absolute_location.multiply(p.p0);
 				global_px=ci.parameter.comp.absolute_location.multiply(touch_point);
 				if(global_px.sub(global_p0).distance2()<const_value.min_value2)
 					return true;
@@ -233,27 +229,20 @@ public class distance_tag_array
 				
 				p.px_component_id=ci.parameter.comp.component_id;
 				p.px=touch_point;
-				p.py=distance_comp.absolute_location.negative().multiply(global_py);
+				p.py=comp_p0.caculate_negative_absolute_location().multiply(global_py);
 				p.set_tag_str(display_precision,ek,ci);
 				
 				return false;
 			case 1://confirm third point
-				distance_comp=ek.component_cont.get_component(p.px_component_id);
-				global_px=distance_comp.absolute_location.multiply(p.px);
-				view_px=ci.display_camera_result.matrix.multiply(global_px);
-				
-				distance_comp=ek.component_cont.get_component(p.p0_component_id);
-				global_p0=distance_comp.absolute_location.multiply(p.p0);
+				comp_p0=ek.component_cont.get_component(p.p0_component_id);
+				global_p0=comp_p0.absolute_location.multiply(p.p0);
 				view_p0=ci.display_camera_result.matrix.multiply(global_p0);
-
-				plane p_pl;
 				
-				double up_dot_value=ci.selection_camera_result.up_direct.dot(global_px.sub(global_p0));
-				double right_dot_value=ci.selection_camera_result.right_direct.dot(global_px.sub(global_p0));
-				if(Math.abs(up_dot_value)<Math.abs(right_dot_value))
-					p_pl=new plane(global_p0,global_px,global_px.add(ci.selection_camera_result.up_direct));
-				else
-					p_pl=new plane(global_p0,global_px,global_px.add(ci.selection_camera_result.right_direct));
+				comp_px=ek.component_cont.get_component(p.px_component_id);
+				global_px=comp_px.absolute_location.multiply(p.px);
+				view_px=ci.display_camera_result.matrix.multiply(global_px);
+
+				plane p_pl=new plane(global_p0,global_px,global_px.add(ci.selection_camera_result.up_direct));
 				if(p_pl.error_flag)
 					return true;
 				
@@ -262,9 +251,7 @@ public class distance_tag_array
 						ci.selection_camera_result.negative_matrix.multiply(new point(0,0,ci.parameter.depth+1)));
 				if(global_py==null)
 					return true;
-				if((global_py=(new plane(global_p0,global_px)).project_to_plane_location().multiply(global_py))==null)
-					return true;
-				
+				global_py=(new plane(global_p0,global_px)).project_to_plane_location().multiply(global_py);
 				if(global_py.sub(global_p0).distance2()<const_value.min_value2)
 					return true;
 				if(new plane(global_p0,global_py).error_flag)
@@ -276,7 +263,7 @@ public class distance_tag_array
 				if(view_py.sub(view_p0).distance2()<(min_view_distance*min_view_distance))
 					return true;
 
-				p.py=distance_comp.absolute_location.negative().multiply(global_py);
+				p.py=comp_p0.caculate_negative_absolute_location().multiply(global_py);
 				return false;
 			default:
 				break;
@@ -286,23 +273,21 @@ public class distance_tag_array
 	}
 	public boolean mark_distance_tag(engine_kernel ek,client_information ci)
 	{
-		distance_tag_item p;
-		component distance_comp;
+		component comp_p0;
 		point mark_point,global_p0,global_px,global_py,view_p0,view_px,view_py;
 
 		for(int i=0,ni=distance_tag_array.length;i<ni;i++) {
-			switch((p=distance_tag_array[i]).state){
+			distance_tag_item p=distance_tag_array[i];
+			switch(p.state){
 			case 0:	//input second point
 				if(ci.parameter.comp==null)
 					return true;
 				if((mark_point=ci.selection_camera_result.caculate_local_focus_point(ci.parameter))==null)
 					return true;
-				p.px_component_id=ci.parameter.comp.component_id;
-				p.px=mark_point;
 				
-				distance_comp=ek.component_cont.get_component(p.p0_component_id);
-				global_p0=distance_comp.absolute_location.multiply(p.p0);
-				global_px=ci.parameter.comp.absolute_location.multiply(p.px);
+				comp_p0=ek.component_cont.get_component(p.p0_component_id);
+				global_p0=comp_p0.absolute_location.multiply(p.p0);
+				global_px=ci.parameter.comp.absolute_location.multiply(mark_point);
 				if(global_px.sub(global_p0).distance2()<const_value.min_value2)
 					return true;
 				if(new plane(global_p0,global_px).error_flag)
@@ -314,13 +299,15 @@ public class distance_tag_array
 				if(view_px.sub(view_p0).distance2()<(min_view_distance*min_view_distance))
 					return true;
 				
+				p.px_component_id=ci.parameter.comp.component_id;
+				p.px=mark_point;
 				p.state=1;
 				p.set_tag_str(display_precision,ek,ci);
 				return false;
 			case 1://confirm third point
-				distance_comp=ek.component_cont.get_component(p.p0_component_id);
-				global_p0=distance_comp.absolute_location.multiply(p.p0);
-				global_py=distance_comp.absolute_location.multiply(p.py);
+				comp_p0=ek.component_cont.get_component(p.p0_component_id);
+				global_p0=comp_p0.absolute_location.multiply(p.p0);
+				global_py=comp_p0.absolute_location.multiply(p.py);
 				
 				if(global_py.sub(global_p0).distance2()<const_value.min_value2)
 					return true;
@@ -332,7 +319,6 @@ public class distance_tag_array
 				if(view_py.sub(view_p0).distance2()<(min_view_distance*min_view_distance))
 					return true;
 				p.state=2;
-				save(ek);
 				return false;
 			default:
 				break;
@@ -346,10 +332,8 @@ public class distance_tag_array
 			distance_tag_array=new distance_tag_item[bak.length+1];
 			for(int i=0,ni=bak.length;i<ni;i++)
 				distance_tag_array[i]=bak[i];
-			
-			p=new distance_tag_item(mark_point,
-					ci.parameter.comp.component_id,ek.component_cont.root_component.component_id);
-			distance_tag_array[distance_tag_array.length-1]=p;
+			distance_tag_array[distance_tag_array.length-1]=new distance_tag_item(mark_point,
+				ci.parameter.comp.component_id,ek.component_cont.root_component.component_id);
 		}
 		return false;
 	}
@@ -363,41 +347,37 @@ public class distance_tag_array
 				break;
 			case 1:
 			case 2:
-				long new_location_version_p0=ek.component_cont.get_component(
-						p.p0_component_id).get_absolute_location_version();
-				long new_location_version_px=ek.component_cont.get_component(
-						p.px_component_id).get_absolute_location_version();
-				long new_location_version_tag=ek.component_cont.get_component(
-						p.tag_component_id).get_absolute_location_version();
+				component comp_p0 =ek.component_cont.get_component(p.p0_component_id);
+				component comp_px =ek.component_cont.get_component(p.px_component_id);
+				component comp_tag=ek.component_cont.get_component(p.tag_component_id);
+				long new_location_version_p0=comp_p0.get_absolute_location_version();
+				long new_location_version_px=comp_px.get_absolute_location_version();
+				long new_location_version_tag=comp_tag.get_absolute_location_version();
+				
 				if(p.location_version_p0>=new_location_version_p0)
 					if(p.location_version_px>=new_location_version_px)
 						if(p.location_version_tag>=new_location_version_tag)
 							break;
+				point global_py=comp_p0.absolute_location.multiply(p.py);
+				point global_px=comp_px.absolute_location.multiply(p.px);
+				point global_p0=comp_p0.absolute_location.multiply(p.p0);
+				double dy_distance=global_py.sub(global_p0).distance();
+				
+				plane p_pl=new plane(global_p0,global_px,global_px.add(ci.display_camera_result.up_direct));
+				if(p_pl.error_flag)
+					break;
+
+				ret_val=true;
 				p.location_version_p0=new_location_version_p0;
 				p.location_version_px=new_location_version_px;
 				p.location_version_tag=new_location_version_tag;
-
-				ret_val=true;
-				component distance_comp;
-				distance_comp=ek.component_cont.get_component(p.px_component_id);
-				point global_px=distance_comp.absolute_location.multiply(p.px);
-				distance_comp=ek.component_cont.get_component(p.p0_component_id);
-				point global_py=distance_comp.absolute_location.multiply(p.py);
-				point global_p0=distance_comp.absolute_location.multiply(p.p0);
-				double dy_distance=global_py.sub(global_p0).distance();
 				
-				plane p_pl;
-				double up_dot_value=ci.selection_camera_result.up_direct.dot(global_px.sub(global_p0));
-				double right_dot_value=ci.selection_camera_result.right_direct.dot(global_px.sub(global_p0));
-				if(Math.abs(up_dot_value)<Math.abs(right_dot_value))
-					p_pl=new plane(global_p0,global_px,global_px.add(ci.selection_camera_result.up_direct));
-				else
-					p_pl=new plane(global_p0,global_px,global_px.add(ci.selection_camera_result.right_direct));
 				global_py=p_pl.project_to_plane_location().multiply(global_py);
 				global_py=new plane(global_p0,global_px).project_to_plane_location().multiply(global_py);
 				global_py=global_py.sub(global_p0).expand(dy_distance).add(global_p0);
 				
-				p.py=distance_comp.absolute_location.negative().multiply(global_py);
+				p.py=comp_p0.caculate_negative_absolute_location().multiply(global_py);
+
 				p.set_tag_str(display_precision,ek,ci);
 				
 				break;

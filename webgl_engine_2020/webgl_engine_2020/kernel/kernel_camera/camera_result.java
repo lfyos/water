@@ -210,7 +210,7 @@ public class camera_result
 		if(!(parameter.comp.uniparameter.part_list_flag))
 			return null;
 		
-		location comp_negative_loca=parameter.comp.absolute_location.negative();
+		location comp_negative_loca=parameter.comp.caculate_negative_absolute_location();
 		point p0=comp_negative_loca.multiply(negative_matrix.multiply(new point(0,0,parameter.depth+0.0)));
 		point p1=comp_negative_loca.multiply(negative_matrix.multiply(new point(0,0,parameter.depth+1.0)));
 

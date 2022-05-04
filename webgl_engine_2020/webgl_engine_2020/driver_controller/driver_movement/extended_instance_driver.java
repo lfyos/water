@@ -35,7 +35,7 @@ public class extended_instance_driver extends instance_driver
 			if(suspend.follow_mouse_component_id>=0)
 				if((follow_mouse_comp=ek.component_cont.get_component(suspend.follow_mouse_component_id))!=null)
 					if(follow_mouse_comp.component_box!=null) {
-						location loca=follow_mouse_comp.absolute_location.negative();
+						location loca=follow_mouse_comp.caculate_negative_absolute_location();
 						point p0=loca.multiply(follow_mouse_comp.component_box.center());
 						point p1=ci.selection_camera_result.center_point;
 						p1=ci.selection_camera_result.matrix.multiply(p1);
