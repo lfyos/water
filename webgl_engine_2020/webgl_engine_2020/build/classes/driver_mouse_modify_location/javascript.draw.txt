@@ -422,9 +422,6 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	
 	function mousedown(event,component_id,render)
 	{
-		render.call_server_component(part_initialize_data.movement_component_name,"all",
-			[["operation","virtual_mount"],["virtual_mount","terminate_follow"]]);
-
 		var ep=render.component_event_processor[component_id];
 		switch(event.button){
 		case 0:
@@ -434,7 +431,25 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 			ep.mouse_up_flag=false;
 			ep.last_point=[pinpoint.x,pinpoint.y,0,1];
 			send_to_webserver(component_id,"mousedown",render);
-			return;
+			break;
+		case 2:	
+			break;
+		default:
+			break;
+		}
+	}
+	function mouseup(event,component_id,render)
+	{
+		var ep=render.component_event_processor[component_id];
+
+		render.call_server_component(part_initialize_data.movement_component_name,"all",
+			[["operation","virtual_mount"],["virtual_mount","terminate_follow"]]);
+
+		switch(event.button){
+		case 0:
+			ep.mouse_up_flag=true;
+			send_location_to_webserver("mouseup",ep.component_id,render,false);
+			break;
 		case 2:	
 			if(event.ctrlKey||event.shiftKey||event.altKey){
 				render.call_server_component(part_initialize_data.movement_component_name,"all",
@@ -457,25 +472,11 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 						if((value=value.trim()).length>0)
 							render.call_server_component(part_initialize_data.mark_component_name,"all",
 								[["operation","append"],["value",encodeURIComponent(encodeURIComponent(value))]]);
-			}
-			return;
+			}		
+			break;
 		default:
-			return;
-		}
-	}
-	function mouseup(event,component_id,render)
-	{
-		var ep=render.component_event_processor[component_id];		
-		switch(event.button){
-		case 0:
-			ep.mouse_up_flag=true;
-			send_location_to_webserver("mouseup",ep.component_id,render,false);
-			return;
-		case 2:
-			return;
-		default:
-			return;
-		}
+			break;
+		}		
 	}
 	
 	function mousemove(event,component_id,render)

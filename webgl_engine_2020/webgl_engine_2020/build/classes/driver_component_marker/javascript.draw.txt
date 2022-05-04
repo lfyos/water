@@ -85,7 +85,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		var ep=render.component_event_processor[component_id];
 		if(typeof(ep)=="undefined"){
 			ep={
-				mousedown			:	function mousedown(event,component_id,render)
+				mouseup			:	function(event,component_id,render)
 				{
 					var value;
 					if(render.pickup.component_id<0)

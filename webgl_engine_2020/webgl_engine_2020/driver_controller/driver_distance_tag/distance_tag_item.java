@@ -14,14 +14,15 @@ public class distance_tag_item
 	public int state,p0_component_id,px_component_id,tag_component_id,function_id;
 	public point p0,px,py;
 	public long location_version_p0,location_version_px,location_version_tag;
-	public String tag_str;
+	public String tag_str,tag_title;
 
 	public distance_tag_item(
 			int my_p0_component_id,int my_px_component_id,int my_tag_component_id,
 			int my_function_id,
 			double p0_x,double p0_y,double p0_z,
 			double px_x,double px_y,double px_z,
-			double py_x,double py_y,double py_z)
+			double py_x,double py_y,double py_z,
+			String my_tag_title)
 	{
 		state=2;
 		p0_component_id=my_p0_component_id;
@@ -35,6 +36,7 @@ public class distance_tag_item
 		location_version_px=0;
 		location_version_tag=0;
 		tag_str=jason_string.change_string("");
+		tag_title=(my_tag_title==null)?"":(my_tag_title.trim());
 	}
 	public distance_tag_item(point my_point,int my_component_id,int my_tag_component_id)
 	{
@@ -50,6 +52,7 @@ public class distance_tag_item
 		location_version_px=0;
 		location_version_tag=0;
 		tag_str=jason_string.change_string("");
+		tag_title="";
 	}
 	public void set_function(engine_kernel ek,client_information ci)
 	{
@@ -68,9 +71,10 @@ public class distance_tag_item
 			break;
 		}	
 		function_id=(function_id+17)%17;
+		
 		int old_tag_component_id=tag_component_id;
 
-		switch(function_id) {
+		switch(function_id){
 		default:
 		case 0:
 		case 1://X direction
@@ -106,6 +110,7 @@ public class distance_tag_item
 		}
 		if(old_tag_component_id!=tag_component_id)
 			location_version_tag=0;
+		return;
 	}
 	public void set_tag_str(int display_precision,engine_kernel ek,client_information ci)
 	{
@@ -125,7 +130,8 @@ public class distance_tag_item
 		switch(function_id) {
 		default:
 		case 0:
-			tag_str=format_change.double_to_decimal_string(global_px.sub(global_p0).distance(),display_precision);
+			tag_str=tag_title+format_change.double_to_decimal_string(
+					global_px.sub(global_p0).distance(),display_precision);
 			break;
 		case 1://X direction
 		case 2://Y direction
@@ -133,7 +139,7 @@ public class distance_tag_item
 			title=new String[]{"X:","Y:","Z:"};
 			data=new double[][] {new double[] {1,0,0},new double[] {0,1,0},new double[] {0,0,1}};
 			pl=new plane(data[function_id-1][0],data[function_id-1][1],data[function_id-1][2],0);
-			tag_str=title[function_id-1]+format_change.double_to_decimal_string(
+			tag_str=tag_title+title[function_id-1]+format_change.double_to_decimal_string(
 					Math.abs(pl.test(global_px)-pl.test(global_p0)),display_precision);
 			break;
 		case 4://local X direction
@@ -145,8 +151,8 @@ public class distance_tag_item
 			data=new double[][] {new double[] {1,0,0},new double[] {0,1,0},new double[] {0,0,1}};
 			pl=new plane(comp.absolute_location.multiply(0,0,0),
 					comp.absolute_location.multiply(data[function_id-4][0],data[function_id-4][1],data[function_id-4][2]));
-			tag_str=title[function_id-4]+format_change.double_to_decimal_string(
-					Math.abs(pl.test(global_px)-pl.test(global_p0)),display_precision);
+			tag_str=tag_title+title[function_id-4]+format_change.double_to_decimal_string(
+						Math.abs(pl.test(global_px)-pl.test(global_p0)),display_precision);
 			break;
 		case 7://left right direction
 		case 8://up down direction
@@ -157,7 +163,7 @@ public class distance_tag_item
 			data=new double[][] {new double[] {1,0,0},new double[] {0,1,0},new double[] {0,0,1}};
 			pl=new plane(comp.absolute_location.multiply(0,0,0),
 					comp.absolute_location.multiply(data[function_id-7][0],data[function_id-7][1],data[function_id-7][2]));
-			tag_str=title[function_id-7]+format_change.double_to_decimal_string(
+			tag_str=tag_title+title[function_id-7]+format_change.double_to_decimal_string(
 					Math.abs(pl.test(global_px)-pl.test(global_p0)),display_precision);
 			break;
 		case 10://XY plane
@@ -167,7 +173,7 @@ public class distance_tag_item
 			data=new double[][] {new double[] {0,0,1},new double[] {1,0,0},new double[] {0,1,0}};
 			pl=new plane(new point(0,0,0),new point(data[function_id-10][0],data[function_id-10][1],data[function_id-10][2]));
 			loca=pl.project_to_plane_location();
-			tag_str=title[function_id-10]+format_change.double_to_decimal_string(
+			tag_str=tag_title+title[function_id-10]+format_change.double_to_decimal_string(
 					loca.multiply(global_px).sub(loca.multiply(global_p0)).distance(),display_precision);
 			break;
 		case 13://local XY plane
@@ -180,7 +186,7 @@ public class distance_tag_item
 			pl=new plane(comp.absolute_location.multiply(0,0,0),
 				comp.absolute_location.multiply(data[function_id-13][0],data[function_id-13][1],data[function_id-13][2]));
 			loca=pl.project_to_plane_location();
-			tag_str=title[function_id-13]+format_change.double_to_decimal_string(
+			tag_str=tag_title+title[function_id-13]+format_change.double_to_decimal_string(
 					loca.multiply(global_px).sub(loca.multiply(global_p0)).distance(),display_precision);
 			break;
 		case 16://view plane
@@ -188,10 +194,10 @@ public class distance_tag_item
 				break;
 			pl=new plane(comp.absolute_location.multiply(0,0,0),comp.absolute_location.multiply(0,0,1));
 			loca=pl.project_to_plane_location();
-			tag_str="View:"+format_change.double_to_decimal_string(
+			tag_str=tag_title+"View:"+format_change.double_to_decimal_string(
 					loca.multiply(global_px).sub(loca.multiply(global_p0)).distance(),display_precision);
 			break;
 		}
-		tag_str=jason_string.change_string(tag_str);
+		tag_str=jason_string.change_string(tag_str.trim());
 	}
 }

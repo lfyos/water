@@ -1,0 +1,34 @@
+package kernel_maintain;
+
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
+import kernel_common_class.debug_information;
+
+public class test_5
+{
+	public class item
+	{
+		public long id;
+		public String name;
+		public double score;
+		
+		public item(file_reader fr)
+		{
+			id=fr.get_long();
+			name=fr.get_string();
+			score=fr.get_double()+fr.get_double();
+		}
+	}
+	public static void main(String args[])
+	{
+		debug_information.println("Begin");
+		
+		file_reader fr=new file_reader("c:\\tmp\\x.txt",null);
+		
+		item p[]=new item[60];
+		for(int i=0,ni=p.length;i<ni;i++)
+			p[i]=new item(fr);
+
+		debug_information.println("End");
+	}
+}

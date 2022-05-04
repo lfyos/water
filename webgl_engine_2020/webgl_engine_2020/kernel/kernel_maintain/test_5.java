@@ -1,0 +1,49 @@
+package kernel_maintain;
+
+import kernel_file_manager.file_reader;
+import kernel_common_class.debug_information;
+
+class item
+{
+	public long id;
+	public String name;
+	public double score_1,score_2;
+	
+	public item(file_reader fr)
+	{
+		id=fr.get_long();
+		name=fr.get_string();
+		score_1=fr.get_double();
+		score_2=fr.get_double();
+	}
+}
+public class test_5
+{
+	
+	public static void main(String args[])
+	{
+		debug_information.println("Begin");
+		
+		file_reader fr=new file_reader("e:\\tmp\\x.txt",null);
+		
+		item p[]=new item[60];
+		for(int i=0,n=p.length;i<n;i++)
+			p[i]=new item(fr);
+		for(int i=0,n=p.length-1;i<n;i++)
+			for(int j=i+1;j<=n;j++)
+				if(p[i].id>p[j].id) {
+					item q=p[i];
+					p[i]=p[j];
+					p[j]=q;
+				}
+		for(int i=0,n=p.length;i<n;i++) {
+			debug_information.print  (p[i].id);
+			debug_information.print  ("\t",p[i].name);
+			debug_information.print  ("\t",(int)(Math.round((p[i].score_1+p[i].score_2)*100)/100));
+			debug_information.print  ("\t",(int)(p[i].score_1));
+			debug_information.println("\t",(int)(p[i].score_2));
+		}
+		debug_information.println("End");
+		fr.close();
+	}
+}

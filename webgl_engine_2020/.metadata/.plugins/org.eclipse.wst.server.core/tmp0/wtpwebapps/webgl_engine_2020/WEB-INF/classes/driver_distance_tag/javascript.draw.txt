@@ -102,14 +102,17 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				},
 				pickupdblclick		:	function(event,component_id,render)
 				{
-					if(render.pickup.body_id<0)
-						return true;
 					switch(event.button){
-					case 0:	
-						render.call_server_component(component_id,"all",[["operation","modify"],["id",render.pickup.body_id]]);
-						return true;
+					case 0:
+						if(render.pickup.body_id>=0)
+							render.call_server_component(component_id,"all",
+								[["operation","modify"],["id",render.pickup.body_id]]);
+						break;
+					case 1:
+					case 2:
+						break;
 					}
-					return false;
+					return true;
 				},
 				pickupcontextmenu	:	function(event,component_id,render)
 				{
@@ -117,17 +120,32 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				},
 				pickupmousedown		:	function(event,component_id,render)
 				{
-					if(render.pickup.body_id<0)
-						return true;
+					return true;
+				},
+				pickupmouseup		:	function(event,component_id,render)
+				{
 					switch(event.button){
 					case 0:
+						break;
 					case 1:
 						break;
 					case 2:
-						render.call_server_component(component_id,"all",[["operation","clear"],["id",render.pickup.body_id]]);
-						return true;
+						if(render.pickup.body_id<0)
+							break;
+						if((!event.shiftKey)&&(!event.ctrlKey)&&(!event.altKey)){
+							render.call_server_component(component_id,"all",
+								[["operation","clear"],["id",render.pickup.body_id]]);
+							break;
+						}
+						var tag_title;
+						if((tag_title=prompt("Input tag title"))==null)
+							break;
+						render.call_server_component(component_id,"all",
+							[["operation","title"],["id",render.pickup.body_id],
+							 ["title",encodeURIComponent(encodeURIComponent(tag_title))]]);
+						break;
 					}
-					return false;
+					return true;
 				},
 				
 				pickupmousewheel_last_time	:	0,
