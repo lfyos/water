@@ -47,13 +47,27 @@ public class distance_tag_item
 		p0=new point(my_point);
 		px=new point(my_point);
 		py=new point(my_point);
-		function_id=0;
+		function_id=-1;
 		location_version_p0=0;
 		location_version_px=0;
 		location_version_tag=0;
 		tag_str=jason_string.change_string("");
 		tag_title="";
 	}
+	//<0	global distance
+	
+	//0:global X direction		1:global Y direction	 	2:global Z direction
+	//3:local  X direction		4:local  Y direction		5:local  Z direction
+	//6:view   X direction		7:view   Y direction		8:view   Z direction
+	
+	//9:global YZ plane			10:global ZX plane		 	11:global XY plane
+	//12:local YZ plane			13:local  ZX plane			14:local  XY plane
+	//15:view  YZ plane			16:view   ZX plane			17:view   XY plane
+	
+	//18:global X angle			19:global Y angle		 	20:global Z angle	
+	//21:local  X angle			22:local  Y angle			23:local  Z angle	
+	//24:view   X angle			25:view   Y angle			26:view   Z angle	
+	
 	public void set_function(engine_kernel ek,client_information ci)
 	{
 		String str;
@@ -69,43 +83,24 @@ public class distance_tag_item
 		case "decrease":
 			function_id--;
 			break;
-		}	
-		function_id=(function_id+17)%17;
+		}
+
+		if(function_id>=27)
+			function_id=-1;
+		if(function_id<=-2)
+			function_id=26;
 		
 		int old_tag_component_id=tag_component_id;
-
-		switch(function_id){
-		default:
-		case 0:
-		case 1://X direction
-		case 2://Y direction
-		case 3://Z direction
-			tag_component_id=ek.component_cont.root_component.component_id;
-			break;
-		case 4://local X direction
-		case 5://local Y direction
-		case 6://local Z direction
+		tag_component_id=ek.component_cont.root_component.component_id;
+		switch((function_id%9)/3){
+		case 1:
 			if((comp=ek.component_cont.search_component())!=null)
 				tag_component_id=comp.component_id;
 			break;
-		case 7://left right direction
-		case 8://up down direction
-		case 9://near far direction
-			tag_component_id=ci.display_camera_result.cam.eye_component.component_id;
-			break;
-		case 10://XY plane
-		case 11://YZ plane
-		case 12://ZX plane
-			tag_component_id=ek.component_cont.root_component.component_id;
-			break;
-		case 13://local XY plane
-		case 14://local YZ plane
-		case 15://local ZX plane
-			if((comp=ek.component_cont.search_component())!=null)
-				tag_component_id=comp.component_id;
-			break;
-		case 16://view plane
-			tag_component_id=ci.display_camera_result.cam.eye_component.component_id;
+		case 2:
+			if(ci.display_camera_result!=null)
+				if(ci.display_camera_result.cam.eye_component!=null)
+					tag_component_id=ci.display_camera_result.cam.eye_component.component_id;
 			break;
 		}
 		if(old_tag_component_id!=tag_component_id)
@@ -114,90 +109,47 @@ public class distance_tag_item
 	}
 	public void set_tag_str(int display_precision,engine_kernel ek,client_information ci)
 	{
-		plane pl;
-		point global_p0,global_px;
-		location loca;
 		component comp;
-		double data[][];
-		String title[];
-		
 		comp=ek.component_cont.get_component(p0_component_id);
-		global_p0=comp.absolute_location.multiply(p0);
+		point global_p0=comp.absolute_location.multiply(p0);
 		comp=ek.component_cont.get_component(px_component_id);
-		global_px=comp.absolute_location.multiply(px);
+		point global_px=comp.absolute_location.multiply(px);
+
+		if(function_id<0) {
+			tag_str=jason_string.change_string(
+						tag_title+format_change.double_to_decimal_string(
+							global_px.sub(global_p0).distance(),display_precision)).trim();
+			return;
+		}
+		if((comp=ek.component_cont.get_component(tag_component_id))==null) {
+			tag_str="tag_component error:"+tag_component_id;
+			return;
+		}
+		String title[]=new String[]
+		{
+			"X:",	"Y:",	"Z:",		"LX:",	"LY:",	"LZ:",		"VX:",	"VY:",	"VZ:",
+			"YZ:",	"ZX:",	"XY:",		"LYZ:",	"LZX:",	"LXY:",		"VYZ:",	"VZX:",	"VXY:",
+			"AX:",	"AY:",	"AZ:",		"ALX:",	"ALY:",	"ALZ:",		"AVX:",	"AVY:",	"AVZ:"
+		};
+		double value=0,data[][]=new double[][] {new double[] {1,0,0},	new double[] {0,1,0},	new double[] {0,0,1}};
+		point p0=comp.absolute_location.multiply(0,0,0);
+		point p1=comp.absolute_location.multiply(data[function_id%3][0],data[function_id%3][1],data[function_id%3][2]);
+		plane pl=new plane(p0,p1);
+		location loca=pl.project_to_plane_location();
 		
-		tag_str="error_distance";
-		switch(function_id) {
-		default:
+		switch(function_id/9) {
 		case 0:
-			tag_str=tag_title+format_change.double_to_decimal_string(
-					global_px.sub(global_p0).distance(),display_precision);
+			value=Math.abs(pl.test(global_px)-pl.test(global_p0));
 			break;
-		case 1://X direction
-		case 2://Y direction
-		case 3://Z direction
-			title=new String[]{"X:","Y:","Z:"};
-			data=new double[][] {new double[] {1,0,0},new double[] {0,1,0},new double[] {0,0,1}};
-			pl=new plane(data[function_id-1][0],data[function_id-1][1],data[function_id-1][2],0);
-			tag_str=tag_title+title[function_id-1]+format_change.double_to_decimal_string(
-					Math.abs(pl.test(global_px)-pl.test(global_p0)),display_precision);
+		case 1:
+			value=loca.multiply(global_px).sub(loca.multiply(global_p0)).distance();
 			break;
-		case 4://local X direction
-		case 5://local Y direction
-		case 6://local Z direction
-			if((comp=ek.component_cont.get_component(tag_component_id))==null)
-				break;
-			title=new String[]{"LX:","LY:","LZ:"};
-			data=new double[][] {new double[] {1,0,0},new double[] {0,1,0},new double[] {0,0,1}};
-			pl=new plane(comp.absolute_location.multiply(0,0,0),
-					comp.absolute_location.multiply(data[function_id-4][0],data[function_id-4][1],data[function_id-4][2]));
-			tag_str=tag_title+title[function_id-4]+format_change.double_to_decimal_string(
-						Math.abs(pl.test(global_px)-pl.test(global_p0)),display_precision);
-			break;
-		case 7://left right direction
-		case 8://up down direction
-		case 9://near far direction
-			if((comp=ek.component_cont.get_component(tag_component_id))==null)
-				break;
-			title=new String[]{"LR:","UD:","NF:"};
-			data=new double[][] {new double[] {1,0,0},new double[] {0,1,0},new double[] {0,0,1}};
-			pl=new plane(comp.absolute_location.multiply(0,0,0),
-					comp.absolute_location.multiply(data[function_id-7][0],data[function_id-7][1],data[function_id-7][2]));
-			tag_str=tag_title+title[function_id-7]+format_change.double_to_decimal_string(
-					Math.abs(pl.test(global_px)-pl.test(global_p0)),display_precision);
-			break;
-		case 10://XY plane
-		case 11://YZ plane
-		case 12://ZX plane
-			title=new String[]{"XY:","YZ:","ZX:"};
-			data=new double[][] {new double[] {0,0,1},new double[] {1,0,0},new double[] {0,1,0}};
-			pl=new plane(new point(0,0,0),new point(data[function_id-10][0],data[function_id-10][1],data[function_id-10][2]));
-			loca=pl.project_to_plane_location();
-			tag_str=tag_title+title[function_id-10]+format_change.double_to_decimal_string(
-					loca.multiply(global_px).sub(loca.multiply(global_p0)).distance(),display_precision);
-			break;
-		case 13://local XY plane
-		case 14://local YZ plane
-		case 15://local ZX plane
-			if((comp=ek.component_cont.get_component(tag_component_id))==null)
-				break;
-			title=new String[]{"LXY:","LYZ:","LZX:"};
-			data=new double[][] {new double[] {0,0,1},new double[] {1,0,0},new double[] {0,1,0}};
-			pl=new plane(comp.absolute_location.multiply(0,0,0),
-				comp.absolute_location.multiply(data[function_id-13][0],data[function_id-13][1],data[function_id-13][2]));
-			loca=pl.project_to_plane_location();
-			tag_str=tag_title+title[function_id-13]+format_change.double_to_decimal_string(
-					loca.multiply(global_px).sub(loca.multiply(global_p0)).distance(),display_precision);
-			break;
-		case 16://view plane
-			if((comp=ek.component_cont.get_component(tag_component_id))==null)
-				break;
-			pl=new plane(comp.absolute_location.multiply(0,0,0),comp.absolute_location.multiply(0,0,1));
-			loca=pl.project_to_plane_location();
-			tag_str=tag_title+"View:"+format_change.double_to_decimal_string(
-					loca.multiply(global_px).sub(loca.multiply(global_p0)).distance(),display_precision);
+		case 2:
+			value=global_px.sub(global_p0).expand(1.0).dot(p1.sub(p0).expand(1.0));
+			value=180.0*Math.acos(value)/Math.PI;
 			break;
 		}
+		tag_str=tag_title+title[function_id]+format_change.double_to_decimal_string(value,display_precision);	
 		tag_str=jason_string.change_string(tag_str.trim());
 	}
 }

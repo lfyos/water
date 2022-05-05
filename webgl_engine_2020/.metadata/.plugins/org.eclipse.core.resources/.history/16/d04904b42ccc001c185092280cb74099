@@ -1,0 +1,152 @@
+package driver_distance_tag;
+
+import kernel_common_class.format_change;
+import kernel_common_class.jason_string;
+import kernel_engine.client_information;
+import kernel_engine.engine_kernel;
+import kernel_transformation.point;
+import kernel_transformation.plane;
+import kernel_transformation.location;
+import kernel_component.component;
+
+public class distance_tag_item
+{
+	public int state,p0_component_id,px_component_id,tag_component_id,function_id;
+	public point p0,px,py;
+	public long location_version_p0,location_version_px,location_version_tag;
+	public String tag_str,tag_title;
+
+	public distance_tag_item(
+			int my_p0_component_id,int my_px_component_id,int my_tag_component_id,
+			int my_function_id,
+			double p0_x,double p0_y,double p0_z,
+			double px_x,double px_y,double px_z,
+			double py_x,double py_y,double py_z,
+			String my_tag_title)
+	{
+		state=2;
+		p0_component_id=my_p0_component_id;
+		px_component_id=my_px_component_id;
+		tag_component_id=my_tag_component_id;
+		function_id=my_function_id;
+		p0=new point(p0_x,p0_y,p0_z);
+		px=new point(px_x,px_y,px_z);
+		py=new point(py_x,py_y,py_z);
+		location_version_p0=0;
+		location_version_px=0;
+		location_version_tag=0;
+		tag_str=jason_string.change_string("");
+		tag_title=(my_tag_title==null)?"":(my_tag_title.trim());
+	}
+	public distance_tag_item(point my_point,int my_component_id,int my_tag_component_id)
+	{
+		state=0;
+		p0_component_id=my_component_id;
+		px_component_id=my_component_id;
+		tag_component_id=my_tag_component_id;
+		p0=new point(my_point);
+		px=new point(my_point);
+		py=new point(my_point);
+		function_id=0;
+		location_version_p0=0;
+		location_version_px=0;
+		location_version_tag=0;
+		tag_str=jason_string.change_string("");
+		tag_title="";
+	}
+	public void set_function(engine_kernel ek,client_information ci)
+	{
+		String str;
+		component comp;
+		if((str=ci.request_response.get_parameter("switch"))==null)	
+			return;
+		switch(str.trim()) {
+		default:
+			return;
+		case "increase":
+			if((++function_id)>=27)
+				function_id=-1;
+			break;
+		case "decrease":
+			if((--function_id)<=-2)
+				function_id=26;
+			break;
+		}
+		int old_tag_component_id=tag_component_id;
+		switch((function_id%9)/3){
+		case 0:
+			tag_component_id=ek.component_cont.root_component.component_id;
+			break;
+		case 1:
+			if((comp=ek.component_cont.search_component())!=null)
+				tag_component_id=comp.component_id;
+			else
+				tag_component_id=ek.component_cont.root_component.component_id;
+			break;
+		case 2:
+			tag_component_id=ci.display_camera_result.cam.eye_component.component_id;
+			break;
+		}
+		if(old_tag_component_id!=tag_component_id)
+			location_version_tag=0;
+		return;
+	}
+	public void set_tag_str(int display_precision,engine_kernel ek,client_information ci)
+	{
+		component comp;
+		comp=ek.component_cont.get_component(p0_component_id);
+		point global_p0=comp.absolute_location.multiply(p0);
+		comp=ek.component_cont.get_component(px_component_id);
+		point global_px=comp.absolute_location.multiply(px);
+
+		if(function_id<0) {
+			tag_str=jason_string.change_string(
+						tag_title+format_change.double_to_decimal_string(
+							global_px.sub(global_p0).distance(),display_precision)).trim();
+			return;
+		}
+		
+		//0:global X direction	1:global Y direction	 	2:global Z direction
+		//3:local  X direction	4:local  Y direction		5:local  Z direction
+		//6:view   X direction	7:view   Y direction		8:view   Z direction
+		
+		//9:global X plane		10:global Y plane		 	11:global Z plane
+		//12:local X plane		13:local  Y plane			14:local  Z plane
+		//15:view  X plane		16:view   Y plane			17:view   Z plane
+		
+		//18:global X direction	19:global Y direction	 	20:global Z direction
+		//21:local  X direction	22:local  Y direction		23:local  Z direction
+		//24:view   X direction	25:view   Y direction		26:view   Z direction
+			
+		if((comp=ek.component_cont.get_component(tag_component_id))==null) {
+			tag_str="tag_component error:"+tag_component_id;
+			return;
+		}
+		String title[]=new String[]
+		{
+			"X:",	"Y:",	"Z:",		"LX:",	"LY:",	"LZ:",		"VX:",	"VY:",	"VZ:",
+			"YZ:",	"ZX:",	"XY:",		"LYZ:",	"LZX:",	"LXY:",		"VYZ:",	"VZX:",	"VXY:",
+			"AX:",	"AY:",	"AZ:",		"ALX:",	"ALY:",	"ALZ:",		"AVX:",	"AVY:",	"AVZ:"
+		};
+		double value=0,data[][]=new double[][] {new double[] {1,0,0},	new double[] {0,1,0},	new double[] {0,0,1}};
+		point p0=comp.absolute_location.multiply(0,0,0);
+		point p1=comp.absolute_location.multiply(data[function_id%3][0],data[function_id%3][1],data[function_id%3][2]);
+		plane pl=new plane(p0,p1);
+		location loca=pl.project_to_plane_location();
+		
+		switch(function_id/9) {
+		case 0:
+			value=Math.abs(pl.test(global_px)-pl.test(global_p0));
+			break;
+		case 1:
+			value=loca.multiply(global_px).sub(loca.multiply(global_p0)).distance();
+			break;
+		case 2:
+			value=global_px.sub(global_p0).expand(1.0).dot(p1.sub(p0).expand(1.0));
+			value=180.0*Math.acos(value)/Math.PI;
+			break;
+		}
+		tag_str=tag_title+title[function_id]+format_change.double_to_decimal_string(value,display_precision);	
+		tag_str=jason_string.change_string(tag_str.trim());
+	}
+}

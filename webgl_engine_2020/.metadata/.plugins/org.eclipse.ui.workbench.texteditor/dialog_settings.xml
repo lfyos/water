@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="tag_text_scale"/>
+		<item key="selection" value="&#x09;&#x09;&#x09;"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="&#x09;&#x09;&#x09;"/>
+			<item value="(function_id-1)%3"/>
+			<item value="case "/>
 			<item value="tag_text_scale"/>
 			<item value="ctr"/>
 			<item value="mouse_down_flag"/>
@@ -20,11 +23,11 @@
 			<item value="function_id"/>
 			<item value="mouse_inside_canvas_flag"/>
 			<item value="render_buffer_id"/>
-			<item value="render_component"/>
-			<item value="gl_Position"/>
-			<item value="gl_FragDepth"/>
 		</list>
 		<list key="replacehistory">
+			<item value="&#x09;&#x09;"/>
+			<item value="function_id%3"/>
+			<item value="//"/>
 			<item value=""/>
 			<item value="p"/>
 			<item value="render"/>
@@ -37,9 +40,6 @@
 			<item value="pickup_exit_flag"/>
 			<item value="ek.modifier_cont.clear_modifier(ek,ci);"/>
 			<item value="ek.modifier_cont"/>
-			<item value="0"/>
-			<item value="/*&#x09;max_modifier_container_number&#x09;&#x09;&#x09;&#x09;*/&#x09;&#x09;1"/>
-			<item value="6"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
