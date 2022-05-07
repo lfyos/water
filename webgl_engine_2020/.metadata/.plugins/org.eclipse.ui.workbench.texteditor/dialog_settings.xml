@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="&#x09;&#x09;&#x09;"/>
+		<item key="selection" value="angle"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="plane"/>
+			<item value="function_id"/>
+			<item value="set_event_component"/>
+			<item value="tag_object"/>
+			<item value="get_component_processor"/>
+			<item value="&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;"/>
+			<item value="&#x09;&#x09;&#x09;&#x09;"/>
+			<item value="x"/>
+			<item value="component_array_sorted_by_name"/>
+			<item value="_by_name"/>
+			<item value="mousemove_flag"/>
+			<item value="set_menu_show"/>
+			<item value="_distance"/>
 			<item value="&#x09;&#x09;&#x09;"/>
 			<item value="(function_id-1)%3"/>
-			<item value="case "/>
-			<item value="tag_text_scale"/>
-			<item value="ctr"/>
-			<item value="mouse_down_flag"/>
-			<item value="neg"/>
-			<item value="negative"/>
-			<item value="negi"/>
-			<item value="cross"/>
-			<item value="double "/>
-			<item value="distance_tag_array[i]"/>
-			<item value="function_id"/>
-			<item value="mouse_inside_canvas_flag"/>
-			<item value="render_buffer_id"/>
 		</list>
 		<list key="replacehistory">
+			<item value="angle"/>
+			<item value="type_id"/>
+			<item value="tag_ep"/>
+			<item value="&#x09;&#x09;&#x09;"/>
+			<item value=""/>
+			<item value="y"/>
+			<item value="_angle"/>
 			<item value="&#x09;&#x09;"/>
 			<item value="function_id%3"/>
 			<item value="//"/>
-			<item value=""/>
 			<item value="p"/>
 			<item value="render"/>
 			<item value="part_material"/>
 			<item value="parameter.txt&#x09;relative"/>
 			<item value="this."/>
-			<item value="ep.function_id"/>
-			<item value="ep."/>
-			<item value="pickup_exit_display_flag"/>
-			<item value="pickup_exit_flag"/>
-			<item value="ek.modifier_cont.clear_modifier(ek,ci);"/>
-			<item value="ek.modifier_cont"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

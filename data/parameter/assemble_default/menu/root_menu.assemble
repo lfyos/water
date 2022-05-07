@@ -10,6 +10,7 @@
 		mount	parameter\parameter.assemble
 		mount	list\list.assemble
 		mount	marker\marker.assemble
+		mount	tag\tag.assemble
 			
 	/* 1children number */		1
 	

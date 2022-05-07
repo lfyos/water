@@ -87,8 +87,10 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		var ep=render.component_event_processor[component_id];
 		if(typeof(ep)=="undefined"){
 			ep={
-				mousemove_flag		:	true,
-				texture_object		:	new Array(),
+				pickup_tag_id				:	-1,
+				tag_menu_component_name		:	instance_initialize_data[buffer_id],
+				mousemove_flag				:	true,
+				texture_object				:	new Array(),
 				
 				destroy				:	function(gl,ep,component_id)
 				{
@@ -102,27 +104,17 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				},
 				pickupdblclick		:	function(event,component_id,render)
 				{
-					switch(event.button){
-					case 0:
-						if(render.pickup.body_id>=0)
-							render.call_server_component(component_id,"all",
-								[["operation","modify"],["id",render.pickup.body_id]]);
-						break;
-					case 1:
-					case 2:
-						break;
-					}
 					return true;
 				},
 				pickupcontextmenu	:	function(event,component_id,render)
 				{
 					return true;
 				},
-				pickupmousedown		:	function(event,component_id,render)
+				pickupmouseup		:	function(event,component_id,render)
 				{
 					return true;
 				},
-				pickupmouseup		:	function(event,component_id,render)
+				pickupmousedown		:	function(event,component_id,render)
 				{
 					switch(event.button){
 					case 0:
@@ -130,46 +122,11 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					case 1:
 						break;
 					case 2:
-						if(render.pickup.body_id<0)
-							break;
-						if((!event.shiftKey)&&(!event.ctrlKey)&&(!event.altKey)){
-							render.call_server_component(component_id,"all",
-								[["operation","clear"],["id",render.pickup.body_id]]);
-							break;
-						}
-						var tag_title;
-						if((tag_title=prompt("Input tag title"))==null)
-							break;
-						render.call_server_component(component_id,"all",
-							[["operation","title"],["id",render.pickup.body_id],
-							 ["title",encodeURIComponent(encodeURIComponent(tag_title))]]);
+						var ep=render.component_event_processor[component_id];
+						if((ep.pickup_tag_id=render.pickup.body_id)>=0)
+							render.system_call_processor.set_menu_show(ep.tag_menu_component_name);
 						break;
 					}
-					return true;
-				},
-				
-				pickupmousewheel_last_time	:	0,
-				pickupmousewheel	:	function(event,component_id,render)
-				{
-					var ep=render.component_event_processor[component_id];
-					
-					if(render.pickup.body_id<0)
-						return true;
-					var my_current_time,function_id=1;
-					if((my_current_time=new Date().getTime())<(this.pickupmousewheel_last_time+500))
-						return true;
-
-					if(typeof(event.wheelDelta)=="number")	//for chrome,opera
-						function_id=(event.wheelDelta<0)?1:-1;
-					else if(typeof(event.detail)=="number")	//for firefox
-						function_id=(event.detail<0)?-1:1;
-					else
-						return;
-						
-					render.call_server_component(component_id,"all",[["operation","switch"],
-						["id",render.pickup.body_id],["switch",(function_id>0)?"increase":"decrease"]]);
-							
-					this.pickupmousewheel_last_time=my_current_time;
 					return true;
 				},
 				mousemove			:	function(event,component_id,render)

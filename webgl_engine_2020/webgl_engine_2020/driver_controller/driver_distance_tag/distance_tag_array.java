@@ -13,16 +13,18 @@ import kernel_file_manager.file_writer;
 
 public class distance_tag_array
 {
+	public String tag_root_menu_component_name;
 	public distance_tag_item distance_tag_array[];
 	private String directory_component_name,distance_tag_file_name;
 	private int display_precision;
 	private double min_view_distance;
 	private boolean has_done_load_flag;
 
-	public distance_tag_array(
+	public distance_tag_array(String my_tag_root_menu_component_name,
 			String my_directory_component_name,String my_distance_tag_file_name,
 			int my_display_precision,double my_min_view_distance)
 	{
+		tag_root_menu_component_name=my_tag_root_menu_component_name;
 		distance_tag_array=new distance_tag_item[] {};
 		directory_component_name=my_directory_component_name;
 		distance_tag_file_name=file_reader.separator(my_distance_tag_file_name);
@@ -54,7 +56,7 @@ public class distance_tag_array
 			fw.println("/*	p0_component	*/	",comp_p0. component_name);
 			fw.println("/*	px_component	*/	",comp_px. component_name);
 			fw.println("/*	tag_component	*/	",comp_tag.component_name);
-			fw.println("/*	function_id		*/	",p.function_id);
+			fw.println("/*	type_id			*/	",p.type_id);
 			fw.print  ("/*	p0				*/	",p.p0.x).print("	",p.p0.y).println("	",p.p0.z);
 			fw.print  ("/*	px				*/	",p.px.x).print("	",p.px.y).println("	",p.px.z);
 			fw.print  ("/*	py				*/	",p.py.x).print("	",p.py.y).println("	",p.py.z);
@@ -85,7 +87,7 @@ public class distance_tag_array
 			ci.request_response.print  ("		\"p0_component\":	",	jason_string.change_string(comp_p0. component_name)).println(",");
 			ci.request_response.print  ("		\"px_component\":	",	jason_string.change_string(comp_px. component_name)).println(",");
 			ci.request_response.print  ("		\"tag_component\":",	jason_string.change_string(comp_tag.component_name)).println(",");
-			ci.request_response.print  ("		\"function_id\":	",	p.function_id).println(",");
+			ci.request_response.print  ("		\"type_id\":	",		p.type_id).println(",");
 			ci.request_response.print  ("		\"p0\":		[",			p.p0.x).print(",	",p.p0.y).print(",	",p.p0.z).println(",	1.0],");
 			ci.request_response.print  ("		\"px\":		[",			p.px.x).print(",	",p.px.y).print(",	",p.px.z).println(",	1.0],");
 			ci.request_response.print  ("		\"py\":		[",			p.py.x).print(",	",p.py.y).print(",	",p.py.z).println(",	1.0],");
@@ -117,11 +119,7 @@ public class distance_tag_array
 				fr.close();
 				return;
 			}
-			int function_id;
-			if((function_id=fr.get_int())<-1)
-				function_id=-1;
-			else if(function_id>=27)
-				function_id=26;
+			int type_id=fr.get_int();
 			
 			point p0=new point(fr),px=new point(fr),py=new point(fr);
 			String tag_title=fr.get_string();
@@ -150,7 +148,7 @@ public class distance_tag_array
 				distance_tag_array[i]=bak[i];
 			distance_tag_array[bak.length]=new distance_tag_item(
 				comp_p0.component_id,comp_px.component_id,comp_tag.component_id,
-				function_id,	p0.x,p0.y,p0.z,		px.x,px.y,px.z,		py.x,py.y,py.z,
+				type_id,	p0.x,p0.y,p0.z,		px.x,px.y,px.z,		py.x,py.y,py.z,
 				tag_title);
 			distance_tag_array[bak.length].set_tag_str(display_precision,ek,ci);
 		}
@@ -195,7 +193,7 @@ public class distance_tag_array
 		distance_tag_array[tag_index].state=1;
 		return false;
 	}
-	public boolean switch_distance_tag(engine_kernel ek,client_information ci)
+	public boolean set_distance_tag_type(engine_kernel ek,client_information ci)
 	{
 		String str;
 		if((str=ci.request_response.get_parameter("id"))==null)
@@ -203,7 +201,9 @@ public class distance_tag_array
 		int tag_index=Integer.parseInt(str);
 		if((tag_index<0)||(tag_index>=distance_tag_array.length))
 			return true;
-		distance_tag_array[tag_index].set_function(ek,ci);
+		if((str=ci.request_response.get_parameter("type"))==null)
+			return true;
+		distance_tag_array[tag_index].set_distance_tag_type(Integer.parseInt(str),ek,ci);
 		distance_tag_array[tag_index].set_tag_str(display_precision,ek,ci);
 		return false;
 	}

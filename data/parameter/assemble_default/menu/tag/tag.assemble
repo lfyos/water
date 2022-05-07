@@ -1,0 +1,76 @@
+/* 1name			*/	tag_root_component
+/* 1type			*/	undefined_part
+/* 1location		*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+/* 1child_number	*/	5
+
+		/* 2name		*/	tag_root_menu_component
+		/* 2type		*/	interface_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+		false			0		0.25		1.2		tag_root_menu.png		
+		file_program	tag_root_menu.txt
+
+		/* 2child_number	*/	0
+	
+	
+		/* 2name		*/	tag_direction_distance_component
+		/* 2type		*/	interface_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+		false			0		0.25		1.2		tag_direction_distance.png
+		file_program	tag_type_menu.txt
+		token_program	tag_direction_distance_component
+		function(component_name,component_id,render)
+		{
+			render.component_event_processor[component_id].type_base_id=0;
+		}
+		tag_direction_distance_component
+		
+
+		/* 2child_number	*/	0
+		
+		/* 2name		*/	tag_plane_distance_component
+		/* 2type		*/	interface_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+		false			0		0.25		1.2		tag_plane_distance.png
+		file_program	tag_type_menu.txt
+		token_program	tag_plane_distance_component
+		function(component_name,component_id,render)
+		{
+			render.component_event_processor[component_id].type_base_id=9;
+		}
+		tag_plane_distance_component
+
+		/* 2child_number	*/	0	
+		
+	
+		/* 2name		*/	tag_direction_angle_component
+		/* 2type		*/	interface_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+		false			0		0.25		1.2		tag_direction_angle.png
+		file_program	tag_type_menu.txt		
+		token_program	tag_direction_angle_component
+		function(component_name,component_id,render)
+		{
+			render.component_event_processor[component_id].type_base_id=18;
+		}
+		tag_direction_angle_component
+		/* 2child_number	*/	0
+		
+		/* 2name		*/	tag_plane_angle_component
+		/* 2type		*/	interface_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+		false			0		0.25		1.2		tag_plane_angle.png
+		file_program	tag_type_menu.txt
+		token_program	tag_plane_angle_component
+		function(component_name,component_id,render)
+		{
+			render.component_event_processor[component_id].type_base_id=27;
+		}
+		tag_plane_angle_component
+		
+		/* 2child_number	*/	0	
+		

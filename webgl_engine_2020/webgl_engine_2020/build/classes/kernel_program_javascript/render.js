@@ -997,24 +997,19 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	};
 	this.get_component_processor=function(my_component_name)
 	{
-		var my_component_id=my_component_name;
-		if(typeof(my_component_id)=="string"){
-			var p=this.get_component_object_by_component_name(my_component_id);
-			if(p==null)
+		var p,my_component_id;
+		if(typeof(my_component_id=my_component_name)=="string"){
+			if((p=this.get_component_object_by_component_name(my_component_id))==null)
 				return null;
 			my_component_id=p.component_id;
 		}
-		if(typeof(my_component_id)=="number"){
-			if(my_component_id>=0)
-				if(my_component_id<(this.component_event_processor.length)){
-					var ret_val=this.component_event_processor[my_component_id];
-					if(typeof(ret_val)=="object")
-						if(ret_val!=null){
-							ret_val.component_id=my_component_id;
-							return ret_val;
-						}
-				}
-		}
+		if(typeof(my_component_id)=="number")
+			if((my_component_id>=0)&&(my_component_id<(this.component_event_processor.length)))
+				if(typeof(p=this.component_event_processor[my_component_id])=="object")
+					if(p!=null){
+						p.component_id=my_component_id;
+						return p;
+					}
 		return null;
 	};
 	this.call_server=function(request_string,

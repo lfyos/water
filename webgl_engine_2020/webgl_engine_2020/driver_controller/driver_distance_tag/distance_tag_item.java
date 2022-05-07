@@ -11,14 +11,14 @@ import kernel_component.component;
 
 public class distance_tag_item
 {
-	public int state,p0_component_id,px_component_id,tag_component_id,function_id;
+	public int state,p0_component_id,px_component_id,tag_component_id,type_id;
 	public point p0,px,py;
 	public long location_version_p0,location_version_px,location_version_tag;
 	public String tag_str,tag_title;
 
 	public distance_tag_item(
 			int my_p0_component_id,int my_px_component_id,int my_tag_component_id,
-			int my_function_id,
+			int my_type_id,
 			double p0_x,double p0_y,double p0_z,
 			double px_x,double px_y,double px_z,
 			double py_x,double py_y,double py_z,
@@ -28,7 +28,7 @@ public class distance_tag_item
 		p0_component_id=my_p0_component_id;
 		px_component_id=my_px_component_id;
 		tag_component_id=my_tag_component_id;
-		function_id=my_function_id;
+		type_id=my_type_id;
 		p0=new point(p0_x,p0_y,p0_z);
 		px=new point(px_x,px_y,px_z);
 		py=new point(py_x,py_y,py_z);
@@ -47,7 +47,7 @@ public class distance_tag_item
 		p0=new point(my_point);
 		px=new point(my_point);
 		py=new point(my_point);
-		function_id=-1;
+		type_id=-1;
 		location_version_p0=0;
 		location_version_px=0;
 		location_version_tag=0;
@@ -68,32 +68,21 @@ public class distance_tag_item
 	//21:local  X angle			22:local  Y angle			23:local  Z angle	
 	//24:view   X angle			25:view   Y angle			26:view   Z angle	
 	
-	public void set_function(engine_kernel ek,client_information ci)
+	//27:global YZ angle		28:global ZX angle		 	29:global XY angle
+	//30:local  YZ angle		31:local  ZX angle			32:local  XY angle
+	//33:view   YZ angle		34:view   ZX angle			35:view   XY angle
+	
+	public void set_distance_tag_type(int new_type_id,engine_kernel ek,client_information ci)
 	{
-		String str;
-		component comp;
-		if((str=ci.request_response.get_parameter("switch"))==null)	
-			return;
-		switch(str.trim()) {
-		default:
-			return;
-		case "increase":
-			function_id++;
-			break;
-		case "decrease":
-			function_id--;
-			break;
-		}
-
-		if(function_id>=27)
-			function_id=-1;
-		if(function_id<=-2)
-			function_id=26;
+		type_id=new_type_id;
+		type_id=(type_id<-2)?-2:(type_id>26)?26:type_id;
 		
 		int old_tag_component_id=tag_component_id;
 		tag_component_id=ek.component_cont.root_component.component_id;
-		switch((function_id%9)/3){
+		
+		switch((type_id%9)/3){
 		case 1:
+			component comp;
 			if((comp=ek.component_cont.search_component())!=null)
 				tag_component_id=comp.component_id;
 			break;
@@ -115,12 +104,18 @@ public class distance_tag_item
 		comp=ek.component_cont.get_component(px_component_id);
 		point global_px=comp.absolute_location.multiply(px);
 
-		if(function_id<0) {
-			tag_str=jason_string.change_string(
+		if(type_id<0)
+			switch(type_id){
+			case -1:
+				tag_str=jason_string.change_string(
 						tag_title+format_change.double_to_decimal_string(
 							global_px.sub(global_p0).distance(),display_precision)).trim();
-			return;
-		}
+				return;
+			case -2:
+				return;
+			default:
+				return;
+			}
 		if((comp=ek.component_cont.get_component(tag_component_id))==null) {
 			tag_str="tag_component error:"+tag_component_id;
 			return;
@@ -129,15 +124,16 @@ public class distance_tag_item
 		{
 			"X:",	"Y:",	"Z:",		"LX:",	"LY:",	"LZ:",		"VX:",	"VY:",	"VZ:",
 			"YZ:",	"ZX:",	"XY:",		"LYZ:",	"LZX:",	"LXY:",		"VYZ:",	"VZX:",	"VXY:",
-			"AX:",	"AY:",	"AZ:",		"ALX:",	"ALY:",	"ALZ:",		"AVX:",	"AVY:",	"AVZ:"
+			"AX:",	"AY:",	"AZ:",		"ALX:",	"ALY:",	"ALZ:",		"AVX:",	"AVY:",	"AVZ:",
+			"AYZ:",	"AZX:",	"XY:",		"ALYZ:","ALZX:","ALXY:",	"AVYZ:","AVZX:","AVXY:"
 		};
 		double value=0,data[][]=new double[][] {new double[] {1,0,0},	new double[] {0,1,0},	new double[] {0,0,1}};
 		point p0=comp.absolute_location.multiply(0,0,0);
-		point p1=comp.absolute_location.multiply(data[function_id%3][0],data[function_id%3][1],data[function_id%3][2]);
+		point p1=comp.absolute_location.multiply(data[type_id%3][0],data[type_id%3][1],data[type_id%3][2]);
 		plane pl=new plane(p0,p1);
 		location loca=pl.project_to_plane_location();
 		
-		switch(function_id/9) {
+		switch(type_id/9) {
 		case 0:
 			value=Math.abs(pl.test(global_px)-pl.test(global_p0));
 			break;
@@ -148,8 +144,12 @@ public class distance_tag_item
 			value=global_px.sub(global_p0).expand(1.0).dot(p1.sub(p0).expand(1.0));
 			value=180.0*Math.acos(value)/Math.PI;
 			break;
+		case 3:
+			value=global_px.sub(global_p0).expand(1.0).dot(p1.sub(p0).expand(1.0));
+			value=180.0*Math.acos(value)/Math.PI;
+			break;
 		}
-		tag_str=tag_title+title[function_id]+format_change.double_to_decimal_string(value,display_precision);	
+		tag_str=tag_title+title[type_id]+format_change.double_to_decimal_string(value,display_precision);	
 		tag_str=jason_string.change_string(tag_str.trim());
 	}
 }

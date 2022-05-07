@@ -226,6 +226,10 @@ public class engine_initialization
 									initialization_program_file_name[i][j]=ek.system_par.data_root_directory_name+file_name;
 									if(!(f=new File(initialization_program_file_name[i][j])).exists()){
 										initialization_program_file_name[i][j]=null;
+										debug_information.print  (
+												"Not exist component init function,component name:	",init_comp[i].component_name);
+										debug_information.println(
+												"	file_name:	",init_comp[i].initialization.initialization_program[j]);
 										continue;
 									}
 								}

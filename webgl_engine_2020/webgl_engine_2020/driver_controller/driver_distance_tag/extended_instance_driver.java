@@ -7,6 +7,7 @@ import kernel_driver.instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_transformation.point;
+import kernel_common_class.jason_string;
 
 public class extended_instance_driver extends instance_driver
 {
@@ -24,6 +25,7 @@ public class extended_instance_driver extends instance_driver
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
 		tag_array.load(true,ek,ci);
+		ci.request_response.print(jason_string.change_string(tag_array.tag_root_menu_component_name));
 	}
 	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
 			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
@@ -75,8 +77,8 @@ public class extended_instance_driver extends instance_driver
 			if(tag_array.touch_distance_tag(ek,ci))
 				return null;
 			break;
-		case "switch":
-			if(tag_array.switch_distance_tag(ek,ci))
+		case "type":
+			if(tag_array.set_distance_tag_type(ek,ci))
 				return null;
 			tag_array.save(ek);
 			break;

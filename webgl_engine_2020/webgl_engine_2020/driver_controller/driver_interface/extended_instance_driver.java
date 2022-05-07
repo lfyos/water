@@ -108,6 +108,14 @@ public class extended_instance_driver extends instance_driver
 				break;
 			}
 		}
+		if((x0+dx)>1)
+			x0=1.0-dx;
+		if(x0<-1)
+			x0=-1;
+		if((y0+dy)>1)
+			y0=1.0-dy;
+		if(y0<-1)
+			y0=-1;
 	}
 	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
 	{
