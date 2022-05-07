@@ -54,10 +54,10 @@
 <fullyQualifiedTypeName name="kernel_transformation.box"/>
 <fullyQualifiedTypeName name="kernel_common_class.change_name"/>
 <fullyQualifiedTypeName name="java.io.File"/>
-<fullyQualifiedTypeName name="kernel_common_class.const_value"/>
 <fullyQualifiedTypeName name="kernel_component.component"/>
 <fullyQualifiedTypeName name="kernel_file_manager.file_reader"/>
-<fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="kernel_common_class.jason_string"/>
+<fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
+<fullyQualifiedTypeName name="kernel_common_class.const_value"/>
 </qualifiedTypeNameHistroy>

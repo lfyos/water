@@ -104,11 +104,14 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 
 			ep.pickupenter_component=function(this_pickup,old_pickup,render)
 			{
-
 			}
 			ep.pickupleave_component=function(this_pickup,old_pickup,render)
 			{
 				ep.mousedown_flag=false;
+			}
+			ep.pickupdblclick=function(event,component_id,render)
+			{
+				return true;
 			}
 			ep.pickupmousedown=function(event,component_id,render)
 			{

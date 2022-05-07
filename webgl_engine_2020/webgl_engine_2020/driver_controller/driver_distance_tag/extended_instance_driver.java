@@ -53,7 +53,8 @@ public class extended_instance_driver extends instance_driver
 			distance_comp=ek.component_cont.get_component(p.px_component_id);
 			point dx=distance_comp.absolute_location.multiply(p.px).sub(p0);
 			
-			ci.request_response.print((p.state!=2)?"[1,":"[0,",p.tag_str).
+			ci.request_response.print(
+				(p.state!=2)?"[1,":"[0,",p.get_tag_str(tag_array.display_precision,ek,ci)).
 				print(",",p0.x).print(",",p0.y).print(",",p0.z).
 				print(",",dx.x).print(",",dx.y).print(",",dx.z).
 				print(",",dy.x).print(",",dy.y).print(",",dy.z).
@@ -76,6 +77,9 @@ public class extended_instance_driver extends instance_driver
 		case "touch":
 			if(tag_array.touch_distance_tag(ek,ci))
 				return null;
+			break;
+		case "extra":
+			tag_array.set_extra_distance_tag(ek,ci);
 			break;
 		case "type":
 			if(tag_array.set_distance_tag_type(ek,ci))

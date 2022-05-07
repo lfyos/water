@@ -1,5 +1,6 @@
 package driver_distance_tag;
 
+import kernel_common_class.const_value;
 import kernel_common_class.format_change;
 import kernel_common_class.jason_string;
 import kernel_engine.client_information;
@@ -14,8 +15,27 @@ public class distance_tag_item
 	public int state,p0_component_id,px_component_id,tag_component_id,type_id;
 	public point p0,px,py;
 	public long location_version_p0,location_version_px,location_version_tag;
-	public String tag_str,tag_title;
-
+	public String tag_title;
+	
+	public distance_tag_item extra_distance_tag;
+	
+	public distance_tag_item(distance_tag_item dti)
+	{
+		state				=dti.state;
+		p0_component_id		=dti.p0_component_id;
+		px_component_id		=dti.px_component_id;
+		tag_component_id	=dti.tag_component_id;
+		type_id				=dti.type_id;
+		p0					=dti.p0;
+		px					=dti.px;
+		py					=dti.py;
+		location_version_p0	=0;
+		location_version_px	=0;
+		location_version_tag=0;
+		tag_title			=dti.tag_title;
+		
+		extra_distance_tag=null;
+	}
 	public distance_tag_item(
 			int my_p0_component_id,int my_px_component_id,int my_tag_component_id,
 			int my_type_id,
@@ -35,8 +55,9 @@ public class distance_tag_item
 		location_version_p0=0;
 		location_version_px=0;
 		location_version_tag=0;
-		tag_str=jason_string.change_string("");
 		tag_title=(my_tag_title==null)?"":(my_tag_title.trim());
+		
+		extra_distance_tag=null;
 	}
 	public distance_tag_item(point my_point,int my_component_id,int my_tag_component_id)
 	{
@@ -51,8 +72,9 @@ public class distance_tag_item
 		location_version_p0=0;
 		location_version_px=0;
 		location_version_tag=0;
-		tag_str=jason_string.change_string("");
 		tag_title="";
+		
+		extra_distance_tag=null;
 	}
 	//<0	global distance
 	
@@ -72,14 +94,23 @@ public class distance_tag_item
 	//30:local  YZ angle		31:local  ZX angle			32:local  XY angle
 	//33:view   YZ angle		34:view   ZX angle			35:view   XY angle
 	
-	public void set_distance_tag_type(int new_type_id,engine_kernel ek,client_information ci)
+	public void set_distance_tag_type(int new_type_id,
+			distance_tag_item my_ex_distance_tag,engine_kernel ek,client_information ci)
 	{
 		type_id=new_type_id;
-		type_id=(type_id<-2)?-2:(type_id>26)?26:type_id;
+		type_id=(type_id<-2)?-2:(type_id>=36)?35:type_id;
+		
+		extra_distance_tag=null;
+		if((type_id>=27)||(type_id==-2)){
+			if(my_ex_distance_tag==null)
+				type_id=-1;
+			else
+				extra_distance_tag=new distance_tag_item(my_ex_distance_tag);
+		}
 		
 		int old_tag_component_id=tag_component_id;
 		tag_component_id=ek.component_cont.root_component.component_id;
-		
+
 		switch((type_id%9)/3){
 		case 1:
 			component comp;
@@ -94,32 +125,47 @@ public class distance_tag_item
 		}
 		if(old_tag_component_id!=tag_component_id)
 			location_version_tag=0;
+		
 		return;
 	}
-	public void set_tag_str(int display_precision,engine_kernel ek,client_information ci)
+	public String get_tag_str(int display_precision,engine_kernel ek,client_information ci)
 	{
 		component comp;
 		comp=ek.component_cont.get_component(p0_component_id);
-		point global_p0=comp.absolute_location.multiply(p0);
+		point global_p0=comp.absolute_location.multiply(p0),extra_global_p0;
 		comp=ek.component_cont.get_component(px_component_id);
-		point global_px=comp.absolute_location.multiply(px);
-
+		point global_px=comp.absolute_location.multiply(px),extra_global_px;
+		
+		point dir_0,dir_1;
+		double value=0;
+		
+		if(extra_distance_tag==null) {
+			extra_global_p0=new point(0,0,0);
+			extra_global_px=new point(0,0,1);
+		}else {
+			comp=ek.component_cont.get_component(extra_distance_tag.p0_component_id);
+			extra_global_p0=comp.absolute_location.multiply(extra_distance_tag.p0);
+			comp=ek.component_cont.get_component(extra_distance_tag.px_component_id);
+			extra_global_px=comp.absolute_location.multiply(extra_distance_tag.px);
+		}
 		if(type_id<0)
 			switch(type_id){
 			case -1:
-				tag_str=jason_string.change_string(
+				return jason_string.change_string(
 						tag_title+format_change.double_to_decimal_string(
-							global_px.sub(global_p0).distance(),display_precision)).trim();
-				return;
+							global_px.sub(global_p0).distance(),display_precision).trim());
 			case -2:
-				return;
+				dir_0=global_px.sub(global_p0).expand(1);
+				dir_1=extra_global_px.sub(extra_global_p0).expand(1);
+				value=180.0*Math.acos(dir_0.dot(dir_1))/Math.PI;
+				return jason_string.change_string(tag_title+"Ang:"+
+					format_change.double_to_decimal_string(value,display_precision).trim());
 			default:
-				return;
+				return jason_string.change_string("error:type_id=="+type_id);
 			}
-		if((comp=ek.component_cont.get_component(tag_component_id))==null) {
-			tag_str="tag_component error:"+tag_component_id;
-			return;
-		}
+		if((comp=ek.component_cont.get_component(tag_component_id))==null)
+			return jason_string.change_string("tag_component error:"+tag_component_id);
+
 		String title[]=new String[]
 		{
 			"X:",	"Y:",	"Z:",		"LX:",	"LY:",	"LZ:",		"VX:",	"VY:",	"VZ:",
@@ -127,7 +173,7 @@ public class distance_tag_item
 			"AX:",	"AY:",	"AZ:",		"ALX:",	"ALY:",	"ALZ:",		"AVX:",	"AVY:",	"AVZ:",
 			"AYZ:",	"AZX:",	"XY:",		"ALYZ:","ALZX:","ALXY:",	"AVYZ:","AVZX:","AVXY:"
 		};
-		double value=0,data[][]=new double[][] {new double[] {1,0,0},	new double[] {0,1,0},	new double[] {0,0,1}};
+		double data[][]=new double[][] {new double[] {1,0,0},	new double[] {0,1,0},	new double[] {0,0,1}};
 		point p0=comp.absolute_location.multiply(0,0,0);
 		point p1=comp.absolute_location.multiply(data[type_id%3][0],data[type_id%3][1],data[type_id%3][2]);
 		plane pl=new plane(p0,p1);
@@ -141,15 +187,21 @@ public class distance_tag_item
 			value=loca.multiply(global_px).sub(loca.multiply(global_p0)).distance();
 			break;
 		case 2:
-			value=global_px.sub(global_p0).expand(1.0).dot(p1.sub(p0).expand(1.0));
-			value=180.0*Math.acos(value)/Math.PI;
+			if((dir_0=global_px.sub(global_p0)).distance2()<const_value.min_value2)
+				return jason_string.change_string(tag_title+title[type_id]+" global_p0 too near to global_p1");
+			if((dir_1=p1.sub(p0)).distance2()<const_value.min_value2)
+				return jason_string.change_string(tag_title+title[type_id]+" p0 too near to p1");
+			value=180.0*Math.acos(dir_0.expand(1.0).dot(dir_1.expand(1.0)))/Math.PI;
 			break;
 		case 3:
-			value=global_px.sub(global_p0).expand(1.0).dot(p1.sub(p0).expand(1.0));
-			value=180.0*Math.acos(value)/Math.PI;
+			if((dir_0=loca.multiply(global_px).sub(loca.multiply(global_p0))).distance2()<const_value.min_value2)
+				return jason_string.change_string(tag_title+title[type_id]+" global_p0 too near to global_p1");
+			if((dir_1=loca.multiply(extra_global_px).sub(loca.multiply(extra_global_p0))).distance2()<const_value.min_value2)
+				return jason_string.change_string(tag_title+title[type_id]+" p0 too near to p1");
+			value=180.0*Math.acos(dir_0.expand(1).dot(dir_1.expand(1)))/Math.PI;
 			break;
 		}
-		tag_str=tag_title+title[type_id]+format_change.double_to_decimal_string(value,display_precision);	
-		tag_str=jason_string.change_string(tag_str.trim());
+		String tag_str=format_change.double_to_decimal_string(value,display_precision);	
+		return jason_string.change_string((tag_title+title[type_id]+tag_str).trim());
 	}
 }

@@ -14,9 +14,9 @@ import kernel_file_manager.file_writer;
 public class distance_tag_array
 {
 	public String tag_root_menu_component_name;
-	public distance_tag_item distance_tag_array[];
+	public distance_tag_item distance_tag_array[],ex_distance_tag;
 	private String directory_component_name,distance_tag_file_name;
-	private int display_precision;
+	public int display_precision;
 	private double min_view_distance;
 	private boolean has_done_load_flag;
 
@@ -26,6 +26,7 @@ public class distance_tag_array
 	{
 		tag_root_menu_component_name=my_tag_root_menu_component_name;
 		distance_tag_array=new distance_tag_item[] {};
+		ex_distance_tag=null;
 		directory_component_name=my_directory_component_name;
 		distance_tag_file_name=file_reader.separator(my_distance_tag_file_name);
 		display_precision=my_display_precision;
@@ -91,7 +92,6 @@ public class distance_tag_array
 			ci.request_response.print  ("		\"p0\":		[",			p.p0.x).print(",	",p.p0.y).print(",	",p.p0.z).println(",	1.0],");
 			ci.request_response.print  ("		\"px\":		[",			p.px.x).print(",	",p.px.y).print(",	",p.px.z).println(",	1.0],");
 			ci.request_response.print  ("		\"py\":		[",			p.py.x).print(",	",p.py.y).print(",	",p.py.z).println(",	1.0],");
-			ci.request_response.println("		\"tag_string\":	",		p.tag_str);
 			ci.request_response.println("		\"tag_string\":	",		jason_string.change_string(p.tag_title));
 			ci.request_response.print  ("	}");
 		}
@@ -150,7 +150,6 @@ public class distance_tag_array
 				comp_p0.component_id,comp_px.component_id,comp_tag.component_id,
 				type_id,	p0.x,p0.y,p0.z,		px.x,px.y,px.z,		py.x,py.y,py.z,
 				tag_title);
-			distance_tag_array[bak.length].set_tag_str(display_precision,ek,ci);
 		}
 	}
 	public boolean clear_all_distance_tag(engine_kernel ek,client_information ci)
@@ -172,6 +171,19 @@ public class distance_tag_array
 			if(tag_index!=i)
 				distance_tag_array[j++]=bak[i];
 		return false;
+	}
+	public void set_extra_distance_tag(engine_kernel ek,client_information ci)
+	{
+		String str;
+		ex_distance_tag=null;
+		if((str=ci.request_response.get_parameter("id"))==null)
+			return;
+		int tag_index=Integer.parseInt(str);
+		if((tag_index<0)||(tag_index>=distance_tag_array.length))
+			return;
+		if(distance_tag_array[tag_index].state==2)
+			ex_distance_tag=new distance_tag_item(distance_tag_array[tag_index]);
+		return;
 	}
 	public boolean modify_distance_tag(engine_kernel ek,client_information ci)
 	{
@@ -203,8 +215,8 @@ public class distance_tag_array
 			return true;
 		if((str=ci.request_response.get_parameter("type"))==null)
 			return true;
-		distance_tag_array[tag_index].set_distance_tag_type(Integer.parseInt(str),ek,ci);
-		distance_tag_array[tag_index].set_tag_str(display_precision,ek,ci);
+		distance_tag_array[tag_index].set_distance_tag_type(
+					Integer.parseInt(str),ex_distance_tag,ek,ci);
 		return false;
 	}
 	public boolean title_distance_tag(engine_kernel ek,client_information ci)
@@ -229,7 +241,7 @@ public class distance_tag_array
 		str=str.replace(" ","").replace("\t","").replace("\n","").replace("\r","");
 		
 		distance_tag_array[tag_index].tag_title=str;
-		distance_tag_array[tag_index].set_tag_str(display_precision,ek,ci);
+		
 		return false;
 	}
 	public boolean touch_distance_tag(engine_kernel ek,client_information ci)
@@ -269,7 +281,6 @@ public class distance_tag_array
 				p.px_component_id=ci.parameter.comp.component_id;
 				p.px=touch_point;
 				p.py=comp_p0.caculate_negative_absolute_location().multiply(global_py);
-				p.set_tag_str(display_precision,ek,ci);
 				
 				return false;
 			case 1://confirm third point
@@ -341,7 +352,6 @@ public class distance_tag_array
 				p.px_component_id=ci.parameter.comp.component_id;
 				p.px=mark_point;
 				p.state=1;
-				p.set_tag_str(display_precision,ek,ci);
 				return false;
 			case 1://confirm third point
 				comp_p0=ek.component_cont.get_component(p.p0_component_id);
@@ -389,14 +399,31 @@ public class distance_tag_array
 				component comp_p0 =ek.component_cont.get_component(p.p0_component_id);
 				component comp_px =ek.component_cont.get_component(p.px_component_id);
 				component comp_tag=ek.component_cont.get_component(p.tag_component_id);
-				long new_location_version_p0=comp_p0.get_absolute_location_version();
-				long new_location_version_px=comp_px.get_absolute_location_version();
-				long new_location_version_tag=comp_tag.get_absolute_location_version();
 				
+				component comp_extra_p0=null;
+				component comp_extra_px=null;
+				
+				long new_location_version_p0	=comp_p0.get_absolute_location_version();
+				long new_location_version_px	=comp_px.get_absolute_location_version();
+				long new_location_version_tag	=comp_tag.get_absolute_location_version();
+				long new_location_version_extra_p0=0;
+				long new_location_version_extra_px=0;
+				if(p.extra_distance_tag!=null) {
+					comp_extra_p0 =ek.component_cont.get_component(p.extra_distance_tag.p0_component_id);
+					comp_extra_px =ek.component_cont.get_component(p.extra_distance_tag.px_component_id);
+					new_location_version_extra_p0=comp_extra_p0.get_absolute_location_version();
+					new_location_version_extra_px=comp_extra_px.get_absolute_location_version();
+				}
+
 				if(p.location_version_p0>=new_location_version_p0)
 					if(p.location_version_px>=new_location_version_px)
-						if(p.location_version_tag>=new_location_version_tag)
-							break;
+						if(p.location_version_tag>=new_location_version_tag) {
+							if(p.extra_distance_tag==null)
+								break;
+							if(p.extra_distance_tag.location_version_p0>=new_location_version_extra_p0)
+								if(p.extra_distance_tag.location_version_px>=new_location_version_extra_px)
+									break;
+						}
 				point global_p0=comp_p0.absolute_location.multiply(p.p0);
 				point global_px=comp_px.absolute_location.multiply(p.px);
 				point global_py=comp_p0.absolute_location.multiply(p.py);
@@ -410,6 +437,10 @@ public class distance_tag_array
 				p.location_version_p0=new_location_version_p0;
 				p.location_version_px=new_location_version_px;
 				p.location_version_tag=new_location_version_tag;
+				if(p.extra_distance_tag!=null){
+					p.extra_distance_tag.location_version_p0=new_location_version_extra_p0;
+					p.extra_distance_tag.location_version_px=new_location_version_extra_px;
+				}
 				
 				global_py=p_pl.project_to_plane_location().multiply(global_py);
 				global_py=new plane(global_p0,global_px).project_to_plane_location().multiply(global_py);
@@ -417,8 +448,6 @@ public class distance_tag_array
 				
 				p.py=comp_p0.caculate_negative_absolute_location().multiply(global_py);
 
-				p.set_tag_str(display_precision,ek,ci);
-				
 				break;
 			}
 		return ret_val;

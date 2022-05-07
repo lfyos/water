@@ -6,7 +6,7 @@ function(component_name,component_id,render)
 		{
 			var tag_ep=render.get_component_processor("distance_tag_component");
 			var ep=render.component_event_processor[component_id];
-			var function_id=Math.floor((1.0-ep.y)*12.0);
+			var function_id=Math.floor((1.0-ep.y)*13.0);
 			switch(function_id){
 			case 0:
 				render.call_server_component(tag_ep.component_id,"all",
@@ -54,6 +54,10 @@ function(component_name,component_id,render)
 			case 11:
 				render.system_call_processor.set_menu_show("tag_plane_angle_component");
 				break;	
+			case 12:
+				render.call_server_component(tag_ep.component_id,"all",
+					[["operation","extra"],["id",tag_ep.pickup_tag_id]]);
+				break;
 			}
 			render.system_call_processor.set_menu_hide(component_id);					
 		}
