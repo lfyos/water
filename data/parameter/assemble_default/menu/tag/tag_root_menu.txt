@@ -6,7 +6,7 @@ function(component_name,component_id,render)
 		{
 			var tag_ep=render.get_component_processor("distance_tag_component");
 			var ep=render.component_event_processor[component_id];
-			var function_id=Math.floor((1.0-ep.y)*13.0);
+			var function_id=Math.floor((1.0-ep.y)*14.0);
 			switch(function_id){
 			case 0:
 				render.call_server_component(tag_ep.component_id,"all",
@@ -31,33 +31,38 @@ function(component_name,component_id,render)
 						 ["title",encodeURIComponent(encodeURIComponent(tag_title))]]);
 				break;
 			case 4:
-				return;
-			case 5:
-				render.call_server_component(tag_ep.component_id,"all",
-					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","-1"]]);
-				break;
-			case 6:
-				render.system_call_processor.set_menu_show("tag_direction_distance_component");
-				break;
-			case 7:
-				render.system_call_processor.set_menu_show("tag_plane_distance_component");
-				break;
-			case 8:
-				return;
-			case 9:
-				render.call_server_component(tag_ep.component_id,"all",
-					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","-2"]]);
-				break;
-			case 10:
-				render.system_call_processor.set_menu_show("tag_direction_angle_component");
-				break;
-			case 11:
-				render.system_call_processor.set_menu_show("tag_plane_angle_component");
-				break;	
-			case 12:
 				render.call_server_component(tag_ep.component_id,"all",
 					[["operation","extra"],["id",tag_ep.pickup_tag_id]]);
 				break;
+			case 5:
+				return;
+			case 6:
+				render.call_server_component(tag_ep.component_id,"all",
+					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","-1"]]);
+				break;
+			case 7:
+				render.call_server_component(tag_ep.component_id,"all",
+					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","-2"]]);
+				break;
+			case 8:
+				render.system_call_processor.set_menu_show("tag_direction_distance_component");
+				break;
+			case 9:
+				render.system_call_processor.set_menu_show("tag_plane_distance_component");
+				break;
+			case 10:
+				return;
+			case 11:
+				render.call_server_component(tag_ep.component_id,"all",
+					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","-3"]]);
+				break;
+			case 12:
+				render.system_call_processor.set_menu_show("tag_direction_angle_component");
+				break;
+			case 13:
+				render.system_call_processor.set_menu_show("tag_plane_angle_component");
+				break;	
+			
 			}
 			render.system_call_processor.set_menu_hide(component_id);					
 		}

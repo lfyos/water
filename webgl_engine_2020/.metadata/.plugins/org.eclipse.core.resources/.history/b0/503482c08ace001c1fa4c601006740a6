@@ -253,6 +253,7 @@ public class distance_tag_item
 				value=Math.abs(dir_0.dot(dir_1.expand(1)));
 				return jason_string.change_string(tag_title+"Line:"+
 					format_change.double_to_decimal_string(value,display_precision).trim());
+				
 			case -3:
 				dir_0=global_px.sub(global_p0);
 				dir_1=extra_global_px.sub(extra_global_p0);
