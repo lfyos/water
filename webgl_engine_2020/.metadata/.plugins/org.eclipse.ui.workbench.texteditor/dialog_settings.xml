@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="angle"/>
+		<item key="selection" value="p."/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="p."/>
 			<item value="plane"/>
 			<item value="function_id"/>
 			<item value="set_event_component"/>
@@ -22,14 +23,13 @@
 			<item value="set_menu_show"/>
 			<item value="_distance"/>
 			<item value="&#x09;&#x09;&#x09;"/>
-			<item value="(function_id-1)%3"/>
 		</list>
 		<list key="replacehistory">
+			<item value=""/>
 			<item value="angle"/>
 			<item value="type_id"/>
 			<item value="tag_ep"/>
 			<item value="&#x09;&#x09;&#x09;"/>
-			<item value=""/>
 			<item value="y"/>
 			<item value="_angle"/>
 			<item value="&#x09;&#x09;"/>

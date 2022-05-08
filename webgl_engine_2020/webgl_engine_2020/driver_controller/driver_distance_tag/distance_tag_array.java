@@ -6,7 +6,6 @@ import kernel_transformation.point;
 import kernel_transformation.plane;
 import kernel_common_class.const_value;
 import kernel_common_class.debug_information;
-import kernel_common_class.jason_string;
 import kernel_component.component;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
@@ -39,117 +38,68 @@ public class distance_tag_array
 	}
 	public void save(engine_kernel ek)
 	{
-		distance_tag_item p;
-		component directory_comp,comp_p0,comp_px,comp_tag;
+		component directory_comp;
 		if((directory_comp=ek.component_cont.search_component(directory_component_name))==null)
 			return;
 		String my_distance_tag_file_name=directory_comp.component_directory_name+distance_tag_file_name;
 		file_writer fw=new file_writer(my_distance_tag_file_name,directory_comp.component_charset);
-		for(int i=0,ni=distance_tag_array.length;i<ni;i++) {
-			if((p=distance_tag_array[i]).state!=2)
-				continue;
-			if((comp_p0=ek.component_cont.get_component(p.p0_component_id))==null)
-				continue;
-			if((comp_px=ek.component_cont.get_component(p.px_component_id))==null)
-				continue;
-			if((comp_tag=ek.component_cont.get_component(p.tag_component_id))==null)
-				continue;
-			fw.println("/*	p0_component	*/	",comp_p0. component_name);
-			fw.println("/*	px_component	*/	",comp_px. component_name);
-			fw.println("/*	tag_component	*/	",comp_tag.component_name);
-			fw.println("/*	type_id			*/	",p.type_id);
-			fw.print  ("/*	p0				*/	",p.p0.x).print("	",p.p0.y).println("	",p.p0.z);
-			fw.print  ("/*	px				*/	",p.px.x).print("	",p.px.y).println("	",p.px.z);
-			fw.print  ("/*	py				*/	",p.py.x).print("	",p.py.y).println("	",p.py.z);
-			fw.println("/*	tag_title		*/	",(p.tag_title.length()<=0)?"null":p.tag_title);
-			fw.println();
-		}
+		for(int i=0,ni=distance_tag_array.length;i<ni;i++) 
+			if(distance_tag_array[i].write_out(fw, ek)) {
+				fw.println();
+				if(distance_tag_array[i].extra_distance_tag==null)
+					fw.println("/*	extra_distance_tag	*/	false");
+				else {
+					fw.println("/*	extra_distance_tag	*/	true");
+					distance_tag_array[i].extra_distance_tag.write_out(fw, ek);
+				}
+				fw.println();
+				fw.println();
+			}
 		fw.close();
 	}
 	public void jason(engine_kernel ek,client_information ci)
 	{
-		distance_tag_item p;
-		component comp_p0,comp_px,comp_tag;
 		ci.request_response.print  ("[");
 		String follow_str="";
-		for(int i=0,ni=distance_tag_array.length;i<ni;i++) {
-			if((p=distance_tag_array[i]).state!=2)
-				continue;
-			if((comp_p0=ek.component_cont.get_component(p.p0_component_id))==null)
-				continue;
-			if((comp_px=ek.component_cont.get_component(p.px_component_id))==null)
-				continue;
-			if((comp_tag=ek.component_cont.get_component(p.tag_component_id))==null)
-				continue;
-			ci.request_response.println(follow_str).println();follow_str=",";
-			
-			ci.request_response.println("	{");
-			ci.request_response.print  ("		\"tag_id\":	",			i).println(",");
-			ci.request_response.print  ("		\"p0_component\":	",	jason_string.change_string(comp_p0. component_name)).println(",");
-			ci.request_response.print  ("		\"px_component\":	",	jason_string.change_string(comp_px. component_name)).println(",");
-			ci.request_response.print  ("		\"tag_component\":",	jason_string.change_string(comp_tag.component_name)).println(",");
-			ci.request_response.print  ("		\"type_id\":	",		p.type_id).println(",");
-			ci.request_response.print  ("		\"p0\":		[",			p.p0.x).print(",	",p.p0.y).print(",	",p.p0.z).println(",	1.0],");
-			ci.request_response.print  ("		\"px\":		[",			p.px.x).print(",	",p.px.y).print(",	",p.px.z).println(",	1.0],");
-			ci.request_response.print  ("		\"py\":		[",			p.py.x).print(",	",p.py.y).print(",	",p.py.z).println(",	1.0],");
-			ci.request_response.println("		\"tag_string\":	",		jason_string.change_string(p.tag_title));
-			ci.request_response.print  ("	}");
-		}
+		for(int i=0,ni=distance_tag_array.length;i<ni;i++)
+			if(distance_tag_array[i].response_jason(i, ek, ci, follow_str)) {
+				follow_str=",";
+				if(distance_tag_array[i].extra_distance_tag!=null)
+					distance_tag_array[i].extra_distance_tag.response_jason(i, ek, ci, follow_str);
+				else {
+					ci.request_response.print(",");
+					ci.request_response.print("	null");
+				}
+			}
 		ci.request_response.println();
 		ci.request_response.println("]");
 	}
-	public void load(boolean init_flag,engine_kernel ek,client_information ci)
+	public void load(boolean init_flag,engine_kernel ek)
 	{
 		if(init_flag)
 			if(has_done_load_flag)
 				return;
 		has_done_load_flag=true;
 		
-		component directory_comp,comp_p0,comp_px,comp_tag;
+		component directory_comp;
 		if((directory_comp=ek.component_cont.search_component(directory_component_name))==null)
 			return;
 		distance_tag_array=new distance_tag_item[] {};
 		String my_distance_tag_file_name=directory_comp.component_directory_name+distance_tag_file_name;
 		for(file_reader fr=new file_reader(my_distance_tag_file_name,directory_comp.component_charset);;) {
-			String component_name_p0 =fr.get_string();
-			String component_name_px =fr.get_string(); 
-			String component_name_tag=fr.get_string();
-			
-			if(fr.eof()) {
+			distance_tag_item new_distance_tag;
+			if((new_distance_tag=distance_tag_item.load(fr,ek))==null) {
 				fr.close();
 				return;
 			}
-			int type_id=fr.get_int();
+			if(fr.get_boolean())
+				new_distance_tag.extra_distance_tag=distance_tag_item.load(fr,ek);
 			
-			point p0=new point(fr),px=new point(fr),py=new point(fr);
-			String tag_title=fr.get_string();
-			if(tag_title!=null)
-				if(tag_title.compareTo("null")==0)
-					tag_title=null;
-			
-			if((comp_p0=ek.component_cont.search_component(component_name_p0))==null)
-				continue;
-			if((comp_px=ek.component_cont.search_component(component_name_px))==null)
-				continue;
-			if((comp_tag=ek.component_cont.search_component(component_name_tag))==null)
-				continue;
-			
-			point global_p0=comp_p0.absolute_location.multiply(p0);
-			point global_px=comp_px.absolute_location.multiply(px);
-			point global_py=comp_p0.absolute_location.multiply(py);
-			double dy_length=global_py.sub(global_p0).distance();
-			global_py=new plane(global_p0,global_px).project_to_plane_location().multiply(global_py);
-			global_py=global_py.sub(global_p0).expand(dy_length).add(global_p0);
-			py=comp_p0.caculate_negative_absolute_location().multiply(global_py);
-
 			distance_tag_item bak[]=distance_tag_array;
 			distance_tag_array=new distance_tag_item[bak.length+1];
 			for(int i=0,ni=bak.length;i<ni;i++)
 				distance_tag_array[i]=bak[i];
-			distance_tag_array[bak.length]=new distance_tag_item(
-				comp_p0.component_id,comp_px.component_id,comp_tag.component_id,
-				type_id,	p0.x,p0.y,p0.z,		px.x,px.y,px.z,		py.x,py.y,py.z,
-				tag_title);
+			distance_tag_array[bak.length]=new_distance_tag;
 		}
 	}
 	public boolean clear_all_distance_tag(engine_kernel ek,client_information ci)

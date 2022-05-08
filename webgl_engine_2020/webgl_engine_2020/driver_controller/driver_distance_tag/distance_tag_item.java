@@ -5,6 +5,8 @@ import kernel_common_class.format_change;
 import kernel_common_class.jason_string;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
 import kernel_transformation.point;
 import kernel_transformation.plane;
 import kernel_transformation.location;
@@ -36,7 +38,7 @@ public class distance_tag_item
 		
 		extra_distance_tag=null;
 	}
-	public distance_tag_item(
+	private distance_tag_item(
 			int my_p0_component_id,int my_px_component_id,int my_tag_component_id,
 			int my_type_id,
 			double p0_x,double p0_y,double p0_z,
@@ -59,6 +61,44 @@ public class distance_tag_item
 		
 		extra_distance_tag=null;
 	}
+	public static distance_tag_item load(file_reader fr,engine_kernel ek)
+	{
+		String component_name_p0 =fr.get_string();
+		String component_name_px =fr.get_string(); 
+		String component_name_tag=fr.get_string();
+		
+		if(fr.eof())
+			return null;
+
+		int type_id=fr.get_int();
+		
+		point p0=new point(fr),px=new point(fr),py=new point(fr);
+		String tag_title=fr.get_string();
+		if(tag_title!=null)
+			if(tag_title.compareTo("null")==0)
+				tag_title=null;
+		
+		component comp_p0,comp_px,comp_tag;
+		if((comp_p0=ek.component_cont.search_component(component_name_p0))==null)
+			return null;
+		if((comp_px=ek.component_cont.search_component(component_name_px))==null)
+			return null;
+		if((comp_tag=ek.component_cont.search_component(component_name_tag))==null)
+			return null;
+		
+		point global_p0=comp_p0.absolute_location.multiply(p0);
+		point global_px=comp_px.absolute_location.multiply(px);
+		point global_py=comp_p0.absolute_location.multiply(py);
+		double dy_length=global_py.sub(global_p0).distance();
+		global_py=new plane(global_p0,global_px).project_to_plane_location().multiply(global_py);
+		global_py=global_py.sub(global_p0).expand(dy_length).add(global_p0);
+		py=comp_p0.caculate_negative_absolute_location().multiply(global_py);
+
+		return new distance_tag_item(
+			comp_p0.component_id,comp_px.component_id,comp_tag.component_id,
+			type_id,	p0.x,p0.y,p0.z,		px.x,px.y,px.z,		py.x,py.y,py.z,
+			tag_title);
+	}
 	public distance_tag_item(point my_point,int my_component_id,int my_tag_component_id)
 	{
 		state=0;
@@ -76,6 +116,59 @@ public class distance_tag_item
 		
 		extra_distance_tag=null;
 	}
+	public boolean write_out(file_writer fw,engine_kernel ek)
+	{
+		if(state!=2)
+			return false;
+		component comp_p0,comp_px,comp_tag;
+		if((comp_p0=ek.component_cont.get_component(p0_component_id))==null)
+			return false;
+		if((comp_px=ek.component_cont.get_component(px_component_id))==null)
+			return false;
+		if((comp_tag=ek.component_cont.get_component(tag_component_id))==null)
+			return false;
+		
+		fw.println("/*	p0_component	*/	",comp_p0. component_name);
+		fw.println("/*	px_component	*/	",comp_px. component_name);
+		fw.println("/*	tag_component	*/	",comp_tag.component_name);
+		fw.println("/*	type_id			*/	",type_id);
+		fw.print  ("/*	p0				*/	",p0.x).print("	",p0.y).println("	",p0.z);
+		fw.print  ("/*	px				*/	",px.x).print("	",px.y).println("	",px.z);
+		fw.print  ("/*	py				*/	",py.x).print("	",py.y).println("	",py.z);
+		fw.println("/*	tag_title		*/	",(tag_title.length()<=0)?"null":tag_title);
+		fw.println();
+		
+		return true;
+	}
+	public boolean response_jason(int tag_id,engine_kernel ek,client_information ci,String follow_str)
+	{
+		component comp_p0,comp_px,comp_tag;
+		if(state!=2)
+			return false;
+		if((comp_p0=ek.component_cont.get_component(p0_component_id))==null)
+			return false;
+		if((comp_px=ek.component_cont.get_component(px_component_id))==null)
+			return false;
+		if((comp_tag=ek.component_cont.get_component(tag_component_id))==null)
+			return false;
+		
+		ci.request_response.println(follow_str);
+		ci.request_response.println("	{");
+		ci.request_response.print  ("		\"tag_id\":	",			tag_id).println(",");
+		ci.request_response.print  ("		\"p0_component\":	",	jason_string.change_string(comp_p0. component_name)).println(",");
+		ci.request_response.print  ("		\"px_component\":	",	jason_string.change_string(comp_px. component_name)).println(",");
+		ci.request_response.print  ("		\"tag_component\":",	jason_string.change_string(comp_tag.component_name)).println(",");
+		ci.request_response.print  ("		\"type_id\":	",		type_id).println(",");
+		ci.request_response.print  ("		\"p0\":		[",			p0.x).print(",	",p0.y).print(",	",p0.z).println(",	1.0],");
+		ci.request_response.print  ("		\"px\":		[",			px.x).print(",	",px.y).print(",	",px.z).println(",	1.0],");
+		ci.request_response.print  ("		\"py\":		[",			py.x).print(",	",py.y).print(",	",py.z).println(",	1.0],");
+		ci.request_response.println("		\"tag_string\":	",		jason_string.change_string(tag_title));
+		ci.request_response.print  ("	}");
+		
+		return true;
+	}
+	
+	
 	//<0	global distance
 	
 	//0:global X direction		1:global Y direction	 	2:global Z direction

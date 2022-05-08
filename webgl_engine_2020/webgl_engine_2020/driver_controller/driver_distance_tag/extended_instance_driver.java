@@ -24,7 +24,7 @@ public class extended_instance_driver extends instance_driver
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
-		tag_array.load(true,ek,ci);
+		tag_array.load(true,ek);
 		ci.request_response.print(jason_string.change_string(tag_array.tag_root_menu_component_name));
 	}
 	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
@@ -109,7 +109,7 @@ public class extended_instance_driver extends instance_driver
 			tag_array.save(ek);
 			return null;
 		case "load":
-			tag_array.load(false,ek,ci);
+			tag_array.load(false,ek);
 			break;
 		case "jason":
 			tag_array.jason(ek,ci);
