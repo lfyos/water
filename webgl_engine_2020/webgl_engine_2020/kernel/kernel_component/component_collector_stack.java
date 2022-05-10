@@ -9,7 +9,6 @@ import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_part.part;
 import kernel_render.render;
-import kernel_engine.component_container;
 import kernel_engine.system_parameter;
 import kernel_engine.scene_parameter;
 

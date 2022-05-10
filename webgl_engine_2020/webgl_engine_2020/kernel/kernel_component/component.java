@@ -1,11 +1,7 @@
 package kernel_component;
 
-import kernel_file_manager.file_reader;
-import kernel_network.client_request_response;
-import kernel_part.part_container_for_part_search;
 import kernel_common_class.change_name;
-import kernel_engine.engine_kernel;
-import kernel_engine.part_type_string_sorter;
+import kernel_file_manager.file_reader;
 
 public class component extends component_core_12
 {
@@ -15,13 +11,11 @@ public class component extends component_core_12
 	{
 		super.destroy();
 	}
-	public component(String token_string,engine_kernel ek,client_request_response request_response,
-			file_reader fr,part_container_for_part_search pcfps,change_name change_part_name,
-			part_type_string_sorter type_string_sorter,boolean normalize_location_flag,
-			boolean part_list_flag,long default_display_bitmap)
+	public component(String token_string,file_reader fr,boolean part_list_flag,
+			boolean normalize_location_flag,change_name change_part_name,
+			component_construction_parameter ccp)
 	{
-		super(token_string,ek,request_response,fr,pcfps,change_part_name,
-			type_string_sorter,normalize_location_flag,part_list_flag,default_display_bitmap);
+		super(token_string,fr,part_list_flag,normalize_location_flag,change_part_name,ccp);
 
 		render_touch_time=0;
 	}

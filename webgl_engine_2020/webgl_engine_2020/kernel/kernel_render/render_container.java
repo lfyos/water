@@ -3,6 +3,7 @@ package kernel_render;
 import java.io.File;
 
 import kernel_common_class.debug_information;
+import kernel_component.component_load_source_container;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_engine.part_package;
@@ -207,6 +208,7 @@ public class render_container
 			renders[i].compress_part();
 	}
 	private void load_one_shader(boolean not_real_scene_fast_load_flag,
+			component_load_source_container component_load_source_cont,
 			part_container_for_part_search pcps,String load_sub_directory_name,
 			String driver_name,String render_list_file_name,String file_system_charset,String shader_file_name,
 			int part_type_id,system_parameter system_par,scene_parameter scene_par,
@@ -236,8 +238,9 @@ public class render_container
 
 			String get_part_list_result[];
 			try{
-				get_part_list_result=ren.driver.get_part_list(part_type_id,
-					f_render_list,load_sub_directory_name,part_par,system_par,scene_par,request_response);
+				get_part_list_result=ren.driver.get_part_list(
+					part_type_id,f_render_list,load_sub_directory_name,part_par,
+					component_load_source_cont,system_par,scene_par,request_response);
 			}catch(Exception e){
 				debug_information.println("Execute get_part_list fail:		",e.toString());
 				debug_information.println("Driver name:		",	driver_name);
@@ -284,7 +287,7 @@ public class render_container
 			debug_information.println("part parameter file:		",		part_parameter_file_name);
 
 			int render_id=(renders==null)?0:renders.length;
-			ren.add_part(not_real_scene_fast_load_flag,
+			ren.add_part(not_real_scene_fast_load_flag,component_load_source_cont,
 				pcps,ren.driver,part_type_id,render_id,part_par,system_par,get_part_list_result[0],
 				(get_part_list_result.length>1)?get_part_list_result[1]:f_render_list.get_charset(),
 				"part_mesh_"+Integer.toString(render_id)+"_",request_response);
@@ -313,6 +316,7 @@ public class render_container
 		return;
 	}
 	public void load_shader(boolean not_real_scene_fast_load_flag,
+		component_load_source_container component_load_source_cont,
 		part_container_for_part_search pcps,long last_modify_time,
 		String shader_file_name,String shader_file_charset,String load_sub_directory_name,
 		int part_type_id,system_parameter system_par,scene_parameter scene_par,
@@ -344,7 +348,8 @@ public class render_container
 				continue;
 			}
 			String render_list_file_name[]=ren.driver.get_render_list(
-					part_type_id,f_shader,load_sub_directory_name,system_par,scene_par,request_response);
+					part_type_id,f_shader,load_sub_directory_name,
+					component_load_source_cont,system_par,scene_par,request_response);
 			if(render_list_file_name==null) {
 				debug_information.print  ("render list file is NULL	",	driver_name);
 				continue;
@@ -365,7 +370,8 @@ public class render_container
 			if(f_shader.lastModified_time>f.lastModified())
 				f.setLastModified(f_shader.lastModified_time);
 
-			load_one_shader(not_real_scene_fast_load_flag,pcps,load_sub_directory_name,
+			load_one_shader(not_real_scene_fast_load_flag,
+				component_load_source_cont,pcps,load_sub_directory_name,
 				driver_name,render_list_file_name[0],render_list_file_name[1],
 				f_shader.directory_name+f_shader.file_name,
 				part_type_id,system_par,scene_par,ren,request_response);
@@ -383,7 +389,8 @@ public class render_container
 		type_part_package		=new part_package();
 		scene_part_package		=new part_package();
 	}
-	public render_container(render_container ren_con,client_request_response request_response,
+	public render_container(render_container ren_con,
+			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
 		renders=new render[0];

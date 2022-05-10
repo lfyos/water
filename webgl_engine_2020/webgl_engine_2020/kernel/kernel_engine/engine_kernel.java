@@ -8,6 +8,8 @@ import kernel_common_class.change_name;
 import kernel_common_class.nanosecond_timer;
 import kernel_component.component;
 import kernel_component.component_collector_stack;
+import kernel_component.component_container;
+import kernel_component.component_load_source_container;
 import kernel_create_top_assemble_part.create_assemble_part;
 import kernel_driver.modifier_container;
 import kernel_file_manager.file_reader;
@@ -191,9 +193,9 @@ public class engine_kernel
 			camera_cont=new camera_container(f_camera,component_cont,scene_par.max_camera_return_stack_number);
 		f_camera.close();
 	}
-	private void mount_top_box_part(
-			component comp,part_container_for_part_search part_search,
-			client_request_response request_response)
+	private void mount_top_box_part(component comp,
+			component_load_source_container component_load_source_cont,
+			part_container_for_part_search part_search,client_request_response request_response)
 	{
 		part p[];
 		int child_number;
@@ -203,11 +205,11 @@ public class engine_kernel
 
 		if((p=part_search.search_part(comp.part_name))==null)
 			for(int i=0;i<child_number;i++)
-				mount_top_box_part(comp.children[i],part_search,request_response);
+				mount_top_box_part(comp.children[i],component_load_source_cont,part_search,request_response);
 		else{
 			component_driver cd;
 			try{
-				cd=p[0].driver.create_component_driver(null,false,p[0],this,request_response);
+				cd=p[0].driver.create_component_driver(null,false,p[0],component_load_source_cont,this,request_response);
 			}catch(Exception e){
 				cd=null;
 				debug_information.println("create_component_driver fail int mount_top_box_part():	",e.toString());
@@ -221,7 +223,7 @@ public class engine_kernel
 		}	
 	}
 	
-	private void load_create_assemble_part(
+	private void load_create_assemble_part(component_load_source_container component_load_source_cont,
 			client_request_response request_response,boolean not_real_scene_fast_load_flag,
 			part_container part_cont_for_delete_file,part_container_for_part_search all_part_part_cont,
 			buffer_object_file_modify_time_and_length_container boftal_container)
@@ -240,12 +242,14 @@ public class engine_kernel
 						get_file_last_modified_time())).top_box_part;
 				if(top_box_part!=null)
 					if(top_box_part.length>0)
-						mount_top_box_part(component_cont.root_component,
+						mount_top_box_part(component_cont.root_component,component_load_source_cont,
 							new part_container_for_part_search(top_box_part),request_response);
 			}
 		}
 	}
-	private void load_routine(client_request_response request_response,client_process_bar process_bar)
+	
+	private void load_routine(component_load_source_container component_load_source_cont,
+			client_request_response request_response,client_process_bar process_bar)
 	{
 		long start_time=new Date().getTime(),current_time;
 		String boftal_file_name=scene_par.scene_proxy_directory_name+"engine.boftal";
@@ -274,11 +278,11 @@ public class engine_kernel
 		part_cont=new part_container_for_part_search(render_cont.part_array(true,-1));
 
 		start_time=new Date().getTime();
-		render_cont.load_shader(not_real_scene_fast_load_flag,
+		render_cont.load_shader(not_real_scene_fast_load_flag,component_load_source_cont,
 				part_cont,scene_par.parameter_last_modified_time,
 				scene_par.directory_name+scene_par.type_shader_file_name,
 				scene_par.parameter_charset,"",1,system_par,scene_par,request_response);
-		render_cont.load_shader(not_real_scene_fast_load_flag,
+		render_cont.load_shader(not_real_scene_fast_load_flag,component_load_source_cont,
 				part_cont,scene_par.scene_last_modified_time,
 				scene_directory_name+scene_par.scene_shader_file_name,scene_charset,
 				scene_par.scene_sub_directory,2,system_par,scene_par,request_response);
@@ -299,19 +303,22 @@ public class engine_kernel
 		render_cont.load_part(not_real_scene_fast_load_flag,
 				(1<<1)+(1<<2),2,part_loader_cont,system_par,scene_par,part_cont,
 				boftal_container,"load_second_class_part",process_bar,part_cont_for_delete_file);
-		debug_information.println("Load second class part time length:	",(current_time=new Date().getTime())-start_time);
+		debug_information.println("Load second class part time length:	",
+				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 
 		start_time=current_time;
 		render_cont.type_part_package=new part_package(not_real_scene_fast_load_flag,process_bar,
 				"create_first_class_package",render_cont,1,system_par,scene_par);
-		debug_information.println("Create first part package time length:	",(current_time=new Date().getTime())-start_time);
+		debug_information.println("Create first part package time length:	",
+				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		
 		start_time=current_time;
 		process_bar.set_process_bar(true,"load_component", 1, 2);
 		component_cont=new component_container(
-				scene_f,this,scene_par.default_display_bitmap,request_response,
+				scene_f,this,component_load_source_cont,
+				scene_par.default_display_bitmap,request_response,
 				new change_name(
 						new String[]{
 								scene_par.extra_directory_name+scene_par.change_part_file_name,
@@ -340,8 +347,8 @@ public class engine_kernel
 		component_cont.root_component.reset_component(component_cont);
 		
 		start_time=new Date().getTime();
-		load_create_assemble_part(request_response,not_real_scene_fast_load_flag,
-				part_cont_for_delete_file,part_cont,boftal_container);	
+		load_create_assemble_part(component_load_source_cont,request_response,
+				not_real_scene_fast_load_flag,part_cont_for_delete_file,part_cont,boftal_container);	
 		part_cont.execute_append();
 		render_cont.load_part(not_real_scene_fast_load_flag,
 				(1<<2),4,part_loader_cont,system_par,scene_par,part_cont,
@@ -394,7 +401,8 @@ public class engine_kernel
 
 		return;
 	}
-	public void load(client_request_response request_response,client_process_bar process_bar)
+	public void load(component_load_source_container component_load_source_cont,
+			client_request_response request_response,client_process_bar process_bar)
 	{
 		String my_lock_name=scene_par.scene_proxy_directory_name+"engine.lock";
 		exclusive_file_mutex efm=exclusive_file_mutex.lock(my_lock_name,
@@ -414,7 +422,7 @@ public class engine_kernel
 		debug_information.println("scene_sub_directory		:	"	 ,	scene_par.scene_sub_directory);
 		
 		try {
-			load_routine(request_response,process_bar);
+			load_routine(component_load_source_cont,request_response,process_bar);
 		}catch(Exception e) {
 			debug_information.println("Engine load exception:	",e.toString());
 			e.printStackTrace();

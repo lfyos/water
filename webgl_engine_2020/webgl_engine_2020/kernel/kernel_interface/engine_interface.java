@@ -3,6 +3,7 @@ package kernel_interface;
 import java.util.concurrent.locks.ReentrantLock;
 
 import kernel_common_class.debug_information;
+import kernel_component.component_load_source_container;
 import kernel_engine.engine_kernel_link_list;
 import kernel_engine.system_parameter;
 import kernel_network.client_request_response;
@@ -17,11 +18,13 @@ import kernel_engine.part_package;
 public class engine_interface
 {
 	public int engine_current_number[];
+	public component_load_source_container component_load_source_cont;
 	
 	private engine_kernel_link_list engine_kernel_link_list_first;
 	
 	private render_container original_render;
 	private part_loader_container part_loader_cont;
+	
 	
 	private ReentrantLock engine_interface_lock;
 	
@@ -29,7 +32,10 @@ public class engine_interface
 	{
 		if(engine_current_number!=null)
 			engine_current_number=null;
-		
+		if(component_load_source_cont!=null) {
+			component_load_source_cont.destroy();
+			component_load_source_cont=null;
+		}
 		if(engine_kernel_link_list_first!=null){
 			engine_kernel_link_list_first.forced_destroy();
 			engine_kernel_link_list_first=null;
@@ -114,7 +120,8 @@ public class engine_interface
 			part_container_for_delete_part_file part_cont_for_delete_file=new part_container_for_delete_part_file();
 			original_render=new render_container();
 			part_container_for_part_search pcps=new part_container_for_part_search(new part[]{});
-			original_render.load_shader(true,pcps,system_par.last_modified_time,
+			original_render.load_shader(true,
+				component_load_source_cont,pcps,system_par.last_modified_time,
 				system_par.data_root_directory_name+system_par.shader_file_name,
 				system_par.local_data_charset,"",part_type_id,system_par,null,request_response);
 			pcps.execute_append();
@@ -201,11 +208,12 @@ public class engine_interface
 	public engine_interface()
 	{
 		engine_current_number				=new int[]{0,0};
+		component_load_source_cont			=new component_load_source_container();
 		engine_kernel_link_list_first		=null;
 
 		original_render						=null;
 		part_loader_cont					=new part_loader_container();
-		
+
 		engine_interface_lock				=new ReentrantLock();
 	}
 }

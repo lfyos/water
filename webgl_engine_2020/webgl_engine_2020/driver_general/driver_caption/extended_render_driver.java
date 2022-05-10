@@ -1,5 +1,6 @@
 package driver_caption;
 
+import kernel_component.component_load_source_container;
 import kernel_driver.part_driver;
 import kernel_driver.render_driver;
 import kernel_engine.client_information;
@@ -40,7 +41,9 @@ public class extended_render_driver extends render_driver
 	{
 		return new extended_render_driver();
 	}
-	public String[] get_render_list(int part_type_id,file_reader shader_fr,String load_sub_directory_name,
+	public String[] get_render_list(
+			int part_type_id,file_reader shader_fr,String load_sub_directory_name,
+			component_load_source_container component_load_source_cont,
 			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
 	{
 		String render_list_file_name=file_reader.separator(shader_fr.get_string());
@@ -48,12 +51,14 @@ public class extended_render_driver extends render_driver
 	}
 	public String[] get_part_list(
 			int part_type_id,file_reader render_fr,String load_sub_directory_name,part_parameter part_par,
+			component_load_source_container component_load_source_cont,
 			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
 	{
 		String par_list_file_name=file_reader.separator(render_fr.get_string());
 		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
 	}
 	public part_driver create_part_driver(file_reader part_fr,part p,
+			component_load_source_container component_load_source_cont,
 			system_parameter system_par,client_request_response request_response)
 	{
 		return new extended_part_driver(p,system_par,request_response);

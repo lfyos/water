@@ -172,7 +172,7 @@ public class client_request_switcher
 					e.printStackTrace();
 					return null;
 				}
-				ret_val.ecr=ret_val.client.execute_system_call(channel_id,
+				ret_val.ecr=ret_val.client.execute_system_call(ei,channel_id,
 					request_response,statistics_interface,ei.engine_current_number);
 			}
 			break;

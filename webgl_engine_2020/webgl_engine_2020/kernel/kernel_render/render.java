@@ -3,6 +3,7 @@ package kernel_render;
 import java.io.File;
 
 import kernel_common_class.debug_information;
+import kernel_component.component_load_source_container;
 import kernel_driver.render_driver;
 import kernel_engine.system_parameter;
 import kernel_engine.scene_parameter;
@@ -141,6 +142,7 @@ public class render
 		return;
 	}
 	public void add_part(boolean not_real_scene_fast_load_flag,
+			component_load_source_container component_load_source_cont,
 			part_container_for_part_search pcps,render_driver r_driver,int part_type_id,
 			int add_render_id,part_parameter part_par,system_parameter system_par,
 			String file_name,String file_charset,String pre_buffer_object_file_name,
@@ -193,7 +195,8 @@ public class render
 				add_part(add_render_id,my_part);
 				
 				try{
-					my_part.driver=r_driver.create_part_driver(f,my_part,system_par,request_response);
+					my_part.driver=r_driver.create_part_driver(f,my_part,
+							component_load_source_cont,system_par,request_response);
 				}catch(Exception e){
 					my_part.driver=null;
 					debug_information.println("Create part driver fail:",e.toString());

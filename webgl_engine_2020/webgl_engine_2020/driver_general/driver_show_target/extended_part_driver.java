@@ -1,6 +1,7 @@
 package driver_show_target;
 
 import kernel_component.component;
+import kernel_component.component_load_source_container;
 import kernel_driver.component_driver;
 import kernel_driver.part_driver;
 import kernel_engine.client_information;
@@ -51,8 +52,10 @@ public class extended_part_driver extends part_driver{
 			file_reader.get_text(buffer_object_file_writer,p.directory_name+p.material_file_name,p.file_charset);
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}
-	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,
-			part my_component_part,engine_kernel ek,client_request_response request_response)
+	public component_driver create_component_driver(
+			file_reader fr,boolean rollback_flag,part my_component_part,
+			component_load_source_container component_load_source_cont,
+			engine_kernel ek,client_request_response request_response)
 	{
 		return new extended_component_driver(my_component_part,fr.get_string(),fr.get_int());
 	}

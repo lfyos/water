@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;component_container.java&apos; to &apos;webgl_engine_2020/kernel/kernel_component&apos;&#x0D;&#x0A;- Original project: &apos;webgl_engine_2020&apos;&#x0D;&#x0A;- Destination element: &apos;webgl_engine_2020/kernel/kernel_component&apos;&#x0D;&#x0A;- Original element: &apos;kernel_engine.component_container.java&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="/kernel&lt;kernel_component" element1="/kernel&lt;kernel_engine{component_container.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1652107695226" units="1" version="1.0"/>
+</session>

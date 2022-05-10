@@ -9,6 +9,7 @@ import kernel_engine.client_information;
 import kernel_engine.engine_call_result;
 import kernel_client_interface.dispatch_request_main;
 import kernel_common_class.debug_information;
+import kernel_component.component_load_source_container;
 import kernel_file_manager.file_reader;
 import kernel_interface.client_process_bar;
 import kernel_network.client_request_response;
@@ -214,6 +215,7 @@ public class engine_kernel_link_list
 				cccfn.compress_file_name,null,ek.scene_par.scene_cors_string);
 	}
 	private engine_call_result get_engine_result_routine(
+			component_load_source_container component_load_source_cont,
 			client_process_bar process_bar,client_session session,
 			engine_kernel_link_list_and_client_information ec,
 			client_request_response my_request_response,long delay_time_length,
@@ -227,11 +229,13 @@ public class engine_kernel_link_list
 		if(initilization_flag){
 			initilization_flag=false;
 			if(ek.component_cont==null) {
-				ek.load(my_request_response,process_bar);
+				component_load_source_cont=new component_load_source_container(component_load_source_cont);
+				ek.load(component_load_source_cont,my_request_response,process_bar);
 				if(ek.component_cont.root_component!=null) {
 					engine_current_number[0]++;
 					engine_current_number[1]+=ek.component_cont.root_component.component_id+1;
 				}
+				component_load_source_cont.destroy();
 			}
 		}
 		if(ec.client_information==null){
@@ -273,7 +277,8 @@ public class engine_kernel_link_list
 		return new engine_call_result(null,null,null,
 				my_compress_file_name,null,ek.scene_par.scene_cors_string);
 	}
-	public engine_call_result get_engine_result(client_process_bar process_bar,
+	public engine_call_result get_engine_result(
+			component_load_source_container component_load_source_cont,client_process_bar process_bar,
 			client_session session,engine_kernel_link_list_and_client_information ec,
 			client_request_response my_request_response,long delay_time_length,
 			interface_statistics statistics_interface,int engine_current_number[])
@@ -281,7 +286,8 @@ public class engine_kernel_link_list
 		engine_call_result ret_val;
 		engine_kernel_lock.lock();
 		try{
-			ret_val=get_engine_result_routine(process_bar,session,ec,my_request_response,
+			ret_val=get_engine_result_routine(
+				component_load_source_cont,process_bar,session,ec,my_request_response,
 				delay_time_length,statistics_interface,engine_current_number);
 		}catch(Exception e){
 			debug_information.println(

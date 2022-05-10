@@ -10,6 +10,7 @@ import kernel_common_class.debug_information;
 import kernel_common_class.balance_tree;
 import kernel_common_class.balance_tree_item;
 import kernel_common_class.nanosecond_timer;
+import kernel_component.component_load_source_container;
 import kernel_engine.engine_kernel_link_list;
 import kernel_engine.engine_kernel_link_list_and_client_information;
 import kernel_engine.system_parameter;
@@ -19,7 +20,6 @@ import kernel_engine.engine_call_result;
 import kernel_engine.interface_statistics;
 import kernel_engine.engine_kernel;
 import kernel_security.client_session;
-
 
 final class ek_ci_node extends balance_tree_item
 {
@@ -217,7 +217,7 @@ public class client_interface
 				break;
 		}
 	}
-	private engine_call_result create_engine_routine(
+	private engine_call_result create_engine_routine(component_load_source_container component_load_source_cont,
 			client_session session,engine_interface ei,client_interface client,ReentrantLock my_client_interface_lock,
 			client_request_response request_response,long delay_time_length,interface_statistics statistics_interface)
 	{
@@ -279,7 +279,7 @@ public class client_interface
 		
 		engine_call_result ecr=null;
 		try{
-			ecr=ec.engine_kernel_link_list.get_engine_result(
+			ecr=ec.engine_kernel_link_list.get_engine_result(component_load_source_cont,
 					get_process_bar(request_response),session,ec,request_response,
 					delay_time_length,statistics_interface,ei.engine_current_number);
 		}catch(Exception e) {
@@ -325,8 +325,8 @@ public class client_interface
 		}
 		return ecr;
 	}
-	private engine_call_result create_engine(
-			engine_interface ei,ReentrantLock my_client_interface_lock,client_interface client,
+	private engine_call_result create_engine(engine_interface ei,
+			ReentrantLock my_client_interface_lock,client_interface client,
 			client_session session,client_request_response request_response,
 			long delay_time_length,interface_statistics statistics_interface)
 	{
@@ -354,7 +354,7 @@ public class client_interface
 		debug_information.println("default_parameter_directory	:	",		system_par.default_parameter_directory);
 		debug_information.println("proxy_data_root_directory_name	:	",	system_par.proxy_par.proxy_data_root_directory_name);
 		
-		engine_call_result ret_val=create_engine_routine(session,ei,client,
+		engine_call_result ret_val=create_engine_routine(ei.component_load_source_cont,session,ei,client,
 				my_client_interface_lock,request_response,delay_time_length,statistics_interface);
 		
 		now = Calendar.getInstance();  
@@ -376,7 +376,7 @@ public class client_interface
 		return ret_val;
 	}
 	private engine_call_result execute_system_call_routine(
-			long channel_id,ReentrantLock my_client_interface_lock,
+			engine_interface ei,long channel_id,ReentrantLock my_client_interface_lock,
 			client_session session,client_request_response request_response,
 			interface_statistics statistics_interface,int engine_current_number[])
 	{
@@ -428,7 +428,7 @@ public class client_interface
 		my_client_interface_lock.unlock();
 		try{
 			ecr=ecn.ek_ci.engine_kernel_link_list.get_engine_result(
-					get_process_bar(request_response),session,ecn.ek_ci,
+					ei.component_load_source_cont,get_process_bar(request_response),session,ecn.ek_ci,
 					request_response,delay_time_length,statistics_interface,engine_current_number);
 		}catch(Exception e){
 			ecr=null;
@@ -472,7 +472,7 @@ public class client_interface
 		return ecr;
 	}
 	public engine_call_result execute_system_call(
-			long channel_id,client_request_response request_response,
+			engine_interface ei,long channel_id,client_request_response request_response,
 			interface_statistics statistics_interface,int engine_current_number[])
 	{
 		engine_call_result ret_val=null;
@@ -486,7 +486,7 @@ public class client_interface
 			debug_information.println("manager_delay==null		",request_response.implementor.get_client_id());
 		else {
 			try{
-				ret_val=execute_system_call_routine(channel_id,my_client_interface_lock,
+				ret_val=execute_system_call_routine(ei,channel_id,my_client_interface_lock,
 						session,request_response,statistics_interface,engine_current_number);
 			}catch(Exception e) {
 				ret_val=null;

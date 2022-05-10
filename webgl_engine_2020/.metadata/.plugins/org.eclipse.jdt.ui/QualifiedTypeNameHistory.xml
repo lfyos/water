@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="format_convert.gltf_converter"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
@@ -53,11 +52,12 @@
 <fullyQualifiedTypeName name="kernel_component.component_array"/>
 <fullyQualifiedTypeName name="kernel_transformation.box"/>
 <fullyQualifiedTypeName name="kernel_common_class.change_name"/>
-<fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="kernel_component.component"/>
 <fullyQualifiedTypeName name="kernel_file_manager.file_reader"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="kernel_common_class.jason_string"/>
 <fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 <fullyQualifiedTypeName name="kernel_common_class.const_value"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="kernel_component.component_load_source_container"/>
 </qualifiedTypeNameHistroy>

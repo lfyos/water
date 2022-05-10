@@ -1,0 +1,34 @@
+package kernel_component;
+
+import kernel_common_class.change_name;
+import kernel_engine.engine_kernel;
+import kernel_engine.part_type_string_sorter;
+import kernel_network.client_request_response;
+import kernel_part.part_container_for_part_search;
+
+public class component_construction_parameter 
+{
+//	String token_string,
+//	file_reader fr,
+//	boolean part_list_flag,
+	
+	public engine_kernel ek;
+	public client_request_response request_response;
+	public part_container_for_part_search pcfps;
+	public change_name change_part_name;
+	public part_type_string_sorter type_string_sorter;
+	public boolean normalize_location_flag;
+	public long default_display_bitmap;
+	
+	public component_construction_parameter(
+			engine_kernel ek,
+			client_request_response request_response,
+			part_container_for_part_search pcfps,
+			change_name change_part_name,
+			part_type_string_sorter type_string_sorter,
+			boolean normalize_location_flag,
+			long default_display_bitmap)
+	{
+		
+	}
+}

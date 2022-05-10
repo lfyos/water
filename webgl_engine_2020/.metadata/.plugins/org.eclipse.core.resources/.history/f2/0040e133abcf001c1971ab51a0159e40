@@ -1,0 +1,50 @@
+package kernel_component;
+
+public class component_load_source_container 
+{
+	public component_load_source_item source_array[];
+	public component_load_source_container()
+	{
+		source_array=new component_load_source_item[] {};
+	}
+	public component_load_source_item[] add_source_item(String component_name)
+	{
+		for(int last_id=source_array.length-1,begin_pointer=0,end_pointer=last_id;begin_pointer<=end_pointer;) {
+			int middle_pointer=(begin_pointer+end_pointer)/2;
+			int compare_result=source_array[middle_pointer].component_name.compareTo(component_name);
+			if(compare_result<0)
+				begin_pointer=middle_pointer+1;
+			else if(compare_result>0)
+				end_pointer=middle_pointer-1;
+			else {
+				for(begin_pointer=middle_pointer;begin_pointer>0;begin_pointer--)
+					if(source_array[begin_pointer-1].component_name.compareTo(component_name)!=0)
+						break;
+				for(end_pointer=middle_pointer;end_pointer<last_id;end_pointer++)
+					if(source_array[end_pointer+1].component_name.compareTo(component_name)!=0)
+						break;
+				component_load_source_item ret_val[]=new component_load_source_item[end_pointer-begin_pointer+1];
+				for(int i=0,ni=ret_val.length;i<ni;)
+					ret_val[i++]=source_array[begin_pointer++];
+				break;
+			}
+		}
+		return null;
+	}
+	public void add_source_item(String component_name,String component_file_name,String component_file_charset)
+	{
+		component_load_source_item bak[]=source_array;
+		source_array=new component_load_source_item[bak.length+1];
+		for(int i=0,ni=bak.length;i<ni;i++)
+			source_array[i]=bak[i];
+		source_array[bak.length]=new component_load_source_item(
+				component_name,component_file_name,component_file_charset);
+		component_load_source_item p_0,p_1;
+		for(int i=bak.length;i>0;i--){
+			if((p_1=source_array[i-1]).component_name.compareTo((p_0=source_array[i]).component_name)<=0)
+				break;
+			source_array[i  ]=p_1;
+			source_array[i-1]=p_0;
+		}
+	}
+}

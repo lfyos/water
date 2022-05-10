@@ -2,7 +2,7 @@ package kernel_camera;
 
 import kernel_common_class.debug_information;
 import kernel_component.component;
-import kernel_engine.component_container;
+import kernel_component.component_container;
 import kernel_file_manager.file_reader;
 
 public class camera_container 

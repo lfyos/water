@@ -2,6 +2,7 @@ package driver_camera_operation;
 
 import kernel_common_class.const_value;
 import kernel_component.component;
+import kernel_component.component_load_source_container;
 import kernel_driver.component_driver;
 
 import kernel_driver.part_driver;
@@ -80,8 +81,10 @@ public class extended_part_driver extends part_driver
 		}
 		return ret_val;
 	}
-	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,
-			part my_component_part,engine_kernel ek,client_request_response request_response)
+	public component_driver create_component_driver(
+			file_reader fr,boolean rollback_flag,part my_component_part,
+			component_load_source_container component_load_source_cont,
+			engine_kernel ek,client_request_response request_response)
 	{
 		return new extended_component_driver(my_component_part,modifier_container_id);
 	}

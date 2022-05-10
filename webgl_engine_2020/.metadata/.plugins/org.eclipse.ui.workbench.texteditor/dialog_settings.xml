@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="p."/>
+		<item key="selection" value="token_string"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="token_string"/>
+			<item value="part_list_flag"/>
+			<item value="normalize_location_flag"/>
+			<item value="engine_interface"/>
+			<item value="ei.component_load_source_cont"/>
+			<item value="get_engine_result"/>
+			<item value=";"/>
+			<item value="color_par"/>
+			<item value="color_par_uniform"/>
 			<item value="p."/>
 			<item value="plane"/>
 			<item value="function_id"/>
 			<item value="set_event_component"/>
 			<item value="tag_object"/>
 			<item value="get_component_processor"/>
-			<item value="&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;&#x09;"/>
-			<item value="&#x09;&#x09;&#x09;&#x09;"/>
-			<item value="x"/>
-			<item value="component_array_sorted_by_name"/>
-			<item value="_by_name"/>
-			<item value="mousemove_flag"/>
-			<item value="set_menu_show"/>
-			<item value="_distance"/>
-			<item value="&#x09;&#x09;&#x09;"/>
 		</list>
 		<list key="replacehistory">
+			<item value=","/>
 			<item value=""/>
 			<item value="angle"/>
 			<item value="type_id"/>
@@ -39,13 +40,12 @@
 			<item value="render"/>
 			<item value="part_material"/>
 			<item value="parameter.txt&#x09;relative"/>
-			<item value="this."/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="77"/>
-		<item key="DIALOG_Y_ORIGIN" value="350"/>
-		<item key="DIALOG_WIDTH" value="313"/>
+		<item key="DIALOG_X_ORIGIN" value="1323"/>
+		<item key="DIALOG_Y_ORIGIN" value="265"/>
+		<item key="DIALOG_WIDTH" value="533"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 	</section>

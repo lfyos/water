@@ -40,10 +40,9 @@ public class component_core_3 extends component_core_2
 		else
 			return driver_array.length;	
 	}
-	private void create_driver(engine_kernel ek,
-			client_request_response request_response,file_reader fr,
-			part_container_for_part_search pcfps,change_name change_part_name,
-			part_type_string_sorter type_string_sorter)
+	private void create_driver(engine_kernel ek,component_load_source_container component_load_source_cont,
+			client_request_response request_response,file_reader fr,part_container_for_part_search pcfps,
+			change_name change_part_name,part_type_string_sorter type_string_sorter)
 	{
 		part parts[];
 		String search_part_name=change_part_name.search_change_name(part_name,part_name);
@@ -66,7 +65,8 @@ public class component_core_3 extends component_core_2
 					continue;
 			fr.mark_start();
 			try{
-				driver_array[i]=parts[i].driver.create_component_driver(fr,i>0,parts[i],ek,request_response);
+				driver_array[i]=parts[i].driver.create_component_driver(
+						fr,i>0,parts[i],component_load_source_cont,ek,request_response);
 			}catch(Exception e){
 				debug_information.println("create_component_driver fail:	",e.toString());
 				debug_information.println("Part user name:",	parts[i].user_name);
@@ -93,15 +93,11 @@ public class component_core_3 extends component_core_2
 			driver_array[i]=old_driver[i];
 		return;
 	}
-	public component_core_3(String token_string,
-			engine_kernel ek,client_request_response request_response,
-			file_reader fr,part_container_for_part_search pcfps,change_name change_part_name,
-			part_type_string_sorter type_string_sorter,boolean normalize_location_flag,
-			boolean part_list_flag,long default_display_bitmap)
+	public component_core_3(String token_string,file_reader fr,boolean part_list_flag,
+			boolean normalize_location_flag,change_name change_part_name,component_construction_parameter ccp)
 	{
-		super(token_string,ek,request_response,fr,pcfps,change_part_name,
-			type_string_sorter,normalize_location_flag,part_list_flag,default_display_bitmap);
+		super(token_string,fr,part_list_flag,normalize_location_flag,change_part_name,ccp);
 		
-		create_driver(ek,request_response,fr,pcfps,change_part_name,type_string_sorter);
+		create_driver(ccp.ek,ccp.clsc,ccp.request_response,fr,ccp.pcfps,change_part_name,ccp.type_string_sorter);
 	}
 }

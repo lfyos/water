@@ -38,7 +38,7 @@ public class system_parameter
 	
 	public String file_download_cors_string;
 	
-	public int process_modifier_times;
+	public int process_component_load_times,process_modifier_times;
 	
 	public change_name language_change_name,content_type_change_name;
 	public proxy_parameter proxy_par;
@@ -88,6 +88,7 @@ public class system_parameter
 		
 		file_download_cors_string		=new String(sp.file_download_cors_string);
 		
+		process_component_load_times	=sp.process_component_load_times;
 		process_modifier_times			=sp.process_modifier_times;
 		
 		content_type_change_name		=new change_name(sp.content_type_change_name,false);
@@ -225,6 +226,7 @@ public class system_parameter
 		if(new File(my_file_name).exists())
 			file_download_cors_string=file_reader.get_text(my_file_name,f.get_charset()).trim();
 		
+		process_component_load_times			=f.get_int();
 		process_modifier_times					=f.get_int();
 		
 		f.close();

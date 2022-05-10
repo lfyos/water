@@ -2,10 +2,10 @@ package kernel_buffer;
 
 import kernel_camera.camera_result;
 import kernel_component.component;
+import kernel_component.component_container;
 import kernel_component.component_link_list;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
-import kernel_engine.component_container;
 import kernel_driver.instance_driver;
 import kernel_part.part;
 

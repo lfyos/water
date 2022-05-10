@@ -6,9 +6,10 @@
 		/*	2:type			*/	undefined_part
 		/*	2:location		*/	relative_file_location	coordinate
 		
-			normalize_location
-			
+			part_list		normalize_location
 			environment_sub_directory_mount		liufuyan_sigma_directory	assemble.assemble
+			
+			not_part_list	not_normalize_location
 			environment_sub_directory_mount		liufuyan_sigma_directory	movement.assemble
 		
 		/*	2:child_number	*/	0

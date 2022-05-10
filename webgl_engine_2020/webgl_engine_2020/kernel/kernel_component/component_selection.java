@@ -2,7 +2,6 @@ package kernel_component;
 
 import kernel_common_class.nanosecond_timer;
 import kernel_engine.engine_kernel;
-import kernel_engine.component_container;
 
 public class component_selection
 {

@@ -1,7 +1,6 @@
 package kernel_component;
 
 
-import kernel_engine.component_container;
 import kernel_component.component_collector;
 import kernel_transformation.box;
 import kernel_part.part;

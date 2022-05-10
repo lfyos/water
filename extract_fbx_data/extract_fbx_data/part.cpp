@@ -48,7 +48,7 @@ std::string part::register_node(FbxNode* assemble_node)
 			(*part_list_f) << std::endl;
 
 			std::cout << "Begin extract mesh data for part "<< part_name <<" (NO. " << register_number<<")" << std::endl;
-			this->output_part_material(fm,assemble_node);
+			output_part_material(fm,assemble_node);
 			output_part_mesh(fm);
 			std::cout << "End extract mesh data for part " << part_name << " (NO. " << register_number<< ")" << std::endl;
 
@@ -291,6 +291,7 @@ void part::output_part_mesh(FbxMesh* pMesh)
 
 	delete[]material_id;
 }
+
 void part::output_part_material(FbxMesh* fm, FbxNode* fn)
 {
 	std::ofstream f_material(directory_name + "part_" + std::to_string(register_number) + ".material");
@@ -330,14 +331,14 @@ void part::output_part_material(FbxMesh* fm, FbxNode* fn)
 		}
 
 
-		int lTextureIndex;
-		FBXSDK_FOR_EACH_TEXTURE(lTextureIndex)
-		{
-			FbxProperty lProperty = pSurfaceMaterial->FindProperty(FbxLayerElement::sTextureChannelNames[lTextureIndex]);
-			if (lProperty.IsValid()) {
-				FindAndDisplayTextureInfoByProperty(lProperty, lDisplayHeader, lMaterialIndex);
-			}
-		}
+//		int lTextureIndex;
+//		FBXSDK_FOR_EACH_TEXTURE(lTextureIndex)
+//		{
+//			FbxProperty lProperty = pSurfaceMaterial->FindProperty(FbxLayerElement::sTextureChannelNames[lTextureIndex]);
+//			if (lProperty.IsValid()) {
+//				FindAndDisplayTextureInfoByProperty(lProperty, lDisplayHeader, lMaterialIndex);
+//			}
+//		}
 
 
 

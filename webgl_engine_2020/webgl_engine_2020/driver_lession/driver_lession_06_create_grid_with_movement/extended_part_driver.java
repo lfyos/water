@@ -3,6 +3,7 @@ package driver_lession_06_create_grid_with_movement;
 import java.io.File;
 
 import kernel_component.component;
+import kernel_component.component_load_source_container;
 import kernel_driver.component_driver;
 
 import kernel_driver.part_driver;
@@ -82,8 +83,10 @@ public class extended_part_driver extends part_driver
 		}
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}
-	public component_driver create_component_driver(file_reader fr,boolean rollback_flag,
-			part my_component_part,engine_kernel ek,client_request_response request_response)
+	public component_driver create_component_driver(
+			file_reader fr,boolean rollback_flag,part my_component_part,
+			component_load_source_container component_load_source_cont,
+			engine_kernel ek,client_request_response request_response)
 	{
 		return new extended_component_driver(my_component_part);
 	}

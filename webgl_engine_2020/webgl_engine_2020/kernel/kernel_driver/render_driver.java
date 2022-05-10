@@ -6,6 +6,7 @@ import kernel_render.render;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_network.client_request_response;
+import kernel_component.component_load_source_container;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_engine.scene_parameter;
@@ -55,7 +56,9 @@ public class render_driver
 		tess_control_shader	=my_tess_control_shader;
 		tess_evalue_shader	=my_tess_evalue_shader;
 	}
-	public String[] get_render_list(int part_type_id,file_reader shader_fr,String load_sub_directory_name,
+	public String[] get_render_list(
+			int part_type_id,file_reader shader_fr,String load_sub_directory_name,
+			component_load_source_container component_load_source_cont,
 			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
 	{
 		String render_list_file_name=file_reader.separator(shader_fr.get_string());
@@ -63,12 +66,14 @@ public class render_driver
 	}
 	public String[] get_part_list(
 			int part_type_id,file_reader render_fr,String load_sub_directory_name,part_parameter part_par,
+			component_load_source_container component_load_source_cont,
 			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
 	{
 		String par_list_file_name=file_reader.separator(render_fr.get_string());
 		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
 	}
 	public part_driver create_part_driver(file_reader part_fr,part p,
+			component_load_source_container component_load_source_cont,
 			system_parameter system_par,client_request_response request_response)
 	{
 		return new part_driver();
