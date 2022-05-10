@@ -1,7 +1,6 @@
 package kernel_component;
 
 import java.io.File;
-import java.nio.charset.Charset;
 
 import kernel_common_class.change_name;
 import kernel_file_manager.file_reader;
@@ -64,26 +63,21 @@ public class component_load_source_container
 	public void add_source_item(String component_name,String token_string,
 					String component_file_name,String component_file_charset)
 	{
-		if(component_name==null)
-			return;
-		if(!(new File(component_file_name).exists()))
-			return;
-		if(component_file_charset==null)
-			component_file_charset=Charset.defaultCharset().name();
-		
-		component_load_source_item bak[]=source_array;
-		source_array=new component_load_source_item[bak.length+1];
-		for(int i=0,ni=bak.length;i<ni;i++)
-			source_array[i]=bak[i];
-		source_array[bak.length]=new component_load_source_item(
-				component_name,token_string,component_file_name,component_file_charset);
-		for(int i=bak.length;i>0;i--){
-			component_load_source_item this_p=source_array[i  ];
-			component_load_source_item pre_p =source_array[i-1];
-			if(pre_p.component_name.compareTo(this_p.component_name)<=0)
-				break;
-			source_array[i  ]=pre_p;
-			source_array[i-1]=this_p;
+		if(new File(component_file_name).exists()){
+			component_load_source_item bak[]=source_array;
+			source_array=new component_load_source_item[bak.length+1];
+			for(int i=0,ni=bak.length;i<ni;i++)
+				source_array[i]=bak[i];
+			source_array[bak.length]=new component_load_source_item(
+					component_name,token_string,component_file_name,component_file_charset);
+			for(int i=bak.length;i>0;i--){
+				component_load_source_item this_p=source_array[i  ];
+				component_load_source_item pre_p =source_array[i-1];
+				if(pre_p.component_name.compareTo(this_p.component_name)<=0)
+					break;
+				source_array[i  ]=pre_p;
+				source_array[i-1]=this_p;
+			}
 		}
 	}
 	public int get_source_item_number()

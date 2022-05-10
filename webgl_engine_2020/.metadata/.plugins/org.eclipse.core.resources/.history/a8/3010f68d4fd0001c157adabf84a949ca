@@ -1,7 +1,6 @@
 package kernel_component;
 
 import java.io.File;
-import java.nio.charset.Charset;
 
 import kernel_common_class.change_name;
 import kernel_file_manager.file_reader;
@@ -68,9 +67,7 @@ public class component_load_source_container
 			return;
 		if(!(new File(component_file_name).exists()))
 			return;
-		if(component_file_charset==null)
-			component_file_charset=Charset.defaultCharset().name();
-		
+		component_file_charset=(component_file_charset==null)?:component_file_charset;
 		component_load_source_item bak[]=source_array;
 		source_array=new component_load_source_item[bak.length+1];
 		for(int i=0,ni=bak.length;i<ni;i++)

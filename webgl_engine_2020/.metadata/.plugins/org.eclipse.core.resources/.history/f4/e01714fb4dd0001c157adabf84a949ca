@@ -289,39 +289,9 @@ public class component_core_4 extends component_core_3
 					ccp.ek.scene_par.change_part_string,fr.get_charset());
 				continue;
 			case "component_mount":
-				ccp.clsc.add_source_item(fr.get_string(),token_string, 
+				ccp.clsc.add_source_item(fr.get_string(), token_string, 
 						fr.directory_name+file_reader.separator(fr.get_string()),fr.get_charset());
 				continue;
-			case "charset_component_mount":
-				ccp.clsc.add_source_item(fr.get_string(),token_string, 
-						fr.directory_name+file_reader.separator(fr.get_string()),fr.get_string());
-				continue;
-			case "absulate_component_mount":
-				ccp.clsc.add_source_item(fr.get_string(),token_string, 
-						file_reader.separator(fr.get_string()),fr.get_charset());
-				continue;
-			case "absulate_charset_component_mount":
-				ccp.clsc.add_source_item(fr.get_string(),token_string, 
-						file_reader.separator(fr.get_string()),fr.get_string());
-				continue;
-			case "environment_component_mount":	
-			{
-				String add_component_name=fr.get_string();
-				String add_file_name=file_reader.separator(System.getenv(fr.get_string()));
-				if(add_file_name.charAt(add_file_name.length()-1)!=File.separatorChar)
-					add_file_name+=File.separatorChar;
-				ccp.clsc.add_source_item(add_component_name,token_string,add_file_name,fr.get_charset());
-				continue;
-			}
-			case "environment_charset_component_mount":	
-			{
-				String add_component_name=fr.get_string();
-				String add_file_name=file_reader.separator(System.getenv(fr.get_string()));
-				if(add_file_name.charAt(add_file_name.length()-1)!=File.separatorChar)
-					add_file_name+=File.separatorChar;
-				ccp.clsc.add_source_item(add_component_name,token_string,add_file_name,fr.get_string());
-				continue;
-			}
 			case "mount":
 				assemble_file_name_array=file_mount(fr,ccp.ek);
 				break;
