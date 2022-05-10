@@ -109,6 +109,7 @@ public class extended_instance_driver extends instance_driver
 				break;
 			}
 		}
+
 		if(x0>=1)
 			x0=1.0-const_value.min_value;
 		if((x0+dx)<=-1)

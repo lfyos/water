@@ -1,7 +1,6 @@
 package driver_interface;
 
 import kernel_camera.camera_result;
-import kernel_common_class.const_value;
 import kernel_common_class.jason_string;
 import kernel_component.component;
 import kernel_component.component_collector;
@@ -109,14 +108,16 @@ public class extended_instance_driver extends instance_driver
 				break;
 			}
 		}
-		if(x0>=1)
-			x0=1.0-const_value.min_value;
-		if((x0+dx)<=-1)
-			x0=-1-dx+const_value.min_value;
-		if(y0>=1)
-			y0=1.0-const_value.min_value;
-		if((y0+dy)<=-1)
-			y0=-1-dy+const_value.min_value;
+/*		
+		if((x0+dx)>1)
+			x0=1.0-dx;
+		if(x0<-1)
+			x0=-1;
+		if((y0+dy)>1)
+			y0=1.0-dy;
+		if(y0<-1)
+			y0=-1;
+*/			
 	}
 	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
 	{
