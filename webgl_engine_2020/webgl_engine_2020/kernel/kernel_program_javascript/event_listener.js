@@ -38,16 +38,6 @@ function construct_event_listener(my_render)
 		}
 		this.render.canvas.focus();
 	};
-	this.caculate_pickup_event_processor=function()
-	{
-		if(this.render.pickup.component_id<0)
-			return null;
-		if(this.render.pickup.component_id>=(this.render.component_event_processor.length))
-			return null;
-		var ep=this.render.component_event_processor[this.render.pickup.component_id];
-		
-		return (typeof(ep)=="object")?ep:null;
-	};
 	this.caculate_component_event_processor=function (processor_component_object)
 	{
 		if(typeof(processor_component_object)!="object")
@@ -67,6 +57,7 @@ function construct_event_listener(my_render)
 		var ep=this.render.component_event_processor[component_object.component_id];
 		return (typeof(ep)!="object")?-1:(ep==null)?-1:(component_object.component_id);
 	};
+	this.render.system_event_processor.systemmousemove	=function(event,render)						{return false;};
 	this.render.system_event_processor.pickupmousemove	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.mousemove		=function(event,render)						{return false;};
 	this.mousemove_event_listener=function (event)
@@ -79,16 +70,19 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
+		if(this.render.system_event_processor.systemmousemove(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupmousemove(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupmousemove)=="function")
+						if(ep.pickupmousemove(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.mousemove(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickupmousemove)=="function")
-				if(ep.pickupmousemove(event,this.render.pickup.component_id,this.render))
-					return;
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
@@ -97,6 +91,7 @@ function construct_event_listener(my_render)
 			if(ep.mousemove(event,component_id,this.render))
 				return;
 	};
+	this.render.system_event_processor.systemmousedown	=function(event,render)						{return false;};
 	this.render.system_event_processor.pickupmousedown	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.mousedown		=function(event,render)						{return false;};
 	this.mousedown_event_listener=function (event)
@@ -114,18 +109,19 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
+		if(this.render.system_event_processor.systemmousedown(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupmousedown(event,this.render.pickup.component_id,this.render))
-						return;
+					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupmousedown)=="function")
+						if(ep.pickupmousedown(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.mousedown(event,this.render))
 			return;
-
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickupmousedown)=="function")
-				if(ep.pickupmousedown(event,this.render.pickup.component_id,this.render))
-					return;
-		
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
@@ -135,6 +131,7 @@ function construct_event_listener(my_render)
 				return;
 		
 	};
+	this.render.system_event_processor.systemmouseup	=function(event,render)						{return false;};
 	this.render.system_event_processor.pickupmouseup	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.mouseup			=function(event,render)						{return false;};
 	this.mouseup_event_listener=function (event)
@@ -152,16 +149,19 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
+		if(this.render.system_event_processor.systemmouseup(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupmouseup(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupmouseup)=="function")
+						if(ep.pickupmouseup(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.mouseup(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickupmouseup)=="function")
-				if(ep.pickupmouseup(event,this.render.pickup.component_id,this.render))
-					return;
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
@@ -170,6 +170,8 @@ function construct_event_listener(my_render)
 			if(ep.mouseup(event,component_id,this.render))
 				return;
 	};
+	
+	this.render.system_event_processor.systemdblclick	=function(event,render)						{return false;};
 	this.render.system_event_processor.pickupdblclick	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.dblclick			=function(event,render)						{return false;};
 	this.dblclick_event_listener=function (event)
@@ -183,16 +185,19 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
+		if(this.render.system_event_processor.systemdblclick(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupdblclick(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupdblclick)=="function")
+						if(ep.pickupdblclick(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.dblclick(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickupdblclick)=="function")
-				if(ep.pickupdblclick(event,this.render.pickup.component_id,this.render))
-					return;
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
@@ -201,6 +206,7 @@ function construct_event_listener(my_render)
 			if(ep.dblclick(event,component_id,this.render))
 				return;
 	};
+	this.render.system_event_processor.systemmousewheel	=function(event,render)						{return false;};
 	this.render.system_event_processor.pickupmousewheel	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.mousewheel		=function(event,render)						{return false;};
 	this.mousewheel_event_listener=function (event)
@@ -213,17 +219,19 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
+		if(this.render.system_event_processor.systemmousewheel(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupmousewheel(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupmousewheel)=="function")
+						if(ep.pickupmousewheel(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.mousewheel(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickupmousewheel)=="function")
-				if(ep.pickupmousewheel(event,this.render.pickup.component_id,this.render))
-					return;
-
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
@@ -232,7 +240,7 @@ function construct_event_listener(my_render)
 			if(ep.mousewheel(event,component_id,this.render))
 				return;
 	};
-	
+	this.render.system_event_processor.systemmouseover	=function(event,render)						{return false;};
 	this.render.system_event_processor.pickupmouseover	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.mouseover		=function(event,render)						{return false;};
 	this.mouseover_event_listener=function (event)
@@ -245,17 +253,19 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
+		if(this.render.system_event_processor.systemmouseover(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupmouseover(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupmouseover)=="function")
+						if(ep.pickupmouseover(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.mouseover(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickupmouseover)=="function")
-				if(ep.pickupmouseover(event,this.render.pickup.component_id,this.render))
-					return;
-
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
@@ -264,7 +274,7 @@ function construct_event_listener(my_render)
 			if(ep.mouseover(event,component_id,this.render))
 				return;
 	};
-	
+	this.render.system_event_processor.systemmouseout	=function(event,render)						{return false;};
 	this.render.system_event_processor.pickupmouseout	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.mouseout			=function(event,render)						{return false;};
 	this.mouseout_event_listener=function (event)
@@ -277,17 +287,19 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
+		if(this.render.system_event_processor.systemmouseout(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupmouseout(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupmouseout)=="function")
+						if(ep.pickupmouseout(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.mouseout(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickupmouseout)=="function")
-				if(ep.pickupmouseout(event,this.render.pickup.component_id,this.render))
-					return;
-
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
@@ -296,7 +308,7 @@ function construct_event_listener(my_render)
 			if(ep.mouseout(event,component_id,this.render))
 				return;
 	};
-	
+	this.render.system_event_processor.systemmouseenter	=function(event,render)						{return false;};
 	this.render.system_event_processor.pickupmouseenter	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.mouseenter		=function(event,render)						{return false;};
 	this.mouseenter_event_listener=function (event)
@@ -309,17 +321,19 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
+		if(this.render.system_event_processor.systemmouseenter(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupmouseenter(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupmouseenter)=="function")
+						if(ep.pickupmouseenter(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.mouseenter(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickupmouseenter)=="function")
-				if(ep.pickupmouseenter(event,this.render.pickup.component_id,this.render))
-					return;
-
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
@@ -328,7 +342,7 @@ function construct_event_listener(my_render)
 			if(ep.mouseenter(event,component_id,this.render))
 				return;
 	};
-	
+	this.render.system_event_processor.systemmouseleave	=function(event,render)						{return false;};
 	this.render.system_event_processor.pickupmouseleave	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.mouseleave		=function(event,render)						{return false;};
 	this.mouseleave_event_listener=function (event)
@@ -341,17 +355,19 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
+		if(this.render.system_event_processor.systemmouseleave(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupmouseleave(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupmouseleave)=="function")
+						if(ep.pickupmouseleave(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.mouseleave(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickupmouseleave)=="function")
-				if(ep.pickupmouseleave(event,this.render.pickup.component_id,this.render))
-					return;
-
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
@@ -359,8 +375,8 @@ function construct_event_listener(my_render)
 		if(typeof(ep.mouseleave)=="function")
 			if(ep.mouseleave(event,component_id,this.render))
 				return;
-	};	
-
+	};
+	this.render.system_event_processor.systemtouchstart	=function(event,render)						{return false;};
 	this.render.system_event_processor.pickuptouchstart	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.touchstart		=function(event,render)						{return false;};
 	this.touchstart_event_listener=function (event)
@@ -372,16 +388,19 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_mobile_render_view(event);
 		
+		if(this.render.system_event_processor.systemtouchstart(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickuptouchstart(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickuptouchstart)=="function")
+						if(ep.pickuptouchstart(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.touchstart(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickuptouchstart)=="function")
-				if(ep.pickuptouchstart(event,this.render.pickup.component_id,this.render))
-					return;
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.touch))<0)
 			return;
 		this.render.event_component.touch.component_name=component_id;
@@ -391,6 +410,7 @@ function construct_event_listener(my_render)
 				return;
 
 	};
+	this.render.system_event_processor.systemtouchend	=function(event,render)						{return false;};
 	this.render.system_event_processor.pickuptouchend	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.touchend			=function(event,render)						{return false;};
 	this.touchend_event_listener=function (event)
@@ -402,17 +422,19 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_mobile_render_view(event);
 		
+		if(this.render.system_event_processor.systemtouchend(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickuptouchend(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickuptouchend)=="function")
+						if(ep.pickuptouchend(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.touchend(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickuptouchend)=="function")
-				if(ep.pickuptouchend(event,this.render.pickup.component_id,this.render))
-					return;
-
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.touch))<0)
 			return;
 		this.render.event_component.touch.component_name=component_id;
@@ -422,6 +444,7 @@ function construct_event_listener(my_render)
 				return;
 
 	};
+	this.render.system_event_processor.systemtouchmove	=function(event,render){return false;};
 	this.render.system_event_processor.pickuptouchmove	=function(event,render,pickup_component_id){return false;};
 	this.render.system_event_processor.touchmove		=function(event,render){return false;};
 	this.touchmove_event_listener=function (event)
@@ -433,16 +456,19 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_mobile_render_view(event);
 		
+		if(this.render.system_event_processor.systemtouchmove(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickuptouchmove(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickuptouchmove)=="function")
+						if(ep.pickuptouchmove(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.touchmove(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickuptouchmove)=="function")
-				if(ep.pickuptouchmove(event,this.render.pickup.component_id,this.render))
-					return;
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.touch))<0)
 			return;
 		this.render.event_component.touch.component_name=component_id;
@@ -452,28 +478,30 @@ function construct_event_listener(my_render)
 				return;
 
 	};
-	
+	this.render.system_event_processor.systemkeydown	=function(event,render){return false;};
 	this.render.system_event_processor.pickupkeydown	=function(event,pickup_component_id,render){return false;};
 	this.render.system_event_processor.keydown			=function(event,render){return false;};
 	this.keydown_event_listener=function (event)
 	{
 		if(this.render.terminate_flag)
 			return;
-	
+
 		var ep,component_id;
 		event.preventDefault();
 		
+		if(this.render.system_event_processor.systemkeydown(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupkeydown(event,this.render.pickup.component_id,this.render))
 					return;
-
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupkeydown)=="function")
+						if(ep.pickupkeydown(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.keydown(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickupkeydown)=="function")
-				if(ep.pickupkeydown(event,this.render.pickup.component_id,this.render))
-					return;
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.keyboard))<0)
 			return;
 		this.render.event_component.keyboard.component_name=component_id;
@@ -482,6 +510,7 @@ function construct_event_listener(my_render)
 			if(ep.keydown(event,component_id,this.render))
 				return;
 	};
+	this.render.system_event_processor.systemkeypress	=function(event,render){return false;};
 	this.render.system_event_processor.pickupkeypress	=function(event,pickup_component_id,render){return false;};
 	this.render.system_event_processor.keypress			=function(event,render){return false;};
 	this.keypress_event_listener=function (event)
@@ -492,17 +521,19 @@ function construct_event_listener(my_render)
 		var ep,component_id;
 		event.preventDefault();
 
+		if(this.render.system_event_processor.systemkeypress(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupkeypress(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupkeypress)=="function")
+						if(ep.pickupkeypress(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.keypress(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickupkeypress)=="function")
-				if(ep.pickupkeypress(event,this.render.pickup.component_id,this.render))
-					return;
-		
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.keyboard))<0)
 			return;
 		this.render.event_component.keyboard.component_name=component_id;
@@ -511,7 +542,7 @@ function construct_event_listener(my_render)
 			if(ep.keypress(event,component_id,this.render))
 				return;
 	};
-	
+	this.render.system_event_processor.systemkeyup	=function(event,render){return false;};
 	this.render.system_event_processor.pickupkeyup	=function(event,pickup_component_id,render){return false;};
 	this.render.system_event_processor.keyup		=function(event,render){return false;};
 	this.keyup_event_listener=function (event)
@@ -536,16 +567,19 @@ function construct_event_listener(my_render)
 			break;
 		}
 
+		if(this.render.system_event_processor.systemkeyup(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupkeyup(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupkeyup)=="function")
+						if(ep.pickupkeyup(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.keyup(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickupkeyup)=="function")
-				if(ep.pickupkeyup(event,this.render.pickup.component_id,this.render))
-					return;
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.keyboard))<0)
 			return;
 		this.render.event_component.keyboard.component_name=component_id;
@@ -554,6 +588,7 @@ function construct_event_listener(my_render)
 			if(ep.keyup(event,component_id,this.render))
 				return;
 	};
+	this.render.system_event_processor.systemcontextmenu=function(event,render)						{return false;};
 	this.render.system_event_processor.pickupcontextmenu=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.contextmenu		=function(event,render)						{return false;};
 	this.contextmenu_event_listener=function (event)
@@ -562,19 +597,22 @@ function construct_event_listener(my_render)
 			return;
 	
 		var ep,component_id;
-
+		
 		event.preventDefault();
 		
+		if(this.render.system_event_processor.systemcontextmenu(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupcontextmenu(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupcontextmenu)=="function")
+						if(ep.pickupcontextmenu(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.contextmenu(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickupcontextmenu)=="function")
-				if(ep.pickupcontextmenu(event,this.render.pickup.component_id,this.render))
-					return;
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
 			return;
 		this.render.event_component.mouse.component_name=component_id;
@@ -583,6 +621,7 @@ function construct_event_listener(my_render)
 			if(ep.contextmenu(event,component_id,this.render))
 				return;
 	};
+	this.render.system_event_processor.systemgamepadconnected	=function(event,render){return false;};
 	this.render.system_event_processor.pickupgamepadconnected	=function(event,pickup_component_id,render){return false;};
 	this.render.system_event_processor.gamepadconnected			=function(event,render){return false;};
 	this.gamepadconnected_event_listener=function (event)
@@ -593,17 +632,19 @@ function construct_event_listener(my_render)
 		var ep,component_id;
 		event.preventDefault();
 		
+		if(this.render.system_event_processor.systemgamepadconnected(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupgamepadconnected(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupgamepadconnected)=="function")
+						if(ep.pickupgamepadconnected(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.gamepadconnected(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickupgamepadconnected)=="function")
-				if(ep.pickupgamepadconnected(event,this.render.pickup.component_id,this.render))
-					return;
-
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.gamepad))<0)
 			return;
 		this.render.event_component.gamepad.component_name=component_id;
@@ -612,6 +653,7 @@ function construct_event_listener(my_render)
 			if(ep.gamepadconnected(event,component_id,this.render))
 				return;
 	};
+	this.render.system_event_processor.systemgamepaddisconnected	=function(event,render){return false;};
 	this.render.system_event_processor.pickupgamepaddisconnected	=function(event,pickup_component_id,render){return false;};
 	this.render.system_event_processor.gamepaddisconnected			=function(event,render){return false;};
 	this.gamepaddisconnected_event_listener=function (event)
@@ -622,17 +664,19 @@ function construct_event_listener(my_render)
 		var ep,component_id;
 		event.preventDefault();
 		
+		if(this.render.system_event_processor.systemgamepaddisconnected(event,this.render))
+			return;
 		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupgamepaddisconnected(event,this.render.pickup.component_id,this.render))
 					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupgamepaddisconnected)=="function")
+						if(ep.pickupgamepaddisconnected(event,this.render.pickup.component_id,this.render))
+							return;
+			}
 		if(this.render.system_event_processor.gamepaddisconnected(event,this.render))
 			return;
-		if((ep=this.caculate_pickup_event_processor())!=null)
-			if(typeof(ep.pickupgamepaddisconnected)=="function")
-				if(ep.pickupgamepaddisconnected(event,this.render.pickup.component_id,this.render))
-					return;
-
 		if((component_id=this.caculate_component_event_processor(this.render.event_component.gamepad))<0)
 			return;
 		this.render.event_component.gamepad.component_name=component_id;

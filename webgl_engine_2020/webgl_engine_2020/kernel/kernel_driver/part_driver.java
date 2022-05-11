@@ -47,7 +47,6 @@ public class part_driver
 	{
 		return 0;
 	}
-	
 	public part_rude create_part_mesh_and_buffer_object_head(part p,
 			file_writer buffer_object_file_writer,part_container_for_part_search pcps,
 			system_parameter system_par,scene_parameter scene_par)

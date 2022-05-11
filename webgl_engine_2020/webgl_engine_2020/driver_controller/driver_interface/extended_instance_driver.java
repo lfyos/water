@@ -117,6 +117,21 @@ public class extended_instance_driver extends instance_driver
 			y0=1.0-const_value.min_value;
 		if((y0+dy)<=-1)
 			y0=-1-dy+const_value.min_value;
+		
+		if((str=ci.request_response.get_parameter("all_in_view"))!=null)
+			switch(str.trim().toLowerCase()){
+			case "all_in_view":
+				if((x0+dx)>=1)
+					x0=1.0-dx-const_value.min_value;
+				if(x0<=-1)
+					x0=-1+const_value.min_value;
+				if((y0+dy)>=1)
+					y0=1.0-dy-const_value.min_value;
+				if(y0<=-1)
+					y0=-1+const_value.min_value;
+				
+				break;
+			}
 	}
 	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
 	{
