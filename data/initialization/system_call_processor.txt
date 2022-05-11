@@ -4,7 +4,9 @@ function(component_name,component_id,render)
 
 	render.system_call_processor.set_menu_show=function(menu_name,par)
 	{
-		var my_par=(typeof(par)=="undefined")?[["center","center"]]:par;
+		var my_par=par;
+		if(typeof(par)=="undefined")
+			my_par=[["center","center"],["all_in_view","all_in_view"]];
 		render.call_server_component(menu_name,"all",my_par.concat([["operation","show"]]));
 	};
 	render.system_call_processor.set_menu_hide=function(menu_name)

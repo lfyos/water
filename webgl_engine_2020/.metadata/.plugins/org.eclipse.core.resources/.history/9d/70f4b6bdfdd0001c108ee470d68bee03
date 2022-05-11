@@ -1,0 +1,898 @@
+function construct_event_listener(my_render)
+{
+	this.render=my_render;
+	this.mouse_inside_canvas_flag=false;
+	this.mouse_down_flag=false;
+	this.mouse_down_flag_array=[false,false,false,false,false];
+
+	this.set_render_view=function(event)
+	{
+		var rect=this.render.canvas.getBoundingClientRect();
+		var left=rect.left,top=rect.top,right=rect.right,bottom=rect.bottom;
+		var width=right-left,height=bottom-top;
+		var x=event.clientX-left,y=event.clientY-top;
+		if((this.render.view.x=2.0*x/width-1.0)<-1.0)
+			this.render.view.x=-1.0;
+		else if(this.render.view.x >1.0)
+			this.render.view.x=1.0;
+		if((this.render.view.y=1.0-2.0*y/height)<-1.0)
+			this.render.view.y=-1.0;
+		else if(this.render.view.y>1.0)
+			this.render.view.y=1.0;
+		this.render.canvas.focus();
+	};
+	this.set_mobile_render_view=function(event)
+	{
+		if(event.touches.length>0){
+			var btn=this.render.canvas;
+			var x=event.touches[0].clientX-btn.offsetLeft;
+			var y=btn.clientHeight-(event.touches[0].clientY-btn.offsetTop);	
+			if((this.render.view.x=2.0*((x/btn.clientWidth )-0.5))<-1.0)
+				this.render.view.x=-1.0;
+			else if(this.render.view.x >1.0)
+				this.render.view.x=1.0;
+			if((this.render.view.y=2.0*((y/btn.clientHeight)-0.5))<-1.0)
+				this.render.view.y=-1.0;
+			else if(this.render.view.y>1.0)
+				this.render.view.y=1.0;
+		}
+		this.render.canvas.focus();
+	};
+	this.caculate_pickup_event_processor=function()
+	{
+		if(this.render.pickup.component_id<0)
+			return null;
+		if(this.render.pickup.component_id>=(this.render.component_event_processor.length))
+			return null;
+		var ep=this.render.component_event_processor[this.render.pickup.component_id];
+		
+		return (typeof(ep)=="object")?ep:null;
+	};
+	this.caculate_component_event_processor=function (processor_component_object)
+	{
+		if(typeof(processor_component_object)!="object")
+			return -1;
+		var component_name=processor_component_object.component_name;
+		var component_object=this.render.get_component_processor(component_name);
+		if(typeof(component_object)!="object")
+			return -1;
+		if(component_object==null)
+			return -1;
+		if(typeof(component_object.component_id)!="number")
+			return -1;
+		if(component_object.component_id<0)
+			return -1;
+		if(component_object.component_id>=(this.render.component_event_processor.length))
+			return -1;
+		var ep=this.render.component_event_processor[component_object.component_id];
+		return (typeof(ep)!="object")?-1:(ep==null)?-1:(component_object.component_id);
+	};
+	this.render.system_event_processor.pickupmousemove	=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.mousemove		=function(event,render)						{return false;};
+	this.mousemove_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+		this.mouse_inside_canvas_flag=true;
+		
+		var ep,component_id;
+		event.preventDefault();
+		this.set_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupmousemove(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupmousemove)=="function")
+				if(ep.pickupmousemove(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.mousemove(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
+			return;
+		this.render.event_component.mouse.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];
+		if(typeof(ep.mousemove)=="function")
+			if(ep.mousemove(event,component_id,this.render))
+				return;
+	};
+	this.render.system_event_processor.pickupmousedown	=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.mousedown		=function(event,render)						{return false;};
+	this.mousedown_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+		this.mouse_inside_canvas_flag=true;
+		this.mouse_down_flag_array[event.button]=true;
+		this.mouse_down_flag=false;
+		for(var i=0,ni=this.mouse_down_flag_array.length;i<ni;i++)
+			this.mouse_down_flag|=this.mouse_down_flag_array[i];
+		
+		var ep,component_id;
+
+		event.preventDefault();
+		this.set_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupmousedown(event,this.render.pickup.component_id,this.render))
+						return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupmousedown)=="function")
+				if(ep.pickupmousedown(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.mousedown(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
+			return;
+		this.render.event_component.mouse.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];			
+		if(typeof(ep.mousedown)=="function")
+			if(ep.mousedown(event,component_id,this.render))
+				return;
+		
+	};
+	this.render.system_event_processor.pickupmouseup	=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.mouseup			=function(event,render)						{return false;};
+	this.mouseup_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+		this.mouse_inside_canvas_flag=true;
+		this.mouse_down_flag_array[event.button]=false;
+		this.mouse_down_flag=false;
+		for(var i=0,ni=this.mouse_down_flag_array.length;i<ni;i++)
+			this.mouse_down_flag|=this.mouse_down_flag_array[i];
+		
+		var ep,component_id;
+		
+		event.preventDefault();
+		this.set_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupmouseup(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupmouseup)=="function")
+				if(ep.pickupmouseup(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.mouseup(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
+			return;
+		this.render.event_component.mouse.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];
+		if(typeof(ep.mouseup)=="function")
+			if(ep.mouseup(event,component_id,this.render))
+				return;
+	};
+	this.render.system_event_processor.pickupdblclick	=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.dblclick			=function(event,render)						{return false;};
+	this.dblclick_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+		this.mouse_inside_canvas_flag=true;
+	
+		var ep,component_id;
+		
+		event.preventDefault();
+		this.set_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupdblclick(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupdblclick)=="function")
+				if(ep.pickupdblclick(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.dblclick(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
+			return;
+		this.render.event_component.mouse.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];	
+		if(typeof(ep.dblclick)=="function")
+			if(ep.dblclick(event,component_id,this.render))
+				return;
+	};
+	this.render.system_event_processor.pickupmousewheel	=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.mousewheel		=function(event,render)						{return false;};
+	this.mousewheel_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+		this.mouse_inside_canvas_flag=true;
+		
+		var ep,component_id;
+		event.preventDefault();
+		this.set_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupmousewheel(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupmousewheel)=="function")
+				if(ep.pickupmousewheel(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.mousewheel(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
+			return;
+		this.render.event_component.mouse.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];			
+		if(typeof(ep.mousewheel)=="function")
+			if(ep.mousewheel(event,component_id,this.render))
+				return;
+	};
+	
+	this.render.system_event_processor.pickupmouseover	=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.mouseover		=function(event,render)						{return false;};
+	this.mouseover_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+		this.mouse_inside_canvas_flag=true;
+		
+		var ep,component_id;
+		event.preventDefault();
+		this.set_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupmouseover(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupmouseover)=="function")
+				if(ep.pickupmouseover(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.mouseover(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
+			return;
+		this.render.event_component.mouse.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];			
+		if(typeof(ep.mouseover)=="function")
+			if(ep.mouseover(event,component_id,this.render))
+				return;
+	};
+	
+	this.render.system_event_processor.pickupmouseout	=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.mouseout			=function(event,render)						{return false;};
+	this.mouseout_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+		this.mouse_inside_canvas_flag=false;
+
+		var ep,component_id;
+		event.preventDefault();
+		this.set_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupmouseout(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupmouseout)=="function")
+				if(ep.pickupmouseout(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.mouseout(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
+			return;
+		this.render.event_component.mouse.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];			
+		if(typeof(ep.mouseout)=="function")
+			if(ep.mouseout(event,component_id,this.render))
+				return;
+	};
+	
+	this.render.system_event_processor.pickupmouseenter	=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.mouseenter		=function(event,render)						{return false;};
+	this.mouseenter_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+		this.mouse_inside_canvas_flag=true;
+		
+		var ep,component_id;
+		event.preventDefault();
+		this.set_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupmouseenter(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupmouseenter)=="function")
+				if(ep.pickupmouseenter(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.mouseenter(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
+			return;
+		this.render.event_component.mouse.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];			
+		if(typeof(ep.mouseenter)=="function")
+			if(ep.mouseenter(event,component_id,this.render))
+				return;
+	};
+	
+	this.render.system_event_processor.pickupmouseleave	=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.mouseleave		=function(event,render)						{return false;};
+	this.mouseleave_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+		this.mouse_inside_canvas_flag=false;
+		
+		var ep,component_id;
+		event.preventDefault();
+		this.set_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupmouseleave(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupmouseleave)=="function")
+				if(ep.pickupmouseleave(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.mouseleave(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
+			return;
+		this.render.event_component.mouse.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];			
+		if(typeof(ep.mouseleave)=="function")
+			if(ep.mouseleave(event,component_id,this.render))
+				return;
+	};	
+
+	this.render.system_event_processor.pickuptouchstart	=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.touchstart		=function(event,render)						{return false;};
+	this.touchstart_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+
+		var ep,component_id;
+		event.preventDefault();
+		this.set_mobile_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickuptouchstart(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickuptouchstart)=="function")
+				if(ep.pickuptouchstart(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.touchstart(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.touch))<0)
+			return;
+		this.render.event_component.touch.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];	
+		if(typeof(ep.touchstart)=="function")
+			if(ep.touchstart(event,component_id,this.render))
+				return;
+
+	};
+	this.render.system_event_processor.pickuptouchend	=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.touchend			=function(event,render)						{return false;};
+	this.touchend_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+	
+		var ep,component_id;
+		event.preventDefault();
+		this.set_mobile_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickuptouchend(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickuptouchend)=="function")
+				if(ep.pickuptouchend(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.touchend(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.touch))<0)
+			return;
+		this.render.event_component.touch.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];	
+		if(typeof(ep.touchend)=="function")
+			if(ep.touchend(event,component_id,this.render))
+				return;
+
+	};
+	this.render.system_event_processor.pickuptouchmove	=function(event,render,pickup_component_id){return false;};
+	this.render.system_event_processor.touchmove		=function(event,render){return false;};
+	this.touchmove_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+	
+		var ep,component_id;
+		event.preventDefault();
+		this.set_mobile_render_view(event);
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickuptouchmove(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickuptouchmove)=="function")
+				if(ep.pickuptouchmove(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.touchmove(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.touch))<0)
+			return;
+		this.render.event_component.touch.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];	
+		if(typeof(ep.touchmove)=="function")
+			if(ep.touchmove(event,component_id,this.render))
+				return;
+
+	};
+	
+	this.render.system_event_processor.pickupkeydown	=function(event,pickup_component_id,render){return false;};
+	this.render.system_event_processor.keydown			=function(event,render){return false;};
+	this.keydown_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+	
+		var ep,component_id;
+		event.preventDefault();
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupkeydown(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupkeydown)=="function")
+				if(ep.pickupkeydown(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.keydown(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.keyboard))<0)
+			return;
+		this.render.event_component.keyboard.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];	
+		if(typeof(ep.keydown)=="function")
+			if(ep.keydown(event,component_id,this.render))
+				return;
+	};
+	this.render.system_event_processor.pickupkeypress	=function(event,pickup_component_id,render){return false;};
+	this.render.system_event_processor.keypress			=function(event,render){return false;};
+	this.keypress_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+	
+		var ep,component_id;
+		event.preventDefault();
+
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupkeypress(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupkeypress)=="function")
+				if(ep.pickupkeypress(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.keypress(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.keyboard))<0)
+			return;
+		this.render.event_component.keyboard.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];	
+		if(typeof(ep.keypress)=="function")
+			if(ep.keypress(event,component_id,this.render))
+				return;
+	};
+	
+	this.render.system_event_processor.pickupkeyup	=function(event,pickup_component_id,render){return false;};
+	this.render.system_event_processor.keyup		=function(event,render){return false;};
+	this.keyup_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+		var ep,component_id;
+		event.preventDefault();
+		
+		switch(event.keyCode){
+		case 48://0
+		case 49://1
+		case 50://2
+		case 51://3
+		case 52://4
+		case 53://5
+		case 54://6
+		case 55://7
+		case 56://8
+		case 57://9
+			this.render.pickup_array[event.keyCode-48]=this.render.pickup.fork();
+			break;
+		}
+
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupkeyup(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupkeyup)=="function")
+				if(ep.pickupkeyup(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.keyup(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.keyboard))<0)
+			return;
+		this.render.event_component.keyboard.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];	
+		if(typeof(ep.keyup)=="function")
+			if(ep.keyup(event,component_id,this.render))
+				return;
+	};
+	this.render.system_event_processor.pickupcontextmenu=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.contextmenu		=function(event,render)						{return false;};
+	this.contextmenu_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+	
+		var ep,component_id;
+
+		event.preventDefault();
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupcontextmenu(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupcontextmenu)=="function")
+				if(ep.pickupcontextmenu(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.contextmenu(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
+			return;
+		this.render.event_component.mouse.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];
+		if(typeof(ep.contextmenu)=="function")
+			if(ep.contextmenu(event,component_id,this.render))
+				return;
+	};
+	this.render.system_event_processor.pickupgamepadconnected	=function(event,pickup_component_id,render){return false;};
+	this.render.system_event_processor.gamepadconnected			=function(event,render){return false;};
+	this.gamepadconnected_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+	
+		var ep,component_id;
+		event.preventDefault();
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupgamepadconnected(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupgamepadconnected)=="function")
+				if(ep.pickupgamepadconnected(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.gamepadconnected(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.gamepad))<0)
+			return;
+		this.render.event_component.gamepad.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];	
+		if(typeof(ep.gamepadconnected)=="function")
+			if(ep.gamepadconnected(event,component_id,this.render))
+				return;
+	};
+	this.render.system_event_processor.pickupgamepaddisconnected	=function(event,pickup_component_id,render){return false;};
+	this.render.system_event_processor.gamepaddisconnected			=function(event,render){return false;};
+	this.gamepaddisconnected_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+
+		var ep,component_id;
+		event.preventDefault();
+		
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length))
+				if(this.render.system_event_processor.pickupgamepaddisconnected(event,this.render.pickup.component_id,this.render))
+					return;
+		if((ep=this.caculate_pickup_event_processor())!=null)
+			if(typeof(ep.pickupgamepaddisconnected)=="function")
+				if(ep.pickupgamepaddisconnected(event,this.render.pickup.component_id,this.render))
+					return;
+		if(this.render.system_event_processor.gamepaddisconnected(event,this.render))
+			return;
+		if((component_id=this.caculate_component_event_processor(this.render.event_component.gamepad))<0)
+			return;
+		this.render.event_component.gamepad.component_name=component_id;
+		ep=this.render.component_event_processor[component_id];	
+		if(typeof(ep.gamepaddisconnected)=="function")
+			if(ep.gamepaddisconnected(event,component_id,this.render))
+				return;
+	};
+
+	var cur=this;
+	
+	function mousemove_fun(event)	
+	{	
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.mousemove_event_listener(event);
+	};
+	function mousedown_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.mousedown_event_listener(event);
+	};
+	function mouseup_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.mouseup_event_listener(event);
+	};
+	function dblclick_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.dblclick_event_listener(event);	
+	};
+	function mousewheel_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.mousewheel_event_listener(event);
+	};
+	function mouseleave_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.mouseleave_event_listener(event);
+	};
+	function mouseenter_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.mouseenter_event_listener(event);
+	};
+	function mouseout_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.mouseout_event_listener(event);
+	};
+	function mouseover_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.mouseover_event_listener(event);
+	};
+	function touchstart_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.touchstart_event_listener(event);
+	};
+	function touchend_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.touchend_event_listener(event);
+	};
+	function touchmove_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.touchmove_event_listener(event);
+	};
+	function keydown_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.keydown_event_listener(event);
+	};
+	function keypress_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.keypress_event_listener(event);	
+	};
+	function keyup_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.keyup_event_listener(event);
+	};
+	function contextmenu_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.contextmenu_event_listener(event);
+	};
+	function gamepadconnected_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.gamepadconnected_event_listener(event);
+	};
+	function gamepaddisconnected_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.gamepaddisconnected_event_listener(event);
+	};
+
+	this.render.canvas.addEventListener(	"mousemove",			mousemove_fun,			false);
+	this.render.canvas.addEventListener(	"mousedown",			mousedown_fun,			false);
+	this.render.canvas.addEventListener(	"mouseup",				mouseup_fun,			false);
+	this.render.canvas.addEventListener(	"dblclick",				dblclick_fun,			false);
+	this.render.canvas.addEventListener(	"mousewheel",			mousewheel_fun,			false);
+	this.render.canvas.addEventListener(	"DOMMouseScroll",		mousewheel_fun,			false);
+	this.render.canvas.addEventListener(	"mouseleave",			mouseleave_fun,			false);
+	this.render.canvas.addEventListener(	"mouseenter",			mouseenter_fun,			false);
+	this.render.canvas.addEventListener(	"mouseout",				mouseout_fun,			false);
+	this.render.canvas.addEventListener(	"mouseover",			mouseover_fun,			false);
+	
+	this.render.canvas.addEventListener(	"touchstart",			touchstart_fun,			false);
+	this.render.canvas.addEventListener(	"touchend",				touchend_fun,			false);
+	this.render.canvas.addEventListener(	"touchmove",			touchmove_fun,			false);
+	
+	this.render.canvas.addEventListener(	"keydown",				keydown_fun,			false);
+	this.render.canvas.addEventListener(	"keypress",				keypress_fun,			false);
+	this.render.canvas.addEventListener(	"keyup",				keyup_fun,				false);
+	
+	this.render.canvas.addEventListener(	"contextmenu", 			contextmenu_fun,		false);
+
+	window.addEventListener(				"gamepadconnected",		gamepadconnected_fun,	false);
+	window.addEventListener(				"gamepaddisconnected",	gamepaddisconnected_fun,false);
+
+	this.render.canvas.focus();
+	
+	this.destroy=function()
+	{
+		window.removeEventListener("gamepadconnected",		gamepadconnected_fun);
+		window.removeEventListener("gamepaddisconnected",	gamepaddisconnected_fun);
+		
+		if(this.render!=null)
+			if(this.render.canvas!=null){
+				this.render.canvas.removeEventListener(	"mousemove",			mousemove_fun);
+				this.render.canvas.removeEventListener(	"mousedown",			mousedown_fun);
+				this.render.canvas.removeEventListener(	"mouseup",				mouseup_fun);
+				this.render.canvas.removeEventListener(	"dblclick",				dblclick_fun);
+				this.render.canvas.removeEventListener(	"mousewheel",			mousewheel_fun);
+				this.render.canvas.removeEventListener(	"DOMMouseScroll",		mousewheel_fun);
+				this.render.canvas.removeEventListener(	"mouseleave",			mouseleave_fun);
+				this.render.canvas.removeEventListener(	"mouseenter",			mouseenter_fun);
+				this.render.canvas.removeEventListener(	"mouseout",				mouseout_fun);
+				this.render.canvas.removeEventListener(	"mouseover",			mouseover_fun);
+				
+				this.render.canvas.removeEventListener(	"touchstart",			touchstart_fun);
+				this.render.canvas.removeEventListener(	"touchend",				touchend_fun);
+				this.render.canvas.removeEventListener(	"touchmove",			touchmove_fun);
+				
+				this.render.canvas.removeEventListener(	"keydown",				keydown_fun);
+				this.render.canvas.removeEventListener(	"keypress",				keypress_fun);
+				this.render.canvas.removeEventListener(	"keyup",				keyup_fun);
+				
+				this.render.canvas.removeEventListener(	"contextmenu", 			contextmenu_fun);
+			}
+
+		cur						=null;
+		mousemove_fun			=null;
+		mousedown_fun			=null;
+		mouseup_fun				=null;
+		dblclick_fun			=null;
+		mousewheel_fun			=null;
+		mouseleave_fun			=null;
+		mouseenter_fun			=null;
+		mouseout_fun			=null;
+		mouseover_fun			=null;
+		
+		touchstart_fun			=null;
+		touchend_fun			=null;
+		touchmove_fun			=null;
+		keydown_fun				=null;
+		keypress_fun			=null;
+		keyup_fun				=null;
+		contextmenu_fun			=null;
+		gamepadconnected_fun	=null;
+		gamepaddisconnected_fun	=null;
+
+
+		this.set_render_view											=null;
+		this.set_mobile_render_view										=null;
+		this.caculate_pickup_event_processor							=null;
+		this.caculate_component_event_processor							=null;
+		this.render.system_event_processor.pickupmousemove				=null;
+		this.render.system_event_processor.mousemove					=null;
+		this.mousemove_event_listener									=null;
+		
+		this.render.system_event_processor.pickupmousedown				=null;
+		this.render.system_event_processor.mousedown					=null;
+		this.mousedown_event_listener									=null;
+		
+		this.render.system_event_processor.pickupmouseup				=null;
+		this.render.system_event_processor.mouseup						=null;
+		this.mouseup_event_listener										=null;
+		
+		this.render.system_event_processor.pickupdblclick				=null;
+		this.render.system_event_processor.dblclick						=null;
+		this.dblclick_event_listener									=null;
+		
+		this.render.system_event_processor.pickupmousewheel				=null;
+		this.render.system_event_processor.mousewheel					=null;
+		this.mousewheel_event_listener									=null;
+
+		this.render.system_event_processor.pickupmouseleave				=null;
+		this.render.system_event_processor.mouseleave					=null;
+		this.mouseleave_event_listener									=null;
+		
+		this.render.system_event_processor.pickupmouseenter				=null;
+		this.render.system_event_processor.mouseenter					=null;
+		this.mouseenter_event_listener									=null;
+		
+		this.render.system_event_processor.pickupmouseout				=null;
+		this.render.system_event_processor.mouseout						=null;
+		this.mouseout_event_listener									=null;
+		
+		this.render.system_event_processor.pickupmouseover				=null;
+		this.render.system_event_processor.mouseover					=null;
+		this.mouseover_event_listener									=null;
+		
+		this.render.system_event_processor.pickuptouchstart				=null;
+		this.render.system_event_processor.touchstart					=null;
+		this.touchstart_event_listener									=null;
+		this.render.system_event_processor.pickuptouchend				=null;
+		this.render.system_event_processor.touchend						=null;
+		this.touchend_event_listener									=null;
+		this.render.system_event_processor.pickuptouchmove				=null;
+		this.render.system_event_processor.touchmove					=null;
+		this.touchmove_event_listener									=null;
+		
+		this.render.system_event_processor.pickupkeydown				=null;
+		this.render.system_event_processor.keydown						=null;
+		this.keydown_event_listener										=null;
+		this.render.system_event_processor.pickupkeypress				=null;
+		this.render.system_event_processor.keypress						=null;
+		this.keypress_event_listener									=null;
+		
+		this.render.system_event_processor.pickupkeyup					=null;
+		this.render.system_event_processor.keyup						=null;
+		this.keyup_event_listener										=null;
+		
+		this.render.system_event_processor.pickupcontextmenu			=null;
+		this.render.system_event_processor.contextmenu					=null;
+		this.contextmenu_event_listener									=null;
+		
+		this.render.system_event_processor.pickupgamepadconnected		=null;
+		this.render.system_event_processor.gamepadconnected				=null;
+		this.gamepadconnected_event_listener							=null;
+		
+		this.render.system_event_processor.pickupgamepaddisconnected	=null;
+		this.render.system_event_processor.gamepaddisconnected			=null;
+		this.gamepaddisconnected_event_listener							=null;
+		
+		this.destroy													=null;
+		
+		this.render														=null;
+	}
+};

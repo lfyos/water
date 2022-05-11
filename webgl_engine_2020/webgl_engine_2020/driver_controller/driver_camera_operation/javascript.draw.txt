@@ -82,7 +82,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 			}
 			return true;
 		};
-		ep.pickupkeyup=function(event,my_component_id,render)
+		ep.pickupkeydown=function(event,my_component_id,render)
 		{
 			var my_ep=render.component_event_processor[my_component_id];
 			
@@ -104,11 +104,12 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 			case 56:
 			case 57:
 				my_ep.alf=my_ep.alf+(event.keyCode-48).toString();
-				my_ep.alf=my_ep.alf.substring(my_ep.alf.length-3,my_ep.alf.length);
+				my_ep.alf=my_ep.alf.substring(my_ep.alf.length-3);
 				break;
 			case 8:		//backspace
+			case 37:	//left arrow
 				render.call_server_component(my_component_id,"all",[["operation","retreat"]]);
-				return true;
+				break;
 			case 82://R
 				render.call_server_component(my_component_id,0,
 					[		["operation",	"rotate"],
@@ -116,7 +117,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					    	["x0","1"],						["y0","0"],["z0","0"],
 					    	["x1",Math.cos(alf).toString()],["y1","0"],["z1",Math.sin(alf).toString()]
 					]);
-				return true;
+				break;
 			case 76://L
 				render.call_server_component(my_component_id,0,
 					[		["operation",	"rotate"],
@@ -124,7 +125,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					    	["x0","1"],						 ["y0","0"],["z0","0"],
 					    	["x1",Math.cos(-alf).toString()],["y1","0"],["z1",Math.sin(-alf).toString()]
 					]);
-				return true;
+				break;
 			case 85://U
 				render.call_server_component(my_component_id,0,
 					[		["operation",	"rotate"],
@@ -132,7 +133,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					    	["x0","0"],["y0","0"],						["z0","1"],
 					    	["x1","0"],["y1",Math.sin(-alf).toString()],["z1",Math.cos(-alf).toString()]
 					]);
-				return true;
+				break;
 			case 68://D
 				render.call_server_component(my_component_id,0,
 					[		["operation",	"rotate"],
@@ -140,7 +141,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					    	["x0","0"],["y0","0"],						["z0","1"],
 					    	["x1","0"],["y1",Math.sin(alf).toString()],	["z1",Math.cos(alf).toString()]
 					]);
-				return true;
+				break;
 			case 83://S
 				render.call_server_component(my_component_id,0,
 					[		["operation",	"rotate"],
@@ -148,7 +149,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					    	["x0","1"],						["y0","0"],						["z0","0"],
 					    	["x1",Math.cos(alf).toString()],["y1",Math.sin(alf).toString()],["z1","0"]
 					]);
-				return true;
+				break;
 			case 84://T
 				render.call_server_component(my_component_id,0,
 					[		["operation",	"rotate"],
@@ -156,7 +157,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					    	["x0","1"],						 ["y0","0"],						["z0","0"],
 					    	["x1",Math.cos(-alf).toString()],["y1",Math.sin(-alf).toString()],	["z1","0"]
 					]);
-				return true;
+				break;
 			case 88://X
 				render.call_server_component(my_component_id,0,
 					[		["operation",	"rotate"],
@@ -164,7 +165,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					    	["x0","0"],["y0","1"],						["z0","0"],
 					    	["x1","0"],["y1",Math.cos(-alf).toString()],["z1",Math.sin(-alf).toString()]
 					]);
-				return true;
+				break;
 			case 89://Y
 				render.call_server_component(my_component_id,0,
 					[		["operation",	"rotate"],
@@ -172,7 +173,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					    	["x0","0"],						 ["y0","0"],["z0","1"],
 					    	["x1",Math.sin(-alf).toString()],["y1","0"],["z1",Math.cos(-alf).toString()]
 					]);
-				return true;
+				break;
 			case 90://Z
 				render.call_server_component(my_component_id,0,
 					[		["operation",	"rotate"],
@@ -180,11 +181,11 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					    	["x0","1"],						 ["y0","0"],					  ["z0","0"],
 					    	["x1",Math.cos(-alf).toString()],["y1",Math.sin(-alf).toString()],["z1","0"]
 					]);
-				return true;
+				break;
 			default:
 				break;
 			}
-			return false;
+			return true;
 		};
 		render.component_event_processor[component_id]=ep;
 		return;

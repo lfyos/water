@@ -10,7 +10,6 @@ import kernel_network.network_parameter;
 import kernel_network.network_result;
 import kernel_part.part;
 
-
 public class instance_driver
 {
 	private long parameter_version,render_version[];
