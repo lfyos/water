@@ -109,8 +109,6 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(this.render.system_event_processor.systemmousedown(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupmousedown(event,this.render.pickup.component_id,this.render))
@@ -149,8 +147,6 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(this.render.system_event_processor.systemmouseup(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupmouseup(event,this.render.pickup.component_id,this.render))
@@ -185,8 +181,6 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(this.render.system_event_processor.systemdblclick(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupdblclick(event,this.render.pickup.component_id,this.render))
@@ -219,8 +213,6 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(this.render.system_event_processor.systemmousewheel(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupmousewheel(event,this.render.pickup.component_id,this.render))
@@ -253,8 +245,6 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(this.render.system_event_processor.systemmouseover(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupmouseover(event,this.render.pickup.component_id,this.render))
@@ -287,8 +277,6 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(this.render.system_event_processor.systemmouseout(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupmouseout(event,this.render.pickup.component_id,this.render))
@@ -321,8 +309,6 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(this.render.system_event_processor.systemmouseenter(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupmouseenter(event,this.render.pickup.component_id,this.render))
@@ -355,8 +341,6 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(this.render.system_event_processor.systemmouseleave(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupmouseleave(event,this.render.pickup.component_id,this.render))
@@ -388,8 +372,6 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_mobile_render_view(event);
 		
-		if(this.render.system_event_processor.systemtouchstart(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickuptouchstart(event,this.render.pickup.component_id,this.render))
@@ -422,8 +404,6 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_mobile_render_view(event);
 		
-		if(this.render.system_event_processor.systemtouchend(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickuptouchend(event,this.render.pickup.component_id,this.render))
@@ -456,8 +436,6 @@ function construct_event_listener(my_render)
 		event.preventDefault();
 		this.set_mobile_render_view(event);
 		
-		if(this.render.system_event_processor.systemtouchmove(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickuptouchmove(event,this.render.pickup.component_id,this.render))
@@ -489,8 +467,6 @@ function construct_event_listener(my_render)
 		var ep,component_id;
 		event.preventDefault();
 		
-		if(this.render.system_event_processor.systemkeydown(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupkeydown(event,this.render.pickup.component_id,this.render))
@@ -521,8 +497,6 @@ function construct_event_listener(my_render)
 		var ep,component_id;
 		event.preventDefault();
 
-		if(this.render.system_event_processor.systemkeypress(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupkeypress(event,this.render.pickup.component_id,this.render))
@@ -567,8 +541,6 @@ function construct_event_listener(my_render)
 			break;
 		}
 
-		if(this.render.system_event_processor.systemkeyup(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupkeyup(event,this.render.pickup.component_id,this.render))
@@ -600,8 +572,6 @@ function construct_event_listener(my_render)
 		
 		event.preventDefault();
 		
-		if(this.render.system_event_processor.systemcontextmenu(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupcontextmenu(event,this.render.pickup.component_id,this.render))
@@ -632,8 +602,6 @@ function construct_event_listener(my_render)
 		var ep,component_id;
 		event.preventDefault();
 		
-		if(this.render.system_event_processor.systemgamepadconnected(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupgamepadconnected(event,this.render.pickup.component_id,this.render))
@@ -664,8 +632,6 @@ function construct_event_listener(my_render)
 		var ep,component_id;
 		event.preventDefault();
 		
-		if(this.render.system_event_processor.systemgamepaddisconnected(event,this.render))
-			return;
 		if(this.render.pickup.component_id>=0)
 			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
 				if(this.render.system_event_processor.pickupgamepaddisconnected(event,this.render.pickup.component_id,this.render))
