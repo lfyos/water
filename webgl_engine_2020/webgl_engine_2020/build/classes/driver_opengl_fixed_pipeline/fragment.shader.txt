@@ -1,0 +1,149 @@
+#define MAX_LIGHT_NUMBER	4
+#define MAX_TEXTURE_NUMBER	4
+
+uniform material_information
+{
+	float vertex_color_type,fragment_color_type,temp,shininess;
+	vec4  vertex_color_parameter,color,ambient,diffuse,specular,emission;
+	mat4  texture_matrix[MAX_TEXTURE_NUMBER]; 
+	vec4  light_color_factor[MAX_LIGHT_NUMBER];
+}material_info;
+
+uniform vec4 draw_par;
+uniform sampler2D texture_object_0,texture_object_1,texture_object_2,texture_object_3;
+
+in vec4 frag_position,frag_material,frag_id,frag_texture,frag_color;
+in float render_value;
+
+layout (location = 0) out vec4 frag_data[4];
+
+void main(void)
+{
+	int my_frag_type		=int(round(frag_id.w));
+	int my_component_id		=component_info.component_id;
+	int my_body_id			=int(round(frag_id.x));
+	int my_face_id			=int(round(frag_id.y));
+	int my_vertex_id		=int(round(frag_id.z));
+	int my_loop_id			=(my_frag_type==0)?-1:int(round(frag_texture.x));
+	int my_edge_id			=(my_frag_type==0)?-1:int(round(frag_texture.y));
+	int my_point_id			=my_vertex_id;
+	
+	float transparency_value=draw_par.x;
+	bool clip_flag			=((int(draw_par.y)&1)!=0)?true:false;
+	bool discard_flag		=((int(draw_par.y)&2)!=0)?true:false;
+
+	if(clip_flag){
+		if(dot(target_info.clip_plane,frag_position)<0.0)
+			discard;
+		my_body_id	=-1;
+		my_face_id	=-1;
+		my_vertex_id=-1;
+		my_loop_id	=-1;
+		my_edge_id	=-1;
+		my_point_id	=-1;
+	}else{
+		if(dot(target_info.clip_plane,frag_position)>0.0)
+			discard;
+	}
+	
+	switch(my_frag_type){
+	case 0://face
+		switch(int(material_info.fragment_color_type)){
+		default:
+		case 0:
+			frag_data[0]=vec4(frag_color.rgb,transparency_value);
+			break;
+		case 1:
+			frag_data[0]=material_info.texture_matrix[0]*vec4(frag_texture.xy,0.0,1.0);
+			frag_data[0]=texture(texture_object_0,frag_data[0].xy/frag_data[0].w);
+			frag_data[0].a=transparency_value;
+			break;
+		case 2:
+			frag_data[0]=material_info.texture_matrix[0]*vec4(frag_texture.xy,0.0,1.0);
+			frag_data[0]=texture(texture_object_0,frag_data[0].xy/frag_data[0].w);
+			if(frag_data[0].a<=material_info.vertex_color_parameter.x)
+				discard;
+			else
+				frag_data[0].a=transparency_value;
+			break;
+		}
+		break;
+	case 1://line
+		frag_data[0]=vec4(0.0,0.0,0.0,transparency_value);
+		if(system_info.pickup_component_id==my_component_id){
+			frag_data[0]=vec4(0.0,0.0,1.0,transparency_value);
+			if(system_info.pickup_body_id==my_body_id){
+				frag_data[0]=vec4(0.0,0.5,0.5,transparency_value);
+				if(system_info.pickup_face_id==my_face_id){
+					frag_data[0]=vec4(0.0,1.0,0.0,transparency_value);
+					break;
+				}
+			}
+		}
+		if(discard_flag)
+			discard;
+		break;
+	case 2://point
+		if(distance(gl_PointCoord,vec2(0.5,0.5))>0.5)
+			discard;
+		frag_data[0]=vec4(1.0,1.0,0.0,transparency_value);
+		if(system_info.pickup_component_id==my_component_id){
+			frag_data[0]=vec4(0.0,0.0,1.0,transparency_value);
+			if(system_info.pickup_body_id==my_body_id){
+				frag_data[0]=vec4(0.0,0.5,0.5,transparency_value);
+				if(system_info.pickup_face_id==my_face_id){
+					frag_data[0]=vec4(0.0,1.0,0.0,transparency_value);
+					if(system_info.pickup_loop_id==my_loop_id){
+						frag_data[0]=vec4(0.35,0.65,0.0,transparency_value);
+						if(system_info.pickup_edge_id==my_edge_id){
+							frag_data[0]=vec4(0.65,0.35,0.0,transparency_value);
+							if(system_info.pickup_point_id==my_point_id)
+								frag_data[0]=vec4(1.0,0.0,0.0,transparency_value);
+						}
+					}
+					break;			
+				}
+			}
+		}
+		if(discard_flag)
+			discard;
+		break;
+	default://frame
+		frag_data[0]=vec4(0.2,0.2,0.2,transparency_value);
+		break;
+	}
+
+	if(pass_info.method_id==1){
+		if(pass_info.pass_id==0){
+			frag_data[0]=code_integer(my_component_id);
+			frag_data[1]=code_integer(my_body_id);
+			frag_data[2]=code_integer(my_face_id);
+			frag_data[3]=code_integer(my_point_id);
+		}else{
+			frag_data[0]=code_integer(my_loop_id);
+			frag_data[1]=code_integer(my_edge_id);
+			frag_data[2]=code_float(gl_FragCoord.z*2.0-1.0);
+			frag_data[3]=code_float(render_value/4.0);
+		}
+	}else{
+		if(system_info.highlight_component_id==my_component_id)
+			if(system_info.highlight_body_id==my_body_id)
+				if(system_info.highlight_face_id==my_face_id)
+					switch(system_info.millisecond/100){
+					default:
+					case 0:
+					case 1:
+					case 2:
+					case 3:
+					case 4:
+						break;
+					case 5:
+					case 6:
+					case 7:
+					case 8:
+					case 9:
+						frag_data[0]=vec4(1.0,0.0,0.0,1.0);
+						break;
+					}
+	}
+}

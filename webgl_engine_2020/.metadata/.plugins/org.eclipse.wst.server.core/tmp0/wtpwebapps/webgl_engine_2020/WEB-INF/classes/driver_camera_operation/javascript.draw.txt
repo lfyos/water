@@ -51,16 +51,36 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		var ep=new Object();
 		ep.alf="0090";
 
-		ep.pickupmousedown=function(event,my_component_id,render)
+		ep.pickupcontextmenu=function(event,component_id,render)
 		{
-			var my_ep=render.component_event_processor[my_component_id];
+			return true;
+		};
+		ep.pickupdblclick=function(event,component_id,render)
+		{
+			return true;
+		};
+		ep.pickupmousedown=function(event,component_id,render)
+		{
+			return true;
+		};
+		ep.pickupkeydown=function(event,component_id,render)
+		{
+			return true;
+		};
+		ep.pickupkeypress=function(event,component_id,render)
+		{
+			return true;
+		};
+		ep.pickupmouseup=function(event,component_id,render)
+		{
+			var my_ep=render.component_event_processor[component_id];
 			var alf=parseFloat(my_ep.alf);
 			
 			switch(event.button){
 			default:
 				break;
 			case 0:
-				render.call_server_component(my_component_id,0,
+				render.call_server_component(component_id,0,
 					[["operation","body_face_direct"],["coordinate","global"],
 					["type",event.shiftKey?"true":"false"]]);
 				break;
@@ -75,16 +95,16 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 						alf/=10.0;
 					else
 						alf/=1.0;
-				render.call_server_component(my_component_id,0,
+				render.call_server_component(component_id,0,
 					[["operation","body_face_rotate"],["coordinate","global"],
 					 ["type",event.shiftKey?"true":"false"],["alf",alf.toString()]]);
 				break;
 			}
 			return true;
 		};
-		ep.pickupkeydown=function(event,my_component_id,render)
+		ep.pickupkeyup=function(event,component_id,render)
 		{
-			var my_ep=render.component_event_processor[my_component_id];
+			var my_ep=render.component_event_processor[component_id];
 			
 			var alf=parseFloat(my_ep.alf);
 			alf=(event.shiftKey||event.ctrlKey)?(-alf):alf;
@@ -108,10 +128,10 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				break;
 			case 8:		//backspace
 			case 37:	//left arrow
-				render.call_server_component(my_component_id,"all",[["operation","retreat"]]);
+				render.call_server_component(component_id,"all",[["operation","retreat"]]);
 				break;
 			case 82://R
-				render.call_server_component(my_component_id,0,
+				render.call_server_component(component_id,0,
 					[		["operation",	"rotate"],
 							["coordinate",	"camera"],
 					    	["x0","1"],						["y0","0"],["z0","0"],
@@ -119,7 +139,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					]);
 				break;
 			case 76://L
-				render.call_server_component(my_component_id,0,
+				render.call_server_component(component_id,0,
 					[		["operation",	"rotate"],
 							["coordinate",	"camera"],
 					    	["x0","1"],						 ["y0","0"],["z0","0"],
@@ -127,7 +147,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					]);
 				break;
 			case 85://U
-				render.call_server_component(my_component_id,0,
+				render.call_server_component(component_id,0,
 					[		["operation",	"rotate"],
 							["coordinate",	"camera"],
 					    	["x0","0"],["y0","0"],						["z0","1"],
@@ -135,7 +155,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					]);
 				break;
 			case 68://D
-				render.call_server_component(my_component_id,0,
+				render.call_server_component(component_id,0,
 					[		["operation",	"rotate"],
 							["coordinate",	"camera"],
 					    	["x0","0"],["y0","0"],						["z0","1"],
@@ -143,7 +163,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					]);
 				break;
 			case 83://S
-				render.call_server_component(my_component_id,0,
+				render.call_server_component(component_id,0,
 					[		["operation",	"rotate"],
 							["coordinate",	"camera"],
 					    	["x0","1"],						["y0","0"],						["z0","0"],
@@ -151,7 +171,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					]);
 				break;
 			case 84://T
-				render.call_server_component(my_component_id,0,
+				render.call_server_component(component_id,0,
 					[		["operation",	"rotate"],
 							["coordinate",	"camera"],
 					    	["x0","1"],						 ["y0","0"],						["z0","0"],
@@ -159,7 +179,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					]);
 				break;
 			case 88://X
-				render.call_server_component(my_component_id,0,
+				render.call_server_component(component_id,0,
 					[		["operation",	"rotate"],
 							["coordinate",	"global"],
 					    	["x0","0"],["y0","1"],						["z0","0"],
@@ -167,7 +187,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					]);
 				break;
 			case 89://Y
-				render.call_server_component(my_component_id,0,
+				render.call_server_component(component_id,0,
 					[		["operation",	"rotate"],
 							["coordinate",	"global"],
 					    	["x0","0"],						 ["y0","0"],["z0","1"],
@@ -175,7 +195,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 					]);
 				break;
 			case 90://Z
-				render.call_server_component(my_component_id,0,
+				render.call_server_component(component_id,0,
 					[		["operation",	"rotate"],
 							["coordinate",	"global"],
 					    	["x0","1"],						 ["y0","0"],					  ["z0","0"],

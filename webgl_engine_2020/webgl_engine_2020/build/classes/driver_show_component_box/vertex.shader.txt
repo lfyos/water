@@ -1,0 +1,10 @@
+uniform mat4 loca;
+uniform vec4 p0,p1;
+
+in vec4 vertex_location;
+
+void main(void)
+{
+	gl_Position=vertex_location*p0+(vec4(1.0,1.0,1.0,1.0)-vertex_location)*p1;
+	gl_Position=target_info.projection_matrix*loca*gl_Position;
+}
