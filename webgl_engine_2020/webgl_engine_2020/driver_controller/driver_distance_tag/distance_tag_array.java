@@ -111,7 +111,7 @@ public class distance_tag_array
 	{
 		String str;
 		if((str=ci.request_response.get_parameter("id"))==null)
-			return true;
+			str=Integer.toString(distance_tag_array.length-1);
 		int tag_index=Integer.parseInt(str);
 		if((tag_index<0)||(tag_index>=distance_tag_array.length))
 			return true;
@@ -242,10 +242,16 @@ public class distance_tag_array
 				global_px=comp_px.absolute_location.multiply(p.px);
 				view_px=ci.display_camera_result.matrix.multiply(global_px);
 
-				plane p_pl=new plane(global_p0,global_px,global_px.add(ci.selection_camera_result.up_direct));
+				plane p_pl_up	=new plane(global_p0,global_px,global_px.add(ci.selection_camera_result.up_direct));
+				plane p_pl_right=new plane(global_p0,global_px,global_px.add(ci.selection_camera_result.right_direct));
+				double p_pl_up_dot=0,p_pl_right_dot=0;
+				if(!(p_pl_up.error_flag))
+					p_pl_up_dot=ci.selection_camera_result.to_me_direct.dot(new point(p_pl_up.A,p_pl_up.B,p_pl_up.C));
+				if(!(p_pl_right.error_flag))
+					p_pl_right_dot=ci.selection_camera_result.to_me_direct.dot(new point(p_pl_right.A,	p_pl_right.B,p_pl_right.C));
+				plane p_pl=(Math.abs(p_pl_up_dot)>=Math.abs(p_pl_right_dot))?p_pl_up:p_pl_right;
 				if(p_pl.error_flag)
 					return true;
-				
 				global_py=p_pl.insection_point(
 						ci.selection_camera_result.negative_matrix.multiply(new point(0,0,ci.parameter.depth+0)),
 						ci.selection_camera_result.negative_matrix.multiply(new point(0,0,ci.parameter.depth+1)));
@@ -339,9 +345,9 @@ public class distance_tag_array
 	public boolean test_location_modify(engine_kernel ek,client_information ci)
 	{
 		boolean ret_val=false;
-		distance_tag_item p;
-		for(int i=0,ni=distance_tag_array.length;i<ni;i++)
-			switch((p=distance_tag_array[i]).state) {
+		for(int i=0,ni=distance_tag_array.length;i<ni;i++) {
+			distance_tag_item p=distance_tag_array[i];
+			switch(p.state) {
 			default:
 				break;
 			case 1:
@@ -378,12 +384,18 @@ public class distance_tag_array
 				point global_px=comp_px.absolute_location.multiply(p.px);
 				point global_py=comp_p0.absolute_location.multiply(p.py);
 				double dy_distance=global_py.sub(global_p0).distance();
-				
-				plane p_pl=new plane(global_p0,global_px,global_px.add(ci.display_camera_result.up_direct));
+
+				plane p_pl_up	=new plane(global_p0,global_px,global_px.add(ci.selection_camera_result.up_direct));
+				plane p_pl_right=new plane(global_p0,global_px,global_px.add(ci.selection_camera_result.right_direct));
+				double p_pl_up_dot=0,p_pl_right_dot=0;
+				if(!(p_pl_up.error_flag))
+					p_pl_up_dot=ci.selection_camera_result.to_me_direct.dot(new point(p_pl_up.A,p_pl_up.B,p_pl_up.C));
+				if(!(p_pl_right.error_flag))
+					p_pl_right_dot=ci.selection_camera_result.to_me_direct.dot(new point(p_pl_right.A,	p_pl_right.B,p_pl_right.C));
+				plane p_pl=(Math.abs(p_pl_up_dot)>=Math.abs(p_pl_right_dot))?p_pl_up:p_pl_right;
 				if(p_pl.error_flag)
 					break;
 
-				ret_val=true;
 				p.location_version_p0=new_location_version_p0;
 				p.location_version_px=new_location_version_px;
 				p.location_version_tag=new_location_version_tag;
@@ -398,8 +410,11 @@ public class distance_tag_array
 				
 				p.py=comp_p0.caculate_negative_absolute_location().multiply(global_py);
 
+				ret_val=true;
+				
 				break;
 			}
+		}
 		return ret_val;
 	}
 }

@@ -408,7 +408,6 @@ function construct_event_listener(my_render)
 		if(typeof(ep.touchstart)=="function")
 			if(ep.touchstart(event,component_id,this.render))
 				return;
-
 	};
 	this.render.system_event_processor.systemtouchend	=function(event,render)						{return false;};
 	this.render.system_event_processor.pickuptouchend	=function(event,pickup_component_id,render)	{return false;};
@@ -566,7 +565,6 @@ function construct_event_listener(my_render)
 			this.render.pickup_array[event.keyCode-48]=this.render.pickup.fork();
 			break;
 		}
-
 		if(this.render.system_event_processor.systemkeyup(event,this.render))
 			return;
 		if(this.render.pickup.component_id>=0)

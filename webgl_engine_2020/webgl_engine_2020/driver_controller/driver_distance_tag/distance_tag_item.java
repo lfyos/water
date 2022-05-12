@@ -85,15 +85,6 @@ public class distance_tag_item
 			return null;
 		if((comp_tag=ek.component_cont.search_component(component_name_tag))==null)
 			return null;
-		
-		point global_p0=comp_p0.absolute_location.multiply(p0);
-		point global_px=comp_px.absolute_location.multiply(px);
-		point global_py=comp_p0.absolute_location.multiply(py);
-		double dy_length=global_py.sub(global_p0).distance();
-		global_py=new plane(global_p0,global_px).project_to_plane_location().multiply(global_py);
-		global_py=global_py.sub(global_p0).expand(dy_length).add(global_p0);
-		py=comp_p0.caculate_negative_absolute_location().multiply(global_py);
-
 		return new distance_tag_item(
 			comp_p0.component_id,comp_px.component_id,comp_tag.component_id,
 			type_id,	p0.x,p0.y,p0.z,		px.x,px.y,px.z,		py.x,py.y,py.z,

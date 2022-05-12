@@ -24,9 +24,14 @@
 					case 0:
 						return;
 					case 1:
-						var tar_id;
-						if((tag_id=prompt("输入尺寸标注ID"))!=null)
-							render.call_server_component("distance_tag_component","all",[["operation","clear"],["id",tag_id]]);
+						var par;
+						if((par=prompt("输入尺寸标注ID,取消删除最后一个标注"))==null)
+								par=[["operation","clear"]]
+						else if((par=par.trim()).length<0)
+								break;
+						else 
+								par=[["operation","clear"],["id",par]];
+						render.call_server_component("distance_tag_component","all",par);
 						break;
 					case 2:
 						render.call_server_component("distance_tag_component","all",[["operation","clear_all"]]);
