@@ -1,5 +1,5 @@
 package kernel_component;
-import kernel_common_class.change_name;
+
 import kernel_file_manager.file_reader;
 
 public class component_core_1 extends component_core_0
@@ -22,9 +22,9 @@ public class component_core_1 extends component_core_0
 			uniparameter.effective_selected_flag|=parent.uniparameter.effective_selected_flag;
 	}
 	public component_core_1(String token_string,file_reader fr,boolean part_list_flag,
-			boolean normalize_location_flag,change_name change_part_name,component_construction_parameter ccp)
+			boolean normalize_location_flag,component_construction_parameter ccp)
 	{
-		super(token_string,fr,part_list_flag,normalize_location_flag,change_part_name,ccp);
+		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
 		
 		component_id=-1;
 		parent_component_id=-1;

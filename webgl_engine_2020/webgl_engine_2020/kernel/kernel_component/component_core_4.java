@@ -3,13 +3,11 @@ package kernel_component;
 import java.io.File;
 
 import kernel_part.part;
-import kernel_common_class.change_name;
 import kernel_common_class.debug_information;
 import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.travel_through_directory;
 import kernel_network.client_request_response;
-import kernel_part.part_container_for_part_search;
 
 public class component_core_4 extends component_core_3
 {
@@ -124,8 +122,7 @@ public class component_core_4 extends component_core_3
 				"my_file_name:	"+my_file_name+"component_name:	"+component_name);
 		return null;
 	}
-	private String [][]part_driver_mount(file_reader fr,
-			engine_kernel ek,client_request_response request_response)
+	private String [][]part_driver_mount(file_reader fr,engine_kernel ek,client_request_response request_response)
 	{
 		String ret_val[][];
 		if(driver_number()<=0)  {
@@ -162,9 +159,7 @@ public class component_core_4 extends component_core_3
 		}
 		return ret_val;
 	}
-	private String [][]external_part_driver_mount(change_name change_part_name,
-			file_reader fr,part_container_for_part_search pcfps,
-			engine_kernel ek,client_request_response request_response)
+	private String [][]external_part_driver_mount(file_reader fr,component_construction_parameter ccp)
 	{
 		String ret_val[][],external_part_name;
 		if((external_part_name=fr.get_string())==null) {
@@ -174,10 +169,10 @@ public class component_core_4 extends component_core_3
 			return null;
 		}
 		part par[];
-		String search_part_name=change_part_name.search_change_name(external_part_name,external_part_name);
-		if((par=pcfps.search_part(search_part_name))==null){
-			search_part_name=change_part_name.search_change_name(search_part_name,search_part_name);
-			par=pcfps.search_part(search_part_name);
+		String search_part_name=ccp.change_part_name.search_change_name(external_part_name,external_part_name);
+		if((par=ccp.pcfps.search_part(search_part_name))==null){
+			search_part_name=ccp.change_part_name.search_change_name(search_part_name,search_part_name);
+			par=ccp.pcfps.search_part(search_part_name);
 		}
 		if(par==null) {
 			debug_information.println(
@@ -198,7 +193,7 @@ public class component_core_4 extends component_core_3
 			return null;
 		}
 		try {
-			ret_val=par[0].driver.assemble_file_name_and_file_charset(fr,par[0],ek,request_response);
+			ret_val=par[0].driver.assemble_file_name_and_file_charset(fr,par[0],ccp.ek,ccp.request_response);
 		}catch(Exception e) {
 			debug_information.println(
 				"external_part_driver driver assemble_file_name_and_file_charset execption:	",
@@ -220,9 +215,7 @@ public class component_core_4 extends component_core_3
 		}
 		return ret_val;
 	}
-	private void append_children(String token_string,file_reader fr,
-			boolean part_list_flag,boolean normalize_location_flag,
-			change_name change_part_name,component_construction_parameter ccp)
+	private void process_component_operation(String token_string,file_reader fr,component_construction_parameter ccp)
 	{
 		for(children=null;!(fr.eof());){
 			String str,assemble_file_name_array[][]=null;
@@ -245,11 +238,9 @@ public class component_core_4 extends component_core_3
 					component my_children[]=new component[create_child_number];
 					for(int i=0;i<create_child_number;i++)
 						my_children[i]=new component(token_string,fr,
-								part_list_flag,normalize_location_flag,change_part_name,ccp);
+								uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp);
 					append_child(my_children);
 				}
-				append_child(ccp.clsc.get_source_item(component_name,
-						part_list_flag,normalize_location_flag,change_part_name,ccp));
 				return;
 			case "token_program":
 			case "file_program":
@@ -257,16 +248,16 @@ public class component_core_4 extends component_core_3
 				initialization.create_initialization(fr,str);
 				continue;
 			case "part_list":
-				part_list_flag=true;
+				uniparameter.part_list_flag=true;
 				continue;
 			case "not_part_list":
-				part_list_flag=false;
+				uniparameter.part_list_flag=false;
 				continue;
 			case "normalize_location":
-				normalize_location_flag=true;
+				uniparameter.normalize_location_flag=true;
 				continue;
 			case "not_normalize_location":
-				normalize_location_flag=false;
+				uniparameter.normalize_location_flag=false;
 				continue;
 			case "blank_token_string":
 				token_string="";
@@ -278,15 +269,6 @@ public class component_core_4 extends component_core_3
 			case "absolute_token_string":
 				if((str=fr.get_string())!=null)
 					token_string=str;
-				continue;
-			case "change_part_name":
-				String file_name_array[]=new String[1];
-				if((file_name_array[0]=fr.get_string())==null)
-					file_name_array=new String[0];
-				else if(file_name_array[0].length()<=0)
-					file_name_array=new String[0];
-				change_part_name=new change_name(file_name_array,
-					ccp.ek.scene_par.change_part_string,fr.get_charset());
 				continue;
 			case "component_mount":
 				ccp.clsc.add_source_item(fr.get_string(),token_string, 
@@ -346,8 +328,7 @@ public class component_core_4 extends component_core_3
 				assemble_file_name_array=part_driver_mount(fr,ccp.ek,ccp.request_response);
 				break;
 			case "external_part_driver_mount":
-				assemble_file_name_array=external_part_driver_mount(
-						change_part_name,fr,ccp.pcfps,ccp.ek,ccp.request_response);
+				assemble_file_name_array=external_part_driver_mount(fr,ccp);
 				break;
 			}
 			if(assemble_file_name_array==null)
@@ -402,7 +383,7 @@ public class component_core_4 extends component_core_3
 					component this_child_comp=null;
 					try{
 						this_child_comp=new component(token_string,mount_fr,
-							part_list_flag,normalize_location_flag,change_part_name,ccp);
+							uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp);
 					}catch(Exception e) {
 						this_child_comp=null;
 						debug_information.println("Create scene from ",afc.file_name_array[j]+" fail");
@@ -415,23 +396,28 @@ public class component_core_4 extends component_core_3
 				}
 			}
 		}
-		append_child(ccp.clsc.get_source_item(component_name,
-				part_list_flag,normalize_location_flag,change_part_name,ccp));
 	}
-	void append_component(change_name change_part_name,component_construction_parameter ccp)
+	void append_component(component_construction_parameter ccp)
 	{
 		if(ccp.clsc.get_source_item_number()>0){
 			append_child(ccp.clsc.get_source_item(component_name,
-					uniparameter.part_list_flag,uniparameter.normalize_location_flag,change_part_name,ccp));
+					uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp));
 			for(int i=0,ni=children_number();i<ni;i++)
-				children[i].append_component(change_part_name,ccp);
+				children[i].append_component(ccp);
 		}
 	}
 	public component_core_4(String token_string,file_reader fr,
-			boolean part_list_flag,boolean normalize_location_flag,
-			change_name change_part_name,component_construction_parameter ccp)
+			boolean part_list_flag,boolean normalize_location_flag,component_construction_parameter ccp)
 	{
-		super(token_string,fr,part_list_flag,normalize_location_flag,change_part_name,ccp);
-		append_children(token_string,fr,part_list_flag,normalize_location_flag,change_part_name,ccp);
+		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
+		
+		process_component_operation(token_string,fr,ccp);
+		
+		if(uniparameter.normalize_location_flag)
+			if(!normalize_location_flag)
+				relative_location=relative_location.normalize();
+		
+		append_child(ccp.clsc.get_source_item(component_name,
+				uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp));
 	}
 }

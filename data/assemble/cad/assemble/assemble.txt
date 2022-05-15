@@ -7,17 +7,16 @@
 		/*	2:location		*/	relative_file_location	coordinate
 		
 			part_list		normalize_location
-			environment_sub_directory_mount		liufuyan_sigma_directory	assemble.assemble
+			environment_sub_directory_mount			liufuyan_sigma_directory	assemble.assemble
 			
-			not_part_list	not_normalize_location
-			environment_sub_directory_mount		liufuyan_sigma_directory	movement.assemble
-		
 		/*	2:child_number	*/	0
 		
 		/*	2:name			*/	not_part_list_component
 		/*	2:type			*/	undefined_part
 		/*	2:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
-				not_part_list	mount	interface.assemble
+			not_part_list	not_normalize_location
+			environment_sub_directory_mount			liufuyan_sigma_directory	movement.assemble
+			mount									interface.assemble
 		/*	2:child_number	*/	0
 		
 		/*	2:name			*/	ground_grid_component
@@ -25,7 +24,7 @@
 		/*	2:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
 				/*	root_component_name		*/		part_list_component
 				/*	init_on_off_flag		*/		false
-
+				
 				not_part_list
 		/*	2:child_number	*/	0
 		
