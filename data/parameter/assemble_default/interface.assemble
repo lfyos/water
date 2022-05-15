@@ -2,10 +2,12 @@
 	/* 1type		*/         undefined_part
 	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 	
+		not_part_list
+		
 		file_program	initialization
 	
-		not_part_list		mount		common.assemble
-		not_part_list		mount		background.assemble
-		not_part_list		mount		menu\root_menu.assemble
+		mount			common.assemble
+		mount			background.assemble
+		mount			menu\root_menu.assemble
 
 	/* 1children number */	0

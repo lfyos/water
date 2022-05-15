@@ -355,61 +355,29 @@ public class distance_tag_array
 				component comp_p0 =ek.component_cont.get_component(p.p0_component_id);
 				component comp_px =ek.component_cont.get_component(p.px_component_id);
 				component comp_tag=ek.component_cont.get_component(p.tag_component_id);
-				
 				component comp_extra_p0=null;
 				component comp_extra_px=null;
-				
-				long new_location_version_p0	=comp_p0.get_absolute_location_version();
-				long new_location_version_px	=comp_px.get_absolute_location_version();
-				long new_location_version_tag	=comp_tag.get_absolute_location_version();
-				long new_location_version_extra_p0=0;
-				long new_location_version_extra_px=0;
 				if(p.extra_distance_tag!=null) {
 					comp_extra_p0 =ek.component_cont.get_component(p.extra_distance_tag.p0_component_id);
 					comp_extra_px =ek.component_cont.get_component(p.extra_distance_tag.px_component_id);
-					new_location_version_extra_p0=comp_extra_p0.get_absolute_location_version();
-					new_location_version_extra_px=comp_extra_px.get_absolute_location_version();
 				}
 
-				if(p.location_version_p0>=new_location_version_p0)
-					if(p.location_version_px>=new_location_version_px)
-						if(p.location_version_tag>=new_location_version_tag) {
+				if(p.location_version_p0>=comp_p0.get_absolute_location_version())
+					if(p.location_version_px>=comp_px.get_absolute_location_version())
+						if(p.location_version_tag>=comp_tag.get_absolute_location_version()) {
 							if(p.extra_distance_tag==null)
 								break;
-							if(p.extra_distance_tag.location_version_p0>=new_location_version_extra_p0)
-								if(p.extra_distance_tag.location_version_px>=new_location_version_extra_px)
+							if(p.extra_distance_tag.location_version_p0>=comp_extra_p0.get_absolute_location_version())
+								if(p.extra_distance_tag.location_version_px>=comp_extra_px.get_absolute_location_version())
 									break;
 						}
-				point global_p0=comp_p0.absolute_location.multiply(p.p0);
-				point global_px=comp_px.absolute_location.multiply(p.px);
-				point global_py=comp_p0.absolute_location.multiply(p.py);
-				double dy_distance=global_py.sub(global_p0).distance();
-
-				plane p_pl_up	=new plane(global_p0,global_px,global_px.add(ci.selection_camera_result.up_direct));
-				plane p_pl_right=new plane(global_p0,global_px,global_px.add(ci.selection_camera_result.right_direct));
-				double p_pl_up_dot=0,p_pl_right_dot=0;
-				if(!(p_pl_up.error_flag))
-					p_pl_up_dot=ci.selection_camera_result.to_me_direct.dot(new point(p_pl_up.A,p_pl_up.B,p_pl_up.C));
-				if(!(p_pl_right.error_flag))
-					p_pl_right_dot=ci.selection_camera_result.to_me_direct.dot(new point(p_pl_right.A,	p_pl_right.B,p_pl_right.C));
-				plane p_pl=(Math.abs(p_pl_up_dot)>=Math.abs(p_pl_right_dot))?p_pl_up:p_pl_right;
-				if(p_pl.error_flag)
-					break;
-
-				p.location_version_p0=new_location_version_p0;
-				p.location_version_px=new_location_version_px;
-				p.location_version_tag=new_location_version_tag;
+				p.location_version_p0=comp_p0.get_absolute_location_version();
+				p.location_version_px=comp_px.get_absolute_location_version();
+				p.location_version_tag=comp_tag.get_absolute_location_version();
 				if(p.extra_distance_tag!=null){
-					p.extra_distance_tag.location_version_p0=new_location_version_extra_p0;
-					p.extra_distance_tag.location_version_px=new_location_version_extra_px;
+					p.extra_distance_tag.location_version_p0=comp_extra_p0.get_absolute_location_version();
+					p.extra_distance_tag.location_version_px=comp_extra_px.get_absolute_location_version();
 				}
-				
-				global_py=p_pl.project_to_plane_location().multiply(global_py);
-				global_py=new plane(global_p0,global_px).project_to_plane_location().multiply(global_py);
-				global_py=global_py.sub(global_p0).expand(dy_distance).add(global_p0);
-				
-				p.py=comp_p0.caculate_negative_absolute_location().multiply(global_py);
-
 				ret_val=true;
 				
 				break;
