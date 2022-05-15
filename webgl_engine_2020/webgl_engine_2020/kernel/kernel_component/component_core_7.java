@@ -31,8 +31,7 @@ public class component_core_7 extends component_core_6
 		}
 		return effective_display_flag[parameter_channel_id]^old_effective_display_flag;
 	}
-	public void modify_display_flag(int parameter_channel_id[],
-		boolean new_display_flag,component_container component_cont)
+	public void modify_display_flag(int parameter_channel_id[],boolean new_display_flag,component_container component_cont)
 	{
 		int buffer_channel_number=0,buffer_channel_id[]=new int[parameter_channel_id.length];
 		for(int i=0,ni=parameter_channel_id.length;i<ni;i++)
@@ -42,7 +41,7 @@ public class component_core_7 extends component_core_6
 			}
 		if(buffer_channel_number<=0)
 			return;
-		for(component p=(component)this;p!=null;) {
+		for(component p=(component)this;p!=null;p=component_cont.get_component(p.parent_component_id)) {
 			int modify_number=0;
 			for(int i=0;i<buffer_channel_number;i++){
 				if(p.caculate_effective_display_flag(buffer_channel_id[i]))
@@ -50,7 +49,8 @@ public class component_core_7 extends component_core_6
 				if(p.caculate_assembly_flag(buffer_channel_id[i]))
 					modify_number++;
 			}
-			p=(modify_number<=0)?null:component_cont.get_component(p.parent_component_id);
+			if(modify_number<=0)
+				break;
 		}
 	}
 	public component_core_7(String token_string,file_reader fr,boolean part_list_flag,

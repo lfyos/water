@@ -1,6 +1,8 @@
 package kernel_engine;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.nio.charset.Charset;
 
 import kernel_common_class.change_name;
@@ -16,6 +18,9 @@ public class system_parameter
 	
 	public String local_data_charset,network_data_charset;
 	public String text_class_charset,text_jar_file_charset,js_class_charset,js_jar_file_charset;
+	
+	public boolean system_terminate_flag;
+	
 	public String user_file_name,shader_file_name,default_parameter_directory;
 	
 	public int normal_loading_number,max_loading_number,max_material_id;
@@ -56,6 +61,9 @@ public class system_parameter
 		text_jar_file_charset			=new String(sp.text_jar_file_charset);
 		js_class_charset				=new String(sp.js_class_charset);
 		js_jar_file_charset				=new String(sp.js_jar_file_charset);
+		
+		system_terminate_flag			=sp.system_terminate_flag;
+		
 		user_file_name					=new String(sp.user_file_name);
 		shader_file_name				=new String(sp.shader_file_name);
 		default_parameter_directory		=new String(sp.default_parameter_directory);
@@ -123,6 +131,7 @@ public class system_parameter
 			debug_information.println("data_configure_file_name is ",data_configure_file_name);
 			debug_information.println("proxy_configure_file_name is ",proxy_configure_file_name);
 		}
+		
 		if((local_data_charset=f.get_string())==null)
 			local_data_charset=Charset.defaultCharset().name();
 		else if(local_data_charset.compareTo("default_charset")==0)
@@ -162,7 +171,16 @@ public class system_parameter
 			js_jar_file_charset=Charset.defaultCharset().name();
 		if(js_jar_file_charset.compareTo("default_charset")==0)
 			js_jar_file_charset=Charset.defaultCharset().name();
-
+		
+		system_terminate_flag=false;
+		try{
+			SimpleDateFormat ft=new SimpleDateFormat(f.get_string());
+			if(new Date().getTime()>ft.parse(f.get_string()).getTime())
+				system_terminate_flag=true;
+		}catch(Exception e){
+			;
+		}
+		
 		if((user_file_name=f.get_string())==null)
 			user_file_name="";
 		else
