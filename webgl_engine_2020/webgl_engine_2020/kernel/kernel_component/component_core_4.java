@@ -412,12 +412,10 @@ public class component_core_4 extends component_core_3
 		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
 		
 		process_component_operation(token_string,fr,ccp);
-		
-		if(uniparameter.normalize_location_flag)
-			if(!normalize_location_flag)
-				relative_location=relative_location.normalize();
-		
-		append_child(ccp.clsc.get_source_item(component_name,
+		if(ccp.clsc.get_source_item_number()>0)
+			append_child(ccp.clsc.get_source_item(component_name,
 				uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp));
+		if(uniparameter.normalize_location_flag)
+			relative_location=relative_location.normalize();
 	}
 }

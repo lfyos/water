@@ -97,5 +97,7 @@ public class component_core_2 extends component_core_1
 		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
 		
 		relative_location=input_location(fr,ccp.request_response);
+		if(uniparameter.normalize_location_flag)
+			relative_location=relative_location.normalize();
 	}
 }
