@@ -4,7 +4,7 @@ import kernel_file_manager.file_reader;
 
 public class component_core_11 extends component_core_10
 {
-public boolean selected_component_family_flag,can_display_assembly_set_flag;
+	public boolean selected_component_family_flag,can_display_assembly_set_flag;
 	
 	private boolean can_display_assembly_flag[];
 	

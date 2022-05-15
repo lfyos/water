@@ -4,7 +4,7 @@ import kernel_file_manager.file_reader;
 
 public class component_core_12  extends component_core_11
 {
-public String component_directory_name,component_file_name,component_charset;
+	public String component_directory_name,component_file_name,component_charset;
 	
 	public void destroy()
 	{

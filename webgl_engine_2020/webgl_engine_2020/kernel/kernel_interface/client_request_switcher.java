@@ -115,10 +115,10 @@ public class client_request_switcher
 			}
 		case "javascript":
 			ret_val.ecr=program_javascript.create(request_response,
-					Long.toString(system_par.file_buffer_expire_time_length),
-					system_par.create_engine_sleep_time_length_scale,
-					system_par.create_engine_sleep_time_length,
-					system_par.create_engine_max_sleep_time_length);
+				Long.toString(system_par.file_buffer_expire_time_length),
+				system_par.create_engine_sleep_time_length_scale,
+				system_par.create_engine_sleep_time_length,
+				system_par.create_engine_max_sleep_time_length);
 			break;
 		case "readme":
 			ret_val.ecr=download_readme_file.download_driver_readme(request_response,
@@ -194,7 +194,10 @@ public class client_request_switcher
 		if(system_par==null)
 			create_system_parameter(network_implementor,
 				data_configure_environment_variable,proxy_configure_environment_variable);
-	
+		
+		if(system_par.system_terminate_flag)
+			return;
+		
 		client_request_response request_response=new client_request_response(
 			system_par.network_data_charset,network_implementor);
 		

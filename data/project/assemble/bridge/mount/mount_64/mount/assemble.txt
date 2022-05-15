@@ -12,6 +12,8 @@
 				part_list			mount		六四梁整体架设第二个桥墩之最高层.SLDASM.assemble
 				part_list			mount		六四梁整体架三片48米三角.SLDASM.assemble
 				part_list			mount		六四梁整体架设所有支撑垫梁.SLDASM.assemble
+				
+				part_list			mount		路基_轨枕_铁轨之最高层_64.SLDASM.assemble
 
 		/*	2:child_number	*/	0
 		
@@ -21,6 +23,4 @@
 				not_part_list		mount	interface.assemble
 				not_part_list		mount	movement.assemble
 				not_part_list		mount	water.assemble
-				not_part_list		mount	路基_轨枕_铁轨之最高层_64.SLDASM.assemble
-				
 		/*	2:child_number	*/	0
