@@ -76,7 +76,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	gl.uniformMatrix4fv(shader_program.color_par_uniform,false,new Float32Array(part_material[0].color));
 
 	for(var i=0,ni=component_data_array.length;i<ni;i++){
-		var buffer_id	=component_data_array[i];
+		var buffer_id	=component_data_array[i][0];
+		var display_flag=component_data_array[i][1];
 		var component_id=part_component_id_and_driver_id[buffer_id][0];
 		var driver_id	=part_component_id_and_driver_id[buffer_id][1];
 		var model_matrix_data=component_location.get_component_location(component_id);
@@ -161,6 +162,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		
 		var my_data_buffer=data_buffer[buffer_id][0];
 		for(var j=0,nj=my_data_buffer.length;j<nj;j++){
+			if(display_flag[j]<=0)
+				continue;
 			if(method_id!=0)
 				if(my_data_buffer[j][0]>0)
 					continue;

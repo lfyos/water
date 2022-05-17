@@ -12,15 +12,18 @@ import kernel_common_class.jason_string;
 public class extended_instance_driver extends instance_driver
 {
 	private distance_tag_array tag_array;
+	private boolean display_flag[];
 
 	public void destroy()
 	{
 		super.destroy();
+		display_flag=null;
 	}
 	public extended_instance_driver(component my_comp,int my_driver_id,distance_tag_array my_tag_array)
 	{
 		super(my_comp,my_driver_id);
 		tag_array=my_tag_array;
+		display_flag=new boolean[] {};
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
@@ -30,17 +33,48 @@ public class extended_instance_driver extends instance_driver
 	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
 			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
 	{
+		if(cr.target.selection_target_flag)
+			return false;
 		if(!(cr.target.main_display_target_flag))
-			return cr.target.selection_target_flag?false:true;
+			return true;
+		
 		if(tag_array.test_location_modify(ek,ci))
 			comp.driver_array[driver_id].update_component_parameter_version();
+		
+		boolean do_update_flag=false;
+		if(tag_array.distance_tag_array.length!=display_flag.length) {
+			display_flag=new boolean[tag_array.distance_tag_array.length];
+			for(int i=0,ni=display_flag.length;i<ni;i++)
+				display_flag[i]=true;
+			do_update_flag=true;
+		}
+		for(int i=0,ni=tag_array.distance_tag_array.length;i<ni;i++){
+			component distance_comp;
+			boolean new_display_flag=false;
+			distance_tag_item p=tag_array.distance_tag_array[i];
+			if((distance_comp=ek.component_cont.get_component(p.p0_component_id))!=null)
+				if(distance_comp.get_effective_display_flag(parameter_channel_id))
+					if((distance_comp=ek.component_cont.get_component(p.px_component_id))!=null)
+						if(distance_comp.get_effective_display_flag(parameter_channel_id))
+							new_display_flag=true;
+			if(display_flag[i]^new_display_flag){
+				display_flag[i]=new_display_flag;
+				do_update_flag=true;
+			}
+		}
+		if(do_update_flag)
+			update_component_render_version(0);
 		return false;
 	}
 	public void create_render_parameter(
 			int render_buffer_id,int parameter_channel_id,int data_buffer_id,
 			engine_kernel ek,client_information ci,camera_result cr)
 	{
-		ci.request_response.print(data_buffer_id);
+		ci.request_response.print("[",data_buffer_id).print(",[");
+		for(int i=0,ni=tag_array.distance_tag_array.length;i<ni;i++)
+			ci.request_response.print((i<=0)?"":",",
+					(i>=display_flag.length)?"1":display_flag[i]?"1":"0");
+		ci.request_response.print("]]");
 	}
 	public void create_component_parameter(engine_kernel ek,client_information ci)
 	{
