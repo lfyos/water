@@ -40,13 +40,11 @@ public class extended_instance_driver extends instance_driver
 		
 		if(tag_array.test_location_modify(ek,ci))
 			comp.driver_array[driver_id].update_component_parameter_version();
-		
-		boolean do_update_flag=false;
 		if(tag_array.distance_tag_array.length!=display_flag.length) {
 			display_flag=new boolean[tag_array.distance_tag_array.length];
 			for(int i=0,ni=display_flag.length;i<ni;i++)
 				display_flag[i]=true;
-			do_update_flag=true;
+			update_component_render_version(0);
 		}
 		for(int i=0,ni=tag_array.distance_tag_array.length;i<ni;i++){
 			component distance_comp;
@@ -59,11 +57,9 @@ public class extended_instance_driver extends instance_driver
 							new_display_flag=true;
 			if(display_flag[i]^new_display_flag){
 				display_flag[i]=new_display_flag;
-				do_update_flag=true;
+				update_component_render_version(0);
 			}
 		}
-		if(do_update_flag)
-			update_component_render_version(0);
 		return false;
 	}
 	public void create_render_parameter(
