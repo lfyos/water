@@ -73,22 +73,21 @@ public class extended_instance_driver extends instance_driver
 	{
 		ci.request_response.print("[");
 		String pre_str="";
-		for(int i=0,ni=cmc.component_marker_array.length;i<ni;i++) {
-			if(!(display_flag[i]))
-				continue;
-			component_marker p=cmc.component_marker_array[i];
-			component my_comp=ek.component_cont.get_component(p.marker_component_id);
-			if(my_comp==null)
-				continue;
-			ci.request_response.print(pre_str).
-				print("[",my_comp.component_id).
-				print(",",p.marker_x).
-				print(",",p.marker_y).
-				print(",",p.marker_z).
-				print(",",jason_string.change_string(p.marker_text)).
-				print(",-1,-1]");
-			pre_str=",";
-		}
+		for(int i=0,ni=cmc.component_marker_array.length;i<ni;i++)
+			if(display_flag[i]) {
+				component_marker p=cmc.component_marker_array[i];
+				component my_comp=ek.component_cont.get_component(p.marker_component_id);
+				if(my_comp!=null){
+					ci.request_response.print(pre_str).
+						print("[",my_comp.component_id).
+						print(",",p.marker_x).
+						print(",",p.marker_y).
+						print(",",p.marker_z).
+						print(",",jason_string.change_string(p.marker_text)).
+						print(",-1,-1]");
+					pre_str=",";
+				}
+			}
 		ci.request_response.print("]");
 	}
 	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)

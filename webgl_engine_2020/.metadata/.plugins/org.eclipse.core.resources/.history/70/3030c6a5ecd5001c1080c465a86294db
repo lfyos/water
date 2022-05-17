@@ -41,7 +41,7 @@ public class component_marker_container
 		write(ek);
 		return;
 	}
-	public void clear_component_marker(long marker_id,engine_kernel ek)
+	public void clear_component_marker(long marker_id)
 	{
 		boolean done_flag=false;
 		component_marker bak[]=component_marker_array;
@@ -52,19 +52,18 @@ public class component_marker_container
 			else
 				component_marker_array[j++]=bak[i];
 		if(done_flag)
-			write(ek);
+			write();
 		else
 			component_marker_array=bak;
 		return;
 	}
-	public void clear_all_component_marker(engine_kernel ek)
+	public void clear_all_component_marker()
 	{
 		component_marker_array=new component_marker[0];
-		write(ek);
+		write();
 		return;
 	}
-	public long  append_component_marker(engine_kernel ek,
-			component my_mark_comp,String my_marker_text,
+	public long  append_component_marker(component my_mark_comp,String my_marker_text,
 			double my_marker_x,double my_marker_y,double my_marker_z)
 	{
 		if((my_mark_comp==null)||(my_marker_text==null))
@@ -77,7 +76,7 @@ public class component_marker_container
 			component_marker_array[i]=bak[i];
 		component_marker_array[bak.length]=new component_marker(
 				my_mark_comp,my_marker_text,my_marker_x,my_marker_y,my_marker_z);
-		write(ek);
+		write();
 		return component_marker_array[bak.length].marker_id;
 	}
 	public component_marker_container(

@@ -16,13 +16,11 @@ public class extended_instance_driver extends instance_driver
 {
 	private component_marker_container cmc;
 	private int modifier_container_id;
-	private boolean display_flag[];
 	
 	public void destroy()
 	{
 		super.destroy();
 		cmc=null;
-		display_flag=null;
 	}
 	public extended_instance_driver(component my_comp,int my_driver_id,
 			component_marker_container my_cmc,int my_modifier_container_id)
@@ -30,7 +28,6 @@ public class extended_instance_driver extends instance_driver
 		super(my_comp,my_driver_id);
 		cmc=my_cmc;
 		modifier_container_id=my_modifier_container_id;
-		display_flag=new boolean[] {};
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
@@ -38,30 +35,7 @@ public class extended_instance_driver extends instance_driver
 	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
 			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
 	{
-		if(cr.target.selection_target_flag)
-			return false;
-		if(!(cr.target.main_display_target_flag))
-			return true;
-		if(cmc.component_marker_array.length!=display_flag.length) {
-			display_flag=new boolean[cmc.component_marker_array.length];
-			for(int i=0,ni=display_flag.length;i<ni;i++)
-				display_flag[i]=true;
-			update_component_parameter_version(0);
-		}
-		for(int i=0,ni=cmc.component_marker_array.length;i<ni;i++){
-			component my_comp=ek.component_cont.get_component(
-					cmc.component_marker_array[i].marker_component_id);
-			if(my_comp==null) {
-				display_flag[i]=false;
-				continue;
-			}
-			boolean new_display_flag=my_comp.get_effective_display_flag(parameter_channel_id);
-			if(!(display_flag[i]^new_display_flag))
-				continue;
-			display_flag[i]=new_display_flag;
-			update_component_parameter_version(0);
-		}
-		return false;
+		return (cr.target.main_display_target_flag||cr.target.selection_target_flag)?false:true;
 	}
 	public void create_render_parameter(
 			int render_buffer_id,int parameter_channel_id,int data_buffer_id,
@@ -74,8 +48,6 @@ public class extended_instance_driver extends instance_driver
 		ci.request_response.print("[");
 		String pre_str="";
 		for(int i=0,ni=cmc.component_marker_array.length;i<ni;i++) {
-			if(!(display_flag[i]))
-				continue;
 			component_marker p=cmc.component_marker_array[i];
 			component my_comp=ek.component_cont.get_component(p.marker_component_id);
 			if(my_comp==null)
