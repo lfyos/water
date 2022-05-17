@@ -96,8 +96,8 @@
 						case 115://F4
 							render.system_call_processor.turnonoff_sound(false);
 							break;
-
 						case 116://F5
+							render.highlight=render.pickup.fork();
 							break;
 						case 117://F6
 							break;
@@ -110,10 +110,8 @@
 						case 121://F10
 							break;
 						case 122://F11
-							render.highlight=render.pickup.fork();
 							break;
 						case 123://F12
-							render.system_call_processor.set_menu_show("交互界面主菜单");
 							break;
 						case 49://1
 						case 50://2

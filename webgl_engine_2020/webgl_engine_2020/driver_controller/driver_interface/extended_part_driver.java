@@ -19,9 +19,11 @@ import kernel_transformation.point;
 
 public class extended_part_driver extends part_driver
 {
-	public extended_part_driver()
+	private boolean always_show_flag;
+	public extended_part_driver(boolean my_always_show_flag)
 	{
 		super();
+		always_show_flag=my_always_show_flag;
 	}
 	public void destroy()
 	{	
@@ -37,7 +39,7 @@ public class extended_part_driver extends part_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver();
+		return new extended_part_driver(always_show_flag);
 	}
 	public int caculate_material_id(
 			part p,String type_str,int body_id,int face_id,int loop_id,int edge_id,
@@ -63,7 +65,8 @@ public class extended_part_driver extends part_driver
 	{
 		return new extended_component_driver(my_component_part,
 				fr.get_boolean(),fr.get_int(),fr.get_double(),fr.get_double(),
-				fr.directory_name+file_reader.separator(fr.get_string()),fr.get_charset());
+				fr.directory_name+file_reader.separator(fr.get_string()),
+				fr.get_charset(),always_show_flag);
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int loop_id,int edge_id,int point_id,

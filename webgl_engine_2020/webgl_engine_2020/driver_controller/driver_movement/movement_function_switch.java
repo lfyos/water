@@ -1179,6 +1179,8 @@ public class movement_function_switch
 		switch(str){
 		case "stop":
 			ek.modifier_cont[manager.config_parameter.modifier_container_id].clear_modifier(ek,ci);
+			manager.movement_start(ek.modifier_cont[manager.config_parameter.modifier_container_id],
+					manager.parameter.current_movement_id,ek.component_cont,true,switch_time_length);
 			update_component_location(ek.component_cont.root_component);
 			break;
 		case "continue":

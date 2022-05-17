@@ -15,8 +15,8 @@ public class extended_instance_driver extends instance_driver
 	private boolean menu_type;
 	private int level;
 	private String file_name,file_charset;
-	private double x0,y0,dx,dy;
-	private boolean show_hide_flag;
+	private double x0,y0,dx,dy,aspect;
+	private boolean hide_show_flag,not_always_show_flag;
 	
 	public void destroy()
 	{
@@ -25,7 +25,7 @@ public class extended_instance_driver extends instance_driver
 	}
 	public extended_instance_driver(component my_comp,int my_driver_id,
 			boolean my_menu_type,int my_level,double my_dx,double my_dy,
-			String my_file_name,String my_file_charset)
+			String my_file_name,String my_file_charset,boolean always_show_flag)
 	{
 		super(my_comp,my_driver_id);
 		
@@ -33,13 +33,15 @@ public class extended_instance_driver extends instance_driver
 		level=my_level;
 		file_name=my_file_name;
 		file_charset=my_file_charset;
+		not_always_show_flag=always_show_flag?false:true;
 		
 		x0=0;
 		y0=0;
 		dx=my_dx;
 		dy=my_dy;
 		
-		show_hide_flag=true;
+		aspect=1.0;
+		hide_show_flag=true;
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
@@ -53,12 +55,17 @@ public class extended_instance_driver extends instance_driver
 	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
 			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
 	{
-		if(show_hide_flag)
+		if(hide_show_flag&&not_always_show_flag)
 			return true;
-		if(cr.target.main_display_target_flag) 
-			return false;
 		if(cr.target.selection_target_flag)
 			return false;
+		if(cr.target.main_display_target_flag){
+			if(Math.abs(ci.parameter.aspect-aspect)>const_value.min_value){
+				aspect=ci.parameter.aspect;
+				update_component_parameter_version(0);
+			}
+			return false;
+		}
 		return true;
 	}
 	public void create_render_parameter(
@@ -82,6 +89,7 @@ public class extended_instance_driver extends instance_driver
 	private void get_parameter(engine_kernel ek,client_information ci)
 	{
 		String str;
+		
 		if(ci.display_camera_result==null) 
 			return;
 		double p[];
@@ -121,6 +129,8 @@ public class extended_instance_driver extends instance_driver
 		if((str=ci.request_response.get_parameter("all_in_view"))!=null)
 			switch(str.trim().toLowerCase()){
 			case "all_in_view":
+			case "yes":
+			case "true":
 				if((x0+dx)>=1)
 					x0=1.0-dx-const_value.min_value;
 				if(x0<=-1)
@@ -141,10 +151,10 @@ public class extended_instance_driver extends instance_driver
 		case "file":
 			return menu_type?null:new String[]{file_name,file_charset};
 		case "hide":
-			show_hide_flag=true;
+			hide_show_flag=true;
 			return null;
 		case "show":
-			show_hide_flag=false;
+			hide_show_flag=false;
 			get_parameter(ek,ci);
 			update_component_parameter_version(0);
 			return null;
