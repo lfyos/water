@@ -84,7 +84,7 @@ public class extended_part_driver extends part_driver
 	public String[] response_event(part p,engine_kernel ek,client_information ci)
 	{
 //		return super.response_event(p,ek,ci);
-		String directory_name,file_name,path_name_1,path_name_2;
+		String directory_name,file_name,path_name;
 		if((file_name=ci.request_response.get_parameter("file"))==null)
 			return null;
 		try{
@@ -96,16 +96,12 @@ public class extended_part_driver extends part_driver
 		
 		file_name=file_reader.separator(file_name);
 		directory_name=new File(p.directory_name+p.material_file_name).getParent();
-		path_name_1=file_reader.separator(directory_name)+File.separator+file_name;
-		if(new File(path_name_1).exists())
-			return new String[]{path_name_1,p.file_charset};
-		
-		path_name_2=ek.system_par.proxy_par.proxy_data_root_directory_name+file_name;
-		if(new File(path_name_2).exists())
-			return new String[]{path_name_2,p.file_charset};
-		
-		debug_information.println("File 1 does NOT exist :	",path_name_1);
-		debug_information.println("File 2 does NOT exist :	",path_name_2);
+		path_name=file_reader.separator(directory_name)+File.separator+file_name;
+		if(new File(path_name).exists())
+			return new String[]{path_name,p.file_charset};
+		path_name=ek.system_par.proxy_par.proxy_data_root_directory_name+file_name;
+		if(new File(path_name).exists()) 
+			return new String[]{path_name,p.file_charset};
 		return null;
 	}
 }

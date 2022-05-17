@@ -103,7 +103,6 @@ public class extended_part_driver extends part_driver
 		path_name_2=ek.system_par.proxy_par.proxy_data_root_directory_name+file_name;
 		if(new File(path_name_2).exists())
 			return new String[]{path_name_2,p.file_charset};
-		
 		debug_information.println("File 1 does NOT exist :	",path_name_1);
 		debug_information.println("File 2 does NOT exist :	",path_name_2);
 		return null;
