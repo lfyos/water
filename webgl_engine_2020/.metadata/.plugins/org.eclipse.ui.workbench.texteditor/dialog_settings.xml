@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="set_hide_flag"/>
+		<item key="selection" value="engine_expire_time"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="set_hide_flag"/>
 			<item value="engine_expire_time"/>
+			<item value="set_hide_flag"/>
 			<item value="change_name change_part_name,"/>
 			<item value="set_mobile_render_view"/>
 			<item value="touchstart_event_listener"/>
@@ -43,8 +43,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1399"/>
-		<item key="DIALOG_Y_ORIGIN" value="638"/>
+		<item key="DIALOG_X_ORIGIN" value="1024"/>
+		<item key="DIALOG_Y_ORIGIN" value="383"/>
 		<item key="DIALOG_WIDTH" value="386"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
