@@ -12,19 +12,19 @@
 		mount	marker\marker.assemble
 		mount	tag\tag.assemble
 			
-	/* 1children number */		2
+	/* 1children number */		3
 	
-		/* 2name		*/	交互界面菜单图标
+		/* 2name		*/	交互界面菜单图标左
 		/* 2type		*/	always_show_interface_part
 		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 				
 				false			11		0.05	0.06	menu_icon.png
 				
-				token_program	交互界面菜单图标
+				token_program	交互界面菜单图标左
 				
 				function(component_name,component_id,render)
 				{
-					render.system_call_processor.set_menu_show("交互界面菜单图标",
+					render.system_call_processor.set_menu_show("交互界面菜单图标左",
 						[["x0",-1.0],["y0",1.0],["all_in_view","all_in_view"]]);
 					render.component_event_processor[component_id]={
 						pickupmouseselect	:	function(event,component_id,render)
@@ -34,9 +34,36 @@
 					}
 				}
 				
-				交互界面菜单图标
+				交互界面菜单图标左
 
 		/* 2child_number	*/	0
+
+
+	
+		/* 2name		*/	交互界面菜单图标右
+		/* 2type		*/	always_show_interface_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+				
+				false			11		0.05	0.06	menu_icon.png
+				
+				token_program	交互界面菜单图标右
+				
+				function(component_name,component_id,render)
+				{
+					render.system_call_processor.set_menu_show("交互界面菜单图标右",
+						[["x0",1.0],["y0",1.0],["all_in_view","all_in_view"]]);
+					render.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,render)
+						{
+							render.system_call_processor.set_menu_show("交互界面主菜单");
+						}
+					}
+				}
+				
+				交互界面菜单图标右
+
+		/* 2child_number	*/	0
+
 
 		/* 2name		*/	交互界面主菜单
 		/* 2type		*/	interface_part

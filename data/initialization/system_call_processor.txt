@@ -11,14 +11,6 @@ function(component_name,component_id,render)
 	{
 		render.call_server_component(menu_name,"all",[["operation","hide"]]);
 	};
-	render.system_call_processor.set_menu_always_show=function(menu_name)
-	{
-		render.call_server_component(menu_name,"all",[["operation","always_show"]]);
-	};
-	render.system_call_processor.set_menu_always_hide=function(menu_name)
-	{
-		render.call_server_component(menu_name,"all",[["operation","always_hide"]]);
-	};
 //	system call for set mouse usage
 
 	if(typeof(render.system_call_processor.mouse_usage)=="undefined")
@@ -494,7 +486,6 @@ function(component_name,component_id,render)
 			par.push(["description",encodeURIComponent(encodeURIComponent(description))]);
 		render.call_server_component("manipulator_component","all",par);
 	};
-	
 	render.system_call_processor.collector_list_create_list=function(part_list_flag_effective_flag)
 	{
 		var par=[["event_method",	"part_list"],	 ["operation",		"create"],
