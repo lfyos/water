@@ -58,10 +58,10 @@ public class extended_instance_driver extends instance_driver
 		if(!always_show_flag)
 			if(hide_show_flag)
 				return true;
-		if(ci.parameter.aspect!=aspect) {
-			aspect=ci.parameter.aspect;
+		
+		if(ci.parameter.aspect!=aspect)
 			update_component_parameter_version(0);
-		}
+		
 		if(cr.target.main_display_target_flag) 
 			return false;
 		if(cr.target.selection_target_flag)
@@ -85,6 +85,8 @@ public class extended_instance_driver extends instance_driver
 			print("[",my_x0).		print(",",my_y0).
 			print(",",my_x1-my_x0).	print(",",my_y1-my_y0).
 			print(",",level).		print("]");
+		
+		aspect=ci.parameter.aspect;
 	}
 	private void get_parameter(engine_kernel ek,client_information ci)
 	{

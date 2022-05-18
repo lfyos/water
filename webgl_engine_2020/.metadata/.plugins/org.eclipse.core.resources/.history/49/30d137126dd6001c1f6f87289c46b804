@@ -58,6 +58,7 @@ public class extended_instance_driver extends instance_driver
 		if(!always_show_flag)
 			if(hide_show_flag)
 				return true;
+		
 		if(ci.parameter.aspect!=aspect) {
 			aspect=ci.parameter.aspect;
 			update_component_parameter_version(0);

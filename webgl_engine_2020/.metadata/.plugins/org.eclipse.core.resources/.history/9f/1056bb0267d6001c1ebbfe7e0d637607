@@ -15,8 +15,8 @@ public class extended_instance_driver extends instance_driver
 	private boolean menu_type;
 	private int level;
 	private String file_name,file_charset;
-	private double x0,y0,dx,dy,aspect;
-	private boolean hide_show_flag,always_show_flag;
+	private double x0,y0,dx,dy;
+	private boolean show_hide_flag;
 	
 	public void destroy()
 	{
@@ -39,9 +39,7 @@ public class extended_instance_driver extends instance_driver
 		dx=my_dx;
 		dy=my_dy;
 		
-		aspect=1.0;
-		hide_show_flag=true;
-		always_show_flag=false;
+		show_hide_flag=true;
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
@@ -55,13 +53,8 @@ public class extended_instance_driver extends instance_driver
 	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
 			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
 	{
-		if(!always_show_flag)
-			if(hide_show_flag)
-				return true;
-		if(ci.parameter.aspect!=aspect) {
-			aspect=ci.parameter.aspect;
-			update_component_parameter_version(0);
-		}
+		if(show_hide_flag)
+			return true;
 		if(cr.target.main_display_target_flag) 
 			return false;
 		if(cr.target.selection_target_flag)
@@ -89,21 +82,6 @@ public class extended_instance_driver extends instance_driver
 	private void get_parameter(engine_kernel ek,client_information ci)
 	{
 		String str;
-
-		if((str=ci.request_response.get_parameter("always"))!=null)
-			switch(str.trim().toLowerCase()){
-			case "always":
-			case "yes":
-			case "true":
-				always_show_flag=true;
-				break;
-			case "notalways":
-			case "no":
-			case "false":
-				always_show_flag=false;
-				break;
-			}
-		
 		if(ci.display_camera_result==null) 
 			return;
 		double p[];
@@ -143,8 +121,6 @@ public class extended_instance_driver extends instance_driver
 		if((str=ci.request_response.get_parameter("all_in_view"))!=null)
 			switch(str.trim().toLowerCase()){
 			case "all_in_view":
-			case "yes":
-			case "true":
 				if((x0+dx)>=1)
 					x0=1.0-dx-const_value.min_value;
 				if(x0<=-1)
@@ -165,10 +141,10 @@ public class extended_instance_driver extends instance_driver
 		case "file":
 			return menu_type?null:new String[]{file_name,file_charset};
 		case "hide":
-			hide_show_flag=true;
+			show_hide_flag=true;
 			return null;
 		case "show":
-			hide_show_flag=false;
+			show_hide_flag=false;
 			get_parameter(ek,ci);
 			update_component_parameter_version(0);
 			return null;

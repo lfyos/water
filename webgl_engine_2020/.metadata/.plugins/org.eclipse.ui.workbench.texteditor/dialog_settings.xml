@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="engine_expire_time"/>
+		<item key="selection" value="set_menu_show"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="set_menu_show"/>
 			<item value="engine_expire_time"/>
 			<item value="set_hide_flag"/>
 			<item value="change_name change_part_name,"/>
@@ -22,7 +23,6 @@
 			<item value="engine_interface"/>
 			<item value="ei.component_load_source_cont"/>
 			<item value="get_engine_result"/>
-			<item value=";"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
