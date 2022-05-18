@@ -9,12 +9,11 @@ import kernel_part.part;
 
 public class extended_component_driver  extends component_driver
 {
-	private boolean menu_type;
+	private boolean menu_type,always_show_flag;
 	private int level;
 	private double dx,dy;
 	private String file_name,file_charset;
-	
-	
+
 	public void destroy()
 	{
 		super.destroy();
@@ -22,7 +21,7 @@ public class extended_component_driver  extends component_driver
 	}
 	public extended_component_driver(part my_component_part,
 			boolean my_menu_type,int my_level,double my_dx,double my_dy,
-			String my_file_name,String my_file_charset)
+			String my_file_name,String my_file_charset,boolean my_always_show_flag)
 	{
 		super(my_component_part);
 
@@ -32,6 +31,7 @@ public class extended_component_driver  extends component_driver
 		dy=my_dy;
 		file_name=my_file_name;
 		file_charset=my_file_charset;
+		always_show_flag=my_always_show_flag;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
@@ -48,6 +48,6 @@ public class extended_component_driver  extends component_driver
 			engine_kernel ek,client_request_response request_response)
 	{
 		return new extended_instance_driver(comp,driver_id,
-				menu_type,level,dx,dy,file_name,file_charset);
+			menu_type,level,dx,dy,file_name,file_charset,always_show_flag);
 	}
 }

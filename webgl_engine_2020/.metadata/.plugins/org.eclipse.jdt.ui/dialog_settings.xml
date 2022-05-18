@@ -77,6 +77,7 @@
 		<item key="JarManifestWizardPage.MANIFEST_LOCATION" value=""/>
 		<item key="JarManifestWizardPage.SEAL_JAR" value="false"/>
 		<list key="JarPackageWizardPage.DESTINATION_NAMES_ID">
+			<item value="E:\tmp\WEB-INF\lib\lfy-2022-05-18.jar"/>
 			<item value="C:\Users\PeterHuntsmen\Desktop\lfy-2022-05-18.jar"/>
 			<item value="C:\Users\PeterHuntsmen\Desktop\lfy-2022-05-15.jar"/>
 			<item value="C:\Users\PeterHuntsmen\Desktop\lfy-2022-05-13.jar"/>

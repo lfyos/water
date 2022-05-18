@@ -4,3 +4,15 @@ interface_part
 	part\part.material
 	part\part.description
 	part\part.mp3
+	
+	/*	always_show_flag	*/		false
+
+interface_part
+	always_show_interface_part
+	part\part.mesh
+	part\part.material
+	part\part.description
+	part\part.mp3
+	
+	/*	always_show_flag	*/		true
+	
