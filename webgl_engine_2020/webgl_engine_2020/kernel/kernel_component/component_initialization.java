@@ -50,18 +50,18 @@ public class component_initialization
 		case "token_program":
 			if((terminated_token=fr.get_line())!=null)
 				if((terminated_token=terminated_token.trim()).length()>0) {
-					while(!(fr.eof())) {
-						if((line_str=fr.get_line())!=null){
-							if(line_str.trim().compareTo(terminated_token)==0)
-								break;
-							if(my_initialization_program==null)
-								my_initialization_program =line_str;
-							else
-								my_initialization_program+="\n"+line_str;
-						}
+					StringBuffer program_buf=new StringBuffer();
+					for(int flag=0;!(fr.eof());) {
+						if((line_str=fr.get_line())==null)
+							continue;
+						if(line_str.trim().compareTo(terminated_token)==0)
+							break;
+						if((flag++)>0)
+							program_buf.append("\n");
+						program_buf.append(line_str);
 					}
-					if(my_initialization_program!=null)
-						if(my_initialization_program.trim().length()>0)
+					if((my_initialization_program=program_buf.toString())!=null)
+						if(my_initialization_program.length()>0)
 							break;
 				}
 			return;
