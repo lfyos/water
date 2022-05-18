@@ -10,6 +10,7 @@ import kernel_part.part;
 public class extended_component_driver  extends component_driver
 {
 	private distance_tag_array tag_array;
+	private int modifier_container_id;
 	
 	public void destroy()
 	{
@@ -19,10 +20,12 @@ public class extended_component_driver  extends component_driver
 			tag_array=null;
 		}
 	}
-	public extended_component_driver(part my_component_part,distance_tag_array my_tag_array)
+	public extended_component_driver(part my_component_part,
+			distance_tag_array my_tag_array,int my_modifier_container_id)
 	{
 		super(my_component_part);
 		tag_array=my_tag_array;
+		modifier_container_id=my_modifier_container_id;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
@@ -35,6 +38,6 @@ public class extended_component_driver  extends component_driver
 	public instance_driver create_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_instance_driver(comp,driver_id,tag_array);
+		return new extended_instance_driver(comp,driver_id,tag_array,modifier_container_id);
 	}
 }

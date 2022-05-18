@@ -7,22 +7,26 @@ import kernel_driver.instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_transformation.point;
+import kernel_common_class.debug_information;
 import kernel_common_class.jason_string;
 
 public class extended_instance_driver extends instance_driver
 {
 	private distance_tag_array tag_array;
 	private boolean display_flag[];
+	private int modifier_container_id;
 
 	public void destroy()
 	{
 		super.destroy();
 		display_flag=null;
 	}
-	public extended_instance_driver(component my_comp,int my_driver_id,distance_tag_array my_tag_array)
+	public extended_instance_driver(component my_comp,int my_driver_id,
+			distance_tag_array my_tag_array,int my_modifier_container_id)
 	{
 		super(my_comp,my_driver_id);
 		tag_array=my_tag_array;
+		modifier_container_id=my_modifier_container_id;
 		display_flag=new boolean[] {};
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
@@ -138,6 +142,14 @@ public class extended_instance_driver extends instance_driver
 		case "modify":
 			if(tag_array.modify_distance_tag(ek,ci))
 				return null;
+			break;
+		case "swap_component":
+			debug_information.println("swap_component");
+			tag_array.swap_tag_component_selection(ek,ci);
+			break;
+		case "locate_component":
+			debug_information.println("locate_component");
+			tag_array.locate_tag_component(modifier_container_id,ek,ci);
 			break;
 		case "save":
 			tag_array.save(ek);

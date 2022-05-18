@@ -1,0 +1,57 @@
+	/* 1name		*/         camera_light_root
+	/* 1type		*/         undefined_part
+	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+	/* 1children number */		2
+
+		/* 2name		*/         camera_root
+		/* 2type		*/         undefined_part
+		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+		/* 2children number */		4
+
+				/* 3name		*/			camera_0
+				/* 3type		*/			undefined_part
+				/* 3location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
+				/* 3children number */		0
+		
+				/* 3name		*/			camera_1
+				/* 3type		*/			undefined_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
+				/* 3children number */		0
+		
+		        
+				/* 3name		*/			camera_2
+				/* 3type		*/			undefined_part
+				/* 3location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
+				/* 3children number */		0
+		
+				/* 3name		*/			camera_3
+				/* 3type		*/			undefined_part
+				/* 3location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
+				/* 3children number */		0
+				
+		/* 2name		*/         light_root
+		/* 2type		*/         undefined_part
+		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+		/* 2children number */   4
+	
+				/* 3name		*/			light_0
+				/* 3type		*/         undefined_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
+				/* 3children number */		0	
+
+				/* 3name		*/			light_1
+				/* 3type		*/         undefined_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1     
+				/* 3children number */		0
+		        
+				/* 3name		*/			light_2
+				/* 3type		*/         undefined_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
+				/* 3children number */		0
+		        
+				/* 3name		*/			light_3
+				/* 3type		*/         undefined_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+				/* 3children number */		0
+
+					

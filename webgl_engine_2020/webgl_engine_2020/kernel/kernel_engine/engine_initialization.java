@@ -212,34 +212,37 @@ public class engine_initialization
 			initialization_program_file_name[i]=new String[init_length];
 			for(int j=0,nj=initialization_program_file_name[i].length;j<nj;j++){
 				initialization_program_file_name[i][j]=null;
-				if(init_comp[i].initialization.initialization_program_charset[j]!=null){
-					File f;
-					String file_name=init_comp[i].initialization.initialization_program[j];
-					initialization_program_file_name[i][j]=init_comp[i].component_directory_name+file_name;
-					if(!(f=new File(initialization_program_file_name[i][j])).exists()){
-						initialization_program_file_name[i][j]=ek.scene_directory_name+file_name;
+				if(init_comp[i].initialization.initialization_program_charset[j]==null){
+					if(last_time<init_comp[i].uniparameter.file_last_modified_time)
+						last_time=init_comp[i].uniparameter.file_last_modified_time;
+					continue;
+				}
+				File f;
+				String file_name=init_comp[i].initialization.initialization_program[j];
+				initialization_program_file_name[i][j]=init_comp[i].component_directory_name+file_name;
+				if(!(f=new File(initialization_program_file_name[i][j])).exists()){
+					initialization_program_file_name[i][j]=ek.scene_directory_name+file_name;
+					if(!(f=new File(initialization_program_file_name[i][j])).exists()) {
+						initialization_program_file_name[i][j]=ek.scene_par.directory_name+file_name;
 						if(!(f=new File(initialization_program_file_name[i][j])).exists()) {
-							initialization_program_file_name[i][j]=ek.scene_par.directory_name+file_name;
-							if(!(f=new File(initialization_program_file_name[i][j])).exists()) {
-								initialization_program_file_name[i][j]=ek.scene_par.extra_directory_name+file_name;
+							initialization_program_file_name[i][j]=ek.scene_par.extra_directory_name+file_name;
+							if(!(f=new File(initialization_program_file_name[i][j])).exists()){
+								initialization_program_file_name[i][j]=ek.system_par.data_root_directory_name+file_name;
 								if(!(f=new File(initialization_program_file_name[i][j])).exists()){
-									initialization_program_file_name[i][j]=ek.system_par.data_root_directory_name+file_name;
-									if(!(f=new File(initialization_program_file_name[i][j])).exists()){
-										initialization_program_file_name[i][j]=null;
-										debug_information.print  (
-												"Not exist component init function,component name:	",init_comp[i].component_name);
-										debug_information.println(
-												"	file_name:	",init_comp[i].initialization.initialization_program[j]);
-										continue;
-									}
+									initialization_program_file_name[i][j]=null;
+									debug_information.print  (
+											"Not exist component init function,component name:	",init_comp[i].component_name);
+									debug_information.println(
+											"	file_name:	",init_comp[i].initialization.initialization_program[j]);
+									continue;
 								}
 							}
 						}
 					}
-					file_last_time flt=new file_last_time(f.getAbsolutePath());
-					if(last_time<flt.last_time)
-						last_time=flt.last_time;
 				}
+				file_last_time flt=new file_last_time(f.getAbsolutePath());
+				if(last_time<flt.last_time)
+					last_time=flt.last_time;
 			}
 		}
 		process_bar.set_process_bar(false,"file_initialization_0",collect_init_comp_number, collect_init_comp_number);
