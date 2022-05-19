@@ -3,10 +3,13 @@ package driver_distance_tag;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_transformation.point;
+import kernel_transformation.box;
 import kernel_transformation.plane;
+import kernel_camera.locate_camera;
 import kernel_common_class.const_value;
 import kernel_common_class.debug_information;
 import kernel_component.component;
+import kernel_component.component_selection;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 
@@ -154,6 +157,101 @@ public class distance_tag_array
 			return true;
 		distance_tag_array[tag_index].state=1;
 		return false;
+	}
+	public void swap_tag_component_selection(engine_kernel ek,client_information ci)
+	{
+		String str;
+		if((str=ci.request_response.get_parameter("id"))==null)
+			return;
+		int tag_index=Integer.parseInt(str);
+		if((tag_index<0)||(tag_index>=distance_tag_array.length))
+			return;
+		component p0_comp=ek.component_cont.get_component(distance_tag_array[tag_index].p0_component_id);
+		if(p0_comp!=null)
+			if((str=ci.request_response.get_parameter("p0"))!=null)
+				switch(str.trim()) {
+				case "true":
+				case "yes":
+					new component_selection(ek).switch_selected_flag(p0_comp,ek.component_cont);
+					break;
+				}
+		component px_comp=ek.component_cont.get_component(distance_tag_array[tag_index].px_component_id);
+		if(px_comp!=null)
+			if((str=ci.request_response.get_parameter("px"))!=null)
+				switch(str.trim()) {
+				case "true":
+				case "yes":
+					new component_selection(ek).switch_selected_flag(px_comp,ek.component_cont);
+					break;
+				}
+		return;
+	}
+	public void locate_tag_component(int modifier_container_id,engine_kernel ek,client_information ci)
+	{
+		String str;
+		if((str=ci.request_response.get_parameter("id"))==null)
+			return;
+		int tag_index=Integer.parseInt(str);
+		if((tag_index<0)||(tag_index>=distance_tag_array.length))
+			return;
+		box b0=null,bx=null,b;
+		boolean locate_type;
+		if((str=ci.request_response.get_parameter("type"))==null)
+			locate_type=false;
+		else
+			switch(str.trim()){
+			case "component":
+				locate_type=true;
+				break;
+			case "point":
+			default:
+				locate_type=false;
+				break;
+			}
+		component p0_comp;
+		if((p0_comp=ek.component_cont.get_component(distance_tag_array[tag_index].p0_component_id))!=null)
+			if((str=ci.request_response.get_parameter("p0"))!=null)
+				switch(str.trim()) {
+				case "true":
+				case "yes":
+					if(locate_type) {
+						if((b0=p0_comp.get_component_box(false))!=null)
+							break;
+						if((b0=p0_comp.get_component_box(true))!=null)
+							break;
+					}
+					b0=new box(p0_comp.absolute_location.multiply(distance_tag_array[tag_index].p0));	
+					break;
+				}
+		component px_comp;
+		if((px_comp=ek.component_cont.get_component(distance_tag_array[tag_index].px_component_id))!=null)
+			if((str=ci.request_response.get_parameter("px"))!=null)
+				switch(str.trim()) {
+				case "true":
+				case "yes":
+					if(locate_type) {
+						if((bx=px_comp.get_component_box(false))!=null)
+							break;
+						if((bx=px_comp.get_component_box(true))!=null)
+							break;
+					}
+					bx=new box(px_comp.absolute_location.multiply(distance_tag_array[tag_index].px));
+					break;
+				}
+		if(b0==null) {
+			if(bx==null)
+				return;
+			else
+				b=bx;
+		}else {
+			if(bx==null)
+				b=b0;
+			else
+				b=b0.add(bx);
+		}
+		locate_camera lc=new locate_camera(ek.camera_cont.camera_array[ci.display_camera_result.target.camera_id]);
+		lc.locate_on_components(ek.modifier_cont[modifier_container_id],b,null,-1.0,ci.parameter.aspect,true,false,false);
+		return;
 	}
 	public boolean set_distance_tag_type(engine_kernel ek,client_information ci)
 	{

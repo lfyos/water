@@ -89,6 +89,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		if(typeof(ep)=="undefined"){
 			ep={
 				pickup_tag_id				:	-1,
+				tag_point_id				:	0,
 				tag_menu_component_name		:	instance_initialize_data[buffer_id],
 				mousemove_flag				:	true,
 				texture_object				:	new Array(),
@@ -117,15 +118,65 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				},
 				pickupmousedown		:	function(event,component_id,render)
 				{
+					var ep=render.component_event_processor[component_id];
+					if((ep.pickup_tag_id=render.pickup.body_id)<0)
+						return true;
+
 					switch(event.button){
-					case 0:
+					case 0:				
+						switch((event.ctrlKey?1:0)+(event.shiftKey?2:0)){
+						case 0:	
+							switch(ep.tag_point_id){
+							case 0:				
+								render.call_server_component(component_id,"all",[["operation","locate_component"],
+									["id",ep.pickup_tag_id],["type","point"],["p0","true"]]);
+								ep.tag_point_id++;
+								break;
+							case 1:
+								render.call_server_component(component_id,"all",[["operation","locate_component"],
+									["id",ep.pickup_tag_id],["type","point"],["px","true"]]);
+								ep.tag_point_id++;
+								break;
+							default:
+								render.call_server_component(component_id,"all",[["operation","locate_component"],
+									["id",ep.pickup_tag_id],["type","point"],["p0","true"],["px","true"]]);
+								ep.tag_point_id=0;
+								break;
+							}
+							break;	
+						case 1:
+							switch(ep.tag_point_id){
+							case 0:				
+								render.call_server_component(component_id,"all",[["operation","locate_component"],
+									["id",ep.pickup_tag_id],["type","component"],["p0","true"]]);
+								ep.tag_point_id++;
+								break;
+							case 1:
+								render.call_server_component(component_id,"all",[["operation","locate_component"],
+									["id",ep.pickup_tag_id],["type","component"],["px","true"]]);
+								ep.tag_point_id++;
+								break;
+							default:
+								render.call_server_component(component_id,"all",[["operation","locate_component"],
+									["id",ep.pickup_tag_id],["type","component"],["p0","true"],["px","true"]]);
+								ep.tag_point_id=0;
+								break;
+							}
+							break;
+						case 2:
+							render.call_server_component(component_id,"all",
+								[["operation","swap_component"],["id",ep.pickup_tag_id],["p0","true"]]);
+							break;
+						case 3:
+							render.call_server_component(component_id,"all",
+								[["operation","swap_component"],["id",ep.pickup_tag_id],["px","true"]]);
+							break;
+						}
 						break;
 					case 1:
 						break;
 					case 2:
-						var ep=render.component_event_processor[component_id];
-						if((ep.pickup_tag_id=render.pickup.body_id)>=0)
-							render.system_call_processor.set_menu_show(ep.tag_menu_component_name);
+						render.system_call_processor.set_menu_show(ep.tag_menu_component_name);
 						break;
 					}
 					return true;

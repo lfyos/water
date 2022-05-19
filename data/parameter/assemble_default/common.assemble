@@ -1,68 +1,15 @@
 	/* 1name		*/         common_component
 	/* 1type		*/         undefined_part
 	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
-	/* 1children number */		20
+	/* 1children number */		18
 
 		/*	0	*/
-		/* 2name		*/         camera_root
-		/* 2type		*/         undefined_part
-		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
-		/* 2children number */		4
-
-				/* 3name		*/			camera_0
-				/* 3type		*/			undefined_part
-				/* 3location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
-				/* 3children number */		0
-		
-				/* 3name		*/			camera_1
-				/* 3type		*/			undefined_part
-				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
-				/* 3children number */		0
-		
-		        
-				/* 3name		*/			camera_2
-				/* 3type		*/			undefined_part
-				/* 3location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
-				/* 3children number */		0
-		
-				/* 3name		*/			camera_3
-				/* 3type		*/			undefined_part
-				/* 3location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
-				/* 3children number */		0
-		
-		/*	1	*/			
-		/* 2name		*/         light_root
-		/* 2type		*/         undefined_part
-		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
-		/* 2children number */   4
-	
-				/* 3name		*/			light_0
-				/* 3type		*/         undefined_part
-				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
-				/* 3children number */		0	
-
-				/* 3name		*/			light_1
-				/* 3type		*/         undefined_part
-				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1     
-				/* 3children number */		0
-		        
-				/* 3name		*/			light_2
-				/* 3type		*/         undefined_part
-				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
-				/* 3children number */		0
-		        
-				/* 3name		*/			light_3
-				/* 3type		*/         undefined_part
-				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
-				/* 3children number */		0
-
-		/*	2	*/
 		/* 2name		*/	trace_primitive_component
 		/* 2type		*/	trace_primitive_part
 		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 		/* 2child_number	*/	0
 
-		/*	3	*/
+		/*	1	*/
 		/* 2name		*/	orientation_camera_component
 		/* 2type		*/	orientation_camera_part
 		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
@@ -71,50 +18,50 @@
 			
 		/* 2child_number	*/	0
 		
-		/*	4	*/
+		/*	2	*/
 		/* 2name		*/	show_pickup_component_box_component
 		/* 2type		*/	show_pickup_component_box_part
 		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 		/* 2child_number	*/	0
 		
-		/*	5	*/
+		/*	3	*/
 		/* 2name		*/	show_select_component_box_component
 		/* 2type		*/	show_select_component_box_part
 		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 		/* 2child_number	*/	0
 	
-		/*	6	*/
+		/*	4	*/
 		/* 2name		*/  component_pickup_component
 		/* 2type		*/  component_pickup_part
 		/* 2location	*/  1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 		/* 2children number */		0
 	
-		/*	7	*/
+		/*	5	*/
 		/* 2name		*/         audio_component
 		/* 2type		*/         audio_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 		/* 2children number */		0
 			
-		/*	8	*/
+		/*	6	*/
 		/* 2name		*/         proxy_component
 		/* 2type		*/         proxy_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 		/* 2children number */		0
 				
-		/*	9	*/	
+		/*	7	*/	
 		/* 2name		*/         screen_rectangle_component
 		/* 2type		*/         screen_rectangle_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 		/* 2children number */		0
 		
-		/*	10	*/
+		/*	8	*/
 		/* 2name		*/         location_modifier_component
 		/* 2type		*/         location_modifier_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 								/*	modifier_container_id	*/	0
 		/* 2children number */		0
 			
-		/*	11	*/
+		/*	9	*/
 		/* 2name		*/         manipulator_component
 		/* 2type		*/         manipulator_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
@@ -122,19 +69,19 @@
 							/*		modifier_container_id				*/		0
 		/* 2children number */		0
 				
-		/*	12	*/
+		/*	10	*/
 		/* 2name		*/         camera_operation_component
 		/* 2type		*/         camera_operation_with_initialization_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 		/* 2children number */		0
 		
-		/*	13	*/
+		/*	11	*/
 		/* 2name		*/         render_target_register_component
 		/* 2type		*/         render_target_register_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 		/* 2children number */		0
 
-		/*	14	*/
+		/*	12	*/
 		/* 2name		*/         component_selection_component
 		/* 2type		*/         component_selection_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
@@ -143,19 +90,19 @@
 									/*		modifier_container_id		*/			0
 		/* 2children number */		0
 				
-		/*	15	*/
+		/*	13	*/
 		/* 2name		*/         mouse_modify_location_component
 		/* 2type		*/         mouse_modify_location_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 		/* 2children number */     0
 	
-		/*	16	*/
+		/*	14	*/
 		/* 2name		*/			caption_component
 		/* 2type		*/			caption_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 		/* 2children number */     0	
 				
-		/*	17	*/		
+		/*	15	*/		
 		/* 2name		*/			coordinate
 		/* 2type		*/			coordinate_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
@@ -163,16 +110,16 @@
 									/*	abandon select coordinate		*/		false
 		/* 2children number */		0
 
-		/*	18	*/
+		/*	16	*/
 		/* 2name		*/			component_marker_component
 		/* 2type		*/			component_marker_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
-						/*	directory_comp_name		*/	movement_manager
-						/*	file_name				*/	component_marker.txt
-						/*	modifier_container_id	*/	0
+						/*	directory_comp_name				*/		movement_manager
+						/*	file_name						*/		component_marker.txt
+						/*	modifier_container_id			*/		0
 		/* 2children number */     0
 
-		/*	19	*/
+		/*	17	*/
 		/* 2name		*/			distance_tag_component
 		/* 2type		*/			distance_tag_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
@@ -181,5 +128,6 @@
 						/*	distance_tag_file_name			*/		distance_tag.txt
 						/*	display_precision				*/		6
 						/*	min_view_distance				*/		0.05
+						/*	modifier_container_id			*/		0
 		/* 2children number */     0
 			
