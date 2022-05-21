@@ -4,6 +4,7 @@ lession_18_dynamic_environment_mapping_texture_part_1
 	part_1\part.material
 	part_1\part.description
 	part_1\part.mp3
+	/*	scale		*/	0.005
 
 lession_18_dynamic_environment_mapping_texture_part_2
 	lession_18_dynamic_environment_mapping_texture_part_2
@@ -11,6 +12,7 @@ lession_18_dynamic_environment_mapping_texture_part_2
 	part_2\part.material
 	part_2\part.description
 	part_2\part.mp3
+	/*	scale		*/	0.005
 	
 lession_18_dynamic_environment_mapping_texture_part_3
 	lession_18_dynamic_environment_mapping_texture_part_3
@@ -18,11 +20,4 @@ lession_18_dynamic_environment_mapping_texture_part_3
 	part_3\part.material
 	part_3\part.description
 	part_3\part.mp3
-
-lession_18_dynamic_environment_mapping_texture_part_4
-	lession_18_dynamic_environment_mapping_texture_part_4
-	part_4\part.obj.mesh
-	part_4\part.material
-	part_4\part.description
-	part_4\part.mp3
-	
+	/*	scale		*/	0.005

@@ -44,8 +44,6 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
 	
-	
-	
 	if(do_render_number.engine_render==0){
 		shader_program.sampler=gl.createSampler();
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MAG_FILTER,	gl.LINEAR);
@@ -53,12 +51,14 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_S,		gl.MIRRORED_REPEAT);
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_WRAP_T,		gl.MIRRORED_REPEAT);
 
-		shader_program.front_uniform	=gl.getUniformLocation(shader_program,"front");
-		shader_program.back_uniform		=gl.getUniformLocation(shader_program,"back");
-		shader_program.left_uniform		=gl.getUniformLocation(shader_program,"left");
-		shader_program.right_uniform	=gl.getUniformLocation(shader_program,"right");
-		shader_program.up_uniform		=gl.getUniformLocation(shader_program,"top");
-		shader_program.down_uniform		=gl.getUniformLocation(shader_program,"down");
+		shader_program.front_uniform		=gl.getUniformLocation(shader_program,"front");
+		shader_program.back_uniform			=gl.getUniformLocation(shader_program,"back");
+		shader_program.left_uniform			=gl.getUniformLocation(shader_program,"left");
+		shader_program.right_uniform		=gl.getUniformLocation(shader_program,"right");
+		shader_program.up_uniform			=gl.getUniformLocation(shader_program,"top");
+		shader_program.down_uniform			=gl.getUniformLocation(shader_program,"down");
+		
+		shader_program.model_scale_uniform	=gl.getUniformLocation(shader_program,"model_scale");
 	}
 	
 	if(method_id!=0)
@@ -105,6 +105,8 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
     	gl.bindSampler(5,shader_program.sampler);
     	gl.uniform1i(shader_program.down_uniform,5);
 	
+		gl.uniform1f(shader_program.model_scale_uniform,data_buffer[buffer_id][0][7]);
+		
 		for(var j=0,nj=part_buffer_object.region_data.length;j<nj;j++){
 			var p=part_buffer_object.region_data[j];
 			gl.bindVertexArray(p.vertex_array_object[0]);

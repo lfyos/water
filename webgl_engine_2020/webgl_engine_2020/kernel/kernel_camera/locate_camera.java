@@ -173,7 +173,7 @@ public class locate_camera
 		loca=cam.eye_component.caculate_negative_absolute_location().multiply(loca);
 
 		move_location=move_location.multiply(loca);
-			
+
 		return move_location;
 	}
 	public location locate(box my_locate_box,location dir)

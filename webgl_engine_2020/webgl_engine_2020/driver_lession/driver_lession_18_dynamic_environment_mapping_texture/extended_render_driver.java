@@ -61,7 +61,7 @@ public class extended_render_driver extends render_driver
 			component_load_source_container component_load_source_cont,
 			system_parameter system_par,client_request_response request_response)
 	{
-		return new extended_part_driver(p,system_par,request_response);
+		return new extended_part_driver(p,part_fr.get_double(),system_par,request_response);
 	}
 	public String create_include_shader_program(String shader_type_string,
 			//vertex,fragment,geometry,tess_control,tess_evalue

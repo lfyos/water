@@ -57,7 +57,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var computer						=render.computer;
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
-	
+
 	function draw_part(primitive_type,part_buffer_object,vertex_array_id,selected_flag)
 	{
 		for(var i=0,ni=part_buffer_object.region_data.length;i<ni;i++){
@@ -94,7 +94,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		for(var i=0,ni=component_data_array.length;i<ni;i++){
 			var buffer_id		=component_data_array[i][0];
 			var display_bitmap	=component_data_array[i][1];
-			
+
 			while(data_buffer[buffer_id].length>1)
 				data_buffer[buffer_id].shift();
 
@@ -330,7 +330,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 				part_buffer_object.destroy=null;
 			}
 		}
-	
+
 	switch(method_id){
 	case 0://render scene before depth rendering
 		break;

@@ -10,8 +10,8 @@ public class test_1 extends travel_through_directory
 	{
 		String str=file_reader.get_text(file_name,"GBK");
 		if(str!=null) {
-			if(str.indexOf("system_event_processor")>=0)
-				debug_information.println("system_event_processor		",file_name);
+			if(str.indexOf("get_camera_data")>=0)
+				debug_information.println("get_camera_data		",file_name);
 		}
 	}
 	public static void main(String args[])

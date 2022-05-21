@@ -1,3 +1,3 @@
-no_group			no_usemtl			part.mtl			0			0			1
-Spindle001			no_usemtl			part.mtl			0			0			1
-Spindle001			wire_228214153			part.mtl			0			0			1
+no_group			no_usemtl			teapot.mtl			0			0			1
+Teapot001			no_usemtl			teapot.mtl			0			0			1
+Teapot001			wire_087225143			teapot.mtl			0			0			1

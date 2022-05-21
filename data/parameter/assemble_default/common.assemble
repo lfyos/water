@@ -71,7 +71,7 @@
 				
 		/*	10	*/
 		/* 2name		*/         camera_operation_component
-		/* 2type		*/         camera_operation_with_initialization_part
+		/* 2type		*/         camera_operation_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 		/* 2children number */		0
 		
