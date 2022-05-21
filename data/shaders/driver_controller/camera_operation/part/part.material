@@ -3,19 +3,19 @@
 /*	camera ID		*/		0		/*	direction:X,Y,Z		*/		 1		 1		 1			 0	 1	 0
 /*	camera ID		*/		1		/*	direction:X,Y,Z		*/		-1		 1		 1			 0	 1	 0
 
-/*
 /*	camera ID		*/		2		/*	direction:X,Y,Z		*/		-1		 1		-1			 0	 1	 0
 /*	camera ID		*/		3		/*	direction:X,Y,Z		*/		 1		 1		-1			 0	 1	 0
 /*	camera ID		*/		4		/*	direction:X,Y,Z		*/		 1.732	 1.5	-1			 0	 1	 0
 /*	camera ID		*/		5		/*	direction:X,Y,Z		*/		-1.732	 1.5	-1			 0	 1	 0
 /*	camera ID		*/		6		/*	direction:X,Y,Z		*/		-1.732	 1.5	 1			 0	 1	 0
 /*	camera ID		*/		7		/*	direction:X,Y,Z		*/		0	 	-1		 0			 1	 0	 0
-*/
 
 
+/*
 /*	camera ID		*/		2		/*	direction:X,Y,Z		*/		 0		 0		-1			 0	  1	 -1
 /*	camera ID		*/		3		/*	direction:X,Y,Z		*/		 0		 0		 1			 0	  1	  1
 /*	camera ID		*/		4		/*	direction:X,Y,Z		*/		 1		 0		 0			 1	 1	  0
 /*	camera ID		*/		5		/*	direction:X,Y,Z		*/		-1		 0		 0			-1	 1	  0
 /*	camera ID		*/		6		/*	direction:X,Y,Z		*/		 0	 	-1		 0			 0	-1	 -1
 /*	camera ID		*/		7		/*	direction:X,Y,Z		*/		 0	 	 1	 	 0			 0	 1	  1
+*/

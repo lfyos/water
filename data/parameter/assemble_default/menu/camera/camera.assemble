@@ -7,7 +7,7 @@
 			/* 2type		*/	interface_part
 			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 				
-				false	9	0.2		0.7		camera.png
+				false	9	0.32		0.7		camera.png
 
 				token_program	相机功能选择
 					function(component_name,component_id,render)
@@ -222,7 +222,7 @@
 			/* 2type		*/	interface_part
 			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 				
-				false	8	0.2		0.6		control.png
+				false	8	0.32		0.6		control.png
 
 				token_program	操作相机组件
 					function(component_name,component_id,render)
