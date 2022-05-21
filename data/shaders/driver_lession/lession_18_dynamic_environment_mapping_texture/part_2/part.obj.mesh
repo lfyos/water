@@ -5,15 +5,15 @@
 /*	default vertex_location_extra_data	*/	1
 /*	default vertex_normal_extra_data	*/	1
 /*	max_attribute_number				*/	1
-/*		0.attribute:	*/	0.5	0.5	0.0	1
+/*		0.attribute:	*/	2.0	2.0	0.0	1
 
 /*	body_number		*/	1
 	/*  body    0  name    */  obj_object_body_0	/*  face_number */	1
 	/*  body 0 face 0  name	*/	no_face_name
 	/*  face type	*/	unknown	/*  parameter number	*/	0	/*  parameter	*/
-	/*  total_face_primitive_number	*/  1200
+	/*  total_face_primitive_number	*/  6400
 	/*  face_attribute_number		*/  1
-	/*  face_face_box               */	-51.3926	0.0	-50.007	48.6074	50.0	49.7956
+	/*  face_face_box               */	-75.2933	0.0	-50.8798	85.5568	78.75	49.1202
 
 	/*  loop number		*/	1
 		/*  body:0 face:0 loop 0 edge number	*/	2

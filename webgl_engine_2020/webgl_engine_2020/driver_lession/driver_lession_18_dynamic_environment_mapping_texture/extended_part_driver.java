@@ -20,9 +20,12 @@ import kernel_transformation.point;
 
 public class extended_part_driver extends part_driver
 {
-	public extended_part_driver(part p,system_parameter system_par,client_request_response request_response)
+	double model_scale;
+	public extended_part_driver(part p,double my_model_scale,
+			system_parameter system_par,client_request_response request_response)
 	{
 		super();
+		model_scale=my_model_scale;
 	}
 	public void destroy()
 	{	
@@ -38,7 +41,7 @@ public class extended_part_driver extends part_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(p,system_par,request_response);
+		return new extended_part_driver(p,model_scale,system_par,request_response);
 	}
 	public int caculate_material_id(
 			part p,String type_str,int body_id,int face_id,int loop_id,int edge_id,
@@ -60,16 +63,15 @@ public class extended_part_driver extends part_driver
 			component_load_source_container component_load_source_cont,
 			engine_kernel ek,client_request_response request_response)
 	{
-		int camera_id[]=new int[6];
-		for(int i=0;i<camera_id.length;i++)
-			camera_id[i]=fr.get_int();
-		return new extended_component_driver(my_component_part,camera_id);
+		return new extended_component_driver(my_component_part,model_scale,
+				new int[] {fr.get_int(),fr.get_int(),fr.get_int(),fr.get_int(),fr.get_int(),fr.get_int()});
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int loop_id,int edge_id,int point_id,
 			point p0,point p1)
 	{
-		return super.caculate_part_box(p,comp,driver_id,body_id,face_id,loop_id,edge_id,point_id,p0,p1);
+		return super.caculate_part_box(p,comp,driver_id,
+				body_id,face_id,loop_id,edge_id,point_id,p0,p1).scale(model_scale);
 	}
 	public String [][]assemble_file_name_and_file_charset(file_reader fr,part p,
 			engine_kernel ek,client_request_response request_response)

@@ -16,7 +16,6 @@ import kernel_transformation.point;
 import kernel_part.face;
 import kernel_part.part_rude;
 
-
 public class extended_instance_driver extends instance_driver
 {
 	private boolean show_flag;
@@ -35,6 +34,7 @@ public class extended_instance_driver extends instance_driver
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
+		
 	}
 	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
 			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
@@ -334,58 +334,10 @@ public class extended_instance_driver extends instance_driver
 	{
 		String str;
 		double scale_value,value;
-
+		
 		if((str=ci.request_response.get_parameter("operation"))==null)
 			return null;
-		
 		switch(str){
-		case "set_camera_data":
-			if((str=ci.request_response.get_parameter("data"))!=null){
-				double data[]=(new location()).get_location_data();
-				for(int index_id,i=0,ni=data.length;(i<ni)&&(str.length()>0);i++) {
-					if((index_id=str.indexOf(','))<0) {
-						data[i]=Double.parseDouble(str);
-						break;
-					}
-					data[i]=Double.parseDouble(str.substring(0,index_id));
-					str=str.substring(index_id+1);
-				}
-				location loca=(new location(data)).normalize();
-				if((str=ci.request_response.get_parameter("rotate"))!=null)
-					loca=loca.multiply(location.move_rotate(0,0,0,0,0,Double.parseDouble(str)));
-				ci.display_camera_result.cam.eye_component.modify_location(loca,ek.component_cont);
-			}
-			if((str=ci.request_response.get_parameter("distance"))!=null)
-				ci.display_camera_result.cam.parameter.distance=Math.abs(Double.parseDouble(str));
-
-			if((str=ci.request_response.get_parameter("flag"))!=null)
-				switch(str.toLowerCase().trim()){
-				case "yes":
-				case "true":
-					ci.display_camera_result.cam.eye_component.uniparameter.cacaulate_location_flag=true;
-					break;
-				case "no":
-				case "false":
-					ci.display_camera_result.cam.eye_component.uniparameter.cacaulate_location_flag=false;
-					break;
-				default:
-					break;
-				}
-		case "get_camera_data":
-			ci.request_response.println("{");
-			ci.request_response.print  ("	\"matrix\"	:	",
-					ci.display_camera_result.cam.eye_component.move_location.get_location_data());
-			ci.request_response.println(",");
-			
-			ci.request_response.println("	\"distance\"	:	",
-					ci.display_camera_result.cam.parameter.distance);
-			ci.request_response.println(",");
-			
-			ci.request_response.println("	\"flag\"	:	",
-					ci.display_camera_result.cam.eye_component.uniparameter.cacaulate_location_flag?"true":"false");
-			
-			ci.request_response.println("}");
-			return null;
 		case "body_face_direct":	
 			body_face_direct_rotate(true,ek,ci);
 			return null;

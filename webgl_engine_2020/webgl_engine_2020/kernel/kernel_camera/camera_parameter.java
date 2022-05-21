@@ -70,7 +70,8 @@ public class camera_parameter
 	public camera_parameter(
 			boolean my_movement_flag,boolean my_direction_flag,boolean my_change_type_flag,
 			double my_scale_value,long my_switch_time_length,double my_distance,
-			double my_half_fovy_tanl,double my_bak_half_fovy_tanl,double my_near_ratio,double my_far_value_ratio,
+			double my_half_fovy_tanl,double my_bak_half_fovy_tanl,
+			double my_near_ratio,double my_far_value_ratio,
 			boolean my_projection_type_flag,
 			double my_low_precision_scale,double my_high_precision_scale,
 			boolean my_synchronize_location_flag,boolean my_light_camera_flag)

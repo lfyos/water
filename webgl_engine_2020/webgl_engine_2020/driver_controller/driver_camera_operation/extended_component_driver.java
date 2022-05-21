@@ -11,9 +11,9 @@ import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
 import kernel_part.part;
-
 import kernel_transformation.box;
 import kernel_transformation.point;
+import kernel_transformation.location;
 
 public class extended_component_driver  extends component_driver
 {
@@ -76,18 +76,18 @@ public class extended_component_driver  extends component_driver
 			debug_information.println("(my_box.distance2()<const_value.min_value2)");
 			return;
 		}
-		
 		do{
 			int cam_id=fr.get_int();
 			if(fr.eof())
 				break;
-			double x=fr.get_double(),y=fr.get_double(),z=fr.get_double();
-			if((cam_id>=0)&&(cam_id<cam_array.length)){
+			point dz=new point(fr),dy=new point(fr),dx=dy.cross(dz);
+			if((cam_id>=0)&&(cam_id<cam_array.length)&&(dx.distance2()>const_value.min_value2)){
+				dx=dx.expand(1.0);
+				dy=dz.cross(dx).expand(1.0);
+				dz=dz.expand(1.0);
+				location loca=new location(new point(),dx,dy,dz).multiply(location.standard_negative);
 				locate_camera loca_cam=new locate_camera(cam_array[cam_id]);
-				cam_array[cam_id].eye_component.modify_location(
-						loca_cam.locate(my_box,null),ek.component_cont);
-				cam_array[cam_id].eye_component.modify_location(
-						loca_cam.direction_locate(new point(x,y,z),null,false),ek.component_cont);
+				cam_array[cam_id].eye_component.modify_location(loca_cam.locate(my_box,loca),ek.component_cont);
 				loca_cam.scale(Math.abs(cam_array[cam_id].parameter.scale_value),1.0);
 				cam_array[cam_id].parameter.distance=loca_cam.distance;
 			}
@@ -96,6 +96,7 @@ public class extended_component_driver  extends component_driver
 		fr.close();
 		return;
 	}
+	
 	public instance_driver create_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{

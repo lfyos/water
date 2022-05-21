@@ -1,9 +1,19 @@
 方向按钮
-	camera_operation_with_initialization_part
+	camera_operation_part
 	part\part.SLDPRT.mesh
 	part\part.material
 	part\part.description
 	part\part.mp3
 	
 	/*	x	y	scale	modifier_container_id	*/	0.875	0.875	15.0	0
+		
+方向按钮
+	camera_operation_map_part
+	part\part.SLDPRT.mesh
+	part\part.map.material
+	part\part.description
+	part\part.mp3
+	
+	/*	x	y	scale	modifier_container_id	*/	0.875	0.875	15.0	0
+		
 		

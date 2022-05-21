@@ -1,0 +1,24 @@
+/*	1:name	*/	system_root_component
+/*	1:type	*/	undefined_part
+/*	1:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+/*	1:child_number	*/	2	
+		/*	2:name			*/	part_list_component		
+		/*	2:type			*/	undefined_part
+		/*	2:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+				part_list		mount		SLDASM.assemble
+		/*	2:child_number	*/	0
+		
+		/*	2:name			*/	not_part_list_component
+		/*	2:type			*/	undefined_part
+		/*	2:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+		
+				not_part_list	mount	movement.assemble
+				not_part_list	mount	interface.assemble
+		
+				token_program	初始化程序
+				function(component_name,component_id,render)
+				{
+					render.system_call_processor.set_background_mode(2);
+				}	
+				初始化程序	
+		/*	2:child_number	*/	0
