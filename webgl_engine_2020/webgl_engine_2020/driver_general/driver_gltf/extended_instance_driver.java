@@ -2,7 +2,6 @@ package driver_gltf;
 
 import kernel_camera.camera_result;
 import kernel_component.component;
-import kernel_component.component_collector;
 import kernel_driver.instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
@@ -30,8 +29,7 @@ public class extended_instance_driver extends instance_driver
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
 	}
-	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
-			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
+	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		if(render_buffer_id>=display_bitmap.length){
 			long bak[]=display_bitmap;
@@ -41,7 +39,7 @@ public class extended_instance_driver extends instance_driver
 			for(int i=bak.length,ni=display_bitmap.length;i<ni;i++)
 				display_bitmap[i]=-1;
 		}
-		long new_display_bitmap=comp.multiparameter[parameter_channel_id].display_bitmap;
+		long new_display_bitmap=comp.multiparameter[cr.target.parameter_channel_id].display_bitmap;
 		if(display_bitmap[render_buffer_id]!=new_display_bitmap){
 			display_bitmap[render_buffer_id]=new_display_bitmap;
 			update_component_render_version(render_buffer_id,0);
@@ -57,9 +55,7 @@ public class extended_instance_driver extends instance_driver
 		}
 		return false;
 	}
-	public void create_render_parameter(
-			int render_buffer_id,int parameter_channel_id,int data_buffer_id,
-			engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		ci.request_response.
 			print("[",data_buffer_id).
@@ -75,7 +71,7 @@ public class extended_instance_driver extends instance_driver
 			print(",",	transparency_value).
 			print("]");
 	}
-	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
+	public String[] response_event(engine_kernel ek,client_information ci)
 	{
 		return null;
 	}

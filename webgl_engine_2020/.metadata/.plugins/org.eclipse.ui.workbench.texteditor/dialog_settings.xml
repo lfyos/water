@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="selection.png"/>
+		<item key="selection" value="vertex_array_id"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="check(engine_kernel ek,client_information ci,camera_result cr)"/>
+			<item value="create_render_parameter(int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)"/>
+			<item value="vertex_array_id"/>
 			<item value="selection.png"/>
 			<item value="selec"/>
 			<item value="&#x09;&#x09;&#x09;&#x09;]);"/>
@@ -20,11 +23,9 @@
 			<item value="engine_expire_time"/>
 			<item value="set_hide_flag"/>
 			<item value="change_name change_part_name,"/>
-			<item value="set_mobile_render_view"/>
-			<item value="touchstart_event_listener"/>
-			<item value="my_component_id"/>
 		</list>
 		<list key="replacehistory">
+			<item value="check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)"/>
 			<item value="&#x09;]);"/>
 			<item value="&#x09;&#x09;"/>
 			<item value="cam."/>
@@ -39,13 +40,12 @@
 			<item value="_angle"/>
 			<item value="function_id%3"/>
 			<item value="//"/>
-			<item value="p"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1440"/>
+		<item key="DIALOG_X_ORIGIN" value="1159"/>
 		<item key="DIALOG_Y_ORIGIN" value="270"/>
-		<item key="DIALOG_WIDTH" value="386"/>
+		<item key="DIALOG_WIDTH" value="667"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 	</section>

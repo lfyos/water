@@ -38,9 +38,8 @@ public class response_render_component_request
 				render_buffer_id,id_array[pps[i][0]][pps[i][1]].length))!=null)
 					ren_buf.clear_clip_flag(ek.component_cont);
 		
-		component_collector list_result=(new list_component_on_collector(render_buffer_id,
-			cam_result.target.parameter_channel_id,true,my_do_discard_lod_flag,
-			my_do_selection_lod_flag,false,true,ek,ci,cam_result)).collector;
+		component_collector list_result=(new list_component_on_collector(
+			true,my_do_discard_lod_flag,my_do_selection_lod_flag,false,true,ek,ci,cam_result)).collector;
 		
 		long current_time=ek.current_time.nanoseconds();
 		for(int i=0,ni=list_result.component_collector.length;i<ni;i++)

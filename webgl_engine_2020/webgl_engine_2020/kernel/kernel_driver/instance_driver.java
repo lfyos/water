@@ -3,7 +3,6 @@ package kernel_driver;
 import kernel_camera.camera_result;
 import kernel_common_class.debug_information;
 import kernel_component.component;
-import kernel_component.component_collector;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_network.network_parameter;
@@ -101,10 +100,9 @@ public class instance_driver
 			if((driver_id>=0)&&(driver_id<comp.driver_number()))
 				if((in_dr=ci.instance_container.get_driver(comp, driver_id))!=null){
 					ci.request_response.install_parameter(parameter);
-					int parameter_channel_id=ci.display_camera_result.target.parameter_channel_id;
 					String ret_val[];
 					try{
-						ret_val=in_dr.response_event(parameter_channel_id,ek,ci);
+						ret_val=in_dr.response_event(ek,ci);
 					}catch(Exception e){
 						ret_val=null;
 						part my_part=comp.driver_array[driver_id].component_part;
@@ -138,14 +136,11 @@ public class instance_driver
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
 	}
-	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
-			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
+	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		return true;
 	}
-	public void create_render_parameter(
-			int render_buffer_id,int parameter_channel_id,int data_buffer_id,
-			engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(data_buffer_id);
 	}
@@ -153,7 +148,7 @@ public class instance_driver
 	{
 		ci.request_response.print(comp.component_id);
 	}
-	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
+	public String[] response_event(engine_kernel ek,client_information ci)
 	{	
 		return null;
 	}

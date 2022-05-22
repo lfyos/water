@@ -2,7 +2,6 @@ package driver_manipulator;
 
 import kernel_camera.camera_result;
 import kernel_component.component;
-import kernel_component.component_collector;
 import kernel_driver.instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
@@ -31,14 +30,11 @@ public class extended_instance_driver extends instance_driver
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
 	}
-	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
-			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
+	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		return true;
 	}
-	public void create_render_parameter(
-			int render_buffer_id,int parameter_channel_id,int data_buffer_id,
-			engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(data_buffer_id);
 	}
@@ -46,7 +42,7 @@ public class extended_instance_driver extends instance_driver
 	{
 		ci.request_response.print(comp.component_id);
 	}
-	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
+	public String[] response_event(engine_kernel ek,client_information ci)
 	{
 		String str;
 		component my_comp;
@@ -75,10 +71,12 @@ public class extended_instance_driver extends instance_driver
 			operate_display_value.set_display_value_request(ek, ci);
 			break;
 		case "show_hide_component":
-			operate_show_hide_component.show_hide_component_request(parameter_channel_id,ek, ci);
+			operate_show_hide_component.show_hide_component_request(
+				ci.display_camera_result.target.parameter_channel_id,ek, ci);
 			break;
 		case "show_hide_parameter":
-			operate_show_hide_parameter.show_hide_parameter_request(parameter_channel_id,ek, ci);
+			operate_show_hide_parameter.show_hide_parameter_request(
+					ci.display_camera_result.target.parameter_channel_id,ek, ci);
 			break;
 		case "lod":
 			operate_lod_scale.lod_scale_request(ek, ci);
@@ -90,7 +88,8 @@ public class extended_instance_driver extends instance_driver
 			operate_display_assembly_flag.set_clear_display_assembly_flag_request(ek, ci);
 			break;
 		case "selection":
-			operate_selection.selection_request(parameter_channel_id,ek, ci);
+			operate_selection.selection_request(
+					ci.display_camera_result.target.parameter_channel_id,ek, ci);
 			break;
 		case "part_list":
 			if((my_comp=ek.component_cont.get_component(audio_component_id))!=null)

@@ -95,7 +95,7 @@ public class movement_suspend
 	{
 		return suspend_collector.component_number;
 	}
-	private void response_suspend_jason_data(int parameter_channel_id,client_information ci,engine_kernel ek)
+	private void response_suspend_jason_data(client_information ci,engine_kernel ek)
 	{
 		component_collector target_collector=new component_collector(ek.render_cont.renders);
 		for(int i=0,ni=virtual_mount_collector.component_collector.length;i<ni;i++)
@@ -103,7 +103,7 @@ public class movement_suspend
 				for(int j=0,nj=virtual_mount_collector.component_collector[i].length;j<nj;j++) {
 					component_link_list cll=virtual_mount_collector.component_collector[i][j];
 					for(;cll!=null;cll=cll.next_list_item)
-						if(cll.comp.get_effective_display_flag(parameter_channel_id))
+						if(cll.comp.get_effective_display_flag(ci.display_camera_result.target.parameter_channel_id))
 							target_collector.register_component(cll.comp,0);
 				}
 		ci.request_response.println("{");
@@ -153,7 +153,7 @@ public class movement_suspend
 			match_array[i]=null;
 		match_number=0;
 	}
-	private void start_follow(int parameter_channel_id,engine_kernel ek,client_information ci)
+	private void start_follow(engine_kernel ek,client_information ci)
 	{
 		String str;
 		
@@ -178,7 +178,7 @@ public class movement_suspend
 				if(ek.render_cont.renders[i].parts[j].system_name.compareTo(str)!=0)
 					continue;
 				for(;cll!=null;cll=cll.next_list_item) {
-					if(cll.comp.get_effective_display_flag(parameter_channel_id))
+					if(cll.comp.get_effective_display_flag(ci.display_camera_result.target.parameter_channel_id))
 						continue;
 					follow_mouse_component_id=cll.comp.component_id;
 						
@@ -199,12 +199,12 @@ public class movement_suspend
 		debug_information.println("Can't find part name in response_event of virtual_mount_driver\t:\t",str);
 		return;
 	}
-	public void response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
+	public void response_event(engine_kernel ek,client_information ci)
 	{
 		String str;
 		switch(((str=ci.request_response.get_parameter("virtual_mount"))==null)?"":str) {
 		case "start_follow":
-			start_follow(parameter_channel_id,ek,ci);
+			start_follow(ek,ci);
 			break;
 		case "terminate_follow":
 			follow_mouse_component_id=-1;
@@ -221,7 +221,7 @@ public class movement_suspend
 					reset_virtual_mount_component(ek);
 			break;
 		case "suspend_jason":
-			response_suspend_jason_data(parameter_channel_id,ci,ek);
+			response_suspend_jason_data(ci,ek);
 			break;
 		}
 	}

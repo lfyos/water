@@ -72,9 +72,8 @@ public class dispatch_component_request
 				for(int driver_id=end_driver_id;driver_id>=begin_driver_id;driver_id--){
 					instance_driver in_dr;
 					if((in_dr=ci.instance_container.get_driver(comp,driver_id))!=null) {
-						int parameter_channel_id=ci.display_camera_result.target.parameter_channel_id;
 						try{
-							ret_val=in_dr.response_event(parameter_channel_id,ek,ci);
+							ret_val=in_dr.response_event(ek,ci);
 						}catch(Exception e){
 							ret_val=null;
 							part my_part=comp.driver_array[driver_id].component_part;
@@ -135,9 +134,8 @@ public class dispatch_component_request
 				for(int driver_id=end_driver_id;driver_id>=begin_driver_id;driver_id--){
 					instance_driver in_dr;
 					if((in_dr=ci.instance_container.get_driver(comp,driver_id))!=null) {
-						int parameter_channel_id=ci.display_camera_result.target.parameter_channel_id;
 						try{
-							ret_val=in_dr.response_event(parameter_channel_id,ek,ci);
+							ret_val=in_dr.response_event(ek,ci);
 						}catch(Exception e){
 							ret_val=null;
 							part my_part=comp.driver_array[driver_id].component_part;
