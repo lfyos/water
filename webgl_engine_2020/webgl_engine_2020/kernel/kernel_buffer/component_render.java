@@ -323,11 +323,9 @@ public class component_render
 					ci.request_response.print(",[",my_instance_id);
 				}
 				ci.request_response.print(",");
-				int data_buffer_id=p.comp.driver_array[p.driver_id].same_part_component_driver_id;
-				int parameter_channel_id=cam_result.target.parameter_channel_id;
 				try{
 					in_dr.create_render_parameter(render_buffer_id,
-							parameter_channel_id,data_buffer_id,ek,ci,cam_result);
+						p.comp.driver_array[p.driver_id].same_part_component_driver_id,ek,ci,cam_result);
 				}catch(Exception e){
 					part my_part=p.comp.driver_array[p.driver_id].component_part;
 					

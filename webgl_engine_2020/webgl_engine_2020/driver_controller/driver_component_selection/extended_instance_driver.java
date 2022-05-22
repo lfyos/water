@@ -37,10 +37,8 @@ public class extended_instance_driver extends instance_driver
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
-		
 	}
-	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
-			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
+	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		if(cr.target.main_display_target_flag){
 			if(ci.display_camera_result!=null)
@@ -52,9 +50,7 @@ public class extended_instance_driver extends instance_driver
 		}
 		return true;
 	}
-	public void create_render_parameter(
-			int render_buffer_id,int parameter_channel_id,int data_buffer_id,
-			engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(data_buffer_id);
 	}
@@ -66,8 +62,8 @@ public class extended_instance_driver extends instance_driver
 		ci.request_response.print("]");
 	}
 
-	private void select_many_component(component comp,int parameter_channel_id,int control_code,
-			engine_kernel ek,client_information ci)
+	private void select_many_component(
+			component comp,int control_code,engine_kernel ek,client_information ci)
 	{
 		String str;
 		
@@ -100,7 +96,8 @@ public class extended_instance_driver extends instance_driver
 				center.x+diff.x*my_x0,center.y+diff.y*my_y0,view_volume_box.p[0].z,
 				center.x+diff.x*my_x1,center.y+diff.y*my_y1,view_volume_box.p[1].z);
 		render_target cam_target=new render_target(comp.component_name,
-				ci.display_camera_result.target.camera_id,parameter_channel_id,
+				ci.display_camera_result.target.camera_id,
+				ci.display_camera_result.target.parameter_channel_id,
 				new component[]{ek.component_cont.root_component},null,ci.clip_plane,0,0,1,
 				view_volume_box,null);
 	
@@ -108,8 +105,7 @@ public class extended_instance_driver extends instance_driver
 			return ;
 		
 		camera_result cam_result=new camera_result(ci.display_camera_result.cam,cam_target,ek.component_cont);
-		component_collector collector=(new list_component_on_collector(
-				cam_result.get_render_buffer_id(ci),parameter_channel_id,false,false,false,
+		component_collector collector=(new list_component_on_collector(false,false,false,
 				((function_id%2)==0)?true:false,false,ek,ci,cam_result)).collector;
 		
 		if(collector.component_number<=0)
@@ -224,7 +220,7 @@ public class extended_instance_driver extends instance_driver
 				ek.camera_cont.camera_array,ci.display_camera_result.target.camera_id);
 		return;
 	}
-	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
+	public String[] response_event(engine_kernel ek,client_information ci)
 	{
 		String str;
 		int control_code=0;
@@ -240,7 +236,7 @@ public class extended_instance_driver extends instance_driver
 			select_single_component(comp,control_code,ek,ci);
 			break;
 		case "many":
-			select_many_component(comp,parameter_channel_id,control_code,ek,ci);
+			select_many_component(comp,control_code,ek,ci);
 			break;
 		case "scale":
 			view_scale(comp,control_code,ek,ci);

@@ -6,7 +6,6 @@ import kernel_camera.locate_camera;
 import kernel_common_class.const_value;
 import kernel_component.component;
 import kernel_component.component_array;
-import kernel_component.component_collector;
 import kernel_driver.instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
@@ -36,17 +35,14 @@ public class extended_instance_driver extends instance_driver
 	{
 		
 	}
-	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
-			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
+	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		if(show_flag)
 			if(cr.target.selection_target_flag||cr.target.main_display_target_flag)
 				return false;
 		return true;
 	}
-	public void create_render_parameter(
-			int render_buffer_id,int parameter_channel_id,int data_buffer_id,
-			engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(cr.target.main_display_target_flag?data_buffer_id:(-1-data_buffer_id));
 	}
@@ -330,7 +326,7 @@ public class extended_instance_driver extends instance_driver
 				ci.parameter,null,scale_value,ci.parameter.aspect,
 				ek.modifier_cont[modifier_container_id].get_timer().get_current_time(),true,true,true,p0,p1);
 	}
-	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
+	public String[] response_event(engine_kernel ek,client_information ci)
 	{
 		String str;
 		double scale_value,value;

@@ -2,13 +2,11 @@ package driver_water;
 
 import kernel_camera.camera_result;
 import kernel_component.component;
-import kernel_component.component_collector;
 import kernel_driver.instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_render.render_target;
 import kernel_render.target_viewport;
-
 import kernel_transformation.box;
 import kernel_transformation.plane;
 import kernel_transformation.point;
@@ -55,15 +53,14 @@ public class extended_instance_driver extends instance_driver
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
 	}
-	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
-			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
+	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		if(ci.display_camera_result.target.target_id!=cr.target.target_id)
 			return true;
 		boolean exit_flag=true;
 		
 		for(int i=0,ni=user_parameter_channel_id.length;i<ni;i++)
-			if(parameter_channel_id==user_parameter_channel_id[i]) {
+			if(cr.target.parameter_channel_id==user_parameter_channel_id[i]) {
 				exit_flag=false;
 				break;
 			}
@@ -75,7 +72,7 @@ public class extended_instance_driver extends instance_driver
 			aspect=1.0/aspect;
 		
 		render_target rt=new render_target(comp.component_name,
-				ci.display_camera_result.target.camera_id,parameter_channel_id,
+				ci.display_camera_result.target.camera_id,cr.target.parameter_channel_id,
 				new component[]{ek.component_cont.root_component},null,
 				mirror_plane,texture_width,texture_height,1,
 				new box(-aspect,-aspect,-1,aspect,aspect,1),
@@ -96,9 +93,7 @@ public class extended_instance_driver extends instance_driver
 		}
 		return false;
 	}
-	public void create_render_parameter(
-			int render_buffer_id,int parameter_channel_id,int data_buffer_id,
-			engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		ci.request_response.print("[",data_buffer_id);
 		ci.request_response.print(",",bak_mirror_id);
@@ -116,7 +111,7 @@ public class extended_instance_driver extends instance_driver
 		ci.request_response.print(",",attenuation);
 		ci.request_response.print("]");
 	}
-	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
+	public String[] response_event(engine_kernel ek,client_information ci)
 	{
 		return null;
 	}

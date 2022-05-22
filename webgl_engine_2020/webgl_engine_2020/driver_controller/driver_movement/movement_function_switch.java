@@ -1211,8 +1211,7 @@ public class movement_function_switch
 		}
 		return null;
 	}
-	public String[] get_engine_result(int parameter_channel_id,
-			int movement_component_id,int movement_driver_id)
+	public String[] get_engine_result(int movement_component_id,int movement_driver_id)
 	{
 		String str;
 				
@@ -1225,7 +1224,7 @@ public class movement_function_switch
 		case "design":
 			return design_request_dispatch(movement_component_id,movement_driver_id);
 		case "virtual_mount":
-			manager.suspend.response_event(parameter_channel_id,ek,ci);
+			manager.suspend.response_event(ek,ci);
 			return null;
 		case "parameter":
 			if((str=ci.request_response.get_parameter("parameter"))==null)

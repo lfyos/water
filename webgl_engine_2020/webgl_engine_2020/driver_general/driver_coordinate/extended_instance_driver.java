@@ -3,13 +3,11 @@ package driver_coordinate;
 import kernel_camera.camera_result;
 import kernel_common_class.const_value;
 import kernel_component.component;
-import kernel_component.component_collector;
 import kernel_driver.instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_transformation.box;
 import kernel_part.part;
-
 
 public class extended_instance_driver extends instance_driver
 {
@@ -52,10 +50,8 @@ public class extended_instance_driver extends instance_driver
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
-
 	}
-	public boolean check(int render_buffer_id,int parameter_channel_id,int data_buffer_id,
-			engine_kernel ek,client_information ci,camera_result cr,component_collector collector)
+	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		if(ek.do_selection_version!=do_selection_version){
 			do_selection_version=ek.do_selection_version;
@@ -63,9 +59,7 @@ public class extended_instance_driver extends instance_driver
 		}
 		return cr.target.main_display_target_flag?false:true;
 	}
-	public void create_render_parameter(
-			int render_buffer_id,int parameter_channel_id,int data_buffer_id,
-			engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		int coordinate_number		=0;
 		int component_id[]			=new int	[ek.component_cont.root_component.component_id+1];
@@ -100,7 +94,7 @@ public class extended_instance_driver extends instance_driver
 	{
 		ci.request_response.print(comp.component_id);
 	}
-	public String[] response_event(int parameter_channel_id,engine_kernel ek,client_information ci)
+	public String[] response_event(engine_kernel ek,client_information ci)
 	{
 		String str;
 
