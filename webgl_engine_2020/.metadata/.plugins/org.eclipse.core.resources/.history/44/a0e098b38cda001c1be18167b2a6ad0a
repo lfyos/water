@@ -4,13 +4,9 @@ import kernel_file_manager.file_reader;
 
 public class component_core_7 extends component_core_6
 {
-	private boolean display_flag[],effective_display_flag[];
-
 	public void destroy()
 	{
 		super.destroy();
-		display_flag=null;
-		effective_display_flag=null;
 	}
 	public boolean get_effective_display_flag(int parameter_channel_id)
 	{
@@ -41,7 +37,7 @@ public class component_core_7 extends component_core_6
 			}
 		if(buffer_channel_number<=0)
 			return;
-		for(component p=(component)this;p!=null;) {
+		for(component p=(component)this;p!=null;p=component_cont.get_component(p.parent_component_id)) {
 			int modify_number=0;
 			for(int i=0;i<buffer_channel_number;i++){
 				if(p.caculate_effective_display_flag(buffer_channel_id[i]))
@@ -49,7 +45,8 @@ public class component_core_7 extends component_core_6
 				if(p.caculate_assembly_flag(buffer_channel_id[i]))
 					modify_number++;
 			}
-			p=(modify_number<=0)?null:component_cont.get_component(p.parent_component_id);
+			if(modify_number<=0)
+				break;
 		}
 	}
 	public component_core_7(String token_string,file_reader fr,boolean part_list_flag,

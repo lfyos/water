@@ -138,8 +138,7 @@
 								function_id=8;
 								render.system_call_processor.set_menu_show("内容显示功能选择组件");
 							}else
-								for(var i=0;i<10;i++)
-									render.system_call_processor.set_target_parameter_channel(i,function_id);
+								render.system_call_processor.set_target_parameter_channel(-1,function_id);
 							ep.hightlight=[0,1.0-function_id/9.0-1.0/9.0,		1.0,1.0-function_id/9.0];
 						}
 					}

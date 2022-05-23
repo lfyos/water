@@ -1,6 +1,5 @@
 package driver_camera_operation;
 
-import kernel_camera.camera;
 import kernel_camera.camera_result;
 import kernel_camera.locate_camera;
 import kernel_common_class.const_value;
@@ -33,7 +32,6 @@ public class extended_instance_driver extends instance_driver
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
-		
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
@@ -192,37 +190,6 @@ public class extended_instance_driver extends instance_driver
 		ci.display_camera_result.cam.mark_restore_stack();
 		ci.display_camera_result.cam.push_restore_stack(
 			ek.modifier_cont[modifier_container_id],true,loca,ci.display_camera_result.cam.parameter);
-	}
-	private String client_parameter_request(client_information ci,camera camera_array[])
-	{
-		String str;
-		if((str=ci.request_response.get_parameter("discard_lod_value"))!=null)
-			switch(str.toLowerCase()) {
-			case "true":
-			case "yes":
-			case "on":
-				ci.parameter.do_discard_lod_flag=true;
-				break;
-			case "false":
-			case "no":
-			case "off":
-				ci.parameter.do_discard_lod_flag=false;
-				break;
-			}
-		if((str=ci.request_response.get_parameter("selection_lod_value"))!=null)
-			switch(str.toLowerCase()) {
-			case "true":
-			case "yes":
-			case "on":
-				ci.parameter.do_selection_lod_flag=true;
-				break;
-			case "false":
-			case "no":
-			case "off":
-				ci.parameter.do_selection_lod_flag=false;
-				break;
-			}
-		return null;
 	}
 	private void locate(engine_kernel ek,client_information ci)
 	{
@@ -425,9 +392,6 @@ public class extended_instance_driver extends instance_driver
 			if((str=ci.request_response.get_parameter("high_value"))!=null)
 				if((value=Double.parseDouble(str))>=(const_value.min_value))
 					ci.display_camera_result.cam.parameter.high_precision_scale=value;
-			return null;
-		case "client_parameter":
-			client_parameter_request(ci,ek.camera_cont.camera_array);
 			return null;
 		case "show_hide":
 			ci.instance_container.get_driver(comp,driver_id).update_component_parameter_version(0);

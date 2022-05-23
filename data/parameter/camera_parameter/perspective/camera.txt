@@ -107,9 +107,6 @@
 /*	light_camera_flag			*/		yes
 /*	name            			*/		light_1
 
-		
-
-
 /*	switch_time					*/		1000000000
 /*	distance     				*/		10
 /*	fovy						*/		45

@@ -100,7 +100,7 @@ public class camera_parameter
 	{
 		camera_parameter result;
 		result=new camera_parameter(
-					movement_flag,		direction_flag,		change_type_flag,
+					movement_flag,				direction_flag,					change_type_flag,
 					scale_value					*p	+t.scale_value			*q,
 					(long)(switch_time_length	*p	+t.switch_time_length	*q),
 					distance					*p	+t.distance				*q,

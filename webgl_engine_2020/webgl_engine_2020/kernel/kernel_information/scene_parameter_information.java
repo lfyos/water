@@ -39,7 +39,6 @@ public class scene_parameter_information extends jason_creator
 		print("scene_cors_string",							sp.scene_cors_string);
 		
 		print("multiparameter_number",						sp.multiparameter_number);
-		print("initial_parameter_channel_id",				sp.initial_parameter_channel_id);
 		print("default_display_bitmap",						sp.default_display_bitmap);
 		
 		print("component_collector_stack_file_name",		sp.component_collector_stack_file_name);
@@ -65,9 +64,7 @@ public class scene_parameter_information extends jason_creator
 		print("component_sort_min_distance",				sp.component_sort_min_distance);
 		
 		print("not_do_ancestor_render_flag",				sp.not_do_ancestor_render_flag);
-		print("do_discard_lod_flag",						sp.do_discard_lod_flag);
-		print("do_selection_lod_flag",						sp.do_selection_lod_flag);
-		
+
 		print("proxy_response_length",						sp.proxy_response_length);
 		print("compress_response_length",					sp.compress_response_length);
 	}

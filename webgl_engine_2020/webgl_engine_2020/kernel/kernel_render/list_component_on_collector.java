@@ -1,7 +1,6 @@
 package kernel_render;
 
 import kernel_camera.camera_result;
-import kernel_common_class.const_value;
 import kernel_common_class.debug_information;
 import kernel_component.component;
 import kernel_component.component_collector;
@@ -17,9 +16,9 @@ public class list_component_on_collector
 	private engine_kernel ek;
 	private client_information ci;
 	private camera_result cam_result;
-	private boolean do_discard_lod_flag,do_selection_lod_flag,discard_cross_clip_plane_flag,discard_unload_component_flag,add_number_flag;
+	private boolean do_discard_lod_flag,do_selection_lod_flag,discard_cross_clip_plane_flag;
+	private boolean discard_unload_component_flag,add_number_flag;
 	private double camera_lod_precision_scale;
-	
 	private int no_driver_component_number;
 	
 	private boolean register(component comp,int driver_id)
@@ -94,23 +93,16 @@ public class list_component_on_collector
 			return false;
 		if(comp.selected_component_family_flag)
 			return false;
-		double lod_precision2;
-		{
-			box my_box;
-			if((my_box=comp.get_component_box(false))==null)
-				return false;
-			double distance2=my_box.center().sub(cam_result.eye_point).distance2();
-			double fovy_tanl=cam_result.cam.parameter.half_fovy_tanl*2.0;
-			distance2*=fovy_tanl*fovy_tanl;
-			double diameter2=my_box.distance2();
-			lod_precision2=diameter2/distance2;
-		}
-		{
-			lod_precision2*=camera_lod_precision_scale*camera_lod_precision_scale;
-			double driver_lod_precision_scale=ci.instance_container.get_lod_precision_scale(comp);
-			if(driver_lod_precision_scale>const_value.min_value)
-				lod_precision2*=driver_lod_precision_scale*driver_lod_precision_scale;
-		}
+		box my_box;
+		if((my_box=comp.get_component_box(false))==null)
+			return false;
+		my_box=cam_result.matrix.multiply(my_box);
+		my_box.p[1].z=my_box.p[0].z;
+		double lod_precision2=my_box.distance2();
+		double driver_lod_precision_scale=ci.instance_container.get_lod_precision_scale(comp);
+		lod_precision2*=driver_lod_precision_scale*driver_lod_precision_scale;
+		lod_precision2*=camera_lod_precision_scale*camera_lod_precision_scale;
+
 		if(do_discard_lod_flag){
 			if(lod_precision2<=comp.uniparameter.discard_precision2){
 				if(add_number_flag)

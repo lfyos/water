@@ -6,3 +6,6 @@
 /*		modifier_container_id					*/		1
 /*		mouse_modify_location_component_name	*/		mouse_modify_location_component
 /*		virtual_mount_root_component_name		*/		virtual_mount_root_component
+
+/*		display_parameter_channel_id			*/		2	2	3
+/*		hide_parameter_channel_id				*/		2 	4	5

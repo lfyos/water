@@ -69,7 +69,7 @@
 								if(new_camera_id==8)
 									render.system_call_processor.set_menu_show("相机功能选择组件");
 								else
-									render.system_call_processor.select_camera(new_camera_id);
+									render.system_call_processor.select_camera(new_camera_id,-1);
 								ep.hightlight=[0,1.0-new_camera_id/9.0-1.0/9.0,		1.0,1.0-new_camera_id/9.0];
 							}
 						}

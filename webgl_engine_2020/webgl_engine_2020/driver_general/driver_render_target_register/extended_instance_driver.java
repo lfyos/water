@@ -1,7 +1,6 @@
 package driver_render_target_register;
 
 import kernel_camera.camera_result;
-import kernel_common_class.debug_information;
 import kernel_component.component;
 import kernel_driver.instance_driver;
 import kernel_engine.client_information;
@@ -15,22 +14,18 @@ import kernel_render.target_viewport;
 
 public class extended_instance_driver extends instance_driver
 {
-	private int target_id;
+	private int main_target_id;
 	private render_target_parameter	target_parameter[];
-	private component  render_component_array[];
-	private int render_driver_id_array[];
 	
 	public void destroy()
 	{
 		super.destroy();
-		render_component_array=null;
-		render_driver_id_array=null;
 	}
 	public extended_instance_driver(component my_comp,int my_driver_id)
 	{
 		super(my_comp,my_driver_id);
-		target_id=-1;
-		target_parameter=null;
+		
+		main_target_id=-1;
 		
 		part p=comp.driver_array[driver_id].component_part;
 		file_reader f=new file_reader(p.directory_name+p.material_file_name,p.file_charset);
@@ -39,9 +34,6 @@ public class extended_instance_driver extends instance_driver
 		for(int i=0;i<ni;i++)
 			target_parameter[i]=new render_target_parameter(f);
 		f.close();
-		
-		render_component_array=new component[] {};
-		render_driver_id_array=new int[] {};
 	}
 	private void write_target_parameter()
 	{
@@ -64,26 +56,27 @@ public class extended_instance_driver extends instance_driver
 	}
 	private void register_target(engine_kernel ek,client_information ci)
 	{
-		int main_view_part_id=-1;
 		double my_x=ci.parameter.x,my_y=ci.parameter.y;
 		for(int i=0,ni=target_parameter.length;i<ni;i++)
-			for(int j=0,nj=target_parameter[i].viewport.length;j<nj;j++){
-				target_viewport tv=target_parameter[i].viewport[j];
-				if((tv.x<=my_x)&&(tv.y<=my_y)&&(my_x<=(tv.x+tv.width))&&(my_y<=(tv.y+tv.height))){
-					main_view_part_id=i;
-					i=ni;
-					j=nj;
-				}
-			}
-		component	my_component_array[]=new component[render_component_array.length+1];
-		int			my_driver_id_array[]=new int[my_component_array.length];
-		my_component_array[0]=ek.component_cont.root_component;
-		my_driver_id_array[0]=-1;
-		for(int i=0,j=1,ni=render_component_array.length;i<ni;i++,j++) {
-			my_component_array[j]=render_component_array[i];
-			 my_driver_id_array[j]=render_driver_id_array[i];
-		}
-		
+			if(target_parameter[i].framebuffer_width<=0)
+				if(target_parameter[i].framebuffer_height<=0)
+					for(int j=0,nj=target_parameter[i].viewport.length;j<nj;j++){
+						target_viewport tv=target_parameter[i].viewport[j];
+						if((tv.x<=my_x)&&(my_x<=(tv.x+tv.width)))
+							if((tv.y<=my_y)&&(my_y<=(tv.y+tv.height))){
+								main_target_id=i;
+								i=ni;
+								j=nj;
+							}
+					}
+		if(main_target_id<0)
+			for(int i=0,ni=target_parameter.length;i<ni;i++)
+				if(target_parameter[i].framebuffer_width<=0)
+					if(target_parameter[i].framebuffer_height<=0){
+						main_target_id=i;
+						break;
+					}
+
 		render_target main_rt=null;
 		for(int i=0,ni=target_parameter.length;i<ni;i++){
 			double aspect_value=ci.parameter.aspect;
@@ -93,25 +86,22 @@ public class extended_instance_driver extends instance_driver
 			double center_x=target_parameter[i].center_x;
 			double center_y=target_parameter[i].center_y;
 			
-			render_target rt=new render_target(comp.component_name+"/"+Integer.toString(i),
+			render_target rt=new render_target(target_parameter[i].target_name,
 				target_parameter[i].camera_id,target_parameter[i].parameter_channel_id,
-				my_component_array,my_driver_id_array,ci.clip_plane,0,0,1,
+				new component[] {ek.component_cont.root_component},null,ci.clip_plane,
+				target_parameter[i].framebuffer_width,target_parameter[i].framebuffer_height,1,
 				new box(center_x-aspect_value,center_y-1.0,-1.0,center_x+aspect_value,center_y+1.0,1.0),
-				target_parameter[i].viewport);
+				target_parameter[i].viewport,(main_target_id==i)?true:false,false,
+				target_parameter[i].do_discard_lod_flag,target_parameter[i].do_selection_lod_flag);
 			
-			if(main_view_part_id>=0)
-				rt.main_display_target_flag=(main_view_part_id==i)?true:false;
-			else
-				rt.main_display_target_flag=(i==0)?true:false;
 			ci.target_container.register_target(rt,-1,main_rt);
-			if(main_rt==null){
+			if(main_rt==null)
 				main_rt=rt;
-				target_id=rt.target_id;
-			}
 		}
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
+		
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
@@ -126,7 +116,7 @@ public class extended_instance_driver extends instance_driver
 	}
 	public void create_component_parameter(engine_kernel ek,client_information ci)
 	{
-		ci.request_response.print(target_id);
+		ci.request_response.print(0);
 	}
 	public String[] response_event(engine_kernel ek,client_information ci)
 	{
@@ -138,11 +128,12 @@ public class extended_instance_driver extends instance_driver
 		if(target_parameter==null)
 			return null;
 		if((str=ci.request_response.get_parameter("target"))==null)
-			return null;
-		if((target_id=Integer.decode(str))<0)
-			return null;
-		if(target_id>=target_parameter.length)
-			return null;
+			target_id=main_target_id;
+		else if((target_id=Integer.parseInt(str))<0)
+			target_id=main_target_id;
+		else if(target_id>=target_parameter.length)
+			target_id=main_target_id;
+			
 		if((str=ci.request_response.get_parameter("operation"))==null)
 			return null;
 
@@ -198,48 +189,35 @@ public class extended_instance_driver extends instance_driver
 				return null;
 			ci.request_response.print(target_parameter[target_id].viewport[viewport_id].clear_color);
 			break;
-		case "clear_render_component":
-			render_component_array=new component[] {};
-			render_driver_id_array=new int[] {};
-			break;
-		case "append_render_component":
-			{
-				component bak_comp[]=render_component_array,append_comp=null;
-				int bak_driver_id[]=render_driver_id_array,append_driver_id=0;
-				if((str=ci.request_response.get_parameter("component_id"))!=null)
-					if((append_comp=ek.component_cont.get_component(Integer.decode(str)))==null){
-						debug_information.println("Can't Find component by ID in append_render_component\t:\t",str);
-						break;
-					}
-				if((str=ci.request_response.get_parameter("component_name"))!=null){
-					try {
-							str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-							str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-					}catch(Exception e) {
-							debug_information.println("Can't decode component name in append_render_component\t:\t",str);
-							break;
-					}
-					if((append_comp=ek.component_cont.search_component(str))==null){
-						debug_information.println("Can't Find component by name in append_render_component\t:\t",str);
-						break;
-					}
-				}
-				if(append_comp==null)
+		case "turnon_off_lod":
+			if((main_target_id<0)||(main_target_id>=target_parameter.length))
+				break;
+			if((str=ci.request_response.get_parameter("discard_lod_value"))!=null)
+				switch(str.toLowerCase()) {
+				case "true":
+				case "yes":
+				case "on":
+					target_parameter[main_target_id].do_discard_lod_flag=true;
 					break;
-				if((str=ci.request_response.get_parameter("driver_id"))!=null)
-					if((str=str.trim()).length()>0)
-						append_driver_id=Integer.decode(str);
-
-				render_component_array=new component[bak_comp.length+1];
-				render_driver_id_array=new int[render_component_array.length];
-				
-				for(int i=0,ni=bak_comp.length;i<ni;i++) {
-					render_component_array[i]=bak_comp[i];
-					render_driver_id_array[i]=bak_driver_id[i];
+				case "false":
+				case "no":
+				case "off":
+					target_parameter[main_target_id].do_discard_lod_flag=false;
+					break;
 				}
-				render_component_array[render_component_array.length-1]=append_comp;
-				render_driver_id_array[render_component_array.length-1]=append_driver_id;
-			}
+			if((str=ci.request_response.get_parameter("selection_lod_value"))!=null)
+				switch(str.toLowerCase()) {
+				case "true":
+				case "yes":
+				case "on":
+					target_parameter[main_target_id].do_selection_lod_flag=true;
+					break;
+				case "false":
+				case "no":
+				case "off":
+					target_parameter[main_target_id].do_selection_lod_flag=false;
+					break;
+				}
 			break;
 		}
 		return null;

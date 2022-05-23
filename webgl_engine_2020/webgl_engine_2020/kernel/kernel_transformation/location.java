@@ -152,7 +152,7 @@ public class location
 	}
 	public box multiply(box b)
 	{
-		box ret_val=new box();
+		box ret_val=null;
 		
 		for(int i=0;i<2;i++)
 			for(int j=0;j<2;j++)

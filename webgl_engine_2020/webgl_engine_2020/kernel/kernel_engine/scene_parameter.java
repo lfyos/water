@@ -28,7 +28,6 @@ public class scene_parameter
 	public String scene_cors_string;
 	
 	public int multiparameter_number;
-	public int initial_parameter_channel_id;
 	public long default_display_bitmap;
 	
 	public String component_collector_stack_file_name;
@@ -55,7 +54,7 @@ public class scene_parameter
 	
 	public long proxy_response_length,compress_response_length;
 	
-	public boolean not_do_ancestor_render_flag,do_discard_lod_flag,do_selection_lod_flag,fast_load_flag;
+	public boolean not_do_ancestor_render_flag,fast_load_flag;
 
 	public scene_parameter(client_request_response request_response,
 			String scene_name,system_parameter system_par,String my_scene_sub_directory,
@@ -195,10 +194,6 @@ public class scene_parameter
 		if((multiparameter_number=fr.get_int())<1)
 			multiparameter_number=1;
 		
-		if((initial_parameter_channel_id=fr.get_int())<0)
-			initial_parameter_channel_id=0;
-		initial_parameter_channel_id%=multiparameter_number;
-		
 		default_display_bitmap=fr.get_long();
 		
 		if((component_collector_stack_file_name=fr.get_string())==null)
@@ -258,8 +253,6 @@ public class scene_parameter
 		compress_response_length				=fr.get_long();
 		
 		not_do_ancestor_render_flag				=fr.get_boolean();
-		do_discard_lod_flag						=fr.get_boolean();
-		do_selection_lod_flag					=fr.get_boolean();
 		fast_load_flag							=fr.get_boolean();
 		
 		fr.close();

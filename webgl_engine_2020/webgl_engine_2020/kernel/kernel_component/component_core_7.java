@@ -4,39 +4,35 @@ import kernel_file_manager.file_reader;
 
 public class component_core_7 extends component_core_6
 {
-	private boolean display_flag[],effective_display_flag[];
-
 	public void destroy()
 	{
 		super.destroy();
-		display_flag=null;
-		effective_display_flag=null;
 	}
 	public boolean get_effective_display_flag(int parameter_channel_id)
 	{
-		return effective_display_flag[parameter_channel_id];
+		return multiparameter[parameter_channel_id].effective_display_flag;
 	}
 	public boolean caculate_effective_display_flag(int parameter_channel_id)
 	{
 		int child_number=children_number();
-		boolean old_effective_display_flag=effective_display_flag[parameter_channel_id];
+		boolean old_effective_display_flag=multiparameter[parameter_channel_id].effective_display_flag;
 
 		if(child_number<=0)
-			effective_display_flag[parameter_channel_id]=display_flag[parameter_channel_id];
+			multiparameter[parameter_channel_id].effective_display_flag=multiparameter[parameter_channel_id].display_flag;
 		else{
-			effective_display_flag[parameter_channel_id]=false;
-			if(display_flag[parameter_channel_id])
+			multiparameter[parameter_channel_id].effective_display_flag=false;
+			if(multiparameter[parameter_channel_id].display_flag)
 				for(int i=0;i<child_number;i++)
-					effective_display_flag[parameter_channel_id]|=children[i].get_effective_display_flag(parameter_channel_id);
+					multiparameter[parameter_channel_id].effective_display_flag|=children[i].get_effective_display_flag(parameter_channel_id);
 		}
-		return effective_display_flag[parameter_channel_id]^old_effective_display_flag;
+		return multiparameter[parameter_channel_id].effective_display_flag^old_effective_display_flag;
 	}
 	public void modify_display_flag(int parameter_channel_id[],boolean new_display_flag,component_container component_cont)
 	{
 		int buffer_channel_number=0,buffer_channel_id[]=new int[parameter_channel_id.length];
 		for(int i=0,ni=parameter_channel_id.length;i<ni;i++)
-			if(display_flag[parameter_channel_id[i]]^new_display_flag){
-				display_flag[parameter_channel_id[i]]=new_display_flag;
+			if(multiparameter[parameter_channel_id[i]].display_flag^new_display_flag){
+				multiparameter[parameter_channel_id[i]].display_flag=new_display_flag;
 				buffer_channel_id[buffer_channel_number++]=parameter_channel_id[i];
 			}
 		if(buffer_channel_number<=0)
@@ -57,12 +53,5 @@ public class component_core_7 extends component_core_6
 			boolean normalize_location_flag,component_construction_parameter ccp)
 	{
 		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
-
-		display_flag			=new boolean[multiparameter.length];
-		effective_display_flag	=new boolean[multiparameter.length];
-		for(int i=0,ni=multiparameter.length;i<ni;i++) {
-			display_flag[i]=true;
-			effective_display_flag[i]=true;
-		}
 	}
 }
