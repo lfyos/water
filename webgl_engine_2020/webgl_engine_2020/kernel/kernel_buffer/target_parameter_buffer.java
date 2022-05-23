@@ -102,7 +102,6 @@ public class target_parameter_buffer
 				client_interface.print(",",				vp[i].width);
 				client_interface.print(",",				vp[i].height);
 				client_interface.print(",",				vp[i].method_id);
-				client_interface.print(",",				vp[i].pass_id);
 				
 				if(vp[i].clear_color!=null){
 					for(int j=0,nj=vp[i].clear_color.length;j<nj;j++)

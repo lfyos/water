@@ -115,7 +115,6 @@ uniform pass_information
 	int		target_height;
 	
 	int		method_id;
-	int		pass_id;
 	int		clear_flag;
 	int		tmp0,tmp1,tmp2;
 	

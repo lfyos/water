@@ -18,9 +18,3 @@ Access-Control-Allow-Origin				*
     	SSLEnabled="true" clientAuth="false" maxThreads="150" scheme="https" secure="true" sslProtocol="TLS"
 />
 
-
-		int render_buffer_id	=cam_result.get_render_buffer_id(ci);
-		int data_buffer_id		=comp.driver_array[driver_id].same_part_component_driver_id;
-		int parameter_channel_id=cam_result.target.parameter_channel_id;
-		
-		

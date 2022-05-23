@@ -113,37 +113,28 @@ void main(void)
 		break;
 	}
 
-	if(pass_info.method_id==1){
-		if(pass_info.pass_id==0){
-			frag_data[0]=code_integer(my_component_id);
-			frag_data[1]=code_integer(my_body_id);
-			frag_data[2]=code_integer(my_face_id);
-			frag_data[3]=code_integer(my_point_id);
-		}else{
-			frag_data[0]=code_integer(my_loop_id);
-			frag_data[1]=code_integer(my_edge_id);
-			frag_data[2]=code_float(gl_FragCoord.z*2.0-1.0);
-			frag_data[3]=code_float(render_value/4.0);
-		}
-	}else{
-		if(system_info.highlight_component_id==my_component_id)
-			if(system_info.highlight_body_id==my_body_id)
-				if(system_info.highlight_face_id==my_face_id)
-					switch(system_info.millisecond/100){
-					default:
-					case 0:
-					case 1:
-					case 2:
-					case 3:
-					case 4:
-						break;
-					case 5:
-					case 6:
-					case 7:
-					case 8:
-					case 9:
-						frag_data[0]=vec4(1.0,0.0,0.0,1.0);
-						break;
-					}
+	switch(pass_info.method_id){
+	case 1:
+		frag_data[0]=code_integer(my_component_id);
+		frag_data[1]=code_integer(my_body_id);
+		frag_data[2]=code_integer(my_face_id);
+		frag_data[3]=code_integer(my_point_id);
+		break;
+	case 2:
+		frag_data[0]=code_integer(my_loop_id);
+		frag_data[1]=code_integer(my_edge_id);
+		frag_data[2]=code_float(gl_FragCoord.z*2.0-1.0);
+		frag_data[3]=code_float(render_value/4.0);
+		break;
+	default:
+		if(system_info.highlight_component_id!=my_component_id)
+			break;
+		if(system_info.highlight_body_id!=my_body_id)
+			break;
+		if(system_info.highlight_face_id!=my_face_id)
+			break;	
+		if((system_info.millisecond/100)>=5)
+			frag_data[0]=vec4(1.0,0.0,0.0,1.0);
+		break;
 	}
 }

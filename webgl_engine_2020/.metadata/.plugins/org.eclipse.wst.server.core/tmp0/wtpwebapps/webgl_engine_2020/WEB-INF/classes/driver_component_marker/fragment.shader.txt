@@ -19,7 +19,7 @@ void main(void)
 		if(pass_info.method_id!=0){
 			frag_data[0]=code_integer(int(par[3].x));				//component_id
 			frag_data[1]=code_integer(int(par[3].y));				//body_id
-			if(pass_info.pass_id==0){
+			if(pass_info.method_id==1){
 				frag_data[2]=frag_data[1];							//face_id
 				frag_data[3]=frag_data[1];							//vertex_id
 			}else{

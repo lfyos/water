@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="render_target_register_component"/>
+		<item key="selection" value="set_background_mode"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="set_background_mode"/>
+			<item value="primitive_type"/>
+			<item value="method_id"/>
+			<item value="get_component_render_parameter"/>
+			<item value="parse_web_server_response_data"/>
+			<item value="pass_id"/>
+			<item value="viewport"/>
+			<item value="render_component"/>
+			<item value="do_render_number"/>
+			<item value="render_target_number"/>
 			<item value="render_target_register_component"/>
 			<item value="lod"/>
 			<item value="change_type_flag"/>
 			<item value="do_discard_lod_flag"/>
 			<item value="turnonoff_level_of_detail"/>
-			<item value="set_level_of_detail_parameter"/>
-			<item value="for ("/>
-			<item value="for("/>
-			<item value="select_camera"/>
-			<item value="for"/>
-			<item value="set_display_value"/>
-			<item value="main_target_id"/>
-			<item value="&quot;render_target_register_component&quot;"/>
-			<item value="set_display_mode"/>
-			<item value="engine_expire_time_length"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
@@ -43,8 +43,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="80"/>
-		<item key="DIALOG_Y_ORIGIN" value="350"/>
+		<item key="DIALOG_X_ORIGIN" value="148"/>
+		<item key="DIALOG_Y_ORIGIN" value="311"/>
 		<item key="DIALOG_WIDTH" value="408"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>

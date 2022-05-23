@@ -208,7 +208,7 @@ function construct_uniform_block_object(my_gl)
 		this.gl.bufferSubData(this.gl.UNIFORM_BUFFER,float_data.length*4,new Int32Array (int_data),		0);
 	};	
 	
-	this.bind_pass=function(method_id,pass_id,clear_flag,viewport,clear_color)
+	this.bind_pass=function(method_id,clear_flag,viewport,clear_color)
 	{
 		var float_data=[
 			clear_color[0],
@@ -225,7 +225,6 @@ function construct_uniform_block_object(my_gl)
 			viewport[5],
 			
 			method_id,
-			pass_id,
 			clear_flag,
 
 			0,0,0

@@ -56,8 +56,6 @@ public class extended_instance_driver extends instance_driver
 					};
 			break;
 		case "directory":
-			if(ci.display_camera_result.target.parameter_channel_id!=user_parameter_channel_id)
-				break;
 			if((str=ci.request_response.get_parameter("directory"))==null)
 				break;
 			if(directory_name.compareTo(str)!=0) {
@@ -66,8 +64,6 @@ public class extended_instance_driver extends instance_driver
 			}
 			break;
 		case "mode":
-			if(ci.display_camera_result.target.parameter_channel_id!=user_parameter_channel_id)
-				break;
 			if((str=ci.request_response.get_parameter("mode"))==null)
 				break;
 			int new_mode=Integer.decode(str);

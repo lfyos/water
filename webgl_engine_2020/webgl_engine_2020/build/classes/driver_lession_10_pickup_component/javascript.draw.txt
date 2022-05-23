@@ -8,9 +8,8 @@
 	]
 ],
 
-function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
-			render_buffer_id,	component_data_array,	project_matrix,			view_port,	do_render_number,
-			render)
+function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buffer_id,
+			component_data_array,	project_matrix,			view_port,		do_render_number,	render)
 {
 	var gl								=render.gl;
 	var shader_object					=render.render_program.render_program[render_id];
@@ -46,10 +45,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var computer						=render.computer;
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
-	
-	
-	
-		
+
 	if(do_render_number.engine_render==0){
 		shader_program.sampler=gl.createSampler();
 		gl.samplerParameteri(shader_program.sampler,	gl.TEXTURE_MAG_FILTER,	gl.LINEAR);
@@ -66,6 +62,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	switch(method_id){
 	case 0:
 	case 1:
+	case 2:
 		break;
 	default:
 		return;

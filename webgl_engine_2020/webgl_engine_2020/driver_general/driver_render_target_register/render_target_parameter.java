@@ -77,7 +77,7 @@ public class render_target_parameter
 				for(int j=0,nj=clear_color.length;j<nj;j++)
 					clear_color[j]=f.get_double();
 			}
-			viewport[i]=new target_viewport(x,y,width,height,method_id,0,clear_color);
+			viewport[i]=new target_viewport(x,y,width,height,method_id,clear_color);
 		}
 	}
 }

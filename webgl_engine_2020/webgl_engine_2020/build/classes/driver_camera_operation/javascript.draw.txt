@@ -7,9 +7,8 @@
 	]
 ],
 
-function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
-			render_buffer_id,	component_data_array,	project_matrix,			view_port,	do_render_number,
-			render)
+function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buffer_id,
+			component_data_array,	project_matrix,			view_port,		do_render_number,	render)
 {
 	var gl								=render.gl;
 	var shader_object					=render.render_program.render_program[render_id];
@@ -238,8 +237,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 
 		part_material[4]=vertical_distance*scale;
 	};
-	function draw_direction_buttion(method_id,primitive_type,
-		shader_program,part_buffer_object,camera_render_parameter)
+	function draw_direction_buttion(primitive_type,shader_program,part_buffer_object,camera_render_parameter)
 	{			
 		for(var i=0,n=component_data_array.length;i<n;i++){
 			var buffer_id			=(component_data_array[i]>=0)?(component_data_array[i]):(-1-component_data_array[i]);
@@ -269,19 +267,15 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	
 	if(do_render_number.engine_render==0)
 		shader_program.par_uniform=gl.getUniformLocation(shader_program,"par");
-		
-	if(pass_id!=0)
-		return;
-	
+
 	switch(method_id){
 	case 0:
-		draw_direction_buttion(method_id,gl.LINES,shader_program,
-			part_buffer_object.edge,camera_render_parameter);
+		draw_direction_buttion(gl.LINES,shader_program,part_buffer_object.edge,camera_render_parameter);
 	case 1:
+	case 2:
 		gl.polygonOffset(1,1);
 		gl.enable(gl.POLYGON_OFFSET_FILL);
-		draw_direction_buttion(method_id,gl.TRIANGLES,shader_program,
-			part_buffer_object.face,camera_render_parameter);
+		draw_direction_buttion(gl.TRIANGLES,shader_program,part_buffer_object.face,camera_render_parameter);
 		gl.disable(gl.POLYGON_OFFSET_FILL);
 		break;
 	default:

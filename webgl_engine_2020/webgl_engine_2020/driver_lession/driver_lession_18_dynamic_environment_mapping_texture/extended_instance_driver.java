@@ -59,14 +59,10 @@ public class extended_instance_driver extends instance_driver
 			target_viewport tv[]=new target_viewport[cr.target.viewport.length];
 			for(int j=0,nj=tv.length;j<nj;j++)
 				tv[j]=new target_viewport(-1,-1,2,2,
-						cr.target.viewport[j].method_id,
-						cr.target.viewport[j].pass_id,
-						cr.target.viewport[j].clear_color);
-			render_target rt=new render_target(
-				comp.component_name+"/"+Integer.toString(i),
-				camera_id[i],cr.target.parameter_channel_id,
-				new component[]{ek.component_cont.root_component},
-				null,null,512,512,10,null,tv,false,false,true,true);
+						cr.target.viewport[j].method_id,cr.target.viewport[j].clear_color);
+			render_target rt=new render_target(comp.component_name+"/"+Integer.toString(i),
+				camera_id[i],cr.target.parameter_channel_id,new component[]{ek.component_cont.root_component},
+				null,null,512,512,1,null,tv,false,false,true,true);
 			ci.target_container.register_target(rt,1,null);
 			target_id[i]=rt.target_id;
 		}
