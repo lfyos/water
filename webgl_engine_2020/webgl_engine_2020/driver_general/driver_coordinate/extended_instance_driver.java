@@ -57,7 +57,7 @@ public class extended_instance_driver extends instance_driver
 			do_selection_version=ek.do_selection_version;
 			comp.driver_array[driver_id].update_component_render_version();
 		}
-		return cr.target.main_display_target_flag?false:true;
+		return (cr.target.framebuffer_width<=0)?false:(cr.target.framebuffer_width<=0)?false:true;
 	}
 	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{

@@ -79,8 +79,7 @@ public class response_render_component_request
 	{
 		render_target t;
 		camera_result cr;
-		render_target target_array[]=ci.target_container.get_render_target(
-			ek.component_cont.root_component,ek.scene_par.initial_parameter_channel_id);
+		render_target target_array[]=ci.target_container.get_render_target(ek.component_cont.root_component);
 		int target_number=ci.target_container.get_render_target_number();
 		if(ci.target_component_collector_array.length<target_number){
 			component_collector bak_collector[]=ci.target_component_collector_array;

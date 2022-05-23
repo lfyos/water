@@ -7,7 +7,6 @@
 /*	scene_cors_string							*/		*
 
 /*	multiparameter_number						*/		8
-/*	initial_parameter_channel_id				*/		2
 /*	default_display_bitmap			2+16		*/		18
 
 /*	component_collector_stack_file_name			*/		collector.txt

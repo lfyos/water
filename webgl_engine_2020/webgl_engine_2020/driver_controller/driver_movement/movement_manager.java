@@ -263,14 +263,15 @@ public class movement_manager
 		return (movement_stack[index_id]!=null)?true:false;
 	}
 	
-	public movement_manager(engine_kernel ek,
-			long camera_switch_time_length,movement_configuration_parameter my_config_parameter)
+	public movement_manager(
+			engine_kernel ek,long camera_switch_time_length,
+			movement_configuration_parameter my_config_parameter,
+			movement_channel_id my_move_channel_id)
 	{
 		create_file_id=0;
 		id_creator=new movement_tree_id_creator();
 		
-		move_channel_id=new movement_channel_id(
-				ek.system_par.text_class_charset,ek.system_par.text_jar_file_charset);
+		move_channel_id=my_move_channel_id;
 		parameter=new movement_parameter();
 		
 		mount_direction_flag=true;

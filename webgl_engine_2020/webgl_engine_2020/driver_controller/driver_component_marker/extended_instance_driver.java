@@ -39,7 +39,8 @@ public class extended_instance_driver extends instance_driver
 		if(cr.target.selection_target_flag)
 			return false;
 		if(!(cr.target.main_display_target_flag))
-			return true;
+			return ((cr.target.framebuffer_width>0)&&(cr.target.framebuffer_width>0));
+		
 		if(cmc.component_marker_array.length!=display_flag.length) {
 			display_flag=new boolean[cmc.component_marker_array.length];
 			for(int i=0,ni=display_flag.length;i<ni;i++)

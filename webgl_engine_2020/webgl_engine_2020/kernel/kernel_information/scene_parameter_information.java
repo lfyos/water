@@ -39,7 +39,6 @@ public class scene_parameter_information extends jason_creator
 		print("scene_cors_string",							sp.scene_cors_string);
 		
 		print("multiparameter_number",						sp.multiparameter_number);
-		print("initial_parameter_channel_id",				sp.initial_parameter_channel_id);
 		print("default_display_bitmap",						sp.default_display_bitmap);
 		
 		print("component_collector_stack_file_name",		sp.component_collector_stack_file_name);

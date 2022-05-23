@@ -14,7 +14,7 @@ public class extended_instance_driver extends instance_driver
 	private boolean menu_type;
 	private int level;
 	private String file_name,file_charset;
-	private double x0,y0,dx,dy,aspect;
+	private double x0,y0,dx,dy,aspect,target_id;
 	private boolean hide_show_flag,not_always_show_flag;
 	
 	public void destroy()
@@ -40,6 +40,7 @@ public class extended_instance_driver extends instance_driver
 		dy=my_dy;
 		
 		aspect=1.0;
+		target_id=-1;
 		hide_show_flag=true;
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
@@ -58,8 +59,9 @@ public class extended_instance_driver extends instance_driver
 		if(cr.target.selection_target_flag)
 			return false;
 		if(cr.target.main_display_target_flag){
-			if(Math.abs(ci.parameter.aspect-aspect)>const_value.min_value){
-				aspect=ci.parameter.aspect;
+			if((Math.abs(ci.parameter.aspect-aspect)>const_value.min_value)||(cr.target.target_id!=target_id)){
+				aspect		=ci.parameter.aspect;
+				target_id	=cr.target.target_id;
 				update_component_parameter_version(0);
 			}
 			return false;

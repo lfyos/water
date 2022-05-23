@@ -38,7 +38,7 @@ public class extended_instance_driver extends instance_driver
 		if(cr.target.selection_target_flag)
 			return false;
 		if(!(cr.target.main_display_target_flag))
-			return true;
+			return ((cr.target.framebuffer_width>0)&&(cr.target.framebuffer_width>0));
 		
 		if(tag_array.test_location_modify(ek,ci))
 			comp.driver_array[driver_id].update_component_parameter_version();

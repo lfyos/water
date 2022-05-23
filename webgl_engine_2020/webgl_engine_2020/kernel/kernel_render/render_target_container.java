@@ -33,10 +33,10 @@ public class render_target_container
 		target_array			=null;
 		search_array			=null;
 	}
-	static public render_target get_default_target(component comp,int initial_parameter_channel_id)
+	static public render_target get_default_target(component comp)
 	{
-		render_target rt=new render_target("default_render_target",0,
-			initial_parameter_channel_id,new component[] {comp},null,null,0,0,1,null,null);
+		render_target rt=new render_target("default_render_target",
+			0,0,new component[] {comp},null,null,0,0,1,null,null);
 		rt.main_display_target_flag=true;
 		return rt;
 	}
@@ -52,7 +52,7 @@ public class render_target_container
 		long ret_val=do_render_number_array[target_id];
 		return (ret_val<0)?-1:ret_val;
 	}
-	public render_target[]get_render_target(component comp,int initial_parameter_channel_id)
+	public render_target[]get_render_target(component comp)
 	{
 		if(search_array!=null){
 			render_target ret_val[]=new render_target[search_array.length];
@@ -77,7 +77,7 @@ public class render_target_container
 				return ret_val;
 			}
 		}
-		return new render_target[]{get_default_target(comp,initial_parameter_channel_id)};
+		return new render_target[]{get_default_target(comp)};
 	}
 	private int search_target(String my_target_name)
 	{

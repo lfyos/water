@@ -282,8 +282,7 @@ public class client_information
 		selection_component_collector	=null;
 		target_component_collector_array=new component_collector[]{};
 
-		render_target t				=render_target_container.get_default_target(
-				ek.component_cont.root_component,ek.scene_par.initial_parameter_channel_id);
+		render_target t				=render_target_container.get_default_target(ek.component_cont.root_component);
 		display_camera_result		=new camera_result(ek.camera_cont.camera_array[t.camera_id],t,ek.component_cont);
 		selection_camera_result		=display_camera_result;
 		target_camera_result_array	=new camera_result[]{};	

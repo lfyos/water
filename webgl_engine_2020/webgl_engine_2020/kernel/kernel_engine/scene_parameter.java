@@ -28,7 +28,6 @@ public class scene_parameter
 	public String scene_cors_string;
 	
 	public int multiparameter_number;
-	public int initial_parameter_channel_id;
 	public long default_display_bitmap;
 	
 	public String component_collector_stack_file_name;
@@ -194,10 +193,6 @@ public class scene_parameter
 		}
 		if((multiparameter_number=fr.get_int())<1)
 			multiparameter_number=1;
-		
-		if((initial_parameter_channel_id=fr.get_int())<0)
-			initial_parameter_channel_id=0;
-		initial_parameter_channel_id%=multiparameter_number;
 		
 		default_display_bitmap=fr.get_long();
 		
