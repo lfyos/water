@@ -38,6 +38,4 @@
 /*	compress_response_length					*/		1024
 
 /*	not_do_ancestor_render_flag					*/		yes
-/*	do_discard_lod_flag							*/		yes
-/*	do_selection_lod_flag						*/		yes
 /*	fast_load_flag								*/		no

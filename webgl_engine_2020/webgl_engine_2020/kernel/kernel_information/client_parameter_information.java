@@ -10,9 +10,6 @@ public class client_parameter_information extends jason_creator
 	public void print()
 	{
 		client_parameter cp=ci.parameter;
-
-		print("do_discard_lod_flag",		cp.do_discard_lod_flag);
-		print("do_selection_lod_flag",		cp.do_selection_lod_flag);
 		
 		print("body_id",					cp.body_id);
 		print("face_id",					cp.face_id);

@@ -36,7 +36,7 @@ public class render_target_container
 	static public render_target get_default_target(component comp)
 	{
 		render_target rt=new render_target("default_render_target",
-			0,0,new component[] {comp},null,null,0,0,1,null,null);
+			0,0,new component[] {comp},null,null,0,0,1,null,null,true,false,true,true);
 		rt.main_display_target_flag=true;
 		return rt;
 	}

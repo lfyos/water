@@ -16,7 +16,6 @@ import kernel_file_manager.file_directory;
 import kernel_part.part;
 import kernel_transformation.plane;
 
-
 public class response_render_component_request
 {
 	private static component_collector collect_render_parts(plane mirror_plane,
@@ -122,8 +121,9 @@ public class response_render_component_request
 			cr=ci.target_camera_result_array[t.target_id];
 			ci.request_response.print(((response_number++)==0)?"[":",[");
 			component_collector collector=collect_render_parts(t.mirror_plane,ek,ci,
-				t.selection_target_flag?false:(ci.parameter.do_discard_lod_flag),
-				t.selection_target_flag?false:(ci.parameter.do_selection_lod_flag),t.camera_id,cr);
+				t.selection_target_flag?false:(t.do_discard_lod_flag),
+				t.selection_target_flag?false:(t.do_selection_lod_flag),
+				t.camera_id,cr);
 			ci.target_component_collector_array[t.target_id]=collector;
 			
 			if(ci.display_camera_result!=null)

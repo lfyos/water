@@ -36,6 +36,7 @@ public class camera_information extends jason_creator
 
 		return;
 	}
+	
 	public camera_information(camera my_cam,client_information my_ci)
 	{
 		super(my_ci.request_response);

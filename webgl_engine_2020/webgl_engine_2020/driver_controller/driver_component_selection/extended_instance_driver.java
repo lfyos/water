@@ -99,7 +99,7 @@ public class extended_instance_driver extends instance_driver
 				ci.display_camera_result.target.camera_id,
 				ci.display_camera_result.target.parameter_channel_id,
 				new component[]{ek.component_cont.root_component},null,ci.clip_plane,0,0,1,
-				view_volume_box,null);
+				view_volume_box,null,false,false,false,false);
 	
 		if(cam_target.view_volume_box.distance2()<const_value.min_value2)
 			return ;

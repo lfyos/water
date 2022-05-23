@@ -63,8 +63,8 @@ public class extended_instance_driver  extends instance_driver
 				{
 					new target_viewport(-1,-1,1,2,	1,0,	new double[]{0.0,0.0,0.0,0.0}),
 					new target_viewport( 0,-1,1,2,	1,1,	new double[]{0.0,0.0,0.0,0.0})
-				}
-		);
+				},
+			false,true,false,false);
 		
 		rt.selection_target_flag=true;
 		

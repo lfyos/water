@@ -9,17 +9,20 @@ public class render_target_parameter
 {
 	public String target_name;
 	public int parameter_channel_id,camera_id,framebuffer_width,framebuffer_height;
+	public boolean do_discard_lod_flag,do_selection_lod_flag;
 	public double center_x,center_y;
 	
 	public target_viewport viewport[];
 
 	public void write_out(file_writer f)
 	{
-		f.println("	/*	target_name								*/	",	target_name);
-		f.println("	/*	parameter_channel_id					*/	",	parameter_channel_id);
-		f.println("	/*	camera_id								*/	",	camera_id);
-		f.println("	/*	framebuffer_width,framebuffer_height	*/	",	framebuffer_width+"\t"+framebuffer_height);
-		f.println("	/*	center_x,center_y						*/	",	center_x+"\t"+center_y);
+		f.println("	/*	target_name									*/	",	target_name);
+		f.println("	/*	parameter_channel_id						*/	",	parameter_channel_id);
+		f.println("	/*	camera_id									*/	",	camera_id);
+		f.println("	/*	framebuffer_width,framebuffer_height		*/	",	framebuffer_width+"\t"+framebuffer_height);
+		f.println("	/*	do_discard_lod_flag,do_selection_lod_flag	*/	",
+				(do_discard_lod_flag?"true":"false")+"\t"+(do_selection_lod_flag?"true":"false"));
+		f.println("	/*	center_x,center_y							*/	",	center_x+"\t"+center_y);
 		
 		f.println();
 		f.println("	/*	view_port_number	*/	",viewport.length);
@@ -45,15 +48,17 @@ public class render_target_parameter
 	}
 	public render_target_parameter(file_reader f)
 	{
-		target_name			=f.get_string();
-		parameter_channel_id=f.get_int();
-		camera_id			=f.get_int();
-		framebuffer_width	=f.get_int();
-		framebuffer_height	=f.get_int();
-		center_x=f.get_double();
-		center_y=f.get_double();
+		target_name				=f.get_string();
+		parameter_channel_id	=f.get_int();
+		camera_id				=f.get_int();
+		framebuffer_width		=f.get_int();
+		framebuffer_height		=f.get_int();
+		do_discard_lod_flag		=f.get_boolean();
+		do_selection_lod_flag	=f.get_boolean();
+		center_x				=f.get_double();
+		center_y				=f.get_double();
 
-		int view_port_number=f.get_int();
+		int view_port_number	=f.get_int();
 		
 		if(view_port_number<0)
 			view_port_number=0;

@@ -1,10 +1,11 @@
 /*	target number 	*/		2
 
-	/*	target_name								*/	render_target_0
-	/*	parameter_channel_id					*/	2
-	/*	camera_id								*/	0
-	/*	framebuffer_width,framebuffer_height	*/	0 	0
-	/*	center_x,center_y						*/	0	0
+	/*	target_name									*/	render_target_0
+	/*	parameter_channel_id						*/	2
+	/*	camera_id									*/	0
+	/*	framebuffer_width,framebuffer_height		*/	0 	0
+	/*	do_discard_lod_flag,do_selection_lod_flag	*/	true	true
+	/*	center_x,center_y							*/	0	0
 	
 	/*	view_port_number	*/	4
 
@@ -14,11 +15,12 @@
 	/*	view_port	3	*/	-1.0	-1.0	2.0		1.0		5	false
 
 	
-	/*	target_name								*/	render_target_1
-	/*	parameter_channel_id					*/	3
-	/*	camera_id								*/	1
-	/*	framebuffer_width,framebuffer_height	*/	0 	0
-	/*	center_x,center_y						*/	0	0
+	/*	target_name									*/	render_target_1
+	/*	parameter_channel_id						*/	3
+	/*	camera_id									*/	1
+	/*	framebuffer_width,framebuffer_height		*/	0 	0
+	/*	do_discard_lod_flag,do_selection_lod_flag	*/	true	true
+	/*	center_x,center_y							*/	0	0
 	
 	/*	view_port_number	*/	4
 

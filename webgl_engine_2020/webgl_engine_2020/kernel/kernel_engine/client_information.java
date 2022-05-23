@@ -290,8 +290,7 @@ public class client_information
 		clip_plane			=null;
 		
 		channel_id			=System.nanoTime();
-		parameter=new client_parameter(max_client_loading_number,
-				ek.scene_par.do_discard_lod_flag,ek.scene_par.do_selection_lod_flag);
+		parameter			=new client_parameter(max_client_loading_number);
 		statistics_client	=new client_statistics();
 		statistics_interface=my_statistics_interface;
 		statistics_user		=my_statistics_user;

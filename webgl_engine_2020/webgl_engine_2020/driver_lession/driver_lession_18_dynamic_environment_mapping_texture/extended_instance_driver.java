@@ -66,7 +66,7 @@ public class extended_instance_driver extends instance_driver
 				comp.component_name+"/"+Integer.toString(i),
 				camera_id[i],cr.target.parameter_channel_id,
 				new component[]{ek.component_cont.root_component},
-				null,null,512,512,10,null,tv);
+				null,null,512,512,10,null,tv,false,false,true,true);
 			ci.target_container.register_target(rt,1,null);
 			target_id[i]=rt.target_id;
 		}

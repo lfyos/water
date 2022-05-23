@@ -83,7 +83,7 @@ public class extended_instance_driver extends instance_driver
 					new target_viewport(-1,-1,2,2,3,0,null),
 					new target_viewport(-1,-1,2,2,4,0,null),
 					new target_viewport(-1,-1,2,2,5,0,null)
-				});
+				},false,false,true,true);
 		rt.mirror_plane=mirror_plane;
 		ci.target_container.register_target(rt,-1,null);
 		

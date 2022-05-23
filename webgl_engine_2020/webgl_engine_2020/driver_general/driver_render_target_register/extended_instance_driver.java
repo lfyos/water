@@ -91,8 +91,9 @@ public class extended_instance_driver extends instance_driver
 				new component[] {ek.component_cont.root_component},null,ci.clip_plane,
 				target_parameter[i].framebuffer_width,target_parameter[i].framebuffer_height,1,
 				new box(center_x-aspect_value,center_y-1.0,-1.0,center_x+aspect_value,center_y+1.0,1.0),
-				target_parameter[i].viewport);
-			rt.main_display_target_flag=(main_target_id==i)?true:false;
+				target_parameter[i].viewport,(main_target_id==i)?true:false,false,
+				target_parameter[i].do_discard_lod_flag,target_parameter[i].do_selection_lod_flag);
+			
 			ci.target_container.register_target(rt,-1,main_rt);
 			if(main_rt==null)
 				main_rt=rt;
@@ -187,6 +188,36 @@ public class extended_instance_driver extends instance_driver
 			if(viewport_id>=target_parameter[target_id].viewport.length)
 				return null;
 			ci.request_response.print(target_parameter[target_id].viewport[viewport_id].clear_color);
+			break;
+		case "turnon_off_lod":
+			if((main_target_id<0)||(main_target_id>=target_parameter.length))
+				break;
+			if((str=ci.request_response.get_parameter("discard_lod_value"))!=null)
+				switch(str.toLowerCase()) {
+				case "true":
+				case "yes":
+				case "on":
+					target_parameter[main_target_id].do_discard_lod_flag=true;
+					break;
+				case "false":
+				case "no":
+				case "off":
+					target_parameter[main_target_id].do_discard_lod_flag=false;
+					break;
+				}
+			if((str=ci.request_response.get_parameter("selection_lod_value"))!=null)
+				switch(str.toLowerCase()) {
+				case "true":
+				case "yes":
+				case "on":
+					target_parameter[main_target_id].do_selection_lod_flag=true;
+					break;
+				case "false":
+				case "no":
+				case "off":
+					target_parameter[main_target_id].do_selection_lod_flag=false;
+					break;
+				}
 			break;
 		}
 		return null;

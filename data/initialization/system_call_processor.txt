@@ -104,10 +104,7 @@ function(component_name,component_id,render)
 	render.system_call_processor.set_target_parameter_channel=function(target_id,parameter_channel_id)
 	{
 		render.call_server_component("render_target_register_component","all",
-			[	["target",target_id],
-				["operation","parameter_channel"],
-				["parameter_channel",parameter_channel_id]
-			]);
+			[["target",target_id],["operation","parameter_channel"],["parameter_channel",parameter_channel_id]]);
 	};
 	render.system_call_processor.set_target_background_color=function(target_id,view_id,new_red,new_green,new_blue)
 	{
@@ -356,13 +353,11 @@ function(component_name,component_id,render)
 		render.call_server_component(
 			"audio_component","all",[["operation",flag?"turn_on":"turn_off"]]);
 	};
-	render.system_call_processor.turnonoff_level_of_detail=function(
-		discard_lod_value,selection_lod_value)
+	render.system_call_processor.turnonoff_level_of_detail=function(discard_lod_value,selection_lod_value)
 	{
-		render.call_server_component(
-			"camera_operation_component","all",[["operation","client_parameter"],
+		render.call_server_component("render_target_register_component","all",[["operation","turnon_off_lod"],
 			["discard_lod_value",	discard_lod_value	?"true":"false"],
-			["selection_lod_value",	selection_lod_value	?"true":"false"]]);
+			["selection_lod_value",	selection_lod_value	?"true":"false"]]);	
 	};
 	render.system_call_processor.set_component_display_precision=function(value)
 	{
@@ -410,7 +405,6 @@ function(component_name,component_id,render)
 	};
 
 //	system call for list
-
 	render.system_call_processor.collector_list_jason_component_url=function(flag)
 	{
 		return render.create_component_request_string("manipulator_component","all",

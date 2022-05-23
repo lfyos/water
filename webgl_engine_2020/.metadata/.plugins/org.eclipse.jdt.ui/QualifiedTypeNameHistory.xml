@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="format_convert.gltf_converter"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="kernel_common_class.zip_file"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 <fullyQualifiedTypeName name="kernel_common_class.jason_string"/>
 <fullyQualifiedTypeName name="kernel_file_manager.file_reader"/>
+<fullyQualifiedTypeName name="kernel_camera.camera_parameter"/>
 </qualifiedTypeNameHistroy>

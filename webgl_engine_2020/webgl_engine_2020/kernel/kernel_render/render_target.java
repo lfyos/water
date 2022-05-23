@@ -16,6 +16,7 @@ public class render_target
 	public int driver_id[];
 
 	public boolean main_display_target_flag,selection_target_flag;
+	public boolean do_discard_lod_flag,do_selection_lod_flag;
 	
 	public box view_volume_box;
 
@@ -46,7 +47,9 @@ public class render_target
 	public render_target(String my_target_name,int my_camera_id,int my_parameter_channel_id,
 			component my_comp[],int my_driver_id[],plane my_clip_plane,
 			int my_framebuffer_width,int my_framebuffer_height,int my_render_target_number,
-			box my_view_volume_box,target_viewport my_viewport[])
+			box my_view_volume_box,target_viewport my_viewport[],
+			boolean my_main_display_target_flag,boolean my_selection_target_flag,
+			boolean my_do_discard_lod_flag,boolean my_do_selection_lod_flag)
 	{
 		target_name				=my_target_name;
 		
@@ -55,8 +58,10 @@ public class render_target
 		comp					=my_comp;
 		driver_id				=my_driver_id;
 
-		main_display_target_flag=false;
-		selection_target_flag	=false;
+		main_display_target_flag=my_main_display_target_flag;
+		selection_target_flag	=my_selection_target_flag;
+		do_discard_lod_flag		=my_do_discard_lod_flag;
+		do_selection_lod_flag	=my_do_selection_lod_flag;
 		
 		clip_plane				=my_clip_plane;
 		mirror_plane			=null;
