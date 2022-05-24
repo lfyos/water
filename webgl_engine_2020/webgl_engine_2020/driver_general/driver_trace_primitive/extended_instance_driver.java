@@ -52,7 +52,7 @@ public class extended_instance_driver extends instance_driver
 			main_t.parameter_channel_id,main_t.comp,main_t.driver_id,main_t.clip_plane,
 			(int)(Math.round(framebuffer_height*ci.parameter.aspect)),framebuffer_height,4,
 			new box(0.0-ci.parameter.aspect,-1.0,-1.0,ci.parameter.aspect,1.0,1.0),
-			new target_viewport[]{new target_viewport(-1,-1,2,2,1,0,new double[] {0,0,0,0})},
+			new target_viewport[]{new target_viewport(-1,-1,2,2,1,new double[] {0,0,0,0})},
 			false,false,false,false);
 		
 		if((target_id=ci.target_container.register_target(rt,1,null))!=old_target_id) {

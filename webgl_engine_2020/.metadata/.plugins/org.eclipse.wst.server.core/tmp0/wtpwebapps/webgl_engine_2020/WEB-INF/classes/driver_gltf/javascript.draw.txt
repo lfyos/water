@@ -3,9 +3,8 @@
 	]
 ],
 
-function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
-			render_buffer_id,	component_data_array,	project_matrix,			view_port,	do_render_number,
-			render)
+function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buffer_id,
+			component_data_array,	project_matrix,			view_port,		do_render_number,	render)
 {
 	var gl								=render.gl;
 	var shader_object					=render.render_program.render_program[render_id];
@@ -41,8 +40,6 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var computer						=render.computer;
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
-	
-	
 	
 	function bind_vertex_array(region_data,attribute_data,gl,shader_program)
 	{
@@ -243,9 +240,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	case 0://render scene before depth rendering
 		break;
 	case 1://render scene for component selection
-		draw_primitive(2,part_buffer_object.face,false);
-		break;
-	case 2://render scene for shadow depth
+	case 2:
 		draw_primitive(2,part_buffer_object.face,false);
 		break;
 	case 3://render depth only,no color rendering
@@ -265,6 +260,9 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 		
 		gl.disable(gl.BLEND);
 		gl.depthMask(true);
+		break;
+	case 6://render scene for shadow depth
+		draw_primitive(2,part_buffer_object.face,false);
 		break;
 	default:
 		return;

@@ -8,17 +8,19 @@ layout (location = 0) out vec4 frag_data[4];
 void main(void)
 {
 	gl_FragDepth=0.0;
-	
-	if(pass_info.method_id==1){
-		frag_data[0]=code_integer(int(round(par[0].w)));		//component_id
-		frag_data[1]=code_integer(int(round(par[1].w)));		//body_id
-		if(pass_info.pass_id==0){
-			frag_data[2]=frag_data[1];							//face_id
-			frag_data[3]=frag_data[1];							//vertex_id
-		}else{
-			frag_data[2]=code_float(2.0*(gl_FragCoord.z-0.5));	//depth
-			frag_data[3]=frag_data[2];							//value
-		}
+
+	switch(pass_info.method_id){
+	case 1:
+		frag_data[0]=code_integer(int(round(par[0].w)));	//component_id
+		frag_data[1]=code_integer(int(round(par[1].w)));	//body_id
+		frag_data[2]=frag_data[1];							//face_id
+		frag_data[3]=frag_data[1];							//vertex_id
+		return;
+	case 2:
+		frag_data[0]=code_integer(int(round(par[0].w)));	//component_id
+		frag_data[1]=code_integer(int(round(par[1].w)));	//body_id
+		frag_data[2]=code_float(2.0*(gl_FragCoord.z-0.5));	//depth
+		frag_data[3]=frag_data[2];							//value
 		return;
 	}
 	

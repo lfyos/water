@@ -361,7 +361,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.data_time_length=(new Date()).getTime()-start_time;
 	};
 	this.render_component=function(render_list,render_buffer_id,parameter_channel_id,
-				method_id,pass_id,project_matrix,viewport,render_do_render_number,pass_do_render_number)
+				method_id,project_matrix,viewport,render_do_render_number,pass_do_render_number)
 	{
 		for(var last_render_id=-1,i=0,ni=render_list.length;i<ni;i++){
 			var render_id			 =render_list[i][0];
@@ -409,9 +409,8 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			
 			this.gl.bindVertexArray(null);
 			
-		    draw_function(
-		    	method_id,  			pass_id,			parameter_channel_id,
-		    	render_id,				part_id,			render_buffer_id,
+		    draw_function(				method_id,  	parameter_channel_id,
+		    	render_id,				part_id,		render_buffer_id,
 		    	component_render_data,	project_matrix,		
 		    	{
 		    		viewport_x0		:	viewport[0],
@@ -518,8 +517,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			
 			for(var viewport_id=0,viewport_number=viewport.length;viewport_id<viewport_number;viewport_id++){
 				var method_id	=viewport[viewport_id][4];
-				var pass_id		=viewport[viewport_id][5];
-				var clear_color	=viewport[viewport_id][6];
+				var clear_color	=viewport[viewport_id][5];
 				var my_viewport=[
 					Math.round((viewport[viewport_id][0]+1.0)*width /2.0),
 					Math.round((viewport[viewport_id][1]+1.0)*height/2.0),
@@ -553,11 +551,10 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 				this.gl.viewport(my_viewport[0],my_viewport[1],my_viewport[2],my_viewport[3]);
 				this.gl.enable(this.gl.DEPTH_TEST);
 				
-				this.uniform_block.bind_pass(method_id,pass_id,my_clear_flag,my_viewport,my_clear_color);
+				this.uniform_block.bind_pass(method_id,my_clear_flag,my_viewport,my_clear_color);
 
 				this.render_component(render_list,render_buffer_id,parameter_channel_id,
-					method_id,pass_id,project_matrix,my_viewport,
-					render_do_render_number,pass_do_render_number);
+					method_id,project_matrix,my_viewport,render_do_render_number,pass_do_render_number);
 			};
 			if((target_id>=0)&&(target_id<(this.target_processor.length)))
 				if(typeof(this.target_processor[target_id])=="object")

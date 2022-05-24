@@ -79,10 +79,10 @@ public class extended_instance_driver extends instance_driver
 				
 				new target_viewport[]
 				{
-					new target_viewport(-1,-1,2,2,0,0,new double[]{0.0,0.0,0.0,1.0}),
-					new target_viewport(-1,-1,2,2,3,0,null),
-					new target_viewport(-1,-1,2,2,4,0,null),
-					new target_viewport(-1,-1,2,2,5,0,null)
+					new target_viewport(-1,-1,2,2,0,new double[]{0.0,0.0,0.0,1.0}),
+					new target_viewport(-1,-1,2,2,3,null),
+					new target_viewport(-1,-1,2,2,4,null),
+					new target_viewport(-1,-1,2,2,5,null)
 				},false,false,true,true);
 		rt.mirror_plane=mirror_plane;
 		ci.target_container.register_target(rt,-1,null);

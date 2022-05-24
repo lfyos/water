@@ -5,9 +5,8 @@
 	]
 ],
 
-function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
-			render_buffer_id,	component_data_array,	project_matrix,			view_port,	do_render_number,
-			render)
+function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buffer_id,
+			component_data_array,	project_matrix,			view_port,		do_render_number,	render)
 {
 	var gl								=render.gl;
 	var shader_object					=render.render_program.render_program[render_id];
@@ -43,9 +42,7 @@ function (	method_id,			pass_id,				parameter_channel_id,	render_id,	part_id,
 	var computer						=render.computer;
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
-	
-	
-	
+
 	if(do_render_number.engine_render==0){
 		gl.uniform4fv(gl.getUniformLocation(shader_program,"color"),new Float32Array([1.0,1.0,0.0,1.0]));
 

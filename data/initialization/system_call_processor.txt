@@ -135,8 +135,7 @@ function(component_name,component_id,render)
 	{
 		for(var i=0;i<8;i++)
 			render.call_server_component(
-				"background_component_"+i.toString(),"all",
-				[["operation","mode"],["mode",new_mode]]);
+				"background_component_"+i.toString(),"all",[["operation","mode"],["mode",new_mode]]);
 	};
 	render.system_call_processor.set_background_picture=function(picture_id)
 	{

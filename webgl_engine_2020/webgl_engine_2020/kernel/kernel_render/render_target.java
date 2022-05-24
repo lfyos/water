@@ -83,7 +83,7 @@ public class render_target
 				return;
 		viewport=new target_viewport[]
 		{
-			new target_viewport(-1,-1,2,2,0,0,new double[]{0.0,0.0,0.0,1.0})
+			new target_viewport(-1,-1,2,2,0,new double[]{0.0,0.0,0.0,1.0})
 		};
 	}
 	public int get_render_buffer_id(boolean precision_flag)
