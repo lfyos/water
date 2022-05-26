@@ -749,28 +749,30 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		
 		return this.terminate_flag;
 	};
-	
+
 	this.terminate=function()
 	{
-		this.terminate_flag=true;
+		var terminated_url=this.url_and_channel+"&command=termination";
 		
-		if(this.process_bar_id>=0){
-			try{
-				var my_ajax=new XMLHttpRequest();
-				my_ajax.open("GET",this.url+"?channel=process_bar&command=release&process_bar="+this.process_bar_id,true);
-				my_ajax.send(null);
-			}catch(e){
-				;
-			}
+		this.terminate_flag=true;
+		try{
+			this.destroy_terminated_data();
+		}catch(e){
+			;
 		}
+		this.destroy_terminated_data=null;
+
 		try{
 			var my_ajax=new XMLHttpRequest();
-			my_ajax.open("GET",this.url_and_channel+"&command=termination",true);
+			my_ajax.open("GET",terminated_url,true);
 			my_ajax.send(null);
 		}catch(e){
 			;
 		}
-
+		this.terminate=null;
+	}
+	this.destroy_terminated_data=function()
+	{	
 		this.collector_loader.destroy();
 		this.utility.destroy();
 		this.uniform_block.destroy();

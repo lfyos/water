@@ -41,7 +41,7 @@ function redraw(render)
 	render_routine();
 };
 
-function render_initialization(initialization_url,my_render,user_initialization_function)
+function render_initialization(initialization_url,my_render,user_initialization_function,processs_bar_object)
 {
 	try{
 		var my_ajax=new XMLHttpRequest(),render=my_render;
@@ -49,9 +49,12 @@ function render_initialization(initialization_url,my_render,user_initialization_
 		{
 			if(my_ajax.readyState!=4)
 				return;
-			if(render.terminate_flag)
+			if(render.terminate_flag){
+				processs_bar_object.process_bar_id=null;
 				return;
+			}
 			if(my_ajax.status!=200){
+				processs_bar_object.process_bar_id=null;
 				alert("Loading system_initialization_function response status error: "+my_ajax.status.toString());
 				alert(initialization_url);
 				return;
@@ -162,10 +165,13 @@ function render_initialization(initialization_url,my_render,user_initialization_
 				user_initialization_function(render);
 			
 			redraw(render);
+			
+			processs_bar_object.process_bar_id=null;
 		};
 		my_ajax.open("GET",initialization_url,true);
 		my_ajax.send(null);
 	}catch(e){
+		processs_bar_object.process_bar_id=null;
 		alert("render_initialization fail: "+e.toString());
 		alert(initialization_url);
 	};
@@ -249,9 +255,8 @@ function request_create_engine(create_engine_sleep_time_length_scale,
 				render=new construct_render_routine(
 					processs_bar_object.process_bar_id,process_bar_render.canvas,process_bar_render.ctx,
 					my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,response_data);
-				render_initialization(initialization_url,render,my_user_initialization_function);
+				render_initialization(initialization_url,render,my_user_initialization_function,processs_bar_object);
 				
-				processs_bar_object.process_bar_id=null;
 				return;
 			}
 			if(typeof(response_data)!="boolean"){
