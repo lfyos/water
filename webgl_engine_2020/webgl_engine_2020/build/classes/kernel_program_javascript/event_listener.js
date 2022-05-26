@@ -794,7 +794,7 @@ function construct_event_listener(my_render)
 		if(cur.render!=null)
 			cur.gamepaddisconnected_event_listener(event);
 	};
-	function unload_fun()
+	function beforeunload_fun()
 	{
 		if(cur!=null){
 			if(cur.render!=null){
@@ -831,13 +831,13 @@ function construct_event_listener(my_render)
 	window.addEventListener(				"gamepadconnected",		gamepadconnected_fun,	false);
 	window.addEventListener(				"gamepaddisconnected",	gamepaddisconnected_fun,false);
 	
-	window.addEventListener(				"unload",				unload_fun,				false);
+	window.addEventListener(				"beforeunload",			beforeunload_fun,		false);
 	
 	this.render.canvas.focus();
 	
 	this.destroy=function()
 	{
-		window.removeEventListener("unload",				unload_fun);
+		window.removeEventListener("beforeunload",			beforeunload_fun);
 		
 		window.removeEventListener("gamepadconnected",		gamepadconnected_fun);
 		window.removeEventListener("gamepaddisconnected",	gamepaddisconnected_fun);

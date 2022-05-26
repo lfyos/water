@@ -48,6 +48,7 @@ public class dispatch_request_main
 			return dispatch_information_request.do_dispatch(8,ek,ci);
 		case "termination":
 			ci.request_response.request_time=0;
+			ci.process_bar.touch_time=0;
 			return null;
 		default:
 			ci.statistics_client.register_system_call_execute_number(9,0);

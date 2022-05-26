@@ -207,7 +207,7 @@ function construct_process_bar(my_gl,my_user_progress_bar_function,my_width,my_h
 				cur.draw_process_bar();
 			});
 	};
-	
+
 	this.set_process_bar_data=function(	my_process_bar_caption,
 			my_process_bar_current,		my_process_bar_max,
 			my_process_bar_time_length,	my_process_bar_engine_time_length,

@@ -24,27 +24,29 @@ public class client_process_bar_container
 		default_process_bar.touch_time=nanosecond_timer.absolute_nanoseconds();
 		return default_process_bar;
 	};
-	synchronized public int request_release_process_bar(int process_bar_id)
+	synchronized public int request_process_bar()
 	{
-		if(process_bar_id>=0) {
-			if(process_bar_id<process_bar_array.length)
-				process_bar_array[process_bar_id]=null;
-			return -1;
-		}
 		long t=nanosecond_timer.absolute_nanoseconds();
 		for(int i=0,ni=process_bar_array.length;i<ni;i++) {
 			if(process_bar_array[i]!=null)
 				if((t-process_bar_array[i].touch_time)<max_time_length)
 					continue;
 			process_bar_array[i]=new client_process_bar(i,t);
+			
 			return i;
 		}
-		return -1;
+		client_process_bar bak[]=process_bar_array;
+		process_bar_array=new client_process_bar[bak.length+1];
+		for(int i=0,ni=bak.length;i<ni;i++)
+			process_bar_array[i]=bak[i];
+		process_bar_array[bak.length]=new client_process_bar(bak.length,t);
+
+		return bak.length;
 	};
-	public client_process_bar_container(int my_max_engine_number,long my_max_time_length)
+	public client_process_bar_container(long my_max_time_length)
 	{
 		default_process_bar	=new client_process_bar(-1,0);
-		process_bar_array	=new client_process_bar[(my_max_engine_number<0)?0:my_max_engine_number];
+		process_bar_array	=new client_process_bar[0];
 		for(int i=0,ni=process_bar_array.length;i<ni;i++)
 			process_bar_array[i]=null;
 		max_time_length=my_max_time_length;

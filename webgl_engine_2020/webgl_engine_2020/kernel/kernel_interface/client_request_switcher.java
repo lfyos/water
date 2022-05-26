@@ -71,10 +71,6 @@ public class client_request_switcher
 			request_response.println("	\"show_process_bar_interval\"	:	",system_par.show_process_bar_interval);
 			request_response.println("}");
 			break;
-		case "release":
-			if((str=request_response.get_parameter("process_bar"))!=null)
-				client.release_process_bar(Integer.parseInt(str));
-			break;
 		case "data":
 			if((process_bar=client.get_process_bar(request_response))==null)
 				break;
@@ -172,6 +168,7 @@ public class client_request_switcher
 					e.printStackTrace();
 					return null;
 				}
+				ret_val.client.get_process_bar(request_response);
 				ret_val.ecr=ret_val.client.execute_system_call(ei,channel_id,
 					request_response,statistics_interface,ei.engine_current_number);
 			}
