@@ -794,6 +794,18 @@ function construct_event_listener(my_render)
 		if(cur.render!=null)
 			cur.gamepaddisconnected_event_listener(event);
 	};
+	function unload_fun()
+	{
+		if(cur!=null){
+			if(cur.render!=null){
+				if(typeof(cur.render.terminate)=="function")
+					cur.render.terminate();
+				cur.render.terminate=null;
+				cur.render=null;
+			}
+			cur=null;
+		};
+	};
 
 	this.render.canvas.addEventListener(	"mousemove",			mousemove_fun,			false);
 	this.render.canvas.addEventListener(	"mousedown",			mousedown_fun,			false);
@@ -818,11 +830,15 @@ function construct_event_listener(my_render)
 
 	window.addEventListener(				"gamepadconnected",		gamepadconnected_fun,	false);
 	window.addEventListener(				"gamepaddisconnected",	gamepaddisconnected_fun,false);
-
+	
+	window.addEventListener(				"unload",				unload_fun,				false);
+	
 	this.render.canvas.focus();
 	
 	this.destroy=function()
 	{
+		window.removeEventListener("unload",				unload_fun);
+		
 		window.removeEventListener("gamepadconnected",		gamepadconnected_fun);
 		window.removeEventListener("gamepaddisconnected",	gamepaddisconnected_fun);
 		

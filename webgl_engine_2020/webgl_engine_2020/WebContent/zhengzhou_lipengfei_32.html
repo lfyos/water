@@ -32,19 +32,10 @@ function body_onload()
 		});
 }
 
-function body_onunload()
-{
-	if(typeof(render)=="object")
-		if(render!=null)
-			if(typeof(render.terminate)=="function")
-				render.terminate();
-}
-
-
 </script>
 </head>
 
-<body onload="body_onload();" onunload="body_onunload();">
+<body onload="body_onload();">
 <canvas id="my_canvas"	tabindex="0" width=1000	 height=500></canvas>
 <br/>
 

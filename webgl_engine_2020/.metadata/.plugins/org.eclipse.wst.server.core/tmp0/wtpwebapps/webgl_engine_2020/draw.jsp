@@ -75,15 +75,8 @@ function body_onload()
 			progress_bar_ctx.textBaseline	="middle";
 			progress_bar_ctx.fillStyle		="rgb(192,192,192)";
 			progress_bar_ctx.textAlign		="center";		
-			progress_bar_ctx.fillText(display_value,	process_bar_canvas.width/2.0,	process_bar_canvas.height/2.0);
+			progress_bar_ctx.fillText(display_value,	process_bar_canvas.width*0.5,	process_bar_canvas.height*0.5);
 		});
-}
-function body_onunload()
-{
-	if(typeof(lfy_render)=="object")
-		if(lfy_render!=null)
-			if(typeof(lfy_render.terminate)=="function")
-				lfy_render.terminate();
 }
 function body_onresize()
 {
@@ -96,7 +89,7 @@ function body_onresize()
 
 </head>
 
-<body onload="body_onresize();body_onload();" onunload="body_onunload();" onresize="body_onresize();">
+<body onload="body_onresize();body_onload();" onresize="body_onresize();">
 
 <div align="center">
 <canvas id="my_canvas"		tabindex="0"	></canvas>
