@@ -56,8 +56,8 @@
 <fullyQualifiedTypeName name="kernel_common_class.const_value"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="kernel_transformation.point"/>
-<fullyQualifiedTypeName name="kernel_common_class.jason_string"/>
 <fullyQualifiedTypeName name="kernel_file_manager.file_reader"/>
 <fullyQualifiedTypeName name="kernel_camera.camera_parameter"/>
 <fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
+<fullyQualifiedTypeName name="kernel_common_class.jason_string"/>
 </qualifiedTypeNameHistroy>

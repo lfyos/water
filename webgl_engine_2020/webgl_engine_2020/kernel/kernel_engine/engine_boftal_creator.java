@@ -64,14 +64,14 @@ public class engine_boftal_creator extends sorter <part,String>
 		
 		do_sort(-1,new part[part_number]);
 
-		process_bar.set_process_bar(true, "create_buffer_object_file", 0,part_number);
+		process_bar.set_process_bar(true, "create_buffer_object_file", "",0,part_number);
 
 		int cut_directory_length=system_par.proxy_par.proxy_data_root_directory_name.length();
 		file_writer fw=new  file_writer(file_name,file_charset);
 		fw.println(data_array.length);
 		
 		for(int i=0;i<part_number;i++) {
-			process_bar.set_process_bar(false, "create_buffer_object_file", i,part_number);
+			process_bar.set_process_bar(false, "create_buffer_object_file", "",i,part_number);
 			
 			String part_temporary_file_directory=file_directory.part_file_directory(data_array[i],system_par,scene_par);
 			String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
@@ -86,7 +86,7 @@ public class engine_boftal_creator extends sorter <part,String>
 		}		
 		fw.close();
 		
-		process_bar.set_process_bar(false, "create_buffer_object_file",part_number,part_number);
+		process_bar.set_process_bar(false, "create_buffer_object_file","",part_number,part_number);
 		
 		debug_information.println("Create engine boftal file: finished!");
 	}

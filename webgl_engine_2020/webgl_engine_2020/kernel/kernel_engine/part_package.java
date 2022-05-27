@@ -150,7 +150,7 @@ public class part_package
 				try {
 					for(int i=0,package_id=0;i<package_number;i++){
 						if(process_bar!=null)
-							process_bar.set_process_bar((i<=0),process_bar_title,i,package_number);
+							process_bar.set_process_bar((i<=0),process_bar_title,"",i,package_number);
 						if(part_package[i].length==1){
 							String my_package_file_name=file_directory.part_file_directory(
 									part_package[i][0],system_par,scene_par)+"mesh.head.gzip_text";
@@ -218,7 +218,7 @@ public class part_package
 						}
 					}
 					if(process_bar!=null)
-						process_bar.set_process_bar(false,process_bar_title,package_number,package_number);
+						process_bar.set_process_bar(false,process_bar_title,"",package_number,package_number);
 				}catch(Exception e){
 					debug_information.println("part_package_collector exception:\t",package_directory_name+"\t"+e.toString());
 					e.printStackTrace();

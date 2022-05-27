@@ -120,7 +120,7 @@ public class render_container
 						all_number++;
 					}
 		if(process_bar!=null)
-			process_bar.set_process_bar(true,process_bar_title,0,(all_number<1)?1:all_number);
+			process_bar.set_process_bar(true,process_bar_title,"",0,(all_number<1)?1:all_number);
 		
 		part_loader already_loaded_part[]=new part_loader[]{};
 		for(int i=0,ni=renders.length;i<ni;i++)
@@ -142,12 +142,14 @@ public class render_container
 								part_cont_for_delete_file,already_loaded_part,pcps,boftal_container);
 						
 						if(process_bar!=null)
-							process_bar.set_process_bar(false,process_bar_title,load_number++,(all_number<1)?1:all_number);
+							process_bar.set_process_bar(false,
+									process_bar_title,"",load_number++,(all_number<1)?1:all_number);
 					}
 		
 		part_loader_container.wait_for_completion(already_loaded_part,system_par,scene_par);
 		if(process_bar!=null)
-			process_bar.set_process_bar(false,process_bar_title,(all_number<1)?1:all_number,(all_number<1)?1:all_number);
+			process_bar.set_process_bar(false,
+					process_bar_title,"",(all_number<1)?1:all_number,(all_number<1)?1:all_number);
 		
 		debug_information.println();
 		debug_information.println("End loading part meshes\t",load_number);
