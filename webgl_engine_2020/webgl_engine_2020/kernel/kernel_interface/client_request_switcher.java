@@ -1,6 +1,7 @@
 package kernel_interface;
 
 import kernel_common_class.debug_information;
+import kernel_common_class.jason_string;
 import kernel_common_class.nanosecond_timer;
 import kernel_engine.engine_call_result;
 import kernel_engine.interface_statistics;
@@ -64,7 +65,7 @@ public class client_request_switcher
 		switch(str){
 		case "request":
 			process_bar=client.request_process_bar();
-			process_bar.set_process_bar(true,"start_create_scene", 0, 1);
+			process_bar.set_process_bar(true,"start_create_scene","", 0, 1);
 			
 			request_response.println("{");
 			request_response.println("	\"process_bar_id\"				:	",process_bar.process_bar_id+",");
@@ -77,12 +78,14 @@ public class client_request_switcher
 			language_str=request_response.get_parameter("language");
 			str=process_bar.process_title+"+"+((language_str==null)?"english":language_str);
 			str=system_par.language_change_name.search_change_name(str,process_bar.process_title);
+			str=jason_string.change_string(str+" "+process_bar.ex_process_title);
+			
 			long current_time=nanosecond_timer.absolute_nanoseconds();
 			long time_length=current_time-process_bar.start_time;
 			long engine_time_length=current_time-process_bar.original_time;
 
 			request_response.println("{");
-			request_response.print  ("	\"caption\":		\"",	str							).							 println("\",");
+			request_response.print  ("	\"caption\":		",		str).						 							 println(",");
 			request_response.print  ("	\"current\":		",		process_bar.current_process	).							 println(",");
 			request_response.print  ("	\"max\":			",  	(process_bar.max_process<1)?1:(process_bar.max_process)).println(",");
 			request_response.print  ("	\"time_length\":	",  	time_length/1000000			).							 println(",");
@@ -151,7 +154,7 @@ public class client_request_switcher
 			else{
 				ret_val.ecr=new engine_call_result(null,null,null,null,null,"*");
 				request_response.println("false");
-				ret_val.client.get_process_bar(request_response).set_process_bar(true,"wait_for_other_exit",1,2);
+				ret_val.client.get_process_bar(request_response).set_process_bar(true,"wait_for_other_exit","",1,2);
 			}
 			test_creation_engine_lock_number(-1);
 			break;
@@ -168,7 +171,6 @@ public class client_request_switcher
 					e.printStackTrace();
 					return null;
 				}
-				ret_val.client.get_process_bar(request_response);
 				ret_val.ecr=ret_val.client.execute_system_call(ei,channel_id,
 					request_response,statistics_interface,ei.engine_current_number);
 			}

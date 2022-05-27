@@ -116,10 +116,10 @@ public class engine_initialization
 			client_request_response request_response,client_process_bar process_bar)
 	{
 		int render_number=ek.render_cont.renders.length;
-		process_bar.set_process_bar(true,"render_driver_initialization", 0, render_number);
+		process_bar.set_process_bar(true,"render_driver_initialization","", 0, render_number);
 		
 		for(int render_id=0;render_id<render_number;render_id++){
-			process_bar.set_process_bar(false,"render_driver_initialization", render_id, render_number);
+			process_bar.set_process_bar(false,"render_driver_initialization","", render_id, render_number);
 			if(ek.render_cont.renders[render_id].driver==null)
 				continue;
 			try {
@@ -132,22 +132,23 @@ public class engine_initialization
 				e.printStackTrace();
 			}
 		}
-		process_bar.set_process_bar(false,"render_driver_initialization", render_number, render_number);
+		process_bar.set_process_bar(false,"render_driver_initialization","", render_number, render_number);
 	}
 	private void part_driver_initialize(engine_kernel ek,
 			client_request_response request_response,client_process_bar process_bar)
 	{
 		int process_parts_sequence[][]=ek.process_part_sequence.process_parts_sequence;
 		int number=process_parts_sequence.length;
-		process_bar.set_process_bar(true,"part_driver_initialization", 0, number);
+		process_bar.set_process_bar(true,"part_driver_initialization","", 0, number);
 		
 		for(int i=0;i<number;i++){
-			process_bar.set_process_bar(false,"part_driver_initialization", i, number);
 			int render_id=process_parts_sequence[i][0];
 			int part_id  =process_parts_sequence[i][1];
-			if(ek.render_cont.renders[render_id].parts[part_id].driver==null)
-				continue;
 			part my_p=ek.render_cont.renders[render_id].parts[part_id];
+			process_bar.set_process_bar(false,"part_driver_initialization",my_p.user_name,i, number);
+			
+			if(my_p.driver==null)
+				continue;
 			try {
 				my_p.driver.initialize_part_driver(my_p,ek,request_response);
 			}catch(Exception e){
@@ -163,15 +164,16 @@ public class engine_initialization
 			}
 		}
 		
-		process_bar.set_process_bar(false,"part_driver_initialization", number, number);
+		process_bar.set_process_bar(false,"part_driver_initialization","", number, number);
 	}
 	private void initialize_component_driver(engine_kernel ek,
 			client_request_response request_response,client_process_bar process_bar)
 	{
 		int number=sort_component_array.length;
-		process_bar.set_process_bar(true,"component_driver_initialization",0, number);
+		process_bar.set_process_bar(true,"component_driver_initialization","",0, number);
 		for(int i=0;i<number;i++) {
-			process_bar.set_process_bar(false,"component_driver_initialization",i, number);
+			process_bar.set_process_bar(false,"component_driver_initialization",
+					sort_component_array[i].component_name,i, number);
 			for(int j=0,driver_number=sort_component_array[i].driver_number();j<driver_number;j++) {
 				component_driver cd=sort_component_array[i].driver_array[j];
 				try {
@@ -186,7 +188,7 @@ public class engine_initialization
 				}
 			}
 		}
-		process_bar.set_process_bar(false,"component_driver_initialization",number,number);
+		process_bar.set_process_bar(false,"component_driver_initialization","",number,number);
 	}
 	
 	private void file_initialize(long program_last_time,engine_kernel ek,client_process_bar process_bar)
@@ -205,9 +207,10 @@ public class engine_initialization
 		
 		String initialization_program_file_name[][]=new String[collect_init_comp_number][];
 		
-		process_bar.set_process_bar(true,"file_initialization_0",0, collect_init_comp_number);
+		process_bar.set_process_bar(true,"file_initialization_0","",0, collect_init_comp_number);
 		for(int i=0,ni=collect_init_comp_number;i<ni;i++){
-			process_bar.set_process_bar(false,"file_initialization_0",i, collect_init_comp_number);
+			process_bar.set_process_bar(false,"file_initialization_0",
+					init_comp[i].component_name,i, collect_init_comp_number);
 			int init_length=init_comp[i].initialization.initialization_program.length;
 			initialization_program_file_name[i]=new String[init_length];
 			for(int j=0,nj=initialization_program_file_name[i].length;j<nj;j++){
@@ -245,20 +248,22 @@ public class engine_initialization
 					last_time=flt.last_time;
 			}
 		}
-		process_bar.set_process_bar(false,"file_initialization_0",collect_init_comp_number, collect_init_comp_number);
+		process_bar.set_process_bar(false,"file_initialization_0","",
+				collect_init_comp_number, collect_init_comp_number);
 		
 		if((new File(destination_file_name)).lastModified()>last_time)
 			return;
 		
 		int number=sort_component_array.length;
-		process_bar.set_process_bar(true,"file_initialization_1",0, number);
+		process_bar.set_process_bar(true,"file_initialization_1","",0, number);
 		
 		file_writer fw=new file_writer(destination_file_name,ek.system_par.network_data_charset);
 
 		fw.println("[");
 		fw.println("[");
 		for(int i=0;i<number;i++){
-			process_bar.set_process_bar(false,"file_initialization_1",i, number);
+			process_bar.set_process_bar(false,"file_initialization_1",
+					sort_component_array[i].component_name,i, number);
 			
 			fw.print("\t[",jason_string.change_string(sort_component_array[i].component_name));
 			fw.print(",",sort_component_array[i].component_id);
@@ -269,7 +274,7 @@ public class engine_initialization
 			fw.println((i!=(number-1))?"]],":"]]");
 		}
 		
-		process_bar.set_process_bar(false,"file_initialization_1",number, number);
+		process_bar.set_process_bar(false,"file_initialization_1","",number, number);
 		
 		fw.println("],");
 		fw.println();
@@ -277,9 +282,10 @@ public class engine_initialization
 		fw.println("[");
 		int id[][][][]=ek.component_cont.part_component_id_and_driver_id;
 		
-		process_bar.set_process_bar(true,"file_initialization_2",0, id.length);
+		process_bar.set_process_bar(true,"file_initialization_2","",0, id.length);
 		for(int render_id=0,render_number=id.length;render_id<render_number;render_id++){
-			process_bar.set_process_bar(false,"file_initialization_2",render_id,render_number);
+			process_bar.set_process_bar(false,"file_initialization_2",
+					ek.render_cont.renders[render_id].render_name,render_id,render_number);
 			fw.println("	[");
 			for(int part_id=0,part_number=id[render_id].length;part_id<part_number;part_id++){
 				fw.println("		[");
@@ -298,18 +304,19 @@ public class engine_initialization
 			fw.println();
 			fw.println((render_id==(render_number-1))?"	]":"	],");	
 		}
-		process_bar.set_process_bar(false,"file_initialization_2",id.length, id.length);
+		process_bar.set_process_bar(false,"file_initialization_2","",id.length, id.length);
 		fw.println("],");
 		fw.println();
 
 		fw.println("[");
 		
-		process_bar.set_process_bar(true,"file_initialization_3",0,collect_init_comp_number);
+		process_bar.set_process_bar(true,"file_initialization_3","",0,collect_init_comp_number);
 		
 		output_component_program ocp=new output_component_program(fw);
 		
 		for(int i=0,ni=collect_init_comp_number;i<ni;i++){
-			process_bar.set_process_bar(false,"file_initialization_3",i,collect_init_comp_number);
+			process_bar.set_process_bar(false,"file_initialization_3",
+					init_comp[i].component_name,i,collect_init_comp_number);
 			for(int j=0,nj=initialization_program_file_name[i].length;j<nj;j++) {
 				String my_program_charset;
 				if((my_program_charset=init_comp[i].initialization.initialization_program_charset[j])==null)
@@ -319,7 +326,7 @@ public class engine_initialization
 								initialization_program_file_name[i][j],my_program_charset,ocp);
 			}
 		}
-		process_bar.set_process_bar(false,"file_initialization_3",
+		process_bar.set_process_bar(false,"file_initialization_3","",
 				collect_init_comp_number,collect_init_comp_number);
 		
 		fw.println();
@@ -328,16 +335,17 @@ public class engine_initialization
 
 		fw.println("[");
 		int render_number=ek.render_cont.renders.length;
-		process_bar.set_process_bar(true,"file_initialization_4",0,render_number);
+		process_bar.set_process_bar(true,"file_initialization_4","",0,render_number);
 		for(int render_id=0;render_id<render_number;render_id++) {
-			process_bar.set_process_bar(false,"file_initialization_4",render_id,render_number);
+			process_bar.set_process_bar(false,"file_initialization_4",
+					ek.render_cont.renders[render_id].render_name,render_id,render_number);
 			fw.print_file(file_directory.render_file_directory(
 				ek.render_cont.renders[render_id].parts[0].part_type_id,
 				ek.render_cont.renders[render_id].parts[0].permanent_render_id,
 				ek.system_par,ek.scene_par)+"program.txt");
 			fw.println((render_id<(render_number-1))?",":"");
 		}
-		process_bar.set_process_bar(false,"file_initialization_4",render_number,render_number);
+		process_bar.set_process_bar(false,"file_initialization_4","",render_number,render_number);
 		fw.println("]");
 		fw.println();
 		fw.println("]");

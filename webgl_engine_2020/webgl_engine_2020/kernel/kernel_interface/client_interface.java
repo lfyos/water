@@ -228,7 +228,7 @@ public class client_interface
 			return null;
 		}
 		
-		client.get_process_bar(request_response).set_process_bar(true,"start_create_kernel",1,2);
+		client.get_process_bar(request_response).set_process_bar(true,"start_create_kernel","",1,2);
 
 		engine_kernel_link_list create_ekll=null;
 
@@ -271,7 +271,7 @@ public class client_interface
 		ec.lock_number++;
 		my_client_interface_lock.unlock();
 		
-		client.get_process_bar(request_response).set_process_bar(true,"start_load_scene",1,2);
+		client.get_process_bar(request_response).set_process_bar(true,"start_load_scene","",1,2);
 		
 		engine_call_result ecr=null;
 		try{

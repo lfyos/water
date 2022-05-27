@@ -15,7 +15,7 @@ public class part_container_for_delete_part_file extends part_container
 			system_parameter system_par,scene_parameter scene_par)
 	{
 		if(cpb!=null)
-			cpb.set_process_bar(true, "delete_part_file", 0,1);
+			cpb.set_process_bar(true, "delete_part_file","", 0,1);
 		
 		int number=0;
 		part_link_list pll=get_part_list();
@@ -25,11 +25,11 @@ public class part_container_for_delete_part_file extends part_container
 			number=1;
 		
 		if(cpb!=null)
-			cpb.set_process_bar(true, "delete_part_file", 0,number);
+			cpb.set_process_bar(true, "delete_part_file","", 0,number);
 		
 		for(int i=0;pll!=null;pll=pll.next,i++) {
 			if(cpb!=null)
-				cpb.set_process_bar(false, "delete_part_file", i,number);
+				cpb.set_process_bar(false, "delete_part_file","",i,number);
 			
 			if(pll.p.part_par==null)
 				continue;
@@ -73,6 +73,6 @@ public class part_container_for_delete_part_file extends part_container
 			}
 		}
 		if(cpb!=null)
-			cpb.set_process_bar(false, "delete_part_file", number,number);
+			cpb.set_process_bar(false, "delete_part_file","", number,number);
 	}
 }

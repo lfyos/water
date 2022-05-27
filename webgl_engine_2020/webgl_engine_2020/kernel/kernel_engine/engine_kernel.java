@@ -315,7 +315,7 @@ public class engine_kernel
 		debug_information.println();
 		
 		start_time=current_time;
-		process_bar.set_process_bar(true,"load_component", 1, 2);
+		process_bar.set_process_bar(true,"load_component", "",1, 2);
 		component_cont=new component_container(
 				scene_f,this,component_load_source_cont,
 				scene_par.default_display_bitmap,request_response,
@@ -339,7 +339,7 @@ public class engine_kernel
 						},scene_par.part_type_string,scene_par.parameter_charset));
 		
 		scene_f.close();
-		process_bar.set_process_bar(false,"load_component", 2, 2);
+		process_bar.set_process_bar(false,"load_component","", 2, 2);
 		debug_information.println("Load components time length:	",new Date().getTime()-start_time);
 		debug_information.println();
 
@@ -381,7 +381,7 @@ public class engine_kernel
 
 		start_time=new Date().getTime();
 		if(not_real_scene_fast_load_flag){
-			process_bar.set_process_bar(true,"create_shader",1,2);
+			process_bar.set_process_bar(true,"create_shader","",1,2);
 			program_last_time=copy_program.copy_shader_programs(render_cont,system_par,scene_par);
 			new engine_initialization(true,program_last_time,this,request_response,process_bar);
 			new engine_boftal_creator(boftal_file_name,system_par.local_data_charset,
@@ -397,7 +397,7 @@ public class engine_kernel
 		
 		part_cont_for_delete_file.delete_part_file(process_bar,system_par, scene_par);
 		
-		process_bar.set_process_bar(true,"load_termination", 1, 1);
+		process_bar.set_process_bar(true,"load_termination", "",1, 1);
 
 		return;
 	}

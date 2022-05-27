@@ -567,10 +567,12 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	};
 	this.can_do_render_request_flag=true;
 	this.render_request_start_time=0;
-	this.render_request=function(current_time)
+	this.render_request=function(current_time,processs_bar_object)
 	{	
-		if(this.terminate_flag)
+		if(this.terminate_flag){
+			processs_bar_object.process_bar_id=null;
 			return false;
+		}
 		if(!(this.can_do_render_request_flag))
 			return false;
 		if((current_time-this.render_request_start_time)<(this.modifier_time_parameter.delay_time_length))
@@ -673,6 +675,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			{
 				if(my_ajax.readyState!=4)
 					return;
+				processs_bar_object.process_bar_id=null;
 				if(cur.terminate_flag)
 					return;
 				if(my_ajax.status!=200){
@@ -689,6 +692,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			my_ajax.send(null);
 			my_ajax.browser_start_time=(new Date()).getTime();
 		}catch(e){
+			processs_bar_object.process_bar_id=null;
 			alert("render_request error fail:	"+e.toString());
 		};
 		return true;
@@ -707,11 +711,12 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 				if(fun_array[i](this))
 					this.routine_array.push(fun_array[i]);
 	};
-	this.do_render=function(my_render_interval_length)
+	this.do_render=function(my_render_interval_length,processs_bar_object)
 	{
-		if(this.terminate_flag)
+		if(this.terminate_flag){
+			processs_bar_object.process_bar_id=null;
 			return this.terminate_flag;
-		
+		}
 		var start_time=(new Date()).getTime();
 		this.render_interval_length=my_render_interval_length;
 		if(this.browser_current_time>0){
@@ -744,7 +749,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			this.buffer_object.process_buffer_head_request_queue(this);
 		}while(false);
 		
-		this.render_request(start_time);
+		this.render_request(start_time,processs_bar_object);
 		this.render_time_length=(new Date()).getTime()-start_time;
 		
 		return this.terminate_flag;

@@ -49,9 +49,9 @@ public class buffer_object_file_modify_time_and_length_container
 		boftal_array		=new buffer_object_file_modify_time_and_length[number];
 		
 		String process_title="load_buffer_object_file_information";
-		process_bar.set_process_bar(true,process_title, 0, number);
+		process_bar.set_process_bar(true,process_title,"", 0, number);
 		for(int i=0;i<number;i++) {
-			process_bar.set_process_bar(false,process_title, i, number);
+			process_bar.set_process_bar(false,process_title, "",i, number);
 			boftal_token_array	[i]=fr.get_string();
 			boftal_array		[i]=new buffer_object_file_modify_time_and_length(fr);
 		}
