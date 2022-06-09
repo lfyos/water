@@ -432,24 +432,6 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 			send_to_webserver(component_id,"mousedown",render);
 			break;
 		case 2:	
-			break;
-		default:
-			break;
-		}
-	}
-	function mouseup(event,component_id,render)
-	{
-		var ep=render.component_event_processor[component_id];
-
-		render.call_server_component(part_initialize_data.movement_component_name,"all",
-			[["operation","virtual_mount"],["virtual_mount","terminate_follow"]]);
-
-		switch(event.button){
-		case 0:
-			ep.mouse_up_flag=true;
-			send_location_to_webserver("mouseup",ep.component_id,render,false);
-			break;
-		case 2:	
 			if(event.ctrlKey||event.shiftKey||event.altKey){
 				render.call_server_component(part_initialize_data.movement_component_name,"all",
 					[["operation","design"],["move_method","listdesignbuffer"]],
@@ -471,7 +453,25 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 						if((value=value.trim()).length>0)
 							render.call_server_component(part_initialize_data.mark_component_name,"all",
 								[["operation","append"],["value",encodeURIComponent(encodeURIComponent(value))]]);
-			}		
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	function mouseup(event,component_id,render)
+	{
+		var ep=render.component_event_processor[component_id];
+
+		render.call_server_component(part_initialize_data.movement_component_name,"all",
+			[["operation","virtual_mount"],["virtual_mount","terminate_follow"]]);
+
+		switch(event.button){
+		case 0:
+			ep.mouse_up_flag=true;
+			send_location_to_webserver("mouseup",ep.component_id,render,false);
+			break;
+		case 2:	
 			break;
 		default:
 			break;

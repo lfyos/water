@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="turnonoff_level_of_detail"/>
+		<item key="selection" value="my_url"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="url_and_channel"/>
+			<item value="my_url"/>
+			<item value="request_create_engine"/>
 			<item value="turnonoff_level_of_detail"/>
 			<item value="level"/>
 			<item value="do_render_request_response_number"/>
@@ -20,9 +23,6 @@
 			<item value="processs_bar_object.process_bar_id"/>
 			<item value="this.terminate"/>
 			<item value="&quot;termination&quot;"/>
-			<item value="terminate=fun"/>
-			<item value="render_show_process_bar"/>
-			<item value="construct_process_bar"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>

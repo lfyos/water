@@ -1,3 +1,4 @@
+always_show_interface_part				interface_part
 
 parts\3ºÅ\3ºÅ.sldprt						bridge\»ìÉ«¸Ë¼þ\ÏÒ¸Ë_±àºÅ_3.SLDPRT
 parts\5ºÅ¼×\5ºÅ¼×.sldprt					bridge\»ìÉ«¸Ë¼þ\¸¹¸Ë_±àºÅ_5¼×_Ô­±àºÅ_5.SLDPRT

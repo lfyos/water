@@ -5,6 +5,7 @@
 		/*	2:name			*/	part_list_component		
 		/*	2:type			*/	undefined_part
 		/*	2:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+		
 				part_list			mount		SLDASM.assemble
 
 		/*	2:child_number	*/	0
@@ -15,4 +16,20 @@
 				not_part_list		mount	interface.assemble
 				not_part_list		mount	movement.assemble
 				not_part_list		mount	virtual_mount.assemble
+				
+				token_program	关闭交互界面菜单图标
+
+				function(component_name,component_id,render)
+				{
+					render.append_routine_function(
+						function(render)
+						{
+							render.system_call_processor.set_menu_hide("交互界面菜单图标左");
+							render.system_call_processor.set_menu_hide("交互界面菜单图标右");
+							return false;
+						});
+				}
+
+				关闭交互界面菜单图标
+				
 		/*	2:child_number	*/	0

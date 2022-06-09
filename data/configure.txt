@@ -3,8 +3,6 @@
 /*	text_class_charset		text_jar_file_charset							*/		GBK		GBK
 /*	js_class_charset		js_jar_file_charset								*/		UTF-8	UTF-8
 
-/*	system_terminate_time													*/		yyyy-MM-dd	2024-01-01
-
 /*	user_file_name															*/		users/users.txt
 /*	shader_file_name														*/		shaders/shaders.txt
 /*	default_parameter_directory												*/		parameter
