@@ -1,3 +1,5 @@
+always_show_interface_part				interface_part
+
 parts\3╨е\3╨е.sldprt						bridge\бли╚╦к╪Ч\ор╦к_╠Ю╨е_3.SLDPRT
 parts\5╨е╪в\5╨е╪в.sldprt					bridge\бли╚╦к╪Ч\╦╧╦к_╠Ю╨е_5╪в_т╜╠Ю╨е_5.SLDPRT
 parts\6╨е\6╨е.SLDPRT						bridge\бли╚╦к╪Ч\╦╧╦к_╠Ю╨е_6.SLDPRT 
