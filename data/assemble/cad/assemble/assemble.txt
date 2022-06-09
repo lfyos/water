@@ -17,6 +17,22 @@
 			not_part_list	not_normalize_location
 			environment_sub_directory_mount			liufuyan_sigma_directory	movement.assemble
 			mount									interface.assemble
+			
+			token_program	关闭交互界面菜单图标
+				
+			function(component_name,component_id,render)
+			{
+				render.append_routine_function(
+					function(render)
+					{
+						render.system_call_processor.set_menu_hide("交互界面菜单图标左");
+						render.system_call_processor.set_menu_hide("交互界面菜单图标右");
+						return false;
+					});
+			}
+				
+			关闭交互界面菜单图标
+
 		/*	2:child_number	*/	0
 		
 		/*	2:name			*/	ground_grid_component

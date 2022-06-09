@@ -36,23 +36,27 @@ std::string part::register_node(FbxNode* assemble_node)
 			part_id_array[register_number]=fm->GetClassId();
 			for (int i = 0; i < register_number; i++)
 				if (part_id_array[i] == part_id_array[register_number])
-					return "cad_part_" + std::to_string(i);
+					return "fbx_part_" + std::to_string(i);
 
-			std::string part_name = process_name(fm->GetClassId().GetName());
-			(*part_list_f) << part_name << std::endl;
-			(*part_list_f) << "cad_part_" << std::to_string(register_number) << std::endl;
+			std::string part_user_name = process_name(fm->GetClassId().GetName());
+			std::string part_system_name = "fbx_part_" + std::to_string(register_number);
+
+			(*part_list_f) << part_user_name << std::endl;
+			(*part_list_f) << part_system_name << std::endl;
 			(*part_list_f) << "part_" << register_number << ".mesh" << std::endl;
 			(*part_list_f) << "part_" << register_number << ".material" << std::endl;
 			(*part_list_f) << "part_" << register_number << ".description" << std::endl;
 			(*part_list_f) << "part_" << register_number << ".mp3" << std::endl;
 			(*part_list_f) << std::endl;
 
-			std::cout << "Begin extract mesh data for part "<< part_name <<" (NO. " << register_number<<")" << std::endl;
+			std::cout << "Begin extract mesh data for part "<< part_user_name <<" (NO. " << register_number<<")" << std::endl;
 			output_part_material(fm,assemble_node);
 			output_part_mesh(fm);
-			std::cout << "End extract mesh data for part " << part_name << " (NO. " << register_number<< ")" << std::endl;
+			std::cout << "End extract mesh data for part " << part_user_name << " (NO. " << register_number<< ")" << std::endl;
 
-			return "cad_part_" + std::to_string(register_number++);
+			register_number++;
+
+			return part_system_name;
 		}
 	return std::string("NOT_exist_fbx_part_name");
 }
@@ -251,7 +255,6 @@ void part::output_part_mesh(FbxMesh* pMesh)
 		delete[] color;
 	}
 	f_mesh.close();
-
 
 	std::string head_str[]{ 
 		"/*	version								*/	2021.07.15",

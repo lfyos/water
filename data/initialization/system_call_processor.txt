@@ -354,9 +354,11 @@ function(component_name,component_id,render)
 	};
 	render.system_call_processor.turnonoff_level_of_detail=function(discard_lod_value,selection_lod_value)
 	{
-		render.call_server_component("render_target_register_component","all",[["operation","turnon_off_lod"],
-			["discard_lod_value",	discard_lod_value	?"true":"false"],
-			["selection_lod_value",	selection_lod_value	?"true":"false"]]);	
+		render.call_server_component("render_target_register_component","all",
+			[["operation",			"turnon_off_lod"					],
+			 ["discard_lod_value",	discard_lod_value	?"true":"false"	],
+			 ["selection_lod_value",selection_lod_value	?"true":"false"	]
+			]);	
 	};
 	render.system_call_processor.set_component_display_precision=function(value)
 	{

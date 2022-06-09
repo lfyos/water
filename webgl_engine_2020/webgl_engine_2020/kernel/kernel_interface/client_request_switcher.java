@@ -1,5 +1,7 @@
 package kernel_interface;
 
+import java.util.Date;
+
 import kernel_common_class.debug_information;
 import kernel_common_class.jason_string;
 import kernel_common_class.nanosecond_timer;
@@ -193,10 +195,10 @@ public class client_request_switcher
 		if(system_par==null)
 			create_system_parameter(network_implementor,
 				data_configure_environment_variable,proxy_configure_environment_variable);
-		
-		if(system_par.system_terminate_flag)
-			return;
-		
+		else
+			if(new Date().getTime()>system_par.system_terminate_time)
+				return;
+
 		client_request_response request_response=new client_request_response(
 			system_par.network_data_charset,network_implementor);
 		

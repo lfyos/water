@@ -181,6 +181,20 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 					}
 					return true;
 				},
+				pickupkeydown		:	function(event,component_id,render)
+				{
+					var ep=render.component_event_processor[component_id];
+					if((ep.pickup_tag_id=render.pickup.body_id)<0)
+						return true;
+						
+					switch(event.keyCode){
+					case 46://del
+					case  8://backspace
+						render.call_server_component(ep.component_id,"all",[["operation","clear"],["id",ep.pickup_tag_id]]);
+						break;
+					}
+					return true;
+				},
 				mousemove			:	function(event,component_id,render)
 				{	
 					var ep=render.component_event_processor[component_id];

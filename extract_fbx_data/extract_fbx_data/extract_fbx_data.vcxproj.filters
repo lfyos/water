@@ -24,12 +24,30 @@
     <ClCompile Include="part.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="mesh.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="triangle_material_id.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="attribute_vertex.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="assemble.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="part.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="triangle_material_id.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="attribute_vertex.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
