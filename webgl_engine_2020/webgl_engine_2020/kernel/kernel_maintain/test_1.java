@@ -10,8 +10,8 @@ public class test_1 extends travel_through_directory
 	{
 		String str=file_reader.get_text(file_name,"GBK");
 		if(str!=null) {
-			if(str.indexOf("render_target_register_component")>=0)
-				debug_information.println("render_target_register_component",file_name);
+			if(str.indexOf("turnonoff_level_of_detail")>=0)
+				debug_information.println("turnonoff_level_of_detail",file_name);
 		}
 	}
 	public static void main(String args[])

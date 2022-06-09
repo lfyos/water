@@ -16,7 +16,6 @@ public:
 	part(std::string my_directory_name);
 	~part();
 	std::string register_node(FbxNode* assemble_node);
-
 private:
 	std::string process_name(std::string name);
 	void output_part_mesh(FbxMesh* fm);

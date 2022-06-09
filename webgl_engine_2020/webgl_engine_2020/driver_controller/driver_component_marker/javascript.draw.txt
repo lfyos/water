@@ -126,6 +126,16 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 					}
 					return true;
 				},
+				pickupkeydown		:	function(event,component_id,render)
+				{
+					switch(event.keyCode){
+					case 46://del
+					case  8://backspace
+						render.call_server_component(component_id,"all",[["operation","delete"]]);
+						break;
+					}
+					return true;
+				},
 				destroy				:	function(gl,ep,component_id)
 				{
 					if(typeof(ep.marker_texture_object)!="undefined"){

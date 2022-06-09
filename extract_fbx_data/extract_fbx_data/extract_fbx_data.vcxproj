@@ -151,12 +151,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="assemble.cpp" />
+    <ClCompile Include="attribute_vertex.cpp" />
     <ClCompile Include="extract_fbx_data.cpp" />
+    <ClCompile Include="mesh.cpp" />
     <ClCompile Include="part.cpp" />
+    <ClCompile Include="triangle_material_id.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="assemble.h" />
+    <ClInclude Include="attribute_vertex.h" />
+    <ClInclude Include="mesh.h" />
     <ClInclude Include="part.h" />
+    <ClInclude Include="triangle_material_id.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,7 +2,6 @@ package kernel_engine;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.nio.charset.Charset;
 
 import kernel_common_class.change_name;
@@ -19,7 +18,7 @@ public class system_parameter
 	public String local_data_charset,network_data_charset;
 	public String text_class_charset,text_jar_file_charset,js_class_charset,js_jar_file_charset;
 	
-	public boolean system_terminate_flag;
+	public long system_terminate_time;
 	
 	public String user_file_name,shader_file_name,default_parameter_directory;
 	
@@ -62,7 +61,7 @@ public class system_parameter
 		js_class_charset				=new String(sp.js_class_charset);
 		js_jar_file_charset				=new String(sp.js_jar_file_charset);
 		
-		system_terminate_flag			=sp.system_terminate_flag;
+		system_terminate_time			=sp.system_terminate_time;
 		
 		user_file_name					=new String(sp.user_file_name);
 		shader_file_name				=new String(sp.shader_file_name);
@@ -172,13 +171,12 @@ public class system_parameter
 		if(js_jar_file_charset.compareTo("default_charset")==0)
 			js_jar_file_charset=Charset.defaultCharset().name();
 		try{
-			SimpleDateFormat ft=new SimpleDateFormat(f.get_string());
-			long system_terminate_time=ft.parse(f.get_string()).getTime();
-			system_terminate_flag=(new Date().getTime()>system_terminate_time);
+			system_terminate_time=new SimpleDateFormat(f.get_string()).parse(f.get_string()).getTime();
 		}catch(Exception e){
-			system_terminate_flag=true;
+			system_terminate_time=0;
+			debug_information.println("parse system_terminate_time error:	",e.toString());
 		}
-		
+
 		if((user_file_name=f.get_string())==null)
 			user_file_name="";
 		else
