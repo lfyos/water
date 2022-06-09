@@ -1,10 +1,10 @@
 {
 	"texture_width"				:	4096,
 	"texture_height"			:	32,
-	"font"						:	"bold 24px Arial",
+	"font"						:	"24px Arial",
 	"texture_start"				:	0.25,
 	"texture_speed"				:	0.04,
-	
-	"color"						:	[0.5,0.5,0.5,1]
+
+	"color"						:	[0,0,0,1]
 }
 	
