@@ -41,7 +41,7 @@ public class instance_driver_container
 	{
 		for(int i=0,child_number=comp.children_number();i<child_number;i++)
 			reset_precision_scale(comp.children[i]);
-	
+		
 		instance_lod_precision_scale[comp.component_id]=-1.0;
 		for(int i=0,child_number=comp.children_number();i<child_number;i++){
 			double scale=instance_lod_precision_scale[comp.children[i].component_id];

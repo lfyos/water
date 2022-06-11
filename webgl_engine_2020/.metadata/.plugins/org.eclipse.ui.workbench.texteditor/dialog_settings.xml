@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="my_url"/>
+		<item key="selection" value=""/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="new String"/>
+			<item value="scene_directory\cad_directory\cad\A159-SR-302A\part_directory"/>
+			<item value="/*&#x09;low_precision_scale&#x09;&#x09;&#x09;*/&#x09;&#x09;0.50"/>
+			<item value="/*&#x09;high_precision_scale&#x09;&#x09;*/&#x09;&#x09;0.5"/>
+			<item value="/*&#x09;high_precision_scale&#x09;&#x09;*/&#x09;&#x09;1.0"/>
+			<item value="turnonoff_lod"/>
 			<item value="url_and_channel"/>
 			<item value="my_url"/>
 			<item value="request_create_engine"/>
@@ -17,15 +23,12 @@
 			<item value="append_routine_function"/>
 			<item value="hide"/>
 			<item value="pickup_tag_id"/>
-			<item value="this.render_request"/>
-			<item value="do_render"/>
-			<item value="render_routine"/>
-			<item value="processs_bar_object.process_bar_id"/>
-			<item value="this.terminate"/>
-			<item value="&quot;termination&quot;"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
+			<item value="/*&#x09;low_precision_scale&#x09;&#x09;&#x09;*/&#x09;&#x09;0.25"/>
+			<item value="/*&#x09;high_precision_scale&#x09;&#x09;*/&#x09;&#x09;0.50"/>
+			<item value="/*&#x09;high_precision_scale&#x09;&#x09;*/&#x09;&#x09;0.5"/>
 			<item value="target_id"/>
 			<item value="check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)"/>
 			<item value="&#x09;]);"/>
@@ -37,15 +40,12 @@
 			<item value="type_id"/>
 			<item value="tag_ep"/>
 			<item value="&#x09;&#x09;&#x09;"/>
-			<item value="y"/>
-			<item value="_angle"/>
-			<item value="function_id%3"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1393"/>
-		<item key="DIALOG_Y_ORIGIN" value="421"/>
-		<item key="DIALOG_WIDTH" value="408"/>
+		<item key="DIALOG_X_ORIGIN" value="8"/>
+		<item key="DIALOG_Y_ORIGIN" value="325"/>
+		<item key="DIALOG_WIDTH" value="530"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 	</section>

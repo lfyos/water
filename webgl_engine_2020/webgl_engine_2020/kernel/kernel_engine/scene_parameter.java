@@ -176,21 +176,21 @@ public class scene_parameter
 		
 		if((scene_cors_string=fr.get_string())==null)
 			scene_cors_string="*";
+		else if(new File(str=fr.directory_name+file_reader.separator(scene_cors_string)).exists()?false:true)
+			scene_cors_string=scene_cors_string.trim();
 		else{
-			scene_cors_string=file_reader.separator(scene_cors_string);
-			if((new File(str=fr.directory_name+scene_cors_string)).exists()) {
-				scene_cors_string="";
-				for(file_reader cors_fr=new file_reader(str,fr.get_charset());;) {
-					if(cors_fr.eof()){
-						cors_fr.close();
-						break;
-					}
-					if((str=cors_fr.get_line())!=null)
-						if((str=str.trim()).length()>0)
-							scene_cors_string+=str;
+			scene_cors_string="";
+			for(file_reader cors_fr=new file_reader(str,fr.get_charset());;) {
+				if(cors_fr.eof()){
+					cors_fr.close();
+					break;
 				}
+				if((str=cors_fr.get_line())!=null)
+					if((str=str.trim()).length()>0)
+						scene_cors_string+=str;
 			}
 		}
+
 		if((multiparameter_number=fr.get_int())<1)
 			multiparameter_number=1;
 		

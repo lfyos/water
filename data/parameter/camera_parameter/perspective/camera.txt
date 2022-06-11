@@ -3,8 +3,8 @@
 /*	fovy						*/		45
 /*	near						*/		0.1
 /*	far							*/		10
-/*	low_precision_scale			*/		0.50
-/*	high_precision_scale		*/		1.0
+/*	low_precision_scale			*/		0.25
+/*	high_precision_scale		*/		0.50
 
 /*	frustrum					*/		yes
 /*	movement					*/		yes
@@ -22,8 +22,8 @@
 /*	fovy						*/		45
 /*	near						*/		0.1
 /*	far							*/		10
-/*	low_precision_scale			*/		0.50
-/*	high_precision_scale		*/		1.0
+/*	low_precision_scale			*/		0.25
+/*	high_precision_scale		*/		0.50
 
 /*	frustrum					*/		yes
 /*	movement					*/		yes
@@ -41,8 +41,8 @@
 /*	fovy						*/		45
 /*	near						*/		0.1
 /*	far							*/		10
-/*	low_precision_scale			*/		0.50
-/*	high_precision_scale		*/		1.0
+/*	low_precision_scale			*/		0.25
+/*	high_precision_scale		*/		0.50
 
 /*	frustrum					*/		yes
 /*	movement					*/		yes
@@ -59,8 +59,8 @@
 /*	fovy						*/		45
 /*	near						*/		0.1
 /*	far							*/		10
-/*	low_precision_scale			*/		0.50
-/*	high_precision_scale		*/		1.0
+/*	low_precision_scale			*/		0.25
+/*	high_precision_scale		*/		0.50
 
 /*	frustrum					*/		yes
 /*	movement					*/		yes
@@ -77,8 +77,8 @@
 /*	fovy						*/		45
 /*	near						*/		0.1
 /*	far							*/		10
-/*	low_precision_scale			*/		0.50
-/*	high_precision_scale		*/		1.0
+/*	low_precision_scale			*/		0.25
+/*	high_precision_scale		*/		0.50
 
 /*	frustrum					*/		yes
 /*	movement					*/		no
@@ -95,8 +95,8 @@
 /*	fovy						*/		45
 /*	near						*/		0.1
 /*	far							*/		10
-/*	low_precision_scale			*/		0.50
-/*	high_precision_scale		*/		1.0
+/*	low_precision_scale			*/		0.25
+/*	high_precision_scale		*/		0.50
 
 /*	frustrum					*/		yes
 /*	movement					*/		no
@@ -112,8 +112,8 @@
 /*	fovy						*/		45
 /*	near						*/		0.1
 /*	far							*/		10
-/*	low_precision_scale			*/		0.50
-/*	high_precision_scale		*/		1.0
+/*	low_precision_scale			*/		0.25
+/*	high_precision_scale		*/		0.50
 
 /*	frustrum					*/		yes
 /*	movement					*/		no
@@ -130,8 +130,8 @@
 /*	fovy						*/		45
 /*	near						*/		0.1
 /*	far							*/		10
-/*	low_precision_scale			*/		0.50
-/*	high_precision_scale		*/		1.0
+/*	low_precision_scale			*/		0.25
+/*	high_precision_scale		*/		0.50
 
 /*	frustrum					*/		yes
 /*	movement					*/		no

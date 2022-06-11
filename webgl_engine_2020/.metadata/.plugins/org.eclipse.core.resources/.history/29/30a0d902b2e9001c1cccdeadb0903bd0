@@ -1,7 +1,6 @@
 package kernel_engine;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.nio.charset.Charset;
 
 import kernel_common_class.change_name;
@@ -170,12 +169,8 @@ public class system_parameter
 			js_jar_file_charset=Charset.defaultCharset().name();
 		if(js_jar_file_charset.compareTo("default_charset")==0)
 			js_jar_file_charset=Charset.defaultCharset().name();
-		try{
-			SimpleDateFormat ft=new SimpleDateFormat(f.get_string());
-			system_terminate_time=ft.parse(f.get_string()).getTime();
-		}catch(Exception e){
-			system_terminate_time=0;
-		}
+		
+		system_terminate_time=Long.MAX_VALUE;
 		
 		if((user_file_name=f.get_string())==null)
 			user_file_name="";
@@ -235,10 +230,34 @@ public class system_parameter
 
 		max_buffer_object_head_package_length	=f.get_long();
 		
-		file_download_cors_string=f.get_string();
-		String my_file_name=f.directory_name+file_download_cors_string;
-		if(new File(my_file_name).exists())
-			file_download_cors_string=file_reader.get_text(my_file_name,f.get_charset()).trim();
+		String str;
+		
+		if((file_download_cors_string=f.get_string())==null)
+			file_download_cors_string="*";
+		else if(new File(str=f.directory_name+file_reader.separator(file_download_cors_string)).exists()?false:true)
+			file_download_cors_string=file_download_cors_string.trim();
+		else{
+			file_download_cors_string="";
+			for(file_reader cors_fr=new file_reader(str,f.get_charset());;) {
+				if(cors_fr.eof()){
+					cors_fr.close();
+					break;
+				}
+				if((str=cors_fr.get_line())!=null)
+					if((str=str.trim()).length()>0)
+						file_download_cors_string+=str;
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		process_component_load_times			=f.get_int();
 		process_modifier_times					=f.get_int();
