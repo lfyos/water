@@ -1,6 +1,7 @@
 package kernel_render;
 
 import kernel_camera.camera_result;
+import kernel_common_class.const_value;
 import kernel_common_class.debug_information;
 import kernel_component.component;
 import kernel_component.component_collector;
@@ -100,8 +101,10 @@ public class list_component_on_collector
 		my_box.p[1].z=my_box.p[0].z;
 		double lod_precision2=my_box.distance2();
 		double driver_lod_precision_scale=ci.instance_container.get_lod_precision_scale(comp);
-		lod_precision2*=driver_lod_precision_scale*driver_lod_precision_scale;
-		lod_precision2*=camera_lod_precision_scale*camera_lod_precision_scale;
+		if(driver_lod_precision_scale>const_value.min_value)
+			lod_precision2*=driver_lod_precision_scale*driver_lod_precision_scale;
+		if(camera_lod_precision_scale>const_value.min_value)
+			lod_precision2*=camera_lod_precision_scale*camera_lod_precision_scale;
 
 		if(do_discard_lod_flag){
 			if(lod_precision2<=comp.uniparameter.discard_precision2){
@@ -224,7 +227,6 @@ public class list_component_on_collector
 						}
 				collect(my_comp,0);
 			}
-		
 		if(ci.parameter.high_or_low_precision_flag)
 			for(component p=ci.parameter.comp;p!=null;p=ek.component_cont.get_component(p.parent_component_id))
 				p.selected_component_family_flag=false;

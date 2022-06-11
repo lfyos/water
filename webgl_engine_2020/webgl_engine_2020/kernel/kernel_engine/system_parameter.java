@@ -229,11 +229,27 @@ public class system_parameter
 		max_engine_component_number				=f.get_int();
 
 		max_buffer_object_head_package_length	=f.get_long();
-		
-		file_download_cors_string=f.get_string();
-		String my_file_name=f.directory_name+file_download_cors_string;
-		if(new File(my_file_name).exists())
-			file_download_cors_string=file_reader.get_text(my_file_name,f.get_charset()).trim();
+
+		if((file_download_cors_string=f.get_string())==null)
+			file_download_cors_string="*";
+		else {
+			String cores_file_name=f.directory_name+file_reader.separator(file_download_cors_string);
+			if(!(new File(cores_file_name).exists()))
+				file_download_cors_string=file_download_cors_string.trim();
+			else{
+				file_download_cors_string="";
+				for(file_reader cors_fr=new file_reader(cores_file_name,f.get_charset());;) {
+					if(cors_fr.eof()){
+						cors_fr.close();
+						break;
+					}
+					String str;
+					if((str=cors_fr.get_line())!=null)
+						if((str=str.trim()).length()>0)
+							file_download_cors_string+=str;
+				}
+			}
+		}
 		
 		process_component_load_times			=f.get_int();
 		process_modifier_times					=f.get_int();
