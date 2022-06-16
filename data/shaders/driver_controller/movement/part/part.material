@@ -3,6 +3,7 @@
 /*		temporary_file_directory				*/		move_temp/
 /*		location_component_name					*/		location_modifier_component
 /*		audio_component_name					*/		audio_component
+/*		wait_audio_terminated_message			*/		wait_audio_terminated_message
 /*		modifier_container_id					*/		1
 /*		mouse_modify_location_component_name	*/		mouse_modify_location_component
 /*		virtual_mount_root_component_name		*/		virtual_mount_root_component

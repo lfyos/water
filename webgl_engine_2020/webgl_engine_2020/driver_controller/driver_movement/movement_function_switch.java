@@ -1167,9 +1167,6 @@ public class movement_function_switch
 	{
 		String str;
 				
-		driver_audio.extended_component_driver acd;
-		if((acd=manager.config_parameter.get_audio_component_driver(ek))!=null)
-			acd.set_audio(null);
 		if(manager==null)
 			return null;
 		if(ek.camera_cont.camera_array==null)
@@ -1191,6 +1188,9 @@ public class movement_function_switch
 			if((str=ci.request_response.get_parameter("single_step"))!=null)
 				if(str.toLowerCase().trim().compareTo("true")==0)
 					single_step_flag=true;
+			driver_audio.extended_component_driver acd;
+			if((acd=manager.config_parameter.get_audio_component_driver(ek))!=null)
+				acd.set_audio(null);
 			ek.modifier_cont[manager.config_parameter.modifier_container_id].clear_modifier(ek,ci);
 			manager.suspend.reset_suspend_collector(ek);
 			manager.suspend.reset_virtual_mount_component(ek);
@@ -1200,7 +1200,8 @@ public class movement_function_switch
 					manager.config_parameter.location_component_id,
 					ek.modifier_cont[manager.config_parameter.modifier_container_id],
 					ek.component_cont,direction_flag,switch_time_length,
-					manager.config_parameter.sound_pre_string);
+					manager.config_parameter.sound_pre_string,
+					manager.config_parameter.wait_audio_terminated_message);
 			break;
 		case "search_jason":
 			new movement_search_jason(manager.config_parameter.component_id,

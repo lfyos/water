@@ -73,7 +73,7 @@ public class movement_manager
 	public void create_render_modifier(boolean single_step_flag,int audio_component_id,
 			int location_component_id,modifier_container movement_modifier_cont,
 			component_container component_cont,boolean direction_flag,
-			long camera_switch_time_length,String sound_pre_string)
+			long camera_switch_time_length,String sound_pre_string,String wait_audio_terminated_message)
 	{
 		if(root_movement==null)
 			return;
@@ -88,7 +88,7 @@ public class movement_manager
 		movement_switch_camera_modifier swcm=new movement_switch_camera_modifier(
 				single_step_flag,movement_modifier_cont.get_timer().get_current_time(),
 				audio_component_id,move_channel_id.display_parameter_channel_id[0],
-				config_parameter.modifier_container_id);
+				config_parameter.modifier_container_id,wait_audio_terminated_message);
 		root_movement.register_modifier(suspend,move_channel_id,location_component_id,
 				component_cont,parameter,movement_modifier_cont,swcm,directory_name,sound_pre_string,
 				t.start_time-camera_switch_time_length,camera_switch_time_length,null,0,1.0,mount_direction_flag);

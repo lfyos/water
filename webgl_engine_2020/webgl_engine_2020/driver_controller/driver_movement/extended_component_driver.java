@@ -49,6 +49,7 @@ public class extended_component_driver extends component_driver
 		String temporary_file_directory				=file_reader.separator(fr.get_string());
 		String location_component_name				=fr.get_string();
 		String audio_component_name					=fr.get_string();
+		String wait_audio_terminated_message		=fr.get_string();
 		int modifier_container_id					=fr.get_int();
 		String mouse_modify_location_component_name	=fr.get_string();
 		String virtual_mount_root_component_name	=fr.get_string();
@@ -65,7 +66,7 @@ public class extended_component_driver extends component_driver
 						component_directory_name+movement_file_name,
 						component_directory_name+design_file_name,
 						component_directory_name+temporary_file_directory,
-						sound_pre_string,
+						sound_pre_string,wait_audio_terminated_message,
 						location_component_name,audio_component_name,modifier_container_id,
 						mouse_modify_location_component_name,virtual_mount_root_component_name),
 				move_channel_id);

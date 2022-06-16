@@ -51,7 +51,7 @@ public class engine_kernel
 	public long 							do_selection_version;
 	
 	public part_loader_container 			part_loader_cont;
-
+	
 	private double							create_top_part_expand_ratio,create_top_part_left_ratio;
 	private long							program_last_time;
 
@@ -139,7 +139,7 @@ public class engine_kernel
 		
 		do_selection_version	=1;
 		
-		part_loader_cont		=my_part_loader_cont;
+		part_loader_cont		=my_part_loader_cont;				
 		
 		scene_directory_name	=my_scene_directory_name;
 		scene_file_name			=my_scene_file_name;

@@ -7,7 +7,7 @@ import kernel_component.component;
 public class movement_configuration_parameter
 {
 	public String movement_file_charset,movement_file_name,design_file_name;
-	public String temporary_file_directory,sound_pre_string;
+	public String temporary_file_directory,sound_pre_string,wait_audio_terminated_message;
 	public int component_id,location_component_id,audio_component_id,modifier_container_id;
 	public int virtual_mount_root_component_id,mouse_modify_location_component_id; 
 
@@ -18,6 +18,7 @@ public class movement_configuration_parameter
 		design_file_name=null;
 		temporary_file_directory=null;
 		sound_pre_string=null;
+		wait_audio_terminated_message=null;
 	}
 	public driver_audio.extended_component_driver get_audio_component_driver(engine_kernel ek)
 	{
@@ -31,6 +32,7 @@ public class movement_configuration_parameter
 	public movement_configuration_parameter(engine_kernel ek,component my_comp,int my_driver_id,
 			String my_movement_file_charset,String my_movement_file_name,
 			String my_design_file_name,String my_temporary_file_directory,String my_sound_pre_string,
+			String my_wait_audio_terminated_message,
 			String location_component_name,String audio_component_name,int my_modifier_container_id,
 			String mouse_modify_location_component_name,String virtual_mount_root_component_name)
 	{
@@ -39,6 +41,7 @@ public class movement_configuration_parameter
 		design_file_name=my_design_file_name;
 		temporary_file_directory=my_temporary_file_directory;
 		sound_pre_string=my_sound_pre_string;
+		wait_audio_terminated_message=my_wait_audio_terminated_message;
 		modifier_container_id=my_modifier_container_id;
 	
 		component_id=my_comp.component_id;
