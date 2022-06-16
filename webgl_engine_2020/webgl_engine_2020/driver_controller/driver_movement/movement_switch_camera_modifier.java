@@ -15,13 +15,13 @@ import kernel_common_class.debug_information;
 
 public class movement_switch_camera_modifier extends modifier_driver
 {
-	private boolean single_step_flag;
+	private boolean single_step_flag,can_display_wait_audio_terminated_message;
 	private long switch_camera_number;
 	private double scale_value;
 	private int main_component_id[],component_id[],audio_component_id,parameter_channel_id;
 	private location direction[],start_location[],terminate_location[];
 	private int component_number,modifier_container_id;
-	public String title_string,information_string,sound_file_name;
+	public String title_string,information_string,sound_file_name,wait_audio_terminated_message;
 	
 	public void destroy()
 	{
@@ -36,6 +36,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 		title_string=null;
 		information_string=null;
 		sound_file_name=null;
+		wait_audio_terminated_message=null;
 	}
 	private void caculate_component_location(component comp,component_container component_cont)
 	{
@@ -172,7 +173,22 @@ public class movement_switch_camera_modifier extends modifier_driver
 			if(acd.get_state())
 				if((play_audio_file_name=acd.get_audio_file_name())!=null)
 					if(sound_file_name.compareTo(play_audio_file_name)!=0)
-						return acd.get_terminate_flag();
+						if(!(acd.get_terminate_flag())) {
+							if(can_display_wait_audio_terminated_message) {
+								can_display_wait_audio_terminated_message=false;
+								String language_str=ci.request_response.get_parameter("language");
+								language_str=(language_str==null)?"english":(language_str.trim());
+								String my_wait_audio_terminated_message=ek.system_par.language_change_name.search_change_name(
+											wait_audio_terminated_message+"+"+language_str,wait_audio_terminated_message);
+								component_collector cc=ek.collector_stack.get_top_collector();
+								if(cc!=null)
+									if(cc.description==null)
+										cc.description=my_wait_audio_terminated_message;
+									else
+										cc.description="["+my_wait_audio_terminated_message+"]"+cc.description;	
+							}
+							return false;
+						}
 		return true;
 	}
 	private void register_visible_component(component comp,component_array comp_array,int depth)
@@ -215,6 +231,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 		cc.title=title_string;
 		cc.description=information_string;	
 		cc.audio_file_name=sound_file_name;
+		can_display_wait_audio_terminated_message=true;
 		
 		if(sound_file_name==null)
 			return;
@@ -222,6 +239,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 		if(acd==null)
 			return;
 		acd.set_audio(sound_file_name);
+		
 	}
 	public void modify(long my_current_time,engine_kernel ek,client_information ci)
 	{
@@ -232,7 +250,8 @@ public class movement_switch_camera_modifier extends modifier_driver
 		super.last_modify(my_current_time,ek,ci,terminated_flag);
 	}
 	public movement_switch_camera_modifier(boolean my_single_step_flag,long current_time,
-			int my_audio_component_id,int my_parameter_channel_id,int my_modifier_container_id)
+			int my_audio_component_id,int my_parameter_channel_id,int my_modifier_container_id,
+			String my_wait_audio_terminated_message)
 	{
 		super(current_time,Long.MAX_VALUE);
 		
@@ -252,6 +271,9 @@ public class movement_switch_camera_modifier extends modifier_driver
 		title_string		="";
 		information_string	="";
 		sound_file_name		=null;
+		
+		can_display_wait_audio_terminated_message=true;
+		wait_audio_terminated_message=my_wait_audio_terminated_message;
 		
 		reset();
 	}

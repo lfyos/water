@@ -8,7 +8,6 @@ import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
 import kernel_part.part;
 
-
 public class extended_component_driver  extends component_driver
 {
 	private String audio_file_name;

@@ -34,7 +34,11 @@ public class extended_instance_driver extends instance_driver
 			return true;
 		render_target rt;
 		if((rt=ci.target_container.get_target(target_name))==null){
-			ci.message_display.set_display_message("No target component found",1000*1000*1000*10);
+			String language_str=ci.request_response.get_parameter("language");
+			language_str=(language_str==null)?"english":(language_str.trim());
+			String caption=ek.system_par.language_change_name.search_change_name(
+					"No_shown_render_target+"+language_str, "No_shown_render_target");
+			ci.message_display.set_display_message(caption,1000*1000*1000*10);
 			return true;
 		}
 		if(rt.target_id!=target_id){

@@ -1,9 +1,14 @@
+wait_audio_terminated_message+english			wait_audio_terminated
+wait_audio_terminated_message+chinese			等待播音结束
+
+No_shown_render_target+english					no_shown_render_target
+No_shown_render_target+chinese					没有显示的渲染目标
+
 load+english									load
 load+chinese									装入
 
 unit+english									second
 unit+chinese									秒
-
 
 wait_for_other_exit+english						1.wait_for_other_scene_create_exit
 wait_for_other_exit+chinese						1.等待其它场景创建结束
