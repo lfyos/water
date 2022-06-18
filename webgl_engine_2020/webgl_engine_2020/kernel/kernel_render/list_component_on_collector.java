@@ -19,7 +19,6 @@ public class list_component_on_collector
 	private camera_result cam_result;
 	private boolean do_discard_lod_flag,do_selection_lod_flag,discard_cross_clip_plane_flag;
 	private boolean discard_unload_component_flag,add_number_flag;
-	private double camera_lod_precision_scale;
 	private int no_driver_component_number;
 	
 	private boolean register(component comp,int driver_id)
@@ -100,11 +99,17 @@ public class list_component_on_collector
 		my_box=cam_result.matrix.multiply(my_box);
 		my_box.p[1].z=my_box.p[0].z;
 		double lod_precision2=my_box.distance2();
-		double driver_lod_precision_scale=ci.instance_container.get_lod_precision_scale(comp);
-		if(driver_lod_precision_scale>const_value.min_value)
-			lod_precision2*=driver_lod_precision_scale*driver_lod_precision_scale;
-		if(camera_lod_precision_scale>const_value.min_value)
-			lod_precision2*=camera_lod_precision_scale*camera_lod_precision_scale;
+		
+		double lod_precision_scale=1.0,my_lod_precision_scale;
+		if((my_lod_precision_scale=comp.uniparameter.component_driver_lod_precision_scale)>const_value.min_value)
+			lod_precision_scale*=my_lod_precision_scale;
+		if((my_lod_precision_scale=ci.instance_container.get_lod_precision_scale(comp))>const_value.min_value)
+			lod_precision_scale*=my_lod_precision_scale;
+		if((my_lod_precision_scale=ci.parameter.high_or_low_precision_flag
+				?cam_result.cam.parameter.high_precision_scale
+				:cam_result.cam.parameter.low_precision_scale)>const_value.min_value)
+			lod_precision_scale*=my_lod_precision_scale;
+		lod_precision2*=lod_precision_scale*lod_precision_scale;
 
 		if(do_discard_lod_flag){
 			if(lod_precision2<=comp.uniparameter.discard_precision2){
@@ -209,14 +214,9 @@ public class list_component_on_collector
 		
 		no_driver_component_number=0;
 		
-		if(ci.parameter.high_or_low_precision_flag){
-			camera_lod_precision_scale=cam_result.cam.parameter.high_precision_scale;
-			for(component p=ci.parameter.comp;p!=null;p=ek.component_cont.get_component(p.parent_component_id))
-				p.selected_component_family_flag=true;
-		}else
-			camera_lod_precision_scale=cam_result.cam.parameter.low_precision_scale;
-		
-		component my_comp;
+		component my_comp,pickup_comp=ci.parameter.comp;
+		for(component p=pickup_comp;p!=null;p=ek.component_cont.get_component(p.parent_component_id))
+			p.selected_component_family_flag=true;
 		for(int my_driver_id,i=0,ni=cam_result.target.comp.length;i<ni;i++)
 			if((my_comp=cam_result.target.comp[i])!=null){
 				if(cam_result.target.driver_id!=null)
@@ -227,8 +227,7 @@ public class list_component_on_collector
 						}
 				collect(my_comp,0);
 			}
-		if(ci.parameter.high_or_low_precision_flag)
-			for(component p=ci.parameter.comp;p!=null;p=ek.component_cont.get_component(p.parent_component_id))
-				p.selected_component_family_flag=false;
+		for(component p=pickup_comp;p!=null;p=ek.component_cont.get_component(p.parent_component_id))
+			p.selected_component_family_flag=false;
 	}
 }

@@ -11,9 +11,9 @@ public class component extends component_core_12
 		super.destroy();
 	}
 	public component(String token_string,file_reader fr,boolean part_list_flag,
-			boolean normalize_location_flag,component_construction_parameter ccp)
+			boolean normalize_location_flag,double lod_precision_scale,component_construction_parameter ccp)
 	{
-		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
+		super(token_string,fr,part_list_flag,normalize_location_flag,lod_precision_scale,ccp);
 
 		render_touch_time=0;
 	}

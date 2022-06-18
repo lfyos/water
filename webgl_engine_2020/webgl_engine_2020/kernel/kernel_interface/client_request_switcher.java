@@ -105,16 +105,16 @@ public class client_request_switcher
 		String str=request_response.get_parameter("channel");
 		switch((str==null)?"switch":str){
 		case "terminate_time":
-		{
-			String format_str=request_response.get_parameter("format");
-			String time_str=request_response.get_parameter("time");
 			try{
-				system_par.system_terminate_time=new SimpleDateFormat(format_str).parse(time_str).getTime();
+				String format_str=request_response.get_parameter("format");
+				String time_str=request_response.get_parameter("time");
+				Date data=new SimpleDateFormat(format_str).parse(time_str);
+				system_par.system_terminate_time=data.getTime();
 			}catch(Exception e){
 				;
 			}
+			debug_information.println("system_terminate_time:",new Date(system_par.system_terminate_time).toString());
 			break;
-		}
 		case "switch":
 			if((str=system_par.switch_server.get_switch_server_url())!=null) {
 				String function_name;
@@ -127,19 +127,18 @@ public class client_request_switcher
 				break;
 			}
 		case "javascript":
-			if(new Date().getTime()<system_par.system_terminate_time)
-				ret_val.ecr=program_javascript.create(request_response,
-					Long.toString(system_par.file_buffer_expire_time_length),
-					system_par.create_engine_sleep_time_length_scale,
-					system_par.create_engine_sleep_time_length,
-					system_par.create_engine_max_sleep_time_length);
+			ret_val.ecr=program_javascript.create(request_response,
+				Long.toString(system_par.file_buffer_expire_time_length),
+				system_par.create_engine_sleep_time_length_scale,
+				system_par.create_engine_sleep_time_length,
+				system_par.create_engine_max_sleep_time_length);
 			break;
 		case "readme":
 			ret_val.ecr=download_readme_file.download_driver_readme(request_response,
-					system_par.data_root_directory_name+system_par.shader_file_name,
-					system_par.local_data_charset,system_par.file_download_cors_string,
-					Long.toString(system_par.file_buffer_expire_time_length),
-					system_par.text_class_charset,system_par.text_jar_file_charset);
+				system_par.data_root_directory_name+system_par.shader_file_name,
+				system_par.local_data_charset,system_par.file_download_cors_string,
+				Long.toString(system_par.file_buffer_expire_time_length),
+				system_par.text_class_charset,system_par.text_jar_file_charset);
 			break;
 		case "clear":
 			if((ret_val.client=client_container.get_client_interface(request_response,system_par))!=null)
@@ -158,15 +157,17 @@ public class client_request_switcher
 			ret_val.ecr=new engine_call_result(null,null,null,null,null,"*");
 			break;
 		case "creation":
-			if((ret_val.client=client_container.get_client_interface(request_response,system_par))==null) {
+			if((ret_val.client=client_container.get_client_interface(request_response,system_par))==null){
 				ret_val.ecr=new engine_call_result(null,null,null,null,null,"*");
 				request_response.println("true");
 				break;
 			}
 			int creation_engine_lock_number=test_creation_engine_lock_number(1);
-			if(creation_engine_lock_number<system_par.create_engine_concurrent_number)
+			if((new Date().getTime()<system_par.system_terminate_time)
+				&&(creation_engine_lock_number<system_par.create_engine_concurrent_number))
+			{
 				ret_val.ecr=ret_val.client.execute_create_call(ei,ret_val.client,request_response,statistics_interface);
-			else{
+			}else{
 				ret_val.ecr=new engine_call_result(null,null,null,null,null,"*");
 				request_response.println("false");
 				ret_val.client.get_process_bar(request_response).set_process_bar(true,"wait_for_other_exit","",1,2);

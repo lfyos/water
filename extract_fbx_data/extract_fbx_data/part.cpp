@@ -6,11 +6,14 @@ part::part(std::string my_directory_name)
 	directory_name = my_directory_name;
 	part_list_f =new std::ofstream(directory_name+"part.list");
 	register_number = 0;
+
+	part_id_array = new FbxClassId[100000];
 }
 
 part::~part()
 {
 	part_list_f->close();
+	delete[]part_id_array;
 }
 
 std::string part::process_name(std::string name)

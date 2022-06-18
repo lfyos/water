@@ -26,7 +26,7 @@ public class component_load_source_container
 		source_array=new component_load_source_item[0];
 	}
 	public component[] get_source_item(String component_name,boolean part_list_flag,
-			boolean normalize_location_flag,component_construction_parameter ccp)
+			boolean normalize_location_flag,double lod_scale,component_construction_parameter ccp)
 	{
 		for(int last_id=source_array.length-1,begin_pointer=0,end_pointer=last_id;begin_pointer<=end_pointer;){
 			int middle_pointer=(begin_pointer+end_pointer)/2;
@@ -47,7 +47,7 @@ public class component_load_source_container
 					file_reader my_fr=new file_reader(
 							source_array[j].component_file_name,source_array[j].component_file_charset);
 					ret_val[i]=new component(source_array[j].token_string,my_fr,
-							part_list_flag,normalize_location_flag,ccp);
+							part_list_flag,normalize_location_flag,lod_scale,ccp);
 					my_fr.close();
 				}
 				component_load_source_item bak[]=source_array;

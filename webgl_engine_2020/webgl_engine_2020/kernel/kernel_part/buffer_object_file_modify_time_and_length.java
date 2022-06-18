@@ -1,6 +1,8 @@
 package kernel_part;
 
 import java.io.File;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import kernel_file_manager.file_reader; 
 import kernel_file_manager.file_writer; 
@@ -58,6 +60,8 @@ public class buffer_object_file_modify_time_and_length
 	public buffer_object_file_modify_time_and_length(
 		part_rude pr,String root_file_name,String file_charset)
 	{
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss:SSS");
+		
 		simple_part_mesh=null;
 		
 		File f=new File(root_file_name+".head.txt");
@@ -137,8 +141,10 @@ public class buffer_object_file_modify_time_and_length
 		fw.println("/*\tpart mesh file length information\t\t*/");
 		fw.println();
 		
-		fw.println("/*\tbuffer_object_head_last_modify_time\t\t*/\t",
-			buffer_object_head_last_modify_time);
+		fw.print  ("/*\tbuffer_object_head_last_modify_time\t\t*/\t",buffer_object_head_last_modify_time);
+		fw.print  ("\t/*\t",sdf.format(new Date(buffer_object_head_last_modify_time)));
+		fw.println("\t*/");
+		
 		fw.println("/*\tbuffer_object_head_length\t\t\t\t*/\t",
 			buffer_object_head_length);
 		fw.println("/*\tbuffer_object_text_file_length.length\t*/\t",
@@ -147,8 +153,12 @@ public class buffer_object_file_modify_time_and_length
 			fw.println("/*\t\tbuffer_object_text_file_length["+i+"]\t*/\t",
 				buffer_object_text_file_length[i].length);
 			for(int j=0,nj=buffer_object_text_file_length[i].length;j<nj;j++){
-				fw.println("/*\t\t\tbuffer_object_file_last_modify_time\t["+i+","+j+"]\t\t*/\t",
-					buffer_object_file_last_modify_time[i][j]);
+				
+				long t=buffer_object_file_last_modify_time[i][j];
+				fw.print  ("/*\t\t\tbuffer_object_file_last_modify_time\t["+i+","+j+"]\t\t*/\t",t);
+				fw.print  ("\t/*\t",sdf.format(new Date(t)));
+				fw.println("\t*/");
+
 				fw.println("/*\t\t\tbuffer_object_text_file_length\t\t["+i+","+j+"]\t\t*/\t",
 					buffer_object_text_file_length[i][j]);
 				fw.println("/*\t\t\tbuffer_object_file_in_head_flag\t\t["+i+","+j+"]\t\t*/\t",
