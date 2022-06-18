@@ -24,10 +24,11 @@ public class component_core_0
 		}
 	}
 	public component_core_0(String token_string,file_reader fr,boolean part_list_flag,
-			boolean normalize_location_flag,component_construction_parameter ccp)
+			boolean normalize_location_flag,double lod_precision_scale,component_construction_parameter ccp)
 	{
 		clip=new component_clip();
-		uniparameter=new component_uniparameter(fr.lastModified_time,normalize_location_flag,part_list_flag);
+		uniparameter=new component_uniparameter(
+				fr.lastModified_time,normalize_location_flag,part_list_flag,lod_precision_scale);
 		multiparameter=new component_multiparameter[ccp.ek.scene_par.multiparameter_number];
 		for(int i=0,ni=multiparameter.length;i<ni;i++)
 			multiparameter[i]=new component_multiparameter(ccp.default_display_bitmap);

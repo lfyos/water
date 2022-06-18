@@ -7,12 +7,14 @@ public class component_uniparameter
 	
 	public boolean normalize_location_flag,part_list_flag;
 	
-	public double discard_precision2,transparency_value;
+	public double discard_precision2,transparency_value,component_driver_lod_precision_scale;
 	
 	public boolean do_response_location_flag,cacaulate_location_flag;
 	public boolean display_part_name_or_component_name_flag;
 	
-	public component_uniparameter(long my_lastModified_time,boolean my_normalize_location_flag,boolean my_part_list_flag)
+	public component_uniparameter(long my_lastModified_time,
+			boolean my_normalize_location_flag,boolean my_part_list_flag,
+			double my_component_driver_lod_precision_scale)
 	{
 		selected_flag					=false;
 		effective_selected_flag			=false;
@@ -23,6 +25,7 @@ public class component_uniparameter
 
 		discard_precision2				=-1.0;
 		transparency_value				=1.0;
+		component_driver_lod_precision_scale=my_component_driver_lod_precision_scale;
 		
 		do_response_location_flag		=true;
 		cacaulate_location_flag			=false;

@@ -202,7 +202,7 @@ public class component_container
 					ek,request_response,ek.part_cont,change_part_name,
 					my_type_string_sorter,component_load_source_cont,default_display_bitmap);
 			try{
-				root_component=new component("",scene_f,false,false,ccp);
+				root_component=new component("",scene_f,false,false,1.0,ccp);
 			}catch(Exception e){
 				root_component=null;
 				debug_information.println("Create scene from file exception:",scene_f.directory_name+scene_f.file_name);
@@ -212,7 +212,8 @@ public class component_container
 				for(int i=0,ni=ek.system_par.process_component_load_times;i<ni;i++){
 					if(ccp.clsc.get_source_item_number()<=0)
 						break;
-					root_component.append_component(ccp);
+					root_component.append_component(
+						root_component.uniparameter.component_driver_lod_precision_scale,ccp);
 				}
 
 			debug_information.println();

@@ -9,7 +9,8 @@ public class component_core_5 extends component_core_4
 		super.destroy();
 	}
 	private void decrease_children_number(String token_string,file_reader fr,
-			boolean part_list_flag,boolean normalize_location_flag,component_construction_parameter ccp)
+			boolean part_list_flag,boolean normalize_location_flag,
+			double lod_scale,component_construction_parameter ccp)
 	{
 		if(children==null)
 			return;
@@ -52,7 +53,7 @@ public class component_core_5 extends component_core_4
 					"0","0","0","1",
 					"0"
 				});
-				children[i]=new component(token_string,fr,part_list_flag,normalize_location_flag,ccp);
+				children[i]=new component(token_string,fr,part_list_flag,normalize_location_flag,lod_scale,ccp);
 
 				children[i].children=new component[(bak_children.length-collect_number)/(ni-i)];
 				for(int j=0,nj=children[i].children.length;j<nj;j++)
@@ -62,11 +63,11 @@ public class component_core_5 extends component_core_4
 	}
 	
 	public component_core_5(String token_string,file_reader fr,boolean part_list_flag,
-			boolean normalize_location_flag,component_construction_parameter ccp)
+			boolean normalize_location_flag,double lod_precision_scale,component_construction_parameter ccp)
 	{
-		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
+		super(token_string,fr,part_list_flag,normalize_location_flag,lod_precision_scale,ccp);
 		
-		decrease_children_number(token_string,fr,part_list_flag,normalize_location_flag,ccp);
+		decrease_children_number(token_string,fr,part_list_flag,normalize_location_flag,lod_precision_scale,ccp);
 		for(int i=0,ni=children_number();i<ni;i++)
 			if(uniparameter.file_last_modified_time<children[i].uniparameter.file_last_modified_time)
 				uniparameter.file_last_modified_time=children[i].uniparameter.file_last_modified_time;
