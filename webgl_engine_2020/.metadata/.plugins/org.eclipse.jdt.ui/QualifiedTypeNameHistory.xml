@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="kernel_common_class.zip_file"/>
 <fullyQualifiedTypeName name="kernel_render.render_target"/>
@@ -53,11 +52,12 @@
 <fullyQualifiedTypeName name="kernel_component.component"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="kernel_component.component_load_source_container"/>
-<fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="kernel_transformation.point"/>
 <fullyQualifiedTypeName name="kernel_file_manager.file_reader"/>
 <fullyQualifiedTypeName name="kernel_camera.camera_parameter"/>
 <fullyQualifiedTypeName name="kernel_common_class.jason_string"/>
 <fullyQualifiedTypeName name="kernel_common_class.const_value"/>
 <fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
 </qualifiedTypeNameHistroy>
