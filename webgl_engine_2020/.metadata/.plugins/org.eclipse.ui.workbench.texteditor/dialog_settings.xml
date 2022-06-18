@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="can_display_wait_audio_terminated_message"/>
+		<item key="selection" value="terminate_time"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="terminate_time"/>
 			<item value="can_display_wait_audio_terminated_message"/>
 			<item value="debug_information"/>
 			<item value="new String"/>
@@ -22,7 +23,6 @@
 			<item value="turnonoff_level_of_detail"/>
 			<item value="level"/>
 			<item value="do_render_request_response_number"/>
-			<item value="append_routine_function"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
