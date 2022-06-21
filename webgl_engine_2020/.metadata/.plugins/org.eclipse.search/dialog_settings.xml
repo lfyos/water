@@ -18,30 +18,18 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="pass_id"/>
+			<item key="textPattern" value="Load part mesh.boftal:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
+				<item value="*.js"/>
 				<item value="*.jsp"/>
 				<item value="*.txt"/>
 				<item value="*java"/>
-				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
 		</section>
 		<section name="HISTORY7">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="channel_id.txt"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*java"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY4">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
@@ -56,11 +44,26 @@
 			<list key="workingSets">
 			</list>
 		</section>
+		<section name="HISTORY4">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="normal_loading_number"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.js"/>
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
 		<section name="HISTORY10">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Create too many component"/>
+			<item key="textPattern" value="channel_id.txt"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*java"/>
@@ -69,70 +72,6 @@
 			</list>
 		</section>
 		<section name="HISTORY5">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;termination&quot;"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
-				<item value="*java"/>
-				<item value="*.js"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="EXTENSIONS">
-			<item key="0" value="*.js, *.jsp, *.txt, *java"/>
-			<item key="1" value="*java"/>
-			<item key="2" value="*.js"/>
-			<item key="3" value="*.java"/>
-			<item key="4" value="*.txt;*.js"/>
-			<item key="5" value="*.txt"/>
-			<item key="6" value="*.js, *.txt, *java,*.jsp"/>
-			<item key="7" value="*.js, *.txt, *java"/>
-			<item key="8" value="*.txt,*.js,*java"/>
-			<item key="9" value="*.txt,*.js"/>
-			<item key="10" value="*.draw.txt"/>
-		</section>
-		<section name="HISTORY11">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;Create too"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*java"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY8">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;show_hide_parameter&quot;"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*java"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY9">
-			<item key="ignoreCase" value="true"/>
-			<item key="isRegExSearch" value="false"/>
-			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;display_value&quot;"/>
-			<item key="scope" value="0"/>
-			<list key="fileNamePatterns">
-				<item value="*java"/>
-			</list>
-			<list key="workingSets">
-			</list>
-		</section>
-		<section name="HISTORY2">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
@@ -147,11 +86,78 @@
 			<list key="workingSets">
 			</list>
 		</section>
+		<section name="EXTENSIONS">
+			<item key="0" value="*java"/>
+			<item key="1" value="*.js, *.jsp, *.txt, *java"/>
+			<item key="2" value="*.js"/>
+			<item key="3" value="*.java"/>
+			<item key="4" value="*.txt;*.js"/>
+			<item key="5" value="*.txt"/>
+			<item key="6" value="*.js, *.txt, *java,*.jsp"/>
+			<item key="7" value="*.js, *.txt, *java"/>
+			<item key="8" value="*.txt,*.js,*java"/>
+			<item key="9" value="*.txt,*.js"/>
+			<item key="10" value="*.draw.txt"/>
+		</section>
+		<section name="HISTORY11">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="&quot;show_hide_parameter&quot;"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY8">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="&quot;termination&quot;"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY9">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="pass_id"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*.jsp"/>
+				<item value="*.txt"/>
+				<item value="*java"/>
+				<item value="*.js"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
+		<section name="HISTORY2">
+			<item key="ignoreCase" value="true"/>
+			<item key="isRegExSearch" value="false"/>
+			<item key="isWholeWord" value="false"/>
+			<item key="textPattern" value="not_do_ancestor_render_flag"/>
+			<item key="scope" value="0"/>
+			<list key="fileNamePatterns">
+				<item value="*java"/>
+			</list>
+			<list key="workingSets">
+			</list>
+		</section>
 		<section name="HISTORY3">
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="Load part mesh.boftal:"/>
+			<item key="textPattern" value="&quot;language&quot;"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
 				<item value="*.js"/>
@@ -166,13 +172,10 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="&quot;language&quot;"/>
+			<item key="textPattern" value="engine.boftal"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
 				<item value="*java"/>
-				<item value="*.js"/>
 			</list>
 			<list key="workingSets">
 			</list>
@@ -181,12 +184,9 @@
 			<item key="ignoreCase" value="true"/>
 			<item key="isRegExSearch" value="false"/>
 			<item key="isWholeWord" value="false"/>
-			<item key="textPattern" value="normal_loading_number"/>
+			<item key="textPattern" value="Load part:"/>
 			<item key="scope" value="0"/>
 			<list key="fileNamePatterns">
-				<item value="*.js"/>
-				<item value="*.jsp"/>
-				<item value="*.txt"/>
 				<item value="*java"/>
 			</list>
 			<list key="workingSets">
@@ -242,7 +242,6 @@
 		<item key="DIALOG_Y_ORIGIN" value="242"/>
 	</section>
 	<section name="">
-		<item key="org.eclipse.jdt.search.resultpage.limit" value="1000"/>
-		<item key="org.eclipse.jdt.search.resultpage.limit_enabled" value="TRUE"/>
+		<item key="org.eclipse.search.resultpage.limit" value="1000"/>
 	</section>
 </section>

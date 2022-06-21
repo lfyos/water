@@ -243,9 +243,6 @@ public class component_core_4 extends component_core_3
 					append_child(my_children);
 				}
 				return;
-			case "lod_precision_scale":
-				uniparameter.component_driver_lod_precision_scale=fr.get_double();
-				continue;
 			case "token_program":
 			case "file_program":
 			case "charset_file_program":
@@ -262,6 +259,9 @@ public class component_core_4 extends component_core_3
 				continue;
 			case "not_normalize_location":
 				uniparameter.normalize_location_flag=false;
+				continue;
+			case "lod_precision_scale":
+				uniparameter.component_driver_lod_precision_scale=fr.get_double();
 				continue;
 			case "blank_token_string":
 				token_string="";

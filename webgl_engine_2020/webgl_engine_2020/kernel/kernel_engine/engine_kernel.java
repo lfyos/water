@@ -291,18 +291,16 @@ public class engine_kernel
 		debug_information.println();
 		
 		start_time=current_time;
-		render_cont.load_part(not_real_scene_fast_load_flag,
-				(1<<1)+(1<<2),1,part_loader_cont,system_par,scene_par,part_cont,
-				boftal_container,"load_first_class_part",process_bar,part_cont_for_delete_file);
+		render_cont.load_part(not_real_scene_fast_load_flag,(1<<1)+(1<<2),1,part_loader_cont,
+			system_par,scene_par,part_cont,boftal_container,"load_first_class_part",process_bar,part_cont_for_delete_file);
 		debug_information.println("Load first class part time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		
 		start_time=current_time;
 		render_cont.create_bottom_box_part(part_cont,request_response,system_par,scene_par);
 		part_cont.execute_append();
-		render_cont.load_part(not_real_scene_fast_load_flag,
-				(1<<1)+(1<<2),2,part_loader_cont,system_par,scene_par,part_cont,
-				boftal_container,"load_second_class_part",process_bar,part_cont_for_delete_file);
+		render_cont.load_part(not_real_scene_fast_load_flag,(1<<1)+(1<<2),2,part_loader_cont,
+			system_par,scene_par,part_cont,boftal_container,"load_second_class_part",process_bar,part_cont_for_delete_file);
 		debug_information.println("Load second class part time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();

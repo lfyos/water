@@ -205,50 +205,53 @@ void mesh::extract_tangent()
 		}
 	}
 }
-void mesh::write_mesh_head(std::string directory_name)
+void mesh::write_mesh_head(std::string file_name)
 {
+	std::string attribute_number_string = std::to_string(
+		((normal->attribute_number <= 0) ? 0 : (normal->attribute_number - 1)) +
+		(color->attribute_number) + (texture->attribute_number) + (tangent->attribute_number));
+
+	std::ofstream f_head(file_name);
 
 	std::string str_1[]{
 		"/*	version								*/	2021.07.15",
-		"/*	origin material						*/	"	+ std::to_string(default_material[0]) + " "
-														+ std::to_string(default_material[1]) + " " 
-														+ std::to_string(default_material[2]) + " " 
+		"/*	origin material						*/	" + std::to_string(default_material[0]) + " "
+														+ std::to_string(default_material[1]) + " "
+														+ std::to_string(default_material[2]) + " "
 														+ std::to_string(default_material[3]),
-		"/*	default material					*/	"	+ std::to_string(default_material[0]) + " "
+		"/*	default material					*/	" + std::to_string(default_material[0]) + " "
 														+ std::to_string(default_material[1]) + " "
 														+ std::to_string(default_material[2]) + " "
 														+ std::to_string(default_material[3]),
 		"/*	origin  vertex_location_extra_data	*/	1",
 		"/*	default vertex_location_extra_data	*/	1",
 		"/*	default vertex_normal_extra_data	*/	1",
-		"/*	max_attribute_number				*/	2",
-		"/*		0.attribute:	*/	"
-				+ std::to_string(average_texture[0] / average_number) + "	"
-				+ std::to_string(average_texture[1] / average_number) + "	0	1",
-		"/*		1.attribute:	*/	"
-				+ std::to_string(average_color[0] / average_number) + "	"
-				+ std::to_string(average_color[1] / average_number) + "	"
-				+ std::to_string(average_color[2] / average_number) + "	1",
-		"",
-		"/*	body_number			*/	1",
-		"/*	body    0  name		*/  body	/*  face_number */	1",
-		"	/*	body 0 face 0  name	*/	face",
-		"		/*	face type		*/	unknown	/*  parameter number	*/	0	/*  parameter	*/",
-		"		/*	total_face_primitive_number	*/  " + std::to_string(lPolygonCount),
-		"		/*	face_attribute_number		*/  2",
-		"		/*	face_face_box               */	"
-			+ std::to_string(box[0]) + "	" + std::to_string(box[1]) + "	" + std::to_string(box[2]) + "	"
-			+ std::to_string(box[3]) + "	" + std::to_string(box[4]) + "	" + std::to_string(box[5]),
-		"		/*  loop number		*/	0",
-		""
+		"/*	max_attribute_number				*/	" + attribute_number_string ,
 	};
 
-	std::ofstream f_head(directory_name + "part_" + std::to_string(register_number) + ".mesh");
+	for (int i = 0, ni = sizeof(str_1) / sizeof(str_1[0]); i < ni; i++)
+		f_head << str_1[i] << std::endl;
 
-	for (int i = 0, ni = sizeof(head_str) / sizeof(head_str[0]); i < ni; i++)
-		f_head << head_str[i] << std::endl;
+	for (int i = 1, ni = normal->attribute_number; i < ni; i++)
+		f_head << "/*		normal:	" << i << "	*/	"<< normal[i].caculate_average_string(i) << std::endl;
+	for (int i = 0, ni = texture->attribute_number; i < ni; i++)
+		f_head << "/*		texture:	" << i << "	*/	" << texture[i].caculate_average_string(i) << std::endl;
+	for (int i = 0, ni = color->attribute_number; i < ni; i++)
+		f_head << "/*		color:	" << i << "	*/	" << color[i].caculate_average_string(i) << std::endl;
+	for (int i = 0, ni = tangent->attribute_number; i < ni; i++)
+		f_head << "/*		tangent:	" << i << "	*/	" << tangent[i].caculate_average_string(i) << std::endl;
 
+	std::string str_2[]{
+		"",
+		"/*	body_number			*/	1",
+		"/*	body    0  name		*/  fbx_body	/*  face_number */	1",
+		"	/*	body 0 face 0  name	*/	fbx_face",
+		"		/*	face type		*/	unknown	/*  parameter number	*/	0	/*  parameter	*/",
+		"		/*	total_face_primitive_number	*/  " + std::to_string(triangle_number),
+		"		/*	face_attribute_number		*/  " + triangle_number,
+		"		/*	face_face_box               */	" + vertex->caculate_box_string(),
+		"		/*  loop number					*/	0",
+		""
+	};
 	f_head.close();
-
-	delete[]material_id;
 }

@@ -17,8 +17,7 @@ private:
 	void extract_color();
 	void extract_texture();
 	void extract_tangent();
-	void write_mesh_head(std::string directory_name);
-
+	void write_mesh_head(std::string file_name);
 public:
 	FbxMesh* pMesh;
 
@@ -27,7 +26,7 @@ public:
 	double default_material[4];
 	attribute_vertex_container *vertex,* normal,* color, * texture,*tangent;
 
-	mesh(FbxMesh* my_pMesh, std::string directory_name)
+	mesh(FbxMesh* my_pMesh, std::string file_name)
 	{
 		pMesh = my_pMesh;
 		triangle_number = pMesh->GetPolygonCount();
@@ -39,7 +38,7 @@ public:
 		extract_texture();
 		extract_tangent();
 
-		write_mesh_head(directory_name);
+		write_mesh_head(file_name);
 	}
 	~mesh()
 	{

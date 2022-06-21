@@ -186,7 +186,8 @@ public class part_loader_container
 				return true;
 			}
 			boftal_container=null;
-		}	
+		}
+		
 		String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
 		long boftal_last_modify_time=new File(boftal_file_name).lastModified();
 		if(boftal_last_modify_time<=last_modified_time) 
@@ -249,9 +250,8 @@ public class part_loader_container
 		String part_temporary_file_directory=file_directory.part_file_directory(my_part,system_par,scene_par);
 		String lock_file_name=file_reader.separator(part_temporary_file_directory+"part.lock");
 		
-		if(fast_load_routine(
-			not_real_scene_fast_load_flag,last_modified_time,part_temporary_file_directory,
-			my_part,my_copy_from_part,system_par,scene_par,pcps,boftal_container))
+		if(fast_load_routine(not_real_scene_fast_load_flag,last_modified_time,
+			part_temporary_file_directory,my_part,my_copy_from_part,system_par,scene_par,pcps,boftal_container))
 		{
 			if(my_part.part_mesh!=null)
 				my_part.part_mesh.free_memory();
@@ -265,8 +265,7 @@ public class part_loader_container
 		part_loader ret_val[]=already_loaded_part;
 		part_loader_container_lock.lock();
 		try{
-			ret_val=load_routine(my_part,my_copy_from_part,last_modified_time,
-					system_par,scene_par,already_loaded_part,pcps);
+			ret_val=load_routine(my_part,my_copy_from_part,last_modified_time,system_par,scene_par,already_loaded_part,pcps);
 		}catch(Exception e) {
 			debug_information.println("load of part_loader_container fail");
 			debug_information.println(e.toString());

@@ -6,7 +6,7 @@ assemble::assemble(part& part_collector, std::ofstream& f,FbxNode* assemble_node
 
 	std::string assemble_name=assemble_node->GetName();
 	std::string part_name= part_collector.register_node(assemble_node);
-	FbxAMatrix loca = assemble_node->EvaluateLocalTransform();
+	fbxsdk::FbxAMatrix loca = assemble_node->EvaluateLocalTransform();
 	int children_number = assemble_node->GetChildCount();
 
 	output_space(f, space_number);	f << "/*	assemble name	*/	" << assemble_name << std::endl;
