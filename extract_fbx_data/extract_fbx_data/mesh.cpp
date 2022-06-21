@@ -279,9 +279,17 @@ void mesh::write_mesh_data(std::string data_file_name)
 					f_data << "	" << p[coordinator_id];
 				f_data << std::endl;
 			}
-			for (int attribute_id = 0; attribute_id < normal->attribute_number; attribute_id++) {
-				FbxVector4 p = normal->attr[attribute_id][triangle_id].vertex[vertex_id];
-				f_data << "/*		" << vertex_id << ".normal.	" << attribute_id << "		*/";
+			if (normal->attribute_number > 0) 
+				for (int attribute_id = 0; attribute_id < normal->attribute_number; attribute_id++) {
+					FbxVector4 p = normal->attr[attribute_id][triangle_id].vertex[vertex_id];
+					f_data << "/*		" << vertex_id << ".normal.	" << attribute_id << "		*/";
+					for (int coordinator_id = 0; coordinator_id < 4; coordinator_id++)
+						f_data << "	" << p[coordinator_id];
+					f_data << std::endl;
+				}
+			else{
+				double p[]{ 0,0,1,1 };
+				f_data << "/*		" << vertex_id << ".normal.	0		*/";
 				for (int coordinator_id = 0; coordinator_id < 4; coordinator_id++)
 					f_data << "	" << p[coordinator_id];
 				f_data << std::endl;
