@@ -11,10 +11,14 @@
 
 int main(int argc,char *argv[])
 {
-    if (argc < 3) {
+    if (argc < 2) {
         std::cout << "No file present!" << std::endl;
         return -1;
     };
+    std::string directory_name = std::string(argv[1]) + ".lfy_3d\\";
+
+    system(std::string("rmdir /S /Q " + directory_name).c_str());
+    system(std::string("mkdir  " + directory_name).c_str());
 
     FbxManager* lSdkManager = FbxManager::Create();
     FbxIOSettings* ios = FbxIOSettings::Create(lSdkManager, IOSROOT);
@@ -44,7 +48,7 @@ int main(int argc,char *argv[])
         return -3;
     }
 
-    std::string directory_name= argv[2];
+    
 
     part part_collector(directory_name);
     std::ofstream f(directory_name+"assemble.assemble");

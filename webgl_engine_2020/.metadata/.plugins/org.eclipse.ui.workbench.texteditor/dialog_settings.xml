@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="simple"/>
+		<item key="selection" value="scene_directory\cad_directory\cad\A159-SR-302A"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="scene_directory\cad_directory\cad\A159-SR-302A"/>
 			<item value="simple"/>
 			<item value="terminate_time"/>
 			<item value="can_display_wait_audio_terminated_message"/>
@@ -22,7 +23,6 @@
 			<item value="my_url"/>
 			<item value="request_create_engine"/>
 			<item value="turnonoff_level_of_detail"/>
-			<item value="level"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>

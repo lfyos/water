@@ -205,50 +205,117 @@ void mesh::extract_tangent()
 		}
 	}
 }
-void mesh::write_mesh_head(std::string directory_name)
+void mesh::write_mesh_head(std::string head_file_name)
 {
+	std::string attribute_number_string = std::to_string(
+		((normal->attribute_number <= 0) ? 0 : (normal->attribute_number - 1)) +
+		(color->attribute_number) + (texture->attribute_number) + (tangent->attribute_number));
+
+	std::ofstream f_head(head_file_name);
 
 	std::string str_1[]{
 		"/*	version								*/	2021.07.15",
-		"/*	origin material						*/	"	+ std::to_string(default_material[0]) + " "
-														+ std::to_string(default_material[1]) + " " 
-														+ std::to_string(default_material[2]) + " " 
-														+ std::to_string(default_material[3]),
-		"/*	default material					*/	"	+ std::to_string(default_material[0]) + " "
-														+ std::to_string(default_material[1]) + " "
+		"/*	origin material						*/	" + std::to_string(default_material[3]) + " "
 														+ std::to_string(default_material[2]) + " "
-														+ std::to_string(default_material[3]),
+														+ std::to_string(default_material[1]) + " "
+														+ std::to_string(default_material[0]),
+		"/*	default material					*/	" + std::to_string(default_material[3]) + " "
+														+ std::to_string(default_material[2]) + " "
+														+ std::to_string(default_material[1]) + " "
+														+ std::to_string(default_material[0]),
 		"/*	origin  vertex_location_extra_data	*/	1",
 		"/*	default vertex_location_extra_data	*/	1",
 		"/*	default vertex_normal_extra_data	*/	1",
-		"/*	max_attribute_number				*/	2",
-		"/*		0.attribute:	*/	"
-				+ std::to_string(average_texture[0] / average_number) + "	"
-				+ std::to_string(average_texture[1] / average_number) + "	0	1",
-		"/*		1.attribute:	*/	"
-				+ std::to_string(average_color[0] / average_number) + "	"
-				+ std::to_string(average_color[1] / average_number) + "	"
-				+ std::to_string(average_color[2] / average_number) + "	1",
-		"",
-		"/*	body_number			*/	1",
-		"/*	body    0  name		*/  body	/*  face_number */	1",
-		"	/*	body 0 face 0  name	*/	face",
-		"		/*	face type		*/	unknown	/*  parameter number	*/	0	/*  parameter	*/",
-		"		/*	total_face_primitive_number	*/  " + std::to_string(lPolygonCount),
-		"		/*	face_attribute_number		*/  2",
-		"		/*	face_face_box               */	"
-			+ std::to_string(box[0]) + "	" + std::to_string(box[1]) + "	" + std::to_string(box[2]) + "	"
-			+ std::to_string(box[3]) + "	" + std::to_string(box[4]) + "	" + std::to_string(box[5]),
-		"		/*  loop number		*/	0",
-		""
+		"/*	max_attribute_number				*/	" + attribute_number_string ,
 	};
 
-	std::ofstream f_head(directory_name + "part_" + std::to_string(register_number) + ".mesh");
+	for (int i = 0, ni = sizeof(str_1) / sizeof(str_1[0]); i < ni; i++)
+		f_head << str_1[i] << std::endl;
 
-	for (int i = 0, ni = sizeof(head_str) / sizeof(head_str[0]); i < ni; i++)
-		f_head << head_str[i] << std::endl;
+	for (int i = 1, ni = normal->attribute_number; i < ni; i++)
+		f_head << "/*		normal:" << i << "	*/	"<< normal[i].caculate_average_string(i) << std::endl;
+	for (int i = 0, ni = texture->attribute_number; i < ni; i++)
+		f_head << "/*		texture:" << i << "	*/	" << texture[i].caculate_average_string(i) << std::endl;
+	for (int i = 0, ni = color->attribute_number; i < ni; i++)
+		f_head << "/*		color:" << i << "	*/	" << color[i].caculate_average_string(i) << std::endl;
+	for (int i = 0, ni = tangent->attribute_number; i < ni; i++)
+		f_head << "/*		tangent:" << i << "	*/	" << tangent[i].caculate_average_string(i) << std::endl;
+
+	std::string str_2[]{
+		"",
+		"/*	body_number			*/	1",
+		"/*	body    0  name		*/  fbx_body	/*  face_number */	1",
+		"	/*	body 0 face 0  name	*/	fbx_face",
+		"		/*	face type		*/	unknown	/*  parameter number	*/	0	/*  parameter	*/",
+		"		/*	total_face_primitive_number	*/  " + std::to_string(triangle_number),
+		"		/*	face_attribute_number		*/  " + attribute_number_string,
+		"		/*	face_face_box               */	" + vertex->caculate_box_string(),
+		"		/*  loop number					*/	0"
+	};
+
+	for (int i = 0, ni = sizeof(str_2) / sizeof(str_2[0]); i < ni; i++)
+		f_head << str_2[i] << std::endl;
 
 	f_head.close();
+}
 
-	delete[]material_id;
+void mesh::write_mesh_data(std::string data_file_name)
+{
+	std::ofstream f_data(data_file_name);
+
+	for (int triangle_id = 0; triangle_id < triangle_number; triangle_id++) {
+		f_data << std::endl;
+		f_data << "/*	triangle:" << triangle_id <<  "	material	*/";
+		f_data << "	" << material_id[triangle_id].material_id[3];
+		f_data << "	" << material_id[triangle_id].material_id[2];
+		f_data << "	" << material_id[triangle_id].material_id[1];
+		f_data << "	" << material_id[triangle_id].material_id[0]<<std::endl;
+		f_data << "/*	vertex number			*/	3" << std::endl;
+		for (int vertex_id = 0; vertex_id < 3; vertex_id++) {
+			for (int attribute_id = 0; attribute_id < 1; attribute_id++) {
+				FbxVector4 p = vertex->attr[attribute_id][triangle_id].vertex[vertex_id];
+				f_data << "/*		" << vertex_id << ".location.	"<< attribute_id <<"		*/";
+				for (int coordinator_id = 0; coordinator_id < 4; coordinator_id++)
+					f_data << "	" << p[coordinator_id];
+				f_data << std::endl;
+			}
+			if (normal->attribute_number > 0) 
+				for (int attribute_id = 0; attribute_id < normal->attribute_number; attribute_id++) {
+					FbxVector4 p = normal->attr[attribute_id][triangle_id].vertex[vertex_id];
+					f_data << "/*		" << vertex_id << ".normal.	" << attribute_id << "		*/";
+					for (int coordinator_id = 0; coordinator_id < 4; coordinator_id++)
+						f_data << "	" << p[coordinator_id];
+					f_data << std::endl;
+				}
+			else{
+				double p[]{ 0,0,1,1 };
+				f_data << "/*		" << vertex_id << ".normal.	0		*/";
+				for (int coordinator_id = 0; coordinator_id < 4; coordinator_id++)
+					f_data << "	" << p[coordinator_id];
+				f_data << std::endl;
+			}
+			for (int attribute_id = 0; attribute_id < texture->attribute_number; attribute_id++) {
+				FbxVector4 p = texture->attr[attribute_id][triangle_id].vertex[vertex_id];
+				f_data << "/*		" << vertex_id << ".texture.	" << attribute_id << "		*/";
+				for (int coordinator_id = 0; coordinator_id < 4; coordinator_id++)
+					f_data << "	" << p[coordinator_id];
+				f_data << std::endl;
+			}
+			for (int attribute_id = 0; attribute_id < color->attribute_number; attribute_id++) {
+				FbxVector4 p = color->attr[attribute_id][triangle_id].vertex[vertex_id];
+				f_data << "/*		" << vertex_id << ".color.	" << attribute_id << "		*/";
+				for (int coordinator_id = 0; coordinator_id < 4; coordinator_id++)
+					f_data << "	" << p[coordinator_id];
+				f_data << std::endl;
+			}
+			for (int attribute_id = 0; attribute_id < tangent->attribute_number; attribute_id++) {
+				FbxVector4 p = tangent->attr[attribute_id][triangle_id].vertex[vertex_id];
+				f_data << "/*		" << vertex_id << ".tangent.	" << attribute_id << "		*/";
+				for (int coordinator_id = 0; coordinator_id < 4; coordinator_id++)
+					f_data << "	" << p[coordinator_id];
+				f_data << std::endl;
+			}
+		}
+	}
+	f_data.close();
 }

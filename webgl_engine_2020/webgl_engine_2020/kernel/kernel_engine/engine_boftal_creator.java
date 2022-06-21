@@ -68,7 +68,7 @@ public class engine_boftal_creator extends sorter <part,String>
 
 		int cut_directory_length=system_par.proxy_par.proxy_data_root_directory_name.length();
 		file_writer fw=new  file_writer(file_name,file_charset);
-		fw.println(data_array.length);
+		fw.println(part_number);
 		
 		for(int i=0;i<part_number;i++) {
 			process_bar.set_process_bar(false, "create_buffer_object_file", "",i,part_number);
