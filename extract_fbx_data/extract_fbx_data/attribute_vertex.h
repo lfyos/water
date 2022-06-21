@@ -47,10 +47,17 @@ public:
 		double x0=0, y0=0, z0=0, x1=0, y1=0, z1=0;
 		for(int i=0;i<triangle_number;i++)
 			for (int j = 0; j < 3; j++) {
+				double my_x = attr[0][i].vertex[j][0]; 
+				double my_y = attr[0][i].vertex[j][1]; 
+				double my_z = attr[0][i].vertex[j][2];
 				double my_w = attr[0][i].vertex[j][3];
-				double my_z = attr[0][i].vertex[j][2] / my_w;
-				double my_y = attr[0][i].vertex[j][1] / my_w;
-				double my_x = attr[0][i].vertex[j][0] / my_w;
+				if ((my_w * my_w) > 0.0) {
+					my_x /= my_w;
+					my_y /= my_w;
+					my_z /= my_w;
+					my_w /= my_w;
+				}
+				
 				if ((vertex_number++) <= 0) {
 					x0 = my_x;
 					y0 = my_y; 

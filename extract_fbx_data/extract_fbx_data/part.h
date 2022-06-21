@@ -57,7 +57,8 @@ public:
 
 				std::cout << "Begin extract mesh data for part " << part_user_name << " (NO. " << register_number << ")" << std::endl;
 
-				mesh part_mesh(fm, directory_name + "part_" + std::to_string(register_number) + ".mesh");
+				std::string mesh_directory = directory_name + "part_" + std::to_string(register_number);
+				mesh part_mesh(fm, mesh_directory + ".mesh",mesh_directory + ".mesh.face" );
 
 				std::cout << "End extract mesh data for part " << part_user_name << " (NO. " << register_number << ")" << std::endl;
 
