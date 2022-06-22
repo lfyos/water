@@ -233,13 +233,13 @@ void mesh::write_mesh_head(std::string head_file_name)
 		f_head << str_1[i] << std::endl;
 
 	for (int i = 1, ni = normal->attribute_number; i < ni; i++)
-		f_head << "/*		normal:" << i << "	*/	"<< normal[i].caculate_average_string(i) << std::endl;
+		f_head << "/*		normal:" << i << "	*/	" << normal->caculate_average_string(i) << std::endl;
 	for (int i = 0, ni = texture->attribute_number; i < ni; i++)
-		f_head << "/*		texture:" << i << "	*/	" << texture[i].caculate_average_string(i) << std::endl;
+		f_head << "/*		texture:" << i << "	*/	" << texture->caculate_average_string(i) << std::endl;
 	for (int i = 0, ni = color->attribute_number; i < ni; i++)
-		f_head << "/*		color:" << i << "	*/	" << color[i].caculate_average_string(i) << std::endl;
+		f_head << "/*		color:" << i << "	*/	" << color->caculate_average_string(i) << std::endl;
 	for (int i = 0, ni = tangent->attribute_number; i < ni; i++)
-		f_head << "/*		tangent:" << i << "	*/	" << tangent[i].caculate_average_string(i) << std::endl;
+		f_head << "/*		tangent:" << i << "	*/	" << tangent->caculate_average_string(i) << std::endl;
 
 	std::string str_2[]{
 		"",

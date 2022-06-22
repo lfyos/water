@@ -14,8 +14,10 @@ private:
 
 	std::string directory_name;
 	std::ofstream* part_list_f;
-	fbxsdk::FbxClassId *part_id_array;
+	FbxMesh**	part_id_array;
 	int register_number;
+
+	bool compare_mesh(FbxMesh* s, FbxMesh* d);
 
 	std::string process_name(std::string name)
 	{
@@ -39,13 +41,15 @@ public:
 			switch (assemble_node->GetNodeAttribute()->GetAttributeType()) {
 			case FbxNodeAttribute::EType::eMesh:
 				FbxMesh* fm = assemble_node->GetMesh();
-				part_id_array[register_number] = fm->GetClassId();
-				for (int i = 0; i < register_number; i++)
-					if (part_id_array[i] == part_id_array[register_number])
-						return "fbx_part_" + std::to_string(i);
 
-				std::string part_user_name = process_name(fm->GetClassId().GetName());
 				std::string part_system_name = "fbx_part_" + std::to_string(register_number);
+				std::string part_user_name = process_name(fm->GetName());
+				if (part_user_name.size() <= 0)
+					part_user_name = part_system_name;
+	
+				for (int i = 0; i < register_number; i++)
+					if (compare_mesh(part_id_array[i],fm))
+						return "fbx_part_" + std::to_string(i);
 
 				(*part_list_f) << part_user_name << std::endl;
 				(*part_list_f) << part_system_name << std::endl;
@@ -55,14 +59,15 @@ public:
 				(*part_list_f) << "part_" << register_number << ".mp3" << std::endl;
 				(*part_list_f) << std::endl;
 
-				std::cout << "Begin extract mesh data for part " << part_user_name << " (NO. " << register_number << ")" << std::endl;
-
 				std::string mesh_directory = directory_name + "part_" + std::to_string(register_number);
+
+				std::cout << "Begin extract mesh data from part " << part_user_name << " (NO. " << register_number << ")" ;
+
 				mesh part_mesh(fm, mesh_directory + ".mesh",mesh_directory + ".mesh.face" );
 
-				std::cout << "End extract mesh data for part " << part_user_name << " (NO. " << register_number << ")" << std::endl;
+				std::cout << "		End extract mesh data from part " << part_user_name << " (NO. " << register_number << ")" << std::endl;
 
-				register_number++;
+				part_id_array[register_number++] = fm;
 
 				return part_system_name;
 			}
@@ -74,7 +79,7 @@ public:
 		directory_name = my_directory_name;
 		part_list_f = new std::ofstream(directory_name + "part.list");
 		register_number = 0;
-		part_id_array = new fbxsdk::FbxClassId[100000];
+		part_id_array = new FbxMesh * [100000];
 	}
 	~part()
 	{

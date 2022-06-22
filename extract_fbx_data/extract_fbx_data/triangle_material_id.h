@@ -11,5 +11,3 @@ public:
 		material_id[3] = 0;
 	}
 };
-
-
