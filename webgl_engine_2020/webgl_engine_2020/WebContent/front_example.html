@@ -56,10 +56,18 @@ function body_onload()
 		});
 }
 
+function body_onunload()
+{
+	if(typeof(lfy_render)=="object")
+		if(lfy_render!=null)
+			if(typeof(lfy_render.terminate)=="function")
+				lfy_render.terminate();
+}
+
 </script>
 </head>
 
-<body onload="body_onload();">
+<body onload="body_onload();" onunload="body_onunload();">
 <canvas id="my_canvas"	tabindex="0" width=1000	 height=500></canvas>
 </body>
 

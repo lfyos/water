@@ -11,7 +11,6 @@
 class part
 {
 private:
-
 	std::string directory_name;
 	std::ofstream* part_list_f;
 	FbxMesh**	part_id_array;
@@ -19,7 +18,8 @@ private:
 
 	bool compare_mesh(FbxMesh* s, FbxMesh* d);
 
-	std::string process_name(std::string name)
+public:
+	static std::string process_name(std::string name)
 	{
 		std::string ret_val = std::string(name);
 		for (int i = 0, ni = (int)(ret_val.length()); i < ni; i++)
@@ -34,7 +34,7 @@ private:
 		return ret_val;
 	}
 	void output_part_material(FbxMesh* fm, FbxNode* fn);
-public:
+
 	std::string register_node(FbxNode* assemble_node)
 	{
 		if (assemble_node->GetNodeAttribute())

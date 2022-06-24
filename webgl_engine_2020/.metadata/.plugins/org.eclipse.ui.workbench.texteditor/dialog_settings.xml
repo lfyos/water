@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="vertex_location"/>
+		<item key="selection" value="environment_sub_directory_mount"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="environment_sub_directory_mount"/>
+			<item value="parse_web_server_response_data fail"/>
+			<item value="/RootNode/粒子视图001"/>
+			<item value="/RootNode/粒子视图"/>
+			<item value="组2142359976"/>
+			<item value="Line2132553757"/>
 			<item value="vertex_location"/>
 			<item value="scene_directory\cad_directory\cad\A159-SR-302A"/>
 			<item value="simple"/>
@@ -17,12 +23,6 @@
 			<item value="new String"/>
 			<item value="scene_directory\cad_directory\cad\A159-SR-302A\part_directory"/>
 			<item value="/*&#x09;low_precision_scale&#x09;&#x09;&#x09;*/&#x09;&#x09;0.50"/>
-			<item value="/*&#x09;high_precision_scale&#x09;&#x09;*/&#x09;&#x09;0.5"/>
-			<item value="/*&#x09;high_precision_scale&#x09;&#x09;*/&#x09;&#x09;1.0"/>
-			<item value="turnonoff_lod"/>
-			<item value="url_and_channel"/>
-			<item value="my_url"/>
-			<item value="request_create_engine"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
@@ -43,8 +43,8 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="1167"/>
-		<item key="DIALOG_Y_ORIGIN" value="452"/>
+		<item key="DIALOG_X_ORIGIN" value="1203"/>
+		<item key="DIALOG_Y_ORIGIN" value="112"/>
 		<item key="DIALOG_WIDTH" value="530"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>

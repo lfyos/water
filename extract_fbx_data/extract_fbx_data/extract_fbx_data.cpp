@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
 
     part part_collector(directory_name);
     std::ofstream f(directory_name + "assemble.assemble");
-    assemble(part_collector, f, lScene->GetRootNode(), 0);
+    assemble assem(part_collector, f, lScene->GetRootNode(), 0,"");
     f.close();
 
     lScene->Destroy();
