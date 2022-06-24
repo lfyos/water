@@ -84,12 +84,19 @@ function body_onresize()
 	canvas_object.width	=window.innerWidth *0.975;
 	canvas_object.height=window.innerHeight*0.925;
 }
+function body_onunload()
+{
+	if(typeof(lfy_render)=="object")
+		if(lfy_render!=null)
+			if(typeof(lfy_render.terminate)=="function")
+				lfy_render.terminate();
+}
 
 </script>
 
 </head>
 
-<body onload="body_onresize();body_onload();" onresize="body_onresize();">
+<body onload="body_onresize();body_onload();" onresize="body_onresize();" onunload="body_onunload();" >
 
 <div align="center">
 <canvas id="my_canvas"		tabindex="0"	></canvas>

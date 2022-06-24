@@ -112,7 +112,8 @@ public class component_core_4 extends component_core_3
 				ek.scene_directory_name						+"assemble_default"+File.separatorChar,
 				ek.scene_par.directory_name					+"assemble_default"+File.separatorChar,
 				ek.scene_par.extra_directory_name			+"assemble_default"+File.separatorChar,
-				ek.system_par.default_parameter_directory	+"assemble_default"+File.separatorChar
+				ek.system_par.default_parameter_directory	+"assemble_default"+File.separatorChar,
+				""
 		};
 		for(int i=0,ni=my_directory_name_array.length;i<ni;i++)
 			if(new File(my_directory_name_array[i]+my_file_name).exists()) 

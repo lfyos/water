@@ -1,10 +1,1 @@
-﻿  assimp_box.cpp
-  default_parameter.cpp
-  extract_assemble_data.cpp
-  extract_assimp_data.cpp
-  extract_material_data.cpp
-  extract_mesh_data.cpp
-  location.cpp
-  mesh_set.cpp
-  正在生成代码...
-  extract_assimp_data.vcxproj -> E:\water\extract_assimp_data\x64\Debug\extract_assimp_data.exe
+﻿

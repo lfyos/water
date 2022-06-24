@@ -6,6 +6,9 @@
 #include<fbxsdk.h>
 
 #include"part.h"
+
+extern int assemble_id;
+
 class assemble
 {
 private:
@@ -15,6 +18,7 @@ private:
 			f << "	";
 	};
 public:
-	assemble(part &part_collector,std::ofstream &f,FbxNode* my_assemble_node,int space_number);
+	assemble(part &part_collector,std::ofstream &f,FbxNode* assemble_node,
+		int space_number,std::string assemble_parent_name);
 };
 

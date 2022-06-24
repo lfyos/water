@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>E:\water\extract_assimp_data\x64\Debug\extract_assimp_data.exe</FullPath>
+      <FullPath>E:\water_all\extract_assimp_data\x64\Debug\extract_assimp_data.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
