@@ -2,46 +2,6 @@
 #include <exception>  
 #include "mesh.h"
 
-bool part::compare_mesh(FbxMesh* s, FbxMesh* d)
-{
-	if (s->GetPolygonCount() != d->GetPolygonCount())
-		return false;
-	if (s->GetControlPointsCount() != d->GetControlPointsCount())
-		return false;
-	if (s->GetPolygonVertexCount() != d->GetPolygonVertexCount())
-		return false;
-	if (s->GetNodeCount() != d->GetNodeCount())
-		return false;
-	if (s->GetElementMaterialCount() != d->GetElementMaterialCount())
-		return false;
-	if (s->GetMeshEdgeCount() != d->GetMeshEdgeCount())
-		return false;
-	if(s->GetElementHoleCount()!= d->GetElementHoleCount())
-		return false;
-	if (s->GetShapeCount() != d->GetShapeCount())
-		return false;
-
-	if (s->GetLayerCount() != d->GetLayerCount())
-		return false;
-	if (s->GetUVLayerCount() != d->GetUVLayerCount())
-		return false;
-
-	if (s->GetElementVisibilityCount() != d->GetElementVisibilityCount())
-		return false;
-
-	if (s->GetElementNormalCount() != d->GetElementNormalCount())
-		return false;
-	if (s->GetElementUVCount() != d->GetElementUVCount())
-		return false;
-	if (s->GetElementVertexColorCount() != d->GetElementVertexColorCount())
-		return false;
-	if (s->GetElementTangentCount() != d->GetElementTangentCount())
-		return false;
-	if (s->GetElementBinormalCount() != d->GetElementBinormalCount())
-		return false;
-	return true;
-}
-
 void part::output_part_material(FbxMesh* fm, FbxNode* fn)
 {
 	std::ofstream f_material(directory_name + "part_" + std::to_string(register_number) + ".material");
