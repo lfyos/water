@@ -16,8 +16,10 @@ private:
 	FbxMesh**	part_id_array;
 	int register_number;
 
-	bool compare_mesh(FbxMesh* s, FbxMesh* d);
-
+	bool compare_mesh(FbxMesh* s, FbxMesh* d)
+	{
+		return (s==d)?true:false;
+	}
 public:
 	static std::string process_name(std::string name)
 	{
