@@ -51,6 +51,7 @@ public class location
 	}
 	public location(String str,String ch)
 	{
+		int ch_length;
 		a=new double [][]
 		{
 			{ 1, 0, 0, 0},
@@ -60,7 +61,9 @@ public class location
 		};
 		if(ch==null)
 			return;
-		for(int ch_length=ch.length(),i=0;i<4;i++)
+		if((ch_length=ch.length())<=0)
+			return;
+		for(int i=0;i<4;i++)
 			for(int index_id,j=0;j<4;j++){
 				if((index_id=str.indexOf(ch))<0) {
 					a[j][i]=Double.parseDouble(str);
