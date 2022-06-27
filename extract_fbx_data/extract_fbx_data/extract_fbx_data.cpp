@@ -45,7 +45,6 @@ int main(int argc, char* argv[])
         lImporter->Destroy();
         ios->Destroy();
         lSdkManager->Destroy();
-
         return -3;
     }
 

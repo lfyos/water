@@ -28,33 +28,29 @@ public class component_core_2 extends component_core_1
 	}
 	private location input_location(file_reader fr,client_request_response request_response)
 	{
-		String command	=fr.get_string();
-		String name		=fr.get_string();
-		String separator=fr.get_string();
+		String command=fr.get_string(),name=fr.get_string();
 		
 		dynamic_location_flag=true;
 		
-		if((command==null)||(name==null)||(separator==null))
+		if((command==null)||(name==null))
 			return new location();
 		if((command=command.trim()).isEmpty())
 			return new location();
 		if((name=name.trim()).isEmpty())
 			return new location();
-		if((separator=separator.trim()).isEmpty())
-			return new location();
 
 		try {
-			switch(command.toLowerCase()) {
+			switch(command.toLowerCase()){
 			default:
 				dynamic_location_flag=false;
 				try {
 					return new location(
-							Double.parseDouble(command),Double.parseDouble(name),	Double.parseDouble(separator),	fr.get_double(),
-							fr.get_double(),			fr.get_double(),			fr.get_double(),				fr.get_double(),
-							fr.get_double(),			fr.get_double(),			fr.get_double(),				fr.get_double(),
-							fr.get_double(),			fr.get_double(),			fr.get_double(),				fr.get_double());
+							Double.parseDouble(command),Double.parseDouble(name),	fr.get_double(),		fr.get_double(),
+							fr.get_double(),			fr.get_double(),			fr.get_double(),		fr.get_double(),
+							fr.get_double(),			fr.get_double(),			fr.get_double(),		fr.get_double(),
+							fr.get_double(),			fr.get_double(),			fr.get_double(),		fr.get_double());
 				}catch(Exception e) {
-					debug_information.println("Component location error:	",command+"	"+name+"	"+separator);
+					debug_information.println("Component location error:	",command+"	"+name);
 					debug_information.println("Component location file:		",fr.directory_name+fr.file_name);
 					debug_information.println(e.toString());
 					e.printStackTrace();
@@ -63,24 +59,22 @@ public class component_core_2 extends component_core_1
 				}
 			case "client_location":
 				if((name=request_response.get_parameter(name))!=null)
-					return new location(name,separator);
+					return new location(name,fr.get_string());
 				return new location();
 			case "environment_location":
 				if((name=System.getenv(name))!=null)
-					return new location(name,separator);
+					return new location(name,fr.get_string());
 				return new location();
 			case "client_environment_location":
 				if((name=request_response.get_parameter(name))!=null)
 					if((name=System.getenv(name))!=null)
-						return new location(name,separator);
+						return new location(name,fr.get_string());
 				return new location();
 			case "relative_file_location":
-				fr.insert_string(new String[] {separator});
 				if((name=request_response.get_parameter(name))!=null)
 					return input_location_from_file(fr.directory_name+name,fr.get_charset());
 				return new location();
 			case "absolute_file_location":
-				fr.insert_string(new String[] {separator});
 				if((name=request_response.get_parameter(name))!=null)
 					return input_location_from_file(name,fr.get_charset());
 				return new location();

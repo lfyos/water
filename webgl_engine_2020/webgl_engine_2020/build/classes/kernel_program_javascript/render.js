@@ -606,30 +606,32 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			this.view_bak.component=id;
 			request_string+="&component="+id.toString();
 		};
-		if(this.view_bak.body!=(id=this.pickup.body_id)){
-			this.view_bak.body=id;
-			request_string+="&body="+id.toString();
-		};
-		if(this.view_bak.face!=(id=this.pickup.face_id)){
-			this.view_bak.face=id;
-			request_string+="&face="+id.toString();
-		};
-		if(this.view_bak.loop!=(id=this.pickup.loop_id)){
-			this.view_bak.loop=id;
-			request_string+="&loop="+id.toString();
-		};
-		if(this.view_bak.edge!=(id=this.pickup.edge_id)){
-			this.view_bak.edge=id;
-			request_string+="&edge="+id.toString();
-		};
-		if(this.view_bak.vertex!=(id=this.pickup.vertex_id)){
-			this.view_bak.vertex=id;
-			request_string+="&vertex="+id.toString();
-		};
-		if(this.view_bak.point!=(id=this.pickup.point_id)){
-			this.view_bak.point=id;
-			request_string+="&point="+id.toString();
-		};	
+		if(this.pickup.component_id>=0){
+			if(this.view_bak.body!=(id=this.pickup.body_id)){
+				this.view_bak.body=id;
+				request_string+="&body="+id.toString();
+			};
+			if(this.view_bak.face!=(id=this.pickup.face_id)){
+				this.view_bak.face=id;
+				request_string+="&face="+id.toString();
+			};
+			if(this.view_bak.loop!=(id=this.pickup.loop_id)){
+				this.view_bak.loop=id;
+				request_string+="&loop="+id.toString();
+			};
+			if(this.view_bak.edge!=(id=this.pickup.edge_id)){
+				this.view_bak.edge=id;
+				request_string+="&edge="+id.toString();
+			};
+			if(this.view_bak.vertex!=(id=this.pickup.vertex_id)){
+				this.view_bak.vertex=id;
+				request_string+="&vertex="+id.toString();
+			};
+			if(this.view_bak.point!=(id=this.pickup.point_id)){
+				this.view_bak.point=id;
+				request_string+="&point="+id.toString();
+			};
+		}
 		if(Math.abs(this.view_bak.depth-(value=this.pickup.depth))>min_value){
 			this.view_bak.depth=value;
 			request_string+="&depth="+(new Number(value)).toPrecision(6);

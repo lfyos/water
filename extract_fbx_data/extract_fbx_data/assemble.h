@@ -7,7 +7,7 @@
 
 #include"part.h"
 
-extern int assemble_id;
+extern int component_id,leaf_component_id;
 
 class assemble
 {
