@@ -184,7 +184,7 @@ public class modifier_container
 	private void process_routine(engine_kernel ek,client_information ci)
 	{
 		long my_current_time=timer.get_current_time();
-		for(int i=0,ni=ek.system_par.process_modifier_times;i<ni;i++){
+		for(int i=0,ni=ek.system_par.max_process_modifier_number;i<ni;i++){
 			if(modifier_number<=0){
 				modifier_driver_sequence_id=0;
 				modifier_number=0;

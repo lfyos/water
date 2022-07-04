@@ -57,7 +57,7 @@
 <fullyQualifiedTypeName name="kernel_camera.camera_parameter"/>
 <fullyQualifiedTypeName name="kernel_common_class.jason_string"/>
 <fullyQualifiedTypeName name="kernel_common_class.const_value"/>
-<fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="kernel_common_class.debug_information"/>
 </qualifiedTypeNameHistroy>

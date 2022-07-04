@@ -62,6 +62,7 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 		shader_program.texture_sampler_uniform	=gl.getUniformLocation(shader_program,"texture_sampler");
 		shader_program.par_uniform				=gl.getUniformLocation(shader_program,"par");
 		shader_program.color_par_uniform		=gl.getUniformLocation(shader_program,"color_par");
+		shader_program.pickup_color_par_uniform	=gl.getUniformLocation(shader_program,"pickup_color_par");
 	}
 	
 	switch(method_id){
@@ -73,7 +74,8 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 		return;
 	}
 	
-	gl.uniformMatrix4fv(shader_program.color_par_uniform,false,new Float32Array(part_material[0].color));
+	gl.uniformMatrix4fv(shader_program.       color_par_uniform,false,new Float32Array(part_material[0].       color));
+	gl.uniformMatrix4fv(shader_program.pickup_color_par_uniform,false,new Float32Array(part_material[0].pickup_color));
 
 	for(var i=0,ni=component_data_array.length;i<ni;i++){
 		var buffer_id	=component_data_array[i][0];

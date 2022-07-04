@@ -41,7 +41,7 @@ public class system_parameter
 	
 	public String file_download_cors_string;
 	
-	public int process_component_load_times,process_modifier_times;
+	public int max_process_component_load_number,max_process_modifier_number;
 	
 	public change_name language_change_name,content_type_change_name;
 	public proxy_parameter proxy_par;
@@ -94,8 +94,8 @@ public class system_parameter
 		
 		file_download_cors_string		=new String(sp.file_download_cors_string);
 		
-		process_component_load_times	=sp.process_component_load_times;
-		process_modifier_times			=sp.process_modifier_times;
+		max_process_component_load_number=sp.max_process_component_load_number;
+		max_process_modifier_number		=sp.max_process_modifier_number;
 		
 		content_type_change_name		=new change_name(sp.content_type_change_name,false);
 		language_change_name			=new change_name(sp.language_change_name,false);
@@ -251,8 +251,8 @@ public class system_parameter
 			}
 		}
 		
-		process_component_load_times			=f.get_int();
-		process_modifier_times					=f.get_int();
+		max_process_component_load_number		=f.get_int();
+		max_process_modifier_number				=f.get_int();
 		
 		f.close();
 		

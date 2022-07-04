@@ -1,4 +1,4 @@
-uniform mat4 par;
+uniform mat4 par,color_par,pickup_color_par;
 
 in	vec4 vertex_location,vertex_normal,vertex_material,vertex_id,vertex_texture;
 out vec4 frag_id,frag_texture;
