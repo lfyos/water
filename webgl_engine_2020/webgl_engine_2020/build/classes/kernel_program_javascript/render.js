@@ -606,32 +606,30 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			this.view_bak.component=id;
 			request_string+="&component="+id.toString();
 		};
-		if(this.pickup.component_id>=0){
-			if(this.view_bak.body!=(id=this.pickup.body_id)){
-				this.view_bak.body=id;
-				request_string+="&body="+id.toString();
-			};
-			if(this.view_bak.face!=(id=this.pickup.face_id)){
-				this.view_bak.face=id;
-				request_string+="&face="+id.toString();
-			};
-			if(this.view_bak.loop!=(id=this.pickup.loop_id)){
-				this.view_bak.loop=id;
-				request_string+="&loop="+id.toString();
-			};
-			if(this.view_bak.edge!=(id=this.pickup.edge_id)){
-				this.view_bak.edge=id;
-				request_string+="&edge="+id.toString();
-			};
-			if(this.view_bak.vertex!=(id=this.pickup.vertex_id)){
-				this.view_bak.vertex=id;
-				request_string+="&vertex="+id.toString();
-			};
-			if(this.view_bak.point!=(id=this.pickup.point_id)){
-				this.view_bak.point=id;
-				request_string+="&point="+id.toString();
-			};
-		}
+		if(this.view_bak.body!=(id=this.pickup.body_id)){
+			this.view_bak.body=id;
+			request_string+="&body="+id.toString();
+		};
+		if(this.view_bak.face!=(id=this.pickup.face_id)){
+			this.view_bak.face=id;
+			request_string+="&face="+id.toString();
+		};
+		if(this.view_bak.loop!=(id=this.pickup.loop_id)){
+			this.view_bak.loop=id;
+			request_string+="&loop="+id.toString();
+		};
+		if(this.view_bak.edge!=(id=this.pickup.edge_id)){
+			this.view_bak.edge=id;
+			request_string+="&edge="+id.toString();
+		};
+		if(this.view_bak.vertex!=(id=this.pickup.vertex_id)){
+			this.view_bak.vertex=id;
+			request_string+="&vertex="+id.toString();
+		};
+		if(this.view_bak.point!=(id=this.pickup.point_id)){
+			this.view_bak.point=id;
+			request_string+="&point="+id.toString();
+		};
 		if(Math.abs(this.view_bak.depth-(value=this.pickup.depth))>min_value){
 			this.view_bak.depth=value;
 			request_string+="&depth="+(new Number(value)).toPrecision(6);
@@ -928,6 +926,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.get_component_object_by_component_name	=null;
 		this.get_component_processor				=null;
 		this.call_server							=null;
+		this.call_server_routine					=null;
 		this.create_part_request_string				=null;
 		this.create_part_request_by_component_string=null;
 		this.create_component_request_string		=null;
@@ -1018,12 +1017,9 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 					}
 		return null;
 	};
-	this.call_server=function(request_string,
+	this.call_server_routine=function(request_string,
 			response_function,error_function,response_type_string,upload_data)
 	{
-		if(this.terminate_flag)
-			return;
-		
 		if(typeof(response_type_string)=="undefined")
 			response_type_string="text";
 		if(typeof(upload_data)=="undefined")
@@ -1073,6 +1069,29 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 				error_function(1,this,e,request_string);
 		};
 	};
+	
+	this.call_server=function(request_string,
+			response_function,error_function,response_type_string,upload_data)
+	{
+		if(this.terminate_flag)
+			return;
+		if(this.do_render_request_response_number>1){
+			this.call_server_routine(request_string,
+					response_function,error_function,response_type_string,upload_data);
+			return;
+		}
+		var cur=this;
+		this.append_routine_function(
+			function()
+			{
+				if(cur.do_render_request_response_number<2)
+					return true;
+				cur.call_server_routine(request_string,
+					response_function,error_function,response_type_string,upload_data);
+				return false;
+			});
+	};
+	
 	this.create_part_request_string=function(render_id_or_part_name,part_id_or_driver_id,part_parameter)
 	{
 		var ret_val=this.url_and_channel+"&command=part&method=event";

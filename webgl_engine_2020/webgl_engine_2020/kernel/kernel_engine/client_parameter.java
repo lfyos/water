@@ -70,6 +70,7 @@ public class client_parameter
 			if((str=ci.request_response.get_parameter("point"))!=null)
 				point_id=Integer.decode(str);
 		}
+
 		if((str=ci.request_response.get_parameter("x"))!=null)
 			x=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("y"))!=null)

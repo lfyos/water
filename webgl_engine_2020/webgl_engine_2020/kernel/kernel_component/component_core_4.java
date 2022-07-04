@@ -402,14 +402,14 @@ public class component_core_4 extends component_core_3
 			}
 		}
 	}
-	void append_component(double lod_precision_scale,component_construction_parameter ccp)
+	public void append_component(double lod_precision_scale,component_construction_parameter ccp)
 	{
-		if(ccp.clsc.get_source_item_number()>0){
-			append_child(ccp.clsc.get_source_item(component_name,
-					uniparameter.part_list_flag,uniparameter.normalize_location_flag,lod_precision_scale,ccp));
-			for(int i=0,ni=children_number();i<ni;i++)
-				children[i].append_component(lod_precision_scale,ccp);
-		}
+		if(ccp.clsc.get_source_item_number()<=0)
+			return;
+		append_child(ccp.clsc.get_source_item(component_name,
+			uniparameter.part_list_flag,uniparameter.normalize_location_flag,lod_precision_scale,ccp));
+		for(int i=0,ni=children_number();i<ni;i++)
+			children[i].append_component(lod_precision_scale,ccp);
 	}
 	public component_core_4(String token_string,file_reader fr,boolean part_list_flag,
 			boolean normalize_location_flag,double lod_precision_scale,component_construction_parameter ccp)
@@ -421,8 +421,5 @@ public class component_core_4 extends component_core_3
 		if(ccp.clsc.get_source_item_number()>0)
 			append_child(ccp.clsc.get_source_item(component_name,uniparameter.part_list_flag,
 				uniparameter.normalize_location_flag,uniparameter.component_driver_lod_precision_scale,ccp));
-
-		if(uniparameter.normalize_location_flag)
-			relative_location=relative_location.normalize();
 	}
 }

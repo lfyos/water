@@ -1,5 +1,5 @@
 uniform sampler2D texture_sampler;
-uniform mat4 par,color_par;
+uniform mat4 par,color_par,pickup_color_par;
 
 in vec4 frag_id,frag_texture;
 
@@ -27,15 +27,19 @@ void main(void)
 	switch(int(round(frag_id.w))){
 	default:
 	case 0:
-		frag_data[0]=color_par[0];
+		frag_data[0]=(int(round(par[0].w))!=system_info.pickup_component_id)
+			?(color_par[0]):(pickup_color_par[0]);
 		if(length(texture(texture_sampler,frag_texture.xy).rgb)<0.75)
 			discard;
 		break;
 	case 1:
-		frag_data[0]=color_par[1];
+		frag_data[0]=(int(round(par[0].w))!=system_info.pickup_component_id)
+			?(color_par[1]):(pickup_color_par[1]);
 		break;
 	case 2:
-		frag_data[0]=color_par[(system_info.millisecond<500)?2:3];
+		frag_data[0]=(int(round(par[0].w))!=system_info.pickup_component_id)
+			?(color_par[(system_info.millisecond<500)?2:3])
+			:(pickup_color_par[(system_info.millisecond<500)?2:3]);
 		if(distance(gl_PointCoord,vec2(0.5,0.5))>0.5)
 			discard;
 		break;

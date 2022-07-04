@@ -49,6 +49,9 @@ function body_onload()
 		{
 			lfy_render=my_render;				//把场景变量保存到变量render中
 			document.title=lfy_render.title;	//设置网页标题
+//			lfy_render.system_call_processor.show_hide_component(false,"camera_operation_component");
+//			lfy_render.system_call_processor.show_hide_component(false,"caption_component");
+//			lfy_render.system_call_processor.turnonoff_level_of_detail(false);
 		},
 		function(			//9.进度条绘制函数，如果不配置该函数，则使用系统内部提供的默认进度条绘制函数
 				process_bar_canvas,				//绘制进度条的画布canvas

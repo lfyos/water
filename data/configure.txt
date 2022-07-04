@@ -37,6 +37,6 @@
 	
 /*	file_download_cors_string												*/		*
 
-/*	process_component_load_times											*/		5
-/*	process_modifier_times													*/		5
+/*	max_process_component_load_number										*/		5
+/*	max_process_modifier_number												*/		5
 
