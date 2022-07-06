@@ -6,6 +6,7 @@ import kernel_driver.instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_transformation.point;
+import kernel_common_class.debug_information;
 import kernel_common_class.jason_string;
 
 public class extended_instance_driver extends instance_driver
