@@ -1,12 +1,7 @@
 function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcontext,
 	my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,response_data)
 {
-	this.channel						=response_data[0].toString().trim();
-    this.channel					   +="&user_name="	+my_user_name;
-    this.channel					   +="&pass_word="	+my_pass_word;
-    this.channel					   +="&process_bar="+my_process_bar_id;
-    this.channel					   +="&language="	+my_language_name;
-    
+    var my_channel_id					=response_data[0]
     var	my_render_initialize_data		=response_data[1];
 	var	my_part_initialize_data			=response_data[2];
 	var	my_instance_initialize_data		=response_data[3];
@@ -55,7 +50,10 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	this.text_2dcontext				=my_text_2dcontext;
 	this.gl							=my_gl;
 	this.url						=my_url;
-	this.url_and_channel			=my_url+"?channel="+this.channel;
+	this.url_and_channel			=my_url	+"?channel="	+my_channel_id.toString()
+		+"&user_name="	+my_user_name		+"&pass_word="	+my_pass_word
+		+"&language="	+my_language_name	+"&process_bar="+my_process_bar_id;
+
 	this.canvas						=my_canvas;
 	this.language_name				=my_language_name;
 	
@@ -825,7 +823,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			this.component_array_sorted_by_id[i]=null;
 		}
 
-		this.channel								=null;
 	    this.link_name								=null;
 	    this.title									=null;
 	    this.parameter								=null;

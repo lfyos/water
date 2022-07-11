@@ -187,7 +187,7 @@ public class response_render_component_request
 	{
 		String directory_name=file_directory.part_file_directory(p,ek.system_par,ek.scene_par)+"mesh.";
 		
-		String proxy_url_directory=ci.get_request_url_header()+"&command=buffer&operation=buffer_data";
+		String proxy_url_directory=ci.request_url_header+"&command=buffer&operation=buffer_data";
 		proxy_url_directory+="&render="+(p.render_id)+"&part="+(p.part_id)+"&data_file=";
 		
 		int ret_val=0;
@@ -253,9 +253,7 @@ public class response_render_component_request
 
 			String package_proxy_url;
 			if((package_proxy_url=ci.get_file_proxy_url(package_file_name,ek.system_par))==null)
-				package_proxy_url=ci.get_request_url_header()
-					+"&command=buffer&operation=buffer_package&package="
-					+part_type_id+"_"+part_package_id;
+				package_proxy_url=ci.request_url_header+"&command=buffer&operation=buffer_package&package="+part_type_id+"_"+part_package_id;
 
 			ci.request_response.print((i<=requesting_number)?"[\"":",[\"",package_proxy_url).
 								print("\",",package_length).

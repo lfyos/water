@@ -1,6 +1,7 @@
 package kernel_component;
 
 import kernel_common_class.debug_information;
+import kernel_interface.client_process_bar;
 import kernel_part.part_rude;
 import kernel_part.part;
 
@@ -167,7 +168,8 @@ public class component_caculator
 			}
 		}
 	}
-	public component_caculator(component root_component,boolean display_flag)
+	public component_caculator(component root_component,boolean display_flag,
+			client_process_bar process_bar,String process_bar_title)
 	{
 		component_id						=0;
 		render_component_id_and_driver_id	=null;
@@ -205,13 +207,15 @@ public class component_caculator
 			}
 		}
 		{
+			process_bar.set_process_bar(true,process_bar_title,"", 0, sort_component_pointer.length);
 			int display_same_number=0,display_same_compoennt_number=0;
-			for(int i=0,j=0;i<(sort_component_pointer.length);i=j){
-				for(j=i+1;j<(sort_component_pointer.length);j++)
+			for(int i=0,j=0,ni=sort_component_pointer.length;i<ni;i=j){
+				process_bar.set_process_bar(false,process_bar_title,sort_component_pointer[i].component_name, i, ni);
+				for(j=i+1;j<ni;j++)
 					if(sort_component_pointer[i].component_name.compareTo(sort_component_pointer[j].component_name)!=0)
 						break;
 				if((j-i)>1) {
-					for(display_same_number++;(i<j)&&(i<sort_component_pointer.length);i++,display_same_compoennt_number++) {
+					for(display_same_number++;(i<j)&&(i<ni);i++,display_same_compoennt_number++) {
 						if(display_flag){
 							debug_information.print  (display_same_number);
 							debug_information.print  ("	Find same name component:",j-i);
@@ -223,6 +227,8 @@ public class component_caculator
 					}
 				}
 			}
+			process_bar.set_process_bar(false,process_bar_title,"", sort_component_pointer.length, sort_component_pointer.length);
+			
 			if(display_same_compoennt_number>0)
 				if(display_flag)
 					debug_information.println("	total same name componment number is ",

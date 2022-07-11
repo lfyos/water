@@ -26,9 +26,6 @@ public class switch_engine_server
 	public String get_switch_server_url()
 	{
 		int number;
-		if((number=server_url_array.length)<=0)
-			return null;
-		index_id%=number;
-		return server_url_array[index_id++];
+		return ((number=server_url_array.length)<=0)?null:server_url_array[index_id=((++index_id)%number)];
 	}
 }

@@ -20,7 +20,7 @@ public class web_page
 	
 		(out=my_ci.request_response).response_content_type="text/html";
 
-		request_url_header=my_ci.get_request_url_header();
+		request_url_header=my_ci.request_url_header;
 		title=my_title;
 		info="";
 	}

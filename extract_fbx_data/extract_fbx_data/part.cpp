@@ -1,5 +1,4 @@
 #include "part.h"
-#include <exception>  
 #include "mesh.h"
 
 void part::output_part_material(FbxMesh* fm, FbxNode* fn)
@@ -40,6 +39,12 @@ void part::output_part_material(FbxMesh* fm, FbxNode* fn)
 			Shininess = p->Shininess;
 		}
 
+		for (int textureLayerIndex = 0; textureLayerIndex < FbxLayerElement::LAYERELEMENT_TYPE_TEXTURE_COUNT; ++textureLayerIndex)
+		{
+
+		}
+
+		FbxProperty lProperty = pSurfaceMaterial->FindProperty(FbxLayerElement::sTextureChannelNames[0]);
 
 //		int lTextureIndex;
 //		FBXSDK_FOR_EACH_TEXTURE(lTextureIndex)

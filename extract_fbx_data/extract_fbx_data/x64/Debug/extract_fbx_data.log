@@ -1,1 +1,3 @@
-﻿
+﻿  part.cpp
+E:\water_all\extract_fbx_data\extract_fbx_data\part.cpp(43,55): error C2653: “KfbxLayerElement”: 不是类或命名空间名称
+E:\water_all\extract_fbx_data\extract_fbx_data\part.cpp(43,73): error C2065: “LAYERELEMENT_TYPE_TEXTURE_COUNT”: 未声明的标识符

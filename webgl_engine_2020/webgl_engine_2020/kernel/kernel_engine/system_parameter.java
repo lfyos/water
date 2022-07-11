@@ -119,6 +119,12 @@ public class system_parameter
 		proxy_configure_file_name=file_reader.separator(proxy_configure_file_name.trim());
 		if(proxy_configure_file_name.charAt(0)=='.')
 			proxy_configure_file_name=application_directory_name+proxy_configure_file_name;
+		
+		debug_information.println();
+		debug_information.println("data_configure_environment_variable:	",		data_configure_environment_variable);
+		debug_information.println("data_configure_file_name:		",			data_configure_file_name);
+		debug_information.println("proxy_configure_environment_variable:	",	proxy_configure_environment_variable);
+		debug_information.println("proxy_configure_file_name:		",			proxy_configure_file_name);
 
 		file_reader f=new file_reader(data_configure_file_name,Charset.defaultCharset().name());
 		if(f.error_flag()){
