@@ -44,12 +44,17 @@ public class client_information
 	
 	public display_message				message_display;
 	
+	public String 						request_url_header;
+	
 	private boolean						file_proxy_url_encode_flag[];
 	private String						file_proxy_url_array[];
 	private int 						file_proxy_pointer;
 	
 	public void destroy()
 	{
+		if(request_url_header!=null)
+			request_url_header=null;
+	
 		if(message_display!=null)
 			message_display=null;
 			
@@ -135,25 +140,11 @@ public class client_information
 	{
 		return file_proxy_url_encode_flag;
 	}
-	public String get_request_url_header()
-	{
-		String user_name=request_response.get_parameter("user_name");
-		user_name=(user_name==null)?"NoName":(user_name.trim());
-		
-		String language_str=request_response.get_parameter("language");
-		language_str=(language_str==null)?"english":(language_str.trim());
-		
-		String url_header;
-		url_header =request_response.implementor.get_url();
-		url_header+="?channel="+Long.toString(channel_id);
-		url_header+="&user_name="+user_name+"&language=" +language_str;
-		
-		return url_header;
-	}
+	
 	public String get_component_request_url_header(int component_id,String driver_id)
 	{
 		String  url_header;
-		url_header =get_request_url_header()+"&command=component&method=event";
+		url_header =request_url_header+"&command=component&method=event";
 		url_header+="&event_component_id="+Integer.toString(component_id);
 		if(driver_id!=null)
 			if((driver_id=driver_id.trim()).length()>0)
@@ -167,7 +158,7 @@ public class client_information
 	public String get_part_request_url_header(int render_id,int part_id)
 	{
 		String  url_header;
-		url_header =get_request_url_header()+"&command=part&method=event";
+		url_header =request_url_header+"&command=part&method=event";
 		url_header+="&event_render_id="+Integer.toString(render_id);
 		url_header+="&event_part_id="+Integer.toString(part_id);
 		return url_header;
@@ -306,7 +297,17 @@ public class client_information
 		
 		instance_container	=new instance_driver_container(ek,request_response);
 		message_display		=new display_message();	
-
+		
+		String user_name	=request_response.get_parameter("user_name");
+		String pass_word	=request_response.get_parameter("pass_word");
+		String language_str	=request_response.get_parameter("language");
+		
+		request_url_header=request_response.implementor.get_url();
+		request_url_header+="?channel="		+Long.toString(channel_id);
+		request_url_header+="&user_name="	+((user_name==null)   ?"NoName"    :user_name.trim());
+		request_url_header+="&pass_word="	+((pass_word==null)   ?"NoPassword":pass_word.trim());
+		request_url_header+="&language="	+((language_str==null)?"english"   :language_str.trim());
+		
 		return;
 	}
 }

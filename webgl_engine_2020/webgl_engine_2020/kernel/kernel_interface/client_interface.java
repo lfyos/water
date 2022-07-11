@@ -21,44 +21,44 @@ import kernel_engine.interface_statistics;
 import kernel_engine.engine_kernel;
 import kernel_security.client_session;
 
-final class ek_ci_node extends balance_tree_item
-{
-	public long channel_id;
-	public engine_kernel_link_list_and_client_information ek_ci;
-	public ek_ci_node front,back;
-	
-	public void destroy()
-	{
-		ek_ci=null;
-		front=null;
-		back=null;
-	}
-	public int compare(balance_tree_item t)
-	{
-		int ret_val=1;
-		if(t instanceof ek_ci_node) {
-			ek_ci_node p=(ek_ci_node)t;
-			ret_val=(channel_id<p.channel_id)?-1:(channel_id>p.channel_id)?1:0;
-		}
-		return ret_val;
-	}
-	public balance_tree_item clone()
-	{
-		ek_ci_node ret_val=new ek_ci_node(channel_id);
-		ret_val.ek_ci=ek_ci;
-		return ret_val;
-	}
-	public ek_ci_node(long my_channel_id)
-	{
-		channel_id=my_channel_id;
-		ek_ci=null;
-		front=null;
-		back=null;
-	}
-}
-
 public class client_interface
 {
+	class ek_ci_node extends balance_tree_item
+	{
+		public long channel_id;
+		public engine_kernel_link_list_and_client_information ek_ci;
+		public ek_ci_node front,back;
+		
+		public void destroy()
+		{
+			ek_ci=null;
+			front=null;
+			back=null;
+		}
+		public int compare(balance_tree_item t)
+		{
+			int ret_val=1;
+			if(t instanceof ek_ci_node) {
+				ek_ci_node p=(ek_ci_node)t;
+				ret_val=(channel_id<p.channel_id)?-1:(channel_id>p.channel_id)?1:0;
+			}
+			return ret_val;
+		}
+		public balance_tree_item clone()
+		{
+			ek_ci_node ret_val=new ek_ci_node(channel_id);
+			ret_val.ek_ci=ek_ci;
+			return ret_val;
+		}
+		public ek_ci_node(long my_channel_id)
+		{
+			channel_id=my_channel_id;
+			ek_ci=null;
+			front=null;
+			back=null;
+		}
+	}
+
 	public long touch_time;
 	
 	private system_parameter system_par;

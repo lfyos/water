@@ -9,46 +9,46 @@ import kernel_common_class.balance_tree;
 import kernel_common_class.balance_tree_item;
 import kernel_common_class.debug_information;
 
-final class client_interface_node extends balance_tree_item
-{
-	public String client_id;
-	public client_interface ci;
-	
-	public client_interface_node front,back;
-	
-	public void destroy()
-	{
-		client_id=null;
-		ci=null;
-		front=null;
-		back=null;
-	}
-	public int compare(balance_tree_item t)
-	{
-		int ret_val=1;
-		if(t instanceof client_interface_node) {
-			client_interface_node p=(client_interface_node)t;
-			ret_val=client_id.compareTo(p.client_id);
-		}
-		return ret_val;
-	}
-	public balance_tree_item clone()
-	{
-		client_interface_node ret_val=new client_interface_node(client_id);
-		ret_val.ci=ci;
-		return ret_val;
-	}
-	public client_interface_node(String my_client_id)
-	{
-		client_id=my_client_id;
-		ci=null;
-		front=null;
-		back=null;
-	}
-}
-
 public class client_interface_container
 {
+	class client_interface_node extends balance_tree_item
+	{
+		public String client_id;
+		public client_interface ci;
+		
+		public client_interface_node front,back;
+		
+		public void destroy()
+		{
+			client_id=null;
+			ci=null;
+			front=null;
+			back=null;
+		}
+		public int compare(balance_tree_item t)
+		{
+			int ret_val=1;
+			if(t instanceof client_interface_node) {
+				client_interface_node p=(client_interface_node)t;
+				ret_val=client_id.compareTo(p.client_id);
+			}
+			return ret_val;
+		}
+		public balance_tree_item clone()
+		{
+			client_interface_node ret_val=new client_interface_node(client_id);
+			ret_val.ci=ci;
+			return ret_val;
+		}
+		public client_interface_node(String my_client_id)
+		{
+			client_id=my_client_id;
+			ci=null;
+			front=null;
+			back=null;
+		}
+	}
+
 	private int client_interface_number;
 	private balance_tree bt;
 	private client_interface_node first,last;
@@ -183,6 +183,7 @@ public class client_interface_container
 		my_pass_word=(my_pass_word==null)?"NoPassword":my_pass_word;
 		
 		client_interface_container_lock.lock();
+		
 		try {
 			if((ret_val=get_client_interface_routine(my_client_id+"/"+my_user_name,my_system_par))!=null)
 				if(ret_val.test_client_interface(my_user_name, my_pass_word,my_client_id))
@@ -193,6 +194,7 @@ public class client_interface_container
 			debug_information.println("get_client_interface exception:\t",e.toString());
 			e.printStackTrace();
 		}
+		
 		client_interface_container_lock.unlock();
 		
 		return ret_val;
@@ -204,7 +206,7 @@ public class client_interface_container
 		bt		=null;
 		first	=null;
 		last	=null;
-		
+
 		client_interface_container_lock=new ReentrantLock();
 	}
 }

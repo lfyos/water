@@ -6,6 +6,7 @@ import kernel_driver.instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_transformation.point;
+import kernel_common_class.debug_information;
 import kernel_common_class.jason_string;
 
 public class extended_instance_driver extends instance_driver
@@ -139,9 +140,11 @@ public class extended_instance_driver extends instance_driver
 				return null;
 			break;
 		case "swap_component":
+			debug_information.println("swap_component");
 			tag_array.swap_tag_component_selection(ek,ci);
 			break;
 		case "locate_component":
+			debug_information.println("locate_component");
 			tag_array.locate_tag_component(modifier_container_id,ek,ci);
 			break;
 		case "save":

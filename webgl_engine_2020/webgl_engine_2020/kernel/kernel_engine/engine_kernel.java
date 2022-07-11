@@ -341,7 +341,7 @@ public class engine_kernel
 		debug_information.println("Load components time length:	",new Date().getTime()-start_time);
 		debug_information.println();
 
-		component_cont.do_component_caculator(false);
+		component_cont.do_component_caculator(false,process_bar,"first_do_component_caculator");
 		component_cont.root_component.reset_component(component_cont);
 		
 		start_time=new Date().getTime();
@@ -370,7 +370,7 @@ public class engine_kernel
 		part_cont.destroy();
 		part_cont=new part_container_for_part_search(render_cont.part_array(true,-1));
 
-		component_cont.do_component_caculator(true);
+		component_cont.do_component_caculator(true,process_bar,"second_do_component_caculator");
 		
 		process_part_sequence=new part_process_sequence(render_cont,component_cont.root_component);
 

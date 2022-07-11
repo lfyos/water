@@ -339,7 +339,7 @@ public class operate_part_list
 			return;
 		}
 		case "upload_webpage":
-			String my_upload_url=ci.get_request_url_header();
+			String my_upload_url=ci.request_url_header;
 			my_upload_url+="&command=component&method=event&event_method=part_list&operation=upload";
 			my_upload_url+="&event_driver_id=all&event_component_id="+Integer.toString(comp.component_id);
 			

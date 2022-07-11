@@ -324,7 +324,7 @@ function render_show_process_bar(process_bar_url,processs_bar_object,process_bar
 			process_bar_render.destroy();
 			return;
 		};
-		my_ajax.open("GET",process_bar_url+"&process_bar="+processs_bar_object.process_bar_id,true);
+		my_ajax.open("GET",process_bar_url+"&command=data&process_bar="+processs_bar_object.process_bar_id,true);
 		my_ajax.send(null);
 	}catch(e){
 		process_bar_render.destroy();
@@ -346,7 +346,9 @@ function render_main(create_engine_sleep_time_length_scale,
 	my_scene_name	=(typeof(my_scene_name		)!="string")?""			 :(my_scene_name.trim());
 	my_link_name	=(typeof(my_link_name		)!="string")?""			 :(my_link_name.trim());
 	
-	var process_bar_url=my_url+"?channel=process_bar&command=data&language="+my_language_name;
+	var process_bar_url=my_url+"?channel=process_bar&language="+my_language_name;
+	process_bar_url+="&user_name="	+my_user_name		+"&pass_word="	+my_pass_word;
+	
 	var request_url=my_url+"?channel=creation&command=creation&language="	+my_language_name;
 	request_url+="&user_name="	+my_user_name		+"&pass_word="	+my_pass_word;
 	request_url+="&scene_name="	+my_scene_name		+"&link_name="	+my_link_name;
@@ -393,7 +395,7 @@ function render_main(create_engine_sleep_time_length_scale,
 				my_user_initialization_function,processs_bar_object,process_bar_render);
 			return;
 		};
-		my_ajax.open("GET",my_url+"?channel=process_bar&command=request",true);
+		my_ajax.open("GET",process_bar_url+"&command=request",true);
 		my_ajax.send(null);
 	}catch(e){
 		alert("System Initialization fail!");

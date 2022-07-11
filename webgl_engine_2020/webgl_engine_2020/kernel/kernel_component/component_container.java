@@ -5,6 +5,7 @@ import kernel_common_class.debug_information;
 import kernel_engine.engine_kernel;
 import kernel_engine.part_type_string_sorter;
 import kernel_file_manager.file_reader;
+import kernel_interface.client_process_bar;
 import kernel_network.client_request_response;
 import kernel_transformation.box;
 
@@ -130,12 +131,14 @@ public class component_container
 		else
 			return root_component.get_component_box(true);
 	}
-	public void do_component_caculator(boolean display_flag)
+	public void do_component_caculator(boolean display_flag,
+			client_process_bar process_bar,String process_bar_title)
 	{
 		if(root_component==null)
 			return;
 	
-		component_caculator c_c				=new component_caculator(root_component,display_flag);
+		component_caculator c_c				=new component_caculator(
+				root_component,display_flag,process_bar,process_bar_title);
 	
 		render_component_id_and_driver_id	=c_c.render_component_id_and_driver_id;
 		part_component_id_and_driver_id		=c_c.part_component_id_and_driver_id;

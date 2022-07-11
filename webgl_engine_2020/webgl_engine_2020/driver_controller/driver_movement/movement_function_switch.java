@@ -1005,7 +1005,7 @@ public class movement_function_switch
 			movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
 			if(searcher.result==null)
 				return null;
-			String my_upload_url=ci.get_request_url_header()+"&command=component";
+			String my_upload_url=ci.request_url_header+"&command=component";
 			my_upload_url+="&method=event&operation=design&move_method=upload_audio";
 			my_upload_url+="&event_component_id="	+movement_component_id;
 			my_upload_url+="&event_driver_id="		+movement_driver_id;
