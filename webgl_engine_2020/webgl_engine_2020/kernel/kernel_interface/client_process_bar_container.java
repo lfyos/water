@@ -47,8 +47,6 @@ public class client_process_bar_container
 	{
 		default_process_bar	=new client_process_bar(-1,0);
 		process_bar_array	=new client_process_bar[0];
-		for(int i=0,ni=process_bar_array.length;i<ni;i++)
-			process_bar_array[i]=null;
 		max_time_length=my_max_time_length;
 	}
 }

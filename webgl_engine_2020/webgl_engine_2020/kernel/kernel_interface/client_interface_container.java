@@ -11,36 +11,39 @@ import kernel_common_class.debug_information;
 
 public class client_interface_container
 {
-	class client_interface_node extends balance_tree_item
+	class client_interface_balance_tree_node extends balance_tree_item
 	{
 		public String client_id;
 		public client_interface ci;
 		
-		public client_interface_node front,back;
+		public client_interface_balance_tree_node front,back;
 		
 		public void destroy()
 		{
+			if(ci!=null) {
+				ci.destroy();
+				ci=null;
+			}
 			client_id=null;
-			ci=null;
 			front=null;
 			back=null;
 		}
 		public int compare(balance_tree_item t)
 		{
 			int ret_val=1;
-			if(t instanceof client_interface_node) {
-				client_interface_node p=(client_interface_node)t;
+			if(t instanceof client_interface_balance_tree_node) {
+				client_interface_balance_tree_node p=(client_interface_balance_tree_node)t;
 				ret_val=client_id.compareTo(p.client_id);
 			}
 			return ret_val;
 		}
 		public balance_tree_item clone()
 		{
-			client_interface_node ret_val=new client_interface_node(client_id);
+			client_interface_balance_tree_node ret_val=new client_interface_balance_tree_node(client_id);
 			ret_val.ci=ci;
 			return ret_val;
 		}
-		public client_interface_node(String my_client_id)
+		public client_interface_balance_tree_node(String my_client_id)
 		{
 			client_id=my_client_id;
 			ci=null;
@@ -51,7 +54,7 @@ public class client_interface_container
 
 	private int client_interface_number;
 	private balance_tree bt;
-	private client_interface_node first,last;
+	private client_interface_balance_tree_node first,last;
 	private ReentrantLock client_interface_container_lock;
 	
 	public void destroy()
@@ -62,22 +65,20 @@ public class client_interface_container
 		}
 		if(first!=null) {
 			while(first!=null) {
-				client_interface_node p=first;
+				client_interface_balance_tree_node p=first;
 				first=first.back;
 				p.destroy();
 			}
 			first=null;
 		}
-		
 		if(last!=null) {
 			while(last!=null) {
-				client_interface_node p=last;
+				client_interface_balance_tree_node p=last;
 				last=last.front;
 				p.destroy();
 			}
 			last=null;
 		}
-		
 		if(client_interface_container_lock!=null) {
 			client_interface_container_lock.unlock();
 			client_interface_container_lock=null;
@@ -99,7 +100,8 @@ public class client_interface_container
 					"Still active client_interface number is  ",--client_interface_number);
 			debug_information.println("/",max_client_interface_number);
 			
-			client_interface_node p=(client_interface_node)(bt.search(new client_interface_node(first.client_id),-1));
+			client_interface_balance_tree_node p=(client_interface_balance_tree_node)
+				(bt.search(new client_interface_balance_tree_node(first.client_id),false,true));
 			if(first==last){
 				bt.destroy();
 				bt=null;
@@ -109,7 +111,6 @@ public class client_interface_container
 				first=first.back;
 				first.front=null;
 			}
-			p.ci.destroy();
 			p.destroy();
 		}
 	}
@@ -123,7 +124,7 @@ public class client_interface_container
 	}
 	private client_interface get_client_interface_routine(String my_client_id,system_parameter my_system_par)
 	{
-		client_interface_node front,back,p,new_p=new client_interface_node(my_client_id);
+		client_interface_balance_tree_node p,new_p=new client_interface_balance_tree_node(my_client_id);
 		
 		if(bt==null){
 			p=new_p;
@@ -141,8 +142,7 @@ public class client_interface_container
 			
 			return p.ci;
 		}
-		
-		if((p=(client_interface_node)bt.search(new_p,1))==null){
+		if((p=(client_interface_balance_tree_node)bt.search(new_p,true,false))==null){
 			p=new_p;
 			p.ci=new client_interface(my_system_par);
 			
@@ -152,12 +152,13 @@ public class client_interface_container
 			p.ci.touch_time=nanosecond_timer.absolute_nanoseconds();
 			if(p==last)
 				return p.ci;
+			
 			if(p==first){
 				first=first.back;
 				first.front=null;
 			}else{
-				front=p.front;
-				back=p.back;
+				client_interface_balance_tree_node front=p.front;
+				client_interface_balance_tree_node back=p.back;
 				front.back=back;
 				back.front=front;
 			}

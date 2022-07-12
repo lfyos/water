@@ -277,8 +277,8 @@ public class engine_kernel_link_list
 		return new engine_call_result(null,null,null,
 				my_compress_file_name,null,ek.scene_par.scene_cors_string);
 	}
-	public engine_call_result get_engine_result(
-			component_load_source_container component_load_source_cont,client_process_bar process_bar,
+	public engine_call_result get_engine_result(client_process_bar process_bar,
+			component_load_source_container component_load_source_cont,
 			client_session session,engine_kernel_link_list_and_client_information ec,
 			client_request_response my_request_response,long delay_time_length,
 			interface_statistics statistics_interface,int engine_current_number[])

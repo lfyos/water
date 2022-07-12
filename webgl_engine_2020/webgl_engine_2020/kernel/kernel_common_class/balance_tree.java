@@ -14,7 +14,6 @@ public class balance_tree
 			left_child.destroy();
 			left_child=null;
 		}
-		
 		if(right_child!=null) {
 			right_child.destroy();
 			right_child=null;
@@ -163,75 +162,80 @@ public class balance_tree
 			}
 		}
 	}
-	private balance_tree_item search(balance_tree_item my_search_item,int operation_code,balance_tree parent)
+	private balance_tree_item search(balance_tree_item my_search_item,
+		balance_tree parent,boolean not_do_append_flag,boolean not_do_delete_flag)
 	{
-		balance_tree_item ret_val;
-		
-		int compare_result=my_search_item.compare(item);
+		int compare_result;
+		balance_tree_item ret_val=null;
 
-		if(compare_result==0){
+		if((compare_result=my_search_item.compare(item))==0){
 			ret_val=item;
-			if(operation_code>=0)
+			if(not_do_delete_flag)
 				return ret_val;
+			
 			if(left_child==null){
-				if(right_child!=null){
+				if(right_child==null){
+					item=null;
+					if(parent==null)
+						return ret_val;
+					if(parent.left_child==this)
+						parent.left_child=null;
+					else
+						parent.right_child=null;
+				}else{
 					item		=right_child.item;
 					depth		=right_child.depth;
 					left_child	=right_child.left_child;
 					right_child	=right_child.right_child;
-				}else if(parent==null)
-					item=null;
-				else if(parent.left_child==this)
-					parent.left_child=null;
-				else
-					parent.right_child=null;
-				return ret_val;
-			}
-			if(right_child==null){
+				}
+			}else if(right_child==null){
 				item		=left_child.item;
 				depth		=left_child.depth;
 				right_child	=left_child.right_child;
 				left_child	=left_child.left_child;
-				return ret_val;
+			}else if(left_child.depth>=right_child.depth){
+				for(balance_tree t=left_child;;t=t.right_child)
+					if(t.right_child==null){
+						balance_tree_item p=t.item;
+						t.item=item;
+						item=p;
+						ret_val=left_child.search(my_search_item,this,not_do_append_flag,not_do_delete_flag);
+						break;
+					}
+			}else {
+				for(balance_tree t=right_child;;t=t.left_child)
+					if(t.left_child==null){
+						balance_tree_item p=t.item;
+						t.item=item;
+						item=p;
+						ret_val=right_child.search(my_search_item,this,not_do_append_flag,not_do_delete_flag);
+						break;
+					}
 			}
-			for(balance_tree t=left_child;;t=t.right_child)
-				if(t.right_child==null){
-					balance_tree_item p=t.item;
-					t.item=item;
-					item=p;
-					ret_val=left_child.search(my_search_item,operation_code,this);
-					break;
-				}
 		}else if(compare_result<0){
-			if(left_child==null){
-				if(operation_code<=0)
-					return null;
-				ret_val=null;
-				left_child=new balance_tree(my_search_item);
-			}else{
-				int left_depth=left_child.depth;
-				ret_val=left_child.search(my_search_item,operation_code,this);
+			if(left_child!=null) {
+				int old_depth=left_child.depth;
+				ret_val=left_child.search(my_search_item,this,not_do_append_flag,not_do_delete_flag);
 				if(left_child!=null)
-					if(left_child.depth==left_depth)
+					if(left_child.depth==old_depth)	
 						return ret_val;
-			}
+			}else if(not_do_append_flag)
+				return ret_val;
+			else
+				left_child=new balance_tree(my_search_item);
 		}else{
-			if(right_child==null){
-				if(operation_code<=0)
-					return null;
-				ret_val=null;
-				right_child=new balance_tree(my_search_item);
-			}else{
-				int right_depth=right_child.depth;
-				ret_val=right_child.search(my_search_item,operation_code,this);
+			if(right_child!=null) {
+				int old_depth=right_child.depth;
+				ret_val=right_child.search(my_search_item,this,not_do_append_flag,not_do_delete_flag);
 				if(right_child!=null)
-					if(right_child.depth==right_depth)
+					if(right_child.depth==old_depth)	
 						return ret_val;
-			}
+			}else if(not_do_append_flag)
+				return ret_val;
+			else
+				right_child=new balance_tree(my_search_item);
 		}
-		
 		caculate_depth();
-		
 		if((compare_result=caculate_balance())<=(-2)){
 			if(left_child.caculate_balance()<0)
 				ll();
@@ -245,8 +249,8 @@ public class balance_tree
 		}
 		return ret_val;
 	}
-	public balance_tree_item search(balance_tree_item my_search_item,int operation_code)
+	public balance_tree_item search(balance_tree_item my_search_item,boolean do_append_flag,boolean do_delete_flag)
 	{
-		return search(my_search_item,operation_code,null);
+		return search(my_search_item,null,do_append_flag?false:true,do_delete_flag?false:true);
 	}
 }
