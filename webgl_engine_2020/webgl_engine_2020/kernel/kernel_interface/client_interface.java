@@ -23,11 +23,11 @@ import kernel_security.client_session;
 
 public class client_interface
 {
-	class ek_ci_node extends balance_tree_item
+	class ek_ci_balance_tree_node extends balance_tree_item
 	{
 		public long channel_id;
 		public engine_kernel_link_list_and_client_information ek_ci;
-		public ek_ci_node front,back;
+		public ek_ci_balance_tree_node front,back;
 		
 		public void destroy()
 		{
@@ -38,19 +38,19 @@ public class client_interface
 		public int compare(balance_tree_item t)
 		{
 			int ret_val=1;
-			if(t instanceof ek_ci_node) {
-				ek_ci_node p=(ek_ci_node)t;
+			if(t instanceof ek_ci_balance_tree_node) {
+				ek_ci_balance_tree_node p=(ek_ci_balance_tree_node)t;
 				ret_val=(channel_id<p.channel_id)?-1:(channel_id>p.channel_id)?1:0;
 			}
 			return ret_val;
 		}
 		public balance_tree_item clone()
 		{
-			ek_ci_node ret_val=new ek_ci_node(channel_id);
+			ek_ci_balance_tree_node ret_val=new ek_ci_balance_tree_node(channel_id);
 			ret_val.ek_ci=ek_ci;
 			return ret_val;
 		}
-		public ek_ci_node(long my_channel_id)
+		public ek_ci_balance_tree_node(long my_channel_id)
 		{
 			channel_id=my_channel_id;
 			ek_ci=null;
@@ -68,16 +68,16 @@ public class client_interface
 	private client_session session;
 
 	private balance_tree bt;
-	private ek_ci_node first,last;
+	private ek_ci_balance_tree_node first,last;
 
 	private volatile ReentrantLock client_interface_lock;
-	private volatile boolean has_been_destroyd_flag;
+	private volatile boolean has_been_destroyed_flag;
 	
 	public void destroy()
 	{
 		ReentrantLock my_client_interface_lock=client_interface_lock;
 		my_client_interface_lock.lock();
-		has_been_destroyd_flag=true;
+		has_been_destroyed_flag=true;
 		try{
 			destroy_routine();
 		}catch(Exception e) {
@@ -104,19 +104,19 @@ public class client_interface
 	}
 	private void destroy_routine()
 	{	
-		for(ek_ci_node p=first;p!=null;p=p.back)
+		for(ek_ci_balance_tree_node p=first;p!=null;p=p.back)
 			if(p.ek_ci!=null)
 				if(p.ek_ci.client_information!=null) {
 					p.ek_ci.engine_kernel_link_list.destroy_client_information(p.ek_ci.client_information);
 					p.ek_ci.client_information=null;
 				}
-		for(ek_ci_node p=first;p!=null;p=p.back)
+		for(ek_ci_balance_tree_node p=first;p!=null;p=p.back)
 			if(p.ek_ci!=null)
 				if(p.ek_ci.engine_kernel_link_list!=null) {
 					p.ek_ci.engine_kernel_link_list.decrease_link_number();
 					p.ek_ci.engine_kernel_link_list=null;
 				}
-		for(ek_ci_node p=first,q;p!=null;){
+		for(ek_ci_balance_tree_node p=first,q;p!=null;){
 			q=p;
 			p=p.back;
 			q.destroy();
@@ -138,7 +138,7 @@ public class client_interface
 		client_interface_lock=null;
 	}
 	
-	private boolean destroy_ek_ci_node(ek_ci_node ecn)
+	private boolean destroy_ek_ci_node(ek_ci_balance_tree_node ecn)
 	{
 		engine_kernel ek;
 		if(ecn==null)
@@ -172,7 +172,7 @@ public class client_interface
 			first=null;
 			last=null;
 		}else{
-			bt.search(ecn,-1);
+			bt.search(ecn,false,true);
 			if(ecn.front==null){
 				first=first.back;
 				first.front=null;
@@ -213,8 +213,9 @@ public class client_interface
 				break;
 		}
 	}
-	private engine_call_result create_engine_routine(component_load_source_container component_load_source_cont,
-			client_session session,engine_interface ei,client_interface client,ReentrantLock my_client_interface_lock,
+	private engine_call_result create_engine_routine(
+			component_load_source_container component_load_source_cont,
+			client_session session,engine_interface ei,ReentrantLock my_client_interface_lock,
 			client_request_response request_response,long delay_time_length,interface_statistics statistics_interface)
 	{
 		if(session.statistics_user.user_engine_kernel_number>session.statistics_user.user_max_engine_kernel_number) {
@@ -227,8 +228,9 @@ public class client_interface
 			debug_information.println("/",session.statistics_user.user_max_engine_component_number);
 			return null;
 		}
+		client_process_bar cpb=get_process_bar(request_response);
 		
-		client.get_process_bar(request_response).set_process_bar(true,"start_create_kernel","",1,2);
+		cpb.set_process_bar(true,"start_create_kernel","",1,2);
 
 		engine_kernel_link_list create_ekll=null;
 
@@ -248,7 +250,7 @@ public class client_interface
 			debug_information.println("Create engine result is null");
 			return null;
 		}
-		if(has_been_destroyd_flag) {
+		if(has_been_destroyed_flag) {
 			create_ekll.destroy();
 			debug_information.println("Client_interface has done annihilation when create engine result");
 			return null;
@@ -271,13 +273,12 @@ public class client_interface
 		ec.lock_number++;
 		my_client_interface_lock.unlock();
 		
-		client.get_process_bar(request_response).set_process_bar(true,"start_load_scene","",1,2);
+		cpb.set_process_bar(true,"start_load_scene","",1,2);
 		
 		engine_call_result ecr=null;
 		try{
-			ecr=ec.engine_kernel_link_list.get_engine_result(component_load_source_cont,
-					get_process_bar(request_response),session,ec,request_response,
-					delay_time_length,statistics_interface,ei.engine_current_number);
+			ecr=ec.engine_kernel_link_list.get_engine_result(cpb,component_load_source_cont,session,ec,
+					request_response,delay_time_length,statistics_interface,ei.engine_current_number);
 		}catch(Exception e) {
 			ecr=null;
 			debug_information.println("ec[channel_id].engine_kernel_link_list.get_engine_result fail");
@@ -287,7 +288,7 @@ public class client_interface
 		my_client_interface_lock.lock();
 		ec.lock_number--;
 		
-		if(has_been_destroyd_flag) {
+		if(has_been_destroyed_flag) {
 			create_ekll.destroy();
 			debug_information.println("Client_interface has done annihilation when get_engine_result");
 			return null;
@@ -305,7 +306,7 @@ public class client_interface
 		debug_information.print  ("Current created component number is ",session.statistics_user.user_engine_component_number);
 		debug_information.println("/",session.statistics_user.user_max_engine_component_number);
 		
-		ek_ci_node ecn=new ek_ci_node((ec.client_information==null)
+		ek_ci_balance_tree_node ecn=new ek_ci_balance_tree_node((ec.client_information==null)
 				?(-(request_response.request_time)):(ec.client_information.channel_id));
 		ecn.ek_ci=ec;
 		
@@ -314,15 +315,15 @@ public class client_interface
 			first=ecn;
 			last=ecn;
 		}else{
-			bt.search(ecn,1);
+			bt.search(ecn,true,false);
 			ecn.front=last;
 			last.back=ecn;
 			last=ecn;
 		}
 		return ecr;
 	}
-	private engine_call_result create_engine(engine_interface ei,
-			ReentrantLock my_client_interface_lock,client_interface client,
+	private engine_call_result create_engine(
+			engine_interface ei,ReentrantLock my_client_interface_lock,
 			client_session session,client_request_response request_response,
 			long delay_time_length,interface_statistics statistics_interface)
 	{
@@ -350,7 +351,7 @@ public class client_interface
 		debug_information.println("default_parameter_directory	:	",		system_par.default_parameter_directory);
 		debug_information.println("proxy_data_root_directory_name	:	",	system_par.proxy_par.proxy_data_root_directory_name);
 		
-		engine_call_result ret_val=create_engine_routine(ei.component_load_source_cont,session,ei,client,
+		engine_call_result ret_val=create_engine_routine(ei.component_load_source_cont,session,ei,
 				my_client_interface_lock,request_response,delay_time_length,statistics_interface);
 		
 		now = Calendar.getInstance();  
@@ -389,21 +390,21 @@ public class client_interface
 			return null;
 		}
 		
-		balance_tree_item bti=bt.search(new ek_ci_node(channel_id),0);
+		balance_tree_item bti=bt.search(new ek_ci_balance_tree_node(channel_id),false,false);
 		if(bti==null) {
 			debug_information.print  ("Search client_interface fail,Client ID is ",
 					request_response.implementor.get_client_id());
 			debug_information.println(",channel_id is ",channel_id);
 			return null;
 		}
-		if(!(bti instanceof ek_ci_node)){
+		if(!(bti instanceof ek_ci_balance_tree_node)){
 			debug_information.print  ("Search client_interface find wrong node,Client ID is ",
 					request_response.implementor.get_client_id());
 			debug_information.println(",channel_id is ",channel_id);
 			return null;
 		}
 		
-		ek_ci_node ecn=(ek_ci_node)bti;
+		ek_ci_balance_tree_node ecn=(ek_ci_balance_tree_node)bti;
 		if(ecn.ek_ci.client_information==null){
 			debug_information.println("ecn.ek_ci.client_information==null,Client ID is ",
 					request_response.implementor.get_client_id());
@@ -424,7 +425,7 @@ public class client_interface
 		my_client_interface_lock.unlock();
 		try{
 			ecr=ecn.ek_ci.engine_kernel_link_list.get_engine_result(
-					ei.component_load_source_cont,get_process_bar(request_response),session,ecn.ek_ci,
+					get_process_bar(request_response),ei.component_load_source_cont,session,ecn.ek_ci,
 					request_response,delay_time_length,statistics_interface,engine_current_number);
 		}catch(Exception e){
 			ecr=null;
@@ -510,7 +511,7 @@ public class client_interface
 			}
 		my_client_interface_lock.unlock();
 	}
-	public engine_call_result execute_create_call(engine_interface ei,client_interface client,
+	public engine_call_result execute_create_call(engine_interface ei,
 			client_request_response request_response,interface_statistics statistics_interface)
 	{
 		engine_call_result ret_val=null;
@@ -528,7 +529,7 @@ public class client_interface
 					debug_information.println("TIME OUT FOUND,Client ID is ",
 							request_response.implementor.get_client_id());
 				else
-					ret_val=create_engine(ei,my_client_interface_lock,client,
+					ret_val=create_engine(ei,my_client_interface_lock,
 							session,request_response,delay_time_length,statistics_interface);
 			}catch(Exception e){
 				ret_val=null;
@@ -596,18 +597,18 @@ public class client_interface
 	}
 	public client_interface(system_parameter my_system_par)
 	{
-		touch_time	=nanosecond_timer.absolute_nanoseconds();
+		touch_time		=nanosecond_timer.absolute_nanoseconds();
 		
-		system_par	 =new system_parameter(my_system_par);
+		system_par	 	=new system_parameter(my_system_par);
 		process_bar_cont=new client_process_bar_container(system_par.engine_expire_time_length);
-		manager_delay=null;
-		session		 =null;
+		manager_delay	=null;
+		session		 	=null;
 		
-		bt		=null;
-		first	=null;
-		last	=null;
+		bt				=null;
+		first			=null;
+		last			=null;
 		
 		client_interface_lock	=new ReentrantLock();
-		has_been_destroyd_flag	=false;
+		has_been_destroyed_flag	=false;
 	}
 }

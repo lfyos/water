@@ -154,7 +154,7 @@ public class client_request_switcher
 			if((new Date().getTime()<system_par.system_terminate_time)
 				&&(creation_engine_lock_number<system_par.create_engine_concurrent_number))
 			{
-				ecr=client.execute_create_call(ei,client,request_response,statistics_interface);
+				ecr=client.execute_create_call(ei,request_response,statistics_interface);
 			}else{
 				ecr=new engine_call_result(null,null,null,null,null,"*");
 				request_response.println("false");
