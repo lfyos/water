@@ -12,7 +12,6 @@ import kernel_part.part_container_for_delete_part_file;
 import kernel_part.part_container_for_part_search;
 import kernel_part.part_loader_container;
 import kernel_render.render_container;
-import kernel_security.client_session;
 import kernel_engine.part_package;
 
 public class engine_interface
@@ -112,7 +111,8 @@ public class engine_interface
 		return true;
 	}
 	
-	private engine_kernel_link_list get_kernel_container_routine(client_session session,
+	private engine_kernel_link_list get_kernel_container_routine(
+			String client_scene_file_name,String client_scene_file_charset,
 			client_request_response request_response,system_parameter system_par)
 	{
 		if(original_render==null){
@@ -176,8 +176,8 @@ public class engine_interface
 		debug_information.println();
 		
 		engine_kernel_link_list_first=new engine_kernel_link_list(
-				system_par,session,request_response,original_render,part_loader_cont,
-				scene_name,link_name,engine_kernel_link_list_first);
+				request_response,system_par,client_scene_file_name,client_scene_file_charset,
+				original_render,part_loader_cont,scene_name,link_name,engine_kernel_link_list_first);
 
 		if(engine_kernel_link_list_first.ek!=null){
 			engine_kernel_link_list_first.increase_link_number();
@@ -187,13 +187,15 @@ public class engine_interface
 		return null;
 	}
 	
-	public engine_kernel_link_list get_kernel_container(client_session session,
+	public engine_kernel_link_list get_kernel_container(
+			String client_scene_file_name,String client_scene_file_charset,
 			client_request_response request_response,system_parameter system_par)
 	{
 		engine_kernel_link_list ret_val=null;
 		engine_interface_lock.lock();
 		try {
-			ret_val=get_kernel_container_routine(session,request_response,system_par);
+			ret_val=get_kernel_container_routine(
+				client_scene_file_name,client_scene_file_charset,request_response,system_par);
 		}catch(Exception e) {
 			debug_information.println(
 					"get_kernel_container of engine_interface fail");

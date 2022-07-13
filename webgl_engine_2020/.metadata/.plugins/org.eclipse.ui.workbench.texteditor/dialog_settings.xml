@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="process_bar_cont"/>
+		<item key="selection" value="client_scene_file_name"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="client_scene_file_name"/>
+			<item value="synchronized"/>
 			<item value="process_bar_cont"/>
 			<item value="session.statistics_user"/>
 			<item value="process_bar"/>
@@ -21,8 +23,6 @@
 			<item value="render_show_process_bar"/>
 			<item value="modifier_time_parameter"/>
 			<item value="delay_time_length"/>
-			<item value="color_par"/>
-			<item value="color_par_uniform"/>
 		</list>
 		<list key="replacehistory">
 			<item value="statistics_user"/>

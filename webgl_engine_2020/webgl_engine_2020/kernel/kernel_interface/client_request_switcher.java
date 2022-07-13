@@ -84,10 +84,10 @@ public class client_request_switcher
 				request_response.println("}");
 				break;	
 			}
-		
 		return new engine_call_result(null,null,null,null,null,"*");
 	}
-	private engine_call_result system_call_switch(client_request_response request_response,client_interface client)
+	private engine_call_result system_call_switch(
+			client_request_response request_response,client_interface client)
 	{
 		engine_call_result ecr=null;
 		
@@ -195,13 +195,18 @@ public class client_request_switcher
 			create_system_parameter(network_implementor,
 				data_configure_environment_variable,proxy_configure_environment_variable);
 		
-		client_interface client;
-		engine_call_result ecr;
-		client_request_response request_response;
-
-		request_response=new client_request_response(system_par.network_data_charset,network_implementor);
-		if((client=client_container.get_client_interface(request_response,system_par))!=null)
-			if((ecr=system_call_switch(request_response,client))!=null){
+		client_request_response request_response=new client_request_response(
+				system_par.network_data_charset,network_implementor);
+		String my_user_name=request_response.get_parameter("user_name");
+		String my_pass_word=request_response.get_parameter("pass_word");
+		String my_client_id=request_response.implementor.get_client_id();
+		client_interface client=client_container.get_client_interface(system_par,
+				(my_user_name==null)?"NoName"		:my_user_name,
+				(my_pass_word==null)?"NoPassword"	:my_pass_word,
+				(my_client_id==null)?"NoClientID"	:my_client_id);
+		if(client!=null) {
+			engine_call_result ecr=system_call_switch(request_response,client);
+			if(ecr!=null){
 				String compress_response_header;
 				if(ecr.compress_file_name==null)
 						compress_response_header=null;
@@ -236,7 +241,7 @@ public class client_request_switcher
 					statistics_interface.network_data_compress_length		+=my_statistics[1];
 				}
 			}
-		
+		}
 		request_response.destroy();
 		
 		if(client!=null)

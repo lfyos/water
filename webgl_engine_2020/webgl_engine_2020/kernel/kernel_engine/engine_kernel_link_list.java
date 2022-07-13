@@ -16,7 +16,6 @@ import kernel_interface.user_statistics;
 import kernel_network.client_request_response;
 import kernel_part.part_loader_container;
 import kernel_render.render_container;
-import kernel_security.client_session;
 
 public class engine_kernel_link_list
 {
@@ -63,12 +62,12 @@ public class engine_kernel_link_list
 	private String extra_parameter_charset;
 
 	private boolean fill_search_item(String test_scenename,
-			String my_file_name,String my_file_charset,system_parameter system_par)
+			String client_scene_file_name,String client_scene_file_charset,system_parameter system_par)
 	{
-		file_reader f_type=new file_reader(my_file_name,my_file_charset);
+		file_reader f_type=new file_reader(client_scene_file_name,client_scene_file_charset);
 		if(f_type.error_flag()){
 			f_type.close();
-			debug_information.println("Open scene_file_name fail	:	",my_file_name);
+			debug_information.println("Open scene_file_name fail	:	",client_scene_file_name);
 			return true;
 		}
 		while(!(f_type.eof())){
@@ -153,16 +152,17 @@ public class engine_kernel_link_list
 		return true;
 	}
 
-	public engine_kernel_link_list(system_parameter system_par,
-			client_session session,client_request_response request_response,
+	public engine_kernel_link_list(
+			client_request_response request_response,system_parameter system_par,
+			String client_scene_file_name,String client_scene_file_charset,
 			render_container original_render,part_loader_container my_part_loader_cont,
 			String my_scene_name,String link_name,engine_kernel_link_list my_next_link_list)
 	{
 		link_number=0;
 		initilization_flag=true;
 	
-		if(fill_search_item(my_scene_name,session.scene_file_name,session.scene_file_charset,system_par))
-			if(fill_search_item(null,session.scene_file_name,session.scene_file_charset,system_par)){
+		if(fill_search_item(my_scene_name,client_scene_file_name,client_scene_file_charset,system_par))
+			if(fill_search_item(null,client_scene_file_name,client_scene_file_charset,system_par)){
 				ek=null;
 				return;
 			}
@@ -216,8 +216,8 @@ public class engine_kernel_link_list
 				cccfn.compress_file_name,null,ek.scene_par.scene_cors_string);
 	}
 	private engine_call_result get_engine_result_routine(
-			component_load_source_container component_load_source_cont,
-			client_process_bar process_bar,client_session session,
+			component_load_source_container component_load_source_cont,client_process_bar process_bar,
+			String client_scene_file_name,String client_scene_file_charset,
 			engine_kernel_link_list_and_client_information ec,
 			client_request_response my_request_response,long delay_time_length,
 			user_statistics statistics_user,interface_statistics statistics_interface,int engine_current_number [])
@@ -280,7 +280,8 @@ public class engine_kernel_link_list
 	}
 	public engine_call_result get_engine_result(client_process_bar process_bar,
 			component_load_source_container component_load_source_cont,
-			client_session session,engine_kernel_link_list_and_client_information ec,
+			String client_scene_file_name,String client_scene_file_charset,
+			engine_kernel_link_list_and_client_information ec,
 			client_request_response my_request_response,long delay_time_length,
 			user_statistics statistics_user,interface_statistics statistics_interface,
 			int engine_current_number[])
@@ -288,8 +289,8 @@ public class engine_kernel_link_list
 		engine_call_result ret_val;
 		engine_kernel_lock.lock();
 		try{
-			ret_val=get_engine_result_routine(
-				component_load_source_cont,process_bar,session,ec,my_request_response,
+			ret_val=get_engine_result_routine(component_load_source_cont,process_bar,
+					client_scene_file_name,client_scene_file_charset,ec,my_request_response,
 				delay_time_length,statistics_user,statistics_interface,engine_current_number);
 		}catch(Exception e){
 			debug_information.println(
