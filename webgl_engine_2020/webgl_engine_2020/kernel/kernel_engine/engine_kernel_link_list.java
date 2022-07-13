@@ -12,6 +12,7 @@ import kernel_common_class.debug_information;
 import kernel_component.component_load_source_container;
 import kernel_file_manager.file_reader;
 import kernel_interface.client_process_bar;
+import kernel_interface.user_statistics;
 import kernel_network.client_request_response;
 import kernel_part.part_loader_container;
 import kernel_render.render_container;
@@ -219,7 +220,7 @@ public class engine_kernel_link_list
 			client_process_bar process_bar,client_session session,
 			engine_kernel_link_list_and_client_information ec,
 			client_request_response my_request_response,long delay_time_length,
-			interface_statistics statistics_interface,int engine_current_number [])
+			user_statistics statistics_user,interface_statistics statistics_interface,int engine_current_number [])
 	{
 		if(ek==null){
 			debug_information.println(
@@ -245,7 +246,7 @@ public class engine_kernel_link_list
 				return null;
 			}
 			ec.client_information=new client_information(
-					my_request_response,process_bar,ek,session.statistics_user,statistics_interface);
+					my_request_response,process_bar,ek,statistics_user,statistics_interface);
 		}
 		ec.client_information.engine_current_number=engine_current_number;
 		ec.client_information.request_response=my_request_response;
@@ -281,14 +282,15 @@ public class engine_kernel_link_list
 			component_load_source_container component_load_source_cont,
 			client_session session,engine_kernel_link_list_and_client_information ec,
 			client_request_response my_request_response,long delay_time_length,
-			interface_statistics statistics_interface,int engine_current_number[])
+			user_statistics statistics_user,interface_statistics statistics_interface,
+			int engine_current_number[])
 	{
 		engine_call_result ret_val;
 		engine_kernel_lock.lock();
 		try{
 			ret_val=get_engine_result_routine(
 				component_load_source_cont,process_bar,session,ec,my_request_response,
-				delay_time_length,statistics_interface,engine_current_number);
+				delay_time_length,statistics_user,statistics_interface,engine_current_number);
 		}catch(Exception e){
 			debug_information.println(
 					"get_engine_result function of engine_kernel_link_list fail!");

@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="process_bar"/>
+		<item key="selection" value="process_bar_cont"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="process_bar_cont"/>
+			<item value="session.statistics_user"/>
 			<item value="process_bar"/>
 			<item value="client_process_bar"/>
 			<item value="my_channel"/>
@@ -21,10 +23,9 @@
 			<item value="delay_time_length"/>
 			<item value="color_par"/>
 			<item value="color_par_uniform"/>
-			<item value="frag_type_id"/>
-			<item value="append"/>
 		</list>
 		<list key="replacehistory">
+			<item value="statistics_user"/>
 			<item value="my_channel"/>
 			<item value="1,1,1"/>
 			<item value=""/>
@@ -39,7 +40,6 @@
 			<item value="component_id"/>
 			<item value=","/>
 			<item value="angle"/>
-			<item value="type_id"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

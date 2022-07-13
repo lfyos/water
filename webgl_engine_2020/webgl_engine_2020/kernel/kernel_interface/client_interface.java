@@ -66,6 +66,7 @@ public class client_interface
 
 	private delay_manager manager_delay;
 	private client_session session;
+	private user_statistics statistics_user;
 
 	private balance_tree bt;
 	private ek_ci_balance_tree_node first,last;
@@ -135,9 +136,20 @@ public class client_interface
 		if(manager_delay!=null)
 			manager_delay=null;
 
-		client_interface_lock=null;
+		if(client_interface_lock!=null)
+			client_interface_lock=null;
+		
+		if(process_bar_cont!=null) {
+			process_bar_cont.destroy();
+			process_bar_cont=null;
+		}
+		if(session!=null) {
+			session.destroy();
+			session=null;
+		}
+		if(statistics_user!=null)
+			statistics_user=null;
 	}
-	
 	private boolean destroy_ek_ci_node(ek_ci_balance_tree_node ecn)
 	{
 		engine_kernel ek;
@@ -146,16 +158,16 @@ public class client_interface
 		if(ecn.ek_ci.lock_number>0)
 			return true;
 		if((ek=ecn.ek_ci.engine_kernel_link_list.ek)!=null){
-			session.statistics_user.user_engine_kernel_number--;
+			statistics_user.user_engine_kernel_number--;
 			if(ek.component_cont!=null)
 				if(ek.component_cont.root_component!=null)
-					session.statistics_user.user_engine_component_number-=ek.component_cont.root_component.component_id+1;
+					statistics_user.user_engine_component_number-=ek.component_cont.root_component.component_id+1;
 		}
 		debug_information.println("Execute destroy_ek_ci_node");
-		debug_information.print  ("kernel_number:",session.statistics_user.user_engine_kernel_number);
-		debug_information.println("/",session.statistics_user.user_max_engine_kernel_number);
-		debug_information.print  ("component_number:",session.statistics_user.user_engine_component_number);
-		debug_information.println("/",session.statistics_user.user_max_engine_component_number);
+		debug_information.print  ("kernel_number:",statistics_user.user_engine_kernel_number);
+		debug_information.println("/",statistics_user.user_max_engine_kernel_number);
+		debug_information.print  ("component_number:",statistics_user.user_engine_component_number);
+		debug_information.println("/",statistics_user.user_max_engine_component_number);
 		
 		if(ecn.ek_ci.client_information!=null) {
 			ecn.ek_ci.engine_kernel_link_list.destroy_client_information(ecn.ek_ci.client_information);
@@ -218,14 +230,14 @@ public class client_interface
 			client_session session,engine_interface ei,ReentrantLock my_client_interface_lock,
 			client_request_response request_response,long delay_time_length,interface_statistics statistics_interface)
 	{
-		if(session.statistics_user.user_engine_kernel_number>session.statistics_user.user_max_engine_kernel_number) {
-			debug_information.print  ("Create too many engine\t\t\t:\t",session.statistics_user.user_engine_kernel_number);
-			debug_information.println("/",session.statistics_user.user_max_engine_kernel_number);
+		if(statistics_user.user_engine_kernel_number>statistics_user.user_max_engine_kernel_number) {
+			debug_information.print  ("Create too many engine\t\t\t:\t",statistics_user.user_engine_kernel_number);
+			debug_information.println("/",statistics_user.user_max_engine_kernel_number);
 			return null;
 		}
-		if(session.statistics_user.user_engine_component_number>session.statistics_user.user_max_engine_component_number) {
-			debug_information.print  ("Create too many component\t\t:\t",session.statistics_user.user_engine_component_number);
-			debug_information.println("/",session.statistics_user.user_max_engine_component_number);
+		if(statistics_user.user_engine_component_number>statistics_user.user_max_engine_component_number) {
+			debug_information.print  ("Create too many component\t\t:\t",statistics_user.user_engine_component_number);
+			debug_information.println("/",statistics_user.user_max_engine_component_number);
 			return null;
 		}
 		client_process_bar cpb=get_process_bar(request_response);
@@ -278,7 +290,7 @@ public class client_interface
 		engine_call_result ecr=null;
 		try{
 			ecr=ec.engine_kernel_link_list.get_engine_result(cpb,component_load_source_cont,session,ec,
-					request_response,delay_time_length,statistics_interface,ei.engine_current_number);
+					request_response,delay_time_length,statistics_user,statistics_interface,ei.engine_current_number);
 		}catch(Exception e) {
 			ecr=null;
 			debug_information.println("ec[channel_id].engine_kernel_link_list.get_engine_result fail");
@@ -294,17 +306,17 @@ public class client_interface
 			return null;
 		}
 		if(create_ekll.ek!=null){
-			session.statistics_user.user_engine_kernel_number++;
+			statistics_user.user_engine_kernel_number++;
 			if(create_ekll.ek.component_cont!=null) {
 				if(create_ekll.ek.component_cont.root_component!=null)
-					session.statistics_user.user_engine_component_number+=create_ekll.ek.component_cont.root_component.component_id+1;
+					statistics_user.user_engine_component_number+=create_ekll.ek.component_cont.root_component.component_id+1;
 			}
 		}
 		debug_information.println(request_response.implementor.get_client_id());
-		debug_information.print  ("Current created engine number is ",session.statistics_user.user_engine_kernel_number);
-		debug_information.println("/",session.statistics_user.user_max_engine_kernel_number);
-		debug_information.print  ("Current created component number is ",session.statistics_user.user_engine_component_number);
-		debug_information.println("/",session.statistics_user.user_max_engine_component_number);
+		debug_information.print  ("Current created engine number is ",statistics_user.user_engine_kernel_number);
+		debug_information.println("/",statistics_user.user_max_engine_kernel_number);
+		debug_information.print  ("Current created component number is ",statistics_user.user_engine_component_number);
+		debug_information.println("/",statistics_user.user_max_engine_component_number);
 		
 		ek_ci_balance_tree_node ecn=new ek_ci_balance_tree_node((ec.client_information==null)
 				?(-(request_response.request_time)):(ec.client_information.channel_id));
@@ -426,7 +438,7 @@ public class client_interface
 		try{
 			ecr=ecn.ek_ci.engine_kernel_link_list.get_engine_result(
 					get_process_bar(request_response),ei.component_load_source_cont,session,ecn.ek_ci,
-					request_response,delay_time_length,statistics_interface,engine_current_number);
+					request_response,delay_time_length,statistics_user,statistics_interface,engine_current_number);
 		}catch(Exception e){
 			ecr=null;
 			debug_information.println("ecn.ek_ci.engine_kernel_link_list.get_engine_result fail");
@@ -511,8 +523,8 @@ public class client_interface
 			}
 		my_client_interface_lock.unlock();
 	}
-	public engine_call_result execute_create_call(engine_interface ei,
-			client_request_response request_response,interface_statistics statistics_interface)
+	public engine_call_result execute_create_call(client_request_response request_response,
+			engine_interface ei,interface_statistics statistics_interface)
 	{
 		engine_call_result ret_val=null;
 		
@@ -585,12 +597,11 @@ public class client_interface
 			f.close();
 					
 			f=new file_reader(parameter_file_name,f.get_charset());
-			user_statistics statistics_user=new user_statistics(f);
+			statistics_user=new user_statistics(f);
 			manager_delay=new delay_manager(f);
 			f.close();
 			
-			session=new client_session(assemble_file_name,f.get_charset(),
-					my_client_id,my_user_name,statistics_user,system_par);
+			session=new client_session(assemble_file_name,f.get_charset(),my_client_id,my_user_name);
 			
 			return false;
 		}
@@ -603,6 +614,7 @@ public class client_interface
 		process_bar_cont=new client_process_bar_container(system_par.engine_expire_time_length);
 		manager_delay	=null;
 		session		 	=null;
+		statistics_user	=null;
 		
 		bt				=null;
 		first			=null;

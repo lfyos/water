@@ -16,8 +16,9 @@ public class jsp_server extends client_request_switcher
 			javax.servlet.jsp.PageContext 			pageContext,
 			javax.servlet.jsp.JspWriter 			out)
 	{
-		jsp_network_implementation jni=new jsp_network_implementation(request,session,response,application);
-		process_system_call(jni,data_configure_environment_variable,proxy_configure_environment_variable);
+		process_system_call(
+				new jsp_network_implementation(request,session,response,application),
+				data_configure_environment_variable,proxy_configure_environment_variable);
 		try{
 			out.clear();
 		}catch(Exception e) {

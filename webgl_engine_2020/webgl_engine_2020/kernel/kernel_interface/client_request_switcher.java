@@ -33,59 +33,59 @@ public class client_request_switcher
 	{
 		if(system_par!=null)
 			system_par=null;
-		
-		if(ei!=null) {
-			ei.destroy();
-			ei=null;
-		}
 		if(program_javascript!=null) {
 			program_javascript.destroy();
 			program_javascript=null;
+		}
+		if(ei!=null) {
+			ei.destroy();
+			ei=null;
 		}
 		if(client_container!=null) {
 			client_container.destroy();
 			client_container=null;
 		}
 	}
-	private void process_bar(client_request_response request_response,client_interface client)
+	private engine_call_result process_bar(client_request_response request_response,client_interface client)
 	{
 		String str,language_str;
 		client_process_bar process_bar;
-		if((str=request_response.get_parameter("command"))==null)
-			return;
-		switch(str){
-		case "request":
-			process_bar=client.request_process_bar();
-			process_bar.set_process_bar(true,"start_create_scene","", 0, 1);
-			
-			request_response.println("{");
-			request_response.println("	\"process_bar_id\"				:	",process_bar.process_bar_id+",");
-			request_response.println("	\"show_process_bar_interval\"	:	",system_par.show_process_bar_interval);
-			request_response.println("}");
-			break;
-		case "data":
-			if((process_bar=client.get_process_bar(request_response))==null)
+		if((str=request_response.get_parameter("command"))!=null)
+			switch(str){
+			case "request":
+				process_bar=client.request_process_bar();
+				process_bar.set_process_bar(true,"start_create_scene","", 0, 1);
+				
+				request_response.println("{");
+				request_response.println("	\"process_bar_id\"				:	",process_bar.process_bar_id+",");
+				request_response.println("	\"show_process_bar_interval\"	:	",system_par.show_process_bar_interval);
+				request_response.println("}");
 				break;
-			language_str=request_response.get_parameter("language");
-			str=process_bar.process_title+"+"+((language_str==null)?"english":language_str);
-			str=system_par.language_change_name.search_change_name(str,process_bar.process_title);
-			str=jason_string.change_string(str+" "+process_bar.ex_process_title);
-			
-			long current_time=nanosecond_timer.absolute_nanoseconds();
-			long time_length=current_time-process_bar.start_time;
-			long engine_time_length=current_time-process_bar.original_time;
-
-			request_response.println("{");
-			request_response.print  ("	\"caption\":		",		str).						 							 println(",");
-			request_response.print  ("	\"current\":		",		process_bar.current_process	).							 println(",");
-			request_response.print  ("	\"max\":			",  	(process_bar.max_process<1)?1:(process_bar.max_process)).println(",");
-			request_response.print  ("	\"time_length\":	",  	time_length/1000000			).							 println(",");
-			request_response.print  ("	\"engine_time_length\":	",  engine_time_length/1000000	).							 println(",");
-			request_response.print  ("	\"time_unit\":		\"",  	system_par.language_change_name.
-				search_change_name("unit+"+((language_str==null)?"english":language_str),"unit")).							 println("\"");
-			request_response.println("}");
-			break;	
-		}
+			case "data":
+				if((process_bar=client.get_process_bar(request_response))==null)
+					break;
+				language_str=request_response.get_parameter("language");
+				str=process_bar.process_title+"+"+((language_str==null)?"english":language_str);
+				str=system_par.language_change_name.search_change_name(str,process_bar.process_title);
+				str=jason_string.change_string(str+" "+process_bar.ex_process_title);
+				
+				long current_time=nanosecond_timer.absolute_nanoseconds();
+				long time_length=current_time-process_bar.start_time;
+				long engine_time_length=current_time-process_bar.original_time;
+	
+				request_response.println("{");
+				request_response.print  ("	\"caption\":		",		str).						 							 println(",");
+				request_response.print  ("	\"current\":		",		process_bar.current_process	).							 println(",");
+				request_response.print  ("	\"max\":			",  	(process_bar.max_process<1)?1:(process_bar.max_process)).println(",");
+				request_response.print  ("	\"time_length\":	",  	time_length/1000000			).							 println(",");
+				request_response.print  ("	\"engine_time_length\":	",  engine_time_length/1000000	).							 println(",");
+				request_response.print  ("	\"time_unit\":		\"",  	system_par.language_change_name.
+					search_change_name("unit+"+((language_str==null)?"english":language_str),"unit")).							 println("\"");
+				request_response.println("}");
+				break;	
+			}
+		
+		return new engine_call_result(null,null,null,null,null,"*");
 	}
 	private engine_call_result system_call_switch(client_request_response request_response,client_interface client)
 	{
@@ -146,15 +146,14 @@ public class client_request_switcher
 				ecr.date_string=null;
 			break;
 		case "process_bar":
-			process_bar(request_response,client);
-			ecr=new engine_call_result(null,null,null,null,null,"*");
+			ecr=process_bar(request_response,client);
 			break;
 		case "creation":
 			int creation_engine_lock_number=test_creation_engine_lock_number(1);
 			if((new Date().getTime()<system_par.system_terminate_time)
 				&&(creation_engine_lock_number<system_par.create_engine_concurrent_number))
 			{
-				ecr=client.execute_create_call(ei,request_response,statistics_interface);
+				ecr=client.execute_create_call(request_response,ei,statistics_interface);
 			}else{
 				ecr=new engine_call_result(null,null,null,null,null,"*");
 				request_response.println("false");
@@ -195,19 +194,19 @@ public class client_request_switcher
 		if(system_par==null)
 			create_system_parameter(network_implementor,
 				data_configure_environment_variable,proxy_configure_environment_variable);
-	
-		engine_call_result ecr;
-		client_interface client;
-		client_request_response request_response=new client_request_response(
-				system_par.network_data_charset,network_implementor);
 		
+		client_interface client;
+		engine_call_result ecr;
+		client_request_response request_response;
+
+		request_response=new client_request_response(system_par.network_data_charset,network_implementor);
 		if((client=client_container.get_client_interface(request_response,system_par))!=null)
 			if((ecr=system_call_switch(request_response,client))!=null){
 				String compress_response_header;
 				if(ecr.compress_file_name==null)
 						compress_response_header=null;
 				else if((compress_response_header=request_response.implementor.get_header("Accept-Encoding"))==null)
-					ecr.compress_file_name=null;
+						ecr.compress_file_name=null;
 				else if((compress_response_header=compress_response_header.toLowerCase()).indexOf("gzip")>=0)
 						compress_response_header="gzip";
 				else if(compress_response_header.indexOf("deflate")>=0)
@@ -218,7 +217,6 @@ public class client_request_switcher
 						compress_response_header=null;
 						ecr.compress_file_name=null;
 				}
-	
 				long my_statistics[];		
 				if(ecr.file_name!=null){
 					statistics_interface.responsing_file_data_number++;
@@ -243,17 +241,15 @@ public class client_request_switcher
 		
 		if(client!=null)
 			client.touch_time=nanosecond_timer.absolute_nanoseconds();
-
-		return;
 	}
 	
 	public client_request_switcher()
 	{
 		creation_engine_lock_number	=0;
 		system_par					=null;
+		program_javascript			=null;
 		
 		ei							=new engine_interface();
-		program_javascript			=null;
 		client_container			=new client_interface_container();
 		download_proxy				=new proxy_downloader();
 		statistics_interface		=new interface_statistics();

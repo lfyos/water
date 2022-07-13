@@ -1,0 +1,261 @@
+package kernel_interface;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import kernel_common_class.debug_information;
+import kernel_common_class.jason_string;
+import kernel_common_class.nanosecond_timer;
+import kernel_engine.engine_call_result;
+import kernel_engine.interface_statistics;
+import kernel_engine.system_parameter;
+import kernel_network.client_request_response;
+import kernel_network.network_implementation;
+import kernel_program_javascript.javascript_program;
+
+public class client_request_switcher
+{
+	private volatile int creation_engine_lock_number;
+	synchronized private int test_creation_engine_lock_number(int modify_number)
+	{
+		creation_engine_lock_number+=modify_number;
+		return creation_engine_lock_number;
+	}
+	private system_parameter system_par;
+	
+	private engine_interface ei;
+	private javascript_program program_javascript;
+	private client_interface_container client_container;
+	private proxy_downloader download_proxy;
+	private interface_statistics statistics_interface;
+	
+	public void destroy()
+	{
+		if(system_par!=null)
+			system_par=null;
+		if(program_javascript!=null) {
+			program_javascript.destroy();
+			program_javascript=null;
+		}
+		if(ei!=null) {
+			ei.destroy();
+			ei=null;
+		}
+		if(client_container!=null) {
+			client_container.destroy();
+			client_container=null;
+		}
+	}
+	private engine_call_result process_bar(client_request_response request_response,client_interface client)
+	{
+		String str,language_str;
+		client_process_bar process_bar;
+		if((str=request_response.get_parameter("command"))!=null)
+			switch(str){
+			case "request":
+				process_bar=client.request_process_bar();
+				process_bar.set_process_bar(true,"start_create_scene","", 0, 1);
+				
+				request_response.println("{");
+				request_response.println("	\"process_bar_id\"				:	",process_bar.process_bar_id+",");
+				request_response.println("	\"show_process_bar_interval\"	:	",system_par.show_process_bar_interval);
+				request_response.println("}");
+				break;
+			case "data":
+				if((process_bar=client.get_process_bar(request_response))==null)
+					break;
+				language_str=request_response.get_parameter("language");
+				str=process_bar.process_title+"+"+((language_str==null)?"english":language_str);
+				str=system_par.language_change_name.search_change_name(str,process_bar.process_title);
+				str=jason_string.change_string(str+" "+process_bar.ex_process_title);
+				
+				long current_time=nanosecond_timer.absolute_nanoseconds();
+				long time_length=current_time-process_bar.start_time;
+				long engine_time_length=current_time-process_bar.original_time;
+	
+				request_response.println("{");
+				request_response.print  ("	\"caption\":		",		str).						 							 println(",");
+				request_response.print  ("	\"current\":		",		process_bar.current_process	).							 println(",");
+				request_response.print  ("	\"max\":			",  	(process_bar.max_process<1)?1:(process_bar.max_process)).println(",");
+				request_response.print  ("	\"time_length\":	",  	time_length/1000000			).							 println(",");
+				request_response.print  ("	\"engine_time_length\":	",  engine_time_length/1000000	).							 println(",");
+				request_response.print  ("	\"time_unit\":		\"",  	system_par.language_change_name.
+					search_change_name("unit+"+((language_str==null)?"english":language_str),"unit")).							 println("\"");
+				request_response.println("}");
+				break;	
+			}
+		
+		return new engine_call_result(null,null,null,null,null,"*");
+	}
+	private engine_call_result system_call_switch(client_request_response request_response,client_interface client)
+	{
+		engine_call_result ecr=null;
+		
+		String str=request_response.get_parameter("channel");
+		switch((str==null)?"switch":str){
+		case "terminate_time":
+			try{
+				system_par.system_terminate_time=new SimpleDateFormat(
+					request_response.get_parameter("format")).parse(request_response.get_parameter("time")).getTime();
+			}catch(Exception e){
+				;
+			}
+			debug_information.println("system_terminate_time:",new Date(system_par.system_terminate_time).toString());
+			break;
+		case "switch":
+			if((str=system_par.switch_server.get_switch_server_url())!=null) {
+				String function_name=request_response.get_parameter("function_name");
+				
+				debug_information.println();
+				debug_information.println("client 		",		request_response.implementor.get_client_id());
+				debug_information.println("switch from	",		request_response.implementor.get_url());
+				debug_information.println("to		",			str);
+				
+				str+="?channel=javascript";
+				if(function_name==null)
+					debug_information.println("No function_name");
+				else{
+					str+="&function_name="+function_name;
+					debug_information.println("function_name	",	function_name);
+				}
+				request_response.implementor.redirect_url(str,"*");
+				break;
+			}
+		case "javascript":
+			ecr=program_javascript.create(request_response,
+				Long.toString(system_par.file_buffer_expire_time_length),
+				system_par.create_engine_sleep_time_length_scale,
+				system_par.create_engine_sleep_time_length,
+				system_par.create_engine_max_sleep_time_length);
+			break;
+		case "readme":
+			ecr=download_readme_file.download_driver_readme(request_response,
+				system_par.data_root_directory_name+system_par.shader_file_name,
+				system_par.local_data_charset,system_par.file_download_cors_string,
+				Long.toString(system_par.file_buffer_expire_time_length),
+				system_par.text_class_charset,system_par.text_jar_file_charset);
+			break;
+		case "clear":
+			client.clear_all_engine();
+			break;
+		case "buffer":
+			ecr=download_proxy.download(request_response,system_par,statistics_interface);
+			break;
+		case "proxy":
+			if((ecr=download_proxy.download(request_response,system_par,statistics_interface))!=null)
+				ecr.date_string=null;
+			break;
+		case "process_bar":
+			ecr=process_bar(request_response,client);
+			break;
+		case "creation":
+			int creation_engine_lock_number=test_creation_engine_lock_number(1);
+			if((new Date().getTime()<system_par.system_terminate_time)
+				&&(creation_engine_lock_number<system_par.create_engine_concurrent_number))
+			{
+				ecr=client.execute_create_call(request_response,ei,statistics_interface);
+			}else{
+				ecr=new engine_call_result(null,null,null,null,null,"*");
+				request_response.println("false");
+				client.get_process_bar(request_response).set_process_bar(true,"wait_for_other_exit","",1,2);
+			}
+			test_creation_engine_lock_number(-1);
+			break;
+		default:
+			long channel_id;
+			try{
+				channel_id=Long.decode(str);
+			}catch(Exception e) {
+				debug_information.println("Channel id is wrong");
+				debug_information.println("client:",request_response.implementor.get_client_id());
+				debug_information.println(",Channel:",str);
+				debug_information.println(",exception:",e.toString());
+				e.printStackTrace();
+				break;
+			}
+			ecr=client.execute_system_call(ei,channel_id,
+				request_response,statistics_interface,ei.engine_current_number);
+			break;
+		}
+		return ecr;
+	}
+	synchronized private void create_system_parameter(network_implementation network_implementor,
+			String data_configure_environment_variable,String proxy_configure_environment_variable)
+	{
+		if(system_par==null) {
+			system_par=new system_parameter(network_implementor.get_application_directory(),
+					data_configure_environment_variable,proxy_configure_environment_variable);
+			program_javascript=new javascript_program(system_par.js_class_charset,system_par.js_jar_file_charset);
+		}
+	}
+	public void process_system_call(network_implementation network_implementor,
+			String data_configure_environment_variable,String proxy_configure_environment_variable)
+	{
+		if(system_par==null)
+			create_system_parameter(network_implementor,
+				data_configure_environment_variable,proxy_configure_environment_variable);
+	
+		client_interface client;
+		engine_call_result ecr;
+		client_request_response request_response;
+		
+		request_response=new client_request_response(system_par.network_data_charset,network_implementor);
+		if((client=client_container.get_client_interface(request_response,system_par))!=null)
+			if((ecr=system_call_switch(request_response,client))!=null){
+				String compress_response_header;
+				if(ecr.compress_file_name==null)
+						compress_response_header=null;
+				else if((compress_response_header=request_response.implementor.get_header("Accept-Encoding"))==null)
+					ecr.compress_file_name=null;
+				else if((compress_response_header=compress_response_header.toLowerCase()).indexOf("gzip")>=0)
+						compress_response_header="gzip";
+				else if(compress_response_header.indexOf("deflate")>=0)
+						compress_response_header="deflate";
+				else if(compress_response_header.indexOf("br")>=0)
+						compress_response_header="br";
+				else{
+						compress_response_header=null;
+						ecr.compress_file_name=null;
+				}
+	
+				long my_statistics[];		
+				if(ecr.file_name!=null){
+					statistics_interface.responsing_file_data_number++;
+					my_statistics=request_response.response_file_data(compress_response_header,ecr,system_par);
+					statistics_interface.responsing_file_data_number--;
+					
+					statistics_interface.file_download_number++;
+					statistics_interface.file_download_data_uncompress_length+=my_statistics[0];
+					statistics_interface.file_download_data_compress_length	 +=my_statistics[1];
+				}else{
+					statistics_interface.responsing_network_data_number++;
+					my_statistics=request_response.response_network_data(compress_response_header,ecr,system_par);
+					statistics_interface.responsing_network_data_number--;
+					
+					statistics_interface.network_data_number++;
+					statistics_interface.network_data_uncompress_length		+=my_statistics[0];
+					statistics_interface.network_data_compress_length		+=my_statistics[1];
+				}
+			}
+		request_response.destroy();
+		
+		if(client!=null)
+			client.touch_time=nanosecond_timer.absolute_nanoseconds();
+
+		return;
+	}
+	
+	public client_request_switcher()
+	{
+		creation_engine_lock_number	=0;
+		system_par					=null;
+		program_javascript			=null;
+		
+		ei							=new engine_interface();
+		client_container			=new client_interface_container();
+		download_proxy				=new proxy_downloader();
+		statistics_interface		=new interface_statistics();
+	}
+}
+
+

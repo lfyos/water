@@ -185,7 +185,7 @@ public class client_interface_container
 		
 		client_interface_container_lock.lock();
 		
-		try {
+		try{
 			if((ret_val=get_client_interface_routine(my_client_id+"/"+my_user_name,my_system_par))!=null)
 				if(ret_val.test_client_interface(my_user_name, my_pass_word,my_client_id))
 					ret_val=null;
@@ -195,7 +195,7 @@ public class client_interface_container
 			debug_information.println("get_client_interface exception:\t",e.toString());
 			e.printStackTrace();
 		}
-		
+
 		client_interface_container_lock.unlock();
 		
 		return ret_val;
