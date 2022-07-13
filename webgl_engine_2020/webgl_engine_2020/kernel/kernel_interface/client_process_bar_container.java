@@ -32,7 +32,7 @@ public class client_process_bar_container
 				if((t-process_bar_array[i].touch_time)<max_time_length)
 					continue;
 			process_bar_array[i]=new client_process_bar(i,t);
-			
+
 			return i;
 		}
 		client_process_bar bak[]=process_bar_array;

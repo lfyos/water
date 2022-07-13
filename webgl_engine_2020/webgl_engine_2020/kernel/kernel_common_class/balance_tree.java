@@ -19,20 +19,6 @@ public class balance_tree
 			right_child=null;
 		}
 	}
-	public balance_tree clone()
-	{
-		balance_tree ret_val;
-		
-		ret_val=new balance_tree(item.clone());
-		
-		if(left_child!=null)
-			ret_val.left_child=left_child.clone();
-		if(right_child!=null)
-			ret_val.right_child=right_child.clone();
-		ret_val.depth=depth;
-		
-		return ret_val;
-	}
 	public balance_tree(balance_tree_item my_item)
 	{
 		item=my_item;
