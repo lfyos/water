@@ -27,12 +27,8 @@ public class client_interface_container
 		}
 		public int compare(balance_tree_item t)
 		{
-			int ret_val=1;
-			if(t instanceof client_interface_balance_tree_node) {
-				client_interface_balance_tree_node p=(client_interface_balance_tree_node)t;
-				ret_val=client_id.compareTo(p.client_id);
-			}
-			return ret_val;
+			return (t instanceof client_interface_balance_tree_node)
+				?(((client_interface_balance_tree_node)t).client_id.compareTo(client_id)):0;
 		}
 		public client_interface_balance_tree_node(String my_client_id)
 		{
@@ -108,7 +104,7 @@ public class client_interface_container
 		
 		if(bt==null){
 			p=new_p;
-			p.ci=new client_interface(my_user_name,my_pass_word,my_client_id,my_system_par);
+			p.ci=new client_interface(my_system_par,my_user_name,my_pass_word,my_client_id);
 			if(p.ci.touch_time<=0) {
 				p.destroy();
 				return null;
@@ -128,7 +124,7 @@ public class client_interface_container
 		}
 		if((p=(client_interface_balance_tree_node)(bt.search(new_p,true,false)))==null){
 			p=new_p;
-			p.ci=new client_interface(my_user_name,my_pass_word,my_client_id,my_system_par);
+			p.ci=new client_interface(my_system_par,my_user_name,my_pass_word,my_client_id);
 			client_interface_number++;
 			print_client_interface_information(my_client_id,my_system_par.max_client_interface_number);
 		}else{

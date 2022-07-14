@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import kernel_common_class.debug_information;
-import kernel_common_class.jason_string;
 import kernel_common_class.nanosecond_timer;
 import kernel_engine.engine_call_result;
 import kernel_engine.interface_statistics;
@@ -15,20 +14,19 @@ import kernel_program_javascript.javascript_program;
 
 public class client_request_switcher
 {
+	private system_parameter system_par;
+	private javascript_program program_javascript;
+	private engine_interface engine_container;
+	private client_interface_container client_container;
+	private proxy_downloader download_proxy;
+	private interface_statistics statistics_interface;
+	
 	private volatile int creation_engine_lock_number;
 	synchronized private int test_creation_engine_lock_number(int modify_number)
 	{
 		creation_engine_lock_number+=modify_number;
 		return creation_engine_lock_number;
 	}
-	private system_parameter system_par;
-	
-	private engine_interface ei;
-	private javascript_program program_javascript;
-	private client_interface_container client_container;
-	private proxy_downloader download_proxy;
-	private interface_statistics statistics_interface;
-	
 	public void destroy()
 	{
 		if(system_par!=null)
@@ -37,54 +35,21 @@ public class client_request_switcher
 			program_javascript.destroy();
 			program_javascript=null;
 		}
-		if(ei!=null) {
-			ei.destroy();
-			ei=null;
+		if(engine_container!=null) {
+			engine_container.destroy();
+			engine_container=null;
 		}
 		if(client_container!=null) {
 			client_container.destroy();
 			client_container=null;
 		}
-	}
-	private engine_call_result process_bar(client_request_response request_response,client_interface client)
-	{
-		String str,language_str;
-		client_process_bar process_bar;
-		if((str=request_response.get_parameter("command"))!=null)
-			switch(str){
-			case "request":
-				process_bar=client.request_process_bar();
-				process_bar.set_process_bar(true,"start_create_scene","", 0, 1);
-				
-				request_response.println("{");
-				request_response.println("	\"process_bar_id\"				:	",process_bar.process_bar_id+",");
-				request_response.println("	\"show_process_bar_interval\"	:	",system_par.show_process_bar_interval);
-				request_response.println("}");
-				break;
-			case "data":
-				if((process_bar=client.get_process_bar(request_response))==null)
-					break;
-				language_str=request_response.get_parameter("language");
-				str=process_bar.process_title+"+"+((language_str==null)?"english":language_str);
-				str=system_par.language_change_name.search_change_name(str,process_bar.process_title);
-				str=jason_string.change_string(str+" "+process_bar.ex_process_title);
-				
-				long current_time=nanosecond_timer.absolute_nanoseconds();
-				long time_length=current_time-process_bar.start_time;
-				long engine_time_length=current_time-process_bar.original_time;
-	
-				request_response.println("{");
-				request_response.print  ("	\"caption\":		",		str).						 							 println(",");
-				request_response.print  ("	\"current\":		",		process_bar.current_process	).							 println(",");
-				request_response.print  ("	\"max\":			",  	(process_bar.max_process<1)?1:(process_bar.max_process)).println(",");
-				request_response.print  ("	\"time_length\":	",  	time_length/1000000			).							 println(",");
-				request_response.print  ("	\"engine_time_length\":	",  engine_time_length/1000000	).							 println(",");
-				request_response.print  ("	\"time_unit\":		\"",  	system_par.language_change_name.
-					search_change_name("unit+"+((language_str==null)?"english":language_str),"unit")).							 println("\"");
-				request_response.println("}");
-				break;	
-			}
-		return new engine_call_result(null,null,null,null,null,"*");
+		if(download_proxy!=null) {
+			download_proxy.destroy();
+			download_proxy=null;
+		}
+		if(statistics_interface!=null)
+			statistics_interface=null;
+		creation_engine_lock_number=0;
 	}
 	private engine_call_result system_call_switch(
 			client_request_response request_response,client_interface client)
@@ -135,9 +100,6 @@ public class client_request_switcher
 				Long.toString(system_par.file_buffer_expire_time_length),
 				system_par.text_class_charset,system_par.text_jar_file_charset);
 			break;
-		case "clear":
-			client.clear_all_engine();
-			break;
 		case "buffer":
 			ecr=download_proxy.download(request_response,system_par,statistics_interface);
 			break;
@@ -146,14 +108,17 @@ public class client_request_switcher
 				ecr.date_string=null;
 			break;
 		case "process_bar":
-			ecr=process_bar(request_response,client);
+			ecr=client.process_bar(request_response);
+			break;
+		case "clear":
+			client.clear_all_engine();
 			break;
 		case "creation":
 			int creation_engine_lock_number=test_creation_engine_lock_number(1);
 			if((new Date().getTime()<system_par.system_terminate_time)
 				&&(creation_engine_lock_number<system_par.create_engine_concurrent_number))
 			{
-				ecr=client.execute_create_call(request_response,ei,statistics_interface);
+				ecr=client.execute_create_call(request_response,engine_container,statistics_interface);
 			}else{
 				ecr=new engine_call_result(null,null,null,null,null,"*");
 				request_response.println("false");
@@ -173,8 +138,7 @@ public class client_request_switcher
 				e.printStackTrace();
 				break;
 			}
-			ecr=client.execute_system_call(ei,channel_id,
-				request_response,statistics_interface,ei.engine_current_number);
+			ecr=client.execute_system_call(engine_container,channel_id,request_response,statistics_interface);
 			break;
 		}
 		return ecr;
@@ -247,18 +211,16 @@ public class client_request_switcher
 		if(client!=null)
 			client.touch_time=nanosecond_timer.absolute_nanoseconds();
 	}
-	
 	public client_request_switcher()
 	{
-		creation_engine_lock_number	=0;
 		system_par					=null;
 		program_javascript			=null;
 		
-		ei							=new engine_interface();
+		engine_container			=new engine_interface();
 		client_container			=new client_interface_container();
 		download_proxy				=new proxy_downloader();
 		statistics_interface		=new interface_statistics();
+		
+		creation_engine_lock_number	=0;
 	}
 }
-
-

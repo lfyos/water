@@ -144,9 +144,9 @@ public class dispatch_create_engine_request
 				}
 		ci.request_response.print("]");
 			
-		ci.request_response.print(",\"",	ek.link_name);			//parameter	4	4
+		ci.request_response.print(",\"",	ek.create_parameter.link_name);			//parameter	4	4
 		ci.request_response.print("\",",	jason_string.change_string(
-				ek.title+ek.scene_par.scene_sub_directory));		//parameter	4	5
+				ek.create_parameter.scene_title+ek.scene_par.scene_sub_directory));	//parameter	4	5
 	
 		ci.request_response.print(",{");							//parameter	4	6
 			

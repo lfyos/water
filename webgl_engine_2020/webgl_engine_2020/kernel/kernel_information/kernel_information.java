@@ -11,10 +11,12 @@ public class kernel_information extends jason_creator
 	public void print()
 	{
 		component_container_information cci;
-		cci=new component_container_information(ek.scene_directory_name,ek.scene_file_name,ek.component_cont,ci);
-		print("title",							ek.title);
-		print("scene_name",						ek.scene_name);
-		print("link_name",						ek.link_name);
+		cci=new component_container_information(
+				ek.create_parameter.scene_directory_name,
+				ek.create_parameter.scene_file_name,ek.component_cont,ci);
+		print("title",							ek.create_parameter.scene_title);
+		print("scene_name",						ek.create_parameter.scene_name);
+		print("link_name",						ek.create_parameter.link_name);
 		
 		print("system_par",						new system_parameter_information(ek.system_par,ci));
 		print("scene_par",						new scene_parameter_information(ek.scene_par,ci));

@@ -10,7 +10,6 @@ import kernel_engine.engine_call_result;
 import kernel_client_interface.dispatch_request_main;
 import kernel_common_class.debug_information;
 import kernel_component.component_load_source_container;
-import kernel_file_manager.file_reader;
 import kernel_interface.client_process_bar;
 import kernel_interface.user_statistics;
 import kernel_network.client_request_response;
@@ -48,131 +47,25 @@ public class engine_kernel_link_list
 	private boolean initilization_flag;
 	private ReentrantLock engine_kernel_lock,link_number_lock;
 
-	private double create_top_part_expand_ratio;
-	private double create_top_part_left_ratio;
-	private String scene_name;
-	private String scene_title;
-	private String scene_directory_name;
-	private String scene_file_name;
-	private String scene_charset;
-	private long   scene_list_file_last_modified_time;
-	private String parameter_file_name;
-	private String parameter_charset;
-	private String extra_parameter_file_name;
-	private String extra_parameter_charset;
-
-	private boolean fill_search_item(String test_scenename,
-			String client_scene_file_name,String client_scene_file_charset,system_parameter system_par)
-	{
-		file_reader f_type=new file_reader(client_scene_file_name,client_scene_file_charset);
-		if(f_type.error_flag()){
-			f_type.close();
-			debug_information.println("Open scene_file_name fail	:	",client_scene_file_name);
-			return true;
-		}
-		while(!(f_type.eof())){
-			String my_mount_file_name;
-			if((my_mount_file_name=f_type.get_string())==null)
-				break;
-			if(my_mount_file_name.compareTo("")==0)
-				break;
-			my_mount_file_name=file_reader.separator(my_mount_file_name);
-			file_reader f_name=new file_reader(
-					f_type.directory_name+my_mount_file_name,f_type.get_charset());
-			while(!(f_name.eof())){
-				String scene_search_name	=f_name.get_string();
-				scene_title					=f_name.get_string();
-				scene_file_name				=f_name.get_string();
-				create_top_part_expand_ratio=f_name.get_long();
-				create_top_part_left_ratio	=f_name.get_long();
-				parameter_file_name			=f_name.get_string();
-				extra_parameter_file_name	=f_name.get_string();
-				
-				if(extra_parameter_file_name==null)
-					break;
-				if(extra_parameter_file_name.compareTo("")==0)
-					break;
-				if(test_scenename!=null)
-					if(test_scenename.compareTo(scene_search_name)!=0)
-						continue;
-				
-				scene_file_name				=file_reader.separator(scene_file_name);
-				parameter_file_name			=file_reader.separator(parameter_file_name);
-				extra_parameter_file_name	=file_reader.separator(extra_parameter_file_name);
-				
-				if(!(file_reader.is_exist(f_name.directory_name+scene_file_name))) {
-					debug_information.println("Find unexist scene_assembly_file_name:",
-						scene_search_name+"\t"+scene_title+"\t"+scene_file_name);
-					continue;
-				}
-				if(file_reader.is_exist(f_name.directory_name+parameter_file_name))
-					parameter_file_name=f_name.directory_name+parameter_file_name;
-				else{
-					parameter_file_name=system_par.default_parameter_directory
-						+"assemble_parameter"+File.separator+parameter_file_name;
-					if(!(file_reader.is_exist(parameter_file_name))) {
-						debug_information.println("Find unexist scene parameter_file_name:",
-								scene_search_name+"\t"+scene_title+"\t"+parameter_file_name);
-						continue;
-					}
-				}
-				if(file_reader.is_exist(f_name.directory_name+extra_parameter_file_name))
-					extra_parameter_file_name=f_name.directory_name+extra_parameter_file_name;
-				else {
-					extra_parameter_file_name=system_par.default_parameter_directory
-						+"assemble_parameter"+File.separator+extra_parameter_file_name;
-					if(!(file_reader.is_exist(extra_parameter_file_name))) {
-						debug_information.println("Find unexist scene extra_parameter_file_name:",
-								scene_search_name+"\t"+scene_title+"\t"+extra_parameter_file_name);
-						continue;
-					}
-				}
-				
-				debug_information.println("scene_name	              	:	",	scene_search_name);
-				debug_information.println("scene_title              	:	",	scene_title);
-				debug_information.println("scene_file_name          	:	",	f_name.directory_name+scene_file_name);
-				debug_information.println("parameter_file_name		:	",		parameter_file_name);
-				debug_information.println("extra_parameter_file_name	:	",	extra_parameter_file_name);
-				
-				f_name.close();
-				f_type.close();
-				
-				scene_name							=scene_search_name;
-				scene_directory_name				=f_name.directory_name;
-				scene_charset						=f_name.get_charset();
-				parameter_charset					=f_name.get_charset();
-				extra_parameter_charset				=f_name.get_charset();
-				scene_list_file_last_modified_time	=(f_type.lastModified_time<f_name.lastModified_time)
-														?f_name.lastModified_time:f_type.lastModified_time;
-				return false;
-			}
-			f_name.close();
-		}
-		f_type.close();
-		return true;
-	}
-
 	public engine_kernel_link_list(
 			client_request_response request_response,system_parameter system_par,
 			String client_scene_file_name,String client_scene_file_charset,
 			render_container original_render,part_loader_container my_part_loader_cont,
-			String my_scene_name,String link_name,engine_kernel_link_list my_next_link_list)
+			String my_scene_name,String my_link_name,engine_kernel_link_list my_next_link_list)
 	{
 		link_number=0;
 		initilization_flag=true;
-	
-		if(fill_search_item(my_scene_name,client_scene_file_name,client_scene_file_charset,system_par))
-			if(fill_search_item(null,client_scene_file_name,client_scene_file_charset,system_par)){
+		
+		engine_kernel_create_parameter create_parameter=new engine_kernel_create_parameter(
+				my_scene_name,my_link_name,client_scene_file_name,client_scene_file_charset,system_par);
+		if(!(create_parameter.success_load_parameter_flag))
+			create_parameter=new engine_kernel_create_parameter(
+					null,my_link_name,client_scene_file_name,client_scene_file_charset,system_par);
+		if(!(create_parameter.success_load_parameter_flag)){
 				ek=null;
 				return;
-			}
-		ek=new engine_kernel(request_response,
-				create_top_part_expand_ratio,create_top_part_left_ratio,
-				scene_name,scene_title,link_name,scene_directory_name,
-				scene_file_name,scene_charset,scene_list_file_last_modified_time,
-				parameter_file_name,parameter_charset,
-				extra_parameter_file_name,extra_parameter_charset,system_par,
-				original_render,my_part_loader_cont);
+		}
+		ek=new engine_kernel(create_parameter,request_response,system_par,original_render,my_part_loader_cont);
 
 		next_link_list=my_next_link_list;
 
@@ -220,7 +113,7 @@ public class engine_kernel_link_list
 			String client_scene_file_name,String client_scene_file_charset,
 			engine_kernel_link_list_and_client_information ec,
 			client_request_response my_request_response,long delay_time_length,
-			user_statistics statistics_user,interface_statistics statistics_interface,int engine_current_number [])
+			user_statistics statistics_user,interface_statistics statistics_interface)
 	{
 		if(ek==null){
 			debug_information.println(
@@ -232,9 +125,9 @@ public class engine_kernel_link_list
 			if(ek.component_cont==null) {
 				component_load_source_cont=new component_load_source_container(component_load_source_cont);
 				ek.load(component_load_source_cont,my_request_response,process_bar);
-				if(ek.component_cont.root_component!=null) {
-					engine_current_number[0]++;
-					engine_current_number[1]+=ek.component_cont.root_component.component_id+1;
+				if(ek.component_cont.root_component!=null){
+					statistics_interface.engine_kernel_number++;
+					statistics_interface.engine_component_number+=ek.component_cont.root_component.component_id+1;
 				}
 				component_load_source_cont.destroy();
 			}
@@ -248,7 +141,6 @@ public class engine_kernel_link_list
 			ec.client_information=new client_information(
 					my_request_response,process_bar,ek,statistics_user,statistics_interface);
 		}
-		ec.client_information.engine_current_number=engine_current_number;
 		ec.client_information.request_response=my_request_response;
 
 		String file_name[];
@@ -283,15 +175,14 @@ public class engine_kernel_link_list
 			String client_scene_file_name,String client_scene_file_charset,
 			engine_kernel_link_list_and_client_information ec,
 			client_request_response my_request_response,long delay_time_length,
-			user_statistics statistics_user,interface_statistics statistics_interface,
-			int engine_current_number[])
+			user_statistics statistics_user,interface_statistics statistics_interface)
 	{
 		engine_call_result ret_val;
 		engine_kernel_lock.lock();
 		try{
 			ret_val=get_engine_result_routine(component_load_source_cont,process_bar,
 					client_scene_file_name,client_scene_file_charset,ec,my_request_response,
-				delay_time_length,statistics_user,statistics_interface,engine_current_number);
+					delay_time_length,statistics_user,statistics_interface);
 		}catch(Exception e){
 			debug_information.println(
 					"get_engine_result function of engine_kernel_link_list fail!");
@@ -334,7 +225,6 @@ public class engine_kernel_link_list
 		}
 		engine_kernel_lock.unlock();
 	}
-
 	public void forced_destroy()
 	{
 		for(engine_kernel_link_list p=this,q;p!=null;p=q){

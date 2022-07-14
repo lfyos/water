@@ -36,7 +36,6 @@ public class client_information
 	public client_statistics			statistics_client;
 	public interface_statistics			statistics_interface;
 	public user_statistics 				statistics_user;
-	public int							engine_current_number[];		
 	public client_request_response 		request_response;
 	public client_process_bar			process_bar;
 	
@@ -126,9 +125,6 @@ public class client_information
 		if(statistics_user!=null)
 			statistics_user=null;
 
-		if(engine_current_number!=null)
-			engine_current_number=null;
-		
 		if(request_response!=null)
 			request_response=null;		
 	}
@@ -285,7 +281,6 @@ public class client_information
 		statistics_client	=new client_statistics();
 		statistics_interface=my_statistics_interface;
 		statistics_user		=my_statistics_user;
-		engine_current_number=new int[] {0,0};
 		
 		request_response	=my_request_response;
 		
