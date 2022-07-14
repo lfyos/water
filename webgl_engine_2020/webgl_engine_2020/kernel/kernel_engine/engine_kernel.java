@@ -28,8 +28,7 @@ import kernel_interface.client_process_bar;
 
 public class engine_kernel
 {
-	public String 							title,scene_name,link_name;
-	public String							scene_directory_name,scene_file_name,scene_charset;
+	public engine_kernel_create_parameter 	create_parameter;
 
 	public system_parameter		 			system_par;
 	public scene_parameter					scene_par;
@@ -48,12 +47,9 @@ public class engine_kernel
 	
 	public part_lru_manager					part_lru;
 
-	public long 							do_selection_version;
-	
 	public part_loader_container 			part_loader_cont;
 	
-	private double							create_top_part_expand_ratio,create_top_part_left_ratio;
-	private long							program_last_time;
+	public long 							do_selection_version,program_last_time;
 
 	public void destroy()
 	{
@@ -94,34 +90,22 @@ public class engine_kernel
 			process_part_sequence=null;
 		}
 		
+		create_parameter=null;
 		system_par=null;
 		scene_par=null;
 		current_time=null;
 		
 		part_loader_cont=null;
 	}
-	public engine_kernel(client_request_response request_response,
-			double my_create_top_part_expand_ratio,double my_create_top_part_left_ratio,
-			String my_scene_name,String my_scene_title,String my_link_name,
-			String my_scene_directory_name,String my_scene_file_name,String my_scene_charset,
-			long my_scene_list_file_last_modified_time,
-			String my_parameter_file_name,String my_parameter_charset,
-			String my_extra_parameter_file_name,String my_extra_parameter_charset,
-			system_parameter my_system_parameter,render_container my_original_render,
-			part_loader_container my_part_loader_cont)
+	public engine_kernel(engine_kernel_create_parameter my_create_parameter,
+			client_request_response request_response,system_parameter my_system_parameter,
+			render_container my_original_render,part_loader_container my_part_loader_cont)
 	{
-		create_top_part_expand_ratio	=my_create_top_part_expand_ratio;
-		create_top_part_left_ratio		=my_create_top_part_left_ratio;
-		
-		scene_name				=new String(my_scene_name);
-		title					=new String(my_scene_title);
-		link_name				=new String(my_link_name);
+		create_parameter=my_create_parameter;
 				
 		system_par				=my_system_parameter;
-		scene_par				=new scene_parameter(request_response,
-			scene_name,system_par,request_response.get_parameter("sub_directory"),
-			my_parameter_file_name,my_parameter_charset,my_extra_parameter_file_name,
-			my_extra_parameter_charset,my_scene_list_file_last_modified_time);
+		scene_par				=new scene_parameter(request_response,system_par,
+				request_response.get_parameter("sub_directory"),create_parameter);
 		
 		component_cont			=null;
 		camera_cont				=null;
@@ -135,21 +119,16 @@ public class engine_kernel
 		for(int i=0;i<scene_par.max_modifier_container_number;i++)
 			modifier_cont[i]=new modifier_container(current_time.nanoseconds());
 		
-		part_lru				=null;					
-		
-		do_selection_version	=1;
-		
-		part_loader_cont		=my_part_loader_cont;				
-		
-		scene_directory_name	=my_scene_directory_name;
-		scene_file_name			=my_scene_file_name;
-		scene_charset			=my_scene_charset;
+		part_lru				=null;	
+
+		part_loader_cont		=my_part_loader_cont;
 		
 		reset_flag				=false;
 		
 		render_cont				=my_original_render;
 		part_cont				=null;	
 		
+		do_selection_version	=1;
 		program_last_time		=0;
 	}
 	public long get_file_last_modified_time()
@@ -228,26 +207,26 @@ public class engine_kernel
 			part_container part_cont_for_delete_file,part_container_for_part_search all_part_part_cont,
 			buffer_object_file_modify_time_and_length_container boftal_container)
 	{	
-		if((create_top_part_expand_ratio>=1.0)&&(create_top_part_left_ratio>=1.0)){
-			if(component_cont.root_component!=null){
-				part top_box_part[]=(new create_assemble_part(
-						not_real_scene_fast_load_flag,part_cont_for_delete_file,
-						request_response,component_cont.root_component,
-						create_top_part_expand_ratio,create_top_part_left_ratio,
-						scene_par.create_top_part_assembly_precision2,
-						scene_par.create_top_part_discard_precision2,
-						scene_par.discard_top_part_component_precision2,
-						render_cont,part_loader_cont,
-						system_par,scene_par,all_part_part_cont,boftal_container,
-						get_file_last_modified_time())).top_box_part;
-				if(top_box_part!=null)
-					if(top_box_part.length>0)
-						mount_top_box_part(component_cont.root_component,component_load_source_cont,
-							new part_container_for_part_search(top_box_part),request_response);
-			}
-		}
+		if(create_parameter.create_top_part_expand_ratio>=1.0)
+			if(create_parameter.create_top_part_left_ratio>=1.0)
+				if(component_cont.root_component!=null){
+					part top_box_part[]=(new create_assemble_part(
+							not_real_scene_fast_load_flag,part_cont_for_delete_file,
+							request_response,component_cont.root_component,
+							create_parameter.create_top_part_expand_ratio,
+							create_parameter.create_top_part_left_ratio,
+							scene_par.create_top_part_assembly_precision2,
+							scene_par.create_top_part_discard_precision2,
+							scene_par.discard_top_part_component_precision2,
+							render_cont,part_loader_cont,
+							system_par,scene_par,all_part_part_cont,boftal_container,
+							get_file_last_modified_time())).top_box_part;
+					if(top_box_part!=null)
+						if(top_box_part.length>0)
+							mount_top_box_part(component_cont.root_component,component_load_source_cont,
+								new part_container_for_part_search(top_box_part),request_response);
+				}
 	}
-	
 	private void load_routine(component_load_source_container component_load_source_cont,
 			client_request_response request_response,client_process_bar process_bar)
 	{
@@ -263,10 +242,12 @@ public class engine_kernel
 		if(boftal_container.get_boftal_number()<=0)
 			not_real_scene_fast_load_flag=true;
 		
-		file_reader scene_f=new file_reader(scene_directory_name+scene_file_name,scene_charset);
+		file_reader scene_f=new file_reader(
+				create_parameter.scene_directory_name+create_parameter.scene_file_name,
+				create_parameter.scene_charset);
 		if(!(scene_f.error_flag())){
-			scene_directory_name				=scene_f.directory_name;
-			scene_file_name						=scene_f.file_name;
+			create_parameter.scene_directory_name	=scene_f.directory_name;
+			create_parameter.scene_file_name		=scene_f.file_name;
 			if(scene_par.scene_last_modified_time<scene_f.lastModified_time)
 				scene_par.scene_last_modified_time=scene_f.lastModified_time;
 		}
@@ -284,7 +265,8 @@ public class engine_kernel
 				scene_par.parameter_charset,"",1,system_par,scene_par,request_response);
 		render_cont.load_shader(not_real_scene_fast_load_flag,component_load_source_cont,
 				part_cont,scene_par.scene_last_modified_time,
-				scene_directory_name+scene_par.scene_shader_file_name,scene_charset,
+				create_parameter.scene_directory_name+scene_par.scene_shader_file_name,
+				create_parameter.scene_charset,
 				scene_par.scene_sub_directory,2,system_par,scene_par,request_response);
 		part_cont.execute_append();
 		debug_information.println("Load shaders time length:	",(current_time=new Date().getTime())-start_time);
@@ -333,7 +315,7 @@ public class engine_kernel
 						new String[]{
 								scene_par.extra_directory_name+scene_par.type_string_file_name,
 								scene_par.directory_name+scene_par.type_string_file_name,
-								scene_directory_name	+scene_par.type_string_file_name
+								create_parameter.scene_directory_name+scene_par.type_string_file_name
 						},scene_par.part_type_string,scene_par.parameter_charset));
 		
 		scene_f.close();
@@ -408,7 +390,8 @@ public class engine_kernel
 		
 		debug_information.println();
 		debug_information.println("type_shader_file_name 		:	",	scene_par.directory_name+scene_par.type_shader_file_name);
-		debug_information.println("scene_shader_file_name		:	",	scene_directory_name	+scene_par.scene_shader_file_name);		
+		debug_information.println("scene_shader_file_name		:	",	
+				create_parameter.scene_directory_name+scene_par.scene_shader_file_name);		
 		debug_information.println("camera_file_name		:	"		 ,	scene_par.directory_name+scene_par.camera_file_name);
 		debug_information.println("change_part_file_name		:	",	scene_par.directory_name+scene_par.change_part_file_name);
 		debug_information.println("change_component_file_name	:	",	scene_par.directory_name+scene_par.change_component_file_name);

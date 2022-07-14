@@ -1,10 +1,9 @@
 package kernel_interface;
 
-import java.util.concurrent.locks.ReentrantLock;
-
 import kernel_common_class.debug_information;
 import kernel_component.component_load_source_container;
-import kernel_engine.engine_kernel_link_list;
+import kernel_engine.engine_kernel_container;
+import kernel_engine.interface_statistics;
 import kernel_engine.system_parameter;
 import kernel_network.client_request_response;
 import kernel_part.part;
@@ -16,28 +15,24 @@ import kernel_engine.part_package;
 
 public class engine_interface
 {
-	public int engine_current_number[];
 	public component_load_source_container component_load_source_cont;
 	
-	private engine_kernel_link_list engine_kernel_link_list_first;
+	private engine_kernel_container next_engine_kernel_cont_first;
 	
 	private render_container original_render;
 	private part_loader_container part_loader_cont;
 	
-	
-	private ReentrantLock engine_interface_lock;
-	
 	public void destroy()
 	{
-		if(engine_current_number!=null)
-			engine_current_number=null;
 		if(component_load_source_cont!=null) {
 			component_load_source_cont.destroy();
 			component_load_source_cont=null;
 		}
-		if(engine_kernel_link_list_first!=null){
-			engine_kernel_link_list_first.forced_destroy();
-			engine_kernel_link_list_first=null;
+		while(next_engine_kernel_cont_first!=null){
+			engine_kernel_container p=next_engine_kernel_cont_first;
+			next_engine_kernel_cont_first=p.next_engine_kernel_cont;
+			p.next_engine_kernel_cont=null;
+			p.forced_destroy();
 		}
 		if(original_render!=null){
 			original_render.destroy();
@@ -47,27 +42,25 @@ public class engine_interface
 			part_loader_cont.destroy();
 			part_loader_cont=null;
 		}
-		if(engine_interface_lock!=null)
-			engine_interface_lock=null;
 	}
-	
-	private boolean clear_expire_engine_kernel_routine(system_parameter system_par)
+	private boolean clear_expire_engine_kernel_routine(
+			interface_statistics statistics_interface,system_parameter system_par)
 	{
-		int my_current_component_number=0,my_current_engine_kernel_number=0;
 		int my_reset_engine_kernel_number=0,my_reset_component_number=0;
-		
-		engine_kernel_link_list p=engine_kernel_link_list_first,q;
-		for(engine_kernel_link_list_first=null;p!=null;){
+		int my_used_engine_kernel_number=0,my_used_component_number=0;
+
+		engine_kernel_container p=next_engine_kernel_cont_first,q;
+		for(next_engine_kernel_cont_first=null;p!=null;){
 			q=p;
-			p=p.next_link_list;
-			q.next_link_list=null;
+			p=p.next_engine_kernel_cont;
+			q.next_engine_kernel_cont=null;
 			if(q.get_link_number()<=0){
 				my_reset_engine_kernel_number++;
-				debug_information.print("Delete unused scene");
+				debug_information.print  ("Delete unused scene");
 				if(q.ek!=null){
-					debug_information.print(", scene name is ",	q.ek.scene_name);
-					debug_information.print(", link name is ",	q.ek.link_name);
-					debug_information.print(", scene title is ",q.ek.title);
+					debug_information.print  (", scene name is ",	q.ek.create_parameter.scene_name);
+					debug_information.print  (", link name is ",	q.ek.create_parameter.link_name);
+					debug_information.print  (", scene title is ",q.ek.create_parameter.scene_title);
 					
 					if(q.ek.component_cont!=null)
 						if(q.ek.component_cont.root_component!=null)
@@ -76,44 +69,41 @@ public class engine_interface
 				debug_information.println();
 				q.destroy();
 			}else{
-				q.next_link_list=engine_kernel_link_list_first;
-				engine_kernel_link_list_first=q;
+				q.next_engine_kernel_cont=next_engine_kernel_cont_first;
+				next_engine_kernel_cont_first=q;
 				if(q.ek!=null)
 					if(q.ek.component_cont!=null)
 						if(q.ek.component_cont.root_component!=null) {
-							my_current_engine_kernel_number++;
-							my_current_component_number+=q.ek.component_cont.root_component.component_id+1;
+							my_used_engine_kernel_number++;
+							my_used_component_number+=q.ek.component_cont.root_component.component_id+1;
 						}
 			}
 		}
 		debug_information.println();
-		debug_information.print  ("Engine number			:	",my_current_engine_kernel_number);
+		debug_information.print  ("Engine number			:	",statistics_interface.engine_kernel_number);
 		debug_information.print  ("/",my_reset_engine_kernel_number);	
 		debug_information.println("/",system_par.max_engine_kernel_number);
 		
-		debug_information.print  ("Component number		:	",my_current_component_number);
+		debug_information.print  ("Component number		:	",statistics_interface.engine_component_number);
 		debug_information.print  ("/",my_reset_component_number);
 		debug_information.println("/",system_par.max_engine_component_number);
-
-		
 		debug_information.println();
+		
+		statistics_interface.engine_kernel_number=my_used_engine_kernel_number;
+		statistics_interface.engine_component_number=my_used_component_number;
 
-		engine_current_number=new int[] {
-				my_current_engine_kernel_number,
-				my_current_component_number
-		};
-		if(	  (my_current_engine_kernel_number<system_par.max_engine_kernel_number)
-			&&(my_current_component_number<system_par.max_engine_component_number))
+		if(	  (statistics_interface.engine_kernel_number<system_par.max_engine_kernel_number)
+			&&(statistics_interface.engine_component_number<system_par.max_engine_component_number))
 				return false;
 		
 		debug_information.println(
 				"create engine fail,has created too many engines or too many conponents");
 		return true;
 	}
-	
-	private engine_kernel_link_list get_kernel_container_routine(
+	synchronized private engine_kernel_container get_kernel_container_routine(
+			client_request_response request_response,
 			String client_scene_file_name,String client_scene_file_charset,
-			client_request_response request_response,system_parameter system_par)
+			interface_statistics statistics_interface,system_parameter system_par)
 	{
 		if(original_render==null){
 			int part_type_id=0;
@@ -141,7 +131,7 @@ public class engine_interface
 			part_cont_for_delete_file.delete_part_file(null,system_par,null);
 		}
 		
-		if(clear_expire_engine_kernel_routine(system_par))
+		if(clear_expire_engine_kernel_routine(statistics_interface,system_par))
 			return null;
 		String scene_name,link_name;
 		if((scene_name=request_response.get_parameter("scene_name"))==null)
@@ -153,13 +143,14 @@ public class engine_interface
 
 		debug_information.println("scene_name			:	",scene_name);
 		debug_information.println("link_name			:	",link_name);
-
-		for(engine_kernel_link_list p=engine_kernel_link_list_first;p!=null;p=p.next_link_list){	
+		
+		engine_kernel_container p=next_engine_kernel_cont_first;
+		for(;p!=null;p=p.next_engine_kernel_cont){	
 			if(p.ek==null)
 				continue;
-			if(p.ek.scene_name.compareTo(scene_name)!=0)
+			if(p.ek.create_parameter.scene_name.compareTo(scene_name)!=0)
 				continue;
-			if(p.ek.link_name.compareTo(link_name)!=0)
+			if(p.ek.create_parameter.link_name.compareTo(link_name)!=0)
 				continue;
 			debug_information.print  ("Found created engine			:	");
 			debug_information.print  ("	",scene_name);
@@ -171,31 +162,31 @@ public class engine_interface
 		}
 
 		debug_information.println();
-		debug_information.println(
-			request_response.implementor.get_client_id(),"	No created engine found, create it!");
+		debug_information.print  (request_response.implementor.get_client_id());
+		debug_information.println("	No created engine found, create it!");
 		debug_information.println();
 		
-		engine_kernel_link_list_first=new engine_kernel_link_list(
+		next_engine_kernel_cont_first=new engine_kernel_container(
 				request_response,system_par,client_scene_file_name,client_scene_file_charset,
-				original_render,part_loader_cont,scene_name,link_name,engine_kernel_link_list_first);
+				original_render,part_loader_cont,scene_name,link_name,next_engine_kernel_cont_first);
 
-		if(engine_kernel_link_list_first.ek!=null){
-			engine_kernel_link_list_first.increase_link_number();
-			return engine_kernel_link_list_first;
+		if(next_engine_kernel_cont_first.ek==null){
+			next_engine_kernel_cont_first.destroy();
+			return null;
+		}else {
+			next_engine_kernel_cont_first.increase_link_number();
+			return next_engine_kernel_cont_first;
 		}
-		engine_kernel_link_list_first.destroy();
-		return null;
 	}
-	
-	public engine_kernel_link_list get_kernel_container(
+	public engine_kernel_container get_kernel_container(
+			client_request_response request_response,
 			String client_scene_file_name,String client_scene_file_charset,
-			client_request_response request_response,system_parameter system_par)
+			interface_statistics statistics_interface,system_parameter system_par)
 	{
-		engine_kernel_link_list ret_val=null;
-		engine_interface_lock.lock();
+		engine_kernel_container ret_val=null;
 		try {
-			ret_val=get_kernel_container_routine(
-				client_scene_file_name,client_scene_file_charset,request_response,system_par);
+			ret_val=get_kernel_container_routine(request_response,
+				client_scene_file_name,client_scene_file_charset,statistics_interface,system_par);
 		}catch(Exception e) {
 			debug_information.println(
 					"get_kernel_container of engine_interface fail");
@@ -203,19 +194,14 @@ public class engine_interface
 			e.printStackTrace();
 			ret_val=null;
 		}
-		engine_interface_lock.unlock();
-		
 		return ret_val;
 	}
 	public engine_interface()
 	{
-		engine_current_number				=new int[]{0,0};
 		component_load_source_cont			=new component_load_source_container();
-		engine_kernel_link_list_first		=null;
+		next_engine_kernel_cont_first		=null;
 
 		original_render						=null;
 		part_loader_cont					=new part_loader_container();
-
-		engine_interface_lock				=new ReentrantLock();
 	}
 }

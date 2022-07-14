@@ -224,7 +224,7 @@ public class engine_initialization
 				String file_name=init_comp[i].initialization.initialization_program[j];
 				initialization_program_file_name[i][j]=init_comp[i].component_directory_name+file_name;
 				if(!(f=new File(initialization_program_file_name[i][j])).exists()){
-					initialization_program_file_name[i][j]=ek.scene_directory_name+file_name;
+					initialization_program_file_name[i][j]=ek.create_parameter.scene_directory_name+file_name;
 					if(!(f=new File(initialization_program_file_name[i][j])).exists()) {
 						initialization_program_file_name[i][j]=ek.scene_par.directory_name+file_name;
 						if(!(f=new File(initialization_program_file_name[i][j])).exists()) {

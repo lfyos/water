@@ -57,10 +57,8 @@ public class scene_parameter
 	public boolean not_do_ancestor_render_flag,fast_load_flag;
 
 	public scene_parameter(client_request_response request_response,
-			String scene_name,system_parameter system_par,String my_scene_sub_directory,
-			String my_parameter_file_name,String my_parameter_charset,
-			String my_extra_parameter_file_name,String my_extra_parameter_charset,
-			long my_scene_list_file_last_modified_time)
+			system_parameter system_par,String my_scene_sub_directory,
+			engine_kernel_create_parameter ekcp)
 	{
 		String str;
 
@@ -81,17 +79,17 @@ public class scene_parameter
 			if(scene_sub_directory.charAt(scene_sub_directory.length()-1)!=File.separatorChar)
 				scene_sub_directory+=File.separator;
 		
-		file_reader fr=new file_reader(my_parameter_file_name,my_parameter_charset);
+		file_reader fr=new file_reader(ekcp.parameter_file_name,ekcp.parameter_charset);
 		
 		if((fr.error_flag())||(fr.eof()))
-			debug_information.println("Open assemble configure file fail : ",my_parameter_file_name);
+			debug_information.println("Open assemble configure file fail : ",ekcp.parameter_file_name);
 		
 		directory_name=fr.directory_name;
 		parameter_charset=fr.get_charset();
 		if((parameter_last_modified_time=fr.lastModified_time)<system_par.last_modified_time)
 			parameter_last_modified_time=system_par.last_modified_time;
-		if(parameter_last_modified_time<my_scene_list_file_last_modified_time)
-			parameter_last_modified_time=my_scene_list_file_last_modified_time;
+		if(parameter_last_modified_time<ekcp.scene_list_file_last_modified_time)
+			parameter_last_modified_time=ekcp.scene_list_file_last_modified_time;
 
 		if((type_proxy_directory_name=fr.get_string())==null)
 			type_proxy_directory_name="no_directory";
@@ -100,7 +98,7 @@ public class scene_parameter
 		type_proxy_directory_name=system_par.proxy_par.proxy_data_root_directory_name
 				+"scene_directory"+File.separator+type_proxy_directory_name+File.separator;
 		
-		scene_proxy_directory_name=type_proxy_directory_name+file_reader.separator(scene_name);
+		scene_proxy_directory_name=type_proxy_directory_name+file_reader.separator(ekcp.scene_name);
 		if(scene_sub_directory.length()<=0)
 			scene_proxy_directory_name+=File.separator;
 		else if(scene_sub_directory.charAt(0)==File.separatorChar)
@@ -153,9 +151,9 @@ public class scene_parameter
 
 		fr.close();
 		
-		fr=new file_reader(my_extra_parameter_file_name,my_extra_parameter_charset);
+		fr=new file_reader(ekcp.extra_parameter_file_name,ekcp.extra_parameter_charset);
 		if((fr.error_flag())||(fr.eof()))
-			debug_information.println("Open assemble extra configure file fail : ",my_extra_parameter_file_name);
+			debug_information.println("Open assemble extra configure file fail : ",ekcp.extra_parameter_file_name);
 		
 		extra_directory_name=fr.directory_name;
 		extra_parameter_charset=fr.get_charset();
