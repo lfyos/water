@@ -3,7 +3,6 @@ package kernel_client_interface;
 import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
 import kernel_engine.client_information;
-import kernel_common_class.nanosecond_timer;
 import kernel_common_class.debug_information;
 
 public class dispatch_request_main
@@ -25,7 +24,6 @@ public class dispatch_request_main
 		switch(str){
 		case "creation":
 			dispatch_create_engine_request.do_dispatch(0,ek,ci);
-			ci.request_response.request_time=nanosecond_timer.absolute_nanoseconds();
 			return null;
 		case "initialization":
 			ci.statistics_client.register_system_call_execute_number(1,0);
@@ -62,7 +60,7 @@ public class dispatch_request_main
 	{
 		ek.current_time.refresh_timer();
 		String ret_val[]=get_engine_result_routine(delay_time_length,ek,ci);
-		ek.process_reset();		
+		ek.process_reset();
 		return (ret_val==null)?null:new String[] {file_reader.separator(ret_val[0]),ret_val[1]};
 	}
 }

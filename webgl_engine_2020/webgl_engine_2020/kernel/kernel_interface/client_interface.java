@@ -17,15 +17,15 @@ import kernel_engine.system_parameter;
 import kernel_engine.engine_kernel;
 import kernel_engine.engine_call_result;
 import kernel_engine.interface_statistics;
-import kernel_engine.engine_kernel_link_list;
-import kernel_engine.engine_kernel_link_list_and_client_information;
+import kernel_engine.engine_kernel_container;
+import kernel_engine.engine_kernel_and_client_information_container;
 
 public class client_interface
 {
 	class ek_ci_balance_tree_node extends balance_tree_item
 	{
 		public long channel_id;
-		public engine_kernel_link_list_and_client_information ek_ci;
+		public engine_kernel_and_client_information_container ek_ci;
 		public ek_ci_balance_tree_node front,back;
 		
 		public void destroy()
@@ -68,8 +68,7 @@ public class client_interface
 	
 	private engine_call_result create_engine_routine(
 			engine_interface engine_container,ReentrantLock my_client_interface_lock,
-			client_request_response request_response,long delay_time_length,
-			interface_statistics statistics_interface)
+			client_request_response request_response,long delay_time_length,interface_statistics statistics_interface)
 	{
 		if(statistics_user.user_engine_kernel_number>statistics_user.user_max_engine_kernel_number) {
 			debug_information.print  ("Create too many engine\t\t\t:\t",statistics_user.user_engine_kernel_number);
@@ -85,7 +84,7 @@ public class client_interface
 		
 		cpb.set_process_bar(true,"start_create_kernel","",1,2);
 
-		engine_kernel_link_list create_ekll=null;
+		engine_kernel_container create_ekll=null;
 
 		my_client_interface_lock.unlock();
 		try{
@@ -105,9 +104,6 @@ public class client_interface
 			return null;
 		}
 
-		engine_kernel_link_list_and_client_information ec;
-		ec=new engine_kernel_link_list_and_client_information(create_ekll);
-
 		debug_information.println();
 		debug_information.print  (request_response.implementor.get_client_id(),"	succed in creating engine");
 		debug_information.print  (", link number is ",create_ekll.get_link_number());
@@ -119,17 +115,18 @@ public class client_interface
 		else
 			debug_information.println(", assemble has already been loaded");
 
-		ec.lock_number++;
+		engine_kernel_and_client_information_container ekcic=new engine_kernel_and_client_information_container(create_ekll);
+		
+		ekcic.lock_number++;
 		my_client_interface_lock.unlock();
 		
 		cpb.set_process_bar(true,"start_load_scene","",1,2);
 		
 		engine_call_result ecr=null;
 		try{
-			ecr=ec.engine_kernel_link_list.get_engine_result(
-					cpb,engine_container.component_load_source_cont,
-					client_scene_file_name,client_scene_file_charset,ec,request_response,
-					delay_time_length,statistics_user,statistics_interface);
+			ecr=ekcic.engine_kernel_cont.get_engine_result(
+					cpb,engine_container.component_load_source_cont,client_scene_file_name,client_scene_file_charset,
+					ekcic,request_response,delay_time_length,statistics_user,statistics_interface);
 		}catch(Exception e) {
 			ecr=null;
 			debug_information.println("ec[channel_id].engine_kernel_link_list.get_engine_result fail");
@@ -137,7 +134,7 @@ public class client_interface
 		}
 		
 		my_client_interface_lock.lock();
-		ec.lock_number--;
+		ekcic.lock_number--;
 
 		if(create_ekll.ek!=null){
 			statistics_user.user_engine_kernel_number++;
@@ -153,9 +150,8 @@ public class client_interface
 		debug_information.println("/",statistics_user.user_max_engine_component_number);
 		
 		ek_ci_balance_tree_node ecn=new ek_ci_balance_tree_node(
-				(ec.client_information==null)?(-(request_response.request_time)):(ec.client_information.channel_id));
-		ecn.ek_ci=ec;
-		
+				(ekcic.client_information==null)?0:(ekcic.client_information.channel_id));
+		ecn.ek_ci=ekcic;
 		if(bt==null){
 			bt=new balance_tree(ecn);
 			first=ecn;
@@ -216,47 +212,40 @@ public class client_interface
 		
 		return ret_val;
 	}
-	private engine_call_result execute_system_call_routine(
-			engine_interface engine_container,long channel_id,ReentrantLock my_client_interface_lock,
-			client_request_response request_response,interface_statistics statistics_interface)
+	private engine_call_result execute_system_call_routine(long channel_id,client_request_response request_response,
+			engine_interface engine_container,interface_statistics statistics_interface,ReentrantLock my_client_interface_lock)
 	{
 		long delay_time_length;
 		if((delay_time_length=manager_delay.process_delay_time_length())<0){
-			debug_information.println("TIME OUT FOUND,Client ID is ",
-					request_response.implementor.get_client_id());
+			debug_information.println("TIME OUT FOUND,Client ID is ",request_response.implementor.get_client_id());
 			return null;
 		}
 		if(bt==null){
-			debug_information.print  ("No client_interface exist,Client ID is ",
-					request_response.implementor.get_client_id());
+			debug_information.print  ("No client_interface exist,Client ID is ",request_response.implementor.get_client_id());
 			debug_information.println(",channel_id is ",channel_id);
 			return null;
 		}
 		
 		balance_tree_item bti=bt.search(new ek_ci_balance_tree_node(channel_id),false,false);
 		if(bti==null) {
-			debug_information.print  ("Search client_interface fail,Client ID is ",
-					request_response.implementor.get_client_id());
+			debug_information.print  ("Search client_interface fail,Client ID is ",request_response.implementor.get_client_id());
 			debug_information.println(",channel_id is ",channel_id);
 			return null;
 		}
 		if(!(bti instanceof ek_ci_balance_tree_node)){
-			debug_information.print  ("Search client_interface find wrong node,Client ID is ",
-					request_response.implementor.get_client_id());
+			debug_information.print  ("Search client_interface find wrong node,Client ID is ",request_response.implementor.get_client_id());
 			debug_information.println(",channel_id is ",channel_id);
 			return null;
 		}
-		
 		ek_ci_balance_tree_node ecn=(ek_ci_balance_tree_node)bti;
+		
 		if(ecn.ek_ci.client_information==null){
-			debug_information.println("ecn.ek_ci.client_information==null,Client ID is ",
-					request_response.implementor.get_client_id());
+			debug_information.println("ecn.ek_ci.client_information==null,Client ID is ",request_response.implementor.get_client_id());
 			debug_information.println(",channel_id is ",channel_id);
 			return null;
 		}
-		if(ecn.ek_ci.engine_kernel_link_list==null){
-			debug_information.println("ecn.ek_ci.engine_kernel_link_list==null,Client ID is ",
-					request_response.implementor.get_client_id());
+		if(ecn.ek_ci.engine_kernel_cont==null){
+			debug_information.println("ecn.ek_ci.engine_kernel_link_list==null,Client ID is ",request_response.implementor.get_client_id());
 			debug_information.println(",channel_id is ",channel_id);
 			return null;
 		}
@@ -267,9 +256,9 @@ public class client_interface
 		
 		my_client_interface_lock.unlock();
 		try{
-			ecr=ecn.ek_ci.engine_kernel_link_list.get_engine_result(get_process_bar(request_response),
-					engine_container.component_load_source_cont,client_scene_file_name,client_scene_file_charset,ecn.ek_ci,
-					request_response,delay_time_length,statistics_user,statistics_interface);
+			ecr=ecn.ek_ci.engine_kernel_cont.get_engine_result(get_process_bar(request_response),
+					engine_container.component_load_source_cont,client_scene_file_name,client_scene_file_charset,
+					ecn.ek_ci,request_response,delay_time_length,statistics_user,statistics_interface);
 		}catch(Exception e){
 			ecr=null;
 			debug_information.println("ecn.ek_ci.engine_kernel_link_list.get_engine_result fail");
@@ -293,11 +282,11 @@ public class client_interface
 			ecn.front=null;
 			first.front=ecn;
 			first=ecn;
-		}else {	
+		}else{	
 			if((ecn==last)||(first==last))
 				return ecr;
 			
-			if(ecn==first) {
+			if(ecn==first){
 				first=first.back;
 				first.front=null;
 			}else{
@@ -311,30 +300,32 @@ public class client_interface
 		}
 		return ecr;
 	}
-	public engine_call_result execute_system_call(engine_interface engine_container,long channel_id,
-			client_request_response request_response,interface_statistics statistics_interface)
+	public engine_call_result execute_system_call(
+			long channel_id,client_request_response request_response,
+			engine_interface engine_container,interface_statistics statistics_interface)
 	{
-		engine_call_result ret_val=null;
-		if(channel_id<0)
-			return ret_val;
-
+		if(channel_id<0){
+			debug_information.println("client_interface channel_id<0		",channel_id);
+			return null;
+		}
+		if(touch_time<=0) {
+			debug_information.println("client_interface touch_time<=0		",request_response.implementor.get_client_id());
+			return null;
+		}
 		ReentrantLock my_client_interface_lock=client_interface_lock;
 		my_client_interface_lock.lock();
 		
-		if(manager_delay==null)
-			debug_information.println("manager_delay==null		",request_response.implementor.get_client_id());
-		else {
-			try{
-				ret_val=execute_system_call_routine(engine_container,channel_id,
-						my_client_interface_lock,request_response,statistics_interface);
-			}catch(Exception e) {
-				ret_val=null;
-				debug_information.println(
-						"execute_system_call of client_interface_base fail");
-				debug_information.println(e.toString());
-				e.printStackTrace();
-			}
-			process_timeout(request_response);
+		process_timeout(request_response);
+		
+		engine_call_result ret_val=null;
+		try{
+			ret_val=execute_system_call_routine(channel_id,
+					request_response,engine_container,statistics_interface,my_client_interface_lock);
+		}catch(Exception e) {
+			ret_val=null;
+			debug_information.println("execute_system_call of client_interface_base fail");
+			debug_information.println(e.toString());
+			e.printStackTrace();
 		}
 		my_client_interface_lock.unlock();
 		return ret_val;
@@ -342,33 +333,31 @@ public class client_interface
 	public engine_call_result execute_create_call(client_request_response request_response,
 			engine_interface engine_container,interface_statistics statistics_interface)
 	{
-		engine_call_result ret_val=null;
-		
+		if(touch_time<=0) {
+			debug_information.println("client_interface touch_time<=0		",request_response.implementor.get_client_id());
+			return null;
+		}
+
 		ReentrantLock my_client_interface_lock=client_interface_lock;
 		my_client_interface_lock.lock();
 		
-		if(manager_delay==null)
-			debug_information.println("manager_delay==null		",request_response.implementor.get_client_id());
-		else {
-			process_timeout(request_response);
-			try{
-				long delay_time_length;
-				if((delay_time_length=manager_delay.process_delay_time_length())<0)
-					debug_information.println("TIME OUT FOUND,Client ID is ",
-							request_response.implementor.get_client_id());
-				else
-					ret_val=create_engine(engine_container,my_client_interface_lock,
-							request_response,delay_time_length,statistics_interface);
-			}catch(Exception e){
-				ret_val=null;
-				debug_information.println(
-						"execute_create_call of client_interface_base fail");
-				debug_information.println(e.toString());
-				e.printStackTrace();
-			}
-			process_timeout(request_response);
-		}
+		process_timeout(request_response);
 		
+		engine_call_result ret_val=null;
+		try{
+			long delay_time_length;
+			if((delay_time_length=manager_delay.process_delay_time_length())<0)
+				debug_information.println("TIME OUT FOUND,Client ID is ",request_response.implementor.get_client_id());
+			else
+				ret_val=create_engine(engine_container,my_client_interface_lock,
+						request_response,delay_time_length,statistics_interface);
+		}catch(Exception e){
+			ret_val=null;
+			debug_information.println(
+					"execute_create_call of client_interface_base fail");
+			debug_information.println(e.toString());
+			e.printStackTrace();
+		}
 		my_client_interface_lock.unlock();
 	
 		return ret_val;
@@ -440,7 +429,7 @@ public class client_interface
 			return true;
 		if(ecn.ek_ci.lock_number>0)
 			return true;
-		if((ek=ecn.ek_ci.engine_kernel_link_list.ek)!=null){
+		if((ek=ecn.ek_ci.engine_kernel_cont.ek)!=null){
 			statistics_user.user_engine_kernel_number--;
 			if(ek.component_cont!=null)
 				if(ek.component_cont.root_component!=null)
@@ -453,12 +442,12 @@ public class client_interface
 		debug_information.println("/",statistics_user.user_max_engine_component_number);
 		
 		if(ecn.ek_ci.client_information!=null) {
-			ecn.ek_ci.engine_kernel_link_list.destroy_client_information(ecn.ek_ci.client_information);
+			ecn.ek_ci.engine_kernel_cont.destroy_client_information(ecn.ek_ci.client_information);
 			ecn.ek_ci.client_information=null;
 		}
-		if(ecn.ek_ci.engine_kernel_link_list!=null) {
-			ecn.ek_ci.engine_kernel_link_list.decrease_link_number();
-			ecn.ek_ci.engine_kernel_link_list=null;
+		if(ecn.ek_ci.engine_kernel_cont!=null) {
+			ecn.ek_ci.engine_kernel_cont.decrease_link_number();
+			ecn.ek_ci.engine_kernel_cont=null;
 		}
 		if(first==last){
 			bt.destroy();
@@ -487,7 +476,7 @@ public class client_interface
 		while(first!=null){
 			if(first.ek_ci.lock_number>0)
 				return;
-			if((first.ek_ci.client_information==null)||(first.ek_ci.engine_kernel_link_list==null)) {
+			if((first.ek_ci.client_information==null)||(first.ek_ci.engine_kernel_cont==null)) {
 				debug_information.print  ("Delete time out client_information found, client id is ");
 				debug_information.println(request_response.implementor.get_client_id());
 				debug_information.println(
@@ -528,20 +517,21 @@ public class client_interface
 		for(ek_ci_balance_tree_node p=first;p!=null;p=p.back)
 			if(p.ek_ci!=null)
 				if(p.ek_ci.client_information!=null) {
-					p.ek_ci.engine_kernel_link_list.destroy_client_information(p.ek_ci.client_information);
+					p.ek_ci.engine_kernel_cont.destroy_client_information(p.ek_ci.client_information);
 					p.ek_ci.client_information=null;
 				}
 		for(ek_ci_balance_tree_node p=first;p!=null;p=p.back)
 			if(p.ek_ci!=null)
-				if(p.ek_ci.engine_kernel_link_list!=null) {
-					p.ek_ci.engine_kernel_link_list.decrease_link_number();
-					p.ek_ci.engine_kernel_link_list=null;
+				if(p.ek_ci.engine_kernel_cont!=null) {
+					p.ek_ci.engine_kernel_cont.decrease_link_number();
+					p.ek_ci.engine_kernel_cont=null;
 				}
 		for(ek_ci_balance_tree_node p=first,q;p!=null;){
 			q=p;
 			p=p.back;
 			q.destroy();
 		}
+
 		first=null;
 		last=null;
 		
@@ -551,13 +541,10 @@ public class client_interface
 		}
 		if(system_par!=null)
 			system_par=null;
-
 		if(manager_delay!=null)
 			manager_delay=null;
-
 		if(client_interface_lock!=null)
 			client_interface_lock=null;
-		
 		if(process_bar_cont!=null) {
 			process_bar_cont.destroy();
 			process_bar_cont=null;

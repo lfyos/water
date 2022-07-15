@@ -138,7 +138,7 @@ public class client_request_switcher
 				e.printStackTrace();
 				break;
 			}
-			ecr=client.execute_system_call(engine_container,channel_id,request_response,statistics_interface);
+			ecr=client.execute_system_call(channel_id,request_response,engine_container,statistics_interface);
 			break;
 		}
 		return ecr;
@@ -207,9 +207,11 @@ public class client_request_switcher
 			}
 		}
 		request_response.destroy();
-		
+		long current_time=nanosecond_timer.absolute_nanoseconds();
+		if(request_response.request_time>0)
+			request_response.request_time=current_time;
 		if(client!=null)
-			client.touch_time=nanosecond_timer.absolute_nanoseconds();
+			client.touch_time=current_time;
 	}
 	public client_request_switcher()
 	{

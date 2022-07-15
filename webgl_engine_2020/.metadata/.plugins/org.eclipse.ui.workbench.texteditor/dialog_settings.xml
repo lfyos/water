@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="public"/>
+		<item key="selection" value=""/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="client_interface"/>
+			<item value="Active client_interface number is"/>
+			<item value="p."/>
+			<item value="touch_time&lt;=0"/>
 			<item value="private"/>
 			<item value="volatile"/>
 			<item value="volatile long"/>
@@ -19,14 +23,10 @@
 			<item value="process_bar"/>
 			<item value="client_process_bar"/>
 			<item value="my_channel"/>
-			<item value="this.channel"/>
-			<item value="url_and_channel"/>
-			<item value="render_initialization"/>
-			<item value="process_bar_render"/>
 		</list>
 		<list key="replacehistory">
-			<item value="public"/>
 			<item value=""/>
+			<item value="public"/>
 			<item value="int"/>
 			<item value="statistics_user"/>
 			<item value="my_channel"/>

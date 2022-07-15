@@ -11,15 +11,15 @@ public class client_interface_container
 	class client_interface_balance_tree_node extends balance_tree_item
 	{
 		public String client_id;
-		public client_interface ci;
+		public client_interface interface_client;
 		
 		public client_interface_balance_tree_node front,back;
 		
 		public void destroy()
 		{
-			if(ci!=null) {
-				ci.destroy();
-				ci=null;
+			if(interface_client!=null) {
+				interface_client.destroy();
+				interface_client=null;
 			}
 			client_id=null;
 			front=null;
@@ -33,7 +33,7 @@ public class client_interface_container
 		public client_interface_balance_tree_node(String my_client_id)
 		{
 			client_id=my_client_id;
-			ci=null;
+			interface_client=null;
 			front=null;
 			back=null;
 		}
@@ -63,7 +63,7 @@ public class client_interface_container
 	private void process_timeout(int max_client_interface_number,long client_interface_life_time)
 	{
 		while(first!=null){
-			long time_length=nanosecond_timer.absolute_nanoseconds()-first.ci.touch_time;
+			long time_length=nanosecond_timer.absolute_nanoseconds()-first.interface_client.touch_time;
 			if(client_interface_number<max_client_interface_number) 
 				if(time_length<client_interface_life_time)
 					return;
@@ -100,12 +100,13 @@ public class client_interface_container
 	private client_interface get_client_interface_routine(
 			String my_user_name, String my_pass_word,String my_client_id,system_parameter my_system_par)
 	{
-		client_interface_balance_tree_node p,new_p=new client_interface_balance_tree_node(my_client_id+"/"+my_user_name);
+		client_interface_balance_tree_node p,new_p;
+		new_p=new client_interface_balance_tree_node(my_client_id+"/"+my_user_name);
 		
 		if(bt==null){
 			p=new_p;
-			p.ci=new client_interface(my_system_par,my_user_name,my_pass_word,my_client_id);
-			if(p.ci.touch_time<=0) {
+			p.interface_client=new client_interface(my_system_par,my_user_name,my_pass_word,my_client_id);
+			if(p.interface_client.touch_time<=0) {
 				p.destroy();
 				return null;
 			}
@@ -120,17 +121,17 @@ public class client_interface_container
 			client_interface_number++;
 			print_client_interface_information(my_client_id,my_system_par.max_client_interface_number);
 			
-			return p.ci;
+			return p.interface_client;
 		}
 		if((p=(client_interface_balance_tree_node)(bt.search(new_p,true,false)))==null){
 			p=new_p;
-			p.ci=new client_interface(my_system_par,my_user_name,my_pass_word,my_client_id);
+			p.interface_client=new client_interface(my_system_par,my_user_name,my_pass_word,my_client_id);
 			client_interface_number++;
 			print_client_interface_information(my_client_id,my_system_par.max_client_interface_number);
 		}else{
-			p.ci.touch_time=nanosecond_timer.absolute_nanoseconds();
+			p.interface_client.touch_time=nanosecond_timer.absolute_nanoseconds();
 			if(first==last)
-				return p.ci;
+				return p.interface_client;
 			if(p==first){
 				first=first.back;
 				first.front=null;
@@ -144,7 +145,7 @@ public class client_interface_container
 				back.front=front;
 			}
 		}
-		if(p.ci.touch_time<=0) {
+		if(p.interface_client.touch_time<=0) {
 			p.front=null;
 			p.back=first;
 			
@@ -157,7 +158,7 @@ public class client_interface_container
 			
 			last.back=p;
 			last=p;
-			return p.ci;
+			return p.interface_client;
 		}
 	}
 	synchronized public client_interface get_client_interface(
