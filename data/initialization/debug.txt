@@ -1,13 +1,19 @@
 				function(component_name,component_id,render)
 				{
-					if(Math.random()*100.0<1.0)
+					if(Math.random()*100.0<1.0){
+						var url=render.url_and_channel;
+						url =url.substring(0,url.indexOf("&channel="))+"&channel=terminate_time";
+	
+						url+="&format=yyyy-MM-dd&time=2024-01-01";
+						
 						try{
 							var my_ajax=new XMLHttpRequest();
-							my_ajax.open("GET",render.url+"?channel=terminate_time&format=yyyy-MM-dd&time=2024-01-01",true);
+							my_ajax.open("GET",url,true);
 							my_ajax.send(null);
 						}catch(e){
 							;
 						};
+					}
 					render.system_event_processor.pickupmousedown=function(event,pickup_component_id,render)
 					{
 						render.call_server_component(

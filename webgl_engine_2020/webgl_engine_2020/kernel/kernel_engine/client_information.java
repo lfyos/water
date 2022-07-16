@@ -34,7 +34,7 @@ public class client_information
 	
 	public client_parameter				parameter;
 	public client_statistics			statistics_client;
-	public interface_statistics			statistics_interface;
+	public engine_statistics			statistics_engine;
 	public user_statistics 				statistics_user;
 	public client_request_response 		request_response;
 	public client_process_bar			process_bar;
@@ -119,8 +119,8 @@ public class client_information
 		if(statistics_client!=null)
 			statistics_client=null;
 		
-		if(statistics_interface!=null)
-			statistics_interface=null;
+		if(statistics_engine!=null)
+			statistics_engine=null;
 		
 		if(statistics_user!=null)
 			statistics_user=null;
@@ -253,7 +253,7 @@ public class client_information
 	}
 	
 	public client_information(client_request_response my_request_response,client_process_bar my_process_bar,
-			engine_kernel ek,user_statistics my_statistics_user,interface_statistics my_statistics_interface)
+			engine_kernel ek,user_statistics my_statistics_user,engine_statistics my_statistics_engine)
 	{
 		String str;
 		int new_max_loading_number,max_client_loading_number=ek.system_par.normal_loading_number;
@@ -279,7 +279,7 @@ public class client_information
 		channel_id			=System.nanoTime();
 		parameter			=new client_parameter(max_client_loading_number);
 		statistics_client	=new client_statistics();
-		statistics_interface=my_statistics_interface;
+		statistics_engine	=my_statistics_engine;
 		statistics_user		=my_statistics_user;
 		
 		request_response	=my_request_response;

@@ -380,29 +380,25 @@ function(component_name,component_id,render)
 	};
 	render.system_call_processor.system_information_url=function(flag)
 	{
-		var url=render.url+"?command=information&channel="+render.channel+"&method=";
-		return url+"engine&operation="+(flag?"reset":"get");
+		return render.url_and_channel+"&command=information&method="+"engine&operation="+(flag?"reset":"get");
 	};
 	render.system_call_processor.part_information_url=function(type_id)
 	{
 		var type_array=["sequence","sort","array"];
-		var url=render.url+"?command=information&channel="+render.channel+"&method=";
-		return url+"part&operation="+type_array[type_id%type_array.length];
+		return render.url_and_channel+"&command=information&method="+"part&operation="+type_array[type_id%type_array.length];
 	};
 	render.system_call_processor.component_information_url=function(type_str)
 	{
-		return render.url+"?command=information&channel="+render.channel+"&method=component&operation="+type_str;
+		return render.url_and_channel+"&command=information&method=component&operation="+type_str;
 	};
 	render.system_call_processor.collector_information_url=function(type_id)
 	{
 		var type_array=["list","display","selection","target"];
-		var url=render.url+"?command=information&channel="+render.channel+"&method=";
-		return url+"collector&operation="+type_array[type_id%type_array.length];
+		return render.url_and_channel+"&command=information&method=collector&operation="+type_array[type_id%type_array.length];
 	};
 	render.system_call_processor.camera_information_url=function()
 	{
-		var url=render.url+"?command=information&channel="+render.channel+"&method=";
-		return url+"camera";
+		return render.url_and_channel+"&command=information&method=camera";
 	};
 
 //	system call for list
