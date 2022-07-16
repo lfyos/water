@@ -9,7 +9,6 @@ public class balance_tree
 	public void destroy()
 	{
 		item=null;
-		
 		if(left_child!=null) {
 			left_child.destroy();
 			left_child=null;
@@ -238,5 +237,17 @@ public class balance_tree
 	public balance_tree_item search(balance_tree_item my_search_item,boolean do_append_flag,boolean do_delete_flag)
 	{
 		return search(my_search_item,null,do_append_flag?false:true,do_delete_flag?false:true);
+	}
+	public balance_tree get_left_child()
+	{
+		return left_child;
+	}
+	public balance_tree get_right_child()
+	{
+		return right_child;
+	}
+	public balance_tree_item get_item()
+	{
+		return item;
 	}
 }
