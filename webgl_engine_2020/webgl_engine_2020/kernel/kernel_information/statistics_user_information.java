@@ -16,8 +16,8 @@ public class statistics_user_information  extends jason_creator
 		print("user_max_engine_kernel_number",		ci.statistics_user.user_max_engine_kernel_number);
 		print("user_max_engine_component_number",	ci.statistics_user.user_max_engine_component_number);
 		
-		print("engine_kernel_number",				ci.statistics_interface.engine_kernel_number);
-		print("engine_component_number",			ci.statistics_interface.engine_component_number);
+		print("engine_kernel_number",				ci.statistics_engine.engine_kernel_number);
+		print("engine_component_number",			ci.statistics_engine.engine_component_number);
 		
 		print("max_engine_kernel_number",			ek.system_par.max_engine_kernel_number);
 		print("max_engine_component_number",		ek.system_par.max_engine_component_number);

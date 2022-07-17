@@ -15,20 +15,15 @@ public class engine_kernel_container
 	public boolean initilization_flag;
 	public volatile ReentrantLock engine_kernel_container_lock;
 
-	public void destroy(interface_statistics statistics_interface)
+	public void destroy()
 	{
 		ReentrantLock my_engine_kernel_container_lock;
 		if((my_engine_kernel_container_lock=engine_kernel_container_lock)!=null){
 			my_engine_kernel_container_lock.lock();
 			if(ek!=null) {
-				statistics_interface.engine_kernel_number--;
-				if(ek.component_cont==null)
-					if(ek.component_cont.root_component!=null)
-						statistics_interface.engine_component_number-=ek.component_cont.root_component.component_id+1;
 				ek.destroy();
 				ek=null;
 			}
-			
 			if(engine_kernel_container_lock!=null)
 				engine_kernel_container_lock=null;
 			
@@ -41,7 +36,7 @@ public class engine_kernel_container
 			client_request_response request_response,system_parameter system_par,
 			String client_scene_file_name,String client_scene_file_charset,
 			render_container original_render,part_loader_container my_part_loader_cont,
-			interface_statistics statistics_interface)
+			engine_statistics statistics_engine)
 	{
 		engine_kernel_create_parameter create_parameter=new engine_kernel_create_parameter(
 				my_scene_name,my_link_name,client_scene_file_name,client_scene_file_charset,system_par);
@@ -55,7 +50,6 @@ public class engine_kernel_container
 			ek=new engine_kernel(create_parameter,request_response,system_par,original_render,my_part_loader_cont);
 			create_parameter.scene_name=my_scene_name;
 			create_parameter.link_name=my_link_name;
-			statistics_interface.engine_kernel_number++;
 		}
 		link_number=0;
 		initilization_flag=true;

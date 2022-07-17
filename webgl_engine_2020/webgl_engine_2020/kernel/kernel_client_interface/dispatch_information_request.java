@@ -32,7 +32,7 @@ public class dispatch_information_request
 			switch(str) {
 			case "reset":
 				ci.statistics_client.clear();
-				ci.statistics_interface.clear();
+				ci.statistics_engine.clear();
 			case "get":
 				break;
 			}

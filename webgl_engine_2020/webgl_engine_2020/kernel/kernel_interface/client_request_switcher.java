@@ -6,7 +6,7 @@ import java.util.Date;
 import kernel_common_class.debug_information;
 import kernel_common_class.nanosecond_timer;
 import kernel_engine.engine_call_result;
-import kernel_engine.interface_statistics;
+import kernel_engine.engine_statistics;
 import kernel_engine.system_parameter;
 import kernel_network.client_request_response;
 import kernel_network.network_implementation;
@@ -19,7 +19,7 @@ public class client_request_switcher
 	private engine_interface engine_container;
 	private client_interface_container client_container;
 	private proxy_downloader download_proxy;
-	private interface_statistics statistics_interface;
+	private engine_statistics statistics_engine;
 	
 	private volatile int creation_engine_lock_number;
 	synchronized private int test_creation_engine_lock_number(int modify_number)
@@ -36,19 +36,19 @@ public class client_request_switcher
 			program_javascript=null;
 		}
 		if(engine_container!=null) {
-			engine_container.destroy(statistics_interface);
+			engine_container.destroy(statistics_engine);
 			engine_container=null;
 		}
 		if(client_container!=null) {
-			client_container.destroy(statistics_interface);
+			client_container.destroy(statistics_engine);
 			client_container=null;
 		}
 		if(download_proxy!=null) {
 			download_proxy.destroy();
 			download_proxy=null;
 		}
-		if(statistics_interface!=null)
-			statistics_interface=null;
+		if(statistics_engine!=null)
+			statistics_engine=null;
 		creation_engine_lock_number=0;
 	}
 	private engine_call_result system_call_switch(
@@ -101,24 +101,24 @@ public class client_request_switcher
 				system_par.text_class_charset,system_par.text_jar_file_charset);
 			break;
 		case "buffer":
-			ecr=download_proxy.download(request_response,system_par,statistics_interface);
+			ecr=download_proxy.download(request_response,system_par,statistics_engine);
 			break;
 		case "proxy":
-			if((ecr=download_proxy.download(request_response,system_par,statistics_interface))!=null)
+			if((ecr=download_proxy.download(request_response,system_par,statistics_engine))!=null)
 				ecr.date_string=null;
 			break;
 		case "process_bar":
 			ecr=client.process_bar(request_response);
 			break;
 		case "clear":
-			client.clear_all_engine(engine_container,statistics_interface);
+			client.clear_all_engine(engine_container,statistics_engine);
 			break;
 		case "creation":
 			int creation_engine_lock_number=test_creation_engine_lock_number(1);
 			if((new Date().getTime()<system_par.system_terminate_time)
 				&&(creation_engine_lock_number<system_par.create_engine_concurrent_number))
 			{
-				ecr=client.execute_create_call(request_response,engine_container,statistics_interface);
+				ecr=client.execute_create_call(request_response,engine_container,statistics_engine);
 			}else{
 				ecr=new engine_call_result(null,null,null,null,null,"*");
 				request_response.println("false");
@@ -133,12 +133,12 @@ public class client_request_switcher
 			}catch(Exception e) {
 				debug_information.println("Channel id is wrong");
 				debug_information.println("client:",request_response.implementor.get_client_id());
-				debug_information.println(",Channel:",str);
-				debug_information.println(",exception:",e.toString());
+				debug_information.println("Channel:",str);
+				debug_information.println("exception:",e.toString());
 				e.printStackTrace();
 				break;
 			}
-			ecr=client.execute_system_call(channel_id,request_response,engine_container,statistics_interface);
+			ecr=client.execute_system_call(channel_id,request_response,engine_container,statistics_engine);
 			break;
 		}
 		return ecr;
@@ -168,7 +168,7 @@ public class client_request_switcher
 				(my_user_name==null)?"NoName"		:my_user_name,
 				(my_pass_word==null)?"NoPassword"	:my_pass_word,
 				(my_client_id==null)?"NoClientID"	:my_client_id,
-				statistics_interface);
+				statistics_engine);
 		if(client!=null) {
 			engine_call_result ecr=system_call_switch(request_response,client);
 			if(ecr!=null){
@@ -189,21 +189,21 @@ public class client_request_switcher
 				}
 				long my_statistics[];		
 				if(ecr.file_name!=null){
-					statistics_interface.responsing_file_data_number++;
+					statistics_engine.responsing_file_data_number++;
 					my_statistics=request_response.response_file_data(compress_response_header,ecr,system_par);
-					statistics_interface.responsing_file_data_number--;
+					statistics_engine.responsing_file_data_number--;
 					
-					statistics_interface.file_download_number++;
-					statistics_interface.file_download_data_uncompress_length+=my_statistics[0];
-					statistics_interface.file_download_data_compress_length	 +=my_statistics[1];
+					statistics_engine.file_download_number++;
+					statistics_engine.file_download_data_uncompress_length	+=my_statistics[0];
+					statistics_engine.file_download_data_compress_length	+=my_statistics[1];
 				}else{
-					statistics_interface.responsing_network_data_number++;
+					statistics_engine.responsing_network_data_number++;
 					my_statistics=request_response.response_network_data(compress_response_header,ecr,system_par);
-					statistics_interface.responsing_network_data_number--;
+					statistics_engine.responsing_network_data_number--;
 					
-					statistics_interface.network_data_number++;
-					statistics_interface.network_data_uncompress_length		+=my_statistics[0];
-					statistics_interface.network_data_compress_length		+=my_statistics[1];
+					statistics_engine.network_data_number++;
+					statistics_engine.network_data_uncompress_length	+=my_statistics[0];
+					statistics_engine.network_data_compress_length		+=my_statistics[1];
 				}
 			}
 		}
@@ -216,13 +216,13 @@ public class client_request_switcher
 	}
 	public client_request_switcher()
 	{
-		system_par					=null;
-		program_javascript			=null;
+		system_par			=null;
+		program_javascript	=null;
 		
-		engine_container			=new engine_interface();
-		client_container			=new client_interface_container();
-		download_proxy				=new proxy_downloader();
-		statistics_interface		=new interface_statistics();
+		engine_container	=new engine_interface();
+		client_container	=new client_interface_container();
+		download_proxy		=new proxy_downloader();
+		statistics_engine	=new engine_statistics();
 		
 		creation_engine_lock_number	=0;
 	}

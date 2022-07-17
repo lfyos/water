@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="component_load_source_cont"/>
+		<item key="selection" value="terminat"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="terminat"/>
+			<item value=".url"/>
+			<item value="url_and_channel"/>
+			<item value="collector_information_url"/>
+			<item value="render.url"/>
+			<item value="system_information_url"/>
+			<item value="this.url"/>
+			<item value="channel"/>
+			<item value="render.url+"/>
+			<item value="engine_interface load scene,scene_name:"/>
+			<item value="Current engine_kernel_number is"/>
+			<item value="interface_statistics statistics_interface"/>
 			<item value="component_load_source_cont"/>
 			<item value="ei"/>
 			<item value="client_interface"/>
-			<item value="Active client_interface number is"/>
-			<item value="p."/>
-			<item value="touch_time&lt;=0"/>
-			<item value="private"/>
-			<item value="volatile"/>
-			<item value="volatile long"/>
-			<item value="volatile int"/>
-			<item value="synchronized"/>
-			<item value="client_scene_file_name"/>
-			<item value="process_bar_cont"/>
-			<item value="session.statistics_user"/>
-			<item value="process_bar"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>
