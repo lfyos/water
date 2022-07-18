@@ -22374,302 +22374,6 @@ version	2015.10
                         
                         /*	match number	*/	0
                         
-        /*	name				*/	00052:没有标记
-        /*	audio				*/	no_sound
-        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
-        /*	sequence/parallel	*/	sequence
-        /*	direction			*/	no_direction
-        /*	camera scale		*/	upper	1.0
-        /*	children number		*/	6
-        
-                /*	name				*/	00052:没有标记/00001:没有标记
-                /*	audio				*/	sound\52.mp3
-                /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
-                /*	sequence/parallel	*/	parallel
-                /*	direction			*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name				*/	00052:没有标记/00001:没有标记/00001
-                        /*	audio				*/	sound\52.mp3
-                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction			*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                两个14甲_s13_110_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 1.75E10
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.0 -1.4005E-4 0.0 1.0 
-                            
-                            /*	time length	*/	 1.75E10
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name				*/	00052:没有标记/00002:没有标记
-                /*	audio				*/	sound\52.mp3
-                /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
-                /*	sequence/parallel	*/	parallel
-                /*	direction			*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name				*/	00052:没有标记/00002:没有标记/00001
-                        /*	audio				*/	sound\52.mp3
-                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction			*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                两个6号29乙螺栓_x12_111_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 2.5E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 0.882249 -0.470783 -1.61522E-16 0.0 0.470783 0.882249 -6.76104E-17 0.0 1.74333E-16 -1.63928E-17 1.0 0.0 -0.6245 0.781025 0.0 1.0 
-                            
-                            /*	time length	*/	 2.5E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name				*/	00052:没有标记/00003:没有标记
-                /*	audio				*/	sound\52.mp3
-                /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
-                /*	sequence/parallel	*/	parallel
-                /*	direction			*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name				*/	00052:没有标记/00003:没有标记/00001
-                        /*	audio				*/	sound\52.mp3
-                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction			*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                两个6号29乙螺栓_s13_121_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 2.5E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 0.642787 0.766044 -9.77663E-18 0.0 -0.766044 0.642787 -7.65845E-19 0.0 5.69761E-18 7.98164E-18 1.0 0.0 0.624719 0.78085 0.0 1.0 
-                            
-                            /*	time length	*/	 2.5E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name				*/	00052:没有标记/00004:没有标记
-                /*	audio				*/	sound\52.mp3
-                /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
-                /*	sequence/parallel	*/	parallel
-                /*	direction			*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	2
-                
-                        /*	name				*/	00052:没有标记/00004:没有标记/00001
-                        /*	audio				*/	sound\52.mp3
-                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction			*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                33号栓钉_s13_121_2-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 2.5E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 5.55112E-17 -1.92593E-34 0.0 -1.11022E-16 1.0 4.81482E-35 0.0 -1.92593E-34 2.40741E-35 1.0 0.0 -1.77636E-15 0.0 1.2234 1.0 
-                            
-                            /*	time length	*/	 2.5E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                        /*	name				*/	00052:没有标记/00004:没有标记/00002
-                        /*	audio				*/	sound\52.mp3
-                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction			*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                33号栓钉_s13_121_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 2.5E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 -5.55112E-17 2.46519E-32 0.0 1.11022E-16 1.0 4.93038E-32 0.0 0.0 0.0 1.0 0.0 -5.32907E-15 0.0 1.01064 1.0 
-                            
-                            /*	time length	*/	 2.5E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name				*/	00052:没有标记/00005:没有标记
-                /*	audio				*/	sound\52.mp3
-                /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
-                /*	sequence/parallel	*/	parallel
-                /*	direction			*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	1
-                
-                        /*	name				*/	00052:没有标记/00005:没有标记/00001
-                        /*	audio				*/	sound\52.mp3
-                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction			*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                两个22号甲_s13_112_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 2.5E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 4.90351E-9 7.38571E-33 0.0 -4.90351E-9 1.0 3.77004E-16 0.0 1.52783E-24 -3.76895E-16 1.0 0.0 2.0 9.80702E-9 2.801E-4 1.0 
-                            
-                            /*	time length	*/	 2.5E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                /*	name				*/	00052:没有标记/00006:没有标记
-                /*	audio				*/	sound\52.mp3
-                /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
-                /*	sequence/parallel	*/	parallel
-                /*	direction			*/	no_direction
-                /*	camera scale		*/	upper	1.0
-                /*	children number		*/	2
-                
-                        /*	name				*/	00052:没有标记/00006:没有标记/00001
-                        /*	audio				*/	sound\52.mp3
-                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction			*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                四个29甲螺栓_s13_112_1-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 2.5E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 4.44089E-16 -1.0461 1.0 
-                            
-                            /*	time length	*/	 2.5E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
-                        /*	name				*/	00052:没有标记/00006:没有标记/00002
-                        /*	audio				*/	sound\52.mp3
-                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
-                        /*	sequence/parallel	*/	sequence
-                        /*	direction			*/	no_direction
-                        /*	camera scale		*/	upper	1.0
-                        /*	children number		*/	0
-                        
-                        component_start
-                        
-                                四个29甲螺栓_s13_112_2-1
-                                
-                        component_end
-                        
-                        
-                        /*	start state	*/	invisible
-                        /*	end state	*/	visible
-                        /*	step number	*/	1
-                        
-                            /*	time length	*/	 2.5E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.86879 1.0 
-                            
-                            /*	time length	*/	 2.5E9
-                            /*	parameter number */	 0	/* parameter */	
-                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
-                            
-                        
-                        /*	match number	*/	0
-                        
         /*	name				*/	00051:没有标记
         /*	audio				*/	no_sound
         /*	description			*/	第五十一步：在HH12和H13拼接点的22甲平联横联结点板上安装10甲平联斜杆，在H13和HH13拼接点的22甲平联横联结点板上安装12号支杆。在H13和HH14拼接点的22甲平联横联结点板上安装10甲平联斜杆，在H14和HH14拼接点的22甲平联横联结点板上安装12号支杆。
@@ -22976,6 +22680,302 @@ version	2015.10
                             /*	location	*/	 1.0 0.0 3.84058E-31 0.0 0.0 1.0 0.0 0.0 3.84058E-31 4.93038E-32 1.0 0.0 -4.62165E-5 0.0 -0.33 1.0 
                             
                             /*	time length	*/	 3.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+        /*	name				*/	00052:没有标记
+        /*	audio				*/	no_sound
+        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	6
+        
+                /*	name				*/	00052:没有标记/00001:没有标记
+                /*	audio				*/	sound\52.mp3
+                /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
+                /*	sequence/parallel	*/	parallel
+                /*	direction			*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name				*/	00052:没有标记/00001:没有标记/00001
+                        /*	audio				*/	sound\52.mp3
+                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction			*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                两个14甲_s13_110_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 1.75E10
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 1.0 -1.4005E-4 0.0 1.0 
+                            
+                            /*	time length	*/	 1.75E10
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name				*/	00052:没有标记/00002:没有标记
+                /*	audio				*/	sound\52.mp3
+                /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
+                /*	sequence/parallel	*/	parallel
+                /*	direction			*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name				*/	00052:没有标记/00002:没有标记/00001
+                        /*	audio				*/	sound\52.mp3
+                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction			*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                两个6号29乙螺栓_x12_111_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 2.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 0.882249 -0.470783 -1.61522E-16 0.0 0.470783 0.882249 -6.76104E-17 0.0 1.74333E-16 -1.63928E-17 1.0 0.0 -0.6245 0.781025 0.0 1.0 
+                            
+                            /*	time length	*/	 2.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name				*/	00052:没有标记/00003:没有标记
+                /*	audio				*/	sound\52.mp3
+                /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
+                /*	sequence/parallel	*/	parallel
+                /*	direction			*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name				*/	00052:没有标记/00003:没有标记/00001
+                        /*	audio				*/	sound\52.mp3
+                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction			*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                两个6号29乙螺栓_s13_121_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 2.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 0.642787 0.766044 -9.77663E-18 0.0 -0.766044 0.642787 -7.65845E-19 0.0 5.69761E-18 7.98164E-18 1.0 0.0 0.624719 0.78085 0.0 1.0 
+                            
+                            /*	time length	*/	 2.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name				*/	00052:没有标记/00004:没有标记
+                /*	audio				*/	sound\52.mp3
+                /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
+                /*	sequence/parallel	*/	parallel
+                /*	direction			*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name				*/	00052:没有标记/00004:没有标记/00001
+                        /*	audio				*/	sound\52.mp3
+                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction			*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                33号栓钉_s13_121_2-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 2.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 5.55112E-17 -1.92593E-34 0.0 -1.11022E-16 1.0 4.81482E-35 0.0 -1.92593E-34 2.40741E-35 1.0 0.0 -1.77636E-15 0.0 1.2234 1.0 
+                            
+                            /*	time length	*/	 2.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name				*/	00052:没有标记/00004:没有标记/00002
+                        /*	audio				*/	sound\52.mp3
+                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction			*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                33号栓钉_s13_121_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 2.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 -5.55112E-17 2.46519E-32 0.0 1.11022E-16 1.0 4.93038E-32 0.0 0.0 0.0 1.0 0.0 -5.32907E-15 0.0 1.01064 1.0 
+                            
+                            /*	time length	*/	 2.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name				*/	00052:没有标记/00005:没有标记
+                /*	audio				*/	sound\52.mp3
+                /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
+                /*	sequence/parallel	*/	parallel
+                /*	direction			*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	1
+                
+                        /*	name				*/	00052:没有标记/00005:没有标记/00001
+                        /*	audio				*/	sound\52.mp3
+                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction			*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                两个22号甲_s13_112_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 2.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 4.90351E-9 7.38571E-33 0.0 -4.90351E-9 1.0 3.77004E-16 0.0 1.52783E-24 -3.76895E-16 1.0 0.0 2.0 9.80702E-9 2.801E-4 1.0 
+                            
+                            /*	time length	*/	 2.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                /*	name				*/	00052:没有标记/00006:没有标记
+                /*	audio				*/	sound\52.mp3
+                /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
+                /*	sequence/parallel	*/	parallel
+                /*	direction			*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	2
+                
+                        /*	name				*/	00052:没有标记/00006:没有标记/00001
+                        /*	audio				*/	sound\52.mp3
+                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction			*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                四个29甲螺栓_s13_112_1-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 2.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 4.44089E-16 -1.0461 1.0 
+                            
+                            /*	time length	*/	 2.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                            
+                        
+                        /*	match number	*/	0
+                        
+                        /*	name				*/	00052:没有标记/00006:没有标记/00002
+                        /*	audio				*/	sound\52.mp3
+                        /*	description			*/	第五十二步：在B12和BB12拼接点的501号弦杆上临时打入栓钉插入安装14甲大结点板。在H11和B12、HH11和BB12以及B12和H13、BB12和HH13拼接点的14甲大结点板上各对应安装两根6号腹杆。在14甲大结点板上安装22甲平联横联结点板。卸下临时安装的栓钉。
+                        /*	sequence/parallel	*/	sequence
+                        /*	direction			*/	no_direction
+                        /*	camera scale		*/	upper	1.0
+                        /*	children number		*/	0
+                        
+                        component_start
+                        
+                                四个29甲螺栓_s13_112_2-1
+                                
+                        component_end
+                        
+                        
+                        /*	start state	*/	invisible
+                        /*	end state	*/	visible
+                        /*	step number	*/	1
+                        
+                            /*	time length	*/	 2.5E9
+                            /*	parameter number */	 0	/* parameter */	
+                            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 -0.86879 1.0 
+                            
+                            /*	time length	*/	 2.5E9
                             /*	parameter number */	 0	/* parameter */	
                             /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
                             

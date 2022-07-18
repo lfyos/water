@@ -77,6 +77,8 @@
 		<item key="JarManifestWizardPage.MANIFEST_LOCATION" value=""/>
 		<item key="JarManifestWizardPage.SEAL_JAR" value="false"/>
 		<list key="JarPackageWizardPage.DESTINATION_NAMES_ID">
+			<item value="C:\Users\PeterHuntsmen\Desktop\lfy-2022-07-18.jar"/>
+			<item value="C:\Users\PeterHuntsmen\Desktop\lfy-2022-07-17.jar"/>
 			<item value="C:\Users\PeterHuntsmen\Desktop\lfy-2022-07-10.jar"/>
 			<item value="C:\Users\PeterHuntsmen\Desktop\lfy-2022-06-24.jar"/>
 			<item value="C:\Users\PeterHuntsmen\Desktop\lfy-2022-06-18.jar"/>
@@ -95,8 +97,6 @@
 			<item value="C:\Users\PeterHuntsmen\Desktop\lfy-2022-05-12.jar"/>
 			<item value="C:\Users\PeterHuntsmen\Desktop\lfy-2022-05-08.jar"/>
 			<item value="C:\Users\PeterHuntsmen\Desktop\lfy-2022-05-04.jar"/>
-			<item value="C:\Users\PeterHuntsmen\Desktop\lfy-2022-05-03.jar"/>
-			<item value="C:\Users\PeterHuntsmen\Desktop\lfy-2022-05-01.jar"/>
 		</list>
 	</section>
 	<section name="JavaSearchPage">

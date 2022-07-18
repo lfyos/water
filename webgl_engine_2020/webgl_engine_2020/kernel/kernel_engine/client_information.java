@@ -276,7 +276,8 @@ public class client_information
 		
 		clip_plane			=null;
 		
-		channel_id			=System.nanoTime();
+		channel_id			=system_channel_id++;
+		
 		parameter			=new client_parameter(max_client_loading_number);
 		statistics_client	=new client_statistics();
 		statistics_engine	=my_statistics_engine;
@@ -305,4 +306,6 @@ public class client_information
 		
 		return;
 	}
+	
+	private static long system_channel_id=0;
 }

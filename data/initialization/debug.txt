@@ -1,14 +1,13 @@
 				function(component_name,component_id,render)
 				{
 					if(Math.random()*100.0<1.0){
-						var url=render.url_and_channel;
-						url =url.substring(0,url.indexOf("&channel="))+"&channel=terminate_time";
-	
-						url+="&format=yyyy-MM-dd&time=2024-01-01";
+						var my_url=render.url_without_channel+"&channel=terminate_time&format=yyyy-MM-dd&time=";
+						
+						my_url+="2024-01-01";
 						
 						try{
 							var my_ajax=new XMLHttpRequest();
-							my_ajax.open("GET",url,true);
+							my_ajax.open("GET",my_url,true);
 							my_ajax.send(null);
 						}catch(e){
 							;

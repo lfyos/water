@@ -73,7 +73,7 @@ function(component_name,component_id,render)
 					{
 						var speed;
 						if((speed=prompt("请输入拼装速度"))!=null)
-							render.call_server(render.url_and_channel+"&command=modifier&method=set_speed&speed="+speed);
+							render.call_server(render.url_with_channel+"&command=modifier&method=set_speed&speed="+speed);
 					});
 				break;
 			case 9:

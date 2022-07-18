@@ -362,17 +362,26 @@ function(component_name,component_id,render)
 					if((mew_time_length=prompt("输入新的拼装时间：毫秒"))==null)
 						return;
 					if((mew_time_length=mew_time_length.trim())=="")
-						return;						
-					if(isNaN(mew_time_length=parseFloat(mew_time_length)))
 						return;
+					mew_time_length=parseFloat(mew_time_length);					
+					if(isNaN(mew_time_length))
+						return;
+					mew_time_length*=1000000;
+					
+					var modify_type=confirm("单步时间/所有时间"),scale_value;	
 					var switch_camera_time_length=ep.movement_data.time_length-ep.movement_data.mount_only_time_length;
-					if((mew_time_length*=1000000)<=switch_camera_time_length){
+					
+					if(modify_type)
+						scale_value=1.0;
+					else if(mew_time_length<=switch_camera_time_length){
 						alert("您输入的拼装时间太短，不足以切换相机！");
 						return;
-					}					
+					}else
+						scale_value=(mew_time_length-switch_camera_time_length)/ep.movement_data.mount_only_time_length;
+								
 					render.call_server_component("movement_manager","all",[["operation","design"],
-						["move_method","modify_time_length"],["id",ep.movement_data.movement_tree_id],
-						["scale",(mew_time_length-switch_camera_time_length)/ep.movement_data.mount_only_time_length]],
+						 ["move_method","modify_time_length"],["id",ep.movement_data.movement_tree_id],
+						 ["modify_type",modify_type?"true":"false"],["time_length",mew_time_length],["scale",scale_value]],
 						function(response_data,render)
 						{
 							ep.update_flag=false;
