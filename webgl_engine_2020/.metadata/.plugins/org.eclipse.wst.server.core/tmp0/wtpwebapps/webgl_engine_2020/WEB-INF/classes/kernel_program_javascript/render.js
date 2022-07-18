@@ -49,12 +49,13 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	this.text_canvas				=my_text_canvas;
 	this.text_2dcontext				=my_text_2dcontext;
 	this.gl							=my_gl;
-	this.gl							=my_gl;
 	
-	this.url_and_channel			=my_url
-		+"?user_name="+my_user_name		+"&pass_word="	+my_pass_word
-		+"&language=" +my_language_name	+"&process_bar="+my_process_bar_id
-		+"&channel="  +my_channel_id.toString();
+	this.url						=my_url;
+	this.url_without_channel		=this.url
+					+"?user_name="+my_user_name		+"&pass_word="	+my_pass_word
+					+"&language=" +my_language_name	+"&process_bar="+my_process_bar_id;
+	this.url_with_channel			=this.url_without_channel
+					+"&channel="+my_channel_id.toString()
 
 	this.canvas						=my_canvas;
 	this.language_name				=my_language_name;
@@ -580,7 +581,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.can_do_render_request_flag	=false;
 		this.render_request_start_time	=(new Date()).getTime();
 		var min_value=this.computer.min_value();
-		var request_string=this.url_and_channel+"&command=component&method=update_render";
+		var request_string=this.url_with_channel+"&command=component&method=update_render";
 
 		this.view.aspect=this.canvas.width/this.canvas.height;
 		if(Math.abs(this.view_bak.aspect-this.view.aspect)>min_value){
@@ -757,7 +758,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 
 	this.terminate=function()
 	{
-		var terminated_url=this.url_and_channel+"&command=termination";
+		var terminated_url=this.url_with_channel+"&command=termination";
 		
 		this.terminate_flag=true;
 		try{
@@ -839,7 +840,9 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.text_canvas							=null;
 		this.text_2dcontext							=null;
 		this.gl										=null;
-		this.url_and_channel						=null;
+		this.url									=null;
+		this.url_without_channel					=null;
+		this.url_with_channel						=null;
 		this.canvas									=null;
 		this.language_name							=null;
 		
@@ -1092,7 +1095,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	
 	this.create_part_request_string=function(render_id_or_part_name,part_id_or_driver_id,part_parameter)
 	{
-		var ret_val=this.url_and_channel+"&command=part&method=event";
+		var ret_val=this.url_with_channel+"&command=part&method=event";
 		if(typeof(render_id_or_part_name)=="string"){
 			ret_val+="&event_part_name="+encodeURIComponent(encodeURIComponent(render_id_or_part_name));
 			ret_val+="&event_driver_id="+part_id_or_driver_id;
@@ -1105,7 +1108,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	this.create_part_request_by_component_string=function(
 			component_id_or_component_name,component_driver_id,part_parameter)
 	{
-		var ret_val=this.url_and_channel+"&command=part&method=event";
+		var ret_val=this.url_with_channel+"&command=part&method=event";
 		if(typeof(component_id_or_component_name)=="string")
 			ret_val+="&event_component_name="+encodeURIComponent(encodeURIComponent(component_id_or_component_name));
 		else
@@ -1118,7 +1121,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	};
 	this.create_component_request_string=function(component_name_or_id,driver_id,component_parameter)
 	{
-		var ret_val=this.url_and_channel+"&command=component&method=event";
+		var ret_val=this.url_with_channel+"&command=component&method=event";
 		if(typeof(component_name_or_id)=="string")
 			ret_val+="&event_component_name="+encodeURIComponent(encodeURIComponent(component_name_or_id));
 		else
@@ -1132,7 +1135,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	this.call_server_engine=function(engine_parameter,
 			response_function,error_function,response_type_string,upload_data)
 	{
-		var request_string=this.url_and_channel;
+		var request_string=this.url_with_channel;
 		for(var i=0,ni=engine_parameter.length;i<ni;i++)
 			request_string+="&"+engine_parameter[i][0].toString()+"="+engine_parameter[i][1].toString();
 		this.call_server(request_string,response_function,error_function,response_type_string,upload_data);

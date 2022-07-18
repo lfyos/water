@@ -34,7 +34,7 @@ function construct_collector_loader_object(my_render_object)
 	};
 	this.collector_url=function(simple_list_flag,single_collector_flag,location_flag)
 	{
-		return this.render_object.url_and_channel+"&command=collector"
+		return this.render_object.url_with_channel+"&command=collector"
 							+"&simple="		+(simple_list_flag		?"true":"false")
 							+"&single="		+(single_collector_flag	?"true":"false")
 							+"&location="	+(location_flag			?"true":"false");
