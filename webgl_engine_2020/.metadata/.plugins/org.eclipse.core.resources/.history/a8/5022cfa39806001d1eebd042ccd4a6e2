@@ -41,6 +41,7 @@ public class list_component_on_collector
 		boolean abandon_display_flag=true;
 		int render_buffer_id=cam_result.get_render_buffer_id(ci);
 		try{
+			debug_information.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 			abandon_display_flag=in_dr.check(render_buffer_id,ek,ci,cam_result);
 		}catch(Exception e){
 			e.printStackTrace();
