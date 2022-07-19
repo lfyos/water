@@ -354,6 +354,8 @@ public class movement_function_switch
 				try{
 					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
 					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					str=str.replace(" ","").replace("\t","").replace("\n","").
+							replace("\r","").replace( "\"","").replace("\\","/");
 					searcher.result.sound_file_name=file_reader.separator(str);
 					if(recursive_flag)
 						do_update_children(searcher.result,true,false);
@@ -366,6 +368,8 @@ public class movement_function_switch
 				try{
 					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
 					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					str=str.replace(" ","").replace("\t","").replace("\n","").
+							replace("\r","").replace("\"","").replace("\\","/");
 					searcher.result.description=str;
 					if(recursive_flag)
 						do_update_children(searcher.result,false,true);

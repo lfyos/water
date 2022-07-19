@@ -48,7 +48,7 @@ public class list_component_on_collector
 			debug_information.println("Execute check in instance_driver fail:	",e.toString());
 		
 			debug_information.println("Component name:	",	comp.component_name);
-			debug_information.println("Driver ID:		",	driver_id);
+			debug_information.println("Driver ID:	",		driver_id);
 			debug_information.println("Part user name:	",	my_part.user_name);
 			debug_information.println("Part system name:",	my_part.system_name);
 			debug_information.println("Mesh file name:	",	my_part.directory_name+my_part.mesh_file_name);
