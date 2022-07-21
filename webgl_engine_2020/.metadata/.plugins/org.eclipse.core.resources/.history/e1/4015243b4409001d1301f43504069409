@@ -65,14 +65,8 @@ public class extended_instance_driver extends instance_driver
 		case "play":
 			if((str=ci.request_response.get_parameter("file"))!=null)
 				if((str=str.trim()).length()>0){
-					try {
-						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-					}catch(Exception e) {
-						acd.set_audio(null);
-						break;
-					}
-					str=file_reader.separator(comp.component_directory_name+str);
+					str=comp.component_directory_name+str;
+					str=file_reader.separator(str);
 					if(new File(str).exists()) {
 						acd.set_audio(str);
 						break;

@@ -10,7 +10,7 @@ public class test_1 extends travel_through_directory
 	{
 		String str=file_reader.get_text(file_name,"GBK");
 		if(str!=null) {
-			if(str.indexOf("\"play\"")>=0)
+			if(str.indexOf("operation=play")>=0)
 				debug_information.println("url		",file_name);
 		}
 	}

@@ -59,7 +59,11 @@
 							render.system_call_processor.select_component("child");
 							break;
 						case 32://space
-							render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]]);
+							render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
+								function(response_data,render)
+								{
+									render.call_server_component("audio_component","all",[["operation","play"],["file",""]]);
+								});
 							break;
 						case 90://z
 						case 88://x

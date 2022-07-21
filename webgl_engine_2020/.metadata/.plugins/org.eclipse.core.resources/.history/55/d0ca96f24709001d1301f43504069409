@@ -166,19 +166,16 @@ public class movement_switch_camera_modifier extends modifier_driver
 	{
 		if((sound_file_name==null)||(audio_component_id<0))
 			return true;
-		
+		String play_audio_file_name;
 		driver_audio.extended_component_driver acd;
 		if((acd=get_acd(ek))==null)
 			return true;
 		if(!(acd.get_state()))
 			return true;
-		
-		String play_audio_file_name;
 		if((play_audio_file_name=acd.get_audio_file_name())==null)
 			return true;
 		if(sound_file_name.compareTo(play_audio_file_name)==0)
 			return true;
-		
 		return acd.get_terminate_flag();
 	}
 	private void register_visible_component(component comp,component_array comp_array,int depth)
