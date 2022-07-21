@@ -55,7 +55,11 @@ function(component_name,component_id,render)
 		mount_stop			:	function()
 		{	
 			//ֹͣƴװ
-			render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]]);
+			render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
+				function(response_data,render)
+				{
+					render.call_server_component("audio_component","all",[["operation","play"],["file",""]]);
+				});
 		},
 		mount_jump			:	function(movement_tree_id)
 		{
