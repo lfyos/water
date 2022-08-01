@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="252"/>
+		<item key="selection" value="collector_list_upload_url"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="collector_list_upload_url"/>
+			<item value="collector_list_upload_webpage"/>
+			<item value="create_webgl_context"/>
 			<item value="252"/>
 			<item value="&quot;stop&quot;"/>
 			<item value="udio"/>
@@ -20,9 +23,6 @@
 			<item value="url_and_channel"/>
 			<item value="url_with_channel"/>
 			<item value="terminat"/>
-			<item value="collector_information_url"/>
-			<item value="render.url"/>
-			<item value="system_information_url"/>
 		</list>
 		<list key="replacehistory">
 			<item value="&quot;"/>

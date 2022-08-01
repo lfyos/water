@@ -10226,3 +10226,36 @@
 5月 12, 2021 12:27:23.90 [9260:15104:0512/122723.905:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
 5月 12, 2021 12:27:28.40 [9260:2584:0512/122728.400:ERROR:device_event_log_impl.cc(214)] [12:27:28.398] USB: usb_device_handle_win.cc:1054 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
 5月 12, 2021 12:27:28.40 [9260:2584:0512/122728.401:ERROR:device_event_log_impl.cc(214)] [12:27:28.399] USB: usb_device_handle_win.cc:1054 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+
+7月 26, 2022 22:55:59.82 NEW SESSION
+7月 26, 2022 22:55:59.82 [8560:15400:0726/225559.820:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
+7月 26, 2022 22:56:02.71 [8560:5200:0726/225602.717:ERROR:device_event_log_impl.cc(214)] [22:56:02.717] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+7月 26, 2022 22:56:02.71 [8560:5200:0726/225602.717:ERROR:device_event_log_impl.cc(214)] [22:56:02.717] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+
+8月 01, 2022 13:58:12.98 NEW SESSION
+8月 01, 2022 13:58:12.98 [7544:15756:0801/135812.982:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
+8月 01, 2022 13:58:15.65 [7544:10544:0801/135815.654:ERROR:device_event_log_impl.cc(214)] [13:58:15.654] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 01, 2022 13:58:15.66 [7544:10544:0801/135815.655:ERROR:device_event_log_impl.cc(214)] [13:58:15.655] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 01, 2022 14:02:13.23 [9480:4596:0801/140213.230:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
+8月 01, 2022 14:02:15.40 [9480:13848:0801/140215.409:ERROR:device_event_log_impl.cc(214)] [14:02:15.409] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 01, 2022 14:02:15.40 [9480:13848:0801/140215.409:ERROR:device_event_log_impl.cc(214)] [14:02:15.410] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 01, 2022 15:08:16.21 [5020:14104:0801/150816.214:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
+8月 01, 2022 15:08:18.45 [5020:9424:0801/150818.452:ERROR:device_event_log_impl.cc(214)] [15:08:18.453] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 01, 2022 15:08:18.45 [5020:9424:0801/150818.453:ERROR:device_event_log_impl.cc(214)] [15:08:18.454] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+
+8月 01, 2022 20:16:25.99 NEW SESSION
+8月 01, 2022 20:16:25.99 [8204:10084:0801/201625.995:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
+8月 01, 2022 20:16:28.20 [8204:3104:0801/201628.208:ERROR:device_event_log_impl.cc(214)] [20:16:28.208] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 01, 2022 20:16:31.74 [8204:3104:0801/201628.208:ERROR:device_event_log_impl.cc(214)] [20:16:28.209] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 01, 2022 20:20:02.74 [9272:12212:0801/202002.741:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
+8月 01, 2022 20:20:04.98 [9272:15564:0801/202004.988:ERROR:device_event_log_impl.cc(214)] [20:20:04.988] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 01, 2022 20:20:04.99 [9272:15564:0801/202004.991:ERROR:device_event_log_impl.cc(214)] [20:20:04.992] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 01, 2022 20:33:39.93 [11244:8988:0801/203339.933:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
+8月 01, 2022 20:33:52.12 [11244:7116:0801/203352.125:ERROR:device_event_log_impl.cc(214)] [20:33:52.125] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 01, 2022 20:33:52.12 [11244:7116:0801/203352.125:ERROR:device_event_log_impl.cc(214)] [20:33:52.125] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 01, 2022 20:34:51.46 [6160:15420:0801/203451.462:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
+8月 01, 2022 20:35:09.63 [6160:1920:0801/203509.632:ERROR:device_event_log_impl.cc(214)] [20:35:09.632] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 01, 2022 20:35:09.63 [6160:1920:0801/203509.632:ERROR:device_event_log_impl.cc(214)] [20:35:09.633] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 01, 2022 20:35:50.29 [4396:3804:0801/203550.297:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
+8月 01, 2022 20:35:53.45 [4396:4984:0801/203553.451:ERROR:device_event_log_impl.cc(214)] [20:35:53.450] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 01, 2022 20:35:53.45 [4396:4984:0801/203553.452:ERROR:device_event_log_impl.cc(214)] [20:35:53.451] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)

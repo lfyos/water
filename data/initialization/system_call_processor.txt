@@ -532,11 +532,6 @@ function(component_name,component_id,render)
 		var par=[["event_method",	"part_list"],	 ["operation",		"download"],	["top",		"true"]];
 		return render.create_component_request_string("manipulator_component","all",par);
 	};
-	render.system_call_processor.collector_list_upload_url=function()
-	{
-		var par=[["event_method",	"part_list"],	 ["operation",		"upload"]];
-		render.create_component_request_string("manipulator_component","all",par);
-	};
 	render.system_call_processor.collector_list_upload_webpage=function(change_name_str)
 	{
 		var par=[["event_method","part_list"],["operation","upload_webpage"],

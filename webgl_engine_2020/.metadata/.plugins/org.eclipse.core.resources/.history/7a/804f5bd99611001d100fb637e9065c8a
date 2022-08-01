@@ -10,8 +10,8 @@ public class test_1 extends travel_through_directory
 	{
 		String str=file_reader.get_text(file_name,"GBK");
 		if(str!=null) {
-			if(str.indexOf("交互界面菜单图标右")>=0)
-				debug_information.println("交互界面菜单图标右		",file_name);
+			if(str.indexOf("collector_list_upload_url")>=0)
+				debug_information.println("url		",file_name);
 		}
 	}
 	public static void main(String args[])
