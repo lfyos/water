@@ -12,7 +12,7 @@
 		mount	marker\marker.assemble
 		mount	tag\tag.assemble
 			
-	/* 1children number */		3
+	/* 1children number */		1
 	
 	
 		/* 2name		*/	交互界面主菜单
