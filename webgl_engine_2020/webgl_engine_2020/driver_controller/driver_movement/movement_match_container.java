@@ -20,16 +20,8 @@ public class movement_match_container
 	
 	public void reset()
 	{
-		if(match==null)
-			match=new movement_match[0];
-		else if(match.length>0){
-			for(int i=0,ni=match.length;i<ni;i++)
-				if(match[i]!=null) {
-					match[i].destroy();
-					match[i]=null;
-				}
-			match=new movement_match[0];
-		}
+		destroy();
+		match=new movement_match[0];
 	}
 	public void add_or_delete_component_part_selection(boolean add_or_clear_flag)
 	{
@@ -39,9 +31,13 @@ public class movement_match_container
 		for(int i=0,ni=match.length;i<ni;i++) {
 			switch(match[i].match_type){
 			case "component_part_selection":
+				match[i].destroy();
+				match[i]=null;
 				break;
 			default:
-				match[number++]=match[i];
+				movement_match p=match[i];
+				match[i]=null;
+				match[number++]=p;
 				break;
 			}
 		}
@@ -61,11 +57,15 @@ public class movement_match_container
 		}
 		int number=0;
 		for(int i=0,ni=match.length;i<ni;i++)
-			switch(match[i].match_type) {
+			switch(match[i].match_type){
 			case "component_face_match":
+				match[i].destroy();
+				match[i]=null;
 				break;
 			default:
-				match[number++]=match[i];
+				movement_match p=match[i];
+				match[i]=null;
+				match[number++]=p;
 				break;
 			}
 		movement_match bak[]=match;
@@ -73,7 +73,6 @@ public class movement_match_container
 		for(int i=0;i<number;i++)
 			match[i]=bak[i];
 	}
-	
 	public void add_component_face_match(
 			String source_component_name,		int source_body_id,			int source_face_id,
 			String destatination_component_name,int destatination_body_id,	int destatination_face_id)
@@ -114,7 +113,6 @@ public class movement_match_container
 				component_part_selection_flag=true;
 			case "component_face_match":
 				number++;
-			default:
 				break;
 			}
 		}

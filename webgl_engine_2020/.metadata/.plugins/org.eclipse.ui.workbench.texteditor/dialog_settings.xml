@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="collector_list_upload_url"/>
+		<item key="selection" value="config_parameter.movement_modifier_container_id"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="config_parameter.modifier_container_id"/>
+			<item value="modifier"/>
+			<item value="max_process_modifier_number"/>
 			<item value="collector_list_upload_url"/>
 			<item value="collector_list_upload_webpage"/>
 			<item value="create_webgl_context"/>
@@ -20,11 +23,9 @@
 			<item value="str.replace"/>
 			<item value="&apos;"/>
 			<item value=".url"/>
-			<item value="url_and_channel"/>
-			<item value="url_with_channel"/>
-			<item value="terminat"/>
 		</list>
 		<list key="replacehistory">
+			<item value="config_parameter.movement_modifier_container_id"/>
 			<item value="&quot;"/>
 			<item value="url_with_channel"/>
 			<item value=""/>
@@ -39,13 +40,12 @@
 			<item value="target_id"/>
 			<item value="check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)"/>
 			<item value="&#x09;]);"/>
-			<item value="&#x09;&#x09;"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item key="DIALOG_X_ORIGIN" value="113"/>
 		<item key="DIALOG_Y_ORIGIN" value="242"/>
-		<item key="DIALOG_WIDTH" value="387"/>
+		<item key="DIALOG_WIDTH" value="832"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 	</section>

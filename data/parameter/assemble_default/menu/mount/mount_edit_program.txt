@@ -297,16 +297,18 @@ function(component_name,component_id,render)
 			case 20://"18.需要选择杆件":"18.不需选择杆件"
 				if(!(ep.type_flag))
 					return;
-				var str="set";
+				var str;
 				if(ep.movement_data.children.length>0)
-					str="clear";
-				else
+					str=confirm("清除杆件选择/设置杆件选择")?"clear":"set";
+				else{
+					str="set";
 					for(var i=0,ni=ep.movement_data.match.length;i<ni;i++)
 						switch(ep.movement_data.match[i].match_type){
 						case "component_part_selection":
 							str="clear";
 							break;
 						}
+				}
 				render.call_server_component("movement_manager","all",
 					[["operation","design"],["component_part_selection",str],["restore","true"],
 					 ["move_method","component_part_selection"],["id",ep.movement_data.movement_tree_id]],
@@ -314,8 +316,7 @@ function(component_name,component_id,render)
 					{
 						ep.update_flag=false;
 						ep.movement_data=response_data;
-						if(ep.movement_data.children.length>0)
-							ep.travel_operate_flag=true;
+						ep.travel_operate_flag=true;
 					});
 				return;
 			case 21://"19.需要表面配合":"19.不需表面配合"
@@ -352,8 +353,7 @@ function(component_name,component_id,render)
 					{
 						ep.update_flag=false;
 						ep.movement_data=response_data;
-						if(ep.movement_data.children.length>0)
-							ep.travel_operate_flag=true;
+						ep.travel_operate_flag=true;
 					});
 				return;
 			case 22://"20.调整拼装所需时间",
@@ -492,7 +492,7 @@ function(component_name,component_id,render)
 								(ep.movement_data.scale_type==1)?"17.设置终点观测":
 								(ep.movement_data.scale_type==2)?"17.设置起点终点观测":"17.设置上层观测",
 										
-								(ep.movement_data.children.length>0)?"18.非叶结点清除所有选择杆件":
+								(ep.movement_data.children.length>0)?"18.非叶结点选择杆件操作":
 								(component_part_selection_number<=0)?"18.叶子结点不需选择杆件":"18.叶子结点需要选择杆件",
 										
 								(ep.movement_data.children.length>0)?"19.非叶结点清除所有表面配合":

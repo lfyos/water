@@ -20,7 +20,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 	private double scale_value;
 	private int main_component_id[],component_id[],audio_component_id,parameter_channel_id;
 	private location direction[],start_location[],terminate_location[];
-	private int component_number,modifier_container_id;
+	private int component_number,camera_modifier_container_id;
 	public String title_string,information_string,sound_file_name;
 	
 	public void destroy()
@@ -201,7 +201,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 			for(int i=0,n=ek.camera_cont.camera_array.length;i<n;i++)
 				if(ek.camera_cont.camera_array[i].parameter.movement_flag)
 					(new locate_camera(ek.camera_cont.camera_array[i])).locate_on_components(
-						ek.modifier_cont[modifier_container_id],b,
+						ek.modifier_cont[camera_modifier_container_id],b,
 						ek.camera_cont.camera_array[i].parameter.direction_flag?dir:null,
 						(ek.camera_cont.camera_array[i].parameter.scale_value<=0)?-1.0:scale_value,
 						ci.parameter.aspect,true,false,false);
@@ -228,7 +228,6 @@ public class movement_switch_camera_modifier extends modifier_driver
 		if(acd==null)
 			return;
 		acd.set_audio(sound_file_name);
-		
 	}
 	public void modify(long my_current_time,engine_kernel ek,client_information ci)
 	{
@@ -239,7 +238,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 		super.last_modify(my_current_time,ek,ci,terminated_flag);
 	}
 	public movement_switch_camera_modifier(boolean my_single_step_flag,long current_time,
-			int my_audio_component_id,int my_parameter_channel_id,int my_modifier_container_id,
+			int my_audio_component_id,int my_parameter_channel_id,int my_camera_modifier_container_id,
 			String my_wait_audio_terminated_message)
 	{
 		super(current_time,Long.MAX_VALUE);
@@ -247,9 +246,9 @@ public class movement_switch_camera_modifier extends modifier_driver
 		single_step_flag=my_single_step_flag;
 		switch_camera_number=0;
 
-		audio_component_id	=my_audio_component_id;
-		parameter_channel_id=my_parameter_channel_id;
-		modifier_container_id=my_modifier_container_id;
+		audio_component_id			=my_audio_component_id;
+		parameter_channel_id		=my_parameter_channel_id;
+		camera_modifier_container_id=my_camera_modifier_container_id;
 		
 		main_component_id	=new int[1];
 		component_id		=new int[1];
