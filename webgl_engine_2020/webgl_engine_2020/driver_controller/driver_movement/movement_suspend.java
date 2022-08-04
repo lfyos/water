@@ -18,9 +18,21 @@ public class movement_suspend
 
 	public void destroy()
 	{
-		suspend_collector=null;
-		virtual_mount_collector=null;
-		match_array=null;
+		if(suspend_collector!=null) {
+			suspend_collector.destroy();
+			suspend_collector=null;
+		}
+		if(virtual_mount_collector!=null) {
+			virtual_mount_collector.destroy();
+			virtual_mount_collector=null;
+		}
+		if(match_array!=null) {
+			for(int i=0,ni=match_array.length;i<ni;i++) 
+				if(match_array[i]!=null)
+					match_array[i]=null;
+			match_array=null;
+		}
+		match_number=0;
 	}
 	private void init_virtual_mount_component_routine(
 			engine_kernel ek,component comp,int parameter_channel_id[])
@@ -41,6 +53,8 @@ public class movement_suspend
 	{
 		component virtual_mount_root_comp;
 		follow_mouse_component_id=-1;
+		if(virtual_mount_collector!=null)
+			virtual_mount_collector.destroy();
 		virtual_mount_collector=new component_collector(ek.render_cont.renders);
 		if((virtual_mount_root_comp=ek.component_cont.get_component(virtual_mount_root_component_id))!=null){
 			int parameter_channel_id[]=new int[virtual_mount_root_comp.multiparameter.length];
@@ -56,6 +70,14 @@ public class movement_suspend
 		match_array=new movement_match[10];
 		match_number=0;
 		reset_virtual_mount_component(ek);
+	}
+	public int get_suspend_match_number()
+	{
+		return match_number;
+	}
+	public int get_suspend_component_number()
+	{
+		return suspend_collector.component_number;
 	}
 	public void register_match_and_component(movement_match_container match,
 			int main_component_id,int follow_component_id[],component_container component_cont)
@@ -86,14 +108,6 @@ public class movement_suspend
 					break;
 				}
 		}
-	}
-	public int get_suspend_match_number()
-	{
-		return match_number;
-	}
-	public int get_suspend_component_number()
-	{
-		return suspend_collector.component_number;
 	}
 	private void response_suspend_jason_data(client_information ci,engine_kernel ek)
 	{
@@ -147,8 +161,11 @@ public class movement_suspend
 	}
 	public void reset_suspend_match()
 	{
-		if(match_array==null)
-			match_array=new movement_match[10];
+		if(match_array!=null)
+			for(int i=0,ni=match_array.length;i<ni;i++)
+				if(match_array[i]!=null)
+					match_array[i]=null;
+		match_array=new movement_match[10];
 		for(int i=0,ni=match_array.length;i<ni;i++)
 			match_array[i]=null;
 		match_number=0;
@@ -211,14 +228,27 @@ public class movement_suspend
 			break;
 		case "reset":
 			if((str=ci.request_response.get_parameter("component_part_selection"))!=null)
-				if(str.toLowerCase().trim().compareTo("true")==0)
+				switch(str.toLowerCase().trim()) {
+				case "true":
+				case "yes":
 					suspend_collector.reset();
+					break;
+				}
+					
 			if((str=ci.request_response.get_parameter("component_face_match"))!=null)
-				if(str.toLowerCase().trim().compareTo("true")==0)
+				switch(str.toLowerCase().trim()) {
+				case "true":
+				case "yes":
 					reset_suspend_match();
+					break;
+				}
 			if((str=ci.request_response.get_parameter("component_virtual_mount"))!=null)
-				if(str.toLowerCase().trim().compareTo("true")==0)
+				switch(str.toLowerCase().trim()) {
+				case "true":
+				case "yes":
 					reset_virtual_mount_component(ek);
+					break;
+				}
 			break;
 		case "suspend_jason":
 			response_suspend_jason_data(ci,ek);

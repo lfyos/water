@@ -29,12 +29,18 @@ public class dispatch_component_request
 		case "update_render":
 			ci.statistics_client.register_system_call_execute_number(main_call_id,0);
 			ci.parameter.get_call_parameter(ek,ci);
+			
 			for(int i=0,ni=ek.modifier_cont.length;i<ni;i++)
 				ek.modifier_cont[i].process(ek,ci);
+			
 			response_render_component_request.do_render(ek,ci,delay_time_length);
 			return null;
 		case "event":
 			ci.statistics_client.register_system_call_execute_number(main_call_id,1);
+			
+			for(int i=0,ni=ek.modifier_cont.length;i<ni;i++)
+				ek.modifier_cont[i].process(ek,ci);
+			
 			if((str=ci.request_response.get_parameter("event_component_id"))!=null){
 				if((comp=ek.component_cont.get_component(Integer.decode(str)))==null){
 					debug_information.println(

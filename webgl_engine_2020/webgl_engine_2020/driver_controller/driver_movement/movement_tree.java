@@ -100,8 +100,7 @@ public class movement_tree {
 		if(move.movement.length<=0)
 			return;
 
-		move.register_modifier(suspend,move_channel_id,
-				location_component_id,component_cont,modifier_cont);
+		move.register_modifier(suspend,move_channel_id,location_component_id,component_cont,modifier_cont);
 		
 		if((start_time!=terminate_time)&&(system_start_time<terminate_time)){
 			location my_start_location=move.movement[0].start_location;

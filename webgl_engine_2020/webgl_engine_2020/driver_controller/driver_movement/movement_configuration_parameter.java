@@ -8,7 +8,8 @@ public class movement_configuration_parameter
 {
 	public String movement_file_charset,movement_file_name,design_file_name;
 	public String temporary_file_directory,sound_pre_string,wait_audio_terminated_message;
-	public int component_id,location_component_id,audio_component_id,modifier_container_id;
+	public int component_id,location_component_id,audio_component_id;
+	public int movement_modifier_container_id,camera_modifier_container_id;
 	public int virtual_mount_root_component_id,mouse_modify_location_component_id; 
 
 	public void destroy()
@@ -33,7 +34,8 @@ public class movement_configuration_parameter
 			String my_movement_file_charset,String my_movement_file_name,
 			String my_design_file_name,String my_temporary_file_directory,String my_sound_pre_string,
 			String my_wait_audio_terminated_message,
-			String location_component_name,String audio_component_name,int my_modifier_container_id,
+			String location_component_name,String audio_component_name,
+			int my_movement_modifier_container_id,int my_camera_modifier_container_id,
 			String mouse_modify_location_component_name,String virtual_mount_root_component_name)
 	{
 		movement_file_charset=my_movement_file_charset;
@@ -42,7 +44,8 @@ public class movement_configuration_parameter
 		temporary_file_directory=my_temporary_file_directory;
 		sound_pre_string=my_sound_pre_string;
 		wait_audio_terminated_message=my_wait_audio_terminated_message;
-		modifier_container_id=my_modifier_container_id;
+		movement_modifier_container_id=my_movement_modifier_container_id;
+		camera_modifier_container_id=my_camera_modifier_container_id;
 	
 		component_id=my_comp.component_id;
 		

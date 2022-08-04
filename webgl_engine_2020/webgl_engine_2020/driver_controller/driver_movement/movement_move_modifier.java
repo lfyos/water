@@ -9,7 +9,6 @@ import kernel_transformation.location;
 
 public class movement_move_modifier  extends driver_location_modifier.location_modifier_modifier
 {
-	private int state;
 	private movement_suspend suspend;
 	private network_parameter parameter[];
 	private int modify_id,clear_parameter_channel_id[],set_parameter_channel_id[],modify_parameter_channel_id[];
@@ -23,9 +22,9 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 		set_parameter_channel_id=null;
 		modify_parameter_channel_id=null;
 	}
-	
-	public movement_move_modifier(movement_suspend my_suspend,component my_comp,
-			int my_location_component_id,
+	public movement_move_modifier(movement_suspend my_suspend,
+			
+			component my_comp,int my_location_component_id,
 				
 			int my_clear_parameter_channel_id[],
 			int my_set_parameter_channel_id[],
@@ -41,7 +40,6 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 				my_terminate_time,my_terminate_location,
 				my_follow_component_id,my_follow_component_location);
 		
-		state=0;
 		suspend=my_suspend;
 		
 		clear_parameter_channel_id	=my_clear_parameter_channel_id;
@@ -62,7 +60,7 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 			for(int i=0;i<terminate_length;i++)
 				parameter[i+4+start_length]=new network_parameter("par_t_"+Integer.toString(i),my_terminate_parameter[i]);
 		}
-		modify_id=2;
+		modify_id=0;
 	}
 	private void do_component_driver(component comp,engine_kernel ek,client_information ci)
 	{
@@ -71,9 +69,7 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 		for(int i=0,n=comp.children_number();i<n;i++)
 			do_component_driver(comp.children[i],ek,ci);
 	}
-	private void call_component_driver(
-			engine_kernel ek,client_information ci,
-			long my_current_time,int operation_id)
+	private void call_component_driver(engine_kernel ek,client_information ci,long my_current_time,int operation_id)
 	{
 		component comp;
 		if(parameter!=null){
@@ -90,55 +86,39 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 	public boolean can_start(long my_current_time,engine_kernel ek,client_information ci)
 	{
 		if(super.can_start(my_current_time,ek,ci))
-			switch(state) {
-			case 0:
-				return (suspend.get_suspend_component_number()<=0);
-			case 1:
-				return (suspend.get_suspend_match_number()<=0);
-			default:
-				return true;
-			}
+			if(suspend.get_suspend_component_number()<=0)
+				if(suspend.get_suspend_match_number()<=0)
+					return true;
 		return false;
 	}
 	public void modify(long my_current_time,engine_kernel ek,client_information ci)
 	{
 		component comp;
-		switch(state) {
-		case 0:
-			if((comp=ek.component_cont.get_component(component_id))!=null){
-				comp.modify_display_flag(modify_parameter_channel_id,true,ek.component_cont);
-				comp.modify_location(start_location,ek.component_cont);
-				if(follow_component_id!=null){
-					location parent_and_relative_location;
-					if(comp.uniparameter.cacaulate_location_flag)
-						parent_and_relative_location=comp.move_location;
-					else
-						parent_and_relative_location=comp.parent_and_relative_location.multiply(comp.move_location);
-					for(int i=0,ni=follow_component_id.length;i<ni;i++)
-						if((comp=ek.component_cont.get_component(follow_component_id[i]))!=null) {
-							comp.modify_display_flag(modify_parameter_channel_id,true,ek.component_cont);
-							location loca=parent_and_relative_location.multiply(follow_component_location[i]);
-							comp.modify_location(loca,ek.component_cont);
-							comp.uniparameter.cacaulate_location_flag=true;
-						}
-				}
+		super.modify(my_current_time, ek, ci);
+		if((comp=ek.component_cont.get_component(component_id))!=null){
+			comp.modify_display_flag(modify_parameter_channel_id,true,ek.component_cont);
+			comp.modify_location(start_location,ek.component_cont);
+			if(follow_component_id!=null){
+				location parent_and_relative_location;
+				if(comp.uniparameter.cacaulate_location_flag)
+					parent_and_relative_location=comp.move_location;
+				else
+					parent_and_relative_location=comp.parent_and_relative_location.multiply(comp.move_location);
+				for(int i=0,ni=follow_component_id.length;i<ni;i++)
+					if((comp=ek.component_cont.get_component(follow_component_id[i]))!=null) {
+						comp.modify_display_flag(modify_parameter_channel_id,true,ek.component_cont);
+						location loca=parent_and_relative_location.multiply(follow_component_location[i]);
+						comp.modify_location(loca,ek.component_cont);
+						comp.uniparameter.cacaulate_location_flag=true;
+					}
 			}
-			call_component_driver(ek,ci,my_current_time,0);
-			state++;
-			return;
-		case 1:
-			state++;
-			return;
-		default:
-			super.modify(my_current_time, ek, ci);
-			call_component_driver(ek,ci,my_current_time,modify_id++);
-			return;
 		}
+		call_component_driver(ek,ci,my_current_time,modify_id++);
 	}
 	public void last_modify(long my_current_time,engine_kernel ek,client_information ci,boolean terminated_flag)
 	{
 		component comp;
-		if((state<=0)&&(!terminated_flag))
+		if(!terminated_flag)
 			return;
 		super.last_modify(my_current_time,ek,ci,true);
 		if((comp=ek.component_cont.get_component(component_id))==null)
@@ -151,6 +131,6 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 					comp.modify_display_flag(clear_parameter_channel_id,false,ek.component_cont);
 					comp.modify_display_flag(set_parameter_channel_id,true,ek.component_cont);
 				}
-		call_component_driver(ek,ci,my_current_time,1);
+		call_component_driver(ek,ci,my_current_time,-1);
 	}
 }
