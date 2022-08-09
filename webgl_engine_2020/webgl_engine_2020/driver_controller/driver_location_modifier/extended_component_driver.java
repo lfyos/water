@@ -42,18 +42,17 @@ public class extended_component_driver  extends component_driver
 	{
 		return new extended_instance_driver(comp,driver_id,modifier_container_id);
 	}
-	public void register(engine_kernel ek,	int my_component_id,long time_length,
-			location my_start_location,		location my_terminate_location,
-			int my_follow_component_id[],	location my_follow_component_location[])
+	public void clear_location_modifier()
+	{
+		first=null;
+		update_component_parameter_version();
+	}
+	public void delete_timeout_location_modifier(engine_kernel ek)
 	{
 		long current_time=ek.modifier_cont[modifier_container_id].get_timer().get_current_time();
-		location_modification_data p=new location_modification_data(
-				first,get_component_parameter_version(),
-				my_component_id,current_time,current_time+time_length,
-				my_start_location,my_terminate_location,
-				my_follow_component_id,my_follow_component_location);
-		
-		for(first=null;p!=null;){
+		location_modification_data p=first;
+		first=null;
+		while(p!=null){
 			location_modification_data pp=p;
 			p=p.next;
 			if((current_time<=pp.start_time)||(current_time<=pp.terminate_time)){
@@ -61,6 +60,17 @@ public class extended_component_driver  extends component_driver
 				first=pp;
 			}
 		}
+	}
+	public void register_location_modifier(engine_kernel ek,	int my_component_id,long time_length,
+			location my_start_location,		location my_terminate_location,
+			int my_follow_component_id[],	location my_follow_component_location[])
+	{
+		long current_time=ek.modifier_cont[modifier_container_id].get_timer().get_current_time();
+		first=new location_modification_data(
+				first,get_component_parameter_version(),
+				my_component_id,current_time,current_time+time_length,
+				my_start_location,my_terminate_location,
+				my_follow_component_id,my_follow_component_location);
 		update_component_parameter_version();
 	}
 }

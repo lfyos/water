@@ -59,12 +59,13 @@ function body_onunload()
 <button type="button" onclick="render.zhengzhou_lipengfei.set_display_all_component();" 		>所有拼装组件</button>
 <br/>
 
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_forward(true);"		>单步向前拼装</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_forward(false);"	>连续向前拼装</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_backward(true);"	>单步向后拆卸</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_backward(false);"	>连续向后拆卸</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_stop();"			>停止拼装</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_jump(prompt());"	>拼装跳转</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_forward(true);"			>单步向前拼装</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_forward(false);"		>连续向前拼装</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_backward(true);"		>单步向后拆卸</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_backward(false);"		>连续向后拆卸</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_stop();"				>停止拼装</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_jump(24,true);"			>跳转并拼装</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_jump(24,false);"		>跳转不拼装</button>
 <br/> 
 
 <button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_all_url(),'_blank');" 		>拼装jason</button>

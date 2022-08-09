@@ -948,6 +948,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			my_component_name_or_id=this.get_component_object_by_component_name(my_component_name_or_id);
 			if(my_component_name_or_id==null)
 				return null;
+			
 			my_component_name_or_id=my_component_name_or_id.component_id;
 			break;
 		case "number":
@@ -957,8 +958,8 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		}
 		if((my_component_name_or_id<0)||(my_component_name_or_id>=this.component_event_processor.length))
 			return null;
-		else
-			return this.component_event_processor[my_component_name_or_id];
+		var ret_val=this.component_event_processor[my_component_name_or_id];
+		return (typeof(ret_val)=="undefined")?null:ret_val;
 	};
 	this.get_component_call_processor=function(my_component_name_or_id)
 	{
@@ -976,8 +977,9 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		}
 		if((my_component_name_or_id<0)||(my_component_name_or_id>=this.component_call_processor.length))
 			return null;
-		else
-			return this.component_call_processor[my_component_name_or_id];
+		
+		var ret_val=this.component_call_processor[my_component_name_or_id];
+		return (typeof(ret_val)=="undefined")?null:ret_val;
 	};
 	this.get_component_object_by_component_id=function(my_component_id)
 	{

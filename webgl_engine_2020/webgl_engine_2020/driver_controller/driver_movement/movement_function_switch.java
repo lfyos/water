@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
+import driver_location_modifier.extended_component_driver;
 import kernel_camera.camera_parameter;
 import kernel_camera.locate_camera;
 import kernel_common_class.debug_information;
@@ -1207,6 +1208,12 @@ public class movement_function_switch
 			manager.movement_start(ek.modifier_cont[manager.config_parameter.movement_modifier_container_id],
 					manager.parameter.current_movement_id,ek.component_cont,true,switch_time_length);
 			update_component_location(ek.component_cont.root_component);
+			
+			component location_comp;
+			if((location_comp=ek.component_cont.get_component(manager.config_parameter.location_component_id))!=null)
+				for(int i=0,ni=location_comp.driver_number();i<ni;i++) 
+					if(location_comp.driver_array[i] instanceof extended_component_driver)
+						((extended_component_driver)(location_comp.driver_array[i])).clear_location_modifier();
 			break;
 		case "continue":
 			boolean direction_flag=true,single_step_flag=false;

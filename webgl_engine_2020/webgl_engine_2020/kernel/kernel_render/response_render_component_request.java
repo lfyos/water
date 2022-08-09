@@ -59,8 +59,7 @@ public class response_render_component_request
 		ci.render_buffer.cam_buffer.response_camera_data(
 				mirror_plane,cam_result,ci,ek.camera_cont,target_camera_id);
 		
-		response_component_render_parameter.response(
-				render_buffer_id,list_result,cam_result,ek,ci);
+		response_component_render_parameter.response(render_buffer_id,list_result,cam_result,ek,ci);
 		
 		ci.render_buffer.clip_buffer.response(
 				render_buffer_id,cam_result.target.clip_plane,ci.request_response);

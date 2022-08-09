@@ -52,20 +52,50 @@ function(component_name,component_id,render)
 						["move_method","continue"],["direct","backward"],["single_step",single_step_flag?"true":"false"]]);
 				});
 		},
-		mount_stop			:	function()
+		mount_stop			:	function(fun)
 		{	
 			//ֹͣƴװ
 			render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-				function(response_data,render)
+				function(response_data,render,response_text)
 				{
 					render.call_server_component("audio_component","all",[["operation","play"],["file",""]]);
+					if(typeof(fun)=="function")
+						fun(response_data,render,response_text);
 				});
 		},
-		mount_jump			:	function(movement_tree_id)
+		mount_jump			:	function(movement_tree_id,mount_flag)
 		{
 			//ƴװ��ת
+			
 			render.call_server_component("movement_manager","all",
-				[["operation","design"],["move_method","locate_camera"],["id",movement_tree_id]]);
+				[["operation","movement"],["move_method","stop"]],
+				function()
+				{
+					var do_render_request_response_number=render.do_render_request_response_number;
+					var do_execute_render_number=render.do_execute_render_number;
+					render.append_routine_function(
+						function()
+						{
+							if((render.do_render_request_response_number-do_render_request_response_number)<2){
+								do_execute_render_number=render.do_execute_render_number;
+								return true;
+							}
+							if((render.do_execute_render_number-do_execute_render_number)<2)
+								return true;
+							
+							render.call_server_component("movement_manager","all",
+								[["operation","design"],["move_method","locate_camera"],["id",movement_tree_id]],
+								function()
+								{
+									if(typeof(mount_flag)=="boolean")
+										if(mount_flag)
+											render.call_server_component("movement_manager","all",
+												[["operation","movement"],["move_method","continue"],
+												 ["direct","forward"],["single_step","false"]]);
+								});
+							return false;
+						});
+				});
 		},
 		
 		mount_all_url			:	function()	
