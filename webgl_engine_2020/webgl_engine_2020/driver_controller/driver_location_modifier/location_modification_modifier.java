@@ -7,11 +7,11 @@ import kernel_engine.engine_kernel;
 import kernel_transformation.location;
 
 
-public class location_modifier_modifier extends modifier_driver
+public class location_modification_modifier extends modifier_driver
 {
 	public int component_id;
 	public int location_component_id;
-	public location start_location,terminate_location;
+	private location start_location,terminate_location;
 	public double p;
 	
 	public int follow_component_id[];
@@ -29,7 +29,7 @@ public class location_modifier_modifier extends modifier_driver
 		follow_component_location=null;
 	}
 	
-	public location_modifier_modifier(
+	public location_modification_modifier(
 			int my_component_id,			int my_location_component_id,
 			long my_start_time,				location my_start_location,
 			long my_terminate_time,			location my_terminate_location,
@@ -99,7 +99,7 @@ public class location_modifier_modifier extends modifier_driver
 			if(!(location_comp.driver_array[i] instanceof extended_component_driver))
 				continue;
 			extended_component_driver ecd=(extended_component_driver)(location_comp.driver_array[i]);
-			ecd.register(ek,component_id,terminate_time-start_time,
+			ecd.register_location_modifier(ek,component_id,terminate_time-start_time,
 				start_location,terminate_location,follow_component_id,follow_component_location);
 			return;
 		}

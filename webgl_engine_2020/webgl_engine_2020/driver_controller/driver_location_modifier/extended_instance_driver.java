@@ -30,7 +30,11 @@ public class extended_instance_driver extends instance_driver
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
-		return cr.target.main_display_target_flag?false:true;
+		if(cr.target.main_display_target_flag){
+			((extended_component_driver)(comp.driver_array[driver_id])).delete_timeout_location_modifier(ek);
+			return false;
+		}
+		return true;
 	}
 	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
@@ -52,30 +56,32 @@ public class extended_instance_driver extends instance_driver
 	public void create_component_parameter(engine_kernel ek,client_information ci)
 	{
 		location_modification_data	p=((extended_component_driver)(comp.driver_array[driver_id])).first;
-	
-		ci.request_response.print("[");
-		for(int print_number=0;p!=null;p=p.next)
-			if(last_parameter_version<=p.parameter_version){
-				ci.request_response.print(((print_number++)<=0)?"[":",[",p.component_id);
-	
-				ci.request_response.print(",",	p.start_time);
-				ci.request_response.print(",");
-				response_location_data(p.start_location,ci.request_response);
-
-				ci.request_response.print(",",	p.terminate_time);
-				ci.request_response.print(",");
-				response_location_data(p.terminate_location,ci.request_response);
-
-				if(p.follow_component_id!=null)
-					for(int i=0,ni=p.follow_component_id.length;i<ni;i++){
-						ci.request_response.print(",",p.follow_component_id[i]);
-						ci.request_response.print(",");
-						response_location_data(p.follow_component_location[i],ci.request_response);
-					}
-				ci.request_response.print("]");
-			}
-		ci.request_response.print("]");
+		if(p==null)
+			ci.request_response.print("0");
+		else {
+			ci.request_response.print("[");
+			for(int print_number=0;p!=null;p=p.next)
+				if(last_parameter_version<=p.parameter_version){
+					ci.request_response.print(((print_number++)<=0)?"[":",[",p.component_id);
 		
+					ci.request_response.print(",",	p.start_time);
+					ci.request_response.print(",");
+					response_location_data(p.start_location,ci.request_response);
+	
+					ci.request_response.print(",",	p.terminate_time);
+					ci.request_response.print(",");
+					response_location_data(p.terminate_location,ci.request_response);
+	
+					if(p.follow_component_id!=null)
+						for(int i=0,ni=p.follow_component_id.length;i<ni;i++){
+							ci.request_response.print(",",p.follow_component_id[i]);
+							ci.request_response.print(",");
+							response_location_data(p.follow_component_location[i],ci.request_response);
+						}
+					ci.request_response.print("]");
+				}
+			ci.request_response.print("]");
+		}
 		last_parameter_version=comp.driver_array[driver_id].get_component_parameter_version();
 	}
 	public String[] response_event(engine_kernel ek,client_information ci)

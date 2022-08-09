@@ -7,7 +7,7 @@ import kernel_engine.engine_kernel;
 import kernel_network.network_parameter;
 import kernel_transformation.location;
 
-public class movement_move_modifier  extends driver_location_modifier.location_modifier_modifier
+public class movement_move_modifier  extends driver_location_modifier.location_modification_modifier
 {
 	private movement_suspend suspend;
 	private network_parameter parameter[];
@@ -97,21 +97,12 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 		super.modify(my_current_time, ek, ci);
 		if((comp=ek.component_cont.get_component(component_id))!=null){
 			comp.modify_display_flag(modify_parameter_channel_id,true,ek.component_cont);
-			comp.modify_location(start_location,ek.component_cont);
-			if(follow_component_id!=null){
-				location parent_and_relative_location;
-				if(comp.uniparameter.cacaulate_location_flag)
-					parent_and_relative_location=comp.move_location;
-				else
-					parent_and_relative_location=comp.parent_and_relative_location.multiply(comp.move_location);
+			if(follow_component_id!=null)
 				for(int i=0,ni=follow_component_id.length;i<ni;i++)
 					if((comp=ek.component_cont.get_component(follow_component_id[i]))!=null) {
 						comp.modify_display_flag(modify_parameter_channel_id,true,ek.component_cont);
-						location loca=parent_and_relative_location.multiply(follow_component_location[i]);
-						comp.modify_location(loca,ek.component_cont);
 						comp.uniparameter.cacaulate_location_flag=true;
 					}
-			}
 		}
 		call_component_driver(ek,ci,my_current_time,modify_id++);
 	}

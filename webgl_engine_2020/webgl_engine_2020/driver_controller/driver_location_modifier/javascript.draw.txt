@@ -46,6 +46,16 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 	var component_length=component_data_array.length;
 	for(var component_index=0;component_index<component_length;component_index++){
 		var buffer_id=component_data_array[component_index];
+		
+		for(var i=data_buffer[buffer_id].length-1;i>=0;i--)
+			if(typeof(data_buffer[buffer_id][i])=="number"){
+				var number=data_buffer[buffer_id].length-(++i);
+				for(var j=0;j<number;)
+					data_buffer[buffer_id][j++]=data_buffer[buffer_id][i++];
+				data_buffer[buffer_id].length=number;
+				break;
+			}
+
 		var modifier_container_id=instance_initialize_data[buffer_id];
 		var new_transfer_length=0,transfer_length=data_buffer[buffer_id].length;
 		for(var transfer_index=0;transfer_index<transfer_length;transfer_index++){

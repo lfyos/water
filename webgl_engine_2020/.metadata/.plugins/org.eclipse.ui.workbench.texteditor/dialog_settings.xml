@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="config_parameter.movement_modifier_container_id"/>
+		<item key="selection" value="do_render_request_response_number"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="do_render_request_response_number"/>
+			<item value="component_event_processor"/>
+			<item value="get_component_event_processor"/>
+			<item value="location_modifier_component"/>
+			<item value="pickupmouseselect"/>
+			<item value="pickupmouseselect_routine"/>
+			<item value="call_server_component"/>
+			<item value="id_array"/>
+			<item value="part_component_id_and_driver_id"/>
+			<item value="new_transfer_length"/>
 			<item value="config_parameter.modifier_container_id"/>
 			<item value="modifier"/>
 			<item value="max_process_modifier_number"/>
 			<item value="collector_list_upload_url"/>
 			<item value="collector_list_upload_webpage"/>
-			<item value="create_webgl_context"/>
-			<item value="252"/>
-			<item value="&quot;stop&quot;"/>
-			<item value="udio"/>
-			<item value="play"/>
-			<item value="&quot;play&quot;"/>
-			<item value="组件拼装拼装编辑组件"/>
-			<item value="str.replace"/>
-			<item value="&apos;"/>
-			<item value=".url"/>
 		</list>
 		<list key="replacehistory">
 			<item value="config_parameter.movement_modifier_container_id"/>
@@ -43,9 +43,9 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="113"/>
-		<item key="DIALOG_Y_ORIGIN" value="242"/>
-		<item key="DIALOG_WIDTH" value="832"/>
+		<item key="DIALOG_X_ORIGIN" value="1250"/>
+		<item key="DIALOG_Y_ORIGIN" value="460"/>
+		<item key="DIALOG_WIDTH" value="513"/>
 		<item key="DIALOG_HEIGHT" value="410"/>
 		<item key="DIALOG_FONT_NAME" value="1|Microsoft YaHei UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft YaHei UI"/>
 	</section>
