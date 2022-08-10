@@ -58,7 +58,7 @@
 		/* 2name		*/         location_modifier_component
 		/* 2type		*/         location_modifier_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
-								/*	modifier_container_id	*/	0
+								/*	modifier_container_id	*/	1
 		/* 2children number */		0
 			
 		/*	9	*/

@@ -86,8 +86,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 			terminate_location[i]	=null;
 		}
 	}
-	public void register_move_component(
-			int my_main_component_id,int my_component_id,
+	public void register_move_component(int my_main_component_id,int my_component_id,
 			double my_scale_value,location my_direction,
 			location my_start_location,location my_terminate_location,
 			String my_title_string,String my_information_string,String my_sound_file_name)
@@ -238,8 +237,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 		super.last_modify(my_current_time,ek,ci,terminated_flag);
 	}
 	public movement_switch_camera_modifier(boolean my_single_step_flag,long current_time,
-			int my_audio_component_id,int my_parameter_channel_id,int my_camera_modifier_container_id,
-			String my_wait_audio_terminated_message)
+			int my_audio_component_id,int my_parameter_channel_id,int my_camera_modifier_container_id)
 	{
 		super(current_time,Long.MAX_VALUE);
 		

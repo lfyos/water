@@ -44,21 +44,27 @@ public class extended_component_driver  extends component_driver
 	}
 	public void clear_location_modifier()
 	{
-		first=null;
+		first=new location_modification_data(get_component_parameter_version());
 		update_component_parameter_version();
 	}
 	public void delete_timeout_location_modifier(engine_kernel ek)
 	{
 		long current_time=ek.modifier_cont[modifier_container_id].get_timer().get_current_time();
-		location_modification_data p=first;
-		first=null;
-		while(p!=null){
-			location_modification_data pp=p;
+		location_modification_data p,pp;
+		
+		for(p=first,first=null;p!=null;){
+			pp=p;
 			p=p.next;
-			if((current_time<=pp.start_time)||(current_time<=pp.terminate_time)){
+			if((current_time<=pp.start_time)||(current_time<=pp.terminate_time)||pp.clear_flag){
 				pp.next=first;
 				first=pp;
 			}
+		}
+		for(p=first,first=null;p!=null;){
+			pp=p;
+			p=p.next;
+			pp.next=first;
+			first=pp;
 		}
 	}
 	public void register_location_modifier(engine_kernel ek,	int my_component_id,long time_length,

@@ -131,11 +131,12 @@ public class movement_tree {
 				}
 			}
 			if(terminate_time>start_time){
-				movement_focus_modifier fm=new movement_focus_modifier(suspend,match,
+				movement_focus_modifier fm=new movement_focus_modifier(
+					parameter,movement_tree_id,suspend,match,
 					moved_component.component_id,move.follow_component_id,move.follow_component_location,
-					start_time-camera_switch_time,swcm,movement_tree_id,my_scale_value,
+					start_time-camera_switch_time,swcm,my_scale_value,
 					my_direction,my_start_location,my_terminate_location,node_name,description,
-					file_reader.separator(directory_name+sound_pre_string+sound_file_name),parameter);
+					file_reader.separator(directory_name+sound_pre_string+sound_file_name));
 				modifier_cont.add_modifier(fm);
 			}
 		}

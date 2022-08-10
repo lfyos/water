@@ -8,12 +8,13 @@ import kernel_transformation.location;
 
 public class movement_focus_modifier extends modifier_driver
 {
+	private movement_parameter parameter;
+	private long current_movement_id;
+	
 	private movement_suspend suspend;
 	private movement_match_container match;
 	
-	private movement_parameter parameter;
 	private movement_switch_camera_modifier swcm;
-	private long current_movement_id;
 	
 	private double scale_value;
 	private location direction,start_location,terminate_location;
@@ -27,10 +28,10 @@ public class movement_focus_modifier extends modifier_driver
 	{
 		super.destroy();
 
+		parameter=null;
 		suspend=null;
 		match=null;
 		
-		parameter=null;
 		swcm=null;
 		direction=null;
 		start_location=null;
@@ -39,16 +40,18 @@ public class movement_focus_modifier extends modifier_driver
 		follow_component_location=null;
 	}
 	
-	public movement_focus_modifier(movement_suspend my_suspend,movement_match_container my_match,
+	public movement_focus_modifier(movement_parameter my_parameter,long my_current_movement_id,
+			movement_suspend my_suspend,movement_match_container my_match,
 			int my_component_id,int my_follow_component_id[],location my_follow_component_location[],
-			long start_time,movement_switch_camera_modifier my_swcm,long my_current_movement_id,
+			long start_time,movement_switch_camera_modifier my_swcm,
 			double my_scale_value,location my_direction,
 			location my_start_location, location my_terminate_location,
-			String my_node_name,String my_description,String my_sound_file_name,
-			movement_parameter my_parameter)
+			String my_node_name,String my_description,String my_sound_file_name)
 	{
 		super(start_time,start_time);
 		
+		parameter=my_parameter;
+		current_movement_id=my_current_movement_id;
 		suspend=my_suspend;
 		match=my_match;
 		
@@ -56,7 +59,6 @@ public class movement_focus_modifier extends modifier_driver
 		follow_component_id=my_follow_component_id;
 		follow_component_location=my_follow_component_location;
 		swcm=my_swcm;
-		current_movement_id=my_current_movement_id;
 		scale_value=my_scale_value;
 		direction=my_direction;
 		start_location=my_start_location;
@@ -65,7 +67,6 @@ public class movement_focus_modifier extends modifier_driver
 		node_name		=my_node_name;
 		description		=my_description;
 		sound_file_name	=my_sound_file_name;
-		parameter		=my_parameter;
 	}
 	public void modify(long my_current_time,engine_kernel ek,client_information ci)
 	{
@@ -78,7 +79,6 @@ public class movement_focus_modifier extends modifier_driver
 		if(!terminated_flag)
 			return;
 		parameter.current_movement_id=current_movement_id;
-
 		if(follow_component_id!=null)
 			for(int i=0,ni=follow_component_id.length;i<ni;i++){
 				swcm.register_move_component(
