@@ -1,7 +1,6 @@
 function(component_name,component_id,render)
 {
 	render.zhengzhou_lipengfei={
-	
 		turnonoff_sound		:	function(flag)
 		{
 			//打开关闭配音
@@ -31,71 +30,36 @@ function(component_name,component_id,render)
 			//显示所有拼装的组件
 			for(var i=0;i<10;i++)
 				render.system_call_processor.set_target_parameter_channel(i,6)
-		},
+		},		
 		mount_forward		:	function(single_step_flag)
 		{
 			//向前拼装
-			render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-				function(response_data,render)
-				{
-					render.call_server_component("movement_manager","all",[["operation","movement"],
-						["move_method","continue"],["direct","forward"],["single_step",single_step_flag?"true":"false"]]);
-				});	
-		},
+			render.call_server_component("movement_manager","all",[["operation","movement"],
+				["move_method","continue"],["direct","forward"],["single_step",single_step_flag?"true":"false"]]);
+		},	
 		mount_backward		:	function(single_step_flag)
 		{
 			//向后拆卸
-			render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-				function(response_data,render)
-				{
-					render.call_server_component("movement_manager","all",[["operation","movement"],
-						["move_method","continue"],["direct","backward"],["single_step",single_step_flag?"true":"false"]]);
-				});
+			render.call_server_component("movement_manager","all",[["operation","movement"],
+				["move_method","continue"],["direct","backward"],["single_step",single_step_flag?"true":"false"]]);
 		},
 		mount_stop			:	function(fun)
 		{	
 			//停止拼装
-			render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-				function(response_data,render,response_text)
-				{
-					render.call_server_component("audio_component","all",[["operation","play"],["file",""]]);
-					if(typeof(fun)=="function")
-						fun(response_data,render,response_text);
-				});
+			render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],fun);
 		},
 		mount_jump			:	function(movement_tree_id,mount_flag)
 		{
 			//拼装跳转
-			
 			render.call_server_component("movement_manager","all",
-				[["operation","movement"],["move_method","stop"]],
-				function()
-				{
-					var do_render_request_response_number=render.do_render_request_response_number;
-					var do_execute_render_number=render.do_execute_render_number;
-					render.append_routine_function(
-						function()
-						{
-							if((render.do_render_request_response_number-do_render_request_response_number)<2){
-								do_execute_render_number=render.do_execute_render_number;
-								return true;
-							}
-							if((render.do_execute_render_number-do_execute_render_number)<2)
-								return true;
-							
+				[["operation","movement"],["move_method",mount_flag?"continue":"stop"],
+				 ["id",movement_tree_id],["direct","forward"],["single_step","false"]],
+					function()
+					{
+						if(!mount_flag)
 							render.call_server_component("movement_manager","all",
-								[["operation","design"],["move_method","locate_camera"],["id",movement_tree_id]],
-								function()
-								{
-									if(typeof(mount_flag)=="boolean")
-										if(mount_flag)
-											render.call_server_component("movement_manager","all",
-												[["operation","movement"],["move_method","continue"],
-												 ["direct","forward"],["single_step","false"]]);
-								});
-							return false;
-						});
-				});
+								[["operation","design"],["move_method","locate_camera"],["id",movement_tree_id]]);
+					});
 		},
 		
 		mount_all_url			:	function()	
@@ -145,7 +109,7 @@ function(component_name,component_id,render)
 			return render.create_component_request_string("movement_manager","all",
 					[["operation","virtual_mount"],["virtual_mount","suspend_jason"]]);
 		},
-		mount_reset_hangup	:	function(movement_tree_id)
+		mount_reset_hangup	:	function(movement_tree_id,fun)
 		{
 			//复位并清除指定拼装步骤的挂起，使拼装恢复执行
 			render.call_server_component("movement_manager","all",
@@ -162,14 +126,14 @@ function(component_name,component_id,render)
 								[["operation","virtual_mount"],["virtual_mount","reset"],
 								 ["component_part_selection",	"true"],
 								 ["component_face_match",		"true"],
-								 ["component_virtual_mount",	"true"]]);
+								 ["component_virtual_mount",	"true"]],fun);
 						});
 				});
 		},
 		mount_jump_hangup		:	function(movement_tree_id,fun)
 		{
 			//在指定的拼装步骤挂起，挂起后执行fun函数
-
+			
 			var p=render.get_component_object_by_component_name("movement_manager");
 			var start_time=(new Date()).getTime();
 			
@@ -185,7 +149,7 @@ function(component_name,component_id,render)
 			function f2()
 			{
 				render.call_server_component("movement_manager","all",[["operation","movement"],
-					["move_method","continue"],["direct","forward"],["single_step","false"]],
+					["move_method","continue"],["direct","forward"],["single_step","false"],["id",movement_tree_id]],
 					(typeof(fun)!="function")?null:
 					function()
 					{
@@ -224,8 +188,7 @@ function(component_name,component_id,render)
 					[["operation","design"],["move_method","component_part_selection"],
 					 ["component_part_selection","clear"],["id",movement_tree_id]],f6);
 			}
-			render.call_server_component("movement_manager","all",
-					[["operation","movement"],["move_method","stop"]],f7);
+			render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],f7);
 		},
 		virtual_mount_insert_component		:	function(part_name,restart_flag)
 		{
@@ -243,7 +206,6 @@ function(component_name,component_id,render)
 						[["operation","virtual_mount"],["virtual_mount","start_follow"],
 						 ["part_name",encodeURIComponent(encodeURIComponent(part_name))]]);
 		},
-		
 		turn_on_off_display_point_on_pickup	:	function(on_off_flag)
 		{
 			var solidworks_shader_data;
@@ -254,5 +216,5 @@ function(component_name,component_id,render)
 			solidworks_shader_data.shader_data[0].pickup_exit_display_flag.edge	=(on_off_flag?false:true);
 			solidworks_shader_data.shader_data[0].pickup_exit_display_flag.point=(on_off_flag?false:true);
 		}
-	};
+	};	
 }

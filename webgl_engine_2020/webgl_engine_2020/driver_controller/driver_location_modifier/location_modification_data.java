@@ -21,24 +21,40 @@ public class location_modification_data
 			follow_component_location=null;
 		}
 	}
+	
+	public		boolean						clear_flag;
 	public		location_modification_data	next;
 	
-	public		long					parameter_version;
+	public		long						parameter_version;
 	
-	public 		int 					component_id;
-	public 		long 					start_time,terminate_time;
+	public 		int 						component_id;
+	public 		long 						start_time,terminate_time;
 	
-	public		location				start_location,terminate_location;
+	public		location					start_location,terminate_location;
 	
-	public		int 					follow_component_id[];
-	public		location				follow_component_location[];
+	public		int 						follow_component_id[];
+	public		location					follow_component_location[];
 	
+	public location_modification_data(long my_parameter_version)
+	{
+		clear_flag					=true;
+		next						=null;
+		parameter_version			=my_parameter_version;
+		component_id				=-1;
+		start_time					=0;
+		terminate_time				=0;
+		start_location				=null;
+		terminate_location			=null;
+		follow_component_id			=null;
+		follow_component_location	=null;
+	}
 	public location_modification_data(location_modification_data my_next,
 			long my_parameter_version,		int my_component_id,
 			long my_start_time,				long my_terminate_time,
 			location my_start_location,		location my_terminate_location,
 			int my_follow_component_id[],	location my_follow_component_location[])
 	{
+		clear_flag					=false;
 		next						=my_next;
 		parameter_version			=my_parameter_version;
 		
@@ -49,5 +65,5 @@ public class location_modification_data
 		terminate_location			=my_terminate_location;
 		follow_component_id			=my_follow_component_id;
 		follow_component_location	=my_follow_component_location;
-	};
+	}
 }

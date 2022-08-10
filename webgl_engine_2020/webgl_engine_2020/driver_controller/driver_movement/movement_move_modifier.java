@@ -10,14 +10,14 @@ import kernel_transformation.location;
 public class movement_move_modifier  extends driver_location_modifier.location_modification_modifier
 {
 	private movement_suspend suspend;
-	private network_parameter parameter[];
+	private network_parameter network_par[];
 	private int modify_id,clear_parameter_channel_id[],set_parameter_channel_id[],modify_parameter_channel_id[];
 	
 	public void destroy()
 	{
 		super.destroy();
 		suspend=null;
-		parameter=null;
+		network_par=null;
 		clear_parameter_channel_id=null;
 		set_parameter_channel_id=null;
 		modify_parameter_channel_id=null;
@@ -50,31 +50,31 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 		int terminate_length=(my_terminate_parameter==null)	?0:my_terminate_parameter.length;
 		
 		if((start_length+terminate_length)<=0)
-			parameter=null;
+			network_par=null;
 		else{
-			parameter=new network_parameter[start_length+terminate_length+4];
-			parameter[2]=new network_parameter("start_time",						Long.toString(my_start_time));
-			parameter[3]=new network_parameter("terminate_time",					Long.toString(my_terminate_time));
+			network_par=new network_parameter[start_length+terminate_length+4];
+			network_par[2]=new network_parameter("start_time",						Long.toString(my_start_time));
+			network_par[3]=new network_parameter("terminate_time",					Long.toString(my_terminate_time));
 			for(int i=0;i<start_length;i++)
-				parameter[i+4]=new network_parameter("par_s_"+Integer.toString(i),my_start_parameter[i]);
+				network_par[i+4]=new network_parameter("par_s_"+Integer.toString(i),my_start_parameter[i]);
 			for(int i=0;i<terminate_length;i++)
-				parameter[i+4+start_length]=new network_parameter("par_t_"+Integer.toString(i),my_terminate_parameter[i]);
+				network_par[i+4+start_length]=new network_parameter("par_t_"+Integer.toString(i),my_terminate_parameter[i]);
 		}
 		modify_id=0;
 	}
 	private void do_component_driver(component comp,engine_kernel ek,client_information ci)
 	{
 		for(int i=0,n=comp.driver_number();i<n;i++)
-			instance_driver.execute_component_function(comp.component_id,i,parameter,ek,ci);
+			instance_driver.execute_component_function(comp.component_id,i,network_par,ek,ci);
 		for(int i=0,n=comp.children_number();i<n;i++)
 			do_component_driver(comp.children[i],ek,ci);
 	}
 	private void call_component_driver(engine_kernel ek,client_information ci,long my_current_time,int operation_id)
 	{
 		component comp;
-		if(parameter!=null){
-			parameter[0]=new network_parameter("operation_id",	Integer.toString(operation_id));
-			parameter[1]=new network_parameter("current_time",	Long.toString(my_current_time));
+		if(network_par!=null){
+			network_par[0]=new network_parameter("operation_id",	Integer.toString(operation_id));
+			network_par[1]=new network_parameter("current_time",	Long.toString(my_current_time));
 			if((comp=ek.component_cont.get_component(component_id))!=null)
 				do_component_driver(comp,ek,ci);
 			if(follow_component_id!=null)
@@ -112,6 +112,7 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 		if(!terminated_flag)
 			return;
 		super.last_modify(my_current_time,ek,ci,true);
+		
 		if((comp=ek.component_cont.get_component(component_id))==null)
 			return;
 		comp.modify_display_flag(clear_parameter_channel_id,false,ek.component_cont);

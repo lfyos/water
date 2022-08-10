@@ -1,5 +1,3 @@
-wait_audio_terminated_message+english			wait_audio_terminated
-wait_audio_terminated_message+chinese			等待播音结束
 
 No_shown_render_target+english					no_shown_render_target
 No_shown_render_target+chinese					没有显示的渲染目标
