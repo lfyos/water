@@ -50,19 +50,21 @@ public class extended_component_driver  extends component_driver
 	public void delete_timeout_location_modifier(engine_kernel ek)
 	{
 		long current_time=ek.modifier_cont[modifier_container_id].get_timer().get_current_time();
-		location_modification_data p,pp,last;
+		location_modification_data p,pp;
 		
-		for(p=first,first=null,last=null;p!=null;){
+		for(p=first,first=null;p!=null;){
 			pp=p;
 			p=p.next;
-			pp.next=null;
 			if((current_time<=pp.start_time)||(current_time<=pp.terminate_time)||pp.clear_flag){
-				if(last==null)
-					first=pp;
-				else
-					last.next=pp;
-				last=pp;
+				pp.next=first;
+				first=pp;
 			}
+		}
+		for(p=first,first=null;p!=null;){
+			pp=p;
+			p=p.next;
+			pp.next=first;
+			first=pp;
 		}
 	}
 	public void register_location_modifier(engine_kernel ek,	int my_component_id,long time_length,

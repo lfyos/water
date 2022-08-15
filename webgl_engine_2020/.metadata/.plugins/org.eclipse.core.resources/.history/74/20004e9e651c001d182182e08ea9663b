@@ -9,7 +9,7 @@ public class operate_show_hide_component
 {
 	private static void show_hide(component comp,int parameter_channel_id,boolean visible_flag,engine_kernel ek)
 	{
-		comp.modify_display_flag(new int[]{parameter_channel_id}, visible_flag,ek.component_cont);
+		comp.modify_display_flag(new int[]{parameter_channel_id}, visible_flag,ek.component_cont);	
 		for(int i=0,child_number=comp.children_number();i<child_number;i++)
 			show_hide(comp.children[i],parameter_channel_id,visible_flag,ek);
 	}
@@ -20,7 +20,7 @@ public class operate_show_hide_component
 		
 		if((str=ci.request_response.get_parameter("event_operation"))==null)
 			return;
-		
+
 		boolean visible_flag;
 		switch(str) {
 		case "show":
@@ -69,7 +69,7 @@ public class operate_show_hide_component
 			selected_operation_flag=true;
 		}
 		if(comp_cont.component_number>0)
-			for(int i=0;i<(comp_cont.component_number);i++)
+			for(int i=0,ni=comp_cont.component_number;i<ni;i++)
 				show_hide(comp_cont.comp[i],parameter_channel_id,visible_flag,ek);
 		else if(visible_flag&&selected_operation_flag)
 				show_hide(ek.component_cont.root_component,parameter_channel_id,visible_flag,ek);

@@ -33,24 +33,16 @@
 									[["component_id",render.pickup.component_id]]);
 							break;
 						case 37://left arrow
-							render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-								function(response_data,render)
-								{
-									var par=[["operation","movement"],["move_method","continue"],["direct","backward"]];
+							var par=[["operation","movement"],["move_method","continue"],["direct","backward"]];
 									if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
 										par.push(["single_step","true"]);
 									render.call_server_component("movement_manager","all",par);
-								});
 							break;
 						case 39://right arrow
-							render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-								function(response_data,render)
-								{
-									var par=[["operation","movement"],["move_method","continue"],["direct","forward"]];
+							var par=[["operation","movement"],["move_method","continue"],["direct","forward"]];
 									if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
 										par.push(["single_step","true"]);
 									render.call_server_component("movement_manager","all",par);
-								});
 							break;
 						case 38://up arrow
 							render.system_call_processor.select_component("parent");
@@ -59,11 +51,7 @@
 							render.system_call_processor.select_component("child");
 							break;
 						case 32://space
-							render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-								function(response_data,render)
-								{
-									render.call_server_component("audio_component","all",[["operation","play"],["file",""]]);
-								});
+							render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]]);
 							break;
 						case 90://z
 						case 88://x

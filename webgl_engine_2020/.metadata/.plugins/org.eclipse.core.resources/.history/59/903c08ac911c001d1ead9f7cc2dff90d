@@ -14,7 +14,6 @@ import kernel_driver.instance_driver;
 public class list_component_on_collector
 {
 	public	component_collector collector;
-	
 	private engine_kernel ek;
 	private client_information ci;
 	private camera_result cam_result;

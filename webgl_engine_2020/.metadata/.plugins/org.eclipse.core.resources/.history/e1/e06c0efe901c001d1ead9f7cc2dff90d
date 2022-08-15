@@ -61,6 +61,7 @@ public class extended_instance_driver extends instance_driver
 		ci.request_response.print(",",change_type_flag?1:0);
 		ci.request_response.print("]");
 	}
+
 	private void select_many_component(
 			component comp,int control_code,engine_kernel ek,client_information ci)
 	{

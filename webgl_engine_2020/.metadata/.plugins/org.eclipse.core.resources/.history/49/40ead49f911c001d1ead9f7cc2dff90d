@@ -14,7 +14,6 @@ import kernel_driver.instance_driver;
 public class list_component_on_collector
 {
 	public	component_collector collector;
-	
 	private engine_kernel ek;
 	private client_information ci;
 	private camera_result cam_result;
@@ -26,7 +25,7 @@ public class list_component_on_collector
 	{
 		if(part_list_only_flag)
 			if(!(comp.uniparameter.part_list_flag))
-				return (comp.children_number()<=0)?true:false;
+				return false;
 		
 		part my_part;
 		instance_driver in_dr;

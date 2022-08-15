@@ -55,7 +55,6 @@ public class extended_component_driver  extends component_driver
 		for(p=first,first=null,last=null;p!=null;){
 			pp=p;
 			p=p.next;
-			pp.next=null;
 			if((current_time<=pp.start_time)||(current_time<=pp.terminate_time)||pp.clear_flag){
 				if(last==null)
 					first=pp;
@@ -64,6 +63,8 @@ public class extended_component_driver  extends component_driver
 				last=pp;
 			}
 		}
+		if(last!=null)
+			last.next=null;
 	}
 	public void register_location_modifier(engine_kernel ek,	int my_component_id,long time_length,
 			location my_start_location,		location my_terminate_location,
