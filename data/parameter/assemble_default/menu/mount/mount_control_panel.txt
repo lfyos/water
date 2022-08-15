@@ -4,35 +4,23 @@ function(component_name,component_id,render)
 		pickupmouseselect	:	function(event,component_id,render)
 		{
 			var ep=render.component_event_processor[component_id];
-			var function_id=Math.floor((1.0-ep.y)*11.0);
+			var function_id=Math.floor((1.0-ep.y)*11.0),par;
 
 			switch(function_id){
 			case 0:
-				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-					function(response_data,render)
-					{
-						var par=[["operation","movement"],["move_method","continue"],["direct","forward"]];
-						if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
-							par.push(["single_step","true"]);
-						render.call_server_component("movement_manager","all",par);
-					});
+				par=[["operation","movement"],["move_method","continue"],["direct","forward"]];
+				if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
+					par.push(["single_step","true"]);
+				render.call_server_component("movement_manager","all",par);
 				break;
 			case 1:
-				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-					function(response_data,render)
-					{
-						var par=[["operation","movement"],["move_method","continue"],["direct","backward"]];
-						if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
-							par.push(["single_step","true"]);
-						render.call_server_component("movement_manager","all",par);
-					});
+				par=[["operation","movement"],["move_method","continue"],["direct","backward"]];
+				if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
+					par.push(["single_step","true"]);
+				render.call_server_component("movement_manager","all",par);
 				break;
 			case 2:
-				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-					function(response_data,render)
-					{
-						render.call_server_component("audio_component","all",[["operation","play"],["file",""]]);
-					});
+				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]]);
 				break;
 			case 3:
 				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],

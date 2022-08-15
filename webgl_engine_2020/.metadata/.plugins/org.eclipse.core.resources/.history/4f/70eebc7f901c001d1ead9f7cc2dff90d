@@ -14,7 +14,6 @@ import kernel_driver.instance_driver;
 public class list_component_on_collector
 {
 	public	component_collector collector;
-	
 	private engine_kernel ek;
 	private client_information ci;
 	private camera_result cam_result;
@@ -26,7 +25,7 @@ public class list_component_on_collector
 	{
 		if(part_list_only_flag)
 			if(!(comp.uniparameter.part_list_flag))
-				return (comp.children_number()<=0)?true:false;
+				return false;
 		
 		part my_part;
 		instance_driver in_dr;
@@ -200,8 +199,7 @@ public class list_component_on_collector
 		return;
 	}
 	
-	public list_component_on_collector(				
-		boolean my_add_number_flag,					boolean my_part_list_only_flag,
+	public list_component_on_collector(				boolean my_add_number_flag,
 		boolean my_do_discard_lod_flag,				boolean my_do_selection_lod_flag,
 		boolean my_discard_cross_clip_plane_flag,	boolean my_discard_unload_component_flag,
 		engine_kernel my_ek,						client_information my_ci,
@@ -211,7 +209,6 @@ public class list_component_on_collector
 		ci											=my_ci;
 		cam_result									=my_cam_result;		
 		add_number_flag								=my_add_number_flag;
-		part_list_only_flag							=my_part_list_only_flag;
 		do_discard_lod_flag							=my_do_discard_lod_flag;
 		do_selection_lod_flag						=my_do_selection_lod_flag;
 		discard_cross_clip_plane_flag				=my_discard_cross_clip_plane_flag;
