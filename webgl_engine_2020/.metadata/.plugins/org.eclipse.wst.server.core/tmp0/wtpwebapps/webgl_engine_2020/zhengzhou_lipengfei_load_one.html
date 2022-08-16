@@ -1,0 +1,102 @@
+<html>
+<head>
+
+<script type="text/javascript" 	src="./interface.jsp?function_name=construct_render_object"></script>
+<script type="text/javascript">
+
+var render;
+function body_onload()
+{
+	construct_render_object(
+		"my_canvas",		//绘图画布
+		"NoName",			//用户名
+		"NoPassword",		//用户密码
+		"chinese",			//语言
+		"bridge_load_one",	//场景名称	bridge_old_32		 bridge_load_one	bridge_load_two		64_old_one_16		64_old_two_24
+		"",				//连接名称,用于多人协同操作一个场景
+		[					//初始化参数
+		],
+		function(my_render)	//创建场景成功后执行的函数
+		{
+			render=my_render;				//把场景变量保存到变量render中
+			document.title=render.title;	//设置网页标题
+			
+			render.zhengzhou_lipengfei.turn_on_off_display_point_on_pickup(false);
+			
+			render.zhengzhou_lipengfei.register_collector_stack_monitor(	//注册列表监视器
+				function(jason_data,text_data)
+				{
+					console.clear();
+					console.log(text_data);
+				});
+		});
+}
+
+function body_onunload()
+{
+	if(typeof(render)=="object")
+		if(render!=null)
+			if(typeof(render.terminate)=="function")
+				render.terminate();
+}
+
+</script>
+</head>
+
+<body onload="body_onload();" onunload="body_onunload();">
+<canvas id="my_canvas"	tabindex="0" width=1000	 height=500></canvas>
+<br/>
+
+<button type="button" onclick="render.zhengzhou_lipengfei.turnonoff_sound(true);"		>打开配音</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.turnonoff_sound(false);"		>关闭配音</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.turnonoff_lod(true,true);"	>打开层次细节</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.turnonoff_lod(false,false);"	>关闭层次细节</button>
+<br/>
+
+<button type="button" onclick="render.zhengzhou_lipengfei.set_display_mounting_component();"	>正在拼装组件</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.set_display_mounted_component();" 	>已经拼装组件</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.set_display_unmounted_component();"	>尚未拼装组件</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.set_display_all_component();" 		>所有拼装组件</button>
+<br/>
+
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_forward(true);"			>单步向前拼装</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_forward(false);"		>连续向前拼装</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_backward(true);"		>单步向后拆卸</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_backward(false);"		>连续向后拆卸</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_stop();"				>停止拼装</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_jump(24,true);"			>跳转并拼装</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_jump(24,false);"		>跳转不拼装</button>
+<br/> 
+
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_all_url(),'_blank');" 		>拼装jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_search_url(),'_blank');" 	>查询jason</button>
+<br/>
+
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(true,true,false),'_blank');" >1.列表jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(false,true,false),'_blank');">2.列表jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(true,false,false),'_blank');">3.列表jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(false,false,false),'_blank');">4.列表jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(true,true,true),'_blank');" >5.列表jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(false,true,true),'_blank');">6.列表jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(true,false,true),'_blank');">7.列表jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(false,false,true),'_blank');">8.列表jason</button>
+<br/>
+
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_jump_hangup(24,function(jason_data,render,text_data){console.log(text_data);});">执行杆件挂起</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.virtual_mount_collector_jason_url(),'_blank');">虚拟拼装jason</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_reset_hangup(24,function(jason_data,render,text_data){});">复位杆件挂起</button>
+<br/>
+
+<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\混色杆件\\栓钉_33.SLDPRT',true);">添加栓钉_33(首次添加)</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\混色杆件\\栓钉_33.SLDPRT',false);">添加栓钉_33(后续添加)</button>
+
+<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\混色杆件\\螺栓_29乙.SLDPRT',true);">添加螺栓_29乙(首次添加)</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\混色杆件\\螺栓_29乙.SLDPRT',false);">添加螺栓_29乙(后续插入)</button>
+
+<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\混色杆件\\槽钢_编号_262.SLDPRT',true);">添加262号槽钢(首次添加)</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\混色杆件\\槽钢_编号_262.SLDPRT',false);">添加262号槽钢(后续插入)</button>
+<br/>
+
+</body>
+
+</html>

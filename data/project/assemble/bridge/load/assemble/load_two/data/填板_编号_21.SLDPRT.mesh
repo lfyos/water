@@ -1,0 +1,2293 @@
+/*	version					*/	2021.07.15
+/*	origin material			*/	0	0	0	1
+/*	default material		*/	1  0  0  0
+/*	origin extra_data		            */	1
+/*	default vertex_location_extra_data	*/	1
+/*	default vertex_normal_extra_data	*/	1
+/*	max_attribute_number	*/  1
+     /*      attribute_0	    */  0   0   0   1
+
+/*  body_number */	1
+     /*  body    0  name    */  돌실1   /*  face_number */  50
+         /*  face 0  name   */  돌실1_face_0
+
+             /*  face type                   */  plane
+             /*  parameter number            */  6    /*  prameter */     0    0    1    -0.17    -0.125    0.014
+             /*  total_face_primitive_number */  352
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.167999997735023 -0.123000003397465 0.0140000004321337 0.167999997735023 0.123000003397465 0.0140000004321337
+
+         /*  face loop number        */  13
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.105065334048306 0.0650163424145603 0.014 0.135 0.0949379122146206 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0250653340483058 -0.0149836575854398 0.014 0.0550000000000001 0.0149379122146205 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.2   edge number */  1
+
+             /*  Loop NO.2  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   -0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0250653340483058 -0.0949836575854398 0.014 0.0550000000000001 -0.0650620877853795 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.3   edge number */  1
+
+             /*  Loop NO.3  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   -0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.134934665951694 -0.0949836575854398 0.014 -0.105 -0.0650620877853795 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.4   edge number */  1
+
+             /*  Loop NO.4  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.134934665951694 -0.0149836575854398 0.014 -0.105 0.0149379122146205 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.5   edge number */  1
+
+             /*  Loop NO.5  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.0549346659516943 0.0650163424145602 0.014 -0.0250000000000001 0.0949379122146205 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.6   edge number */  4
+
+             /*  Loop NO.6  Edge NO.0   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.168   0.125   0.014   0   1   0
+             start_effective    0.168   -0.123   0.014   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.168   0.123   0.014   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.168 -0.123 0.014 0.168 0.123 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.6  Edge NO.1   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   0.123   0.014   -1   0   0
+             start_effective    0.168   0.123   0.014   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   0.123   0.014   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.168 0.123 0.014 0.168 0.123 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.6  Edge NO.2   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.168   -0.125   0.014   0   -1   0
+             start_effective    -0.168   0.123   0.014   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   -0.123   0.014   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.168 -0.123 0.014 -0.168 0.123 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.6  Edge NO.3   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.17   -0.123   0.014   1   0   0
+             start_effective    -0.168   -0.123   0.014   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.168   -0.123   0.014   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.168 -0.123 0.014 0.168 -0.123 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+         /*  Loop NO.7   edge number */  1
+
+             /*  Loop NO.7  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.134934665951694 0.0650163424145603 0.014 -0.105 0.0949379122146206 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.8   edge number */  1
+
+             /*  Loop NO.8  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.0549346659516943 -0.0149836575854398 0.014 -0.0250000000000001 0.0149379122146205 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.9   edge number */  1
+
+             /*  Loop NO.9  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   -0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.0549346659516943 -0.0949836575854398 0.014 -0.0250000000000001 -0.0650620877853795 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.10   edge number */  1
+
+             /*  Loop NO.10  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   -0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.105065334048306 -0.0949836575854398 0.014 0.135 -0.0650620877853795 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.11   edge number */  1
+
+             /*  Loop NO.11  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.105065334048306 -0.0149836575854398 0.014 0.135 0.0149379122146205 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.12   edge number */  1
+
+             /*  Loop NO.12  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0250653340483058 0.0650163424145602 0.014 0.0550000000000001 0.0949379122146205 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+
+         /*  face 1  name   */  돌실1_face_1
+
+             /*  face type                   */  plane
+             /*  parameter number            */  6    /*  prameter */     0    0    1    -0.17    -0.125    0
+             /*  total_face_primitive_number */  352
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.167999997735023 -0.123000003397465 0 0.167999997735023 0.123000003397465 0
+
+         /*  face loop number        */  13
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.105065334048306 0.0650620877853795 0 0.135 0.0949836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0250653340483058 0.0650620877853795 0 0.0550000000000001 0.0949836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.2   edge number */  1
+
+             /*  Loop NO.2  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0250653340483058 -0.0149379122146205 0 0.0550000000000001 0.0149836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.3   edge number */  1
+
+             /*  Loop NO.3  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.105065334048306 -0.0149379122146205 0 0.135 0.0149836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.4   edge number */  1
+
+             /*  Loop NO.4  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   -0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0250653340483058 -0.0949379122146205 0 0.0550000000000001 -0.0650163424145602 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.5   edge number */  1
+
+             /*  Loop NO.5  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   -0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.105065334048306 -0.0949379122146206 0 0.135 -0.0650163424145603 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.6   edge number */  1
+
+             /*  Loop NO.6  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   -0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.134934665951694 -0.0949379122146206 0 -0.105 -0.0650163424145603 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.7   edge number */  1
+
+             /*  Loop NO.7  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   -0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.0549346659516943 -0.0949379122146205 0 -0.0250000000000001 -0.0650163424145602 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.8   edge number */  1
+
+             /*  Loop NO.8  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.134934665951694 -0.0149379122146205 0 -0.105 0.0149836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.9   edge number */  1
+
+             /*  Loop NO.9  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.0549346659516943 -0.0149379122146205 0 -0.0250000000000001 0.0149836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.10   edge number */  1
+
+             /*  Loop NO.10  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.0549346659516943 0.0650620877853795 0 -0.0250000000000001 0.0949836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.11   edge number */  1
+
+             /*  Loop NO.11  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.134934665951694 0.0650620877853795 0 -0.105 0.0949836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.12   edge number */  4
+
+             /*  Loop NO.12  Edge NO.0   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.168   -0.125   0   0   -1   0
+             start_effective    0.168   0.123   0   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.168   -0.123   0   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.168 -0.123 0 0.168 0.123 0
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.12  Edge NO.1   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   -0.123   0   -1   0   0
+             start_effective    0.168   -0.123   0   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   -0.123   0   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.168 -0.123 0 0.168 -0.123 0
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.12  Edge NO.2   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.168   -0.125   0   0   1   0
+             start_effective    -0.168   -0.123   0   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   0.123   0   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.168 -0.123 0 -0.168 0.123 0
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.12  Edge NO.3   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   0.123   0   1   0   0
+             start_effective    -0.168   0.123   0   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.168   0.123   0   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.168 0.123 0 0.168 0.123 0
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+         /*  face 2  name   */  돌실1_face_2
+
+             /*  face type                   */  plane
+             /*  parameter number            */  6    /*  prameter */     1    0    0    -0.17    0.125    0.014
+             /*  total_face_primitive_number */  2
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.170000001788139 -0.125 0.0020000000949949 -0.170000001788139 0.125 0.0120000001043081
+
+         /*  face loop number        */  1
+         /*  Loop NO.0   edge number */  4
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   0.125   0.014   0   0   -1
+             start_effective    -0.17   0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.17   0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 0.125 0.002 -0.17 0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.1   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   0.125   0.002   0   -1   0
+             start_effective    -0.17   0.125   0.002   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.17   -0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 -0.125 0.002 -0.17 0.125 0.002
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.2   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   -0.125   0.014   0   0   -1
+             start_effective    -0.17   -0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.17   -0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 -0.125 0.002 -0.17 -0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.3   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   0.125   0.012   0   1   0
+             start_effective    -0.17   -0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.17   0.125   0.012   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 -0.125 0.012 -0.17 0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+         /*  face 3  name   */  돌실1_face_3
+
+             /*  face type                   */  plane
+             /*  parameter number            */  6    /*  prameter */     0    1    0    -0.17    -0.125    0.014
+             /*  total_face_primitive_number */  2
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.170000001788139 -0.125 0.0020000000949949 0.170000001788139 -0.125 0.0120000001043081
+
+         /*  face loop number        */  1
+         /*  Loop NO.0   edge number */  4
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   -0.125   0.014   0   0   -1
+             start_effective    -0.17   -0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.17   -0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 -0.125 0.002 -0.17 -0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.1   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   -0.125   0.002   1   0   0
+             start_effective    -0.17   -0.125   0.002   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   -0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 -0.125 0.002 0.17 -0.125 0.002
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.2   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.17   -0.125   0.014   0   0   -1
+             start_effective    0.17   -0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   -0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.17 -0.125 0.002 0.17 -0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.3   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   -0.125   0.012   -1   0   0
+             start_effective    0.17   -0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.17   -0.125   0.012   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 -0.125 0.012 0.17 -0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+         /*  face 4  name   */  돌실1_face_4
+
+             /*  face type                   */  plane
+             /*  parameter number            */  6    /*  prameter */     -1    0    0    0.17    0.125    0.014
+             /*  total_face_primitive_number */  2
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.170000001788139 -0.125 0.0020000000949949 0.170000001788139 0.125 0.0120000001043081
+
+         /*  face loop number        */  1
+         /*  Loop NO.0   edge number */  4
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.17   -0.125   0.014   0   0   -1
+             start_effective    0.17   -0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   -0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.17 -0.125 0.002 0.17 -0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.1   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.17   0.125   0.002   0   1   0
+             start_effective    0.17   -0.125   0.002   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.17 -0.125 0.002 0.17 0.125 0.002
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.2   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.17   0.125   0.014   0   0   -1
+             start_effective    0.17   0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.17 0.125 0.002 0.17 0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.3   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.17   -0.125   0.012   0   -1   0
+             start_effective    0.17   0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   -0.125   0.012   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.17 -0.125 0.012 0.17 0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+         /*  face 5  name   */  돌실1_face_5
+
+             /*  face type                   */  plane
+             /*  parameter number            */  6    /*  prameter */     0    -1    0    -0.17    0.125    0.014
+             /*  total_face_primitive_number */  2
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.170000001788139 0.125 0.0020000000949949 0.170000001788139 0.125 0.0120000001043081
+
+         /*  face loop number        */  1
+         /*  Loop NO.0   edge number */  4
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.17   0.125   0.014   0   0   -1
+             start_effective    0.17   0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.17 0.125 0.002 0.17 0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.1   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   0.125   0.002   -1   0   0
+             start_effective    0.17   0.125   0.002   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.17   0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 0.125 0.002 0.17 0.125 0.002
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.2   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   0.125   0.014   0   0   -1
+             start_effective    -0.17   0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.17   0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 0.125 0.002 -0.17 0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.3   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.17   0.125   0.012   1   0   0
+             start_effective    -0.17   0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   0.125   0.012   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 0.125 0.012 0.17 0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+         /*  face 6  name   */  돌실1_face_6
+
+             /*  face type                   */  cylinder
+             /*  parameter number            */  7    /*  prameter */     -0.12    0.08    0.014    0    0    -1    0.013
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.133000001311302 0.0670000016689301 0.0020000000949949 -0.10700000077486 0.0930000022053719 0.0120000001043081
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0.08   0.00199999999999999   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.132952644022601 0.0670430700652854 0.00199999999999999 -0.107 0.0929998981966326 0.00199999999999999
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.132952644022601 0.0670001018033675 0.012 -0.107 0.0929569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 7  name   */  돌실1_face_7
+
+             /*  face type                   */  cylinder
+             /*  parameter number            */  7    /*  prameter */     -0.0400000000000001    0.08    0.014    0    0    -1    0.013
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.0529999993741512 0.0670000016689301 0.0020000000949949 -0.0270000007003546 0.0930000022053719 0.0120000001043081
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0.08   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.052952644022601 0.0670430700652853 0.00200000000000001 -0.0270000000000001 0.0929998981966326 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.052952644022601 0.0670001018033674 0.012 -0.0270000000000001 0.0929569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 8  name   */  돌실1_face_8
+
+             /*  face type                   */  cylinder
+             /*  parameter number            */  7    /*  prameter */     -0.0400000000000001    0    0.014    0    0    -1    0.013
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.0529999993741512 -0.0130000002682209 0.0020000000949949 -0.0270000007003546 0.0130000002682209 0.0120000001043081
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.052952644022601 -0.0129569299347147 0.00200000000000001 -0.0270000000000001 0.0129998981966326 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.052952644022601 -0.0129998981966326 0.012 -0.0270000000000001 0.0129569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 9  name   */  돌실1_face_9
+
+             /*  face type                   */  cylinder
+             /*  parameter number            */  7    /*  prameter */     -0.12    0    0.014    0    0    -1    0.013
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.133000001311302 -0.0130000002682209 0.0020000000949949 -0.10700000077486 0.0130000002682209 0.0120000001043081
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0   0.00199999999999999   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.132952644022601 -0.0129569299347147 0.00199999999999999 -0.107 0.0129998981966326 0.00199999999999999
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.132952644022601 -0.0129998981966326 0.012 -0.107 0.0129569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 10  name   */  돌실1_face_10
+
+             /*  face type                   */  cylinder
+             /*  parameter number            */  7    /*  prameter */     -0.0400000000000001    -0.08    0.014    0    0    -1    0.013
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.0529999993741512 -0.0930000022053719 0.0020000000949949 -0.0270000007003546 -0.0670000016689301 0.0120000001043081
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   -0.08   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.052952644022601 -0.0929569299347147 0.00200000000000001 -0.0270000000000001 -0.0670001018033674 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   -0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.052952644022601 -0.0929998981966326 0.012 -0.0270000000000001 -0.0670430700652853 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 11  name   */  돌실1_face_11
+
+             /*  face type                   */  cylinder
+             /*  parameter number            */  7    /*  prameter */     -0.12    -0.08    0.014    0    0    -1    0.013
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.133000001311302 -0.0930000022053719 0.0020000000949949 -0.10700000077486 -0.0670000016689301 0.0120000001043081
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   -0.08   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.132952644022601 -0.0929569299347147 0.00200000000000001 -0.107 -0.0670001018033675 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   -0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.132952644022601 -0.0929998981966326 0.012 -0.107 -0.0670430700652854 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 12  name   */  돌실1_face_12
+
+             /*  face type                   */  cylinder
+             /*  parameter number            */  7    /*  prameter */     0.12    -0.08    0.014    0    0    -1    0.013
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.10700000077486 -0.0930000022053719 0.0020000000949949 0.133000001311302 -0.0670000016689301 0.0120000001043081
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   -0.08   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.107047355977399 -0.0929569299347147 0.00200000000000001 0.133 -0.0670001018033675 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   -0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.107047355977399 -0.0929998981966326 0.012 0.133 -0.0670430700652854 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 13  name   */  돌실1_face_13
+
+             /*  face type                   */  cylinder
+             /*  parameter number            */  7    /*  prameter */     0.0400000000000001    -0.08    0.014    0    0    -1    0.013
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.0270000007003546 -0.0930000022053719 0.0020000000949949 0.0529999993741512 -0.0670000016689301 0.0120000001043081
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   -0.08   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0270473559773992 -0.0929569299347147 0.00200000000000001 0.0530000000000001 -0.0670001018033674 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   -0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0270473559773992 -0.0929998981966326 0.012 0.0530000000000001 -0.0670430700652853 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 14  name   */  돌실1_face_14
+
+             /*  face type                   */  cylinder
+             /*  parameter number            */  7    /*  prameter */     0.12    0    0.014    0    0    -1    0.013
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.10700000077486 -0.0130000002682209 0.0020000000949949 0.133000001311302 0.0130000002682209 0.0120000001043081
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0   0.00199999999999999   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.107047355977399 -0.0129569299347147 0.00199999999999999 0.133 0.0129998981966326 0.00199999999999999
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.107047355977399 -0.0129998981966326 0.012 0.133 0.0129569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 15  name   */  돌실1_face_15
+
+             /*  face type                   */  cylinder
+             /*  parameter number            */  7    /*  prameter */     0.0400000000000001    0    0.014    0    0    -1    0.013
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.0270000007003546 -0.0130000002682209 0.0020000000949949 0.0529999993741512 0.0130000002682209 0.0120000001043081
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0270473559773992 -0.0129569299347147 0.00200000000000001 0.0530000000000001 0.0129998981966326 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0270473559773992 -0.0129998981966326 0.012 0.0530000000000001 0.0129569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 16  name   */  돌실1_face_16
+
+             /*  face type                   */  cylinder
+             /*  parameter number            */  7    /*  prameter */     0.0400000000000001    0.08    0.014    0    0    -1    0.013
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.0270000007003546 0.0670000016689301 0.0020000000949949 0.0529999993741512 0.0930000022053719 0.0120000001043081
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0.08   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0270473559773992 0.0670430700652853 0.00200000000000001 0.0530000000000001 0.0929998981966326 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0270473559773992 0.0670001018033674 0.012 0.0530000000000001 0.0929569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 17  name   */  돌실1_face_17
+
+             /*  face type                   */  cylinder
+             /*  parameter number            */  7    /*  prameter */     0.12    0.08    0.014    0    0    -1    0.013
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.10700000077486 0.0670000016689301 0.0020000000949949 0.133000001311302 0.0930000022053719 0.0120000001043081
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0.08   0.00199999999999999   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.107047355977399 0.0670430700652854 0.00199999999999999 0.133 0.0929998981966326 0.00199999999999999
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.107047355977399 0.0670001018033675 0.012 0.133 0.0929569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 18  name   */  돌실1_face_18
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     0.12    0.08    0    0    0    1    0.015    0.785398163397449    -1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.104999996721745 0.0649999976158142 0 0.135000005364418 0.0949999988079071 0.0020000000949949
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0.08   0.00199999999999999   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.107047355977399 0.0670430700652854 0.00199999999999999 0.133 0.0929998981966326 0.00199999999999999
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.105065334048306 0.0650620877853795 0 0.135 0.0949836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+
+         /*  face 19  name   */  돌실1_face_19
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     0.0400000000000001    0.08    0    0    0    1    0.015    0.785398163397447    -1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.025000000372529 0.0649999976158142 0 0.0549999997019768 0.0949999988079071 0.0020000000949949
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0.08   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0270473559773992 0.0670430700652853 0.00200000000000001 0.0530000000000001 0.0929998981966326 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0250653340483058 0.0650620877853795 0 0.0550000000000001 0.0949836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+
+         /*  face 20  name   */  돌실1_face_20
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     0.0400000000000001    0    0    0    0    1    0.015    0.785398163397447    -1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.025000000372529 -0.0149999996647239 0 0.0549999997019768 0.0149999996647239 0.0020000000949949
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0270473559773992 -0.0129569299347147 0.00200000000000001 0.0530000000000001 0.0129998981966326 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0250653340483058 -0.0149379122146205 0 0.0550000000000001 0.0149836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+
+         /*  face 21  name   */  돌실1_face_21
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     0.12    0    0    0    0    1    0.015    0.785398163397449    -1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.104999996721745 -0.0149999996647239 0 0.135000005364418 0.0149999996647239 0.0020000000949949
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0   0.00199999999999999   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.107047355977399 -0.0129569299347147 0.00199999999999999 0.133 0.0129998981966326 0.00199999999999999
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.105065334048306 -0.0149379122146205 0 0.135 0.0149836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+
+         /*  face 22  name   */  돌실1_face_22
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     0.0400000000000001    -0.08    0    0    0    1    0.015    0.785398163397447    -1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.025000000372529 -0.0949999988079071 0 0.0549999997019768 -0.0649999976158142 0.0020000000949949
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   -0.08   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0270473559773992 -0.0929569299347147 0.00200000000000001 0.0530000000000001 -0.0670001018033674 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   -0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0250653340483058 -0.0949379122146205 0 0.0550000000000001 -0.0650163424145602 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+
+         /*  face 23  name   */  돌실1_face_23
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     0.12    -0.08    0    0    0    1    0.015    0.785398163397441    -1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.104999996721745 -0.0949999988079071 0 0.135000005364418 -0.0649999976158142 0.0020000000949949
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   -0.08   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.107047355977399 -0.0929569299347147 0.00200000000000001 0.133 -0.0670001018033675 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   -0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.105065334048306 -0.0949379122146206 0 0.135 -0.0650163424145603 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+
+         /*  face 24  name   */  돌실1_face_24
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     -0.12    -0.08    0    0    0    1    0.015    0.785398163397441    -1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.135000005364418 -0.0949999988079071 0 -0.104999996721745 -0.0649999976158142 0.0020000000949949
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   -0.08   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.132952644022601 -0.0929569299347147 0.00200000000000001 -0.107 -0.0670001018033675 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   -0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.134934665951694 -0.0949379122146206 0 -0.105 -0.0650163424145603 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+
+         /*  face 25  name   */  돌실1_face_25
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     -0.0400000000000001    -0.08    0    0    0    1    0.015    0.785398163397447    -1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.0549999997019768 -0.0949999988079071 0 -0.025000000372529 -0.0649999976158142 0.0020000000949949
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   -0.08   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.052952644022601 -0.0929569299347147 0.00200000000000001 -0.0270000000000001 -0.0670001018033674 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   -0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.0549346659516943 -0.0949379122146205 0 -0.0250000000000001 -0.0650163424145602 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+
+         /*  face 26  name   */  돌실1_face_26
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     -0.12    0    0    0    0    1    0.015    0.785398163397449    -1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.135000005364418 -0.0149999996647239 0 -0.104999996721745 0.0149999996647239 0.0020000000949949
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0   0.00199999999999999   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.132952644022601 -0.0129569299347147 0.00199999999999999 -0.107 0.0129998981966326 0.00199999999999999
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.134934665951694 -0.0149379122146205 0 -0.105 0.0149836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+
+         /*  face 27  name   */  돌실1_face_27
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     -0.0400000000000001    0    0    0    0    1    0.015    0.785398163397447    -1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.0549999997019768 -0.0149999996647239 0 -0.025000000372529 0.0149999996647239 0.0020000000949949
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.052952644022601 -0.0129569299347147 0.00200000000000001 -0.0270000000000001 0.0129998981966326 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.0549346659516943 -0.0149379122146205 0 -0.0250000000000001 0.0149836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+
+         /*  face 28  name   */  돌실1_face_28
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     -0.0400000000000001    0.08    0    0    0    1    0.015    0.785398163397447    -1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.0549999997019768 0.0649999976158142 0 -0.025000000372529 0.0949999988079071 0.0020000000949949
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0.08   0.00200000000000001   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.052952644022601 0.0670430700652853 0.00200000000000001 -0.0270000000000001 0.0929998981966326 0.00200000000000001
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.0549346659516943 0.0650620877853795 0 -0.0250000000000001 0.0949836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+
+         /*  face 29  name   */  돌실1_face_29
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     -0.12    0.08    0    0    0    1    0.015    0.785398163397449    -1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.135000005364418 0.0649999976158142 0 -0.104999996721745 0.0949999988079071 0.0020000000949949
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0.08   0.00199999999999999   0   0   -1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.132952644022601 0.0670430700652854 0.00199999999999999 -0.107 0.0929998981966326 0.00199999999999999
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0.08   0   0   0   1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.134934665951694 0.0650620877853795 0 -0.105 0.0949836575854398 0
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+
+         /*  face 30  name   */  돌실1_face_30
+
+             /*  face type                   */  plane
+             /*  parameter number            */  6    /*  prameter */     0    -0.707106781186548    0.707106781186548    -0.17    0.125    0.002
+             /*  total_face_primitive_number */  6
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.170000001788139 0.123000003397465 0 0.170000001788139 0.125 0.0020000000949949
+
+         /*  face loop number        */  1
+         /*  Loop NO.0   edge number */  4
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.0566666666666667   0.0116666666666666   -0.111333333333333   0.577350269189626   0.577350269189626   0.577350269189626
+             start_effective    0.168   0.123   0   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.168 0.123 -4.16333634234434E-17 0.17 0.125 0.00199999999999996
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.1   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   0.123   0   1   0   0
+             start_effective    -0.168   0.123   0   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.168   0.123   0   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.168 0.123 0 0.168 0.123 0
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.2   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   0.125   0.002   0.577350269189626   -0.577350269189626   -0.577350269189626
+             start_effective    -0.17   0.125   0.002   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   0.123   0   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 0.123 4.33680868994202E-19 -0.168 0.125 0.002
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.3   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   0.125   0.002   -1   0   0
+             start_effective    0.17   0.125   0.002   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.17   0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 0.125 0.002 0.17 0.125 0.002
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+         /*  face 31  name   */  돌실1_face_31
+
+             /*  face type                   */  plane
+             /*  parameter number            */  6    /*  prameter */     0.707106781186548    0    0.707106781186548    -0.17    0.125    0.002
+             /*  total_face_primitive_number */  5
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.170000001788139 -0.125 0 -0.167999997735023 0.125 0.0020000000949949
+
+         /*  face loop number        */  1
+         /*  Loop NO.0   edge number */  4
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   0.125   0.002   0.577350269189626   -0.577350269189626   -0.577350269189626
+             start_effective    -0.17   0.125   0.002   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   0.123   0   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 0.123 4.33680868994202E-19 -0.168 0.125 0.002
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.1   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.168   -0.125   0   0   1   0
+             start_effective    -0.168   -0.123   0   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   0.123   0   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.168 -0.123 0 -0.168 0.123 0
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.2   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.0866666666666667   -0.0416666666666667   -0.0813333333333333   0.577350269189626   0.577350269189626   -0.577350269189626
+             start_effective    -0.17   -0.125   0.002   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   -0.123   0   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 -0.125 -2.77555756156289E-17 -0.168 -0.123 0.00199999999999999
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.3   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   0.125   0.002   0   -1   0
+             start_effective    -0.17   0.125   0.002   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.17   -0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 -0.125 0.002 -0.17 0.125 0.002
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+         /*  face 32  name   */  돌실1_face_32
+
+             /*  face type                   */  plane
+             /*  parameter number            */  6    /*  prameter */     -0.707106781186548    0    0.707106781186548    0.17    0.125    0.002
+             /*  total_face_primitive_number */  5
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.167999997735023 -0.125 0 0.170000001788139 0.125 0.0020000000949949
+
+         /*  face loop number        */  1
+         /*  Loop NO.0   edge number */  4
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.0566666666666667   0.0116666666666666   -0.111333333333333   0.577350269189626   0.577350269189626   0.577350269189626
+             start_effective    0.168   0.123   0   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.168 0.123 -4.16333634234434E-17 0.17 0.125 0.00199999999999996
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.1   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.17   0.125   0.002   0   1   0
+             start_effective    0.17   -0.125   0.002   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.17 -0.125 0.002 0.17 0.125 0.002
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.2   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.0866666666666666   -0.0416666666666667   -0.0813333333333333   0.577350269189626   -0.577350269189626   0.577350269189626
+             start_effective    0.168   -0.123   0   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   -0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.168 -0.125 -2.77555756156289E-17 0.17 -0.123 0.00199999999999999
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.3   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.168   -0.125   0   0   -1   0
+             start_effective    0.168   0.123   0   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.168   -0.123   0   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.168 -0.123 0 0.168 0.123 0
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+         /*  face 33  name   */  돌실1_face_33
+
+             /*  face type                   */  plane
+             /*  parameter number            */  6    /*  prameter */     0    0.707106781186548    0.707106781186548    -0.17    -0.125    0.002
+             /*  total_face_primitive_number */  6
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.170000001788139 -0.125 0 0.170000001788139 -0.123000003397465 0.0020000000949949
+
+         /*  face loop number        */  1
+         /*  Loop NO.0   edge number */  4
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.0866666666666667   -0.0416666666666667   -0.0813333333333333   0.577350269189626   0.577350269189626   -0.577350269189626
+             start_effective    -0.17   -0.125   0.002   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   -0.123   0   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 -0.125 -2.77555756156289E-17 -0.168 -0.123 0.00199999999999999
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.1   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   -0.123   0   -1   0   0
+             start_effective    0.168   -0.123   0   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   -0.123   0   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.168 -0.123 0 0.168 -0.123 0
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.2   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.0866666666666666   -0.0416666666666667   -0.0813333333333333   0.577350269189626   -0.577350269189626   0.577350269189626
+             start_effective    0.168   -0.123   0   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   -0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.168 -0.125 -2.77555756156289E-17 0.17 -0.123 0.00199999999999999
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.3   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   -0.125   0.002   1   0   0
+             start_effective    -0.17   -0.125   0.002   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   -0.125   0.002   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 -0.125 0.002 0.17 -0.125 0.002
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+         /*  face 34  name   */  돌실1_face_34
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     0.12    0.08    0.012    0    0    -1    0.013    0.785398163397449    1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.104999996721745 0.0649999976158142 0.0120000001043081 0.135000005364418 0.0949999988079071 0.0140000004321337
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.105065334048306 0.0650163424145603 0.014 0.135 0.0949379122146206 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.107047355977399 0.0670001018033675 0.012 0.133 0.0929569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 35  name   */  돌실1_face_35
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     0.0400000000000001    0    0.012    0    0    -1    0.013    0.785398163397451    1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.025000000372529 -0.0149999996647239 0.0120000001043081 0.0549999997019768 0.0149999996647239 0.0140000004321337
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0250653340483058 -0.0149836575854398 0.014 0.0550000000000001 0.0149379122146205 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0270473559773992 -0.0129998981966326 0.012 0.0530000000000001 0.0129569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 36  name   */  돌실1_face_36
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     0.0400000000000001    -0.08    0.012    0    0    -1    0.013    0.785398163397451    1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.025000000372529 -0.0949999988079071 0.0120000001043081 0.0549999997019768 -0.0649999976158142 0.0140000004321337
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   -0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0250653340483058 -0.0949836575854398 0.014 0.0550000000000001 -0.0650620877853795 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   -0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0270473559773992 -0.0929998981966326 0.012 0.0530000000000001 -0.0670430700652853 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 37  name   */  돌실1_face_37
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     -0.12    -0.08    0.012    0    0    -1    0.013    0.785398163397453    1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.135000005364418 -0.0949999988079071 0.0120000001043081 -0.104999996721745 -0.0649999976158142 0.0140000004321337
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   -0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.134934665951694 -0.0949836575854398 0.014 -0.105 -0.0650620877853795 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   -0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.132952644022601 -0.0929998981966326 0.012 -0.107 -0.0670430700652854 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 38  name   */  돌실1_face_38
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     -0.12    0    0.012    0    0    -1    0.013    0.785398163397449    1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.135000005364418 -0.0149999996647239 0.0120000001043081 -0.104999996721745 0.0149999996647239 0.0140000004321337
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.134934665951694 -0.0149836575854398 0.014 -0.105 0.0149379122146205 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.132952644022601 -0.0129998981966326 0.012 -0.107 0.0129569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 39  name   */  돌실1_face_39
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     -0.0400000000000001    0.08    0.012    0    0    -1    0.013    0.785398163397451    1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.0549999997019768 0.0649999976158142 0.0120000001043081 -0.025000000372529 0.0949999988079071 0.0140000004321337
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.0549346659516943 0.0650163424145602 0.014 -0.0250000000000001 0.0949379122146205 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.052952644022601 0.0670001018033674 0.012 -0.0270000000000001 0.0929569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 40  name   */  돌실1_face_40
+
+             /*  face type                   */  plane
+             /*  parameter number            */  6    /*  prameter */     0    -0.707106781186547    0.707106781186548    -0.17    -0.123    0.014
+             /*  total_face_primitive_number */  6
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.170000001788139 -0.125 0.0120000001043081 0.170000001788139 -0.123000003397465 0.0140000004321337
+
+         /*  face loop number        */  1
+         /*  Loop NO.0   edge number */  4
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.168666666666667   -0.123666666666667   0.0133333333333333   0.577350269189626   0.577350269189626   0.577350269189626
+             start_effective    -0.17   -0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   -0.123   0.014   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 -0.125 0.012 -0.168 -0.123 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.1   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   -0.125   0.012   -1   0   0
+             start_effective    0.17   -0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.17   -0.125   0.012   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 -0.125 0.012 0.17 -0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.2   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.0553333333333333   -0.0103333333333333   0.126666666666667   0.577350269189626   -0.577350269189626   -0.577350269189626
+             start_effective    0.168   -0.123   0.014   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   -0.125   0.012   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.168 -0.125 0.012 0.17 -0.123 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.3   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.17   -0.123   0.014   1   0   0
+             start_effective    -0.168   -0.123   0.014   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.168   -0.123   0.014   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.168 -0.123 0.014 0.168 -0.123 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+         /*  face 41  name   */  돌실1_face_41
+
+             /*  face type                   */  plane
+             /*  parameter number            */  6    /*  prameter */     0.707106781186547    0    0.707106781186548    0.168    -0.125    0.014
+             /*  total_face_primitive_number */  5
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.167999997735023 -0.125 0.0120000001043081 0.170000001788139 0.125 0.0140000004321337
+
+         /*  face loop number        */  1
+         /*  Loop NO.0   edge number */  4
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.0553333333333333   -0.0103333333333333   0.126666666666667   0.577350269189626   -0.577350269189626   -0.577350269189626
+             start_effective    0.168   -0.123   0.014   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   -0.125   0.012   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.168 -0.125 0.012 0.17 -0.123 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.1   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.17   -0.125   0.012   0   -1   0
+             start_effective    0.17   0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   -0.125   0.012   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.17 -0.125 0.012 0.17 0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.2   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.0853333333333333   0.0403333333333333   0.0966666666666666   0.577350269189626   0.577350269189626   -0.577350269189626
+             start_effective    0.168   0.123   0.014   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   0.125   0.012   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.168 0.123 0.012 0.17 0.125 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.3   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.168   0.125   0.014   0   1   0
+             start_effective    0.168   -0.123   0.014   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.168   0.123   0.014   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.168 -0.123 0.014 0.168 0.123 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+         /*  face 42  name   */  돌실1_face_42
+
+             /*  face type                   */  plane
+             /*  parameter number            */  6    /*  prameter */     -0.707106781186547    0    0.707106781186548    -0.168    -0.125    0.014
+             /*  total_face_primitive_number */  5
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.170000001788139 -0.125 0.0120000001043081 -0.167999997735023 0.125 0.0140000004321337
+
+         /*  face loop number        */  1
+         /*  Loop NO.0   edge number */  4
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.168666666666667   -0.123666666666667   0.0133333333333333   0.577350269189626   0.577350269189626   0.577350269189626
+             start_effective    -0.17   -0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   -0.123   0.014   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 -0.125 0.012 -0.168 -0.123 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.1   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.168   -0.125   0.014   0   -1   0
+             start_effective    -0.168   0.123   0.014   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   -0.123   0.014   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.168 -0.123 0.014 -0.168 0.123 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.2   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.0853333333333333   0.0403333333333333   0.0966666666666666   0.577350269189626   -0.577350269189626   0.577350269189626
+             start_effective    -0.17   0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   0.123   0.014   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 0.123 0.012 -0.168 0.125 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.3   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   0.125   0.012   0   1   0
+             start_effective    -0.17   -0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.17   0.125   0.012   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 -0.125 0.012 -0.17 0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+         /*  face 43  name   */  돌실1_face_43
+
+             /*  face type                   */  plane
+             /*  parameter number            */  6    /*  prameter */     0    0.707106781186547    0.707106781186548    -0.17    0.123    0.014
+             /*  total_face_primitive_number */  6
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.170000001788139 0.123000003397465 0.0120000001043081 0.170000001788139 0.125 0.0140000004321337
+
+         /*  face loop number        */  1
+         /*  Loop NO.0   edge number */  4
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.0853333333333333   0.0403333333333333   0.0966666666666666   0.577350269189626   0.577350269189626   -0.577350269189626
+             start_effective    0.168   0.123   0.014   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   0.125   0.012   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.168 0.123 0.012 0.17 0.125 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.1   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   0.17   0.125   0.012   1   0   0
+             start_effective    -0.17   0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    0.17   0.125   0.012   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 0.125 0.012 0.17 0.125 0.012
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.2   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.0853333333333333   0.0403333333333333   0.0966666666666666   0.577350269189626   -0.577350269189626   0.577350269189626
+             start_effective    -0.17   0.125   0.012   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   0.123   0.014   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.17 0.123 0.012 -0.168 0.125 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+             /*  Loop NO.0  Edge NO.3   */
+             /*  curve type             */  line
+             /*  parameter number       */  6  /*  parameter  */   -0.17   0.123   0.014   -1   0   0
+             start_effective    0.168   0.123   0.014   1 /*   start_point_material  */    1    0    0    0
+             end_effective    -0.168   0.123   0.014   1 /*   end_point_material  */    1    0    0    0
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.168 0.123 0.014 0.168 0.123 0.014
+             /*  total_edge_primitive_number     */  2
+             /*  total_point_primitive_number    */  3
+
+         /*  face 44  name   */  돌실1_face_44
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     -0.12    0.08    0.012    0    0    -1    0.013    0.785398163397449    1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.135000005364418 0.0649999976158142 0.0120000001043081 -0.104999996721745 0.0949999988079071 0.0140000004321337
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.134934665951694 0.0650163424145603 0.014 -0.105 0.0949379122146206 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.12   0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.132952644022601 0.0670001018033675 0.012 -0.107 0.0929569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 45  name   */  돌실1_face_45
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     -0.0400000000000001    0    0.012    0    0    -1    0.013    0.785398163397451    1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.0549999997019768 -0.0149999996647239 0.0120000001043081 -0.025000000372529 0.0149999996647239 0.0140000004321337
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.0549346659516943 -0.0149836575854398 0.014 -0.0250000000000001 0.0149379122146205 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   0   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.052952644022601 -0.0129998981966326 0.012 -0.0270000000000001 0.0129569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 46  name   */  돌실1_face_46
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     -0.0400000000000001    -0.08    0.012    0    0    -1    0.013    0.785398163397451    1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  -0.0549999997019768 -0.0949999988079071 0.0120000001043081 -0.025000000372529 -0.0649999976158142 0.0140000004321337
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   -0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.0549346659516943 -0.0949836575854398 0.014 -0.0250000000000001 -0.0650620877853795 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   -0.0400000000000001   -0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  -0.052952644022601 -0.0929998981966326 0.012 -0.0270000000000001 -0.0670430700652853 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 47  name   */  돌실1_face_47
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     0.12    -0.08    0.012    0    0    -1    0.013    0.785398163397453    1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.104999996721745 -0.0949999988079071 0.0120000001043081 0.135000005364418 -0.0649999976158142 0.0140000004321337
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   -0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.105065334048306 -0.0949836575854398 0.014 0.135 -0.0650620877853795 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   -0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.107047355977399 -0.0929998981966326 0.012 0.133 -0.0670430700652854 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 48  name   */  돌실1_face_48
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     0.12    0    0.012    0    0    -1    0.013    0.785398163397449    1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.104999996721745 -0.0149999996647239 0.0120000001043081 0.135000005364418 0.0149999996647239 0.0140000004321337
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.105065334048306 -0.0149836575854398 0.014 0.135 0.0149379122146205 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.12   0   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.107047355977399 -0.0129998981966326 0.012 0.133 0.0129569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+
+         /*  face 49  name   */  돌실1_face_49
+
+             /*  face type                   */  cone
+             /*  parameter number            */  11    /*  prameter */     0.0400000000000001    0.08    0.012    0    0    -1    0.013    0.785398163397451    1    0    0
+             /*  total_face_primitive_number */  48
+             /*  face_attribute_number       */  1
+             /*  face_face_box               */  0.025000000372529 0.0649999976158142 0.0120000001043081 0.0549999997019768 0.0949999988079071 0.0140000004321337
+
+         /*  face loop number        */  2
+         /*  Loop NO.0   edge number */  1
+
+             /*  Loop NO.0  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0.08   0.014   0   0   -1   0.015
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0250653340483058 0.0650163424145602 0.014 0.0550000000000001 0.0949379122146205 0.014
+             /*  total_edge_primitive_number     */  29
+             /*  total_point_primitive_number    */  1
+         /*  Loop NO.1   edge number */  1
+
+             /*  Loop NO.1  Edge NO.0   */
+             /*  curve type             */  circle
+             /*  parameter number       */  7  /*  parameter  */   0.0400000000000001   0.08   0.012   0   0   1   0.013
+             start_not_effective    
+             end_not_effective    
+             /*  parameter_point_extra_data  */      1
+             /*  parameter_point_material    */    1    0    0    0
+             /*  box definition  */  0.0270473559773992 0.0670001018033674 0.012 0.0530000000000001 0.0929569299347147 0.012
+             /*  total_edge_primitive_number     */  27
+             /*  total_point_primitive_number    */  1
+

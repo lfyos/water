@@ -1,0 +1,1 @@
+bridge_load		any_assemble_part_name		solidworks\middle.txt			relative		../data/part.list
