@@ -1,6 +1,3 @@
-
-..\..\..\assemble\process_bar\assemble.txt
-
 ..\..\..\assemble\test_part\assemble.txt
 
 ..\..\..\assemble\cad\assemble.txt
@@ -8,6 +5,8 @@
 ..\..\..\assemble\gltf\assemble.txt
 
 ..\..\..\assemble\map_environment\assemble.txt
+
+..\..\..\project\assemble\bridge\load\assemble.txt
 
 ..\..\..\project\assemble\bridge\bridge_old\assemble.»ìÉ«.txt
 ..\..\..\project\assemble\bridge\bridge_old\assemble.ÂÌÉ«.txt

@@ -1,0 +1,2 @@
+bridge_load_one		32米拆装式桁粱一号车装车			assemble/load_one/assemble.txt		8	8		parameter.txt		parameter.xyz.txt
+bridge_load_two		32米拆装式桁粱二号车装车			assemble/load_two/assemble.txt		8	8		parameter.txt		parameter.xyz.txt

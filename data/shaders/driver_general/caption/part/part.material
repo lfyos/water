@@ -5,5 +5,5 @@
 	"texture_start"				:	0.25,
 	"texture_speed"				:	0.04,
 
-	"color"						:	[0.05,0.05,0.05,1]
+	"color"						:	[0.0,0.0,0.0,1.0]
 }
