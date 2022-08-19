@@ -1,0 +1,301 @@
+c70车
+    c70车.SLDPRT
+    c70车.SLDPRT.mesh
+    c70车.SLDPRT.material
+    c70车.SLDPRT.description
+    c70车.SLDPRT.mp3
+
+8甲立杆：3排11层32件
+    立杆_编号_8甲_原编号_8.SLDPRT
+    立杆_编号_8甲_原编号_8.SLDPRT.mesh
+    立杆_编号_8甲_原编号_8.SLDPRT.material
+    立杆_编号_8甲_原编号_8.SLDPRT.description
+    立杆_编号_8甲_原编号_8.SLDPRT.mp3
+
+10甲平联斜杆：4排12层48件
+    平联斜杆_编号_10甲_原编号_10.SLDPRT
+    平联斜杆_编号_10甲_原编号_10.SLDPRT.mesh
+    平联斜杆_编号_10甲_原编号_10.SLDPRT.material
+    平联斜杆_编号_10甲_原编号_10.SLDPRT.description
+    平联斜杆_编号_10甲_原编号_10.SLDPRT.mp3
+
+5甲腹杆：3排6层16件
+    腹杆_编号_5甲_原编号_5.SLDPRT
+    腹杆_编号_5甲_原编号_5.SLDPRT.mesh
+    腹杆_编号_5甲_原编号_5.SLDPRT.material
+    腹杆_编号_5甲_原编号_5.SLDPRT.description
+    腹杆_编号_5甲_原编号_5.SLDPRT.mp3
+
+6号腹杆：6排6层36件
+    腹杆_编号_6.SLDPRT
+    腹杆_编号_6.SLDPRT.mesh
+    腹杆_编号_6.SLDPRT.material
+    腹杆_编号_6.SLDPRT.description
+    腹杆_编号_6.SLDPRT.mp3
+
+507号腹杆：2排12层24件
+    腹杆_编号_507_原编号_7.SLDPRT
+    腹杆_编号_507_原编号_7.SLDPRT.mesh
+    腹杆_编号_507_原编号_7.SLDPRT.material
+    腹杆_编号_507_原编号_7.SLDPRT.description
+    腹杆_编号_507_原编号_7.SLDPRT.mp3
+
+258号连接板：1排4层4件
+    连接板_编号_258_原编号_108.SLDPRT
+    连接板_编号_258_原编号_108.SLDPRT.mesh
+    连接板_编号_258_原编号_108.SLDPRT.material
+    连接板_编号_258_原编号_108.SLDPRT.description
+    连接板_编号_258_原编号_108.SLDPRT.mp3
+
+16号拼接板：3排35层104件
+    拼接板_编号_16.SLDPRT
+    拼接板_编号_16.SLDPRT.mesh
+    拼接板_编号_16.SLDPRT.material
+    拼接板_编号_16.SLDPRT.description
+    拼接板_编号_16.SLDPRT.mp3
+
+251号加强支杆：2排6层12件
+    加强支杆_编号_251_原编号_101.SLDPRT
+    加强支杆_编号_251_原编号_101.SLDPRT.mesh
+    加强支杆_编号_251_原编号_101.SLDPRT.material
+    加强支杆_编号_251_原编号_101.SLDPRT.description
+    加强支杆_编号_251_原编号_101.SLDPRT.mp3
+
+255号连接角：1排36层36件
+    连接角_编号_255_原编号_105.SLDPRT
+    连接角_编号_255_原编号_105.SLDPRT.mesh
+    连接角_编号_255_原编号_105.SLDPRT.material
+    连接角_编号_255_原编号_105.SLDPRT.description
+    连接角_编号_255_原编号_105.SLDPRT.mp3
+
+256号连接角：1排12层12件
+    连接角_编号_256_原编号_106.SLDPRT
+    连接角_编号_256_原编号_106.SLDPRT.mesh
+    连接角_编号_256_原编号_106.SLDPRT.material
+    连接角_编号_256_原编号_106.SLDPRT.description
+    连接角_编号_256_原编号_106.SLDPRT.mp3
+
+9甲端立杆：2排10层20件
+    端立杆_编号_9甲_原编号_9.SLDPRT
+    端立杆_编号_9甲_原编号_9.SLDPRT.mesh
+    端立杆_编号_9甲_原编号_9.SLDPRT.material
+    端立杆_编号_9甲_原编号_9.SLDPRT.description
+    端立杆_编号_9甲_原编号_9.SLDPRT.mp3
+
+21号填板：1排32件
+    填板_编号_21.SLDPRT
+    填板_编号_21.SLDPRT.mesh
+    填板_编号_21.SLDPRT.material
+    填板_编号_21.SLDPRT.description
+    填板_编号_21.SLDPRT.mp3
+
+14甲大节点板：2排30层60件
+    大拼接板_编号_14甲_原编号_14.SLDPRT
+    大拼接板_编号_14甲_原编号_14.SLDPRT.mesh
+    大拼接板_编号_14甲_原编号_14.SLDPRT.material
+    大拼接板_编号_14甲_原编号_14.SLDPRT.description
+    大拼接板_编号_14甲_原编号_14.SLDPRT.mp3
+
+219号小节点板：2排40层80件
+    小结点板_编号_219_原编号_19.SLDPRT
+    小结点板_编号_219_原编号_19.SLDPRT.mesh
+    小结点板_编号_219_原编号_19.SLDPRT.material
+    小结点板_编号_219_原编号_19.SLDPRT.description
+    小结点板_编号_219_原编号_19.SLDPRT.mp3
+
+12号支杆：2排13层25件
+    支杆_编号_12_原编号_12甲.SLDPRT
+    支杆_编号_12_原编号_12甲.SLDPRT.mesh
+    支杆_编号_12_原编号_12甲.SLDPRT.material
+    支杆_编号_12_原编号_12甲.SLDPRT.description
+    支杆_编号_12_原编号_12甲.SLDPRT.mp3
+
+218号端节点板：2排9层18件
+    结点板_编号_218_原编号_18.SLDPRT
+    结点板_编号_218_原编号_18.SLDPRT.mesh
+    结点板_编号_218_原编号_18.SLDPRT.material
+    结点板_编号_218_原编号_18.SLDPRT.description
+    结点板_编号_218_原编号_18.SLDPRT.mp3
+
+253号横联交叉填板：1排10层10件
+    横联交叉填板_编号_253_原编号_103.SLDPRT
+    横联交叉填板_编号_253_原编号_103.SLDPRT.mesh
+    横联交叉填板_编号_253_原编号_103.SLDPRT.material
+    横联交叉填板_编号_253_原编号_103.SLDPRT.description
+    横联交叉填板_编号_253_原编号_103.SLDPRT.mp3
+
+27号畸零平联杆：1排4层4件
+    畸零平联杆_编号_27.SLDPRT
+    畸零平联杆_编号_27.SLDPRT.mesh
+    畸零平联杆_编号_27.SLDPRT.material
+    畸零平联杆_编号_27.SLDPRT.description
+    畸零平联杆_编号_27.SLDPRT.mp3
+
+13号短弦杆：4排6层24件
+    短弦杆_编号_13.SLDPRT
+    短弦杆_编号_13.SLDPRT.mesh
+    短弦杆_编号_13.SLDPRT.material
+    短弦杆_编号_13.SLDPRT.description
+    短弦杆_编号_13.SLDPRT.mp3
+
+257号连接板：1排4层4件
+    连接板_编号_257_原编号_107.SLDPRT
+    连接板_编号_257_原编号_107.SLDPRT.mesh
+    连接板_编号_257_原编号_107.SLDPRT.material
+    连接板_编号_257_原编号_107.SLDPRT.description
+    连接板_编号_257_原编号_107.SLDPRT.mp3
+
+254号顶梁：1排4层4件
+    顶梁_编号_254_原编号_104.SLDPRT
+    顶梁_编号_254_原编号_104.SLDPRT.mesh
+    顶梁_编号_254_原编号_104.SLDPRT.material
+    顶梁_编号_254_原编号_104.SLDPRT.description
+    顶梁_编号_254_原编号_104.SLDPRT.mp3
+
+24号短弦杆：2排8层16件
+    短弦杆_编号_24.SLDPRT
+    短弦杆_编号_24.SLDPRT.mesh
+    短弦杆_编号_24.SLDPRT.material
+    短弦杆_编号_24.SLDPRT.description
+    短弦杆_编号_24.SLDPRT.mp3
+
+25号畸零短弦杆：2排8层16件
+    畸零短弦杆_编号_25.SLDPRT
+    畸零短弦杆_编号_25.SLDPRT.mesh
+    畸零短弦杆_编号_25.SLDPRT.material
+    畸零短弦杆_编号_25.SLDPRT.description
+    畸零短弦杆_编号_25.SLDPRT.mp3
+
+28号支撑节点板：1排8件
+    支承结点板_编号_28.SLDPRT
+    支承结点板_编号_28.SLDPRT.mesh
+    支承结点板_编号_28.SLDPRT.material
+    支承结点板_编号_28.SLDPRT.description
+    支承结点板_编号_28.SLDPRT.mp3
+
+37甲支座：2排1层4件
+    支座_上部.SLDPRT
+    支座_上部.SLDPRT.mesh
+    支座_上部.SLDPRT.material
+    支座_上部.SLDPRT.description
+    支座_上部.SLDPRT.mp3
+
+37甲支座：2排1层4件
+    支座_下部.SLDPRT
+    支座_下部.SLDPRT.mesh
+    支座_下部.SLDPRT.material
+    支座_下部.SLDPRT.description
+    支座_下部.SLDPRT.mp3
+
+22甲平联横联节点板：8排3列3层72件
+    结点板_编号_22甲.SLDPRT
+    结点板_编号_22甲.SLDPRT.mesh
+    结点板_编号_22甲.SLDPRT.material
+    结点板_编号_22甲.SLDPRT.description
+    结点板_编号_22甲.SLDPRT.mp3
+
+29乙螺栓：4排2列6层45箱
+    零件29乙纠正版.SLDPRT
+    零件29乙纠正版.SLDPRT.mesh
+    零件29乙纠正版.SLDPRT.material
+    零件29乙纠正版.SLDPRT.description
+    零件29乙纠正版.SLDPRT.mp3
+
+32号螺栓：1排2列6层12箱
+    32箱体.SLDPRT
+    32箱体.SLDPRT.mesh
+    32箱体.SLDPRT.material
+    32箱体.SLDPRT.description
+    32箱体.SLDPRT.mp3
+
+31号螺栓：2排2列6层16箱
+    31箱体.SLDPRT
+    31箱体.SLDPRT.mesh
+    31箱体.SLDPRT.material
+    31箱体.SLDPRT.description
+    31箱体.SLDPRT.mp3
+
+36号栓钉：1排2列4层8箱
+    36箱体.SLDPRT
+    36箱体.SLDPRT.mesh
+    36箱体.SLDPRT.material
+    36箱体.SLDPRT.description
+    36箱体.SLDPRT.mp3
+
+零件工具
+    零件工具.SLDPRT
+    零件工具.SLDPRT.mesh
+    零件工具.SLDPRT.material
+    零件工具.SLDPRT.description
+    零件工具.SLDPRT.mp3
+
+33号栓钉：1排2列5层9箱
+    33箱体.SLDPRT
+    33箱体.SLDPRT.mesh
+    33箱体.SLDPRT.material
+    33箱体.SLDPRT.description
+    33箱体.SLDPRT.mp3
+
+35号栓钉：1排5层5箱
+    35箱体.SLDPRT
+    35箱体.SLDPRT.mesh
+    35箱体.SLDPRT.material
+    35箱体.SLDPRT.description
+    35箱体.SLDPRT.mp3
+
+520填板：10排20层200件
+    填板_编号_520_原编号_20.SLDPRT
+    填板_编号_520_原编号_20.SLDPRT.mesh
+    填板_编号_520_原编号_20.SLDPRT.material
+    填板_编号_520_原编号_20.SLDPRT.description
+    填板_编号_520_原编号_20.SLDPRT.mp3
+
+39箱体：1排2列5层9箱
+    39箱体.SLDPRT
+    39箱体.SLDPRT.mesh
+    39箱体.SLDPRT.material
+    39箱体.SLDPRT.description
+    39箱体.SLDPRT.mp3
+
+34号栓钉：1排5层5箱
+    34箱体.SLDPRT
+    34箱体.SLDPRT.mesh
+    34箱体.SLDPRT.material
+    34箱体.SLDPRT.description
+    34箱体.SLDPRT.mp3
+
+259号填板：1排8层8件
+    填板_编号_259_原编号_109.SLDPRT
+    填板_编号_259_原编号_109.SLDPRT.mesh
+    填板_编号_259_原编号_109.SLDPRT.material
+    填板_编号_259_原编号_109.SLDPRT.description
+    填板_编号_259_原编号_109.SLDPRT.mp3
+
+30号螺栓：2排2列5层20箱
+    30甲箱体.SLDPRT
+    30甲箱体.SLDPRT.mesh
+    30甲箱体.SLDPRT.material
+    30甲箱体.SLDPRT.description
+    30甲箱体.SLDPRT.mp3
+
+252号小填板：2排2列10层40件
+    小填板_编号_252_原编号_102.SLDPRT
+    小填板_编号_252_原编号_102.SLDPRT.mesh
+    小填板_编号_252_原编号_102.SLDPRT.material
+    小填板_编号_252_原编号_102.SLDPRT.description
+    小填板_编号_252_原编号_102.SLDPRT.mp3
+
+11号横联斜杆：1排21层21件
+    横联斜杆_编号_11.SLDPRT
+    横联斜杆_编号_11.SLDPRT.mesh
+    横联斜杆_编号_11.SLDPRT.material
+    横联斜杆_编号_11.SLDPRT.description
+    横联斜杆_编号_11.SLDPRT.mp3
+
+29甲螺栓：2排2列6层24箱
+    29甲.SLDPRT
+    29甲.SLDPRT.mesh
+    29甲.SLDPRT.material
+    29甲.SLDPRT.description
+    29甲.SLDPRT.mp3
+

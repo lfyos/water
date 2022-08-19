@@ -28,11 +28,16 @@ void main(void)
 			}
 			return;
 		}
-		frag_data[0]=texture(texture_sampler,(frag_texture*par[2]).xy);
+		frag_data[0]=texture(texture_sampler,vec2(par[2].x*frag_texture.x,frag_texture.y));
 		if(dot(frag_data[0].rgb,frag_data[0].rgb)<(3.0*0.25))
 			discard;
 		break;
 	}
-	frag_data[0]=(int(round(par[3].x))!=system_info.pickup_component_id)?(color_par[frag_type_id]):(pickup_color_par[frag_type_id]);
+	
 	gl_FragDepth=(frag_type_id==0)?0.0:gl_FragCoord.z;
+	
+	frag_data[0]=color_par[frag_type_id];
+	if(int(round(par[3].x))==system_info.pickup_component_id)
+		if(int(round(par[3].y))==system_info.pickup_body_id)
+			frag_data[0]=pickup_color_par[frag_type_id];
 }

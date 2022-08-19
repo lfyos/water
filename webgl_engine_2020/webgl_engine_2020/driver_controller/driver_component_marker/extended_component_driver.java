@@ -12,6 +12,9 @@ public class extended_component_driver  extends component_driver
 	private String directory_comp_name,file_name;
 	private component_marker_container cmc;
 	private int modifier_container_id;
+	private double height_scale[];
+	private boolean global_private_flag,pickup_flag;
+	
 	public void destroy()
 	{
 		super.destroy();
@@ -20,12 +23,19 @@ public class extended_component_driver  extends component_driver
 		cmc=null;
 	}
 	public extended_component_driver(part my_component_part,
-			String my_directory_comp_name,String my_file_name,int my_modifier_container_id)
+			int my_modifier_container_id,double my_height_scale[],
+			boolean my_global_private_flag,boolean my_pickup_flag,
+			String my_directory_comp_name,String my_file_name)
 	{
 		super(my_component_part);
+		modifier_container_id=my_modifier_container_id;
+		height_scale=my_height_scale;
+		global_private_flag=my_global_private_flag;
+		pickup_flag=my_pickup_flag;
+		
 		directory_comp_name=my_directory_comp_name;
 		file_name=my_file_name;
-		modifier_container_id=my_modifier_container_id;
+		
 		cmc=null;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
@@ -34,13 +44,17 @@ public class extended_component_driver  extends component_driver
 //		String component_directory_name=comp.component_directory_name;
 //		String scene_directory_name=ek.scene_directory_name;
 //		String parameter_directory_name=ek.scene_par.directory_name;
-		
-		cmc=new component_marker_container(directory_comp_name,file_name,ek.component_cont);
+
 		return;
 	}
 	public instance_driver create_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_instance_driver(comp,driver_id,cmc,modifier_container_id);
+		if(global_private_flag&&cmc==null)
+			cmc=new component_marker_container(directory_comp_name,file_name,ek.component_cont);
+		
+		return new extended_instance_driver(comp,driver_id,
+				global_private_flag?cmc:new component_marker_container(pickup_flag),
+				modifier_container_id,height_scale);
 	}
 }

@@ -5,7 +5,8 @@ out vec4 frag_id,frag_texture;
 
 void main(void)
 {
-	float my_depth;
+	float my_depth,height_scale;
+	
 	gl_PointSize=16.0;
 	
 	frag_id		=vertex_id;
@@ -17,7 +18,18 @@ void main(void)
 	gl_Position =target_info.negative_screen_move_matrix*gl_Position;
 	gl_Position/=gl_Position.w;
 	
-	gl_Position.xy+=vec2(vertex_location.x*par[2].x*float(system_info.canvas_width)/float(system_info.canvas_height),vertex_location.y);
+	gl_Position.x+=vertex_location.x*par[2].x*float(system_info.canvas_width)/float(system_info.canvas_height);
+	
+	if((gl_Position.y+par[2].y+par[2].z)<=1.0)
+		height_scale=1.0;
+	else if((height_scale=(1.0-gl_Position.y-par[2].z)/par[2].y)<0.0)
+		height_scale=0.0;
+
+	if(vertex_location.y<=1.0)
+		gl_Position.y+=vertex_location.y*par[2].y*height_scale;
+	else
+		gl_Position.y+=par[2].y*height_scale+(vertex_location.y-1.0)*par[2].z;
+	
 	gl_Position =target_info.screen_move_matrix*gl_Position;
 	gl_Position.z=gl_Position.w*my_depth;
 }

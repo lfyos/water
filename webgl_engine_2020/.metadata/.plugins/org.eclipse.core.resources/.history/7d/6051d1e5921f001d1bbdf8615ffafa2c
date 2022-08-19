@@ -1,0 +1,55 @@
+package driver_component_marker;
+
+import kernel_component.component;
+import kernel_driver.component_driver;
+import kernel_driver.instance_driver;
+import kernel_engine.engine_kernel;
+import kernel_network.client_request_response;
+import kernel_part.part;
+
+public class extended_component_driver  extends component_driver
+{
+	private String directory_comp_name,file_name;
+	private component_marker_container cmc;
+	private int modifier_container_id;
+	private boolean global_private_flag,pickup_flag;
+	public void destroy()
+	{
+		super.destroy();
+		directory_comp_name=null;
+		file_name=null;
+		cmc=null;
+	}
+	public extended_component_driver(part my_component_part,
+			int my_modifier_container_id,boolean my_global_private_flag,boolean my_pickup_flag,
+			String my_directory_comp_name,String my_file_name)
+	{
+		super(my_component_part);
+		modifier_container_id=my_modifier_container_id;
+		global_private_flag=my_global_private_flag;
+		pickup_flag=my_pickup_flag;
+		
+		directory_comp_name=my_directory_comp_name;
+		file_name=my_file_name;
+		
+		cmc=null;
+	}
+	public void initialize_component_driver(component comp,int driver_id,
+			engine_kernel ek,client_request_response request_response)
+	{
+//		String component_directory_name=comp.component_directory_name;
+//		String scene_directory_name=ek.scene_directory_name;
+//		String parameter_directory_name=ek.scene_par.directory_name;
+
+		return;
+	}
+	public instance_driver create_instance_driver(component comp,int driver_id,
+			engine_kernel ek,client_request_response request_response)
+	{
+		if(global_private_flag&&cmc==null)
+			cmc=new component_marker_container(directory_comp_name,file_name,ek.component_cont);
+		
+		return new extended_instance_driver(comp,driver_id,
+				global_private_flag?cmc:new component_marker_container(),modifier_container_id);
+	}
+}

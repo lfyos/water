@@ -61,7 +61,22 @@ public class extended_part_driver extends part_driver
 			component_load_source_container component_load_source_cont,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_component_driver(my_component_part,fr.get_string(),fr.get_string(),fr.get_int());
+		int modifier_container_id=fr.get_int();
+		double height_scale[]=new double[] {fr.get_double(),fr.get_double()};
+		
+		String str=fr.get_string();
+		switch((str==null)?"global":(str.toLowerCase())){
+		case "global":
+			return new extended_component_driver(my_component_part,
+					modifier_container_id,height_scale,true,false,fr.get_string(),fr.get_string());
+		case "private":
+			return new extended_component_driver(my_component_part,
+					modifier_container_id,height_scale,false,false,null,null);
+		case "pickup":
+		default:
+			return new extended_component_driver(my_component_part,
+					modifier_container_id,height_scale,false,true,null,null);
+		}
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int loop_id,int edge_id,int point_id,

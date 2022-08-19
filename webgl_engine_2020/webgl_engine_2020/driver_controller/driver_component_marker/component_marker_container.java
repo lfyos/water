@@ -9,22 +9,24 @@ import kernel_file_manager.file_writer;
 public class component_marker_container 
 {
 	private String file_name,file_charset;
+	public boolean global_private_flag,pickup_flag;
 	public component_marker component_marker_array[];
 	
 	private void write(engine_kernel ek)
 	{
-		if((file_name==null)||(file_charset==null))
+		if((file_name==null)||(file_charset==null)||(!global_private_flag))
 			return;
 		file_writer fw=new file_writer(file_name,file_charset);
 		for(int i=0,ni=component_marker_array.length;i<ni;i++) {
 			component operate_comp=ek.component_cont.get_component(
 					component_marker_array[i].marker_component_id);
-			fw.print  (			component_marker_array[i].marker_x).
-			   print  ("	",	component_marker_array[i].marker_y).
-			   println("	",	component_marker_array[i].marker_z).
-			   println((operate_comp==null)?"null":operate_comp.component_name).
-			   println(component_marker_array[i].marker_text).
-			   println();
+			if(operate_comp!=null)
+				fw.print  (			component_marker_array[i].marker_x).
+				   print  ("	",	component_marker_array[i].marker_y).
+				   println("	",	component_marker_array[i].marker_z).
+				   println((operate_comp==null)?"null":operate_comp.component_name).
+				   println(component_marker_array[i].marker_text).
+				   println();
 		}
 		fw.println();
 		fw.close();
@@ -80,10 +82,21 @@ public class component_marker_container
 		write(ek);
 		return component_marker_array[bak.length].marker_id;
 	}
+	public component_marker_container(boolean my_pickup_flag)
+	{
+		global_private_flag=false;
+		pickup_flag=my_pickup_flag;
+		component_marker_array=new component_marker[] {};
+		file_name=null;
+		file_charset=null;
+		return;
+	}
 	public component_marker_container(
 			String my_directory_comp_name,String my_file_name,component_container component_cont)
 	{
 		component directory_comp,mark_comp;
+		global_private_flag=true;
+		pickup_flag=false;
 		component_marker_array=new component_marker[] {};
 		if((directory_comp=component_cont.search_component(my_directory_comp_name))==null) {
 			file_name=null;

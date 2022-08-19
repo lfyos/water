@@ -17,4 +17,3 @@ Access-Control-Allow-Origin				*
     	keystoreFile="E:/water_all/tomcat.keystore" keystorePass="123456"
     	SSLEnabled="true" clientAuth="false" maxThreads="150" scheme="https" secure="true" sslProtocol="TLS"
 />
-

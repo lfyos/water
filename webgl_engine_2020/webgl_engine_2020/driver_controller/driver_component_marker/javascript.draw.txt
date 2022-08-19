@@ -192,11 +192,14 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 			}
 			var marker_text_width=ep.marker_text_width[j]/render.canvas.width;
 			var model_matrix_data=component_location.get_component_location(marker_component_id);
+			var line_height_scale=instance_initialize_data[buffer_id][0];
+			var face_height_scale=instance_initialize_data[buffer_id][1];
+			
 			gl.uniformMatrix4fv(shader_program.par_uniform,false,new Float32Array([	
-				marker_x,			marker_y,		marker_z,		1,
-				0,					0,				0,				1,
-				marker_text_width,	1,				0,				0,
-				component_id,		j,				0,				1]));
+				marker_x,			marker_y,			marker_z,			1,
+				0,					0,					0,					1,
+				marker_text_width,	line_height_scale,	face_height_scale,	0,
+				component_id,		j,					0,					1]));
 				
 			for(var k=0,nk=part_buffer_object.face.region_data.length;k<nk;k++){
 				p=part_buffer_object.face.region_data[k];
