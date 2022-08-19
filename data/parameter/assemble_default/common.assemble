@@ -1,4 +1,4 @@
-	/* 1name		*/         common_component
+	/* 1name		*/         common_component_root
 	/* 1type		*/         undefined_part
 	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 	/* 1children number */		18
@@ -109,15 +109,40 @@
 									/*	abandon display coordinate		*/		false
 									/*	abandon select coordinate		*/		false
 		/* 2children number */		0
-
+		
+		
 		/*	16	*/
-		/* 2name		*/			component_marker_component
-		/* 2type		*/			component_marker_part
+		/* 2name		*/			component_marker_component_root
+		/* 2type		*/			undefined_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
-						/*	directory_comp_name				*/		movement_manager
-						/*	file_name						*/		component_marker.txt
-						/*	modifier_container_id			*/		0
-		/* 2children number */     0
+		/* 2children number */		3
+		
+				/* 3name		*/			private_component_marker_component
+				/* 3type		*/			component_marker_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+								/*	modifier_container_id			*/		0
+								/*	height_scale					*/		0.5		0.1
+								/*	component_marker_type			*/		global
+								
+								/*	directory_comp_name				*/		movement_manager
+								/*	file_name						*/		component_marker.txt
+				/* 3children number */     0
+				
+				/* 3name		*/			component_marker_component
+				/* 3type		*/			component_marker_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+								/*	modifier_container_id			*/		0
+								/*	height_scale					*/		0.5		0.1
+								/*	component_marker_type			*/		private
+				/* 3children number */     0
+		
+				/* 3name		*/			pickup_component_marker_component
+				/* 3type		*/			component_marker_part
+				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+								/*	modifier_container_id			*/		0
+								/*	height_scale					*/		0.5		0.1
+								/*	component_marker_type			*/		pickup
+				/* 3children number */     0
 
 		/*	17	*/
 		/* 2name		*/			distance_tag_component

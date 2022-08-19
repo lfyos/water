@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="old_buffer_data"/>
+		<item key="selection" value="par"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="old_buffer_data"/>
-			<item value="follow"/>
-			<item value="my_buffer_data"/>
-			<item value="delete_timeout_location_modifier"/>
-			<item value="render.zhengzhou_lipengfei.delete_timeout_location_modifier"/>
-			<item value="register_collector_stack_monitor"/>
-			<item value="turn_on_off_display_point_on_pickup"/>
-			<item value="movement_request_dispatch"/>
-			<item value="component_array_sorted_by_name"/>
-			<item value="do_render_request_response_number"/>
-			<item value="component_event_processor"/>
-			<item value="get_component_event_processor"/>
-			<item value="location_modifier_component"/>
-			<item value="pickupmouseselect"/>
-			<item value="pickupmouseselect_routine"/>
+			<item value="par"/>
+			<item value="texture_sampler"/>
+			<item value="marker_text_width"/>
+			<item value="： "/>
+			<item value="："/>
+			<item value=" ："/>
+			<item value="11"/>
+			<item value="9甲"/>
+			<item value="12"/>
+			<item value="12号"/>
+			<item value="13"/>
+			<item value="218"/>
+			<item value="219"/>
+			<item value="14甲"/>
+			<item value="16"/>
 		</list>
 		<list key="replacehistory">
 			<item value="delete_timeout_location_modifier"/>

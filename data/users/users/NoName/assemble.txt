@@ -6,7 +6,7 @@
 
 ..\..\..\assemble\map_environment\assemble.txt
 
-..\..\..\project\assemble\bridge\load\assemble.txt
+..\..\..\project\assemble\bridge\bridge_load\assemble.txt
 
 ..\..\..\project\assemble\bridge\bridge_old\assemble.»ìÉ«.txt
 ..\..\..\project\assemble\bridge\bridge_old\assemble.ÂÌÉ«.txt

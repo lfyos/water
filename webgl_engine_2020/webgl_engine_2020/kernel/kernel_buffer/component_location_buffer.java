@@ -162,7 +162,6 @@ public class component_location_buffer
 		
 		if(component_not_in_list_flag[comp.component_id])
 			return;
-		component_not_in_list_flag[comp.component_id]=true;
 		if(location_collector.component_collector==null)
 			return;
 		if(location_collector.component_collector[render_id]==null)
