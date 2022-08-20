@@ -117,7 +117,7 @@
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 		/* 2children number */		3
 		
-				/* 3name		*/			private_component_marker_component
+				/* 3name		*/			component_marker_component
 				/* 3type		*/			component_marker_part
 				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 								/*	modifier_container_id			*/		0
@@ -128,7 +128,7 @@
 								/*	file_name						*/		component_marker.txt
 				/* 3children number */     0
 				
-				/* 3name		*/			component_marker_component
+				/* 3name		*/			private_component_marker_component
 				/* 3type		*/			component_marker_part
 				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 								/*	modifier_container_id			*/		0

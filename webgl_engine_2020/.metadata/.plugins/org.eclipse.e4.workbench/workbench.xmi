@@ -73,7 +73,7 @@
         <tags>persp.newWizSC:org.eclipse.jpt.jpa.ui.wizard.newJpaProject</tags>
         <tags>persp.perspSC:org.eclipse.jpt.ui.jpaPerspective</tags>
         <tags>persp.actionSet:org.eclipse.text.quicksearch.actionSet</tags>
-        <children xsi:type="basic:PartSashContainer" xmi:id="_2wcjhJ_DEeyhy9VCoi1yXg" containerData="4999" selectedElement="_2wcjh5_DEeyhy9VCoi1yXg" horizontal="true">
+        <children xsi:type="basic:PartSashContainer" xmi:id="_2wcjhJ_DEeyhy9VCoi1yXg" containerData="4999" selectedElement="_2wcjhZ_DEeyhy9VCoi1yXg" horizontal="true">
           <children xsi:type="basic:PartStack" xmi:id="_2wcjhZ_DEeyhy9VCoi1yXg" elementId="PartStack@30bb4248" containerData="2576" selectedElement="_2wcjhp_DEeyhy9VCoi1yXg">
             <tags>active</tags>
             <children xsi:type="advanced:Placeholder" xmi:id="_2wcjhp_DEeyhy9VCoi1yXg" elementId="org.eclipse.ui.navigator.ProjectExplorer" ref="_2wdLap_DEeyhy9VCoi1yXg" closeable="true">
@@ -81,9 +81,9 @@
               <tags>categoryTag:General</tags>
             </children>
           </children>
-          <children xsi:type="basic:PartSashContainer" xmi:id="_2wcjh5_DEeyhy9VCoi1yXg" containerData="7424" selectedElement="_2wcjiZ_DEeyhy9VCoi1yXg">
-            <children xsi:type="advanced:Placeholder" xmi:id="_2wcjiJ_DEeyhy9VCoi1yXg" elementId="org.eclipse.ui.editorss" containerData="5911" ref="_2wdLaJ_DEeyhy9VCoi1yXg"/>
-            <children xsi:type="basic:PartStack" xmi:id="_2wcjiZ_DEeyhy9VCoi1yXg" elementId="bottomRight" containerData="4242" selectedElement="_2wcji5_DEeyhy9VCoi1yXg">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_2wcjh5_DEeyhy9VCoi1yXg" containerData="7424" selectedElement="_2wcjiJ_DEeyhy9VCoi1yXg">
+            <children xsi:type="advanced:Placeholder" xmi:id="_2wcjiJ_DEeyhy9VCoi1yXg" elementId="org.eclipse.ui.editorss" containerData="7451" ref="_2wdLaJ_DEeyhy9VCoi1yXg"/>
+            <children xsi:type="basic:PartStack" xmi:id="_2wcjiZ_DEeyhy9VCoi1yXg" elementId="bottomRight" containerData="2702" selectedElement="_2wcji5_DEeyhy9VCoi1yXg">
               <children xsi:type="advanced:Placeholder" xmi:id="_2wcjip_DEeyhy9VCoi1yXg" elementId="org.eclipse.ui.views.AllMarkersView" ref="_2wdLl5_DEeyhy9VCoi1yXg" closeable="true">
                 <tags>View</tags>
                 <tags>categoryTag:General</tags>
@@ -559,7 +559,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_2wdL3p_DEeyhy9VCoi1yXg" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_BeU7cB_JEe2FLoJpzmDwNg" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_2wiDT5_DEeyhy9VCoi1yXg"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_DRri4B_eEe2bqKdqsufPdA" elementId="print" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" command="_2wiDT5_DEeyhy9VCoi1yXg"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_2wdL65_DEeyhy9VCoi1yXg" elementId="group.edit" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -644,7 +644,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_2wdMX5_DEeyhy9VCoi1yXg" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_BeU7fR_JEe2FLoJpzmDwNg" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" enabled="false" type="Check" command="_2wheBp_DEeyhy9VCoi1yXg"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_DRri7R_eEe2bqKdqsufPdA" elementId="org.eclipse.ui.window.pinEditor" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" enabled="false" type="Check" command="_2wheBp_DEeyhy9VCoi1yXg"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_2wdMaZ_DEeyhy9VCoi1yXg" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
