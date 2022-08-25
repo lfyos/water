@@ -45,6 +45,9 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 
 	for(var my_length,i=0,ni=component_data_array.length;i<ni;i++){
 		var buffer_id=component_data_array[i];
+		var component_id=part_component_id_and_driver_id[buffer_id][0];
+		var driver_id	=part_component_id_and_driver_id[buffer_id][1];
+		
 		if(typeof(data_buffer[buffer_id].audio)=="undefined"){
 			data_buffer[buffer_id].audio			=document.createElement("audio");
 			data_buffer[buffer_id].audio.autoplay	="autoplay";
@@ -55,18 +58,11 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 		if(data_buffer[buffer_id].audio.should_response_flag)
 			if(data_buffer[buffer_id].audio.ended){
 				data_buffer[buffer_id].audio.should_response_flag=false;
-				render.call_server_component(data_buffer[buffer_id].audio.component_id,
-					data_buffer[buffer_id].audio.driver_id,[["operation","ended"],["fresh",Math.random()]]);
+				render.call_server_component(component_id,driver_id,[["operation","ended"],["fresh",Math.random()]]);
 			}
 		if((my_length=data_buffer[buffer_id].length)>0){
-			var component_id=data_buffer[buffer_id][my_length-1][0];
-			var driver_id	=data_buffer[buffer_id][my_length-1][1];
-			
 			data_buffer[buffer_id].length=0;
 			data_buffer[buffer_id].audio.should_response_flag=true;
-			data_buffer[buffer_id].audio.component_id=component_id;
-			data_buffer[buffer_id].audio.driver_id=driver_id;
-			
 			data_buffer[buffer_id].audio.src=render.create_component_request_string(
 				component_id,driver_id,[["operation","audio"],["fresh",Math.random()]]);
 		}

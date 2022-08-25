@@ -1,0 +1,24 @@
+<html>
+<head>
+
+</head>
+
+<body>
+<canvas id="my_canvas"	tabindex="0" width=1000	 height=500></canvas>
+
+
+<script type="text/javascript">
+
+	if(typeof(navigator.gpu)=="undefined")
+		alert("undefined");
+	else if(navigator.gpu==null)
+		alert("null");
+	else
+		alert("success");
+
+</script>
+
+
+</body>
+
+</html>

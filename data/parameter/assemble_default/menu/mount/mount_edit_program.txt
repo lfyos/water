@@ -366,6 +366,7 @@ function(component_name,component_id,render)
 					mew_time_length=parseFloat(mew_time_length);					
 					if(isNaN(mew_time_length))
 						return;
+
 					mew_time_length*=1000000;
 					
 					var modify_type=confirm("单步时间/所有时间"),scale_value;	
@@ -378,7 +379,7 @@ function(component_name,component_id,render)
 						return;
 					}else
 						scale_value=(mew_time_length-switch_camera_time_length)/ep.movement_data.mount_only_time_length;
-								
+
 					render.call_server_component("movement_manager","all",[["operation","design"],
 						 ["move_method","modify_time_length"],["id",ep.movement_data.movement_tree_id],
 						 ["modify_type",modify_type?"true":"false"],["time_length",mew_time_length],["scale",scale_value]],
