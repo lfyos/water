@@ -1,7 +1,7 @@
 package kernel_transformation;
 
 import kernel_common_class.const_value;
-import kernel_file_manager.file_reader;
+import kernel_common_class.common_reader;
 import kernel_file_manager.file_writer;
 
 public class location
@@ -113,12 +113,12 @@ public class location
 				{1.0 ,		1.0 ,		1.0 ,		1.0 }
 		};
 	}
-	public location(file_reader f)
+	public location(common_reader reader)
 	{
 		a=new double[4][4];
 		for(int i=0;i<4;i++)
 			for(int j=0;j<4;j++)
-				a[j][i]=f.get_double();
+				a[j][i]=reader.get_double();
 	}
 	public double []get_location_data(file_writer out)
 	{

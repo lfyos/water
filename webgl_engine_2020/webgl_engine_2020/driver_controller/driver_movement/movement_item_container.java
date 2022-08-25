@@ -7,7 +7,7 @@ import kernel_driver.modifier_container;
 import kernel_file_manager.file_writer;
 import kernel_transformation.box;
 import kernel_transformation.location;
-import kernel_file_manager.file_reader;
+import kernel_common_class.common_reader;
 
 public class movement_item_container
 {
@@ -141,14 +141,14 @@ public class movement_item_container
 				}
 		}
 	}
-	private String[] get_movement_parameter(file_reader f)
+	private String[] get_movement_parameter(common_reader reader)
 	{
-		int parameter_number=f.get_int();
+		int parameter_number=reader.get_int();
 		if(parameter_number<=0)
 			return null;
 		String result[]=new String[parameter_number];
 		for(int i=0;i<result.length;i++)
-			if((result[i]=f.get_string())==null)
+			if((result[i]=reader.get_string())==null)
 				result[i]="";
 		return result;
 	}
@@ -231,7 +231,7 @@ public class movement_item_container
 	}
 	public movement_item_container(String my_moved_component_name,
 			String my_follow_component_name[],location my_follow_component_location[],
-			file_reader f,boolean current_format_flag)
+			common_reader reader,boolean current_format_flag)
 	{
 		String str;
 
@@ -250,41 +250,41 @@ public class movement_item_container
 		}
 		
 		if(current_format_flag){
-			if((str=f.get_string())==null)
+			if((str=reader.get_string())==null)
 				str="";
 			start_state_flag		=(str.compareTo("visible")!=0)?true:false;
-			if((str=f.get_string())==null)
+			if((str=reader.get_string())==null)
 				str="";
 			terminate_state_flag	=(str.compareTo("visible")!=0)?true:false;
 		}else{
-			f.get_string();
-			if((str=f.get_string())==null)
+			reader.get_string();
+			if((str=reader.get_string())==null)
 				str="";
 			start_state_flag		=(str.compareTo("ÏÔÊ¾")!=0)?true:false;
-			f.get_string();
-			if((str=f.get_string())==null)
+			reader.get_string();
+			if((str=reader.get_string())==null)
 				str="";
 			terminate_state_flag	=(str.compareTo("ÏÔÊ¾")!=0)?true:false;
 			
-			f.get_string();
+			reader.get_string();
 		}
 		
-		int move_item_number=f.get_int();
+		int move_item_number=reader.get_int();
 		if(move_item_number<=0)
 			movement=null;
 		else{
 			movement=new movement_item[move_item_number];
-			double time_length=f.get_double();
+			double time_length=reader.get_double();
 			String start_parameter[]=null;
 			if(current_format_flag)
-				start_parameter=get_movement_parameter(f);
-			location start_location=new location(f);
+				start_parameter=get_movement_parameter(reader);
+			location start_location=new location(reader);
 			for(int i=0;i<move_item_number;i++){
-				double new_time_length=f.get_double();
+				double new_time_length=reader.get_double();
 				String terminate_parameter[]=null;
 				if(current_format_flag)
-					terminate_parameter=get_movement_parameter(f);
-				location terminate_location=new location(f);
+					terminate_parameter=get_movement_parameter(reader);
+				location terminate_location=new location(reader);
 				movement[i]=new movement_item(time_length,start_parameter,start_location,terminate_parameter,terminate_location);
 				start_parameter=terminate_parameter;
 				start_location=terminate_location;

@@ -1,5 +1,6 @@
 package driver_movement;
 
+import kernel_common_class.common_reader;
 import kernel_common_class.const_value;
 import kernel_component.component;
 import kernel_component.component_container;
@@ -329,7 +330,7 @@ public class movement_tree {
 		if(move!=null)
 			move.mount_component(component_cont,location_string);
 		if(children!=null)
-			for(int i=0;i<(children.length);i++)
+			for(int i=0,ni=children.length;i<ni;i++)
 				children[i].mount_component(component_cont,location_string+"        "+node_name);
 	}
 	public void reverse()
@@ -505,7 +506,7 @@ public class movement_tree {
 				 children[i].flush(f,space_number+8,flush_match_flag);
 		}
 	}
-	public movement_tree(file_reader f,movement_tree_id_creator id_creator)
+	public movement_tree(common_reader reader,movement_tree_id_creator id_creator)
 	{	
 		movement_tree_id=id_creator.create_movement_tree_id();
 		
@@ -517,30 +518,30 @@ public class movement_tree {
 		scale_value=1.0;
 		current_movement_flag=false;
 		
-		if((node_name=f.get_string())==null)
+		if((node_name=reader.get_string())==null)
 			node_name="";
-		if((sound_file_name=f.get_string())==null)
+		if((sound_file_name=reader.get_string())==null)
 			sound_file_name="";
 		else
 			sound_file_name=file_reader.separator(sound_file_name);
 	
-		if((description=f.get_string())==null)
+		if((description=reader.get_string())==null)
 			description="";
-		if((str=f.get_string())==null)
+		if((str=reader.get_string())==null)
 			str="";
 		sequence_flag=(str.compareTo("sequence")==0)?true:false;
 
-		f.mark_start();
-		if((str=f.get_string())==null)
+		reader.mark_start();
+		if((str=reader.get_string())==null)
 			str="";
 		if(str.compareTo("no_direction")==0)
-			f.mark_terminate(false);
+			reader.mark_terminate(false);
 		else{
-			f.mark_terminate(true);
-			direction=new location(f);
+			reader.mark_terminate(true);
+			direction=new location(reader);
 		}
 	
-		if((str=f.get_string())==null)
+		if((str=reader.get_string())==null)
 			scale_type=0;
 		else if(str.compareTo("start")==0)
 			scale_type=1;
@@ -553,26 +554,26 @@ public class movement_tree {
 		else
 			scale_type=0;
 				
-		if((scale_value=f.get_double())<=const_value.min_value)
+		if((scale_value=reader.get_double())<=const_value.min_value)
 			scale_value=1.0;
 		
-		int i,child_number=Integer.decode(f.get_string());
+		int i,child_number=Integer.decode(reader.get_string());
 		
 		if(child_number<=0){
 			String component_name,follow_component_name[]=null;
 			location follow_component_location[]=null;
-			f.get_string();
-			if((component_name=f.get_string())==null)
+			reader.get_string();
+			if((component_name=reader.get_string())==null)
 				component_name="";
 			for(String my_follow_component_name;;){
-				if((my_follow_component_name=f.get_string())==null)
+				if((my_follow_component_name=reader.get_string())==null)
 					break;
 				if(my_follow_component_name.compareTo("component_end")==0)
 					break;
 				if(follow_component_name==null){
 					follow_component_name		=new String[1];
 					follow_component_name[0]	=my_follow_component_name;
-					follow_component_location	=new location[]{new location(f)};
+					follow_component_location	=new location[]{new location(reader)};
 				}else{
 					String bak_name[]			=follow_component_name;
 					location bak_location[]		=follow_component_location;
@@ -583,16 +584,16 @@ public class movement_tree {
 						follow_component_location[j]=bak_location[j];
 					}
 					follow_component_name[follow_component_name.length-1]		=my_follow_component_name;
-					follow_component_location[follow_component_location.length-1]=new location(f);
+					follow_component_location[follow_component_location.length-1]=new location(reader);
 				}
 			}
 			move=new movement_item_container(component_name,
-					follow_component_name,follow_component_location,f,true);
-			match=new movement_match_container(f);
+					follow_component_name,follow_component_location,reader,true);
+			match=new movement_match_container(reader);
 			sequence_flag=true;
 		}else{
 			for(i=0,children=new movement_tree[child_number];i<child_number;i++)
-				children[i]=new movement_tree(f,id_creator);
+				children[i]=new movement_tree(reader,id_creator);
 		}
 	}
 }

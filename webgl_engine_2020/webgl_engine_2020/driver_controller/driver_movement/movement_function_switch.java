@@ -9,6 +9,7 @@ import kernel_camera.camera_parameter;
 import kernel_camera.locate_camera;
 import kernel_common_class.debug_information;
 import kernel_common_class.jason_string;
+import kernel_common_class.common_reader;
 import kernel_common_class.upload_web_page;
 import kernel_common_class.change_name;
 import kernel_common_class.const_value;
@@ -765,6 +766,8 @@ public class movement_function_switch
 	}
 	private void reset_movement_component(movement_tree t)
 	{
+		if(t==null)
+			return;
 		if(t.children!=null){
 			for(int i=0;i<(t.children.length);i++)
 				reset_movement_component(t.children[i]);
@@ -784,20 +787,20 @@ public class movement_function_switch
 	{
 		if(manager!=null){
 			debug_information.println();
-			debug_information.println("开始装入运动信息        "+(manager.config_parameter.movement_file_name));
+			debug_information.println("Start loading movement from "+(manager.config_parameter.movement_file_name));
 			if(manager.root_movement!=null)
 				reset_movement_component(manager.root_movement);	
 			manager.init(ek.modifier_cont[manager.config_parameter.movement_modifier_container_id],
 					ek.component_cont,manager.config_parameter.movement_file_name,
-					switch_time_length,manager.config_parameter.movement_file_charset);
-			debug_information.println("装入运动信息完毕        "+(manager.config_parameter.movement_file_name));
+					switch_time_length,manager.config_parameter.movement_file_charset,true);
+			debug_information.println("Terminate loading movement from "+(manager.config_parameter.movement_file_name));
 		}
 	}
-	private void push()
+	private String[] push()
 	{
-		manager.push_movement(
-				ek.component_cont,ek.modifier_cont[manager.config_parameter.movement_modifier_container_id],
-				switch_time_length,manager.config_parameter.movement_file_charset);
+		return manager.push_movement(
+				ek.component_cont,switch_time_length,manager.config_parameter.movement_file_charset,
+				ek.modifier_cont[manager.config_parameter.movement_modifier_container_id]);
 	}
 	private long component_part_selection()
 	{
@@ -949,6 +952,13 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("move_method"))==null)
 			return null;
 		switch(str.trim().toLowerCase()){
+		case "clear_all":
+			push();
+			if(manager.root_movement!=null){
+				reset_movement_component(manager.root_movement);
+				manager.root_movement=null;
+			}
+			return null;
 		case "modify_time_length":
 			if(manager.root_movement!=null)
 				if((str=ci.request_response.get_parameter("id"))!=null){
@@ -1053,6 +1063,60 @@ public class movement_function_switch
 			}
 			new upload_web_page(ci,new change_name(null,str,null),
 					"audio/mpeg",null,my_upload_url).create_web_page();
+			return null;
+		}
+		case "download_movement":
+			return push();
+		case "upload_movement":
+		{
+			if(manager==null)
+				return null;
+			common_reader reader=new common_reader(
+					ci.request_response.implementor.get_content_stream(),
+					ek.system_par.network_data_charset);
+			reader.get_string();
+			String version_str=reader.get_string();
+			if(reader.eof()) {
+				reader.close();
+				return null;
+			}
+			if(version_str.compareTo("2015.10")!=0) {
+				reader.close();
+				
+				debug_information.println();
+				debug_information.println("Wrong version:	",version_str);
+				return null;
+			}
+			
+			debug_information.println();
+			debug_information.println("Start upload movement........");
+			movement_tree t=new movement_tree(reader,manager.id_creator);
+			debug_information.println("upload movement terminated");
+			reader.close();
+			
+			push();
+			if(manager.root_movement==null)
+				manager.root_movement=t;
+			else{
+				reset_movement_component(manager.root_movement);
+				movement_tree old=manager.root_movement;
+				manager.root_movement=new movement_tree(manager.id_creator);
+				manager.root_movement.children=new movement_tree[] {old,t};
+			}
+			manager.root_movement.mount_component(ek.component_cont,"");
+			manager.reset(ek.modifier_cont[manager.config_parameter.movement_modifier_container_id],
+					ek.component_cont,switch_time_length);
+			return null;
+		}
+		case "upload_movement_webpage":
+		{
+			String my_upload_url=ci.request_url_header+"&command=component";
+			my_upload_url+="&method=event&operation=design&move_method=upload_movement";
+			my_upload_url+="&event_component_id="	+movement_component_id;
+			my_upload_url+="&event_driver_id="		+movement_driver_id;
+
+			new upload_web_page(ci,new change_name(null,"",null),"text/plain",
+					ek.system_par.network_data_charset,my_upload_url).create_web_page();
 			return null;
 		}
 		case "component_part_selection":
@@ -1167,10 +1231,10 @@ public class movement_function_switch
 			return null;
 		case "save":
 			file_writer f=new file_writer(
-					manager.config_parameter.movement_file_name,
-					manager.config_parameter.movement_file_charset);
-			manager.flush(ek.component_cont,
-					ek.modifier_cont[manager.config_parameter.movement_modifier_container_id],f,switch_time_length);
+				manager.config_parameter.movement_file_name,
+				manager.config_parameter.movement_file_charset);
+			manager.flush(ek.component_cont,f,switch_time_length,
+				ek.modifier_cont[manager.config_parameter.movement_modifier_container_id]);
 			f.close();
 			return null;
 		case "reload":
@@ -1178,8 +1242,11 @@ public class movement_function_switch
 			reload();
 			return null;
 		case "retreat":
-			manager.pop_movement(ek.modifier_cont[manager.config_parameter.movement_modifier_container_id],
-				ek.component_cont,switch_time_length,manager.config_parameter.movement_file_charset);
+			ci.request_response.print("\"",
+				manager.pop_movement(
+					ek.modifier_cont[manager.config_parameter.movement_modifier_container_id],
+					ek.component_cont,switch_time_length,manager.config_parameter.movement_file_charset));
+			ci.request_response.print("\"");
 			return null;
 		default:
 			return null;
@@ -1198,6 +1265,8 @@ public class movement_function_switch
 		boolean create_render_modifier_flag=true;
 				
 		if(manager==null)
+			return null;
+		if(manager.root_movement==null)
 			return null;
 		if(ek.camera_cont.camera_array==null)
 			return null;
