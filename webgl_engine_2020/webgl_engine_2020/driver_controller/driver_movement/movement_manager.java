@@ -1,15 +1,21 @@
 package driver_movement;
 
+import java.io.File;
+
 import kernel_component.component_container;
 import kernel_driver.modifier_container;
 import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
+import kernel_common_class.string_link_list;
 
 public class movement_manager
 {
 	public void destroy()
 	{
+		for(;push_pop_stack_link_list!=null;push_pop_stack_link_list=push_pop_stack_link_list.next_list)
+			file_writer.file_delete(config_parameter.temporary_file_directory+push_pop_stack_link_list.str+".txt");
+	
 		move_channel_id	=null;
 		parameter		=null;
 		directory_name	=null;
@@ -35,11 +41,6 @@ public class movement_manager
 				}
 			buffer_movement=null;
 		}
-		if(movement_stack!=null) {
-			for(int i=0,ni=movement_stack.length;i<ni;i++)
-				movement_stack[i]=null;
-			movement_stack=null;
-		}
 		if(suspend!=null){
 			suspend.destroy();
 			suspend=null;
@@ -53,6 +54,11 @@ public class movement_manager
 	public movement_tree buffer_movement[];
 	public movement_suspend suspend;
 	public boolean  mount_direction_flag;
+	
+	public String directory_name;
+	
+	private string_link_list push_pop_stack_link_list;
+	private long push_pop_stack_id;
 	
 	private void set_direction(
 			component_container component_cont,modifier_container modifier_cont,
@@ -133,10 +139,9 @@ public class movement_manager
 				set_component_state(component_cont,modifier_cont);
 			}
 	}
-	public String directory_name;
-	
+
 	public void flush(component_container component_cont,
-			modifier_container modifier_cont,file_writer f,long camera_switch_time_length)
+			file_writer f,long camera_switch_time_length,modifier_container modifier_cont)
 	{
 		f.println("version	2015.10");
 		if(root_movement!=null){
@@ -148,21 +153,36 @@ public class movement_manager
 	}
 	
 	public void init(modifier_container modifier_cont,component_container component_cont,
-			String my_move_file_name,long camera_switch_time_length,String file_system_charset)
+			String my_move_file_name,long camera_switch_time_length,String file_system_charset,
+			boolean set_directory_name_flag)
 	{	
 		root_movement=null;
 		
 		file_reader f=new file_reader(my_move_file_name,file_system_charset);
+		f.get_string();
+		String version_str=f.get_string();
+		
 		if(f.eof()){
 			f.close();
 			reset(modifier_cont,component_cont,camera_switch_time_length);
+			
+			if(set_directory_name_flag) {
+				directory_name=file_reader.separator(my_move_file_name);
+				for(int i=directory_name.length()-1;i>=0;i--)
+					if(directory_name.charAt(i)==File.separatorChar) {
+						directory_name=directory_name.substring(0, i+1);
+						return;
+					}
+				directory_name="."+File.separatorChar;
+			}
 			return;
 		}
-		String version_str1=f.get_string(),version_str2=f.get_string();
-		double file_version_id=Double.parseDouble(version_str2);
 		
-		directory_name=f.directory_name;
-		if(file_version_id==2015.10)
+		if(set_directory_name_flag)
+			directory_name=f.directory_name;
+		
+		int version_compare_result;
+		if((version_compare_result=version_str.compareTo("2015.10"))==0)
 			root_movement=new movement_tree(f,id_creator);
 		else{
 			f.close();
@@ -177,11 +197,12 @@ public class movement_manager
 
 		reset(modifier_cont,component_cont,camera_switch_time_length);
 		
-		if(file_version_id!=2015.10){
+		if(version_compare_result!=0){
 			String user_file_name=f.directory_name+f.file_name;
-			file_writer.file_rename(user_file_name,user_file_name+"."+version_str1+version_str2);
+			file_writer.file_delete(user_file_name+"."+version_str);
+			file_writer.file_rename(user_file_name,user_file_name+"."+version_str);
 			file_writer fw=new file_writer(user_file_name,file_system_charset);
-			flush(component_cont,modifier_cont,fw,camera_switch_time_length);
+			flush(component_cont,fw,camera_switch_time_length,modifier_cont);
 			fw.close();
 		}	
 	}
@@ -200,77 +221,60 @@ public class movement_manager
 		}
 		designed_move=null;
 	}
-	private file_reader movement_stack[];
-	public int movement_stack_pointer;
-
-	private long create_file_id;
 	
-	public void push_movement(component_container component_cont,
-			modifier_container modifier_cont,long camera_switch_time_length,String file_system_charset)
+	public String[] push_movement(component_container component_cont,
+			long camera_switch_time_length,String file_system_charset,modifier_container modifier_cont)
 	{
-		String file_name=config_parameter.temporary_file_directory+"temp_move_"+Long.toString(create_file_id++)+".txt";
+		push_pop_stack_link_list=new string_link_list(
+				(push_pop_stack_id++)+"_"+Double.toString(Math.random()),push_pop_stack_link_list);
+		String file_name=config_parameter.temporary_file_directory+push_pop_stack_link_list.str+".txt";
 		
 		file_writer f=new file_writer(file_name,file_system_charset);
-		flush(component_cont,modifier_cont,f,camera_switch_time_length);
+		flush(component_cont,f,camera_switch_time_length,modifier_cont);
 		f.close();
-		f=null;
-		movement_stack[movement_stack_pointer]=new file_reader(file_name,file_system_charset);
-		movement_stack_pointer++;
-		if(movement_stack_pointer>=movement_stack.length)
-			movement_stack_pointer=0;
+		
+		return (root_movement==null)?null:new String[] {file_name,file_system_charset};
 	}
-	public movement_tree pop_movement(modifier_container modifier_cont,
+	public String pop_movement(modifier_container modifier_cont,
 			component_container loader,long camera_switch_time_length,String file_system_charset)
 	{
-		movement_stack_pointer--;
-		if(movement_stack_pointer<0)
-			movement_stack_pointer=movement_stack.length-1;
-		file_reader f=movement_stack[movement_stack_pointer];
-		movement_stack[movement_stack_pointer]=null;
+		if(push_pop_stack_link_list==null) {
+			push_pop_stack_id=0;
+			return "fail:empty";
+		}
+		String my_directory_name=config_parameter.temporary_file_directory;
+		String my_file_name=push_pop_stack_link_list.str+".txt";
+		push_pop_stack_link_list=push_pop_stack_link_list.next_list;
+		push_pop_stack_id--;
 		
-		if(f==null)
-			return root_movement;
-		f.close();
-		file_reader ff=new file_reader(f.directory_name+f.file_name,file_system_charset);
-		if(ff.eof())
-			return root_movement;
+		file_reader ff=new file_reader(my_directory_name+my_file_name,file_system_charset);
+		if(ff.eof()) {
+			ff.close();
+			return "fail:file_error";
+		}
 		ff.close();
 		
-		init(modifier_cont,loader,
-				f.directory_name+f.file_name,camera_switch_time_length,file_system_charset);
+		init(modifier_cont,loader,my_directory_name+my_file_name,camera_switch_time_length,file_system_charset,false);
 		
-		file_writer.file_delete(f.directory_name+f.file_name);
+		file_writer.file_delete(my_directory_name+my_file_name);
 		
-		return root_movement;
+		return my_file_name;
 	}
-	public boolean test_movement_stack()
-	{
-		int index_id;
-		
-		index_id =movement_stack_pointer;
-		index_id+=movement_stack.length-1;
-		index_id%=movement_stack.length;
-		
-		return (movement_stack[index_id]!=null)?true:false;
-	}
-	
 	public movement_manager(
 			engine_kernel ek,long camera_switch_time_length,
 			movement_configuration_parameter my_config_parameter,
 			movement_channel_id my_move_channel_id)
 	{
-		create_file_id=0;
+		push_pop_stack_link_list=null;
+		push_pop_stack_id=0;
+		
 		id_creator=new movement_tree_id_creator();
 		
 		move_channel_id=my_move_channel_id;
 		parameter=new movement_parameter();
 		
 		mount_direction_flag=true;
-		
-		movement_stack=new file_reader[100];
-		movement_stack_pointer=0;
-		for(int i=0;i<movement_stack.length;i++)
-			movement_stack[i]=null;
+
 		root_movement=null;
 		buffer_movement=null;
 		suspend=new movement_suspend(ek,my_config_parameter.virtual_mount_root_component_id);
@@ -278,6 +282,6 @@ public class movement_manager
 		config_parameter=my_config_parameter;
 		init(ek.modifier_cont[config_parameter.camera_modifier_container_id],
 				ek.component_cont,config_parameter.movement_file_name,
-				camera_switch_time_length,config_parameter.movement_file_charset);
+				camera_switch_time_length,config_parameter.movement_file_charset,true);
 	}
 }

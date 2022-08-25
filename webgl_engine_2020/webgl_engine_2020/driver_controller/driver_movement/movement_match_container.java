@@ -1,6 +1,7 @@
 package driver_movement;
 
-import kernel_file_manager.file_reader;
+import kernel_common_class.common_reader;
+//import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 
 public class movement_match_container 
@@ -97,16 +98,16 @@ public class movement_match_container
 	{
 		match=new movement_match[] {};
 	}
-	public movement_match_container(file_reader f)
+	public movement_match_container(common_reader reader)
 	{
 		int number;
-		if((number=f.get_int())<0)
+		if((number=reader.get_int())<0)
 			number=0;
 		movement_match bak[]=new movement_match[number];
 		boolean component_part_selection_flag=false;
 		number=0;
 		for(int i=0,ni=bak.length;i<ni;i++) {
-			switch((bak[number]=new movement_match(f)).match_type) {
+			switch((bak[number]=new movement_match(reader)).match_type) {
 			case "component_part_selection":
 				if(component_part_selection_flag)
 					break;

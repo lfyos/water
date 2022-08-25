@@ -1,7 +1,7 @@
 package driver_movement;
 
-import kernel_file_manager.file_reader;
-import kernel_file_manager.file_writer;
+import kernel_common_class.common_reader;
+import kernel_common_class.common_writer;
 
 public class movement_match
 {
@@ -25,25 +25,25 @@ public class movement_match
 	public String destatination_component_name;
 	public int destatination_body_id,destatination_face_id;
 	
-	public void flush(file_writer f)
+	public void flush(common_writer writer)
 	{
 		switch((match_type==null)?"no_match":match_type) {
 		case "component_part_selection":
-			f.println(match_type);
+			writer.println(match_type);
 			break;
 		case "component_face_match":
-			f.println(match_type);
+			writer.println(match_type);
 			
-			f.println(source_component_name);
-			f.println(source_body_id);
-			f.println(source_face_id);
+			writer.println(source_component_name);
+			writer.println(source_body_id);
+			writer.println(source_face_id);
 			
-			f.println(destatination_component_name);
-			f.println(destatination_body_id);
-			f.println(destatination_face_id);
+			writer.println(destatination_component_name);
+			writer.println(destatination_body_id);
+			writer.println(destatination_face_id);
 			break;
 		default:
-			f.println("no_match		no_component	0	0	no_component	0	0");
+			writer.println("no_match		no_component	0	0	no_component	0	0");
 			break;
 		}
 	}
@@ -90,9 +90,9 @@ public class movement_match
 		destatination_body_id=my_destatination_body_id;
 		destatination_face_id=my_destatination_face_id;
 	}
-	public movement_match(file_reader f)
+	public movement_match(common_reader reader)
 	{
-		if((match_type=f.get_string())==null)
+		if((match_type=reader.get_string())==null)
 			match_type="no_match";
 		switch(match_type) {
 		case "component_part_selection":
@@ -107,15 +107,15 @@ public class movement_match
 		default:
 			match_type="no_match";
 		case "component_face_match":
-			if((source_component_name=f.get_string())==null)
+			if((source_component_name=reader.get_string())==null)
 				source_component_name="";
-			source_body_id					=f.get_int();
-			source_face_id					=f.get_int();
+			source_body_id					=reader.get_int();
+			source_face_id					=reader.get_int();
 			
-			if((destatination_component_name=f.get_string())==null)
+			if((destatination_component_name=reader.get_string())==null)
 				destatination_component_name="";
-			destatination_body_id			=f.get_int();
-			destatination_face_id			=f.get_int();
+			destatination_body_id			=reader.get_int();
+			destatination_face_id			=reader.get_int();
 			return;
 		}
 	}
