@@ -117,7 +117,6 @@ uniform pass_information
 	int		method_id;
 	int		clear_flag;
 	int		tmp0,tmp1,tmp2;
-	
 }pass_info;
 
 uniform component_information 
