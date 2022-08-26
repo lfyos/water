@@ -10453,3 +10453,26 @@
 8月 26, 2022 14:33:34.93 [10108:12984:0826/143334.936:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
 8月 26, 2022 14:33:38.75 [10108:10516:0826/143338.754:ERROR:device_event_log_impl.cc(214)] [14:33:38.754] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
 8月 26, 2022 14:33:38.75 [10108:10516:0826/143338.756:ERROR:device_event_log_impl.cc(214)] [14:33:38.756] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+
+8月 27, 2022 13:18:05.92 NEW SESSION
+8月 27, 2022 13:18:05.92 [1920:12400:0827/131805.919:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
+8月 27, 2022 13:18:08.56 [1920:84:0827/131808.568:ERROR:device_event_log_impl.cc(214)] [13:18:08.568] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 27, 2022 13:18:08.57 [1920:84:0827/131808.571:ERROR:device_event_log_impl.cc(214)] [13:18:08.571] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 27, 2022 13:18:08.68 [1920:12172:0827/131808.686:ERROR:segmentation_model_executor.cc(34)] length of input data does not match length of tensor
+8月 27, 2022 13:39:02.59 [4748:14996:0827/133902.597:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
+8月 27, 2022 13:39:04.75 [4748:7148:0827/133904.759:ERROR:device_event_log_impl.cc(214)] [13:39:04.760] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 27, 2022 13:39:04.76 [4748:7148:0827/133904.764:ERROR:device_event_log_impl.cc(214)] [13:39:04.764] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 27, 2022 13:39:04.99 [4748:2808:0827/133904.990:ERROR:segmentation_model_executor.cc(34)] length of input data does not match length of tensor
+8月 27, 2022 13:43:09.72 [8196:13268:0827/134309.727:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
+8月 27, 2022 13:43:11.89 [8196:8532:0827/134311.890:ERROR:device_event_log_impl.cc(214)] [13:43:11.890] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 27, 2022 13:43:11.89 [8196:8532:0827/134311.894:ERROR:device_event_log_impl.cc(214)] [13:43:11.894] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 27, 2022 13:43:12.04 [8196:12312:0827/134312.048:ERROR:segmentation_model_executor.cc(34)] length of input data does not match length of tensor
+8月 27, 2022 13:49:58.02 [3028:11212:0827/134958.027:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
+8月 27, 2022 13:50:00.19 [3028:14924:0827/135000.197:ERROR:device_event_log_impl.cc(214)] [13:50:00.197] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 27, 2022 13:50:00.19 [3028:14924:0827/135000.199:ERROR:device_event_log_impl.cc(214)] [13:50:00.199] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 27, 2022 13:50:00.40 [3028:12220:0827/135000.401:ERROR:segmentation_model_executor.cc(34)] length of input data does not match length of tensor
+8月 27, 2022 13:52:15.86 [16064:12872:0827/135215.861:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.
+8月 27, 2022 13:52:18.02 [16064:10756:0827/135218.028:ERROR:device_event_log_impl.cc(214)] [13:52:18.029] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 27, 2022 13:52:18.03 [16064:10756:0827/135218.037:ERROR:device_event_log_impl.cc(214)] [13:52:18.038] USB: usb_device_handle_win.cc:1048 Failed to read descriptor from node connection: 连到系统上的设备没有发挥作用。 (0x1F)
+8月 27, 2022 13:52:18.29 [16064:9732:0827/135218.294:ERROR:segmentation_model_executor.cc(34)] length of input data does not match length of tensor
+8月 27, 2022 13:53:16.55 [9480:1376:0827/135316.553:ERROR:external_registry_loader_win.cc(158)] File C:\Program Files (x86)\EagleGet\addon\eagleget_newtab.crx for key Software\Google\Chrome\Extensions\hdkdmoacnkphoadmfidlhfdobieblphn does not exist or is not readable.

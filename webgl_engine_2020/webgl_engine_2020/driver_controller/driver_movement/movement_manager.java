@@ -14,7 +14,7 @@ public class movement_manager
 	public void destroy()
 	{
 		for(;push_pop_stack_link_list!=null;push_pop_stack_link_list=push_pop_stack_link_list.next_list)
-			file_writer.file_delete(config_parameter.temporary_file_directory+push_pop_stack_link_list.str+".txt");
+			file_writer.file_delete(push_pop_stack_link_list.str);
 	
 		move_channel_id	=null;
 		parameter		=null;
@@ -223,42 +223,42 @@ public class movement_manager
 	}
 	
 	public String[] push_movement(component_container component_cont,
-			long camera_switch_time_length,String file_system_charset,modifier_container modifier_cont)
+			long camera_switch_time_length,String file_system_charset,
+			modifier_container modifier_cont)
 	{
-		push_pop_stack_link_list=new string_link_list(
-				(push_pop_stack_id++)+"_"+Double.toString(Math.random()),push_pop_stack_link_list);
-		String file_name=config_parameter.temporary_file_directory+push_pop_stack_link_list.str+".txt";
+		String my_file_name=config_parameter.temporary_file_directory+(push_pop_stack_id++);
+		my_file_name+="_"+Double.toString(Math.random()).replace('.','_')+".txt";
+		push_pop_stack_link_list=new string_link_list(my_file_name,push_pop_stack_link_list);
 		
-		file_writer f=new file_writer(file_name,file_system_charset);
+		file_writer f=new file_writer(my_file_name,file_system_charset);
 		flush(component_cont,f,camera_switch_time_length,modifier_cont);
 		f.close();
 		
-		return (root_movement==null)?null:new String[] {file_name,file_system_charset};
+		return (root_movement==null)?null:new String[] {my_file_name,file_system_charset};
 	}
-	public String pop_movement(modifier_container modifier_cont,
+	public boolean pop_movement(modifier_container modifier_cont,
 			component_container loader,long camera_switch_time_length,String file_system_charset)
 	{
 		if(push_pop_stack_link_list==null) {
 			push_pop_stack_id=0;
-			return "fail:empty";
+			return true;
 		}
-		String my_directory_name=config_parameter.temporary_file_directory;
-		String my_file_name=push_pop_stack_link_list.str+".txt";
+		String my_file_name=push_pop_stack_link_list.str;
 		push_pop_stack_link_list=push_pop_stack_link_list.next_list;
 		push_pop_stack_id--;
 		
-		file_reader ff=new file_reader(my_directory_name+my_file_name,file_system_charset);
+		file_reader ff=new file_reader(my_file_name,file_system_charset);
 		if(ff.eof()) {
 			ff.close();
-			return "fail:file_error";
+			return true;
 		}
 		ff.close();
 		
-		init(modifier_cont,loader,my_directory_name+my_file_name,camera_switch_time_length,file_system_charset,false);
+		init(modifier_cont,loader,my_file_name,camera_switch_time_length,file_system_charset,false);
 		
-		file_writer.file_delete(my_directory_name+my_file_name);
+		file_writer.file_delete(my_file_name);
 		
-		return my_file_name;
+		return false;
 	}
 	public movement_manager(
 			engine_kernel ek,long camera_switch_time_length,
