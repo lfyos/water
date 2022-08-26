@@ -798,8 +798,8 @@ public class movement_function_switch
 	}
 	private String[] push()
 	{
-		return manager.push_movement(
-				ek.component_cont,switch_time_length,manager.config_parameter.movement_file_charset,
+		return manager.push_movement(ek.component_cont,
+				switch_time_length,manager.config_parameter.movement_file_charset,
 				ek.modifier_cont[manager.config_parameter.movement_modifier_container_id]);
 	}
 	private long component_part_selection()
@@ -1242,11 +1242,11 @@ public class movement_function_switch
 			reload();
 			return null;
 		case "retreat":
-			ci.request_response.print("\"",
+			ci.request_response.print(
 				manager.pop_movement(
 					ek.modifier_cont[manager.config_parameter.movement_modifier_container_id],
-					ek.component_cont,switch_time_length,manager.config_parameter.movement_file_charset));
-			ci.request_response.print("\"");
+					ek.component_cont,switch_time_length,manager.config_parameter.movement_file_charset)
+				?"true":"false");
 			return null;
 		default:
 			return null;

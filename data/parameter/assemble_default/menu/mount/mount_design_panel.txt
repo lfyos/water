@@ -71,7 +71,8 @@ function(component_name,component_id,render)
 						render.call_server_component("movement_manager","all",[["operation","design"],["move_method","retreat"]],
 							function(response_data,render,responsetext)
 							{
-								alert(response_data);
+								if(response_data)
+									alert("已经回退至开始处。");
 							});
 					});
 				break;
