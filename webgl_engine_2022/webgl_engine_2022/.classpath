@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" path="kernel"/>
+	<classpathentry kind="src" path="format_converter"/>
+	<classpathentry kind="src" path="driver_general"/>
+	<classpathentry kind="src" path="driver_controller"/>
+	<classpathentry kind="src" path="driver_lession"/>
+	<classpathentry kind="src" path="driver_project"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExA3DSJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExACISJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExAdvGeomJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExBRepJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExCATJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExColladaJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExCoreJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExCreoJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExDS3DXMLJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExDWGJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExDXFJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExFBXJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExGLTFJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExIFCJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExIGESJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExINVJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExJTJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExMeshJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExNXJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExOBJJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExParaJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExPLYJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExPRCJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExRhinoJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExSLDEJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExSLDJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExSTEPJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExSTLJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExU3DJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExUSDJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExViewD3DJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExViewJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExViewOpenGlJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExVRMLJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExX3DJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExX3DPDFJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/cadex/CadExX3MFJava.jar"/>
+	<classpathentry kind="lib" path="E:/system_software_install_directory/external_java_library/fastjson-1.2.68.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
