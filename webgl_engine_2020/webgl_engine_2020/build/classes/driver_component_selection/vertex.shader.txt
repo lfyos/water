@@ -1,9 +1,0 @@
-
-in	vec4	vertex_location;
-
-uniform		vec4	p0,dp;
-
-void main(void)
-{
-	gl_Position=p0+dp*vertex_location;
-}

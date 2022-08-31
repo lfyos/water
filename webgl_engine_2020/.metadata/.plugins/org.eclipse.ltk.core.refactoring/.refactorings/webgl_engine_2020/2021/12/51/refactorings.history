@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Move 2 elements to &apos;webgl_engine_2020/kernel/kernel_create_top_assemble_part&apos;&#x0D;&#x0A;- Original project: &apos;webgl_engine_2020&apos;&#x0D;&#x0A;- Destination element: &apos;webgl_engine_2020/kernel/kernel_create_top_assemble_part&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     kernel_render.create_part_rude.java&#x0D;&#x0A;     kernel_render.create_assemble_part.java&#x0D;&#x0A;- Update references to refactored element" description="Move compilation units" destination="/kernel&lt;kernel_create_top_assemble_part" element1="/kernel&lt;kernel_render{create_part_rude.java" element2="/kernel&lt;kernel_render{create_assemble_part.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1639463652557" units="2" version="1.0"/>
-</session>

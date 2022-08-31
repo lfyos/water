@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring accessors="true" comment="Delete element from project &apos;webgl_engine_2020&apos;&#x0D;&#x0A;- Original project: &apos;webgl_engine_2020&apos;&#x0D;&#x0A;- Original element: &apos;kernel_common_class.gzip_directory.java&apos;" description="Delete element" element1="/kernel&lt;kernel_common_class{gzip_directory.java" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1599018359899" subPackages="false" version="1.0"/>
-</session>
