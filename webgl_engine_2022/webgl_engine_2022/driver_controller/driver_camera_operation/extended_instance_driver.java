@@ -200,8 +200,16 @@ public class extended_instance_driver extends instance_driver
 			if((scale_value=Double.parseDouble(str))<const_value.min_value)
 				scale_value=-1.0;
 		component locate_comp=null;
-		if((str=ci.request_response.get_parameter("component_name"))!=null)
-			locate_comp=ek.component_cont.search_component(str);
+		if((str=ci.request_response.get_parameter("component_name"))!=null) {
+			try {
+				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+			}catch(Exception e) {
+				str=null;
+			}
+			if(str!=null)
+				locate_comp=ek.component_cont.search_component(str);
+		}
 		if((str=ci.request_response.get_parameter("component_id"))!=null)
 			locate_comp=ek.component_cont.get_component(Integer.decode(str));
 		if(locate_comp!=null){

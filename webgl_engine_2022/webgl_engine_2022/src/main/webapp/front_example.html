@@ -1,41 +1,40 @@
 <html>
 <head>
 
-<script type="text/javascript"
-	src="./interface.jsp?function_name=construct_render_object"></script>
+<script type="text/javascript" 	src="./interface.jsp?function_name=construct_render_object"></script>
 <script type="text/javascript">
 
 var lfy_render;
 function body_onload()
 {
 	construct_render_object(
-		"my_canvas",		//Objectï¿½ï¿½ï¿½ÍµÄ»ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Stringï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ÏµÍ³Ê¹ï¿½ï¿½document.getElementById("my_canvas")ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ÎªObjectï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ¡ï¿½
-		"NoName",			//ï¿½Ã»ï¿½ï¿½ï¿½
-		"NoPassword",		//ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
-		"chinese",			//ï¿½ï¿½ï¿½ï¿½
-		"cad",				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		"",					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½Ğ­Í¬ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-		[					//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-			["change_part",				""					],	//partï¿½ï¿½ï¿½ï¿½
-			["change_component",		""					],	//componentï¿½ï¿½ï¿½ï¿½
-			["part_type",				""					],	//partï¿½ï¿½ï¿½ï¿½
-			["max_loading_number",		10					],	//Í¬Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-			["sub_directory",			"A159-SR-302A"		],	//ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
-			["coordinate",				"location.xyz.txt"	]	//ï¿½ï¿½ï¿½ï¿½ÏµÑ¡ï¿½ï¿½
+		"my_canvas",		//ObjectÀàĞÍµÄ»æÍ¼»­²¼¡£Èç¹ûÊÇStringÀàĞÍ,ÔòÏµÍ³Ê¹ÓÃdocument.getElementById("my_canvas")½«Æä×ª»»ÎªObjectÀàĞÍÊı¾İ¡£
+		"NoName",			//ÓÃ»§Ãû
+		"NoPassword",		//ÓÃ»§ÃÜÂë
+		"chinese",			//ÓïÑÔ
+		"cad",				//³¡¾°Ãû³Æ
+		"",					//Á¬½ÓÃû³Æ,ÓÃÓÚ¶àÈËĞ­Í¬²Ù×÷Ò»¸ö³¡¾°
+		[					//³õÊ¼»¯²ÎÊı
+			["change_part",				""					],	//part»»Ãû
+			["change_component",		""					],	//component»»Ãû
+			["part_type",				""					],	//partÀàĞÍ
+			["max_loading_number",		10					],	//Í¬Ê±ÏÂÔØÊıÁ¿
+			["sub_directory",			"A159-SR-302A"		],	//ÏÔÊ¾ÄÚÈİ
+			["coordinate",				"location.xyz.txt"	]	//×ø±êÏµÑ¡Ôñ
 		],
-		function(my_render)	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½Ö´ï¿½ĞµÄºï¿½ï¿½ï¿½
+		function(my_render)	//´´½¨³¡¾°³É¹¦ºóÖ´ĞĞµÄº¯Êı
 		{
-			lfy_render=my_render;				//ï¿½Ñ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æµ½ï¿½ï¿½ï¿½ï¿½renderï¿½ï¿½
-			document.title=lfy_render.title;	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½
+			lfy_render=my_render;				//°Ñ³¡¾°±äÁ¿±£´æµ½±äÁ¿renderÖĞ
+			document.title=lfy_render.title;	//ÉèÖÃÍøÒ³±êÌâ
 		},
-		function(			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¸Ãºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ÏµÍ³ï¿½Ú²ï¿½ï¿½á¹©ï¿½ï¿½Ä¬ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æºï¿½ï¿½ï¿½
-				process_bar_canvas,				//ï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½canvas
-				progress_bar_ctx,				//ï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½2Dï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-				process_bar_caption,			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½È±ï¿½ï¿½â£¬ï¿½Ã±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¹Ø£ï¿½Ä¿Ç°ÏµÍ³ï¿½Ğ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äºï¿½Ó¢ï¿½ï¿½ï¿½ï¿½Ø±ï¿½ï¿½ï¿½
-				progress_bar_value,				//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½È£ï¿½È¡Öµï¿½ï¿½Î§0.00~1.00
-				process_bar_time_length,		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½È¾ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£¬ï¿½ï¿½Î»ï¿½Çºï¿½ï¿½ï¿½
-				process_bar_engine_time_length,	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ½ï¿½ï¿½È¾ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£¬ï¿½ï¿½Î»ï¿½Çºï¿½ï¿½ï¿½
-				time_unit)						//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¹ï¿½Ê±ï¿½äµ¥Î»ï¿½ï¿½ï¿½â£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë£¬Ó¢ï¿½ï¿½ï¿½ï¿½second
+		function(			//½ø¶ÈÌõ»æÖÆº¯Êı£¬Èç¹û²»ÅäÖÃ¸Ãº¯Êı£¬ÔòÊ¹ÓÃÏµÍ³ÄÚ²¿Ìá¹©µÄÄ¬ÈÏ½ø¶ÈÌõ»æÖÆº¯Êı
+				process_bar_canvas,				//»æÖÆ½ø¶ÈÌõµÄ»­²¼canvas
+				progress_bar_ctx,				//»æÖÆ½ø¶ÈÌõµÄ2DÉÏÏÂÎÄ
+				process_bar_caption,			//½ø¶ÈÌõµ±Ç°½ø¶È±êÌâ£¬¸Ã±êÌâºÍÓïÑÔÓĞ¹Ø£¬Ä¿Ç°ÏµÍ³ÖĞ½ö½öÅäÖÃÁËÖĞÎÄºÍÓ¢ÎÄÏà¹Ø±êÌâ
+				progress_bar_value,				//½ø¶ÈÌõµ±Ç°½ø¶È£¬È¡Öµ·¶Î§0.00~1.00
+				process_bar_time_length,		//½ø¶ÈÌõµ±Ç°½ø¶È¾­¹ıµÄÊ±¼ä£¬µ¥Î»ÊÇºÁÃë
+				process_bar_engine_time_length,	//½ø¶ÈÌõËùÓĞ½ø¶È¾­¹ıµÄÊ±¼ä£¬µ¥Î»ÊÇºÁÃë
+				time_unit)						//ºÍÓïÑÔÓĞ¹ØÊ±¼äµ¥Î»±êÌâ£¬±ÈÈçÖĞÎÄÊÇÃë£¬Ó¢ÎÄÊÇsecond
 		{
 			var p_separator=Math.round(process_bar_canvas.width*progress_bar_value);
 			progress_bar_ctx.fillStyle="rgb(127,127,127)";
@@ -69,7 +68,7 @@ function body_onunload()
 </head>
 
 <body onload="body_onload();" onunload="body_onunload();">
-	<canvas id="my_canvas" tabindex="0" width=1000 height=500></canvas>
+<canvas id="my_canvas"	tabindex="0" width=1000	 height=500></canvas>
 </body>
 
 </html>

@@ -1,8 +1,8 @@
-3号.SLDPRT						bridge\混色杆件\弦杆_编号_3.SLDPRT
-5号甲.SLDPRT					bridge\混色杆件\腹杆_编号_5甲_原编号_5.SLDPRT
-6号.SLDPRT						bridge\混色杆件\腹杆_编号_6.SLDPRT 
-8号甲.SLDPRT					bridge\混色杆件\立杆_编号_8甲_原编号_8.SLDPRT
-9号甲.SLDPRT					bridge\混色杆件\端立杆_编号_9甲_原编号_9.SLDPRT 
+3号.SLDPRT					bridge\混色杆件\弦杆_编号_3.SLDPRT
+5号甲.SLDPRT				bridge\混色杆件\腹杆_编号_5甲_原编号_5.SLDPRT
+6号.SLDPRT					bridge\混色杆件\腹杆_编号_6.SLDPRT 
+8号甲.SLDPRT				bridge\混色杆件\立杆_编号_8甲_原编号_8.SLDPRT
+9号甲.SLDPRT				bridge\混色杆件\端立杆_编号_9甲_原编号_9.SLDPRT 
 10号甲.SLDPRT				bridge\混色杆件\平联斜杆_编号_10甲_原编号_10.SLDPRT
 11号.SLDPRT					bridge\混色杆件\横联斜杆_编号_11.SLDPRT
 12号.SLDPRT					bridge\混色杆件\支杆_编号_12_原编号_12甲.SLDPRT
@@ -13,22 +13,22 @@
 22号甲.SLDPRT				bridge\混色杆件\结点板_编号_22甲.SLDPRT
 24号.SLDPRT					bridge\混色杆件\短弦杆_编号_24.SLDPRT
 
-218号.SLDPRT					bridge\混色杆件\结点板_编号_218_原编号_18.SLDPRT
-219号.SLDPRT					bridge\混色杆件\小结点板_编号_219_原编号_19.SLDPRT
+218号.SLDPRT				bridge\混色杆件\结点板_编号_218_原编号_18.SLDPRT
+219号.SLDPRT				bridge\混色杆件\小结点板_编号_219_原编号_19.SLDPRT
 
-251号.SLDPRT					bridge\混色杆件\加强支杆_编号_251_原编号_101.SLDPRT
-252号.SLDPRT					bridge\混色杆件\小填板_编号_252_原编号_102.SLDPRT
-253号.SLDPRT					bridge\混色杆件\横联交叉填板_编号_253_原编号_103.SLDPRT
-254号.SLDPRT					bridge\混色杆件\顶梁_编号_254_原编号_104.SLDPRT
+251号.SLDPRT				bridge\混色杆件\加强支杆_编号_251_原编号_101.SLDPRT
+252号.SLDPRT				bridge\混色杆件\小填板_编号_252_原编号_102.SLDPRT
+253号.SLDPRT				bridge\混色杆件\横联交叉填板_编号_253_原编号_103.SLDPRT
+254号.SLDPRT				bridge\混色杆件\顶梁_编号_254_原编号_104.SLDPRT
 										
-255号.SLDPRT					bridge\混色杆件\连接角_编号_255_原编号_105.SLDPRT
-259号.SLDPRT					bridge\混色杆件\填板_编号_259_原编号_109.SLDPRT
+255号.SLDPRT				bridge\混色杆件\连接角_编号_255_原编号_105.SLDPRT
+259号.SLDPRT				bridge\混色杆件\填板_编号_259_原编号_109.SLDPRT
 
 
-501号.SLDPRT					bridge\混色杆件\弦杆_编号_501_原编号_1.SLDPRT
-502号.SLDPRT					bridge\混色杆件\弦杆_编号_502_原编号_2.SLDPRT
-507号.SLDPRT					bridge\混色杆件\腹杆_编号_507_原编号_7.SLDPRT
-520号.SLDPRT					bridge\混色杆件\填板_编号_520_原编号_20.SLDPRT
+501号.SLDPRT				bridge\混色杆件\弦杆_编号_501_原编号_1.SLDPRT
+502号.SLDPRT				bridge\混色杆件\弦杆_编号_502_原编号_2.SLDPRT
+507号.SLDPRT				bridge\混色杆件\腹杆_编号_507_原编号_7.SLDPRT
+520号.SLDPRT				bridge\混色杆件\填板_编号_520_原编号_20.SLDPRT
 
 29甲螺栓.SLDPRT				bridge\混色杆件\螺栓_29甲.SLDPRT
 29乙螺栓.SLDPRT				bridge\混色杆件\螺栓_29乙.SLDPRT
@@ -41,4 +41,4 @@
 35栓钉.SLDPRT				bridge\混色杆件\栓钉_35.SLDPRT
 36号栓钉.SLDPRT				bridge\混色杆件\栓钉_36.SLDPRT
 
-枕木.SLDPRT										bridge\混色杆件\枕木.SLDPRT
+枕木.SLDPRT					bridge\混色杆件\枕木.SLDPRT
