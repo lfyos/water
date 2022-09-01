@@ -1,9 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <html>
 <head>
 
-<script type="text/javascript" 	src="./interface.jsp?function_name=construct_render_object"></script>
+<script type="text/javascript"
+	src="./interface.jsp?function_name=construct_render_object"></script>
 <script type="text/javascript">
 
 <%
@@ -66,9 +68,9 @@ function body_onload()
 
 <body onload="body_onload();" onunload="render_object.terminate();">
 
-<div style="text-align:center"	align="center">
-<canvas id="my_canvas"	tabindex="0"></canvas>
-</div>
+	<div style="text-align: center" align="center">
+		<canvas id="my_canvas" tabindex="0"></canvas>
+	</div>
 
 </body>
 
