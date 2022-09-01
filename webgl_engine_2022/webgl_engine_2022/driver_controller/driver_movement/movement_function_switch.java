@@ -717,16 +717,16 @@ public class movement_function_switch
 		if(searcher.result==null)	
 			return manager.root_movement.movement_tree_id;
 		switch(searcher.result.scale_type){
-		case 1://ÆğµãÏà»ú±ÈÀı
+		case 1://ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			searcher.result.scale_type=2;
 			break;
-		case 2://ÖÕµãÏà»ú±ÈÀı   
+		case 2://ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   
 			searcher.result.scale_type=3;
 			break;
-		case 3://ÆğµãÖÕµãÏà»ú±ÈÀı  
+		case 3://ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
 			searcher.result.scale_type=0;
 			break;		
-		case 0://ÉÏ²ãÏà»ú±ÈÀı
+		case 0://ï¿½Ï²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		default:
 			searcher.result.scale_type=1;
 			break;

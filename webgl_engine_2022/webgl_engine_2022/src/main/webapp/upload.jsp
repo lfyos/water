@@ -5,7 +5,8 @@
 <%@page import="old_convert.protected_cadex_converter"%>
 <%@page import="old_convert.web_converter"%>
 <%@page import="kernel_common_class.debug_information"%>
-<%@page language="java" contentType="text/html; charset=UTF-8"    pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <html>
 <head>
@@ -15,9 +16,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 
 
-<title>
-上传列表
-</title>
+<title>上传列表</title>
 
 <script type="text/javascript">
 <%
@@ -61,15 +60,14 @@ function file_name_change()
 
 <body>
 
-<div align="center" >
+	<div align="center">
 
-<br/>	选择文件上传：	<input type="file"	id="file"		name="file"			onchange="file_name_change();">
-
-<br/>
-<p>
-已经上传文件如下所示，打开如下网页即可显示,每个中括号中的名称是观测方向，分别是xyz、yzx、zxy，前一个超链接是独立方式观测，后一个超链接是合作方式观测。
-</p>
-<%
+		<br /> 选择文件上传： <input type="file" id="file" name="file"
+			onchange="file_name_change();"> <br />
+		<p>
+			已经上传文件如下所示，打开如下网页即可显示,每个中括号中的名称是观测方向，分别是xyz、yzx、zxy，前一个超链接是独立方式观测，后一个超链接是合作方式观测。
+		</p>
+		<%
 	response.setCharacterEncoding("UTF-8");
 
 	String directory_name=System.getenv("liufuyan_sigma_directory");
@@ -183,7 +181,7 @@ function file_name_change()
 	}while(false);
 %>
 
-</div>
+	</div>
 
 </body>
 </html>

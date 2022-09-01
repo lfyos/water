@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
@@ -10,7 +11,8 @@
 
 <title></title>
 
-<script type="text/javascript" src="./interface.jsp?function_name=construct_render_object"></script>
+<script type="text/javascript"
+	src="./interface.jsp?function_name=construct_render_object"></script>
 <script type="text/javascript">
 
 var lfy_render;
@@ -99,11 +101,12 @@ function body_onunload()
 
 </head>
 
-<body onload="body_onresize();body_onload();" onresize="body_onresize();" onunload="body_onunload();" >
+<body onload="body_onresize();body_onload();"
+	onresize="body_onresize();" onunload="body_onunload();">
 
-<div align="center">
-<canvas id="my_canvas"		tabindex="0"	></canvas>
-</div>
+	<div align="center">
+		<canvas id="my_canvas" tabindex="0"></canvas>
+	</div>
 
 </body>
 

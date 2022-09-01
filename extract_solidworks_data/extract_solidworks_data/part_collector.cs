@@ -50,7 +50,8 @@ namespace extract_solidworks_data
             if (my_doc == null)
                 return unknown_part_name;
             if (my_doc.GetType() != (int)(swDocumentTypes_e.swDocPART))
-                return unknown_part_name;
+                if (my_doc.GetType() != (int)(swDocumentTypes_e.swDocASSEMBLY))
+                    return unknown_part_name;
             String my_path_name = my_doc.GetPathName();
             if (my_path_name == null)
                 return unknown_part_name;
@@ -66,6 +67,8 @@ namespace extract_solidworks_data
 
                     return part_name[i];
                 }
+            if (my_doc.GetType() == (int)(swDocumentTypes_e.swDocASSEMBLY))
+                return my_part_name;
 
             string[] bak=path_name;
             path_name = new string[bak.Length + 1];
