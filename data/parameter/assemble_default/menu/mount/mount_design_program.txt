@@ -1,12 +1,14 @@
 function(component_name,component_id,render)
 {
 	render.component_event_processor[component_id]={
-		update_flag			:	true,
+		update_flag		:	true,
 		
-		active_list			:	function()
+		active_list			:	function(coordinate_type)
 		{
+			if(typeof(coordinate_type)!="string")
+				coordinate_type="component";
 			render.call_server_component("movement_manager","all",
-				[["operation","design"],["move_method","get_location"],["coordinate","component"]],
+				[["operation","design"],["move_method","get_location"],["coordinate",coordinate_type]],
 				function(response_data,render)
 				{
 					var ep=render.component_event_processor[component_id];
@@ -35,11 +37,12 @@ function(component_name,component_id,render)
 			
 			var start_state_flag	=[0.20,		0.25,		0.35,	0.31];	
 			var terminate_state_flag=[0.50,		0.25,		0.65,	0.31];	
-			var coordinate			=[0.825,	0.25,		0.95,	0.31];	
+			var coordinate			=[0.825,	0.25,		0.95,	0.31];
 
 			var add_point			=[0.10,		0.10,		0.35,	0.16];	
 			var delete_point		=[0.40,		0.10,		0.65,	0.16];	
-			var add_movement		=[0.675,	0.10,		0.96,	0.16];	
+			var left_add_movement	=[0.675,	0.10,		0.8175,	0.16];	
+			var right_add_movement	=[0.8175,	0.10,		0.96,	0.16];	
 
 			var area_array=[
 					move_all,			move_x,				move_y,				move_z,
@@ -48,7 +51,7 @@ function(component_name,component_id,render)
 					
 					time_length,		start_state_flag,	terminate_state_flag,
 
-					add_point,			delete_point,		add_movement
+					add_point,			delete_point,		left_add_movement,	right_add_movement
 			];
 			
 			ep.hightlight=[-2,-2,-1,-1];
@@ -122,7 +125,7 @@ function(component_name,component_id,render)
 						p.coordinate="component";
 						break;
 					}
-					ep.update_flag=false;
+					ep.active_list	(p.coordinate);
 					return;
 				case 9:
 					if((new_value=prompt("运动时间",Math.round(p.time_length/1000/1000)))==null)
@@ -145,13 +148,14 @@ function(component_name,component_id,render)
 					par=[["move_method","delete_point"]];
 					break;
 				case 14://add_movement
+				case 15://add_movement
 					render.system_call_processor.set_menu_hide(component_id);
 					par=[["move_method","add_movement"],
+						 ["place",		(i==15)						?"true":"false"],
 						 ["start",		p.start_state_flag		?"true":"false"],
 						 ["terminate",	p.terminate_state_flag	?"true":"false"]];
 					break;
 				}
-				
 				par=par.concat([["operation","design"],["coordinate",p.coordinate],["component_id",p.component_id]]);
 				render.call_server_component("movement_manager","all",par,
 					function(response_data,render)
@@ -161,6 +165,7 @@ function(component_name,component_id,render)
 					});
 				return;
 			}
+			ep.active_list	(p.coordinate);
 		},
 		
 		draw_item				:	function(render,x,y,str)
@@ -200,9 +205,9 @@ function(component_name,component_id,render)
 										(p.coordinate=="view"		)?"视口":
 										(p.coordinate=="camera"		)?"相机":"未知");	
 
-			ep.draw_item(render,	0.10,	0.15,	"添加运动点");
-			ep.draw_item(render,	0.40,	0.15,	"删除运动点");
-			ep.draw_item(render,	0.675,	0.15,	"添加运动步骤");
+			ep.draw_item(render,	0.10,	 0.15,	"添加运动点");
+			ep.draw_item(render,	0.40,	 0.15,	"删除运动点");
+			ep.draw_item(render,	0.675,0.15,	"添加运动步骤");
 		},
 		
 		update_canvas_texture	:	function(render_id,part_id,buffer_id,

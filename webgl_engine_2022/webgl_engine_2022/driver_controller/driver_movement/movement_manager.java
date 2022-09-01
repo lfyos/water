@@ -164,7 +164,7 @@ public class movement_manager
 		
 		if(f.eof()){
 			f.close();
-			reset(modifier_cont,component_cont,camera_switch_time_length);
+			reset(-1,modifier_cont,component_cont,camera_switch_time_length);
 			
 			if(set_directory_name_flag) {
 				directory_name=file_reader.separator(my_move_file_name);
@@ -195,7 +195,7 @@ public class movement_manager
 		
 		root_movement.mount_component(component_cont,"");
 
-		reset(modifier_cont,component_cont,camera_switch_time_length);
+		reset(-1,modifier_cont,component_cont,camera_switch_time_length);
 		
 		if(version_compare_result!=0){
 			String user_file_name=f.directory_name+f.file_name;
@@ -206,7 +206,8 @@ public class movement_manager
 			fw.close();
 		}	
 	}
-	public void reset(modifier_container modifier_cont,
+	public void reset(
+			long target_movement_tree_id,modifier_container modifier_cont,
 			component_container component_cont,long camera_switch_time_length)
 	{
 		if(root_movement==null)
@@ -216,8 +217,9 @@ public class movement_manager
 			double min_box_volume=root_movement.caculate_component_minmal_volume(component_cont);
 			root_movement.caculate_time(component_cont,0,0,
 					min_box_volume*mount_precision*mount_precision*mount_precision);
-			movement_start(modifier_cont,root_movement.movement_tree_id,
-					component_cont,true,camera_switch_time_length);
+			movement_start(modifier_cont,
+				(target_movement_tree_id<0)?root_movement.movement_tree_id:target_movement_tree_id,
+				component_cont,true,camera_switch_time_length);
 		}
 		designed_move=null;
 	}

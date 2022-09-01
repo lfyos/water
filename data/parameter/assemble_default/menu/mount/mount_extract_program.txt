@@ -34,10 +34,10 @@ function(component_name,component_id,render)
 					ep.active_list(ep.extract_data,component_id,render);
 				}
 			}else{
-				render.call_server_component("movement_manager","all",
-					[["operation","design"],["move_method","fromdesignbuffer"],
-					 ["buffer",ep.extract_data.movement[function_id].buffer_id],
-					 ["component",ep.extract_data.component_id]]);
+				render.call_server_component("movement_manager","all",[["operation","design"],
+					["move_method","fromdesignbuffer"],["place",(ep.x>=0.5)?"true":"false"],
+					["buffer",ep.extract_data.movement[function_id].buffer_id],
+					["component",ep.extract_data.component_id]]);
 				render.system_call_processor.set_menu_hide(component_id);
 			}
 		},

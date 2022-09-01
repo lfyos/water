@@ -110,7 +110,16 @@ function(component_name,component_id,render)
 								render.system_call_processor.collector_list_swap_component(-1,-1,-1);
 						});
 				return;
-			case  5:// 3.设置跟随组件
+			case 5://"3.改变拼装组件"
+				render.call_server_component("movement_manager","all",[["operation","design"],
+						 ["move_method","change_component"],["id",ep.movement_data.movement_tree_id]],
+						function(response_data,render)
+						{
+							ep.update_flag=false;
+							ep.movement_data=response_data;
+						});	
+				return;		
+			case  6:// 4.设置跟随组件
 				if(ep.type_flag)
 					render.call_server_component("movement_manager","all",[["operation","design"],
 						["move_method","follow"],["id",ep.movement_data.movement_tree_id]],
@@ -120,7 +129,7 @@ function(component_name,component_id,render)
 							ep.movement_data=response_data;
 						});
 				return;
-			case  6:// 4.拼装步骤上移
+			case  7:// 5.拼装步骤上移
 				if(ep.type_flag)
 					render.call_server_component("movement_manager","all",[["operation","design"],
 						["move_method","up"],["id",ep.movement_data.movement_tree_id]],
@@ -131,7 +140,7 @@ function(component_name,component_id,render)
 							ep.movement_data=response_data;
 						});
 				return;
-			case  7:// 5.拼装步骤下移
+			case  8:// 6.拼装步骤下移
 				if(ep.type_flag)
 					render.call_server_component("movement_manager","all",[["operation","design"],
 						["move_method","down"],["id",ep.movement_data.movement_tree_id]],
@@ -142,7 +151,7 @@ function(component_name,component_id,render)
 							ep.movement_data=response_data;
 						});
 				return;
-			case  8:// 6.解散下层拼装
+			case  9:// 7.解散下层拼装
 				if(ep.type_flag)
 					render.call_server_component("movement_manager","all",[["operation","design"],
 						["move_method","fromchild"],["id",ep.movement_data.movement_tree_id]],
@@ -153,7 +162,7 @@ function(component_name,component_id,render)
 							ep.movement_data=response_data;
 						});
 				return;
-			case  9:// 7.存入拼装缓存
+			case  10:// 8.存入拼装缓存
 				if(ep.type_flag)
 					render.call_server_component("movement_manager","all",[["operation","design"],
 						["move_method","tobuffer"],["id",ep.movement_data.movement_tree_id]],
@@ -164,7 +173,7 @@ function(component_name,component_id,render)
 							ep.movement_data=response_data;
 						});
 				return;
-			case  10:// 8.提取拼装缓存
+			case  11:// 9.提取拼装缓存
 				if(ep.type_flag)
 					render.call_server_component("movement_manager","all",[["operation","design"],
 						["move_method","frombuffer"],["id",ep.movement_data.movement_tree_id]],
@@ -175,7 +184,7 @@ function(component_name,component_id,render)
 							ep.movement_data=response_data;
 						});
 				return;
-			case  11:// 9.修改拼装信息
+			case  12:// 10.修改拼装信息
 				if(ep.type_flag)
 					render.call_server_component("movement_manager","all",[["operation","design"],
 						["move_method","get"],["id",ep.movement_data.movement_tree_id]],
@@ -209,7 +218,7 @@ function(component_name,component_id,render)
 								});
 						});
 				return;
-			case 12://10.上传拼装配音
+			case 13://11.上传拼装配音
 				if(ep.type_flag&&(ep.movement_data.children.length<=0))
 					window.open(
 						render.create_component_request_string("movement_manager","all",[["operation","design"],
@@ -217,7 +226,7 @@ function(component_name,component_id,render)
 							["change_name",encodeURIComponent(encodeURIComponent("upload_file%2Bchinese:上传拼装配音"))]]),
 					"_blank");
 				return;
-			case 13://11.打开拼装配音
+			case 14://12.打开拼装配音
 				if(ep.type_flag)
 					window.open(
 						render.create_component_request_string("movement_manager","all",
@@ -225,7 +234,7 @@ function(component_name,component_id,render)
 							 ["id",ep.movement_data.movement_tree_id]]),
 					"_blank");
 				return;
-			case 14://12.放入右键缓存
+			case 15://13.放入右键缓存
 				if(ep.type_flag)
 					render.call_server_component("movement_manager","all",[["operation","design"],
 						["move_method","todesignbuffer"],["id",ep.movement_data.movement_tree_id]],
@@ -234,7 +243,7 @@ function(component_name,component_id,render)
 							alert(response_data);
 						});
 				return;
-			case 15://13.选择拼装组件
+			case 16://14.选择拼装组件
 				if(ep.type_flag)
 					render.call_server_component("movement_manager","all",[["operation","design"],
 						["move_method","collector"],["id",ep.movement_data.movement_tree_id]],
@@ -250,7 +259,7 @@ function(component_name,component_id,render)
 								render.system_call_processor.collector_list_swap_component(-1,-1,-1);
 						});
 				return;
-			case 16://"14.倒排拼装步骤"
+			case 17://"15.倒排拼装步骤"
 				if(ep.type_flag)
 					render.call_server_component("movement_manager","all",[["operation","design"],
 						["move_method","reverse"],["id",ep.movement_data.movement_tree_id]],
@@ -261,7 +270,7 @@ function(component_name,component_id,render)
 							ep.movement_data=response_data;
 						});
 				return;
-			case 17://(ep.movement_data.direction.length<=0)?"15.指定拼装视角":"15.删除拼装视角"
+			case 18://(ep.movement_data.direction.length<=0)?"16.指定拼装视角":"16.删除拼装视角"
 				if(ep.type_flag)
 					render.call_server_component("movement_manager","all",[["operation","design"],
 						["move_method","view_direction"],["id",ep.movement_data.movement_tree_id]],
@@ -271,7 +280,7 @@ function(component_name,component_id,render)
 							ep.movement_data=response_data;
 						});
 				return;
-			case 18://ep.movement_data.sequence_flag?"16.设置同步拼装":"16.设置顺序拼装",
+			case 19://ep.movement_data.sequence_flag?"17.设置同步拼装":"17.设置顺序拼装",
 				if(ep.type_flag)
 					render.call_server_component("movement_manager","all",[["operation","design"],
 						["move_method",ep.movement_data.sequence_flag?"synchronization":"sequence"],
@@ -282,9 +291,9 @@ function(component_name,component_id,render)
 							ep.movement_data=response_data;
 						});
 				return;
-			case 19://(ep.movement_data.scale_type==0)?"17.设置起点观测":
-					//(ep.movement_data.scale_type==1)?"17.设置终点观测":
-					//(ep.movement_data.scale_type==2)?"17.设置起点终点观测":"17.设置上层观测"
+			case 20://(ep.movement_data.scale_type==0)?"18.设置起点观测":
+					//(ep.movement_data.scale_type==1)?"18.设置终点观测":
+					//(ep.movement_data.scale_type==2)?"18.设置起点终点观测":"18.设置上层观测"
 				if(ep.type_flag)
 					render.call_server_component("movement_manager","all",[["operation","design"],
 						["move_method","view_box"],["id",ep.movement_data.movement_tree_id]],
@@ -294,7 +303,7 @@ function(component_name,component_id,render)
 							ep.movement_data=response_data;
 						});
 				return;
-			case 20://"18.需要选择杆件":"18.不需选择杆件"
+			case 21://"19.需要选择杆件":"19.不需选择杆件"
 				if(!(ep.type_flag))
 					return;
 				var str;
@@ -319,7 +328,7 @@ function(component_name,component_id,render)
 						ep.travel_operate_flag=true;
 					});
 				return;
-			case 21://"19.需要表面配合":"19.不需表面配合"
+			case 22://"20.需要表面配合":"20.不需表面配合"
 				if(!(ep.type_flag))
 					return;
 				var par=[["component_face_match","clear"]];
@@ -356,7 +365,7 @@ function(component_name,component_id,render)
 						ep.travel_operate_flag=true;
 					});
 				return;
-			case 22://"20.调整拼装所需时间",
+			case 23://"21.调整拼装所需时间",
 				if(ep.type_flag){				
 					var mew_time_length; 
 					if((mew_time_length=prompt("输入新的拼装时间：毫秒"))==null)
@@ -390,7 +399,7 @@ function(component_name,component_id,render)
 						});						
 				}
 				return;
-			case 23://"21.当前拼装Jason数据"
+			case 24://"22.当前拼装Jason数据"
 				if(ep.type_flag)
 					window.open(
 						render.create_component_request_string("movement_manager","all",
@@ -480,29 +489,30 @@ function(component_name,component_id,render)
 							component_face_match_number++;
 							break;
 						}
-					str_array=[	" 1.跳转拼装步骤",	" 2.拼装步骤删除",	" 3.设置跟随组件",	" 4.拼装步骤上移",	" 5.拼装步骤下移",
-								" 6.解散下层拼装",	" 7.存入拼装缓存",	" 8.提取拼装缓存",	" 9.修改拼装信息",	
-								(ep.movement_data.children.length>0)?"10.不能上传配音":"10.上传拼装配音",
-								"11.打开拼装配音",	"12.放入右键缓存",	"13.选中拼装组件",	"14.倒排拼装步骤",
+					str_array=[	" 1.跳转拼装步骤",	" 2.拼装步骤删除",	" 3.改变拼装组件",	" 4.设置跟随组件",
+								" 5.拼装步骤上移",	" 6.拼装步骤下移",	" 7.解散下层拼装",	" 8.存入拼装缓存",
+								" 9.提取拼装缓存",	"10.修改拼装信息",	
+								(ep.movement_data.children.length>0)?"11.不能上传配音":"11.上传拼装配音",
+								"12.打开拼装配音",	"13.放入右键缓存",	"14.选中拼装组件",	"15.倒排拼装步骤",
 										
-								(ep.movement_data.direction.length<=0)?"15.指定拼装视角":"15.删除拼装视角",	
+								(ep.movement_data.direction.length<=0)?"16.指定拼装视角":"16.删除拼装视角",	
 										
-								ep.movement_data.sequence_flag?	"16.设置同步拼装":"16.设置顺序拼装",
+								ep.movement_data.sequence_flag?	"17.设置同步拼装":"17.设置顺序拼装",
 										
-								(ep.movement_data.scale_type==0)?"17.设置起点观测":
-								(ep.movement_data.scale_type==1)?"17.设置终点观测":
-								(ep.movement_data.scale_type==2)?"17.设置起点终点观测":"17.设置上层观测",
+								(ep.movement_data.scale_type==0)?"18.设置起点观测":
+								(ep.movement_data.scale_type==1)?"18.设置终点观测":
+								(ep.movement_data.scale_type==2)?"18.设置起点终点观测":"18.设置上层观测",
 										
-								(ep.movement_data.children.length>0)?"18.非叶结点选择杆件操作":
-								(component_part_selection_number<=0)?"18.叶子结点不需选择杆件":"18.叶子结点需要选择杆件",
+								(ep.movement_data.children.length>0)?"19.非叶结点选择杆件操作":
+								(component_part_selection_number<=0)?"19.叶子结点不需选择杆件":"19.叶子结点需要选择杆件",
 										
-								(ep.movement_data.children.length>0)?"19.非叶结点清除所有表面配合":
-								(component_face_match_number<=0)	?"19.叶子结点不需表面配合":
-									("19.叶子结点需要表面配合("+component_face_match_number.toString()+")"),
+								(ep.movement_data.children.length>0)?"20.非叶结点清除所有表面配合":
+								(component_face_match_number<=0)	?"20.叶子结点不需表面配合":
+									("20.叶子结点需要表面配合("+component_face_match_number.toString()+")"),
 									
-								"20.拼装时间:"+Math.round(ep.movement_data.mount_only_time_length/1000000)
+								"21.拼装时间:"+Math.round(ep.movement_data.mount_only_time_length/1000000)
 									+"/"+Math.round(ep.movement_data.time_length/1000000),
-								"21.拼装Jason数据"
+								"22.拼装Jason数据"
 					];
 					render.text_2dcontext.fillText(
 						"    拼装ID:"+(ep.movement_data.movement_tree_id)+",缓冲个数:"+(ep.movement_data.buffer_number),

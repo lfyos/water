@@ -249,11 +249,19 @@ public class operate_part_list
 			}
 			comp_cont=new component_array(ek.component_cont.root_component.component_id+1);
 			if((str=ci.request_response.get_parameter("component_name"))!=null){
-				component my_comp=ek.component_cont.search_component(str);
-				if(my_comp!=null)
-					comp_cont.add_component(my_comp);
-				if(comp_cont.component_number<=0)
-					return;
+				try {
+					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+				}catch(Exception e) {
+					str=null;
+				}
+				if(str!=null) {
+					component my_comp=ek.component_cont.search_component(str);
+					if(my_comp!=null)
+						comp_cont.add_component(my_comp);
+					if(comp_cont.component_number<=0)
+						return;
+				}
 			}else if((str=ci.request_response.get_parameter("component_id"))!=null){
 				int component_id;
 				component my_comp;
