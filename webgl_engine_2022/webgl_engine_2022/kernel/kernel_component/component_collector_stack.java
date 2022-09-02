@@ -137,12 +137,22 @@ public class component_collector_stack
 	{
 		return collector[(collector.length-1+collector_pointer)%(collector.length)];
 	}
-	public component_collector get_one_collector(long list_id)
+	public component_collector get_collector_by_list_id(long list_id)
 	{
 		for(int i=0,ni=collector.length;i<ni;i++)
 			if(collector[i]!=null)
 				if(collector[i].list_id==list_id)
 					return collector[i];
+		return null;
+	}
+	public component_collector get_collector_by_list_title(String list_title)
+	{
+		if(list_title!=null)
+			for(int i=0,ni=collector.length;i<ni;i++)
+				if(collector[i]!=null)
+					if(collector[i].title!=null)
+						if(collector[i].title.compareTo(list_title)==0)
+							return collector[i];
 		return null;
 	}
 	public component_collector[] get_all_collector()

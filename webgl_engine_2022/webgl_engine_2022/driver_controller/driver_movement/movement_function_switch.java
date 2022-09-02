@@ -620,12 +620,15 @@ public class movement_function_switch
 	}
 	private void clear_follow(movement_tree t)
 	{
-		t.move.follow_component_name=null;
-		t.move.follow_component_location=null;
-		t.move.follow_component_id=null;
-		if(t.children!=null)
-			for(int i=0,ni=t.children.length;i<ni;i++)
-				clear_follow(t.children[i]);
+		if(t.move!=null) {
+			t.move.follow_component_name=null;
+			t.move.follow_component_location=null;
+			t.move.follow_component_id=null;
+		}
+		if(t.children==null)
+			return;
+		for(int i=0,ni=t.children.length;i<ni;i++)
+			clear_follow(t.children[i]);
 	}
 	private void fromdesignbuffer()
 	{

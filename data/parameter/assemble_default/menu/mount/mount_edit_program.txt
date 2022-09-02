@@ -103,11 +103,20 @@ function(component_name,component_id,render)
 							if(response_data)
 								return;
 							if(event.ctrlKey)
-								render.system_call_processor.collector_list_select_component(-1,-1,-1);
+								render.call_server_component("manipulator_component","all",
+									[["event_method","part_list"],	["operation",	"selection"],
+									 ["selection",	"select"],		["render_id",	-1],
+									 ["part_id",	-1],			["component_id",-1]]);
 							else if(event.shiftKey)
-								render.system_call_processor.collector_list_unselect_component(-1,-1,-1);
+								render.call_server_component("manipulator_component","all",
+									[["event_method",	"part_list"],["operation",		"selection"],
+									 ["selection",		"unselect"], ["render_id",		-1],
+									 ["part_id",		-1],		 ["component_id",	-1]]);
 							else
-								render.system_call_processor.collector_list_swap_component(-1,-1,-1);
+								render.call_server_component("manipulator_component",	"all",
+									[["event_method","part_list"],	["operation",	"selection"],
+									 ["selection",	"swap"],		["render_id",	-1],
+									 ["part_id",		-1],		["component_id",-1]]);
 						});
 				return;
 			case 5://"3.改变拼装组件"
@@ -252,11 +261,20 @@ function(component_name,component_id,render)
 							if(response_data)
 								return;
 							if(event.ctrlKey)
-								render.system_call_processor.collector_list_select_component(-1,-1,-1);
+								render.call_server_component("manipulator_component","all",
+									[["event_method","part_list"],	["operation",	"selection"],
+									 ["selection",	"select"],		["render_id",	-1],
+									 ["part_id",	-1],			["component_id",-1]]);
 							else if(event.shiftKey)
-								render.system_call_processor.collector_list_unselect_component(-1,-1,-1);
+								render.call_server_component("manipulator_component","all",
+									[["event_method",	"part_list"],["operation",		"selection"],
+									 ["selection",		"unselect"], ["render_id",		-1],
+									 ["part_id",		-1],		 ["component_id",	-1]]);
 							else
-								render.system_call_processor.collector_list_swap_component(-1,-1,-1);
+								render.call_server_component("manipulator_component",	"all",
+									[["event_method","part_list"],	["operation",	"selection"],
+									 ["selection",	"swap"],		["render_id",	-1],
+									 ["part_id",		-1],		["component_id",-1]]);
 						});
 				return;
 			case 17://"15.倒排拼装步骤"

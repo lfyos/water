@@ -7,7 +7,7 @@
 	/* 2type		*/	interface_part
 	/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 					
-		false 	9	0.2		1.75	operate_list_menu.png
+		false 	9	0.2		1.5		operate_list_menu.png
 	
 		file_program	operate_list_menu.txt
 	
@@ -35,48 +35,70 @@
 		{
 			render.component_event_processor[component_id]=
 			{
+				list_id					:	-1,
+				title					:	"",
+				
 				pickupmouseselect		:	function(event,component_id,render)
-				{
+				{			
 					var ep=render.component_event_processor[component_id];
-					var display_ep=render.component_event_processor[
-							render.get_component_object_by_component_name("列表功能显示组件").component_id];
 					var function_id=Math.floor((1.0-ep.y)*6.0);
 					ep.hightlight=[-1,-1,-1,-1];
 					
 					switch(function_id){
-					case 0:
-						render.system_call_processor.collector_list_select_list(display_ep.list_id);
+					case 0:					
+						render.call_server_component("manipulator_component","all",
+							[["event_method","part_list"],["operation","manipulation"],["manipulation","select"],		 
+							 (ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]);
 						break;
 					case 1:
-						render.system_call_processor.collector_list_unselect_list(display_ep.list_id);
+						render.call_server_component("manipulator_component","all",
+							[["event_method","part_list"],["operation","manipulation"],["manipulation","unselect"],
+							(ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]);
 						break;
 					case 2:
-						render.system_call_processor.collector_list_swap_list(display_ep.list_id);
+						render.call_server_component("manipulator_component","all",
+							[["event_method","part_list"],["operation","manipulation"],["manipulation","swap"],
+							(ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]);
 						break;
 					case 3:
-						render.system_call_processor.collector_list_top_list(display_ep.list_id);
-						render.system_call_processor.set_menu_hide(component_id);
+						render.call_server_component("manipulator_component","all",
+							[["event_method","part_list"],["operation","manipulation"],["manipulation","top"],
+							(ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]);
 						return;
 					case 4:
 						if(confirm("删除列表?")){
-							render.system_call_processor.collector_list_delete_list(display_ep.list_id);
+							render.call_server_component("manipulator_component","all",
+								[["event_method","part_list"],["operation","manipulation"],["manipulation","delete"],
+								(ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]);
 							render.system_call_processor.set_menu_hide(component_id);
 							return;
 						}
 						break;
 					case 5:
-						var title,description;
-						for(var i=0,ni=display_ep.collector_list_object.length;i<ni;i++)
-							if(display_ep.collector_list_object[i].list_id==display_ep.list_id){
-								if((title=prompt("请输入列表标题",display_ep.collector_list_object[i].title))==null)
-									break;
-								if((description=prompt("请输入列表描述",display_ep.collector_list_object[i].description))==null)
-									break;
-								render.system_call_processor.collector_list_title_list(display_ep.list_id,title,description);
-								render.system_call_processor.set_menu_hide(component_id);
-								return;
+						var display_ep=render.component_event_processor[
+							render.get_component_object_by_component_name("列表功能显示组件").component_id];
+						for(var i=0,ni=display_ep.collector_list_object.length;i<ni;i++){
+							if(ep.list_id>0){
+								if(display_ep.collector_list_object[i].list_id!=ep.list_id)
+									continue;
+							}else{
+								if(display_ep.collector_list_object[i].title!=ep.title)
+									continue;
 							}
-						break;
+							var par=[["event_method","part_list"],["operation","manipulation"],["manipulation","title"]];
+							par.push((ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]);
+							
+							var str;
+							if((str=prompt("请输入列表标题",display_ep.collector_list_object[i].title))!=null){
+								ep.title=str;
+								par.push(["title",encodeURIComponent(encodeURIComponent(str))]);
+							}
+							if((str=prompt("请输入列表描述",display_ep.collector_list_object[i].description))!=null)
+								par.push(["description",encodeURIComponent(encodeURIComponent(str))]);
+							render.call_server_component("manipulator_component","all",par);
+							return;
+						}
+						break;						
 					default:
 						return;
 					}
