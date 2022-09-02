@@ -22,23 +22,26 @@ function(component_name,component_id,render)
 			var function_id=Math.floor(ep.extract_data.movement.length*(1.0-ep.y));
 			if((function_id<0)||(function_id>=ep.extract_data.movement.length))
 				return;	
-			if(event.shiftKey||event.ctrlKey||event.altKey){
-				render.call_server_component("movement_manager","all",
-					[["operation","design"],["move_method","deletedesignbuffer"],
-					 ["buffer",ep.extract_data.movement[function_id].buffer_id]]);
-				if(ep.extract_data.movement.length<=1)
-					render.system_call_processor.set_menu_hide(component_id);
-				else{
-					ep.extract_data.movement[function_id]=ep.extract_data.movement[ep.extract_data.movement.length-1];
-					ep.extract_data.movement.length--;
-					ep.active_list(ep.extract_data,component_id,render);
-				}
-			}else{
-				render.call_server_component("movement_manager","all",[["operation","design"],
+			render.call_server_component("movement_manager","all",[["operation","design"],
 					["move_method","fromdesignbuffer"],["place",(ep.x>=0.5)?"true":"false"],
 					["buffer",ep.extract_data.movement[function_id].buffer_id],
 					["component",ep.extract_data.component_id]]);
+			render.system_call_processor.set_menu_hide(component_id);
+		},
+		pickupkeydown:		function(event,component_id,render)
+		{
+			switch(event.keyCode){
+			case 8:		//Backspace
+			case 46:	//Delete
+				var ep=render.component_event_processor[component_id];
+				var function_id=Math.floor(ep.extract_data.movement.length*(1.0-ep.y));
+				if((function_id<0)||(function_id>=ep.extract_data.movement.length))
+					return;
+				render.call_server_component("movement_manager","all",
+						[["operation","design"],["move_method","deletedesignbuffer"],
+						 ["buffer",ep.extract_data.movement[function_id].buffer_id]]);
 				render.system_call_processor.set_menu_hide(component_id);
+				break;
 			}
 		},
 		update_canvas_texture	:	function(render_id,part_id,buffer_id,

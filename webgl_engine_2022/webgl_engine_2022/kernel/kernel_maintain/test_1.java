@@ -10,16 +10,27 @@ public class test_1 extends travel_through_directory
 	{
 		String str=file_reader.get_text(file_name,"GBK");
 		if(str!=null) {
-			if(str.indexOf("\"locate\"")>=0)
-				debug_information.println("locate",file_name);
+			if(str.indexOf("collector_list_create_list_by_component_id")>=0)
+				debug_information.println("collector_list_create_list_by_component_id:	",file_name);
+			if(str.indexOf("collector_list_create_list_by_component_name")>=0)
+				debug_information.println("collector_list_create_list_by_component_name:	",file_name);
 		}
+	}
+	public test_1()
+	{
+		super(new String[]
+		{
+			"E:\\water_all\\data\\project",
+			"E:\\water_all\\webgl_engine_2022\\webgl_engine_2022\\build"
+		});
 	}
 	public static void main(String args[])
 	{
-		debug_information.println("Begin");
-
+		debug_information.println("Step	1:");
 		new test_1().do_travel("E:\\water_all\\data\\", false);
-		new test_1().do_travel("E:\\water_all\\webgl_engine_2020\\webgl_engine_2020\\", false);
+		
+		debug_information.println("Step	2:");
+		new test_1().do_travel("E:\\water_all\\webgl_engine_2022\\webgl_engine_2022\\", false);
 
 		debug_information.println("End");
 	}

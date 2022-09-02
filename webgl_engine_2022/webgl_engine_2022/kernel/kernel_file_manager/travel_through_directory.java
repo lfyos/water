@@ -5,6 +5,8 @@ import kernel_common_class.sorter;
 
 public class travel_through_directory 
 {
+	private String exclude_file_name[];
+	
 	public void operate_directory_start(String directory_name)
 	{	
 	}
@@ -16,6 +18,11 @@ public class travel_through_directory
 	}
 	public void do_travel(String file_name,boolean sort_file_name_flag)
 	{
+		if(exclude_file_name!=null)
+			for(int i=0,ni=exclude_file_name.length;i<ni;i++)
+				if(exclude_file_name[i].compareTo(file_name)==0)
+					return;
+
 		class file_name_sorter extends sorter<String,String>
 		{
 			public file_name_sorter(String file_name_array[])
@@ -49,7 +56,12 @@ public class travel_through_directory
 				operate_file(path_name);
 		}
 	}
+	public travel_through_directory(String my_exclude_file_name[])
+	{
+		exclude_file_name=my_exclude_file_name;
+	}
 	public travel_through_directory()
 	{
+		exclude_file_name=null;
 	}
 }

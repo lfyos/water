@@ -6,27 +6,32 @@ function(component_name,component_id,render)
 		pickupmouseselect		:	function(event,component_id,render)
 		{
 			var display_ep,ep=render.component_event_processor[component_id];
-			var function_id=Math.floor((1.0-ep.y)*19.0);
+			var function_id=Math.floor((1.0-ep.y)*20.0);
 			switch(function_id){
 			case 0:
-				return;
+				return;			
 			case 1:
-				render.system_call_processor.collector_list_create_list(true);
+				render.call_server_component("manipulator_component","all",
+					[["event_method","part_list"],["operation","create"],["part_list","true"]]);
 				break;
 			case 2:
-				render.system_call_processor.collector_list_create_list(false);
+				render.call_server_component("manipulator_component","all",
+					[["event_method","part_list"],["operation","create"],["part_list","false"]]);
 				break;
 			case 3:
-				render.system_call_processor.collector_list_create_list_by_display_target();
+				render.call_server_component("manipulator_component","all",
+					[["event_method","part_list"],["operation","target"], ["target","display"]]);
 				break;
 			case 4:
-				render.system_call_processor.collector_list_create_list_by_selection_target();
+				render.call_server_component("manipulator_component","all",
+					[["event_method","part_list"],["operation","target"], ["target","selection"]]);
 				break;
 			case 5:
-				render.system_call_processor.collector_list_create_list_by_all_target();
+				render.call_server_component("manipulator_component","all",
+					[["event_method","part_list"],["operation","target"], ["target","all"]]);
 				break;
 			case 6:
-				return;
+				return;							
 			case 7:
 				display_ep=render.component_event_processor[
 					render.get_component_object_by_component_name("列表功能显示组件").component_id];
@@ -58,35 +63,68 @@ function(component_name,component_id,render)
 				ep.first_show_list_flag=false;
 				break;
 			case 10:
-				return;
+				var operate_ep=render.component_event_processor[
+						render.get_component_object_by_component_name("列表功能操作组件").component_id];
+				
+				if((operate_ep.title=prompt("请输入操作列表的标题"))!=null)
+					if((operate_ep.title=operate_ep.title.trim())!=""){
+						operate_ep.list_id	=-1;
+						render.system_call_processor.set_menu_show("列表功能操作组件");
+						return;
+					}
+				if((operate_ep.title=prompt("请输入操作列表的ID"))!=null)
+					if((operate_ep.title=operate_ep.title.trim())!=""){
+						operate_ep.list_id=parseInt(operate_ep.title);
+						render.system_call_processor.set_menu_show("列表功能操作组件");
+						return;
+					}
+				return;	
 			case 11:
-				render.system_call_processor.collector_list_clear();
-				break;
+				return;	
 			case 12:
-				render.system_call_processor.collector_list_save();
+				render.call_server_component("manipulator_component","all",
+					[["event_method","part_list"],["operation","clear"]]);
 				break;
 			case 13:
-				render.system_call_processor.collector_list_load();
-				break;
+				render.call_server_component("manipulator_component","all",
+					[["event_method","part_list"],["operation","save"],["top","false"]]);
+				break;				
 			case 14:
-				window.open(render.system_call_processor.collector_list_upload_webpage("chinese:上传杆件列表"),"_blank");
-				break;
+				render.call_server_component("manipulator_component","all",
+					[["event_method","part_list"],["operation","load"]]);
+				break;						
 			case 15:
-				window.open(render.system_call_processor.collector_list_download_url(),"_blank");
-				break;
+				window.open(
+					render.create_component_request_string("manipulator_component","all",
+						[["event_method","part_list"],["operation","upload_webpage"],
+						 ["change_name",encodeURIComponent(encodeURIComponent("upload_file%2B"+"chinese:上传杆件列表"))]]),
+				"_blank");
+				break;				
 			case 16:
-				window.open(render.collector_loader.collector_url(
-					confirm("简单列表(YES/NO)"),confirm("单一列表(YES/NO)"),confirm("位置信息(YES/NO)")),"_blank");
-				break;
+				window.open(
+					render.create_component_request_string("manipulator_component","all",
+						[["event_method","part_list"],["operation","download"],["top","true"]]),
+				"_blank");
+				break;							
 			case 17:
-				window.open(render.system_call_processor.collector_list_jason_component_url(ep.x<=0.5),"_blank");
+				window.open(
+					render.collector_loader.collector_url(
+						confirm("简单列表(YES/NO)"),confirm("单一列表(YES/NO)"),confirm("位置信息(YES/NO)")),
+					"_blank");
 				break;
-			default:
+			case 18:			
+				window.open(
+					render.create_component_request_string("manipulator_component","all",
+						[["event_method","part_list"],["flag",(ep.x<=0.5)?"true":"false"],
+						 ["operation","part_list_jason_component"]]),
+					"_blank");
+				break;
+			default:			
 				render.system_call_processor.set_menu_show("交互界面主菜单");
-				function_id=18;
+				function_id=19;
 				break;
 			}
-			ep.hightlight=[0,1.0-function_id/19.0-1.0/19.0,		1.0,1.0-function_id/19.0];
+			ep.hightlight=[0,1.0-function_id/20.0-1.0/20.0,		1.0,1.0-function_id/20.0];
 		}
 	}
 }

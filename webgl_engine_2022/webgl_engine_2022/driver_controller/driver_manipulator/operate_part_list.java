@@ -141,11 +141,22 @@ public class operate_part_list
 				return;
 			}
 		case "manipulation":
-			if((str=ci.request_response.get_parameter("list_id"))!=null)
-				collector=ek.collector_stack.get_one_collector(Long.decode(str));
-			if(collector==null)
-				if((collector=ek.collector_stack.get_top_collector())==null)
+			if((str=ci.request_response.get_parameter("list_id"))!=null) {
+				collector=ek.collector_stack.get_collector_by_list_id(Long.decode(str));
+			}else if((str=ci.request_response.get_parameter("list_title"))!=null) {
+				try {
+					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+				}catch(Exception e) {
 					return;
+				}
+				collector=ek.collector_stack.get_collector_by_list_title(str);
+			}else 
+				collector=ek.collector_stack.get_top_collector();
+			
+			if(collector==null)
+				return;
+			
 			acd.set_audio(null);
 
 			if((str=ci.request_response.get_parameter("manipulation"))==null)
@@ -241,9 +252,11 @@ public class operate_part_list
 			switch(((str=ci.request_response.get_parameter("part_list"))!=null)?(str.toLowerCase().trim()):"true"){
 			default:
 			case "true":
+			case "yes":
 				part_list_flag_effective_flag=true; 
 				break;
 			case "false":
+			case "no":
 				part_list_flag_effective_flag=false;
 				break;
 			}

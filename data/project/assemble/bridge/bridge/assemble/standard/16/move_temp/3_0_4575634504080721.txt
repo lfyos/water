@@ -1,0 +1,116 @@
+version	2015.10
+
+/*	name				*/	movement
+/*	audio				*/	sound.mp3
+/*	description			*/	description
+/*	sequence/parallel	*/	sequence
+/*	direction			*/	no_direction
+/*	camera scale		*/	upper	1.0
+/*	children number		*/	3
+
+        /*	name				*/	movement
+        /*	audio				*/	sound.mp3
+        /*	description			*/	description
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name				*/	yyyyyyyy
+                /*	audio				*/	no_sound_file
+                /*	description			*/	no_description
+                /*	sequence/parallel	*/	sequence
+                /*	direction			*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	0
+                
+                component_start
+                
+                        两片梁16.00米-1/上弦3号弦杆及四个8甲立杆的组合-3/两根3号构成的上弦杆及251号加强支杆-1/251号加强支杆和梁端的255号连接角-1/加强支杆_编号_251_原编号_101-1
+                        
+                component_end
+                
+                
+                /*	start state	*/	invisible
+                /*	end state	*/	visible
+                /*	step number	*/	1
+                
+                    /*	time length	*/	 1.0E9
+                    /*	parameter number */	 0	/* parameter */	
+                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.47544029055405557 0.6506610093770562 -0.17522074255378328 1.0 
+                    
+                    /*	time length	*/	 1.0E9
+                    /*	parameter number */	 0	/* parameter */	
+                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                    
+                
+                /*	match number	*/	0
+                
+        /*	name				*/	movement
+        /*	audio				*/	sound.mp3
+        /*	description			*/	description
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	1
+        
+                /*	name				*/	yyyyyyyy
+                /*	audio				*/	no_sound_file
+                /*	description			*/	no_description
+                /*	sequence/parallel	*/	sequence
+                /*	direction			*/	no_direction
+                /*	camera scale		*/	upper	1.0
+                /*	children number		*/	0
+                
+                component_start
+                
+                        梁端_上4米_下2米-2/上弦3号弦杆及四个8甲立杆的组合-1/两根3号构成的上弦杆及251号加强支杆-1/251号加强支杆和梁端的255号连接角-1/加强支杆_编号_251_原编号_101-1
+                        
+                component_end
+                
+                
+                /*	start state	*/	invisible
+                /*	end state	*/	visible
+                /*	step number	*/	1
+                
+                    /*	time length	*/	 1.0E9
+                    /*	parameter number */	 0	/* parameter */	
+                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.47544029055405557 0.6506610093770562 -0.17522074255378328 1.0 
+                    
+                    /*	time length	*/	 1.0E9
+                    /*	parameter number */	 0	/* parameter */	
+                    /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+                    
+                
+                /*	match number	*/	0
+                
+        /*	name				*/	yyyyyyyy
+        /*	audio				*/	no_sound_file
+        /*	description			*/	no_description
+        /*	sequence/parallel	*/	sequence
+        /*	direction			*/	no_direction
+        /*	camera scale		*/	upper	1.0
+        /*	children number		*/	0
+        
+        component_start
+        
+                梁端_上4米_下2米-2/梁端弦杆的端头_立面_下平联_上面的251加强支杆-1/251号加强支杆和梁端的255号连接角-1/加强支杆_编号_251_原编号_101-1
+                
+        component_end
+        
+        
+        /*	start state	*/	invisible
+        /*	end state	*/	visible
+        /*	step number	*/	1
+        
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.47544029055405557 0.6506610093770562 -0.17522074255378328 1.0 
+            
+            /*	time length	*/	 1.0E9
+            /*	parameter number */	 0	/* parameter */	
+            /*	location	*/	 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 
+            
+        
+        /*	match number	*/	0
+        
