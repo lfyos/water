@@ -35,7 +35,7 @@ public class dispatch_part_request
 	{
 		ci.statistics_client.register_system_call_execute_number(main_call_id,0);
 		
-		String str;
+		String str,request_charset=ci.request_response.implementor.get_request_charset();
 		if((str=ci.request_response.get_parameter("method"))==null){
 			debug_information.println(
 				"method is null in part_request_dispatch of dispatch_part_request");
@@ -61,8 +61,8 @@ public class dispatch_part_request
 			}
 			if((str=ci.request_response.get_parameter("event_part_name"))!=null){
 				try {
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
 				}catch(Exception e) {
 					debug_information.println("Can NOT decode part name in part_request_dispatch");
 					return null;
@@ -113,8 +113,8 @@ public class dispatch_part_request
 			}
 			if((str=ci.request_response.get_parameter("event_component_name"))!=null){
 				try {
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
 				}catch(Exception e) {
 					debug_information.println("Can NOT decode component name in part_request_dispatch");
 					return null;

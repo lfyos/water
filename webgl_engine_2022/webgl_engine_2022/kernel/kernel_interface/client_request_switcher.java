@@ -161,14 +161,29 @@ public class client_request_switcher
 		
 		client_request_response request_response=new client_request_response(
 				system_par.network_data_charset,network_implementor);
-		String my_user_name=request_response.get_parameter("user_name");
-		String my_pass_word=request_response.get_parameter("pass_word");
+		
+		String my_user_name,my_pass_word,request_charset=request_response.implementor.get_request_charset();
+		if((my_user_name=request_response.get_parameter("user_name"))==null)
+			my_user_name="NoName";
+		else try{
+				my_user_name=java.net.URLDecoder.decode(my_user_name,request_charset);
+				my_user_name=java.net.URLDecoder.decode(my_user_name,request_charset);
+			}catch(Exception e) {
+				;
+			}
+		if((my_pass_word=request_response.get_parameter("pass_word"))==null)
+			my_pass_word="NoPassword";
+		else
+			try{
+				my_pass_word=java.net.URLDecoder.decode(my_pass_word,request_charset);
+				my_pass_word=java.net.URLDecoder.decode(my_pass_word,request_charset);
+			}catch(Exception e) {
+				;
+			}
+		
 		String my_client_id=request_response.implementor.get_client_id();
 		client_interface client=client_container.get_client_interface(system_par,
-				(my_user_name==null)?"NoName"		:my_user_name,
-				(my_pass_word==null)?"NoPassword"	:my_pass_word,
-				(my_client_id==null)?"NoClientID"	:my_client_id,
-				statistics_engine);
+				my_user_name,my_pass_word,(my_client_id==null)?"NoClientID"	:my_client_id,statistics_engine);
 		if(client!=null) {
 			engine_call_result ecr=system_call_switch(request_response,client);
 			if(ecr!=null){

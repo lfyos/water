@@ -297,7 +297,7 @@ public class client_information
 		String user_name	=request_response.get_parameter("user_name");
 		String pass_word	=request_response.get_parameter("pass_word");
 		String language_str	=request_response.get_parameter("language");
-		
+
 		request_url_header=request_response.implementor.get_url();
 		request_url_header+="?channel="		+Long.toString(channel_id);
 		request_url_header+="&user_name="	+((user_name==null)   ?"NoName"    :user_name.trim());

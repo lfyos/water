@@ -87,7 +87,7 @@ public class extended_instance_driver extends instance_driver
 	}
 	public String[] response_event(engine_kernel ek,client_information ci)
 	{
-		String str;
+		String str,request_charset=ci.request_response.implementor.get_request_charset();
 		
 		last_touch_time=new Date().getTime();
 		
@@ -108,8 +108,8 @@ public class extended_instance_driver extends instance_driver
 				break;
 			new_component_id=-1;
 			try {
-				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
 			}catch(Exception e) {
 				break;
 			}
@@ -127,8 +127,8 @@ public class extended_instance_driver extends instance_driver
 			new_component_id=-1;
 			int my_component_id;
 			try {
-				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
 				my_component_id=Integer.decode(str);
 			}catch(Exception e) {
 				break;

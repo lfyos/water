@@ -63,9 +63,10 @@ public class extended_instance_driver extends instance_driver
 		case "play":
 			if((str=ci.request_response.get_parameter("file"))!=null)
 				if((str=str.trim()).length()>0){
+					String request_charset=ci.request_response.implementor.get_request_charset();
 					try {
-						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+						str=java.net.URLDecoder.decode(str,request_charset);
+						str=java.net.URLDecoder.decode(str,request_charset);
 					}catch(Exception e) {
 						acd.set_audio(null);
 						break;

@@ -332,12 +332,12 @@ public class movement_function_switch
 				recursive_flag=true;
 				break;
 			}
-		
+		String request_charset=ci.request_response.implementor.get_request_charset();
 		if((str=ci.request_response.get_parameter("node_name"))!=null)
 			if((str=str.trim()).length()>0){
 				try{
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
 					searcher.result.node_name=str;
 				}catch(Exception e){
 					;
@@ -346,8 +346,8 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("sound_file_name"))!=null)
 			if((str=str.trim()).length()>0){
 				try{
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
 					str=str.replace(" ","").replace("\t","").replace("\n","").
 							replace("\r","").replace( "\"","").replace("\\","/");
 					searcher.result.sound_file_name=file_reader.separator(str);
@@ -360,8 +360,8 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("description"))!=null) 
 			if((str=str.trim()).length()>0){
 				try{
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
 					str=str.replace(" ","").replace("\t","").replace("\n","").
 							replace("\r","").replace("\"","").replace("\\","/");
 					searcher.result.description=str;
@@ -1119,9 +1119,10 @@ public class movement_function_switch
 			if((str=ci.request_response.get_parameter("change_name"))==null)
 				str="";
 			if((str=str.trim()).length()>0){
+				String request_charset=ci.request_response.implementor.get_request_charset();
 				try{
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
 				}catch(Exception e){
 					;
 				}

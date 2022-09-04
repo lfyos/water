@@ -178,9 +178,10 @@ public class movement_suspend
 			debug_information.println("NO part name in response_event of virtual_mount_driver");
 			return;
 		}
+		String request_charset=ci.request_response.implementor.get_request_charset();
 		try{
-			str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-			str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+			str=java.net.URLDecoder.decode(str,request_charset);
+			str=java.net.URLDecoder.decode(str,request_charset);
 		}catch(Exception e) {
 			debug_information.println("Can't decode part name in response_event of virtual_mount_driver\t:\t",str);
 			return;

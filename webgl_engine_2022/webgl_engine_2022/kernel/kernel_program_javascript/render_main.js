@@ -2,11 +2,13 @@ function redraw(render,processs_bar_object)
 {
 	if(render.terminate_flag)
 		return;
+		
 	var redraw_object={
 			touch_time:			 0,
 			interval_length:	 1,
 			clear_interval_id:	-1	
 	};
+	
 	function render_routine()
 	{
 		if(render.terminate_flag)
@@ -346,6 +348,11 @@ function render_main(create_engine_sleep_time_length_scale,
 	my_scene_name	=(typeof(my_scene_name		)!="string")?""			 :(my_scene_name.trim());
 	my_link_name	=(typeof(my_link_name		)!="string")?""			 :(my_link_name.trim());
 	
+	my_user_name=encodeURIComponent(encodeURIComponent(my_user_name));
+	my_pass_word=encodeURIComponent(encodeURIComponent(my_pass_word));
+	my_scene_name=encodeURIComponent(encodeURIComponent(my_scene_name));
+	my_link_name=encodeURIComponent(encodeURIComponent(my_link_name));
+	
 	var process_bar_url=my_url+"?channel=process_bar&language="+my_language_name;
 	process_bar_url+="&user_name="	+my_user_name		+"&pass_word="	+my_pass_word;
 	
@@ -358,6 +365,7 @@ function render_main(create_engine_sleep_time_length_scale,
 				var parameter_item	=my_initialization_parameter[i];
 				var parameter_name	=parameter_item[0].toString().trim();
 				var parameter_value	=parameter_item[1].toString().trim();
+
 				request_url+="&"+parameter_name+"="+parameter_value;
 			};
 

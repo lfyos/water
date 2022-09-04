@@ -8,6 +8,7 @@ import javax.servlet.ServletOutputStream;
 import kernel_common_class.debug_information;
 import kernel_file_manager.file_reader;
 import kernel_network.network_implementation;
+import kernel_network.network_implementation_default_parameter;
 
 public class jsp_network_implementation implements network_implementation
 {
@@ -32,14 +33,14 @@ public class jsp_network_implementation implements network_implementation
 		output_stream	=null;
 
 		if((request_charset=request.getCharacterEncoding())==null)
-			request_charset="UTF-8";
+			request_charset=network_implementation_default_parameter.network_request_charset;
 		try {			
 			request.setCharacterEncoding(request_charset);
 		}catch(Exception e) {
 			;
 		}
 		if((client_id=request.getRemoteAddr())==null)
-			client_id="NoRemoteAddr";		
+			client_id="NoRemoteAddr";
 //		client_id =client_id+"/"+my_session.getId();
 	}
 	static private void print_error(boolean print_stack_trace_flag,

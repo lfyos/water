@@ -101,11 +101,9 @@ public class engine_kernel
 			client_request_response request_response,system_parameter my_system_parameter,
 			render_container my_original_render,part_loader_container my_part_loader_cont)
 	{
-		create_parameter=my_create_parameter;
-				
+		create_parameter		=my_create_parameter;
 		system_par				=my_system_parameter;
-		scene_par				=new scene_parameter(request_response,system_par,
-				request_response.get_parameter("sub_directory"),create_parameter);
+		scene_par				=new scene_parameter(request_response,system_par,create_parameter);
 		
 		component_cont			=null;
 		camera_cont				=null;
