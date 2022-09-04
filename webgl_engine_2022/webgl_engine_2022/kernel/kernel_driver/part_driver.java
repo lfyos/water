@@ -119,9 +119,20 @@ public class part_driver
 	}
 	public String[] response_event(part p,engine_kernel ek,client_information ci)
 	{	
-		String directory_name=file_directory.part_file_directory(p,ek.system_par,ek.scene_par);
-		String file_name=ci.request_response.get_parameter("file");
-		file_name=(file_name==null)?directory_name:(directory_name+file_reader.separator(file_name));
+		String file_name;
+		if((file_name=ci.request_response.get_parameter("file"))==null)
+			file_name="";
+		else{
+			String request_charset=ci.request_response.implementor.get_request_charset();
+			try {
+				file_name=java.net.URLDecoder.decode(file_name,request_charset);
+				file_name=java.net.URLDecoder.decode(file_name,request_charset);
+			}catch(Exception e) {
+				;
+			}
+			file_name=file_reader.separator(file_name);
+		};
+		file_name=file_directory.part_file_directory(p,ek.system_par,ek.scene_par)+file_name;
 		
 		if(file_reader.is_exist(file_name))
 			return new String[] {file_name,ek.system_par.local_data_charset};

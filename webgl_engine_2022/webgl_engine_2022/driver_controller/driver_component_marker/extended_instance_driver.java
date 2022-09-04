@@ -189,9 +189,11 @@ public class extended_instance_driver extends instance_driver
 			}
 			if((marker_text=ci.request_response.get_parameter("value"))==null)
 				break;
+			
+			String request_charset=ci.request_response.implementor.get_request_charset();
 			try{
-				marker_text=java.net.URLDecoder.decode(marker_text,ek.system_par.network_data_charset);
-				marker_text=java.net.URLDecoder.decode(marker_text,ek.system_par.network_data_charset);
+				marker_text=java.net.URLDecoder.decode(marker_text,request_charset);
+				marker_text=java.net.URLDecoder.decode(marker_text,request_charset);
 			}catch(Exception e){
 				break;
 			}
@@ -212,8 +214,8 @@ public class extended_instance_driver extends instance_driver
 						break;
 				if((str=ci.request_response.get_parameter("component_name"))!=null){
 					try {
-						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+						str=java.net.URLDecoder.decode(str,request_charset);
+						str=java.net.URLDecoder.decode(str,request_charset);
 					}catch(Exception e) {
 						break;
 					}

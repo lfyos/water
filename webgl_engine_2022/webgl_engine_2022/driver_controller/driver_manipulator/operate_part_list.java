@@ -105,7 +105,7 @@ public class operate_part_list
 			int modifier_container_id,boolean save_component_name_or_id_flag,component comp,
 			engine_kernel ek,client_information ci,driver_audio.extended_component_driver acd)
 	{
-		String str;
+		String str,request_charset=ci.request_response.implementor.get_request_charset();;
 		component_collector collector=null;
 		component_array comp_cont;
 		
@@ -144,9 +144,10 @@ public class operate_part_list
 			if((str=ci.request_response.get_parameter("list_id"))!=null) {
 				collector=ek.collector_stack.get_collector_by_list_id(Long.decode(str));
 			}else if((str=ci.request_response.get_parameter("list_title"))!=null) {
+				
 				try {
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
 				}catch(Exception e) {
 					return;
 				}
@@ -169,8 +170,8 @@ public class operate_part_list
 				int flag=0;
 				if((str=ci.request_response.get_parameter("title"))!=null)
 					try{
-						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+						str=java.net.URLDecoder.decode(str,request_charset);
+						str=java.net.URLDecoder.decode(str,request_charset);
 						str=(str==null)?"":str;
 						collector.title=(collector.title==null)?"":collector.title;
 						if(collector.title.compareTo(str)!=0) {
@@ -182,8 +183,8 @@ public class operate_part_list
 					}
 				if((str=ci.request_response.get_parameter("description"))!=null)
 					try{
-						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+						str=java.net.URLDecoder.decode(str,request_charset);
+						str=java.net.URLDecoder.decode(str,request_charset);
 						str=(str==null)?"":str;
 						collector.description=(collector.description==null)?"":collector.description;
 						if(collector.description.compareTo(str)!=0) {
@@ -263,8 +264,8 @@ public class operate_part_list
 			comp_cont=new component_array(ek.component_cont.root_component.component_id+1);
 			if((str=ci.request_response.get_parameter("component_name"))!=null){
 				try {
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
 				}catch(Exception e) {
 					str=null;
 				}
@@ -368,8 +369,8 @@ public class operate_part_list
 				str="";
 			if((str=str.trim()).length()>0){
 				try{
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
 				}catch(Exception e){
 					;
 				}

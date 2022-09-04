@@ -9,6 +9,7 @@
 /*	multiparameter_number						*/		8
 /*	default_display_bitmap			2+16		*/		18
 
+/*	component_collector_stack_component_name	*/		movement_manager
 /*	component_collector_stack_file_name			*/		collector.txt
 /*	component_collector_parameter_channel_id	*/		2	0	1
 /*	max_component_collector_number				*/		50

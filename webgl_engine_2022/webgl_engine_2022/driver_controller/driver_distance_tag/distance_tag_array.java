@@ -277,9 +277,10 @@ public class distance_tag_array
 			return true;
 		if((str=ci.request_response.get_parameter("title"))==null)
 			return true;
+		String request_charset=ci.request_response.implementor.get_request_charset();
 		try {
-			str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-			str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+			str=java.net.URLDecoder.decode(str,request_charset);
+			str=java.net.URLDecoder.decode(str,request_charset);
 		}catch(Exception e) {
 			debug_information.println("Can't decode tag_title \t:\t",str);
 			return true;

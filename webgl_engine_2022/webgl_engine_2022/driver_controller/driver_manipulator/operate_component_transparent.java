@@ -29,8 +29,9 @@ public class operate_component_transparent
 				
 				if((str=ci.request_response.get_parameter("component_name"))!=null) {
 					if(str.length()>0){
-						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-						str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+						String request_charset=ci.request_response.implementor.get_request_charset();
+						str=java.net.URLDecoder.decode(str,request_charset);
+						str=java.net.URLDecoder.decode(str,request_charset);
 						if((my_comp=ek.component_cont.search_component(str))!=null)
 							comp_array.add_component(my_comp);
 					}

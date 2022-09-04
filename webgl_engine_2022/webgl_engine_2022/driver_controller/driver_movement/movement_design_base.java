@@ -39,9 +39,10 @@ public class movement_design_base
 				break;
 			if(str.length()<=0)
 				break;
+			String request_charset=ci.request_response.implementor.get_request_charset();
 			try {
-				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
 			}catch(Exception e) {
 				break;
 			}

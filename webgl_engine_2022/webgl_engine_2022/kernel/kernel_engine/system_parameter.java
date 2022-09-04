@@ -8,6 +8,7 @@ import kernel_common_class.debug_information;
 import kernel_file_manager.file_reader;
 import kernel_content_type.get_content_type_change_name;
 import kernel_interface.switch_engine_server;
+import kernel_network.network_implementation_default_parameter;
 
 public class system_parameter
 {
@@ -155,6 +156,7 @@ public class system_parameter
 			network_data_charset=Charset.defaultCharset().name();
 		if(network_data_charset.compareTo("default_charset")==0)
 			network_data_charset=Charset.defaultCharset().name();
+		network_implementation_default_parameter.network_request_charset=network_data_charset;
 		
 		if((text_class_charset=f.get_string())==null)
 			text_class_charset=Charset.defaultCharset().name();

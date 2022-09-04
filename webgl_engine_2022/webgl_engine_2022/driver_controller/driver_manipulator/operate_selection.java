@@ -58,10 +58,11 @@ public class operate_selection
 		case "swap_component":
 		case "select_component":
 			component my_comp=null;
+			String request_charset=ci.request_response.implementor.get_request_charset();
 			if((component_str=ci.request_response.get_parameter("component"))!=null) {
 				try{
-					component_str=java.net.URLDecoder.decode(component_str,ek.system_par.network_data_charset);
-					component_str=java.net.URLDecoder.decode(component_str,ek.system_par.network_data_charset);
+					component_str=java.net.URLDecoder.decode(component_str,request_charset);
+					component_str=java.net.URLDecoder.decode(component_str,request_charset);
 				}catch(Exception e) {
 					component_str=null;
 				}
@@ -69,8 +70,8 @@ public class operate_selection
 					my_comp=ek.component_cont.search_component(component_str);
 			}else if((component_str=ci.request_response.get_parameter("component_id"))!=null) {
 				try{
-					component_str=java.net.URLDecoder.decode(component_str,ek.system_par.network_data_charset);
-					component_str=java.net.URLDecoder.decode(component_str,ek.system_par.network_data_charset);
+					component_str=java.net.URLDecoder.decode(component_str,request_charset);
+					component_str=java.net.URLDecoder.decode(component_str,request_charset);
 				}catch(Exception e) {
 					component_str=null;
 				}

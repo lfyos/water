@@ -8,15 +8,15 @@ var render;
 function body_onload()
 {
 	construct_render_object(
-		"my_canvas",		//绘图画布
-		"NoName",			//用户名
-		"NoPassword",		//用户密码
-		"chinese",			//语言
-		"bridge_old_32",	//场景名称	bridge_old_32		 64_old_one_16		64_old_two_24
-		"",				//连接名称,用于多人协同操作一个场景
-		[					//初始化参数
+		"my_canvas",			//绘图画布
+		"NoName",				//用户名
+		"NoPassword",			//用户密码
+		"chinese",				//语言
+		"bridge_old_32",		//场景名称	bridge_old_32		 64_old_one_16		64_old_two_24
+		"",						//连接名称,用于多人协同操作一个场景
+		[						//初始化参数
 		],
-		function(my_render)	//创建场景成功后执行的函数
+		function(my_render)		//创建场景成功后执行的函数
 		{
 			render=my_render;				//把场景变量保存到变量render中
 			document.title=render.title;	//设置网页标题

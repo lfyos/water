@@ -201,9 +201,10 @@ public class extended_instance_driver extends instance_driver
 				scale_value=-1.0;
 		component locate_comp=null;
 		if((str=ci.request_response.get_parameter("component_name"))!=null) {
+			String request_charset=ci.request_response.implementor.get_request_charset();
 			try {
-				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
 			}catch(Exception e) {
 				str=null;
 			}

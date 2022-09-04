@@ -96,9 +96,10 @@ public class dispatch_component_request
 				return ret_val;
 			}
 			if((str=ci.request_response.get_parameter("event_component_name"))!=null){
+				String request_charset=ci.request_response.implementor.get_request_charset();
 				try {
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-					str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
 				}catch(Exception e) {
 					debug_information.println(
 							"Can't decode component name in component_request_dispatch of dispatch_component_request\t:\t",str);

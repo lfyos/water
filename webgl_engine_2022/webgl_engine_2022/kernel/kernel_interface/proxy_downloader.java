@@ -68,20 +68,21 @@ public class proxy_downloader
 		
 		String decode_file_name,decode_original_url;
 		long file_last_modified_time,file_length;
+		String request_charset=request_response.implementor.get_request_charset();
 		try{
-			decode_file_name=java.net.URLDecoder.decode(file_name,			system_par.network_data_charset);
-			decode_file_name=java.net.URLDecoder.decode(decode_file_name,	system_par.network_data_charset);
+			decode_file_name=java.net.URLDecoder.decode(file_name,			request_charset);
+			decode_file_name=java.net.URLDecoder.decode(decode_file_name,	request_charset);
 
-			decode_original_url=java.net.URLDecoder.decode(original_url,		system_par.network_data_charset);
-			decode_original_url=java.net.URLDecoder.decode(decode_original_url,	system_par.network_data_charset);
+			decode_original_url=java.net.URLDecoder.decode(original_url,		request_charset);
+			decode_original_url=java.net.URLDecoder.decode(decode_original_url,	request_charset);
 			
 			String str;
-			str=java.net.URLDecoder.decode(date_str,system_par.network_data_charset);
-			str=java.net.URLDecoder.decode(str,		system_par.network_data_charset);
+			str=java.net.URLDecoder.decode(date_str,request_charset);
+			str=java.net.URLDecoder.decode(str,		request_charset);
 			file_last_modified_time=Long.decode(str.trim());
 			
-			str=java.net.URLDecoder.decode(file_length_str,	system_par.network_data_charset);
-			str=java.net.URLDecoder.decode(str,				system_par.network_data_charset);
+			str=java.net.URLDecoder.decode(file_length_str,	request_charset);
+			str=java.net.URLDecoder.decode(str,				request_charset);
 			file_length=Long.decode(str.trim());
 		}catch(Exception e){
 			debug_information.println(

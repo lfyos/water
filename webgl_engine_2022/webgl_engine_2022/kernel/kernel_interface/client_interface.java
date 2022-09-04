@@ -174,9 +174,17 @@ public class client_interface
 		debug_information.print  (":",now.get(Calendar.MINUTE));  
 		debug_information.print  (":",now.get(Calendar.SECOND));
 		debug_information.println(":",now.get(Calendar.MILLISECOND));
-		
+
+		String request_charset=request_response.implementor.get_request_charset();
+		String user_name=request_response.get_parameter("user_name");
+		try{
+			user_name=java.net.URLDecoder.decode(user_name,request_charset);
+			user_name=java.net.URLDecoder.decode(user_name,request_charset);
+		}catch(Exception e) {
+			;
+		}
 		debug_information.println("Request Client ID		:	",	request_response.implementor.get_client_id());
-		debug_information.println("Request user name		:	",	request_response.get_parameter("user_name"));
+		debug_information.println("Request user name		:	",	user_name);
 		debug_information.println();
 		
 		debug_information.println("data_root_directory_name	:	",			system_par.data_root_directory_name);

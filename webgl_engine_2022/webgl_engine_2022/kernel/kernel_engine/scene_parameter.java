@@ -30,7 +30,7 @@ public class scene_parameter
 	public int multiparameter_number;
 	public long default_display_bitmap;
 	
-	public String component_collector_stack_file_name;
+	public String component_collector_stack_component_name,component_collector_stack_file_name;
 	public int component_collector_parameter_channel_id[];
 	public int max_component_collector_number;
 
@@ -57,27 +57,65 @@ public class scene_parameter
 	public boolean not_do_ancestor_render_flag,fast_load_flag;
 
 	public scene_parameter(client_request_response request_response,
-			system_parameter system_par,String my_scene_sub_directory,
-			engine_kernel_create_parameter ekcp)
+			system_parameter system_par,engine_kernel_create_parameter ekcp)
 	{
-		String str;
+		String str,request_charset=request_response.implementor.get_request_charset();
 
 		if((change_part_string=request_response.get_parameter("change_part"))==null)
 			change_part_string="";
 		else
-			change_part_string=change_part_string.trim();
+			try {
+				change_part_string=java.net.URLDecoder.decode(change_part_string,request_charset);
+				change_part_string=java.net.URLDecoder.decode(change_part_string,request_charset);
+				change_part_string=change_part_string.trim();
+			}catch(Exception e) {
+				;
+			}
+
 		if((change_component_string=request_response.get_parameter("change_component"))==null)
 			change_component_string="";
+		else
+			try {
+				change_component_string=java.net.URLDecoder.decode(change_component_string,request_charset);
+				change_component_string=java.net.URLDecoder.decode(change_component_string,request_charset);
+				change_component_string=change_component_string.trim();
+			}catch(Exception e) {
+				;
+			}
 		if((mount_component_string=request_response.get_parameter("mount_component"))==null)
 			mount_component_string="";
+		else
+			try {
+				mount_component_string=java.net.URLDecoder.decode(mount_component_string,request_charset);
+				mount_component_string=java.net.URLDecoder.decode(mount_component_string,request_charset);
+				mount_component_string=mount_component_string.trim();
+			}catch(Exception e) {
+				;
+			}
 		if((part_type_string=request_response.get_parameter("part_type"))==null)
 			part_type_string="";
-		
-		if((scene_sub_directory=my_scene_sub_directory)==null)
+		else
+			try {
+				part_type_string=java.net.URLDecoder.decode(part_type_string,request_charset);
+				part_type_string=java.net.URLDecoder.decode(part_type_string,request_charset);
+				part_type_string=part_type_string.trim();
+			}catch(Exception e) {
+				;
+			}
+		if((scene_sub_directory=request_response.get_parameter("sub_directory"))==null)
 			scene_sub_directory="";
-		else if((scene_sub_directory=file_reader.separator(scene_sub_directory.trim())).length()>0)
-			if(scene_sub_directory.charAt(scene_sub_directory.length()-1)!=File.separatorChar)
-				scene_sub_directory+=File.separator;
+		else{
+			try {
+				scene_sub_directory=java.net.URLDecoder.decode(scene_sub_directory,request_charset);
+				scene_sub_directory=java.net.URLDecoder.decode(scene_sub_directory,request_charset);
+				scene_sub_directory=part_type_string.trim();
+			}catch(Exception e) {
+				;
+			}
+			if((scene_sub_directory=file_reader.separator(scene_sub_directory.trim())).length()>0)
+				if(scene_sub_directory.charAt(scene_sub_directory.length()-1)!=File.separatorChar)
+					scene_sub_directory+=File.separator;
+		}
 		
 		file_reader fr=new file_reader(ekcp.parameter_file_name,ekcp.parameter_charset);
 		
@@ -194,6 +232,8 @@ public class scene_parameter
 		
 		default_display_bitmap=fr.get_long();
 		
+		if((component_collector_stack_component_name=fr.get_string())==null)
+			component_collector_stack_component_name="";
 		if((component_collector_stack_file_name=fr.get_string())==null)
 			component_collector_stack_file_name="";
 		else

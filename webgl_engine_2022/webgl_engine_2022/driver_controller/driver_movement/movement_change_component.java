@@ -26,9 +26,10 @@ public class movement_change_component
 			if((comp=ek.component_cont.get_component(Integer.decode(str)))==null)
 				return manager.parameter.current_movement_id;
 		}else if((str=ci.request_response.get_parameter("component_name"))!=null) {
+			String request_charset=ci.request_response.implementor.get_request_charset();
 			try {
-				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
 			}catch(Exception e) {
 				return manager.parameter.current_movement_id;
 			}

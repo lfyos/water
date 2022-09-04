@@ -41,9 +41,10 @@ public class operate_show_hide_component
 		component_array comp_cont=new component_array(ek.component_cont.root_component.component_id+1);
 		boolean selected_operation_flag;
 		if((str=ci.request_response.get_parameter("component_name"))!=null) {
+			String request_charset=ci.request_response.implementor.get_request_charset();
 			try {
-				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
 			}catch(Exception e) {
 				;
 			}

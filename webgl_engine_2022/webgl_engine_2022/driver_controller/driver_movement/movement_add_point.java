@@ -18,9 +18,10 @@ public class movement_add_point extends movement_design_base
 			String str;
 			if((str=ci.request_response.get_parameter("par_"+i))==null)
 				break;
+			String request_charset=ci.request_response.implementor.get_request_charset();
 			try {
-				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
-				str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
 			}catch(Exception e) {
 				continue;
 			}

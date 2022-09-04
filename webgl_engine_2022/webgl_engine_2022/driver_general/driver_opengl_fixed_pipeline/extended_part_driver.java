@@ -87,9 +87,10 @@ public class extended_part_driver extends part_driver
 		String directory_name,file_name,path_name_1,path_name_2;
 		if((file_name=ci.request_response.get_parameter("file"))==null)
 			return null;
+		String request_charset=ci.request_response.implementor.get_request_charset();
 		try{
-			file_name=java.net.URLDecoder.decode(file_name,ek.system_par.network_data_charset);
-			file_name=java.net.URLDecoder.decode(file_name,ek.system_par.network_data_charset);
+			file_name=java.net.URLDecoder.decode(file_name,request_charset);
+			file_name=java.net.URLDecoder.decode(file_name,request_charset);
 		}catch(Exception e){
 			return null;
 		}

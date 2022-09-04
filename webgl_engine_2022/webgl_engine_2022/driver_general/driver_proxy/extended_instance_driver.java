@@ -132,19 +132,21 @@ public class extended_instance_driver extends instance_driver
 
 		ci.request_response.println("}");
 	}
-	private String get_proxy_url(client_information ci,String uri_encode_charset)
+	private String get_proxy_url(client_information ci)
 	{
 		String proxy_url;
 
 		if((proxy_url=ci.request_response.get_parameter("proxy_url"))!=null)
-			if((proxy_url=proxy_url.trim()).length()>0)
+			if((proxy_url=proxy_url.trim()).length()>0) {
+				String request_charset=ci.request_response.implementor.get_request_charset();
 				try{
-					proxy_url=java.net.URLDecoder.decode(proxy_url,uri_encode_charset);
-					proxy_url=java.net.URLDecoder.decode(proxy_url,uri_encode_charset);
+					proxy_url=java.net.URLDecoder.decode(proxy_url,request_charset);
+					proxy_url=java.net.URLDecoder.decode(proxy_url,request_charset);
 					return proxy_url;
 				}catch(Exception e){
 					;
 				}
+			}
 		return null;
 	}
 	private boolean get_proxy_encode_flag(client_information ci)
@@ -160,10 +162,10 @@ public class extended_instance_driver extends instance_driver
 		String str;
 		switch(((str=ci.request_response.get_parameter("operation"))==null)?"":str){
 		case "append":
-			ci.add_file_proxy_url(get_proxy_url(ci,ek.system_par.network_data_charset),get_proxy_encode_flag(ci));
+			ci.add_file_proxy_url(get_proxy_url(ci),get_proxy_encode_flag(ci));
 			break;
 		case "delete":
-			ci.delete_file_proxy_url(get_proxy_url(ci,ek.system_par.network_data_charset));
+			ci.delete_file_proxy_url(get_proxy_url(ci));
 			break;
 		}
 		return null;
