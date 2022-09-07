@@ -154,7 +154,7 @@ public class response_render_component_request
 		if(view_coordinate==null)
 			return -1;
 		else
-			return (int)(view_coordinate[3]);
+			return (int)(view_coordinate[2]);
 	}
 	private static void response_parameter(engine_kernel ek,client_information ci,long delay_time_length)
 	{

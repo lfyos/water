@@ -108,7 +108,7 @@ public class scene_parameter
 			try {
 				scene_sub_directory=java.net.URLDecoder.decode(scene_sub_directory,request_charset);
 				scene_sub_directory=java.net.URLDecoder.decode(scene_sub_directory,request_charset);
-				scene_sub_directory=part_type_string.trim();
+				scene_sub_directory=scene_sub_directory.trim();
 			}catch(Exception e) {
 				;
 			}

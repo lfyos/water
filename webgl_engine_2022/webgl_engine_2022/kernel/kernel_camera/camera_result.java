@@ -276,6 +276,7 @@ public class camera_result
 		if(undecided_box!=null)
 			return false;
 		comp.clip.can_be_clipped_flag=true;
+		
 		return true;
 	}
 	public int get_render_buffer_id(client_information ci)
@@ -284,6 +285,6 @@ public class camera_result
 	}
 	public double []caculate_view_coordinate(client_information ci)
 	{
-		return target.caculate_view_coordinate(ci.parameter.x,ci.parameter.y,ci.parameter.aspect);
+		return target.caculate_view_coordinate(ci.parameter.x,ci.parameter.y);
 	}
 }
