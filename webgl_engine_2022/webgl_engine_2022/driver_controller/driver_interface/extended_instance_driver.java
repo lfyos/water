@@ -8,13 +8,14 @@ import kernel_driver.instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
+import kernel_render.target_viewport;
 
 public class extended_instance_driver extends instance_driver
 {
 	private boolean menu_type;
 	private int level;
 	private String file_name,file_charset;
-	private double x0,y0,dx,dy,aspect,target_id;
+	private double x0,y0,dx,dy,pickup_x,pickup_y,x_scale;
 	private boolean hide_show_flag,always_show_flag;
 	
 	public void destroy()
@@ -38,9 +39,9 @@ public class extended_instance_driver extends instance_driver
 		y0=0;
 		dx=my_dx;
 		dy=my_dy;
-		
-		aspect=1.0;
-		target_id=-1;
+		pickup_x=0;
+		pickup_y=0;
+		x_scale=1.0;
 		hide_show_flag=true;
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
@@ -59,10 +60,17 @@ public class extended_instance_driver extends instance_driver
 		if(cr.target.selection_target_flag)
 			return false;
 		if(cr.target.main_display_target_flag){
-			if((Math.abs(ci.parameter.aspect-aspect)>const_value.min_value)||(cr.target.target_id!=target_id)){
-				aspect		=ci.parameter.aspect;
-				target_id	=cr.target.target_id;
-				update_component_parameter_version(0);
+			double p[];
+			if((p=ci.display_camera_result.caculate_view_coordinate(ci))!=null) {
+				pickup_x=p[0];
+				pickup_y=p[1];
+				target_viewport tv=ci.display_camera_result.target.viewport[(int)(p[2])];
+				double new_x_scale=ci.parameter.aspect*tv.width/tv.height;
+
+				if(Math.abs(x_scale-new_x_scale)>const_value.min_value) {
+					x_scale=new_x_scale;
+					update_component_parameter_version(0);
+				}
 			}
 			return false;
 		}
@@ -74,15 +82,10 @@ public class extended_instance_driver extends instance_driver
 	}
 	public void create_component_parameter(engine_kernel ek,client_information ci)
 	{
-		double p[],my_x0=x0,my_x1=x0+dx,my_y0=y0,my_y1=y0+dy;
-		if((p=ci.display_camera_result.caculate_view_coordinate(ci))!=null) {
-			my_x0*=p[2];
-			my_x1*=p[2];
-		}
-		ci.request_response.
-			print("[",my_x0).		print(",",my_y0).
-			print(",",my_x1-my_x0).	print(",",my_y1-my_y0).
-			print(",",level).		print("]");
+		ci.request_response.	print("[",x0*x_scale).	print(",",y0).
+								print(",",dx*x_scale).	print(",",dy).
+								print(",",x_scale).		print(",",level).		
+								print("]");
 	}
 	private void get_parameter(engine_kernel ek,client_information ci)
 	{
@@ -90,11 +93,6 @@ public class extended_instance_driver extends instance_driver
 		
 		if(ci.display_camera_result==null) 
 			return;
-		double p[];
-		if((p=ci.display_camera_result.caculate_view_coordinate(ci))==null)
-			return;
-		if((str=ci.request_response.get_parameter("adjust_dx"))!=null)
-			dx=Double.parseDouble(str)/p[2];
 		if((str=ci.request_response.get_parameter("dx"))!=null)
 			dx=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("dy"))!=null)
@@ -102,16 +100,14 @@ public class extended_instance_driver extends instance_driver
 		
 		if((str=ci.request_response.get_parameter("x0"))!=null)
 			x0=Double.parseDouble(str);
-		if((str=ci.request_response.get_parameter("adjust_x0"))!=null)
-			x0=Double.parseDouble(str)/p[2];
 		if((str=ci.request_response.get_parameter("y0"))!=null)
 			y0=Double.parseDouble(str);
 		
 		if((str=ci.request_response.get_parameter("center"))!=null) {
 			switch(str.trim().toLowerCase()){
 			case "center":
-				x0=p[0];
-				y0=p[1]-dy/2.0;
+				x0=pickup_x;
+				y0=pickup_y-dy/2.0;
 				break;
 			}
 		}

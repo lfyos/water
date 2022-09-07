@@ -86,6 +86,15 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 			ep.mouse_y0=render.view.y;
 		}
 		
+		var x0			 =data_buffer[buffer_id][0][0];
+		var y0			 =data_buffer[buffer_id][0][1];
+		var dx			 =data_buffer[buffer_id][0][2];
+		var dy			 =data_buffer[buffer_id][0][3];
+		var x_scale		 =data_buffer[buffer_id][0][4];
+		var depth_level	 =data_buffer[buffer_id][0][5];
+		var depth		 =shader_data[0].render_depth_base;
+			depth		+=shader_data[0].render_depth_step*depth_level;
+
 		if(typeof(ep.pickupenter_component)!="function"){
 			ep.mousedown_flag=false;
 			ep.location_modify_flag=0;
@@ -206,21 +215,22 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 				if((ep.mousedown_flag)&&(render.event_listener.mouse_down_flag_array[0])){
 					var adjust_x_scale =view_port.target_width	/view_port.viewport_height;
 					var adjust_y_scale =view_port.target_height	/view_port.viewport_height;
-					data_buffer[buffer_id][0][0]+=(render.view.x-ep.mouse_x)*adjust_x_scale;
-					data_buffer[buffer_id][0][1]+=(render.view.y-ep.mouse_y)*adjust_y_scale;
+					x0+=(render.view.x-ep.mouse_x)*adjust_x_scale;
+					y0+=(render.view.y-ep.mouse_y)*adjust_y_scale;
+					data_buffer[buffer_id][0][0]=x0;
+					data_buffer[buffer_id][0][1]=y0;
 					ep.location_modify_flag=true;
 				}
 				ep.mouse_x=render.view.x;
 				ep.mouse_y=render.view.y;
 			}
 		}
+		
 		if(ep.location_modify_flag)
 			if(!(render.event_listener.mouse_down_flag_array[0])){
-				render.call_server_component(component_id,driver_id,[["operation","show"],
-					["adjust_x0",data_buffer[buffer_id][0][0]],["y0",data_buffer[buffer_id][0][1]]]);
+				render.call_server_component(component_id,driver_id,[["operation","show"],["x0",x0/x_scale],["y0",y0]]);
 				ep.location_modify_flag=false;
 			}
-
 		var i_i_data=instance_initialize_data[buffer_id];
 		var background=(typeof(i_i_data)=="object")?(i_i_data.background):(part_material[0].background);
 		
@@ -237,11 +247,11 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 			}
 
 		gl.uniformMatrix4fv(shader_program.par_uniform,false,new Float32Array([	
-			data_buffer[buffer_id][0][0],	data_buffer[buffer_id][0][1],	data_buffer[buffer_id][0][2],	data_buffer[buffer_id][0][3],
-			background[0],					background[1],					background[2],					background[3],
-			ep.hightlight[0],				ep.hightlight[1],				ep.hightlight[2],				ep.hightlight[3],
-			0,								0,								
-			shader_data[0].render_depth_base+shader_data[0].render_depth_step*data_buffer[buffer_id][0][4],	1]));
+			x0,					y0,					dx,					dy,
+			background[0],		background[1],		background[2],		background[3],
+			ep.hightlight[0],	ep.hightlight[1],	ep.hightlight[2],	ep.hightlight[3],
+			0,					0,					depth,				1
+		]));
 
 		gl.activeTexture(gl.TEXTURE0);
 		gl.bindTexture(gl.TEXTURE_2D,ep.texture_object);

@@ -90,7 +90,7 @@ public class render_target
 	{
 		return target_id+target_id+(precision_flag?0:1);
 	}
-	public double []caculate_view_coordinate(double canvas_x,double canvas_y,double aspect)
+	public double []caculate_view_coordinate(double canvas_x,double canvas_y)
 	{
 		if(viewport!=null)
 			for(int view_id=0,view_number=viewport.length;view_id<view_number;view_id++){
@@ -101,9 +101,8 @@ public class render_target
 					if((my_viewport_y>=-1.0)&&(my_viewport_y<=1.0))
 						return new double[]
 							{
-								my_viewport_x,my_viewport_y,
-								aspect*tv.width/tv.height,
-								tv.width/tv.height,
+								my_viewport_x,
+								my_viewport_y,
 								view_id
 							};
 			}
