@@ -224,13 +224,24 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 				ep.mouse_x=render.view.x;
 				ep.mouse_y=render.view.y;
 			}
+			
+			if(typeof(part_buffer_object.aspect_value)=="undefined")
+				part_buffer_object.aspect_value=new Array();
+			if(typeof(part_buffer_object.aspect_value[buffer_id])=="undefined")
+				part_buffer_object.aspect_value[buffer_id]=-1;
+			var new_aspect_value=render.canvas.width/render.canvas.height;
+			if(part_buffer_object.aspect_value[buffer_id]!=new_aspect_value){
+				part_buffer_object.aspect_value[buffer_id]=new_aspect_value;
+				render.call_server_component(component_id,driver_id,
+					[["operation","aspect_value"],["aspect_value",new_aspect_value]]);
+			}
 		}
-		
 		if(ep.location_modify_flag)
 			if(!(render.event_listener.mouse_down_flag_array[0])){
 				render.call_server_component(component_id,driver_id,[["operation","show"],["x0",x0/x_scale],["y0",y0]]);
 				ep.location_modify_flag=false;
 			}
+			
 		var i_i_data=instance_initialize_data[buffer_id];
 		var background=(typeof(i_i_data)=="object")?(i_i_data.background):(part_material[0].background);
 		

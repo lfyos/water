@@ -250,7 +250,7 @@ public class distance_tag_array
 				b=b0.add(bx);
 		}
 		locate_camera lc=new locate_camera(ek.camera_cont.camera_array[ci.display_camera_result.target.camera_id]);
-		lc.locate_on_components(ek.modifier_cont[modifier_container_id],b,null,-1.0,ci.parameter.aspect,true,false,false);
+		lc.locate_on_components(ek.modifier_cont[modifier_container_id],b,null,-1.0,true,false,false);
 		return;
 	}
 	public boolean set_distance_tag_type(engine_kernel ek,client_information ci)

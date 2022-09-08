@@ -7,11 +7,12 @@ import kernel_render.render_target_container;
 import kernel_transformation.plane;
 import kernel_camera.camera_result;
 import kernel_component.component_collector;
-import kernel_driver.instance_driver_container;
 import kernel_interface.user_statistics;
 import kernel_network.client_request_response;
 import kernel_buffer.buffer_container;
 import kernel_interface.client_process_bar;
+
+import kernel_driver.component_instance_driver_container;
 
 
 public class client_information 
@@ -39,13 +40,13 @@ public class client_information
 	public client_request_response 		request_response;
 	public client_process_bar			process_bar;
 	
-	public instance_driver_container	instance_container;
+	public component_instance_driver_container	component_instance_container;
 	
 	public display_message				message_display;
 	
 	public String 						request_url_header;
 	
-	private boolean						file_proxy_url_encode_flag[];
+	private boolean					file_proxy_url_encode_flag[];
 	private String						file_proxy_url_array[];
 	private int 						file_proxy_pointer;
 	
@@ -57,9 +58,9 @@ public class client_information
 		if(message_display!=null)
 			message_display=null;
 			
-		if(instance_container!=null) {
-			instance_container.destroy();
-			instance_container=null;
+		if(component_instance_container!=null) {
+			component_instance_container.destroy();
+			component_instance_container=null;
 		}
 		if(render_buffer!=null) {
 			render_buffer.destroy();
@@ -291,7 +292,7 @@ public class client_information
 		file_proxy_url_array=new String[0];
 		file_proxy_pointer	=0;
 		
-		instance_container	=new instance_driver_container(ek,request_response);
+		component_instance_container=new component_instance_driver_container(ek,request_response);
 		message_display		=new display_message();	
 		
 		String user_name	=request_response.get_parameter("user_name");

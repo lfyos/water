@@ -97,7 +97,7 @@ public class operate_part_list
 				if(select_type_id!=2)
 					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
 						ek.modifier_cont[modifier_container_id],comp_con.get_box(),null,
-						ci.display_camera_result.cam.parameter.scale_value,ci.parameter.aspect,true,true,
+						ci.display_camera_result.cam.parameter.scale_value,true,true,
 						ci.display_camera_result.cam.parameter.scale_value>const_value.min_value);
 		return;
 	}
@@ -245,7 +245,7 @@ public class operate_part_list
 				if(ci.display_camera_result.cam.parameter.movement_flag)
 					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
 						ek.modifier_cont[modifier_container_id],comp_cont.get_box(),null,
-						ci.display_camera_result.cam.parameter.scale_value,ci.parameter.aspect,true,true,
+						ci.display_camera_result.cam.parameter.scale_value,true,true,
 						ci.display_camera_result.cam.parameter.scale_value>const_value.min_value);
 			return;
 		case "create":

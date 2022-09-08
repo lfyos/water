@@ -134,7 +134,6 @@ public class camera_result
 		up_direct		=camera_absolute_matrix.multiply(new point(0,1,0)).sub(center_point).expand(1.0);
 		to_me_direct	=camera_absolute_matrix.multiply(new point(0,0,1)).sub(center_point).expand(1.0);
 	}
-	
 	public plane		left_plane,right_plane,up_plane,down_plane,near_plane,far_plane;
 	
 	private plane		clip[];
@@ -217,10 +216,8 @@ public class camera_result
 		box my_box=parameter.comp.driver_array[driver_id].component_part.secure_caculate_part_box(
 					parameter.comp,driver_id,parameter.body_id,parameter.face_id,parameter.loop_id,
 					parameter.edge_id,parameter.point_id,p0,p1);
-		if(my_box==null)
-			return null;
 		
-		return my_box.center();
+		return (my_box==null)?null:(my_box.center());
 	}
 	
 	public boolean clipper_test(component comp,component_container component_cont,int parameter_channel_id)

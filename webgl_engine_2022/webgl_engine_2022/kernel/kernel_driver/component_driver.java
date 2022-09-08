@@ -61,9 +61,9 @@ public class component_driver
 			engine_kernel ek,client_request_response request_response)
 	{
 	}
-	public instance_driver create_instance_driver(component comp,int driver_id,
+	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new instance_driver(comp,driver_id);
+		return new component_instance_driver(comp,driver_id);
 	}
 }

@@ -2,7 +2,7 @@ package driver_gltf;
 
 import kernel_component.component;
 import kernel_driver.component_driver;
-import kernel_driver.instance_driver;
+import kernel_driver.component_instance_driver;
 import kernel_engine.engine_kernel;
 import kernel_network.client_request_response;
 import kernel_part.part;
@@ -28,9 +28,9 @@ public class extended_component_driver  extends component_driver
 		
 		return;
 	}
-	public instance_driver create_instance_driver(component comp,int driver_id,
+	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_instance_driver(comp,driver_id);
+		return new extended_component_instance_driver(comp,driver_id);
 	}
 }

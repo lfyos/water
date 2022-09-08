@@ -38,11 +38,8 @@ function construct_render_utility(my_render_instance)
 				var tv_height	=viewport[target_viewport_id][3];
 
 				return {
-					x		:	2.0*(this.render_instance.view.x-tv_x)/tv_width-1.0,
-					y		:	2.0*(this.render_instance.view.y-tv_y)/tv_height-1.0,
-					aspect	:	this.render_instance.view.aspect*tv_width/tv_height,
-					viewport:	target_viewport_id,
-					target	:	target_id
+					x:	2.0*(this.render_instance.view.x-tv_x)/tv_width -1.0,
+					y:	2.0*(this.render_instance.view.y-tv_y)/tv_height-1.0
 				};
 			};
 		return null;

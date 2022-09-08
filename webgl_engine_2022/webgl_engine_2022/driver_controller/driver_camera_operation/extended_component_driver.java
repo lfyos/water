@@ -6,7 +6,7 @@ import kernel_common_class.const_value;
 import kernel_common_class.debug_information;
 import kernel_component.component;
 import kernel_driver.component_driver;
-import kernel_driver.instance_driver;
+import kernel_driver.component_instance_driver;
 import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
@@ -88,7 +88,7 @@ public class extended_component_driver  extends component_driver
 				location loca=new location(new point(),dx,dy,dz).multiply(location.standard_negative);
 				locate_camera loca_cam=new locate_camera(cam_array[cam_id]);
 				cam_array[cam_id].eye_component.modify_location(loca_cam.locate(my_box,loca),ek.component_cont);
-				loca_cam.scale(Math.abs(cam_array[cam_id].parameter.scale_value),1.0);
+				loca_cam.scale(Math.abs(cam_array[cam_id].parameter.scale_value));
 				cam_array[cam_id].parameter.distance=loca_cam.distance;
 			}
 		}while(true);
@@ -97,9 +97,9 @@ public class extended_component_driver  extends component_driver
 		return;
 	}
 	
-	public instance_driver create_instance_driver(component comp,int driver_id,
+	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_instance_driver(comp,driver_id,modifier_container_id);
+		return new extended_component_instance_driver(comp,driver_id,modifier_container_id);
 	}
 }

@@ -95,9 +95,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	this.view=
 	{
 		x		:	-0.0,
-		y		:	-0.0,
-		
-        aspect	:	1.0
+		y		:	-0.0
 	};
 	this.view_bak=
 	{
@@ -116,7 +114,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		depth			:	-2,
 		value			:	-2,
 		
-		aspect			:	-1,
 		in_canvas_flag	:	false
 	};
 
@@ -583,11 +580,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		var min_value=this.computer.min_value();
 		var request_string=this.url_with_channel+"&command=component&method=update_render";
 
-		this.view.aspect=this.canvas.width/this.canvas.height;
-		if(Math.abs(this.view_bak.aspect-this.view.aspect)>min_value){
-			this.view_bak.aspect=this.view.aspect;
-			request_string+="&aspect="+(this.view.aspect.toString());
-		};
 		if(Math.abs(this.view_bak.x-this.view.x)>min_value){
 			this.view_bak.x=this.view.x;
 			request_string+="&x="+(this.view.x.toString());

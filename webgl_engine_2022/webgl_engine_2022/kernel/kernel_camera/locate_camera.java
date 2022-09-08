@@ -207,7 +207,7 @@ public class locate_camera
 				return locate(my_box,dir);
 		return null;
 	}
-	public void scale(double scale_value,double aspect_value)
+	public void scale(double scale_value)
 	{
 		if(locate_box!=null)
 			if(scale_value>=(const_value.min_value))
@@ -215,10 +215,6 @@ public class locate_camera
 					double box_distance=locate_box.distance();
 					distance		=box_distance/(cam.parameter.half_fovy_tanl	*scale_value)/2.0;
 					half_fovy_tanl	=box_distance/(cam.parameter.distance		*scale_value)/2.0;
-					if(aspect_value<1.0) {
-						distance		/=aspect_value;
-						half_fovy_tanl	/=aspect_value;
-					}
 				}
 		return;
 	}
@@ -253,13 +249,13 @@ public class locate_camera
 		}
 		return false;
 	}
-	public boolean locate_on_components(modifier_container modifier_cont,
-			box my_box,location dir,double my_scale_value,double my_aspect_value,
+	public boolean locate_on_components(
+			modifier_container modifier_cont,box my_box,location dir,double my_scale_value,
 			boolean switch_camera_flag,boolean mandatory_movement_flag,boolean mandatory_scale_flag)
 	{
 		if(my_box!=null){
 			locate(my_box,dir);
-			scale(my_scale_value,my_aspect_value);
+			scale(my_scale_value);
 			return locate_on_components(modifier_cont,switch_camera_flag,
 					mandatory_movement_flag,mandatory_scale_flag);
 		}
@@ -268,11 +264,11 @@ public class locate_camera
 	public void locate_on_components(
 			modifier_container modifier_cont,component_container component_cont,
 			camera_result display_camera_result,client_parameter par,location dir,
-			double my_scale_value,double my_aspect_value,long start_time,boolean switch_camera_flag,
+			double my_scale_value,long start_time,boolean switch_camera_flag,
 			boolean mandatory_movement_flag,boolean mandatory_scale_flag,point p0,point p1)
 	{
 		if(locate(component_cont,display_camera_result,par,dir,p0,p1)!=null){
-			scale(my_scale_value,my_aspect_value);
+			scale(my_scale_value);
 			locate_on_components(modifier_cont,switch_camera_flag,mandatory_movement_flag,mandatory_scale_flag);
 		}
 	}

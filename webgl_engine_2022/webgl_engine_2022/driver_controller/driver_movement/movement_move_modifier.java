@@ -1,7 +1,7 @@
 package driver_movement;
 
 import kernel_component.component;
-import kernel_driver.instance_driver;
+import kernel_driver.component_instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_network.network_parameter;
@@ -65,7 +65,7 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 	private void do_component_driver(component comp,engine_kernel ek,client_information ci)
 	{
 		for(int i=0,n=comp.driver_number();i<n;i++)
-			instance_driver.execute_component_function(comp.component_id,i,network_par,ek,ci);
+			component_instance_driver.execute_component_function(comp.component_id,i,network_par,ek,ci);
 		for(int i=0,n=comp.children_number();i<n;i++)
 			do_component_driver(comp.children[i],ek,ci);
 	}

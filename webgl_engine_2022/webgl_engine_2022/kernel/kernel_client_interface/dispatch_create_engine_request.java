@@ -3,7 +3,7 @@ package kernel_client_interface;
 import kernel_part.part;
 import kernel_component.component;
 import kernel_engine.engine_kernel;
-import kernel_driver.instance_driver;
+import kernel_driver.component_instance_driver;
 import kernel_engine.client_information;
 import kernel_file_manager.file_directory;
 
@@ -86,11 +86,11 @@ public class dispatch_create_engine_request
 		if(comp_array==null)
 			comp_array=new component[] {};
 		
-		instance_driver i_d;
+		component_instance_driver i_d;
 		ci.request_response.print("[");
 		for(int i=0,ni=comp_array.length;i<ni;i++)
 			for(int driver_id=0,driver_number=comp_array[i].driver_number();driver_id<driver_number;driver_id++)
-				if((i_d=ci.instance_container.get_driver(comp_array[i],driver_id))!=null){
+				if((i_d=ci.component_instance_container.get_component_driver(comp_array[i],driver_id))!=null){
 					long old_length=ci.request_response.output_data_length;
 					
 					try {

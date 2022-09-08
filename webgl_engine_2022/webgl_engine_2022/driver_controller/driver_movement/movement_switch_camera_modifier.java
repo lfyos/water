@@ -203,7 +203,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 						ek.modifier_cont[camera_modifier_container_id],b,
 						ek.camera_cont.camera_array[i].parameter.direction_flag?dir:null,
 						(ek.camera_cont.camera_array[i].parameter.scale_value<=0)?-1.0:scale_value,
-						ci.parameter.aspect,true,false,false);
+						true,false,false);
 		}
 		component comp;
 		component_array comp_array=new component_array(
