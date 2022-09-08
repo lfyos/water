@@ -2,7 +2,7 @@ package driver_component_selection;
 
 import kernel_component.component;
 import kernel_driver.component_driver;
-import kernel_driver.instance_driver;
+import kernel_driver.component_instance_driver;
 import kernel_engine.engine_kernel;
 import kernel_network.client_request_response;
 import kernel_part.part;
@@ -33,7 +33,7 @@ public class extended_component_driver extends component_driver
 		
 		return;
 	}
-	public instance_driver create_instance_driver(component comp,int driver_id,
+	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
 		int screen_rectangle_component_id=-1,audio_component_id=-1;
@@ -45,7 +45,7 @@ public class extended_component_driver extends component_driver
 				if(my_comp.driver_array[0] instanceof driver_audio.extended_component_driver)
 					audio_component_id=my_comp.component_id;
 		
-		return new extended_instance_driver(comp,driver_id,
+		return new extended_component_instance_driver(comp,driver_id,
 				screen_rectangle_component_id,audio_component_id,modifier_container_id);
 	}
 }

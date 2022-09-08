@@ -3,7 +3,7 @@ package kernel_client_interface;
 import kernel_part.part;
 import kernel_component.component;
 import kernel_engine.engine_kernel;
-import kernel_driver.instance_driver;
+import kernel_driver.component_instance_driver;
 import kernel_engine.client_information;
 import kernel_common_class.debug_information;
 import kernel_render.response_render_component_request;
@@ -76,8 +76,8 @@ public class dispatch_component_request
 				ci.statistics_client.register_component_response_execute_number(comp.component_id);
 				String ret_val[]=null;
 				for(int driver_id=end_driver_id;driver_id>=begin_driver_id;driver_id--){
-					instance_driver in_dr;
-					if((in_dr=ci.instance_container.get_driver(comp,driver_id))!=null) {
+					component_instance_driver in_dr;
+					if((in_dr=ci.component_instance_container.get_component_driver(comp,driver_id))!=null) {
 						try{
 							ret_val=in_dr.response_event(ek,ci);
 						}catch(Exception e){
@@ -139,8 +139,8 @@ public class dispatch_component_request
 				ci.statistics_client.register_component_response_execute_number(comp.component_id);
 				String ret_val[]=null;
 				for(int driver_id=end_driver_id;driver_id>=begin_driver_id;driver_id--){
-					instance_driver in_dr;
-					if((in_dr=ci.instance_container.get_driver(comp,driver_id))!=null) {
+					component_instance_driver in_dr;
+					if((in_dr=ci.component_instance_container.get_component_driver(comp,driver_id))!=null) {
 						try{
 							ret_val=in_dr.response_event(ek,ci);
 						}catch(Exception e){

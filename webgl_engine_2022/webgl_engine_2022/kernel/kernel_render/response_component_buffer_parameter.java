@@ -3,7 +3,7 @@ package kernel_render;
 import kernel_common_class.debug_information;
 import kernel_component.component_collector;
 import kernel_component.component_link_list;
-import kernel_driver.instance_driver;
+import kernel_driver.component_instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_part.part;
@@ -15,12 +15,12 @@ public class response_component_buffer_parameter
 	private engine_kernel ek;
 	private client_information ci;
 	
-	private instance_driver test_should_response_parameter(
+	private component_instance_driver test_should_response_parameter(
 			component_link_list cll,long current_touch_time,
 			engine_kernel ek,client_information ci,int should_increase)
 	{
-		instance_driver in_dr;
-		if((in_dr=ci.instance_container.get_driver(cll.comp,cll.driver_id))==null)
+		component_instance_driver in_dr;
+		if((in_dr=ci.component_instance_container.get_component_driver(cll.comp,cll.driver_id))==null)
 			return null;
 
 		long old_parameter_version=in_dr.get_component_parameter_version();
@@ -43,7 +43,7 @@ public class response_component_buffer_parameter
 			int render_id=ek.process_part_sequence.process_parts_sequence[i][0];
 			int part_id=ek.process_part_sequence.process_parts_sequence[i][1];
 			for(component_link_list cll=collector.component_collector[render_id][part_id];cll!=null;cll=cll.next_list_item){
-				instance_driver in_dr=test_should_response_parameter(cll,current_touch_time,ek,ci,0);
+				component_instance_driver in_dr=test_should_response_parameter(cll,current_touch_time,ek,ci,0);
 				if(in_dr==null)
 					continue;
 				ci.request_response.print(((part_print_number++)>0)?",[":"[",render_id);

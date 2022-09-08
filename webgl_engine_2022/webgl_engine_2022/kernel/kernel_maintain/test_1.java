@@ -10,10 +10,8 @@ public class test_1 extends travel_through_directory
 	{
 		String str=file_reader.get_text(file_name,"GBK");
 		if(str!=null) {
-			if(str.indexOf("collector_list_create_list_by_component_id")>=0)
-				debug_information.println("collector_list_create_list_by_component_id:	",file_name);
-			if(str.indexOf("collector_list_create_list_by_component_name")>=0)
-				debug_information.println("collector_list_create_list_by_component_name:	",file_name);
+			if(str.indexOf("instance_initialize_data[")>=0)
+				debug_information.println("instance_initialize_data[:	",file_name);
 		}
 	}
 	public test_1()

@@ -45,5 +45,15 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 			var buffer_id=component_data_array[i];
 			while(data_buffer[buffer_id].length>1)
 				data_buffer[buffer_id].shift();
+			
+			var new_aspect_value=render.canvas.width/render.canvas.height;
+			if(instance_initialize_data[buffer_id]==new_aspect_value)
+				continue;
+			
+			instance_initialize_data[buffer_id]=new_aspect_value;
+			var component_id=part_component_id_and_driver_id[buffer_id][0];
+			var driver_id=part_component_id_and_driver_id[buffer_id][1];
+			render.call_server_component(component_id,driver_id,
+				[["operation","aspect_value"],["aspect_value",new_aspect_value]]);
 		}
 }

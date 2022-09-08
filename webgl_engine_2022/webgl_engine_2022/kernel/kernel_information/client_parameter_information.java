@@ -20,7 +20,6 @@ public class client_parameter_information extends jason_creator
 		
 		print("x",							cp.x);
 		print("y",							cp.y);
-		print("aspect",						cp.aspect);
 		print("depth",						cp.depth);
 		print("value",						cp.value);
 		

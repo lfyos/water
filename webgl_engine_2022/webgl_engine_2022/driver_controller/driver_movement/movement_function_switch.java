@@ -91,7 +91,7 @@ public class movement_function_switch
 			if((all_components.get_box()!=null)&&(ci.display_camera_result.cam.parameter.movement_flag))
 				(new locate_camera(ci.display_camera_result.cam)).locate_on_components(	modifier_cont,all_components.get_box(),
 						ci.display_camera_result.cam.parameter.direction_flag?location.combine_location(target_direction):null,
-						ci.display_camera_result.cam.parameter.scale_value,ci.parameter.aspect,true,true,false);
+						ci.display_camera_result.cam.parameter.scale_value,true,true,false);
 		}
 		return searcher.result.movement_tree_id;
 	}

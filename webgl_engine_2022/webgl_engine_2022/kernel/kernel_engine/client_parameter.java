@@ -6,7 +6,7 @@ import kernel_component.component;
 public class client_parameter 
 {
 	public int body_id,face_id,loop_id,edge_id,vertex_id,point_id;
-	public double x,y,aspect,depth,value;
+	public double x,y,depth,value;
 	public boolean high_or_low_precision_flag,mouse_inside_canvas_flag;
 	
 	public int request_length,max_client_loading_number;
@@ -30,7 +30,6 @@ public class client_parameter
 		
 		x			=0;
 		y			=0;
-		aspect		=1.0;
 		
 		depth=1.0;
 		value=-1.0;
@@ -74,10 +73,7 @@ public class client_parameter
 		if((str=ci.request_response.get_parameter("x"))!=null)
 			x=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("y"))!=null)
-			y=Double.parseDouble(str);	
-		if((str=ci.request_response.get_parameter("aspect"))!=null)
-			if((aspect=Double.parseDouble(str))<=0)
-				aspect=1.0;
+			y=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("in_canvas"))!=null)
 			mouse_inside_canvas_flag=(str.compareTo("yes")==0);
 		
