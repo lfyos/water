@@ -77,7 +77,7 @@ public class dispatch_component_request
 				String ret_val[]=null;
 				for(int driver_id=end_driver_id;driver_id>=begin_driver_id;driver_id--){
 					component_instance_driver in_dr;
-					if((in_dr=ci.component_instance_container.get_component_driver(comp,driver_id))!=null) {
+					if((in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp,driver_id))!=null) {
 						try{
 							ret_val=in_dr.response_event(ek,ci);
 						}catch(Exception e){
@@ -140,7 +140,7 @@ public class dispatch_component_request
 				String ret_val[]=null;
 				for(int driver_id=end_driver_id;driver_id>=begin_driver_id;driver_id--){
 					component_instance_driver in_dr;
-					if((in_dr=ci.component_instance_container.get_component_driver(comp,driver_id))!=null) {
+					if((in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp,driver_id))!=null) {
 						try{
 							ret_val=in_dr.response_event(ek,ci);
 						}catch(Exception e){

@@ -2,28 +2,29 @@ package kernel_render;
 
 import java.io.File;
 
-import kernel_common_class.debug_information;
-import kernel_component.component_load_source_container;
-import kernel_engine.scene_parameter;
-import kernel_engine.system_parameter;
-import kernel_engine.part_package;
-import kernel_file_manager.file_reader;
-import kernel_interface.client_process_bar;
-import kernel_network.client_request_response;
-import kernel_part.buffer_object_file_modify_time_and_length_container;
+
 import kernel_part.part;
-import kernel_part.part_container;
-import kernel_part.part_loader;
-import kernel_part.part_parameter;
 import kernel_part.part_rude;
+import kernel_part.part_loader;
 import kernel_transformation.box;
+import kernel_part.part_container;
+import kernel_part.part_parameter;
+import kernel_engine.part_package;
+import kernel_engine.scene_parameter;
 import kernel_transformation.location;
+import kernel_engine.system_parameter;
+import kernel_file_manager.file_reader;
 import kernel_part.part_loader_container;
+import kernel_interface.client_process_bar;
+import kernel_common_class.debug_information;
+import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
+import kernel_component.component_load_source_container;
+import kernel_part.buffer_object_file_modify_time_and_length_container;
 
 public class render_container
 {
-	public render renders[];
+	public render renders[],sorted_renders[];
 	public part_package system_part_package,type_part_package,scene_part_package;
 	
 	public void destroy()
@@ -36,6 +37,8 @@ public class render_container
 				}
 			renders=null;
 		}
+		sorted_renders=null;
+		
 		if(system_part_package!=null) {
 			system_part_package.destroy();
 			system_part_package=null;
@@ -49,6 +52,22 @@ public class render_container
 			scene_part_package=null;
 		}
 	}
+	
+	public render search_render(String my_render_name)
+	{
+		if(sorted_renders!=null)
+			for(int begin_pointer=0,end_pointer=sorted_renders.length-1,result;begin_pointer<=end_pointer;) {
+				int middle_pointer=(begin_pointer+end_pointer)/2;
+				if((result=sorted_renders[middle_pointer].render_name.compareTo(my_render_name))<0)
+					begin_pointer=middle_pointer+1;
+				else if(result>0)
+					end_pointer=middle_pointer-1;
+				else 
+					return sorted_renders[middle_pointer];
+			}
+		return null;
+	}
+	
 	public part[] part_array(boolean part_mesh_flag,int part_type_id)
 	{
 		int effective_part_number=0;
@@ -187,7 +206,7 @@ public class render_container
 						null,p.material_file_name,p.description_file_name,p.audio_file_name);
 			if((add_part.part_mesh=new part_rude(1,new part[] {p},new location[]{new location()},new box[] {b}))==null)
 				continue;
-			renders[p.render_id].add_part(p.render_id,add_part);
+			renders[p.render_id].add_part(add_part);
 			add_part.part_from_id			=p.part_id;
 			add_part.permanent_part_from_id	=p.permanent_part_id;
 			try {
@@ -290,7 +309,7 @@ public class render_container
 
 			int render_id=(renders==null)?0:renders.length;
 			ren.add_part(not_real_scene_fast_load_flag,component_load_source_cont,
-				pcps,ren.driver,part_type_id,render_id,part_par,system_par,get_part_list_result[0],
+				pcps,ren.driver,part_type_id,part_par,system_par,get_part_list_result[0],
 				(get_part_list_result.length>1)?get_part_list_result[1]:f_render_list.get_charset(),
 				"part_mesh_"+Integer.toString(render_id)+"_",request_response);
 
@@ -343,8 +362,8 @@ public class render_container
 			String driver_name=(str=f_shader.get_string())==null?"":str.trim();	
 			debug_information.println("render name:	",	render_name);
 			debug_information.println("Driver name:	",	driver_name);
-			
-			render ren=new render(render_name,driver_name,request_response,system_par,scene_par);
+			int render_id=(renders==null)?0:(renders.length);
+			render ren=new render(render_id,render_name,driver_name,request_response,system_par,scene_par);
 			if(ren.driver==null) {
 				debug_information.print  ("ren.driver==null		",driver_name);
 				continue;
@@ -399,8 +418,9 @@ public class render_container
 		if(ren_con.renders!=null)
 			if(ren_con.renders.length>0){
 				renders=new render[ren_con.renders.length];
-				for(int i=0,n=ren_con.renders.length;i<n;i++)
-					renders[i]=new render(ren_con.renders[i],request_response,system_par,scene_par);
+				for(int render_id=0,render_number=ren_con.renders.length;render_id<render_number;render_id++)
+					renders[render_id]=new render(render_id,
+							ren_con.renders[render_id],request_response,system_par,scene_par);
 			}
 		system_part_package	=new part_package(ren_con.system_part_package);
 		type_part_package	=new part_package(ren_con.type_part_package);

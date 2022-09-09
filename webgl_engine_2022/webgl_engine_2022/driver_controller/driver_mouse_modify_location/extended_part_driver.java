@@ -1,27 +1,27 @@
 package driver_mouse_modify_location;
 
-import kernel_common_class.jason_string;
 import kernel_component.component;
-import kernel_component.component_load_source_container;
 import kernel_driver.component_driver;
-
 import kernel_driver.part_driver;
-import kernel_engine.client_information;
+import kernel_driver.part_instance_driver;
 import kernel_engine.engine_kernel;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
-import kernel_network.client_request_response;
 import kernel_part.part;
 import kernel_part.part_rude;
-import kernel_part.part_container_for_part_search;
 import kernel_transformation.box;
 import kernel_transformation.point;
+import kernel_network.client_request_response;
+import kernel_part.part_container_for_part_search;
+import kernel_component.component_load_source_container;
 
 public class extended_part_driver extends part_driver
 {
-	private String material_file_name,mark_component_name,movement_component_name,movement_abstract_menu_component_name;
+	private String material_file_name;
+	private String mark_component_name,movement_component_name;
+	private String movement_abstract_menu_component_name;
 	
 	public extended_part_driver(String my_material_file_name,
 			String my_mark_component_name,String my_movement_component_name,
@@ -43,17 +43,6 @@ public class extended_part_driver extends part_driver
 	public void initialize_part_driver(part p,engine_kernel ek,client_request_response request_response)
 	{	
 	}
-	public void response_init_part_data(part p,engine_kernel ek,client_information ci)
-	{
-		ci.request_response.println("{");
-		ci.request_response.print("\"mark_component_name\":		",
-				jason_string.change_string(mark_component_name)).println(",");
-		ci.request_response.print("\"movement_component_name\":	",
-				jason_string.change_string(movement_component_name)).println(",");
-		ci.request_response.print("\"movement_abstract_menu_component_name\":	",
-				jason_string.change_string(movement_abstract_menu_component_name));
-		ci.request_response.println("}");
-	}
 	public part_driver clone(part parent,part p,
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
@@ -74,6 +63,18 @@ public class extended_part_driver extends part_driver
 	{
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}
+	public box caculate_part_box(part p,component comp,int driver_id,
+			int body_id,int face_id,int loop_id,int edge_id,int point_id,
+			point p0,point p1)
+	{
+		super.caculate_part_box(p,comp,driver_id,body_id,face_id,loop_id,edge_id,point_id,p0,p1);
+		return null;
+	}
+	public String [][]assemble_file_name_and_file_charset(file_reader fr,part p,
+			engine_kernel ek,client_request_response request_response)
+	{
+		return null;
+	}
 	public component_driver create_component_driver(
 			file_reader fr,boolean rollback_flag,part my_component_part,
 			component_load_source_container component_load_source_cont,
@@ -92,20 +93,10 @@ public class extended_part_driver extends part_driver
 		material_fr.close();
 		return ret_val;
 	}
-	public box caculate_part_box(part p,component comp,int driver_id,
-			int body_id,int face_id,int loop_id,int edge_id,int point_id,
-			point p0,point p1)
-	{
-		super.caculate_part_box(p,comp,driver_id,body_id,face_id,loop_id,edge_id,point_id,p0,p1);
-		return null;
-	}
-	public String [][]assemble_file_name_and_file_charset(file_reader fr,part p,
+	public part_instance_driver create_part_instance_driver(part p,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return null;
-	}
-	public String[] response_event(part p,engine_kernel ek,client_information ci)
-	{
-		return super.response_event(p,ek,ci);
+		return new extended_part_instance_driver(
+				mark_component_name,movement_component_name,movement_abstract_menu_component_name);
 	}
 }

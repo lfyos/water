@@ -34,13 +34,13 @@ public class operate_lod_scale
 			comp=comp_array.comp[--(comp_array.component_number)];
 			comp_array.comp[comp_array.component_number]=null;
 			for(int driver_id=0,driver_number=comp.driver_number();driver_id<driver_number;driver_id++){
-				component_instance_driver in_dr=ci.component_instance_container.get_component_driver(comp,driver_id);
+				component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp,driver_id);
 				in_dr.instance_driver_lod_precision_scale=new_lod_scale;
 			}
 			for(int child_id=0,child_number=comp.children_number();child_id<child_number;child_id++)
 				comp_array.add_component(comp.children[child_id]);
 		}
-		ci.component_instance_container.reset_precision_scale(ek.component_cont.root_component);
+		ci.component_instance_driver_cont.reset_precision_scale(ek.component_cont.root_component);
 
 		return;
 	}

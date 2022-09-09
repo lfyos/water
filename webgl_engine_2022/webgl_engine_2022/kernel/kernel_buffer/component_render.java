@@ -132,7 +132,7 @@ public class component_render
 		
 // set component flag in buffer
 		for(int i=0;i<component_number;i++){
-			component_instance_driver in_dr=ci.component_instance_container.get_component_driver(comp[i],driver_id[i]);
+			component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp[i],driver_id[i]);
 			long old_component_render_version=in_dr.get_component_render_version(render_buffer_id);
 			long new_component_render_version=comp[i].driver_array[driver_id[i]].get_component_render_version();
 			int flag_id=comp[i].driver_array[driver_id[i]].same_part_component_driver_id;
@@ -145,7 +145,7 @@ public class component_render
 			int flag_id=p.comp.driver_array[p.driver_id].same_part_component_driver_id;
 			switch(flag[flag_id]){
 			case 0://component not in buffer,but in link list 
-				component_instance_driver in_dr=ci.component_instance_container.get_component_driver(p.comp,p.driver_id);
+				component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(p.comp,p.driver_id);
 				long old_component_render_version=in_dr.get_component_render_version(render_buffer_id);
 				long new_component_render_version=p.comp.driver_array[p.driver_id].get_component_render_version();
 				flag[flag_id]|=(old_component_render_version!=new_component_render_version)?4:8;
@@ -270,7 +270,7 @@ public class component_render
 			case 1+4://last display(refresh),		this display(refresh),DELETE,DO ADD
 			case 4://last not display,				this display(refresh),		NOT EXIST,DO ADD
 			case 8://last not display,				this display(not refresh),	NOT EXIST,DO ADD
-				component_instance_driver in_dr=ci.component_instance_container.get_component_driver(p.comp,p.driver_id);
+				component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(p.comp,p.driver_id);
 				if(in_dr.get_component_parameter_version()<=0){
 					// 	if buffer parameter has not transfer to client broswer,
 					//	do not transfer render parameter to client broswer

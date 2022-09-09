@@ -40,7 +40,7 @@ public class list_component_on_collector
 			return false;
 		if((comp.clip.clip_plane!=null)&&discard_cross_clip_plane_flag)
 			return (comp.children_number()<=0)?true:false;
-		if((in_dr=ci.component_instance_container.get_component_driver(comp, driver_id))==null)
+		if((in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp, driver_id))==null)
 			return false;
 		
 		boolean abandon_display_flag=true;
@@ -108,7 +108,7 @@ public class list_component_on_collector
 		double lod_precision_scale=1.0,my_lod_precision_scale;
 		if((my_lod_precision_scale=comp.uniparameter.component_driver_lod_precision_scale)>const_value.min_value)
 			lod_precision_scale*=my_lod_precision_scale;
-		if((my_lod_precision_scale=ci.component_instance_container.get_lod_precision_scale(comp))>const_value.min_value)
+		if((my_lod_precision_scale=ci.component_instance_driver_cont.get_lod_precision_scale(comp))>const_value.min_value)
 			lod_precision_scale*=my_lod_precision_scale;
 		if((my_lod_precision_scale=ci.parameter.high_or_low_precision_flag
 				?cam_result.cam.parameter.high_precision_scale

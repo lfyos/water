@@ -11,7 +11,8 @@ import kernel_interface.user_statistics;
 import kernel_network.client_request_response;
 import kernel_buffer.buffer_container;
 import kernel_interface.client_process_bar;
-
+import kernel_driver.render_instance_driver_container;
+import kernel_driver.part_instance_driver_container;
 import kernel_driver.component_instance_driver_container;
 
 
@@ -40,7 +41,11 @@ public class client_information
 	public client_request_response 		request_response;
 	public client_process_bar			process_bar;
 	
-	public component_instance_driver_container	component_instance_container;
+	
+	public render_instance_driver_container		render_instance_driver_cont;
+	public part_instance_driver_container		part_instance_driver_cont;
+	public component_instance_driver_container	component_instance_driver_cont;
+	
 	
 	public display_message				message_display;
 	
@@ -58,9 +63,17 @@ public class client_information
 		if(message_display!=null)
 			message_display=null;
 			
-		if(component_instance_container!=null) {
-			component_instance_container.destroy();
-			component_instance_container=null;
+		if(component_instance_driver_cont!=null) {
+			component_instance_driver_cont.destroy();
+			component_instance_driver_cont=null;
+		}
+		if(part_instance_driver_cont!=null) {
+			part_instance_driver_cont.destroy();
+			part_instance_driver_cont=null;
+		}
+		if(render_instance_driver_cont!=null) {
+			render_instance_driver_cont.destroy();
+			render_instance_driver_cont=null;
 		}
 		if(render_buffer!=null) {
 			render_buffer.destroy();
@@ -137,7 +150,6 @@ public class client_information
 	{
 		return file_proxy_url_encode_flag;
 	}
-	
 	public String get_component_request_url_header(int component_id,String driver_id)
 	{
 		String  url_header;
@@ -292,7 +304,10 @@ public class client_information
 		file_proxy_url_array=new String[0];
 		file_proxy_pointer	=0;
 		
-		component_instance_container=new component_instance_driver_container(ek,request_response);
+		render_instance_driver_cont		=new render_instance_driver_container(ek,request_response);
+		part_instance_driver_cont		=new part_instance_driver_container(ek,request_response);	
+		component_instance_driver_cont	=new component_instance_driver_container(ek,request_response);
+		
 		message_display		=new display_message();	
 		
 		String user_name	=request_response.get_parameter("user_name");

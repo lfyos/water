@@ -98,7 +98,7 @@ public class component_instance_driver
 		
 		if((comp=ek.component_cont.get_component(component_id))!=null)
 			if((driver_id>=0)&&(driver_id<comp.driver_number()))
-				if((in_dr=ci.component_instance_container.get_component_driver(comp, driver_id))!=null){
+				if((in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp, driver_id))!=null){
 					ci.request_response.install_parameter(parameter);
 					String ret_val[];
 					try{

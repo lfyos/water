@@ -1,18 +1,18 @@
 package driver_component_marker;
 
-import kernel_component.component_load_source_container;
+import kernel_part.part;
+import kernel_render.render;
 import kernel_driver.part_driver;
+import kernel_part.part_parameter;
 import kernel_driver.render_driver;
-import kernel_engine.client_information;
+import kernel_driver.render_instance_driver;
 import kernel_engine.engine_kernel;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_network.client_request_response;
-import kernel_part.part;
-import kernel_part.part_parameter;
-import kernel_render.render;
+import kernel_component.component_load_source_container;
 
 public class extended_render_driver extends render_driver
 {
@@ -31,9 +31,6 @@ public class extended_render_driver extends render_driver
 		super.destroy();
 	}
 	public void initialize_render_driver(int render_id,engine_kernel ek,client_request_response request_response)
-	{
-	}
-	public void response_init_render_data(int render_id,engine_kernel ek,client_information ci)
 	{
 	}
 	public render_driver clone(render parent_render,
@@ -57,12 +54,6 @@ public class extended_render_driver extends render_driver
 		String par_list_file_name=file_reader.separator(render_fr.get_string());
 		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
 	}
-	public part_driver create_part_driver(file_reader part_fr,part p,
-			component_load_source_container component_load_source_cont,
-			system_parameter system_par,client_request_response request_response)
-	{
-		return new extended_part_driver(p,system_par,request_response);
-	}
 	public String create_include_shader_program(String shader_type_string,
 			//vertex,fragment,geometry,tess_control,tess_evalue
 			render rr,system_parameter system_par,scene_parameter scene_par)
@@ -72,5 +63,16 @@ public class extended_render_driver extends render_driver
 	public void create_shader_data(file_writer fw,render rr,system_parameter system_par,scene_parameter scene_par)
 	{
 		super.create_shader_data(fw, rr, system_par, scene_par);
+	}
+	public part_driver create_part_driver(file_reader part_fr,part p,
+			component_load_source_container component_load_source_cont,
+			system_parameter system_par,client_request_response request_response)
+	{
+		return new extended_part_driver(p,system_par,request_response);
+	}
+	public render_instance_driver create_render_instance_driver(render r,
+			engine_kernel ek,client_request_response request_response)
+	{
+		return new extended_render_instance_driver();
 	}
 }

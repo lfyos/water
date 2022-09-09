@@ -5,18 +5,23 @@ import kernel_engine.engine_kernel;
 import kernel_part.part;
 import kernel_common_class.debug_information;
 import kernel_component.component;
+import kernel_driver.part_instance_driver;
 
 public class dispatch_part_request 
 {
 	static private String[] part_response_event(part p,engine_kernel ek,client_information ci)
 	{
+		part_instance_driver  my_part_instance_driver;
+		
 		if(p==null)
 			debug_information.println("Part is null when execute call part driver");
 		else if(p.driver==null)
-			debug_information.println("Part p_driver is null when execute call part driver");
+			debug_information.println("Part driver is null when execute call part driver");
+		else if((my_part_instance_driver=ci.part_instance_driver_cont.get_part_instance_driver(p))==null)
+			debug_information.println("Part instance_driver is null when execute call part driver");
 		else {
 			try{
-				return p.driver.response_event(p, ek, ci);
+				return my_part_instance_driver.response_event(p, ek, ci);
 			}catch(Exception e){
 				debug_information.println("execute part response_event fail:",e.toString());
 				e.printStackTrace();
