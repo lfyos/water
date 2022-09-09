@@ -3,12 +3,14 @@ package kernel_client_interface;
 import kernel_part.part;
 import kernel_component.component;
 import kernel_engine.engine_kernel;
-import kernel_driver.component_instance_driver;
 import kernel_engine.client_information;
 import kernel_file_manager.file_directory;
-
 import kernel_common_class.debug_information;
 import kernel_common_class.jason_string;
+import kernel_driver.component_instance_driver;
+import kernel_driver.part_instance_driver;
+import kernel_driver.render_instance_driver;
+import kernel_render.render;
 
 public class dispatch_create_engine_request
 {
@@ -21,9 +23,13 @@ public class dispatch_create_engine_request
 		for(int render_id=0,render_number=ek.render_cont.renders.length;render_id<render_number;render_id++){
 			if(ek.render_cont.renders[render_id].driver==null)
 				continue;
+			render r=ek.render_cont.renders[render_id];
+			render_instance_driver r_i_driver=ci.render_instance_driver_cont.get_render_instance_driver(r);
+			if(r_i_driver==null)
+				continue;
 			long old_length=ci.request_response.output_data_length;
 			try {
-				ek.render_cont.renders[render_id].driver.response_init_render_data(render_id,ek,ci);
+				r_i_driver.response_init_render_data(r,ek,ci);
 			}catch(Exception e){
 				debug_information.println("Render driver response_init_data fail:	",e.toString());
 				debug_information.println("Driver name:		",
@@ -52,8 +58,10 @@ public class dispatch_create_engine_request
 			if(ek.render_cont.renders[render_id].parts[part_id].driver!=null) {
 				long old_length=ci.request_response.output_data_length;
 				part my_p=ek.render_cont.renders[render_id].parts[part_id];
+				part_instance_driver  my_part_instance_driver=ci.part_instance_driver_cont.get_part_instance_driver(my_p);
+				if(my_part_instance_driver!=null)
 				try {
-					my_p.driver.response_init_part_data(my_p,ek,ci);
+					my_part_instance_driver.response_init_part_data(my_p,ek,ci);
 				}catch(Exception e){
 					debug_information.println("Part driver response_init_data fail:	",e.toString());
 					
@@ -90,7 +98,7 @@ public class dispatch_create_engine_request
 		ci.request_response.print("[");
 		for(int i=0,ni=comp_array.length;i<ni;i++)
 			for(int driver_id=0,driver_number=comp_array[i].driver_number();driver_id<driver_number;driver_id++)
-				if((i_d=ci.component_instance_container.get_component_driver(comp_array[i],driver_id))!=null){
+				if((i_d=ci.component_instance_driver_cont.get_component_instance_driver(comp_array[i],driver_id))!=null){
 					long old_length=ci.request_response.output_data_length;
 					
 					try {

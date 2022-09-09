@@ -290,7 +290,7 @@ public class create_assemble_part
 					comp_p.part_name,comp_p.part_name,null,assemble_part.material_file_name,null,null);
 			add_part.part_mesh=cpr.topbox_part_rude;
 				
-			render_cont.renders[assemble_part.render_id].add_part(assemble_part.render_id,add_part);
+			render_cont.renders[assemble_part.render_id].add_part(add_part);
 				
 			add_part.part_from_id			=assemble_part.part_id;
 			add_part.permanent_part_from_id	=assemble_part.permanent_part_id;

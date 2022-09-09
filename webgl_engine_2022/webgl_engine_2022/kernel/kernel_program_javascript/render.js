@@ -918,15 +918,25 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.get_component_object_by_component_id	=null;
 		this.get_component_object_by_component_name	=null;
 		this.get_component_processor				=null;
+		
 		this.call_server							=null;
 		this.call_server_routine					=null;
+		
+		this.create_render_request_string			=null;
+		this.create_render_request_by_part_string	=null;
+		this.create_render_request_by_component_string=null;
 		this.create_part_request_string				=null;
 		this.create_part_request_by_component_string=null;
 		this.create_component_request_string		=null;
+		
 		this.call_server_engine						=null;
+		this.call_server_render						=null;
+		this.call_server_render_by_part				=null;
+		this.call_server_render_by_component		=null;
 		this.call_server_part						=null;
 		this.call_server_part_by_component			=null;
 		this.call_server_component					=null;
+
 		this.set_event_component					=null;
 		this.upload_string							=null;
 		this.upload_canvas_image					=null;
@@ -1087,6 +1097,46 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			});
 	};
 	
+	
+	this.create_render_request_string=function(render_id_or_render_name,render_parameter)
+	{
+		var ret_val=this.url_with_channel+"&command=render&method=event";
+		if(typeof(render_id_or_render_name)=="string")
+			ret_val+="&event_render_name="+encodeURIComponent(encodeURIComponent(render_id_or_render_name));
+		else
+			ret_val+="&event_render_id="+render_id_or_part_name.toString();
+		for(var i=0,ni=render_parameter.length;i<ni;i++)
+			ret_val+="&"+render_parameter[i][0].toString()+"="+render_parameter[i][1].toString();		
+		return ret_val;
+	};
+	this.create_render_request_by_part_string=function(render_id_or_part_name,part_id_or_driver_id,render_parameter)
+	{
+		var ret_val=this.url_with_channel+"&command=render&method=event";
+		if(typeof(render_id_or_part_name)=="string"){
+			ret_val+="&event_part_name="+encodeURIComponent(encodeURIComponent(render_id_or_part_name));
+			ret_val+="&event_driver_id="+part_id_or_driver_id;
+		}else
+			ret_val+="&event_render_id="+render_id_or_part_name.toString()+"&event_part_id="+part_id_or_driver_id.toString();
+		for(var i=0,ni=render_parameter.length;i<ni;i++)
+			ret_val+="&"+render_parameter[i][0].toString()+"="+render_parameter[i][1].toString();		
+		return ret_val;
+	};
+	this.create_render_request_by_component_string=function(
+			component_id_or_component_name,component_driver_id,render_parameter)
+	{
+		var ret_val=this.url_with_channel+"&command=render&method=event";
+		if(typeof(component_id_or_component_name)=="string")
+			ret_val+="&event_component_name="+encodeURIComponent(encodeURIComponent(component_id_or_component_name));
+		else
+			ret_val+="&event_component_id="+component_id_or_component_name.toString();
+		if(typeof(component_driver_id)!="undefined")
+			ret_val+="&event_driver_id="+component_driver_id.toString();
+		for(var i=0,ni=render_parameter.length;i<ni;i++)
+			ret_val+="&"+render_parameter[i][0].toString()+"="+render_parameter[i][1].toString();
+		return ret_val;
+	};
+	
+	
 	this.create_part_request_string=function(render_id_or_part_name,part_id_or_driver_id,part_parameter)
 	{
 		var ret_val=this.url_with_channel+"&command=part&method=event";
@@ -1099,6 +1149,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			ret_val+="&"+part_parameter[i][0].toString()+"="+part_parameter[i][1].toString();		
 		return ret_val;
 	};
+	
 	this.create_part_request_by_component_string=function(
 			component_id_or_component_name,component_driver_id,part_parameter)
 	{
@@ -1113,6 +1164,9 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			ret_val+="&"+part_parameter[i][0].toString()+"="+part_parameter[i][1].toString();
 		return ret_val;
 	};
+
+
+
 	this.create_component_request_string=function(component_name_or_id,driver_id,component_parameter)
 	{
 		var ret_val=this.url_with_channel+"&command=component&method=event";
@@ -1126,6 +1180,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			ret_val+="&"+component_parameter[i][0].toString()+"="+component_parameter[i][1].toString();
 		return ret_val;
 	};
+	
 	this.call_server_engine=function(engine_parameter,
 			response_function,error_function,response_type_string,upload_data)
 	{
@@ -1134,6 +1189,37 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			request_string+="&"+engine_parameter[i][0].toString()+"="+engine_parameter[i][1].toString();
 		this.call_server(request_string,response_function,error_function,response_type_string,upload_data);
 	};
+	
+	
+	this.call_server_render=function(render_id_or_render_name,render_parameter,
+		response_function,error_function,response_type_string,upload_data)
+	{
+		this.call_server(
+			this.create_render_request_string(
+				render_id_or_render_name,render_parameter),
+			response_function,error_function,response_type_string,upload_data);
+	};
+	
+	this.call_server_render_by_part=function(
+		render_id_or_part_name,part_id_or_driver_id,render_parameter,
+		response_function,error_function,response_type_string,upload_data)
+	{
+		this.call_server(
+			this.create_render_request_by_part_string(
+				render_id_or_part_name,part_id_or_driver_id,render_parameter),
+			response_function,error_function,response_type_string,upload_data);
+	};
+	
+	this.call_server_render_by_component=function(
+		component_id_or_component_name,component_driver_id,render_parameter,
+		response_function,error_function,response_type_string,upload_data)
+	{
+		this.call_server(
+			this.create_render_request_by_component_string(
+				component_id_or_component_name,component_driver_id,render_parameter),
+			response_function,error_function,response_type_string,upload_data);
+	};
+	
 	this.call_server_part=function(
 			render_id_or_part_name,part_id_or_driver_id,part_parameter,
 			response_function,error_function,response_type_string,upload_data)

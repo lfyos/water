@@ -20,7 +20,7 @@ public class response_component_buffer_parameter
 			engine_kernel ek,client_information ci,int should_increase)
 	{
 		component_instance_driver in_dr;
-		if((in_dr=ci.component_instance_container.get_component_driver(cll.comp,cll.driver_id))==null)
+		if((in_dr=ci.component_instance_driver_cont.get_component_instance_driver(cll.comp,cll.driver_id))==null)
 			return null;
 
 		long old_parameter_version=in_dr.get_component_parameter_version();

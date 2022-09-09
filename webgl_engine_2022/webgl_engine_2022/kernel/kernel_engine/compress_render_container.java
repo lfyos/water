@@ -4,6 +4,7 @@ import kernel_render.render;
 import kernel_render.render_container;
 import kernel_part.part;
 import kernel_part.part_container_for_part_search;
+import kernel_common_class.sorter;
 import kernel_component.component;
 
 public class compress_render_container
@@ -74,10 +75,11 @@ public class compress_render_container
 			for(int i=0;i<render_number;i++)
 				render_cont.renders[i]=bak[i];
 		}
-		for(int i=0;i<render_number;i++)
+		for(int i=0;i<render_number;i++) {
+			render_cont.renders[i].render_id=i;
 			for(int j=0,nj=render_cont.renders[i].parts.length;j<nj;j++)
 				render_cont.renders[i].parts[j].render_id=i;
-		
+		}
 		return total_original_part_number;
 	}
 	private void touch_component_access_part(component comp,part_container_for_part_search pcps)
@@ -104,5 +106,30 @@ public class compress_render_container
 		render_cont=my_render_cont;
 		touch_component_access_part(root_component,pcps);
 		original_part_number=compress_render();
+		
+		render_cont.sorted_renders=null;
+		if(render_cont.renders==null)
+			return;
+	
+		class create_sorted_render extends sorter<render,render>
+		{
+			public int compare_data(render s,render t)
+			{
+				return s.render_name.compareTo(t.render_name);
+			}
+			public int compare_key(render s,render t)
+			{
+				return s.render_name.compareTo(t.render_name);
+			}
+			public create_sorted_render()
+			{
+				data_array=new render[render_cont.renders.length];
+				for(int i=0,ni=render_cont.renders.length;i<ni;i++)
+					data_array[i]=render_cont.renders[i];
+				do_sort();
+				render_cont.sorted_renders=data_array;
+			}
+		};
+		new create_sorted_render();
 	}
 }

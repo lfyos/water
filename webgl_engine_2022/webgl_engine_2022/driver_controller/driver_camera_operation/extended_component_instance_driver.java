@@ -402,7 +402,7 @@ public class extended_component_instance_driver extends component_instance_drive
 					ci.display_camera_result.cam.parameter.high_precision_scale=value;
 			return null;
 		case "show_hide":
-			ci.component_instance_container.get_component_driver(comp,driver_id).update_component_parameter_version(0);
+			update_component_parameter_version(0);
 			if((str=ci.request_response.get_parameter("show_hide"))!=null){
 				switch(str.toLowerCase()){
 				case "yes":

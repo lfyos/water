@@ -6,7 +6,7 @@ import kernel_component.component_load_source_container;
 import kernel_driver.component_driver;
 
 import kernel_driver.part_driver;
-import kernel_engine.client_information;
+import kernel_driver.part_instance_driver;
 import kernel_engine.engine_kernel;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
@@ -39,9 +39,6 @@ public class extended_part_driver extends part_driver
 		super.destroy();
 	}
 	public void initialize_part_driver(part p,engine_kernel ek,client_request_response request_response)
-	{
-	}
-	public void response_init_part_data(part p,engine_kernel ek,client_information ci)
 	{
 	}
 	public part_driver clone(part parent,part p,
@@ -81,13 +78,6 @@ public class extended_part_driver extends part_driver
 		}
 		return ret_val;
 	}
-	public component_driver create_component_driver(
-			file_reader fr,boolean rollback_flag,part my_component_part,
-			component_load_source_container component_load_source_cont,
-			engine_kernel ek,client_request_response request_response)
-	{
-		return new extended_component_driver(my_component_part,modifier_container_id);
-	}
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int loop_id,int edge_id,int point_id,
 			point p0,point p1)
@@ -100,8 +90,16 @@ public class extended_part_driver extends part_driver
 	{
 		return null;
 	}
-	public String[] response_event(part p,engine_kernel ek,client_information ci)
+	public component_driver create_component_driver(
+			file_reader fr,boolean rollback_flag,part my_component_part,
+			component_load_source_container component_load_source_cont,
+			engine_kernel ek,client_request_response request_response)
 	{
-		return super.response_event(p,ek,ci);
+		return new extended_component_driver(my_component_part,modifier_container_id);
+	}
+	public part_instance_driver create_part_instance_driver(part p,
+			engine_kernel ek,client_request_response request_response)
+	{
+		return new extended_part_instance_driver();
 	}
 }

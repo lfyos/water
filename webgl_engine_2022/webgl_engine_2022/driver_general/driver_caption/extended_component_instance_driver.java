@@ -54,7 +54,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			part p=ci.parameter.comp.driver_array[i].component_part;
 			if(p==null)
 				continue;
-			component_instance_driver in_d=ci.component_instance_container.get_component_driver(ci.parameter.comp,i);
+			component_instance_driver in_d=ci.component_instance_driver_cont.get_component_instance_driver(ci.parameter.comp,i);
 			if(in_d==null)
 				continue;
 			if(ci.parameter.comp.uniparameter.display_part_name_or_component_name_flag){

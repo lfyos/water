@@ -94,7 +94,7 @@ public class component_instance_driver_container
 			}
 		}
 	}
-	public component_instance_driver get_component_driver(component comp,int driver_id)
+	public component_instance_driver get_component_instance_driver(component comp,int driver_id)
 	{
 		if(component_driver_array[comp.component_id]==null)
 			return null;

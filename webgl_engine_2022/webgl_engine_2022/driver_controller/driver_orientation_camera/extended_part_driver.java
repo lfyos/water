@@ -5,7 +5,7 @@ import kernel_component.component_load_source_container;
 import kernel_driver.component_driver;
 
 import kernel_driver.part_driver;
-import kernel_engine.client_information;
+import kernel_driver.part_instance_driver;
 import kernel_engine.engine_kernel;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
@@ -17,7 +17,6 @@ import kernel_part.part_rude;
 import kernel_part.part_container_for_part_search;
 import kernel_transformation.box;
 import kernel_transformation.point;
-import kernel_transformation.location;
 
 public class extended_part_driver extends part_driver
 {
@@ -33,9 +32,6 @@ public class extended_part_driver extends part_driver
 		super.destroy();
 	}
 	public void initialize_part_driver(part p,engine_kernel ek,client_request_response request_response)
-	{
-	}
-	public void response_init_part_data(part p,engine_kernel ek,client_information ci)
 	{
 	}
 	public part_driver clone(part parent,part p,
@@ -59,13 +55,6 @@ public class extended_part_driver extends part_driver
 					p.directory_name+p.mesh_file_name,buffer_object_file_writer.directory_name);
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}
-	public component_driver create_component_driver(
-			file_reader fr,boolean rollback_flag,part my_component_part,
-			component_load_source_container component_load_source_cont,
-			engine_kernel ek,client_request_response request_response)
-	{
-		return new extended_component_driver(my_component_part,fr.get_boolean(),fr.get_boolean());
-	}
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int loop_id,int edge_id,int point_id,
 			point p0,point p1)
@@ -77,40 +66,16 @@ public class extended_part_driver extends part_driver
 	{
 		return null;
 	}
-	public String[] response_event(part p,engine_kernel ek,client_information ci)
+	public component_driver create_component_driver(
+			file_reader fr,boolean rollback_flag,part my_component_part,
+			component_load_source_container component_load_source_cont,
+			engine_kernel ek,client_request_response request_response)
 	{
-		if(ci.display_camera_result==null)
-			return null;
-		
-		String str;
-		
-		if((str=ci.request_response.get_parameter("component"))==null)
-			return null;
-		component comp;
-		if((comp=ek.component_cont.get_component(Integer.decode(str)))==null)
-			return null;
-		
-		if((str=ci.request_response.get_parameter("data"))==null)
-			return null;
-		
-		double data[]= {
-				1,0,0,0,
-				0,1,0,0,
-				0,0,1,0,
-				0,0,0,1
-		};
-		for(int index_id,i=0,ni=data.length;i<ni;i++)
-			if((index_id=str.indexOf(','))<0) {
-				data[i]=Double.parseDouble(str);
-				break;
-			}else {
-				data[i]=Double.parseDouble(str.substring(0,index_id));
-				str=str.substring(index_id+1);
-			}
-
-		comp.modify_location(new location(data),ek.component_cont);
-		comp.uniparameter.cacaulate_location_flag=true;
-		ci.render_buffer.location_buffer.synchronize_location_version(comp,ek,false);
-		return null;
+		return new extended_component_driver(my_component_part,fr.get_boolean(),fr.get_boolean());
+	}
+	public part_instance_driver create_part_instance_driver(part p,
+			engine_kernel ek,client_request_response request_response)
+	{
+		return new extended_part_instance_driver();
 	}
 }

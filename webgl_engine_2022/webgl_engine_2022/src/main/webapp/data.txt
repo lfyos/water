@@ -28,5 +28,4 @@ Access-Control-Allow-Origin				*
 	}catch(Exception e){
 		;
 	}
-	
-	
+
