@@ -14,7 +14,6 @@ import kernel_render.target_viewport;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
-	private double aspect_value;
 	private int main_target_id;
 	private render_target_parameter	target_parameter[];
 	
@@ -26,7 +25,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		super(my_comp,my_driver_id);
 		
-		aspect_value=1;
 		main_target_id=-1;
 		
 		part p=comp.driver_array[driver_id].component_part;
@@ -81,7 +79,9 @@ public class extended_component_instance_driver extends component_instance_drive
 
 		render_target main_rt=null;
 		for(int i=0,ni=target_parameter.length;i<ni;i++){
-			double my_aspect_value=aspect_value;
+			double my_aspect_value=1.0;
+			my_aspect_value*=ci.parameter.canvas_width;
+			my_aspect_value/=ci.parameter.canvas_height;
 			my_aspect_value*=target_parameter[i].viewport[0].width;
 			my_aspect_value/=target_parameter[i].viewport[0].height;
 			
@@ -103,7 +103,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void response_init_instance_data(engine_kernel ek,client_information ci)
 	{
-		ci.request_response.println(aspect_value);
+		
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
@@ -140,10 +140,6 @@ public class extended_component_instance_driver extends component_instance_drive
 			return null;
 
 		switch(str.toLowerCase()){
-		case "aspect_value":
-			if((str=ci.request_response.get_parameter("aspect_value"))!=null)
-				aspect_value=Double.parseDouble(str);
-			return null;
 		case "parameter_channel":
 			if((str=ci.request_response.get_parameter("parameter_channel"))!=null)
 				target_parameter[target_id].parameter_channel_id=Integer.decode(str);

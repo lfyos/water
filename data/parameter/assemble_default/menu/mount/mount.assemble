@@ -1,7 +1,7 @@
 	/* 1name			*/	组件拼装交互界面组件
 	/* 1type			*/	undefined_part
 	/* 1location		*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
-	/* 1children number */	6
+	/* 1children number */	7
 	
 		/* 2name		*/	组件拼装功能设计运动组件
 		/* 2type		*/	interface_part
@@ -16,10 +16,21 @@
 		/* 2type		*/	interface_part
 		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 			
-			true			0		0.45	1.8		mount_edit_render_data.txt	
+			true			7		0.45	1.8		mount_edit_render_data.txt	
 			file_program							mount_edit_program.txt
 				
 		/* 2child_number	*/	0
+		
+		
+		/* 2name		*/	组件拼装拼装操作组件
+		/* 2type		*/	interface_part
+		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+
+			true			6		0.35	1.4		mount_operate_render_data.txt	
+			file_program							mount_operate_program.txt
+
+		/* 2child_number	*/	0
+		
 	
 		/* 2name		*/	组件拼装拼装查询组件
 		/* 2type		*/	interface_part

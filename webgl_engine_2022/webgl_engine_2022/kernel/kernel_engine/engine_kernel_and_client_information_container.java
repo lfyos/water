@@ -17,13 +17,15 @@ public class engine_kernel_and_client_information_container
 	public client_information 		client_information;
 	public volatile int 			access_lock_number;
 	
-	public engine_kernel_and_client_information_container(engine_kernel_container my_engine_kernel_cont)
+	public engine_kernel_and_client_information_container(
+			engine_kernel_container my_engine_kernel_cont)
 	{
 		engine_kernel_cont	=my_engine_kernel_cont;
 		client_information	=null;
 		access_lock_number	=0;
 	}
-	private engine_call_result create_file_result(client_information ci,String file_name,String file_charset)
+	private engine_call_result create_file_result(
+			client_information ci,String file_name,String file_charset)
 	{
 		File f=new File(file_name);
 		if(f.exists())
@@ -43,11 +45,13 @@ public class engine_kernel_and_client_information_container
 		
 		String proxy_url;
 		if((proxy_url=ci.get_file_proxy_url(f,engine_kernel_cont.ek.system_par))!=null){
-			ci.request_response.implementor.redirect_url(proxy_url,engine_kernel_cont.ek.scene_par.scene_cors_string);
+			ci.request_response.implementor.redirect_url(
+					proxy_url,engine_kernel_cont.ek.scene_par.scene_cors_string);
 			ci.statistics_client.response_proxy_data_length+=f.length();
 			return null;
 		}
-		caculate_charset_compress_file_name cccfn=new caculate_charset_compress_file_name(f,engine_kernel_cont.ek.system_par);
+		caculate_charset_compress_file_name cccfn;
+		cccfn=new caculate_charset_compress_file_name(f,engine_kernel_cont.ek.system_par);
 		if(cccfn.content_type_id<0)
 			ci.statistics_client.response_no_type_file_data_length+=f.length();
 		else
@@ -75,15 +79,19 @@ public class engine_kernel_and_client_information_container
 				component_load_source_cont=new component_load_source_container(component_load_source_cont);
 				engine_kernel_cont.ek.load(component_load_source_cont,my_request_response,process_bar);
 				if(engine_kernel_cont.ek.component_cont.root_component!=null) {
-					statistics_engine.update_kernel_component_number(1,engine_kernel_cont.ek.component_cont.root_component.component_id+1);
+					statistics_engine.update_kernel_component_number(1,
+							engine_kernel_cont.ek.component_cont.root_component.component_id+1);
 
-					debug_information.print  ("engine_interface load scene,scene_name:",engine_kernel_cont.ek.create_parameter.scene_name);
+					debug_information.print  ("engine_interface load scene,scene_name:",
+							engine_kernel_cont.ek.create_parameter.scene_name);
 					debug_information.println(",link_name:",engine_kernel_cont.ek.create_parameter.link_name);
 					
-					debug_information.print  ("engine_interface engine_kernel_number:",statistics_engine.engine_kernel_number);
+					debug_information.print  ("engine_interface engine_kernel_number:",
+							statistics_engine.engine_kernel_number);
 					debug_information.println("/",engine_kernel_cont.ek.system_par.max_engine_kernel_number);
 					
-					debug_information.print  ("engine_interface engine_component_number:",statistics_engine.engine_component_number);
+					debug_information.print  ("engine_interface engine_component_number:",
+							statistics_engine.engine_component_number);
 					debug_information.println("/",engine_kernel_cont.ek.system_par.max_engine_component_number);
 				}
 			}
@@ -100,7 +108,8 @@ public class engine_kernel_and_client_information_container
 		}
 		client_information.request_response=my_request_response;
 
-		String file_name[]=dispatch_request_main.get_engine_result(delay_time_length,engine_kernel_cont.ek,client_information);
+		String file_name[]=dispatch_request_main.get_engine_result(
+				delay_time_length,engine_kernel_cont.ek,client_information);
 		if(file_name!=null) {
 			if(file_name.length<=0)
 				file_name=null;
@@ -123,7 +132,9 @@ public class engine_kernel_and_client_information_container
 			if(output_data_length>=engine_kernel_cont.ek.scene_par.compress_response_length)
 				my_compress_file_name="do_compress_flag";
 		
-		return new engine_call_result(null,null,null,my_compress_file_name,null,engine_kernel_cont.ek.scene_par.scene_cors_string);
+		return new engine_call_result(
+			null,null,null,my_compress_file_name,null,
+			engine_kernel_cont.ek.scene_par.scene_cors_string);
 	}
 	public engine_call_result get_engine_result(client_process_bar process_bar,
 			component_load_source_container component_load_source_cont,

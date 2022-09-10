@@ -111,6 +111,7 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 
 			ep.pickupenter_component=function(this_pickup,old_pickup,render)
 			{
+				ep.mousedown_flag=false;
 			}
 			ep.pickupleave_component=function(this_pickup,old_pickup,render)
 			{
@@ -153,21 +154,20 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 				var ep=render.component_event_processor[component_id];
 				switch(event.button){
 				case 0:
-					if(!(ep.mousedown_flag))
-						break;
-					ep.mousedown_flag=false;
-					
-					if(typeof(ep.pickupmouseselect)!="function")
-						break;
-					var dx=ep.mouse_x0-render.view.x;
-					var dy=ep.mouse_y0-render.view.y;
-					if((dx*dx+dy*dy)>(2.0*0.01*0.01))
-						break;
-					ep.x=render.pickup.depth;
-					ep.y=render.pickup.value;
-					
-					ep.pickupmouseselect(event,component_id,render);
-					
+					if(ep.mousedown_flag){
+						ep.mousedown_flag=false;
+						
+						if(typeof(ep.pickupmouseselect)!="function")
+							break;
+						var dx=ep.mouse_x0-render.view.x;
+						var dy=ep.mouse_y0-render.view.y;
+						if((dx*dx+dy*dy)>(2.0*0.01*0.01))
+							break;
+						ep.x=render.pickup.depth;
+						ep.y=render.pickup.value;
+						
+						ep.pickupmouseselect(event,component_id,render);
+					}
 					break;
 				case 2:
 					break;
@@ -209,7 +209,7 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 				ep.pickupmousewheel=null;
 			}
 		}
-
+		
 		if(main_display_target_flag){
 			if((render.view.x!=ep.mouse_x)&&(render.view.y!=ep.mouse_y)){
 				if((ep.mousedown_flag)&&(render.event_listener.mouse_down_flag_array[0])){
@@ -223,17 +223,6 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 				}
 				ep.mouse_x=render.view.x;
 				ep.mouse_y=render.view.y;
-			}
-			
-			if(typeof(part_buffer_object.aspect_value)=="undefined")
-				part_buffer_object.aspect_value=new Array();
-			if(typeof(part_buffer_object.aspect_value[buffer_id])=="undefined")
-				part_buffer_object.aspect_value[buffer_id]=-1;
-			var new_aspect_value=render.canvas.width/render.canvas.height;
-			if(part_buffer_object.aspect_value[buffer_id]!=new_aspect_value){
-				part_buffer_object.aspect_value[buffer_id]=new_aspect_value;
-				render.call_server_component(component_id,driver_id,
-					[["operation","aspect_value"],["aspect_value",new_aspect_value]]);
 			}
 		}
 		if(ep.location_modify_flag)

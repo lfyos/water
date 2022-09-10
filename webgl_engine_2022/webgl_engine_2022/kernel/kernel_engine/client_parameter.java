@@ -9,7 +9,7 @@ public class client_parameter
 	public double x,y,depth,value;
 	public boolean high_or_low_precision_flag,mouse_inside_canvas_flag;
 	
-	public int request_length,max_client_loading_number;
+	public int canvas_width	,canvas_height,request_length,max_client_loading_number;
 	
 	public component comp;
 	
@@ -19,8 +19,6 @@ public class client_parameter
 	}
 	public client_parameter(int my_max_client_loading_number)
 	{
-		max_client_loading_number	=my_max_client_loading_number;
-		
 		body_id		=-1;
 		face_id		=-1;
 		loop_id		=-1;
@@ -37,7 +35,10 @@ public class client_parameter
 		high_or_low_precision_flag=true;
 		mouse_inside_canvas_flag=false;
 		
+		canvas_width=1;
+		canvas_height=1;
 		request_length=0;
+		max_client_loading_number	=my_max_client_loading_number;
 
 		comp=null;
 	}
@@ -74,6 +75,10 @@ public class client_parameter
 			x=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("y"))!=null)
 			y=Double.parseDouble(str);
+		if((str=ci.request_response.get_parameter("width"))!=null)
+			canvas_width=Integer.decode(str);
+		if((str=ci.request_response.get_parameter("height"))!=null)
+			canvas_height=Integer.decode(str);		
 		if((str=ci.request_response.get_parameter("in_canvas"))!=null)
 			mouse_inside_canvas_flag=(str.compareTo("yes")==0);
 		

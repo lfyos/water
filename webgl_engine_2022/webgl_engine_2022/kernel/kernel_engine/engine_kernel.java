@@ -365,7 +365,7 @@ public class engine_kernel
 			new engine_boftal_creator(boftal_file_name,system_par.local_data_charset,
 					part_cont.data_array,system_par,scene_par,process_bar);
 			debug_information.println("Create engine temp data time length:	",		new Date().getTime()-start_time);
-		}else {
+		}else{
 			new engine_initialization(false,program_last_time,this,request_response,process_bar);
 			debug_information.println("Doing engine_initialization time length:	",	new Date().getTime()-start_time);
 		}

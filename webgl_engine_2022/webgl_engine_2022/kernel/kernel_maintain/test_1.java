@@ -10,8 +10,8 @@ public class test_1 extends travel_through_directory
 	{
 		String str=file_reader.get_text(file_name,"GBK");
 		if(str!=null) {
-			if(str.indexOf("instance_initialize_data[")>=0)
-				debug_information.println("instance_initialize_data[:	",file_name);
+			if(str.indexOf("pickupenter_component")>=0)
+				debug_information.println("pickupenter_component:	",file_name);
 		}
 	}
 	public test_1()
