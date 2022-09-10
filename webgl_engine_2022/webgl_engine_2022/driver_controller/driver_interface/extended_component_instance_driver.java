@@ -15,7 +15,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	private boolean menu_type;
 	private int level;
 	private String file_name,file_charset;
-	private double x0,y0,dx,dy,pickup_x,pickup_y,aspect_value,x_scale;
+	private double x0,y0,dx,dy,x_scale;
 	private boolean hide_show_flag,always_show_flag;
 	
 	public void destroy()
@@ -39,9 +39,6 @@ public class extended_component_instance_driver extends component_instance_drive
 		y0=0;
 		dx=my_dx;
 		dy=my_dy;
-		pickup_x=0;
-		pickup_y=0;
-		aspect_value=1.0;
 		x_scale=1.0;
 		hide_show_flag=true;
 	}
@@ -63,16 +60,16 @@ public class extended_component_instance_driver extends component_instance_drive
 		if(cr.target.main_display_target_flag){
 			double p[];
 			if((p=ci.display_camera_result.caculate_view_coordinate(ci))!=null) {
-				pickup_x=p[0];
-				pickup_y=p[1];
 				target_viewport tv=ci.display_camera_result.target.viewport[(int)(p[2])];
-				double new_x_scale=aspect_value*tv.width/tv.height;
-
+				double new_x_scale=tv.width/tv.height;
+				new_x_scale*=ci.parameter.canvas_width;
+				new_x_scale/=ci.parameter.canvas_height;
 				if(Math.abs(x_scale-new_x_scale)>const_value.min_value) {
 					x_scale=new_x_scale;
 					update_component_parameter_version(0);
 				}
 			}
+						
 			return false;
 		}
 		return true;
@@ -105,12 +102,14 @@ public class extended_component_instance_driver extends component_instance_drive
 			y0=Double.parseDouble(str);
 		
 		if((str=ci.request_response.get_parameter("center"))!=null) {
-			switch(str.trim().toLowerCase()){
-			case "center":
-				x0=pickup_x;
-				y0=pickup_y-dy/2.0;
-				break;
-			}
+			double p[];
+			if((p=ci.display_camera_result.caculate_view_coordinate(ci))!=null)
+				switch(str.trim().toLowerCase()){
+				case "center":
+					x0=p[0];
+					y0=p[1]-dy/2.0;
+					break;
+				}
 		}
 		if(x0>=1)
 			x0=1.0-const_value.min_value;
@@ -152,10 +151,6 @@ public class extended_component_instance_driver extends component_instance_drive
 			hide_show_flag=false;
 			get_parameter(ek,ci);
 			update_component_parameter_version(0);
-			return null;
-		case "aspect_value":
-			if((str=ci.request_response.get_parameter("aspect_value"))!=null)
-				aspect_value=Double.parseDouble(str);
 			return null;
 		default:
 			return null;

@@ -1,0 +1,17 @@
+			{
+				"background"		:	[10,10,10,1],
+				
+				"canvas_width"		:	400,
+				"canvas_height"		:	800,
+				"canvas_step"		:	32,
+
+				"current_fillStyle"	:	"rgb(128,0,0)",
+				"fillStyle"			:	"rgb(0,0,0)",
+				"strokeStyle"		:	"rgb(0,0,0)",
+				"backgroundStyle"	:	"rgb(0,128,0)",				
+				"font"				:	"bold 24px Arial",
+				"textAlign"			:	"left",
+				"textBaseline"		:	"top"
+			}
+
+				

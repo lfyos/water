@@ -129,6 +129,8 @@ public class engine_initialization
 				debug_information.println("Render class name:		",	
 						ek.render_cont.renders[render_id].driver.getClass().getName());
 				debug_information.println("render_id:		",	render_id);
+				debug_information.println("render_name:		",	
+						ek.render_cont.renders[render_id].render_name);
 				e.printStackTrace();
 			}
 		}

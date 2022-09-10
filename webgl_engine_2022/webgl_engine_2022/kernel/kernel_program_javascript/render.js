@@ -102,6 +102,9 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		x				:	-this.view.x,
 		y				:	-this.view.y,
 		
+		canvas_width	:	-1,
+		canvas_height	:	-1,
+		
 		component		:	-2,
 		
 		body			:	-2,
@@ -587,6 +590,14 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		if(Math.abs(this.view_bak.y-this.view.y)>min_value){
 			this.view_bak.y=this.view.y;
 			request_string+="&y="+(this.view.y.toString());
+		};
+		if(Math.abs(this.view_bak.canvas_width-this.canvas.width)>min_value){
+			this.view_bak.canvas_width=this.canvas.width;
+			request_string+="&width="+(this.canvas.width.toString());
+		};
+		if(Math.abs(this.view_bak.canvas_height-this.canvas.height)>min_value){
+			this.view_bak.canvas_height=this.canvas.height;
+			request_string+="&height="+(this.canvas.height.toString());
 		};
 		if(this.view_bak.in_canvas_flag^this.event_listener.mouse_inside_canvas_flag){
 			this.view_bak.in_canvas_flag=this.event_listener.mouse_inside_canvas_flag;
@@ -1104,7 +1115,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		if(typeof(render_id_or_render_name)=="string")
 			ret_val+="&event_render_name="+encodeURIComponent(encodeURIComponent(render_id_or_render_name));
 		else
-			ret_val+="&event_render_id="+render_id_or_part_name.toString();
+			ret_val+="&event_render_id="+render_id_or_render_name.toString();
 		for(var i=0,ni=render_parameter.length;i<ni;i++)
 			ret_val+="&"+render_parameter[i][0].toString()+"="+render_parameter[i][1].toString();		
 		return ret_val;
