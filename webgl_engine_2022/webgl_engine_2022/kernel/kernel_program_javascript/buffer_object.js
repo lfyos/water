@@ -497,14 +497,14 @@ function construct_buffer_object(my_gl,my_parameter)
 		p.material							=buffer_object_head_data.material;
 		p.property							=buffer_object_head_data.property;
 		p.part_component_id_and_driver_id	=my_part_component_id_and_driver_id;
-		p.instance_initialize_data			=new Array();
+		p.component_initialize_data			=new Array();
 		p.part_initialize_data				=my_render.part_initialize_data[render_id][part_id];
 		p.render_initialize_data			=my_render.render_initialize_data[render_id];
 		
 		for(var buffer_id=0,buffer_number=my_part_component_id_and_driver_id.length;buffer_id<buffer_number;buffer_id++){
 			var my_component_id					 =my_part_component_id_and_driver_id[buffer_id][0];
 			var my_driver_id					 =my_part_component_id_and_driver_id[buffer_id][1];
-			p.instance_initialize_data[buffer_id]=my_render.instance_initialize_data[my_component_id][my_driver_id];
+			p.component_initialize_data[buffer_id]=my_render.component_initialize_data[my_component_id][my_driver_id];
 		}
 		var max_buffer_object_data_length=buffer_object_head_data.data.max_buffer_object_data_length;
 		this.request_render_part_id[this.request_render_part_id.length]

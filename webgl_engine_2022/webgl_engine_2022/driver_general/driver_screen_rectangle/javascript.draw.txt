@@ -25,7 +25,7 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 	var part_material					=render.part_information[render_id][part_id].material;
 	var part_property					=render.part_information[render_id][part_id].property;
 	var part_component_id_and_driver_id	=render.part_information[render_id][part_id].part_component_id_and_driver_id;
-	var instance_initialize_data		=render.part_information[render_id][part_id].instance_initialize_data;
+	var component_initialize_data		=render.part_information[render_id][part_id].component_initialize_data;
 	var part_initialize_data			=render.part_information[render_id][part_id].part_initialize_data;
 	var render_initialize_data			=render.part_information[render_id][part_id].render_initialize_data;
 	

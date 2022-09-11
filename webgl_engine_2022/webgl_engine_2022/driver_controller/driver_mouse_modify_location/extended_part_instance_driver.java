@@ -36,8 +36,8 @@ public class extended_part_instance_driver extends part_instance_driver
 				jason_string.change_string(movement_abstract_menu_component_name));
 		ci.request_response.println("}");
 	}
-	public String[] response_event(part p,engine_kernel ek,client_information ci)
+	public String[] response_part_event(part p,engine_kernel ek,client_information ci)
 	{			
-		return super.response_event(p,ek,ci);
+		return super.response_part_event(p,ek,ci);
 	}
 }

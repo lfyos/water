@@ -175,7 +175,7 @@ public class movement_suspend
 		String str;
 		
 		if((str=ci.request_response.get_parameter("part_name"))==null) {
-			debug_information.println("NO part name in response_event of virtual_mount_driver");
+			debug_information.println("NO part name in response_suspend_event of virtual_mount_driver");
 			return;
 		}
 		String request_charset=ci.request_response.implementor.get_request_charset();
@@ -183,7 +183,7 @@ public class movement_suspend
 			str=java.net.URLDecoder.decode(str,request_charset);
 			str=java.net.URLDecoder.decode(str,request_charset);
 		}catch(Exception e) {
-			debug_information.println("Can't decode part name in response_event of virtual_mount_driver\t:\t",str);
+			debug_information.println("Can't decode part name in response_suspend_event of virtual_mount_driver\t:\t",str);
 			return;
 		}
 		for(int i=0,ni=virtual_mount_collector.component_collector.length;i<ni;i++) {
@@ -205,7 +205,7 @@ public class movement_suspend
 						parameter_channel_id_array[k]=k;
 					cll.comp.modify_display_flag(parameter_channel_id_array,true,ek.component_cont);
 
-					debug_information.println("success in response_event of start_follow\t:\t",str);
+					debug_information.println("success in response_suspend_event of start_follow\t:\t",str);
 					debug_information.println("component\t:\t",cll.comp.component_name);
 					debug_information.println("system_name\t:\t",ek.render_cont.renders[i].parts[j].system_name);
 					debug_information.println("user_name\t:\t",ek.render_cont.renders[i].parts[j].user_name);
@@ -214,10 +214,10 @@ public class movement_suspend
 				}
 			}
 		}
-		debug_information.println("Can't find part name in response_event of virtual_mount_driver\t:\t",str);
+		debug_information.println("Can't find part name in response_suspend_event of virtual_mount_driver\t:\t",str);
 		return;
 	}
-	public void response_event(engine_kernel ek,client_information ci)
+	public void response_suspend_event(engine_kernel ek,client_information ci)
 	{
 		String str;
 		switch(((str=ci.request_response.get_parameter("virtual_mount"))==null)?"":str) {

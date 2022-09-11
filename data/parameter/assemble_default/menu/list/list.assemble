@@ -47,28 +47,28 @@
 					switch(function_id){
 					case 0:					
 						render.call_server_component("manipulator_component","all",
-							[["event_method","part_list"],["operation","manipulation"],["manipulation","select"],		 
+							[["event_method","part_list"],["operation","selection"],["selection","select"],		 
 							 (ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]);
 						break;
 					case 1:
 						render.call_server_component("manipulator_component","all",
-							[["event_method","part_list"],["operation","manipulation"],["manipulation","unselect"],
-							(ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]);
+							[["event_method","part_list"],["operation","selection"],["selection","unselect"],		 
+							 (ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]);
 						break;
 					case 2:
 						render.call_server_component("manipulator_component","all",
-							[["event_method","part_list"],["operation","manipulation"],["manipulation","swap"],
-							(ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]);
+							[["event_method","part_list"],["operation","selection"],["selection","swap"],		 
+							 (ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]);
 						break;
 					case 3:
 						render.call_server_component("manipulator_component","all",
-							[["event_method","part_list"],["operation","manipulation"],["manipulation","top"],
+							[["event_method","part_list"],["operation","top"],
 							(ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]);
 						return;
 					case 4:
 						if(confirm("É¾³ıÁĞ±í?")){
 							render.call_server_component("manipulator_component","all",
-								[["event_method","part_list"],["operation","manipulation"],["manipulation","delete"],
+								[["event_method","part_list"],["operation","delete"],
 								(ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]);
 							render.system_call_processor.set_menu_hide(component_id);
 							return;
@@ -85,7 +85,7 @@
 								if(display_ep.collector_list_object[i].title!=ep.title)
 									continue;
 							}
-							var par=[["event_method","part_list"],["operation","manipulation"],["manipulation","title"]];
+							var par=[["event_method","part_list"],["operation","title"]];
 							par.push((ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]);
 							
 							var str;

@@ -20,7 +20,7 @@ public class part_instance_driver
 	public void response_init_part_data(part p,engine_kernel ek,client_information ci)
 	{
 	}
-	public String[] response_event(part p,engine_kernel ek,client_information ci)
+	public String[] response_part_event(part p,engine_kernel ek,client_information ci)
 	{	
 		String file_name;
 		if((file_name=ci.request_response.get_parameter("file"))==null)
@@ -45,9 +45,9 @@ public class part_instance_driver
 			part_instance_driver part_instance=ci.part_instance_driver_cont.get_part_instance_driver(p);
 			if(part_instance!=null)
 				try{
-					return part_instance.response_event(p,ek,ci);
+					return part_instance.response_part_event(p,ek,ci);
 				}catch(Exception e){
-					debug_information.println("Execute part response_event fail:",e.toString());
+					debug_information.println("Execute part response_part_event fail:",e.toString());
 					debug_information.println("Part user name:",	p.user_name);
 					debug_information.println("Part system name:",	p.system_name);
 					debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);

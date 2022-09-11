@@ -48,7 +48,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		abandon_camera_display_flag=my_abandon_camera_display_flag;
 		abandon_selected_display_flag=my_abandon_selected_display_flag;
 	}
-	public void response_init_instance_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
@@ -94,7 +94,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		ci.request_response.print(comp.component_id);
 	}
-	public String[] response_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{
 		String str;
 

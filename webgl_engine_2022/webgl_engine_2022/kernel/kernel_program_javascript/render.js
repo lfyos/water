@@ -4,7 +4,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
     var my_channel_id					=response_data[0]
     var	my_render_initialize_data		=response_data[1];
 	var	my_part_initialize_data			=response_data[2];
-	var	my_instance_initialize_data		=response_data[3];
+	var	my_component_initialize_data	=response_data[3];
 	var	render_data						=response_data[4];
 	
 	var component_number				=render_data[0];
@@ -32,14 +32,14 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.part_initialize_data[render_id][part_id]=my_data;
 	};
 	
-	this.instance_initialize_data=new Array(component_number);
+	this.component_initialize_data=new Array(component_number);
 	for(var i=0;i<component_number;i++)
-		this.instance_initialize_data[i]=new Array();
-	for(var i=0,ni=my_instance_initialize_data.length-1;i<ni;i+=3){
-		var my_data				=my_instance_initialize_data[i+0];
-		var my_component_id		=my_instance_initialize_data[i+1];
-		var my_driver_id		=my_instance_initialize_data[i+2];
-		this.instance_initialize_data[my_component_id][my_driver_id]=my_data;
+		this.component_initialize_data[i]=new Array();
+	for(var i=0,ni=my_component_initialize_data.length-1;i<ni;i+=3){
+		var my_data				=my_component_initialize_data[i+0];
+		var my_component_id		=my_component_initialize_data[i+1];
+		var my_driver_id		=my_component_initialize_data[i+2];
+		this.component_initialize_data[my_component_id][my_driver_id]=my_data;
 	}
 
 	this.engine_start_time			=(new Date()).getTime();
@@ -835,7 +835,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	    
 	    this.render_initialize_data					=null;
 		this.part_initialize_data					=null;
-		this.instance_initialize_data				=null;
+		this.component_initialize_data				=null;
 
 		this.engine_start_time						=null;
 		this.last_event_time						=null;

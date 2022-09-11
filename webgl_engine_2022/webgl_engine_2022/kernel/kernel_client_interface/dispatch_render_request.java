@@ -10,7 +10,7 @@ import kernel_render.render;
 
 public class dispatch_render_request 
 {
-	static private String[] render_response_event(render r,engine_kernel ek,client_information ci)
+	static private String[] response_render_event(render r,engine_kernel ek,client_information ci)
 	{
 		render_instance_driver my_render_instance_driver;
 		
@@ -22,9 +22,9 @@ public class dispatch_render_request
 			debug_information.println("render instance_driver is null when execute call render driver");
 		else
 			try{
-				return my_render_instance_driver.response_event(r,ek,ci);
+				return my_render_instance_driver.response_render_event(r,ek,ci);
 			}catch(Exception e){
-				debug_information.println("execute render response_event fail:",e.toString());
+				debug_information.println("execute render response_render_event fail:",e.toString());
 				e.printStackTrace();
 			}
 		debug_information.println("Render  name:	",	r.render_name);
@@ -58,7 +58,7 @@ public class dispatch_render_request
 			if((str=ci.request_response.get_parameter("event_render_id"))!=null)
 				if((render_id=Integer.decode(str))>=0)
 					if(render_id<(ek.render_cont.renders.length))
-						return render_response_event(ek.render_cont.renders[render_id],ek,ci);
+						return response_render_event(ek.render_cont.renders[render_id],ek,ci);
 			
 			if((str=ci.request_response.get_parameter("event_render_name"))!=null){
 				try {
@@ -69,7 +69,7 @@ public class dispatch_render_request
 					return null;
 				}
 				if((r=ek.render_cont.search_render(str))!=null) 
-					return render_response_event(r,ek,ci);
+					return response_render_event(r,ek,ci);
 				else{
 					debug_information.println("No render exist with name ",str+" in render_request_dispatch");
 					return null;
@@ -96,11 +96,11 @@ public class dispatch_render_request
 							if(parts[i]!=null)
 								if((render_id=parts[i].render_id)>=0)
 									if(render_id<(ek.render_cont.renders.length))
-										return render_response_event(ek.render_cont.renders[render_id],ek,ci);
+										return response_render_event(ek.render_cont.renders[render_id],ek,ci);
 					}else if((driver_id=Integer.decode(str))>=0)
 							if(driver_id<parts.length)
 								if(parts[driver_id]!=null)
-									return render_response_event(ek.render_cont.renders[parts[driver_id].render_id],ek,ci);
+									return response_render_event(ek.render_cont.renders[parts[driver_id].render_id],ek,ci);
 			}
 			if((str=ci.request_response.get_parameter("event_component_id"))!=null) {
 				if((component_id=Integer.decode(str))>=0)
@@ -110,13 +110,13 @@ public class dispatch_render_request
 								for(int i=0,driver_number=comp.driver_number();i<driver_number;i++)
 									if(comp.driver_array[i]!=null)
 										if((p=comp.driver_array[i].component_part)!=null)
-											return render_response_event(ek.render_cont.renders[p.render_id],ek,ci);
+											return response_render_event(ek.render_cont.renders[p.render_id],ek,ci);
 							}else {
 								if((driver_id=Integer.decode(str))>=0)
 									if(driver_id<comp.driver_number())
 										if(comp.driver_array[driver_id]!=null)
 											if((p=comp.driver_array[driver_id].component_part)!=null)
-												return render_response_event(ek.render_cont.renders[p.render_id],ek,ci);
+												return response_render_event(ek.render_cont.renders[p.render_id],ek,ci);
 							}
 			}
 			if((str=ci.request_response.get_parameter("event_component_name"))!=null){
@@ -132,17 +132,17 @@ public class dispatch_render_request
 						for(int i=0,driver_number=comp.driver_number();i<driver_number;i++)
 							if(comp.driver_array[i]!=null)
 								if((p=comp.driver_array[i].component_part)!=null)
-									return render_response_event(ek.render_cont.renders[p.render_id],ek,ci);
+									return response_render_event(ek.render_cont.renders[p.render_id],ek,ci);
 					}else {
 						if((driver_id=Integer.decode(str))>=0)
 							if(driver_id<comp.driver_number())
 								if(comp.driver_array[driver_id]!=null)
 									if((p=comp.driver_array[driver_id].component_part)!=null)
-										return render_response_event(ek.render_cont.renders[p.render_id],ek,ci);
+										return response_render_event(ek.render_cont.renders[p.render_id],ek,ci);
 					}
 			}
 			debug_information.println(
-				"Execute response_event of render driver fail in render_request_dispatch of dispatch_render_request");
+				"Execute response_render_event  fail in render_request_dispatch of dispatch_render_request");
 			
 			return null;
 		}

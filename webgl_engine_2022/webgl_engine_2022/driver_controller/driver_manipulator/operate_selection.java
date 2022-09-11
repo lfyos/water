@@ -49,7 +49,19 @@ public class operate_selection
 			cs.set_selected_flag(ek.component_cont.search_component(),ek.component_cont);
 			break;
 		case "part_list":
-			cs.set_collector_selected(ek.collector_stack.get_top_collector(),ek.component_cont);
+			if((str=ci.request_response.get_parameter("list_id"))!=null)
+				cs.set_collector_selected(ek.collector_stack.get_collector_by_list_id(Long.decode(str)),ek.component_cont);
+			else if((str=ci.request_response.get_parameter("list_title"))!=null){
+				String request_charset=ci.request_response.implementor.get_request_charset();
+				try{
+					str=java.net.URLDecoder.decode(str,request_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
+				}catch(Exception e) {
+					break;
+				}
+				cs.set_collector_selected(ek.collector_stack.get_collector_by_list_title(str),ek.component_cont);
+			}else
+				cs.set_collector_selected(ek.collector_stack.get_top_collector(),ek.component_cont);
 			break;
 		case "clear_all":
 			cs.clear_selected_flag(ek.component_cont);

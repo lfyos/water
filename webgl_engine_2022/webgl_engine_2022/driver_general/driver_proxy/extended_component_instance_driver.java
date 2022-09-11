@@ -33,7 +33,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		proxy_url			=null;
 		proxy_encode_flag	=null;
 	}
-	public void response_init_instance_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
 		proxy_url=new String[0];
 		proxy_encode_flag=new boolean[0];
@@ -157,7 +157,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				return (proxy_encode.compareTo("true")==0)?true:false;
 		return false;
 	}
-	public String[] response_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{
 		String str;
 		switch(((str=ci.request_response.get_parameter("operation"))==null)?"":str){

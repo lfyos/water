@@ -179,23 +179,39 @@ function(component_name,component_id,render)
 					["move_method","collector"],["id",edit_ep.movement_data.movement_tree_id]],
 					function(response_data,render)
 					{
-						if(response_data)
+						var list_id;
+						if((list_id=response_data)<0)
 							return;
 						if(event.ctrlKey)
 							render.call_server_component("manipulator_component","all",
-								[["event_method","part_list"],	["operation",	"selection"],
-								 ["selection",	"select"],		["render_id",	-1],
-								 ["part_id",	-1],			["component_id",-1]]);
+								[["event_method",	"part_list"],["operation",	"selection"],
+								 ["selection",		"select"],	 ["list_id",	list_id]],
+								function()
+								{
+									render.call_server_component("manipulator_component","all",
+										[["event_method","part_list"],["operation","delete"],["list_id",list_id]]);
+								
+								});
 						else if(event.shiftKey)
 							render.call_server_component("manipulator_component","all",
-								[["event_method",	"part_list"],["operation",		"selection"],
-								 ["selection",		"unselect"], ["render_id",		-1],
-								 ["part_id",		-1],		 ["component_id",	-1]]);
+								[["event_method",	"part_list"],["operation",	"selection"],
+								 ["selection",		"unselect"],	 ["list_id",	list_id]],
+								function()
+								{
+									render.call_server_component("manipulator_component","all",
+										[["event_method","part_list"],["operation","delete"],["list_id",list_id]]);
+								
+								});
 						else
-							render.call_server_component("manipulator_component",	"all",
-								[["event_method","part_list"],	["operation",	"selection"],
-								 ["selection",	"swap"],		["render_id",	-1],
-								 ["part_id",		-1],		["component_id",-1]]);
+							render.call_server_component("manipulator_component","all",
+								[["event_method",	"part_list"],["operation",	"selection"],
+								 ["selection",		"swap"],	 ["list_id",	list_id]],
+								function()
+								{
+									render.call_server_component("manipulator_component","all",
+										[["event_method","part_list"],["operation","delete"],["list_id",list_id]]);
+								
+								});
 					});
 				return;
 			case 15://"15.µ¹ÅÅÆ´×°²½Öè"
