@@ -19,8 +19,8 @@ public class extended_part_instance_driver extends part_instance_driver
 	public void response_init_part_data(part p,engine_kernel ek,client_information ci)
 	{
 	}
-	public String[] response_event(part p,engine_kernel ek,client_information ci)
+	public String[] response_part_event(part p,engine_kernel ek,client_information ci)
 	{			
-		return super.response_event(p,ek,ci);
+		return super.response_part_event(p,ek,ci);
 	}
 }

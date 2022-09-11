@@ -18,31 +18,43 @@ import kernel_file_manager.file_writer;
 
 public class operate_part_list 
 {
+	private static component_collector get_collector(engine_kernel ek,client_information ci)
+	{
+		String str,request_charset=ci.request_response.implementor.get_request_charset();
+		if((str=ci.request_response.get_parameter("list_id"))!=null)
+			return ek.collector_stack.get_collector_by_list_id(Long.decode(str));
+		if((str=ci.request_response.get_parameter("list_title"))!=null){
+			try{
+				str=java.net.URLDecoder.decode(str,request_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
+			}catch(Exception e) {
+				return null;
+			}
+			return ek.collector_stack.get_collector_by_list_title(str);
+		}
+		return ek.collector_stack.get_top_collector();
+	}
 	private static void part_list_selection(int modifier_container_id,int select_type_id,
-			engine_kernel ek,client_information ci,driver_audio.extended_component_driver acd)
+			String request_charset,engine_kernel ek,client_information ci,
+			driver_audio.extended_component_driver acd)
 	{
 		String str;
-		int render_id=-1,part_id=-1,component_id=-1;
-		component_collector collector;
-		component_link_list cll;
-		component_array comp_con=new component_array(ek.component_cont.root_component.component_id+1);
-		
-		if((collector=ek.collector_stack.get_top_collector())==null)
-			return;
-		if(collector.component_number<=0)
-			return;
-		if((str=ci.request_response.get_parameter("render_id"))!=null)
-			render_id=Integer.decode(str);
-		if((str=ci.request_response.get_parameter("part_id"))!=null)
-			part_id=Integer.decode(str);
-		if((str=ci.request_response.get_parameter("component_id"))!=null)
-			component_id=Integer.decode(str);
-		
+		component my_comp=null;
 		component_selection cs=new component_selection(ek);
-		if(component_id>=0) {
-			component my_comp;
-			if((my_comp=ek.component_cont.get_component(component_id))==null)
+		component_array comp_con=new component_array(ek.component_cont.root_component.component_id+1);
+
+		if((str=ci.request_response.get_parameter("component_id"))!=null) {
+			my_comp=ek.component_cont.get_component(Integer.decode(str));
+		}else if((str=ci.request_response.get_parameter("component_name"))!=null) {
+			try{
+				str=java.net.URLDecoder.decode(str,request_charset);
+				str=java.net.URLDecoder.decode(str,request_charset);
+			}catch(Exception e) {
 				return;
+			}
+			my_comp=ek.component_cont.search_component(str);
+		}
+		if(my_comp!=null){
 			comp_con.add_component(my_comp);
 			switch(select_type_id){
 			case 1:
@@ -58,6 +70,18 @@ public class operate_part_list
 				return;
 			}
 		}else {
+			component_collector collector;
+			if((collector=get_collector(ek,ci))==null)
+				return;
+			if(collector.component_number<=0)
+				return;
+			
+			int render_id=-1,part_id=-1;
+			if((str=ci.request_response.get_parameter("render_id"))!=null)
+				render_id=Integer.decode(str);
+			if((str=ci.request_response.get_parameter("part_id"))!=null)
+				part_id=Integer.decode(str);
+			
 			for(int i=0,ni=collector.component_collector.length;i<ni;i++){
 				if(collector.component_collector[i]==null)
 					continue;
@@ -65,6 +89,7 @@ public class operate_part_list
 					if(i!=render_id)
 						continue;
 				for(int j=0,nj=collector.component_collector[i].length;j<nj;j++){
+					component_link_list cll;
 					if((cll=collector.component_collector[i][j])==null)
 						continue;
 					if(part_id>=0)
@@ -105,7 +130,7 @@ public class operate_part_list
 			int modifier_container_id,boolean save_component_name_or_id_flag,component comp,
 			engine_kernel ek,client_information ci,driver_audio.extended_component_driver acd)
 	{
-		String str,request_charset=ci.request_response.implementor.get_request_charset();;
+		String str,request_charset=ci.request_response.implementor.get_request_charset();
 		component_collector collector=null;
 		component_array comp_cont;
 		
@@ -129,124 +154,73 @@ public class operate_part_list
 				return;
 			switch(str.toLowerCase()){
 			case "select":
-				part_list_selection(modifier_container_id,1,ek,ci,acd);
+				part_list_selection(modifier_container_id,1,request_charset,ek,ci,acd);
 				return;
 			case "unselect":
-				part_list_selection(modifier_container_id,2,ek,ci,acd);
+				part_list_selection(modifier_container_id,2,request_charset,ek,ci,acd);
 				return;
 			case "swap":
-				part_list_selection(modifier_container_id,3,ek,ci,acd);
+				part_list_selection(modifier_container_id,3,request_charset,ek,ci,acd);
 				return;
 			default:
 				return;
 			}
-		case "manipulation":
-			if((str=ci.request_response.get_parameter("list_id"))!=null) {
-				collector=ek.collector_stack.get_collector_by_list_id(Long.decode(str));
-			}else if((str=ci.request_response.get_parameter("list_title"))!=null) {
-				
-				try {
-					str=java.net.URLDecoder.decode(str,request_charset);
-					str=java.net.URLDecoder.decode(str,request_charset);
-				}catch(Exception e) {
-					return;
-				}
-				collector=ek.collector_stack.get_collector_by_list_title(str);
-			}else 
-				collector=ek.collector_stack.get_top_collector();
-			
-			if(collector==null)
+		case "title":
+		{
+			if((collector=get_collector(ek,ci))==null)
 				return;
-			
 			acd.set_audio(null);
-
-			if((str=ci.request_response.get_parameter("manipulation"))==null)
-				return;
-			switch(str.toLowerCase()){
-			default:
-				return;
-			case "title":
-			{
-				int flag=0;
-				if((str=ci.request_response.get_parameter("title"))!=null)
-					try{
-						str=java.net.URLDecoder.decode(str,request_charset);
-						str=java.net.URLDecoder.decode(str,request_charset);
-						str=(str==null)?"":str;
-						collector.title=(collector.title==null)?"":collector.title;
-						if(collector.title.compareTo(str)!=0) {
-							collector.title=str;
-							flag++;
-						}
-					}catch(Exception e){
-						;
+			int flag=0;
+			if((str=ci.request_response.get_parameter("title"))!=null)
+				try{
+					str=java.net.URLDecoder.decode(str,request_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
+					str=(str==null)?"":str;
+					collector.title=(collector.title==null)?"":collector.title;
+					if(collector.title.compareTo(str)!=0) {
+						collector.title=str;
+						flag++;
 					}
-				if((str=ci.request_response.get_parameter("description"))!=null)
-					try{
-						str=java.net.URLDecoder.decode(str,request_charset);
-						str=java.net.URLDecoder.decode(str,request_charset);
-						str=(str==null)?"":str;
-						collector.description=(collector.description==null)?"":collector.description;
-						if(collector.description.compareTo(str)!=0) {
-							collector.description=str;
-							flag++;
-						}
-					}catch(Exception e){
-						;
+				}catch(Exception e){
+					;
+				}
+			if((str=ci.request_response.get_parameter("description"))!=null)
+				try{
+					str=java.net.URLDecoder.decode(str,request_charset);
+					str=java.net.URLDecoder.decode(str,request_charset);
+					str=(str==null)?"":str;
+					collector.description=(collector.description==null)?"":collector.description;
+					if(collector.description.compareTo(str)!=0) {
+						collector.description=str;
+						flag++;
 					}
-				if(flag>0)
-					ek.collector_stack.update_collector_version();
+				}catch(Exception e){
+					;
+				}
+			if(flag>0)
+				ek.collector_stack.update_collector_version();
+			return;
+		}
+		case "delete":
+			if((collector=get_collector(ek,ci))==null)
 				return;
+			acd.set_audio(null);
+			ek.collector_stack.delete_collector(collector.list_id,ek.component_cont);
+			if((collector=ek.collector_stack.get_top_collector())!=null)
+				acd.set_audio(collector.audio_file_name);
+			return;
+		case "top":
+			if((collector=get_collector(ek,ci))==null)
+				return;
+			acd.set_audio(null);
+			collector=ek.collector_stack.delete_collector(collector.list_id,ek.component_cont);
+			if(collector!=null){
+				long old_id=collector.list_id;
+				ek.collector_stack.push_collector(false,ek.system_par,ek.scene_par,
+							collector,ek.component_cont,ek.render_cont.renders);
+				collector.list_id=old_id;
+				acd.set_audio(collector.audio_file_name);
 			}
-			case "delete":
-				ek.collector_stack.delete_collector(collector.list_id,ek.component_cont);
-				if((collector=ek.collector_stack.get_top_collector())!=null)
-					acd.set_audio(collector.audio_file_name);
-				return;
-			case "top":
-				collector=ek.collector_stack.delete_collector(collector.list_id,ek.component_cont);
-				if(collector!=null){
-					long old_id=collector.list_id;
-					ek.collector_stack.push_collector(false,ek.system_par,ek.scene_par,
-								collector,ek.component_cont,ek.render_cont.renders);
-					collector.list_id=old_id;
-					acd.set_audio(collector.audio_file_name);
-				}
-				return;
-			case "select":
-				{
-					comp_cont=new component_array(ek.component_cont.root_component.component_id+1);
-					comp_cont.add_collector(collector);
-					component_selection cs=new component_selection(ek);	
-					cs.set_component_container_selected(comp_cont,ek.component_cont);
-					break;
-				}
-			case "unselect":
-				{
-					comp_cont=new component_array(
-							ek.component_cont.root_component.component_id+1);
-					comp_cont.add_collector(collector);
-					component_selection cs=new component_selection(ek);	
-					for(int i=0,ni=comp_cont.component_number;i<ni;i++)
-						cs.clear_selected_flag(comp_cont.comp[i],ek.component_cont);
-					return;
-				}
-			case "swap":
-				{
-					comp_cont=new component_array(ek.component_cont.root_component.component_id+1);
-					comp_cont.add_collector(collector);
-					component_selection cs=new component_selection(ek);	
-					for(int i=0,ni=comp_cont.component_number;i<ni;i++)
-						cs.switch_selected_flag(comp_cont.comp[i],ek.component_cont);
-					break;
-				}
-			}
-			if(comp_cont.component_number>0)
-				if(ci.display_camera_result.cam.parameter.movement_flag)
-					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
-						ek.modifier_cont[modifier_container_id],comp_cont.get_box(),null,
-						ci.display_camera_result.cam.parameter.scale_value,true,true,
-						ci.display_camera_result.cam.parameter.scale_value>const_value.min_value);
 			return;
 		case "create":
 			boolean part_list_flag_effective_flag=true; 

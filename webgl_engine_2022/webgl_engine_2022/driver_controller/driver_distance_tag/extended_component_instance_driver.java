@@ -29,7 +29,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		modifier_container_id=my_modifier_container_id;
 		display_flag=new boolean[] {};
 	}
-	public void response_init_instance_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
 		tag_array.load(true,ek);
 		ci.request_response.print(jason_string.change_string(tag_array.tag_root_menu_component_name));
@@ -97,7 +97,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		ci.request_response.print("]");
 	}
-	public String[] response_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{
 		String str=ci.request_response.get_parameter("operation");
 		

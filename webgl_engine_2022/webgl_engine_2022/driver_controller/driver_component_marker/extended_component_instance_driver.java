@@ -33,7 +33,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		height_scale=my_height_scale;
 		display_flag=new boolean[] {};
 	}
-	public void response_init_instance_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
 		for(int i=0,ni=cmc.component_marker_array.length;i<ni;i++)
 			ci.render_buffer.location_buffer.put_in_list(
@@ -103,7 +103,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			}
 		ci.request_response.print("]");
 	}
-	public String[] response_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{
 		component operate_comp;
 		component_marker operate_cm;

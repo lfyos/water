@@ -102,12 +102,12 @@ public class component_instance_driver
 					ci.request_response.install_parameter(parameter);
 					String ret_val[];
 					try{
-						ret_val=in_dr.response_event(ek,ci);
+						ret_val=in_dr.response_component_event(ek,ci);
 					}catch(Exception e){
 						ret_val=null;
 						part my_part=comp.driver_array[driver_id].component_part;
 						
-						debug_information.println("3.Execute response_event of instance driver fail:	",e.toString());
+						debug_information.println("3.Execute response_component_event fail:	",e.toString());
 						debug_information.println("Component name:	",	comp.component_name);
 						debug_information.println("Driver ID:		",	driver_id);
 						debug_information.println("Part user name:	",	my_part.user_name);
@@ -133,7 +133,7 @@ public class component_instance_driver
 		
 		display_parameter			=new instance_display_parameter();
 	}
-	public void response_init_instance_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
@@ -148,7 +148,7 @@ public class component_instance_driver
 	{
 		ci.request_response.print(comp.component_id);
 	}
-	public String[] response_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{	
 		return null;
 	}

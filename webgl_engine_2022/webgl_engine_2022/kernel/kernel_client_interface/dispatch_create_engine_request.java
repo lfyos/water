@@ -84,10 +84,10 @@ public class dispatch_create_engine_request
 		ci.request_response.print("0]");
 		debug_information.println("End part response_init_data: ",part_initialize_number);
 	}
-	static private int do_response_init_instance_data(engine_kernel ek,client_information ci)
+	static private int do_response_init_component_data(engine_kernel ek,client_information ci)
 	{
 		debug_information.println();
-		debug_information.println("Begin instance response_init_data");
+		debug_information.println("Begin component response_init_data");
 	
 		int instance_initialize_number=0;
 		component comp_array[]=ek.component_cont.get_sort_component_array();
@@ -102,13 +102,13 @@ public class dispatch_create_engine_request
 					long old_length=ci.request_response.output_data_length;
 					
 					try {
-						i_d.response_init_instance_data(ek, ci);
+						i_d.response_init_component_data(ek, ci);
 					}catch(Exception e) {
-						debug_information.println("instance driver response_init_data fail:	",e.toString());
-						debug_information.println("instance name:",comp_array[i].component_name);
-						debug_information.println("instance file:",
+						debug_information.println("response_init_component_data fail:	",e.toString());
+						debug_information.println("component_name:",comp_array[i].component_name);
+						debug_information.println("component file:",
 								comp_array[i].component_directory_name+comp_array[i].component_file_name);
-						debug_information.println("instance driver id:",driver_id);
+						debug_information.println("component driver id:",driver_id);
 						e.printStackTrace();
 					}
 					
@@ -122,7 +122,7 @@ public class dispatch_create_engine_request
 				}
 		ci.request_response.print("0]");
 		
-		debug_information.println("End instance response_init_data: ",instance_initialize_number);
+		debug_information.println("End component response_init_data: ",instance_initialize_number);
 		
 		return comp_array.length;
 	}
@@ -139,7 +139,7 @@ public class dispatch_create_engine_request
 		do_response_init_part_data(ek,ci);								//parameter	2
 		ci.request_response.print(",");
 		
-		int total_component_number=do_response_init_instance_data(ek,ci);//parameter3
+		int total_component_number=do_response_init_component_data(ek,ci);//parameter3
 
 		ci.request_response.print(",[",total_component_number);			//parameter	4	0
 		ci.request_response.print(",",ek.render_cont.renders.length);	//parameter	4	1

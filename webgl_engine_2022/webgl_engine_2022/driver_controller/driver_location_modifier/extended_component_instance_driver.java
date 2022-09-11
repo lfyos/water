@@ -24,7 +24,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		modifier_container_id=my_modifier_container_id;
 		last_parameter_version=0;
 	}
-	public void response_init_instance_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
 		ci.request_response.print(modifier_container_id);
 	}
@@ -86,7 +86,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		
 		last_parameter_version=comp.driver_array[driver_id].get_component_parameter_version();
 	}
-	public String[] response_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{
 		return null;
 	}

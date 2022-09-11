@@ -18,8 +18,8 @@ public class extended_render_instance_driver extends render_instance_driver
 	public void response_init_render_data(render r,engine_kernel ek,client_information ci)
 	{	
 	}
-	public String[] response_event(render r,engine_kernel ek,client_information ci)
+	public String[] response_render_event(render r,engine_kernel ek,client_information ci)
 	{
-		return super.response_event(r,ek,ci);
+		return super.response_render_event(r,ek,ci);
 	}
 }

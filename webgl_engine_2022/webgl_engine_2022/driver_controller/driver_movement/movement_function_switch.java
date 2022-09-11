@@ -750,20 +750,20 @@ public class movement_function_switch
 		}
 		return searcher.result.movement_tree_id;
 	}
-	private boolean push_component_collector()
+	private long push_component_collector()
 	{
 		if(manager.root_movement==null)
-			return true;
+			return -1;
 		String str;
 		if((str=ci.request_response.get_parameter("id"))==null)
-			return true;
+			return -1;
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
 		if(searcher.result==null)
-			return true;
+			return -1;
 		
 		add_component(searcher.result);
 		if(all_components.make_to_children()<=0)
-			return true;
+			return -1;
 		
 		driver_audio.extended_component_driver acd;
 		if((acd=manager.config_parameter.get_audio_component_driver(ek))!=null)
@@ -771,15 +771,15 @@ public class movement_function_switch
 		component_collector collector=ek.collector_stack.push_component_array(true,
 				ek.system_par,ek.scene_par,all_components,ek.component_cont,ek.render_cont.renders);
 		if(collector==null)
-			return true;
+			return -1;
 		if(collector.component_number<=0)
-			return true;
+			return collector.list_id;
 		collector.title=searcher.result.node_name;
 		collector.description=searcher.result.description;
 		collector.audio_file_name=file_reader.separator(manager.directory_name+searcher.result.sound_file_name);
 		if(acd!=null)
 			acd.set_audio(collector.audio_file_name);
-		return false;
+		return collector.list_id;
 	}
 	private void reset_movement_component(movement_tree t)
 	{
@@ -1235,7 +1235,7 @@ public class movement_function_switch
 			new movement_edit_jason(locate_camera(),switch_time_length,ci,manager);
 			return null;
 		case "collector":
-			ci.request_response.println(push_component_collector()?"true":"false");
+			ci.request_response.println(push_component_collector());
 			return null;
 		case "sequence":
 			push();
@@ -1383,7 +1383,7 @@ public class movement_function_switch
 		case "design":
 			return design_request_dispatch(movement_component_id,movement_driver_id);
 		case "virtual_mount":
-			manager.suspend.response_event(ek,ci);
+			manager.suspend.response_suspend_event(ek,ci);
 			return null;
 		case "parameter":
 			if((str=ci.request_response.get_parameter("parameter"))==null)

@@ -30,7 +30,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		display_parameter.body_title="Ìו";
 		display_parameter.face_title="Ãז";
 	}
-	public void response_init_instance_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
@@ -301,7 +301,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				ek.component_cont,ci.display_camera_result,ci.parameter,null,scale_value,
 				ek.modifier_cont[modifier_container_id].get_timer().get_current_time(),true,true,true,p0,p1);
 	}
-	public String[] response_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{
 		String str;
 		double scale_value,value;

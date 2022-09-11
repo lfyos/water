@@ -21,7 +21,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		root_box_distance=my_root_box_distance;
 		on_off_flag=init_on_off_flag;
 	}
-	public void response_init_instance_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
@@ -36,7 +36,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		ci.request_response.print(root_box_distance);
 	}
-	public String[] response_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{
 		String str;
 		if((str=ci.request_response.get_parameter("operation"))!=null)

@@ -42,7 +42,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		x_scale=1.0;
 		hide_show_flag=true;
 	}
-	public void response_init_instance_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
 		if(menu_type)
 			file_reader.get_text(ci.request_response,file_name,file_charset);
@@ -68,8 +68,7 @@ public class extended_component_instance_driver extends component_instance_drive
 					x_scale=new_x_scale;
 					update_component_parameter_version(0);
 				}
-			}
-						
+			}		
 			return false;
 		}
 		return true;
@@ -137,7 +136,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;
 			}
 	}
-	public String[] response_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{
 		String str=ci.request_response.get_parameter("operation");
 		

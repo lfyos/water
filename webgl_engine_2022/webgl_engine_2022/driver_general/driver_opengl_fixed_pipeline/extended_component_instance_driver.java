@@ -26,7 +26,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		super(my_comp,my_driver_id);
 		display_bitmap=new long[0];
 	}
-	public void response_init_instance_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
@@ -73,7 +73,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			print  (",",display_parameter.display_value_id).
 			print  (effective_selected_flag?",1]":",0]");
 	}
-	public String[] response_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{
 		return null;
 	}

@@ -9,9 +9,10 @@ public class test_1 extends travel_through_directory
 	public void operate_file(String file_name)
 	{
 		String str=file_reader.get_text(file_name,"GBK");
-		if(str!=null) {
-			if(str.indexOf("pickupenter_component")>=0)
-				debug_information.println("pickupenter_component:	",file_name);
+		if(str!=null){
+			if(str.indexOf("select_component")>=0)
+				if(str.indexOf("system_call_processor")>=0)
+					debug_information.println(file_name);
 		}
 	}
 	public test_1()
