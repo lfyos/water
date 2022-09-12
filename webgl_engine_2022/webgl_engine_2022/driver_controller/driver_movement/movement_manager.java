@@ -115,10 +115,11 @@ public class movement_manager
 			long my_movement_id,component_container component_cont,
 			boolean new_mount_direction_flag,long camera_switch_time_length)
 	{
-		movement_tree tree,ct;
+		movement_tree ct;
+		movement_tree_link_list ll;
 		
 		if(root_movement!=null)
-			if((tree=(new movement_searcher(root_movement,my_movement_id)).result)!=null){
+			if((ll=(new movement_searcher(root_movement,my_movement_id)).search_link_list)!=null){
 								
 				set_direction(component_cont,modifier_cont,new_mount_direction_flag,camera_switch_time_length);
 				double mount_precision=parameter.movement_precision;
@@ -126,12 +127,12 @@ public class movement_manager
 				root_movement.caculate_time(component_cont,0,camera_switch_time_length,
 						min_box_volume*mount_precision*mount_precision*mount_precision);
 				
-				long time_distance=modifier_cont.get_timer().get_current_time()-tree.start_time+camera_switch_time_length;
+				long time_distance=modifier_cont.get_timer().get_current_time()-ll.tree_node.start_time+camera_switch_time_length;
 				
 				root_movement.caculate_time(component_cont,time_distance,
 						camera_switch_time_length,min_box_volume*mount_precision*mount_precision*mount_precision);
 								
-				for(ct=tree;ct.children!=null;ct=ct.children[0])
+				for(ct=ll.tree_node;ct.children!=null;ct=ct.children[0])
 					if(ct.children.length<=0)
 						break;
 				parameter.current_movement_id=ct.movement_tree_id;

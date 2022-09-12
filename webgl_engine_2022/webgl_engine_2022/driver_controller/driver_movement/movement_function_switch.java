@@ -83,17 +83,17 @@ public class movement_function_switch
 			return -1;
 	
 		movement_searcher searcher=new movement_searcher(manager.root_movement,current_movement_id);
-		if(searcher.result==null)
+		if(searcher.search_link_list==null)
 			return -1;
-		if(searcher.result_parent!=null){
+		if(searcher.search_link_list.next!=null){
 			manager.movement_start(modifier_cont,current_movement_id,ek.component_cont,true,switch_time_length);
-			add_component(searcher.result);
+			add_component(searcher.search_link_list.tree_node);
 			if((all_components.get_box()!=null)&&(ci.display_camera_result.cam.parameter.movement_flag))
 				(new locate_camera(ci.display_camera_result.cam)).locate_on_components(	modifier_cont,all_components.get_box(),
 						ci.display_camera_result.cam.parameter.direction_flag?location.combine_location(target_direction):null,
 						ci.display_camera_result.cam.parameter.scale_value,true,true,false);
 		}
-		return searcher.result.movement_tree_id;
+		return searcher.search_link_list.tree_node.movement_tree_id;
 	}
 	private long delete_move()
 	{
@@ -103,27 +103,26 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("id"))==null)
 			return -1;
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-		if((searcher.result==null)||(searcher.result_parent==null))
+		if((searcher.search_link_list==null)||(searcher.can_delete_list==null))
 			return -1;
-		
-		add_component(searcher.result);
+
+		add_component(searcher.can_delete_list.tree_node);
 		for(int i=0,n=all_components.component_number;i<n;i++)
 			all_components.comp[i].modify_display_flag(
 					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
 		
-		long current_movement_id=searcher.result_parent.movement_tree_id;
-		if(searcher.result_parent.children.length>1){
-			movement_tree tmp[]=new movement_tree[searcher.result_parent.children.length-1];
-			for(int i=0,j=0;i<(searcher.result_parent.children.length);i++){
-				if(searcher.result_id!=i)
-						tmp[j++]=searcher.result_parent.children[i];
-				else if(i>0)
-						current_movement_id=searcher.result_parent.children[i-1].movement_tree_id;
-			}
-			searcher.result_parent.children=tmp;
-		}
+		int index_id=searcher.can_delete_list.next.tree_node.children.length-1;
+		if(searcher.can_delete_list.index_id!=(index_id--))
+			index_id=searcher.can_delete_list.index_id+1;
+		long current_movement_id=searcher.can_delete_list.next.tree_node.children[index_id].movement_tree_id;
+		
+		movement_tree tmp[]=new movement_tree[searcher.can_delete_list.next.tree_node.children.length-1];
+		for(int i=0,j=0,ni=searcher.can_delete_list.next.tree_node.children.length;i<ni;i++)
+			if(searcher.can_delete_list.index_id!=i)
+				tmp[j++]=searcher.can_delete_list.next.tree_node.children[i];
+		searcher.can_delete_list.next.tree_node.children=tmp;
 		manager.movement_start(modifier_cont,current_movement_id,ek.component_cont,true,switch_time_length);
-		return searcher.result_parent.movement_tree_id;
+		return current_movement_id;
 	}
 	private long reverse_move()
 	{
@@ -133,18 +132,18 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("id"))==null)
 			return manager.root_movement.movement_tree_id;
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-		if(searcher.result==null)
+		if(searcher.search_link_list==null)
 			return manager.root_movement.movement_tree_id;
-		add_component(searcher.result);
+		add_component(searcher.search_link_list.tree_node);
 		for(int i=0,n=all_components.component_number;i<n;i++)
 			all_components.comp[i].modify_display_flag(
 					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
 
-		searcher.result.reverse();
+		searcher.search_link_list.tree_node.reverse();
 		manager.movement_start(modifier_cont,
-				searcher.result.movement_tree_id,ek.component_cont,true,switch_time_length);
+				searcher.search_link_list.tree_node.movement_tree_id,ek.component_cont,true,switch_time_length);
 		
-		return searcher.result.movement_tree_id;
+		return searcher.search_link_list.tree_node.movement_tree_id;
 	}
 	
 	private long updown_move(boolean updown_flag)
@@ -155,31 +154,34 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("id"))==null)
 			return manager.root_movement.movement_tree_id;
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-		if((searcher.result==null)||(searcher.result_parent==null))
+		if(searcher.search_link_list==null)
+			return manager.root_movement.movement_tree_id;
+		if(searcher.search_link_list.next==null)
 			return manager.root_movement.movement_tree_id;
 				
 		if(updown_flag){
-			if(searcher.result_id>0){
-				searcher.result_parent.children[searcher.result_id  ]=searcher.result_parent.children[searcher.result_id-1];
-				searcher.result_parent.children[searcher.result_id-1]=searcher.result;
-				searcher.result_id--;
+			if(searcher.search_link_list.index_id>0){
+				searcher.search_link_list.next.tree_node.children[searcher.search_link_list.index_id  ]=searcher.search_link_list.next.tree_node.children[searcher.search_link_list.index_id-1];
+				searcher.search_link_list.next.tree_node.children[searcher.search_link_list.index_id-1]=searcher.search_link_list.tree_node;
+				searcher.search_link_list.index_id--;
 			}
 		}else{
-			if(searcher.result_id<(searcher.result_parent.children.length-1)){
-				searcher.result_parent.children[searcher.result_id  ]=searcher.result_parent.children[searcher.result_id+1];
-				searcher.result_parent.children[searcher.result_id+1]=searcher.result;
-				searcher.result_id++;
+			if(searcher.search_link_list.index_id<(searcher.search_link_list.next.tree_node.children.length-1)){
+				searcher.search_link_list.next.tree_node.children[searcher.search_link_list.index_id  ]=searcher.search_link_list.next.tree_node.children[searcher.search_link_list.index_id+1];
+				searcher.search_link_list.next.tree_node.children[searcher.search_link_list.index_id+1]=searcher.search_link_list.tree_node;
+				searcher.search_link_list.index_id++;
 			}
 		}
-		add_component(searcher.result);
+		add_component(searcher.search_link_list.tree_node);
 		for(int i=0;i<(all_components.component_number);i++)
 			all_components.comp[i].modify_display_flag(
 					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
 		
 		manager.movement_start(modifier_cont,
-				searcher.result.movement_tree_id,ek.component_cont,true,switch_time_length);
+				searcher.search_link_list.tree_node.movement_tree_id,
+				ek.component_cont,true,switch_time_length);
 		
-		return searcher.result_parent.movement_tree_id;
+		return searcher.search_link_list.next.tree_node.movement_tree_id;
 	}
 	private long set_sequence_flag(boolean new_sequence_flag)
 	{
@@ -189,14 +191,14 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("id"))==null)
 			return manager.root_movement.movement_tree_id;
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-		if(searcher.result==null)
+		if(searcher.search_link_list==null)
 			return manager.root_movement.movement_tree_id;
-		searcher.result.sequence_flag=new_sequence_flag;
+		searcher.search_link_list.tree_node.sequence_flag=new_sequence_flag;
 		
 		manager.movement_start(modifier_cont,
-				searcher.result.movement_tree_id,ek.component_cont,true,switch_time_length);
+				searcher.search_link_list.tree_node.movement_tree_id,ek.component_cont,true,switch_time_length);
 		
-		return searcher.result.movement_tree_id;
+		return searcher.search_link_list.tree_node.movement_tree_id;
 	}
 	private long tobuffer()
 	{
@@ -204,92 +206,100 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("id"))==null)
 			return -1;
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-		if((searcher.result==null)||(searcher.result_parent==null))
+		if(searcher.search_link_list==null)
 			return -1;
-		if(searcher.result_parent.children.length<=1)
-			return searcher.result.movement_tree_id;
-			
-		movement_tree tmp[]=new movement_tree[searcher.result_parent.children.length-1];
-		for(int i=0,j=0;i<(searcher.result_parent.children.length);i++)
-			if(searcher.result_id!=i)
-				tmp[j++]=searcher.result_parent.children[i];
-		searcher.result_parent.children=tmp;
-			
-		if(manager.buffer_movement==null){
-			manager.buffer_movement=new movement_tree[1];
-			manager.buffer_movement[0]=searcher.result;
-		}else{
-			movement_tree buffer_tmp[]=new movement_tree[manager.buffer_movement.length+1];
-			for(int i=0;i<(manager.buffer_movement.length);i++)
-				buffer_tmp[i]=manager.buffer_movement[i];
-			buffer_tmp[manager.buffer_movement.length]=searcher.result;
-			manager.buffer_movement=buffer_tmp;
-		}
-		add_component(searcher.result);
-		for(int i=0;i<(all_components.component_number);i++)
+		if(searcher.can_delete_list==null)
+			return searcher.search_link_list.tree_node.movement_tree_id;
+		
+		add_component(searcher.can_delete_list.tree_node);
+		for(int i=0,ni=all_components.component_number;i<ni;i++)
 			all_components.comp[i].modify_display_flag(
 					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
-
-		manager.movement_start(modifier_cont,
-				searcher.result_parent.movement_tree_id,ek.component_cont,true,switch_time_length);
-
-		return searcher.result_parent.movement_tree_id;
+			
+		int index_id=searcher.can_delete_list.next.tree_node.children.length-1;
+		if(searcher.can_delete_list.index_id!=(index_id--))
+			index_id=searcher.can_delete_list.index_id+1;
+		long long_movement_tree_id=searcher.can_delete_list.next.tree_node.children[index_id].movement_tree_id;
+		
+		movement_tree tmp[]=new movement_tree[searcher.can_delete_list.next.tree_node.children.length-1];
+		for(int i=0,j=0,ni=searcher.can_delete_list.next.tree_node.children.length;i<ni;i++)
+			if(searcher.can_delete_list.index_id!=i)
+				tmp[j++]=searcher.can_delete_list.next.tree_node.children[i];
+		searcher.can_delete_list.next.tree_node.children=tmp;
+		
+		if(manager.buffer_movement==null){
+			manager.buffer_movement=new movement_tree[1];
+			manager.buffer_movement[0]=searcher.search_link_list.tree_node;
+		}else{
+			movement_tree buffer_tmp[]=new movement_tree[manager.buffer_movement.length+1];
+			for(int i=0,ni=manager.buffer_movement.length;i<ni;i++)
+				buffer_tmp[i]=manager.buffer_movement[i];
+			buffer_tmp[manager.buffer_movement.length]=searcher.search_link_list.tree_node;
+			manager.buffer_movement=buffer_tmp;
+		}
+		manager.movement_start(modifier_cont,long_movement_tree_id,ek.component_cont,true,switch_time_length);
+		return long_movement_tree_id;
 	}
 	private long frombuffer()
 	{
-		if(manager.root_movement==null)
-			return -1;
 		if(manager.buffer_movement==null)
 			return -1;
-		String str;
-		if((str=ci.request_response.get_parameter("id"))==null)
-			return -1;
-		long movement_tree_id=Long.decode(str);
-		movement_searcher searcher=new movement_searcher(manager.root_movement,movement_tree_id);
-		if((searcher.result==null)||(searcher.result_parent==null))
-			return movement_tree_id;
-		movement_tree t=null,tmp[]=new movement_tree[searcher.result_parent.children.length+1];
-		for(int i=0,j=0,n=searcher.result_parent.children.length;i<n;i++){
-			if(searcher.result_id==i){
-				if(manager.buffer_movement!=null){
-					t=new movement_tree(manager.id_creator);
-					t.children=manager.buffer_movement;
+		long current_movement_tree_id;
+		if(manager.root_movement==null) {
+			manager.root_movement=new movement_tree(manager.id_creator);
+			manager.root_movement.children=manager.buffer_movement;
+			manager.buffer_movement=null;
+			current_movement_tree_id=manager.root_movement.movement_tree_id;
+		}else{
+			String str;
+			current_movement_tree_id=manager.root_movement.movement_tree_id;
+			if((str=ci.request_response.get_parameter("id"))==null)
+				return current_movement_tree_id;
+			movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
+			if(searcher.search_link_list==null)
+				return current_movement_tree_id;
+			if(searcher.search_link_list.next==null)
+				return current_movement_tree_id;
+			movement_tree tmp[]=new movement_tree[searcher.search_link_list.next.tree_node.children.length+1];
+			for(int i=0,j=0,n=searcher.search_link_list.next.tree_node.children.length;i<n;i++){
+				if(searcher.search_link_list.index_id==i){
+					tmp[j]=new movement_tree(manager.id_creator);
+					tmp[j].children=manager.buffer_movement;
 					manager.buffer_movement=null;
-					tmp[j++]=t;
+					current_movement_tree_id=tmp[j++].movement_tree_id;
 				}
+				tmp[j++]=searcher.search_link_list.next.tree_node.children[i];
 			}
-			tmp[j++]=searcher.result_parent.children[i];
+			searcher.search_link_list.next.tree_node.children=tmp;
+			manager.reset(current_movement_tree_id,modifier_cont,ek.component_cont,switch_time_length);
 		}
-		searcher.result_parent.children=tmp;
-		manager.reset(((t!=null)?t:searcher.result).movement_tree_id,
-				modifier_cont,ek.component_cont,switch_time_length);
-		return searcher.result_parent.movement_tree_id;
+		return current_movement_tree_id;
 	}
 	private long fromchild()
 	{
+		if(manager.root_movement==null)
+			return manager.root_movement.movement_tree_id;
 		String str;
 		if((str=ci.request_response.get_parameter("id"))==null)
 			return -1;
-		long movement_tree_id=Long.decode(str);
-		if(manager.root_movement==null)
-			return movement_tree_id;
-		movement_searcher searcher=new movement_searcher(manager.root_movement,movement_tree_id);
-		if((searcher.result==null)||(searcher.result_parent==null))
-			return movement_tree_id;
-		if(searcher.result.children!=null){
-			movement_tree tmp[]=new movement_tree[searcher.result_parent.children.length+searcher.result.children.length-1];
-			int j=0;
-			for(int i=0;i<(searcher.result_parent.children.length);i++)
-				if(searcher.result_id!=i)
-					tmp[j++]=searcher.result_parent.children[i];
-				else
-					for(int k=0;k<(searcher.result.children.length);k++)
-						tmp[j++]=searcher.result.children[k];
-			searcher.result_parent.children=tmp;
-			manager.reset(searcher.result.children[0].movement_tree_id,
-					modifier_cont,ek.component_cont,switch_time_length);
-		}
-		return searcher.result_parent.movement_tree_id;
+		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
+		if((searcher.search_link_list==null)||(searcher.search_link_list.next==null))
+			return -1;
+		if(searcher.search_link_list.tree_node.children==null)
+			return searcher.search_link_list.tree_node.movement_tree_id;
+		movement_tree tmp[]=new movement_tree[
+		      searcher.search_link_list.next.tree_node.children.length
+		     +searcher.search_link_list.tree_node.children.length-1];
+		for(int i=0,j=0,ni=searcher.search_link_list.next.tree_node.children.length;i<ni;i++)
+			if(searcher.search_link_list.index_id!=i)
+		       tmp[j++]=searcher.search_link_list.next.tree_node.children[i];
+		    else
+		       	for(int k=0,kn=searcher.search_link_list.tree_node.children.length;k<kn;k++)
+		             tmp[j++]=searcher.search_link_list.tree_node.children[k];
+		searcher.search_link_list.next.tree_node.children=tmp;
+		manager.reset(searcher.search_link_list.next.tree_node.movement_tree_id,
+		              modifier_cont,ek.component_cont,switch_time_length);
+		return searcher.search_link_list.next.tree_node.movement_tree_id;
 	}
 	private void do_update_children(movement_tree t,
 			boolean update_sound_file_name_flag,boolean update_description_flag)
@@ -314,7 +324,7 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("id"))==null)
 			return -1;
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-		if(searcher.result==null)
+		if(searcher.search_link_list==null)
 			return -1;
 		
 		boolean recursive_flag=true;
@@ -338,7 +348,7 @@ public class movement_function_switch
 				try{
 					str=java.net.URLDecoder.decode(str,request_charset);
 					str=java.net.URLDecoder.decode(str,request_charset);
-					searcher.result.node_name=str;
+					searcher.search_link_list.tree_node.node_name=str;
 				}catch(Exception e){
 					;
 				}
@@ -350,9 +360,9 @@ public class movement_function_switch
 					str=java.net.URLDecoder.decode(str,request_charset);
 					str=str.replace(" ","").replace("\t","").replace("\n","").
 							replace("\r","").replace( "\"","").replace("\\","/");
-					searcher.result.sound_file_name=file_reader.separator(str);
+					searcher.search_link_list.tree_node.sound_file_name=file_reader.separator(str);
 					if(recursive_flag)
-						do_update_children(searcher.result,true,false);
+						do_update_children(searcher.search_link_list.tree_node,true,false);
 				}catch(Exception e){
 					;
 				}
@@ -364,14 +374,14 @@ public class movement_function_switch
 					str=java.net.URLDecoder.decode(str,request_charset);
 					str=str.replace(" ","").replace("\t","").replace("\n","").
 							replace("\r","").replace("\"","").replace("\\","/");
-					searcher.result.description=str;
+					searcher.search_link_list.tree_node.description=str;
 					if(recursive_flag)
-						do_update_children(searcher.result,false,true);
+						do_update_children(searcher.search_link_list.tree_node,false,true);
 				}catch(Exception e){
 					;
 				}
 			}
-		return searcher.result.movement_tree_id;
+		return searcher.search_link_list.tree_node.movement_tree_id;
 	}
 	private long do_follow()
 	{
@@ -384,15 +394,15 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("id"))==null)
 			return manager.root_movement.movement_tree_id;;
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-		if((searcher.result==null))
+		if((searcher.search_link_list==null))
 			return manager.root_movement.movement_tree_id;;
-		add_component(searcher.result);
+		add_component(searcher.search_link_list.tree_node);
 		for(int i=0,n=all_components.component_number;i<n;i++)
 			all_components.comp[i].modify_display_flag(
 					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
 		
 		component main_comp;
-		if((main_comp=ek.component_cont.get_component(searcher.result.move.moved_component_id))!=null){
+		if((main_comp=ek.component_cont.get_component(searcher.search_link_list.tree_node.move.moved_component_id))!=null){
 			component_array comp_array=new component_array(ek.component_cont.root_component.component_id+1);
 			comp_array.add_selected_component(ek.component_cont.root_component,false);
 			for(int i=0;i<comp_array.component_number;i++){
@@ -412,27 +422,28 @@ public class movement_function_switch
 					}
 			}
 			if(comp_array.component_number<=0){
-				searcher.result.move.follow_component_name		=null;
-				searcher.result.move.follow_component_id		=null;
-				searcher.result.move.follow_component_location	=null;
+				searcher.search_link_list.tree_node.move.follow_component_name		=null;
+				searcher.search_link_list.tree_node.move.follow_component_id		=null;
+				searcher.search_link_list.tree_node.move.follow_component_location	=null;
 			}else{
-				searcher.result.move.follow_component_name		=new String[comp_array.component_number];
-				searcher.result.move.follow_component_id		=new int[comp_array.component_number];
-				searcher.result.move.follow_component_location	=new location[comp_array.component_number];
+				searcher.search_link_list.tree_node.move.follow_component_name		=new String[comp_array.component_number];
+				searcher.search_link_list.tree_node.move.follow_component_id		=new int[comp_array.component_number];
+				searcher.search_link_list.tree_node.move.follow_component_location	=new location[comp_array.component_number];
 				
 				location main_negative_loca=main_comp.caculate_negative_absolute_location();
 				for(int i=0,ni=comp_array.component_number;i<ni;i++){
 					location loca=main_negative_loca.multiply(comp_array.comp[i].absolute_location);
-					searcher.result.move.follow_component_name[i]		=comp_array.comp[i].component_name;
-					searcher.result.move.follow_component_id[i]			=comp_array.comp[i].component_id;
-					searcher.result.move.follow_component_location[i]	=loca;
+					searcher.search_link_list.tree_node.move.follow_component_name[i]		=comp_array.comp[i].component_name;
+					searcher.search_link_list.tree_node.move.follow_component_id[i]			=comp_array.comp[i].component_id;
+					searcher.search_link_list.tree_node.move.follow_component_location[i]	=loca;
 				}
 			}
 		}
 		manager.movement_start(modifier_cont,
-				searcher.result.movement_tree_id,ek.component_cont,true,switch_time_length);
+				searcher.search_link_list.tree_node.movement_tree_id,
+				ek.component_cont,true,switch_time_length);
 		
-		return searcher.result.movement_tree_id;
+		return searcher.search_link_list.tree_node.movement_tree_id;
 	}
 	private boolean test_can_not_todesignbuffer(component comp)
 	{
@@ -515,8 +526,9 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("id"))==null)
 			return "no_id";
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-		if((t=searcher.result)==null)
+		if(searcher.search_link_list==null)
 			return "no_search_result";
+		t=searcher.search_link_list.tree_node;
 		if(test_movement_tree(comp,t))
 			return "selected_component_is_not_parent_of_movement_component";
 
@@ -526,7 +538,7 @@ public class movement_function_switch
 		f.println();
 		f.println(comp.part_name);
 		f.println(comp.component_name);
-		searcher.result.flush(f,0,false);
+		searcher.search_link_list.tree_node.flush(f,0,false);
 		f.println();
 		f.close();
 		
@@ -712,15 +724,16 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("id"))==null)
 			return manager.root_movement.movement_tree_id;
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-		if(searcher.result==null)
+		if(searcher.search_link_list==null)
 			return manager.root_movement.movement_tree_id;
-		if(searcher.result.direction!=null)
-			searcher.result.direction=null;
+		if(searcher.search_link_list.tree_node.direction!=null)
+			searcher.search_link_list.tree_node.direction=null;
 		else{
-			clear_view_direction(searcher.result);
-			searcher.result.direction=new location(ci.display_camera_result.cam.eye_component.absolute_location);
+			clear_view_direction(searcher.search_link_list.tree_node);
+			searcher.search_link_list.tree_node.direction=new location(
+					ci.display_camera_result.cam.eye_component.absolute_location);
 		}
-		return searcher.result.movement_tree_id;
+		return searcher.search_link_list.tree_node.movement_tree_id;
 	}
 	private long view_box()
 	{
@@ -730,25 +743,25 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("id"))==null)
 			return manager.root_movement.movement_tree_id;
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-		if(searcher.result==null)	
+		if(searcher.search_link_list==null)	
 			return manager.root_movement.movement_tree_id;
 		
-		switch(searcher.result.scale_type){
+		switch(searcher.search_link_list.tree_node.scale_type){
 		case 1://起点相机比例
-			searcher.result.scale_type=2;
+			searcher.search_link_list.tree_node.scale_type=2;
 			break;
 		case 2://终点相机比例   
-			searcher.result.scale_type=3;
+			searcher.search_link_list.tree_node.scale_type=3;
 			break;
 		case 3://起点终点相机比例  
-			searcher.result.scale_type=0;
+			searcher.search_link_list.tree_node.scale_type=0;
 			break;		
 		case 0://上层相机比例
 		default:
-			searcher.result.scale_type=1;
+			searcher.search_link_list.tree_node.scale_type=1;
 			break;
 		}
-		return searcher.result.movement_tree_id;
+		return searcher.search_link_list.tree_node.movement_tree_id;
 	}
 	private long push_component_collector()
 	{
@@ -758,10 +771,10 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("id"))==null)
 			return -1;
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-		if(searcher.result==null)
+		if(searcher.search_link_list==null)
 			return -1;
 		
-		add_component(searcher.result);
+		add_component(searcher.search_link_list.tree_node);
 		if(all_components.make_to_children()<=0)
 			return -1;
 		
@@ -774,9 +787,10 @@ public class movement_function_switch
 			return -1;
 		if(collector.component_number<=0)
 			return collector.list_id;
-		collector.title=searcher.result.node_name;
-		collector.description=searcher.result.description;
-		collector.audio_file_name=file_reader.separator(manager.directory_name+searcher.result.sound_file_name);
+		collector.title=searcher.search_link_list.tree_node.node_name;
+		collector.description=searcher.search_link_list.tree_node.description;
+		collector.audio_file_name=file_reader.separator(
+				manager.directory_name+searcher.search_link_list.tree_node.sound_file_name);
 		if(acd!=null)
 			acd.set_audio(collector.audio_file_name);
 		return collector.list_id;
@@ -846,20 +860,20 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("id"))==null)
 			str=Long.toString(manager.root_movement.movement_tree_id);
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-		if(searcher.result==null)
+		if(searcher.search_link_list==null)
 			return manager.root_movement.movement_tree_id;
 		if((str=ci.request_response.get_parameter("component_part_selection"))==null)
 			str="clear";
 
 		switch(str.trim().toLowerCase()){
 		case "clear":
-			new component_part_selection_processor(searcher.result,false);
+			new component_part_selection_processor(searcher.search_link_list.tree_node,false);
 			break;
 		case "set":
-			new component_part_selection_processor(searcher.result,true);
+			new component_part_selection_processor(searcher.search_link_list.tree_node,true);
 			break;
 		}
-		return searcher.result.movement_tree_id;
+		return searcher.search_link_list.tree_node.movement_tree_id;
 	}
 	private long component_face_match()
 	{
@@ -870,7 +884,7 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("id"))==null)
 			str=Long.toString(manager.root_movement.movement_tree_id);
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-		if(searcher.result==null)
+		if(searcher.search_link_list==null)
 			return manager.root_movement.movement_tree_id;
 		
 		if((str=ci.request_response.get_parameter("component_face_match"))==null)
@@ -892,12 +906,12 @@ public class movement_function_switch
 					}
 				}
 			}
-			new clear_component_face_match().process(searcher.result);
+			new clear_component_face_match().process(searcher.search_link_list.tree_node);
 			break;
 		case "add":
-			if(searcher.result.children!=null) {
-				if(searcher.result.match!=null)
-					searcher.result.match.reset();
+			if(searcher.search_link_list.tree_node.children!=null) {
+				if(searcher.search_link_list.tree_node.match!=null)
+					searcher.search_link_list.tree_node.match.reset();
 				break;
 			}
 			if((str=ci.request_response.get_parameter("source_component_id"))==null)
@@ -931,12 +945,12 @@ public class movement_function_switch
 			int destatination_face_id;
 			if((destatination_face_id=Integer.parseInt(str))<0)
 				break;
-			searcher.result.match.add_component_face_match(
+			searcher.search_link_list.tree_node.match.add_component_face_match(
 					source_component_name,			source_body_id,			source_face_id,
 					destatination_component_name,	destatination_body_id,	destatination_face_id);
 			break;
 		}
-		return searcher.result.movement_tree_id;
+		return searcher.search_link_list.tree_node.movement_tree_id;
 	}
 	private void scale_time_length(movement_tree t,double scale_value)
 	{
@@ -1007,7 +1021,7 @@ public class movement_function_switch
 		if((str=ci.request_response.get_parameter("id"))==null)
 			return;
 		movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-		if(searcher.result==null)
+		if(searcher.search_link_list==null)
 			return;
 		if((str=ci.request_response.get_parameter("modify_type"))==null)
 			return;
@@ -1019,18 +1033,19 @@ public class movement_function_switch
 			double new_time_length;
 			if((str=ci.request_response.get_parameter("time_length"))!=null)
 				if((new_time_length=Double.parseDouble(str))>const_value.min_value)
-					set_same_time_length(searcher.result,new_time_length);
+					set_same_time_length(searcher.search_link_list.tree_node,new_time_length);
 			break;
 		case "no":
 		case "false":
 			double scale_value;
 			if((str=ci.request_response.get_parameter("scale"))!=null)
 				if((scale_value=Double.parseDouble(str))>const_value.min_value)
-					scale_time_length(searcher.result,scale_value);
+					scale_time_length(searcher.search_link_list.tree_node,scale_value);
 			break;
 		}
 		manager.movement_start(modifier_cont,
-			searcher.result.movement_tree_id,ek.component_cont,true,switch_time_length);
+			searcher.search_link_list.tree_node.movement_tree_id,
+			ek.component_cont,true,switch_time_length);
 		return;
 	}
 	private String[] design_request_dispatch(int movement_component_id,int movement_driver_id)
@@ -1060,10 +1075,11 @@ public class movement_function_switch
 			if((str=ci.request_response.get_parameter("id"))==null)
 				str=Long.toString(manager.root_movement.movement_tree_id);
 			movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-			if(searcher.result==null)
+			if(searcher.search_link_list==null)
 				return null;
 			String directory_name=manager.directory_name+manager.config_parameter.sound_pre_string;
-			String file_name=file_reader.separator(directory_name+searcher.result.sound_file_name);
+			String file_name=file_reader.separator(
+					directory_name+searcher.search_link_list.tree_node.sound_file_name);
 			return new String[] {file_name,null};
 		}
 		case "upload_audio":
@@ -1075,12 +1091,13 @@ public class movement_function_switch
 			if((str=ci.request_response.get_parameter("id"))==null)
 				str=Long.toString(manager.root_movement.movement_tree_id);
 			movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-			if(searcher.result==null){
+			if(searcher.search_link_list==null){
 				ci.request_response.print("-1");
 				return null;
 			}
 			String directory_name=manager.directory_name+manager.config_parameter.sound_pre_string;
-			String file_name=file_reader.separator(directory_name+searcher.result.sound_file_name);
+			String file_name=file_reader.separator(
+					directory_name+searcher.search_link_list.tree_node.sound_file_name);
 			long write_length=0;
 			try{
 				InputStream is=ci.request_response.implementor.get_content_stream();
@@ -1108,13 +1125,13 @@ public class movement_function_switch
 			if((str=ci.request_response.get_parameter("id"))==null)
 				str=Long.toString(manager.root_movement.movement_tree_id);
 			movement_searcher searcher=new movement_searcher(manager.root_movement,Long.decode(str));
-			if(searcher.result==null)
+			if(searcher.search_link_list==null)
 				return null;
 			String my_upload_url=ci.request_url_header+"&command=component";
 			my_upload_url+="&method=event&operation=design&move_method=upload_audio";
 			my_upload_url+="&event_component_id="	+movement_component_id;
 			my_upload_url+="&event_driver_id="		+movement_driver_id;
-			my_upload_url+="&id="					+searcher.result.movement_tree_id;
+			my_upload_url+="&id="					+searcher.search_link_list.tree_node.movement_tree_id;
 			
 			if((str=ci.request_response.get_parameter("change_name"))==null)
 				str="";

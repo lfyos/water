@@ -23,7 +23,7 @@ public class movement_edit_jason
 				movement_tree_id=manager.root_movement.movement_tree_id;
 		}
 		movement_searcher searcher=new movement_searcher(manager.root_movement,movement_tree_id);
-		if(searcher.result==null)
+		if(searcher.search_link_list==null)
 			if(manager.root_movement.movement_tree_id!=movement_tree_id) {
 				movement_tree_id=manager.root_movement.movement_tree_id;
 				searcher=new movement_searcher(manager.root_movement,movement_tree_id);
@@ -38,27 +38,31 @@ public class movement_edit_jason
 		
 		ci.request_response.println("	\"switch_time_length\"	:	",switch_time_length+",");
 		
-		if(searcher.result==null){
+		if(searcher.search_link_list==null){
 			ci.request_response.println("}");
 			return;
 		}
 
 		movement_jason.create_tree_node_jason(
-				searcher.result, ci.request_response, "\t",",",switch_time_length);
+				searcher.search_link_list.tree_node, 
+				ci.request_response, "\t",",",switch_time_length);
 	
-		if(searcher.result_parent!=null) {
-			ci.request_response.println("	\"parent\"	:	{");
-			movement_jason.create_tree_node_jason(
-					searcher.result_parent, ci.request_response, "\t\t","",switch_time_length);
-			ci.request_response.println("	},");
-		}
+		if(searcher.search_link_list!=null)
+			if(searcher.search_link_list.next!=null){
+				ci.request_response.println("	\"parent\"	:	{");
+				movement_jason.create_tree_node_jason(
+						searcher.search_link_list.next.tree_node,
+						ci.request_response, "\t\t","",switch_time_length);
+				ci.request_response.println("	},");
+			}
 
 		ci.request_response.println("	\"children\"	:	[");
-		if(searcher.result_children!=null)
-			for(int i=0,ni=searcher.result_children.length;i<ni;i++){
+		if(searcher.search_link_list.tree_node!=null)
+			for(int i=0,ni=searcher.search_link_list.tree_node.children.length;i<ni;i++){
 				ci.request_response.println("		{");
 				movement_jason.create_tree_node_jason(
-						searcher.result_children[i],ci.request_response,"\t\t\t","",switch_time_length);
+						searcher.search_link_list.tree_node.children[i],
+						ci.request_response,"\t\t\t","",switch_time_length);
 				ci.request_response.println("		}",(i==(ni-1))?"":",");
 			}
 		ci.request_response.println("	]");

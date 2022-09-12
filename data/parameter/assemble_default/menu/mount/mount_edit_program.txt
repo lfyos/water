@@ -52,7 +52,9 @@ function(component_name,component_id,render)
 				if(ep.type_flag){
 					var p=render.get_component_object_by_component_name("组件拼装拼装操作组件");
 					render.component_event_processor[p.component_id].active_list();
-				}else
+				}else{
+					render.system_call_processor.set_menu_hide(component_id);
+					
 					render.call_server_component("movement_manager","all",[["operation","design"],
 						["move_method","locate_camera"],["id",ep.movement_data.movement_tree_id]],
 						function(response_data,render)
@@ -60,6 +62,7 @@ function(component_name,component_id,render)
 							ep.update_flag=false;
 							ep.movement_data=response_data;
 						});
+				}
 				return;
 			default:
 				var index_id=ep.id_base+function_id-2;
