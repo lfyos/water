@@ -363,6 +363,8 @@ function(component_name,component_id,render)
 		},
 		pickupmouseselect		:	function(event,component_id,render)
 		{
+			render.system_call_processor.set_menu_hide(component_id);
+			
 			render.call_server_component("movement_manager","all",
 				[["operation","movement"],["move_method","stop"]],
 				function(response_data,render)
