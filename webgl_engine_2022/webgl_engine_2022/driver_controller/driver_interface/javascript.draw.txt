@@ -143,10 +143,9 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 			ep.pickupmousemove=function(event,component_id,render)
 			{
 				var ep=render.component_event_processor[component_id];
-				if(ep.mousedown_flag){
-					ep.x=render.pickup.depth;
-					ep.y=render.pickup.value;
-				}
+				ep.x=render.pickup.depth;
+				ep.y=render.pickup.value;
+
 				return true;
 			}
 			ep.pickupmouseup=function(event,component_id,render)
