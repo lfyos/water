@@ -41,8 +41,8 @@ function(component_name,component_id,render)
 
 			var add_point			=[0.10,		0.10,		0.35,	0.16];	
 			var delete_point		=[0.40,		0.10,		0.65,	0.16];	
-			var left_add_movement	=[0.675,	0.10,		0.8175,	0.16];	
-			var right_add_movement	=[0.8175,	0.10,		0.96,	0.16];	
+			var front_add_movement	=[0.675,	0.13,		0.96,	0.19];	
+			var back_add_movement	=[0.675,	0.07,		0.96,	0.13];
 
 			var area_array=[
 					move_all,			move_x,				move_y,				move_z,
@@ -51,7 +51,7 @@ function(component_name,component_id,render)
 					
 					time_length,		start_state_flag,	terminate_state_flag,
 
-					add_point,			delete_point,		left_add_movement,	right_add_movement
+					add_point,			delete_point,		front_add_movement,	back_add_movement
 			];
 			
 			ep.hightlight=[-2,-2,-1,-1];
@@ -151,7 +151,7 @@ function(component_name,component_id,render)
 				case 15://add_movement
 					render.system_call_processor.set_menu_hide(component_id);
 					par=[["move_method","add_movement"],
-						 ["place",		(i==15)						?"true":"false"],
+						 ["place",		(i==15)					?"true":"false"],
 						 ["start",		p.start_state_flag		?"true":"false"],
 						 ["terminate",	p.terminate_state_flag	?"true":"false"]];
 					break;
@@ -205,9 +205,10 @@ function(component_name,component_id,render)
 										(p.coordinate=="view"		)?"视口":
 										(p.coordinate=="camera"		)?"相机":"未知");	
 
-			ep.draw_item(render,	0.10,	 0.15,	"添加运动点");
-			ep.draw_item(render,	0.40,	 0.15,	"删除运动点");
-			ep.draw_item(render,	0.675,0.15,	"添加运动步骤");
+			ep.draw_item(render,	0.10,	0.15,	"添加运动点");
+			ep.draw_item(render,	0.40,	0.15,	"删除运动点");
+			ep.draw_item(render,	0.675,	0.125,	"后面添加运动");
+			ep.draw_item(render,	0.675,	0.175,	"前面添加运动");
 		},
 		
 		update_canvas_texture	:	function(render_id,part_id,buffer_id,
