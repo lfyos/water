@@ -302,11 +302,11 @@ public class component_collector_stack
 
 		component_collector_stack_file_charset	 =system_par.local_data_charset;
 		
-		component my_comp;
-		if((my_comp=component_cont.search_component(scene_par.component_collector_stack_component_name))==null)
+		if(component_cont.scene_component==null)
 			component_collector_stack_file_name =scene_par.scene_proxy_directory_name;
 		else
-			component_collector_stack_file_name =my_comp.component_directory_name;
+			component_collector_stack_file_name =component_cont.scene_component.component_directory_name;
+		
 		component_collector_stack_file_name+=scene_par.component_collector_stack_file_name;
 
 		file_reader f=new file_reader(component_collector_stack_file_name,component_collector_stack_file_charset);

@@ -11,7 +11,7 @@ import kernel_transformation.box;
 
 public class component_container 
 {
-	public component root_component;
+	public component root_component,scene_component;
 	
 	public int original_part_number,part_component_number,exist_part_component_number,top_assemble_component_number;
 	public int render_component_id_and_driver_id[][][],part_component_id_and_driver_id[][][][];
@@ -26,6 +26,10 @@ public class component_container
 		if(root_component!=null) {
 			root_component.destroy();
 			root_component=null;
+		}
+		if(scene_component!=null) {
+			scene_component.destroy();
+			scene_component=null;
 		}
 		render_component_id_and_driver_id=null;
 		part_component_id_and_driver_id=null;
@@ -171,6 +175,7 @@ public class component_container
 	{
 		{
 			root_component=null;
+			scene_component=null;
 			
 			original_part_number				=0;
 			
