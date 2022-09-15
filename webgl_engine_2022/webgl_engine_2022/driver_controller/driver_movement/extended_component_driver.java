@@ -40,7 +40,8 @@ public class extended_component_driver extends component_driver
 //		String scene_directory_name=ek.scene_directory_name;
 //		String parameter_directory_name=ek.scene_par.directory_name;
 		
-		String component_directory_name=comp.component_directory_name;
+		component scene_comp=ek.component_cont.scene_component;
+		String movement_directory_name=((scene_comp==null)?comp:scene_comp).component_directory_name;
 		
 		part p=comp.driver_array[driver_id].component_part;
 		file_reader fr=new file_reader(p.directory_name+p.material_file_name,p.file_charset);
@@ -58,20 +59,20 @@ public class extended_component_driver extends component_driver
 		
 		fr.close();
 		
-		debug_information.println("Begin loading movement information\t",component_directory_name+movement_file_name);
+		debug_information.println("Begin loading movement information\t",movement_directory_name+movement_file_name);
 		camera_parameter cam_par=ek.camera_cont.camera_array[0].parameter;
 		m=new movement_manager(ek,cam_par.movement_flag?cam_par.switch_time_length:0,
 				new movement_configuration_parameter(
 						ek,comp,driver_id,comp.component_charset,
-						component_directory_name+movement_file_name,
-						component_directory_name+design_file_name,
-						component_directory_name+temporary_file_directory,
+						movement_directory_name+movement_file_name,
+						movement_directory_name+design_file_name,
+						movement_directory_name+temporary_file_directory,
 						sound_pre_string,
 						location_component_name,audio_component_name,
 						movement_modifier_container_id,camera_modifier_container_id,
 						mouse_modify_location_component_name,virtual_mount_root_component_name),
 				move_channel_id);
-		debug_information.println("End loading movement information\t",component_directory_name+design_file_name);
+		debug_information.println("End loading movement information\t",movement_directory_name+design_file_name);
 		
 		return;
 	}

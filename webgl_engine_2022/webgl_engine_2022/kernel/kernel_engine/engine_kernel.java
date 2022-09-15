@@ -351,6 +351,7 @@ public class engine_kernel
 		part_cont=new part_container_for_part_search(render_cont.part_array(true,-1));
 
 		component_cont.do_component_caculator(true,process_bar,"second_do_component_caculator");
+		component_cont.scene_component=component_cont.search_component(scene_par.scene_component_name);
 		
 		process_part_sequence=new part_process_sequence(render_cont,component_cont.root_component);
 

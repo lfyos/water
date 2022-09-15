@@ -10,12 +10,10 @@ import kernel_part.part;
 public class part_instance_driver 
 {
 	public part_instance_driver()
-	{
-		
+	{	
 	}
 	public void destroy()
 	{
-		
 	}
 	public void response_init_part_data(part p,engine_kernel ek,client_information ci)
 	{
