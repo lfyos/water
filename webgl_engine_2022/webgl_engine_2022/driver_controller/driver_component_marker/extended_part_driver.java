@@ -72,8 +72,8 @@ public class extended_part_driver extends part_driver
 		int modifier_container_id=fr.get_int();
 		double height_scale[]=new double[] {fr.get_double(),fr.get_double()};
 		
-		String str=fr.get_string();
-		switch((str==null)?"global":(str.toLowerCase())){
+		String str;
+		switch(((str=fr.get_string())==null)?"global":(str.toLowerCase())){
 		case "global":
 			return new extended_component_driver(my_component_part,
 					modifier_container_id,height_scale,true,false,fr.get_string(),fr.get_string());

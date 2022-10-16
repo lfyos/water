@@ -9,21 +9,20 @@ public class score
 	{
 		debug_information.println("Begin");
 		
-		file_reader f=new file_reader("c:\\temp\\z.txt",null);
-		for(int j=1;!(f.eof());j++) {
-//			int number=f.get_int();
-			int number=j;
+		file_reader f=new file_reader("E:\\2022春季学期编译原理课程\\期末提交的材料\\平时成绩.txt",null);
+		while(true){
+			int number=f.get_int();
 			int id=f.get_int();
 			String name=f.get_string();
-			String school=f.get_string();
 			if(f.eof())
 				break;
 			String str=f.get_string();
+			f.get_string();
+			f.get_string();
 			
 			debug_information.print  (number);
 			debug_information.print  ("\t",id);
 			debug_information.print  ("\t",name);
-			debug_information.print  ("\t",school);
 			
 			int score[]= {0,0,0,0,0,0,0,0,0,0},my_score=0,step=5;
 			
@@ -45,7 +44,7 @@ public class score
 					for(int i=0;i<10;i++) {
 						if(score[i]>95)
 							flag=false;
-						if(score[i]<79)
+						if(score[i]<70)
 							flag=false;
 					}
 					if(flag)
