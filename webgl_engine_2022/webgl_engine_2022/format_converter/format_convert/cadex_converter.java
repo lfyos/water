@@ -1865,8 +1865,9 @@ public class cadex_converter
 			return new cadex.BRep_Reader();
 		}
 	}
-	public static boolean do_convert(String source_file_name,String target_directory_name,String target_charset,
-			String config_directory_name,double chordal_deflection,double angular_deflection,int max_step_number)
+	public static boolean do_convert(String source_file_name,
+			String target_directory_name,String config_directory_name,String target_charset,
+			double chordal_deflection,double angular_deflection,int max_step_number)
 	{
 		if(target_charset==null)
 			target_charset=Charset.defaultCharset().name();
@@ -1980,21 +1981,33 @@ public class cadex_converter
 			debug_information.println("Success:CAD Exchanger SDK convertion,file_name is ",				source_file_name);
 			debug_information.println("Success:CAD Exchanger SDK convertion,target_directory_name is ",	target_directory_name);
 			debug_information.println("Success:CAD Exchanger SDK convertion,license file name is ",		license_file_name);
+			
+			(new file_writer(target_directory_name+"movement.assemble",null)).
+				println("/*	1:name			*/		movement_manager").
+				println("/*	1:type			*/		movement_manager").
+				println("/*	1:location		*/		1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0").
+				println("/*	1:child_number	*/		0").
+				println().close();
+			
 			return false;
         }else {
-			debug_information.println("Fail:CAD Exchanger SDK convertion,file_name is ",				source_file_name);
+        	debug_information.println("Fail:CAD Exchanger SDK convertion,file_name is ",				source_file_name);
 			debug_information.println("Fail:CAD Exchanger SDK convertion,target_directory_name is ",	target_directory_name);
 			debug_information.println("Fail:CAD Exchanger SDK convertion,license file name is ",		license_file_name);
 			return true;
         }
 	}
-
 	public static void main(String args[])
 	{
 		String source_file_name		=args[0];
 		String target_directory_name=args[1];
 		String config_directory_name=args[2];
-
-		do_convert(source_file_name,target_directory_name,null,config_directory_name,0,0,100);
+		String target_charset		=args[3];
+		double chordal_deflection	=Double.parseDouble(args[4]);
+		double angular_deflection	=Double.parseDouble(args[5]);
+		int max_step_number			=Integer.parseInt(  args[6]);
+		
+		do_convert(source_file_name,target_directory_name,config_directory_name,
+				target_charset,chordal_deflection,angular_deflection,max_step_number);
 	}
 }
