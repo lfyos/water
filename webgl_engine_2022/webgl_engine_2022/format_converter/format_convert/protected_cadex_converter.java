@@ -12,22 +12,33 @@ public class protected_cadex_converter
 {
 	public static void main(String args[])
 	{
-//		args=new String[] {"1800000","c:\\tmp\\1030-P-211-3D.stp","c:\\temp\\","e:\\cad\\lfy.jar"};
-		
 		debug_information.println("Begin");
-		do_convert(args[0],args[1],args[2],args[3]);
+		do_convert(args[0],args[1],args[2]);
 		debug_information.println("End");
 	}
-	public static boolean do_convert(String max_convert_time_length_str,
-			String source_file_name,String target_directory_name,String jar_file_name)
+	public static boolean do_convert(
+			String max_convert_time_length_str,String source_file_name,String target_directory_name)
 	{
 		return do_convert("1024",max_convert_time_length_str,
-				source_file_name,target_directory_name,jar_file_name,"0","0","100");
+				source_file_name,target_directory_name,"0","0","100");
 	}
 	public static boolean do_convert(String memory_string,String max_convert_time_length_str,
-			String source_file_name,String target_directory_name,String jar_file_name,
+			String source_file_name,String target_directory_name,
 			String chordal_deflection_str,String angular_deflection_str,String max_step_number_str)
 	{
+		String jar_file_name="";
+		try{
+			jar_file_name=new cadex_converter().getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
+			jar_file_name=java.net.URLDecoder.decode(jar_file_name,"UTF-8");
+			if((jar_file_name.charAt(0)=='/')||(jar_file_name.charAt(0)=='\\'))
+				if(	  ((jar_file_name.charAt(1)>='A')&&(jar_file_name.charAt(1)<='Z'))
+					||((jar_file_name.charAt(1)>='a')&&(jar_file_name.charAt(1)<='z')))
+					if(jar_file_name.charAt(2)==':')
+						jar_file_name=jar_file_name.substring(1);
+	    } catch (Exception e) {
+	        ;
+	    }
+
 		debug_information.println("protected_cadex_converter memory_string:		",			memory_string);
 		debug_information.println("protected_cadex_converter max_convert_time_length:	",	max_convert_time_length_str);
 		debug_information.println("protected_cadex_converter source_file_name:		",		source_file_name);
@@ -37,14 +48,7 @@ public class protected_cadex_converter
 		debug_information.println("protected_cadex_converter angular_deflection:	",		angular_deflection_str);
 		debug_information.println("protected_cadex_converter max_step_number:	",			max_step_number_str);
 
-		String config_directory_name;
 		jar_file_name=file_reader.separator(jar_file_name);
-		
-		int index_id;
-		if((index_id=jar_file_name.lastIndexOf(File.separator))<0)
-			config_directory_name="."+File.separator;
-		else 
-			config_directory_name=jar_file_name.substring(0,index_id+1);
 
 		target_directory_name=file_reader.separator(target_directory_name);
 		if(target_directory_name.charAt(target_directory_name.length()-1)!=File.separatorChar)
@@ -64,15 +68,17 @@ public class protected_cadex_converter
 				super(name,cmd,null,Long.decode(max_convert_time_length_str));
 			}
 		};
-		new exec_converter(source_file_name,new String[]
+		
+		new exec_converter(source_file_name,
+				new String[]
 				{
 					"java","-Xms256m","-Xmx"+memory_string.trim()+"m",
 					"-classpath",jar_file_name,"format_convert.cadex_converter",
-					
-					source_file_name,target_directory_name,config_directory_name,
-					Charset.defaultCharset().name(),chordal_deflection_str,angular_deflection_str,
-					max_step_number_str
+
+					source_file_name,target_directory_name,Charset.defaultCharset().name(),
+					"UTF-8",chordal_deflection_str,angular_deflection_str,max_step_number_str
 				});
+		
 		if((new File(target_directory_name+"token.txt")).exists()){
 			debug_information.println("Convert success,target directory: ",target_directory_name);
 			return false;
