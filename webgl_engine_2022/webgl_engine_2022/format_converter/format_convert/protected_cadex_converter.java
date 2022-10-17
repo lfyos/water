@@ -16,14 +16,14 @@ public class protected_cadex_converter
 		do_convert(args[0],args[1],args[2]);
 		debug_information.println("End");
 	}
-	public static boolean do_convert(
-			String max_convert_time_length_str,String source_file_name,String target_directory_name)
+	public static boolean do_convert(String source_file_name,
+			String target_directory_name,String max_convert_time_length_str)
 	{
 		return do_convert("1024",max_convert_time_length_str,
-				source_file_name,target_directory_name,"0","0","100");
+				source_file_name,target_directory_name,Charset.defaultCharset().name(),"0","0","100");
 	}
 	public static boolean do_convert(String memory_string,String max_convert_time_length_str,
-			String source_file_name,String target_directory_name,
+			String source_file_name,String target_directory_name,String target_charset,
 			String chordal_deflection_str,String angular_deflection_str,String max_step_number_str)
 	{
 		String jar_file_name="";
@@ -75,7 +75,7 @@ public class protected_cadex_converter
 					"java","-Xms256m","-Xmx"+memory_string.trim()+"m",
 					"-classpath",jar_file_name,"format_convert.cadex_converter",
 
-					source_file_name,target_directory_name,Charset.defaultCharset().name(),
+					source_file_name,target_directory_name,target_charset,
 					"UTF-8",chordal_deflection_str,angular_deflection_str,max_step_number_str
 				});
 		
