@@ -1875,13 +1875,13 @@ public class cadex_converter
 		}
 	}
 	public static boolean do_convert(String source_file_name,
-			String target_directory_name,String target_charset,String config_charset,
+			String target_directory_name,String target_charset,String class_charset,
 			double chordal_deflection,double angular_deflection,int max_step_number)
 	{
 		if(target_charset==null)
 			target_charset=Charset.defaultCharset().name();
-		if(config_charset==null)
-			config_charset=Charset.defaultCharset().name();
+		if(class_charset==null)
+			class_charset=Charset.defaultCharset().name();
 
 		target_directory_name=file_reader.separator(target_directory_name);
 		if(target_directory_name.charAt(target_directory_name.length()-1)!=File.separatorChar)
@@ -1892,7 +1892,7 @@ public class cadex_converter
 		debug_information.println("Begin CAD Exchanger SDK convertion,target_directory_name is "	,target_directory_name);
 		
 		
-		if(cad_license_key.test_license(config_charset)) {
+		if(cad_license_key.test_license(class_charset)) {
 			debug_information.println("CAD Exchanger SDK convertion terminated:","license error.");
 			return true;
 		}
@@ -1971,7 +1971,7 @@ public class cadex_converter
         debug_information.println("CAD Exchanger SDK begin traversing scene tree,file name is "+source_file_name);
         component_visitor cv=new component_visitor(
         		target_directory_name,target_charset,repace_string.replace(source_directory_name),
-        		new material(config_charset),
+        		new material(class_charset),
         		my_parameter.ChordalDeflection(),my_parameter.AngularDeflection(),max_step_number);
         my_model.Accept(cv);
         
@@ -2001,12 +2001,12 @@ public class cadex_converter
 		String source_file_name		=args[0];
 		String target_directory_name=args[1];
 		String target_charset		=args[2];
-		String config_charset		=args[3];
+		String class_charset		=args[3];
 		double chordal_deflection	=Double.parseDouble(args[4]);
 		double angular_deflection	=Double.parseDouble(args[5]);
 		int	max_step_number			=Integer.parseInt(  args[6]);
 		
-		do_convert(source_file_name,target_directory_name,target_charset,config_charset,
+		do_convert(source_file_name,target_directory_name,target_charset,class_charset,
 				chordal_deflection,angular_deflection,max_step_number);
 	}
 }

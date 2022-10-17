@@ -3,7 +3,7 @@
 <%@page import="kernel_service.jsp_network_implementation"%>
 <%@page import="kernel_file_manager.file_writer"%>
 <%@page import="format_convert.protected_cadex_converter"%>
-<%@page import="old_convert.web_converter"%>
+<%@page import="format_convert.web_converter"%>
 <%@page import="kernel_common_class.debug_information"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"    pageEncoding="UTF-8"%>
 
@@ -132,8 +132,6 @@ function file_name_change()
 		}
 		
 		String source_file_name				=directory_name+"_source_"+file_name;
-		String jar_file_name				=directory_name+"lfy.jar";
-		String max_convert_time_length_str	="1800000";
 
 		file_writer.file_delete(source_file_name);
 		file_writer fw=new file_writer(source_file_name,null);
@@ -158,8 +156,7 @@ function file_name_change()
 			e.printStackTrace();
 			break;
 		}
-		protected_cadex_converter.do_convert(
-				max_convert_time_length_str,source_file_name,directory_name+file_name);
+		protected_cadex_converter.do_convert(source_file_name,directory_name+file_name,"1800000");
 		
 		file_writer.file_delete(source_file_name);
 
