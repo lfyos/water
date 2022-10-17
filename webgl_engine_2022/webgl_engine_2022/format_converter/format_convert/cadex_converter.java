@@ -5,12 +5,15 @@ import java.nio.charset.Charset;
 
 import cadex.*;
 
-import kernel_common_class.const_value;
-import kernel_common_class.debug_information;
+import kernel_transformation.box;
+import kernel_transformation.point;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
-import kernel_transformation.point;
-import kernel_transformation.box;
+import kernel_common_class.const_value;
+import kernel_common_class.common_reader;
+import kernel_common_class.class_file_reader;
+import kernel_common_class.debug_information;
+
 
 class repace_string
 {
@@ -33,7 +36,7 @@ class cad_license_key
 	private static boolean has_not_done_test_flag=true,uneffective_flag=false;
 	private static String error_message="";
 
-	public static boolean test_license(String license_file_name,String target_charset)
+	public static boolean test_license(String license_charset)
 	{
 		if(has_not_done_test_flag) {
 			has_not_done_test_flag=false;
@@ -63,7 +66,10 @@ class cad_license_key
 					error_message+=str;
 				}
 			String license_str="";
-			for(file_reader license_f=new file_reader(license_file_name,target_charset);;) {
+			
+			for(common_reader license_f=class_file_reader.get_reader("cadex_license.txt",
+					cadex_converter.class,license_charset,license_charset);;)
+			{
 				if(license_f.eof()){
 					license_f.close();
 					break;
@@ -71,6 +77,8 @@ class cad_license_key
 				if((str=license_f.get_line())!=null)
 					license_str+=str.trim();
 			}
+			debug_information.println("CAD Exchanger SDK license:	",license_str);
+			
 			if(LicenseManager.Activate(license_str))
 				uneffective_flag=false;
 			else {
@@ -78,7 +86,7 @@ class cad_license_key
 				uneffective_flag=true;
 				if(error_message.length()>0)
 					error_message+="\n";
-				error_message+="CAD Exchanger SDK license error,license file name is "+license_file_name;
+				error_message+="CAD Exchanger SDK license error";
 			}
 		}
 		if(uneffective_flag)
@@ -228,9 +236,10 @@ class material
 		return true;
 	}
 	
-	public material(String file_name,String charset)
+	public material(String config_charset)
 	{
-		file_reader f=new file_reader(file_name,charset);
+		common_reader f=class_file_reader.get_reader("cadex_material.txt",
+				cadex_converter.class,config_charset,config_charset);
 		
 		color		=new double[]{f.get_double(),f.get_double(),f.get_double(),f.get_double()};
 		ambient		=new double[]{f.get_double(),f.get_double(),f.get_double(),f.get_double()};
@@ -1866,33 +1875,25 @@ public class cadex_converter
 		}
 	}
 	public static boolean do_convert(String source_file_name,
-			String target_directory_name,String config_directory_name,String target_charset,
+			String target_directory_name,String target_charset,String config_charset,
 			double chordal_deflection,double angular_deflection,int max_step_number)
 	{
 		if(target_charset==null)
 			target_charset=Charset.defaultCharset().name();
+		if(config_charset==null)
+			config_charset=Charset.defaultCharset().name();
 
 		target_directory_name=file_reader.separator(target_directory_name);
 		if(target_directory_name.charAt(target_directory_name.length()-1)!=File.separatorChar)
 			target_directory_name+=File.separator;
 		file_writer.file_delete(target_directory_name+"token.txt");
 
-		config_directory_name=file_reader.separator(config_directory_name);
-		if(config_directory_name.charAt(config_directory_name.length()-1)!=File.separatorChar)
-			config_directory_name+=File.separator;
-		String license_file_name=config_directory_name+"license.txt";
-		String default_material_file_name=config_directory_name+"material.txt";
-
 		debug_information.println("Begin CAD Exchanger SDK convertion,file_name is "				,source_file_name);
 		debug_information.println("Begin CAD Exchanger SDK convertion,target_directory_name is "	,target_directory_name);
-		debug_information.println("Begin CAD Exchanger SDK convertion,license file name is "		,license_file_name);
 		
-		if(!(new File(license_file_name).exists())) {
-			debug_information.println("license file NOT exist:	",license_file_name);
-			return true;
-		}
-		if(cad_license_key.test_license(license_file_name,target_charset)) {
-			debug_information.println("CAD Exchanger SDK convertion terminated:","license error. file_name is "+license_file_name);
+		
+		if(cad_license_key.test_license(config_charset)) {
+			debug_information.println("CAD Exchanger SDK convertion terminated:","license error.");
 			return true;
 		}
 		int index_id;
@@ -1970,7 +1971,7 @@ public class cadex_converter
         debug_information.println("CAD Exchanger SDK begin traversing scene tree,file name is "+source_file_name);
         component_visitor cv=new component_visitor(
         		target_directory_name,target_charset,repace_string.replace(source_directory_name),
-        		new material(default_material_file_name,target_charset),
+        		new material(config_charset),
         		my_parameter.ChordalDeflection(),my_parameter.AngularDeflection(),max_step_number);
         my_model.Accept(cv);
         
@@ -1980,7 +1981,6 @@ public class cadex_converter
 	        (new file_writer(target_directory_name+"token.txt",null)).close();
 			debug_information.println("Success:CAD Exchanger SDK convertion,file_name is ",				source_file_name);
 			debug_information.println("Success:CAD Exchanger SDK convertion,target_directory_name is ",	target_directory_name);
-			debug_information.println("Success:CAD Exchanger SDK convertion,license file name is ",		license_file_name);
 			
 			(new file_writer(target_directory_name+"movement.assemble",null)).
 				println("/*	1:name			*/		movement_manager").
@@ -1993,7 +1993,6 @@ public class cadex_converter
         }else {
         	debug_information.println("Fail:CAD Exchanger SDK convertion,file_name is ",				source_file_name);
 			debug_information.println("Fail:CAD Exchanger SDK convertion,target_directory_name is ",	target_directory_name);
-			debug_information.println("Fail:CAD Exchanger SDK convertion,license file name is ",		license_file_name);
 			return true;
         }
 	}
@@ -2001,13 +2000,13 @@ public class cadex_converter
 	{
 		String source_file_name		=args[0];
 		String target_directory_name=args[1];
-		String config_directory_name=args[2];
-		String target_charset		=args[3];
+		String target_charset		=args[2];
+		String config_charset		=args[3];
 		double chordal_deflection	=Double.parseDouble(args[4]);
 		double angular_deflection	=Double.parseDouble(args[5]);
-		int max_step_number			=Integer.parseInt(  args[6]);
+		int	max_step_number			=Integer.parseInt(  args[6]);
 		
-		do_convert(source_file_name,target_directory_name,config_directory_name,
-				target_charset,chordal_deflection,angular_deflection,max_step_number);
+		do_convert(source_file_name,target_directory_name,target_charset,config_charset,
+				chordal_deflection,angular_deflection,max_step_number);
 	}
 }

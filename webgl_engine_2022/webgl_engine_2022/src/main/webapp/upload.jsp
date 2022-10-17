@@ -159,7 +159,7 @@ function file_name_change()
 			break;
 		}
 		protected_cadex_converter.do_convert(
-				max_convert_time_length_str,source_file_name,directory_name+file_name,jar_file_name);
+				max_convert_time_length_str,source_file_name,directory_name+file_name);
 		
 		file_writer.file_delete(source_file_name);
 
