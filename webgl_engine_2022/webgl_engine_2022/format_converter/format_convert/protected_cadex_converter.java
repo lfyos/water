@@ -3,6 +3,8 @@ package format_convert;
 import java.io.File;
 import java.nio.charset.Charset;
 
+import kernel_common_class.class_file_reader;
+import kernel_common_class.common_reader;
 import kernel_common_class.debug_information;
 import kernel_common_class.execute_command;
 import kernel_file_manager.file_reader;
@@ -16,16 +18,29 @@ public class protected_cadex_converter
 		do_convert(args[0],args[1],args[2]);
 		debug_information.println("End");
 	}
+	
 	public static boolean do_convert(String source_file_name,
 			String target_directory_name,String max_convert_time_length_str)
 	{
-		return do_convert("1024",max_convert_time_length_str,
-				source_file_name,target_directory_name,Charset.defaultCharset().name(),"0","0","100");
-	}
-	public static boolean do_convert(String memory_string,String max_convert_time_length_str,
-			String source_file_name,String target_directory_name,String target_charset,
-			String chordal_deflection_str,String angular_deflection_str,String max_step_number_str)
-	{
+		String class_charset=Charset.defaultCharset().name();
+		common_reader f=class_file_reader.get_reader("cadex_parameter.txt",
+				cadex_converter.class,class_charset,class_charset);
+		class_charset=f.get_string();
+		f.close();
+		
+		f=class_file_reader.get_reader("cadex_parameter.txt",
+				cadex_converter.class,class_charset,class_charset);
+		class_charset=f.get_string();
+		String target_charset=f.get_string();
+		if(target_charset==null)
+			target_charset=Charset.defaultCharset().name();
+		else if(target_charset.trim().compareTo("null")==0)
+			target_charset=Charset.defaultCharset().name();
+		String min_memory_size=f.get_string(),max_memory_size=f.get_string();
+		String chordal_deflection_str=f.get_string(),angular_deflection_str=f.get_string();
+		String max_step_number_str=f.get_string();
+		f.close();
+		
 		String jar_file_name="";
 		try{
 			jar_file_name=new cadex_converter().getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
@@ -39,7 +54,7 @@ public class protected_cadex_converter
 	        ;
 	    }
 
-		debug_information.println("protected_cadex_converter memory_string:		",			memory_string);
+		debug_information.println("protected_cadex_converter memory_string:		",			min_memory_size+"/"+max_memory_size);
 		debug_information.println("protected_cadex_converter max_convert_time_length:	",	max_convert_time_length_str);
 		debug_information.println("protected_cadex_converter source_file_name:		",		source_file_name);
 		debug_information.println("protected_cadex_converter target_directory_name:	",		target_directory_name);
@@ -68,16 +83,16 @@ public class protected_cadex_converter
 				super(name,cmd,null,Long.decode(max_convert_time_length_str));
 			}
 		};
-		
-		new exec_converter(source_file_name,
-				new String[]
-				{
-					"java","-Xms256m","-Xmx"+memory_string.trim()+"m",
-					"-classpath",jar_file_name,"format_convert.cadex_converter",
-
-					source_file_name,target_directory_name,target_charset,
-					"UTF-8",chordal_deflection_str,angular_deflection_str,max_step_number_str
-				});
+		String cmd[]=new String[]{
+			"java","-Xms"+min_memory_size.trim()+"m","-Xmx"+max_memory_size.trim()+"m",
+			"-classpath",jar_file_name,"format_convert.cadex_converter",
+			source_file_name,target_directory_name,target_charset,
+			class_charset,chordal_deflection_str,angular_deflection_str,max_step_number_str
+		};
+		for(int i=0,ni=cmd.length;i<ni;i++)
+			debug_information.print(cmd[i]," ");
+		debug_information.println();
+		new exec_converter(source_file_name,cmd);
 		
 		if((new File(target_directory_name+"token.txt")).exists()){
 			debug_information.println("Convert success,target directory: ",target_directory_name);
