@@ -15,7 +15,8 @@ public class protected_cadex_converter
 	public static void main(String args[])
 	{
 		debug_information.println("Begin");
-		do_convert(args[0],args[1],args[2]);
+//		do_convert(args[0],args[1],args[2]);
+		do_convert(args[0],args[1],args[2],"c:\\tmp\\lfy-2022-10-21.jar","256","1024");
 		debug_information.println("End");
 	}
 	public static boolean do_convert(String source_file_name,
@@ -65,7 +66,8 @@ public class protected_cadex_converter
 		        ;
 		    }
 		}
-		return do_convert(source_file_name,target_directory_name,Long.decode(max_step_number_str),
+		return do_convert(source_file_name,
+					target_directory_name,Long.decode(max_convert_time_length_str),
 					class_charset,target_charset,jar_file_name,min_memory_size,max_memory_size,
 					chordal_deflection_str,angular_deflection_str,max_step_number_str);
 	}

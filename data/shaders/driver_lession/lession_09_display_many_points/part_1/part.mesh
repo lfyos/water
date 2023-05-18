@@ -12,7 +12,7 @@
 /*		face type	*/  unknown		/*  parameter number	*/	0	/*	prameter	*/
 /*		total_face_primitive_number	*/	2048
 /*		face_attribute_number		*/  0
-/*		face_face_box               */	-1.8886053098105529	-1.9435462426730388	-2.0424858739038743	1.9990070772167816	2.057058453816109	2.0101292465589777
+/*		face_face_box               */	-1.971317436493197	-2.044485966306936	-1.9555071425695574	1.9306144373397252	1.9793168961125398	1.9991562512628336
 
 /*  	face loop number					*/  1
 /*		Loop NO.0	edge number				*/  2
@@ -22,7 +22,7 @@
 			end_not_effective
 /*			parameter_point_extra_data		*/	1
 /*			parameter_point_material    	*/	0	0	0	0
-/*			face_edge_box               	*/	-1.8886053098105529	-1.9435462426730388	-2.0424858739038743	1.9990070772167816	2.057058453816109	2.0101292465589777
+/*			face_edge_box               	*/	-1.971317436493197	-2.044485966306936	-1.9555071425695574	1.9306144373397252	1.9793168961125398	1.9991562512628336
 /*			total_edge_primitive_number		*/	4224
 /*			total_point_primitive_number	*/	0
 
@@ -33,7 +33,7 @@
 			end_not_effective
 /*			parameter_point_extra_data		*/	1
 /*			parameter_point_material   		*/	0	0	0	0
-/*			face_edge_box               	*/	-1.8886053098105529	-1.9435462426730388	-2.0424858739038743	1.9990070772167816	2.057058453816109	2.0101292465589777
+/*			face_edge_box               	*/	-1.971317436493197	-2.044485966306936	-1.9555071425695574	1.9306144373397252	1.9793168961125398	1.9991562512628336
 /*			total_edge_primitive_number		*/	0
 /*			total_point_primitive_number	*/	1089
 

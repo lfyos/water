@@ -26,6 +26,8 @@
 /*	render_22	*/	movement				driver_movement.extended_render_driver					driver_controller\movement\render.list
 /*	render_23	*/	orientation_camera		driver_orientation_camera.extended_render_driver		driver_controller\orientation_camera\render.list
 
+/*
+
 /*	******************************		driver_lession		********************************************	*/
 /*	render_24	*/	lession_00_start_driver							driver_lession_00_start_driver.extended_render_driver							driver_lession\lession_00_start_driver\render.list
 /*	render_25	*/	lession_01_modify_location_at_server			driver_lession_01_modify_location_at_server.extended_render_driver				driver_lession\lession_01_modify_location_at_server\render.list
@@ -48,6 +50,7 @@
 /*	render_42	*/	lession_18_dynamic_environment_mapping_texture	driver_lession_18_dynamic_environment_mapping_texture.extended_render_driver	driver_lession\lession_18_dynamic_environment_mapping_texture\render.list
 /*	render_43	*/	lession_19_caculate_color						driver_lession_19_caculate_color.extended_render_driver							driver_lession\lession_19_caculate_color\render.list
 
+
 /*	########################	driver_project		#######################		*/
 /*	render_44	*/	territory	driver_territory.extended_render_driver					..\project\part\territory\render.list
 /*	render_45	*/	water		driver_water.extended_render_driver						..\project\part\water\render.list
@@ -62,3 +65,6 @@
 /*	########################	driver_project_boat_2011	#######################		*/
 /*	render_48	*/	boat		driver_opengl_fixed_pipeline.extended_render_driver		..\project\boat\part\render.list
 								..\project\boat\part\shader_material.txt				..\project\boat\part\light.txt
+
+								
+*/								
