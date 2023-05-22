@@ -4,7 +4,6 @@ package kernel_driver;
 import kernel_common_class.const_value;
 import kernel_common_class.debug_information;
 import kernel_component.component;
-import kernel_part.part;
 import kernel_engine.engine_kernel;
 import kernel_network.client_request_response;
 
@@ -51,7 +50,7 @@ public class component_instance_driver_container
 		}
 		for(int i=0,driver_number=comp.driver_number();i<driver_number;i++){
 			double scale=component_driver_array[comp.component_id][i].instance_driver_lod_precision_scale;
-			scale*=comp.driver_array[i].component_part.part_par.lod_precision_scale;
+			scale*=comp.driver_array.get(i).component_part.part_par.lod_precision_scale;
 			if(instance_lod_precision_scale[comp.component_id]<scale)
 				instance_lod_precision_scale[comp.component_id]=scale;
 		}
@@ -72,9 +71,9 @@ public class component_instance_driver_container
 			component_driver_array			[comp.component_id]=new component_instance_driver[driver_number];
 			for(int i=0;i<driver_number;i++){
 				component_instance_driver i_d;
-				part p=comp.driver_array[i].component_part;
+				component_driver c_d=comp.driver_array.get(i);
 				try{
-					i_d=comp.driver_array[i].create_component_instance_driver(comp,i,ek,request_response);
+					i_d=c_d.create_component_instance_driver(comp,i,ek,request_response);
 				}catch(Exception e){
 					i_d=null;
 					debug_information.println("create_instance_driver fail:	",e.toString());
@@ -83,10 +82,10 @@ public class component_instance_driver_container
 					debug_information.println("Component file:",comp.component_directory_name+comp.component_file_name);
 					debug_information.println("Component driver id:",i);
 					
-					debug_information.println("Part user name:	",		p.user_name);
-					debug_information.println("Part system name:	",	p.system_name);
-					debug_information.println("Directory name:	",		p.directory_name);
-					debug_information.println("Mesh file name:	",		p.mesh_file_name);
+					debug_information.println("Part user name:	",		c_d.component_part.user_name);
+					debug_information.println("Part system name:	",	c_d.component_part.system_name);
+					debug_information.println("Directory name:	",		c_d.component_part.directory_name);
+					debug_information.println("Mesh file name:	",		c_d.component_part.mesh_file_name);
 					
 					e.printStackTrace();
 				}

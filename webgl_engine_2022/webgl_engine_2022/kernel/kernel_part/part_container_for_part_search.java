@@ -1,62 +1,45 @@
 package kernel_part;
 
+import java.util.ArrayList;
+
 import kernel_common_class.sorter;
 
 public class part_container_for_part_search extends sorter<part,String>
 {
-	private part append_part_array[];
-	private int append_part_number;
+	private ArrayList<part>append_part_array;
 	
 	public void append_one_part(part new_part)
 	{
-		if(new_part!=null) {
-			if(append_part_array==null)
-				append_part_array=new part[100];
-			if(append_part_array.length<=append_part_number) {
-				part bak[]=append_part_array;
-				append_part_array=new part[bak.length+100];
-				for(int i=0,ni=bak.length;i<ni;i++)
-					append_part_array[i]=bak[i];
-			}
-			append_part_array[append_part_number++]=new_part;
-		}
+		if(new_part!=null)
+			append_part_array.add(new_part);
 	}
 	public void execute_append()
 	{
-		if(append_part_number<=0)
+		int append_part_number,old_part_number;
+		if((append_part_number=append_part_array.size())<=0)
 			return;
 		
-		part my_parts[]=new part[append_part_number];
-		for(int i=0;i<append_part_number;i++) {
-			my_parts[i]=append_part_array[i];
-			append_part_array[i]=null;
+		part_container_for_part_search pcps;
+		pcps=new part_container_for_part_search(append_part_array);
+		append_part_array.clear();
+		
+		if((old_part_number=get_number())<=0) {
+			data_array=pcps.data_array;
+			return;
 		}
-		append_part_array=null;
-		append_part_number=0;
-		
-		part_container_for_part_search pcps=new part_container_for_part_search(my_parts);
-		
-		part p1[]=data_array,	p2[]=pcps.data_array;
-		int  n1	 =get_number(),	n2	=pcps.get_number();
-		
-		if(n1<=0)
-			data_array=p2;
-		else if(n2<=0)
-			data_array=p1;
-		else {
-			data_array=new part[n1+n2];
-			for(int i1=0,i2=0,j=0;;) {
-				if(i1>=n1) {
-					if(i2>=n2)
-						break;
-					data_array[j++]=p2[i2++];
-				}else if(i2>=n2)
-					data_array[j++]=p1[i1++];
-				else if(compare_data(p1[i1],p2[i2])<=0)
-					data_array[j++]=p1[i1++];
-				else
-					data_array[j++]=p2[i2++];
-			}
+		part old_data_array[]=data_array;
+		data_array=new part[old_part_number+append_part_number];
+		for(int old_part_pointer=0,append_part_pointer=0,new_pointer=0;;) {
+			if(old_part_pointer>=old_part_number) {
+				if(append_part_pointer>=append_part_number)
+					break;
+				data_array[new_pointer++]=pcps.data_array[append_part_pointer++];
+			}else if(append_part_pointer>=append_part_number)
+				data_array[new_pointer++]=old_data_array[old_part_pointer++];
+			else if(compare_data(old_data_array[old_part_pointer],pcps.data_array[append_part_pointer])<=0)
+				data_array[new_pointer++]=old_data_array[old_part_pointer++];
+			else
+				data_array[new_pointer++]=pcps.data_array[append_part_pointer++];
 		}
 	}
 	
@@ -64,7 +47,6 @@ public class part_container_for_part_search extends sorter<part,String>
 	{
 		super.destroy();
 		append_part_array=null;
-		append_part_number=0;
 	}
 	public int compare_key(part s,String t)
 	{
@@ -108,16 +90,9 @@ public class part_container_for_part_search extends sorter<part,String>
 		
 		return 0;
 	}
-	private static part[] clone_array(part my_parts[])
+	public part_container_for_part_search(ArrayList<part> my_parts)
 	{
-		part ret_val[]=new part[my_parts.length];
-		for(int i=0,ni=ret_val.length;i<ni;i++)
-			ret_val[i]=my_parts[i];
-		return ret_val;
-	}
-	public part_container_for_part_search(part my_parts[])
-	{
-		super(clone_array(my_parts),-1,new part[my_parts.length]);
+		super(my_parts.toArray(new part[my_parts.size()]));
 		
 		for(int i=0,j=0,id=0,n=get_number();i<n;){
 			for(id=i,j=i;j<n;j++){
@@ -129,48 +104,33 @@ public class part_container_for_part_search extends sorter<part,String>
 			for(;i<j;i++)
 				data_array[i].part_par.assembly_precision2=data_array[id].part_par.assembly_precision2;
 		}
-		
-		append_part_array=null;
-		append_part_number=0;
+		append_part_array=new ArrayList<part>();
 	}
 	
-	public part[] search_part(String my_part_system_name)
+	public ArrayList<part> search_part(String my_part_system_name)
 	{
-		execute_append();
+		if(append_part_array.size()>0)
+			execute_append();
 		
-		int search_id[]=range(my_part_system_name);
-		if(search_id==null)
+		int search_id[];
+		if((search_id=range(my_part_system_name))==null)
 			return null;
 		
-		part ret_part[]=new part[search_id[1]-search_id[0]+1];
-		for(int i=0,ni=ret_part.length,j=search_id[0];i<ni;i++,j++)
-			ret_part[i]=data_array[j];
-		
-		part bak[]=new part[ret_part.length];
-		int effective_part_number=0;
+		ArrayList<part> ret_part=new ArrayList<part>();
 		boolean top_flag=false,bottom_flag=false;
-		for(int i=0,ni=ret_part.length;i<ni;i++) {
-			bak[effective_part_number++]=ret_part[i];
-			if(ret_part[i].is_bottom_box_part()){
+		for(int i=0,ni=search_id[1]-search_id[0]+1,j=search_id[0],k=0;i<ni;i++,j++) {
+			if(data_array[j].is_bottom_box_part()){
 				if(bottom_flag)
-					effective_part_number--;
-				else
-					bottom_flag=true;
+					continue;
+				bottom_flag=true;
 			}
-			if(ret_part[i].is_top_box_part()){
+			if(data_array[j].is_top_box_part()){
 				if(top_flag)
-					effective_part_number--;
-				else
-					top_flag=true;
+					continue;
+				top_flag=true;
 			}
+			ret_part.add(k++,data_array[j]);
 		}
-		if(bak.length==effective_part_number)
-			ret_part=bak;
-		else{
-			ret_part=new part[effective_part_number];
-			for(int i=0;i<effective_part_number;i++)
-				ret_part[i]=bak[i];
-		}
-		return ret_part;
+		return (ret_part.size()<=0)?null:ret_part;
 	}
 }

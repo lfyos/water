@@ -82,7 +82,7 @@ public class dispatch_component_request
 							ret_val=in_dr.response_component_event(ek,ci);
 						}catch(Exception e){
 							ret_val=null;
-							part my_part=comp.driver_array[driver_id].component_part;
+							part my_part=comp.driver_array.get(driver_id).component_part;
 							debug_information.println("1.Execute response_component_event fail:	",e.toString());
 							debug_information.println("Component name:	",	comp.component_name);
 							debug_information.println("Driver ID:		",	driver_id);
@@ -145,7 +145,7 @@ public class dispatch_component_request
 							ret_val=in_dr.response_component_event(ek,ci);
 						}catch(Exception e){
 							ret_val=null;
-							part my_part=comp.driver_array[driver_id].component_part;
+							part my_part=comp.driver_array.get(driver_id).component_part;
 							
 							debug_information.println("2.Execute response_component_event fail:	",e.toString());
 							debug_information.println("Component name:	",	comp.component_name);

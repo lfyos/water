@@ -2,12 +2,13 @@ package driver_trace_primitive;
 
 import java.io.InputStream;
 
+import kernel_part.part;
+import kernel_render.render;
 import kernel_common_class.common_reader;
 import kernel_component.component;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_file_manager.file_writer;
-import kernel_part.part;
 import kernel_part.primitive_interface;
 import kernel_transformation.plane;
 import kernel_transformation.point;
@@ -46,15 +47,16 @@ public class collect_trace_primitive
 			}
 			int data_buffer_id=cr.get_int();
 
-			if((render_id<0)||(render_id>=ek.render_cont.renders.length))
+			if((render_id<0)||(render_id>=ek.render_cont.renders.size()))
 				continue;
-			if(ek.render_cont.renders[render_id]==null)
+			render r;
+			if((r=ek.render_cont.renders.get(render_id))==null)
 				continue;
-			if(ek.render_cont.renders[render_id].parts==null)
+			if(r.parts==null)
 				continue;
-			if((part_id<0)||(part_id>=ek.render_cont.renders[render_id].parts.length))
+			if((part_id<0)||(part_id>=r.parts.size()))
 				continue;
-			if((p=ek.render_cont.renders[render_id].parts[part_id])==null)
+			if((p=r.parts.get(part_id))==null)
 				continue;
 			if((body_id<0)||(body_id>=p.part_mesh.body_number()))
 				continue;

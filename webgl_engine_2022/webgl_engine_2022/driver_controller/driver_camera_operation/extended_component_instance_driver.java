@@ -5,6 +5,7 @@ import kernel_camera.locate_camera;
 import kernel_common_class.const_value;
 import kernel_component.component;
 import kernel_component.component_array;
+import kernel_driver.component_driver;
 import kernel_driver.component_instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
@@ -94,9 +95,10 @@ public class extended_component_instance_driver extends component_instance_drive
 			return;
 		if(comp.driver_number()<=0)
 			return;
-		if(comp.driver_array[driver_id].component_part==null)
+		component_driver c_d=comp.driver_array.get(driver_id);
+		if(c_d.component_part==null)
 			return;
-		part_rude part_mesh=comp.driver_array[driver_id].component_part.part_mesh;
+		part_rude part_mesh=c_d.component_part.part_mesh;
 		if(part_mesh==null)
 			return;
 		if(ci.parameter.body_id>=part_mesh.body_number())
@@ -243,10 +245,11 @@ public class extended_component_instance_driver extends component_instance_drive
 				}
 				if(locate_comp.driver_number()<=0)
 					break;
-				if(locate_comp.driver_array[0].component_part==null)
+				component_driver c_d=locate_comp.driver_array.get(0);
+				if(c_d.component_part==null)
 					break;
 				part_rude pr;
-				if((pr=locate_comp.driver_array[0].component_part.part_mesh)==null)
+				if((pr=c_d.component_part.part_mesh)==null)
 					break;
 				if((str=ci.request_response.get_parameter("body_id"))==null)
 					break;

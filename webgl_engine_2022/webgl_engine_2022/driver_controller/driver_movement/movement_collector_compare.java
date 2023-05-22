@@ -69,31 +69,35 @@ public class movement_collector_compare
 				for(component_link_list cll=target_cll;cll!=null;cll=cll.next_list_item)
 					target_array.add_component(cll.comp);
 
-				for(int i=0,ni=source_array.component_number;;i++){
+				for(int i=0,ni=source_array.comp_list.size();;i++){
 					if(i>=ni){
-						for(int j=0,nj=target_array.component_number;j<nj;j++)
-							unnecessary_component.register_component(target_array.comp[j],0);
+						for(int j=0,nj=target_array.comp_list.size();j<nj;j++)
+							unnecessary_component.register_component(target_array.comp_list.get(j),0);
 						break;
 					}
-					if(target_array.component_number<=0) {
+					if(target_array.comp_list.size()<=0) {
 						for(int j=i,nj=ni;j<nj;j++)
-							unmatched_component.register_component(source_array.comp[j],0);
+							unmatched_component.register_component(source_array.comp_list.get(j),0);
 						break;
 					}
-					source_matched_component.register_component(source_array.comp[i],0);
+					source_matched_component.register_component(source_array.comp_list.get(i),0);
 					
 					int match_id=0;
-					double match_distance2=caculate_component_distances(source_array.comp[i],target_array.comp[0]);
-					for(int j=1,nj=target_array.component_number;j<nj;j++) {
-						double my_match_distance2=caculate_component_distances(source_array.comp[i],target_array.comp[j]);
+					double match_distance2=caculate_component_distances(
+							source_array.comp_list.get(i),target_array.comp_list.get(0));
+					for(int j=1,nj=target_array.comp_list.size();j<nj;j++) {
+						double my_match_distance2=caculate_component_distances(
+								source_array.comp_list.get(i),target_array.comp_list.get(j));
 						if(match_distance2>my_match_distance2) {
 							match_id=j;
 							match_distance2=my_match_distance2;
 						}
 					}
-					target_matched_component.register_component(target_array.comp[match_id],0);
-					target_array.comp[match_id]=target_array.comp[--target_array.component_number];
-					target_array.comp[target_array.component_number]=null;
+					target_matched_component.register_component(target_array.comp_list.get(match_id),0);
+					
+					int last_target_id=target_array.comp_list.size()-1;
+					target_array.comp_list.set(match_id,target_array.comp_list.get(last_target_id));
+					target_array.comp_list.remove(last_target_id);
 				};
 			}
 		}

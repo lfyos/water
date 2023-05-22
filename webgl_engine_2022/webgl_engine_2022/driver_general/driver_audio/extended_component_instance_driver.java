@@ -42,7 +42,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		if((str=ci.request_response.get_parameter("operation"))==null)
 			return null;
 		
-		extended_component_driver acd=(extended_component_driver)(comp.driver_array[driver_id]);
+		extended_component_driver acd=(extended_component_driver)(comp.driver_array.get(driver_id));
 		
 		switch(str){
 		case "audio":

@@ -256,11 +256,9 @@ public class response_render_component_request
 			ci.request_response.print((i<=requesting_number)?"[\"":",[\"",package_proxy_url).
 								print("\",",package_length).
 								print(package_flag?",true,[":",false,[");
-
 			for(int j=0,nj=package_render_part_id.length;j<nj;j++){
-				int render_id=package_render_part_id[j][0];
-				int part_id  =package_render_part_id[j][1];
-				part p=ek.render_cont.renders[render_id].parts[part_id];
+				int render_id=package_render_part_id[j][0],part_id  =package_render_part_id[j][1];
+				part p=ek.render_cont.renders.get(render_id).parts.get(part_id);
 				ci.request_response.print((j<=0)?"[":",[",	p.render_id).
 									print(",",				p.part_id).
 									print(",",				p.part_from_id).
@@ -311,12 +309,14 @@ public class response_render_component_request
 			percentage/=total_length;
 			str+="K/"+Integer.toString((int)percentage)+"%]";
 		}
-		part p;
-		if((render_id>=0)&&(render_id<ek.render_cont.renders.length))
-			if((part_id>=0)&&(part_id<ek.render_cont.renders[render_id].parts.length))
-				if((p=ek.render_cont.renders[render_id].parts[part_id])!=null)
+		if((render_id>=0)&&(render_id<ek.render_cont.renders.size())) {
+			render r=ek.render_cont.renders.get(render_id);
+			if((part_id>=0)&&(part_id<r.parts.size())) {
+				part p=r.parts.get(part_id);
+				if(p!=null)
 					str+=":"+p.user_name;
-		
+			}
+		}
 		ci.message_display.set_display_message(str,
 				(loaded_buffer_object_data_length>=total_length)?1000*1000*1000*10:-1);
 	}

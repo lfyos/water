@@ -6,6 +6,7 @@ import kernel_common_class.jason_string;
 import kernel_component.component;
 import kernel_component.component_selection;
 import kernel_driver.component_instance_driver;
+import kernel_driver.component_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_transformation.box;
@@ -50,13 +51,15 @@ public class extended_component_instance_driver extends component_instance_drive
 					return true;
 				if(ci.parameter.comp.driver_number()<=0)
 					return true;
-				if(ci.parameter.comp.driver_array[0].component_part==null)
+				component_driver c_d=ci.parameter.comp.driver_array.get(0);
+				if(c_d.component_part==null)
 					return true;
 				point p;
 				if((p=ci.selection_camera_result.caculate_local_focus_point(ci.parameter))==null)
 					return true;
-				String marker_text=ci.parameter.comp.driver_array[0].component_part.user_name;
-				cmc.component_marker_array=new component_marker[]{new component_marker(ci.parameter.comp,marker_text,p.x,p.y,p.z)};
+				String marker_text=c_d.component_part.user_name;
+				cmc.component_marker_array=new component_marker[]{
+						new component_marker(ci.parameter.comp,marker_text,p.x,p.y,p.z)};
 				display_flag=new boolean[]{true};
 				update_component_parameter_version(0);
 				return false;
@@ -107,7 +110,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		component operate_comp;
 		component_marker operate_cm;
-		
+
 		String str,marker_text;
 		switch(((str=ci.request_response.get_parameter("operation"))==null)?"":str) {
 		default:
@@ -135,7 +138,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		case "clear_all":
 			cmc.clear_all_component_marker(ek);
 			if(cmc.global_private_flag)
-				comp.driver_array[driver_id].update_component_parameter_version();
+				comp.driver_array.get(driver_id).update_component_parameter_version();
 			else
 				update_component_parameter_version(0);
 			break;
@@ -144,7 +147,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;
 			cmc.clear_component_marker(Long.parseLong(str),ek);
 			if(cmc.global_private_flag)
-				comp.driver_array[driver_id].update_component_parameter_version();
+				comp.driver_array.get(driver_id).update_component_parameter_version();
 			else
 				update_component_parameter_version(0);
 			break;
@@ -164,7 +167,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			case "delete":
 				cmc.delete_component_marker(ci.parameter.body_id,ek);
 				if(cmc.global_private_flag)
-					comp.driver_array[driver_id].update_component_parameter_version();
+					comp.driver_array.get(driver_id).update_component_parameter_version();
 				else
 					update_component_parameter_version(0);
 				break;
@@ -235,7 +238,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				cmc.append_component_marker(ek,operate_comp,
 					marker_text,operated_point.x,operated_point.y,operated_point.z));
 			if(cmc.global_private_flag)
-				comp.driver_array[driver_id].update_component_parameter_version();
+				comp.driver_array.get(driver_id).update_component_parameter_version();
 			else
 				update_component_parameter_version(0);
 			break;

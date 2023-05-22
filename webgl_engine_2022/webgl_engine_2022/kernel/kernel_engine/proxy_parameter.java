@@ -89,6 +89,6 @@ public class proxy_parameter extends sorter<proxy_information,String>
 			data_array[data_array.length-1]=pi;
 		}
 		f.close();
-		do_sort(-1,new  proxy_information[data_array.length]);
+		do_sort();
 	}
 }

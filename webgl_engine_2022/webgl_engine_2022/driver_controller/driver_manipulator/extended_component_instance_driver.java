@@ -2,6 +2,7 @@ package driver_manipulator;
 
 import kernel_camera.camera_result;
 import kernel_component.component;
+import kernel_driver.component_driver;
 import kernel_driver.component_instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
@@ -93,13 +94,15 @@ public class extended_component_instance_driver extends component_instance_drive
 			break;
 		case "part_list":
 			if((my_comp=ek.component_cont.get_component(audio_component_id))!=null)
-				if(my_comp.driver_number()>0)
-					if(my_comp.driver_array[0] instanceof driver_audio.extended_component_driver) {
+				if(my_comp.driver_number()>0) {
+					component_driver c_d=my_comp.driver_array.get(0);
+					if(c_d instanceof driver_audio.extended_component_driver) {
 						operate_part_list.part_list_request(
 							modifier_container_id,save_component_name_or_id_flag,comp,
-							ek,ci,(driver_audio.extended_component_driver)(my_comp.driver_array[0]));
+							ek,ci,(driver_audio.extended_component_driver)c_d);
 						return null;
 					}
+				}
 			break;
 		case "clip":
 			operate_clip_plane.clip_plane_request(modifier_container_id,ek, ci);

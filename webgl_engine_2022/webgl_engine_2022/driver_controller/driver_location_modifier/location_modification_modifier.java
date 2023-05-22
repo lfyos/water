@@ -2,6 +2,7 @@ package driver_location_modifier;
 
 import kernel_component.component;
 import kernel_driver.modifier_driver;
+import kernel_driver.component_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_transformation.location;
@@ -96,9 +97,10 @@ public class location_modification_modifier extends modifier_driver
 		if((do_modify_number++)!=0)
 			return;
 		for(int i=0,ni=location_comp.driver_number();i<ni;i++) {
-			if(!(location_comp.driver_array[i] instanceof extended_component_driver))
+			component_driver c_d=location_comp.driver_array.get(i);
+			if(!(c_d instanceof extended_component_driver))
 				continue;
-			extended_component_driver ecd=(extended_component_driver)(location_comp.driver_array[i]);
+			extended_component_driver ecd=(extended_component_driver)c_d;
 			ecd.register_location_modifier(ek,component_id,terminate_time-start_time,
 				start_location,terminate_location,follow_component_id,follow_component_location);
 			return;

@@ -1,5 +1,6 @@
 package kernel_buffer;
 
+import kernel_driver.component_driver;
 import kernel_common_class.const_value;
 import kernel_component.component;
 import kernel_component.component_collector;
@@ -57,12 +58,15 @@ public class component_location_buffer
 		int part_id		=ek.process_part_sequence.process_parts_sequence[0][1];
 
 		if(comp.driver_number()>0)
-			for(int i=0,ni=comp.driver_number();i<ni;i++)
-				if(comp.driver_array[i].component_part!=null){
-					render_id	=comp.driver_array[i].component_part.render_id;
-					part_id		=comp.driver_array[i].component_part.part_id;
-					break;
-				}
+			for(int i=0,ni=comp.driver_number();i<ni;i++) {
+				component_driver c_d=comp.driver_array.get(i);
+				if(c_d!=null)
+					if(c_d.component_part!=null){
+						render_id	=c_d.component_part.render_id;
+						part_id		=c_d.component_part.part_id;
+						break;
+					}
+			}
 		int ret_val[]={render_id,part_id};
 		return ret_val;
 	}

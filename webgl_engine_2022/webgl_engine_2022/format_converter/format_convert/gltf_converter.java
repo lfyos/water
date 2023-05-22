@@ -267,7 +267,7 @@ class gltf_sampler_sorter extends sorter<gltf_sampler,String>
 		data_array=new gltf_sampler[gltf_sampler_array.get_number()];
 		for(int i=0,ni=data_array.length;i<ni;i++)
 			data_array[i]=new gltf_sampler(gltf_sampler_array.get(i),gltf_sampler_array.get_search_id());
-		do_sort(new gltf_sampler[data_array.length]);
+		do_sort();
 	}
 }
 
@@ -303,7 +303,7 @@ class gltf_image_sorter extends sorter<gltf_image,String>
 		data_array=new gltf_image[my_image_array.get_number()];
 		for(int i=0,ni=data_array.length;i<ni;i++)
 			data_array[i]=new gltf_image(my_image_array.get(i),my_image_array.get_search_id());
-		do_sort(new gltf_image[data_array.length]);
+		do_sort();
 	}
 }
 
@@ -398,7 +398,7 @@ class gltf_texture_sorter extends sorter<gltf_texture,String>
 		for(int i=0,ni=data_array.length;i<ni;i++)
 			data_array[i]=new gltf_texture(gltf_texture_array.get(i),
 				gltf_texture_array.get_search_id(),my_image_sorter,my_sampler_sorter);
-		do_sort(new gltf_texture[data_array.length]);
+		do_sort();
 	}
 }
 
@@ -568,7 +568,7 @@ class gltf_material_sorter extends sorter<gltf_material,String>
 		for(int i=0,ni=data_array.length;i<ni;i++)
 			data_array[i]=new gltf_material(my_material_array.get(i),
 					my_material_array.get_search_id(),my_texture_sorter);
-		do_sort(new gltf_material[data_array.length]);
+		do_sort();
 	}
 }
 
@@ -742,7 +742,7 @@ class gltf_buffer_sorter extends sorter<gltf_buffer,String>
 			else
 				data_array[i]=new gltf_buffer(buffer_name,my_directory_name+file_name,length);
 		}
-		do_sort(new gltf_buffer[data_array.length]);
+		do_sort();
 	}
 }
 
@@ -823,7 +823,7 @@ class gltf_buffer_view_sorter extends sorter<gltf_buffer_view,String>
 		for(int i=0,ni=data_array.length;i<ni;i++)
 			data_array[i]=new gltf_buffer_view(my_buffer_view_array.get(i),
 				my_buffer_view_array.get_search_id(),my_buffer_sorter);
-		do_sort(new gltf_buffer_view[data_array.length]);
+		do_sort();
 	}
 }
 
@@ -1277,7 +1277,7 @@ class gltf_accessor_sorter extends sorter<gltf_accessor,String>
 		for(int i=0,ni=data_array.length;i<ni;i++)
 			data_array[i]=new gltf_accessor(my_accessor_array.get(i),
 				my_accessor_array.get_search_id(),my_buffer_view_sorter);
-		do_sort(new gltf_accessor[data_array.length]);
+		do_sort();
 	}
 }
 
@@ -1521,7 +1521,7 @@ class gltf_mesh extends sorter<gltf_primitive,String>
 			data_array[i]=new gltf_primitive(my_primitive_array.get(i),
 				my_primitive_array.get_search_id(),my_accessor_sorter,my_material_sorter);
 		
-		do_sort(new gltf_primitive[data_array.length]);
+		do_sort();
 	}
 }
 
@@ -1543,7 +1543,7 @@ class gltf_mesh_sorter extends sorter<gltf_mesh,String>
 		for(int i=0,ni=data_array.length;i<ni;i++)
 			data_array[i]=new gltf_mesh(my_mesh_array.get(i),
 					my_mesh_array.get_search_id(),my_accessor_sorter,my_material_sorter);
-		do_sort(new gltf_mesh[data_array.length]);
+		do_sort();
 	}
 }
 
@@ -1610,7 +1610,7 @@ class gltf_mesh_same_tester extends sorter<gltf_mesh,gltf_mesh>
 			data_array[i]=my_mesh_array[i];
 		
 		gltf_mesh buffer[]=new gltf_mesh[data_array.length];
-		do_sort(buffer);
+		do_sort();
 		
 		int number=0;
 		for(int i=0,j,n=data_array.length;i<n;i=j) {
@@ -1757,7 +1757,7 @@ class gltf_node_sorter extends sorter<gltf_node,String>
 		data_array=new gltf_node[my_node_array.get_number()];
 		for(int i=0,ni=data_array.length;i<ni;i++)
 			data_array[i]=new gltf_node(my_node_array.get(i),my_node_array.get_search_id());
-		do_sort(new gltf_node[data_array.length]);
+		do_sort();
 		
 		identity_matrix_data=(new location()).get_location_data();
 	}
@@ -1868,7 +1868,7 @@ class gltf_scene_sorter extends sorter<gltf_scene,String>
 		data_array=new gltf_scene[my_scene_array.get_number()];
 		for(int i=0,ni=data_array.length;i<ni;i++)
 			data_array[i]=new gltf_scene(my_scene_array.get(i),my_scene_array.get_search_id());
-		do_sort(new gltf_scene[data_array.length]);
+		do_sort();
 		if((default_scene_id=search(my_jason_object.getString("scene")))>=data_array.length)
 			default_scene_id=-1;
 	}

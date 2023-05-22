@@ -68,7 +68,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		if(exit_flag)
 			return true;
 		
-		render_target rt=new render_target(comp.component_name,
+		render_target rt=new render_target(comp.component_name,-1,
 				ci.display_camera_result.target.camera_id,cr.target.parameter_channel_id,
 				new component[]{ek.component_cont.root_component},null,
 				mirror_plane,texture_width,texture_height,1,new box(-aspect_value,-1,-1, aspect_value, 1, 1),
@@ -80,7 +80,7 @@ public class extended_component_instance_driver extends component_instance_drive
 					new target_viewport(-1,-1,2,2,5,null)
 				},false,false,true,true);
 		rt.mirror_plane=mirror_plane;
-		ci.target_container.register_target(rt,-1,null);
+		ci.target_container.register_target(rt,null);
 		
 		if(rt.target_id!=bak_mirror_id){
 			bak_mirror_id=rt.target_id;

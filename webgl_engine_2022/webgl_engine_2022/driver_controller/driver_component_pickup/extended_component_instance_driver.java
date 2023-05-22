@@ -43,15 +43,17 @@ public class extended_component_instance_driver extends component_instance_drive
 		if(do_render_number!=0)
 			viewport=ci.display_camera_result.caculate_view_coordinate(ci);
 		if(viewport==null){
-			if((rt=ci.target_container.get_target(comp.component_name))!=null)
-				ci.target_container.register_target(rt,0,null);
+			if((rt=ci.target_container.get_target(comp.component_name))!=null) {
+				rt.do_render_number=0;
+				ci.target_container.register_target(rt,null);
+			}
 			return true;
 		}
 		double xm=viewport[0],ym=viewport[1];
 		box view_volume_box=ci.display_camera_result.target.view_volume_box;
 		point center=view_volume_box.center(),diff=view_volume_box.p[1].sub(center);
 
-		rt=new render_target(comp.component_name,
+		rt=new render_target(comp.component_name,do_render_number,
 			cr.target.camera_id,cr.target.parameter_channel_id,
 			new component[] {ek.component_cont.root_component},null,ci.clip_plane,2,1,4,
 			new box(	center.x+diff.x*xm-pickup_area_length,
@@ -68,7 +70,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		
 		rt.selection_target_flag=true;
 		
-		int new_target_id=ci.target_container.register_target(rt,do_render_number,null);
+		int new_target_id=ci.target_container.register_target(rt,null);
 		
 		if(target_id!=new_target_id){
 			target_id=new_target_id;

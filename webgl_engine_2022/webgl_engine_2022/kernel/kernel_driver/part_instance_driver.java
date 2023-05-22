@@ -39,7 +39,7 @@ public class part_instance_driver
 			return new String[] {file_name,ek.system_par.local_data_charset};
 		
 		if(p.part_from_id>=0){
-			p=ek.render_cont.renders[p.render_id].parts[p.part_from_id];
+			p=ek.render_cont.renders.get(p.render_id).parts.get(p.part_from_id);
 			part_instance_driver part_instance=ci.part_instance_driver_cont.get_part_instance_driver(p);
 			if(part_instance!=null)
 				try{

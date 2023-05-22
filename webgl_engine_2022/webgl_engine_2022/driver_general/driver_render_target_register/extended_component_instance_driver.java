@@ -27,7 +27,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		
 		main_target_id=-1;
 		
-		part p=comp.driver_array[driver_id].component_part;
+		part p=comp.driver_array.get(driver_id).component_part;
 		file_reader f=new file_reader(p.directory_name+p.material_file_name,p.file_charset);
 		int ni=f.get_int();
 		target_parameter=new render_target_parameter[ni];
@@ -37,7 +37,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	private void write_target_parameter()
 	{
-		part p=comp.driver_array[driver_id].component_part;
+		part p=comp.driver_array.get(driver_id).component_part;
 		file_writer f=new file_writer(p.directory_name+p.material_file_name,p.file_charset);
 		f.print("/*	target number 	*/		");
 		
@@ -88,7 +88,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			double center_x=target_parameter[i].center_x;
 			double center_y=target_parameter[i].center_y;
 			
-			render_target rt=new render_target(target_parameter[i].target_name,
+			render_target rt=new render_target(target_parameter[i].target_name,-1,
 				target_parameter[i].camera_id,target_parameter[i].parameter_channel_id,
 				new component[] {ek.component_cont.root_component},null,ci.clip_plane,
 				target_parameter[i].framebuffer_width,target_parameter[i].framebuffer_height,1,
@@ -96,7 +96,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				target_parameter[i].viewport,(main_target_id==i)?true:false,false,
 				target_parameter[i].do_discard_lod_flag,target_parameter[i].do_selection_lod_flag);
 			
-			ci.target_container.register_target(rt,-1,main_rt);
+			ci.target_container.register_target(rt,main_rt);
 			if(main_rt==null)
 				main_rt=rt;
 		}

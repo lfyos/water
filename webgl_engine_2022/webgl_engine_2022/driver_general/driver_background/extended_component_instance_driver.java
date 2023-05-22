@@ -50,7 +50,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		case "file":
 			if((str=ci.request_response.get_parameter("file"))!=null)
 				return new String[] {
-						file_directory.part_file_directory(comp.driver_array[driver_id].component_part,
+						file_directory.part_file_directory(comp.driver_array.get(driver_id).component_part,
 								ek.system_par,ek.scene_par)+file_reader.separator(directory_name+str),
 						ek.system_par.local_data_charset
 					};

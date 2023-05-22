@@ -23,7 +23,7 @@ public class operate_fix_render_driver_id
 		component_array comp_cont=new component_array(ek.component_cont.root_component.component_id+1);
 		if((str=ci.request_response.get_parameter("component"))==null){
 			comp_cont.add_selected_component(ek.component_cont.root_component,false);
-			if(comp_cont.component_number<=0)
+			if(comp_cont.comp_list.size()<=0)
 				comp_cont.add_component(ek.component_cont.root_component);
 		}else {
 			component comp;
@@ -31,9 +31,8 @@ public class operate_fix_render_driver_id
 				return;
 			comp_cont.add_component(comp);
 		}
-		for(component comp;comp_cont.component_number>0;){
-			comp=comp_cont.comp[--(comp_cont.component_number)];
-			comp_cont.comp[comp_cont.component_number]=null;
+		for(component comp;comp_cont.comp_list.size()>0;){
+			comp=comp_cont.comp_list.remove(comp_cont.comp_list.size()-1);
 			for(int child_id=0,child_number=comp.children_number();child_id<child_number;child_id++)
 				comp_cont.add_component(comp.children[child_id]);
 			if((comp.fix_render_driver_id=fix_render_driver_id)>=0)

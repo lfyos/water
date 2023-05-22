@@ -69,9 +69,9 @@ public class operate_show_hide_component
 			comp_cont.add_selected_component(ek.component_cont.root_component,false);
 			selected_operation_flag=true;
 		}
-		if(comp_cont.component_number>0)
-			for(int i=0;i<(comp_cont.component_number);i++)
-				show_hide(comp_cont.comp[i],parameter_channel_id,visible_flag,ek);
+		if(comp_cont.comp_list.size()>0)
+			for(int i=0,ni=comp_cont.comp_list.size();i<ni;i++)
+				show_hide(comp_cont.comp_list.get(i),parameter_channel_id,visible_flag,ek);
 		else if(visible_flag&&selected_operation_flag)
 				show_hide(ek.component_cont.root_component,parameter_channel_id,visible_flag,ek);
 		return;

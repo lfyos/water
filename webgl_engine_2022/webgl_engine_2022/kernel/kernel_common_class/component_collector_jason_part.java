@@ -1,6 +1,7 @@
 package kernel_common_class;
 
 import kernel_part.part;
+import kernel_render.render;
 import kernel_component.component_collector;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
@@ -100,6 +101,8 @@ public class component_collector_jason_part
 			print(pre_str,ci,"\"render_part_number\":		",	collector.render_part_number[i],		",");
 			print(pre_str,ci,"\"render_component_number\":	",	collector.render_component_number[i],	",");
 			print(pre_str,ci,"\"part_list\":[");
+			
+			render r=ek.render_cont.renders.get(i);
 			if(collector.component_collector[i]!=null)
 				for(int j=0,nj=collector.component_collector[i].length;j<nj;j++){
 					if(collector.part_component_number[i][j]<=0)
@@ -110,7 +113,7 @@ public class component_collector_jason_part
 						unprint_str=null;
 					}
 					
-					part p=ek.render_cont.renders[i].parts[j];
+					part p=r.parts.get(j);
 
 					pre_str="\t\t\t\t";
 					print(pre_str,ci,"{");

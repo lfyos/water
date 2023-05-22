@@ -1,5 +1,7 @@
 package driver_movement;
 
+import kernel_part.part;
+import kernel_render.render;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_component.component;
@@ -189,11 +191,17 @@ public class movement_suspend
 		for(int i=0,ni=virtual_mount_collector.component_collector.length;i<ni;i++) {
 			if(virtual_mount_collector.component_collector[i]==null)
 				continue;
+			render my_render;
+			if((my_render=ek.render_cont.renders.get(i))==null)
+				continue;
 			for(int j=0,nj=virtual_mount_collector.component_collector[i].length;j<nj;j++) {
-				component_link_list cll;
-				if((cll=virtual_mount_collector.component_collector[i][j])==null)
+				component_link_list cll=virtual_mount_collector.component_collector[i][j];
+				if(cll==null)
 					continue;
-				if(ek.render_cont.renders[i].parts[j].system_name.compareTo(str)!=0)
+				part my_p;
+				if((my_p=my_render.parts.get(j))==null)
+					continue;
+				if(my_p.system_name.compareTo(str)!=0)
 					continue;
 				for(;cll!=null;cll=cll.next_list_item) {
 					if(cll.comp.get_effective_display_flag(ci.display_camera_result.target.parameter_channel_id))
@@ -207,8 +215,8 @@ public class movement_suspend
 
 					debug_information.println("success in response_suspend_event of start_follow\t:\t",str);
 					debug_information.println("component\t:\t",cll.comp.component_name);
-					debug_information.println("system_name\t:\t",ek.render_cont.renders[i].parts[j].system_name);
-					debug_information.println("user_name\t:\t",ek.render_cont.renders[i].parts[j].user_name);
+					debug_information.println("system_name\t:\t",my_p.system_name);
+					debug_information.println("user_name\t:\t",my_p.user_name);
 
 					return;
 				}

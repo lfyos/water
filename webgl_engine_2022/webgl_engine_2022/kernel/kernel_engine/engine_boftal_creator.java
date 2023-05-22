@@ -62,7 +62,7 @@ public class engine_boftal_creator extends sorter <part,String>
 				break;
 			}
 		
-		do_sort(-1,new part[part_number]);
+		do_sort();
 
 		process_bar.set_process_bar(true, "create_buffer_object_file", "",0,part_number);
 

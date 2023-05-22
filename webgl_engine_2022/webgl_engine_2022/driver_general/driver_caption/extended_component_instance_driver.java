@@ -29,7 +29,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		last_time=0;
 		fps_string="";
 		
-		part p=comp.driver_array[driver_id].component_part;
+		part p=comp.driver_array.get(driver_id).component_part;
 		String file_name=p.directory_name+p.material_file_name;
 		file_reader f=new file_reader(file_name,p.file_charset);
 		
@@ -51,7 +51,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		if(ci.parameter.comp==null)
 			return ret_val;
 		for(int i=0,ni=ci.parameter.comp.driver_number();i<ni;i++){
-			part p=ci.parameter.comp.driver_array[i].component_part;
+			part p=ci.parameter.comp.driver_array.get(i).component_part;
 			if(p==null)
 				continue;
 			component_instance_driver in_d=ci.component_instance_driver_cont.get_component_instance_driver(ci.parameter.comp,i);

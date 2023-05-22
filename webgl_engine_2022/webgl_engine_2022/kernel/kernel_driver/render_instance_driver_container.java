@@ -14,12 +14,13 @@ public class render_instance_driver_container
 		render_instance_driver_array=new render_instance_driver[0];
 		if(ek.render_cont.renders==null)
 			return;
-		if(ek.render_cont.renders.length<=0)
+		if(ek.render_cont.renders.size()<=0)
 			return;
-		render_instance_driver_array=new render_instance_driver[ek.render_cont.renders.length];
-		for(int i=0,ni=render_instance_driver_array.length;i<ni;i++)
-			render_instance_driver_array[i]=ek.render_cont.renders[i].driver.create_render_instance_driver(
-					ek.render_cont.renders[i],ek,request_response);
+		render_instance_driver_array=new render_instance_driver[ek.render_cont.renders.size()];
+		for(int i=0,ni=render_instance_driver_array.length;i<ni;i++) {
+			render r=ek.render_cont.renders.get(i);
+			render_instance_driver_array[i]=r.driver.create_render_instance_driver(r,ek,request_response);
+		}
 		return;
 	}
 	public void destroy()

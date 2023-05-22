@@ -210,25 +210,26 @@ public class extended_component_instance_driver extends component_instance_drive
 			return null;
 		case "dblclick_component":
 			component_array c_a=new component_array(ek.component_cont.root_component.component_id+1);
+			
 			if((str=ci.request_response.get_parameter("priority"))==null)
 				str="pickup";
 			if(str.toLowerCase().compareTo("pickup")==0)
 				if(ci.parameter.comp!=null)
 					c_a.add_component(ci.parameter.comp);
-			if(c_a.component_number<=0) 
+			if(c_a.comp_list.size()<=0) 
 				if(operate_component!=null)
 					if(operate_component.component_id!=ek.component_cont.root_component.component_id)
 						if(operate_component.component_id!=camera_component_id) 
 							c_a.add_component(operate_component);
-			if(c_a.component_number<=0)
+			if(c_a.comp_list.size()<=0)
 				c_a.add_selected_component(ek.component_cont.root_component,false);
-			if(c_a.component_number<=0)
+			if(c_a.comp_list.size()<=0)
 				add_in_list_component(ek.component_cont.root_component,c_a);
 			
 			c_a.make_to_ancestor(ek.component_cont);
 			long start_time=ek.modifier_cont[modifier_container_id].get_timer().get_current_time();
-			for(int i=0,ni=c_a.component_number;i<ni;i++)
-				reset_component_location(c_a.comp[i],start_time,ek,ci);
+			for(int i=0,ni=c_a.comp_list.size();i<ni;i++)
+				reset_component_location(c_a.comp_list.get(i),start_time,ek,ci);
 			return null;
 		default:
 			return null;

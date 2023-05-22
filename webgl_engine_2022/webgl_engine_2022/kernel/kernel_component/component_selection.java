@@ -144,8 +144,8 @@ public class component_selection
 	}
 	public void set_component_container_selected(component_array comp_cont,component_container component_cont)
 	{
-		for(int i=0,ni=comp_cont.component_number;i<ni;i++)
-			set_selected_flag(comp_cont.comp[i],component_cont);
+		for(int i=0,ni=comp_cont.comp_list.size();i<ni;i++)
+			set_selected_flag(comp_cont.comp_list.get(i),component_cont);
 	}
 	public component_selection(engine_kernel ek)
 	{

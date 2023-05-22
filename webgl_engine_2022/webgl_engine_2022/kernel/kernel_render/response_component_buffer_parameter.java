@@ -24,7 +24,7 @@ public class response_component_buffer_parameter
 			return null;
 
 		long old_parameter_version=in_dr.get_component_parameter_version();
-		long new_parameter_version=cll.comp.driver_array[cll.driver_id].get_component_parameter_version();
+		long new_parameter_version=cll.comp.driver_array.get(cll.driver_id).get_component_parameter_version();
 		if(old_parameter_version==new_parameter_version)
 			return null;
 		ci.statistics_client.should_update_component_parameter_number+=should_increase;
@@ -56,12 +56,12 @@ public class response_component_buffer_parameter
 						continue;
 					
 					ci.request_response.print(((parameter_print_number++)>0)?",[":"[",
-							cll.comp.driver_array[cll.driver_id].same_part_component_driver_id);
+							cll.comp.driver_array.get(cll.driver_id).same_part_component_driver_id);
 					ci.request_response.print(",");
 					try{
 						in_dr.create_component_parameter(ek,ci);
 					}catch(Exception e){
-						part p=cll.comp.driver_array[cll.driver_id].component_part;
+						part p=cll.comp.driver_array.get(cll.driver_id).component_part;
 						
 						debug_information.println("create_component_parameter in instance_driver fail:	",e.toString());
 						debug_information.println("Component name:	",	cll.comp.component_name);
@@ -75,7 +75,7 @@ public class response_component_buffer_parameter
 					ci.request_response.print("]");
 					ci.statistics_client.update_component_parameter_number++;
 					in_dr.update_component_parameter_version(
-							cll.comp.driver_array[cll.driver_id].get_component_parameter_version());
+							cll.comp.driver_array.get(cll.driver_id).get_component_parameter_version());
 				}
 				ci.request_response.print("]]");
 				break;

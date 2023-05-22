@@ -1,10 +1,13 @@
 package kernel_client_interface;
 
+
+import kernel_part.part;
+import kernel_render.render;
 import kernel_common_class.debug_information;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_file_manager.file_directory;
-import kernel_part.part;
+
 
 public class dispatch_buffer_request
 {
@@ -29,13 +32,20 @@ public class dispatch_buffer_request
 				"render_id less than zero in do_buffer_dispatch of dispatch_system_request");
 			return null;
 		}
-		if(render_id>=(ek.render_cont.renders.length)){
+		int render_number=ek.render_cont.renders.size();
+		if(render_id>=render_number){
 			debug_information.println(
 				"render_id more than max value in do_buffer_dispatch of dispatch_system_request\t:\t",
-				Integer.toString(render_id)+"/"+Integer.toString(ek.render_cont.renders.length));
+				Integer.toString(render_id)+"/"+Integer.toString(render_number));
 			return null;
 		}
-		if(ek.render_cont.renders[render_id].parts==null){
+		render  r;
+		if((r=ek.render_cont.renders.get(render_id))==null){
+			debug_information.println(
+				"(ek.render_cont.renders[render_id]==null) in do_buffer_dispatch of dispatch_system_request");
+			return null;
+		}
+		if(r.parts==null){
 			debug_information.println(
 				"(ek.render_cont.renders[render_id].parts==null) in do_buffer_dispatch of dispatch_system_request");
 			return null;
@@ -50,15 +60,15 @@ public class dispatch_buffer_request
 				"part_id less than zero in do_buffer_dispatch of dispatch_system_request");
 			return null;
 		}
-		if(part_id>=ek.render_cont.renders[render_id].parts.length){
+		if(part_id>=r.parts.size()){
 			debug_information.println(
 				"part_id more than max value in do_buffer_dispatch of dispatch_system_request\t:\t",
-				Integer.toString(part_id)+"/"+Integer.toString(ek.render_cont.renders[render_id].parts.length));
+				Integer.toString(part_id)+"/"+Integer.toString(r.parts.size()));
 			return null;
 		}
 
-		part p=ek.render_cont.renders[render_id].parts[part_id];
-		if(p==null){
+		part p;
+		if((p=r.parts.get(part_id))==null){
 			debug_information.println(
 				"part object is null in do_buffer_dispatch of dispatch_system_request\t:\t",
 				Integer.toString(render_id)+"/"+Integer.toString(part_id));

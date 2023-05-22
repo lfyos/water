@@ -1,5 +1,6 @@
 package kernel_interface;
 
+import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
 import kernel_common_class.balance_tree;
@@ -61,7 +62,7 @@ public class engine_interface
 		int part_type_id=0;
 		part_container_for_delete_part_file part_cont_for_delete_file=new part_container_for_delete_part_file();
 		original_render=new render_container();
-		part_container_for_part_search pcps=new part_container_for_part_search(new part[]{});
+		part_container_for_part_search pcps=new part_container_for_part_search(new ArrayList<part>());
 		original_render.load_shader(true,
 			component_load_source_cont,pcps,system_par.last_modified_time,
 			system_par.data_root_directory_name+system_par.shader_file_name,

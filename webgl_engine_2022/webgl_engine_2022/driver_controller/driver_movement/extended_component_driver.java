@@ -43,7 +43,7 @@ public class extended_component_driver extends component_driver
 		component scene_comp=ek.component_cont.scene_component;
 		String movement_directory_name=((scene_comp==null)?comp:scene_comp).component_directory_name;
 		
-		part p=comp.driver_array[driver_id].component_part;
+		part p=comp.driver_array.get(driver_id).component_part;
 		file_reader fr=new file_reader(p.directory_name+p.material_file_name,p.file_charset);
 		String movement_file_name					=file_reader.separator(fr.get_string());
 		String design_file_name						=file_reader.separator(fr.get_string());

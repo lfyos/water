@@ -31,7 +31,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		if(cr.target.main_display_target_flag){
-			((extended_component_driver)(comp.driver_array[driver_id])).delete_timeout_location_modifier(ek);
+			((extended_component_driver)(comp.driver_array.get(driver_id))).delete_timeout_location_modifier(ek);
 			return false;
 		}
 		return true;
@@ -55,7 +55,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void create_component_parameter(engine_kernel ek,client_information ci)
 	{
-		location_modification_data	p=((extended_component_driver)(comp.driver_array[driver_id])).first;
+		location_modification_data	p=((extended_component_driver)(comp.driver_array.get(driver_id))).first;
 		
 		ci.request_response.print("[");
 		for(int print_number=0;p!=null;p=p.next)
@@ -84,7 +84,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			}
 		ci.request_response.print("]");
 		
-		last_parameter_version=comp.driver_array[driver_id].get_component_parameter_version();
+		last_parameter_version=comp.driver_array.get(driver_id).get_component_parameter_version();
 	}
 	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{

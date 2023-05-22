@@ -22,7 +22,7 @@ public class component_information extends jason_creator
 			driver_number=comp.driver_number();
 			pi=new part_information[driver_number];
 			for(int i=0;i<driver_number;i++)
-				pi[i]=new part_information(comp.driver_array[i].component_part,ci);
+				pi[i]=new part_information(comp.driver_array.get(i).component_part,ci);
 			
 		}
 		print("component_name",			component_name);

@@ -1,5 +1,7 @@
 package kernel_engine;
 
+import java.util.ArrayList;
+
 import kernel_common_class.debug_information;
 import kernel_part.part;
 import kernel_render.render;
@@ -105,7 +107,7 @@ public class part_lru_manager
 		}
 		part_array=null;
 	}
-	public part_lru_manager(render r[],int my_max_in_list_number)
+	public part_lru_manager(ArrayList<render> ren,int my_max_in_list_number)
 	{
 		in_list_number=0;
 		max_in_list_number=my_max_in_list_number;
@@ -113,16 +115,17 @@ public class part_lru_manager
 		last=null;
 		
 		int render_number=0;
-		if(r!=null)
-			render_number=r.length;
+		if(ren!=null)
+			render_number=ren.size();
 		part_array=new part_bidirection_link_list[render_number][];
 		for(int render_id=0;render_id<render_number;render_id++) {
 			int part_number=0;
-			if(r[render_id].parts!=null)
-				part_number=r[render_id].parts.length;
+			render r=ren.get(render_id);
+			if(r.parts!=null)
+				part_number=r.parts.size();
 			part_array[render_id]=new part_bidirection_link_list[part_number];
 			for(int part_id=0;part_id<part_number;part_id++)
-				part_array[render_id][part_id]=new part_bidirection_link_list(r[render_id].parts[part_id]);
+				part_array[render_id][part_id]=new part_bidirection_link_list(r.parts.get(part_id));
 		}
 	}
 }

@@ -27,7 +27,7 @@ public class travel_through_directory
 		{
 			public file_name_sorter(String file_name_array[])
 			{
-				super(file_name_array,-1,new String[file_name_array.length]);
+				super(file_name_array);
 			}
 			public int compare_data(String s,String t)
 			{

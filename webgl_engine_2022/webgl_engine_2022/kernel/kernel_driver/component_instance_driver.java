@@ -105,7 +105,7 @@ public class component_instance_driver
 						ret_val=in_dr.response_component_event(ek,ci);
 					}catch(Exception e){
 						ret_val=null;
-						part my_part=comp.driver_array[driver_id].component_part;
+						part my_part=comp.driver_array.get(driver_id).component_part;
 						
 						debug_information.println("3.Execute response_component_event fail:	",e.toString());
 						debug_information.println("Component name:	",	comp.component_name);

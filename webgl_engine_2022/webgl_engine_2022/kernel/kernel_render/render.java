@@ -1,6 +1,11 @@
 package kernel_render;
 
 import java.io.File;
+import java.util.ArrayList;
+
+import kernel_part.part;
+import kernel_part.part_parameter;
+import kernel_part.part_container_for_part_search;
 
 import kernel_common_class.debug_information;
 import kernel_component.component_load_source_container;
@@ -9,9 +14,6 @@ import kernel_engine.system_parameter;
 import kernel_engine.scene_parameter;
 import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
-import kernel_part.part;
-import kernel_part.part_container_for_part_search;
-import kernel_part.part_parameter;
 
 public class render
 {
@@ -19,27 +21,27 @@ public class render
 	
 	public String render_name;
 	public render_driver driver;
-	public part parts[];
-	private int part_number;
+	public ArrayList<part> parts;
 	
 	public void destroy()
 	{
 		if(render_name!=null)
 			render_name=null;
 		
-		if(parts!=null) {
-			for(int i=0,ni=parts.length;i<ni;i++) 
-				if(parts[i]!=null){
-					parts[i].destroy();
-					parts[i]=null;
+		if(parts!=null){
+			for(int i=0,ni=parts.size();i<ni;i++){
+				part p;
+				if((p=parts.get(i))!=null){
+					p.destroy();
+					parts.set(i,null);
 				}
+			}
 			parts=null;
 		}
 		if(driver!=null){
 			driver.destroy();
 			driver=null;
 		}
-		part_number=0;
 	}
 	public render(int my_render_id,
 			render r,client_request_response request_response,
@@ -48,21 +50,16 @@ public class render
 		render_id=my_render_id;
 		render_name=r.render_name;
 		render_id=r.render_id;
-		part_number=r.part_number;
 		driver=r.driver.clone(r,request_response,system_par,scene_par);
 		
-		if(r.parts==null)
-			parts=null;
-		else if(r.parts.length<=0)
-			parts=null;
-		else{
-			parts=new part[r.parts.length];
-			for(int i=0,ni=r.parts.length;i<ni;i++)
-				if(i<part_number)
-					parts[i]=new part(r.parts[i],request_response,system_par,scene_par);
-				else
-					parts[i]=null;
-		}
+		parts=new ArrayList<part>();
+		if(r.parts!=null)
+			for(int i=0,ni=r.parts.size();i<ni;i++){
+				part p;
+				if((p=r.parts.get(i))!=null)
+					p=new part(p,request_response,system_par,scene_par);
+				parts.add(i,p);
+			}
 	}
 	public render(int my_render_id,
 			String my_render_name,String my_driver_name,
@@ -71,7 +68,6 @@ public class render
 	{
 		render_id=my_render_id;
 		render_name=my_render_name;
-		part_number=0;
 		driver=null;
 		parts=null;
 		
@@ -96,45 +92,25 @@ public class render
 	}
 	public void delete_last_part()
 	{
-		if(part_number<=0) {
-			parts=null;
+		int part_number=parts.size();
+		if(part_number<=0) 
 			return;
-		}
-		parts[part_number-1].destroy();
-		parts[part_number-1]=null;
-		part_number--;
-		
-		if(part_number<=0)
-			parts=null;
+		part p=parts.get(part_number-1);
+		p.destroy();
+		parts.remove(part_number-1);
 		return;
 	}
-	public void compress_part()
-	{
-		if((parts==null)||(part_number<=0)){
-			part_number=0;
-			parts=null;
-		}else if(parts.length!=part_number){
-			part bak[]=parts;
-			parts=new part[part_number];
-			for(int i=0;i<part_number;i++)
-				parts[i]=bak[i];
-		}
-	}
+	
 	public void add_part(part p)
 	{
 		if(p==null)
 			return;
 		
-		if(parts==null) {
-			parts=new part[10];
-			part_number=0;
-		}else if(part_number>=parts.length){
-			part bak[]=parts;
-			parts=new part[parts.length*2];
-			for(int i=0,ni=bak.length;i<ni;i++)
-				parts[i]=bak[i];
-		}
-		parts[part_number]=p;
+		if(parts==null) 
+			parts=new ArrayList<part>();
+		
+		int part_number=parts.size();
+		parts.add(part_number, p);
 
 		p.render_id				=render_id;
 		p.part_id				=part_number;
@@ -143,8 +119,6 @@ public class render
 		p.permanent_render_id	=p.render_id;
 		p.permanent_part_id		=p.part_id;
 		p.permanent_part_from_id=-1;
-		
-		part_number++;
 		
 		return;
 	}
@@ -221,8 +195,6 @@ public class render
 				}
 		}
 		f.close();
-		compress_part();
-		
 		return;
 	}
 }

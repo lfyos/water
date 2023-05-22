@@ -44,7 +44,7 @@ public class extended_component_driver  extends component_driver
 		component audio_comp=ek.component_cont.search_component(audio_component_name);
 		if(audio_comp!=null)
 			if(audio_comp.driver_number()>0)
-				if(audio_comp.driver_array[0] instanceof driver_audio.extended_component_driver)
+				if(audio_comp.driver_array.get(0) instanceof driver_audio.extended_component_driver)
 					audio_component_id=audio_comp.component_id;
 		
 		return new extended_component_instance_driver(
