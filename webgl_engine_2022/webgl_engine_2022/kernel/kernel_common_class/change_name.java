@@ -49,8 +49,15 @@ public class change_name extends sorter<String[],String>
 		data_array=new String[n+1][];
 		for(int i=0;i<n;i++)
 			data_array[i]=bak[i];
-		data_array[n]=t;
-		one_time_insertion_sort(n);
+		
+		for(int i=n-1;i>=0;i--)
+			if(compare_data(t,data_array[i])<0)
+				data_array[i+1]=data_array[i];
+			else{
+				data_array[i+1]=t;
+				return;
+			}
+		data_array[0]=t;
 		return;
 	}
 	public void delete(int id)
@@ -94,7 +101,7 @@ public class change_name extends sorter<String[],String>
 					new String(a.data_array[i][0]),
 					new String(a.data_array[i][1])
 			};
-		do_sort(new String[data_array.length][]);
+		do_sort();
 	}
 	private void init(common_reader f_array[],String change_string)
 	{
@@ -143,13 +150,13 @@ public class change_name extends sorter<String[],String>
 		if(change_number<=0)
 			data_array=null;
 		else if(data_array.length==change_number)
-			do_sort(-1,new String[change_number][]);
+			do_sort();
 		else {
 			String bak[][]=data_array;
 			data_array=new String[change_number][];
 			for(int i=0;i<change_number;i++)
 				data_array[i]=bak[i];
-			do_sort(-1,bak);
+			do_sort();
 		}
 	}
 	public change_name()

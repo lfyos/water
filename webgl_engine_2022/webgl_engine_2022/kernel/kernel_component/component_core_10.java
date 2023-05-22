@@ -39,7 +39,7 @@ public class component_core_10 	extends component_core_9
 			}
 			if((child_number=children_number())<=0){
 				for(i=0,n=driver_number();i<n;i++){
-					part p=driver_array[i].component_part;
+					part p=driver_array.get(i).component_part;
 					model_box=p.secure_caculate_part_box((component)this,i,-1,-1,-1,-1,-1,null,null);
 					if(model_box!=null){
 						caculate_box_result_flag=true;
@@ -68,7 +68,7 @@ public class component_core_10 	extends component_core_9
 					}
 				if(model_box==null)
 					for(i=0,n=driver_number();i<n;i++){
-						part p=driver_array[i].component_part;
+						part p=driver_array.get(i).component_part;
 						model_box=p.secure_caculate_part_box(
 								(component)this,i,-1,-1,-1,-1,-1,null,null);
 						if(model_box!=null)
@@ -105,7 +105,7 @@ public class component_core_10 	extends component_core_9
 			}else{
 				if(!children_location_modify_flag)
 					for(i=0,n=driver_number();i<n;i++){
-						part p=driver_array[i].component_part;
+						part p=driver_array.get(i).component_part;
 						box my_model_box=p.secure_caculate_part_box(
 									(component)this,i,-1,-1,-1,-1,-1,null,null);
 						if(my_model_box!=null){

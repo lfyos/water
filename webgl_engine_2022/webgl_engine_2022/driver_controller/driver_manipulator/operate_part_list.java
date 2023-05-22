@@ -118,7 +118,7 @@ public class operate_part_list
 		acd.set_audio(null);
 		
 		if(ci.display_camera_result.cam.parameter.movement_flag)
-			if(comp_con.component_number>0)
+			if(comp_con.comp_list.size()>0)
 				if(select_type_id!=2)
 					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
 						ek.modifier_cont[modifier_container_id],comp_con.get_box(),null,
@@ -247,7 +247,7 @@ public class operate_part_list
 					component my_comp=ek.component_cont.search_component(str);
 					if(my_comp!=null)
 						comp_cont.add_component(my_comp);
-					if(comp_cont.component_number<=0)
+					if(comp_cont.comp_list.size()<=0)
 						return;
 				}
 			}else if((str=ci.request_response.get_parameter("component_id"))!=null){
@@ -260,11 +260,11 @@ public class operate_part_list
 				}
 				if((my_comp=ek.component_cont.get_component(component_id))!=null)
 					comp_cont.add_component(my_comp);
-				if(comp_cont.component_number<=0)
+				if(comp_cont.comp_list.size()<=0)
 					return;
 			}else{
 				comp_cont.add_selected_component(ek.component_cont.root_component,false);
-				if(comp_cont.component_number<=0)
+				if(comp_cont.comp_list.size()<=0)
 					comp_cont.add_component(ek.component_cont.root_component);
 			}
 			collector=ek.collector_stack.push_component_array(part_list_flag_effective_flag,

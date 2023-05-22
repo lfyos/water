@@ -62,7 +62,7 @@ public class part_type_string_sorter extends sorter<String,String>
 			data_array=new String[part_type_string_number];
 			for(int i=0;i<part_type_string_number;i++)
 				data_array[i]=bak[i];
-			do_sort(-1,bak);
+			do_sort();
 		}
 	}
 }

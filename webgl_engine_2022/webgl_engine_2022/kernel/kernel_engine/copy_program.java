@@ -2,6 +2,7 @@ package kernel_engine;
 
 import java.io.File;
 
+import kernel_part.part;
 import kernel_render.render;
 import kernel_render.render_container;
 import kernel_common_class.jason_string;
@@ -18,11 +19,11 @@ public class copy_program
 			render_container render_cont,system_parameter system_par,scene_parameter scene_par,
 			String program_file_name,String type_name[],common_reader common_shader_reader)
 	{
-		render my_render=render_cont.renders[render_id];
+		render my_render=render_cont.renders.get(render_id);
 		file_writer fw=new file_writer(program_file_name,system_par.network_data_charset);
 		
 		fw.print  ("[",jason_string.change_string(my_render.render_name)).println(",");
-		fw.print  (" ",my_render.parts[0].permanent_render_id).println(",");
+		fw.print  (" ",my_render.parts.get(0).permanent_render_id).println(",");
 		
 		common_reader decode_reader=program_file_reader.get_render_program_reader(
 				my_render,"decode",system_par.text_class_charset,system_par.text_jar_file_charset);
@@ -117,14 +118,19 @@ public class copy_program
 		long common_shader_last_time=common_shader_reader.lastModified_time;
 		long ret_val=common_shader_last_time;
 		
-		for(int i=0,ni=render_cont.renders.length;i<ni;i++) {
-			if(render_cont.renders[i].parts==null)
+		for(int i=0,ni=render_cont.renders.size();i<ni;i++) {
+			render r;
+			part p;
+			if((r=render_cont.renders.get(i))==null)
 				continue;
-			if(render_cont.renders[i].parts.length<=0)
+			if(r.parts==null)
+				continue;
+			if(r.parts.size()<=0)
+				continue;
+			if((p=r.parts.get(0))==null)
 				continue;
 			String target_directory=file_directory.render_file_directory(
-					render_cont.renders[i].parts[0].part_type_id,
-					render_cont.renders[i].parts[0].permanent_render_id,system_par,scene_par);
+					p.part_type_id,p.permanent_render_id,system_par,scene_par);
 			String lock_file_name=target_directory+"program.lock";
 			String program_file_name=target_directory+"program.txt";
 			long program_last_time=new File(program_file_name).lastModified();
@@ -140,7 +146,7 @@ public class copy_program
 					system_shader_reader.close();
 				}
 				common_reader user_shader_reader=program_file_reader.get_render_program_reader(
-						render_cont.renders[i],type_name[j],system_par.text_class_charset,system_par.text_jar_file_charset);
+						r,type_name[j],system_par.text_class_charset,system_par.text_jar_file_charset);
 				if(user_shader_reader!=null){
 					if(source_last_time<(my_last_time=user_shader_reader.lastModified_time))
 						source_last_time=my_last_time;
@@ -148,21 +154,21 @@ public class copy_program
 				}
 			}
 			common_reader decode_reader=program_file_reader.get_render_program_reader(
-					render_cont.renders[i],"decode",system_par.text_class_charset,system_par.text_jar_file_charset);
+					r,"decode",system_par.text_class_charset,system_par.text_jar_file_charset);
 			if(decode_reader!=null) {
 				if(source_last_time<(my_last_time=decode_reader.lastModified_time))
 					source_last_time=my_last_time;
 				decode_reader.close();
 			}
 			common_reader draw_reader=program_file_reader.get_render_program_reader(
-					render_cont.renders[i],"draw",system_par.text_class_charset,system_par.text_jar_file_charset);
+					r,"draw",system_par.text_class_charset,system_par.text_jar_file_charset);
 			if(draw_reader!=null){
 				if(source_last_time<(my_last_time=draw_reader.lastModified_time))
 					source_last_time=my_last_time;
 				draw_reader.close();
 			}
-			for(int j=0,nj=render_cont.renders[i].parts.length;j<nj;j++) {
-				my_last_time=render_cont.renders[i].parts[j].boftal.buffer_object_head_last_modify_time;
+			for(int j=0,nj=r.parts.size();j<nj;j++) {
+				my_last_time=r.parts.get(j).boftal.buffer_object_head_last_modify_time;
 				if(source_last_time<my_last_time)
 					source_last_time=my_last_time;
 			}

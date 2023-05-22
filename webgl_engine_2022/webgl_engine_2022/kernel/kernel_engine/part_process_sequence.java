@@ -1,5 +1,7 @@
 package kernel_engine;
 
+
+import kernel_render.render;
 import kernel_component.component;
 import kernel_component.component_collector;
 import kernel_part.part;
@@ -125,7 +127,7 @@ public class part_process_sequence
 		
 		all_buffer_object_head_package_last_modify_time=0;
 		for(int i=0,ni=process_parts_sequence.length;i<ni;i++) {
-			part p=render_cont.renders[process_parts_sequence[i][0]].parts[process_parts_sequence[i][1]];
+			part p=render_cont.renders.get(process_parts_sequence[i][0]).parts.get(process_parts_sequence[i][1]);
 			
 			if(all_buffer_object_head_package_last_modify_time<p.boftal.buffer_object_head_last_modify_time)
 				all_buffer_object_head_package_last_modify_time=p.boftal.buffer_object_head_last_modify_time;
@@ -179,24 +181,26 @@ public class part_process_sequence
 		component_collector collector=new component_collector(render_cont.renders);
 		collector.register_all(root_component);
 		
+		render r;
 		part sort_parts[]=new part[collector.part_number];
 		int effective_part_number=0;
 		
 		if((render_cont.renders!=null)&&(collector.render_component_number!=null)){
-			for(int render_id=0,render_number=render_cont.renders.length;render_id<render_number;render_id++){
-				if(render_cont.renders[render_id]==null)
+			for(int render_id=0,render_number=render_cont.renders.size();render_id<render_number;render_id++){
+				if((r=render_cont.renders.get(render_id))==null)
 					continue;
-				if(render_cont.renders[render_id].parts==null)
+				if(r.parts==null)
 					continue;
-				int part_number=render_cont.renders[render_id].parts.length;
+				int part_number=r.parts.size();
 				for(int part_id=0;part_id<part_number;part_id++){
-					if(render_cont.renders[render_id].parts[part_id]==null)
+					part p;
+					if((p=r.parts.get(part_id))==null)
 						continue;
 					if(collector.part_component_number[render_id]==null)
 						continue;
 					if(collector.part_component_number[render_id][part_id]<=0)
 						continue;
-					sort_parts[effective_part_number++]=render_cont.renders[render_id].parts[part_id];
+					sort_parts[effective_part_number++]=p;
 				}
 			}
 		}

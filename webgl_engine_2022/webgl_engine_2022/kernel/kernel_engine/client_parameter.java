@@ -124,7 +124,7 @@ public class client_parameter
 		part my_part;
 		if(comp!=null)
 			if(comp.driver_number()>0)
-				if((my_part=comp.driver_array[0].component_part)!=null)
+				if((my_part=comp.driver_array.get(0).component_part)!=null)
 					if(ek.part_lru.touch(my_part.render_id,my_part.part_id))
 						ek.part_loader_cont.load_part_mesh_head_only(
 								my_part,ek.part_cont,ek.system_par,ek.scene_par);

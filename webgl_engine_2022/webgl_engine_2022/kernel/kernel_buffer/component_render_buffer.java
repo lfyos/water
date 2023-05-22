@@ -1,5 +1,7 @@
 package kernel_buffer;
 
+import java.util.ArrayList;
+
 import kernel_render.render;
 
 public class component_render_buffer 
@@ -25,11 +27,12 @@ public class component_render_buffer
 		render_buffer=null;
 	}
 
-	public component_render_buffer(render ren[],int max_component_number)
+	public component_render_buffer(ArrayList<render> ren,int max_component_number)
 	{
-		render_buffer=new component_render[ren.length][][];
+		render_buffer=new component_render[ren.size()][][];
 		for(int i=0;i<render_buffer.length;i++){
-			render_buffer[i]=new component_render[(ren[i]==null)?1:ren[i].parts.length][];
+			render r=ren.get(i);
+			render_buffer[i]=new component_render[(r==null)?1:r.parts.size()][];
 			for(int j=0;j<render_buffer[i].length;j++){
 				render_buffer[i][j]=new component_render[2];
 				for(int k=0;k<render_buffer[i][j].length;k++)

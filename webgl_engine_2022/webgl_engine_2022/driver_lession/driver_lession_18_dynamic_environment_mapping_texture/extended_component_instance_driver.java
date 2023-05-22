@@ -60,10 +60,10 @@ public class extended_component_instance_driver extends component_instance_drive
 			for(int j=0,nj=tv.length;j<nj;j++)
 				tv[j]=new target_viewport(-1,-1,2,2,
 						cr.target.viewport[j].method_id,cr.target.viewport[j].clear_color);
-			render_target rt=new render_target(comp.component_name+"/"+Integer.toString(i),
+			render_target rt=new render_target(comp.component_name+"/"+Integer.toString(i),1,
 				camera_id[i],cr.target.parameter_channel_id,new component[]{ek.component_cont.root_component},
 				null,null,512,512,1,null,tv,false,false,true,true);
-			ci.target_container.register_target(rt,1,null);
+			ci.target_container.register_target(rt,null);
 			target_id[i]=rt.target_id;
 		}
 		for(int i=0,ni=target_id.length;i<ni;i++)

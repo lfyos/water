@@ -94,7 +94,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		view_volume_box=new box(
 				center.x+diff.x*my_x0,center.y+diff.y*my_y0,view_volume_box.p[0].z,
 				center.x+diff.x*my_x1,center.y+diff.y*my_y1,view_volume_box.p[1].z);
-		render_target cam_target=new render_target(comp.component_name,
+		render_target cam_target=new render_target(comp.component_name,1,
 				ci.display_camera_result.target.camera_id,
 				ci.display_camera_result.target.parameter_channel_id,
 				new component[]{ek.component_cont.root_component},null,ci.clip_plane,0,0,1,
@@ -150,7 +150,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			return;
 		
 		driver_audio.extended_component_driver acd=(driver_audio.extended_component_driver)
-				(ek.component_cont.get_component(audio_component_id).driver_array[0]);
+				(ek.component_cont.get_component(audio_component_id).driver_array.get(0));
 		
 		switch(Integer.decode(str)){
 		default:
@@ -190,7 +190,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		if(collector!=null)
 			if(collector.component_number==1) {
 				comp_array.add_collector(collector);
-				if(comp_array.comp[0].component_id==ci.parameter.comp.component_id){
+				if(comp_array.comp_list.get(0).component_id==ci.parameter.comp.component_id){
 					if(acd!=null)
 						acd.set_audio(collector.audio_file_name);
 					return;

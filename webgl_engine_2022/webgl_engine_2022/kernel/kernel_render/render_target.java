@@ -7,6 +7,7 @@ import kernel_component.component;
 public class render_target
 {
 	public String target_name;
+	public long do_render_number;
 	
 	public int target_id,render_target_id;
 	
@@ -44,7 +45,8 @@ public class render_target
 				}
 		viewport=null;
 	}
-	public render_target(String my_target_name,int my_camera_id,int my_parameter_channel_id,
+	public render_target(String my_target_name,long my_do_render_number,
+			int my_camera_id,int my_parameter_channel_id,
 			component my_comp[],int my_driver_id[],plane my_clip_plane,
 			int my_framebuffer_width,int my_framebuffer_height,int my_render_target_number,
 			box my_view_volume_box,target_viewport my_viewport[],
@@ -52,6 +54,7 @@ public class render_target
 			boolean my_do_discard_lod_flag,boolean my_do_selection_lod_flag)
 	{
 		target_name				=my_target_name;
+		do_render_number		=my_do_render_number;
 		
 		camera_id				=my_camera_id;
 		parameter_channel_id	=my_parameter_channel_id;

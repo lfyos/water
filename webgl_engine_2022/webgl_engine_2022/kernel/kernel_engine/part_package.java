@@ -1,6 +1,7 @@
 package kernel_engine;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import kernel_common_class.debug_information;
 import kernel_common_class.exclusive_file_mutex;
@@ -95,9 +96,9 @@ public class part_package
 					package_number++;
 				return package_number;
 			}
-			public part_package_collector(render_container rc)
+			public part_package_collector(part my_parts[])
 			{
-				super(rc.part_array(true,part_type_id));
+				super(my_parts);
 
 				int package_number=caculate_part_package_id();
 				part part_package[][]=new part[package_number][];
@@ -254,7 +255,8 @@ public class part_package
 		}
 		
 		debug_information.println("Begin create part package");
-		new part_package_collector(rc);
+		ArrayList<part> my_part_list=rc.part_array_list(true, part_type_id);
+		new part_package_collector(my_part_list.toArray(new part[my_part_list.size()]));
 		debug_information.println("End create part package");
 		
 		return;

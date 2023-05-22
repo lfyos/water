@@ -43,7 +43,7 @@ public class operate_component_transparent
 					break;
 				}
 				comp_array.add_selected_component(ek.component_cont.root_component,false);
-				if(comp_array.component_number<=0) {
+				if(comp_array.comp_list.size()<=0) {
 					str=ci.request_response.get_parameter("flag");
 					switch((str==null)?"":str) {
 					default:
@@ -62,7 +62,7 @@ public class operate_component_transparent
 			}
 		}while(false);
 
-		for(int i=0,ni=comp_array.component_number;i<ni;i++)
-			set_transparency(comp_array.comp[i],transparency_value);
+		for(int i=0,ni=comp_array.comp_list.size();i<ni;i++)
+			set_transparency(comp_array.comp_list.get(i),transparency_value);
 	}
 }

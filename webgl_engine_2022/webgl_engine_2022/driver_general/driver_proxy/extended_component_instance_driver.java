@@ -37,7 +37,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		proxy_url=new String[0];
 		proxy_encode_flag=new boolean[0];
-		part p=comp.driver_array[driver_id].component_part;
+		part p=comp.driver_array.get(driver_id).component_part;
 		file_reader f=new file_reader(p.directory_name+p.material_file_name,p.file_charset);
 		time_length=f.get_int();
 		while(!(f.eof())){
@@ -97,7 +97,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void create_component_parameter(engine_kernel ek,client_information ci)
 	{
-		part p=comp.driver_array[driver_id].component_part;
+		part p=comp.driver_array.get(driver_id).component_part;
 		
 		String version_file_name=file_directory.part_file_directory(p,ek.system_par,ek.scene_par)+"version.txt";
 		String stamp_string=Long.toString((new File(version_file_name)).lastModified());

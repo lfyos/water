@@ -1,12 +1,15 @@
 package kernel_client_interface;
 
-import kernel_common_class.debug_information;
-import kernel_component.component;
-import kernel_driver.render_instance_driver;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import java.util.ArrayList;
+
 import kernel_part.part;
 import kernel_render.render;
+import kernel_component.component;
+import kernel_engine.engine_kernel;
+import kernel_driver.component_driver;
+import kernel_engine.client_information;
+import kernel_driver.render_instance_driver;
+import kernel_common_class.debug_information;
 
 public class dispatch_render_request 
 {
@@ -37,6 +40,7 @@ public class dispatch_render_request
 		render r;
 		part p;
 		component comp;
+		component_driver c_d;
 		int render_id,driver_id,component_id;
 		
 		
@@ -57,8 +61,8 @@ public class dispatch_render_request
 		case "event":
 			if((str=ci.request_response.get_parameter("event_render_id"))!=null)
 				if((render_id=Integer.decode(str))>=0)
-					if(render_id<(ek.render_cont.renders.length))
-						return response_render_event(ek.render_cont.renders[render_id],ek,ci);
+					if(render_id<(ek.render_cont.renders.size()))
+						return response_render_event(ek.render_cont.renders.get(render_id),ek,ci);
 			
 			if((str=ci.request_response.get_parameter("event_render_name"))!=null){
 				try {
@@ -83,7 +87,7 @@ public class dispatch_render_request
 					debug_information.println("Can NOT decode part name in render_request_dispatch");
 					return null;
 				}
-				part parts[];
+				ArrayList<part> parts;
 				String part_name=str;
 				String search_part_name=ek.component_cont.change_part_name.search_change_name(part_name,part_name);
 				if((parts=ek.part_cont.search_part(search_part_name))==null){
@@ -92,15 +96,15 @@ public class dispatch_render_request
 				}
 				if(parts!=null)
 					if((str=ci.request_response.get_parameter("event_driver_id"))==null){
-						for(int i=0,ni=parts.length;i<ni;i++)
-							if(parts[i]!=null)
-								if((render_id=parts[i].render_id)>=0)
-									if(render_id<(ek.render_cont.renders.length))
-										return response_render_event(ek.render_cont.renders[render_id],ek,ci);
+						for(int i=0,ni=parts.size();i<ni;i++)
+							if((p=parts.get(i))!=null)
+								if((render_id=p.render_id)>=0)
+									if(render_id<(ek.render_cont.renders.size()))
+										return response_render_event(ek.render_cont.renders.get(render_id),ek,ci);
 					}else if((driver_id=Integer.decode(str))>=0)
-							if(driver_id<parts.length)
-								if(parts[driver_id]!=null)
-									return response_render_event(ek.render_cont.renders[parts[driver_id].render_id],ek,ci);
+							if(driver_id<parts.size())
+								if((p=parts.get(driver_id))!=null)
+									return response_render_event(ek.render_cont.renders.get(p.render_id),ek,ci);
 			}
 			if((str=ci.request_response.get_parameter("event_component_id"))!=null) {
 				if((component_id=Integer.decode(str))>=0)
@@ -108,15 +112,16 @@ public class dispatch_render_request
 						if((comp=ek.component_cont.get_component(component_id))!=null)
 							if((str=ci.request_response.get_parameter("event_driver_id"))==null){
 								for(int i=0,driver_number=comp.driver_number();i<driver_number;i++)
-									if(comp.driver_array[i]!=null)
-										if((p=comp.driver_array[i].component_part)!=null)
-											return response_render_event(ek.render_cont.renders[p.render_id],ek,ci);
+									if((c_d=comp.driver_array.get(i))!=null)
+										if((p=c_d.component_part)!=null)
+											return response_render_event(ek.render_cont.renders.get(p.render_id),ek,ci);
 							}else {
 								if((driver_id=Integer.decode(str))>=0)
 									if(driver_id<comp.driver_number())
-										if(comp.driver_array[driver_id]!=null)
-											if((p=comp.driver_array[driver_id].component_part)!=null)
-												return response_render_event(ek.render_cont.renders[p.render_id],ek,ci);
+										if((c_d=comp.driver_array.get(driver_id))!=null)
+											if((p=c_d.component_part)!=null)
+												return response_render_event(
+															ek.render_cont.renders.get(p.render_id),ek,ci);
 							}
 			}
 			if((str=ci.request_response.get_parameter("event_component_name"))!=null){
@@ -130,15 +135,17 @@ public class dispatch_render_request
 				if((comp=ek.component_cont.search_component(str))!=null)
 					if((str=ci.request_response.get_parameter("event_driver_id"))==null){
 						for(int i=0,driver_number=comp.driver_number();i<driver_number;i++)
-							if(comp.driver_array[i]!=null)
-								if((p=comp.driver_array[i].component_part)!=null)
-									return response_render_event(ek.render_cont.renders[p.render_id],ek,ci);
+							if((c_d=comp.driver_array.get(i))!=null)
+								if((p=c_d.component_part)!=null)
+									return response_render_event(
+												ek.render_cont.renders.get(p.render_id),ek,ci);
 					}else {
 						if((driver_id=Integer.decode(str))>=0)
 							if(driver_id<comp.driver_number())
-								if(comp.driver_array[driver_id]!=null)
-									if((p=comp.driver_array[driver_id].component_part)!=null)
-										return response_render_event(ek.render_cont.renders[p.render_id],ek,ci);
+								if((c_d=comp.driver_array.get(driver_id))!=null)
+									if((p=c_d.component_part)!=null)
+										return response_render_event(
+													ek.render_cont.renders.get(p.render_id),ek,ci);
 					}
 			}
 			debug_information.println(

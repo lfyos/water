@@ -49,7 +49,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		{
 			effective_selected_flag=comp.uniparameter.effective_selected_flag;
 			transparency_value=comp.uniparameter.transparency_value;
-			comp.driver_array[driver_id].update_component_parameter_version();
+			comp.driver_array.get(driver_id).update_component_parameter_version();
 		}
 		if(comp.clip.close_clip_plane_number!=close_clip_plane_number){
 			close_clip_plane_number=comp.clip.close_clip_plane_number;

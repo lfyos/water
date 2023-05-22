@@ -1,8 +1,10 @@
 package driver_movement;
 
-import kernel_common_class.debug_information;
+
 import kernel_engine.engine_kernel;
 import kernel_component.component;
+import kernel_driver.component_driver;
+import kernel_common_class.debug_information;
 
 public class movement_configuration_parameter
 {
@@ -24,9 +26,11 @@ public class movement_configuration_parameter
 	{
 		component my_comp=ek.component_cont.get_component(audio_component_id);
 		if(my_comp!=null)
-			if(my_comp.driver_number()>0)
-				if(my_comp.driver_array[0] instanceof driver_audio.extended_component_driver)
-					return (driver_audio.extended_component_driver)(my_comp.driver_array[0]);
+			if(my_comp.driver_number()>0) {
+				component_driver c_d=my_comp.driver_array.get(0);
+				if(c_d instanceof driver_audio.extended_component_driver)
+					return (driver_audio.extended_component_driver)c_d;
+			}
 		return null;
 	}
 	public movement_configuration_parameter(engine_kernel ek,component my_comp,int my_driver_id,
@@ -55,7 +59,7 @@ public class movement_configuration_parameter
 		audio_component_id=-1;
 		if((my_comp=ek.component_cont.search_component(audio_component_name))!=null)
 			if(my_comp.driver_number()>0)
-				if(my_comp.driver_array[0] instanceof driver_audio.extended_component_driver)
+				if(my_comp.driver_array.get(0) instanceof driver_audio.extended_component_driver)
 					audio_component_id=my_comp.component_id;
 		if(audio_component_id<0)
 			debug_information.println("audio component not exist: ",audio_component_name);

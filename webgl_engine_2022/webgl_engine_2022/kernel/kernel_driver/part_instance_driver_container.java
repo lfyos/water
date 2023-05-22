@@ -3,6 +3,7 @@ package kernel_driver;
 import kernel_engine.engine_kernel;
 import kernel_network.client_request_response;
 import kernel_part.part;
+import kernel_render.render;
 
 public class part_instance_driver_container
 {
@@ -10,14 +11,14 @@ public class part_instance_driver_container
 	
 	public part_instance_driver_container(engine_kernel ek,client_request_response request_response)
 	{
-		part p;
-		
-		part_instance_driver_array=new part_instance_driver[ek.render_cont.renders.length][];
+		part_instance_driver_array=new part_instance_driver[ek.render_cont.renders.size()][];
 		for(int i=0,ni=part_instance_driver_array.length;i<ni;i++) {
-			part_instance_driver_array[i]=new part_instance_driver[ek.render_cont.renders[i].parts.length];
+			render r=ek.render_cont.renders.get(i);
+			part_instance_driver_array[i]=new part_instance_driver[r.parts.size()];
 			for(int j=0,nj=part_instance_driver_array[i].length;j<nj;j++) {
 				part_instance_driver_array[i][j]=null;
-				if((p=ek.render_cont.renders[i].parts[j]).driver!=null)
+				part p=r.parts.get(j);
+				if(p.driver!=null)
 					part_instance_driver_array[i][j]=p.driver.create_part_instance_driver(p,ek,request_response);
 			}
 		}	

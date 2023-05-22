@@ -204,7 +204,7 @@ public class camera_result
 		if(driver_id>=driver_number)
 			return null;
 		
-		if(parameter.comp.driver_array[driver_id].component_part==null)
+		if(parameter.comp.driver_array.get(driver_id).component_part==null)
 			return null;
 		if(!(parameter.comp.uniparameter.part_list_flag))
 			return null;
@@ -213,7 +213,7 @@ public class camera_result
 		point p0=comp_negative_loca.multiply(negative_matrix.multiply(new point(0,0,parameter.depth+0.0)));
 		point p1=comp_negative_loca.multiply(negative_matrix.multiply(new point(0,0,parameter.depth+1.0)));
 
-		box my_box=parameter.comp.driver_array[driver_id].component_part.secure_caculate_part_box(
+		box my_box=parameter.comp.driver_array.get(driver_id).component_part.secure_caculate_part_box(
 					parameter.comp,driver_id,parameter.body_id,parameter.face_id,parameter.loop_id,
 					parameter.edge_id,parameter.point_id,p0,p1);
 		

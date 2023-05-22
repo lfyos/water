@@ -99,7 +99,7 @@ public class component_space_sorter extends sorter<component_info,component_info
 				po=b.center();
 			data_array[component_number++]=new component_info(p.comp,p.driver_id,po);
 		}
-		do_sort(-1,new component_info[data_array.length]);
+		do_sort();
 	}
 	public static component_link_list sort_component(
 		component_link_list list,int sort_type,double min_distance)

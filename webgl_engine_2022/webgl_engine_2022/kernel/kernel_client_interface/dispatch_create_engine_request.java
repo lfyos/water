@@ -20,10 +20,13 @@ public class dispatch_create_engine_request
 		debug_information.println("Begin render response_init_data");
 		int render_initialize_number=0;
 		ci.request_response.print("[");
-		for(int render_id=0,render_number=ek.render_cont.renders.length;render_id<render_number;render_id++){
-			if(ek.render_cont.renders[render_id].driver==null)
+		for(int render_id=0,render_number=ek.render_cont.renders.size();render_id<render_number;render_id++){
+			render r;
+			if((r=ek.render_cont.renders.get(render_id))==null)
 				continue;
-			render r=ek.render_cont.renders[render_id];
+			if(r.driver==null)
+				continue;
+			
 			render_instance_driver r_i_driver=ci.render_instance_driver_cont.get_render_instance_driver(r);
 			if(r_i_driver==null)
 				continue;
@@ -32,8 +35,7 @@ public class dispatch_create_engine_request
 				r_i_driver.response_init_render_data(r,ek,ci);
 			}catch(Exception e){
 				debug_information.println("Render driver response_init_data fail:	",e.toString());
-				debug_information.println("Driver name:		",
-					ek.render_cont.renders[render_id].driver.getClass().getName());
+				debug_information.println("Driver name:		",r.driver.getClass().getName());
 				debug_information.println("render_id:		",render_id);
 				e.printStackTrace();
 			}
@@ -55,9 +57,9 @@ public class dispatch_create_engine_request
 		ci.request_response.print("[");
 		for(int i=0,ni=process_parts_sequence.length;i<ni;i++){
 			int render_id=process_parts_sequence[i][0],part_id=process_parts_sequence[i][1];
-			if(ek.render_cont.renders[render_id].parts[part_id].driver!=null) {
+			part my_p=ek.render_cont.renders.get(render_id).parts.get(part_id);
+			if(my_p.driver!=null) {
 				long old_length=ci.request_response.output_data_length;
-				part my_p=ek.render_cont.renders[render_id].parts[part_id];
 				part_instance_driver  my_part_instance_driver=ci.part_instance_driver_cont.get_part_instance_driver(my_p);
 				if(my_part_instance_driver!=null)
 				try {
@@ -142,7 +144,7 @@ public class dispatch_create_engine_request
 		int total_component_number=do_response_init_component_data(ek,ci);//parameter3
 
 		ci.request_response.print(",[",total_component_number);			//parameter	4	0
-		ci.request_response.print(",",ek.render_cont.renders.length);	//parameter	4	1
+		ci.request_response.print(",",ek.render_cont.renders.size());	//parameter	4	1
 		ci.request_response.print(",",ek.modifier_cont.length);			//parameter	4	2
 		ci.request_response.print(",[");								//parameter	4	3
 			if(ek.camera_cont.camera_array!=null)

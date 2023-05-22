@@ -1,11 +1,14 @@
 package kernel_component;
 
+import java.util.ArrayList;
+
 import kernel_common_class.sorter;
 import kernel_part.part;
 import kernel_part.part_rude;
 import kernel_render.render;
 import kernel_transformation.box;
 import kernel_transformation.point;
+import kernel_driver.component_driver;
 
 public class component_collector 
 {
@@ -192,7 +195,7 @@ public class component_collector
 				number=0;
 				for(component_link_list p=cll;p!=null;p=p.next_list_item)
 					data_array[number++]=p;
-				do_sort(new component_link_list[number]);
+				do_sort();
 				for(int i=0,ni=number-1;i<ni;i++)
 					data_array[i].next_list_item=data_array[i+1];
 				data_array[number-1].next_list_item=null;
@@ -272,23 +275,25 @@ public class component_collector
 			part_number++;
 			render_part_number[render_id]++;
 		}
-		if((driver_id>=0)&&(driver_id<comp.driver_number()))
-			if(comp.driver_array[driver_id]!=null)
-				if(comp.driver_array[driver_id].component_part!=null) {
-					part_rude part_mesh=comp.driver_array[driver_id].component_part.part_mesh;
+		if((driver_id>=0)&&(driver_id<comp.driver_number())) {
+			component_driver c_d=comp.driver_array.get(driver_id);
+			if(c_d!=null)
+				if(c_d.component_part!=null) {
+					part_rude part_mesh=c_d.component_part.part_mesh;
 					if(part_mesh!=null){
 						total_face_primitive_number+=part_mesh.total_face_primitive_number;
 						total_edge_primitive_number+=part_mesh.total_edge_primitive_number;
 						total_point_primitive_number+=part_mesh.total_point_primitive_number;
 					}
 				}
+		}
 		component_collector[render_id][part_id]=new component_link_list(
 				comp,driver_id,component_collector[render_id][part_id]);
 		return 1;
 	}
 	public int register_component(component comp,int driver_id)
 	{
-		part p=comp.driver_array[driver_id].component_part;
+		part p=comp.driver_array.get(driver_id).component_part;
 		return register_component(comp,driver_id,p.render_id,p.part_id);
 	}
 	public int register_component(component comp)
@@ -306,8 +311,8 @@ public class component_collector
 	public int register_component(component_array all_components)
 	{
 		int register_number=0;
-		for(int i=0,ni=all_components.component_number;i<ni;i++)
-			register_number+=register_component(all_components.comp[i]);
+		for(int i=0,ni=all_components.comp_list.size();i<ni;i++)
+			register_number+=register_component(all_components.comp_list.get(i));
 		return register_number;
 	}
 	public int register_all(component comp)
@@ -355,41 +360,46 @@ public class component_collector
 		description="";
 		audio_file_name="";
 	}
-	private void init(render renders[])
+	private void init(ArrayList<render> renders)
 	{
 		render_component_number	=null;
 		part_component_number	=null;
 		component_collector		=null;
-		
-		if(renders!=null)
-			if(renders.length>0){
-				render_part_number		=new int[renders.length] ;
-				render_component_number	=new int[renders.length] ;
-				part_component_number	=new int[renders.length][];
-				component_collector		=new component_link_list[renders.length][];
-				for(int i=0,ni=renders.length;i<ni;i++){
+
+		if(renders!=null) {
+			int render_number;
+			if((render_number=renders.size())>0){
+				render_part_number		=new int[render_number] ;
+				render_component_number	=new int[render_number] ;
+				part_component_number	=new int[render_number][];
+				component_collector		=new component_link_list[render_number][];
+				for(int i=0;i<render_number;i++){
+					render r;
 					part_component_number[i]=null;
 					component_collector	 [i]=null;
-					if(renders[i]!=null)
-						if(renders[i].parts!=null)
-							if(renders[i].parts.length>0){
-								part_component_number[i]=new int[renders[i].parts.length];
-								component_collector[i]	=new component_link_list[renders[i].parts.length];
+					if((r=renders.get(i))!=null)
+						if(r.parts!=null) {
+							int part_number;
+							if((part_number=r.parts.size())>0){
+								part_component_number[i]=new int[part_number];
+								component_collector[i]	=new component_link_list[part_number];
 							}
+						}
 				}
 			}
+		}
 		reset();
 	}
-	public  component_collector(render renders[])
+	public  component_collector(ArrayList<render> renders)
 	{
 		init(renders);
 	}
-	public  component_collector(render renders[],component comp)
+	public  component_collector(ArrayList<render> renders,component comp)
 	{
 		init(renders);
 		register_component(comp);
 	}
-	public  component_collector(render renders[],component_array all_components)
+	public  component_collector(ArrayList<render> renders,component_array all_components)
 	{
 		init(renders);
 		register_component(all_components);

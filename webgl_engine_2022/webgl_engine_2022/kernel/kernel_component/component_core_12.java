@@ -1,6 +1,7 @@
 package kernel_component;
 
 import kernel_file_manager.file_reader;
+import kernel_driver.component_driver;
 
 public class component_core_12  extends component_core_11
 {
@@ -37,13 +38,15 @@ public class component_core_12  extends component_core_11
 			caculate_effective_display_flag(i);
 		
 		uniparameter.discard_precision2=-1;
-		for(int i=0,ni=driver_number();i<ni;i++)
-			if(driver_array[i].component_part.part_par.discard_precision2>0.0){
+		for(int i=0,ni=driver_number();i<ni;i++) {
+			component_driver c_d=driver_array.get(i);
+			if(c_d.component_part.part_par.discard_precision2>0.0){
 				if(uniparameter.discard_precision2<0.0)
-					uniparameter.discard_precision2=driver_array[i].component_part.part_par.discard_precision2;
-				else if(driver_array[i].component_part.part_par.discard_precision2<uniparameter.discard_precision2)
-					uniparameter.discard_precision2=driver_array[i].component_part.part_par.discard_precision2;
+					uniparameter.discard_precision2=c_d.component_part.part_par.discard_precision2;
+				else if(c_d.component_part.part_par.discard_precision2<uniparameter.discard_precision2)
+					uniparameter.discard_precision2=c_d.component_part.part_par.discard_precision2;
 			}
+		}
 		for(int i=0,n=children_number();i<n;i++){
 			double child_discard_precision2=children[i].uniparameter.discard_precision2;
 			if(child_discard_precision2>0.0){

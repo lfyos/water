@@ -1,5 +1,7 @@
 package kernel_create_top_assemble_part;
 
+import java.util.ArrayList;
+
 import kernel_common_class.debug_information;
 import kernel_component.component;
 import kernel_engine.scene_parameter;
@@ -25,7 +27,7 @@ public class create_assemble_part
 	{
 		if(p.children_number()<=0){
 			for(int i=0,ni=p.driver_number();i<ni;i++){
-				part comp_part=p.driver_array[i].component_part;
+				part comp_part=p.driver_array.get(i).component_part;
 				if(comp_part==null)
 					continue;
 				if(comp_part.driver==null)
@@ -193,7 +195,7 @@ public class create_assemble_part
 				p.part_par.symmetry_flag);
 	}
 	
-	public part top_box_part[];
+	public ArrayList<part> top_box_part;
 	
 	public create_assemble_part(
 			boolean not_real_scene_fast_load_flag,part_container part_cont_for_delete_file,
@@ -247,7 +249,7 @@ public class create_assemble_part
 		
 		part_loader already_loaded_part[]=new part_loader[]{};
 		int create_part_number=0,add_part_number=0;
-		top_box_part=new part[component_number];
+		top_box_part=new ArrayList<part>();
 		
 		while(component_number>0){
 			if((create_part_number+min_left_part_number)>=all_part_number)
@@ -270,11 +272,12 @@ public class create_assemble_part
 				all_part_number-=my_create_part_number;
 				continue;
 			}
-			part assemble_part=null,assemble_part_array[]=pcps.search_part(
-					can_create_assemble_part_name[comp_p.component_id]);
+			part assemble_part=null;
+			ArrayList<part> assemble_part_array=pcps.search_part(
+				can_create_assemble_part_name[comp_p.component_id]);
 			if(assemble_part_array!=null)
-				for(int i=0,ni=assemble_part_array.length;i<ni;i++)
-					if((assemble_part=assemble_part_array[i])!=null){
+				for(int i=0,ni=assemble_part_array.size();i<ni;i++)
+					if((assemble_part=assemble_part_array.get(i))!=null){
 						if(assemble_part.driver!=null)
 							break;
 						assemble_part=null;
@@ -290,8 +293,7 @@ public class create_assemble_part
 					comp_p.part_name,comp_p.part_name,null,assemble_part.material_file_name,null,null);
 			add_part.part_mesh=cpr.topbox_part_rude;
 				
-			render_cont.renders[assemble_part.render_id].add_part(add_part);
-				
+			render_cont.renders.get(assemble_part.render_id).add_part(add_part);
 			add_part.part_from_id			=assemble_part.part_id;
 			add_part.permanent_part_from_id	=assemble_part.permanent_part_id;
 
@@ -306,13 +308,15 @@ public class create_assemble_part
 				debug_information.println("Temp directory:",	file_directory.part_file_directory(add_part,system_par,scene_par));
 				e.printStackTrace();
 				
-				render_cont.renders[assemble_part.render_id].delete_last_part();
+				render_cont.renders.get(assemble_part.render_id).delete_last_part();
 				continue;
 			}
 			already_loaded_part=part_loader_cont.load(add_part,render_cont.get_copy_from_part(add_part),not_real_scene_fast_load_flag,
 						last_modified_time,system_par,scene_par,part_cont_for_delete_file,already_loaded_part,pcps,boftal_container);
-			top_box_part[add_part_number++]=add_part;
+			top_box_part.add(add_part_number++,add_part);
 			create_part_number+=my_create_part_number;	
+			
+			pcps.append_one_part(add_part);
 			
 			debug_information.println();
 			debug_information.println(add_part_number+".add top part		name:"+add_part.system_name);
@@ -323,20 +327,8 @@ public class create_assemble_part
 			debug_information.println(add_part_number+".add top part		material:"		+add_part.directory_name+add_part.material_file_name);
 		}
 		
-		for(int i=0,ni=render_cont.renders.length;i<ni;i++)
-			render_cont.renders[i].compress_part();
-		
-		if(add_part_number<=0)
-			top_box_part=null;
-		else{
-			part bak[]=top_box_part;
-			top_box_part=new part[add_part_number];
-			for(int i=0;i<add_part_number;i++) {
-				top_box_part[i]=bak[i];
-				pcps.append_one_part(bak[i]);
-			}
+		if(add_part_number>0)
 			part_loader_container.wait_for_completion(already_loaded_part,system_par,scene_par);
-		}
 		
 		debug_information.println();
 		debug_information.print  ("End creating top box");

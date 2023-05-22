@@ -6,6 +6,7 @@ import kernel_component.component_collector;
 import kernel_component.component_container;
 import kernel_component.component_array;
 import kernel_driver.modifier_driver;
+import kernel_driver.component_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
@@ -152,14 +153,16 @@ public class movement_switch_camera_modifier extends modifier_driver
 				audio_component_id);
 				return null;
 		}
-		if(!(audio_comp.driver_array[0] instanceof driver_audio.extended_component_driver)){
+		component_driver c_d=audio_comp.driver_array.get(0);
+		
+		if(!(c_d instanceof driver_audio.extended_component_driver)){
 			debug_information.print(
 				"movement_switch_camera_modifier finds audio component IS NOT audio_component_driver:\t",
 				audio_comp.component_name);
 			debug_information.println("\taudio_component_id",audio_component_id);
 			return null;
 		}
-		return (driver_audio.extended_component_driver)(audio_comp.driver_array[0]);
+		return (driver_audio.extended_component_driver)c_d;
 	}
 	private boolean can_start_routine(long my_current_time,engine_kernel ek,client_information ci)
 	{

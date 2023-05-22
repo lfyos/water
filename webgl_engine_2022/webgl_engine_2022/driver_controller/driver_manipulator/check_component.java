@@ -54,7 +54,7 @@ public class check_component
 		
 		if(comp.driver_number()>0) {
 			for(int i=0,ni=comp.driver_number();i<ni;i++)
-				if((p=comp.driver_array[i].component_part)!=null) {
+				if((p=comp.driver_array.get(i).component_part)!=null) {
 					String str="part	"+i+"	";
 					ci.request_response.println(str+"use_name:		",			p.user_name);
 					ci.request_response.println(str+"system_name:		",		p.system_name);

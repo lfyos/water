@@ -1,9 +1,10 @@
 package kernel_component;
 
-import kernel_common_class.debug_information;
-import kernel_interface.client_process_bar;
-import kernel_part.part_rude;
 import kernel_part.part;
+import kernel_part.part_rude;
+import kernel_driver.component_driver;
+import kernel_interface.client_process_bar;
+import kernel_common_class.debug_information;
 
 public class component_caculator 
 {
@@ -31,13 +32,14 @@ public class component_caculator
 			comp.children[i].parent_component_id=comp.component_id;
 		
 		for(int i=0;i<driver_number;i++){
-			comp.driver_array[i].same_render_component_driver_id=not_exist_component_driver_id;
-			comp.driver_array[i].same_part_component_driver_id	=not_exist_component_driver_id;
+			component_driver c_d=comp.driver_array.get(i);
+			c_d.same_render_component_driver_id=not_exist_component_driver_id;
+			c_d.same_part_component_driver_id	=not_exist_component_driver_id;
 			not_exist_component_driver_id++;
-			if(comp.driver_array[i].component_part==null)
+			if(c_d.component_part==null)
 				continue;
-			int render_id	=comp.driver_array[i].component_part.render_id;
-			int part_id		=comp.driver_array[i].component_part.part_id;
+			int render_id	=c_d.component_part.render_id;
+			int part_id		=c_d.component_part.part_id;
 			if((render_id<0)||(part_id<0))
 				continue;
 			
@@ -74,21 +76,22 @@ public class component_caculator
 				for(int j=part_bak.length,nj=same_part_component_driver_id[render_id].length;j<nj;j++)
 					same_part_component_driver_id[render_id][j]=0;
 			}
-			comp.driver_array[i].same_render_component_driver_id=same_render_component_driver_id[render_id]++;
-			comp.driver_array[i].same_part_component_driver_id	=same_part_component_driver_id	[render_id][part_id]++;
+			c_d.same_render_component_driver_id=same_render_component_driver_id[render_id]++;
+			c_d.same_part_component_driver_id	=same_part_component_driver_id	[render_id][part_id]++;
 			not_exist_component_driver_id--;
 		}
 	}
 	
 	private void register_componennt_to_part(component comp)
 	{
+		component_driver c_d;
 		for(int i=0,ni=comp.children_number();i<ni;i++)
 			register_componennt_to_part(comp.children[i]);
 		
 		for(int i=0,ni=comp.driver_number();i<ni;i++)
-			if(comp.driver_array[i].component_part!=null){
-				int render_id	=comp.driver_array[i].component_part.render_id;
-				int part_id		=comp.driver_array[i].component_part.part_id;
+			if((c_d=comp.driver_array.get(i)).component_part!=null){
+				int render_id	=c_d.component_part.render_id;
+				int part_id		=c_d.component_part.part_id;
 				if((render_id<0)||(part_id<0))
 					continue;
 				
@@ -123,8 +126,8 @@ public class component_caculator
 						part_component_id_and_driver_id[render_id][part_id][j]=null;
 				}
 				int id[]={comp.component_id,i};
-				part_component_id_and_driver_id		[render_id][part_id][comp.driver_array[i].same_part_component_driver_id		]=id;
-				render_component_id_and_driver_id	[render_id]			[comp.driver_array[i].same_render_component_driver_id	]=id;
+				part_component_id_and_driver_id		[render_id][part_id][c_d.same_part_component_driver_id		]=id;
+				render_component_id_and_driver_id	[render_id]			[c_d.same_render_component_driver_id	]=id;
 			}
 	}
 	
@@ -246,7 +249,7 @@ public class component_caculator
 			for(int i=0,ni=component_pointer.length;i<ni;i++){
 				component comp=component_pointer[i];
 				for(int j=0,nj=comp.driver_number();j<nj;j++){
-					part my_part=comp.driver_array[j].component_part;
+					part my_part=comp.driver_array.get(j).component_part;
 					if(my_part.is_top_box_part()){
 						top_assemble_component_number++;
 						break;
@@ -257,7 +260,7 @@ public class component_caculator
 					if(comp.driver_number()>0){
 						exist_part_component_number++;
 						part_rude part_mesh;
-						if((part_mesh=comp.driver_array[0].component_part.part_mesh)!=null) {
+						if((part_mesh=comp.driver_array.get(0).component_part.part_mesh)!=null) {
 							total_face_primitive_number	+=part_mesh.total_face_primitive_number;
 							total_edge_primitive_number	+=part_mesh.total_edge_primitive_number;
 							total_point_primitive_number+=part_mesh.total_point_primitive_number;

@@ -191,7 +191,7 @@ public class locate_camera
 		if(par!=null)
 			if(par.comp!=null){
 				for(int i=0,n=par.comp.driver_number();i<n;i++){
-					part my_part=par.comp.driver_array[i].component_part;
+					part my_part=par.comp.driver_array.get(i).component_part;
 					if((my_box=my_part.secure_caculate_part_box(par.comp,i,
 							par.body_id,par.face_id,par.loop_id,par.edge_id,par.point_id,p0,p1))!=null)
 						return locate(par.comp.absolute_location.multiply(my_box),dir);

@@ -42,7 +42,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			return ((cr.target.framebuffer_width>0)&&(cr.target.framebuffer_width>0));
 		
 		if(tag_array.test_location_modify(ek,ci))
-			comp.driver_array[driver_id].update_component_parameter_version();
+			comp.driver_array.get(driver_id).update_component_parameter_version();
 		
 		boolean do_update_flag=false;
 		if(tag_array.distance_tag_array.length!=display_flag.length) {
@@ -158,7 +158,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			tag_array.jason(ek,ci);
 			return null;
 		}
-		comp.driver_array[driver_id].update_component_parameter_version();
+		comp.driver_array.get(driver_id).update_component_parameter_version();
 		return null;
 	}
 }

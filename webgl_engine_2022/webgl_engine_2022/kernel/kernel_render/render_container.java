@@ -1,7 +1,7 @@
 package kernel_render;
 
 import java.io.File;
-
+import java.util.ArrayList;
 
 import kernel_part.part;
 import kernel_part.part_rude;
@@ -24,21 +24,31 @@ import kernel_part.buffer_object_file_modify_time_and_length_container;
 
 public class render_container
 {
-	public render renders[],sorted_renders[];
+	public ArrayList<render> renders,sorted_renders;
 	public part_package system_part_package,type_part_package,scene_part_package;
 	
 	public void destroy()
 	{
+		render r;
+		
 		if(renders!=null) {
-			for(int i=0,ni=renders.length;i<ni;i++)
-				if(renders[i]!=null){
-					renders[i].destroy();
-					renders[i]=null;
+			for(int i=0,ni=renders.size();i<ni;i++) {
+				if((r=renders.get(i))!=null){
+					r.destroy();
+					renders.set(i,null);
 				}
+			}
 			renders=null;
 		}
-		sorted_renders=null;
-		
+		if(sorted_renders!=null) {
+			for(int i=0,ni=sorted_renders.size();i<ni;i++) {
+				if((r=sorted_renders.get(i))!=null){
+					r.destroy();
+					sorted_renders.set(i,null);
+				}
+			}
+			sorted_renders=null;
+		}
 		if(system_part_package!=null) {
 			system_part_package.destroy();
 			system_part_package=null;
@@ -56,55 +66,50 @@ public class render_container
 	public render search_render(String my_render_name)
 	{
 		if(sorted_renders!=null)
-			for(int begin_pointer=0,end_pointer=sorted_renders.length-1,result;begin_pointer<=end_pointer;) {
+			for(int begin_pointer=0,end_pointer=sorted_renders.size()-1,result;begin_pointer<=end_pointer;) {
 				int middle_pointer=(begin_pointer+end_pointer)/2;
-				if((result=sorted_renders[middle_pointer].render_name.compareTo(my_render_name))<0)
+				render r=sorted_renders.get(middle_pointer);
+				if((result=r.render_name.compareTo(my_render_name))<0)
 					begin_pointer=middle_pointer+1;
 				else if(result>0)
 					end_pointer=middle_pointer-1;
 				else 
-					return sorted_renders[middle_pointer];
+					return r;
 			}
 		return null;
 	}
 	
-	public part[] part_array(boolean part_mesh_flag,int part_type_id)
+	public ArrayList<part> part_array_list(boolean part_mesh_flag,int part_type_id)
 	{
-		int effective_part_number=0;
+		ArrayList<part> ret_val=new ArrayList<part>();
 
-		if(renders!=null)
-			for(int i=0,ni=renders.length;i<ni;i++)
-				if(renders[i]!=null)
-					if(renders[i].parts!=null)
-						for(int j=0,nj=renders[i].parts.length;j<nj;j++)
-							if(renders[i].parts[j]!=null)
-								if((renders[i].parts[j].part_mesh!=null)||part_mesh_flag) {
-									if(part_type_id>=0)
-										if(renders[i].parts[j].part_type_id!=part_type_id)
-											continue;
-									effective_part_number++;
-								}
-		if(effective_part_number<=0)
-			return new part[] {};
-		part ret_val[]=new part[effective_part_number];
-		effective_part_number=0;
-		for(int i=0,ni=renders.length;i<ni;i++)
-			if(renders[i]!=null)
-				if(renders[i].parts!=null)
-					for(int j=0,nj=renders[i].parts.length;j<nj;j++)
-						if(renders[i].parts[j]!=null)
-							if((renders[i].parts[j].part_mesh!=null)||part_mesh_flag) {
-								if(part_type_id>=0)
-									if(renders[i].parts[j].part_type_id!=part_type_id)
-										continue;
-								ret_val[effective_part_number++]=renders[i].parts[j];
-							}
+		if(renders==null)
+			return ret_val;
+		
+		for(int i=0,ni=renders.size();i<ni;i++) {
+			render r=renders.get(i);
+			if(r==null)
+				continue;
+			if(r.parts==null)
+				continue;
+			for(int j=0,nj=r.parts.size();j<nj;j++) {
+				part p;
+				if((p=r.parts.get(j))==null)
+					continue;
+				if((p.part_mesh!=null)||part_mesh_flag) {
+					if(part_type_id>=0)
+						if(p.part_type_id!=part_type_id)
+							continue;
+						ret_val.add(p);
+				}
+			}
+		}
 		return ret_val;
 	}
 	public part get_copy_from_part(part p)
 	{
 		while(p.part_from_id>=0)
-			p=renders[p.render_id].parts[p.part_from_id];
+			p=renders.get(p.render_id).parts.get(p.part_from_id);
 		return p;
 	}
 	public void load_part(boolean not_real_scene_fast_load_flag,
@@ -121,50 +126,53 @@ public class render_container
 		debug_information.println();
 		
 		part p;
+		render r;
 		int load_number=0,all_number=0;
 
-		for(int i=0,ni=renders.length;i<ni;i++)
-			if(renders[i].parts!=null)
-				for(int j=0,part_number=renders[i].parts.length;j<part_number;j++)
-					if((p=renders[i].parts[j])!=null){
-						if(((1<<p.part_type_id)&part_type)==0)
-							continue;
-						int my_part_flag=0;
-						my_part_flag+=p.is_normal_part()	?1:0;
-						my_part_flag+=p.is_bottom_box_part()?2:0;
-						my_part_flag+=p.is_top_box_part()	?4:0;
-						
-						if((my_part_flag&part_flag)==0)
-							continue;
-						all_number++;
-					}
+		for(int i=0,ni=renders.size();i<ni;i++)
+			if((r=renders.get(i))!=null)
+				if(r.parts!=null)
+					for(int j=0,part_number=r.parts.size();j<part_number;j++)
+						if((p=r.parts.get(j))!=null){
+							if(((1<<p.part_type_id)&part_type)==0)
+								continue;
+							int my_part_flag=0;
+							my_part_flag+=p.is_normal_part()	?1:0;
+							my_part_flag+=p.is_bottom_box_part()?2:0;
+							my_part_flag+=p.is_top_box_part()	?4:0;
+							
+							if((my_part_flag&part_flag)==0)
+								continue;
+							all_number++;
+						}
 		if(process_bar!=null)
 			process_bar.set_process_bar(true,process_bar_title,"",0,(all_number<1)?1:all_number);
 		
 		part_loader already_loaded_part[]=new part_loader[]{};
-		for(int i=0,ni=renders.length;i<ni;i++)
-			if(renders[i].parts!=null)
-				for(int j=0,part_number=renders[i].parts.length;j<part_number;j++)
-					if((p=renders[i].parts[j])!=null){
-						if(((1<<p.part_type_id)&part_type)==0)
-							continue;
-						int my_part_flag=0;
-						my_part_flag+=p.is_normal_part()	?1:0;
-						my_part_flag+=p.is_bottom_box_part()?2:0;
-						my_part_flag+=p.is_top_box_part()	?4:0;
-						
-						if((my_part_flag&part_flag)==0)
-							continue;
-						
-						already_loaded_part=part_loader_cont.load(
-								p,get_copy_from_part(p),not_real_scene_fast_load_flag,-1,system_par,scene_par,
-								part_cont_for_delete_file,already_loaded_part,pcps,boftal_container);
-						
-						if(process_bar!=null)
-							process_bar.set_process_bar(false,
-									process_bar_title,"",load_number++,(all_number<1)?1:all_number);
-					}
-		
+		for(int i=0,ni=renders.size();i<ni;i++)
+			if((r=renders.get(i))!=null)
+				if(r.parts!=null)
+					for(int j=0,part_number=r.parts.size();j<part_number;j++)
+						if((p=r.parts.get(j))!=null){
+							if(((1<<p.part_type_id)&part_type)==0)
+								continue;
+							int my_part_flag=0;
+							my_part_flag+=p.is_normal_part()	?1:0;
+							my_part_flag+=p.is_bottom_box_part()?2:0;
+							my_part_flag+=p.is_top_box_part()	?4:0;
+							
+							if((my_part_flag&part_flag)==0)
+								continue;
+							
+							already_loaded_part=part_loader_cont.load(
+									p,get_copy_from_part(p),not_real_scene_fast_load_flag,-1,system_par,scene_par,
+									part_cont_for_delete_file,already_loaded_part,pcps,boftal_container);
+							
+							if(process_bar!=null)
+								process_bar.set_process_bar(false,
+										process_bar_title,"",load_number++,(all_number<1)?1:all_number);
+						}
+			
 		part_loader_container.wait_for_completion(already_loaded_part,system_par,scene_par);
 		if(process_bar!=null)
 			process_bar.set_process_bar(false,
@@ -206,7 +214,10 @@ public class render_container
 						null,p.material_file_name,p.description_file_name,p.audio_file_name);
 			if((add_part.part_mesh=new part_rude(1,new part[] {p},new location[]{new location()},new box[] {b}))==null)
 				continue;
-			renders[p.render_id].add_part(add_part);
+			render r=renders.get(p.render_id);
+			if(r==null)
+				continue;
+			r.add_part(add_part);
 			add_part.part_from_id			=p.part_id;
 			add_part.permanent_part_from_id	=p.permanent_part_id;
 			try {
@@ -219,14 +230,11 @@ public class render_container
 				debug_information.println("Material_file_name:",p.directory_name+p.material_file_name);
 				debug_information.println(e.toString());
 				e.printStackTrace();
-				renders[p.render_id].delete_last_part();
+				r.delete_last_part();
 				continue;
 			}
 			pcps.append_one_part(add_part);
 		}
-		
-		for(int i=0,ni=renders.length;i<ni;i++)
-			renders[i].compress_part();
 	}
 	private void load_one_shader(boolean not_real_scene_fast_load_flag,
 			component_load_source_container component_load_source_cont,
@@ -307,7 +315,7 @@ public class render_container
 			debug_information.println("Begin load part list file:	",	get_part_list_result[0]);
 			debug_information.println("part parameter file:		",		part_parameter_file_name);
 
-			int render_id=(renders==null)?0:renders.length;
+			int render_id=(renders==null)?0:renders.size();
 			ren.add_part(not_real_scene_fast_load_flag,component_load_source_cont,
 				pcps,ren.driver,part_type_id,part_par,system_par,get_part_list_result[0],
 				(get_part_list_result.length>1)?get_part_list_result[1]:f_render_list.get_charset(),
@@ -321,16 +329,10 @@ public class render_container
 		f_render_list.close();
 
 		if(ren.parts!=null)
-			if(ren.parts.length>0){
+			if(ren.parts.size()>0){
 				if(renders==null)
-					renders=new render[1];
-				else{
-					render bak[]=renders;
-					renders=new render[bak.length+1];
-					for(int i=0;i<bak.length;i++)
-						renders[i]=bak[i];
-				}
-				renders[renders.length-1]=ren;
+					renders=new ArrayList<render>();
+				renders.add(renders.size(),ren);
 				return;
 			}
 		ren.destroy();
@@ -362,7 +364,7 @@ public class render_container
 			String driver_name=(str=f_shader.get_string())==null?"":str.trim();	
 			debug_information.println("render name:	",	render_name);
 			debug_information.println("Driver name:	",	driver_name);
-			int render_id=(renders==null)?0:(renders.length);
+			int render_id=(renders==null)?0:(renders.size());
 			render ren=new render(render_id,render_name,driver_name,request_response,system_par,scene_par);
 			if(ren.driver==null) {
 				debug_information.print  ("ren.driver==null		",driver_name);
@@ -405,7 +407,7 @@ public class render_container
 	}
 	public render_container()
 	{
-		renders					=new render[0];
+		renders					=new ArrayList<render>();
 		system_part_package		=new part_package();
 		type_part_package		=new part_package();
 		scene_part_package		=new part_package();
@@ -414,14 +416,10 @@ public class render_container
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		renders=new render[0];
+		renders=new ArrayList<render>();
 		if(ren_con.renders!=null)
-			if(ren_con.renders.length>0){
-				renders=new render[ren_con.renders.length];
-				for(int render_id=0,render_number=ren_con.renders.length;render_id<render_number;render_id++)
-					renders[render_id]=new render(render_id,
-							ren_con.renders[render_id],request_response,system_par,scene_par);
-			}
+			for(int i=0,ni=ren_con.renders.size();i<ni;i++)
+				renders.add(i,new render(i,ren_con.renders.get(i),request_response,system_par,scene_par));
 		system_part_package	=new part_package(ren_con.system_part_package);
 		type_part_package	=new part_package(ren_con.type_part_package);
 		scene_part_package	=new part_package(ren_con.scene_part_package);

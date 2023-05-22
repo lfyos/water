@@ -76,6 +76,6 @@ public class part_container_for_process_sequence extends sorter<part,part>
 	}
 	public part_container_for_process_sequence(part my_parts[])
 	{
-		super(clone_array(my_parts),-1,new part[my_parts.length]);
+		super(clone_array(my_parts));
 	}
 }

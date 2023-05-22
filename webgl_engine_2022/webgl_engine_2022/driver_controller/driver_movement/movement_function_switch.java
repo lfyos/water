@@ -21,6 +21,7 @@ import kernel_file_manager.file_writer;
 import kernel_transformation.location;
 import kernel_component.component_collector;
 import kernel_driver.modifier_container;
+import kernel_driver.component_driver;
 import driver_location_modifier.extended_component_driver;
 
 public class movement_function_switch
@@ -107,8 +108,8 @@ public class movement_function_switch
 			return -1;
 
 		add_component(searcher.can_delete_list.tree_node);
-		for(int i=0,n=all_components.component_number;i<n;i++)
-			all_components.comp[i].modify_display_flag(
+		for(int i=0,n=all_components.comp_list.size();i<n;i++)
+			all_components.comp_list.get(i).modify_display_flag(
 					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
 		
 		int index_id=searcher.can_delete_list.next.tree_node.children.length-1;
@@ -135,8 +136,8 @@ public class movement_function_switch
 		if(searcher.search_link_list==null)
 			return manager.root_movement.movement_tree_id;
 		add_component(searcher.search_link_list.tree_node);
-		for(int i=0,n=all_components.component_number;i<n;i++)
-			all_components.comp[i].modify_display_flag(
+		for(int i=0,n=all_components.comp_list.size();i<n;i++)
+			all_components.comp_list.get(i).modify_display_flag(
 					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
 
 		searcher.search_link_list.tree_node.reverse();
@@ -173,8 +174,8 @@ public class movement_function_switch
 			}
 		}
 		add_component(searcher.search_link_list.tree_node);
-		for(int i=0;i<(all_components.component_number);i++)
-			all_components.comp[i].modify_display_flag(
+		for(int i=0,ni=all_components.comp_list.size();i<ni;i++)
+			all_components.comp_list.get(i).modify_display_flag(
 					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
 		
 		manager.movement_start(modifier_cont,
@@ -212,8 +213,8 @@ public class movement_function_switch
 			return searcher.search_link_list.tree_node.movement_tree_id;
 		
 		add_component(searcher.can_delete_list.tree_node);
-		for(int i=0,ni=all_components.component_number;i<ni;i++)
-			all_components.comp[i].modify_display_flag(
+		for(int i=0,ni=all_components.comp_list.size();i<ni;i++)
+			all_components.comp_list.get(i).modify_display_flag(
 					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
 			
 		int index_id=searcher.can_delete_list.next.tree_node.children.length-1;
@@ -397,44 +398,47 @@ public class movement_function_switch
 		if((searcher.search_link_list==null))
 			return manager.root_movement.movement_tree_id;;
 		add_component(searcher.search_link_list.tree_node);
-		for(int i=0,n=all_components.component_number;i<n;i++)
-			all_components.comp[i].modify_display_flag(
+		for(int i=0,n=all_components.comp_list.size();i<n;i++)
+			all_components.comp_list.get(i).modify_display_flag(
 					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
 		
 		component main_comp;
 		if((main_comp=ek.component_cont.get_component(searcher.search_link_list.tree_node.move.moved_component_id))!=null){
 			component_array comp_array=new component_array(ek.component_cont.root_component.component_id+1);
 			comp_array.add_selected_component(ek.component_cont.root_component,false);
-			for(int i=0;i<comp_array.component_number;i++){
+			for(int i=0;i<comp_array.comp_list.size();i++){
 				component comp=ek.component_cont.get_component(main_comp.parent_component_id);
 				for(;comp!=null;comp=ek.component_cont.get_component(comp.parent_component_id))
-					if(comp.component_id==comp_array.comp[i].component_id){
+					if(comp.component_id==comp_array.comp_list.get(i).component_id){
 						comp_array.expand(i--);
 						break;
 					}
 			}
-			for(int i=0;i<comp_array.component_number;i++) {
-				component comp=comp_array.comp[i];
+			for(int i=0;i<comp_array.comp_list.size();i++) {
+				component comp=comp_array.comp_list.get(i);
 				for(;comp!=null;comp=ek.component_cont.get_component(comp.parent_component_id))
 					if(main_comp.component_id==comp.component_id){
 						comp_array.delete(i--);
 						break;
 					}
 			}
-			if(comp_array.component_number<=0){
+			int component_number;
+			
+			if((component_number=comp_array.comp_list.size())<=0){
 				searcher.search_link_list.tree_node.move.follow_component_name		=null;
 				searcher.search_link_list.tree_node.move.follow_component_id		=null;
 				searcher.search_link_list.tree_node.move.follow_component_location	=null;
 			}else{
-				searcher.search_link_list.tree_node.move.follow_component_name		=new String[comp_array.component_number];
-				searcher.search_link_list.tree_node.move.follow_component_id		=new int[comp_array.component_number];
-				searcher.search_link_list.tree_node.move.follow_component_location	=new location[comp_array.component_number];
+				searcher.search_link_list.tree_node.move.follow_component_name		=new String[component_number];
+				searcher.search_link_list.tree_node.move.follow_component_id		=new int[component_number];
+				searcher.search_link_list.tree_node.move.follow_component_location	=new location[component_number];
 				
 				location main_negative_loca=main_comp.caculate_negative_absolute_location();
-				for(int i=0,ni=comp_array.component_number;i<ni;i++){
-					location loca=main_negative_loca.multiply(comp_array.comp[i].absolute_location);
-					searcher.search_link_list.tree_node.move.follow_component_name[i]		=comp_array.comp[i].component_name;
-					searcher.search_link_list.tree_node.move.follow_component_id[i]			=comp_array.comp[i].component_id;
+				for(int i=0;i<component_number;i++){
+					component comp=comp_array.comp_list.get(i);
+					location loca=main_negative_loca.multiply(comp_array.comp_list.get(i).absolute_location);
+					searcher.search_link_list.tree_node.move.follow_component_name[i]		=comp.component_name;
+					searcher.search_link_list.tree_node.move.follow_component_id[i]			=comp.component_id;
 					searcher.search_link_list.tree_node.move.follow_component_location[i]	=loca;
 				}
 			}
@@ -1337,9 +1341,11 @@ public class movement_function_switch
 
 		component location_comp;
 		if((location_comp=ek.component_cont.get_component(manager.config_parameter.location_component_id))!=null)
-			for(int i=0,ni=location_comp.driver_number();i<ni;i++) 
-				if(location_comp.driver_array[i] instanceof extended_component_driver)
-					((extended_component_driver)(location_comp.driver_array[i])).clear_location_modifier();
+			for(int i=0,ni=location_comp.driver_number();i<ni;i++) {
+				component_driver c_d=location_comp.driver_array.get(i);
+				if(c_d instanceof extended_component_driver)
+					((extended_component_driver)c_d).clear_location_modifier();
+			}
 		
 		driver_audio.extended_component_driver acd;
 		if((acd=manager.config_parameter.get_audio_component_driver(ek))!=null)

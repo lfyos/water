@@ -55,7 +55,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		if(ek.do_selection_version!=do_selection_version){
 			do_selection_version=ek.do_selection_version;
-			comp.driver_array[driver_id].update_component_render_version();
+			comp.driver_array.get(driver_id).update_component_render_version();
 		}
 		return (cr.target.framebuffer_width<=0)?false:(cr.target.framebuffer_width<=0)?false:true;
 	}
@@ -65,7 +65,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		int component_id[]			=new int	[ek.component_cont.root_component.component_id+1];
 		double coordinate_length[]	=new double	[ek.component_cont.root_component.component_id+1];
 
-		part my_part=comp.driver_array[driver_id].component_part;
+		part my_part=comp.driver_array.get(driver_id).component_part;
 		
 		if(!abandon_camera_display_flag){
 			component_id[coordinate_number]			=-1;//cam_result.cam.eye_component.component_id;
@@ -112,7 +112,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				abandon_camera_display_flag=true;
 				break;
 			}
-			comp.driver_array[driver_id].update_component_render_version();
+			comp.driver_array.get(driver_id).update_component_render_version();
 		}
 		if((str=ci.request_response.get_parameter("selected_display_flag"))!=null){
 			switch(str.toLowerCase()) {
@@ -125,7 +125,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				abandon_selected_display_flag=true;
 				break;
 			}
-			comp.driver_array[driver_id].update_component_render_version();
+			comp.driver_array.get(driver_id).update_component_render_version();
 		}
 		return null;
 	}

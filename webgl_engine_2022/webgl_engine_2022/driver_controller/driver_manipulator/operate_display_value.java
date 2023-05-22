@@ -27,7 +27,7 @@ public class operate_display_value
 		
 		if((str=ci.request_response.get_parameter("component"))==null){
 			comp_cont.add_selected_component(ek.component_cont.root_component,false);
-			if(comp_cont.component_number<=0)
+			if(comp_cont.comp_list.size()<=0)
 				comp_cont.add_component(ek.component_cont.root_component);
 		}else {
 			component my_comp=ek.component_cont.search_component(str);
@@ -36,8 +36,8 @@ public class operate_display_value
 		}
 		if((str=ci.request_response.get_parameter("display_value"))!=null){
 			int new_display_value_id=Integer.decode(str);
-			for(int i=0,ni=comp_cont.component_number;i<ni;i++)
-				set_display_value(ek,ci,comp_cont.comp[i],new_display_value_id);
+			for(int i=0,ni=comp_cont.comp_list.size();i<ni;i++)
+				set_display_value(ek,ci,comp_cont.comp_list.get(i),new_display_value_id);
 		}	
 	}
 }

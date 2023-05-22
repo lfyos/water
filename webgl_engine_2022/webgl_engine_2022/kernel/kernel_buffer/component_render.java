@@ -125,7 +125,7 @@ public class component_render
 		
 // clear component flag in link list
 		for(component_link_list p=cll;p!=null;p=p.next_list_item){
-			int flag_id=p.comp.driver_array[p.driver_id].same_part_component_driver_id;
+			int flag_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
 			flag[flag_id]=0;
 			instance_id[flag_id]=-1;
 		}
@@ -134,20 +134,20 @@ public class component_render
 		for(int i=0;i<component_number;i++){
 			component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp[i],driver_id[i]);
 			long old_component_render_version=in_dr.get_component_render_version(render_buffer_id);
-			long new_component_render_version=comp[i].driver_array[driver_id[i]].get_component_render_version();
-			int flag_id=comp[i].driver_array[driver_id[i]].same_part_component_driver_id;
+			long new_component_render_version=comp[i].driver_array.get(driver_id[i]).get_component_render_version();
+			int flag_id=comp[i].driver_array.get(driver_id[i]).same_part_component_driver_id;
 			flag[flag_id]=(old_component_render_version!=new_component_render_version)?1:2;
 			instance_id[flag_id]=i;
 		}
 		
 // append component flag in link list	
 		for(component_link_list p=cll;p!=null;p=p.next_list_item){
-			int flag_id=p.comp.driver_array[p.driver_id].same_part_component_driver_id;
+			int flag_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
 			switch(flag[flag_id]){
 			case 0://component not in buffer,but in link list 
 				component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(p.comp,p.driver_id);
 				long old_component_render_version=in_dr.get_component_render_version(render_buffer_id);
-				long new_component_render_version=p.comp.driver_array[p.driver_id].get_component_render_version();
+				long new_component_render_version=p.comp.driver_array.get(p.driver_id).get_component_render_version();
 				flag[flag_id]|=(old_component_render_version!=new_component_render_version)?4:8;
 				
 				if(p.comp.uniparameter.touch_time>lastest_append_touch_time)
@@ -175,7 +175,7 @@ public class component_render
 
 //create delete_cll, refresh_cll, keep_cll link list
 		for(int i=0;i<component_number;i++){
-			int flag_id=comp[i].driver_array[driver_id[i]].same_part_component_driver_id;
+			int flag_id=comp[i].driver_array.get(driver_id[i]).same_part_component_driver_id;
 			switch(flag[flag_id]){
 			case 1://last display(refresh),			this not display,DELETE
 			case 2://last display(not refresh),		this not display,DELETE
@@ -206,7 +206,7 @@ public class component_render
 			engine_kernel ek,client_information ci,camera_result cam_result)
 	{
 		for(int print_number=0;p!=null;p=p.next_list_item) {
-			int flag_id=p.comp.driver_array[p.driver_id].same_part_component_driver_id;
+			int flag_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
 			switch(flag[flag_id]&(1+2+4+8)){
 			case 1://last display(refresh),			this not display,DELETE
 			case 2://last display(not refresh),		this not display,DELETE
@@ -231,7 +231,8 @@ public class component_render
 					comp[my_instance_id]=comp[component_number];
 					driver_id[my_instance_id]=driver_id[component_number];
 					
-					flag_id=comp[my_instance_id].driver_array[driver_id[my_instance_id]].same_part_component_driver_id;
+					flag_id=comp[my_instance_id].driver_array.
+							get(driver_id[my_instance_id]).same_part_component_driver_id;
 					instance_id[flag_id]=my_instance_id;
 				}
 				comp[component_number]=null;
@@ -258,7 +259,7 @@ public class component_render
 	{
 		for(component_link_list p=cll;p!=null;p=p.next_list_item){
 			int my_flag;
-			int buffer_id=p.comp.driver_array[p.driver_id].same_part_component_driver_id;
+			int buffer_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
 			switch(my_flag=flag[buffer_id]&(1+2+4+8)){
 			default://impossible
 				flag[buffer_id]=0;
@@ -317,7 +318,7 @@ public class component_render
 				else{
 					if((do_append_part_number++)>0)
 						ci.request_response.print(",");
-					part my_part=p.comp.driver_array[p.driver_id].component_part;
+					part my_part=p.comp.driver_array.get(p.driver_id).component_part;
 					ci.request_response.print(		my_part.render_id);
 					ci.request_response.print(",",	my_part.part_id);
 					ci.request_response.print(",[",my_instance_id);
@@ -325,9 +326,9 @@ public class component_render
 				ci.request_response.print(",");
 				try{
 					in_dr.create_render_parameter(render_buffer_id,
-						p.comp.driver_array[p.driver_id].same_part_component_driver_id,ek,ci,cam_result);
+						p.comp.driver_array.get(p.driver_id).same_part_component_driver_id,ek,ci,cam_result);
 				}catch(Exception e){
-					part my_part=p.comp.driver_array[p.driver_id].component_part;
+					part my_part=p.comp.driver_array.get(p.driver_id).component_part;
 					
 					debug_information.println("instance driver create_render_parameter fail:	",e.toString());
 					debug_information.println("Component name:	",	cll.comp.component_name);
@@ -339,7 +340,7 @@ public class component_render
 				}
 				
 				in_dr.update_component_render_version(render_buffer_id,
-						p.comp.driver_array[p.driver_id].get_component_render_version());
+						p.comp.driver_array.get(p.driver_id).get_component_render_version());
 				
 				if(flag[buffer_id]==((1+4)|128))
 					ci.statistics_client.component_refresh_number++;
@@ -353,7 +354,7 @@ public class component_render
 	public void register_location(engine_kernel ek,client_information ci)
 	{
 		for(int i=0;i<component_number;i++){
-			int flag_id=comp[i].driver_array[driver_id[i]].same_part_component_driver_id;
+			int flag_id=comp[i].driver_array.get(driver_id[i]).same_part_component_driver_id;
 			switch(flag[flag_id]&(1+2+4+8)){
 			case 4:		//last not display,				this display(refresh),		need position
 			case 8:		//last not display,				this display(not refresh),	need position

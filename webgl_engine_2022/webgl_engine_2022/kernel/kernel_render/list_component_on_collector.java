@@ -36,7 +36,7 @@ public class list_component_on_collector
 		if((comp.fix_render_driver_id>=0)&&(comp.fix_render_driver_id<driver_number))
 			driver_id=comp.fix_render_driver_id;
 
-		if((my_part=comp.driver_array[driver_id].component_part)==null)
+		if((my_part=comp.driver_array.get(driver_id).component_part)==null)
 			return false;
 		if((comp.clip.clip_plane!=null)&&discard_cross_clip_plane_flag)
 			return (comp.children_number()<=0)?true:false;
@@ -131,9 +131,9 @@ public class list_component_on_collector
 				if(!(comp.get_can_display_assembly_flag(cam_result.target.parameter_channel_id)))
 					return false;
 			for(int i=0;i<driver_number;i++)
-				if(comp.driver_array[i].component_part.part_par.discard_precision2<=lod_precision2){
+				if(comp.driver_array.get(i).component_part.part_par.discard_precision2<=lod_precision2){
 					if(comp.children_number()>0)
-						if(comp.driver_array[i].component_part.part_par.assembly_precision2<=lod_precision2)
+						if(comp.driver_array.get(i).component_part.part_par.assembly_precision2<=lod_precision2)
 							return false;
 					if(register(comp,i))
 						return true;
@@ -192,7 +192,7 @@ public class list_component_on_collector
 			return;
 		if(comp.get_can_display_assembly_flag(cam_result.target.parameter_channel_id))
 			for(int i=0;i<driver_number;i++)
-				if(comp.driver_array[i].component_part.is_normal_part())
+				if(comp.driver_array.get(i).component_part.is_normal_part())
 					if(register(comp,i)){
 						no_driver_component_number=old_no_driver_component_number;
 						return;

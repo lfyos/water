@@ -1,5 +1,7 @@
 package kernel_component;
 
+import java.util.ArrayList;
+
 import kernel_common_class.common_reader;
 import kernel_common_class.common_writer;
 import kernel_file_manager.file_directory;
@@ -47,7 +49,7 @@ public class component_collector_stack
 			if(hide_flag)
 				if(comp.uniparameter.part_list_flag)
 					if(comp.driver_number()>0)
-						if(comp.driver_array[0].component_part!=null) {
+						if(comp.driver_array.get(0).component_part!=null) {
 							comp.modify_display_flag(parameter_channel_id,false,component_cont);
 							return;
 						}
@@ -66,7 +68,7 @@ public class component_collector_stack
 	}
 	public component_collector push_collector(
 			boolean set_part_information_flag,system_parameter system_par,scene_parameter scene_par,
-			component_collector push_collector,component_container component_cont,render renders[])
+			component_collector push_collector,component_container component_cont,ArrayList<render> renders)
 	{
 		part p;
 		
@@ -78,7 +80,7 @@ public class component_collector_stack
 					for(int part_id=0;(exit_flag>0)&&(part_id<push_collector.component_collector[render_id].length);part_id++)
 						for(component_link_list cll=push_collector.component_collector[render_id][part_id];(exit_flag>0)&&(cll!=null);cll=cll.next_list_item)
 							for(int i=0,ni=cll.comp.driver_number();(exit_flag>0)&&(i<ni);i++)
-								if((p=cll.comp.driver_array[i].component_part)!=null){
+								if((p=cll.comp.driver_array.get(i).component_part)!=null){
 									String root_directory=file_directory.part_file_directory(p,system_par,scene_par);
 									
 									if(cll.comp.uniparameter.display_part_name_or_component_name_flag)
@@ -105,9 +107,9 @@ public class component_collector_stack
 
 		return push_collector;
 	}
-	public component_collector push_component_array(
-			boolean part_list_flag_effective_flag,system_parameter system_par,scene_parameter scene_par,
-			component_array comp_array,component_container component_cont,render []renders)
+	public component_collector push_component_array(boolean part_list_flag_effective_flag,
+			system_parameter system_par,scene_parameter scene_par,
+			component_array comp_array,component_container component_cont,ArrayList<render>renders)
 	{
 		comp_array.make_to_ancestor(component_cont);
 		comp_array.remove_not_in_part_list_component(part_list_flag_effective_flag);
@@ -217,10 +219,11 @@ public class component_collector_stack
 			ca.make_to_children();
 			ca.make_to_ancestor(component_cont);
 			
-			if(ca.component_number<=0)
+			int component_number;
+			if((component_number=ca.comp_list.size())<=0)
 				continue;
-			if(ca.component_number==1)
-				if(ca.comp[0].component_id==component_cont.root_component.component_id)
+			if(component_number==1)
+				if(ca.comp_list.get(0).component_id==component_cont.root_component.component_id)
 					continue;
 			
 			String str=p[i].title;
@@ -229,14 +232,14 @@ public class component_collector_stack
 			else if((str=str.trim()).length()<=0)
 				str=no_title_string;
 
-			fw.println(str+"\t\t",ca.component_number);
+			fw.println(str+"\t\t",component_number);
 			
 			if(save_component_name_or_id_flag)
-				for(int j=0,nj=ca.component_number;j<nj;j++)
-					fw.println("\t",ca.comp[j].component_name);
+				for(int j=0;j<component_number;j++)
+					fw.println("\t",ca.comp_list.get(j).component_name);
 			else
-				for(int j=0,nj=ca.component_number;j<nj;j++)
-					fw.println("\t",ca.comp[j].component_id);
+				for(int j=0;j<component_number;j++)
+					fw.println("\t",ca.comp_list.get(j).component_id);
 			
 			fw.println();
 		}
@@ -245,7 +248,7 @@ public class component_collector_stack
 		fw.println();
 	}
 	public void load(common_reader f,component_container component_cont,
-			system_parameter system_par,scene_parameter scene_par,render []renders)
+			system_parameter system_par,scene_parameter scene_par,ArrayList<render> renders)
 	{
 		update_collector_version();
 		
@@ -275,8 +278,7 @@ public class component_collector_stack
 				if(comp!=null)
 					ca.add_component(comp);
 			}
-			if(ca.component_number>0){
-				ca.make_to_children();
+			if(ca.comp_list.size()>0){
 				ca.make_to_ancestor(component_cont);
 				push_component_array(false,system_par,scene_par,ca,component_cont,renders);
 				if(title!=null)
@@ -286,7 +288,7 @@ public class component_collector_stack
 		}
 	}
 	public component_collector_stack(component_container component_cont,
-			system_parameter system_par,scene_parameter scene_par,render []renders)
+			system_parameter system_par,scene_parameter scene_par,ArrayList<render>renders)
 	{
 		version=1;
 		parameter_channel_id=scene_par.component_collector_parameter_channel_id;

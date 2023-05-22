@@ -57,7 +57,7 @@ public class operate_component_explosion
 					}
 					if((my_comp=ek.component_cont.search_component(str))!=null) {
 						comp_array.add_component(my_comp);
-						if(comp_array.component_number>0)
+						if(comp_array.comp_list.size()>0)
 							break;
 					}
 				}
@@ -67,7 +67,7 @@ public class operate_component_explosion
 				if(str.length()>0)
 					if((my_comp=ek.component_cont.get_component(Integer.decode(str)))!=null) {
 						comp_array.add_component(my_comp);
-						if(comp_array.component_number>0)
+						if(comp_array.comp_list.size()>0)
 							break;
 					}
 				return;
@@ -79,7 +79,7 @@ public class operate_component_explosion
 						int list_id=cc.length-Integer.decode(str);
 						if((list_id>=0)&&(list_id<cc.length)){
 							comp_array.add_collector(cc[list_id]);
-							if(comp_array.component_number>0)
+							if(comp_array.comp_list.size()>0)
 								break;
 						}
 					}catch(Exception e) {
@@ -88,16 +88,16 @@ public class operate_component_explosion
 				return;
 			}
 			comp_array.add_selected_component(ek.component_cont.root_component,false);
-			if(comp_array.component_number<=0)
+			if(comp_array.comp_list.size()<=0)
 				comp_array.add_component(ek.component_cont.root_component);	
-			if(comp_array.component_number<=0)
+			if(comp_array.comp_list.size()<=0)
 				return;
 			break;
 		}
 
 		comp_array.make_to_children();
 		comp_array.remove_not_in_part_list_component(true);
-		if(comp_array.component_number<=0)
+		if(comp_array.comp_list.size()<=0)
 			return;
 		
 		box my_box=comp_array.get_box();
@@ -128,21 +128,21 @@ public class operate_component_explosion
 			return;
 		}
 		
-		for(int i=0,ni=comp_array.component_number;i<ni;i++) {
+		for(int i=0,ni=comp_array.comp_list.size();i<ni;i++) {
 			modifier_container_timer timer=ek.modifier_cont[modifier_container_id].get_timer();
 			long start_time=timer.get_current_time();
 			long terminate_time=ci.display_camera_result.cam.parameter.switch_time_length+start_time;
 			
+			component my_comp=comp_array.comp_list.get(i);
 			location new_move_location;
 			if(reset_flag)
 				new_move_location=new location();
 			else
-				new_move_location=caculate_location(comp_array.comp[i],
+				new_move_location=caculate_location(my_comp,
 						center_point,t,direction_x,direction_y,direction_z);
 			
-			location_modifier lm=new location_modifier(comp_array.comp[i],
-						start_time,comp_array.comp[i].move_location,
-						terminate_time,new_move_location,true,true);
+			location_modifier lm=new location_modifier(my_comp,start_time,
+					my_comp.move_location,terminate_time,new_move_location,true,true);
 			lm.touch_time_length=touch_time_length;
 			ek.modifier_cont[modifier_container_id].add_modifier(lm);
 		}

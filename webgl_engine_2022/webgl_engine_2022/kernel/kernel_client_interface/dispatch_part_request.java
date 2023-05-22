@@ -1,10 +1,13 @@
 package kernel_client_interface;
 
+import java.util.ArrayList;
+
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_part.part;
 import kernel_common_class.debug_information;
 import kernel_component.component;
+import kernel_driver.component_driver;
 import kernel_driver.part_instance_driver;
 
 public class dispatch_part_request 
@@ -56,13 +59,13 @@ public class dispatch_part_request
 			if((str=ci.request_response.get_parameter("event_render_id"))!=null) {
 				int render_id,part_id;
 				if((render_id=Integer.decode(str))>=0)
-					if(render_id<(ek.render_cont.renders.length))
-						if(ek.render_cont.renders[render_id].parts!=null)
+					if(render_id<(ek.render_cont.renders.size()))
+						if(ek.render_cont.renders.get(render_id).parts!=null)
 							if((str=ci.request_response.get_parameter("event_part_id"))!=null)
 								if((part_id=Integer.decode(str))>=0)
-									if(part_id<(ek.render_cont.renders[render_id].parts.length))
+									if(part_id<(ek.render_cont.renders.get(render_id).parts.size()))
 										return response_part_event(
-											ek.render_cont.renders[render_id].parts[part_id],ek,ci);
+											ek.render_cont.renders.get(render_id).parts.get(part_id),ek,ci);
 			}
 			if((str=ci.request_response.get_parameter("event_part_name"))!=null){
 				try {
@@ -72,7 +75,8 @@ public class dispatch_part_request
 					debug_information.println("Can NOT decode part name in part_request_dispatch");
 					return null;
 				}
-				part parts[];
+				part p;
+				ArrayList<part> parts;
 				String part_name=str;
 				String search_part_name=ek.component_cont.change_part_name.search_change_name(part_name,part_name);
 				if((parts=ek.part_cont.search_part(search_part_name))==null){
@@ -81,16 +85,16 @@ public class dispatch_part_request
 				}
 				if(parts!=null)
 					if((str=ci.request_response.get_parameter("event_driver_id"))==null){
-						for(int i=0,ni=parts.length;i<ni;i++)
-							if(parts[i]!=null)
-								if(parts[i].driver!=null)
-									return response_part_event(parts[i],ek,ci);
+						for(int i=0,ni=parts.size();i<ni;i++)
+							if((p=parts.get(i))!=null)
+								if(p.driver!=null)
+									return response_part_event(p,ek,ci);
 					}else{
 						int driver_id=Integer.decode(str);
-						if((driver_id>=0)&&(driver_id<parts.length))
-							if(parts[driver_id]!=null)
-								if(parts[driver_id].driver!=null)
-									return response_part_event(parts[driver_id],ek,ci);
+						if((driver_id>=0)&&(driver_id<parts.size()))
+							if((p=parts.get(driver_id))!=null)
+								if(p.driver!=null)
+									return response_part_event(p,ek,ci);
 					}
 			}
 			
@@ -100,18 +104,18 @@ public class dispatch_part_request
 					if(component_id<=(ek.component_cont.root_component.component_id)) {
 						component comp;
 						if((comp=ek.component_cont.get_component(component_id))!=null){
+							component_driver c_d;
 							int driver_number=comp.driver_number();
 							if((str=ci.request_response.get_parameter("event_driver_id"))==null){
 								for(int i=0;i<driver_number;i++)
-									if(comp.driver_array[i]!=null)
+									if((c_d=comp.driver_array.get(i))!=null)
 										return response_part_event(
-												comp.driver_array[i].component_part,ek,ci);
+												c_d.component_part,ek,ci);
 							}else{
 								int driver_id=Integer.decode(str);
 								if((driver_id>=0)&&(driver_id<driver_number))
-									if(comp.driver_array[driver_id]!=null)
-										return response_part_event(
-												comp.driver_array[driver_id].component_part,ek,ci);
+									if((c_d=comp.driver_array.get(driver_id))!=null)
+										return response_part_event(	c_d.component_part,ek,ci);
 							}
 						}
 					}
@@ -127,18 +131,19 @@ public class dispatch_part_request
 				
 				component comp;
 				if((comp=ek.component_cont.search_component(str))!=null){
+					component_driver c_d;
 					int driver_number=comp.driver_number();
 					if((str=ci.request_response.get_parameter("event_driver_id"))==null){
 						for(int i=0;i<driver_number;i++)
-							if(comp.driver_array[i]!=null)
+							if((c_d=comp.driver_array.get(i))!=null)
 								return response_part_event(
-										comp.driver_array[i].component_part,ek,ci);
+										c_d.component_part,ek,ci);
 					}else{
 						int driver_id=Integer.decode(str);
 						if((driver_id>=0)&&(driver_id<driver_number))
-							if(comp.driver_array[driver_id]!=null)
+							if((c_d=comp.driver_array.get(driver_id))!=null)
 								return response_part_event(
-										comp.driver_array[driver_id].component_part,ek,ci);
+										c_d.component_part,ek,ci);
 					}
 				}
 			}

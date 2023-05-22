@@ -25,14 +25,13 @@ public class operate_lod_scale
 		
 		component_array comp_array=new component_array(ek.component_cont.root_component.component_id+1);
 		comp_array.add_selected_component(ek.component_cont.root_component,false);
-		if(comp_array.component_number<=0) {
+		if(comp_array.comp_list.size()<=0) {
 			comp_array.add_component(ek.component_cont.root_component);
-			if(comp_array.component_number<=0)
+			if(comp_array.comp_list.size()<=0)
 				return;
 		}
-		for(component comp;comp_array.component_number>0;){
-			comp=comp_array.comp[--(comp_array.component_number)];
-			comp_array.comp[comp_array.component_number]=null;
+		for(int my_size;(my_size=comp_array.comp_list.size())>0;){
+			component comp=comp_array.comp_list.remove(my_size-1);
 			for(int driver_id=0,driver_number=comp.driver_number();driver_id<driver_number;driver_id++){
 				component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp,driver_id);
 				in_dr.instance_driver_lod_precision_scale=new_lod_scale;

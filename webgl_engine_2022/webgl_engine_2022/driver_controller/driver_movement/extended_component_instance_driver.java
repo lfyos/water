@@ -27,7 +27,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		component follow_mouse_comp;
-		movement_suspend suspend=((extended_component_driver)(comp.driver_array[driver_id])).m.suspend;
+		movement_suspend suspend=((extended_component_driver)(comp.driver_array.get(driver_id))).m.suspend;
 		if(cr.target.selection_target_flag) {
 			if(suspend.follow_mouse_component_id>=0)
 				if((follow_mouse_comp=ek.component_cont.get_component(suspend.follow_mouse_component_id))!=null)
@@ -63,7 +63,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{
 		return new movement_function_switch(ek,ci,
-			((extended_component_driver)(comp.driver_array[driver_id])).m).
+			((extended_component_driver)(comp.driver_array.get(driver_id))).m).
 				get_engine_result(comp.component_id,driver_id);
 	}
 }

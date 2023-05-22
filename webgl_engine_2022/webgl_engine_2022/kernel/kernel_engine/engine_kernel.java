@@ -1,6 +1,7 @@
 package kernel_engine;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 
 import kernel_camera.camera_container;
@@ -174,30 +175,34 @@ public class engine_kernel
 			component_load_source_container component_load_source_cont,
 			part_container_for_part_search part_search,client_request_response request_response)
 	{
-		part p[];
 		int child_number;
 		
 		if((comp.driver_number()>0)||((child_number=comp.children_number())<=0))
 			return;
-
-		if((p=part_search.search_part(comp.part_name))==null)
-			for(int i=0;i<child_number;i++)
-				mount_top_box_part(comp.children[i],component_load_source_cont,part_search,request_response);
-		else{
-			component_driver cd;
-			try{
-				cd=p[0].driver.create_component_driver(null,false,p[0],component_load_source_cont,this,request_response);
-			}catch(Exception e){
-				cd=null;
-				debug_information.println("create_component_driver fail int mount_top_box_part():	",e.toString());
-				debug_information.println("Part user name:",	p[0].user_name);
-				debug_information.println("Part system name:",	p[0].system_name);
-				debug_information.println("Mesh_file_name:",	p[0].directory_name+p[0].mesh_file_name);
-				debug_information.println("Material_file_name:",p[0].directory_name+p[0].material_file_name);
-				e.printStackTrace();
+		ArrayList<part> part_list=part_search.search_part(comp.part_name);
+		if(part_list!=null)
+			if(part_list.size()>0){
+				part p=part_list.get(0);
+				component_driver cd;
+				try{
+					cd=p.driver.create_component_driver(null,false,p,component_load_source_cont,this,request_response);
+				}catch(Exception e){
+					debug_information.println("create_component_driver fail int mount_top_box_part():	",e.toString());
+					debug_information.println("Part user name:",	p.user_name);
+					debug_information.println("Part system name:",	p.system_name);
+					debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);
+					debug_information.println("Material_file_name:",p.directory_name+p.material_file_name);
+					e.printStackTrace();
+					cd=null;
+				}
+				if(cd!=null){
+					comp.driver_array=new ArrayList<component_driver>();
+					comp.driver_array.add(0,cd);
+					return;
+				}
 			}
-			comp.driver_array=(cd==null)?null:new component_driver[]{cd};
-		}	
+		for(int i=0;i<child_number;i++)
+			mount_top_box_part(comp.children[i],component_load_source_cont,part_search,request_response);
 	}
 	
 	private void load_create_assemble_part(component_load_source_container component_load_source_cont,
@@ -208,7 +213,7 @@ public class engine_kernel
 		if(create_parameter.create_top_part_expand_ratio>=1.0)
 			if(create_parameter.create_top_part_left_ratio>=1.0)
 				if(component_cont.root_component!=null){
-					part top_box_part[]=(new create_assemble_part(
+					ArrayList<part> top_box_part=(new create_assemble_part(
 							not_real_scene_fast_load_flag,part_cont_for_delete_file,
 							request_response,component_cont.root_component,
 							create_parameter.create_top_part_expand_ratio,
@@ -220,7 +225,7 @@ public class engine_kernel
 							system_par,scene_par,all_part_part_cont,boftal_container,
 							get_file_last_modified_time())).top_box_part;
 					if(top_box_part!=null)
-						if(top_box_part.length>0)
+						if(top_box_part.size()>0)
 							mount_top_box_part(component_cont.root_component,component_load_source_cont,
 								new part_container_for_part_search(top_box_part),request_response);
 				}
@@ -254,7 +259,7 @@ public class engine_kernel
 		part_cont_for_delete_file=new part_container_for_delete_part_file();
 
 		render_cont=new render_container(render_cont,request_response,system_par,scene_par);
-		part_cont=new part_container_for_part_search(render_cont.part_array(true,-1));
+		part_cont=new part_container_for_part_search(render_cont.part_array_list(true,-1));
 
 		start_time=new Date().getTime();
 		render_cont.load_shader(not_real_scene_fast_load_flag,component_load_source_cont,
@@ -348,7 +353,7 @@ public class engine_kernel
 				render_cont,part_cont,component_cont.root_component).original_part_number;
 		
 		part_cont.destroy();
-		part_cont=new part_container_for_part_search(render_cont.part_array(true,-1));
+		part_cont=new part_container_for_part_search(render_cont.part_array_list(true,-1));
 
 		component_cont.do_component_caculator(true,process_bar,"second_do_component_caculator");
 		component_cont.scene_component=component_cont.search_component(scene_par.scene_component_name);

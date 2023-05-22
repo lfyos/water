@@ -25,7 +25,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		super(my_comp,my_driver_id);
 		
-		part p=comp.driver_array[driver_id].component_part;
+		part p=comp.driver_array.get(driver_id).component_part;
 		file_reader f=new file_reader(p.directory_name+p.material_file_name,p.file_charset);
 		primitive_file_name=f.get_string();
 		f.close();
@@ -50,14 +50,14 @@ public class extended_component_instance_driver extends component_instance_drive
 			return false;
 		
 		double aspect=((double)framebuffer_width)/((double)framebuffer_height);
-		rt=new render_target(comp.component_name,main_t.camera_id,
+		rt=new render_target(comp.component_name,1,main_t.camera_id,
 			main_t.parameter_channel_id,main_t.comp,main_t.driver_id,main_t.clip_plane,
 			framebuffer_width,framebuffer_height,4,
 			new box(-aspect,-1.0,-1.0,aspect,1.0,1.0),
 			new target_viewport[]{new target_viewport(-1,-1,2,2,1,new double[] {0,0,0,0})},
 			false,false,false,false);
 		
-		if((target_id=ci.target_container.register_target(rt,1,null))!=old_target_id) {
+		if((target_id=ci.target_container.register_target(rt,null))!=old_target_id) {
 			update_component_parameter_version(0);
 			old_target_id=target_id;
 		};
