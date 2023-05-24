@@ -219,76 +219,63 @@ function create_webgl_context(my_canvas)
 	alert("Could not initialise WebGL2.0, enable WebGL2.0 please");
     return null;
 }
-function request_create_engine(create_engine_sleep_time_length_scale,
+async function request_create_engine(create_engine_sleep_time_length_scale,
 	create_engine_sleep_time_length,create_engine_max_sleep_time_length,
 	request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,
 	my_user_initialization_function,processs_bar_object,process_bar_render)
 {
-	var my_ajax;
+	var engine_promise=await fetch(request_url+"&process_bar="+processs_bar_object.process_bar_id);
+	if(!(engine_promise.ok)){
+		alert("request_create_engine fail:"+engine_promise.status);
+		return;
+	}
+	var response_data;
 	try{
-		my_ajax=new XMLHttpRequest();
-		my_ajax.onreadystatechange=function()
-		{
-			if(my_ajax.readyState!=4)
-				return;
-			if(my_ajax.status!=200){
-				alert("Initialization response status error: "+my_ajax.status.toString());
-				return;
-			}
-			var response_data;
-			try{
-				response_data=JSON.parse(my_ajax.responseText);
-			}catch(e){
-				alert("Web server error, or Create Too many scenes:  "+e.toString());
-				alert(my_ajax.responseText);
-				return;
-			}
-			if(typeof(response_data)=="object"){
-				if(response_data==null){
-					alert("Web server error, response_data==null!");
-					return;
-				}
-				var render,initialization_url=response_data.pop();
-				render=new construct_render_routine(
+		response_data = await engine_promise.json();
+	}catch(e){
+		alert("Web server error, or Create Too many scenes:  "+e.toString());
+		return;
+	}
+	
+	if(typeof(response_data)=="object"){
+		if(response_data==null){
+			alert("Web server error, response_data==null!");
+			return;
+		}
+		var render,initialization_url=response_data.pop();
+		render=new construct_render_routine(
 					processs_bar_object.process_bar_id,process_bar_render.canvas,process_bar_render.ctx,
 					my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,response_data);
-				render_initialization(initialization_url,render,my_user_initialization_function,processs_bar_object);
-				
-				return;
-			}
-			if(typeof(response_data)!="boolean"){
-				alert("Web server error, response_data type is NOT boolean!");
-				return;
-			}
-			if(response_data){
-				alert("Web server error, get_client_interface fail!");
-				return;
-			}
-			var new_create_engine_sleep_time_length=create_engine_sleep_time_length;
-			new_create_engine_sleep_time_length*=create_engine_sleep_time_length_scale;
-			if(new_create_engine_sleep_time_length>create_engine_max_sleep_time_length){
-				alert("Web server error,try too many times to create scene!");
-				return;
-			}
-			setTimeout(
-				function()
-				{
-					request_create_engine(create_engine_sleep_time_length_scale,
+		render_initialization(initialization_url,render,my_user_initialization_function,processs_bar_object);
+		return;
+	}
+	if(typeof(response_data)!="boolean"){
+		alert("Web server error, response_data type is NOT boolean!");
+		return;
+	}
+	if(response_data){
+		alert("Web server error, get_client_interface fail!");
+		return;
+	}
+	var new_create_engine_sleep_time_length=create_engine_sleep_time_length;
+		new_create_engine_sleep_time_length*=create_engine_sleep_time_length_scale;
+	
+	if(new_create_engine_sleep_time_length>create_engine_max_sleep_time_length){
+		alert("Web server error,try too many times to create scene!");
+		return;
+	}
+	setTimeout(
+		function()
+		{
+			request_create_engine(create_engine_sleep_time_length_scale,
 						new_create_engine_sleep_time_length,create_engine_max_sleep_time_length,
 						request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,
 						my_user_initialization_function,processs_bar_object,process_bar_render);
-				},create_engine_sleep_time_length);
-			return;
-		}
-		my_ajax.open("GET",request_url+"&process_bar="+processs_bar_object.process_bar_id,true);
-		my_ajax.send(null);
-	}catch(e){
-		alert("request_create_engine fail!");
-		alert(e.toString());
-	}
+		},create_engine_sleep_time_length);
+	return;
 }
 
-function render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render,my_canvas)
+async function render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render,my_canvas)
 {
 	do{
 		if(typeof(processs_bar_object.process_bar_id)=="number")
@@ -300,42 +287,34 @@ function render_show_process_bar(process_bar_url,processs_bar_object,process_bar
 		return;
 	}while(false);
 	
-	var my_ajax;
+	var data_promise=await fetch(process_bar_url+"&command=data&process_bar="+processs_bar_object.process_bar_id);
+	if(!(data_promise.ok)){
+		process_bar_render.destroy();
+		alert("render_show_process_bar fail:"+data_promise.status);
+		return;
+	}
+	var response_data;
 	try{
-		my_ajax=new XMLHttpRequest();
-		my_ajax.onreadystatechange=function()
-		{
-			if(my_ajax.readyState!=4)
-				return;
-			if(my_ajax.status==200)
-				try{
-					var response_data=JSON.parse(my_ajax.responseText);
-					setTimeout(
-						function()
-						{
-							render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render,my_canvas);
-						},processs_bar_object.show_process_bar_interval);
-					process_bar_render.set_process_bar_data(response_data.caption,
-								response_data.current,		response_data.max,
-								response_data.time_length,	response_data.engine_time_length,
-								response_data.time_unit,	my_canvas);
-					return;
-				}catch(e){
-					;
-				}
-			process_bar_render.destroy();
-			return;
-		};
-		my_ajax.open("GET",process_bar_url+"&command=data&process_bar="+processs_bar_object.process_bar_id,true);
-		my_ajax.send(null);
+		response_data = await data_promise.json();
 	}catch(e){
 		process_bar_render.destroy();
-		alert("render_show_process_bar fail!");
-		alert(e.toString());
-	};
+		alert("parse render_show_process_bar fail:"+e.toString());
+		return;
+	}
+	setTimeout(
+		function()
+		{
+			render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render,my_canvas);
+		},processs_bar_object.show_process_bar_interval);
+	
+	process_bar_render.set_process_bar_data(response_data.caption,
+		response_data.current,		response_data.max,
+		response_data.time_length,	response_data.engine_time_length,
+		response_data.time_unit,	my_canvas);
+	return;
 }
 
-function render_main(create_engine_sleep_time_length_scale,
+async function render_main(create_engine_sleep_time_length_scale,
 	create_engine_sleep_time_length,create_engine_max_sleep_time_length,
 	my_canvas,my_url,my_user_name,my_pass_word,my_language_name,
 	my_scene_name,my_link_name,my_initialization_parameter,
@@ -371,42 +350,43 @@ function render_main(create_engine_sleep_time_length_scale,
 
 	var my_gl;
 	if((my_gl=create_webgl_context(my_canvas))==null)
-    	return; 
+    	return ; 
 	var max_draw_buffers=my_gl.getParameter(my_gl.MAX_DRAW_BUFFERS); 
 	var max_color_attatchments=my_gl.getParameter(my_gl.MAX_COLOR_ATTACHMENTS);
 	if((max_draw_buffers<4)||(max_color_attatchments<4)){
 		alert(	  "MAX_DRAW_BUFFERS is "		+(max_draw_buffers.toString())
 				+",MAX_COLOR_ATTACHMENTS is "	+(max_color_attatchments.toString())
 				+",they are to small!,they must be equal or greater than 4");
-    	return;
+    	return ;
 	};
 	
-	var my_ajax;
+	var processs_bar_promise=await fetch(process_bar_url+"&command=request");
+	if(!(processs_bar_promise.ok)){
+		alert("render_main create process bar error,status is "+processs_bar_promise.status);
+		alert(process_bar_url+"&command=request");
+		return;
+	}
+	
+	var processs_bar_object;
+	
 	try{
-		my_ajax=new XMLHttpRequest();
-		my_ajax.onreadystatechange=function()
-		{
-			if(my_ajax.readyState!=4)
-				return;
-			if(my_ajax.status!=200){
-				alert("Create process bar response status error: "+my_ajax.status.toString());
-				return;
-			};
-			
-			var processs_bar_object=JSON.parse(my_ajax.responseText);
-			var process_bar_render=new construct_process_bar(my_gl,my_user_progress_bar_function,
-					my_canvas.width,my_canvas.height,processs_bar_object.show_process_bar_interval);
-			render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render,my_canvas);
-			request_create_engine(create_engine_sleep_time_length_scale,
-				create_engine_sleep_time_length,create_engine_max_sleep_time_length,
-				request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,
-				my_user_initialization_function,processs_bar_object,process_bar_render);
-			return;
-		};
-		my_ajax.open("GET",process_bar_url+"&command=request",true);
-		my_ajax.send(null);
+		processs_bar_object = await processs_bar_promise.json();
 	}catch(e){
-		alert("System Initialization fail!");
-		alert(e.toString());
-	};
+		alert("render_main error:"+e.toString());
+		alert(process_bar_url+"&command=request");
+		return;
+	}
+	
+	var process_bar_render	= new construct_process_bar(my_gl,my_user_progress_bar_function,
+				my_canvas.width,my_canvas.height,processs_bar_object.show_process_bar_interval);
+				
+	render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render,my_canvas);
+		
+	request_create_engine(create_engine_sleep_time_length_scale,
+			create_engine_sleep_time_length,create_engine_max_sleep_time_length,
+			request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,
+			my_user_initialization_function,processs_bar_object,process_bar_render);
+
+	return;
 };
+

@@ -87,11 +87,7 @@ public class client_request_switcher
 				break;
 			}
 		case "javascript":
-			ecr=program_javascript.create(request_response,
-				Long.toString(system_par.file_buffer_expire_time_length),
-				system_par.create_engine_sleep_time_length_scale,
-				system_par.create_engine_sleep_time_length,
-				system_par.create_engine_max_sleep_time_length);
+			ecr=program_javascript.create(request_response,system_par);
 			break;
 		case "readme":
 			ecr=download_readme_file.download_driver_readme(request_response,

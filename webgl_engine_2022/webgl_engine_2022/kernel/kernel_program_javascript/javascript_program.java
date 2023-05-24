@@ -3,6 +3,7 @@ package kernel_program_javascript;
 import java.util.Date;
 
 import kernel_engine.engine_call_result;
+import kernel_engine.system_parameter;
 import kernel_common_class.http_modify_string;
 import kernel_common_class.class_file_reader;
 import kernel_common_class.common_reader;
@@ -44,9 +45,8 @@ public class javascript_program
 		}
 	}
 	
-	public engine_call_result create(client_request_response request_response,
-			String max_age_string,double create_engine_sleep_time_length_scale,
-			long create_engine_sleep_time_length,long create_engine_max_sleep_time_length)
+	public engine_call_result create(
+			client_request_response request_response,system_parameter system_par)
 	{
 		String function_name;
 		if((function_name=request_response.get_parameter("function_name"))==null)
@@ -74,7 +74,8 @@ public class javascript_program
 			long request_time=http_modify_string.parse(request_modified_str);
 			if((request_time>=0)&&(current_time>=0)&&(request_time>=current_time)){
 				request_response.implementor.response_not_modify(
-					"javascript_program response_not_modify()",file_modified_str,max_age_string);
+					"javascript_program response_not_modify()",file_modified_str,
+					Long.toString(system_par.file_buffer_expire_time_length));
 				return null;
 			}
 		}
@@ -96,12 +97,12 @@ public class javascript_program
 		}
 		str=new String[]{
 				"	return render_main("
-							+create_engine_sleep_time_length_scale	+","
-							+create_engine_sleep_time_length		+","
-							+create_engine_max_sleep_time_length	+",my_canvas,"			,
-				"		\""	+request_response.implementor.get_url()	+"\","					,
-				"		my_user_name,my_pass_word,my_language_name,scene_name,link_name,"	,
-				"		initialization_parameter,initialization_function,progress_bar_function);",
+							+system_par.create_engine_sleep_time_length_scale	+","
+							+system_par.create_engine_sleep_time_length			+","
+							+system_par.create_engine_max_sleep_time_length		+",my_canvas,"		,
+				"		\""	+request_response.implementor.get_url()	+"\","							,
+				"		my_user_name,my_pass_word,my_language_name,scene_name,link_name,"			,
+				"		initialization_parameter,initialization_function,progress_bar_function);"	,
 				"};"
 		};
 		
