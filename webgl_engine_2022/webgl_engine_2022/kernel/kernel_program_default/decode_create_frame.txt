@@ -1,5 +1,5 @@
 
-function(request_type_string,part_information,part_material,part_property,buffer_object_data,my_parameter)
+function(request_type_string,part_information,part_material,part_property,buffer_object_data,parameter)
 {
 	var item_size=buffer_object_data.region_data.length/buffer_object_data.item_number;
 	

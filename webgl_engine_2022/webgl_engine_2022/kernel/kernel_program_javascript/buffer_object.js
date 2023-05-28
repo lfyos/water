@@ -139,36 +139,23 @@ function construct_buffer_object(my_gl,my_parameter)
 		this.destroy=null;
 	};
 	
-	this.create_empty_buffer_object=function(
-			my_render_id,my_part_id,my_part_from_id,buffer_object_head_data)
+	this.create_empty_buffer_object=function(render_id,part_id,buffer_object_head_data)
 	{
 		var face_region_data,edge_region_data,point_region_data;
 		var face_file_number,edge_file_number,point_file_number;
-
-		try{
-			face_region_data=buffer_object_head_data.face.region_data;
-			face_file_number=face_region_data.length;
-			edge_region_data=buffer_object_head_data.edge.region_data;
-			edge_file_number=edge_region_data.length;
-			point_region_data=buffer_object_head_data.point.region_data;
-			point_file_number=point_region_data.length;
-		}catch(e){
-			face_region_data=new Array();
-			face_file_number=0;
-			edge_region_data=new Array();
-			edge_file_number=0;
-			point_region_data=new Array();
-			point_file_number=0;
-			
-			alert("create_empty_buffer_object error,render_id:"+my_render_id+",part_id"+my_part_id+",my_part_from_id"+my_part_from_id+"error:"+e.toString());
-		}
-		
 		var created_buffer_object;
 
-		if(typeof(this.buffer_object[my_render_id])=="undefined")
-			this.buffer_object[my_render_id]=new Array();
-		if(typeof(this.buffer_object[my_render_id][my_part_id])=="undefined")
-			this.buffer_object[my_render_id][my_part_id]=new Object();
+		face_region_data=buffer_object_head_data.face.region_data;
+		face_file_number=face_region_data.length;
+		edge_region_data=buffer_object_head_data.edge.region_data;
+		edge_file_number=edge_region_data.length;
+		point_region_data=buffer_object_head_data.point.region_data;
+		point_file_number=point_region_data.length;
+
+		if(typeof(this.buffer_object[render_id])=="undefined")
+			this.buffer_object[render_id]=new Array();
+		if(typeof(this.buffer_object[render_id][part_id])=="undefined")
+			this.buffer_object[render_id][part_id]=new Object();
 
 		created_buffer_object = new Object();
 		created_buffer_object.server_region_data= face_region_data;
@@ -177,7 +164,7 @@ function construct_buffer_object(my_gl,my_parameter)
     	created_buffer_object.region_data		= new Array();
     	created_buffer_object.data_collector	= new Array();
     	created_buffer_object.error_flag		=false;
-		this.buffer_object[my_render_id][my_part_id].face=created_buffer_object;
+		this.buffer_object[render_id][part_id].face=created_buffer_object;
 
 		created_buffer_object = new Object();
 		created_buffer_object.server_region_data= null;
@@ -186,7 +173,7 @@ function construct_buffer_object(my_gl,my_parameter)
     	created_buffer_object.region_data		= new Array();
     	created_buffer_object.data_collector	= new Array();
     	created_buffer_object.error_flag		=false;
-		this.buffer_object[my_render_id][my_part_id].frame=created_buffer_object;
+		this.buffer_object[render_id][part_id].frame=created_buffer_object;
 		
 		created_buffer_object = new Object();
 		created_buffer_object.server_region_data= edge_region_data;
@@ -195,7 +182,7 @@ function construct_buffer_object(my_gl,my_parameter)
     	created_buffer_object.region_data		= new Array();
     	created_buffer_object.data_collector	= new Array();
     	created_buffer_object.error_flag		=false;
-		this.buffer_object[my_render_id][my_part_id].edge=created_buffer_object;
+		this.buffer_object[render_id][part_id].edge=created_buffer_object;
 
 		created_buffer_object = new Object();
 		created_buffer_object.server_region_data= point_region_data;
@@ -204,7 +191,7 @@ function construct_buffer_object(my_gl,my_parameter)
     	created_buffer_object.region_data		= new Array();
     	created_buffer_object.data_collector	= new Array();
     	created_buffer_object.error_flag		=false;
-		this.buffer_object[my_render_id][my_part_id].point=created_buffer_object;
+		this.buffer_object[render_id][part_id].point=created_buffer_object;
 	};
 	
 	this.save_data_into_buffer_object=function(
@@ -353,9 +340,51 @@ function construct_buffer_object(my_gl,my_parameter)
 		}
 	};
 	
-	this.request_buffer_object_data=function(my_render)
+	this.fetch_buffer_object_data=async function(
+				data_url,data_length,object_pointer,shader_program,attribute_map,
+				request_str,object_pointer,frame_object_pointer,max_buffer_object_data_length,
+				decode_function,part_information,part_material,part_property,request_file_id,
+				render)
 	{
-		if(my_render.terminate_flag)
+		this.current_loading_mesh_number++;
+		
+		var buffer_data_promise=await fetch(data_url);
+		if(!(buffer_data_promise.ok)){
+			alert("request request_buffer_object data fail: "+data_url);
+			this.current_loading_mesh_number--;
+			return;
+		}
+		var response_data;
+		try{
+			response_data = await buffer_data_promise.arrayBuffer();
+		}catch(e){
+			alert("parse request_buffer_object data fail: "+e.toString());
+			alert(data_url);
+			this.current_loading_mesh_number--;
+			return;
+		}
+		
+		this.current_loading_mesh_number--;
+		this.loaded_buffer_object_file_number++;
+		this.loaded_buffer_object_data_length+=data_length;
+		
+		object_pointer.loaded_number--;
+		
+		if(render.terminate_flag)
+			return;
+		if(this.destroy_flag)
+			return;
+		
+		this.process_buffer_object_data(
+				shader_program,attribute_map,new Float32Array(response_data),
+				request_str,object_pointer,frame_object_pointer,max_buffer_object_data_length,
+				decode_function,part_information,part_material,part_property,request_file_id);
+		return;
+	}
+	
+	this.request_buffer_object_data=function(render)
+	{
+		if(render.terminate_flag)
 			return this.parameter.max_loading_number;
 		if(this.destroy_flag)
 			return this.parameter.max_loading_number;
@@ -369,10 +398,9 @@ function construct_buffer_object(my_gl,my_parameter)
 		var p								=this.request_render_part_id[0];
 		var render_id						=p[0];
 		var part_id							=p[1];
-		var part_from_id					=p[2];
-		var max_buffer_object_data_length	=p[3];
-		var part_file_proxy_url				=p[4];
-		var buffer_object_affiliated_data	=p[5];
+		var max_buffer_object_data_length	=p[2];
+		var part_file_proxy_url				=p[3];
+		var buffer_object_affiliated_data	=p[4];
 		
 		var request_str;
 		var this_buffer_object=this.buffer_object[render_id][part_id];
@@ -392,12 +420,12 @@ function construct_buffer_object(my_gl,my_parameter)
 			return 0;
 		}
 		
-		p=my_render.part_information[render_id][part_id];
+		p=render.part_information[render_id][part_id];
 		var part_information=p.information;
 		var part_material	=p.material;
 		var part_property	=p.property;
 		
-		p=my_render.render_program.render_program[render_id];
+		p=render.render_program.render_program[render_id];
 		var decode_function	=p.decode_function;
 		var shader_program	=p.shader_program;
 		var attribute_map	=p.attribute_map;
@@ -425,72 +453,30 @@ function construct_buffer_object(my_gl,my_parameter)
 			return 0;
 		}
 		
-		var data_length	=part_file_proxy_url[request_file_id][0];
-		var data_url	=part_file_proxy_url[request_file_id][1];
-		
 		this.loading_render_id	=render_id;
 		this.loading_part_id	=part_id;
 		
-		try{
-			var my_ajax=new XMLHttpRequest(),cur=this;
-			my_ajax.responseType="arraybuffer";
-			my_ajax.onreadystatechange=function()
-			{
-				if(my_ajax.readyState!=4)
-					return;
-				if(my_render.terminate_flag)
-					return;
-				if(cur.destroy_flag)
-					return;
-				
-				cur.current_loading_mesh_number--;
-				object_pointer.loaded_number--;
-				
-				if(my_ajax.status!=200){
-					alert("Loading Buffer Object Data response status error: "+my_ajax.status.toString());
-					alert("request_str:"+request_str+",request_file_id:"+request_file_id.toString());
-					alert(data_url);
-					return;
-				}
-				
-				cur.loaded_buffer_object_file_number++;
-				cur.loaded_buffer_object_data_length+=data_length;
-				
-				var my_response_data;
-				
-				try{
-					my_response_data=new Float32Array(my_ajax.response);
-				}catch(e){
-					alert("Parse buffer data error, "+e.toString());
-					alert(data_url);
-					return;
-				}
-				
-				cur.process_buffer_object_data(shader_program,attribute_map,my_response_data,
-					request_str,object_pointer,frame_object_pointer,max_buffer_object_data_length,
-					decode_function,part_information,part_material,part_property,request_file_id);
-				
-				return;
-			};
-			my_ajax.open("GET",data_url,true);
-			my_ajax.send(null);
-			this.current_loading_mesh_number++;
-		}catch(e){
-			alert("Loading Buffer Object Data ajax error: "+e.toString());
-		};
+		var data_length	=part_file_proxy_url[request_file_id][0];
+		var data_url	=part_file_proxy_url[request_file_id][1];
+		
+		this.fetch_buffer_object_data(
+				data_url,data_length,object_pointer,shader_program,attribute_map,
+				request_str,object_pointer,frame_object_pointer,max_buffer_object_data_length,
+				decode_function,part_information,part_material,part_property,request_file_id,
+				render);
 		return 1;
 	};
 	
-	this.process_buffer_object_head=function(render_id,part_id,part_from_id,
-		part_file_proxy_url,buffer_object_head_data,buffer_object_affiliated_data,my_render)
+	this.process_buffer_object_head=function(render_id,part_id,
+		part_file_proxy_url,buffer_object_head_data,buffer_object_affiliated_data,render)
 	{
-		if(typeof(my_render.part_information[render_id])=="undefined")
-			my_render.part_information[render_id]=new Array();
-		if(typeof(my_render.part_information[render_id][part_id])=="undefined")
-			my_render.part_information[render_id][part_id]=new Object();
+		if(typeof(render.part_information[render_id])=="undefined")
+			render.part_information[render_id]=new Array();
+		if(typeof(render.part_information[render_id][part_id])=="undefined")
+			render.part_information[render_id][part_id]=new Object();
 		
-		var p=my_render.part_information[render_id][part_id];
-		var my_part_component_id_and_driver_id=my_render.part_component_id_and_driver_id[render_id][part_id];
+		var p=render.part_information[render_id][part_id];
+		var my_part_component_id_and_driver_id=render.part_component_id_and_driver_id[render_id][part_id];
 		
 		p.find_error_flag					=false;
 		p.information						=buffer_object_head_data.information;
@@ -498,23 +484,21 @@ function construct_buffer_object(my_gl,my_parameter)
 		p.property							=buffer_object_head_data.property;
 		p.part_component_id_and_driver_id	=my_part_component_id_and_driver_id;
 		p.component_initialize_data			=new Array();
-		p.part_initialize_data				=my_render.part_initialize_data[render_id][part_id];
-		p.render_initialize_data			=my_render.render_initialize_data[render_id];
+		p.part_initialize_data				=render.part_initialize_data[render_id][part_id];
+		p.render_initialize_data			=render.render_initialize_data[render_id];
 		
 		for(var buffer_id=0,buffer_number=my_part_component_id_and_driver_id.length;buffer_id<buffer_number;buffer_id++){
 			var my_component_id					 =my_part_component_id_and_driver_id[buffer_id][0];
 			var my_driver_id					 =my_part_component_id_and_driver_id[buffer_id][1];
-			p.component_initialize_data[buffer_id]=my_render.component_initialize_data[my_component_id][my_driver_id];
+			p.component_initialize_data[buffer_id]=render.component_initialize_data[my_component_id][my_driver_id];
 		}
 		var max_buffer_object_data_length=buffer_object_head_data.data.max_buffer_object_data_length;
 		this.request_render_part_id[this.request_render_part_id.length]
-			=[	render_id,						part_id,				part_from_id,
-				max_buffer_object_data_length,	part_file_proxy_url,	buffer_object_affiliated_data
-			];
-		this.create_empty_buffer_object(render_id,part_id,part_from_id,buffer_object_head_data.data);
+			=[render_id,part_id,max_buffer_object_data_length,part_file_proxy_url,buffer_object_affiliated_data];
+		this.create_empty_buffer_object(render_id,part_id,buffer_object_head_data.data);
 		return;
 	};
-	this.process_buffer_head_package=function(package_length,package_data,head_data_array,my_render)
+	this.process_buffer_head_package=function(package_length,package_data,head_data_array,render)
 	{
 		this.loaded_buffer_object_file_number++;
 		this.loaded_buffer_object_data_length+=package_length;
@@ -522,65 +506,53 @@ function construct_buffer_object(my_gl,my_parameter)
 		for(var i=0,ni=package_data.length;i<ni;i++){
 			var render_id						=package_data[i][0];
 			var part_id							=package_data[i][1];
-			var part_from_id					=package_data[i][2];
-			var part_package_sequence_id		=package_data[i][3];
-			var part_file_proxy_url				=package_data[i][4];
+			var part_package_sequence_id		=package_data[i][2];
+			var part_file_proxy_url				=package_data[i][3];
 			
 			var buffer_object_head_data			=head_data_array[part_package_sequence_id].shift();
 			var buffer_object_affiliated_data	=head_data_array[part_package_sequence_id];
 
-			this.process_buffer_object_head(render_id,part_id,part_from_id,
-				part_file_proxy_url,buffer_object_head_data,buffer_object_affiliated_data,my_render);
+			this.process_buffer_object_head(render_id,part_id,
+				part_file_proxy_url,buffer_object_head_data,buffer_object_affiliated_data,render);
 		}
 	};
 	
-	this.request_buffer_head_package=function(
-			package_proxy_url,package_length,package_flag,package_data,my_render)
+	this.request_buffer_head_package=async function(
+			package_proxy_url,package_length,package_flag,package_data,render)
 	{
-		try{
-			var cur=this,my_ajax=new XMLHttpRequest();
-			my_ajax.onreadystatechange=function()
-			{
-				if(my_ajax.readyState!=4)
-					return;
-				if(my_render.terminate_flag)
-					return;
-				if(cur.destroy_flag)
-					return;
-				cur.current_loading_mesh_number--;
-				if(my_ajax.status!=200){
-					alert("this.request_buffer_head_package response status error: "+my_ajax.status.toString());
-					alert(package_proxy_url);
-					return;
-				}
-				var head_data_array;
-				try{
-					head_data_array=JSON.parse(my_ajax.responseText);
-				}catch(e){
-					alert("this.request_buffer_head_package JSON.parse error: "+e.toString());
-					console.log(my_ajax.responseText);
-					console.log("package_proxy_url: "+package_proxy_url);
-					return;
-				}
-				if(package_flag)
-					head_data_array=[head_data_array];
-				
-				cur.process_buffer_head_package(package_length,package_data,head_data_array,my_render);
-			}
-			my_ajax.open("GET",package_proxy_url,true);
-			my_ajax.send(null);
-			
-			this.current_loading_mesh_number++;
-		}catch(e){
-			alert("this.request_buffer_head_package fail: "+e.toString());
-			console.log("package_proxy_url: "+package_proxy_url);
+		this.current_loading_mesh_number++;
+		
+		var head_promise=await fetch(package_proxy_url);
+		if(!(head_promise.ok)){
+			alert("request request_buffer_head_package fail: "+initialization_url);
+			this.current_loading_mesh_number--;
+			return;
 		}
+		var head_data_array;
+		try{
+			head_data_array = await head_promise.json();
+		}catch(e){
+			alert("parse request_buffer_head_package data fail: "+e.toString());
+			alert(initialization_url);
+			this.current_loading_mesh_number--;
+			return;
+		}
+		
+		this.current_loading_mesh_number--;
+		
+		if(render.terminate_flag)
+			return;
+		if(this.destroy_flag)
+			return;
+		
+		this.process_buffer_head_package(package_length,package_data,
+			package_flag?[head_data_array]:head_data_array,render);
 	}
 	
-	this.process_buffer_head_request_queue=function(my_render)
+	this.process_buffer_head_request_queue=function(render)
 	{
 		while(true){
-			if(my_render.terminate_flag)
+			if(render.terminate_flag)
 				return;
 			if(this.destroy_flag)
 				return;
@@ -593,7 +565,8 @@ function construct_buffer_object(my_gl,my_parameter)
 			var package_length		=p[1];
 			var package_flag		=p[2];
 			var package_data		=p[3];
-			this.request_buffer_head_package(package_proxy_url,package_length,package_flag,package_data,my_render);
+
+			this.request_buffer_head_package(package_proxy_url,package_length,package_flag,package_data,render);
 		}
 	}
 };

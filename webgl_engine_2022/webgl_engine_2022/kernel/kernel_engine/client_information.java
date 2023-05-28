@@ -272,7 +272,7 @@ public class client_information
 		int new_max_loading_number,max_client_loading_number=ek.system_par.normal_loading_number;
 		if((str=my_request_response.get_parameter("max_loading_number"))!=null)	
 			if((new_max_loading_number=Integer.decode(str))>0)
-				if(new_max_loading_number<ek.system_par.max_loading_number)
+				if(new_max_loading_number<=ek.system_par.max_loading_number)
 					max_client_loading_number=new_max_loading_number;
 		
 		render_buffer					=new buffer_container(ek);

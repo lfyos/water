@@ -33,9 +33,9 @@ public class engine_initialization
 				fw.println(",");
 			fw.println("\t{");
 			
-			fw.println("\t\tcomponent_id			:	",	comp.component_id+",");
-			fw.println("\t\tcomponent_name			:	",	jason_string.change_string(comp.component_name)+",");
-			fw.println("\t\tinitialization_function	:	",	jason_string.change_string(program_text));
+			fw.println("\t\t\"component_id\"			:	",	comp.component_id+",");
+			fw.println("\t\t\"component_name\"			:	",	jason_string.change_string(comp.component_name)+",");
+			fw.println("\t\t\"initialization_function\"	:	",	jason_string.change_string(program_text));
 			
 			fw.print  ("\t}");
 		}
