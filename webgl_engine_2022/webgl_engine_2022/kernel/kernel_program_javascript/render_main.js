@@ -43,138 +43,126 @@ function redraw(render,processs_bar_object)
 	render_routine();
 };
 
-function render_initialization(initialization_url,my_render,user_initialization_function,processs_bar_object)
+async function render_initialization(initialization_url,render,user_initialization_function,processs_bar_object)
 {
+	var initialization_promise=await fetch(initialization_url);
+	if(!(initialization_promise.ok)){
+		alert("request render_initialization data fail: "+initialization_url);
+		return;
+	}
+	var response_data;
 	try{
-		var my_ajax=new XMLHttpRequest(),render=my_render;
-		my_ajax.onreadystatechange=function()
-		{
-			if(my_ajax.readyState!=4)
-				return;
-			if(render.terminate_flag){
-				processs_bar_object.process_bar_id=null;
-				return;
-			}
-			if(my_ajax.status!=200){
-				processs_bar_object.process_bar_id=null;
-				alert("Loading system_initialization_function response status error: "+my_ajax.status.toString());
-				alert(initialization_url);
-				return;
-			};
-			
-			var response_data					=eval(my_ajax.responseText);
-			var sorted_component_name_id		=response_data[0];
-			var	part_component_id_and_driver_id	=response_data[1];
-			var response_fun_array				=response_data[2];
-			var program_data					=response_data[3];
-			
-			render.process_part_component_id_and_driver_id(
-					sorted_component_name_id,part_component_id_and_driver_id);
-			
-			for(var i=0,ni=program_data.length;i<ni;i++){
-				var render_name			=program_data[i][0];
-				var permanent_render_id	=program_data[i][1];
-				var decode_function;
-				try{
-					decode_function=(eval("["+(program_data[i][2])+"]"))[0];
-				}catch(e){
-					decode_function=function(request_type_string,
-						part_information,part_material,part_property,buffer_object_data,my_parameter)
-					{
-						return {
-									region_box	:	buffer_object_data.region_box,
-									item_size	:	buffer_object_data.region_data.length/buffer_object_data.item_number,
-									region_data	:	new Array()
-						};
-					};
-					console.log("Error decode_function:	"+permanent_render_id+"		"+e.toString());
-					console.log(program_data[i][2]);
-				}
-				var attribute_map,draw_function;
-				try{
-					draw_function=(eval("["+(program_data[i][3])+"]"));
-					attribute_map=draw_function[0];
-					draw_function=draw_function[1];
-				}catch(e){
-					attribute_map=[];
-					draw_function=function(){};
-					console.log("Error draw_function:	"+permanent_render_id+"		"+e.toString());
-					console.log(program_data[i][3]);
-				}
-				
-				var vertex_program		=program_data[i][4];
-				var fragment_program	=program_data[i][5];
-				var geometry_program	=program_data[i][6];
-				var tess_control_Program=program_data[i][7];
-				var tess_evalueprogram	=program_data[i][8];
-				var shader_data			=program_data[i][9];
-				
-				render.render_program.compile_program(i,
-						render_name,
-						permanent_render_id,
-						decode_function,
-						attribute_map,
-						draw_function,
-						vertex_program,
-						fragment_program,
-						geometry_program,
-						tess_control_Program,
-						tess_evalueprogram,
-						shader_data);
-			};
-			render.render_program.create_sorted_render_program_id();
-			
-			for(var i=0,ni=response_fun_array.length;i<ni;i++){
-				if(typeof(response_fun_array[i])!="object")
-					continue;
-				var component_id=response_fun_array[i].component_id;
-				var component_name=response_fun_array[i].component_name;
-				var init_function=response_fun_array[i].initialization_function;
-				if(typeof(init_function)!="string"){
-					console.log("component init_function program is not string:	"+component_name+"		"+component_id);
-					console.log(response_fun_array[i].initialization_function);
-					continue;
-				}
-				if((init_function=init_function.trim()).length<=0){
-					console.log("component init_function program is empty:	"+component_name+"		"+component_id);
-					console.log(response_fun_array[i].initialization_function);
-					continue;
-				}
-				try{
-					init_function=(eval("["+init_function+"]"))[0];
-				}catch(e){
-					console.log("Error compile component init_function:	"
-						+component_name+"		"+component_id+"		"+e.toString());
-					console.log(response_fun_array[i].initialization_function);
-					continue;
-				}
-				if(typeof(init_function)!="function"){
-					console.log("component init_function is NOT FUNCTION:	"
-						+component_name+"		"+component_id+"		"+e.toString());
-					console.log(response_fun_array[i].initialization_function);
-					continue;
-				}
-				try{
-					init_function(component_name,component_id,render);
-				}catch(e){
-					console.log("Error execute component init_function:	"
-						+component_name+"		"+component_id+"		"+e.toString());
-					console.log(response_fun_array[i].initialization_function);
-					continue;
-				}
-			}
-			if(typeof(user_initialization_function)=="function")
-				user_initialization_function(render);
-			
-			redraw(render,processs_bar_object);
-		};
-		my_ajax.open("GET",initialization_url,true);
-		my_ajax.send(null);
+		response_data = await initialization_promise.json();
 	}catch(e){
-		processs_bar_object.process_bar_id=null;
-		alert("render_initialization fail: "+e.toString());
+		alert("parse render_initialization data fail: "+e.toString());
 		alert(initialization_url);
+		return;
+	}
+	
+	var sorted_component_name_id		=response_data[0];
+	var	part_component_id_and_driver_id	=response_data[1];
+	var response_fun_array				=response_data[2];
+	var program_data					=response_data[3];
+			
+	render.process_part_component_id_and_driver_id(
+			sorted_component_name_id,part_component_id_and_driver_id);
+			
+	for(var i=0,ni=program_data.length;i<ni;i++){
+		var render_name			=program_data[i][0];
+		var permanent_render_id	=program_data[i][1];
+		var decode_function;
+		try{
+			decode_function=(eval("["+(program_data[i][2])+"]"))[0];
+		}catch(e){
+			decode_function=function()
+			{
+				var ret_val={
+					region_box	:	[[0,0,0,1],[1,1,1,1]],
+					item_size	:	4,
+					region_data	:	new Array()
+				};
+				return ret_val;
+			};
+			console.log("Error decode_function:	"+permanent_render_id+"		"+e.toString());
+			console.log(program_data[i][2]);
+		}
+		var attribute_map,draw_function;
+		try{
+			draw_function=(eval("["+(program_data[i][3])+"]"));
+			attribute_map=draw_function[0];
+			draw_function=draw_function[1];
+		}catch(e){
+			attribute_map=[];
+			draw_function=function(){};
+			console.log("Error draw_function:	"+permanent_render_id+"		"+e.toString());
+			console.log(program_data[i][3]);
+		}
+				
+		var vertex_program		=program_data[i][4];
+		var fragment_program	=program_data[i][5];
+		var geometry_program	=program_data[i][6];
+		var tess_control_Program=program_data[i][7];
+		var tess_evalueprogram	=program_data[i][8];
+		var shader_data			=program_data[i][9];
+				
+		render.render_program.compile_program(i,
+				render_name,
+				permanent_render_id,
+				decode_function,
+				attribute_map,
+				draw_function,
+				vertex_program,
+				fragment_program,
+				geometry_program,
+				tess_control_Program,
+				tess_evalueprogram,
+				shader_data);
 	};
+	render.render_program.create_sorted_render_program_id();
+		
+	for(var i=0,ni=response_fun_array.length;i<ni;i++){
+		if(typeof(response_fun_array[i])!="object")
+			continue;
+		var component_id=response_fun_array[i].component_id;
+		var component_name=response_fun_array[i].component_name;
+		var init_function=response_fun_array[i].initialization_function;
+		if(typeof(init_function)!="string"){
+			console.log("component init_function program is not string:	"+component_name+"		"+component_id);
+			console.log(response_fun_array[i].initialization_function);
+			continue;
+		}
+		if((init_function=init_function.trim()).length<=0){
+			console.log("component init_function program is empty:	"+component_name+"		"+component_id);
+			console.log(response_fun_array[i].initialization_function);
+			continue;
+		}
+		try{
+			init_function=(eval("["+init_function+"]"))[0];
+		}catch(e){
+			console.log("Error compile component init_function:	"
+				+component_name+"		"+component_id+"		"+e.toString());
+			console.log(response_fun_array[i].initialization_function);
+			continue;
+		}
+		if(typeof(init_function)!="function"){
+			console.log("component init_function is NOT FUNCTION:	"
+				+component_name+"		"+component_id+"		"+e.toString());
+			console.log(response_fun_array[i].initialization_function);
+			continue;
+		}
+		try{
+			init_function(component_name,component_id,render);
+		}catch(e){
+			console.log("Error execute component init_function:	"
+				+component_name+"		"+component_id+"		"+e.toString());
+			console.log(response_fun_array[i].initialization_function);
+			continue;
+		}
+	}
+	if(typeof(user_initialization_function)=="function")
+			user_initialization_function(render);
+			
+	redraw(render,processs_bar_object);
 };
 
 function create_webgl_context(my_canvas)

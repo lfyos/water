@@ -261,7 +261,6 @@ public class response_render_component_request
 				part p=ek.render_cont.renders.get(render_id).parts.get(part_id);
 				ci.request_response.print((j<=0)?"[":",[",	p.render_id).
 									print(",",				p.part_id).
-									print(",",				p.part_from_id).
 									print(",",				p.part_package_sequence_id);
 				ci.request_response.print(",[");
 				i+=response_buffer_object_proxy_request(p,ek,ci);

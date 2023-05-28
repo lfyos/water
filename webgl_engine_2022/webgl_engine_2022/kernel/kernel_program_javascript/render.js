@@ -325,26 +325,39 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			};
 		};
 	};
-	this.parse_web_server_response_data=function(responseText,browser_start_time)
+	
+	this.fetch_web_server_response_data=async function(request_string,processs_bar_object)
 	{
-		var response_data,start_time=(new Date()).getTime();
-		try{
-			response_data=JSON.parse(responseText);
-			this.can_do_render_request_flag=true;
-		}catch(e){
+		var fetch_start_time=(new Date()).getTime();
+		
+		var render_promise=await fetch(request_string);
+		if(!(render_promise.ok)){
+			processs_bar_object.process_bar_id=null;
 			this.can_do_render_request_flag	=false;
-			
-			console.log(responseText);
-			console.log();
-			console.log(e.toString());
-			
-			alert("parse_web_server_response_data fail:"+e.toString());
-
+			alert("request fetch_web_server_response_data fail: "+request_string);
 			return;
-		};
+		}
+		var response_data;
+		try{
+			response_data = await render_promise.json();
+		}catch(e){
+			processs_bar_object.process_bar_id=null;
+			this.can_do_render_request_flag	=false;
+			alert("parse fetch_web_server_response_data fail: "+e.toString());
+			alert(request_string);
+			return;
+		}
+
+		var fetch_end_time=(new Date()).getTime();
+		
+		processs_bar_object.process_bar_id=null;
+		this.can_do_render_request_flag	=true;
+		
+		this.do_render_request_response_number++;
+
 		this.collector_stack_version=response_data[0].shift();
 		this.modifier_current_time=this.modifier_time_parameter.modify_parameter(response_data[0]);
-		this.browser_current_time=(browser_start_time+start_time)/2.0;
+		this.browser_current_time=(fetch_start_time+fetch_end_time)/2.0;
 		this.render_data=new Array();
 		for(var i=0,ni=response_data[1].length;i<ni;i++){
 			var render_buffer_id=this.get_component_render_parameter(response_data[1][i][0]);
@@ -359,7 +372,9 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.parse_current_information_request(response_data[4]);
 		for(var p=response_data[5],i=0,ni=p.length;i<ni;i++)
 			this.buffer_object.buffer_head_request_queue.push(p[i]);
-		this.data_time_length=(new Date()).getTime()-start_time;
+		this.data_time_length=(new Date()).getTime()-fetch_end_time;
+
+		return;
 	};
 	this.render_component=function(render_list,render_buffer_id,parameter_channel_id,
 				method_id,project_matrix,viewport,render_do_render_number,pass_do_render_number)
@@ -569,15 +584,17 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	this.can_do_render_request_flag=true;
 	this.render_request_start_time=0;
 	this.render_request=function(current_time,processs_bar_object)
-	{	
+	{
 		if(this.terminate_flag){
 			processs_bar_object.process_bar_id=null;
 			return false;
 		}
 		if(!(this.can_do_render_request_flag))
 			return false;
+		
 		if((current_time-this.render_request_start_time)<(this.modifier_time_parameter.delay_time_length))
 			return false;
+			
 		this.can_do_render_request_flag	=false;
 		this.render_request_start_time	=(new Date()).getTime();
 		var min_value=this.computer.min_value();
@@ -673,32 +690,8 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		request_string+="&length=";
 		request_string+=request_string.length.toString();
 
-		try{
-			var cur=this,my_ajax=new XMLHttpRequest();
-			my_ajax.onreadystatechange=function()
-			{
-				if(my_ajax.readyState!=4)
-					return;
-				processs_bar_object.process_bar_id=null;
-				if(cur.terminate_flag)
-					return;
-				if(my_ajax.status!=200){
-					alert("render_request:my_ajax.status!=200 fail:"+my_ajax.status);
-					return;
-				};
-				cur.parse_web_server_response_data(my_ajax.responseText,my_ajax.browser_start_time);
-				cur.do_render_request_response_number++;
-				
-				return;
-			};
-			my_ajax.browser_start_time=(new Date()).getTime();
-			my_ajax.open("GET",request_string,true);
-			my_ajax.send(null);
-			my_ajax.browser_start_time=(new Date()).getTime();
-		}catch(e){
-			processs_bar_object.process_bar_id=null;
-			alert("render_request error fail:	"+e.toString());
-		};
+		this.fetch_web_server_response_data(request_string,processs_bar_object);
+	
 		return true;
 	};
 	this.append_routine_function=function(my_routine_function)
@@ -741,16 +734,16 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		
 		this.process_routine_function();
 		this.render_routine();
-		
-		if(this.terminate_flag)
-			return this.terminate_flag;
+
 		do{
 			if((this.render_request_start_time-this.last_event_time)<=this.parameter.download_minimal_time_length)
 				if((this.render_request_start_time-this.engine_start_time)>this.parameter.download_start_time_length)
 					break;
-			for(var i=0,ni=this.parameter.max_loading_number;(i<ni);)
+
+			for(var i=this.buffer_object.current_loading_mesh_number,ni=this.parameter.max_loading_number;i<ni;)
 				i+=this.buffer_object.request_buffer_object_data(this);
 			this.buffer_object.process_buffer_head_request_queue(this);
+			
 		}while(false);
 		
 		this.render_request(start_time,processs_bar_object);
@@ -761,7 +754,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 
 	this.terminate=function()
 	{
-		var terminated_url=this.url_with_channel+"&command=termination";
+		fetch(this.url_with_channel+"&command=termination");
 		
 		this.terminate_flag=true;
 		try{
@@ -770,14 +763,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			;
 		}
 		this.destroy_terminated_data=null;
-
-		try{
-			var my_ajax=new XMLHttpRequest();
-			my_ajax.open("GET",terminated_url,true);
-			my_ajax.send(null);
-		}catch(e){
-			;
-		}
 		this.terminate=null;
 	}
 	this.destroy_terminated_data=function()
@@ -907,18 +892,18 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		
 		this.browser_current_time					=null;
 		
-		this.do_execute_render_number				=null;
-		this.do_render_request_response_number		=null;
+		this.do_execute_render_number				=0;
+		this.do_render_request_response_number		=0;
 		this.collector_stack_version				=0;
 
 		this.process_part_component_id_and_driver_id=null;
 		this.get_component_buffer_parameter			=null;
 		this.get_component_render_parameter			=null;
 		this.parse_current_information_request		=null;
-		this.parse_web_server_response_data			=null;
+		this.fetch_web_server_response_data			=null;
 		this.render_component						=null;
 		this.render_routine							=null;
-		this.can_do_render_request_flag				=null;
+		this.can_do_render_request_flag				=false;
 		this.render_request_start_time				=null;
 		this.render_request							=null;
 		this.append_routine_function				=null;
