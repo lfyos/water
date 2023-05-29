@@ -142,14 +142,16 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 			[	["operation","start_trace_primitive"],
 				["width",	Math.round(render.canvas.width *my_precision)],
 				["height",	Math.round(render.canvas.height*my_precision)]
-			],
-			function(response_data,render)
+			]).
+		then(
+			function(response_data)
 			{
 				clear_triangle(my_component_id);
 				if(typeof(my_response_fun)=="function")
 					my_response_fun(response_data,render);
-			},
-			function(type_id,render,e,responseText)
+			}).
+		catch(
+			function()
 			{
 				clear_triangle(my_component_id);
 				if(typeof(my_error_fun)=="function")

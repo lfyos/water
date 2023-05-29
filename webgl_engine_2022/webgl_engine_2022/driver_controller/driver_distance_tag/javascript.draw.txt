@@ -192,7 +192,8 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 					switch(event.keyCode){
 					case 46://del
 					case  8://backspace
-						render.call_server_component(ep.component_id,"all",[["operation","clear"],["id",ep.pickup_tag_id]]);
+						render.call_server_component(
+									ep.component_id,"all",[["operation","clear"],["id",ep.pickup_tag_id]]);
 						break;
 					}
 					return true;
@@ -202,8 +203,10 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 					var ep=render.component_event_processor[component_id];
 					if(ep.mousemove_flag){
 						ep.mousemove_flag=false;
-						render.call_server_component(component_id,"all",[["operation","touch"]],
-							function(response_data,render)
+						render.call_server_component(
+							component_id,"all",[["operation","touch"]]).
+						then(
+							function(response_data)
 							{
 								ep.mousemove_flag=true;
 							});

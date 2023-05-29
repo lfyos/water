@@ -6,14 +6,22 @@ import kernel_file_manager.travel_through_directory;
 
 public class test_1 extends travel_through_directory
 {
+	private static String match[]= {
+			"XMLHttpRequest"
+	};
 	public void operate_file(String file_name)
 	{
-		String str=file_reader.get_text(file_name,"GBK");
-		if(str!=null){
-			if(str.indexOf("\"place\"")>=0)
-				if(str.indexOf("\"place\"")>=0)
+		String str;
+		if((str=file_reader.get_text(file_name,"GBK"))==null)
+			return;
+		for(int index_id,i=0,ni=match.length;i<ni;i++)
+			if((index_id=str.indexOf(match[i]))>=0) {
+				index_id+=match[i].length();
+				if(str.charAt(index_id)!='_') {
 					debug_information.println(file_name);
-		}
+					return;
+				}
+			}
 	}
 	public test_1()
 	{

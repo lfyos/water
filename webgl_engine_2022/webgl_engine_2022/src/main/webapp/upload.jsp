@@ -39,18 +39,15 @@ function file_name_change()
 	var reader=new FileReader();
 	reader.onloadend=function()
 	{
-		var my_ajax=new XMLHttpRequest();
-		my_ajax.onreadystatechange=function()
-		{
-			if(my_ajax.readyState!=4)
-				return;
-			if(my_ajax.status!=200)
-				alert("上传失败");
-			else
-				window.open("./upload.jsp?format="+format_string,"_self");
-		};
-		my_ajax.open("POST","./upload.jsp?format="+format_string+"&file="+file_name,true);
-		my_ajax.send(reader.result);
+		fetch("./upload.jsp?format="+format_string+"&file="+file_name,
+			{
+				method: "POST", 
+				body: reader.result
+			}).catch(
+					function()
+					{
+						alert("上传失败!");
+					});
 	};
 	reader.readAsArrayBuffer(fi.files[0]);
 }

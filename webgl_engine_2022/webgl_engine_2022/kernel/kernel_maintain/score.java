@@ -9,27 +9,33 @@ public class score
 	{
 		debug_information.println("Begin");
 		
-		file_reader f=new file_reader("E:\\2022春季学期编译原理课程\\期末提交的材料\\平时成绩.txt",null);
+		file_reader f=new file_reader("E:\\tmp\\x.txt",null);
 		while(true){
-			int number=f.get_int();
-			int id=f.get_int();
-			String name=f.get_string();
+			String number	=f.get_string();
+			String id		=f.get_string();
+			String name		=f.get_string();
 			if(f.eof())
 				break;
-			String str=f.get_string();
-			f.get_string();
-			f.get_string();
-			
+			String score_str_1		=f.get_string();
+			String score_str_2		=f.get_string();
+
+
 			debug_information.print  (number);
 			debug_information.print  ("\t",id);
 			debug_information.print  ("\t",name);
+			debug_information.print  ("\t",
+					(int)(Math.round(0.5*(Double.parseDouble(score_str_1)+Double.parseDouble(score_str_2)))));
+			debug_information.print  ("\t",score_str_1);
+			debug_information.print  ("\t",score_str_2);
 			
-			int score[]= {0,0,0,0,0,0,0,0,0,0},my_score=0,step=5;
+			int score[]= {0,0,0,0,0,0,0,0,0,0},my_score=Integer.decode(score_str_2);
 			
-			if(str.compareTo("不计")!=0)
+			if(score_str_2.compareTo("不计")==0)
+				for(int i=0;i<10;i++)
+					debug_information.print  ("\t不计");
+			else {
 				for(;;){
-					my_score=Integer.decode(str);
-					step=5;
+					int step=5;
 					if(my_score>=90)
 						step=3;
 					if(my_score>=95)
@@ -39,7 +45,6 @@ public class score
 						score[i]=(int)(Math.round(my_score+2.0*(Math.random()-0.5)*step));
 						score[9]-=score[i];
 					}
-					
 					boolean flag=true;
 					for(int i=0;i<10;i++) {
 						if(score[i]>95)
@@ -50,16 +55,10 @@ public class score
 					if(flag)
 						break;
 				}
-			if(my_score<50)
-				debug_information.print  ("\t不计");
-			else
-				debug_information.print  ("\t",my_score);
-			
-			for(int i=0;i<10;i++)
-				if(score[i]<50)
-					debug_information.print  ("\t不计");
-				else
+				
+				for(int i=0;i<10;i++)
 					debug_information.print  ("\t",score[i]);
+			}
 			debug_information.println();
 		}
 		f.close();

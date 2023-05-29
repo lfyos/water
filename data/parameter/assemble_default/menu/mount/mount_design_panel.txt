@@ -8,15 +8,19 @@ function(component_name,component_id,render)
 
 			switch(function_id){
 			case 0:
-				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-					function(response_data,render,responsetext)
+				render.call_server_component(
+						"movement_manager","all",[["operation","movement"],["move_method","stop"]]).
+				then(
+					function(response_data)
 					{
 						render.get_component_event_processor("组件拼装功能设计运动组件").active_list();
 					});
 				break;
 			case 1:
-				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-					function(response_data,render,responsetext)
+				render.call_server_component(
+					"movement_manager","all",[["operation","movement"],["move_method","stop"]]).
+				then(
+					function(response_data)
 					{
 						render.get_component_event_processor("组件拼装拼装编辑组件").active_list(true);
 					});
@@ -28,19 +32,25 @@ function(component_name,component_id,render)
 					"_blank");
 				break;
 			case 3:
-				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-					function(response_data,render,responsetext)
+				render.call_server_component(
+						"movement_manager","all",[["operation","movement"],["move_method","stop"]]).
+				then(
+					function(response_data)
 					{
-						render.call_server_component("movement_manager","all",[["operation","design"],["move_method","save"]]);
+						render.call_server_component(
+							"movement_manager","all",[["operation","design"],["move_method","save"]]);
 					});
 				break;
 			case 4:
 				render.system_call_processor.set_menu_hide("组件拼装拼装编辑组件");
 				
-				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-					function(response_data,render,responsetext)
+				render.call_server_component(
+					"movement_manager","all",[["operation","movement"],["move_method","stop"]]).
+				then(
+					function(response_data)
 					{
-						render.call_server_component("movement_manager","all",[["operation","design"],["move_method","reload"]]);
+						render.call_server_component(
+							"movement_manager","all",[["operation","design"],["move_method","reload"]]);
 					});
 				break;
 			case 5:
@@ -52,8 +62,10 @@ function(component_name,component_id,render)
 			case 6:
 				render.system_call_processor.set_menu_hide("组件拼装拼装编辑组件");
 				
-				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-					function(response_data,render,responsetext)
+				render.call_server_component(
+					"movement_manager","all",[["operation","movement"],["move_method","stop"]]).
+				then(
+					function(response_data)
 					{
 						window.open(
 							render.create_component_request_string("movement_manager","all",
@@ -64,24 +76,31 @@ function(component_name,component_id,render)
 			case 7:
 				render.system_call_processor.set_menu_hide("组件拼装拼装编辑组件");
 				
-				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-					function(response_data,render,responsetext)
+				render.call_server_component(
+					"movement_manager","all",[["operation","movement"],["move_method","stop"]]).
+				then(
+					function(response_data)
 					{
-						render.call_server_component("movement_manager","all",[["operation","design"],["move_method","clear_all"]]);
+						render.call_server_component(
+							"movement_manager","all",[["operation","design"],["move_method","clear_all"]]);
 					});
 				break;
 			case 8:
 				render.system_call_processor.set_menu_hide("组件拼装拼装编辑组件");
 				
-				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-					function(response_data,render,responsetext)
+				render.call_server_component(
+					"movement_manager","all",[["operation","movement"],["move_method","stop"]]).
+				then(
+					function(response_data)
 					{
-						render.call_server_component("movement_manager","all",[["operation","design"],["move_method","retreat"]],
-							function(response_data,render,responsetext)
-							{
-								if(response_data)
-									alert("已经回退至开始处。");
-							});
+						return render.call_server_component(
+							"movement_manager","all",[["operation","design"],["move_method","retreat"]]);
+					}).
+				then(
+					function(response_data)
+					{
+						if(response_data)
+							alert("已经回退至开始处。");
 					});
 				break;
 			default:

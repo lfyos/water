@@ -350,6 +350,8 @@ function construct_buffer_object(my_gl,my_parameter)
 		
 		var buffer_data_promise=await fetch(data_url);
 		if(!(buffer_data_promise.ok)){
+			if(render.terminate_flag)
+				return;
 			alert("request request_buffer_object data fail: "+data_url);
 			this.current_loading_mesh_number--;
 			return;
@@ -358,6 +360,8 @@ function construct_buffer_object(my_gl,my_parameter)
 		try{
 			response_data = await buffer_data_promise.arrayBuffer();
 		}catch(e){
+			if(render.terminate_flag)
+				return;
 			alert("parse request_buffer_object data fail: "+e.toString());
 			alert(data_url);
 			this.current_loading_mesh_number--;
@@ -524,6 +528,8 @@ function construct_buffer_object(my_gl,my_parameter)
 		
 		var head_promise=await fetch(package_proxy_url);
 		if(!(head_promise.ok)){
+			if(render.terminate_flag)
+				return;
 			alert("request request_buffer_head_package fail: "+initialization_url);
 			this.current_loading_mesh_number--;
 			return;
@@ -532,6 +538,8 @@ function construct_buffer_object(my_gl,my_parameter)
 		try{
 			head_data_array = await head_promise.json();
 		}catch(e){
+			if(render.terminate_flag)
+				return;
 			alert("parse request_buffer_head_package data fail: "+e.toString());
 			alert(initialization_url);
 			this.current_loading_mesh_number--;
@@ -557,7 +565,7 @@ function construct_buffer_object(my_gl,my_parameter)
 			if(this.destroy_flag)
 				return;
 			if(this.buffer_head_request_queue.length<=0)
-				return;
+				break;
 			if(this.test_busy()<=0)
 				break;
 			var p=this.buffer_head_request_queue.shift();
