@@ -39,8 +39,7 @@ public class component_collector_jason_component
 	public component_collector_jason_component(boolean flag,
 		component_collector collector,client_information ci,engine_kernel ek)
 	{
-		component_array comp_array=new component_array(
-				ek.component_cont.root_component.component_id+1);
+		component_array comp_array=new component_array();
 		comp_array.add_collector(collector);
 		if(flag)
 			comp_array.make_to_ancestor(ek.component_cont);

@@ -211,7 +211,7 @@ public class component_array
 				add_component(expand_comp.children[i]);
 		return expand_comp;
 	}
-	public component_array(int max_component_number)
+	public component_array()
 	{
 		comp_list=new ArrayList<component>();
 		

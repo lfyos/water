@@ -60,22 +60,6 @@ public class movement_manager
 	private string_link_list push_pop_stack_link_list;
 	private long push_pop_stack_id;
 	
-	private void set_direction(
-			component_container component_cont,modifier_container modifier_cont,
-			boolean new_mount_direction_flag,long camera_switch_time_length)
-	{
-		if(root_movement!=null)
-			if(mount_direction_flag^new_mount_direction_flag){
-				mount_direction_flag=new_mount_direction_flag;
-				root_movement.reverse();
-				long current_movement_time=modifier_cont.get_timer().get_current_time();
-				long t=current_movement_time-(root_movement.terminate_time-current_movement_time);
-				double mount_precision=parameter.movement_precision;
-				double min_box_volume=root_movement.caculate_component_minmal_volume(component_cont);
-				root_movement.caculate_time(component_cont,t,camera_switch_time_length,
-						min_box_volume*mount_precision*mount_precision*mount_precision);
-			}
-	}
 	public void create_render_modifier(
 			movement_tree t,boolean single_step_flag,int audio_component_id,
 			int location_component_id,modifier_container movement_modifier_cont,
@@ -87,28 +71,9 @@ public class movement_manager
 					audio_component_id,move_channel_id.display_parameter_channel_id[0],
 					config_parameter.camera_modifier_container_id);
 			root_movement.register_modifier(suspend,move_channel_id,location_component_id,
-					component_cont,parameter,movement_modifier_cont,swcm,directory_name,sound_pre_string,
-					t.start_time-camera_switch_time_length,camera_switch_time_length,null,0,1.0,mount_direction_flag);
+					component_cont,parameter,movement_modifier_cont,swcm,directory_name,
+					sound_pre_string,camera_switch_time_length,null,0,1.0,mount_direction_flag);
 			movement_modifier_cont.add_modifier(swcm);
-		}
-	}
-	public void set_component_state(component_container component_cont,modifier_container modifier_cont)
-	{
-		if(root_movement!=null){
-			long my_current_time=modifier_cont.get_timer().get_current_time();
-			root_movement.reset_component_state(component_cont,
-					move_channel_id.display_parameter_channel_id,move_channel_id.hide_parameter_channel_id);
-			if(mount_direction_flag){
-				root_movement.sequence_set_component_state(move_channel_id.display_parameter_channel_id,
-					move_channel_id.hide_parameter_channel_id,component_cont,my_current_time,false);
-				root_movement.sequence_set_component_state(move_channel_id.display_parameter_channel_id,
-					move_channel_id.hide_parameter_channel_id,component_cont,my_current_time,true);
-			}else{
-				root_movement.sequence_set_component_state(move_channel_id.display_parameter_channel_id,
-					move_channel_id.hide_parameter_channel_id,component_cont,my_current_time,true);
-				root_movement.sequence_set_component_state(move_channel_id.display_parameter_channel_id,
-					move_channel_id.hide_parameter_channel_id,component_cont,my_current_time,false);
-			}
 		}
 	}
 	public void movement_start(modifier_container modifier_cont,
@@ -116,43 +81,59 @@ public class movement_manager
 			boolean new_mount_direction_flag,long camera_switch_time_length)
 	{
 		movement_tree ct;
-		movement_tree_link_list ll;
+		movement_tree_link_list mtll;
 		
 		if(root_movement!=null)
-			if((ll=(new movement_searcher(root_movement,my_movement_id)).search_link_list)!=null){
-								
-				set_direction(component_cont,modifier_cont,new_mount_direction_flag,camera_switch_time_length);
+			if((mtll=(new movement_searcher(root_movement,my_movement_id)).search_link_list)!=null){
+				if(mount_direction_flag^new_mount_direction_flag){
+					mount_direction_flag=new_mount_direction_flag;
+					root_movement.reverse();
+				}
+				for(ct=mtll.tree_node;ct.children!=null;ct=ct.children[0])
+					if(ct.children.length<=0)
+						break;
+				parameter.current_movement_id=ct.movement_tree_id;
+
 				double mount_precision=parameter.movement_precision;
 				double min_box_volume=root_movement.caculate_component_minmal_volume(component_cont);
 				root_movement.caculate_time(component_cont,0,camera_switch_time_length,
 						min_box_volume*mount_precision*mount_precision*mount_precision);
+
+				long current_time=modifier_cont.get_timer().get_current_time();
+				long time_distance=current_time+camera_switch_time_length-ct.start_time;
 				
-				long time_distance=modifier_cont.get_timer().get_current_time()-ll.tree_node.start_time+camera_switch_time_length;
-				
-				root_movement.caculate_time(component_cont,time_distance,
+				root_movement.caculate_time(component_cont,root_movement.start_time+time_distance,
 						camera_switch_time_length,min_box_volume*mount_precision*mount_precision*mount_precision);
-								
-				for(ct=ll.tree_node;ct.children!=null;ct=ct.children[0])
-					if(ct.children.length<=0)
-						break;
-				parameter.current_movement_id=ct.movement_tree_id;
+
+				root_movement.reset_component_state(component_cont,
+						move_channel_id.display_parameter_channel_id,
+						move_channel_id.hide_parameter_channel_id);
 				
-				set_component_state(component_cont,modifier_cont);
+				root_movement.sequence_set_component_state(
+						move_channel_id.display_parameter_channel_id,
+						move_channel_id.hide_parameter_channel_id,
+						component_cont,current_time,false);
+				root_movement.sequence_set_component_state(
+						move_channel_id.display_parameter_channel_id,
+						move_channel_id.hide_parameter_channel_id,
+						component_cont,current_time,true);
 			}
 	}
-
 	public void flush(component_container component_cont,
 			file_writer f,long camera_switch_time_length,modifier_container modifier_cont)
 	{
 		f.println("version	2015.10");
 		if(root_movement!=null){
 			boolean old_mount_direction_flag=mount_direction_flag;
-			set_direction(component_cont,modifier_cont,true,camera_switch_time_length);
+			long current_movement_id=(parameter.current_movement_id<0)
+					?root_movement.movement_tree_id:parameter.current_movement_id;
+			movement_start(modifier_cont,current_movement_id,
+					component_cont,true,camera_switch_time_length);
 			root_movement.flush(f,0,true);
-			set_direction(component_cont,modifier_cont,old_mount_direction_flag,camera_switch_time_length);
+			movement_start(modifier_cont,current_movement_id,
+					component_cont,old_mount_direction_flag,camera_switch_time_length);
 		}
 	}
-	
 	public void init(modifier_container modifier_cont,component_container component_cont,
 			String my_move_file_name,long camera_switch_time_length,String file_system_charset,
 			boolean set_directory_name_flag)
@@ -207,21 +188,13 @@ public class movement_manager
 			fw.close();
 		}	
 	}
-	public void reset(
-			long target_movement_tree_id,modifier_container modifier_cont,
-			component_container component_cont,long camera_switch_time_length)
+	public void reset(	long target_movement_tree_id,modifier_container modifier_cont,
+						component_container component_cont,long camera_switch_time_length)
 	{
-		if(root_movement==null)
-			set_component_state(component_cont,modifier_cont);
-		else{
-			double mount_precision=parameter.movement_precision;
-			double min_box_volume=root_movement.caculate_component_minmal_volume(component_cont);
-			root_movement.caculate_time(component_cont,0,0,
-					min_box_volume*mount_precision*mount_precision*mount_precision);
+		if(root_movement!=null)
 			movement_start(modifier_cont,
 				(target_movement_tree_id<0)?root_movement.movement_tree_id:target_movement_tree_id,
 				component_cont,true,camera_switch_time_length);
-		}
 		designed_move=null;
 	}
 	

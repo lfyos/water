@@ -23,7 +23,7 @@ public class operate_display_value
 	public static void set_display_value_request(engine_kernel ek,client_information ci)
 	{
 		String str;
-		component_array comp_cont=new component_array(ek.component_cont.root_component.component_id+1);
+		component_array comp_cont=new component_array();
 		
 		if((str=ci.request_response.get_parameter("component"))==null){
 			comp_cont.add_selected_component(ek.component_cont.root_component,false);

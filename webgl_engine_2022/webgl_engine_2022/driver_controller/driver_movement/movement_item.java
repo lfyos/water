@@ -19,10 +19,9 @@ public class movement_item
 	
 	public void reverse()
 	{
-		location l_s=new location(start_location);
-		location l_t=new location(terminate_location);
-		start_location=l_t;
-		terminate_location=l_s;
+		location bak=start_location;
+		start_location=terminate_location;
+		terminate_location=bak;
 		
 		String p_s[]=start_parameter;
 		String p_t[]=terminate_parameter;

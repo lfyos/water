@@ -378,8 +378,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			}
 			
 			box engine_box;
-			component_array effective_comp_container=new component_array(
-					ek.component_cont.root_component.component_id+1);
+			component_array effective_comp_container=new component_array();
 			effective_comp_container.add_part_list_component(ek.component_cont.root_component);
 			if((engine_box=effective_comp_container.get_box())==null){
 				effective_comp_container.clear_compoment();

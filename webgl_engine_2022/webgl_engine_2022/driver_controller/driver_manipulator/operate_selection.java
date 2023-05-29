@@ -38,7 +38,7 @@ public class operate_selection
 			cs.set_collector_selected(ci.selection_component_collector,ek.component_cont);
 			break;
 		case "visible":
-			component_array comp_cont=new component_array(ek.component_cont.root_component.component_id+1);
+			component_array comp_cont=new component_array();
 			comp_cont.add_visible_component(ek.component_cont.root_component,parameter_channel_id,true);
 			cs.set_component_container_selected(comp_cont,ek.component_cont);
 			break;

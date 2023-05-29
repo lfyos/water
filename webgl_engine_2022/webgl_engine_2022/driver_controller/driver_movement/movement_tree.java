@@ -65,7 +65,7 @@ public class movement_tree {
 			component_container component_cont,movement_parameter parameter,
 			modifier_container modifier_cont,movement_switch_camera_modifier swcm,
 			String directory_name,String sound_pre_string,
-			long system_start_time,long camera_switch_time,location parent_direction,
+			long camera_switch_time,location parent_direction,
 			int  parent_scale_type,double parent_scale_value,boolean direction_flag)
 	{
 		int my_scale_type;
@@ -84,15 +84,16 @@ public class movement_tree {
 			break;
 		}
 		location my_direction=(direction!=null)?direction:parent_direction;
-		if(children!=null){
-			for(int i=0,ni=children.length;i<ni;i++)
-				children[i].register_modifier(
-					suspend,move_channel_id,location_component_id,
-					component_cont,parameter,modifier_cont,swcm,directory_name,
-					sound_pre_string,system_start_time,camera_switch_time,
-					my_direction,my_scale_type,my_scale_value,direction_flag);	
-			return;
-		}
+		if(children!=null)
+			if(children.length>0){
+				for(int i=0,ni=children.length;i<ni;i++)
+					children[i].register_modifier(
+						suspend,move_channel_id,location_component_id,
+						component_cont,parameter,modifier_cont,swcm,directory_name,
+						sound_pre_string,camera_switch_time,
+						my_direction,my_scale_type,my_scale_value,direction_flag);	
+				return;
+			}
 		if(move==null)
 			return;
 		component moved_component;
@@ -100,47 +101,44 @@ public class movement_tree {
 			return;
 		if(move.movement.length<=0)
 			return;
-
+		
+		long my_current_time=modifier_cont.get_timer().get_current_time();
+		if(terminate_time<my_current_time)
+			return;
 		move.register_modifier(suspend,move_channel_id,location_component_id,component_cont,modifier_cont);
 		
-		if((start_time!=terminate_time)&&(system_start_time<terminate_time)){
-			location my_start_location=move.movement[0].start_location;
-			location my_terminate_location=move.movement[move.movement.length-1].terminate_location;
-			
-			if(terminate_time<(modifier_cont.get_timer().get_current_time())){
-				my_start_location=null;
+		if(start_time>=terminate_time)
+			return;
+		
+		location my_start_location=move.movement[0].start_location;
+		location my_terminate_location=move.movement[move.movement.length-1].terminate_location;
+		
+		switch(my_scale_type){
+		case 1://起点相机比例
+			if(direction_flag)
 				my_terminate_location=null;
-				my_direction=null;
-			}else{
-				switch(my_scale_type){
-				case 1://起点相机比例
-					if(direction_flag)
-						my_terminate_location=null;
-					else
-						my_start_location=null;
-					break;
-				case 2://终点相机比例   
-					if(direction_flag)
-						my_start_location=null;
-					else
-						my_terminate_location=null;
-					break;
-				case 3://起点终点相机比例  
-				case 0://上层相机比例
-				default:
-					break;
-				}
-			}
-			if(terminate_time>start_time){
-				movement_focus_modifier fm=new movement_focus_modifier(
-					parameter,movement_tree_id,suspend,match,
-					moved_component.component_id,move.follow_component_id,move.follow_component_location,
-					start_time-camera_switch_time,swcm,my_scale_value,
-					my_direction,my_start_location,my_terminate_location,node_name,description,
-					file_reader.separator(directory_name+sound_pre_string+sound_file_name));
-				modifier_cont.add_modifier(fm);
-			}
+			else
+				my_start_location=null;
+			break;
+		case 2://终点相机比例   
+			if(direction_flag)
+				my_start_location=null;
+			else
+				my_terminate_location=null;
+			break;
+		case 3://起点终点相机比例  
+		case 0://上层相机比例
+		default:
+			break;
 		}
+		movement_focus_modifier fm=new movement_focus_modifier(
+				parameter,movement_tree_id,suspend,match,
+				moved_component.component_id,move.follow_component_id,move.follow_component_location,
+				start_time-camera_switch_time,swcm,my_scale_value,
+				my_direction,my_start_location,my_terminate_location,node_name,description,
+				file_reader.separator(directory_name+sound_pre_string+sound_file_name));
+		modifier_cont.add_modifier(fm);
+		return;
 	}
 	
 	public void reset_component_state(component_container component_cont,
@@ -186,37 +184,28 @@ public class movement_tree {
 			return;
 		
 		location loca;
-		if((move.movement[0].start_time<=current_time)&&(current_time<move.movement[move_id].terminate_time)){
+		boolean display_flag,hide_flag;
+		
+		if(move.movement[move_id].terminate_time<current_time) {
+			if(!start_terminate_flag)
+				return;
+			loca=move.movement[move_id].terminate_location;
+			display_flag=move.terminate_state_flag?false:true;
+			hide_flag=move.start_state_flag?false:true;
+		}else if(current_time<move.movement[0].start_time) {
+			if(start_terminate_flag)
+				return;
 			loca=move.movement[0].start_location;
-			moved_component.modify_display_flag(display_parameter_channel_id,true,component_cont);
-			moved_component.modify_display_flag(hide_parameter_channel_id,true,component_cont);
-		}else if(start_terminate_flag){
-			if(current_time<move.movement[0].start_time)
-				return;
-			if(move.terminate_state_flag) {
-				loca=new location();
-				moved_component.modify_display_flag(display_parameter_channel_id,false,component_cont);
-				moved_component.modify_display_flag(hide_parameter_channel_id,true,component_cont);
-			}else {
-				loca=move.movement[move_id].terminate_location;
-				moved_component.modify_display_flag(display_parameter_channel_id,true,component_cont);
-				moved_component.modify_display_flag(hide_parameter_channel_id,false,component_cont);
-			}
+			display_flag=move.start_state_flag?false:true;
+			hide_flag=move.terminate_state_flag?false:true;
 		}else{
-			if(move.movement[move_id].terminate_time<current_time)
-				return;
-			if(move.start_state_flag){
-				loca=new location();
-				moved_component.modify_display_flag(display_parameter_channel_id,false,component_cont);
-				moved_component.modify_display_flag(hide_parameter_channel_id,true,component_cont);
-			}else {
-				loca=move.movement[0].start_location;
-				moved_component.modify_display_flag(display_parameter_channel_id,true,component_cont);
-				moved_component.modify_display_flag(hide_parameter_channel_id,false,component_cont);
-			}
+			loca=move.movement[0].start_location;
+			display_flag=true;
+			hide_flag=true;
 		}
-
-		moved_component.modify_location(loca,component_cont);
+		moved_component.modify_location(display_flag?loca:new location(),component_cont);
+		moved_component.modify_display_flag(display_parameter_channel_id,display_flag,component_cont);
+		moved_component.modify_display_flag(hide_parameter_channel_id,hide_flag,component_cont);
 		
 		if(move.follow_component_id==null)
 			return;
@@ -226,28 +215,13 @@ public class movement_tree {
 		
 		for(int i=0,ni=move.follow_component_id.length;i<ni;i++)
 			if((follow_component=component_cont.get_component(move.follow_component_id[i]))!=null){
-				if(start_terminate_flag){
-					if(move.terminate_state_flag) {
-						follow_component.modify_display_flag(display_parameter_channel_id,false,component_cont);
-						follow_component.modify_display_flag(hide_parameter_channel_id,true,component_cont);
-					}else {
-						follow_component.modify_display_flag(display_parameter_channel_id,true,component_cont);
-						follow_component.modify_display_flag(hide_parameter_channel_id,false,component_cont);
-					}
-				}else{
-					if(move.start_state_flag){
-						follow_component.modify_display_flag(display_parameter_channel_id,false,component_cont);
-						follow_component.modify_display_flag(hide_parameter_channel_id,true,component_cont);
-					}else {
-						follow_component.modify_display_flag(display_parameter_channel_id,true,component_cont);
-						follow_component.modify_display_flag(hide_parameter_channel_id,false,component_cont);
-					}
-				}
-				
 				loca=main_loca.multiply(move.follow_component_location[i]);
 				loca=follow_component.caculate_negative_parent_and_relative_location().multiply(loca);
 				follow_component.uniparameter.cacaulate_location_flag=false;
 				follow_component.modify_location(loca,component_cont);
+				
+				follow_component.modify_display_flag(display_parameter_channel_id,display_flag,component_cont);
+				follow_component.modify_display_flag(hide_parameter_channel_id,hide_flag,component_cont);
 			}
 	}
 	public double caculate_component_minmal_volume(component_container component_cont)

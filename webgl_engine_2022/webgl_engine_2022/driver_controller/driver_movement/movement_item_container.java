@@ -56,7 +56,6 @@ public class movement_item_container
 		component moved_component=component_cont.get_component(moved_component_id);
 		if((movement!=null)&&(moved_component!=null))
 			for(int i=0;i<movement.length;i++){
-				int modify_parameter_channel_id[]=move_channel_id.all_parameter_channel_id;
 				int set_parameter_channel_id[],clear_parameter_channel_id[];	
 				if(i<(movement.length-1)){
 					clear_parameter_channel_id=new int[]{};
@@ -71,7 +70,7 @@ public class movement_item_container
 				modifier_cont.add_modifier(
 					new movement_move_modifier(					
 							my_suspend,					moved_component,					location_component_id,
-							clear_parameter_channel_id,	set_parameter_channel_id,			modify_parameter_channel_id,
+							clear_parameter_channel_id,	set_parameter_channel_id,
 							movement[i].start_time,		movement[i].start_parameter,		movement[i].start_location,
 							movement[i].terminate_time,	movement[i].terminate_parameter,	movement[i].terminate_location,
 							follow_component_id,		follow_component_location));
@@ -88,7 +87,7 @@ public class movement_item_container
 			movement[end_pointer]=p;
 		}
 		for(int i=0,ni=movement.length;i<ni;i++)
-			movement[i].reverse();	
+			movement[i].reverse();
 		
 		boolean bak_state_flag=start_state_flag;
 		start_state_flag=terminate_state_flag;
@@ -100,7 +99,7 @@ public class movement_item_container
 		
 		if((movement==null)||(moved_component==null))
 			return new_start_time;
-		for(int i=0;i<(movement.length);i++)
+		for(int i=0,ni=movement.length;i<ni;i++)
 			if(discard_flag){
 				movement[i].start_time		=new_start_time;
 				movement[i].terminate_time	=new_start_time;

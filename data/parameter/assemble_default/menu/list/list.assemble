@@ -64,7 +64,7 @@
 						render.call_server_component("manipulator_component","all",
 							[["event_method","part_list"],["operation","top"],
 							(ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]);
-						return;
+						break;
 					case 4:
 						if(confirm("É¾³ýÁÐ±í?")){
 							render.call_server_component("manipulator_component","all",

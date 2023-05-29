@@ -43,7 +43,7 @@ public class operate_component_explosion
 			long touch_time_length,engine_kernel ek,client_information ci)
 	{
 		String str;
-		component_array comp_array=new component_array(ek.component_cont.root_component.component_id+1);
+		component_array comp_array=new component_array();
 		
 		for(component my_comp;;){
 			if((str=ci.request_response.get_parameter("component"))!=null) {

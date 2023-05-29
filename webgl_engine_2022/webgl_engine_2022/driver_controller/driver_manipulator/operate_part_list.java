@@ -41,7 +41,7 @@ public class operate_part_list
 		String str;
 		component my_comp=null;
 		component_selection cs=new component_selection(ek);
-		component_array comp_con=new component_array(ek.component_cont.root_component.component_id+1);
+		component_array comp_con=new component_array();
 
 		if((str=ci.request_response.get_parameter("component_id"))!=null) {
 			my_comp=ek.component_cont.get_component(Integer.decode(str));
@@ -235,7 +235,7 @@ public class operate_part_list
 				part_list_flag_effective_flag=false;
 				break;
 			}
-			comp_cont=new component_array(ek.component_cont.root_component.component_id+1);
+			comp_cont=new component_array();
 			if((str=ci.request_response.get_parameter("component_name"))!=null){
 				try {
 					str=java.net.URLDecoder.decode(str,request_charset);

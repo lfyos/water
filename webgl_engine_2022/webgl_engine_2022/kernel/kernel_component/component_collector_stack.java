@@ -210,7 +210,7 @@ public class component_collector_stack
 		if(p.length<=0)
 			return;
 
-		component_array ca=new component_array(component_cont.root_component.component_id+1);
+		component_array ca=new component_array();
 		
 		for(int i=only_top_list_flag?0:(p.length-1);i>=0;i--){
 			ca.clear_compoment();
@@ -254,7 +254,7 @@ public class component_collector_stack
 		
 		boolean save_component_name_or_id_flag=f.get_boolean();
 		
-		component_array ca=new component_array(component_cont.root_component.component_id+1);
+		component_array ca=new component_array();
 		
 		for(int i=0,ni=scene_par.max_component_collector_number;i<ni;i++){
 			String title=f.get_string();

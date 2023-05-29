@@ -246,7 +246,7 @@ public class component_collector
 		if((component_number<=0)||(component_collector==null))
 			return null;
 		component_link_list p;
-		component_array comp_con=new component_array(component_number);
+		component_array comp_con=new component_array();
 		for(int i=0,ni=component_collector.length;i<ni;i++)
 			if(component_collector[i]!=null)
 				for(int j=0,nj=component_collector[i].length;j<nj;j++)

@@ -404,7 +404,7 @@ public class movement_function_switch
 		
 		component main_comp;
 		if((main_comp=ek.component_cont.get_component(searcher.search_link_list.tree_node.move.moved_component_id))!=null){
-			component_array comp_array=new component_array(ek.component_cont.root_component.component_id+1);
+			component_array comp_array=new component_array();
 			comp_array.add_selected_component(ek.component_cont.root_component,false);
 			for(int i=0;i<comp_array.comp_list.size();i++){
 				component comp=ek.component_cont.get_component(main_comp.parent_component_id);
@@ -1352,12 +1352,13 @@ public class movement_function_switch
 			acd.set_audio(null);
 		
 		manager.movement_start(modifier_cont,
-				manager.parameter.current_movement_id,ek.component_cont,direction_flag,switch_time_length);
+				manager.parameter.current_movement_id,
+				ek.component_cont,direction_flag,switch_time_length);
 
 		manager.suspend.reset_suspend_collector(ek);
 		manager.suspend.reset_virtual_mount_component(ek);
 		manager.suspend.reset_suspend_match();
-		
+
 		if(create_render_modifier_flag)
 			manager.create_render_modifier(t,single_step_flag,
 				manager.config_parameter.audio_component_id,
@@ -1431,7 +1432,7 @@ public class movement_function_switch
 
 		manager=my_manager;
 		target_direction=null;
-		all_components=new  component_array(ek.component_cont.root_component.component_id+1);
+		all_components=new  component_array();
 		modifier_cont=ek.modifier_cont[manager.config_parameter.movement_modifier_container_id];
 
 		camera_parameter cam_par=ci.display_camera_result.cam.parameter;

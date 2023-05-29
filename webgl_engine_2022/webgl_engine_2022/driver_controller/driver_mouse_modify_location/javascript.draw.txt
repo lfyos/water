@@ -56,9 +56,11 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 		then(
 			function(response_data)
 			{
-				if(response_data!=null)
-					if(event_operation=="mousedown")
-						ep.selected_component_id=response_data;
+				if(response_data==null)
+					return;
+				if(event_operation!="mousedown")
+					return;
+				ep.selected_component_id=response_data;
 			});
 	}
 	function send_location_to_webserver(command_str,component_id,render,do_delay_flag)

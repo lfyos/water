@@ -11,7 +11,7 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 {
 	private movement_suspend suspend;
 	private network_parameter network_par[];
-	private int modify_id,clear_parameter_channel_id[],set_parameter_channel_id[],modify_parameter_channel_id[];
+	private int modify_id,clear_parameter_channel_id[],set_parameter_channel_id[];
 	
 	public void destroy()
 	{
@@ -20,7 +20,6 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 		network_par=null;
 		clear_parameter_channel_id=null;
 		set_parameter_channel_id=null;
-		modify_parameter_channel_id=null;
 	}
 	public movement_move_modifier(movement_suspend my_suspend,
 			
@@ -28,7 +27,6 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 				
 			int my_clear_parameter_channel_id[],
 			int my_set_parameter_channel_id[],
-			int my_modify_parameter_channel_id[],
 			
 			long my_start_time,		String my_start_parameter[],		location my_start_location,
 			long my_terminate_time,	String my_terminate_parameter[],	location my_terminate_location,
@@ -44,7 +42,6 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 		
 		clear_parameter_channel_id	=my_clear_parameter_channel_id;
 		set_parameter_channel_id	=my_set_parameter_channel_id;
-		modify_parameter_channel_id	=my_modify_parameter_channel_id;
 		
 		int start_length	=(my_start_parameter==null)		?0:my_start_parameter.length;
 		int terminate_length=(my_terminate_parameter==null)	?0:my_terminate_parameter.length;
@@ -96,11 +93,13 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 		component comp;
 		super.modify(my_current_time, ek, ci);
 		if((comp=ek.component_cont.get_component(component_id))!=null){
-			comp.modify_display_flag(modify_parameter_channel_id,true,ek.component_cont);
+			comp.modify_display_flag(clear_parameter_channel_id,true,ek.component_cont);
+			comp.modify_display_flag(set_parameter_channel_id,true,ek.component_cont);
 			if(follow_component_id!=null)
 				for(int i=0,ni=follow_component_id.length;i<ni;i++)
 					if((comp=ek.component_cont.get_component(follow_component_id[i]))!=null) {
-						comp.modify_display_flag(modify_parameter_channel_id,true,ek.component_cont);
+						comp.modify_display_flag(clear_parameter_channel_id,true,ek.component_cont);
+						comp.modify_display_flag(set_parameter_channel_id,true,ek.component_cont);
 						comp.uniparameter.cacaulate_location_flag=true;
 					}
 		}
@@ -115,6 +114,7 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 		
 		if((comp=ek.component_cont.get_component(component_id))==null)
 			return;
+
 		comp.modify_display_flag(clear_parameter_channel_id,false,ek.component_cont);
 		comp.modify_display_flag(set_parameter_channel_id,true,ek.component_cont);
 		if(follow_component_id!=null)

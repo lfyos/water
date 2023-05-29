@@ -9,7 +9,7 @@ public class operate_show_hide_component
 {
 	private static void show_hide(component comp,int parameter_channel_id,boolean visible_flag,engine_kernel ek)
 	{
-		comp.modify_display_flag(new int[]{parameter_channel_id}, visible_flag,ek.component_cont);
+		comp.modify_display_flag(new int[]{parameter_channel_id},visible_flag,ek.component_cont);
 		for(int i=0,child_number=comp.children_number();i<child_number;i++)
 			show_hide(comp.children[i],parameter_channel_id,visible_flag,ek);
 	}
@@ -38,7 +38,7 @@ public class operate_show_hide_component
 		default:
 			return;
 		}
-		component_array comp_cont=new component_array(ek.component_cont.root_component.component_id+1);
+		component_array comp_cont=new component_array();
 		boolean selected_operation_flag;
 		if((str=ci.request_response.get_parameter("component_name"))!=null) {
 			String request_charset=ci.request_response.implementor.get_request_charset();
