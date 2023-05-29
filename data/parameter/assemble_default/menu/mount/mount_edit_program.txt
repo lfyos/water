@@ -9,20 +9,22 @@ function(component_name,component_id,render)
 		active_list					:	function(my_type_flag)
 		{
 			render.call_server_component("movement_manager","all",
-				[["operation","movement"],["move_method","stop"]],
-				function(response_data,render)
+				[["operation","movement"],["move_method","stop"]]).
+			then(
+				function(response_data)
 				{
-					render.call_server_component("movement_manager","all",
-						[["operation","design"],["move_method","edit_jason"]],
-						function(response_data,render)
-						{
-							var ep=render.component_event_processor[component_id];
-							ep.id_base					=0;
-							ep.type_flag				=my_type_flag;
-							ep.update_flag				=false;
-							ep.movement_data			=response_data;
-							render.system_call_processor.set_menu_show(component_id);
-						});
+					return render.call_server_component("movement_manager","all",
+						[["operation","design"],["move_method","edit_jason"]]);
+				}).
+			then(
+				function(response_data)
+				{
+					var ep=render.component_event_processor[component_id];
+					ep.id_base					=0;
+					ep.type_flag				=my_type_flag;
+					ep.update_flag				=false;
+					ep.movement_data			=response_data;
+					render.system_call_processor.set_menu_show(component_id);
 				});
 		},
 		pickupmouseselect_routine		:	function(event,component_id,render)
@@ -40,8 +42,9 @@ function(component_name,component_id,render)
 				if(typeof(ep.movement_data.parent)=="object")
 					render.call_server_component("movement_manager","all",
 						[	["operation","design"],["move_method","edit_jason"],
-							["id",ep.movement_data.parent.movement_tree_id]],
-						function(response_data,render)
+							["id",ep.movement_data.parent.movement_tree_id]]).
+					then(
+						function(response_data)
 						{
 							ep.movement_data=response_data;
 							ep.update_flag=false;
@@ -56,7 +59,8 @@ function(component_name,component_id,render)
 					render.system_call_processor.set_menu_hide(component_id);
 					
 					render.call_server_component("movement_manager","all",[["operation","design"],
-						["move_method","locate_camera"],["id",ep.movement_data.movement_tree_id]],
+						["move_method","locate_camera"],["id",ep.movement_data.movement_tree_id]]).
+					then(
 						function(response_data,render)
 						{
 							ep.update_flag=false;
@@ -67,10 +71,12 @@ function(component_name,component_id,render)
 			default:
 				var index_id=ep.id_base+function_id-2;
 				if((index_id>=0)&&(index_id<ep.movement_data.children.length))
+					
 					render.call_server_component("movement_manager","all",
 						[	["operation","design"],["move_method","edit_jason"],
-							["id",ep.movement_data.children[index_id].movement_tree_id]],
-						function(response_data,render)
+							["id",ep.movement_data.children[index_id].movement_tree_id]]).
+					then(
+						function(response_data)
 						{
 							ep.movement_data=response_data;
 							ep.update_flag=false;
@@ -82,8 +88,9 @@ function(component_name,component_id,render)
 		pickupmouseselect		:	function(event,component_id,render)
 		{
 			render.call_server_component("movement_manager","all",
-				[["operation","movement"],["move_method","stop"]],
-				function(response_data,render)
+				[["operation","movement"],["move_method","stop"]]).
+			then(
+				function(response_data)
 				{
 					var ep=render.component_event_processor[component_id];
 					ep.pickupmouseselect_routine(event,component_id,render);

@@ -8,8 +8,9 @@ function(component_name,component_id,render)
 			if(typeof(coordinate_type)!="string")
 				coordinate_type="component";
 			render.call_server_component("movement_manager","all",
-				[["operation","design"],["move_method","get_location"],["coordinate",coordinate_type]],
-				function(response_data,render)
+				[["operation","design"],["move_method","get_location"],["coordinate",coordinate_type]]).
+			then(
+				function(response_data)
 				{
 					var ep=render.component_event_processor[component_id];
 					ep.update_flag	=false;
@@ -157,8 +158,10 @@ function(component_name,component_id,render)
 					break;
 				}
 				par=par.concat([["operation","design"],["coordinate",p.coordinate],["component_id",p.component_id]]);
-				render.call_server_component("movement_manager","all",par,
-					function(response_data,render)
+				render.call_server_component(
+					"movement_manager","all",par).
+				then(
+					function(response_data)
 					{
 						ep.update_flag	=false;
 						ep.response_data.movement_number=response_data.movement_number;

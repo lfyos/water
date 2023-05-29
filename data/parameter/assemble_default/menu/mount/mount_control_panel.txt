@@ -23,19 +23,22 @@ function(component_name,component_id,render)
 				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]]);
 				break;
 			case 3:
-				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-					function(response_data,render)
+				render.call_server_component(
+					"movement_manager","all",[["operation","movement"],["move_method","stop"]]).
+				then(
+					function(response_data)
 					{
-						render.call_server_component("movement_manager","all",
-							[["operation","movement"],["move_method","search_jason"]],
-							function(response_data,render)
-							{
-								if(response_data.length<=0)
-									return;
-								var my_component_id=render.get_component_object_by_component_name("组件拼装拼装查询组件").component_id;
-								render.component_event_processor[my_component_id].active_list(response_data,my_component_id,render);
-							});
-					});
+						return render.call_server_component("movement_manager","all",
+							[["operation","movement"],["move_method","search_jason"]]);
+					}).
+				then(
+					function(response_data)
+					{
+						if(response_data.length<=0)
+							return;
+						var my_component_id=render.get_component_object_by_component_name("组件拼装拼装查询组件").component_id;
+						render.component_event_processor[my_component_id].active_list(response_data,my_component_id,render);
+				});
 				break;
 			case 4:
 				window.open(render.create_component_request_string("movement_manager","all",
@@ -52,16 +55,20 @@ function(component_name,component_id,render)
 					 ["component_face_match","true"]]);
 				break;
 			case 7:
-				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-					function(response_data,render)
+				render.call_server_component(
+						"movement_manager","all",[["operation","movement"],["move_method","stop"]]).
+				then(
+					function(response_data)
 					{
 						var my_component_id=render.get_component_object_by_component_name("组件拼装拼装编辑组件").component_id;
 						render.component_event_processor[my_component_id].active_list(false);
 					});
 				break;
 			case 8:
-				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-					function(response_data,render)
+				render.call_server_component(
+						"movement_manager","all",[["operation","movement"],["move_method","stop"]]).
+				then(
+					function(response_data)
 					{
 						var speed;
 						if((speed=prompt("请输入拼装速度"))!=null)
@@ -69,8 +76,10 @@ function(component_name,component_id,render)
 					});
 				break;
 			case 9:
-				render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],
-					function(response_data,render)
+				render.call_server_component(
+						"movement_manager","all",[["operation","movement"],["move_method","stop"]]).
+				then(
+					function(response_data)
 					{
 						var precision;
 						if((precision=prompt("请输入拼装精度"))!=null)

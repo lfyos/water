@@ -46,20 +46,22 @@ function(component_name,component_id,render)
 		mount_stop			:	function(fun)
 		{	
 			//停止拼装
-			render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],fun);
+			render.call_server_component("movement_manager","all",
+					[["operation","movement"],["move_method","stop"]]).then(fun);
 		},
 		mount_jump			:	function(movement_tree_id,mount_flag)
 		{
 			//拼装跳转
 			render.call_server_component("movement_manager","all",
 				[["operation","movement"],["move_method",mount_flag?"continue":"stop"],
-				 ["id",movement_tree_id],["direct","forward"],["single_step","false"]],
-					function()
-					{
-						if(!mount_flag)
-							render.call_server_component("movement_manager","all",
-								[["operation","design"],["move_method","locate_camera"],["id",movement_tree_id]]);
-					});
+				 ["id",movement_tree_id],["direct","forward"],["single_step","false"]]).
+			then(
+				function()
+				{
+					if(!mount_flag)
+						render.call_server_component("movement_manager","all",
+							[["operation","design"],["move_method","locate_camera"],["id",movement_tree_id]]);
+				});
 		},
 		
 		mount_all_url			:	function()	
@@ -88,18 +90,29 @@ function(component_name,component_id,render)
 			
 			render.system_call_processor.turnonoff_level_of_detail(discard_lod_flag,selection_lod_flag);
 		},
-		collector_stack_version				:	0,
 		register_collector_stack_monitor	:	function(fun)
 		{
-			//监视拼装组件的列表，函数fun的格式为function(jason_data,text_data)，第一个参数是jason对象，text_data是其文本，
-			//可以通过console.log(text_data);把text_data在控制台上显示出来用于调试程序。
+			//监视拼装组件的列表，函数fun的格式为function(jason_data)，jason_data是拼装组件的列表对象
+			
+			var my_collector_stack_version=0;
+			var old_collector_stack_version=0;
+			
 			render.append_routine_function(
 				function(render)
 				{
-					if(render.collector_stack_version!=render.zhengzhou_lipengfei.collector_stack_version){
-						render.zhengzhou_lipengfei.collector_stack_version=render.collector_stack_version;
-						render.collector_loader.load_collector(false,true,false,fun);
-					}
+					if(render.collector_stack_version==my_collector_stack_version)
+						return true;
+					old_collector_stack_version=my_collector_stack_version;
+					my_collector_stack_version=render.collector_stack_version;
+					render.collector_loader.load_collector(false,true,false).
+						then(	
+							function(response_data)
+							{
+								if(response_data.done_flag)
+									fun(response_data.collector_data);
+								else
+									my_collector_stack_version=old_collector_stack_version;
+							});
 					return true;
 				});
 		},
@@ -114,21 +127,24 @@ function(component_name,component_id,render)
 			//复位并清除指定拼装步骤的挂起，使拼装恢复执行
 			render.call_server_component("movement_manager","all",
 				[["operation","design"],["move_method","component_part_selection"],
-				 ["component_part_selection","clear"],["id",movement_tree_id]],
+				 ["component_part_selection","clear"],["id",movement_tree_id]]).
+			then(
 				function()
 				{
-					render.call_server_component("movement_manager","all",
-						[["operation","design"],["move_method","component_face_match"],
-						 ["component_face_match","clear"],["id",movement_tree_id]],
-						function()
-						{
-							render.call_server_component("movement_manager","all",
+					return render.call_server_component("movement_manager","all",
+								[["operation","design"],["move_method","component_face_match"],
+								 ["component_face_match","clear"],["id",movement_tree_id]]);
+				}).
+			then(		 
+				function()
+				{
+					return render.call_server_component("movement_manager","all",
 								[["operation","virtual_mount"],["virtual_mount","reset"],
-								 ["component_part_selection",	"true"],
-								 ["component_face_match",		"true"],
-								 ["component_virtual_mount",	"true"]],fun);
-						});
-				});
+									 ["component_part_selection",	"true"],
+									 ["component_face_match",		"true"],
+									 ["component_virtual_mount",	"true"]]);
+				}).
+			then(fun);
 		},
 		mount_jump_hangup		:	function(movement_tree_id,fun)
 		{
@@ -136,66 +152,73 @@ function(component_name,component_id,render)
 			
 			var p=render.get_component_object_by_component_name("movement_manager");
 			var start_time=(new Date()).getTime();
-			
-			function f1()
-			{
-				if(render.component_call_processor[p.component_id].suspend_status){
-					render.call_server_component("movement_manager","all",
-						[["operation","virtual_mount"],["virtual_mount","suspend_jason"]],fun);
-					return false;
-				}else
-					return (((new Date()).getTime()-start_time)<60000);
-			};
-			function f2()
-			{
-				render.call_server_component("movement_manager","all",[["operation","movement"],
-					["move_method","continue"],["direct","forward"],["single_step","false"],["id",movement_tree_id]],
-					(typeof(fun)!="function")?null:
-					function()
-					{
-						render.component_call_processor[p.component_id].suspend_status=false;
-						render.append_routine_function(f1);
-					});
-			};
-			function f3()
-			{
-				render.call_server_component("movement_manager","all",[["operation","design"],
-					["move_method","locate_camera"],["id",movement_tree_id]],f2);
-			};
-			function f4()
-			{
-				render.call_server_component("movement_manager","all",
-					[["operation","design"],["move_method","component_part_selection"],
-					 ["id",movement_tree_id],["component_part_selection","set"]],f3);
-			};
-			function f5()
-			{
-				render.call_server_component("movement_manager","all",
-					[["operation","virtual_mount"],["virtual_mount","reset"],
-					 ["component_part_selection",	"true"],
-					 ["component_face_match",		"true"],
-					 ["component_virtual_mount",	"true"]],f4);
-			};
-			function f6()
-			{
-				render.call_server_component("movement_manager","all",
-					[["operation","design"],["move_method","component_face_match"],
-					 ["component_face_match","clear"],["id",movement_tree_id]],f5);
-			};
-			function f7()
-			{
-				render.call_server_component("movement_manager","all",
-					[["operation","design"],["move_method","component_part_selection"],
-					 ["component_part_selection","clear"],["id",movement_tree_id]],f6);
-			}
-			render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]],f7);
+		
+			render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]]).
+			then(
+				function()
+				{
+					return render.call_server_component("movement_manager","all",
+						[["operation","design"],["move_method","component_part_selection"],
+						 ["component_part_selection","clear"],["id",movement_tree_id]]);
+				}).
+			then(
+				function()
+				{
+					return render.call_server_component("movement_manager","all",
+						[["operation","design"],["move_method","component_face_match"],
+						 ["component_face_match","clear"],["id",movement_tree_id]]);
+				}).
+			then(	
+				function()
+				{
+					return render.call_server_component("movement_manager","all",
+						[["operation","virtual_mount"],["virtual_mount","reset"],
+						 ["component_part_selection",	"true"],
+						 ["component_face_match",		"true"],
+						 ["component_virtual_mount",	"true"]]);
+				}).
+			then(
+				function()
+				{
+					return render.call_server_component("movement_manager","all",
+						[["operation","design"],["move_method","component_part_selection"],
+						 ["id",movement_tree_id],["component_part_selection","set"]]);
+				}).
+			then(
+				function ()
+				{
+					return render.call_server_component("movement_manager","all",[["operation","design"],
+						["move_method","locate_camera"],["id",movement_tree_id]]);
+				}).
+			then(		
+				function()
+				{
+					return render.call_server_component("movement_manager","all",[["operation","movement"],
+						["move_method","continue"],["direct","forward"],["single_step","false"],["id",movement_tree_id]]);
+				}).
+			then(
+				function()
+				{
+					render.component_call_processor[p.component_id].suspend_status=false;
+					render.append_routine_function(
+						function()
+						{
+							if(render.component_call_processor[p.component_id].suspend_status){
+								render.call_server_component("movement_manager","all",
+									[["operation","virtual_mount"],["virtual_mount","suspend_jason"]]).then(fun);
+								return false;
+							}else
+								return (((new Date()).getTime()-start_time)<60000);
+						});
+				});
 		},
 		virtual_mount_insert_component		:	function(part_name,restart_flag)
 		{
 			if(restart_flag)
 				render.call_server_component("movement_manager","all",
-					[["operation","virtual_mount"],["virtual_mount","reset"],["component_virtual_mount","true"]],
-					function(jason_data,render,text_data)
+					[["operation","virtual_mount"],["virtual_mount","reset"],["component_virtual_mount","true"]]).
+				then(
+					function(jason_data)
 					{
 						render.call_server_component("movement_manager","all",
 						[["operation","virtual_mount"],["virtual_mount","start_follow"],

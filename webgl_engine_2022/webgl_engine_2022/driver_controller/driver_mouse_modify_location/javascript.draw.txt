@@ -52,11 +52,13 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 			[
 				["event_operation",		event_operation],
 				["operate_component_id",operate_component_id]
-			],
+			]).
+		then(
 			function(response_data)
 			{
-				if(event_operation=="mousedown")
-					ep.selected_component_id=response_data;
+				if(response_data!=null)
+					if(event_operation=="mousedown")
+						ep.selected_component_id=response_data;
 			});
 	}
 	function send_location_to_webserver(command_str,component_id,render,do_delay_flag)
@@ -434,17 +436,19 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 		case 2:	
 			if(event.ctrlKey||event.shiftKey||event.altKey){
 				render.call_server_component(part_initialize_data.movement_component_name,"all",
-					[["operation","design"],["move_method","listdesignbuffer"]],
-					function(response_data,render)
+					[["operation","design"],["move_method","listdesignbuffer"]]).
+				then(
+					function(response_data)
 					{
-						if(response_data.movement.length>0){
-							var p=part_initialize_data.movement_abstract_menu_component_name;
-							if((p=render.get_component_object_by_component_name(p))!=null){
-								var my_component_id=p.component_id;
-								p=render.component_event_processor[my_component_id];
-								p.active_list(response_data,my_component_id,render);
-							}
-						}
+						if(response_data!=null)
+							if(response_data.movement.length>0){
+									var p=part_initialize_data.movement_abstract_menu_component_name;
+									if((p=render.get_component_object_by_component_name(p))!=null){
+										var my_component_id=p.component_id;
+										p=render.component_event_processor[my_component_id];
+										p.active_list(response_data,my_component_id,render);
+									}
+								}
 					});
 			}else{
 				var value;

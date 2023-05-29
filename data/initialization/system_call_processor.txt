@@ -15,6 +15,7 @@ function(component_name,component_id,render)
 
 	if(typeof(render.system_call_processor.mouse_usage)=="undefined")
 		render.system_call_processor.mouse_usage=[0,0,0,0,0,0,0];
+		
 	render.system_call_processor.set_mouse_for_view_rotate=function(function_id)
 	{
 		if(function_id<0)
@@ -330,7 +331,7 @@ function(component_name,component_id,render)
 		render.call_server_component("camera_operation_component","all",
 			[["operation","display_precision"],["high_value",high_precision_scale],["low_value",low_precision_scale]]);
 	};
-	render.system_call_processor.select_component=function(select_operation_str,par,response_function)
+	render.system_call_processor.select_component=async function(select_operation_str,par)
 		//	"parent" "child" "move" "display" "select" "visible" "all" "latest" "part_list" "clear_all":
 		//	"clear_component"	"swap_component"	"select_component"	 with "component" or "component_id" paramerer
 	{
@@ -338,7 +339,7 @@ function(component_name,component_id,render)
 		if(typeof(par)!="undefined")
 			if(par!=null)
 				my_par=my_par.concat(par);
-		render.call_server_component("manipulator_component","all",my_par,response_function);
+		return render.call_server_component("manipulator_component","all",my_par);
 	};
 	render.system_call_processor.component_check_url=function()
 	{

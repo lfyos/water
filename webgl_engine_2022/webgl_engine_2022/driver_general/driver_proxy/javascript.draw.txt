@@ -40,6 +40,24 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
 	
+	function async get_server_data(url)
+	{
+		var server_promise=await fetch(url);
+		if(!(server_promise.ok)){
+			if(render.terminate_flag)
+				return null;
+			alert("request proxy server data fail:"+server_promise.status);
+			return null;
+		}
+		try{
+			return render.terminate_flag?null:(await server_promise.text());
+		}catch(e){
+			if(!(render.terminate_flag))
+				alert("parse proxy server data fail:"+e.toString());
+		}
+		return null;
+	};
+	
 	function add_one_proxy(component_id,driver_id,version_string,time_length,
 					file_name,stamp_string,original_url,my_proxy,my_encode_flag)
 	{
@@ -52,33 +70,20 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 			my_url+="&original="+encodeURIComponent(original_url);
 		}else
 			my_url+=file_name;
-		
-		try{
-			var start_time=(new Date()).getTime();
-			var my_ajax=new XMLHttpRequest();
-			my_ajax.onreadystatechange=function()
+			
+		var start_time=(new Date()).getTime();
+			
+		get_server_data(url).
+		then(
+			function(response_data)
 			{
-				if(my_ajax.readyState!=4)
-					return;
-				
 				if(render.terminate_flag)
 					return;
-				
-				if(my_ajax.status!=200){
-					data_buffer.can_do_register_flag=true;
-					alert("Proxy status is wrong:"+my_ajax.status.toString());
-					alert(my_url);
-					alert(my_proxy);
-					alert(file_name);
-					alert(stamp_string);
-					alert(original_url);
-					alert(my_encode_flag);
-					
+				if(response_data==null)
 					return;
-				}
-				if(my_ajax.responseText.substring(0,version_string.length)!=version_string){
+				if(response_data.substring(0,version_string.length)!=version_string){
 					data_buffer.can_do_register_flag=true;
-					alert("Proxy version is different:"+my_ajax.responseText+":"+version_string);
+					alert("Proxy version is different:"+response_data+":"+version_string);
 					alert(my_url);
 					return;
 				}
@@ -92,26 +97,18 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 						["operation","append"],
 						["proxy_url",encodeURIComponent(encodeURIComponent(my_proxy))],
 						["proxy_encode",my_encode_flag?"true":"false"]
-					],
+					]).
+				then(
 					function()
 					{
-						data_buffer.can_do_register_flag=true;
 						data_buffer.complete_register_flag=true;
-					},
+					}).
+				finally(
 					function()
 					{
 						data_buffer.can_do_register_flag=true;
 					});
-			};
-
-			my_ajax.open("GET",my_url,true);
-			my_ajax.send(null);
-			
-			data_buffer.can_do_register_flag=false;
-			
-		}catch(e){
-			alert(e.toString());
-		};
+			});
 	}
 	
 	if(typeof(data_buffer.can_do_register_flag)!="boolean"){

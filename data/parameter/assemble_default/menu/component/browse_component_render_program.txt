@@ -8,8 +8,10 @@ function(component_name,component_id,render)
 		
 		active_list					:	function()
 		{
-			render.call_server_component("manipulator_component","all",[["event_method","last_component"]],
-				function(response_data,render)
+			render.call_server_component(
+					"manipulator_component","all",[["event_method","last_component"]]).
+			then(
+				function(response_data)
 				{
 					var ep=render.component_event_processor[component_id];
 					ep.browse_type_flag=true;
@@ -64,10 +66,13 @@ function(component_name,component_id,render)
 					ep.update_flag=false;
 					ep.component_id=child_component_id;
 					
-					render.system_call_processor.select_component("clear_component",[["component_id",my_component_id]],
-						function(response_data,render)
+					render.system_call_processor.select_component(
+						"clear_component",[["component_id",my_component_id]]).
+					then(
+						function(response_data)
 						{
-							render.system_call_processor.select_component("select_component",[["component_id",child_component_id]]);
+							render.system_call_processor.select_component(
+									"select_component",[["component_id",child_component_id]]);
 						});
 					break;
 				}

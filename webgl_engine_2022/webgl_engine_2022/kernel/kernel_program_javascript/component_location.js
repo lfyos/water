@@ -176,6 +176,7 @@ function construct_component_location_object(component_number,my_computer,my_gl)
 	this.get_component_location=function(component_id)
 	{
 		var loca;
+
 		if((loca=this.get_component_location_routine(component_id))==null)
 			return [1,	0,	0,	0,		0,	1,	0,	0,		0,	0,	1,	0,		0,	0,	0,	1];
 		

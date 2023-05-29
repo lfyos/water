@@ -165,7 +165,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	this.browser_current_time		=0;
 	
 	this.do_execute_render_number			=0;
-	this.do_render_request_response_number	=0;
 	this.collector_stack_version			=0;
 
 	this.process_part_component_id_and_driver_id=function(
@@ -332,6 +331,8 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		
 		var render_promise=await fetch(request_string);
 		if(!(render_promise.ok)){
+			if(this.terminate_flag)
+				return null;
 			processs_bar_object.process_bar_id=null;
 			this.can_do_render_request_flag	=false;
 			alert("request fetch_web_server_response_data fail: "+request_string);
@@ -341,6 +342,8 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		try{
 			response_data = await render_promise.json();
 		}catch(e){
+			if(this.terminate_flag)
+				return null;
 			processs_bar_object.process_bar_id=null;
 			this.can_do_render_request_flag	=false;
 			alert("parse fetch_web_server_response_data fail: "+e.toString());
@@ -353,8 +356,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		processs_bar_object.process_bar_id=null;
 		this.can_do_render_request_flag	=true;
 		
-		this.do_render_request_response_number++;
-
 		this.collector_stack_version=response_data[0].shift();
 		this.modifier_current_time=this.modifier_time_parameter.modify_parameter(response_data[0]);
 		this.browser_current_time=(fetch_start_time+fetch_end_time)/2.0;
@@ -667,11 +668,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			request_string+="_"+				this.buffer_object.loading_part_id.toString();
 		};
 		{
-			var requesting_number,max_request_number;
-			if((max_request_number=this.do_render_request_response_number)<=0)
-				max_request_number=1;
-			else if(max_request_number>this.parameter.max_loading_number)
-				max_request_number=this.parameter.max_loading_number;
+			var requesting_number,max_request_number=this.parameter.max_loading_number;
 
 			requesting_number =this.buffer_object.current_loading_mesh_number;
 			requesting_number+=this.buffer_object.request_render_part_id.length;
@@ -893,7 +890,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.browser_current_time					=null;
 		
 		this.do_execute_render_number				=0;
-		this.do_render_request_response_number		=0;
 		this.collector_stack_version				=0;
 
 		this.process_part_component_id_and_driver_id=null;
@@ -916,7 +912,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.get_component_processor				=null;
 		
 		this.call_server							=null;
-		this.call_server_routine					=null;
 		
 		this.create_render_request_string			=null;
 		this.create_render_request_by_part_string	=null;
@@ -1018,82 +1013,64 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 					}
 		return null;
 	};
-	this.call_server_routine=function(request_string,
-			response_function,error_function,response_type_string,upload_data)
+	this.call_server=async function(request_string,response_type_string,upload_data)
 	{
-		if(typeof(response_type_string)=="undefined")
-			response_type_string="text";
-		if(typeof(upload_data)=="undefined")
-			upload_data=null;
-		try{
-			var my_ajax=new XMLHttpRequest(),cur=this;
-			my_ajax.responseType=response_type_string;
-			my_ajax.onreadystatechange=function()
+		var server_request_parameter=
 			{
-				if(my_ajax.readyState!=4)
-					return;
-				if(cur.terminate_flag)
-					return;
-
-				cur.current.calling_server_number--;
-
-				if(my_ajax.status!=200){
-					if(typeof(error_function)=="function")
-						error_function(0,cur);
-					return;
-				};
-				
-				if(typeof(response_function)!="function")
-					return;
-				
-				var response_data;
-				switch(response_type_string){
-				case "text":
-					try{
-						response_data=JSON.parse(my_ajax.responseText);
-						break;
-					}catch(e){
-						;
-					};
-				default:
-					response_data=my_ajax.responseText;
-					break;
-				};
-				response_function(response_data,cur,my_ajax.responseText);
-				return;
+				method	: "POST"
 			};
-			my_ajax.open("GET",request_string,true);
-			my_ajax.send(upload_data);
-			this.current.calling_server_number++;
-		}catch(e){
-			if(typeof(error_function)=="function")
-				error_function(1,this,e,request_string);
-		};
-	};
-	
-	this.call_server=function(request_string,
-			response_function,error_function,response_type_string,upload_data)
-	{
-		if(this.terminate_flag)
-			return;
-		if(this.do_render_request_response_number>1){
-			this.call_server_routine(request_string,
-					response_function,error_function,response_type_string,upload_data);
-			return;
+		if(typeof(upload_data)!="undefined")
+			if(upload_data!=null)
+				server_request_parameter.body=upload_data;
+					
+		if(typeof(response_type_string)=="undefined")
+			response_type_string="json";
+		else if(response_type_string==null)
+			response_type_string="json";
+
+		this.current.calling_server_number++;
+		
+		var server_promise=await fetch(request_string,server_request_parameter);
+		if(!(server_promise.ok)){
+			if(this.terminate_flag)
+				return null;
+			this.current.calling_server_number--;
+			alert("request call_server error,status is "+server_promise.status);
+			alert(request_string);
+			return null;
 		}
-		var cur=this;
-		this.append_routine_function(
-			function()
-			{
-				if(cur.do_render_request_response_number<2)
-					return true;
-				cur.call_server_routine(request_string,
-					response_function,error_function,response_type_string,upload_data);
-				return false;
-			});
+		var response_data;
+		try{
+			switch(response_type_string){
+			case "arrayBuffer":
+				response_data= await server_promise.arrayBuffer();
+				break;
+			case "blob":
+				response_data= await server_promise.blob();
+				break;
+			case "formData":
+				response_data= await server_promise.formData();
+				break;
+			case "text":
+				response_data= await server_promise.text();
+				break;
+			case "json":
+				response_data= await server_promise.json();
+				break;
+			default:
+				response_data= null;
+				break;
+			}
+		}catch(e){
+			if(this.terminate_flag)
+				return null;
+			response_data= null;
+		}
+		
+		this.current.calling_server_number--;
+		
+		return response_data;
 	};
-	
-	
 	this.create_render_request_string=function(render_id_or_render_name,render_parameter)
 	{
 		var ret_val=this.url_with_channel+"&command=render&method=event";
@@ -1131,8 +1108,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			ret_val+="&"+render_parameter[i][0].toString()+"="+render_parameter[i][1].toString();
 		return ret_val;
 	};
-	
-	
 	this.create_part_request_string=function(render_id_or_part_name,part_id_or_driver_id,part_parameter)
 	{
 		var ret_val=this.url_with_channel+"&command=part&method=event";
@@ -1145,7 +1120,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			ret_val+="&"+part_parameter[i][0].toString()+"="+part_parameter[i][1].toString();		
 		return ret_val;
 	};
-	
 	this.create_part_request_by_component_string=function(
 			component_id_or_component_name,component_driver_id,part_parameter)
 	{
@@ -1160,9 +1134,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			ret_val+="&"+part_parameter[i][0].toString()+"="+part_parameter[i][1].toString();
 		return ret_val;
 	};
-
-
-
 	this.create_component_request_string=function(component_name_or_id,driver_id,component_parameter)
 	{
 		var ret_val=this.url_with_channel+"&command=component&method=event";
@@ -1176,71 +1147,65 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 			ret_val+="&"+component_parameter[i][0].toString()+"="+component_parameter[i][1].toString();
 		return ret_val;
 	};
-	
-	this.call_server_engine=function(engine_parameter,
-			response_function,error_function,response_type_string,upload_data)
+	this.call_server_engine=async function(
+			engine_parameter,response_type_string,upload_data)
 	{
+		if(this.terminate_flag)
+			return null;
 		var request_string=this.url_with_channel;
 		for(var i=0,ni=engine_parameter.length;i<ni;i++)
 			request_string+="&"+engine_parameter[i][0].toString()+"="+engine_parameter[i][1].toString();
-		this.call_server(request_string,response_function,error_function,response_type_string,upload_data);
+		
+		return this.call_server(request_string,response_type_string,upload_data);
 	};
-	
-	
-	this.call_server_render=function(render_id_or_render_name,render_parameter,
-		response_function,error_function,response_type_string,upload_data)
+	this.call_server_render=async function(
+		render_id_or_render_name,render_parameter,
+		response_type_string,upload_data)
 	{
-		this.call_server(
-			this.create_render_request_string(
-				render_id_or_render_name,render_parameter),
-			response_function,error_function,response_type_string,upload_data);
+		var request_string=this.create_render_request_string(
+				render_id_or_render_name,render_parameter);
+		return this.call_server(request_string,response_type_string,upload_data);
 	};
-	
-	this.call_server_render_by_part=function(
+	this.call_server_render_by_part=async function(
 		render_id_or_part_name,part_id_or_driver_id,render_parameter,
-		response_function,error_function,response_type_string,upload_data)
+		response_type_string,upload_data)
 	{
-		this.call_server(
-			this.create_render_request_by_part_string(
-				render_id_or_part_name,part_id_or_driver_id,render_parameter),
-			response_function,error_function,response_type_string,upload_data);
+		var request_string=this.create_render_request_by_part_string(
+				render_id_or_part_name,part_id_or_driver_id,render_parameter);
+		return this.call_server(request_string,response_type_string,upload_data);
 	};
 	
-	this.call_server_render_by_component=function(
+	this.call_server_render_by_component=async function(
 		component_id_or_component_name,component_driver_id,render_parameter,
-		response_function,error_function,response_type_string,upload_data)
+		response_type_string,upload_data)
 	{
-		this.call_server(
-			this.create_render_request_by_component_string(
-				component_id_or_component_name,component_driver_id,render_parameter),
-			response_function,error_function,response_type_string,upload_data);
+		var request_string=this.create_render_request_by_component_string(
+				component_id_or_component_name,component_driver_id,render_parameter);
+		return this.call_server(request_string,response_type_string,upload_data);
 	};
 	
-	this.call_server_part=function(
+	this.call_server_part=async function(
 			render_id_or_part_name,part_id_or_driver_id,part_parameter,
-			response_function,error_function,response_type_string,upload_data)
+			response_type_string,upload_data)
 	{
-		this.call_server(
-			this.create_part_request_string(
-					render_id_or_part_name,part_id_or_driver_id,part_parameter),
-			response_function,error_function,response_type_string,upload_data);
+		var request_string=this.create_part_request_string(
+					render_id_or_part_name,part_id_or_driver_id,part_parameter);
+		return this.call_server(request_string,response_type_string,upload_data);
 	};
-	this.call_server_part_by_component=function(
+	this.call_server_part_by_component=async function(
 			component_id_or_component_name,component_driver_id,part_parameter,
-			response_function,error_function,response_type_string,upload_data)
+			response_type_string,upload_data)
 	{
-		this.call_server(
-			this.create_part_request_by_component_string(
-					component_id_or_component_name,component_driver_id,part_parameter),
-			response_function,error_function,response_type_string,upload_data);
+		var request_string=this.create_part_request_by_component_string(
+					component_id_or_component_name,component_driver_id,part_parameter);
+		return this.call_server(request_string,response_type_string,upload_data);
 	};
-	this.call_server_component=function(component_name_or_id,driver_id,
-			component_parameter,response_function,error_function,response_type_string,upload_data)
+	this.call_server_component=async function(component_name_or_id,driver_id,
+			component_parameter,response_type_string,upload_data)
 	{
-		this.call_server(
-			this.create_component_request_string(
-					component_name_or_id,driver_id,component_parameter),
-			response_function,error_function,response_type_string),upload_data;
+		var request_string=this.create_component_request_string(
+					component_name_or_id,driver_id,component_parameter);
+		return this.call_server(request_string,response_type_string,upload_data);
 	};
 	this.set_event_component=function(event_component_name)
 	{

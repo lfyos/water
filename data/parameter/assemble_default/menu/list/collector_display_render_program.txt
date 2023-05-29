@@ -13,6 +13,7 @@ function(component_name,component_id,render)
 			component_id,driver_id,instance_initialize_data,part_material,shader_data,render)
 		{
 			var ep=render.component_event_processor[component_id];
+			var old_collector_stack_version=ep.collector_stack_version;
 			if(render.collector_stack_version!=ep.collector_stack_version){
 				ep.update_flag=true;
 				ep.collector_stack_version=render.collector_stack_version;
@@ -31,14 +32,17 @@ function(component_name,component_id,render)
 					single_collector_flag=true;
 					break;
 				};
-				render.collector_loader.load_collector(
-					simple_list_flag,single_collector_flag,false,
-					function(response_data,response_text)
-					{
-						ep.collector_list_object=response_data;
-						ep.update_flag=false;
-						ep.id_base=0;
-					});
+				
+				render.collector_loader.load_collector(simple_list_flag,single_collector_flag,false).
+					then(	function(response_data)
+							{
+								if(response_data.done_flag){
+									ep.collector_list_object=response_data.collector_data;
+									ep.update_flag=false;
+									ep.id_base=0;
+								}else
+									ep.collector_stack_version=old_collector_stack_version;
+							});
 			}
 			if(ep.update_flag)
 				return false;
