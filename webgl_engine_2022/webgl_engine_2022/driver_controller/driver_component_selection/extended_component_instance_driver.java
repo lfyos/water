@@ -184,7 +184,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		if(ci.parameter.comp.driver_number()<=0)
 			return;
 
-		component_array comp_array=new component_array(1);
+		component_array comp_array=new component_array();
 		component_collector collector=ek.collector_stack.get_top_collector();
 		
 		if(collector!=null)

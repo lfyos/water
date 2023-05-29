@@ -58,13 +58,14 @@ public class movement_edit_jason
 
 		ci.request_response.println("	\"children\"	:	[");
 		if(searcher.search_link_list.tree_node!=null)
-			for(int i=0,ni=searcher.search_link_list.tree_node.children.length;i<ni;i++){
-				ci.request_response.println("		{");
-				movement_jason.create_tree_node_jason(
-						searcher.search_link_list.tree_node.children[i],
-						ci.request_response,"\t\t\t","",switch_time_length);
-				ci.request_response.println("		}",(i==(ni-1))?"":",");
-			}
+			if(searcher.search_link_list.tree_node.children!=null)
+				for(int i=0,ni=searcher.search_link_list.tree_node.children.length;i<ni;i++){
+					ci.request_response.println("		{");
+					movement_jason.create_tree_node_jason(
+							searcher.search_link_list.tree_node.children[i],
+							ci.request_response,"\t\t\t","",switch_time_length);
+					ci.request_response.println("		}",(i==(ni-1))?"":",");
+				}
 		ci.request_response.println("	]");
 
 		ci.request_response.println("}");

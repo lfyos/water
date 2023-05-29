@@ -55,17 +55,11 @@ public class movement_collector_compare
 					continue;
 				}
 				
-				int source_component_number=0;
-				for(component_link_list cll=source_cll;cll!=null;cll=cll.next_list_item)
-					source_component_number++;
-				component_array  source_array=new component_array(source_component_number);
+				component_array  source_array=new component_array();
 				for(component_link_list cll=source_cll;cll!=null;cll=cll.next_list_item)
 					source_array.add_component(cll.comp);
 					
-				int target_component_number=0;
-				for(component_link_list cll=target_cll;cll!=null;cll=cll.next_list_item)
-					target_component_number++;
-				component_array target_array=new component_array(target_component_number);
+				component_array target_array=new component_array();
 				for(component_link_list cll=target_cll;cll!=null;cll=cll.next_list_item)
 					target_array.add_component(cll.comp);
 

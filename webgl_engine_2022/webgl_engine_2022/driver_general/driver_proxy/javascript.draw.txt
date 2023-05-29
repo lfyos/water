@@ -40,7 +40,7 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 	var current_time					=render.current_time;
 	var modifier_current_time			=render.modifier_current_time;
 	
-	function async get_server_data(url)
+	async function get_server_data(url)
 	{
 		var server_promise=await fetch(url);
 		if(!(server_promise.ok)){

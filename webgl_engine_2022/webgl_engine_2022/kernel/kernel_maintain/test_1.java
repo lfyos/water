@@ -7,7 +7,10 @@ import kernel_file_manager.travel_through_directory;
 public class test_1 extends travel_through_directory
 {
 	private static String match[]= {
-			"XMLHttpRequest"
+			"XMLHttpRequest",
+			"upload_string",
+			"upload_scene_image",
+			"upload_canvas_image"
 	};
 	public void operate_file(String file_name)
 	{

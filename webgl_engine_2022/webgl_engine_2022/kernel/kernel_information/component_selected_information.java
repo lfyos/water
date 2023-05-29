@@ -13,7 +13,7 @@ public class component_selected_information extends jason_creator
 	public void print()
 	{
 		component comp=ek.component_cont.root_component;
-		component_array a=new component_array(comp.component_id+1);
+		component_array a=new component_array();
 		a.add_selected_component(comp,do_one_child_flag);
 		
 		jason_creator jc[]=new jason_creator[a.comp_list.size()];

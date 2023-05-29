@@ -103,7 +103,7 @@ public class component_container
 	public box get_effective_box(int parameter_channel_id)
 	{
 		box effective_box;
-		component_array effective_comp_container=new component_array(root_component.component_id+1);
+		component_array effective_comp_container=new component_array();
 
 		effective_comp_container.clear_compoment();
 		effective_comp_container.add_selected_component(root_component,false);

@@ -174,8 +174,14 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 
 		clear_triangle(my_component_id);
 
-		var url=render.create_component_request_string(my_component_id,"all",[["operation","collect_trace_primitive"]]);
-		render.upload_string(str_content,url,my_response_fun);
+		render.call_server_component(my_component_id,"all",
+			[["operation","collect_trace_primitive"]],null,str_content,
+			{
+				method: "POST", 
+				headers: {
+      				"Content-Type": "text/plain"
+    			}
+			});
 		return;
 	};
 	function trace_primitive_download_url(my_component_id,file_type)

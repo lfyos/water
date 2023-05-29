@@ -35,8 +35,7 @@ public class operate_show_hide_parameter
 		if((str=ci.request_response.get_parameter("show_code"))!=null)
 			show_code=Long.decode(str);
 
-		component_array comp_cont=new component_array(
-				ek.component_cont.root_component.component_id+1);
+		component_array comp_cont=new component_array();
 		
 		if((str=ci.request_response.get_parameter("component"))!=null){
 			component my_comp=ek.component_cont.search_component(str);

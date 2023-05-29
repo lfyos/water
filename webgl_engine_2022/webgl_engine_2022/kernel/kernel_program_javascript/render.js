@@ -929,9 +929,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.call_server_component					=null;
 
 		this.set_event_component					=null;
-		this.upload_string							=null;
-		this.upload_canvas_image					=null;
-		this.upload_scene_image						=null;
 	};
 	
 	this.get_component_event_processor=function(my_component_name_or_id)
@@ -1013,19 +1010,15 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 					}
 		return null;
 	};
-	this.call_server=async function(request_string,response_type_string,upload_data)
+	this.call_server=async function(request_string,response_type_string,upload_data,server_request_parameter)
 	{
-		var server_request_parameter=
-			{
-				method	: "POST"
-			};
-		if(typeof(upload_data)!="undefined")
-			if(upload_data!=null)
-				server_request_parameter.body=upload_data;
-					
-		if(typeof(response_type_string)=="undefined")
-			response_type_string="json";
-		else if(response_type_string==null)
+		if((typeof(server_request_parameter)!="object")||(server_request_parameter==null))
+			server_request_parameter=new Object();
+				
+		if((typeof(upload_data)!="undefined")&&(upload_data!=null))
+			server_request_parameter.body=upload_data;
+			
+		if((typeof(response_type_string)=="undefined")||(response_type_string==null))
 			response_type_string="json";
 
 		this.current.calling_server_number++;
@@ -1148,7 +1141,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		return ret_val;
 	};
 	this.call_server_engine=async function(
-			engine_parameter,response_type_string,upload_data)
+			engine_parameter,response_type_string,upload_data,server_request_parameter)
 	{
 		if(this.terminate_flag)
 			return null;
@@ -1156,41 +1149,41 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		for(var i=0,ni=engine_parameter.length;i<ni;i++)
 			request_string+="&"+engine_parameter[i][0].toString()+"="+engine_parameter[i][1].toString();
 		
-		return this.call_server(request_string,response_type_string,upload_data);
+		return this.call_server(request_string,response_type_string,upload_data,server_request_parameter);
 	};
 	this.call_server_render=async function(
 		render_id_or_render_name,render_parameter,
-		response_type_string,upload_data)
+		response_type_string,upload_data,server_request_parameter)
 	{
 		var request_string=this.create_render_request_string(
 				render_id_or_render_name,render_parameter);
-		return this.call_server(request_string,response_type_string,upload_data);
+		return this.call_server(request_string,response_type_string,upload_data,server_request_parameter);
 	};
 	this.call_server_render_by_part=async function(
 		render_id_or_part_name,part_id_or_driver_id,render_parameter,
-		response_type_string,upload_data)
+		response_type_string,upload_data,server_request_parameter)
 	{
 		var request_string=this.create_render_request_by_part_string(
 				render_id_or_part_name,part_id_or_driver_id,render_parameter);
-		return this.call_server(request_string,response_type_string,upload_data);
+		return this.call_server(request_string,response_type_string,upload_data,server_request_parameter);
 	};
 	
 	this.call_server_render_by_component=async function(
 		component_id_or_component_name,component_driver_id,render_parameter,
-		response_type_string,upload_data)
+		response_type_string,upload_data,server_request_parameter)
 	{
 		var request_string=this.create_render_request_by_component_string(
 				component_id_or_component_name,component_driver_id,render_parameter);
-		return this.call_server(request_string,response_type_string,upload_data);
+		return this.call_server(request_string,response_type_string,upload_data,server_request_parameter);
 	};
 	
 	this.call_server_part=async function(
 			render_id_or_part_name,part_id_or_driver_id,part_parameter,
-			response_type_string,upload_data)
+			response_type_string,upload_data,server_request_parameter)
 	{
 		var request_string=this.create_part_request_string(
 					render_id_or_part_name,part_id_or_driver_id,part_parameter);
-		return this.call_server(request_string,response_type_string,upload_data);
+		return this.call_server(request_string,response_type_string,upload_data,server_request_parameter);
 	};
 	this.call_server_part_by_component=async function(
 			component_id_or_component_name,component_driver_id,part_parameter,
@@ -1198,88 +1191,31 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	{
 		var request_string=this.create_part_request_by_component_string(
 					component_id_or_component_name,component_driver_id,part_parameter);
-		return this.call_server(request_string,response_type_string,upload_data);
+		return this.call_server(request_string,response_type_string,upload_data,server_request_parameter);
 	};
 	this.call_server_component=async function(component_name_or_id,driver_id,
-			component_parameter,response_type_string,upload_data)
+			component_parameter,response_type_string,upload_data,server_request_parameter)
 	{
 		var request_string=this.create_component_request_string(
 					component_name_or_id,driver_id,component_parameter);
-		return this.call_server(request_string,response_type_string,upload_data);
+		return this.call_server(request_string,response_type_string,upload_data,server_request_parameter);
 	};
 	this.set_event_component=function(event_component_name)
 	{
 		var cep,component_object,event_component_id
-		if((component_object=this.get_component_processor(event_component_name))!=null)
-			if((event_component_id=component_object.component_id)>=0)
-				if(event_component_id<this.component_event_processor.length)
-					if(typeof(cep=this.component_event_processor[event_component_id])=="object")
-						if(cep!=null)
-							if(typeof(cep.set_event_component)=="function")
-								cep.set_event_component(event_component_id,this);
-	};
-	this.upload_string=function(str_content,str_url,complete_function,error_function)
-	{
-		if(this.terminate_flag)
+		if((component_object=this.get_component_processor(event_component_name))==null)
 			return;
-		try{
-			var my_ajax=new XMLHttpRequest(),cur=this;
-			my_ajax.onreadystatechange=function()
-			{
-				if(my_ajax.readyState!=4)
-					return;
-				if(cur.terminate_flag)
-					return;
-				if(my_ajax.status!=200){
-					if(typeof(error_function)=="function")
-						error_function(0,cur);
-					return;
-				}
-				if(typeof(complete_function)=="function")
-					complete_function(cur,my_ajax.responseText);
-			};
-			my_ajax.open("POST",str_url,true);
-			my_ajax.setRequestHeader("Content-type","text/plain");
-			my_ajax.send(str_content);
-			return true;
-		}catch(e){
-			if(typeof(error_function)=="function")
-				error_function(2,this,e,str_url);
-			return false;
-		};
-	};
-	this.upload_canvas_image=function(uploaded_canvas,png_url,complete_function,error_function)
-	{
-		if(this.terminate_flag)
+		if((event_component_id=component_object.component_id)<0)
 			return;
-		try{
-			var my_ajax=new XMLHttpRequest(),cur=this;
-			my_ajax.onreadystatechange=function()
-			{
-				if(my_ajax.readyState!=4)
-					return;
-				if(cur.terminate_flag)
-					return;
-				if(my_ajax.status!=200){
-					if(typeof(error_function)=="function")
-						error_function(0,cur);
-					return;
-				}
-				if(typeof(complete_function)=="function")
-					complete_function(cur,my_ajax.responseText);
-			};
-			my_ajax.open("POST",png_url,true);
-			my_ajax.setRequestHeader("Content-type","image/png");
-			my_ajax.send(uploaded_canvas.toDataURL());
-			return true;
-		}catch(e){
-			if(typeof(error_function)=="function")
-				error_function(2,this,e,png_url);
-			return false;
-		};
-	};
-	this.upload_scene_image=function(png_url,complete_function,error_function)
-	{
-		this.upload_canvas_image(this.canvas,png_url,complete_function,error_function)
+		if(event_component_id>=this.component_event_processor.length)
+			return;
+		if(typeof(cep=this.component_event_processor[event_component_id])!="object")
+			return;
+		if(cep==null)
+			return;
+		if(typeof(cep.set_event_component)!="function")
+			return;
+		cep.set_event_component(event_component_id,this);
+		return;
 	};
 };

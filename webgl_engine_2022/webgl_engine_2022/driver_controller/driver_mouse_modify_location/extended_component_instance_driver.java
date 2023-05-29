@@ -209,7 +209,7 @@ public class extended_component_instance_driver extends component_instance_drive
 					true,true,true,p0,p1);
 			return null;
 		case "dblclick_component":
-			component_array c_a=new component_array(ek.component_cont.root_component.component_id+1);
+			component_array c_a=new component_array();
 			
 			if((str=ci.request_response.get_parameter("priority"))==null)
 				str="pickup";

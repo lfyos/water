@@ -19,7 +19,7 @@ public class operate_component_transparent
 		String str;
 		double transparency_value;
 		component my_comp;
-		component_array comp_array=new component_array(ek.component_cont.root_component.component_id+1);
+		component_array comp_array=new component_array();
 		
 		do{
 			try{

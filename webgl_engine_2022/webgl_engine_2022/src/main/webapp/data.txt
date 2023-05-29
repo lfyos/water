@@ -1,4 +1,9 @@
 
+clear_parameter_channel_id:	4	5
+set_parameter_channel_id:	2	3
+
+
+
 set JAVA_OPTS=-server -Xms1920m -Xmx2148m -XX:MaxNewSize=512m -XX:MaxPermSize=256m
 
 -Xms2048m -Xmx2560m

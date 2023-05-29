@@ -47,6 +47,5 @@ public class movement_add_movement extends movement_design_base
 		manager.reset(manager.designed_move.movement_tree_id,
 				ek.modifier_cont[manager.config_parameter.movement_modifier_container_id],
 				ek.component_cont,switch_time_length);
-		manager.designed_move=null;
 	}
 }

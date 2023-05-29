@@ -23,7 +23,7 @@ public class operate_lod_scale
 		if(ek.component_cont.root_component==null)
 			return;
 		
-		component_array comp_array=new component_array(ek.component_cont.root_component.component_id+1);
+		component_array comp_array=new component_array();
 		comp_array.add_selected_component(ek.component_cont.root_component,false);
 		if(comp_array.comp_list.size()<=0) {
 			comp_array.add_component(ek.component_cont.root_component);

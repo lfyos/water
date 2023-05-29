@@ -209,8 +209,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 						true,false,false);
 		}
 		component comp;
-		component_array comp_array=new component_array(
-				ek.component_cont.root_component.component_id+1);
+		component_array comp_array=new component_array();
 		for(int i=0;i<component_number;i++)
 			if((comp=ek.component_cont.get_component(component_id[i]))!=null)
 				register_visible_component(comp,comp_array,0);
