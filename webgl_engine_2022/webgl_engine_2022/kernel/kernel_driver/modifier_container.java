@@ -1,170 +1,187 @@
 package kernel_driver;
 
+import java.util.ArrayList;
+
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
+import kernel_common_class.sorter;
 
 public class modifier_container
 {
 	private modifier_container_timer timer;
-	private modifier_driver_holder modifier_driver_array[];
-	private modifier_driver_holder insert_modifier_driver_array[];
-	private modifier_driver_holder temp_modifier_driver_array[];
-	private int modifier_number,insert_modifier_number;
+	private ArrayList<modifier_driver_holder> modifier_driver_execute_list;
+	private ArrayList<modifier_driver_holder>modifier_driver_insert_list;
 	private long modifier_driver_sequence_id;
 
 	public void destroy()
 	{
 		if(timer!=null)
 			timer=null;
-		if(modifier_driver_array!=null) {
-			for(int i=0, ni=modifier_driver_array.length;i<ni;i++)
-				if(modifier_driver_array[i]!=null){
-					if(modifier_driver_array[i].md!=null){
-						modifier_driver_array[i].md.destroy();
-						modifier_driver_array[i].md=null;
-					}
-					modifier_driver_array[i]=null;
-				}
-			modifier_driver_array=null;
-		}
-		if(insert_modifier_driver_array!=null) {
-			for(int i=0, ni=insert_modifier_driver_array.length;i<ni;i++)
-				if(insert_modifier_driver_array[i]!=null){
-					if(insert_modifier_driver_array[i].md!=null){
-						insert_modifier_driver_array[i].md.destroy();
-						insert_modifier_driver_array[i].md=null;
-					}
-					insert_modifier_driver_array[i]=null;
-				}
-			insert_modifier_driver_array=null;
-		}
-		if(temp_modifier_driver_array!=null)
-			for(int i=0, ni=temp_modifier_driver_array.length;i<ni;i++)
-				if(temp_modifier_driver_array[i]!=null){
-					temp_modifier_driver_array[i].md=null;
-					temp_modifier_driver_array[i]=null;
-				};
-		temp_modifier_driver_array=null;
-	}
-	private void adjust_heap(int modifier_id)
-	{
-		if((modifier_number<=0)||(modifier_id<0)||(modifier_id>=modifier_number))
-			return;
 
-		long this_time=modifier_driver_array[modifier_id].md.start_time;
+		if(modifier_driver_execute_list!=null) {
+			for(int i=0, ni=modifier_driver_execute_list.size();i<ni;i++) {
+				modifier_driver_holder p=modifier_driver_execute_list.get(i);
+				if(p!=null){
+					if(p.md!=null){
+						p.md.destroy();
+						p.md=null;
+					}
+				}
+			}
+			modifier_driver_execute_list.clear();
+			modifier_driver_execute_list=null;
+		}
+		if(modifier_driver_insert_list!=null) {
+			for(int i=0, ni=modifier_driver_insert_list.size();i<ni;i++) {
+				modifier_driver_holder p=modifier_driver_insert_list.get(i);
+				if(p!=null){
+					if(p.md!=null){
+						p.md.destroy();
+						p.md=null;
+					}
+				}
+			}
+			modifier_driver_insert_list.clear();
+			modifier_driver_insert_list=null;
+		}
+	}
+	private int adjust_heap(int modifier_id)
+	{
+		int modifier_number=modifier_driver_execute_list.size();
+		if((modifier_driver_execute_list.size()<=0)||(modifier_id<0)||(modifier_id>=modifier_number))
+			return modifier_id;
+
+		modifier_driver_holder p=modifier_driver_execute_list.get(modifier_id);
 		
 		while(modifier_id>0){
 			int parent=(modifier_id-1)/2;
-			if(modifier_driver_array[parent].md.start_time<=this_time)
-				break;	
-			modifier_driver_holder p=modifier_driver_array[modifier_id];
-			modifier_driver_array[modifier_id]=modifier_driver_array[parent];
-			modifier_driver_array[parent]=p;
+			modifier_driver_holder parent_p=modifier_driver_execute_list.get(parent);
+			if(parent_p.md.start_time<=p.md.start_time)
+				break;
+			modifier_driver_execute_list.set(modifier_id,parent_p);
+			modifier_driver_execute_list.set(parent,p);
 			modifier_id=parent;
 		}
+		
+		int ret_val=modifier_id;
+		
 		while(true){
 			int left_child=modifier_id+modifier_id+1;
 			int right_child=left_child+1;
 			if(left_child>=modifier_number)
 				break;
-			long left_time=modifier_driver_array[left_child].md.start_time;
+			modifier_driver_holder left_p=modifier_driver_execute_list.get(left_child);
 			if(right_child<modifier_number){
-				long right_time=modifier_driver_array[right_child].md.start_time;
-				if(right_time<left_time){
+				modifier_driver_holder right_p=modifier_driver_execute_list.get(right_child);
+				if(right_p.md.start_time<left_p.md.start_time){
 					left_child=right_child;
-					left_time=right_time;
+					left_p=right_p;
 				}
 			}
-			if(this_time<=left_time)
+			if(p.md.start_time<=left_p.md.start_time)
 				break;
-			modifier_driver_holder p=modifier_driver_array[modifier_id];
-			modifier_driver_array[modifier_id]=modifier_driver_array[left_child];
-			modifier_driver_array[left_child]=p;
+			
+			modifier_driver_execute_list.set(modifier_id,left_p);
+			modifier_driver_execute_list.set(left_child,p);
 			modifier_id=left_child;
 		}
+		
+		return ret_val;
 	}
-	private int recurse_collect_delete_modifiers(int modifier_id,int delete_number,
-			modifier_driver_holder my_delete_modifier_driver_array[],long my_current_time,
-			engine_kernel ek,client_information ci)
+	private int recurse_collect_delete_modifiers(int modifier_id,
+			ArrayList<modifier_driver_holder> delete_modify_driver_list,
+			long my_current_time,engine_kernel ek,client_information ci)
 	{
 		while(true){
+			int modifier_number=modifier_driver_execute_list.size();
 			if((modifier_number<=0)||(modifier_id<0)||(modifier_id>=modifier_number))
-				return delete_number;
-			if(my_current_time<modifier_driver_array[modifier_id].md.start_time)
-				return delete_number;
-			if(my_current_time<modifier_driver_array[modifier_id].md.terminate_time){
-				delete_number=recurse_collect_delete_modifiers(modifier_id+modifier_id+1,
-					delete_number,my_delete_modifier_driver_array,my_current_time,ek,ci);
-				delete_number=recurse_collect_delete_modifiers(modifier_id+modifier_id+2,
-					delete_number,my_delete_modifier_driver_array,my_current_time,ek,ci);
-				return delete_number;
+				return modifier_id;
+			modifier_driver_holder p=modifier_driver_execute_list.get(modifier_id);
+			if(my_current_time<p.md.start_time)
+				return modifier_id;
+			if(my_current_time<p.md.terminate_time){
+				int left_id=recurse_collect_delete_modifiers(modifier_id+modifier_id+1,
+						delete_modify_driver_list,my_current_time,ek,ci);
+				int right_id=recurse_collect_delete_modifiers(modifier_id+modifier_id+2,
+						delete_modify_driver_list,my_current_time,ek,ci);
+				if(left_id>right_id)
+					left_id=right_id;
+				if(left_id>modifier_id)
+					return modifier_id;
+				modifier_id=left_id;
+			}else {
+				delete_modify_driver_list.add(delete_modify_driver_list.size(),p);
+				p=modifier_driver_execute_list.remove(modifier_number-1);
+				if(modifier_id<(modifier_number-1)) {
+					modifier_driver_execute_list.set(modifier_id,p);
+					int new_modifier_id=adjust_heap(modifier_id);
+					if(new_modifier_id<modifier_id)
+						modifier_id=new_modifier_id;
+				}
 			}
-			my_delete_modifier_driver_array[delete_number++]=modifier_driver_array[modifier_id];
-			modifier_driver_array[modifier_id]=modifier_driver_array[--modifier_number];
-			modifier_driver_array[modifier_number]=null;
-			adjust_heap(modifier_id);
 		}
 	}
 	private void recurse_execute_modifier_modify(
 			int modifier_id,long my_current_time,engine_kernel ek,client_information ci)
 	{
+		int modifier_number=modifier_driver_execute_list.size();
 		if((modifier_number<=0)||(modifier_id<0)||(modifier_id>=modifier_number))
 			return;
-		if(my_current_time<modifier_driver_array[modifier_id].md.start_time)
+		modifier_driver_holder p=modifier_driver_execute_list.get(modifier_id);
+		if(my_current_time<p.md.start_time)
 			return;
-		modifier_driver_array[modifier_id].md.modify(my_current_time,ek,ci);
-		clear_modifier_flag|=modifier_driver_array[modifier_id].md.get_clear_modifier_flag();
+		p.md.modify(my_current_time,ek,ci);
+		clear_modifier_flag|=p.md.get_clear_modifier_flag();
 		recurse_execute_modifier_modify(modifier_id+modifier_id+1,my_current_time,ek,ci);
 		recurse_execute_modifier_modify(modifier_id+modifier_id+2,my_current_time,ek,ci);
 	}
 	private boolean test_can_not_start(
 			int modifier_id,long my_current_time,engine_kernel ek,client_information ci)
 	{
+		int modifier_number=modifier_driver_execute_list.size();
 		if(modifier_number<=0)
 			return false;
 		if(modifier_id>=modifier_number)
 			return false;
-		if(my_current_time<modifier_driver_array[modifier_id].md.start_time)
+		modifier_driver_holder p=modifier_driver_execute_list.get(modifier_id);
+		if(my_current_time<p.md.start_time)
 			return false;
-		boolean my_ret_val	 =modifier_driver_array[modifier_id].md.can_start(my_current_time,ek,ci)?false:true;
+		boolean my_ret_val	 =p.md.can_start(my_current_time,ek,ci)?false:true;
 		boolean left_ret_val =test_can_not_start(modifier_id+modifier_id+1,my_current_time,ek,ci);
 		boolean right_ret_val=test_can_not_start(modifier_id+modifier_id+2,my_current_time,ek,ci);
-		clear_modifier_flag|=modifier_driver_array[modifier_id].md.get_clear_modifier_flag();
+		clear_modifier_flag|=p.md.get_clear_modifier_flag();
 		return my_ret_val||left_ret_val||right_ret_val;
 	}
-	private void sort_modifiers(int begin_modifier_id,int end_modifier_id,
-			modifier_driver_holder sort_modifier_driver_array[],
-			modifier_driver_holder temp_modifier_driver_array[])
+	private modifier_driver_holder[] sort_modifier_driver_list(
+			ArrayList<modifier_driver_holder> modifier_driver_list)
 	{
-		if(begin_modifier_id<end_modifier_id){
-			int mid_modifier_id	=(begin_modifier_id+end_modifier_id)/2;
-			int p_left_begin	=begin_modifier_id,p_left_end	=mid_modifier_id;
-			int p_right_begin	=mid_modifier_id+1,p_right_end	=end_modifier_id;
-			
-			sort_modifiers(p_left_begin,p_left_end,sort_modifier_driver_array,temp_modifier_driver_array);
-			sort_modifiers(p_right_begin,p_right_end,sort_modifier_driver_array,temp_modifier_driver_array);
-			
-			for(int p_result_pointer=0,p_left_pointer=p_left_begin,p_right_pointer=p_right_begin;(p_left_pointer<=p_left_end)||(p_right_pointer<=p_right_end);p_result_pointer++){
-				if(p_left_pointer>p_left_end)
-					temp_modifier_driver_array[p_result_pointer]=sort_modifier_driver_array[p_right_pointer++];
-				else if(p_right_pointer>p_right_end)
-					temp_modifier_driver_array[p_result_pointer]=sort_modifier_driver_array[p_left_pointer++];
-				else{
-					long left_time	=sort_modifier_driver_array[p_left_pointer].md.terminate_time;
-					long right_time	=sort_modifier_driver_array[p_right_pointer].md.terminate_time;
-					if(left_time==right_time){
-						left_time	=sort_modifier_driver_array[p_left_pointer].sequence_id;
-						right_time	=sort_modifier_driver_array[p_right_pointer].sequence_id;
-					}
-					if(left_time<=right_time)
-						temp_modifier_driver_array[p_result_pointer]=sort_modifier_driver_array[p_left_pointer++];
-					else
-						temp_modifier_driver_array[p_result_pointer]=sort_modifier_driver_array[p_right_pointer++];
-				}
+		class modifier_driver_list_sorter extends sorter<modifier_driver_holder,modifier_driver_holder>
+		{
+			public int compare_data(modifier_driver_holder s,modifier_driver_holder t)
+			{
+				if(s.md.terminate_time<t.md.terminate_time)
+					return -1;
+				if(s.md.terminate_time>t.md.terminate_time)
+					return 1;
+				if(s.sequence_id<t.sequence_id)
+					return -1;
+				if(s.sequence_id>t.sequence_id)
+					return 1;
+				return 0;
 			}
-			for(int i=begin_modifier_id,j=0;i<=end_modifier_id;i++,j++)
-				sort_modifier_driver_array[i]=temp_modifier_driver_array[j];
+			public int compare_key(modifier_driver_holder s,modifier_driver_holder t)
+			{
+				return compare_data(s,t);
+			}
+			
+			public modifier_driver_list_sorter()
+			{
+				data_array=modifier_driver_list.toArray(
+					new modifier_driver_holder[modifier_driver_list.size()]);
+				do_sort();
+			}
 		}
+		return new modifier_driver_list_sorter().data_array;
 	}
 	private boolean clear_modifier_flag;
 	public void process(engine_kernel ek,client_information ci)
@@ -182,61 +199,43 @@ public class modifier_container
 	}	
 	private void process_routine(engine_kernel ek,client_information ci)
 	{
+		modifier_driver_holder p;
 		long my_current_time=timer.get_current_time();
 		
 		for(int i=0,ni=ek.system_par.max_process_modifier_number;i<ni;i++){
+			int modifier_number=modifier_driver_execute_list.size();
 			if(modifier_number<=0){
 				modifier_driver_sequence_id=0;
 				modifier_number=0;
 			}
-			if((modifier_number+insert_modifier_number)>=modifier_driver_array.length){
-				modifier_driver_holder bak[]=modifier_driver_array;
-				modifier_driver_array=new modifier_driver_holder[modifier_number+insert_modifier_number];
-				for(int j=0,nj=bak.length;j<nj;j++)
-					modifier_driver_array[j]=bak[j];
-				for(int j=bak.length,nj=modifier_driver_array.length;j<nj;j++)
-					modifier_driver_array[j]=null;
-			}
-			for(int j=0;j<insert_modifier_number;j++)
-				if(insert_modifier_driver_array[j]!=null){
-					modifier_driver_array[modifier_number]=insert_modifier_driver_array[j];
-					insert_modifier_driver_array[j]=null;
+			for(int j=0,nj=modifier_driver_insert_list.size();j<nj;j++)
+				if((p=modifier_driver_insert_list.get(j))!=null){
+					modifier_driver_execute_list.add(modifier_number,p);
 					adjust_heap(modifier_number++);
 				}
-			insert_modifier_number=0;
+			modifier_driver_insert_list.clear();
+			
 			if(test_can_not_start(0,my_current_time,ek,ci)) {
 				timer.modify_current_time(my_current_time,ek.current_time);
 				return;
 			}
-			if(temp_modifier_driver_array.length<modifier_number){
-				temp_modifier_driver_array=new modifier_driver_holder[modifier_number];
-				for(int j=0,nj=temp_modifier_driver_array.length;j<nj;j++)
-					temp_modifier_driver_array[j]=null;
-			}
-			int delete_number=recurse_collect_delete_modifiers(0,0,
-					temp_modifier_driver_array,my_current_time,ek,ci);
-			if(delete_number<=0)
+			ArrayList<modifier_driver_holder> delete_modify_driver_list=new ArrayList<modifier_driver_holder>();
+			recurse_collect_delete_modifiers(0,delete_modify_driver_list,my_current_time,ek,ci);
+			
+			int delete_number;
+			if((delete_number=delete_modify_driver_list.size())<=0)
 				break;
-			if(insert_modifier_driver_array.length<delete_number){
-				insert_modifier_driver_array=new modifier_driver_holder[delete_number];
-				for(int j=0;j<delete_number;j++)
-					insert_modifier_driver_array[j]=null;
-			}
-			sort_modifiers(0,delete_number-1,
-					temp_modifier_driver_array,insert_modifier_driver_array);
-			for(int j=0;j<delete_number;j++)
-				insert_modifier_driver_array[j]=null;
+			modifier_driver_holder p_array[]=sort_modifier_driver_list(delete_modify_driver_list);
 			
 			for(int j=0;j<delete_number;j++){
-				temp_modifier_driver_array[j].md.last_modify(my_current_time,ek,ci,true);
-				clear_modifier_flag|=temp_modifier_driver_array[j].md.get_clear_modifier_flag();
+				p_array[j].md.last_modify(my_current_time,ek,ci,true);
+				clear_modifier_flag|=p_array[j].md.get_clear_modifier_flag();
 			}
 			for(int j=0;j<delete_number;j++){
-				temp_modifier_driver_array[j].md.destroy();
-				temp_modifier_driver_array[j].md=null;
-				temp_modifier_driver_array[j]=null;
+				p_array[j].md.destroy();
+				p_array[j].md=null;
 			}
-			if(insert_modifier_number<=0)
+			if(modifier_driver_insert_list.size()<=0)
 				break;
 		}
 		recurse_execute_modifier_modify(0,my_current_time,ek,ci);
@@ -245,40 +244,25 @@ public class modifier_container
 	}
 	private void clear_modifier_routine(engine_kernel ek,client_information ci)
 	{
-		if(temp_modifier_driver_array.length<modifier_number){
-			temp_modifier_driver_array=new modifier_driver_holder[modifier_number];
-			for(int i=0;i<modifier_number;i++)
-				temp_modifier_driver_array[i]=null;
-		}
-		sort_modifiers(0,modifier_number-1,modifier_driver_array,temp_modifier_driver_array);
+		int modifier_number=modifier_driver_execute_list.size();
 		
+		modifier_driver_holder p_array[]=sort_modifier_driver_list(modifier_driver_execute_list);
 		long my_current_time=timer.caculate_current_time(ek.current_time);
 		
 		for(int i=0;i<modifier_number;i++) {
-			modifier_driver_array[i].md.last_modify(my_current_time,ek,ci,false);
-			clear_modifier_flag|=modifier_driver_array[i].md.get_clear_modifier_flag();
+			p_array[i].md.last_modify(my_current_time,ek,ci,false);
+			clear_modifier_flag|=p_array[i].md.get_clear_modifier_flag();
 		}
 		for(int i=0;i<modifier_number;i++){
-			modifier_driver_array[i].md.destroy();
-			modifier_driver_array[i].md=null;
-			modifier_driver_array[i]=null;
+			p_array[i].md.destroy();
+			p_array[i].md=null;
 		}
-		for(int i=0;i<modifier_number;i++)
-			temp_modifier_driver_array[i]=null;
-		modifier_number=0;
+		modifier_driver_execute_list.clear();
 	}
 	public void add_modifier(modifier_driver new_modifier)
 	{
-		if(insert_modifier_number>=insert_modifier_driver_array.length){
-			modifier_driver_holder bak[]=insert_modifier_driver_array;
-			insert_modifier_driver_array=new modifier_driver_holder[bak.length+100];
-			for(int i=0,n=bak.length;i<n;i++)
-				insert_modifier_driver_array[i]=bak[i];
-			for(int i=bak.length,n=insert_modifier_driver_array.length;i<n;i++)
-				insert_modifier_driver_array[i]=null;
-		}
-		insert_modifier_driver_array[insert_modifier_number++]
-				=new modifier_driver_holder(new_modifier,modifier_driver_sequence_id++);
+		modifier_driver_insert_list.add(modifier_driver_insert_list.size(),
+				new modifier_driver_holder(new_modifier,modifier_driver_sequence_id++));
 	}
 	public modifier_container_timer get_timer()
 	{
@@ -286,25 +270,15 @@ public class modifier_container
 	};
 	public int get_modifier_number()
 	{
-		return modifier_number+insert_modifier_number;
+		return modifier_driver_execute_list.size()+modifier_driver_insert_list.size();
 	}
 	public modifier_container(long my_timer_adjust_value)
 	{
 		timer=new modifier_container_timer(my_timer_adjust_value);
 		
-		modifier_driver_array		=new modifier_driver_holder[100];
-		insert_modifier_driver_array=new modifier_driver_holder[100];
-		temp_modifier_driver_array	=new modifier_driver_holder[100];
+		modifier_driver_execute_list	=new ArrayList<modifier_driver_holder>();
+		modifier_driver_insert_list		=new ArrayList<modifier_driver_holder>();
 		
-		for(int i=0,n=modifier_driver_array.length;i<n;i++)
-			modifier_driver_array[i]=null;
-		for(int i=0,n=insert_modifier_driver_array.length;i<n;i++)
-			insert_modifier_driver_array[i]=null;
-		for(int i=0,n=temp_modifier_driver_array.length;i<n;i++)
-			temp_modifier_driver_array[i]=null;
-		
-		insert_modifier_number=0;
-		modifier_number=0;
 		modifier_driver_sequence_id=0;
 		
 		clear_modifier_flag=false;

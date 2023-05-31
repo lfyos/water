@@ -3,7 +3,6 @@ package driver_movement;
 import kernel_common_class.debug_information;
 import kernel_component.component;
 import kernel_component.component_container;
-import kernel_driver.modifier_container;
 import kernel_file_manager.file_writer;
 import kernel_transformation.box;
 import kernel_transformation.location;
@@ -49,33 +48,7 @@ public class movement_item_container
 		terminate_box=null;
 	}
 	
-	public void register_modifier(movement_suspend my_suspend,
-			movement_channel_id move_channel_id,int location_component_id,
-			component_container component_cont,modifier_container modifier_cont)
-	{
-		component moved_component=component_cont.get_component(moved_component_id);
-		if((movement!=null)&&(moved_component!=null))
-			for(int i=0;i<movement.length;i++){
-				int set_parameter_channel_id[],clear_parameter_channel_id[];	
-				if(i<(movement.length-1)){
-					clear_parameter_channel_id=new int[]{};
-					set_parameter_channel_id=move_channel_id.all_parameter_channel_id;
-				}else if(terminate_state_flag){
-					clear_parameter_channel_id=move_channel_id.display_parameter_channel_id;
-					set_parameter_channel_id=move_channel_id.hide_parameter_channel_id;
-				}else {
-					clear_parameter_channel_id=move_channel_id.hide_parameter_channel_id;
-					set_parameter_channel_id=move_channel_id.display_parameter_channel_id;
-				}
-				modifier_cont.add_modifier(
-					new movement_move_modifier(					
-							my_suspend,					moved_component,					location_component_id,
-							clear_parameter_channel_id,	set_parameter_channel_id,
-							movement[i].start_time,		movement[i].start_parameter,		movement[i].start_location,
-							movement[i].terminate_time,	movement[i].terminate_parameter,	movement[i].terminate_location,
-							follow_component_id,		follow_component_location));
-			}
-	}
+	
 	public void reverse()
 	{
 		if(movement==null)
