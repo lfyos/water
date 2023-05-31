@@ -30,11 +30,13 @@ public class component_core_7 extends component_core_6
 	public void modify_display_flag(int parameter_channel_id[],boolean new_display_flag,component_container component_cont)
 	{
 		int buffer_channel_number=0,buffer_channel_id[]=new int[parameter_channel_id.length];
-		for(int i=0,ni=parameter_channel_id.length;i<ni;i++)
-			if(multiparameter[parameter_channel_id[i]].display_flag^new_display_flag){
+
+		for(int i=0,ni=parameter_channel_id.length;i<ni;i++) {
+			if(multiparameter[parameter_channel_id[i]].display_flag!=new_display_flag){
 				multiparameter[parameter_channel_id[i]].display_flag=new_display_flag;
 				buffer_channel_id[buffer_channel_number++]=parameter_channel_id[i];
 			}
+		}
 		if(buffer_channel_number<=0)
 			return;
 		for(component p=(component)this;p!=null;p=component_cont.get_component(p.parent_component_id)) {

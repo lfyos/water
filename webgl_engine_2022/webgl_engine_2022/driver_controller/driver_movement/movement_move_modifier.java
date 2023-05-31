@@ -12,6 +12,7 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 	private movement_suspend suspend;
 	private network_parameter network_par[];
 	private int modify_id,clear_parameter_channel_id[],set_parameter_channel_id[];
+	private boolean  start_state_flag,terminate_state_flag;
 	
 	public void destroy()
 	{
@@ -21,16 +22,12 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 		clear_parameter_channel_id=null;
 		set_parameter_channel_id=null;
 	}
-	public movement_move_modifier(movement_suspend my_suspend,
-			
-			component my_comp,int my_location_component_id,
-				
-			int my_clear_parameter_channel_id[],
-			int my_set_parameter_channel_id[],
-			
-			long my_start_time,		String my_start_parameter[],		location my_start_location,
-			long my_terminate_time,	String my_terminate_parameter[],	location my_terminate_location,
-			int my_follow_component_id[],location my_follow_component_location[])
+	public movement_move_modifier(					boolean my_start_state_flag,			boolean my_terminate_state_flag,
+			movement_suspend my_suspend,			component my_comp,						int my_location_component_id,
+			int my_clear_parameter_channel_id[],	int my_set_parameter_channel_id[],
+			long my_start_time,						String my_start_parameter[],			location my_start_location,
+			long my_terminate_time,					String my_terminate_parameter[],		location my_terminate_location,
+			int my_follow_component_id[],			location my_follow_component_location[])
 	{
 		super(	my_comp.component_id,
 				my_location_component_id,
@@ -38,11 +35,14 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 				my_terminate_time,my_terminate_location,
 				my_follow_component_id,my_follow_component_location);
 		
+		start_state_flag=my_start_state_flag;
+		terminate_state_flag=my_terminate_state_flag;
+		
 		suspend=my_suspend;
 		
 		clear_parameter_channel_id	=my_clear_parameter_channel_id;
 		set_parameter_channel_id	=my_set_parameter_channel_id;
-		
+
 		int start_length	=(my_start_parameter==null)		?0:my_start_parameter.length;
 		int terminate_length=(my_terminate_parameter==null)	?0:my_terminate_parameter.length;
 		
@@ -111,18 +111,18 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 		if(!terminated_flag)
 			return;
 		super.last_modify(my_current_time,ek,ci,true);
-		
 		if((comp=ek.component_cont.get_component(component_id))==null)
 			return;
-
-		comp.modify_display_flag(clear_parameter_channel_id,false,ek.component_cont);
-		comp.modify_display_flag(set_parameter_channel_id,true,ek.component_cont);
+		call_component_driver(ek,ci,my_current_time,-1);
+		
+		comp.modify_display_flag(clear_parameter_channel_id,!start_state_flag,ek.component_cont);
+		comp.modify_display_flag(set_parameter_channel_id,!terminate_state_flag,ek.component_cont);
+		
 		if(follow_component_id!=null)
 			for(int i=0,ni=follow_component_id.length;i<ni;i++)
 				if((comp=ek.component_cont.get_component(follow_component_id[i]))!=null) {
-					comp.modify_display_flag(clear_parameter_channel_id,false,ek.component_cont);
-					comp.modify_display_flag(set_parameter_channel_id,true,ek.component_cont);
+					comp.modify_display_flag(clear_parameter_channel_id,!start_state_flag,ek.component_cont);
+					comp.modify_display_flag(set_parameter_channel_id,!terminate_state_flag,ek.component_cont);
 				}
-		call_component_driver(ek,ci,my_current_time,-1);
 	}
 }

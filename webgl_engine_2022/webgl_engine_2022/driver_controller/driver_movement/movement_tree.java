@@ -96,17 +96,27 @@ public class movement_tree {
 			}
 		if(move==null)
 			return;
-		component moved_component;
-		if((moved_component=component_cont.get_component(move.moved_component_id))==null)
+		if(move.movement==null)
 			return;
 		if(move.movement.length<=0)
 			return;
 		
 		long my_current_time=modifier_cont.get_timer().get_current_time();
-		if(terminate_time<my_current_time)
+		if(terminate_time<=my_current_time)
 			return;
-		move.register_modifier(suspend,move_channel_id,location_component_id,component_cont,modifier_cont);
-		
+		component moved_component;
+		if((moved_component=component_cont.get_component(move.moved_component_id))==null)
+			return;
+		for(int i=0,ni=move.movement.length;i<ni;i++) {
+			movement_item p=move.movement[i];
+			modifier_cont.add_modifier(new movement_move_modifier(	
+				move.start_state_flag,	move.terminate_state_flag,
+				suspend,				moved_component,		location_component_id,
+				move_channel_id.hide_parameter_channel_id,		move_channel_id.display_parameter_channel_id,
+				p.start_time,			p.start_parameter,		p.start_location,
+				p.terminate_time,		p.terminate_parameter,	p.terminate_location,
+				move.follow_component_id,						move.follow_component_location));
+		}	
 		if(start_time>=terminate_time)
 			return;
 		
@@ -199,7 +209,7 @@ public class movement_tree {
 			display_flag=move.start_state_flag?false:true;
 			hide_flag=move.terminate_state_flag?false:true;
 		}else{
-			loca=move.movement[0].start_location;
+			loca=move.movement[move_id].terminate_location;
 			display_flag=true;
 			hide_flag=true;
 		}
