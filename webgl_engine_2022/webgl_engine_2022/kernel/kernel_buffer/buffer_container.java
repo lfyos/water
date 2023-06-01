@@ -1,6 +1,7 @@
 package kernel_buffer;
 
 import kernel_engine.engine_kernel;
+import  kernel_camera.camera;
 
 public class buffer_container
 {
@@ -54,7 +55,8 @@ public class buffer_container
 				?1
 				:(ek.component_cont.root_component.component_id+1));
 		location_buffer		=new component_location_buffer(ek);	
-		cam_buffer			=new camera_buffer(ek.camera_cont.camera_array);
+		cam_buffer			=new camera_buffer(
+				ek.camera_cont.toArray(new camera[ek.camera_cont.size()]));
 		target_buffer		=new target_parameter_buffer();
 		clip_buffer			=new clip_plane_buffer();
 		mesh_loader			=new part_mesh_loader(ek.render_cont);

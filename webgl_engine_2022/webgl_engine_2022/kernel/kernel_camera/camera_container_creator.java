@@ -1,28 +1,19 @@
 package kernel_camera;
 
+import java.util.ArrayList;
+
 import kernel_common_class.debug_information;
 import kernel_component.component;
 import kernel_component.component_container;
 import kernel_file_manager.file_reader;
 
-public class camera_container 
+public class camera_container_creator 
 {
-	public camera camera_array[];
-	
-	public void destroy()
+	static public  ArrayList<camera> load_camera_container(
+			file_reader f,component_container component_cont,int max_camera_stack_number)
 	{
-		if(camera_array!=null)
-			for(int i=0,ni=camera_array.length;i<ni;i++)
-				if(camera_array[i]!=null){
-					camera_array[i].destroy();
-					camera_array[i]=null;
-				}
-		camera_array=null;
-	}
-	
-	public  camera_container(file_reader f,component_container component_cont,int max_camera_stack_number)
-	{
-		for(camera_array=new camera[0];;){
+		ArrayList<camera> ret_val=new ArrayList<camera>();
+		for(;;){
 			long switch_time_length				=f.get_long();
 			double distance						=f.get_double();
 			double half_fovy_tanl				=Math.tan(f.get_double()*(Math.PI)/360.0);
@@ -50,20 +41,17 @@ public class camera_container
 			else if((eye_component=component_cont.search_component(component_name))==null)
 				debug_information.println("创建相机时,发现相机存在的组件 "+component_name+"不存在");
 			else{
-				camera bak[]=camera_array;
-				camera_array=new camera[bak.length+1];
-				for(int i=0,ni=bak.length;i<ni;i++)
-					camera_array[i]=bak[i];
 				camera_parameter cam_par=new camera_parameter(
 						movement_flag,direction_flag,change_type_flag,
 						scale_value,switch_time_length,distance,
 						half_fovy_tanl,half_fovy_tanl,near_value_ratio,far_value_ratio,
 						projection_type_flag,low_precision_scale,high_precision_scale,
 						synchronize_location_flag,light_camera_flag);
-				camera_array[camera_array.length-1]=new camera(
-						eye_component,cam_par,max_camera_stack_number);
+				ret_val.add(ret_val.size(), new camera(eye_component,cam_par,max_camera_stack_number));
 			}
 		}
 		f.close();
+		
+		return ret_val;
 	}
 }

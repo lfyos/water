@@ -1,5 +1,8 @@
 package driver_movement;
 
+import java.util.ArrayList;
+
+import kernel_camera.camera;
 import kernel_camera.locate_camera;
 import kernel_component.component;
 import kernel_component.component_collector;
@@ -16,23 +19,38 @@ import kernel_common_class.debug_information;
 
 public class movement_switch_camera_modifier extends modifier_driver
 {
+	class movement_switch_information
+	{
+		public int main_component_id,component_id;
+		public location direction,start_location,terminate_location;
+		public movement_switch_information(int my_main_component_id,int my_component_id,
+					location my_direction,location my_start_location,location my_terminate_location)
+		{
+			main_component_id	=my_main_component_id;
+			component_id		=my_component_id;
+			direction			=my_direction;
+			start_location		=my_start_location;
+			terminate_location	=my_terminate_location;
+		}
+	};
+	
+	private ArrayList<movement_switch_information> container;
+	
 	private boolean single_step_flag;
-	private long switch_camera_number;
+	private int switch_camera_number;
 	private double scale_value;
-	private int main_component_id[],component_id[],audio_component_id,parameter_channel_id;
-	private location direction[],start_location[],terminate_location[];
-	private int component_number,camera_modifier_container_id;
+	private int audio_component_id,parameter_channel_id;
+	private int movement_modifier_container_id,camera_modifier_container_id;
 	public String title_string,information_string,sound_file_name;
 	
 	public void destroy()
 	{
 		super.destroy();
 		
-		main_component_id=null;
-		component_id=null;
-		direction=null;
-		start_location=null;
-		terminate_location=null;
+		if(container!=null) {
+			container.clear();
+			container=null;
+		}
 		
 		title_string=null;
 		information_string=null;
@@ -58,65 +76,39 @@ public class movement_switch_camera_modifier extends modifier_driver
 	{
 		box b,return_value=null;
 		component comp,main_comp;
-		for(int i=0;i<component_number;i++)
-			if((main_comp=component_cont.get_component(main_component_id[i]))!=null)
-				if((comp=component_cont.get_component(component_id[i]))!=null){
+		for(int i=0,ni=container.size();i<ni;i++) {
+			movement_switch_information p=container.get(i);
+			if((main_comp=component_cont.get_component(p.main_component_id))!=null)
+				if((comp=component_cont.get_component(p.component_id))!=null){
 					caculate_component_location(main_comp,component_cont);
 					main_comp.caculate_box(true);
 					caculate_component_location(comp,component_cont);
 					comp.caculate_box(true);
 
-					if(start_location[i]!=null)
-						if((b=caculate_move_box(comp,main_comp.parent_and_relative_location.multiply(start_location[i])))!=null)
+					if(p.start_location!=null)
+						if((b=caculate_move_box(comp,main_comp.parent_and_relative_location.multiply(p.start_location)))!=null)
 							return_value=(return_value==null)?b:return_value.add(b);
-					if(terminate_location[i]!=null)
-						if((b=caculate_move_box(comp,main_comp.parent_and_relative_location.multiply(terminate_location[i])))!=null)
+					if(p.terminate_location!=null)
+						if((b=caculate_move_box(comp,main_comp.parent_and_relative_location.multiply(p.terminate_location)))!=null)
 							return_value=(return_value==null)?b:return_value.add(b);
 				}
+		}
 		return return_value;
 	}
 	public void reset()
 	{
 		scale_value=-1.0;
-		component_number=0;
-		for(int i=0,n=component_id.length;i<n;i++){
-			main_component_id[i]	=-1;
-			component_id[i]			=-1;
-			direction[i]			=null;
-			start_location[i]		=null;
-			terminate_location[i]	=null;
-		}
+		container.clear();
 	}
 	public void register_move_component(int my_main_component_id,int my_component_id,
 			double my_scale_value,location my_direction,
 			location my_start_location,location my_terminate_location,
 			String my_title_string,String my_information_string,String my_sound_file_name)
 	{
-		if(component_number>=component_id.length){
-			int bak_main_component_id[]			=main_component_id;
-			int bak_component_id[]				=component_id;
-			location bak_direction[]			=direction;
-			location bak_start_location[]		=start_location;
-			location bak_terminate_location[]	=terminate_location;
-						
-			main_component_id	=new int[component_number+1];
-			component_id		=new int[component_number+1];		
-			direction			=new location [component_number+1];		
-			start_location		=new location [component_number+1];		
-			terminate_location	=new location [component_number+1];			
-			for(int i=0;i<component_number;i++){
-				main_component_id[i]	=bak_main_component_id[i];
-				component_id[i]			=bak_component_id[i];
-				direction[i]			=bak_direction[i];
-				start_location[i]		=bak_start_location[i];
-				terminate_location[i]	=bak_terminate_location[i];
-			}
-		}
-		main_component_id	[component_number  ]=my_main_component_id;
-		component_id		[component_number  ]=my_component_id;
-		direction			[component_number  ]=my_direction;
-		start_location		[component_number  ]=my_start_location;
-		terminate_location	[component_number++]=my_terminate_location;
+		container.add(
+			new movement_switch_information(
+					my_main_component_id,my_component_id,
+					my_direction, my_start_location,my_terminate_location));
 		
 		if(my_scale_value>scale_value)
 			scale_value=my_scale_value;
@@ -129,10 +121,11 @@ public class movement_switch_camera_modifier extends modifier_driver
 	{
 		if(super.can_start(my_current_time,ek,ci))
 			if(can_start_routine(my_current_time,ek,ci)){
-				if(component_number>0){
+				if(container.size()>0){
 					if(single_step_flag)
 						if(switch_camera_number>0){
-							set_clear_modifier_flag();
+							ek.modifier_cont[movement_modifier_container_id].set_clear_modifier_flag();
+							ek.modifier_cont[camera_modifier_container_id].set_clear_modifier_flag();
 							reset();
 							return false;
 						}
@@ -198,20 +191,26 @@ public class movement_switch_camera_modifier extends modifier_driver
 	private void process_routine(long my_current_time,engine_kernel ek,client_information ci)
 	{
 		box b;
+		location direction[]=new location[container.size()];
+		for(int i=0,ni=direction.length;i<ni;i++)
+			direction[i]=container.get(i).direction;
+		
 		if((b=caculate_box(ek.component_cont))!=null){
 			location dir=location.combine_location(direction);
-			for(int i=0,n=ek.camera_cont.camera_array.length;i<n;i++)
-				if(ek.camera_cont.camera_array[i].parameter.movement_flag)
-					(new locate_camera(ek.camera_cont.camera_array[i])).locate_on_components(
+			for(int i=0,n=ek.camera_cont.size();i<n;i++) {
+				camera cam=ek.camera_cont.get(i);
+				if(cam.parameter.movement_flag)
+					(new locate_camera(cam)).locate_on_components(
 						ek.modifier_cont[camera_modifier_container_id],b,
-						ek.camera_cont.camera_array[i].parameter.direction_flag?dir:null,
-						(ek.camera_cont.camera_array[i].parameter.scale_value<=0)?-1.0:scale_value,
+						cam.parameter.direction_flag?dir:null,
+						(cam.parameter.scale_value<=0)?-1.0:scale_value,
 						true,false,false);
+			}
 		}
 		component comp;
 		component_array comp_array=new component_array();
-		for(int i=0;i<component_number;i++)
-			if((comp=ek.component_cont.get_component(component_id[i]))!=null)
+		for(int i=0,ni=container.size();i<ni;i++)
+			if((comp=ek.component_cont.get_component(container.get(i).component_id))!=null)
 				register_visible_component(comp,comp_array,0);
 
 		ek.collector_stack.push_component_array(true,
@@ -239,27 +238,25 @@ public class movement_switch_camera_modifier extends modifier_driver
 		super.last_modify(my_current_time,ek,ci,terminated_flag);
 	}
 	public movement_switch_camera_modifier(boolean my_single_step_flag,long current_time,
-			int my_audio_component_id,int my_parameter_channel_id,int my_camera_modifier_container_id)
+			int my_audio_component_id,int my_parameter_channel_id,
+			int my_movement_modifier_container_id,int my_camera_modifier_container_id)
 	{
 		super(current_time,Long.MAX_VALUE);
+		
+		container=new ArrayList<movement_switch_information>();
 		
 		single_step_flag=my_single_step_flag;
 		switch_camera_number=0;
 
 		audio_component_id			=my_audio_component_id;
 		parameter_channel_id		=my_parameter_channel_id;
+		movement_modifier_container_id=my_movement_modifier_container_id;
 		camera_modifier_container_id=my_camera_modifier_container_id;
-		
-		main_component_id	=new int[1];
-		component_id		=new int[1];
-		direction			=new location[1];
-		start_location		=new location[1];
-		terminate_location	=new location[1];
 		
 		title_string		="";
 		information_string	="";
 		sound_file_name		=null;
-		
+
 		reset();
 	}
 }

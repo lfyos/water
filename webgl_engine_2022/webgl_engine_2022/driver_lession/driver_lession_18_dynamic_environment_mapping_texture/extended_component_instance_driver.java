@@ -1,5 +1,6 @@
 package driver_lession_18_dynamic_environment_mapping_texture;
 
+import kernel_camera.camera;
 import kernel_camera.camera_result;
 import kernel_component.component;
 import kernel_driver.component_instance_driver;
@@ -38,15 +39,16 @@ public class extended_component_instance_driver extends component_instance_drive
 		double my_box_radius=my_box.distance();
 		point global_center_point=my_box.center();
 		for(int i=0,ni=camera_id.length;i<ni;i++) {
-			component eye_comp=ek.camera_cont.camera_array[camera_id[i]].eye_component;
+			camera cam=ek.camera_cont.get(camera_id[i]);
+			component eye_comp=cam.eye_component;
 			point local_center_point=eye_comp.caculate_negative_absolute_location().multiply(global_center_point);
 			point p=local_center_point.sub(new point(0,0,my_box_radius));
 			location loca=eye_comp.move_location.multiply(location.move_rotate(p.x,p.y,p.z,0,0,0));
 			eye_comp.modify_location(loca,ek.component_cont);
 			double half_fovy_tanl=Math.tan(Math.PI/4.0);
-			ek.camera_cont.camera_array[camera_id[i]].parameter.half_fovy_tanl=half_fovy_tanl;
-			ek.camera_cont.camera_array[camera_id[i]].parameter.bak_half_fovy_tanl=half_fovy_tanl;
-			ek.camera_cont.camera_array[camera_id[i]].parameter.distance=my_box_radius;
+			cam.parameter.half_fovy_tanl=half_fovy_tanl;
+			cam.parameter.bak_half_fovy_tanl=half_fovy_tanl;
+			cam.parameter.distance=my_box_radius;
 		}
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)

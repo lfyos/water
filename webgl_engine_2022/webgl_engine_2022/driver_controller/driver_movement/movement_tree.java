@@ -119,6 +119,8 @@ public class movement_tree {
 		}	
 		if(start_time>=terminate_time)
 			return;
+		if((start_time-camera_switch_time)<=my_current_time)
+			return;
 		
 		location my_start_location=move.movement[0].start_location;
 		location my_terminate_location=move.movement[move.movement.length-1].terminate_location;
@@ -199,15 +201,18 @@ public class movement_tree {
 		if(move.movement[move_id].terminate_time<current_time) {
 			if(!start_terminate_flag)
 				return;
-			loca=move.movement[move_id].terminate_location;
 			display_flag=move.terminate_state_flag?false:true;
 			hide_flag=move.start_state_flag?false:true;
+			
+			loca=display_flag?move.movement[move_id].terminate_location:new location();
+			
 		}else if(current_time<move.movement[0].start_time) {
 			if(start_terminate_flag)
 				return;
-			loca=move.movement[0].start_location;
 			display_flag=move.start_state_flag?false:true;
 			hide_flag=move.terminate_state_flag?false:true;
+			
+			loca=display_flag?move.movement[0].start_location:new location();
 		}else{
 			loca=move.movement[move_id].terminate_location;
 			display_flag=true;

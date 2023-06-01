@@ -60,7 +60,7 @@ public class extended_component_driver extends component_driver
 		fr.close();
 		
 		debug_information.println("Begin loading movement information\t",movement_directory_name+movement_file_name);
-		camera_parameter cam_par=ek.camera_cont.camera_array[0].parameter;
+		camera_parameter cam_par=ek.camera_cont.get(0).parameter;
 		m=new movement_manager(ek,cam_par.movement_flag?cam_par.switch_time_length:0,
 				new movement_configuration_parameter(
 						ek,comp,driver_id,comp.component_charset,

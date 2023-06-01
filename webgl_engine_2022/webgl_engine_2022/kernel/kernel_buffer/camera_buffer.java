@@ -1,7 +1,8 @@
 package kernel_buffer;
 
+import java.util.ArrayList;
+
 import kernel_camera.camera;
-import kernel_camera.camera_container;
 import kernel_camera.camera_parameter;
 import kernel_camera.camera_result;
 import kernel_common_class.const_value;
@@ -50,24 +51,25 @@ public class camera_buffer
 		buffer=new camera_buffer_item_container[1];
 		buffer[0]=null;
 	}
-	public void synchronize_camera_buffer(camera my_camera_array[],int camera_id)
+	public void synchronize_camera_buffer(ArrayList<camera> my_camera_array,int camera_id)
 	{
 		if(my_camera_array==null)
 			return;
-		if((camera_id<0)||(camera_id>=my_camera_array.length))
+		if((camera_id<0)||(camera_id>=my_camera_array.size()))
 			return;
-		distance			[camera_id]=my_camera_array[camera_id].parameter.distance;
-		half_fovy_tanl		[camera_id]=my_camera_array[camera_id].parameter.half_fovy_tanl;
-		near_ratio			[camera_id]=my_camera_array[camera_id].parameter.near_ratio;
-		far_ratio			[camera_id]=my_camera_array[camera_id].parameter.far_ratio;
-		projection_type_flag[camera_id]=my_camera_array[camera_id].parameter.projection_type_flag?1:0;
+		camera cam=my_camera_array.get(camera_id);
+		distance			[camera_id]=cam.parameter.distance;
+		half_fovy_tanl		[camera_id]=cam.parameter.half_fovy_tanl;
+		near_ratio			[camera_id]=cam.parameter.near_ratio;
+		far_ratio			[camera_id]=cam.parameter.far_ratio;
+		projection_type_flag[camera_id]=cam.parameter.projection_type_flag?1:0;
 		
 		return;
 	}
 	
-	private int response_one_camera_data(client_information ci,camera_container camera_con,int current_camera_id,int n)
+	private int response_one_camera_data(client_information ci,ArrayList<camera> camera_con,int current_camera_id,int n)
 	{
-		camera_parameter par=camera_con.camera_array[current_camera_id].parameter;
+		camera_parameter par=camera_con.get(current_camera_id).parameter;
 		
 		if(Math.abs(par.distance-distance[current_camera_id])>const_value.min_value){
 			ci.request_response.print(((n++)>0)?",[":"[",current_camera_id);
@@ -107,12 +109,12 @@ public class camera_buffer
 	}
 	
 	public void response_camera_data(plane mirror_plane,camera_result cam_result,
-			client_information ci,camera_container camera_con,int current_camera_id)
+			client_information ci,ArrayList<camera> camera_con,int current_camera_id)
 	{
 		ci.request_response.print(",[");
 		ci.request_response.print("[");
 		
-		for(int i=0,number=0,ni=camera_con.camera_array.length;i<ni;i++)
+		for(int i=0,number=0,ni=camera_con.size();i<ni;i++)
 			number=response_one_camera_data(ci,camera_con,i,number);
 		
 		ci.request_response.print("],[");

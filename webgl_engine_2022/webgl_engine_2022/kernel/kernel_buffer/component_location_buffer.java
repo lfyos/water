@@ -104,11 +104,11 @@ public class component_location_buffer
 	}
 	public void response_location(engine_kernel ek,client_information ci)
 	{
-		if(ek.camera_cont.camera_array!=null)
-			for(int i=0,ni=ek.camera_cont.camera_array.length;i<ni;i++) {
+		if(ek.camera_cont!=null)
+			for(int i=0,ni=ek.camera_cont.size();i<ni;i++) {
 				component eye_component;
-				if((eye_component=ek.camera_cont.camera_array[i].eye_component)!=null)
-					if(ek.camera_cont.camera_array[i].parameter.synchronize_location_flag
+				if((eye_component=ek.camera_cont.get(i).eye_component)!=null)
+					if(ek.camera_cont.get(i).parameter.synchronize_location_flag
 						||has_not_response_relative_location_flag[eye_component.component_id])
 							put_in_list(eye_component,ek);
 			}

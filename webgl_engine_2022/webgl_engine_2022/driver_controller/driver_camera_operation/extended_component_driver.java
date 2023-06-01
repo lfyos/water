@@ -35,16 +35,15 @@ public class extended_component_driver  extends component_driver
 //		String parameter_directory_name=ek.scene_par.directory_name;
 
 		box my_box;
-		camera cam_array[];
 		int box_parameter_channel_id;
 		
 		comp.uniparameter.cacaulate_location_flag=true;
 		
-		if((cam_array=ek.camera_cont.camera_array)==null) {
-			debug_information.println("((cam_array=ek.camera_cont.camera_array)==null)");
+		if(ek.camera_cont==null) {
+			debug_information.println("(ek.camera_cont==null)");
 			return;
 		}
-		if(cam_array.length<=0) {
+		if(ek.camera_cont.size()<=0) {
 			debug_information.println("(cam_array.length<=0)");
 			return;
 		}
@@ -81,15 +80,16 @@ public class extended_component_driver  extends component_driver
 			if(fr.eof())
 				break;
 			point dz=new point(fr),dy=new point(fr),dx=dy.cross(dz);
-			if((cam_id>=0)&&(cam_id<cam_array.length)&&(dx.distance2()>const_value.min_value2)){
+			if((cam_id>=0)&&(cam_id<ek.camera_cont.size())&&(dx.distance2()>const_value.min_value2)){
 				dx=dx.expand(1.0);
 				dy=dz.cross(dx).expand(1.0);
 				dz=dz.expand(1.0);
 				location loca=new location(new point(),dx,dy,dz).multiply(location.standard_negative);
-				locate_camera loca_cam=new locate_camera(cam_array[cam_id]);
-				cam_array[cam_id].eye_component.modify_location(loca_cam.locate(my_box,loca),ek.component_cont);
-				loca_cam.scale(Math.abs(cam_array[cam_id].parameter.scale_value));
-				cam_array[cam_id].parameter.distance=loca_cam.distance;
+				camera cam=ek.camera_cont.get(cam_id);
+				locate_camera loca_cam=new locate_camera(cam);
+				cam.eye_component.modify_location(loca_cam.locate(my_box,loca),ek.component_cont);
+				loca_cam.scale(Math.abs(cam.parameter.scale_value));
+				cam.parameter.distance=loca_cam.distance;
 			}
 		}while(true);
 		

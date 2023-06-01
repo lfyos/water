@@ -118,7 +118,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			if(ci.display_camera_result!=null)
 				if(ci.display_camera_result.target!=null)
 					ci.render_buffer.cam_buffer.synchronize_camera_buffer(
-						ek.camera_cont.camera_array,ci.display_camera_result.target.camera_id);
+						ek.camera_cont,ci.display_camera_result.target.camera_id);
 	}
 	private void reset_component_location(component comp,long start_time,engine_kernel ek,client_information ci)
 	{

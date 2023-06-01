@@ -1336,7 +1336,7 @@ public class movement_function_switch
 						break;
 		manager.parameter.current_movement_id=t.movement_tree_id;
 		
-		modifier_cont.clear_modifier(ek,ci);
+		modifier_cont.process(ek,ci,true);
 		update_component_location(ek.component_cont.root_component);
 
 		component location_comp;
@@ -1374,7 +1374,7 @@ public class movement_function_switch
 			return null;
 		if(manager.root_movement==null)
 			return null;
-		if(ek.camera_cont.camera_array==null)
+		if(ek.camera_cont==null)
 			return null;
 		if((str=ci.request_response.get_parameter("move_method"))==null)
 			return null;

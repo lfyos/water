@@ -118,11 +118,17 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 		comp.modify_display_flag(clear_parameter_channel_id,!start_state_flag,ek.component_cont);
 		comp.modify_display_flag(set_parameter_channel_id,!terminate_state_flag,ek.component_cont);
 		
+		if(terminate_state_flag)
+			comp.modify_location(new location(), ek.component_cont);
+		
 		if(follow_component_id!=null)
 			for(int i=0,ni=follow_component_id.length;i<ni;i++)
 				if((comp=ek.component_cont.get_component(follow_component_id[i]))!=null) {
 					comp.modify_display_flag(clear_parameter_channel_id,!start_state_flag,ek.component_cont);
 					comp.modify_display_flag(set_parameter_channel_id,!terminate_state_flag,ek.component_cont);
+					
+					if(terminate_state_flag)
+						comp.modify_location(new location(),ek.component_cont);
 				}
 	}
 }
