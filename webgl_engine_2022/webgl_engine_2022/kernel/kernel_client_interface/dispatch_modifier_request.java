@@ -33,7 +33,7 @@ public class dispatch_modifier_request
 		switch(str){
 		case "clear":
 			ci.statistics_client.register_system_call_execute_number(main_call_id,0);
-			ek.modifier_cont[modifier_id].clear_modifier(ek,ci);
+			ek.modifier_cont[modifier_id].process(ek,ci,true);
 			return null;
 		case "set_time":
 			ci.statistics_client.register_system_call_execute_number(main_call_id,1);

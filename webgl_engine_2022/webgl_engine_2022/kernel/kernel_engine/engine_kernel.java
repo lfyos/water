@@ -4,7 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
-import kernel_camera.camera_container;
+import kernel_camera.camera;
+import kernel_camera.camera_container_creator;
 import kernel_common_class.change_name;
 import kernel_common_class.nanosecond_timer;
 import kernel_component.component;
@@ -37,7 +38,7 @@ public class engine_kernel
 	public render_container 				render_cont;
 	public part_container_for_part_search	part_cont;
 	public component_container			 	component_cont;
-	public camera_container 				camera_cont;
+	public ArrayList<camera> 				camera_cont;
 	public component_collector_stack		collector_stack;
 	
 	public part_process_sequence			process_part_sequence;
@@ -79,7 +80,9 @@ public class engine_kernel
 			collector_stack=null;
 		}
 		if(camera_cont!=null) {
-			camera_cont.destroy();
+			for(int i=0,ni=camera_cont.size();i<ni;i++)
+				camera_cont.get(i).destroy();
+			camera_cont.clear();
 			camera_cont=null;
 		}
 		if(part_cont!=null) {
@@ -168,7 +171,8 @@ public class engine_kernel
 			debug_information.println("Opening camera file fail:"+scene_par.directory_name+scene_par.camera_file_name);
 			debug_information.println("Opening camera file fail:"+camera_file_name);	
 		}else
-			camera_cont=new camera_container(f_camera,component_cont,scene_par.max_camera_return_stack_number);
+			camera_cont=camera_container_creator.load_camera_container(
+					f_camera,component_cont,scene_par.max_camera_return_stack_number);
 		f_camera.close();
 	}
 	private void mount_top_box_part(component comp,

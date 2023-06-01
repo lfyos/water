@@ -69,6 +69,7 @@ public class movement_manager
 			movement_switch_camera_modifier swcm=new movement_switch_camera_modifier(
 					single_step_flag,movement_modifier_cont.get_timer().get_current_time(),
 					audio_component_id,move_channel_id.display_parameter_channel_id[0],
+					config_parameter.movement_modifier_container_id,
 					config_parameter.camera_modifier_container_id);
 			root_movement.register_modifier(suspend,move_channel_id,location_component_id,
 					component_cont,parameter,movement_modifier_cont,swcm,directory_name,

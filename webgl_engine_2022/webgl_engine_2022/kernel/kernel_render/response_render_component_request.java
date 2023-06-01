@@ -95,9 +95,9 @@ public class response_render_component_request
 		}
 		for(int i=0,ni=target_array.length;i<ni;i++)
 			if((t=target_array[i]).camera_id>=0)
-				if(t.camera_id<ek.camera_cont.camera_array.length)
+				if(t.camera_id<ek.camera_cont.size())
 					ci.target_camera_result_array[t.target_id]=new camera_result(
-							ek.camera_cont.camera_array[t.camera_id],t,ek.component_cont);
+							ek.camera_cont.get(t.camera_id),t,ek.component_cont);
 
 		for(int i=0,ni=target_array.length;i<ni;i++)
 			if((t=target_array[i]).selection_target_flag)

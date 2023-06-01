@@ -216,7 +216,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		if((str=ci.request_response.get_parameter("half_fovy_tanl"))!=null)
 			ci.display_camera_result.cam.parameter.half_fovy_tanl=Double.parseDouble(str);
 		ci.render_buffer.cam_buffer.synchronize_camera_buffer(
-				ek.camera_cont.camera_array,ci.display_camera_result.target.camera_id);
+				ek.camera_cont,ci.display_camera_result.target.camera_id);
 		return;
 	}
 	public String[] response_component_event(engine_kernel ek,client_information ci)

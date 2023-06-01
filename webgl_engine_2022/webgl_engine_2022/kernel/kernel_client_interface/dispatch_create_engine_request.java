@@ -147,9 +147,9 @@ public class dispatch_create_engine_request
 		ci.request_response.print(",",ek.render_cont.renders.size());	//parameter	4	1
 		ci.request_response.print(",",ek.modifier_cont.length);			//parameter	4	2
 		ci.request_response.print(",[");								//parameter	4	3
-			if(ek.camera_cont.camera_array!=null)
-				for(int i=0,n=ek.camera_cont.camera_array.length;i<n;i++){
-					component eye_comp=ek.camera_cont.camera_array[i].eye_component;
+			if(ek.camera_cont!=null)
+				for(int i=0,n=ek.camera_cont.size();i<n;i++){
+					component eye_comp=ek.camera_cont.get(i).eye_component;
 					ci.request_response.print((i<=0)?"":",",(eye_comp==null)?-1:eye_comp.component_id);
 				}
 		ci.request_response.print("]");

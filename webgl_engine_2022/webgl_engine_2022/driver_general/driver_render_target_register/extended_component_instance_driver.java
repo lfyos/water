@@ -149,7 +149,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				target_parameter[target_id].camera_id++;
 			else if((target_parameter[target_id].camera_id=Integer.decode(str))<0)
 				target_parameter[target_id].camera_id=0;
-			target_parameter[target_id].camera_id%=ek.camera_cont.camera_array.length;
+			target_parameter[target_id].camera_id%=ek.camera_cont.size();
 			return null;
 		case "set_clear_color":
 			if((str=ci.request_response.get_parameter("viewport"))==null)

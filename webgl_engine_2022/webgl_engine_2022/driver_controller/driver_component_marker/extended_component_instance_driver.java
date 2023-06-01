@@ -175,7 +175,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				new component_selection(ek).switch_selected_flag(operate_comp,ek.component_cont);
 				break;
 			case "locate":
-				new locate_camera(ek.camera_cont.camera_array[ci.display_camera_result.target.camera_id]).
+				new locate_camera(ek.camera_cont.get(ci.display_camera_result.target.camera_id)).
 						locate_on_components(ek.modifier_cont[modifier_container_id],
 							new box(operate_comp.absolute_location.multiply(
 									operate_cm.marker_x,operate_cm.marker_y,operate_cm.marker_z)),

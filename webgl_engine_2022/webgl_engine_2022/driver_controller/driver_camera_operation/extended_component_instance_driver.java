@@ -335,17 +335,17 @@ public class extended_component_instance_driver extends component_instance_drive
 				ci.display_camera_result.cam.parameter.projection_type_flag=(str.compareTo("frustum")==0)?true:false;
 			return null;
 		case "view_move":
-			ek.modifier_cont[modifier_container_id].clear_modifier(ek, ci);
+			ek.modifier_cont[modifier_container_id].process(ek, ci,true);
 			if((str=ci.request_response.get_parameter("value"))!=null)
 				ci.display_camera_result.cam.parameter.movement_flag=(str.compareTo("true")==0)?true:false;
 			return null;
 		case "view_direct":
-			ek.modifier_cont[modifier_container_id].clear_modifier(ek, ci);
+			ek.modifier_cont[modifier_container_id].process(ek, ci,true);
 			if((str=ci.request_response.get_parameter("value"))!=null)
 				ci.display_camera_result.cam.parameter.direction_flag=(str.compareTo("true")==0)?true:false;
 			return null;
 		case "view_scale":
-			ek.modifier_cont[modifier_container_id].clear_modifier(ek, ci);
+			ek.modifier_cont[modifier_container_id].process(ek, ci,true);
 			if((str=ci.request_response.get_parameter("value"))!=null){
 				scale_value=Math.abs(ci.display_camera_result.cam.parameter.scale_value);
 				scale_value=(str.compareTo("true")==0)?scale_value:(-scale_value);
@@ -357,7 +357,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			if(ek.component_cont.root_component==null)
 				return null;
 
-			ek.modifier_cont[modifier_container_id].clear_modifier(ek, ci);
+			ek.modifier_cont[modifier_container_id].process(ek, ci,true);
 			if((str=ci.request_response.get_parameter("value"))==null)
 				return null;
 			boolean new_change_type_flag=(str.compareTo("true")==0)?true:false;
