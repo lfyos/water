@@ -20,8 +20,6 @@ import kernel_render.render_container;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
 import kernel_part.part;
 import kernel_part.part_container_for_part_search;
-import kernel_part.part_container;
-import kernel_part.part_container_for_delete_part_file;
 import kernel_driver.component_driver;
 import kernel_part.part_loader_container;
 import kernel_common_class.debug_information;
@@ -211,14 +209,14 @@ public class engine_kernel
 	
 	private void load_create_assemble_part(component_load_source_container component_load_source_cont,
 			client_request_response request_response,boolean not_real_scene_fast_load_flag,
-			part_container part_cont_for_delete_file,part_container_for_part_search all_part_part_cont,
+			ArrayList<part> part_list_for_delete_file,part_container_for_part_search all_part_part_cont,
 			buffer_object_file_modify_time_and_length_container boftal_container)
 	{	
 		if(create_parameter.create_top_part_expand_ratio>=1.0)
 			if(create_parameter.create_top_part_left_ratio>=1.0)
 				if(component_cont.root_component!=null){
 					ArrayList<part> top_box_part=(new create_assemble_part(
-							not_real_scene_fast_load_flag,part_cont_for_delete_file,
+							not_real_scene_fast_load_flag,part_list_for_delete_file,
 							request_response,component_cont.root_component,
 							create_parameter.create_top_part_expand_ratio,
 							create_parameter.create_top_part_left_ratio,
@@ -239,9 +237,9 @@ public class engine_kernel
 	{
 		long start_time=new Date().getTime(),current_time;
 		String boftal_file_name=scene_par.scene_proxy_directory_name+"engine.boftal";
-		buffer_object_file_modify_time_and_length_container boftal_container=
-			new buffer_object_file_modify_time_and_length_container(
-					process_bar,boftal_file_name,system_par.local_data_charset);
+		buffer_object_file_modify_time_and_length_container boftal_container;
+		boftal_container=new buffer_object_file_modify_time_and_length_container(
+				process_bar,boftal_file_name,system_par.local_data_charset);
 		debug_information.println("Load engine.boftal time length	:	",new Date().getTime()-start_time);
 		debug_information.println();
 		
@@ -258,9 +256,6 @@ public class engine_kernel
 			if(scene_par.scene_last_modified_time<scene_f.lastModified_time)
 				scene_par.scene_last_modified_time=scene_f.lastModified_time;
 		}
-		
-		part_container_for_delete_part_file part_cont_for_delete_file;
-		part_cont_for_delete_file=new part_container_for_delete_part_file();
 
 		render_cont=new render_container(render_cont,request_response,system_par,scene_par);
 		part_cont=new part_container_for_part_search(render_cont.part_array_list(true,-1));
@@ -279,9 +274,11 @@ public class engine_kernel
 		debug_information.println("Load shaders time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		
+		ArrayList<part> part_list_for_delete_file=new ArrayList<part>();
+		
 		start_time=current_time;
 		render_cont.load_part(not_real_scene_fast_load_flag,(1<<1)+(1<<2),1,part_loader_cont,
-			system_par,scene_par,part_cont,boftal_container,"load_first_class_part",process_bar,part_cont_for_delete_file);
+			system_par,scene_par,part_cont,boftal_container,"load_first_class_part",process_bar,part_list_for_delete_file);
 		debug_information.println("Load first class part time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		
@@ -289,7 +286,7 @@ public class engine_kernel
 		render_cont.create_bottom_box_part(part_cont,request_response,system_par,scene_par);
 		part_cont.execute_append();
 		render_cont.load_part(not_real_scene_fast_load_flag,(1<<1)+(1<<2),2,part_loader_cont,
-			system_par,scene_par,part_cont,boftal_container,"load_second_class_part",process_bar,part_cont_for_delete_file);
+			system_par,scene_par,part_cont,boftal_container,"load_second_class_part",process_bar,part_list_for_delete_file);
 		debug_information.println("Load second class part time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
@@ -335,11 +332,11 @@ public class engine_kernel
 		
 		start_time=new Date().getTime();
 		load_create_assemble_part(component_load_source_cont,request_response,
-				not_real_scene_fast_load_flag,part_cont_for_delete_file,part_cont,boftal_container);	
+				not_real_scene_fast_load_flag,part_list_for_delete_file,part_cont,boftal_container);	
 		part_cont.execute_append();
 		render_cont.load_part(not_real_scene_fast_load_flag,
 				(1<<2),4,part_loader_cont,system_par,scene_par,part_cont,
-				boftal_container,"load_third_class_part",process_bar,part_cont_for_delete_file);
+				boftal_container,"load_third_class_part",process_bar,part_list_for_delete_file);
 		debug_information.println("Create top assemble time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		start_time=current_time;
@@ -383,7 +380,7 @@ public class engine_kernel
 		
 		part_lru=new part_lru_manager(render_cont.renders,scene_par.part_lru_in_list_number);
 		
-		part_cont_for_delete_file.delete_part_file(process_bar,system_par, scene_par);
+		delete_part_files.do_delete(part_list_for_delete_file,process_bar,system_par, scene_par);
 		
 		process_bar.set_process_bar(true,"load_termination", "",1, 1);
 

@@ -7,6 +7,7 @@ function(component_name,component_id,render)
 			var tag_ep=render.get_component_processor("distance_tag_component");
 			var ep=render.component_event_processor[component_id];
 			var function_id=Math.floor((1.0-ep.y)*14.0);
+
 			switch(function_id){
 			case 0:
 				render.call_server_component(tag_ep.component_id,"all",

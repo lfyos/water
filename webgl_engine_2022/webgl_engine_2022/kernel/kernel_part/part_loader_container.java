@@ -1,6 +1,7 @@
 package kernel_part;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
 import kernel_common_class.debug_information;
@@ -222,8 +223,9 @@ public class part_loader_container
 
 		return true;
 	}
-	public void load_part_mesh_head_only(part my_part,
-			part_container_for_part_search my_pcps,system_parameter my_system_par,scene_parameter my_scene_par)
+	public void load_part_mesh_head_only(
+			part my_part,part_container_for_part_search my_pcps,
+			system_parameter my_system_par,scene_parameter my_scene_par)
 	{
 		if(my_part.is_normal_part()){
 			exclusive_file_mutex efm=null;
@@ -243,7 +245,7 @@ public class part_loader_container
 	
 	public part_loader[] load(part my_part,part my_copy_from_part,
 			boolean not_real_scene_fast_load_flag,long last_modified_time,
-			system_parameter system_par,scene_parameter scene_par,part_container part_cont_for_delete_file,
+			system_parameter system_par,scene_parameter scene_par,ArrayList<part> part_list_for_delete_file,
 			part_loader already_loaded_part[],part_container_for_part_search pcps,
 			buffer_object_file_modify_time_and_length_container boftal_container)
 	{
@@ -275,7 +277,7 @@ public class part_loader_container
 		
 		efm.unlock();
 		
-		part_cont_for_delete_file.add_part(my_part);
+		part_list_for_delete_file.add(my_part);
 		
 		return ret_val;
 	}

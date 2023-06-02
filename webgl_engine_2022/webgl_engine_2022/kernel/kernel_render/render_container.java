@@ -7,7 +7,6 @@ import kernel_part.part;
 import kernel_part.part_rude;
 import kernel_part.part_loader;
 import kernel_transformation.box;
-import kernel_part.part_container;
 import kernel_part.part_parameter;
 import kernel_engine.part_package;
 import kernel_engine.scene_parameter;
@@ -116,7 +115,7 @@ public class render_container
 			int part_type,int part_flag,part_loader_container part_loader_cont,
 			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
 			buffer_object_file_modify_time_and_length_container boftal_container,
-			String process_bar_title,client_process_bar process_bar,part_container part_cont_for_delete_file)
+			String process_bar_title,client_process_bar process_bar,ArrayList<part> part_list_for_delete_file)
 	{
 		if(renders==null)
 			return;
@@ -166,7 +165,7 @@ public class render_container
 							
 							already_loaded_part=part_loader_cont.load(
 									p,get_copy_from_part(p),not_real_scene_fast_load_flag,-1,system_par,scene_par,
-									part_cont_for_delete_file,already_loaded_part,pcps,boftal_container);
+									part_list_for_delete_file,already_loaded_part,pcps,boftal_container);
 							
 							if(process_bar!=null)
 								process_bar.set_process_bar(false,
@@ -350,7 +349,7 @@ public class render_container
 			f.setLastModified(last_modify_time);
 		
 		file_reader f_shader=new file_reader(shader_file_name,shader_file_charset);
-		if(f_shader.error_flag()) {
+		if(f_shader.error_flag()){
 			debug_information.println();
 			debug_information.println("shader configure file error,file name is ",shader_file_name);
 			f_shader.close();
@@ -373,7 +372,7 @@ public class render_container
 			String render_list_file_name[]=ren.driver.get_render_list(
 					part_type_id,f_shader,load_sub_directory_name,
 					component_load_source_cont,system_par,scene_par,request_response);
-			if(render_list_file_name==null) {
+			if(render_list_file_name==null){
 				debug_information.print  ("render list file is NULL	",	driver_name);
 				continue;
 			}
@@ -399,7 +398,6 @@ public class render_container
 				f_shader.directory_name+f_shader.file_name,
 				part_type_id,system_par,scene_par,ren,request_response);
 		}
-		
 		debug_information.println();
 		debug_information.println("End shader and part initialization");
 			

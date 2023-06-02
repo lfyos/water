@@ -1,11 +1,13 @@
 package kernel_engine;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import kernel_common_class.jason_string;
 import kernel_common_class.compress_file_data;
 import kernel_common_class.debug_information;
 import kernel_component.component;
+import kernel_component.component_initialization;
 import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
@@ -66,9 +68,8 @@ public class engine_initialization
 		public long last_time;
 		public void operate_file(String file_name)
 		{
-			long my_last_time=new File(file_name).lastModified();
-			if(last_time<my_last_time)
-				last_time=my_last_time;
+			long my_last_time;
+			last_time=(last_time<(my_last_time=new File(file_name).lastModified()))?my_last_time:last_time;
 		}
 		public file_last_time(String file_name)
 		{
@@ -76,57 +77,21 @@ public class engine_initialization
 			do_travel(file_name,false);
 		}
 	}
-	
-	
-	private component sort_component_array[];
-	
-	public engine_initialization(boolean not_real_scene_fast_load_flag,long program_last_time,
-			engine_kernel ek,client_request_response request_response,client_process_bar process_bar)
-	{
-		if((sort_component_array=ek.component_cont.get_sort_component_array())==null)
-			sort_component_array=new component[] {};
-		
-		debug_information.println();
-		debug_information.println("Begin initialize_render_driver");
-		render_driver_initialize(ek,request_response,process_bar);
-		debug_information.println("End initialize_render_driver");		
-		
-		debug_information.println();
-		debug_information.println("Begin initialize_part_driver");
-		part_driver_initialize(ek,request_response,process_bar);
-		debug_information.println("End initialize_part_driver");
-		
-		debug_information.println();
-		debug_information.println("Begin initialize_component_driver");
-		initialize_component_driver(ek,request_response,process_bar);
-		debug_information.println("End initialize_component_driver");
-		
-		debug_information.println();
-		debug_information.println("Begin create initialization file");
-		if(not_real_scene_fast_load_flag)
-			file_initialize(program_last_time,ek,process_bar);
-		debug_information.println("End create initialization file");
-		
-		for(int i=0,ni=sort_component_array.length;i<ni;i++)
-			if(sort_component_array[i].initialization!=null) {
-				sort_component_array[i].initialization.destroy();
-				sort_component_array[i].initialization=null;
-			};
-	}
+
 	private void render_driver_initialize(engine_kernel ek,
 			client_request_response request_response,client_process_bar process_bar)
 	{
+		render r;
 		int render_number=ek.render_cont.renders.size();
 		process_bar.set_process_bar(true,"render_driver_initialization","", 0, render_number);
 		
 		for(int render_id=0;render_id<render_number;render_id++){
 			process_bar.set_process_bar(false,"render_driver_initialization","", render_id, render_number);
-			render r;
 			if((r=ek.render_cont.renders.get(render_id))==null)
 				continue;
 			if(r.driver==null)
 				continue;
-			try {
+			try{
 				r.driver.initialize_render_driver(render_id,ek,request_response);
 			}catch(Exception e){
 				debug_information.println("Render driver initialize_part_driver fail:	",e.toString());
@@ -170,7 +135,7 @@ public class engine_initialization
 		
 		process_bar.set_process_bar(false,"part_driver_initialization","", number, number);
 	}
-	private void initialize_component_driver(engine_kernel ek,
+	private void initialize_component_driver(component sort_component_array[],engine_kernel ek,
 			client_request_response request_response,client_process_bar process_bar)
 	{
 		int number=sort_component_array.length;
@@ -180,7 +145,7 @@ public class engine_initialization
 					sort_component_array[i].component_name,i, number);
 			for(int j=0,driver_number=sort_component_array[i].driver_number();j<driver_number;j++) {
 				component_driver cd=sort_component_array[i].driver_array.get(j);
-				try {
+				try{
 					cd.initialize_component_driver(sort_component_array[i],j,ek,request_response);
 				}catch(Exception e) {
 					debug_information.println("Component driver initialize fail:	",e.toString());
@@ -195,38 +160,48 @@ public class engine_initialization
 		process_bar.set_process_bar(false,"component_driver_initialization","",number,number);
 	}
 	
-	private void file_initialize(long program_last_time,engine_kernel ek,client_process_bar process_bar)
+	private ArrayList<component> file_initialize(long program_last_time,
+			component sort_component_array[],engine_kernel ek,client_process_bar process_bar)
 	{
+		component_initialization pi;
 		long last_time=program_last_time;
 		String destination_file_name=ek.scene_par.scene_proxy_directory_name+"initialization.gzip_text";
+
+		ArrayList<component> init_comp=new ArrayList<component>();
+		for(int i=0,ni=sort_component_array.length;i<ni;i++) {
+			if((pi=sort_component_array[i].initialization)==null)
+				continue;
+			if(pi.initialization_program!=null)
+				if(pi.initialization_program_charset!=null)
+					if(pi.initialization_program.length>0)
+						if(pi.initialization_program_charset.length>0) {
+							init_comp.add(sort_component_array[i]);
+							continue;
+						}
+			pi.destroy();
+			sort_component_array[i].initialization=null;
+		}
 		
-		int collect_init_comp_number=0;
-		component init_comp[]=new component[sort_component_array.length];
-		for(int i=0,ni=sort_component_array.length;i<ni;i++)
-			if(sort_component_array[i].initialization.initialization_program!=null)
-				if(sort_component_array[i].initialization.initialization_program_charset!=null)
-					if(sort_component_array[i].initialization.initialization_program.length>0)
-						if(sort_component_array[i].initialization.initialization_program_charset.length>0)
-							init_comp[collect_init_comp_number++]=sort_component_array[i];
-		
+		int collect_init_comp_number=init_comp.size();
 		String initialization_program_file_name[][]=new String[collect_init_comp_number][];
 		
 		process_bar.set_process_bar(true,"file_initialization_0","",0, collect_init_comp_number);
-		for(int i=0,ni=collect_init_comp_number;i<ni;i++){
-			process_bar.set_process_bar(false,"file_initialization_0",
-					init_comp[i].component_name,i, collect_init_comp_number);
-			int init_length=init_comp[i].initialization.initialization_program.length;
+		for(int i=0;i<collect_init_comp_number;i++){
+			component comp=init_comp.get(i);
+			process_bar.set_process_bar(false,"file_initialization_0",comp.component_name,i, collect_init_comp_number);
+			
+			int init_length=comp.initialization.initialization_program.length;
 			initialization_program_file_name[i]=new String[init_length];
 			for(int j=0,nj=initialization_program_file_name[i].length;j<nj;j++){
 				initialization_program_file_name[i][j]=null;
-				if(init_comp[i].initialization.initialization_program_charset[j]==null){
-					if(last_time<init_comp[i].uniparameter.file_last_modified_time)
-						last_time=init_comp[i].uniparameter.file_last_modified_time;
+				if(comp.initialization.initialization_program_charset[j]==null){
+					if(last_time<comp.uniparameter.file_last_modified_time)
+						last_time=comp.uniparameter.file_last_modified_time;
 					continue;
 				}
 				File f;
-				String file_name=init_comp[i].initialization.initialization_program[j];
-				initialization_program_file_name[i][j]=init_comp[i].component_directory_name+file_name;
+				String file_name=comp.initialization.initialization_program[j];
+				initialization_program_file_name[i][j]=comp.component_directory_name+file_name;
 				if(!(f=new File(initialization_program_file_name[i][j])).exists()){
 					initialization_program_file_name[i][j]=ek.create_parameter.scene_directory_name+file_name;
 					if(!(f=new File(initialization_program_file_name[i][j])).exists()) {
@@ -238,9 +213,9 @@ public class engine_initialization
 								if(!(f=new File(initialization_program_file_name[i][j])).exists()){
 									initialization_program_file_name[i][j]=null;
 									debug_information.print  (
-											"Not exist component init function,component name:	",init_comp[i].component_name);
+											"Not exist component init function,component name:	",comp.component_name);
 									debug_information.println(
-											"	file_name:	",init_comp[i].initialization.initialization_program[j]);
+											"	file_name:	",comp.initialization.initialization_program[j]);
 									continue;
 								}
 							}
@@ -252,11 +227,11 @@ public class engine_initialization
 					last_time=flt.last_time;
 			}
 		}
-		process_bar.set_process_bar(false,"file_initialization_0","",
-				collect_init_comp_number, collect_init_comp_number);
+		
+		process_bar.set_process_bar(false,"file_initialization_0","",collect_init_comp_number,collect_init_comp_number);
 		
 		if((new File(destination_file_name)).lastModified()>last_time)
-			return;
+			return init_comp;
 		
 		int number=sort_component_array.length;
 		process_bar.set_process_bar(true,"file_initialization_1","",0, number);
@@ -319,19 +294,18 @@ public class engine_initialization
 		output_component_program ocp=new output_component_program(fw);
 		
 		for(int i=0,ni=collect_init_comp_number;i<ni;i++){
-			process_bar.set_process_bar(false,"file_initialization_3",
-					init_comp[i].component_name,i,collect_init_comp_number);
-			for(int j=0,nj=initialization_program_file_name[i].length;j<nj;j++) {
+			component comp=init_comp.get(i);
+			process_bar.set_process_bar(false,"file_initialization_3",comp.component_name,i,collect_init_comp_number);
+			for(int j=0,nj=initialization_program_file_name[i].length;j<nj;j++){
 				String my_program_charset;
-				if((my_program_charset=init_comp[i].initialization.initialization_program_charset[j])==null)
-					ocp.output(init_comp[i],init_comp[i].initialization.initialization_program[j]);
+				if((my_program_charset=comp.initialization.initialization_program_charset[j])==null)
+					ocp.output(comp,comp.initialization.initialization_program[j]);
 				else if(initialization_program_file_name[i][j]!=null)
-						new output_all_component_program(init_comp[i],
+						new output_all_component_program(comp,
 								initialization_program_file_name[i][j],my_program_charset,ocp);
 			}
 		}
-		process_bar.set_process_bar(false,"file_initialization_3","",
-				collect_init_comp_number,collect_init_comp_number);
+		process_bar.set_process_bar(false,"file_initialization_3","",collect_init_comp_number,collect_init_comp_number);
 		
 		fw.println();
 		fw.println("],");
@@ -362,6 +336,46 @@ public class engine_initialization
 			ek.system_par.response_block_size,"gzip");
 		file_writer.file_delete(tmp_file_name);
 
-		return;
+		return init_comp;
+	}
+	public engine_initialization(boolean not_real_scene_fast_load_flag,long program_last_time,
+			engine_kernel ek,client_request_response request_response,client_process_bar process_bar)
+	{
+		component sort_component_array[];
+		if((sort_component_array=ek.component_cont.get_sort_component_array())==null)
+			sort_component_array=new component[] {};
+		
+		debug_information.println();
+		debug_information.println("Begin initialize_render_driver");
+		render_driver_initialize(ek,request_response,process_bar);
+		debug_information.println("End initialize_render_driver");		
+		
+		debug_information.println();
+		debug_information.println("Begin initialize_part_driver");
+		part_driver_initialize(ek,request_response,process_bar);
+		debug_information.println("End initialize_part_driver");
+		
+		debug_information.println();
+		debug_information.println("Begin initialize_component_driver");
+		initialize_component_driver(sort_component_array,ek,request_response,process_bar);
+		debug_information.println("End initialize_component_driver");
+		
+		debug_information.println();
+		debug_information.println("Begin create initialization file");
+		if(not_real_scene_fast_load_flag) {
+			ArrayList<component> init_comp=file_initialize(
+					program_last_time,sort_component_array,ek,process_bar);
+			for(int i=0,ni=init_comp.size();i<ni;i++) {
+				component comp=init_comp.get(i);
+				comp.initialization.destroy();
+				comp.initialization=null;
+			}
+		}else
+			for(int i=0,ni=sort_component_array.length;i<ni;i++)
+				if(sort_component_array[i].initialization!=null) {
+					sort_component_array[i].initialization.destroy();
+					sort_component_array[i].initialization=null;
+				}
+		debug_information.println("End create initialization file");
 	}
 }

@@ -9,19 +9,19 @@ public class engine_kernel_create_parameter
 {
 	public boolean success_load_parameter_flag;
 	
-	public double create_top_part_expand_ratio;
-	public double create_top_part_left_ratio;
-	public String link_name;
-	public String scene_name;
-	public String scene_title;
-	public String scene_directory_name;
-	public String scene_file_name;
-	public String scene_charset;
-	public long   scene_list_file_last_modified_time;
-	public String parameter_file_name;
-	public String parameter_charset;
-	public String extra_parameter_file_name;
-	public String extra_parameter_charset;
+	public double	create_top_part_expand_ratio;
+	public double	create_top_part_left_ratio;
+	public String	link_name;
+	public String	scene_name;
+	public String	scene_title;
+	public String	scene_directory_name;
+	public String	scene_file_name;
+	public String	scene_charset;
+	public long		scene_list_file_last_modified_time;
+	public String	parameter_file_name;
+	public String	parameter_charset;
+	public String	extra_parameter_file_name;
+	public String	extra_parameter_charset;
 	
 	public engine_kernel_create_parameter(String test_scenename,String my_link_name,
 			String client_scene_file_name,String client_scene_file_charset,system_parameter system_par)
