@@ -27,7 +27,7 @@ var lfy_render;
 	out.print  ("part_type=\""			+(((str=request.getParameter("part_type"		 ))==null)?""			:str)+"\",");
 	out.print  ("sub_directory=\""		+(((str=request.getParameter("sub_directory"	 ))==null)?""			:str)+"\",");
 	out.print  ("coordinate=\""			+(((str=request.getParameter("coordinate"		 ))==null)?"xyz"		:str)+"\",");
-	out.print  ("max_loading_number=\""	+(((str=request.getParameter("max_loading_number"))==null)?"5"			:str)+"\";");
+	out.print  ("max_loading_number=\""	+(((str=request.getParameter("max_loading_number"))==null)?"15"			:str)+"\";");
 }
 %>
 

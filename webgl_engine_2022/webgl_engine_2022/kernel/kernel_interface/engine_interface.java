@@ -15,7 +15,7 @@ import kernel_network.client_request_response;
 import kernel_part.part;
 import kernel_part.part_loader_container;
 import kernel_part.part_container_for_part_search;
-import kernel_part.part_container_for_delete_part_file;
+import kernel_engine.delete_part_files;
 import kernel_render.render_container;
 
 public class engine_interface
@@ -60,7 +60,7 @@ public class engine_interface
 	private void load_render_container(client_request_response request_response,system_parameter system_par)
 	{
 		int part_type_id=0;
-		part_container_for_delete_part_file part_cont_for_delete_file=new part_container_for_delete_part_file();
+		ArrayList<part> part_list_for_delete_file=new ArrayList<part>();//part_container_for_delete_part_file();
 		original_render=new render_container();
 		part_container_for_part_search pcps=new part_container_for_part_search(new ArrayList<part>());
 		original_render.load_shader(true,
@@ -69,19 +69,19 @@ public class engine_interface
 			system_par.local_data_charset,"",part_type_id,system_par,null,request_response);
 		pcps.execute_append();
 		original_render.load_part(true,1<<part_type_id,1,part_loader_cont,
-				system_par,null,pcps,null,null,null,part_cont_for_delete_file);
+				system_par,null,pcps,null,null,null,part_list_for_delete_file);
 		
 		original_render.create_bottom_box_part(pcps,request_response,system_par,null);
 		pcps.execute_append();
 		original_render.load_part(true,1<<part_type_id,2,part_loader_cont,
-				system_par,null,pcps,null,null,null,part_cont_for_delete_file);
+				system_par,null,pcps,null,null,null,part_list_for_delete_file);
 		
 		debug_information.println("Begin create system_part_package");
 		original_render.system_part_package=new part_package(
 				true,null,null,original_render,part_type_id,system_par,null);
 		debug_information.println("End create system_part_package");
 		
-		part_cont_for_delete_file.delete_part_file(null,system_par,null);
+		delete_part_files.do_delete(part_list_for_delete_file,null,system_par,null);
 	}
 	private engine_kernel_container get_kernel_container_routine(
 			client_request_response request_response,

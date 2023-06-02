@@ -100,13 +100,16 @@ function (	method_id,				parameter_channel_id,	render_id,		part_id,			render_buf
 		gl.uniform4fv(shader_program.par,	new Float32Array([Math.PI*alf,height,0.0,1.0]));
 		gl.uniform4fv(shader_program.ex_par,new Float32Array([amplitude,wavelength,attenuation,1.0]));
 
-		if(mirror_id>=0){
-			gl.activeTexture	(gl.TEXTURE2);
-			gl.bindTexture		(gl.TEXTURE_2D,							render.target[mirror_id].texture[0]);
-			gl.bindSampler		(2,shader_program.sampler);
-			gl.uniform1i		(shader_program.mirror_texture,			2);
-			gl.uniformMatrix4fv	(shader_program.mirror_project_matrix,	false,render.target[mirror_id].project_matrix.matrix);
-		}
+		if((mirror_id<0)&&(mirror_id>=render.target.length))
+			continue;
+		if(typeof(render.target[mirror_id])=="undefined")
+			continue;
+		gl.activeTexture	(gl.TEXTURE2);
+		gl.bindTexture		(gl.TEXTURE_2D,							render.target[mirror_id].texture[0]);
+		gl.bindSampler		(2,shader_program.sampler);
+		gl.uniform1i		(shader_program.mirror_texture,			2);
+		gl.uniformMatrix4fv	(shader_program.mirror_project_matrix,	false,render.target[mirror_id].project_matrix.matrix);
+		
 		for(var j=0,nj=part_buffer_object.region_data.length;j<nj;j++){
 			var p=part_buffer_object.region_data[j];
 			gl.bindVertexArray(p.vertex_array_object[0]);

@@ -16,7 +16,6 @@ import kernel_part.part_container_for_part_search;
 import kernel_transformation.box;
 import kernel_transformation.point;
 import kernel_network.client_request_response;
-import kernel_common_class.debug_information;
 import kernel_part.part_rude;
 
 public class part_driver
@@ -53,36 +52,9 @@ public class part_driver
 		if(!(new File(my_file_path).exists()))
 			return null;
 
-		file_reader fr=null;
-		try{
-			fr=new file_reader(my_file_path,p.file_charset);
-			fr.mark_start();
-			for(String version_str;;) {
-				if((version_str=fr.get_string())!=null)
-					if(version_str.compareTo("2021.07.15")==0) {
-						fr.mark_terminate(true);
-						break;
-					}
-				fr.close();	
-				convert_old_part_rude_2021_07_01.part_rude.convert(my_file_path,p.file_charset);
-				fr=new file_reader(my_file_path,p.file_charset);
-				break;
-			}
-		}catch(Exception e) {
-			debug_information.println("create_part_mesh_and_buffer_object_head(format convertion) exception:	",e.toString());
-			e.printStackTrace();
-			if(fr!=null) {
-				fr.close();
-				fr=null;
-			}
-		}
-		
-		if(fr==null)
-			return null;
-		
+		file_reader fr=new file_reader(my_file_path,p.file_charset);
 		part_rude ret_val=new part_rude(fr);
 		fr.close();
-		
 		return ret_val;
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,

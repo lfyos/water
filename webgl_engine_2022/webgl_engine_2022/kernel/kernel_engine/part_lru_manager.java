@@ -46,7 +46,7 @@ public class part_lru_manager
 		if(pbll.in_list_flag) {
 			if(first==pbll) 
 				return false;
-			if(last==pbll) {
+			if(last==pbll){
 				last=last.front;
 				last.back=null;
 			}else{
@@ -86,7 +86,7 @@ public class part_lru_manager
 		pbll.front=null;
 		pbll.back=null;
 		
-		if(pbll.p.part_mesh!=null) {
+		if(pbll.p.part_mesh!=null){
 			pbll.p.part_mesh.free_memory();
 			debug_information.println("Unload part:	user name:"+pbll.p.user_name,
 					"	system name:"	+pbll.p.system_name+
@@ -110,7 +110,8 @@ public class part_lru_manager
 	public part_lru_manager(ArrayList<render> ren,int my_max_in_list_number)
 	{
 		in_list_number=0;
-		max_in_list_number=my_max_in_list_number;
+		if((max_in_list_number=my_max_in_list_number)<2)
+			max_in_list_number=2;
 		first=null;
 		last=null;
 		

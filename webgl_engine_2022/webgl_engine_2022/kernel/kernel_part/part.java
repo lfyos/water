@@ -176,7 +176,6 @@ public class part
 			debug_information.println("Material_file_name:",			directory_name+material_file_name);
 			e.printStackTrace();
 		}
-		
 		return my_part_mesh;
 	}
 	private String create_mesh_and_material_routine(String part_temporary_file_directory,
