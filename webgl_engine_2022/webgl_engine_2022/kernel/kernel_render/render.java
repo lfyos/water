@@ -136,63 +136,62 @@ public class render
 			return;
 		}
 		while(!(f.eof())){
-				String user_name			=f.get_string();
-				String system_name			=f.get_string();
-				String mesh_file_name		=f.get_string();
-				String material_file_name	=f.get_string();
-				String description_file_name=f.get_string();
-				String audio_file_name		=f.get_string();
+			String user_name			=f.get_string();
+			String system_name			=f.get_string();
+			String mesh_file_name		=f.get_string();
+			String material_file_name	=f.get_string();
+			String description_file_name=f.get_string();
+			String audio_file_name		=f.get_string();
 								
-				if(audio_file_name==null)
-					continue;
-				if(audio_file_name.compareTo("")==0)
-					continue;
+			if(audio_file_name==null)
+				continue;
+			if(audio_file_name.compareTo("")==0)
+				continue;
 				
-				mesh_file_name			=file_reader.separator(mesh_file_name);
-				material_file_name		=file_reader.separator(material_file_name);
-				description_file_name	=file_reader.separator(description_file_name);
-				audio_file_name			=file_reader.separator(audio_file_name);
+			mesh_file_name			=file_reader.separator(mesh_file_name);
+			material_file_name		=file_reader.separator(material_file_name);
+			description_file_name	=file_reader.separator(description_file_name);
+			audio_file_name			=file_reader.separator(audio_file_name);
 				
-				if(not_real_scene_fast_load_flag) {
-					File mesh_f=new File(f.directory_name+mesh_file_name);
-					if(mesh_f.exists())
-						if(mesh_f.lastModified()<f.lastModified_time)
-							mesh_f.setLastModified(f.lastModified_time);
-					
-					File material_f=new File(f.directory_name+material_file_name);
-					if(material_f.exists())
-						if(material_f.lastModified()<f.lastModified_time)
-							material_f.setLastModified(f.lastModified_time);
-				}
-				part my_part=new part(part_type_id,false,
-						part_par.clone(),f.directory_name,f.get_charset(),
-						(user_name==null)				?"":user_name,
-						(system_name==null)				?"":system_name,
-						(mesh_file_name==null)			?"":mesh_file_name,
-						(material_file_name==null)		?"":material_file_name,
-						(description_file_name==null)	?"":description_file_name,		
-						(audio_file_name==null)			?"":audio_file_name);
+			if(not_real_scene_fast_load_flag) {
+				File mesh_f=new File(f.directory_name+mesh_file_name);
+				if(mesh_f.exists())
+					if(mesh_f.lastModified()<f.lastModified_time)
+						mesh_f.setLastModified(f.lastModified_time);
 				
-				add_part(my_part);
+				File material_f=new File(f.directory_name+material_file_name);
+				if(material_f.exists())
+					if(material_f.lastModified()<f.lastModified_time)
+						material_f.setLastModified(f.lastModified_time);
+			}
+			part my_part=new part(part_type_id,false,part_par,f.directory_name,f.get_charset(),
+					(user_name==null)				?"":user_name,
+					(system_name==null)				?"":system_name,
+					(mesh_file_name==null)			?"":mesh_file_name,
+					(material_file_name==null)		?"":material_file_name,
+					(description_file_name==null)	?"":description_file_name,		
+					(audio_file_name==null)			?"":audio_file_name);
+
+			add_part(my_part);
 				
-				try{
-					my_part.driver=r_driver.create_part_driver(f,my_part,
-							component_load_source_cont,system_par,request_response);
-				}catch(Exception e){
-					my_part.driver=null;
-					debug_information.println("Create part driver fail:",e.toString());
-					debug_information.println("Part user name:	",		my_part.user_name);
-					debug_information.println("Part system name:	",	my_part.system_name);
-					debug_information.println("Directory name:	",		my_part.directory_name);
-					debug_information.println("Mesh file name:	",		my_part.mesh_file_name);
-					e.printStackTrace();
-				}
-				if(my_part.driver!=null)
-					pcps.append_one_part(my_part);
-				else {
-					delete_last_part();
-					my_part.destroy();
-				}
+			try{
+				my_part.driver=r_driver.create_part_driver(f,my_part,
+						component_load_source_cont,system_par,request_response);
+			}catch(Exception e){
+				my_part.driver=null;
+				debug_information.println("Create part driver fail:",e.toString());
+				debug_information.println("Part user name:	",		my_part.user_name);
+				debug_information.println("Part system name:	",	my_part.system_name);
+				debug_information.println("Directory name:	",		my_part.directory_name);
+				debug_information.println("Mesh file name:	",		my_part.mesh_file_name);
+				e.printStackTrace();
+			}
+			if(my_part.driver!=null)
+				pcps.append_one_part(my_part);
+			else {
+				delete_last_part();
+				my_part.destroy();
+			}
 		}
 		f.close();
 		return;

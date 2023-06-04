@@ -246,7 +246,7 @@ public class engine_kernel
 		boolean not_real_scene_fast_load_flag=scene_par.fast_load_flag?false:true;
 		if(boftal_container.get_boftal_number()<=0)
 			not_real_scene_fast_load_flag=true;
-		
+	
 		file_reader scene_f=new file_reader(
 				create_parameter.scene_directory_name+create_parameter.scene_file_name,
 				create_parameter.scene_charset);
@@ -256,7 +256,7 @@ public class engine_kernel
 			if(scene_par.scene_last_modified_time<scene_f.lastModified_time)
 				scene_par.scene_last_modified_time=scene_f.lastModified_time;
 		}
-
+		
 		render_cont=new render_container(render_cont,request_response,system_par,scene_par);
 		part_cont=new part_container_for_part_search(render_cont.part_array_list(true,-1));
 
@@ -277,16 +277,18 @@ public class engine_kernel
 		ArrayList<part> part_list_for_delete_file=new ArrayList<part>();
 		
 		start_time=current_time;
-		render_cont.load_part(not_real_scene_fast_load_flag,(1<<1)+(1<<2),1,part_loader_cont,
-			system_par,scene_par,part_cont,boftal_container,"load_first_class_part",process_bar,part_list_for_delete_file);
+		render_cont.load_part(not_real_scene_fast_load_flag,(1<<1)+(1<<2),1,
+			part_loader_cont,system_par,scene_par,part_cont,boftal_container,
+			"load_first_class_part",process_bar,part_list_for_delete_file);
 		debug_information.println("Load first class part time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		
 		start_time=current_time;
 		render_cont.create_bottom_box_part(part_cont,request_response,system_par,scene_par);
 		part_cont.execute_append();
-		render_cont.load_part(not_real_scene_fast_load_flag,(1<<1)+(1<<2),2,part_loader_cont,
-			system_par,scene_par,part_cont,boftal_container,"load_second_class_part",process_bar,part_list_for_delete_file);
+		render_cont.load_part(not_real_scene_fast_load_flag,(1<<1)+(1<<2),2,
+			part_loader_cont,system_par,scene_par,part_cont,boftal_container,
+			"load_second_class_part",process_bar,part_list_for_delete_file);
 		debug_information.println("Load second class part time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();

@@ -34,7 +34,7 @@ public class collect_trace_primitive
 		
 		int last_render_id=-1,last_part_id=-1;
 		primitive_interface p_i=null;
-		part p_i_p=null,p;
+		part p;
 		
 		for(common_reader cr=new common_reader(stream,
 				ci.request_response.implementor.get_request_charset());;)
@@ -90,13 +90,12 @@ public class collect_trace_primitive
 			
 			if((render_id!=last_render_id)||(part_id!=last_part_id)) {
 				if(p_i!=null) {
-					p.destroy_primitive_interface(p_i,ek.system_par);
+					p_i.destroy();
 					p_i=null;
-					p_i_p=null;
 				}
 			}
 			if(p_i==null) {
-				p_i=(p_i_p=p).create_primitive_interface(ek.system_par,true);
+				p_i=p.create_primitive_interface(ek.system_par,true);
 				last_render_id=render_id;
 				last_part_id=part_id;
 			}
@@ -157,8 +156,8 @@ public class collect_trace_primitive
 		}
 		stl_fw.println("endsolid").println();
 		
-		if((p_i_p!=null)&&(p_i!=null))
-			p_i_p.destroy_primitive_interface(p_i,ek.system_par);
+		if(p_i!=null)
+			p_i.destroy();
 		
 		stl_fw.close();
 		id_fw.close();

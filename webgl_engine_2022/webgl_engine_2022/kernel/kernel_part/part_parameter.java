@@ -14,7 +14,7 @@ public class part_parameter
 	public int 		max_component_data_buffer_number,max_part_load_thread_number;
 	
 	public boolean	do_create_bottom_box_flag,do_load_lock_flag;
-	public boolean	clear_buffer_head_file_flag,clear_model_file_flag[];
+	public boolean	clear_buffer_head_file_flag,clear_buffer_boftal_file_flag,clear_model_file_flag[];
 	
 	public double	location_match_direction[];
 	public boolean	symmetry_flag[]; 
@@ -50,6 +50,7 @@ public class part_parameter
 			boolean my_do_load_lock_flag,
 			
 			boolean my_clear_buffer_head_file_flag,
+			boolean my_clear_buffer_boftal_file_flag,
 			boolean my_clear_model_file_flag[],
 			double	my_location_match_direction[],
 			boolean	my_symmetry_flag[])
@@ -83,6 +84,7 @@ public class part_parameter
 		do_load_lock_flag				=my_do_load_lock_flag;
 		
 		clear_buffer_head_file_flag		=my_clear_buffer_head_file_flag;
+		clear_buffer_boftal_file_flag	=my_clear_buffer_boftal_file_flag;
 		clear_model_file_flag			=new boolean[my_clear_model_file_flag.length];
 		for(int i=0,ni=clear_model_file_flag.length;i<ni;i++)
 			clear_model_file_flag[i]=my_clear_model_file_flag[i];
@@ -127,6 +129,7 @@ public class part_parameter
 				do_load_lock_flag,
 				
 				clear_buffer_head_file_flag,
+				clear_buffer_boftal_file_flag,
 				clear_model_file_flag,
 				location_match_direction,
 				symmetry_flag);
@@ -165,6 +168,7 @@ public class part_parameter
 				do_load_lock_flag,
 				
 				clear_buffer_head_file_flag,
+				clear_buffer_boftal_file_flag,
 				clear_model_file_flag,
 				location_match_direction,
 				symmetry_flag);
@@ -207,6 +211,7 @@ public class part_parameter
 		do_load_lock_flag					=f.get_boolean();
 		
 		clear_buffer_head_file_flag			=f.get_boolean();
+		clear_buffer_boftal_file_flag		=f.get_boolean();
 		clear_model_file_flag				=new boolean[]
 		{
 			f.get_boolean(),
