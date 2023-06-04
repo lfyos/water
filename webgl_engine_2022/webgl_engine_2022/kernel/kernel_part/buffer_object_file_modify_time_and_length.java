@@ -2,6 +2,7 @@ package kernel_part;
 
 import java.io.File;
 import java.util.Date;
+import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
 import kernel_file_manager.file_reader; 
@@ -12,46 +13,39 @@ public class buffer_object_file_modify_time_and_length
 	public long buffer_object_head_last_modify_time;
 	public long	buffer_object_head_length,buffer_object_total_file_length;
 	
-	public long	buffer_object_file_last_modify_time[][];
-	
-	public long	buffer_object_text_file_length[][];
-	public boolean buffer_object_file_in_head_flag[][];
+	public ArrayList<ArrayList<buffer_object_file_modify_time_and_length_item>> list;
 	
 	public part_rude simple_part_mesh;
 	
 	public buffer_object_file_modify_time_and_length()
 	{
-		buffer_object_head_last_modify_time=0;
-		buffer_object_head_length=0;
-		buffer_object_total_file_length=0;
+		buffer_object_head_last_modify_time	=0;
+		buffer_object_head_length			=0;
+		buffer_object_total_file_length		=0;
 		
-		buffer_object_file_last_modify_time	=new long[0][];
-		buffer_object_text_file_length		=new long[0][];
-		buffer_object_file_in_head_flag		=new boolean[0][];
+		list=new ArrayList<ArrayList<buffer_object_file_modify_time_and_length_item>>();
+		simple_part_mesh=null;
 	}
 	public buffer_object_file_modify_time_and_length(file_reader fr)
 	{
+		ArrayList<buffer_object_file_modify_time_and_length_item> pp;
+		buffer_object_file_modify_time_and_length_item p;
+		
 		buffer_object_head_last_modify_time	=fr.get_long();
 		buffer_object_head_length			=fr.get_long();
 		buffer_object_total_file_length		=buffer_object_head_length;
 		
-		buffer_object_text_file_length		=new long[fr.get_int()][];
-		buffer_object_file_last_modify_time	=new long[buffer_object_text_file_length.length][];
-		buffer_object_file_in_head_flag		=new boolean[buffer_object_text_file_length.length][];
-		
-		for(int i=0,ni=buffer_object_text_file_length.length;i<ni;i++){
-			buffer_object_text_file_length[i]		=new long[fr.get_int()];
-			buffer_object_file_last_modify_time[i]	=new long[buffer_object_text_file_length[i].length];
-			buffer_object_file_in_head_flag[i]		=new boolean[buffer_object_text_file_length[i].length];
-			for(int j=0,nj=buffer_object_text_file_length[i].length;j<nj;j++){
-				buffer_object_file_last_modify_time[i][j]	=fr.get_long();
-				buffer_object_text_file_length[i][j]		=fr.get_long();
-				buffer_object_file_in_head_flag[i][j]		=fr.get_boolean();
-				if(!(buffer_object_file_in_head_flag[i][j]))
-					buffer_object_total_file_length+=buffer_object_text_file_length[i][j];
+		list=new ArrayList<ArrayList<buffer_object_file_modify_time_and_length_item>>();
+		for(int i=0,ni=fr.get_int();i<ni;i++) {
+			pp=new ArrayList<buffer_object_file_modify_time_and_length_item>();
+			list.add(i,pp);
+			for(int j=0,nj=fr.get_int();j<nj;j++){
+				p=new buffer_object_file_modify_time_and_length_item(
+						fr.get_long(),fr.get_long(),fr.get_boolean());
+				pp.add(pp.size(),p);
+				buffer_object_total_file_length+=(p.buffer_object_file_in_head_flag)?0:(p.buffer_object_text_file_length);
 			}
 		}
-		
 		simple_part_mesh=new part_rude(fr);
 
 		return;
@@ -63,24 +57,22 @@ public class buffer_object_file_modify_time_and_length
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss:SSS");
 		
 		simple_part_mesh=null;
+		list=new ArrayList<ArrayList<buffer_object_file_modify_time_and_length_item>>();
+		list.add(0,new ArrayList<buffer_object_file_modify_time_and_length_item>());		//face
+		list.add(1,new ArrayList<buffer_object_file_modify_time_and_length_item>());		//edge
+		list.add(2,new ArrayList<buffer_object_file_modify_time_and_length_item>());		//point
 		
 		File f=new File(root_file_name+".head.txt");
 		buffer_object_head_last_modify_time	=f.lastModified();
 		buffer_object_head_length			=f.length();
 		buffer_object_total_file_length		=buffer_object_head_length;
 		
-		String file_type[]=new String[]{".face",".edge",".point"};
-		buffer_object_file_last_modify_time	=new long[file_type.length][];
-		buffer_object_text_file_length		=new long[file_type.length][];
-		buffer_object_file_in_head_flag		=new boolean[file_type.length][];
+		ArrayList<buffer_object_file_modify_time_and_length_item> pp;
+		buffer_object_file_modify_time_and_length_item p;
 		
+		String file_type[]=new String[]{".face",".edge",".point"};
 		for(int i=0,ni=file_type.length;i<ni;i++){
-			buffer_object_file_last_modify_time[i]	=new long[100];
-			buffer_object_text_file_length[i]		=new long[100];
-			buffer_object_file_in_head_flag[i]		=new boolean[100];
-			
-			int file_number=0;
-			
+			pp=list.get(i);
 			for(long j=0;;j++){
 				String my_file_name=root_file_name+file_type[i]+Long.toString(j)+".txt";
 				if(!((f=new File(my_file_name)).exists()))
@@ -89,50 +81,10 @@ public class buffer_object_file_modify_time_and_length
 					break;
 				if(f.length()<=0)
 					break;
-				
-				if(file_number>=buffer_object_text_file_length[i].length) {
-					long bak[]=buffer_object_text_file_length[i];
-					buffer_object_text_file_length[i]=new long[bak.length+100];
-					for(int k=0,nk=bak.length;k<nk;k++)
-						buffer_object_text_file_length[i][k]=bak[k];
-	
-					bak=buffer_object_file_last_modify_time[i];
-					buffer_object_file_last_modify_time[i]=new long[bak.length+100];
-					for(int k=0,nk=bak.length;k<nk;k++)
-						buffer_object_file_last_modify_time[i][k]=bak[k];
-	
-					boolean flag_bak[]=buffer_object_file_in_head_flag[i];
-					buffer_object_file_in_head_flag[i]=new boolean[flag_bak.length+100];
-					for(int k=0,nk=flag_bak.length;k<nk;k++)
-						buffer_object_file_in_head_flag[i][k]=flag_bak[k];
-				}
-		
-				buffer_object_text_file_length[i][file_number]=f.length();
-				buffer_object_file_last_modify_time[i][file_number]=f.lastModified();
-
-				my_file_name=root_file_name+file_type[i]+Long.toString(j)+".in_head_flag";
-				buffer_object_file_in_head_flag[i][file_number]=new File(my_file_name).exists();
-				
-				if(!(buffer_object_file_in_head_flag[i][file_number]))
-					buffer_object_total_file_length+=buffer_object_text_file_length[i][file_number];
-				file_number++;
-			}
-			
-			if(buffer_object_file_last_modify_time[i].length!=file_number) {
-				long bak[]=buffer_object_file_last_modify_time[i];
-				buffer_object_file_last_modify_time[i]=new long[file_number];
-				for(int j=0;j<file_number;j++)
-					buffer_object_file_last_modify_time[i][j]=bak[j];
-				
-				bak=buffer_object_text_file_length[i];
-				buffer_object_text_file_length[i]=new long[file_number];
-				for(int j=0;j<file_number;j++)
-					buffer_object_text_file_length[i][j]=bak[j];
-				
-				boolean bak_flag[]=buffer_object_file_in_head_flag[i];
-				buffer_object_file_in_head_flag[i]=new boolean[file_number];
-				for(int j=0;j<file_number;j++)
-					buffer_object_file_in_head_flag[i][j]=bak_flag[j];
+				p=new buffer_object_file_modify_time_and_length_item(f.lastModified(),f.length(),
+						new File(root_file_name+file_type[i]+Long.toString(j)+".in_head_flag").exists());
+				pp.add(pp.size(),p);
+				buffer_object_total_file_length+=(p.buffer_object_file_in_head_flag)?0:(p.buffer_object_text_file_length);
 			}
 		}
 		
@@ -145,24 +97,23 @@ public class buffer_object_file_modify_time_and_length
 		fw.print  ("\t/*\t",sdf.format(new Date(buffer_object_head_last_modify_time)));
 		fw.println("\t*/");
 		
-		fw.println("/*\tbuffer_object_head_length\t\t\t\t*/\t",
-			buffer_object_head_length);
-		fw.println("/*\tbuffer_object_text_file_length.length\t*/\t",
-			buffer_object_text_file_length.length);
-		for(int i=0,ni=buffer_object_text_file_length.length;i<ni;i++){
-			fw.println("/*\t\tbuffer_object_text_file_length["+i+"]\t*/\t",
-				buffer_object_text_file_length[i].length);
-			for(int j=0,nj=buffer_object_text_file_length[i].length;j<nj;j++){
-				
-				long t=buffer_object_file_last_modify_time[i][j];
+		fw.println("/*\tbuffer_object_head_length\t\t\t\t*/\t",buffer_object_head_length);
+
+		fw.println("/*\tbuffer_object_text_file_length.length\t*/\t",list.size());
+		for(int i=0,ni=list.size();i<ni;i++){
+			pp=list.get(i);
+			fw.println("/*\t\tbuffer_object_text_file_length["+i+"]\t*/\t",pp.size());
+			for(int j=0,nj=pp.size();j<nj;j++){
+				p=pp.get(j);
+				long t=p.buffer_object_file_last_modify_time;
 				fw.print  ("/*\t\t\tbuffer_object_file_last_modify_time\t["+i+","+j+"]\t\t*/\t",t);
 				fw.print  ("\t/*\t",sdf.format(new Date(t)));
 				fw.println("\t*/");
 
 				fw.println("/*\t\t\tbuffer_object_text_file_length\t\t["+i+","+j+"]\t\t*/\t",
-					buffer_object_text_file_length[i][j]);
+					p.buffer_object_text_file_length);
 				fw.println("/*\t\t\tbuffer_object_file_in_head_flag\t\t["+i+","+j+"]\t\t*/\t",
-					buffer_object_file_in_head_flag[i][j]?"true":"false");
+					p.buffer_object_file_in_head_flag?"true":"false");
 			}
 		}
 

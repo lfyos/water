@@ -82,6 +82,10 @@ public class part_package
 				int ret_val;
 				return ((ret_val=package_compare(pi,pj))!=0)?ret_val:super.compare_part(pi,pj);
 			}
+			public int compare_key(part pi,part pj)
+			{
+				return compare_part(pi,pj);
+			}
 			public part_package_collector(ArrayList<part> my_part_list,system_parameter system_par)
 			{
 				super(my_part_list.toArray(new part[my_part_list.size()]));
@@ -110,7 +114,7 @@ public class part_package
 				for(int i=0;i<package_number;i++)
 					part_package[i]=new part_arraylist();
 
-				for(int i=0,ni=data_array.length;i<ni;i++) {
+				for(int i=0,ni=data_array.length;i<ni;i++){
 					int part_package_id=data_array[i].part_package_id;
 					int part_package_sequence_id=part_package[part_package_id].list.size();
 					part_package[part_package_id].list.add(part_package_sequence_id,data_array[i]);
@@ -213,7 +217,7 @@ public class part_package
 						new File(my_file_name),system_par.response_block_size,"gzip");
 				fw.print_file(my_tmp_file_name).println((j<(nj-1))?",":"");
 			}
-						
+
 			fw.println("]");
 			fw.close();
 						

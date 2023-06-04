@@ -79,7 +79,7 @@ public class dispatch_buffer_request
 				"No data_file in do_buffer_dispatch of dispatch_system_request");
 			return null;
 		}
-		return file_directory.part_file_directory(p,ek.system_par,ek.scene_par)+"mesh."+str+".gzip_binary";
+		return file_directory.part_file_directory(p,ek.system_par,ek.scene_par)+"mesh."+str+".gzip_text";
 	}
 	static public String do_dispatch(int main_call_id,engine_kernel ek,client_information ci)
 	{
@@ -122,8 +122,7 @@ public class dispatch_buffer_request
 				return null;
 			}
 		case "buffer_data":
-			str=download_data(ek,ci);
-			return str;
+			return download_data(ek,ci);
 		}
 	}
 }

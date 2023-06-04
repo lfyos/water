@@ -7,6 +7,7 @@ import kernel_file_manager.file_writer;
 public class graphics_buffer_object_creater_container
 {
 	private ArrayList<ArrayList<graphics_buffer_object_creater>> creaters;
+	
 	public graphics_buffer_object_creater_container()
 	{
 		creaters=new ArrayList<ArrayList<graphics_buffer_object_creater>>();

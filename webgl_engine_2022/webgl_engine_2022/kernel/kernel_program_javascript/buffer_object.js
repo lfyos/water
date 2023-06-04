@@ -284,12 +284,7 @@ function construct_buffer_object(my_gl,my_parameter)
 			object_pointer.data_collector[my_material_id]=p;
 		}else{
 			p=object_pointer.data_collector[my_material_id];
-			
-			var old_region_data=p.region_data;
-			p.region_data=new Float32Array(old_region_data.length+buffer_object_data.length);
-			p.region_data.set(old_region_data,0);
-			p.region_data.set(buffer_object_data,old_region_data.length);
-			
+			p.region_data=p.region_data.concat(buffer_object_data);
 			for(var i=0,ni=p.region_box[0].length;i<ni;i++){
 				if(my_region_box[0][i]<p.region_box[0][i])
 					p.region_box[0][i]=my_region_box[0][i];
@@ -358,7 +353,7 @@ function construct_buffer_object(my_gl,my_parameter)
 		}
 		var response_data;
 		try{
-			response_data = await buffer_data_promise.arrayBuffer();
+			response_data = await buffer_data_promise.json();
 		}catch(e){
 			if(render.terminate_flag)
 				return;
@@ -379,8 +374,7 @@ function construct_buffer_object(my_gl,my_parameter)
 		if(this.destroy_flag)
 			return;
 		
-		this.process_buffer_object_data(
-				shader_program,attribute_map,new Float32Array(response_data),
+		this.process_buffer_object_data(shader_program,attribute_map,response_data,
 				request_str,object_pointer,frame_object_pointer,max_buffer_object_data_length,
 				decode_function,part_information,part_material,part_property,request_file_id);
 		return;
@@ -447,8 +441,7 @@ function construct_buffer_object(my_gl,my_parameter)
 				buffer_object_affiliated_data.pop();
 				
 				object_pointer.loaded_number--;
-				this.process_buffer_object_data(
-						shader_program,attribute_map,new Float32Array(my_data),request_str,
+				this.process_buffer_object_data(shader_program,attribute_map,my_data,request_str,
 						object_pointer,frame_object_pointer,max_buffer_object_data_length,
 						decode_function,part_information,part_material,part_property,request_file_id);
 				return 0;

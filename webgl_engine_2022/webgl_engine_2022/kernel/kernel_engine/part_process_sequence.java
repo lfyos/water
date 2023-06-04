@@ -2,8 +2,12 @@ package kernel_engine;
 
 
 import kernel_render.render;
+
+import java.util.ArrayList;
+
 import kernel_component.component;
 import kernel_component.component_collector;
+import kernel_part.buffer_object_file_modify_time_and_length_item;
 import kernel_part.part;
 import kernel_part.part_container_for_process_sequence;
 import kernel_render.render_container;
@@ -218,14 +222,15 @@ public class part_process_sequence
 		total_buffer_object_file_number=0;
 		total_buffer_object_text_data_length=0;
 		
+		ArrayList<buffer_object_file_modify_time_and_length_item> item_list;
+		buffer_object_file_modify_time_and_length_item item;
 		for(int i=0,ni=sort_parts.length;i<ni;i++)
-			for(int j=0,nj=sort_parts[i].boftal.buffer_object_text_file_length.length;j<nj;j++)
-				for(int k=0,nk=sort_parts[i].boftal.buffer_object_text_file_length[j].length;k<nk;k++){
-					if(sort_parts[i].boftal.buffer_object_file_in_head_flag[j][k])
-						continue;
-					total_buffer_object_file_number++;
-					total_buffer_object_text_data_length	+=sort_parts[i].boftal.buffer_object_text_file_length[j][k];
-				}
+			for(int j=0,nj=sort_parts[i].boftal.list.size();j<nj;j++) 
+				for(int k=0,nk=(item_list=sort_parts[i].boftal.list.get(j)).size();k<nk;k++)
+					if(!((item=item_list.get(k)).buffer_object_file_in_head_flag)){
+						total_buffer_object_file_number++;
+						total_buffer_object_text_data_length	+=item.buffer_object_text_file_length;
+					}
 	}
 	public part_process_sequence(render_container render_cont,component root_component)
 	{
