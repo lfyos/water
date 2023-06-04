@@ -154,11 +154,6 @@ public class part
 			p_i=new primitive_from_box(part_mesh.body_array);
 		return p_i;
 	}
-	public void destroy_primitive_interface(primitive_interface p_i,system_parameter system_par)
-	{
-		p_i.destroy();
-	}
-	
 	public part_rude call_part_driver_for_load_part_mesh(file_writer head_fw,
 			part_container_for_part_search pcps,system_parameter system_par,scene_parameter scene_par)
 	{
@@ -258,7 +253,7 @@ public class part
 			ret_val+="\n\t\tpoint "+response_buffer_object_data(p_i,
 				system_par.max_material_id,file_collector,head_fw,"point"," ",head_fw.get_charset());
 			
-			destroy_primitive_interface(p_i,system_par);
+			p_i.destroy();
 		}
 		
 		head_fw.println("\t}");

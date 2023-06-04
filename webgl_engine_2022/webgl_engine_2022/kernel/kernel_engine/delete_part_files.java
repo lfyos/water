@@ -52,20 +52,21 @@ public class delete_part_files
 					if((f=new File(p.directory_name+file_reader.separator(clear_file_name_array[j]))).exists())
 						f.delete();
 
-			if(p.part_par.clear_buffer_head_file_flag){
-				String part_temporary_file_directory=file_directory.part_file_directory(p,system_par,scene_par);
+			String part_temporary_file_directory=file_directory.part_file_directory(p,system_par,scene_par);
+			if(p.part_par.clear_buffer_head_file_flag)
 				if((f=new File(part_temporary_file_directory+"mesh.head.gzip_text")).exists())
 					f.delete();
-				if((f=new File(part_temporary_file_directory+"mesh.boftal")).exists()){
-					long t=f.lastModified();
-					try{
-						new FileWriter(f).close();
-					}catch(Exception e) {
-						;
+			if(p.part_par.clear_buffer_boftal_file_flag)
+				if((f=new File(part_temporary_file_directory+"mesh.boftal")).exists())
+					if(f.length()>0){
+						long t=f.lastModified();
+						try{
+							new FileWriter(f).close();
+						}catch(Exception e) {
+							;
+						}
+						f.setLastModified(t);
 					}
-					f.setLastModified(t);
-				}
-			}
 		}
 		if(cpb!=null)
 			cpb.set_process_bar(false, "delete_part_file","", number,number);

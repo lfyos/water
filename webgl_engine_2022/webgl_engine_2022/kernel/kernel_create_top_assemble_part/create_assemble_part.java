@@ -189,6 +189,7 @@ public class create_assemble_part
 				p.part_par.do_load_lock_flag,
 				
 				p.part_par.clear_buffer_head_file_flag,
+				p.part_par.clear_buffer_boftal_file_flag,
 				p.part_par.clear_model_file_flag,
 				p.part_par.location_match_direction,
 				p.part_par.symmetry_flag);
@@ -246,7 +247,7 @@ public class create_assemble_part
 		debug_information.print  ("\tgive_up_number:",give_up_number);
 		debug_information.println("\tall_part_number:",all_part_number);
 		
-		part_loader already_loaded_part[]=new part_loader[]{};
+		ArrayList<part_loader> already_loaded_part=new ArrayList<part_loader>();
 		int create_part_number=0,add_part_number=0;
 		top_box_part=new ArrayList<part>();
 		
@@ -310,9 +311,8 @@ public class create_assemble_part
 				render_cont.renders.get(assemble_part.render_id).delete_last_part();
 				continue;
 			}
-			already_loaded_part=part_loader_cont.load(add_part,
-					render_cont.get_copy_from_part(add_part),not_real_scene_fast_load_flag,last_modified_time,
-					system_par,scene_par,part_list_for_delete_file,already_loaded_part,pcps,boftal_container);
+			part_loader_cont.load(add_part,render_cont.get_copy_from_part(add_part),not_real_scene_fast_load_flag,
+				last_modified_time,system_par,scene_par,part_list_for_delete_file,already_loaded_part,pcps,boftal_container);
 			top_box_part.add(add_part_number++,add_part);
 			create_part_number+=my_create_part_number;	
 			

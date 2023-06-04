@@ -55,11 +55,11 @@ public class buffer_object_file_modify_time_and_length_container
 			boftal_token_array	[i]=fr.get_string();
 			boftal_array		[i]=new buffer_object_file_modify_time_and_length(fr);
 		}
+		process_bar.set_process_bar(true,process_title,"", number, number);
 		fr.close();
 	}
 	
-	public buffer_object_file_modify_time_and_length search_boftal(
-			String boftal_token,long my_boftal_last_modify_time)
+	public buffer_object_file_modify_time_and_length search_boftal(	String boftal_token,long my_boftal_last_modify_time)
 	{
 		if(last_modify_time<my_boftal_last_modify_time) {
 			if(boftal_file_name!=null)

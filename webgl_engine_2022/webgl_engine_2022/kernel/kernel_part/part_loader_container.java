@@ -13,25 +13,25 @@ import kernel_engine.scene_parameter;
 
 public class part_loader_container
 {
-	private volatile part_loader part_loader_array[];
+	private volatile ArrayList<part_loader> part_loader_list;
 	private ReentrantLock part_loader_container_lock;
 	
 	public void destroy()
 	{
-		if(part_loader_array!=null) {
-			for(int i=0,ni=part_loader_array.length;i<ni;i++)
-				if(part_loader_array[i]!=null) {
-					part_loader_array[i].destroy();
-					part_loader_array[i]=null;
-				}
-			part_loader_array=null;
+		part_loader pl;
+		if(part_loader_list!=null) {
+			for(int i=0,ni=part_loader_list.size();i<ni;i++)
+				if((pl=part_loader_list.get(i))!=null)
+					pl.destroy();
+			part_loader_list.clear();
+			part_loader_list=null;
 		}
 		if(part_loader_container_lock!=null)
 			part_loader_container_lock=null;
 	}
 	public part_loader_container()
 	{
-		part_loader_array=new part_loader[]{};
+		part_loader_list=new ArrayList<part_loader>();
 		part_loader_container_lock=new ReentrantLock();
 	}
 	private static void wait_for_part_loader_termination(part_loader pl,
@@ -61,82 +61,56 @@ public class part_loader_container
 				debug_information.println("		",file_directory.part_file_directory(pl.loaded_part,system_par, scene_par));
 			}
 	}
-	public static void wait_for_completion(part_loader already_loaded_part[],
+	public static void wait_for_completion(ArrayList<part_loader> already_loaded_part,
 			system_parameter system_par,scene_parameter scene_par)
 	{
+		part_loader pl;
+		
 		debug_information.println();
 		debug_information.println("Begin wait_for_completion");
 		debug_information.println();
-		for(int wait_number=0;;wait_number++){
-			int number=0;
-			for(int i=0,ni=already_loaded_part.length;i<ni;i++){
-				if(already_loaded_part[i]!=null){
-					if(already_loaded_part[i].test_loading_flag()){
-						if(number==i)
-							number++;
-						else {
-							already_loaded_part[number++]=already_loaded_part[i];
-							already_loaded_part[i]=null;
-						}
-					}else{
-						wait_for_part_loader_termination(already_loaded_part[i],false,system_par,scene_par);
-						already_loaded_part[i]=null;
-					}	
+		for(int wait_number=0;already_loaded_part.size()>0;wait_number++){
+			for(int i=already_loaded_part.size()-1;i>=0;i--) {
+				if((pl=already_loaded_part.get(i)).test_loading_flag()) {
+					if((wait_number%2)==0)
+						wait_for_part_loader_termination(pl,false,system_par,scene_par);
+					else{
+						debug_information.println(pl.loaded_part.system_name+" is Waiting for completion:",wait_number);
+						wait_for_part_loader_termination(pl,true,system_par,scene_par);
+					}
+				}else {
+					debug_information.println(pl.loaded_part.system_name+" has done Waiting for completion:",wait_number);
+					already_loaded_part.remove(i);
 				}
 			}
-			if(number<=0)
-				break;
-			for(int i=0;i<number;i++)
-				if(already_loaded_part[i].test_loading_flag()){
-					String str=already_loaded_part[i].loaded_part.system_name;
-					debug_information.println(str+" is Waiting for completion:",wait_number);
-					wait_for_part_loader_termination(already_loaded_part[i],true,system_par,scene_par);
-					break;
-				}
 		}
 		debug_information.println();
 		debug_information.println("End wait_for_completion");
 		debug_information.println();
 	}
-	private part_loader[] load_routine(
-			part my_part,part my_copy_from_part,long last_modified_time,
-			system_parameter system_par,scene_parameter scene_par,
-			part_loader already_loaded_part[],part_container_for_part_search pcps)
+	private void load_routine(	part my_part,part my_copy_from_part,
+			long last_modified_time,system_parameter system_par,scene_parameter scene_par,
+			ArrayList<part_loader> already_loaded_part,part_container_for_part_search pcps)
 	{
+		part_loader pl;
 		int max_part_load_thread_number=my_part.part_par.max_part_load_thread_number;
 		if(max_part_load_thread_number<1)
 			max_part_load_thread_number=1;
 		
-		if(part_loader_array.length<max_part_load_thread_number){
-			part_loader bak[]=part_loader_array;
-			part_loader_array=new part_loader[max_part_load_thread_number];
-			for(int i=0,ni=bak.length;i<ni;i++)
-				part_loader_array[i]=bak[i];
-			for(int i=bak.length,ni=part_loader_array.length;i<ni;i++)
-				part_loader_array[i]=null;
-		}
 		for(long last_display_time=0;;){
-			int number=0;
-			for(int i=0,ni=part_loader_array.length;i<ni;i++){
-				if(part_loader_array[i]!=null){
-					if(part_loader_array[i].test_loading_flag()){
-						if((number++)!=i){
-							part_loader_array[number-1]=part_loader_array[i];
-							part_loader_array[i]=null;
-						}
-					}else{
-						wait_for_part_loader_termination(part_loader_array[i],false,system_par,scene_par);
-						part_loader_array[i]=null;
-					}
-				}
+			for(int i=part_loader_list.size()-1;i>=0;i--) {
+				if((pl=part_loader_list.get(i)).test_loading_flag())
+					continue;
+				part_loader_list.remove(i);
+				wait_for_part_loader_termination(pl,false,system_par,scene_par);
 			}
 			long current_display_time=System.nanoTime()/(1000*1000*1000);
-			if(number<max_part_load_thread_number)
+			if(part_loader_list.size()<max_part_load_thread_number)
 				last_display_time=current_display_time;
 			else{
 				if((current_display_time-last_display_time)>5){
 					last_display_time=current_display_time;
-					debug_information.print  ("Current part loading number is ",	number);
+					debug_information.print  ("Current part loading number is ",	part_loader_list.size());
 					debug_information.println(", Maximum part loading number is ",	max_part_load_thread_number);				
 				}
 				try {
@@ -147,27 +121,19 @@ public class part_loader_container
 				}
 				continue;
 			}
-			part_loader my_loader=new part_loader(my_part,my_copy_from_part,
-					last_modified_time,system_par,scene_par,pcps);
-			part_loader_array[number++]=my_loader;
-				
-			for(int i=0,ni=already_loaded_part.length;i<ni;i++){
-				if(already_loaded_part[i]==null){
-					already_loaded_part[i]=my_loader;
-					return already_loaded_part;
-				}
-				if(!(already_loaded_part[i].test_loading_flag())) {
-					wait_for_part_loader_termination(already_loaded_part[i],false,system_par,scene_par);
-					already_loaded_part[i]=my_loader;
-					return already_loaded_part;
-				}
+			
+			pl=new part_loader(my_part,my_copy_from_part,last_modified_time,system_par,scene_par,pcps);
+			part_loader_list.add(pl);
+			already_loaded_part.add(pl);
+
+			for(int i=already_loaded_part.size()-1;i>=0;i--) {
+				if((pl=already_loaded_part.get(i)).test_loading_flag())
+					continue;
+				already_loaded_part.remove(i);
+				wait_for_part_loader_termination(pl,false,system_par,scene_par);	
 			}
-			part_loader bak[]=already_loaded_part;
-			already_loaded_part=new part_loader[bak.length+1];
-			for(int i=0,ni=bak.length;i<ni;i++)
-				already_loaded_part[i]=bak[i];
-			already_loaded_part[already_loaded_part.length-1]=my_loader;
-			return already_loaded_part;
+
+			return;
 		}
 	}
 	
@@ -243,10 +209,10 @@ public class part_loader_container
 		}
 	}
 	
-	public part_loader[] load(part my_part,part my_copy_from_part,
+	public void load(part my_part,part my_copy_from_part,
 			boolean not_real_scene_fast_load_flag,long last_modified_time,
 			system_parameter system_par,scene_parameter scene_par,ArrayList<part> part_list_for_delete_file,
-			part_loader already_loaded_part[],part_container_for_part_search pcps,
+			ArrayList<part_loader> already_loaded_part,part_container_for_part_search pcps,
 			buffer_object_file_modify_time_and_length_container boftal_container)
 	{
 		String part_temporary_file_directory=file_directory.part_file_directory(my_part,system_par,scene_par);
@@ -257,17 +223,16 @@ public class part_loader_container
 		{
 			if(my_part.part_mesh!=null)
 				my_part.part_mesh.free_memory();
-			return already_loaded_part;
+			return;
 		}
 		
 		exclusive_file_mutex efm=exclusive_file_mutex.lock(lock_file_name,
 				"wait for load_mesh_and_create_buffer_object_and_material_file:	"
 				+my_part.directory_name+my_part.mesh_file_name);
 		
-		part_loader ret_val[]=already_loaded_part;
 		part_loader_container_lock.lock();
 		try{
-			ret_val=load_routine(my_part,my_copy_from_part,last_modified_time,system_par,scene_par,already_loaded_part,pcps);
+			load_routine(my_part,my_copy_from_part,last_modified_time,system_par,scene_par,already_loaded_part,pcps);
 		}catch(Exception e) {
 			debug_information.println("load of part_loader_container fail");
 			debug_information.println(e.toString());
@@ -278,7 +243,5 @@ public class part_loader_container
 		efm.unlock();
 		
 		part_list_for_delete_file.add(my_part);
-		
-		return ret_val;
 	}
 }

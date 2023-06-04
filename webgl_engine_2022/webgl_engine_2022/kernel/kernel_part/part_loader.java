@@ -18,10 +18,7 @@ public class part_loader extends Thread
 	private volatile boolean is_loading_flag;
 	public boolean test_loading_flag()
 	{
-		if(is_loading_flag)
-			return true;
-		else
-			return isAlive();
+		return is_loading_flag;
 	}
 	
 	public void destroy()

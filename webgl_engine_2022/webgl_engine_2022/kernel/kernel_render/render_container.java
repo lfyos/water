@@ -128,50 +128,55 @@ public class render_container
 		render r;
 		int load_number=0,all_number=0;
 
-		for(int i=0,ni=renders.size();i<ni;i++)
-			if((r=renders.get(i))!=null)
-				if(r.parts!=null)
-					for(int j=0,part_number=r.parts.size();j<part_number;j++)
-						if((p=r.parts.get(j))!=null){
-							if(((1<<p.part_type_id)&part_type)==0)
-								continue;
-							int my_part_flag=0;
-							my_part_flag+=p.is_normal_part()	?1:0;
-							my_part_flag+=p.is_bottom_box_part()?2:0;
-							my_part_flag+=p.is_top_box_part()	?4:0;
+		for(int i=0,ni=renders.size();i<ni;i++) {
+			if((r=renders.get(i))==null)
+				continue;
+			if(r.parts==null)
+				continue;
+			for(int j=0,part_number=r.parts.size();j<part_number;j++) {
+				if((p=r.parts.get(j))==null)
+					continue;
+				if(((1<<p.part_type_id)&part_type)==0)
+					continue;
+				int my_part_flag=0;
+				my_part_flag+=p.is_normal_part()	?1:0;
+				my_part_flag+=p.is_bottom_box_part()?2:0;
+				my_part_flag+=p.is_top_box_part()	?4:0;
 							
-							if((my_part_flag&part_flag)==0)
-								continue;
-							all_number++;
-						}
+				if((my_part_flag&part_flag)==0)
+					continue;
+				all_number++;
+			}
+		}
 		if(process_bar!=null)
 			process_bar.set_process_bar(true,process_bar_title,"",0,(all_number<1)?1:all_number);
 		
-		part_loader already_loaded_part[]=new part_loader[]{};
-		for(int i=0,ni=renders.size();i<ni;i++)
-			if((r=renders.get(i))!=null)
-				if(r.parts!=null)
-					for(int j=0,part_number=r.parts.size();j<part_number;j++)
-						if((p=r.parts.get(j))!=null){
-							if(((1<<p.part_type_id)&part_type)==0)
-								continue;
-							int my_part_flag=0;
-							my_part_flag+=p.is_normal_part()	?1:0;
-							my_part_flag+=p.is_bottom_box_part()?2:0;
-							my_part_flag+=p.is_top_box_part()	?4:0;
+		ArrayList<part_loader> already_loaded_part=new ArrayList<part_loader>();
+		for(int i=0,ni=renders.size();i<ni;i++) {
+			if((r=renders.get(i))==null)
+				continue;
+			if(r.parts==null)
+				continue;
+			for(int j=0,part_number=r.parts.size();j<part_number;j++) {
+				if((p=r.parts.get(j))==null)
+					continue;
+				if(((1<<p.part_type_id)&part_type)==0)
+					continue;
+				int my_part_flag=0;
+				my_part_flag+=p.is_normal_part()	?1:0;
+				my_part_flag+=p.is_bottom_box_part()?2:0;
+				my_part_flag+=p.is_top_box_part()	?4:0;
 							
-							if((my_part_flag&part_flag)==0)
-								continue;
+				if((my_part_flag&part_flag)==0)
+					continue;
+				part_loader_cont.load(p,get_copy_from_part(p),not_real_scene_fast_load_flag,-1,
+					system_par,scene_par,part_list_for_delete_file,already_loaded_part,pcps,boftal_container);
 							
-							already_loaded_part=part_loader_cont.load(
-									p,get_copy_from_part(p),not_real_scene_fast_load_flag,-1,system_par,scene_par,
-									part_list_for_delete_file,already_loaded_part,pcps,boftal_container);
-							
-							if(process_bar!=null)
-								process_bar.set_process_bar(false,
-										process_bar_title,"",load_number++,(all_number<1)?1:all_number);
-						}
-			
+				if(process_bar!=null)
+					process_bar.set_process_bar(false,process_bar_title,"",load_number++,(all_number<1)?1:all_number);
+			}
+		}
+		
 		part_loader_container.wait_for_completion(already_loaded_part,system_par,scene_par);
 		if(process_bar!=null)
 			process_bar.set_process_bar(false,
@@ -369,9 +374,8 @@ public class render_container
 				debug_information.print  ("ren.driver==null		",driver_name);
 				continue;
 			}
-			String render_list_file_name[]=ren.driver.get_render_list(
-					part_type_id,f_shader,load_sub_directory_name,
-					component_load_source_cont,system_par,scene_par,request_response);
+			String render_list_file_name[]=ren.driver.get_render_list(part_type_id,f_shader,
+					load_sub_directory_name,component_load_source_cont,system_par,scene_par,request_response);
 			if(render_list_file_name==null){
 				debug_information.print  ("render list file is NULL	",	driver_name);
 				continue;

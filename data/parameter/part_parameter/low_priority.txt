@@ -19,6 +19,7 @@
 /*	do_load_lock_flag					*/		true
 
 /*	clear_buffer_head_file_flag			*/		false
+/*	clear_buffer_boftal_file_flag		*/		false
 /*	clear_model_file_flag				*/		false	false	false	false	false	false	false	false
 
 /*	symmetry_flag						*/
