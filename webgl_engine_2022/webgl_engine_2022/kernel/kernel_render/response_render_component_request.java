@@ -1,5 +1,7 @@
 package kernel_render;
 
+import java.util.ArrayList;
+
 import kernel_buffer.component_render;
 import kernel_buffer.component_render_buffer;
 import kernel_buffer.modifier_parameter_buffer;
@@ -12,6 +14,7 @@ import kernel_driver.modifier_container_timer;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_file_manager.file_directory;
+import kernel_part.buffer_object_file_modify_time_and_length_item;
 import kernel_part.part;
 import kernel_transformation.plane;
 
@@ -192,14 +195,15 @@ public class response_render_component_request
 		final String type_str[]={"face","edge","point"};
 		
 		for(int i=0,ni=type_str.length;i<ni;i++){
+			ArrayList<buffer_object_file_modify_time_and_length_item> item_list=p.boftal.list.get(i);
 			ci.request_response.print((i<=0)?"[":",[");
-			for(int j=0,nj=p.boftal.buffer_object_text_file_length[i].length;j<nj;j++){
+			for(int j=0,nj=item_list.size();j<nj;j++){
+				buffer_object_file_modify_time_and_length_item item=item_list.get(j);
 				ci.request_response.print((j<=0)?"[":",[");
-				if(!(p.boftal.buffer_object_file_in_head_flag[i][j])){
+				if(!(item.buffer_object_file_in_head_flag)){
 					ret_val++;
-					ci.request_response.print(p.boftal.buffer_object_text_file_length[i][j]);
-					
-					String proxy_url,file_name=directory_name+type_str[i]+Integer.toString(j)+".gzip_binary";
+					ci.request_response.print(item.buffer_object_text_file_length);
+					String proxy_url,file_name=directory_name+type_str[i]+Integer.toString(j)+".gzip_text";
 					if((proxy_url=ci.get_file_proxy_url(file_name,ek.system_par))==null)
 						proxy_url=proxy_url_directory+type_str[i]+j;
 					ci.request_response.print(",\"",proxy_url).print("\"");

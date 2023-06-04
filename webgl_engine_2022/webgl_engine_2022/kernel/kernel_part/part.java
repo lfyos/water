@@ -99,8 +99,8 @@ public class part
 		boftal=null;
 	}
 	private String response_buffer_object_data(primitive_interface p_i,
-		int max_material_id,mesh_file_collector file_collector,file_writer fw,
-		String front_str,String follow_str,String buffer_object_data_charset)
+		int max_material_id,mesh_file_collector file_collector,
+		file_writer fw,String front_str,String follow_str)
 	{	
 		fw.print  ("\t\t\"",front_str);
 		fw.println("\"\t\t\t:");
@@ -121,17 +121,17 @@ public class part
 			front_str="face";
 		case "face":
 			gbocc=(new graphics_buffer_object_for_face(p_i,
-				max_material_id,this,file_name+"."+front_str,buffer_object_data_charset,
+				max_material_id,this,file_name+"."+front_str,fw.get_charset(),
 				part_par.max_file_data_length,part_par.create_face_buffer_object_bitmap)).gbocc;
 			break;
 		case "edge":
 			gbocc=(new graphics_buffer_object_for_edge(p_i,
-				max_material_id,this,file_name+"."+front_str,buffer_object_data_charset,
+				max_material_id,this,file_name+"."+front_str,fw.get_charset(),
 				part_par.max_file_data_length,part_par.create_edge_buffer_object_bitmap)).gbocc;
 			break;
 		case "point":
 			gbocc=(new graphics_buffer_object_for_point(p_i,
-				max_material_id,this,file_name+"."+front_str,buffer_object_data_charset,
+				max_material_id,this,file_name+"."+front_str,fw.get_charset(),
 				part_par.max_file_data_length,part_par.create_point_buffer_object_bitmap)).gbocc;
 			break;
 		}
@@ -182,7 +182,7 @@ public class part
 		ret_val+="\n\tbuffer object file name:\tmesh";	
 
 		file_writer head_fw=new file_writer(
-				part_temporary_file_directory+"mesh.head.txt",system_par.local_data_charset);
+				part_temporary_file_directory+"mesh.head.txt",system_par.network_data_charset);
 		
 		head_fw.println("[");
 		head_fw.println();
@@ -247,11 +247,11 @@ public class part
 			primitive_interface p_i=create_primitive_interface(system_par,false);
 			
 			ret_val+="\n\t\tmesh " +response_buffer_object_data(p_i,
-				system_par.max_material_id,file_collector,head_fw,"face",",",head_fw.get_charset());
+					system_par.max_material_id,file_collector,head_fw,"face",",");
 			ret_val+="\n\t\tedge " +response_buffer_object_data(p_i,
-				system_par.max_material_id,file_collector,head_fw,"edge",",",head_fw.get_charset());
+					system_par.max_material_id,file_collector,head_fw,"edge",",");
 			ret_val+="\n\t\tpoint "+response_buffer_object_data(p_i,
-				system_par.max_material_id,file_collector,head_fw,"point"," ",head_fw.get_charset());
+					system_par.max_material_id,file_collector,head_fw,"point"," ");
 			
 			p_i.destroy();
 		}
@@ -270,10 +270,10 @@ public class part
 		head_fw.close();
 		
 		boftal=new buffer_object_file_modify_time_and_length(part_mesh,
-				part_temporary_file_directory+"mesh",system_par.local_data_charset);
+				part_temporary_file_directory+"mesh",head_fw.get_charset());
 		
-		create_binary_buffer_object_file.create(system_par.response_block_size,
-				head_fw.get_charset(),system_par.network_data_charset,part_temporary_file_directory+"mesh");
+		create_network_buffer_object_file.create(system_par.response_block_size,
+				head_fw.get_charset(),part_temporary_file_directory+"mesh");
 
 		if(audio_file_name!=null)
 			if(file_reader.is_exist(directory_name+audio_file_name))

@@ -294,8 +294,8 @@ public class engine_kernel
 		debug_information.println();
 
 		start_time=current_time;
-		render_cont.type_part_package=new part_package(not_real_scene_fast_load_flag,process_bar,
-				"create_first_class_package",render_cont,1,system_par,scene_par);
+		render_cont.type_part_package=new part_package(not_real_scene_fast_load_flag,
+				process_bar,"create_first_class_package",render_cont,1,system_par,scene_par);
 		debug_information.println("Create first part package time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
@@ -384,7 +384,7 @@ public class engine_kernel
 		
 		delete_part_files.do_delete(part_list_for_delete_file,process_bar,system_par, scene_par);
 		
-		process_bar.set_process_bar(true,"load_termination", "",1, 1);
+		process_bar.set_process_bar(true,"load_termination","",1,1);
 
 		return;
 	}

@@ -13,6 +13,7 @@ public class graphics_buffer_object_creater
 	private box region_box;
 	
 	private file_writer text_fw;
+	private boolean first_register_flag;
 
 	public graphics_buffer_object_creater(
 			String my_file_name,String my_file_charset,
@@ -25,11 +26,18 @@ public class graphics_buffer_object_creater
 		region_box=null;
 		
 		text_fw=new file_writer(my_file_name,my_file_charset);
+		first_register_flag=true;
+		text_fw.print("[");
 	}
 	private void one_register(String str)
 	{
-		if((create_buffer_object_id&create_buffer_object_bitmap)!=0)
-			text_fw.println(str.replace(',','\t'));
+		if((create_buffer_object_id&create_buffer_object_bitmap)!=0) {
+			if(first_register_flag) {
+				text_fw.print(str);
+				first_register_flag=false;
+			}else
+				text_fw.print(",",str);
+		}
 		create_buffer_object_id+=create_buffer_object_id;
 	}
 	public void register(String x,String y,String z,String w)
@@ -65,11 +73,11 @@ public class graphics_buffer_object_creater
 			if(text_fw.output_data_length<max_file_data_length)
 				return false;
 		}
+		text_fw.print("]");
 		text_fw.close();
 		return true;
 	}
-	public String create_head_data(
-				file_writer head_fw,String material_id,String follow_str)
+	public String create_head_data(file_writer head_fw,String material_id,String follow_str)
 	{
 		if(text_fw.output_data_length<=0){
 			(new File(text_fw.directory_name+text_fw.file_name)).delete();
