@@ -71,6 +71,8 @@ public class part_package
 			public int package_compare(part s,part t)
 			{
 				int ret_val;
+				if((ret_val=s.part_par.process_sequence_id-t.part_par.process_sequence_id)!=0)
+					return ret_val;
 				if((ret_val=s.part_type_id-t.part_type_id)!=0)
 					return ret_val;
 				if((ret_val=s.part_par.part_type_string.compareTo(t.part_par.part_type_string))!=0)
@@ -139,17 +141,17 @@ public class part_package
 		
 		File f;
 		long last_time;
-		boolean need_not_create_flag;
+		boolean create_flag;
 		
 		if((f=new File(package_data_file_name)).exists()){
-			need_not_create_flag=true;
+			create_flag=true;
 			last_time=f.lastModified();
 			file_reader fr=new file_reader(package_data_file_name,system_par.network_data_charset);
 			for(int i=0;i<package_number;i++) {
 				String my_file_name=package_directory_name+"package_"+i+".gzip_text";
 				if(not_real_scene_fast_load_flag)
 					if(new File(my_file_name).lastModified()>=last_time) {
-						need_not_create_flag=false;
+						create_flag=false;
 						break;
 					}
 				package_length[i]	=fr.get_long();
@@ -158,7 +160,7 @@ public class part_package
 				package_flag[i]	 	=fr.get_boolean();
 			}
 			fr.close();
-			if(need_not_create_flag)
+			if(create_flag)
 				return;
 		}
 		exclusive_file_mutex efm=exclusive_file_mutex.lock(
@@ -188,13 +190,13 @@ public class part_package
 			package_file_name[i]=my_package_file_name;
 			package_flag	 [i]=false;
 			
-			need_not_create_flag=true;
+			create_flag=true;
 			for(int j=0,nj=part_package[i].list.size();j<nj;j++)
 				if(part_package[i].list.get(j).boftal.buffer_object_head_last_modify_time>=package_last_time[i]) {
-					need_not_create_flag=false;
+					create_flag=false;
 					break;
 				}
-			if(need_not_create_flag)
+			if(create_flag)
 				continue;
 				
 			debug_information.println("Create part package:	",my_package_file_name);
@@ -233,14 +235,14 @@ public class part_package
 		if(process_bar!=null)
 			process_bar.set_process_bar(false,process_bar_title,"",package_number,package_number);
 
-		need_not_create_flag=true;
+		create_flag=false;
 		last_time=new File(package_data_file_name).lastModified();
 		for(int i=0;i<package_number;i++)
 			if(package_last_time[i]>last_time){
-				need_not_create_flag=false;
+				create_flag=true;
 				break;
 			}
-		if(!need_not_create_flag){
+		if(create_flag){
 			file_writer fw=new file_writer(package_data_file_name,system_par.network_data_charset);
 			for(int i=0;i<package_number;i++)
 				fw.	println("/*	"+i+".package_length	*/	",package_length[i]).

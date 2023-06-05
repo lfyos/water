@@ -217,17 +217,21 @@ public class response_render_component_request
 	private static void response_buffer_object_request(engine_kernel ek,
 		client_information ci,int requesting_number,int max_request_number)
 	{
+		boolean only_request_flag=false;
+		
 		ci.request_response.print(",[");
 		for(int i=requesting_number;i<max_request_number;i++){
 			part_mesh_loader pml=ci.render_buffer.mesh_loader;
-			int request_package[]=pml.get_request_package(ek.process_part_sequence);
-			if(request_package==null)
+			int request_package[];
+			if((request_package=pml.get_request_package(ek.process_part_sequence,only_request_flag))==null)
 				break;
+			only_request_flag=true;
+
 			int part_type_id	=request_package[0];
 			int part_package_id	=request_package[1];
 			
 			String package_file_name;
-			int package_render_part_id[][];
+			ArrayList<int[]> package_render_part_id;
 			long package_length;
 			boolean package_flag;
 			
@@ -235,19 +239,19 @@ public class response_render_component_request
 			default:
 			case 0:
 				package_file_name=ek.render_cont.system_part_package.package_file_name[part_package_id];
-				package_render_part_id=ek.process_part_sequence.system_render_part_id[part_package_id];
+				package_render_part_id=ek.process_part_sequence.system_render_part_id.get(part_package_id);
 				package_length=ek.render_cont.system_part_package.package_length[part_package_id];
 				package_flag=ek.render_cont.system_part_package.package_flag[part_package_id];
 				break;
 			case 1:
 				package_file_name=ek.render_cont.type_part_package.package_file_name[part_package_id];
-				package_render_part_id=ek.process_part_sequence.type_render_part_id[part_package_id];
+				package_render_part_id=ek.process_part_sequence.type_render_part_id.get(part_package_id);
 				package_length=ek.render_cont.type_part_package.package_length[part_package_id];
 				package_flag=ek.render_cont.type_part_package.package_flag[part_package_id];
 				break;
 			case 2:
 				package_file_name=ek.render_cont.scene_part_package.package_file_name[part_package_id];
-				package_render_part_id=ek.process_part_sequence.scene_render_part_id[part_package_id];
+				package_render_part_id=ek.process_part_sequence.scene_render_part_id.get(part_package_id);
 				package_length=ek.render_cont.scene_part_package.package_length[part_package_id];
 				package_flag=ek.render_cont.scene_part_package.package_flag[part_package_id];
 				break;
@@ -255,13 +259,16 @@ public class response_render_component_request
 
 			String package_proxy_url;
 			if((package_proxy_url=ci.get_file_proxy_url(package_file_name,ek.system_par))==null)
-				package_proxy_url=ci.request_url_header+"&command=buffer&operation=buffer_package&package="+part_type_id+"_"+part_package_id;
+				package_proxy_url=ci.request_url_header
+					+"&command=buffer&operation=buffer_package&package="
+					+part_type_id+"_"+part_package_id;
 
 			ci.request_response.print((i<=requesting_number)?"[\"":",[\"",package_proxy_url).
 								print("\",",package_length).
 								print(package_flag?",true,[":",false,[");
-			for(int j=0,nj=package_render_part_id.length;j<nj;j++){
-				int render_id=package_render_part_id[j][0],part_id  =package_render_part_id[j][1];
+			for(int j=0,nj=package_render_part_id.size();j<nj;j++){
+				int render_part_id[]=package_render_part_id.get(j);
+				int render_id=render_part_id[0],part_id =render_part_id[1];
 				part p=ek.render_cont.renders.get(render_id).parts.get(part_id);
 				ci.request_response.print((j<=0)?"[":",[",	p.render_id).
 									print(",",				p.part_id).
@@ -330,32 +337,21 @@ public class response_render_component_request
 			ci.statistics_client.transportation_time_length=1;		
 		ci.statistics_client.caculate_time_length=nanosecond_timer.absolute_nanoseconds()-ci.request_response.request_time;	
 
-		int my_loading_request_number=0,max_loading_request_number=1,index_id;
-		{
-			String str;
-			if((str=ci.request_response.get_parameter("requesting_number"))!=null)
-				if((index_id=str.indexOf("_"))>0){
-					if((my_loading_request_number=Integer.decode(str.substring(0,index_id)))<0)
-						my_loading_request_number=0;
-					str=str.substring(index_id+1);
-					
-					if((index_id=str.indexOf("_"))>0)
-						max_loading_request_number=Integer.decode(str.substring(0,index_id));
-					else
-						max_loading_request_number=Integer.decode(str);
-					str=str.substring(index_id+1);
-					
-					if(max_loading_request_number<1)
-						max_loading_request_number=1;
-				}
-			if(max_loading_request_number>ek.system_par.max_loading_number)
-				max_loading_request_number=ek.system_par.max_loading_number;
-		}
-		
+		int my_loading_request_number=0,max_loading_request_number=ek.system_par.max_loading_number,index_id;
+		String str;
+		if((str=ci.request_response.get_parameter("requesting_number"))!=null)
+			if((index_id=str.indexOf("_"))>0){
+				if((my_loading_request_number=Integer.decode(str.substring(0,index_id)))<0)
+					my_loading_request_number=0;
+				if((max_loading_request_number=Integer.decode(str.substring(index_id+1)))<1)
+					max_loading_request_number=1;
+				if(max_loading_request_number>ek.system_par.max_loading_number)
+					max_loading_request_number=ek.system_par.max_loading_number;
+				ci.render_buffer.mesh_loader.test_request_package(max_loading_request_number);
+			}
+
 		display_data_load_message(ek,ci);
 
-		ci.render_buffer.mesh_loader.test_request_package(max_loading_request_number,max_loading_request_number);
-		
 		ci.statistics_client.start(delay_time_length,my_loading_request_number);
 				
 		ci.request_response.print("[");
