@@ -55,7 +55,6 @@ function construct_render_utility(my_render_instance)
 	};
 	this.load_texture_image=function(my_src,old_texture_object)
 	{
-		var cur=this.render_instance;
 		var gl =this.render_instance.gl;
 		var texture_object=old_texture_object;
 
@@ -74,6 +73,9 @@ function construct_render_utility(my_render_instance)
     		texture_object.state="done";
     		return texture_object;
     	}
+    	
+    	var cur=this.render_instance;
+    	
 		texture_object.image = new Image();
 		texture_object.image.crossOrigin="Anonymous";
 		texture_object.image.onerror= function()
@@ -94,16 +96,16 @@ function construct_render_utility(my_render_instance)
 			cur.gl.bindTexture	(cur.gl.TEXTURE_2D,null);
 			texture_object.state="done";
 	    }; 
-	    cur.append_routine_function(
-	    		function(my_render)
+	    this.render_instance.append_routine_function(
+	    		function(render)
 	    		{
-	    			if(cur.terminate_flag)
+	    			if(render.terminate_flag)
 	    				return true;
-	    			if(cur.buffer_object.test_busy()<=0)
+	    			if(render.buffer_object.test_busy()<=0)
 	    				return true;
 	    			texture_object.state="loading";
 	    			texture_object.image.src=my_src;
-	    			cur.buffer_object.current_loading_mesh_number++;
+	    			render.buffer_object.current_loading_mesh_number++;
 					return false;
 	    		});
 	    texture_object.state="waiting";

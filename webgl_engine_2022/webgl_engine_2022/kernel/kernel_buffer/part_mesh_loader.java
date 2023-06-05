@@ -27,21 +27,21 @@ public class part_mesh_loader
 				package_loaded_flag[i][j]=false;
 		
 		request_package_id=new int[5][];
-		
+
 		request_number=0;
 		package_pointer=0;
 	}
-	public void test_request_package(int new_length,int max_length)
+	public void test_request_package(int max_length)
 	{
-		if(new_length>max_length)
-			new_length=max_length;
-		if(new_length<1)
-			new_length=1;
-		if(request_package_id.length!=new_length)
-			request_package_id=new int[new_length][];
-		request_number=0;
+		if(request_package_id.length!=max_length){
+			int bak[][]=request_package_id;
+			request_package_id=new int[max_length][];
+			request_number=(request_number>max_length)?max_length:request_number;
+			for(int i=0;i<request_number;i++)
+				request_package_id[i]=bak[i];
+		}
 	}
-	public int[] get_request_package(part_process_sequence pps)
+	public int[]get_request_package(part_process_sequence pps,boolean only_request_flag)
 	{
 		while(request_number>0){
 			int part_type_id=request_package_id[0][0];
@@ -50,26 +50,28 @@ public class part_mesh_loader
 				request_package_id[i]=request_package_id[j];
 			request_package_id[--request_number]=null;
 			
-			if(!(package_loaded_flag[part_type_id][package_id])){
-				package_loaded_flag[part_type_id][package_id]=true;
-				return new int[] {part_type_id,package_id};
-			}
+			if(package_loaded_flag[part_type_id][package_id])
+				continue;
+			package_loaded_flag[part_type_id][package_id]=true;
+			return new int[] {part_type_id,package_id};
 		}
-		for(int package_number=pps.process_package_sequence.length;package_pointer<package_number;){
-			int part_type_id=pps.process_package_sequence[package_pointer  ][0];
-			int package_id	=pps.process_package_sequence[package_pointer++][1];
-			
-			if(!(package_loaded_flag[part_type_id][package_id])){
-				package_loaded_flag[part_type_id][package_id]=true;
-				return new int[] {part_type_id,package_id};
-			}
-		}
-		return null;
+		if(only_request_flag)
+			return null;
+		if(package_pointer>=pps.process_package_sequence.size())
+			return null;
+		int p[]=pps.process_package_sequence.get(package_pointer++);
+		int part_type_id=p[0],package_id=p[1];
+		if(package_loaded_flag[part_type_id][package_id])
+			return null;
+		package_loaded_flag[part_type_id][package_id]=true;
+		
+		return new int[] {part_type_id,package_id};
 	}
 	public boolean load_test(part_process_sequence pps,part p)
 	{
 		if(package_loaded_flag[p.part_type_id][p.part_package_id])
 			return false;
+		
 		for(int i=0;i<request_number;i++)
 			if(request_package_id[i][0]==p.part_type_id)
 				if(request_package_id[i][1]==p.part_package_id)
@@ -109,7 +111,6 @@ public class part_mesh_loader
 				return true;
 			request_package_id[request_package_id.length-1]=new int[]{p.part_type_id,p.part_package_id};
 		}
-		
 		for(int i=request_number-1;i>0;i--){
 			int part_type_id_1	=request_package_id[i-1][0];
 			int package_id_1	=request_package_id[i-1][1];
