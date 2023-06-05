@@ -33,9 +33,8 @@ public class engine_kernel_container
 	}
 	public engine_kernel_container(String my_scene_name,String my_link_name,
 			client_request_response request_response,system_parameter system_par,
-			String client_scene_file_name,String client_scene_file_charset,
-			render_container original_render,part_loader_container my_part_loader_cont,
-			engine_statistics statistics_engine)
+			String client_scene_file_name,String client_scene_file_charset,render_container original_render,
+			part_loader_container my_part_loader_cont,engine_statistics statistics_engine)
 	{
 		engine_kernel_create_parameter create_parameter=new engine_kernel_create_parameter(
 				my_scene_name,my_link_name,client_scene_file_name,client_scene_file_charset,system_par);
@@ -46,7 +45,8 @@ public class engine_kernel_container
 			ek=null;
 			debug_information.println("Cann't Create scene:	",my_scene_name+"	"+my_link_name);
 		}else {
-			ek=new engine_kernel(create_parameter,request_response,system_par,original_render,my_part_loader_cont);
+			ek=new engine_kernel(create_parameter,request_response,
+						system_par,original_render,my_part_loader_cont);
 			create_parameter.scene_name=my_scene_name;
 			create_parameter.link_name=my_link_name;
 		}

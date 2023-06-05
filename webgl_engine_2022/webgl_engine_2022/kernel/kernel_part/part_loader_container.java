@@ -137,12 +137,12 @@ public class part_loader_container
 		}
 	}
 	
-	private boolean fast_load_routine(boolean not_real_scene_fast_load_flag,long last_modified_time,
+	private boolean fast_load_routine(long last_modified_time,
 			String part_temporary_file_directory,part my_part,part my_copy_from_part,
 			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
 			buffer_object_file_modify_time_and_length_container boftal_container)
 	{
-		if((scene_par!=null)&&(boftal_container!=null)&&(!not_real_scene_fast_load_flag)){
+		if((scene_par!=null)&&(boftal_container!=null)){
 			buffer_object_file_modify_time_and_length my_boftal;
 			String boftal_token_str=part_temporary_file_directory.substring(
 					system_par.proxy_par.proxy_data_root_directory_name.length());
@@ -189,28 +189,25 @@ public class part_loader_container
 
 		return true;
 	}
-	public void load_part_mesh_head_only(
-			part my_part,part_container_for_part_search my_pcps,
-			system_parameter my_system_par,scene_parameter my_scene_par)
+	public void load_part_mesh_head_only(part my_part,
+			part_container_for_part_search my_pcps,system_parameter my_system_par,scene_parameter my_scene_par)
 	{
-		if(my_part.is_normal_part()){
-			exclusive_file_mutex efm=null;
-			if(my_part.part_par.do_load_lock_flag) {
-				String my_directory_name=file_directory.part_file_directory(my_part,my_system_par,my_scene_par);
-				String msg="wait for load_mesh_and_create_buffer_object_and_material_file:	";
-				msg+=my_part.directory_name+my_part.mesh_file_name;
-				efm=exclusive_file_mutex.lock(my_directory_name+"part.lock",msg);
-			}
-			if(my_part.part_mesh!=null)
-				my_part.part_mesh.destroy();
-			my_part.part_mesh=my_part.call_part_driver_for_load_part_mesh(null,my_pcps,my_system_par,my_scene_par);
-			if(efm!=null)
-				efm.unlock();
-		}
+		if(!(my_part.is_normal_part()))
+			return;
+		String part_temporary_file_directory=file_directory.part_file_directory(my_part,my_system_par,my_scene_par);
+		String lock_file_name=file_reader.separator(part_temporary_file_directory+"part.lock");
+		
+		exclusive_file_mutex efm=exclusive_file_mutex.lock(lock_file_name,
+				"wait for load_part_mesh_head_only:	"+my_part.directory_name+my_part.mesh_file_name);
+		
+		if(my_part.part_mesh!=null)
+			my_part.part_mesh.destroy();
+		my_part.part_mesh=my_part.call_part_driver_for_load_part_mesh(null,my_pcps,my_system_par,my_scene_par);
+		
+		efm.unlock();
 	}
 	
-	public void load(part my_part,part my_copy_from_part,
-			boolean not_real_scene_fast_load_flag,long last_modified_time,
+	public void load(part my_part,part my_copy_from_part,long last_modified_time,
 			system_parameter system_par,scene_parameter scene_par,ArrayList<part> part_list_for_delete_file,
 			ArrayList<part_loader> already_loaded_part,part_container_for_part_search pcps,
 			buffer_object_file_modify_time_and_length_container boftal_container)
@@ -218,8 +215,8 @@ public class part_loader_container
 		String part_temporary_file_directory=file_directory.part_file_directory(my_part,system_par,scene_par);
 		String lock_file_name=file_reader.separator(part_temporary_file_directory+"part.lock");
 		
-		if(fast_load_routine(not_real_scene_fast_load_flag,last_modified_time,
-			part_temporary_file_directory,my_part,my_copy_from_part,system_par,scene_par,pcps,boftal_container))
+		if(fast_load_routine(last_modified_time,part_temporary_file_directory,
+				my_part,my_copy_from_part,system_par,scene_par,pcps,boftal_container))
 		{
 			if(my_part.part_mesh!=null)
 				my_part.part_mesh.free_memory();

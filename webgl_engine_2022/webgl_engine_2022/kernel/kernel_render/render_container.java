@@ -78,7 +78,7 @@ public class render_container
 		return null;
 	}
 	
-	public ArrayList<part> part_array_list(boolean part_mesh_flag,int part_type_id)
+	public ArrayList<part> part_array_list(int part_type_id)
 	{
 		ArrayList<part> ret_val=new ArrayList<part>();
 
@@ -95,12 +95,12 @@ public class render_container
 				part p;
 				if((p=r.parts.get(j))==null)
 					continue;
-				if((p.part_mesh!=null)||part_mesh_flag) {
-					if(part_type_id>=0)
-						if(p.part_type_id!=part_type_id)
-							continue;
-						ret_val.add(p);
-				}
+				if(p.part_mesh==null)
+					continue;
+				if(part_type_id>=0)
+					if(p.part_type_id!=part_type_id)
+						continue;
+				ret_val.add(p);
 			}
 		}
 		return ret_val;
@@ -111,8 +111,7 @@ public class render_container
 			p=renders.get(p.render_id).parts.get(p.part_from_id);
 		return p;
 	}
-	public void load_part(boolean not_real_scene_fast_load_flag,
-			int part_type,int part_flag,part_loader_container part_loader_cont,
+	public void load_part(int part_type,int part_flag,part_loader_container part_loader_cont,
 			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
 			buffer_object_file_modify_time_and_length_container boftal_container,
 			String process_bar_title,client_process_bar process_bar,ArrayList<part> part_list_for_delete_file)
@@ -169,8 +168,8 @@ public class render_container
 							
 				if((my_part_flag&part_flag)==0)
 					continue;
-				part_loader_cont.load(p,get_copy_from_part(p),not_real_scene_fast_load_flag,-1,
-					system_par,scene_par,part_list_for_delete_file,already_loaded_part,pcps,boftal_container);
+				part_loader_cont.load(p,get_copy_from_part(p),-1,system_par,scene_par,
+						part_list_for_delete_file,already_loaded_part,pcps,boftal_container);
 							
 				if(process_bar!=null)
 					process_bar.set_process_bar(false,process_bar_title,"",load_number++,(all_number<1)?1:all_number);
@@ -240,8 +239,7 @@ public class render_container
 			pcps.append_one_part(add_part);
 		}
 	}
-	private void load_one_shader(boolean not_real_scene_fast_load_flag,
-			component_load_source_container component_load_source_cont,
+	private void load_one_shader(component_load_source_container component_load_source_cont,
 			part_container_for_part_search pcps,String load_sub_directory_name,
 			String driver_name,String render_list_file_name,String file_system_charset,String shader_file_name,
 			int part_type_id,system_parameter system_par,scene_parameter scene_par,
@@ -320,7 +318,7 @@ public class render_container
 			debug_information.println("part parameter file:		",		part_parameter_file_name);
 
 			int render_id=(renders==null)?0:renders.size();
-			ren.add_part(not_real_scene_fast_load_flag,component_load_source_cont,
+			ren.add_part(component_load_source_cont,
 				pcps,ren.driver,part_type_id,part_par,system_par,get_part_list_result[0],
 				(get_part_list_result.length>1)?get_part_list_result[1]:f_render_list.get_charset(),
 				"part_mesh_"+Integer.toString(render_id)+"_",request_response);
@@ -342,7 +340,7 @@ public class render_container
 		ren.destroy();
 		return;
 	}
-	public void load_shader(boolean not_real_scene_fast_load_flag,
+	public void load_shader(
 		component_load_source_container component_load_source_cont,
 		part_container_for_part_search pcps,long last_modify_time,
 		String shader_file_name,String shader_file_charset,String load_sub_directory_name,
@@ -396,7 +394,7 @@ public class render_container
 			if(f_shader.lastModified_time>f.lastModified())
 				f.setLastModified(f_shader.lastModified_time);
 
-			load_one_shader(not_real_scene_fast_load_flag,
+			load_one_shader(
 				component_load_source_cont,pcps,load_sub_directory_name,
 				driver_name,render_list_file_name[0],render_list_file_name[1],
 				f_shader.directory_name+f_shader.file_name,
