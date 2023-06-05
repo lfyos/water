@@ -118,9 +118,12 @@ public class client_interface
 		
 		engine_call_result ecr=null;
 		try{
-			ecr=ekcic.get_engine_result(cpb,engine_container.component_load_source_cont,
+			ecr=ekcic.get_engine_result(
+					cpb,engine_container.system_boftal_container,
+					engine_container.component_load_source_cont,
 					client_scene_file_name,client_scene_file_charset,
-					request_response,delay_time_length,statistics_user,statistics_engine);
+					request_response,delay_time_length,statistics_user,
+					statistics_engine);
 		}catch(Exception e) {
 			ecr=null;
 			debug_information.println("ec[channel_id].engine_kernel_link_list.get_engine_result fail");
@@ -158,7 +161,8 @@ public class client_interface
 		}
 		return ecr;
 	}
-	private engine_call_result create_engine(engine_interface engine_container,ReentrantLock my_client_interface_lock,
+	private engine_call_result create_engine(
+			engine_interface engine_container,ReentrantLock my_client_interface_lock,
 			client_request_response request_response,long delay_time_length,engine_statistics statistics_engine)
 	{
 		debug_information.println();
@@ -193,8 +197,8 @@ public class client_interface
 		debug_information.println("default_parameter_directory	:	",		system_par.default_parameter_directory);
 		debug_information.println("proxy_data_root_directory_name	:	",	system_par.proxy_par.proxy_data_root_directory_name);
 		
-		engine_call_result ret_val=create_engine_routine(engine_container,
-				my_client_interface_lock,request_response,delay_time_length,statistics_engine);
+		engine_call_result ret_val=create_engine_routine(engine_container,my_client_interface_lock,
+				request_response,delay_time_length,statistics_engine);
 		
 		now = Calendar.getInstance();  
 		long end_time=new Date().getTime();
@@ -258,7 +262,8 @@ public class client_interface
 		
 		my_client_interface_lock.unlock();
 		try{
-			ecr=ecn.ek_ci.get_engine_result(get_process_bar(request_response),
+			ecr=ecn.ek_ci.get_engine_result(
+					get_process_bar(request_response),engine_container.system_boftal_container,
 					engine_container.component_load_source_cont,client_scene_file_name,client_scene_file_charset,
 					request_response,delay_time_length,statistics_user,statistics_engine);
 		}catch(Exception e){
@@ -321,8 +326,8 @@ public class client_interface
 		
 		engine_call_result ret_val=null;
 		try{
-			ret_val=execute_system_call_routine(channel_id,
-					request_response,engine_container,statistics_engine,my_client_interface_lock);
+			ret_val=execute_system_call_routine(channel_id,request_response,
+					engine_container,statistics_engine,my_client_interface_lock);
 		}catch(Exception e) {
 			ret_val=null;
 			debug_information.println("execute_system_call of client_interface_base fail");

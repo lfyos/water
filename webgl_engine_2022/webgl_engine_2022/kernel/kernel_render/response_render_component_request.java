@@ -233,7 +233,6 @@ public class response_render_component_request
 			String package_file_name;
 			ArrayList<int[]> package_render_part_id;
 			long package_length;
-			boolean package_flag;
 			
 			switch(part_type_id){
 			default:
@@ -241,31 +240,27 @@ public class response_render_component_request
 				package_file_name=ek.render_cont.system_part_package.package_file_name[part_package_id];
 				package_render_part_id=ek.process_part_sequence.system_render_part_id.get(part_package_id);
 				package_length=ek.render_cont.system_part_package.package_length[part_package_id];
-				package_flag=ek.render_cont.system_part_package.package_flag[part_package_id];
 				break;
 			case 1:
 				package_file_name=ek.render_cont.type_part_package.package_file_name[part_package_id];
 				package_render_part_id=ek.process_part_sequence.type_render_part_id.get(part_package_id);
 				package_length=ek.render_cont.type_part_package.package_length[part_package_id];
-				package_flag=ek.render_cont.type_part_package.package_flag[part_package_id];
 				break;
 			case 2:
 				package_file_name=ek.render_cont.scene_part_package.package_file_name[part_package_id];
 				package_render_part_id=ek.process_part_sequence.scene_render_part_id.get(part_package_id);
 				package_length=ek.render_cont.scene_part_package.package_length[part_package_id];
-				package_flag=ek.render_cont.scene_part_package.package_flag[part_package_id];
 				break;
 			}
 
 			String package_proxy_url;
 			if((package_proxy_url=ci.get_file_proxy_url(package_file_name,ek.system_par))==null)
-				package_proxy_url=ci.request_url_header
-					+"&command=buffer&operation=buffer_package&package="
-					+part_type_id+"_"+part_package_id;
+				package_proxy_url =ci.request_url_header;
+				package_proxy_url+="&command=buffer&operation=buffer_package&package=";
+				package_proxy_url+=(part_type_id+"_"+part_package_id);
 
-			ci.request_response.print((i<=requesting_number)?"[\"":",[\"",package_proxy_url).
-								print("\",",package_length).
-								print(package_flag?",true,[":",false,[");
+			ci.request_response.print((i<=requesting_number)?"[\"":",[\"").
+				print(package_proxy_url).print("\",",package_length).print(",[");
 			for(int j=0,nj=package_render_part_id.size();j<nj;j++){
 				int render_part_id[]=package_render_part_id.get(j);
 				int render_id=render_part_id[0],part_id =render_part_id[1];

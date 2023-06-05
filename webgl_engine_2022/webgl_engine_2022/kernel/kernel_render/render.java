@@ -122,8 +122,7 @@ public class render
 		
 		return;
 	}
-	public void add_part(boolean not_real_scene_fast_load_flag,
-			component_load_source_container component_load_source_cont,
+	public void add_part(component_load_source_container component_load_source_cont,
 			part_container_for_part_search pcps,render_driver r_driver,int part_type_id,
 			part_parameter part_par,system_parameter system_par,
 			String file_name,String file_charset,String pre_buffer_object_file_name,
@@ -153,17 +152,16 @@ public class render
 			description_file_name	=file_reader.separator(description_file_name);
 			audio_file_name			=file_reader.separator(audio_file_name);
 				
-			if(not_real_scene_fast_load_flag) {
-				File mesh_f=new File(f.directory_name+mesh_file_name);
-				if(mesh_f.exists())
-					if(mesh_f.lastModified()<f.lastModified_time)
-						mesh_f.setLastModified(f.lastModified_time);
+			File mesh_f=new File(f.directory_name+mesh_file_name);
+			if(mesh_f.exists())
+				if(mesh_f.lastModified()<f.lastModified_time)
+					mesh_f.setLastModified(f.lastModified_time);
 				
-				File material_f=new File(f.directory_name+material_file_name);
-				if(material_f.exists())
-					if(material_f.lastModified()<f.lastModified_time)
-						material_f.setLastModified(f.lastModified_time);
-			}
+			File material_f=new File(f.directory_name+material_file_name);
+			if(material_f.exists())
+				if(material_f.lastModified()<f.lastModified_time)
+					material_f.setLastModified(f.lastModified_time);
+			
 			part my_part=new part(part_type_id,false,part_par,f.directory_name,f.get_charset(),
 					(user_name==null)				?"":user_name,
 					(system_name==null)				?"":system_name,

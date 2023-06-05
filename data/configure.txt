@@ -1,7 +1,7 @@
 /*	local_data_charset														*/		GBK
 /*	network_data_charset													*/		UTF-8
-/*	text_class_charset		text_jar_file_charset							*/		GBK		GBK
-/*	js_class_charset		js_jar_file_charset								*/		UTF-8	UTF-8
+/*	text_class_charset			text_jar_file_charset						*/		GBK			GBK
+/*	js_class_charset			js_jar_file_charset							*/		UTF-8		UTF-8
 
 /*	user_file_name															*/		users/users.txt
 /*	shader_file_name														*/		shaders/shaders.txt
@@ -9,16 +9,16 @@
 /*	language_change_file_name												*/		language_change.txt
 /*	switch_server_url_file_name												*/		switch_server_url.txt
 
-/*	normal_loading_number													*/		10
-/*	max_loading_number														*/		20
+/*	normal_loading_number													*/		5
+/*	max_loading_number														*/		10
 /*	max_material_id															*/		100
 
 /*	response_block_size														*/		65536
 
-/*	engine_expire_time_length		unit:nanosecond							*/		 60000000000
-/*	engine_touch_time_length		unit:nanosecond							*/		 10000000000
-/*	download_start_time_length		unit:nanosecond							*/		  5000000000
-/*	download_minimal_time_length	unit:nanosecond							*/		  2000000000
+/*	engine_expire_time_length		unit:nanosecond							*/		60000000000
+/*	engine_touch_time_length		unit:nanosecond							*/		10000000000
+/*	download_start_time_length		unit:nanosecond							*/		 5000000000
+/*	download_minimal_time_length	unit:nanosecond							*/		 2000000000
 
 /*	create_engine_concurrent_number											*/		15
 /*	create_engine_sleep_time_length_scale									*/		1.25

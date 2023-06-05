@@ -73,9 +73,6 @@ file_initialization_3+chinese					19.文件初始化_3
 file_initialization_4+english					19.file_initialization_4 
 file_initialization_4+chinese					19.文件初始化_4
 
-create_buffer_object_file+english				20.create_buffer_file_information
-create_buffer_object_file+chinese				20.生成缓冲文件信息
-
 delete_part_file+english						21.delete_part_file
 delete_part_file+chinese						21.删除零件数据文件
 

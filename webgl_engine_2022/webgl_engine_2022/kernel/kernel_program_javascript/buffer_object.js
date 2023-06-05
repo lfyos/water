@@ -514,8 +514,7 @@ function construct_buffer_object(my_gl,my_parameter)
 		}
 	};
 	
-	this.request_buffer_head_package=async function(
-			package_proxy_url,package_length,package_flag,package_data,render)
+	this.request_buffer_head_package=async function(package_proxy_url,package_length,package_data,render)
 	{
 		this.current_loading_mesh_number++;
 		
@@ -534,7 +533,7 @@ function construct_buffer_object(my_gl,my_parameter)
 			if(render.terminate_flag)
 				return;
 			alert("parse request_buffer_head_package data fail: "+e.toString());
-			alert(initialization_url);
+			alert(package_proxy_url);
 			this.current_loading_mesh_number--;
 			return;
 		}
@@ -546,8 +545,7 @@ function construct_buffer_object(my_gl,my_parameter)
 		if(this.destroy_flag)
 			return;
 		
-		this.process_buffer_head_package(package_length,package_data,
-			package_flag?[head_data_array]:head_data_array,render);
+		this.process_buffer_head_package(package_length,package_data,head_data_array,render);
 	}
 	
 	this.process_buffer_head_request_queue=function(render)
@@ -564,10 +562,9 @@ function construct_buffer_object(my_gl,my_parameter)
 			var p=this.buffer_head_request_queue.shift();
 			var package_proxy_url	=p[0];
 			var package_length		=p[1];
-			var package_flag		=p[2];
-			var package_data		=p[3];
+			var package_data		=p[2];
 
-			this.request_buffer_head_package(package_proxy_url,package_length,package_flag,package_data,render);
+			this.request_buffer_head_package(package_proxy_url,package_length,package_data,render);
 		}
 	}
 };

@@ -186,8 +186,6 @@ public class create_assemble_part
 				
 				false,
 				
-				p.part_par.do_load_lock_flag,
-				
 				p.part_par.clear_buffer_head_file_flag,
 				p.part_par.clear_buffer_boftal_file_flag,
 				p.part_par.clear_model_file_flag,
@@ -197,8 +195,7 @@ public class create_assemble_part
 	
 	public ArrayList<part> top_box_part;
 	
-	public create_assemble_part(
-			boolean not_real_scene_fast_load_flag,ArrayList<part>part_list_for_delete_file,
+	public create_assemble_part(ArrayList<part>part_list_for_delete_file,
 			client_request_response request_response,component root_component,
 			double expand_ratio,double left_ratio,double create_top_part_assembly_precision2,
 			double create_top_part_discard_precision2,double discard_top_part_component_precision2,
@@ -311,8 +308,9 @@ public class create_assemble_part
 				render_cont.renders.get(assemble_part.render_id).delete_last_part();
 				continue;
 			}
-			part_loader_cont.load(add_part,render_cont.get_copy_from_part(add_part),not_real_scene_fast_load_flag,
-				last_modified_time,system_par,scene_par,part_list_for_delete_file,already_loaded_part,pcps,boftal_container);
+			part_loader_cont.load(add_part,render_cont.get_copy_from_part(add_part),
+				last_modified_time,system_par,scene_par,part_list_for_delete_file,
+				already_loaded_part,pcps,boftal_container);
 			top_box_part.add(add_part_number++,add_part);
 			create_part_number+=my_create_part_number;	
 			

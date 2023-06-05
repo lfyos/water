@@ -10,6 +10,7 @@ import kernel_component.component_load_source_container;
 import kernel_interface.client_process_bar;
 import kernel_interface.user_statistics;
 import kernel_network.client_request_response;
+import kernel_part.buffer_object_file_modify_time_and_length_container;
 
 public class engine_kernel_and_client_information_container
 {
@@ -64,6 +65,7 @@ public class engine_kernel_and_client_information_container
 	}
 	private engine_call_result get_engine_result_routine(
 			component_load_source_container component_load_source_cont,client_process_bar process_bar,
+			buffer_object_file_modify_time_and_length_container system_boftal_container,
 			String client_scene_file_name,String client_scene_file_charset,
 			client_request_response my_request_response,long delay_time_length,
 			user_statistics statistics_user,engine_statistics statistics_engine)
@@ -77,7 +79,8 @@ public class engine_kernel_and_client_information_container
 			engine_kernel_cont.initilization_flag=false;
 			if(engine_kernel_cont.ek.component_cont==null) {
 				component_load_source_cont=new component_load_source_container(component_load_source_cont);
-				engine_kernel_cont.ek.load(component_load_source_cont,my_request_response,process_bar);
+				engine_kernel_cont.ek.load(component_load_source_cont,
+						my_request_response,process_bar,system_boftal_container);
 				if(engine_kernel_cont.ek.component_cont.root_component!=null) {
 					statistics_engine.update_kernel_component_number(1,
 							engine_kernel_cont.ek.component_cont.root_component.component_id+1);
@@ -137,6 +140,7 @@ public class engine_kernel_and_client_information_container
 			engine_kernel_cont.ek.scene_par.scene_cors_string);
 	}
 	public engine_call_result get_engine_result(client_process_bar process_bar,
+			buffer_object_file_modify_time_and_length_container system_boftal_container,
 			component_load_source_container component_load_source_cont,
 			String client_scene_file_name,String client_scene_file_charset,
 			client_request_response my_request_response,long delay_time_length,
@@ -147,7 +151,8 @@ public class engine_kernel_and_client_information_container
 		if((my_engine_kernel_container_lock=engine_kernel_cont.engine_kernel_container_lock)!=null){
 			my_engine_kernel_container_lock.lock();
 			try{
-				ret_val=get_engine_result_routine(component_load_source_cont,process_bar,
+				ret_val=get_engine_result_routine(
+						component_load_source_cont,process_bar,system_boftal_container,
 						client_scene_file_name,client_scene_file_charset,my_request_response,
 						delay_time_length,statistics_user,statistics_engine);
 			}catch(Exception e){

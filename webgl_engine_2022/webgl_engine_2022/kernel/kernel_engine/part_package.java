@@ -18,21 +18,18 @@ public class part_package
 {
 	public String	package_file_name[];
 	public long		package_length[],package_last_time[];
-	public boolean	package_flag[];
 	
 	public void destroy()
 	{
 		package_file_name	=null;
 		package_length		=null;
 		package_last_time	=null;
-		package_flag		=null;
 	}
 	public part_package()
 	{
 		package_file_name	=new String[0];
 		package_length		=new long[0];
 		package_last_time	=new long[0];
-		package_flag		=new boolean[0];
 	}
 	public part_package(part_package pp)
 	{
@@ -48,13 +45,10 @@ public class part_package
 		for(int i=0,ni=package_last_time.length;i<ni;i++)
 			package_last_time[i]=pp.package_last_time[i];
 		
-		package_flag=new boolean[pp.package_flag.length];
-		for(int i=0,ni=package_flag.length;i<ni;i++)
-			package_flag[i]=pp.package_flag[i];
 	}
-	public part_package(boolean not_real_scene_fast_load_flag,
-			client_process_bar process_bar,String process_bar_title,render_container rc,
-			int part_type_id,system_parameter system_par,scene_parameter scene_par)
+	public part_package(
+			client_process_bar process_bar,String package_process_bar_title,String boftal_process_bar_title,
+			render_container rc,int part_type_id,system_parameter system_par,scene_parameter scene_par)
 	{
 		class part_arraylist
 		{
@@ -124,79 +118,64 @@ public class part_package
 				}
 			}
 		};
-		
+
 		debug_information.println("Begin create part package");
 		
-		part_arraylist part_package[]=new part_package_collector(
-			rc.part_array_list(true, part_type_id),system_par).part_package;
-		int package_number=part_package.length;
-				
+		part_package_collector ppc=new part_package_collector(rc.part_array_list(part_type_id),system_par);
+		
+		int package_number=ppc.part_package.length;
+
 		package_length	 =new long	 [package_number];
 		package_last_time=new long	 [package_number];
 		package_file_name=new String [package_number];
-		package_flag	 =new boolean[package_number];
 				
 		String package_directory_name=file_directory.system_package_directory(part_type_id,system_par,scene_par);
 		String package_data_file_name=package_directory_name+"package_data.txt";
+		String boftal_data_file_name =package_directory_name+"boftal_data.txt";
 		
-		File f;
-		long last_time;
-		boolean create_flag;
+		File package_f=new File(package_data_file_name);
+		File boftal_f=new File(boftal_data_file_name);
+		long last_time=package_f.lastModified();
 		
-		if((f=new File(package_data_file_name)).exists()){
-			create_flag=true;
-			last_time=f.lastModified();
-			file_reader fr=new file_reader(package_data_file_name,system_par.network_data_charset);
+		if((package_f.exists())&&(boftal_f.exists())){
+			boolean not_create_flag=true;
+			file_reader fr=new file_reader(package_data_file_name,system_par.local_data_charset);
 			for(int i=0;i<package_number;i++) {
-				String my_file_name=package_directory_name+"package_"+i+".gzip_text";
-				if(not_real_scene_fast_load_flag)
-					if(new File(my_file_name).lastModified()>=last_time) {
-						create_flag=false;
-						break;
-					}
+				String my_package_file_name=package_directory_name+"package_"+i+".gzip_text";
+				if(new File(my_package_file_name).lastModified()>=last_time) {
+					not_create_flag=false;
+					break;
+				}
 				package_length[i]	=fr.get_long();
 				package_last_time[i]=fr.get_long();
-				package_file_name[i]=my_file_name;
-				package_flag[i]	 	=fr.get_boolean();
+				package_file_name[i]=my_package_file_name;
 			}
 			fr.close();
-			if(create_flag)
+			if(not_create_flag) 
 				return;
 		}
 		exclusive_file_mutex efm=exclusive_file_mutex.lock(
 			package_directory_name+"package.lock","wait for create scene package:	"+package_directory_name);
 		
-		for(int i=0,package_id=0;i<package_number;i++){
+		for(int i=0;i<package_number;i++){
 			if(process_bar!=null)
-				process_bar.set_process_bar((i<=0),process_bar_title,"",i,package_number);
-
-			if(part_package[i].list.size()==1){
-				String my_package_file_name=file_directory.part_file_directory(
-						part_package[i].list.get(0),system_par,scene_par)+"mesh.head.gzip_text";
-				f=new File(my_package_file_name);
-				package_length[i]=f.length();
-				package_last_time[i]=f.lastModified();
-				package_file_name[i]=my_package_file_name;
-				package_flag	 [i]=true;
-				continue;
-			}
-
-			String my_tmp_file_name		=package_directory_name+"package_"+(package_id  )+".tmp";
-			String my_package_file_name	=package_directory_name+"package_"+(package_id++)+".gzip_text";
-			f=new File(my_package_file_name);
+				process_bar.set_process_bar((i<=0),package_process_bar_title,"",i,package_number);
+			
+			String my_tmp_file_name		=package_directory_name+"package_"+i+".tmp";
+			String my_package_file_name	=package_directory_name+"package_"+i+".gzip_text";
+			File f=new File(my_package_file_name);
 	
 			package_length[i]   =f.length();
 			package_last_time[i]=f.lastModified();
 			package_file_name[i]=my_package_file_name;
-			package_flag	 [i]=false;
 			
-			create_flag=true;
-			for(int j=0,nj=part_package[i].list.size();j<nj;j++)
-				if(part_package[i].list.get(j).boftal.buffer_object_head_last_modify_time>=package_last_time[i]) {
-					create_flag=false;
+			boolean not_create_flag=true;
+			for(int j=0,nj=ppc.part_package[i].list.size();j<nj;j++)
+				if(ppc.part_package[i].list.get(j).boftal.buffer_object_head_last_modify_time>=package_last_time[i]) {
+					not_create_flag=false;
 					break;
 				}
-			if(create_flag)
+			if(not_create_flag)
 				continue;
 				
 			debug_information.println("Create part package:	",my_package_file_name);
@@ -204,8 +183,8 @@ public class part_package
 			file_writer fw=new file_writer(my_package_file_name,system_par.network_data_charset);
 			fw.println("[");
 	
-			for(int j=0,nj=part_package[i].list.size();j<nj;j++) {
-				part p=part_package[i].list.get(j);
+			for(int j=0,nj=ppc.part_package[i].list.size();j<nj;j++) {
+				part p=ppc.part_package[i].list.get(j);
 				debug_information.print  ("part user_name:	",	p.user_name);
 				debug_information.print  ("		part type:	",	p.part_par.part_type_string);
 				if(p.is_normal_part())
@@ -227,33 +206,39 @@ public class part_package
 					new File(my_tmp_file_name),system_par.response_block_size,"gzip");
 			file_writer.file_rename(my_tmp_file_name,my_package_file_name);
 							
-			f=new File(my_package_file_name);
-			package_length[i]=f.length();
-			package_last_time[i]=f.lastModified();
+			package_f=new File(my_package_file_name);
+			package_length[i]=package_f.length();
+			package_last_time[i]=package_f.lastModified();
 		}
 
 		if(process_bar!=null)
-			process_bar.set_process_bar(false,process_bar_title,"",package_number,package_number);
+			process_bar.set_process_bar(false,package_process_bar_title,"",package_number,package_number);
 
-		create_flag=false;
-		last_time=new File(package_data_file_name).lastModified();
-		for(int i=0;i<package_number;i++)
-			if(package_last_time[i]>last_time){
-				create_flag=true;
-				break;
-			}
-		if(create_flag){
-			file_writer fw=new file_writer(package_data_file_name,system_par.network_data_charset);
+		boolean do_create_flag=false;
+		if((!package_f.exists())||(!boftal_f.exists()))
+			do_create_flag=true;
+		else {
+			last_time=package_f.lastModified();
+			for(int i=0;i<package_number;i++)
+				if(package_last_time[i]>last_time) {
+					do_create_flag=true;
+					break;
+				}
+		}
+		if(do_create_flag) {
+			file_writer fw=new file_writer(package_data_file_name,system_par.local_data_charset);
 			for(int i=0;i<package_number;i++)
 				fw.	println("/*	"+i+".package_length	*/	",package_length[i]).
 					println("/*	"+i+".package_last_time	*/	",package_last_time[i]).
-					println("/*	"+i+".package_flag		*/	",package_flag[i]?"true":"false").
 					println();
 			fw.close();
+			
+			new part_boftal_creator(boftal_data_file_name,system_par.local_data_charset,
+					ppc.data_array,part_type_id,system_par,scene_par,process_bar,boftal_process_bar_title);
 		}
 		
 		efm.unlock();
-
+		
 		debug_information.println("End create part package");
 		
 		return;

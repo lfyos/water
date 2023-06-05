@@ -9,10 +9,12 @@ import kernel_common_class.debug_information;
 import kernel_component.component_load_source_container;
 import kernel_engine.part_package;
 import kernel_engine.system_parameter;
+import kernel_file_manager.file_directory;
 import kernel_engine.engine_statistics;
 import kernel_engine.engine_kernel_container;
 import kernel_network.client_request_response;
 import kernel_part.part;
+import kernel_part.buffer_object_file_modify_time_and_length_container;
 import kernel_part.part_loader_container;
 import kernel_part.part_container_for_part_search;
 import kernel_engine.delete_part_files;
@@ -54,31 +56,37 @@ public class engine_interface
 	private balance_tree bt;
 	public component_load_source_container component_load_source_cont;
 	private render_container original_render;
+	public buffer_object_file_modify_time_and_length_container system_boftal_container;
 	private part_loader_container part_loader_cont;
 	private ReentrantLock client_interface_lock;
 	
 	private void load_render_container(client_request_response request_response,system_parameter system_par)
 	{
 		int part_type_id=0;
-		ArrayList<part> part_list_for_delete_file=new ArrayList<part>();//part_container_for_delete_part_file();
+		ArrayList<part> part_list_for_delete_file=new ArrayList<part>();
 		original_render=new render_container();
 		part_container_for_part_search pcps=new part_container_for_part_search(new ArrayList<part>());
-		original_render.load_shader(true,
+		original_render.load_shader(
 			component_load_source_cont,pcps,system_par.last_modified_time,
 			system_par.data_root_directory_name+system_par.shader_file_name,
 			system_par.local_data_charset,"",part_type_id,system_par,null,request_response);
 		pcps.execute_append();
-		original_render.load_part(true,1<<part_type_id,1,part_loader_cont,
+		original_render.load_part(1<<part_type_id,1,part_loader_cont,
 				system_par,null,pcps,null,null,null,part_list_for_delete_file);
 		
 		original_render.create_bottom_box_part(pcps,request_response,system_par,null);
 		pcps.execute_append();
-		original_render.load_part(true,1<<part_type_id,2,part_loader_cont,
+		original_render.load_part(1<<part_type_id,2,part_loader_cont,
 				system_par,null,pcps,null,null,null,part_list_for_delete_file);
 		
 		debug_information.println("Begin create system_part_package");
-		original_render.system_part_package=new part_package(
-				true,null,null,original_render,part_type_id,system_par,null);
+		original_render.system_part_package=new part_package(null,null,null,
+				original_render,part_type_id,system_par,null);
+		
+		system_boftal_container=new buffer_object_file_modify_time_and_length_container(null,
+				file_directory.system_package_directory(0,system_par,null)+"boftal_data.txt",
+				system_par.local_data_charset);
+		
 		debug_information.println("End create system_part_package");
 		
 		delete_part_files.do_delete(part_list_for_delete_file,null,system_par,null);
@@ -244,6 +252,7 @@ public class engine_interface
 		component_load_source_cont	=new component_load_source_container();
 		bt							=null;
 		original_render				=null;
+		system_boftal_container	=null;
 		part_loader_cont			=new part_loader_container();
 		client_interface_lock		=new ReentrantLock();
 	}
