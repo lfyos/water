@@ -39,15 +39,19 @@ public class response_render_component_request
 				render_buffer_id,id_array[pps[i][0]][pps[i][1]].length))!=null)
 					ren_buf.clear_clip_flag(ek.component_cont);
 		
-		component_collector list_result=(new list_component_on_collector(true,false,
-				my_do_discard_lod_flag,my_do_selection_lod_flag,false,true,ek,ci,cam_result)).collector;
+		component_collector list_result;
+		list_result=(new list_component_on_collector(true,false,
+				my_do_discard_lod_flag,my_do_selection_lod_flag,
+				false,true,ek,ci,cam_result)).collector;
 		
 		long current_time=ek.current_time.nanoseconds();
 		for(int i=0,ni=list_result.component_collector.length;i<ni;i++)
 			if(list_result.component_collector[i]!=null)
-				for(int j=0,nj=list_result.component_collector[i].length;j<nj;j++)
-					for(component_link_list cll=list_result.component_collector[i][j];cll!=null;cll=cll.next_list_item)
+				for(int j=0,nj=list_result.component_collector[i].length;j<nj;j++) {
+					component_link_list cll=list_result.component_collector[i][j];
+					for(;cll!=null;cll=cll.next_list_item)
 						cll.comp.render_touch_time=current_time;
+				}
 		
 		for(int i=0,ni=pps.length;i<ni;i++)
 			if((ren_buf=buffer.get_render_buffer(pps[i][0],pps[i][1],
@@ -144,14 +148,10 @@ public class response_render_component_request
 		}
 		
 		ci.request_response.print("],[");
-		
-		{
-			response_component_buffer_parameter rcbp=new response_component_buffer_parameter(ek,ci);
-			for(int i=0,ni=ci.target_component_collector_array.length;i<ni;i++)
-				if(ci.target_component_collector_array[i]!=null)
-					rcbp.response(ci.target_component_collector_array[i]);
-		}
-		
+		response_component_buffer_parameter rcbp=new response_component_buffer_parameter(ek,ci);
+		for(int i=0,ni=ci.target_component_collector_array.length;i<ni;i++)
+			if(ci.target_component_collector_array[i]!=null)
+				rcbp.response(ci.target_component_collector_array[i]);
 		ci.request_response.print("]");
 		
 		if(view_coordinate==null)

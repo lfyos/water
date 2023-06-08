@@ -1,27 +1,22 @@
 package kernel_component;
 
+import java.util.ArrayList;
+
 import kernel_file_manager.file_reader;
 
 public class component_initialization 
 {
-	public String  initialization_program[],initialization_program_charset[];
+	public ArrayList<String[]>  program_and_charset;
 	
 	public component_initialization()
 	{
-		initialization_program			=null;
-		initialization_program_charset	=null;
+		program_and_charset=new ArrayList<String[]>();
 	}
 	public void destroy()
 	{
-		if(initialization_program!=null){
-			for(int i=0,ni=initialization_program.length;i<ni;i++)
-				initialization_program[i]=null;
-			initialization_program=null;
-		}
-		if(initialization_program_charset!=null) {
-			for(int i=0,ni=initialization_program_charset.length;i<ni;i++)
-				initialization_program_charset[i]=null;
-			initialization_program_charset=null;
+		if(program_and_charset!=null){
+			program_and_charset.clear();
+			program_and_charset=null;
 		}
 	}
 	public void create_initialization(file_reader fr,String initialization_type)
@@ -66,23 +61,7 @@ public class component_initialization
 				}
 			return;
 		}
-
-		if(initialization_program==null){
-			initialization_program			=new String[]{my_initialization_program};
-			initialization_program_charset	=new String[]{my_initialization_program_charset};
-		}else{
-			String initialization_program_bak[]			=initialization_program;
-			String initialization_program_charset_bak[]	=initialization_program_charset;
-			
-			initialization_program			=new String[initialization_program.length+1];
-			initialization_program_charset	=new String[initialization_program_charset.length+1];
-			
-			for(int i=0,ni=initialization_program_bak.length;i<ni;i++){
-				initialization_program[i]			=initialization_program_bak[i];
-				initialization_program_charset[i]	=initialization_program_charset_bak[i];
-			}
-			initialization_program		 	[initialization_program.length-1]		 =my_initialization_program;
-			initialization_program_charset	[initialization_program_charset.length-1]=my_initialization_program_charset;
-		}
+		program_and_charset.add(program_and_charset.size(),
+			new String[] {my_initialization_program,my_initialization_program_charset});
 	}
 }
