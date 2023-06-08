@@ -50,20 +50,16 @@ public class buffer_container
 	}
 	public buffer_container(engine_kernel ek)
 	{
-		component_buffer=new component_render_buffer(ek.render_cont.renders,
-				(ek.component_cont.root_component==null)
-				?1
-				:(ek.component_cont.root_component.component_id+1));
+		component_buffer	=new component_render_buffer(ek.render_cont.renders);
 		location_buffer		=new component_location_buffer(ek);	
-		cam_buffer			=new camera_buffer(
-				ek.camera_cont.toArray(new camera[ek.camera_cont.size()]));
+		cam_buffer			=new camera_buffer(ek.camera_cont.toArray(new camera[ek.camera_cont.size()]));
 		target_buffer		=new target_parameter_buffer();
 		clip_buffer			=new clip_plane_buffer();
 		mesh_loader			=new part_mesh_loader(ek.render_cont);
 		current_buffer		=new current_information_buffer();
 		modifier_parameter	=new modifier_parameter_buffer[ek.scene_par.max_modifier_container_number];
 		for(int i=0;i<ek.scene_par.max_modifier_container_number;i++)
-		modifier_parameter[i]=new modifier_parameter_buffer(0);
+			modifier_parameter[i]=new modifier_parameter_buffer(0);
 		response_current_time_pointer=0;
 	}
 }

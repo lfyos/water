@@ -23,9 +23,25 @@ import kernel_common_class.debug_information;
 //	64:can not append
 //	128:append success
 
-
 public class component_render
 {
+	private component comp[];
+	private int driver_id[],flag[],instance_id[],component_number;
+		
+	public component_link_list delete_in_cll;
+	public component_link_list delete_out_cll;
+	public component_link_list refresh_cll;
+	public component_link_list keep_cll;
+	public component_link_list append_cll;
+	
+	public long lastest_append_touch_time;
+	public long lastest_refresh_touch_time;
+	public long lastest_in_delete_touch_time;
+	public long lastest_out_delete_touch_time;
+	
+	public int do_append_instance_number;
+	public int do_delete_instance_number;
+	
 	public void destroy()
 	{
 		if(comp!=null)
@@ -58,30 +74,14 @@ public class component_render
 		append_cll=null;
 		
 	}
-	private component comp[];
-	private int driver_id[],flag[],instance_id[],component_number;
-		
-	public component_link_list delete_in_cll;
-	public component_link_list delete_out_cll;
-	public component_link_list refresh_cll;
-	public component_link_list keep_cll;
-	public component_link_list append_cll;
-	
-	public long lastest_append_touch_time;
-	public long lastest_refresh_touch_time;
-	public long lastest_in_delete_touch_time;
-	public long lastest_out_delete_touch_time;
-	
-	public int do_append_instance_number,do_delete_instance_number;
-	
 	public component_render(int max_part_component_number)
 	{
 		component_number=0;
 		
-		comp		=new component[1];
+		comp		=new component[max_part_component_number];
 		comp[0]		=null;
 		
-		driver_id	=new int[1];
+		driver_id	=new int[max_part_component_number];
 		driver_id[0]=-1;
 		
 		flag		=new int[max_part_component_number];
@@ -91,10 +91,11 @@ public class component_render
 	public void clear_clip_flag(component_container component_cont)
 	{
 		for(int i=0;i<component_number;i++)
-			for(component p=comp[i];p!=null;p=component_cont.get_component(p.parent_component_id))
+			for(component p=comp[i];p!=null;){
 				p.clip.has_done_clip_flag=false;
+				p=component_cont.get_component(p.parent_component_id);
+			}
 	}
-	
 	public void test_clip_flag_of_delete_component(
 			camera_result cr,component_container component_cont,int parameter_channel_id)
 	{
@@ -139,7 +140,6 @@ public class component_render
 			flag[flag_id]=(old_component_render_version!=new_component_render_version)?1:2;
 			instance_id[flag_id]=i;
 		}
-		
 // append component flag in link list	
 		for(component_link_list p=cll;p!=null;p=p.next_list_item){
 			int flag_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
@@ -155,7 +155,7 @@ public class component_render
 				append_cll=new component_link_list(p.comp,p.driver_id,append_cll);
 				ci.statistics_client.should_component_append_number++;
 				break;
-			case 1://component in both buffer and link list, modified, should update 
+			case 1://component in both buffer and link list, modified,should update 
 				flag[flag_id]|=4;
 				if(p.comp.uniparameter.touch_time>lastest_refresh_touch_time)
 					lastest_refresh_touch_time=p.comp.uniparameter.touch_time;
@@ -167,7 +167,7 @@ public class component_render
 				ci.statistics_client.component_keep_number++;
 				keep_cll=new component_link_list(p.comp,p.driver_id,keep_cll);
 				break;
-			default:
+			default://impossible
 				flag[flag_id]=0;
 				break;
 			}
@@ -201,7 +201,6 @@ public class component_render
 		}
 		return;
 	}
-	
 	public void create_delete_render_parameter(component_link_list p,long render_current_time,
 			engine_kernel ek,client_information ci,camera_result cam_result)
 	{
@@ -294,18 +293,8 @@ public class component_render
 				if(my_flag==(1+4))
 					my_instance_id=instance_id[buffer_id];
 				else{
-					if(comp.length<=component_number){
-						component bak_comp[]=comp;
-						int bak_driver_id[]=driver_id;
-						comp		=new component[component_number+1];
-						driver_id	=new int[component_number+1];
-						for(int i=0,ni=bak_comp.length;i<ni;i++){
-							comp[i]		=bak_comp[i];
-							driver_id[i]=bak_driver_id[i];
-						}
-					}
-					instance_id[buffer_id]=component_number++;
-					my_instance_id=instance_id[buffer_id];
+					my_instance_id=component_number++;
+					instance_id	[buffer_id]=my_instance_id;
 					
 					comp[my_instance_id]		=p.comp;
 					driver_id[my_instance_id]	=p.driver_id;
@@ -348,7 +337,6 @@ public class component_render
 					ci.statistics_client.component_append_number++;
 			}
 		}
-		
 		return do_append_part_number;
 	}	
 	public void register_location(engine_kernel ek,client_information ci)

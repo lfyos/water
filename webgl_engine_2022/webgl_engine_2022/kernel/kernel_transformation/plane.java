@@ -199,8 +199,7 @@ public class plane
 	}
 	public plane(point p0,point p1,point p2)
 	{
-		point pp=(p1.sub(p0)).cross(p2.sub(p1)).add(p0);
-		copy_from(new plane(p0,pp));
+		copy_from(new plane(p0,p1.sub(p0).cross(p2.sub(p1)).add(p0)));
 	}
 	public plane(plane p)
 	{

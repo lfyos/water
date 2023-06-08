@@ -1,5 +1,7 @@
 package kernel_camera;
 
+import java.util.ArrayList;
+
 import kernel_render.render_target;
 import kernel_transformation.location;
 import kernel_transformation.plane;
@@ -63,10 +65,10 @@ public class camera_result
 		near_plane=null;
 		far_plane=null;
 		
-		if(clip!=null)
-			for(int i=0,ni=clip.length;i<ni;i++)
-				clip[i]=null;
-		clip=null;
+		if(clip!=null) {
+			clip.clear();
+			clip=null;
+		}
 	}
 	
 	private void basic_init()
@@ -136,22 +138,15 @@ public class camera_result
 	}
 	public plane		left_plane,right_plane,up_plane,down_plane,near_plane,far_plane;
 	
-	private plane		clip[];
+	private ArrayList<plane> clip;
 	
 	private int add_clip_component(plane new_clip_plane)
 	{
 		if(new_clip_plane.error_flag)
 			return -1;
-		if(clip==null)
-			clip=new plane[1];
-		else{
-			plane []bak_clip=clip;
-			clip=new plane[clip.length+1];
-			for(int i=0,ni=bak_clip.length;i<ni;i++)
-				clip[i]=bak_clip[i];
-		}
-		clip[clip.length-1]=new plane(new_clip_plane);
-		return clip.length-1;
+		int index_id=clip.size();
+		clip.add(index_id,new_clip_plane);
+		return index_id;
 	}
 	private void caculate_clip_planes()
 	{
@@ -162,12 +157,11 @@ public class camera_result
 		near_plane		=new plane(right_up_near,	left_up_near,	left_down_near);
 		far_plane		=new plane(right_up_far,	right_down_far,	left_down_far);
 		
-		clip			=null;
+		clip			=new ArrayList<plane>();
 		add_clip_component(up_plane);
 		add_clip_component(down_plane);
 		add_clip_component(left_plane);
 		add_clip_component(right_plane);
-		
 		add_clip_component(near_plane);
 		add_clip_component(far_plane);
 		
@@ -220,7 +214,8 @@ public class camera_result
 		return (my_box==null)?null:(my_box.center());
 	}
 	
-	public boolean clipper_test(component comp,component_container component_cont,int parameter_channel_id)
+	public boolean clipper_test(component comp,
+				component_container component_cont,int parameter_channel_id)
 	{
 		if(comp.clip.has_done_clip_flag)
 			return comp.clip.can_be_clipped_flag;
@@ -231,7 +226,7 @@ public class camera_result
 		component parent=component_cont.get_component(comp.parent_component_id);
 		comp.clip.clear_clip_plane();
 		
-		plane []comp_clip_plane;
+		ArrayList<plane> comp_clip_plane;
 		if((parent==null)||(comp.clip.clipper_test_depth<=0))
 			comp_clip_plane=clip;
 		else{
@@ -247,28 +242,31 @@ public class camera_result
 		comp.caculate_location(component_cont);
 		comp.caculate_box(false);
 		
-		for(int i=0,ni=(comp_clip_plane==null)?0:comp_clip_plane.length;i<ni;i++){
-			switch(comp_clip_plane[i].clip_component_test(comp,parameter_channel_id)){
+		for(int i=0,ni=(comp_clip_plane==null)?0:comp_clip_plane.size();i<ni;i++){
+			plane my_comp_clip_plane=comp_clip_plane.get(i);
+			if(my_comp_clip_plane.error_flag)
+				continue;
+			switch(my_comp_clip_plane.clip_component_test(comp,parameter_channel_id)){
 			case 0:
 				comp.clip.can_be_clipped_flag=true;
 				return true;					//total box is outside,all can be clipped,unnecessary to to clip test 
 			case 8:
 				break;							//inner to one clip plane
 			default:
-				comp.clip.close_clip_plane_number+=comp.clip.add_clip_plane(comp_clip_plane[i]);
+				comp.clip.close_clip_plane_number+=comp.clip.add_clip_plane(my_comp_clip_plane);
 												//some inside,some outside,clip can not be decided					
-				break;									
+				break;
 			}
 		}
 		if((comp.clip.clip_plane==null)||(comp.children_number()>0)||(comp.model_box==null))
 			return false;
 		
 		tetrahedron undecided_box=new tetrahedron(comp.absolute_location,comp.model_box);
-		for(int i=0,ni=comp.clip.clip_plane.length;i<ni;i++){
+		for(int i=0,ni=comp.clip.clip_plane.size();i<ni;i++){
 			tetrahedron p=undecided_box;
 			undecided_box=null;
 			for(;p!=null;p=p.next)
-				undecided_box=p.clip_tetrahedron(comp.clip.clip_plane[i],undecided_box);
+				undecided_box=p.clip_tetrahedron(comp.clip.clip_plane.get(i),undecided_box);
 		}
 		if(undecided_box!=null)
 			return false;
