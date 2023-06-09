@@ -2,8 +2,6 @@ package kernel_render;
 
 import java.util.ArrayList;
 
-import kernel_component.component;
-
 public class render_target_container 
 {
 	private ArrayList<render_target> target_array;
@@ -30,39 +28,26 @@ public class render_target_container
 		target_array			=new ArrayList<render_target>();
 		search_array			=new ArrayList<render_target>();
 	}
-	static public render_target get_default_target(component comp)
-	{
-		render_target rt=new render_target("default_render_target",-1,
-			0,0,new component[] {comp},null,null,0,0,1,null,null,true,false,true,true);
-		rt.main_display_target_flag=true;
-		return rt;
-	}
 	public int get_render_target_number()
 	{
-		int ret_val;
-		return ((ret_val=target_array.size())<=0)?1:ret_val;
+		return target_array.size();
 	}
 	public long get_do_render_number(int target_id)
 	{
 		return target_array.get(target_id).do_render_number;
 	}
-	public render_target[]get_render_target(component comp)
+	public ArrayList<render_target>get_render_target()
 	{
-		int ret_number=0,target_number=search_array.size();
-		render_target rt,ret_val[]=new render_target[target_number];
+		ArrayList<render_target> ret_val=new ArrayList<render_target>();
 		
-		for(int i=0;i<target_number;i++)
-			if((rt=search_array.get(i)).do_render_number!=0) {
-				rt.do_render_number--;
-				ret_val[ret_number++]=target_array.get(rt.target_id);
-			}
-		if(ret_number<=0)
-			return new render_target[]{get_default_target(comp)};
-		if(ret_number<ret_val.length){
-			render_target bak[]=ret_val;
-			ret_val=new render_target[ret_number];
-			for(int i=0;i<ret_number;i++)
-				ret_val[i]=bak[i];
+		for(int i=0,j=0,ni=search_array.size();i<ni;i++) {
+			render_target rt=search_array.get(i);
+			if(rt==null)
+				continue;
+			if(rt.do_render_number==0)
+				continue;
+			rt.do_render_number--;
+			ret_val.add(j++,rt);
 		}
 		return ret_val;	
 	}

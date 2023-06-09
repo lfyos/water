@@ -11,13 +11,13 @@ public class component_collector_of_target_information extends jason_creator
 	public void print()
 	{
 		jason_creator creator_array[];
-		if(ci.target_component_collector_array==null)
+		if(ci.target_component_collector_list==null)
 			creator_array=new jason_creator[0];
 		else
-			creator_array=new jason_creator[ci.target_component_collector_array.length];
-		for(int i=0,ni=ci.target_component_collector_array.length;i<ni;i++)
+			creator_array=new jason_creator[ci.target_component_collector_list.size()];
+		for(int i=0,ni=ci.target_component_collector_list.size();i<ni;i++)
 			creator_array[i]=new component_collector_with_component_information(
-										ci.target_component_collector_array[i],ek,ci);
+										ci.target_component_collector_list.get(i),ek,ci);
 		print("target_collector",creator_array);
 	}
 	public component_collector_of_target_information(engine_kernel my_ek,client_information my_ci)

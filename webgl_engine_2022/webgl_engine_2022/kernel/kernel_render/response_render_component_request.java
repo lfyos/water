@@ -81,77 +81,70 @@ public class response_render_component_request
 	}
 	private static int process_target(engine_kernel ek,client_information ci)
 	{
-		render_target t;
 		camera_result cr;
-		render_target target_array[]=ci.target_container.get_render_target(ek.component_cont.root_component);
-		int target_number=ci.target_container.get_render_target_number();
-		if(ci.target_component_collector_array.length<target_number){
-			component_collector bak_collector[]=ci.target_component_collector_array;
-			camera_result		bak_camera_result[]=ci.target_camera_result_array;
-			ci.target_component_collector_array=new component_collector[target_number];
-			ci.target_camera_result_array=new camera_result[target_number];
-			
-			for(int i=0,ni=bak_collector.length;i<ni;i++) {
-				ci.target_component_collector_array[i]=bak_collector[i];
-				ci.target_camera_result_array[i]=bak_camera_result[i];
-			}
-			for(int i=bak_collector.length;i<target_number;i++){
-				ci.target_component_collector_array[i]=null;
-				ci.target_camera_result_array[i]=null;
-			}
-		}
-		for(int i=0,ni=target_array.length;i<ni;i++)
-			if((t=target_array[i]).camera_id>=0)
-				if(t.camera_id<ek.camera_cont.size())
-					ci.target_camera_result_array[t.target_id]=new camera_result(
-							ek.camera_cont.get(t.camera_id),t,ek.component_cont);
 
-		for(int i=0,ni=target_array.length;i<ni;i++)
-			if((t=target_array[i]).selection_target_flag)
-				if((cr=ci.target_camera_result_array[t.target_id])!=null){
+		for(int pos,target_number=ci.target_container.get_render_target_number();
+				(pos=ci.target_component_collector_list.size())<target_number;)
+		{
+			ci.target_component_collector_list.add(pos,null);
+			ci.target_camera_result_list.add(pos,null);
+		}
+		render_target rt;
+		ArrayList<render_target>target_list=ci.target_container.get_render_target(); 
+		for(int i=0,ni=target_list.size();i<ni;i++)
+			if((rt=target_list.get(i)).camera_id>=0)
+				if(rt.camera_id<ek.camera_cont.size())
+					ci.target_camera_result_list.set(rt.target_id,
+						new camera_result(ek.camera_cont.get(rt.camera_id),rt,ek.component_cont));
+
+		for(int i=0,ni=target_list.size();i<ni;i++)
+			if((rt=target_list.get(i)).selection_target_flag)
+				if((cr=ci.target_camera_result_list.get(rt.target_id))!=null){
 					ci.selection_camera_result=cr;
 					break;
 				}
 		double view_coordinate[]=null;
-		for(int i=0,ni=target_array.length;i<ni;i++)
-			if((t=target_array[i]).main_display_target_flag)
-				if((cr=ci.target_camera_result_array[t.target_id])!=null)
+		for(int i=0,ni=target_list.size();i<ni;i++)
+			if((rt=target_list.get(i)).main_display_target_flag)
+				if((cr=ci.target_camera_result_list.get(rt.target_id))!=null)
 					if((view_coordinate=cr.caculate_view_coordinate(ci))!=null){
 						ci.display_camera_result=cr;
 						break;
 					}
 		ci.request_response.print(",[");
-		for(int i=0,response_number=0,ni=target_array.length;i<ni;i++){
-			t=target_array[i];
-			cr=ci.target_camera_result_array[t.target_id];
+		for(int i=0,response_number=0,ni=target_list.size();i<ni;i++){
+			rt=target_list.get(i);
+			cr=ci.target_camera_result_list.get(rt.target_id);
 			ci.request_response.print(((response_number++)==0)?"[":",[");
-			component_collector collector=collect_render_parts(t.mirror_plane,ek,ci,
-				t.selection_target_flag?false:(t.do_discard_lod_flag),
-				t.selection_target_flag?false:(t.do_selection_lod_flag),
-				t.camera_id,cr);
-			ci.target_component_collector_array[t.target_id]=collector;
+			component_collector collector=collect_render_parts(rt.mirror_plane,ek,ci,
+				rt.selection_target_flag?false:(rt.do_discard_lod_flag),
+				rt.selection_target_flag?false:(rt.do_selection_lod_flag),
+				rt.camera_id,cr);
+			ci.target_component_collector_list.set(rt.target_id,collector);
 			
 			if(ci.display_camera_result!=null)
-				if(ci.display_camera_result.target.target_id==t.target_id)
+				if(ci.display_camera_result.target.target_id==rt.target_id)
 					ci.display_component_collector=collector;
 			if(ci.selection_camera_result!=null)
-				if(ci.selection_camera_result.target.target_id==t.target_id)
+				if(ci.selection_camera_result.target.target_id==rt.target_id)
 					ci.selection_component_collector=collector;
 			
-			ci.request_response.print(",",t.target_id);
-			ci.request_response.print(",",ci.target_container.get_do_render_number(t.target_id));
+			ci.request_response.print(",",rt.target_id);
+			ci.request_response.print(",",ci.target_container.get_do_render_number(rt.target_id));
 			ci.render_buffer.target_buffer.response_parameter(	ci.request_response,
-				t.target_id,			t.render_target_id,		t.parameter_channel_id,
-				t.framebuffer_width,	t.framebuffer_height,	t.render_target_number,
-				t.viewport);
+				rt.target_id,			rt.render_target_id,	rt.parameter_channel_id,
+				rt.framebuffer_width,	rt.framebuffer_height,	rt.render_target_number,
+				rt.viewport);
 			ci.request_response.print("]");
 		}
 		
 		ci.request_response.print("],[");
 		response_component_buffer_parameter rcbp=new response_component_buffer_parameter(ek,ci);
-		for(int i=0,ni=ci.target_component_collector_array.length;i<ni;i++)
-			if(ci.target_component_collector_array[i]!=null)
-				rcbp.response(ci.target_component_collector_array[i]);
+		for(int i=0,ni=ci.target_component_collector_list.size();i<ni;i++) {
+			component_collector cc;
+			if((cc=ci.target_component_collector_list.get(i))!=null)
+				rcbp.response(cc);
+		}
 		ci.request_response.print("]");
 		
 		if(view_coordinate==null)

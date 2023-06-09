@@ -15,12 +15,12 @@ public class engine_camera_information extends jason_creator
 		print("display_camera",			new camera_information(ci.display_camera_result.cam,ci));
 		print("selection_camera",		new camera_information(ci.selection_camera_result.cam,ci));
 		
-		if(ci.target_camera_result_array==null)
+		if(ci.target_camera_result_list==null)
 			creator_array=new jason_creator[0];
 		else
-			creator_array=new jason_creator[ci.target_camera_result_array.length];
+			creator_array=new jason_creator[ci.target_camera_result_list.size()];
 		for(int i=0,ni=creator_array.length;i<ni;i++)
-			creator_array[i]=new camera_information(ci.target_camera_result_array[i].cam,ci);
+			creator_array[i]=new camera_information(ci.target_camera_result_list.get(i).cam,ci);
 		print("target_camera",creator_array);
 		
 		if(ek.camera_cont==null)

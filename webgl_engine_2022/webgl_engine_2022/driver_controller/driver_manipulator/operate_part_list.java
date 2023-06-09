@@ -1,5 +1,7 @@
 package driver_manipulator;
 
+import java.util.ArrayList;
+
 import kernel_camera.locate_camera;
 import kernel_common_class.change_name;
 import kernel_common_class.const_value;
@@ -276,22 +278,25 @@ public class operate_part_list
 		case "target":
 			if((str=ci.request_response.get_parameter("target"))==null)
 				str="display";
-			component_collector cc[];
+			ArrayList<component_collector> cc_list=new ArrayList<component_collector>();
 			switch(str){
 			default:
 			case "all":
-				cc=ci.target_component_collector_array;
+				cc_list=ci.target_component_collector_list;
 				break;
 			case "display":
-				cc=new component_collector[]{ci.display_component_collector};
+				cc_list.add(ci.display_component_collector);
 				break;
 			case "selection":
-				cc=new component_collector[]{ci.selection_component_collector};
+				cc_list.add(ci.selection_component_collector);
+				break;
 			}
-			for(int i=cc.length-1;i>=0;i--)
-				if(cc[i]!=null)
+			for(int i=cc_list.size()-1;i>=0;i--) {
+				component_collector cc=cc_list.get(i);
+				if(cc!=null)
 					ek.collector_stack.push_collector(false,ek.system_par,
-						ek.scene_par,cc[i],ek.component_cont,ek.render_cont.renders);
+						ek.scene_par,cc,ek.component_cont,ek.render_cont.renders);
+			}
 			acd.set_audio(null);
 			if((collector=ek.collector_stack.get_top_collector())!=null)
 				acd.set_audio(collector.audio_file_name);

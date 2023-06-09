@@ -1,11 +1,13 @@
 package kernel_engine;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import kernel_render.render_target;
 import kernel_render.render_target_container;
 import kernel_transformation.plane;
 import kernel_camera.camera_result;
+import kernel_component.component;
 import kernel_component.component_collector;
 import kernel_interface.user_statistics;
 import kernel_network.client_request_response;
@@ -18,28 +20,28 @@ import kernel_driver.component_instance_driver_container;
 
 public class client_information 
 {
-	public buffer_container				render_buffer;
+	public buffer_container					render_buffer;
 
-	public render_target_container		target_container;
+	public render_target_container			target_container;
 	
-	public component_collector 			display_component_collector;
-	public component_collector 			selection_component_collector;
-	public component_collector 			target_component_collector_array[];
+	public component_collector 				display_component_collector;
+	public component_collector 				selection_component_collector;
+	public ArrayList<component_collector> 	target_component_collector_list;
 	
-	public camera_result				display_camera_result;
-	public camera_result				selection_camera_result;
-	public camera_result				target_camera_result_array[];
+	public camera_result					display_camera_result;
+	public camera_result					selection_camera_result;
+	public ArrayList<camera_result>			target_camera_result_list;
 	
-	public plane						clip_plane;
+	public plane							clip_plane;
 	
-	public long							channel_id;
+	public long								channel_id;
 	
-	public client_parameter				parameter;
-	public client_statistics			statistics_client;
-	public engine_statistics			statistics_engine;
-	public user_statistics 				statistics_user;
-	public client_request_response 		request_response;
-	public client_process_bar			process_bar;
+	public client_parameter					parameter;
+	public client_statistics				statistics_client;
+	public engine_statistics				statistics_engine;
+	public user_statistics 					statistics_user;
+	public client_request_response 			request_response;
+	public client_process_bar				process_bar;
 	
 	
 	public render_instance_driver_container		render_instance_driver_cont;
@@ -47,13 +49,13 @@ public class client_information
 	public component_instance_driver_container	component_instance_driver_cont;
 	
 	
-	public display_message				message_display;
+	public display_message					message_display;
 	
-	public String 						request_url_header;
+	public String 							request_url_header;
 	
-	private boolean					file_proxy_url_encode_flag[];
-	private String						file_proxy_url_array[];
-	private int 						file_proxy_pointer;
+	private boolean						file_proxy_url_encode_flag[];
+	private String							file_proxy_url_array[];
+	private int 							file_proxy_pointer;
 	
 	public void destroy()
 	{
@@ -94,13 +96,13 @@ public class client_information
 			selection_component_collector=null;
 		}
 		
-		if(target_component_collector_array!=null) {
-			for(int i=0,ni=target_component_collector_array.length;i<ni;i++)
-				if(target_component_collector_array[i]!=null) {
-					target_component_collector_array[i].destroy();
-					target_component_collector_array[i]=null;
-				}
-			target_component_collector_array=null;
+		if(target_component_collector_list!=null) {
+			component_collector cc;
+			for(int i=0,ni=target_component_collector_list.size();i<ni;i++)
+				if((cc=target_component_collector_list.get(i))!=null)
+					cc.destroy();
+			target_component_collector_list.clear();
+			target_component_collector_list=null;
 		}
 
 		if(display_camera_result!=null) {
@@ -113,13 +115,13 @@ public class client_information
 			selection_camera_result=null;
 		}
 		
-		if(target_camera_result_array!=null) {
-			for(int i=0,ni=target_camera_result_array.length;i<ni;i++)
-				if(target_camera_result_array[i]!=null) {
-					target_camera_result_array[i].destroy();
-					target_camera_result_array[i]=null;
-				}
-			target_camera_result_array=null;
+		if(target_camera_result_list!=null) {
+			camera_result cr;
+			for(int i=0,ni=target_camera_result_list.size();i<ni;i++)
+				if((cr=target_camera_result_list.get(i))!=null)
+					cr.destroy();
+			target_camera_result_list.clear();
+			target_camera_result_list=null;
 		}
 		
 		if(clip_plane!=null)
@@ -280,12 +282,16 @@ public class client_information
 		
 		display_component_collector		=null;
 		selection_component_collector	=null;
-		target_component_collector_array=new component_collector[]{};
+		target_component_collector_list=new ArrayList<component_collector>();
 
-		render_target t				=render_target_container.get_default_target(ek.component_cont.root_component);
-		display_camera_result		=new camera_result(ek.camera_cont.get(t.camera_id),t,ek.component_cont);
+		render_target rt=new render_target("default_render_target",-1,
+				0,0,new component[] {ek.component_cont.root_component},
+				null,null,0,0,1,null,null,true,false,true,true);
+		rt.main_display_target_flag=true;
+	
+		display_camera_result		=new camera_result(ek.camera_cont.get(rt.camera_id),rt,ek.component_cont);
 		selection_camera_result		=display_camera_result;
-		target_camera_result_array	=new camera_result[]{};	
+		target_camera_result_list	=new ArrayList<camera_result>();	
 		
 		clip_plane			=null;
 		
