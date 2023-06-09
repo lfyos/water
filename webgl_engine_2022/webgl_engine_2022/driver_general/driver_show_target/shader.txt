@@ -1,0 +1,32 @@
+struct vertex_to_fragment_struct
+{
+	@builtin(position)	vertex_position		:	vec4<f32>,
+	@location(0)		vertex_texture		:	vec4<f32>
+};
+
+@group(1) @binding(0) var target_texture	:	texture_2d<f32>;
+@group(1) @binding(1) var target_sampler	:	sampler;
+
+@vertex
+fn vertex_main(
+		@location(0) my_coord	:	vec4<f32>,
+		@location(1) my_texture	:	vec4<f32>,
+		@location(2) my_p0		:	vec4<f32>,
+		@location(3) my_p1		:	vec4<f32>
+	)->vertex_to_fragment_struct
+{
+	var vf:vertex_to_fragment_struct;
+	
+	vf.vertex_position	=my_coord*my_p0+(vec4<f32>(1.0,1.0,1.0,1.0)-my_coord)*my_p1;
+	vf.vertex_position	=vec4(vf.vertex_position.xy,0.0,1.0);
+
+	vf.vertex_texture	=my_texture;
+	
+	return vf;
+}
+
+@fragment
+fn fragment_main(vf	:	vertex_to_fragment_struct) ->  @location(0) vec4<f32>
+{
+	return textureSample(target_texture,target_sampler,vf.vertex_texture.xy);
+}

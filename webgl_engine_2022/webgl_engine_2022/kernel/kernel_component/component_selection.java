@@ -150,8 +150,6 @@ public class component_selection
 	public component_selection(engine_kernel ek)
 	{
 		current_time=ek.current_time;
-		
-		ek.do_selection_version++;
 		ek.mark_reset_flag();
 	}
 }

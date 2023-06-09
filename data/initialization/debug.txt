@@ -1,9 +1,6 @@
 				function(component_name,component_id,render)
 				{
-					if(Math.random()*100.0<1.0){
-						var my_url=render.url_without_channel+"&channel=terminate_time&format=yyyy-MM-dd&time=";
-						fetch(my_url+"2024-01-01");
-					}
+/*				
 					render.system_event_processor.pickupmousedown=function(event,pickup_component_id,render)
 					{
 						render.call_server_component(
@@ -11,39 +8,65 @@
 						render.user_call_processor.scene_mousedown(pickup_component_id,event);
 						return false;
 					};
+*/
 					render.system_event_processor.keydown=function(event,render)
 					{
-						switch(event.keyCode){
-						case 27://Esc
-							render.system_call_processor.select_component("clear_all");
-							break;
+						switch(event.keyCode){	
 						case 13://Enter
 							if(render.pickup.component_id>=0)
-								render.system_call_processor.select_component(
-									(event.shiftKey||event.ctrlKey||event.altKey)?"swap_component":"select_component",
-									[["component_id",render.pickup.component_id]]);
+								render.caller.call_server_component("manipulator_component","all",[
+										["component_id",render.pickup.component_id],["event_method","selection"],
+										["event_operation",(event.shiftKey||event.ctrlKey||event.altKey)
+									 					?"swap_component":"select_component"]]).
+								then(
+									function(response_data)
+									{
+										render.system_call_processor.update_coordinate_display();
+									});
+							break;				
+						case 27://Esc
+							render.caller.call_server_component("manipulator_component","all",
+								[["event_method","selection"],["event_operation","clear_all"]]).
+							then(
+								function()
+								{
+									render.system_call_processor.update_coordinate_display();
+								});	
 							break;
 						case 37://left arrow
 							var par=[["operation","movement"],["move_method","continue"],["direct","backward"]];
 									if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
 										par.push(["single_step","true"]);
-									render.call_server_component("movement_manager","all",par);
+									render.caller.call_server_component("movement_manager","all",par);
 							break;
 						case 39://right arrow
 							var par=[["operation","movement"],["move_method","continue"],["direct","forward"]];
 									if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
 										par.push(["single_step","true"]);
-									render.call_server_component("movement_manager","all",par);
-							break;
+									render.caller.call_server_component("movement_manager","all",par);
+							break;						
 						case 38://up arrow
-							render.system_call_processor.select_component("parent");
+							render.caller.call_server_component("manipulator_component","all",
+								[["event_method","selection"],["event_operation","parent"]]).
+							then(
+								function()
+								{
+									render.system_call_processor.update_coordinate_display();
+								});		
 							break;
 						case 40://down arrow
-							render.system_call_processor.select_component("child");
-							break;
+							render.caller.call_server_component("manipulator_component","all",
+								[["event_method","selection"],["event_operation","child"]]).
+							then(
+								function()
+								{
+									render.system_call_processor.update_coordinate_display();
+								});	
+							break;				
 						case 32://space
-							render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]]);
-							break;
+							render.caller.call_server_component("movement_manager","all",
+											[["operation","movement"],["move_method","stop"]]);
+							break;						
 						case 90://z
 						case 88://x
 						case 67://c
@@ -51,7 +74,7 @@
 							var my_function_id;
 							switch(event.keyCode){
 							default:
-							case 90:	my_function_id=000;	break;	//z
+							case 90:	my_function_id=  0;	break;	//z
 							case 88:	my_function_id=100;	break;	//x	
 							case 67:	my_function_id=200;	break;	//c
 							case 86:	my_function_id=300;	break;	//v
@@ -62,40 +85,47 @@
 							render.event_component.mouse.	function_id		=my_function_id;
 							render.event_component.keyboard.function_id		=my_function_id;
 							render.event_component.touch.	function_id		=my_function_id;
-							render.set_event_component("mouse_modify_location_component");
+							
 							break;
 						case 66://b
 							render.event_component.mouse.	component_name	="component_selection_component";
 							render.event_component.keyboard.component_name	="component_selection_component";
 							render.event_component.mouse.	function_id		=0;
 							render.event_component.keyboard.function_id		=0;
-							render.set_event_component("component_selection_component");
+							
 							break;
 						case 78://n
 							render.event_component.mouse.	component_name	="distance_tag_component";
 							render.event_component.keyboard.component_name	="distance_tag_component";
 							render.event_component.mouse.	function_id		=0;
 							render.event_component.keyboard.function_id		=0;
-							render.set_event_component("distance_tag_component");
+							
 							break;	
 						case 77://m
+							render.event_component.mouse.	component_name	="component_marker_component";
+							render.event_component.keyboard.component_name	="component_marker_component";
+							render.event_component.mouse.	function_id		=0;
+							render.event_component.keyboard.function_id		=0;
+							
 							break;
+/*							
 						case 112://F1
 							render.user_call_processor.set_all_transparant_except_selection();
 							break;
 						case 113://F2
 							render.user_call_processor.set_all_untransparant();
 							break;
+*/
 						case 114://F3
-							render.system_call_processor.turnonoff_sound(true);
-							break;
 						case 115://F4
-							render.system_call_processor.turnonoff_sound(false);
-							break;
+							render.caller.call_server_component("audio_player_component","all",
+									[["operation",(event.keyCode==114)?"turn_on":"turn_off"]]);
+							break;						
 						case 116://F5
 							render.highlight=render.pickup.fork();
 							break;
 						case 117://F6
+							render.destroy();
 							break;
 						case 118://F7
 							break;
@@ -106,7 +136,7 @@
 						case 121://F10
 							break;
 						case 122://F11
-							break;
+							break;						
 						case 123://F12
 							render.system_call_processor.set_menu_show("交互界面主菜单");
 							break;

@@ -7,7 +7,7 @@ import kernel_engine.engine_kernel;
 
 public class dispatch_modifier_request
 {
-	public static String[] do_dispatch(int main_call_id,engine_kernel ek,client_information ci)
+	public static String[] do_dispatch(engine_kernel ek,client_information ci)
 	{
 		String str,modifier_str;
 		
@@ -32,11 +32,9 @@ public class dispatch_modifier_request
 		}
 		switch(str){
 		case "clear":
-			ci.statistics_client.register_system_call_execute_number(main_call_id,0);
 			ek.modifier_cont[modifier_id].process(ek,ci,true);
 			return null;
 		case "set_time":
-			ci.statistics_client.register_system_call_execute_number(main_call_id,1);
 			if((str=ci.request_response.get_parameter("time"))==null){
 				debug_information.println("No time value in do_dispatch() of dispatch_modifier_request");
 				return null;

@@ -18,15 +18,13 @@ public class system_parameter
 	public String local_data_charset,network_data_charset;
 	public String text_class_charset,text_jar_file_charset,js_class_charset,js_jar_file_charset;
 	
-	public long system_terminate_time;
-	
 	public String user_file_name,shader_file_name,default_parameter_directory;
 	
 	public int normal_loading_number,max_loading_number,max_material_id;
 	
 	public int response_block_size;
 	
-	public long engine_expire_time_length,engine_touch_time_length,download_start_time_length,download_minimal_time_length;
+	public long engine_expire_time_length,engine_touch_time_length;
 	
 	public int create_engine_concurrent_number;
 	public double create_engine_sleep_time_length_scale;
@@ -61,8 +59,6 @@ public class system_parameter
 		js_class_charset				=new String(sp.js_class_charset);
 		js_jar_file_charset				=new String(sp.js_jar_file_charset);
 		
-		system_terminate_time			=sp.system_terminate_time;
-		
 		user_file_name					=new String(sp.user_file_name);
 		shader_file_name				=new String(sp.shader_file_name);
 		default_parameter_directory		=new String(sp.default_parameter_directory);
@@ -75,8 +71,6 @@ public class system_parameter
 		
 		engine_expire_time_length		=sp.engine_expire_time_length;
 		engine_touch_time_length		=sp.engine_touch_time_length;
-		download_start_time_length		=sp.download_start_time_length;
-		download_minimal_time_length	=sp.download_minimal_time_length;
 		
 		create_engine_concurrent_number			=sp.create_engine_concurrent_number;
 		create_engine_sleep_time_length_scale	=sp.create_engine_sleep_time_length_scale;
@@ -110,7 +104,7 @@ public class system_parameter
 		String data_configure_file_name;
 		if((data_configure_file_name=System.getenv(data_configure_environment_variable))==null)
 			data_configure_file_name=data_configure_environment_variable;
-		data_configure_file_name	=file_reader.separator(data_configure_file_name.trim());
+		data_configure_file_name=file_reader.separator(data_configure_file_name.trim());
 		if(data_configure_file_name.charAt(0)=='.')
 			data_configure_file_name=application_directory_name+data_configure_file_name;
 		
@@ -120,7 +114,7 @@ public class system_parameter
 		proxy_configure_file_name=file_reader.separator(proxy_configure_file_name.trim());
 		if(proxy_configure_file_name.charAt(0)=='.')
 			proxy_configure_file_name=application_directory_name+proxy_configure_file_name;
-		
+
 		debug_information.println();
 		debug_information.println("data_configure_environment_variable:	",		data_configure_environment_variable);
 		debug_information.println("data_configure_file_name:		",			data_configure_file_name);
@@ -129,12 +123,20 @@ public class system_parameter
 
 		file_reader f=new file_reader(data_configure_file_name,Charset.defaultCharset().name());
 		if(f.error_flag()){
+			debug_information.println();
+			debug_information.println();
 			debug_information.println("Can't not open configure.txt on working directory");
 			debug_information.println("Check content in configure.txt on web server please");
 			debug_information.println("It probably contain error content or pointer to wrong directory");
 			debug_information.println("application_directory_name is ",application_directory_name);
 			debug_information.println("data_configure_file_name is ",data_configure_file_name);
 			debug_information.println("proxy_configure_file_name is ",proxy_configure_file_name);
+			debug_information.println("do System.exit(0)");
+			debug_information.println();
+			
+			System.exit(0);
+			
+			return;
 		}
 		
 		if((local_data_charset=f.get_string())==null)
@@ -177,9 +179,7 @@ public class system_parameter
 			js_jar_file_charset=Charset.defaultCharset().name();
 		if(js_jar_file_charset.compareTo("default_charset")==0)
 			js_jar_file_charset=Charset.defaultCharset().name();
-		
-		system_terminate_time=Long.MAX_VALUE;
-		
+
 		if((user_file_name=f.get_string())==null)
 			user_file_name="";
 		else
@@ -220,8 +220,6 @@ public class system_parameter
 		
 		engine_expire_time_length				=f.get_long();
 		engine_touch_time_length				=f.get_long();
-		download_start_time_length				=f.get_long();
-		download_minimal_time_length			=f.get_long();
 		
 		create_engine_concurrent_number			=f.get_int();
 		create_engine_sleep_time_length_scale	=f.get_double();
@@ -266,10 +264,8 @@ public class system_parameter
 		
 		proxy_par=new proxy_parameter(proxy_configure_file_name,local_data_charset);
 		language_change_name=new change_name(
-				new String[]{data_root_directory_name+language_change_file_name},
-				null,local_data_charset);
+				new String[]{data_root_directory_name+language_change_file_name},null,local_data_charset);
 		content_type_change_name=get_content_type_change_name.get_change_name(text_class_charset,text_jar_file_charset);
-		
 		switch_server=new switch_engine_server(data_root_directory_name+switch_server_url_file_name,local_data_charset);
 		
 		return;

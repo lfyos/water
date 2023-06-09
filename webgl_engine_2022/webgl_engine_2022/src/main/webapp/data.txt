@@ -1,7 +1,8 @@
-
-clear_parameter_channel_id:	4	5
-set_parameter_channel_id:	2	3
-
+		if(render.component_event_processor[this.component_id]!=null){
+			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
+				render.component_event_processor[this.component_id].destroy(render);
+			render.component_event_processor[this.component_id]=null;
+		}
 
 
 set JAVA_OPTS=-server -Xms1920m -Xmx2148m -XX:MaxNewSize=512m -XX:MaxPermSize=256m

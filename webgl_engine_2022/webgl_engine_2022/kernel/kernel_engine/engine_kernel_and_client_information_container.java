@@ -48,15 +48,10 @@ public class engine_kernel_and_client_information_container
 		if((proxy_url=ci.get_file_proxy_url(f,engine_kernel_cont.ek.system_par))!=null){
 			ci.request_response.implementor.redirect_url(
 					proxy_url,engine_kernel_cont.ek.scene_par.scene_cors_string);
-			ci.statistics_client.response_proxy_data_length+=f.length();
 			return null;
 		}
 		caculate_charset_compress_file_name cccfn;
 		cccfn=new caculate_charset_compress_file_name(f,engine_kernel_cont.ek.system_par);
-		if(cccfn.content_type_id<0)
-			ci.statistics_client.response_no_type_file_data_length+=f.length();
-		else
-			ci.statistics_client.modify_response_data_length(cccfn.content_type_id,f.length());
 		ci.request_response.response_content_type=cccfn.content_type_str;
 
 		return new engine_call_result(
@@ -68,7 +63,7 @@ public class engine_kernel_and_client_information_container
 			buffer_object_file_modify_time_and_length_container system_boftal_container,
 			String client_scene_file_name,String client_scene_file_charset,
 			client_request_response my_request_response,long delay_time_length,
-			user_statistics statistics_user,engine_statistics statistics_engine)
+			user_statistics statistics_user,create_engine_counter engine_counter)
 	{
 		if(engine_kernel_cont.ek==null){
 			debug_information.println(
@@ -82,7 +77,7 @@ public class engine_kernel_and_client_information_container
 				engine_kernel_cont.ek.load(component_load_source_cont,
 						my_request_response,process_bar,system_boftal_container);
 				if(engine_kernel_cont.ek.component_cont.root_component!=null) {
-					statistics_engine.update_kernel_component_number(1,
+					engine_counter.update_kernel_component_number(1,
 							engine_kernel_cont.ek.component_cont.root_component.component_id+1);
 
 					debug_information.print  ("engine_interface load scene,scene_name:",
@@ -90,11 +85,11 @@ public class engine_kernel_and_client_information_container
 					debug_information.println(",link_name:",engine_kernel_cont.ek.create_parameter.link_name);
 					
 					debug_information.print  ("engine_interface engine_kernel_number:",
-							statistics_engine.engine_kernel_number);
+							engine_counter.engine_kernel_number);
 					debug_information.println("/",engine_kernel_cont.ek.system_par.max_engine_kernel_number);
 					
 					debug_information.print  ("engine_interface engine_component_number:",
-							statistics_engine.engine_component_number);
+							engine_counter.engine_component_number);
 					debug_information.println("/",engine_kernel_cont.ek.system_par.max_engine_component_number);
 				}
 			}
@@ -107,7 +102,7 @@ public class engine_kernel_and_client_information_container
 				return null;
 			}
 			client_information=new client_information(
-					my_request_response,process_bar,engine_kernel_cont.ek,statistics_user,statistics_engine);
+					my_request_response,process_bar,engine_kernel_cont.ek,statistics_user,engine_counter);
 		}
 		client_information.request_response=my_request_response;
 
@@ -127,12 +122,9 @@ public class engine_kernel_and_client_information_container
 			return create_file_result(client_information,file_name[0],file_name[1]);
 		}
 
-		long output_data_length=client_information.request_response.output_data_length;
-		client_information.statistics_client.response_network_data_length+=output_data_length;
-		
 		String my_compress_file_name=null;
 		if(engine_kernel_cont.ek.scene_par.compress_response_length>0)
-			if(output_data_length>=engine_kernel_cont.ek.scene_par.compress_response_length)
+			if(client_information.request_response.output_data_length>=engine_kernel_cont.ek.scene_par.compress_response_length)
 				my_compress_file_name="do_compress_flag";
 		
 		return new engine_call_result(
@@ -144,7 +136,7 @@ public class engine_kernel_and_client_information_container
 			component_load_source_container component_load_source_cont,
 			String client_scene_file_name,String client_scene_file_charset,
 			client_request_response my_request_response,long delay_time_length,
-			user_statistics statistics_user,engine_statistics statistics_engine)
+			user_statistics statistics_user,create_engine_counter engine_counter)
 	{
 		engine_call_result ret_val=null;
 		ReentrantLock my_engine_kernel_container_lock;
@@ -154,7 +146,7 @@ public class engine_kernel_and_client_information_container
 				ret_val=get_engine_result_routine(
 						component_load_source_cont,process_bar,system_boftal_container,
 						client_scene_file_name,client_scene_file_charset,my_request_response,
-						delay_time_length,statistics_user,statistics_engine);
+						delay_time_length,statistics_user,engine_counter);
 			}catch(Exception e){
 				debug_information.println(
 						"get_engine_result function of engine_kernel_link_list fail!");

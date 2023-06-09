@@ -5,7 +5,7 @@ import kernel_transformation.box;
 import kernel_transformation.location;
 import kernel_transformation.point;
 
-public class face_curve 
+public class face_curve
 {
 	public face_loop f_loop[];
 	public box curve_box;
@@ -41,7 +41,7 @@ public class face_curve
 			}
 	}
 	public face_curve(location loca,box b,String my_extra_data,String my_material[])
-	{														//		 Y
+	{											//		 Y
 		point p[]=new point[]								//		 |
 		{													//       2***********************6
 			new point(b.p[0].x,b.p[0].y,b.p[0].z),			//     * |                     * *
@@ -59,11 +59,11 @@ public class face_curve
 		
 		f_loop=new face_loop[] 
 		{
-			new face_loop(p[0],p[1],p[3],p[2],my_extra_data,my_material),		//left face
-			new face_loop(p[5],p[4],p[6],p[7],my_extra_data,my_material),		//right face
-			new face_loop(p[1],p[0],p[4],p[5],my_extra_data,my_material),		//down
-			new face_loop(p[2],p[3],p[7],p[6],my_extra_data,my_material),		//up
-			new face_loop(p[0],p[2],p[6],p[4],my_extra_data,my_material),		//front
+			new face_loop(p[0],p[1],p[3],p[2],my_extra_data,my_material),	//left face
+			new face_loop(p[5],p[4],p[6],p[7],my_extra_data,my_material),	//right face
+			new face_loop(p[1],p[0],p[4],p[5],my_extra_data,my_material),	//down
+			new face_loop(p[2],p[3],p[7],p[6],my_extra_data,my_material),	//up
+			new face_loop(p[0],p[2],p[6],p[4],my_extra_data,my_material),	//front
 			new face_loop(p[1],p[5],p[7],p[3],my_extra_data,my_material)		//back
 		};
 		

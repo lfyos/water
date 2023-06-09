@@ -4,28 +4,28 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
+import kernel_part.part;
 import kernel_camera.camera;
-import kernel_camera.camera_container_creator;
-import kernel_common_class.change_name;
-import kernel_common_class.nanosecond_timer;
 import kernel_component.component;
-import kernel_component.component_collector_stack;
+import kernel_driver.component_driver;
+import kernel_render.render_container;
+import kernel_file_manager.file_reader;
+import kernel_common_class.change_name;
+import kernel_driver.modifier_container;
+import kernel_part.part_loader_container;
+import kernel_file_manager.file_directory;
+import kernel_interface.client_process_bar;
 import kernel_component.component_container;
+import kernel_common_class.nanosecond_timer;
+import kernel_common_class.debug_information;
+import kernel_network.client_request_response;
+import kernel_camera.camera_container_creator;
+import kernel_common_class.exclusive_file_mutex;
+import kernel_component.component_collector_stack;
+import kernel_part.part_container_for_part_search;
 import kernel_component.component_load_source_container;
 import kernel_create_top_assemble_part.create_assemble_part;
-import kernel_driver.modifier_container;
-import kernel_file_manager.file_directory;
-import kernel_file_manager.file_reader;
-import kernel_network.client_request_response;
-import kernel_render.render_container;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
-import kernel_part.part;
-import kernel_part.part_container_for_part_search;
-import kernel_driver.component_driver;
-import kernel_part.part_loader_container;
-import kernel_common_class.debug_information;
-import kernel_common_class.exclusive_file_mutex;
-import kernel_interface.client_process_bar;
 
 public class engine_kernel
 {
@@ -49,8 +49,6 @@ public class engine_kernel
 	public part_lru_manager					part_lru;
 
 	public part_loader_container 			part_loader_cont;
-	
-	public long 							do_selection_version,program_last_time;
 
 	public void destroy()
 	{
@@ -117,7 +115,7 @@ public class engine_kernel
 		current_time			=new nanosecond_timer();
 
 		modifier_cont			=new modifier_container[scene_par.max_modifier_container_number];
-		for(int i=0;i<scene_par.max_modifier_container_number;i++)
+		for(int i=0,ni=scene_par.max_modifier_container_number;i<ni;i++)
 			modifier_cont[i]=new modifier_container(current_time.nanoseconds());
 		
 		part_lru				=null;	
@@ -128,16 +126,10 @@ public class engine_kernel
 		
 		render_cont				=my_original_render;
 		part_cont				=null;	
-		
-		do_selection_version	=1;
-		program_last_time		=0;
 	}
 	public long get_file_last_modified_time()
 	{
 		long ret_val=0;
-		
-		if(ret_val<program_last_time)
-			ret_val=program_last_time;
 		
 		if(ret_val<system_par.last_modified_time)
 			ret_val=system_par.last_modified_time;
@@ -212,7 +204,7 @@ public class engine_kernel
 			client_request_response request_response,ArrayList<part> part_list_for_delete_file,
 			part_container_for_part_search all_part_part_cont,
 			buffer_object_file_modify_time_and_length_container boftal_container)
-	{	
+	{		
 		if(create_parameter.create_top_part_expand_ratio>=1.0)
 			if(create_parameter.create_top_part_left_ratio>=1.0)
 				if(component_cont.root_component!=null){
@@ -231,7 +223,7 @@ public class engine_kernel
 						if(top_box_part.size()>0)
 							mount_top_box_part(component_cont.root_component,component_load_source_cont,
 								new part_container_for_part_search(top_box_part),request_response);
-				}
+				}			
 	}
 	private buffer_object_file_modify_time_and_length_container get_boftal_container(client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container)
@@ -302,18 +294,16 @@ public class engine_kernel
 		ArrayList<part> part_list_for_delete_file=new ArrayList<part>();
 		
 		start_time=current_time;
-		render_cont.load_part((1<<1)+(1<<2),1,
-			part_loader_cont,system_par,scene_par,part_cont,boftal_container,
-			"load_first_class_part",process_bar,part_list_for_delete_file);
+		render_cont.load_part((1<<1)+(1<<2),1,part_loader_cont,system_par,scene_par,
+				boftal_container,"load_first_class_part",process_bar,part_list_for_delete_file);
 		debug_information.println("Load first class part time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		
 		start_time=current_time;
 		render_cont.create_bottom_box_part(part_cont,request_response,system_par,scene_par);
 		part_cont.execute_append();
-		render_cont.load_part((1<<1)+(1<<2),2,
-			part_loader_cont,system_par,scene_par,part_cont,boftal_container,
-			"load_second_class_part",process_bar,part_list_for_delete_file);
+		render_cont.load_part((1<<1)+(1<<2),2,part_loader_cont,system_par,scene_par,
+				boftal_container,"load_second_class_part",process_bar,part_list_for_delete_file);
 		debug_information.println("Load second class part time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
@@ -362,7 +352,7 @@ public class engine_kernel
 				request_response,part_list_for_delete_file,part_cont,boftal_container);	
 		part_cont.execute_append();
 		render_cont.load_part(
-				(1<<2),4,part_loader_cont,system_par,scene_par,part_cont,
+				(1<<2),4,part_loader_cont,system_par,scene_par,
 				boftal_container,"load_third_class_part",process_bar,part_list_for_delete_file);
 		debug_information.println("Create top assemble time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
@@ -392,11 +382,10 @@ public class engine_kernel
 		start_time=new Date().getTime();
 		if(boftal_container==null){
 			process_bar.set_process_bar(true,"create_shader","",1,2);
-			program_last_time=copy_program.copy_shader_programs(render_cont,system_par,scene_par);
-			new engine_initialization(true,program_last_time,this,request_response,process_bar);
+			new engine_initialization(true,this,request_response,process_bar);
 			debug_information.println("Create engine temp data time length:	",		new Date().getTime()-start_time);
 		}else{
-			new engine_initialization(false,program_last_time,this,request_response,process_bar);
+			new engine_initialization(false,this,request_response,process_bar);
 			debug_information.println("Doing engine_initialization time length:	",	new Date().getTime()-start_time);
 		}
 		debug_information.println();

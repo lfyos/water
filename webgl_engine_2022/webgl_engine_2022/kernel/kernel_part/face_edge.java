@@ -4,7 +4,7 @@ import kernel_file_manager.file_reader;
 import kernel_transformation.box;
 import kernel_transformation.point;
 
-public class face_edge 
+public class face_edge
 {
 	public void destroy()
 	{

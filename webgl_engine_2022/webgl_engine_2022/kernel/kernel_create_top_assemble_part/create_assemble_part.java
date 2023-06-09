@@ -31,7 +31,7 @@ public class create_assemble_part
 					continue;
 				if(comp_part.driver==null)
 					continue;
-				if(comp_part.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,null,null)==null)
+				if(comp_part.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null)==null)
 					continue;
 				can_create_assemble_part_name[p.component_id]=comp_part.part_par.assemble_part_name;
 				return comp_part.render_id;
@@ -181,9 +181,9 @@ public class create_assemble_part
 				p.part_par.create_edge_buffer_object_bitmap,
 				p.part_par.create_point_buffer_object_bitmap,
 				
-				p.part_par.max_component_data_buffer_number,
 				p.part_par.max_part_load_thread_number,
 				
+				p.part_par.do_create_part_ids_flag,
 				false,
 				
 				p.part_par.clear_buffer_head_file_flag,
@@ -310,7 +310,7 @@ public class create_assemble_part
 			}
 			part_loader_cont.load(add_part,render_cont.get_copy_from_part(add_part),
 				last_modified_time,system_par,scene_par,part_list_for_delete_file,
-				already_loaded_part,pcps,boftal_container);
+				already_loaded_part,boftal_container);
 			top_box_part.add(add_part_number++,add_part);
 			create_part_number+=my_create_part_number;	
 			

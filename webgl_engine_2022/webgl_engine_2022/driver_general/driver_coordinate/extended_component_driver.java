@@ -9,19 +9,17 @@ import kernel_part.part;
 
 public class extended_component_driver extends component_driver
 {
-	private boolean abandon_camera_display_flag,abandon_selected_display_flag;
+	private double coordinate_length_scale;
 	
 	public void destroy()
 	{
 		super.destroy();
 	}
-	public extended_component_driver(part component_part,
-			boolean my_abandon_camera_display_flag,
-			boolean my_abandon_selected_display_flag)
+	public extended_component_driver(part component_part,double my_coordinate_length_scale)
 	{
 		super(component_part);
-		abandon_camera_display_flag=my_abandon_camera_display_flag;
-		abandon_selected_display_flag=my_abandon_selected_display_flag;
+		
+		coordinate_length_scale=my_coordinate_length_scale;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
@@ -35,7 +33,6 @@ public class extended_component_driver extends component_driver
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_component_instance_driver(
-				comp,driver_id,abandon_camera_display_flag,abandon_selected_display_flag);
+		return new extended_component_instance_driver(comp,driver_id,coordinate_length_scale);
 	}
 }

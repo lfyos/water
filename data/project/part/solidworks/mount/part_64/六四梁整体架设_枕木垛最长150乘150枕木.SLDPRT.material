@@ -5,11 +5,15 @@
 						"fragment_color_type"		:	1,
 						"texture"					:	[
 							{
-								"texture_file"	:	"images/textures/wood/grain2.jpg",
-								"u_wrapmode"	:	"mirrored_repeat",
-								"v_wrapmode"	:	"mirrored_repeat",
-								"min_filter"	:	"linear",
-								"mag_filter"	:	"linear",
+								"texture_file"	:	"images/textures/wood/grain2.jpg",							
+								"parameter"			:
+								{
+									"addressModeU"	:	"mirror-repeat",
+									"addressModeV"	:	"mirror-repeat",
+									"magFilter"		:	"linear",
+									"minFilter"		:	"linear",
+									"mipmapFilter"	:	"linear"
+								},
 								"matrix"		:	[0.3495279221869413,0.01918422601200053,0.0,0.0,-0.01918422601200053,0.3495279221869413,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0]
 							}
 						],

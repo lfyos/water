@@ -1,5 +1,6 @@
 package kernel_part;
 
+
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_transformation.box;
@@ -41,7 +42,7 @@ public class part_rude
 	public body body_array[];
 	public box part_box;
 	public int total_face_primitive_number,total_edge_primitive_number,total_point_primitive_number;
-
+	
 	public int body_number()
 	{
 		return (body_array==null)?0:body_array.length;
@@ -87,7 +88,7 @@ public class part_rude
 			for(int i=0;i<body_number;i++)
 				body_array[i]=new body(s.body_array[i]);
 		}
-		
+
 		if((part_box=s.part_box)!=null)
 			part_box=new box(s.part_box);
 		
@@ -97,6 +98,7 @@ public class part_rude
 	}
 	public part_rude(file_reader fr)
 	{
+		
 		String default_value="0";
 		
 		String version_string=fr.get_string();	//version code
@@ -132,7 +134,7 @@ public class part_rude
 			if((default_attribute_string[j]=fr.get_string())==null)
 				default_attribute_string[j]="1";
 		}
-		
+			
 		if(version_string.compareTo("simple")==0) {
 			body_array=null;
 			fr.mark_start();
@@ -163,7 +165,7 @@ public class part_rude
 		return;
 	}
 	public part_rude(int my_box_number,part my_reference_part[],location my_box_loca[],box my_box_array[])
-	{
+	{		
 		double max_distance_2=my_box_array[0].distance2();
 		int max_index_id=0;
 		for(int i=0;i<my_box_number;i++){
@@ -202,7 +204,10 @@ public class part_rude
 						default_attribute_double[j]=pr.default_attribute_double[j];
 				}
 			}
-		body_array=new body[]{new body(my_box_number,my_reference_part,my_box_loca,my_box_array)};
+		body_array=new body[]
+			{
+				new body(my_box_number,my_reference_part,my_box_loca,my_box_array)
+			};
 		caculate_rp_box_and_primitive_number();
 		return;
 	}
@@ -244,6 +249,7 @@ public class part_rude
 		fw.println("/*	total_face_primitive_number			*/	",total_face_primitive_number);
 		fw.println("/*	total_edge_primitive_number			*/	",total_edge_primitive_number);
 		fw.println("/*	total_point_primitive_number		*/	",total_point_primitive_number);
+		fw.println();
 		
 		return;
 	}

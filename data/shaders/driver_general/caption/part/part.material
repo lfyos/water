@@ -1,9 +1,7 @@
 {
-	"texture_width"				:	4096,
+	"texture_width"				:	8192,
 	"texture_height"			:	32,
 	"font"						:	"24px Arial",
-	"texture_start"				:	0.25,
-	"texture_speed"				:	0.04,
-
-	"color"						:	[0.0,0.0,0.0,1.0]
+	"canvas_width"				:	1024,
+	"texture_speed"				:	0.00005
 }

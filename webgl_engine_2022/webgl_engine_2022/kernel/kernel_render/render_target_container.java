@@ -2,8 +2,6 @@ package kernel_render;
 
 import java.util.ArrayList;
 
-import kernel_component.component;
-
 public class render_target_container 
 {
 	private ArrayList<render_target> target_array;
@@ -12,111 +10,94 @@ public class render_target_container
 	public void destroy()
 	{
 		render_target rt;
-		for(int i=0,ni=target_array.size();i<ni;i++)
-			if((rt=target_array.get(i))!=null){
-				rt.destroy();
-				target_array.set(i,null);
-			}
-		for(int i=0,ni=search_array.size();i<ni;i++)
-			if((rt=search_array.get(i))!=null){
-				rt.destroy();
-				search_array.set(i,null);
-			}
-		target_array=null;
-		search_array=null;
+		if(target_array!=null) {
+			for(int i=0,ni=target_array.size();i<ni;i++)
+				if((rt=target_array.get(i))!=null){
+					rt.destroy();
+					target_array.set(i,null);
+				}
+			target_array.clear();
+			target_array=null;
+		}
+		if(search_array!=null) {
+			for(int i=0,ni=search_array.size();i<ni;i++)
+				if((rt=search_array.get(i))!=null){
+					rt.destroy();
+					search_array.set(i,null);
+				}
+			search_array.clear();
+			search_array=null;
+		}
 	}
 	public render_target_container()
 	{
-		target_array			=new ArrayList<render_target>();
-		search_array			=new ArrayList<render_target>();
-	}
-	static public render_target get_default_target(component comp)
-	{
-		render_target rt=new render_target("default_render_target",-1,
-			0,0,new component[] {comp},null,null,0,0,1,null,null,true,false,true,true);
-		rt.main_display_target_flag=true;
-		return rt;
+		target_array	=new ArrayList<render_target>();
+		search_array	=new ArrayList<render_target>();
 	}
 	public int get_render_target_number()
 	{
-		int ret_val;
-		return ((ret_val=target_array.size())<=0)?1:ret_val;
+		return (target_array==null)?0:(target_array.size());
 	}
-	public long get_do_render_number(int target_id)
+	public render_target[]get_render_target()
 	{
-		return target_array.get(target_id).do_render_number;
+		return target_array.toArray(new render_target[target_array.size()]);
 	}
-	public render_target[]get_render_target(component comp)
+	static private int compart_target(render_target s,render_target t)
 	{
-		int ret_number=0,target_number=search_array.size();
-		render_target rt,ret_val[]=new render_target[target_number];
+		if(s.target_comonent_id<t.target_comonent_id)
+			return -3;
+		if(s.target_comonent_id>t.target_comonent_id)
+			return 3;
 		
-		for(int i=0;i<target_number;i++)
-			if((rt=search_array.get(i)).do_render_number!=0) {
-				rt.do_render_number--;
-				ret_val[ret_number++]=target_array.get(rt.target_id);
-			}
-		if(ret_number<=0)
-			return new render_target[]{get_default_target(comp)};
-		if(ret_number<ret_val.length){
-			render_target bak[]=ret_val;
-			ret_val=new render_target[ret_number];
-			for(int i=0;i<ret_number;i++)
-				ret_val[i]=bak[i];
-		}
-		return ret_val;	
+		if(s.target_driver_id<t.target_driver_id)
+			return -2;
+		if(s.target_driver_id>t.target_driver_id)
+			return 2;
+		
+		if(s.target_texture_id<t.target_texture_id)
+			return -1;
+		if(s.target_texture_id>t.target_texture_id)
+			return 1;
+		
+		return 0;
 	}
-	private int search_target(String my_target_name)
+	private int search_target(render_target rt)
 	{
-		if(search_array!=null)
-			for(int start_pointer=0,end_pointer=search_array.size()-1;start_pointer<=end_pointer;){
-				int mid_pointer=(start_pointer+end_pointer)/2;
-				int compare_result=search_array.get(mid_pointer).target_name.compareTo(my_target_name);
-				if(compare_result==0)
-					return mid_pointer;
-				if(compare_result<0)
-					start_pointer=mid_pointer+1;
-				else
-					end_pointer=mid_pointer-1;
-			}
+		for(int start_pointer=0,end_pointer=search_array.size()-1;start_pointer<=end_pointer;){
+			int mid_pointer=(start_pointer+end_pointer)/2;
+			int compare_result=compart_target(rt,search_array.get(mid_pointer));
+			if(compare_result<0)
+				end_pointer=mid_pointer-1;
+			else if(compare_result>0)
+				start_pointer=mid_pointer+1;
+			else
+				return mid_pointer;
+		}	
 		return -1;
 	}
-	public render_target get_target(String my_target_name)
+	public void register_target(render_target new_rt)
 	{
 		int search_target_id;
-		return ((search_target_id=search_target(my_target_name))<0)?null:(search_array.get(search_target_id));
-	}
-	public int register_target(render_target target,render_target main_target)
-	{
-		main_target=(main_target==null)?target:main_target;
-		int search_target_id;
-		if((search_target_id=search_target(target.target_name))>=0){
-			render_target rt=search_array.get(search_target_id);
-			
-			target.target_id=rt.target_id;
-			target.render_target_id	=main_target.target_id;
-			
-			search_array.set(search_target_id,target);
-			target_array.set(target.target_id,target);
-	
-			return target.target_id;
-		}
 
-		int target_number=target_array.size();
-		
-		target_array.add(target_number, target);
-		search_array.add(target_number, target);
-		target.target_id		=target_number;
-		target.render_target_id	=main_target.target_id;
-		
-		for(int i=target_number-1,j=target_number;i>=0;i--,j--){
-			render_target rt_i=search_array.get(i);
-			render_target rt_j=search_array.get(j);
-			if(rt_i.target_name.compareTo(rt_j.target_name)<=0)
-				break;
-			search_array.set(i,rt_j);
-			search_array.set(j,rt_i);
+		if((search_target_id=search_target(new_rt))>=0){
+			render_target old_rt=search_array.get(search_target_id);
+			new_rt.target_id=old_rt.target_id;
+			search_array.set(search_target_id,new_rt);
+			target_array.set(new_rt.target_id,new_rt);
+		}else{
+			int target_number=target_array.size();
+			target_array.	add(target_number,new_rt);
+			search_array.	add(target_number,new_rt);
+			new_rt.target_id=target_number;
+			
+			for(int i=target_number-1,j=target_number;i>=0;i--,j--){
+				render_target rt_i=search_array.get(i);
+				render_target rt_j=search_array.get(j);
+				if(compart_target(rt_i,rt_j)<=0)
+					break;
+				search_array.set(i,rt_j);
+				search_array.set(j,rt_i);
+			}
 		}
-		return target.target_id;
 	}
 }

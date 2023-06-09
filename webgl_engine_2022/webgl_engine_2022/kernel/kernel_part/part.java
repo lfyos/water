@@ -1,18 +1,20 @@
 package kernel_part;
 
 import kernel_driver.part_driver;
+import kernel_transformation.box;
+import kernel_component.component;
+import kernel_transformation.point;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
-import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
-import kernel_network.client_request_response;
-
-import kernel_transformation.box;
-import kernel_transformation.point;
-import kernel_common_class.debug_information;
 import kernel_common_class.jason_string;
-import kernel_component.component;
+import kernel_file_manager.file_directory;
+
+import java.io.File;
+
+import kernel_common_class.debug_information;
+import kernel_network.client_request_response;
 
 public class part
 {
@@ -48,14 +50,15 @@ public class part
 	public buffer_object_file_modify_time_and_length boftal;
 	
 	public box secure_caculate_part_box(component comp,int driver_id,
-			int body_id,int face_id,int loop_id,int edge_id,int point_id,
+			int body_id,int face_id,int primitive_id,int vertex_id,int loop_id,int edge_id,
 			point p0,point p1)
 	{
 		if(driver==null)
 			debug_information.println("Find No driver part");
 		else
 			try{
-				return driver.caculate_part_box(this,comp,driver_id,body_id,face_id,loop_id,edge_id,point_id,p0,p1);
+				return driver.caculate_part_box(this,comp,driver_id,body_id,face_id,
+						primitive_id,vertex_id,loop_id,edge_id,p0,p1);
 			}catch(Exception e){
 				debug_information.println("secure_caculate_part_box fail:	",e.toString());
 				e.printStackTrace();
@@ -154,27 +157,26 @@ public class part
 			p_i=new primitive_from_box(part_mesh.body_array);
 		return p_i;
 	}
-	public part_rude call_part_driver_for_load_part_mesh(file_writer head_fw,
-			part_container_for_part_search pcps,system_parameter system_par,scene_parameter scene_par)
+	public void call_part_driver_for_load_part_mesh()
 	{
 		debug_information.println("Load part:	user name:"+user_name,
 				"	system name:"+system_name+"	mesh file:"		+directory_name+mesh_file_name);
-		
-		part_rude my_part_mesh=null;
-		try{
-			my_part_mesh=driver.create_part_mesh_and_buffer_object_head(this,head_fw,pcps,system_par,scene_par);
-		}catch(Exception e){
-			debug_information.println("create_mesh_and_material fail:",	e.toString());
-			debug_information.println("Part user name:",				user_name);
-			debug_information.println("Part system name:",				system_name);
-			debug_information.println("Mesh_file_name:",				directory_name+mesh_file_name);
-			debug_information.println("Material_file_name:",			directory_name+material_file_name);
-			e.printStackTrace();
+		if(!(is_normal_part()))
+			return;
+
+		String my_file_path=file_reader.separator(directory_name+mesh_file_name);
+		if(!(new File(my_file_path).exists())) {
+			part_mesh=null;
+			return;
 		}
-		return my_part_mesh;
+		file_reader fr=new file_reader(my_file_path,file_charset);
+		part_mesh=new part_rude(fr);
+		fr.close();
+		return;
 	}
-	private String create_mesh_and_material_routine(String part_temporary_file_directory,
-			part_container_for_part_search pcps,system_parameter system_par,scene_parameter scene_par)
+	private String create_mesh_and_material_routine(
+			String part_temporary_file_directory,
+			system_parameter system_par,scene_parameter scene_par)
 	{
 		String ret_val="";
 
@@ -204,22 +206,26 @@ public class part
 		head_fw.println("\t\"material\"\t\t:");
 		head_fw.println("\t[");
 		
-		part_rude my_part_mesh=call_part_driver_for_load_part_mesh(head_fw,pcps,system_par,scene_par);
-		if((part_mesh==null)&&(my_part_mesh!=null))
-			part_mesh=my_part_mesh;
-
+		try{
+			driver.create_part_material_in_head(head_fw,this,system_par,scene_par);
+		}catch(Exception e){
+			debug_information.println("create_mesh_and_material fail:",	e.toString());
+			debug_information.println("Part user name:",				user_name);
+			debug_information.println("Part system name:",				system_name);
+			debug_information.println("Mesh_file_name:",				directory_name+mesh_file_name);
+			debug_information.println("Material_file_name:",			directory_name+material_file_name);
+			e.printStackTrace();
+		}
 		head_fw.println("\t],");
 		
-		head_fw.println("\t\"property\"\t\t:\t");
+		head_fw.println("\t\"property\"\t\t:");
 		head_fw.println("\t{");
 		head_fw.println("\t\t\"normal_part_flag\"\t\t\t\t\t:\t",	is_normal_part()	?"true,":"false,");
 		head_fw.println("\t\t\"bottom_box_flag\"\t\t\t\t\t:\t",		is_bottom_box_part()?"true,":"false,");
 		head_fw.println("\t\t\"top_box_flag\"\t\t\t\t\t\t:\t",		is_top_box_part()	?"true,":"false,");
-		head_fw.println("\t\t\"max_component_data_buffer_number\"\t:\t",
-				part_par.max_component_data_buffer_number+",");
 		
 		head_fw.print ("\t\t\"part_box\"\t\t\t\t\t\t\t:\t[");
-		box part_box=secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,null,null);
+		box part_box=secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null);
 		for(int i=0;(i<2)&&(part_box!=null);i++){
 			head_fw.print("[",part_box.p[i].x);
 			head_fw.print(",",part_box.p[i].y);
@@ -257,7 +263,7 @@ public class part
 		}
 		
 		head_fw.println("\t}");
-		
+
 		head_fw.print  ("}");
 		
 		file_collector.create_head_data(head_fw,part_par.max_file_head_length);
@@ -281,8 +287,8 @@ public class part
 
 		return ret_val;
 	}
-	public String load_mesh_and_create_buffer_object(part copy_from_part,long last_modified_time,
-			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps)
+	public String load_mesh_and_create_buffer_object(part copy_from_part,
+			long last_modified_time,system_parameter system_par,scene_parameter scene_par)
 	{
 		String str;
 		
@@ -301,14 +307,10 @@ public class part
 		file_writer.file_delete(part_temporary_file_directory);
 		file_writer.make_directory(part_temporary_file_directory);
 		
-		try{
-			str+=create_mesh_and_material_routine(part_temporary_file_directory,pcps,system_par,scene_par);
-		}catch(Exception e) {
-			debug_information.println("create_mesh_and_material_routine exception:",
-				"\t"+system_name+"\t"+user_name+"\t"+e.toString());
-			e.printStackTrace();
-		}
+		call_part_driver_for_load_part_mesh();
 		
+		str+=create_mesh_and_material_routine(part_temporary_file_directory,system_par,scene_par);
+	
 		if(part_mesh!=null)
 			part_mesh.free_memory();
 		

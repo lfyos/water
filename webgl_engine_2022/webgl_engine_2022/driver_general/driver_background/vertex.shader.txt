@@ -1,8 +1,0 @@
-in  vec4 vertex_location;
-out vec4 frag_location;
-
-void main(void)
-{
-	frag_location=vertex_location;
-	gl_Position	 =vertex_location;
-}

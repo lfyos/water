@@ -1,13 +1,20 @@
 show_pickup_component_box_part
 	show_pickup_component_box_part
-	part\part.mesh
-	part\pickup.material
-	part\part.description
-	part\part.mp3
+	pickup_part\part.mesh
+	pickup_part\part.material
+	pickup_part\part.description
+	pickup_part\part.mp3
+	
+	/*	show_type_flag	*/	true
+	/*	time_length		*/	2000
 	
 show_select_component_box_part
 	show_select_component_box_part
-	part\part.mesh
-	part\select.material
-	part\part.description
-	part\part.mp3
+	select_part\part.mesh
+	select_part\part.material
+	select_part\part.description
+	select_part\part.mp3
+	
+	/*	show_type_flag	*/	false
+	/*	time_length		*/	2000
+	

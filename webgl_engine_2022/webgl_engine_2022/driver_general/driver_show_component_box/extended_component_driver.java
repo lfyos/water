@@ -11,11 +11,13 @@ public class extended_component_driver  extends component_driver
 {
 	private boolean show_type_flag;
 	private long time_length;
+	
 	public void destroy()
 	{
 		super.destroy();
 	}
-	public extended_component_driver(part my_component_part,boolean my_show_type_flag,long my_time_length)
+	public extended_component_driver(part my_component_part,
+			boolean my_show_type_flag,long my_time_length)
 	{
 		super(my_component_part);
 		show_type_flag=my_show_type_flag;

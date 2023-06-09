@@ -5,7 +5,8 @@ function(component_name,component_id,render)
 		pickupmouseselect	:	function(event,component_id,render)
 		{
 			var ep=render.component_event_processor[component_id];
-			var type_id=-1,function_id=Math.floor((1.0-ep.y)*12.0);
+
+			var type_id=-1,function_id=Math.floor(ep.y*12.0);
 			switch(function_id){
 			case 0:	
 				return;
@@ -32,9 +33,9 @@ function(component_name,component_id,render)
 			case 11:
 				type_id=8;break;
 			}
-			var tag_ep=render.get_component_processor("distance_tag_component");
+			var tag_ep=render.operate_component.get_component_event_processor("distance_tag_component");
 			if(tag_ep.pickup_tag_id>=0)
-				render.call_server_component(tag_ep.component_id,"all",
+				render.caller.call_server_component(tag_ep.component_id,"all",
 					[["operation","type"],["id",tag_ep.pickup_tag_id],["type",ep.type_base_id+type_id]]);
 		}
 	}

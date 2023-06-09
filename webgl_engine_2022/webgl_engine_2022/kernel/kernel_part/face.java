@@ -85,7 +85,8 @@ public class face
 		fa_curve=new face_curve(my_face_loca,my_face_box,my_extra_data,my_material);
 		fa_face=new face_face(fa_curve.curve_box,
 				(double_attribute_number<string_attribute_number)
-				?double_attribute_number:string_attribute_number);
+				?double_attribute_number:string_attribute_number);		
+
 		reference_part=my_reference_part;
 		caculate_box();
 	}

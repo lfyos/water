@@ -9,18 +9,16 @@ import kernel_part.part;
 
 public class extended_component_driver  extends component_driver
 {
-	private String target_name;
-	private int texture_id;
-	
+	private double position[];
 	public void destroy()
 	{
 		super.destroy();
+		position=null;
 	}
-	public extended_component_driver(part my_component_part,String my_target_name,int my_texture_id)
+	public extended_component_driver(part my_component_part,double my_position[])
 	{
 		super(my_component_part);
-		target_name=my_target_name;
-		texture_id=my_texture_id;
+		position=my_position;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
@@ -28,11 +26,14 @@ public class extended_component_driver  extends component_driver
 //		String component_directory_name=comp.component_directory_name;
 //		String scene_directory_name=ek.scene_directory_name;
 //		String parameter_directory_name=ek.scene_par.directory_name;
+		
+		comp.uniparameter.display_part_name_or_component_name_flag=false;
+		
 		return;
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_component_instance_driver(comp,driver_id,target_name,texture_id);
+		return new extended_component_instance_driver(comp,driver_id,position);
 	}
 }

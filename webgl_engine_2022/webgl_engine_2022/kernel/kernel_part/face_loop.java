@@ -4,7 +4,7 @@ import kernel_file_manager.file_reader;
 import kernel_transformation.box;
 import kernel_transformation.point;
 
-public class face_loop 
+public class face_loop
 {	
 	public face_edge edge[];
 	public box loop_box;
@@ -69,7 +69,8 @@ public class face_loop
 		}
 		caculate_box_and_primitive_number();
 	}
-	public face_loop(point p0,point p1,point p2,point p3,String my_extra_data,String my_material[])
+	public face_loop(point p0,point p1,point p2,point p3,
+			String my_extra_data,String my_material[])
 	{
 		edge=new face_edge[4];
 		edge[0]=new face_edge(p0,p1,my_extra_data,my_material);

@@ -1,6 +1,5 @@
 package driver_background;
 
-
 import kernel_driver.part_instance_driver;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
@@ -18,10 +17,9 @@ public class extended_part_instance_driver extends part_instance_driver
 	}
 	public void response_init_part_data(part p,engine_kernel ek,client_information ci)
 	{
-		
 	}
 	public String[] response_part_event(part p,engine_kernel ek,client_information ci)
-	{
+	{			
 		return super.response_part_event(p,ek,ci);
 	}
 }

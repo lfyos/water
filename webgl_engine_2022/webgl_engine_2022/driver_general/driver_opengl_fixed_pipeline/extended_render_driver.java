@@ -12,45 +12,41 @@ import kernel_engine.engine_kernel;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
-import kernel_file_manager.file_writer;
 import kernel_network.client_request_response;
 import kernel_component.component_load_source_container;
 
 public class extended_render_driver extends render_driver
 {
-	private String shader_material_file_name,light_file_name,file_charset;
+	private String light_file_name,file_charset;
+
 	public extended_render_driver()
 	{
-		super(	"voxel.txt",
-				"javascript.draw.txt",
-				"vertex.shader.txt",
-				"fragment.shader.txt",
-				"geometry.shader.txt",
-				"tess_control.shader.txt",
-				"tess_evalue.shader.txt");
-		shader_material_file_name=null;
-		light_file_name=null;
+		super();
+		
 		file_charset=null;
+		light_file_name=null;
+	}
+	public extended_render_driver(String my_light_file_name,String my_file_charset)
+	{
+		super();
+		
+		file_charset=my_file_charset;
+		light_file_name=my_light_file_name;
 	}
 	public void destroy()
 	{
 		super.destroy();
-		shader_material_file_name=null;
+		
 		light_file_name=null;
 		file_charset=null;
 	}
 	public void initialize_render_driver(int render_id,engine_kernel ek,client_request_response request_response)
-	{
+	{	
 	}
 	public render_driver clone(render parent_render,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		extended_render_driver ret_val=new extended_render_driver();
-		
-		ret_val.shader_material_file_name=shader_material_file_name;
-		ret_val.light_file_name=light_file_name;
-		
-		return ret_val;
+		return new extended_render_driver(light_file_name,file_charset);
 	}
 	public String[] get_render_list(
 			int part_type_id,file_reader shader_fr,String load_sub_directory_name,
@@ -58,7 +54,6 @@ public class extended_render_driver extends render_driver
 			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
 	{
 		String render_list_file_name=shader_fr.directory_name+file_reader.separator(shader_fr.get_string());
-		shader_material_file_name	=shader_fr.directory_name+file_reader.separator(shader_fr.get_string());
 		light_file_name				=shader_fr.directory_name+file_reader.separator(shader_fr.get_string());
 		file_charset				=shader_fr.get_charset();
 		return (new File(render_list_file_name).exists())?new String[] {render_list_file_name,file_charset}:null;
@@ -68,9 +63,9 @@ public class extended_render_driver extends render_driver
 			component_load_source_container component_load_source_cont,
 			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
 	{
-		String part_list_file_name;
+		String part_list_file_name=render_fr.get_string();
 		
-		switch(((part_list_file_name=render_fr.get_string())==null)?"":part_list_file_name){
+		switch((part_list_file_name==null)?"":part_list_file_name){
 		default:
 			return null;
 		case "absulate":
@@ -92,34 +87,22 @@ public class extended_render_driver extends render_driver
 			break;
 		}
 		part_list_file_name+=file_reader.separator(render_fr.get_string());
+		
 		return new String[] {part_list_file_name,render_fr.get_charset()};
 	}
-	public String create_include_shader_program(String shader_type_string,
-			//vertex,fragment,geometry,tess_control,tess_evalue
-			render rr,system_parameter system_par,scene_parameter scene_par)
+	public String[][] shader_file_name_array()
 	{
-		return null;
-	}
-	public void create_shader_data(file_writer fw,render rr,system_parameter system_par,scene_parameter scene_par)
-	{
-		fw.println("		{");
-		fw.println(file_reader.get_text(light_file_name,file_charset));
-		if(!(new File(shader_material_file_name).exists()))
-			fw.println("			\"material\"	:	[]");
-		else
-			fw.println(file_reader.get_text(shader_material_file_name,file_charset));
-		fw.println("		}");
-		return;
+		return super.shader_file_name_array();
 	}
 	public part_driver create_part_driver(file_reader part_fr,part p,
 			component_load_source_container component_load_source_cont,
 			system_parameter system_par,client_request_response request_response)
 	{
-		return new extended_part_driver(p);
+		return new extended_part_driver();
 	}
 	public render_instance_driver create_render_instance_driver(render r,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_render_instance_driver();
+		return new extended_render_instance_driver(	light_file_name,file_charset);
 	}
 }

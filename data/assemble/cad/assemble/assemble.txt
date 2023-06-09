@@ -1,7 +1,7 @@
 /*	1:name	*/	system_root_component
 /*	1:type	*/	undefined_part
 /*	1:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
-/*	1:child_number	*/	3	
+/*	1:child_number	*/	2	
 		/*	2:name			*/	part_list_component		
 		/*	2:type			*/	undefined_part
 		/*	2:location		*/	relative_file_location	coordinate
@@ -19,13 +19,3 @@
 			mount									interface.assemble
 
 		/*	2:child_number	*/	0
-		
-		/*	2:name			*/	ground_grid_component
-		/*	2:type			*/	ground_grid_part
-		/*	2:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
-				/*	root_component_name		*/		part_list_component
-				/*	init_on_off_flag		*/		false
-				
-				not_part_list
-		/*	2:child_number	*/	0
-		

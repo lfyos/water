@@ -56,11 +56,14 @@ public class component_core_12  extends component_core_11
 					uniparameter.discard_precision2=child_discard_precision2;
 			}
 		}
+		
+		if(uniparameter.discard_precision2<0)
+			uniparameter.discard_precision2=1;
 	}
 	public component_core_12(String token_string,file_reader fr,boolean part_list_flag,
-			boolean normalize_location_flag,double lod_precision_scale,component_construction_parameter ccp)
+			boolean normalize_location_flag,component_construction_parameter ccp)
 	{
-		super(token_string,fr,part_list_flag,normalize_location_flag,lod_precision_scale,ccp);
+		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
 
 		component_directory_name=fr.directory_name;
 		component_file_name		=fr.file_name;

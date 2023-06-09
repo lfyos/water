@@ -1,4 +1,4 @@
-bridge_color	any_assemble_part_name	solidworks\big.txt				relative	bridge\color.大件.list			
+bridge_color	any_assemble_part_name	solidworks\big.txt				relative	bridge\color.大件.list
 bridge_color	any_assemble_part_name	solidworks\big.coarse.txt		relative	bridge\color.coarse.大件.list	
 bridge_color	any_assemble_part_name	solidworks\small.txt			relative	bridge\color.小件.list			
 bridge_color	any_assemble_part_name	solidworks\high_priority.txt	relative	bridge\color.no_box.list		
@@ -11,10 +11,10 @@ bridge_grey		any_assemble_part_name	solidworks\high_priority.txt	relative	bridge
 bridge_green	any_assemble_part_name	solidworks\big.txt				relative	bridge\green.大件.list			
 bridge_green	any_assemble_part_name	solidworks\big.coarse.txt		relative	bridge\green.coarse.大件.list	
 bridge_green	any_assemble_part_name	solidworks\small.txt			relative	bridge\green.小件.list			
-bridge_green	any_assemble_part_name	solidworks\high_priority.txt	relative	bridge\green.no_box.list		
+bridge_green	any_assemble_part_name	solidworks\high_priority.txt	relative	bridge\green.no_box.list
 
-64_color		any_assemble_part_name	solidworks\parameter.txt		relative	64\color.list					
-64_green		any_assemble_part_name	solidworks\parameter.txt		relative	64\green.list					
+64_color		any_assemble_part_name	solidworks\parameter.txt		relative	64\color.list		
+64_green		any_assemble_part_name	solidworks\parameter.txt		relative	64\green.list
 
 87_color		any_assemble_part_name	solidworks\big.txt				relative	87\color.大件.list					
 87_color		any_assemble_part_name	solidworks\middle.txt			relative	87\color.中件.list				
@@ -54,5 +54,5 @@ mount			any_assemble_part_name	solidworks\parameter.txt		relative	mount\mount.li
 mount			any_assemble_part_name	solidworks\parameter.txt		relative	mount\railway.list				
 mount			any_assemble_part_name	solidworks\parameter.txt		relative	mount\拆装梁枕木.list				
 mount			any_assemble_part_name	solidworks\parameter.txt		relative	mount\64.list					
-mount			any_assemble_part_name	solidworks\parameter.txt		relative	mount\64枕木.list				
+mount			any_assemble_part_name	solidworks\parameter.txt		relative	mount\64枕木.list
 

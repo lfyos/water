@@ -1,83 +1,58 @@
 package driver_render_target_register;
 
+import java.util.ArrayList;
+
 import kernel_file_manager.file_reader;
-import kernel_file_manager.file_writer;
 
-import kernel_render.target_viewport;
-
-public class render_target_parameter
+public class render_target_parameter 
 {
-	public String target_name;
-	public int parameter_channel_id,camera_id,framebuffer_width,framebuffer_height;
-	public boolean do_discard_lod_flag,do_selection_lod_flag;
-	public double center_x,center_y;
+	public int camera_id,parameter_channel_id,canvas_id;
+	public boolean load_operation_flag;
+	public double target_x0,target_y0,target_width,target_height;
 	
-	public target_viewport viewport[];
-
-	public void write_out(file_writer f)
-	{
-		f.println("	/*	target_name									*/	",	target_name);
-		f.println("	/*	parameter_channel_id						*/	",	parameter_channel_id);
-		f.println("	/*	camera_id									*/	",	camera_id);
-		f.println("	/*	framebuffer_width,framebuffer_height		*/	",	framebuffer_width+"\t"+framebuffer_height);
-		f.println("	/*	do_discard_lod_flag,do_selection_lod_flag	*/	",
-				(do_discard_lod_flag?"true":"false")+"\t"+(do_selection_lod_flag?"true":"false"));
-		f.println("	/*	center_x,center_y							*/	",	center_x+"\t"+center_y);
-		
-		f.println();
-		f.println("	/*	view_port_number	*/	",viewport.length);
-		f.println();
-		
-		for(int i=0,ni=viewport.length;i<ni;i++){
-			f.print ("	/*	view_port	",i);	f.print ("	*/");
-			f.print ("	",viewport[i].x);
-			f.print ("	",viewport[i].y);
-			f.print ("	",viewport[i].width);
-			f.print ("	",viewport[i].height);
-			f.print ("	",viewport[i].method_id);
-			if(viewport[i].clear_color==null)
-				f.println("	false");
-			else{
-				f.print("	true");
-				for(int j=0,nj=viewport[i].clear_color.length;j<nj;j++)
-					f.print ("	",viewport[i].clear_color[j]);
-				f.println();
-			}
-		}
-		f.println();
+	private render_target_parameter()
+	{	
 	}
-	public render_target_parameter(file_reader f)
+	private static render_target_parameter load_parameter(file_reader fr)
 	{
-		target_name				=f.get_string();
-		parameter_channel_id	=f.get_int();
-		camera_id				=f.get_int();
-		framebuffer_width		=f.get_int();
-		framebuffer_height		=f.get_int();
-		do_discard_lod_flag		=f.get_boolean();
-		do_selection_lod_flag	=f.get_boolean();
-		center_x				=f.get_double();
-		center_y				=f.get_double();
+		render_target_parameter rtp=new render_target_parameter();
+		
+		rtp.camera_id			=fr.get_int();
+		if(fr.eof())
+			return null;
+		rtp.parameter_channel_id=fr.get_int();
+		if(fr.eof())
+			return null;
+		rtp.canvas_id			=fr.get_int();
+		if(fr.eof())
+			return null;
+		rtp.load_operation_flag	=fr.get_boolean();
+		if(fr.eof())
+			return null;
+		rtp.target_x0			=fr.get_double();
+		if(fr.eof())
+			return null;
+		rtp.target_y0			=fr.get_double();
+		if(fr.eof())
+			return null;
+		rtp.target_width		=fr.get_double();
+		
+		if(fr.eof())
+			return null;
+		
+		rtp.target_height=fr.get_double();
 
-		int view_port_number	=f.get_int();
+		return rtp;
+	}
+	public static render_target_parameter[] load_parameter(String file_name,String file_charset)
+	{
+		ArrayList<render_target_parameter> rtp_list=new ArrayList<render_target_parameter>();
 		
-		if(view_port_number<0)
-			view_port_number=0;
-		viewport=new target_viewport[view_port_number];
+		file_reader fr=new file_reader(file_name,file_charset);
+		for(render_target_parameter rtp;(rtp=render_target_parameter.load_parameter(fr))!=null;)
+			rtp_list.add(rtp_list.size(),rtp);
+		fr.close();
 		
-		for(int i=0;i<view_port_number;i++){
-			double x		=f.get_double();
-			double y		=f.get_double();
-			double width	=f.get_double();
-			double height	=f.get_double();
-			int method_id	=f.get_int();
-			
-			double clear_color[]=null;
-			if(f.get_boolean()){
-				clear_color=new double[4];
-				for(int j=0,nj=clear_color.length;j<nj;j++)
-					clear_color[j]=f.get_double();
-			}
-			viewport[i]=new target_viewport(x,y,width,height,method_id,clear_color);
-		}
+		return rtp_list.toArray(new render_target_parameter[rtp_list.size()]);
 	}
 }

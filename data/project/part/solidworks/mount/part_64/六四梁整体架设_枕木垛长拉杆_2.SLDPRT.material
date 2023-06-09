@@ -17,11 +17,15 @@
 						"fragment_color_type"		:	1,
 						"texture"					:	[
 							{
-								"texture_file"	:	"Images/textures/thread/thread.jpg",
-								"u_wrapmode"	:	"mirrored_repeat",
-								"v_wrapmode"	:	"mirrored_repeat",
-								"min_filter"	:	"linear",
-								"mag_filter"	:	"linear",
+								"texture_file"	:	"Images/textures/thread/thread.jpg",							
+								"parameter"			:
+								{
+									"addressModeU"	:	"mirror-repeat",
+									"addressModeV"	:	"mirror-repeat",
+									"magFilter"		:	"linear",
+									"minFilter"		:	"linear",
+									"mipmapFilter"	:	"linear"
+								},
 								"matrix"		:	[9.942568678765333,1.070200013097816,0.0,0.0,-1.070200013097816,9.942568678765333,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0]
 							}
 						],

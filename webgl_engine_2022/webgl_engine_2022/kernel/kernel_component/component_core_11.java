@@ -4,7 +4,7 @@ import kernel_file_manager.file_reader;
 
 public class component_core_11 extends component_core_10
 {
-	public boolean selected_component_family_flag,can_display_assembly_set_flag;
+	public boolean selected_component_family_flag;
 	
 	private boolean can_display_assembly_flag[];
 	
@@ -15,7 +15,7 @@ public class component_core_11 extends component_core_10
 	}
 	public boolean get_can_display_assembly_flag(int parameter_channel_id)
 	{
-		return can_display_assembly_flag[parameter_channel_id]&&can_display_assembly_set_flag;
+		return can_display_assembly_flag[parameter_channel_id];
 	}
 	public boolean caculate_assembly_flag(int parameter_channel_id)
 	{
@@ -44,12 +44,11 @@ public class component_core_11 extends component_core_10
 		return (can_display_assembly_flag[parameter_channel_id])^old_value;
 	}
 	public component_core_11(String token_string,file_reader fr,boolean part_list_flag,
-			boolean normalize_location_flag,double lod_precision_scale,component_construction_parameter ccp)
+			boolean normalize_location_flag,component_construction_parameter ccp)
 	{
-		super(token_string,fr,part_list_flag,normalize_location_flag,lod_precision_scale,ccp);
+		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
 
 		selected_component_family_flag	=false;
-		can_display_assembly_set_flag	=true;
 		can_display_assembly_flag		=new boolean[multiparameter.length];
 		for(int i=0,ni=can_display_assembly_flag.length;i<ni;i++)
 			can_display_assembly_flag[i]=true;

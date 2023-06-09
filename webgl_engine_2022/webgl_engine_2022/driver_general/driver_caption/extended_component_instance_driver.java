@@ -1,46 +1,37 @@
 package driver_caption;
 
+import kernel_part.part;
+import kernel_component.component;
+
+import java.util.Date;
 
 import kernel_camera.camera_result;
-import kernel_common_class.format_change;
-import kernel_common_class.jason_string;
-import kernel_component.component;
-import kernel_driver.component_instance_driver;
-import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
-import kernel_file_manager.file_reader;
-import kernel_part.part;
-
+import kernel_common_class.jason_string;
+import kernel_engine.client_information;
+import kernel_common_class.format_change;
+import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
 	private String display_information;
-	private long time_step,last_time;
-	private String fps_name,fps_string;
+	private long last_time=0,max_time_length;
 
 	public void destroy()
 	{
 		super.destroy();
+		display_information=null;
 	}
-	public extended_component_instance_driver(component my_comp,int my_driver_id)
+	public extended_component_instance_driver(component my_comp,int my_driver_id,long my_max_time_length)
 	{
 		super(my_comp,my_driver_id);
+	
+		max_time_length=my_max_time_length;
 		display_information="";
-		last_time=0;
-		fps_string="";
-		
-		part p=comp.driver_array.get(driver_id).component_part;
-		String file_name=p.directory_name+p.material_file_name;
-		file_reader f=new file_reader(file_name,p.file_charset);
-		
-		time_step=f.get_long();
-		if((fps_name=f.get_string())==null)
-			fps_name="";
-		
-		f.close();
 	}
 	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
+		
 	}
 	private String pickup_string(client_information ci,int display_precision)
 	{
@@ -78,74 +69,61 @@ public class extended_component_instance_driver extends component_instance_drive
 				ret_val+=str+Integer.toString(ci.parameter.loop_id);
 			if(((str=in_d.display_parameter.edge_title)!=null)&&(ci.parameter.edge_id>=0))
 				ret_val+=str+Integer.toString(ci.parameter.edge_id);
-			if(((str=in_d.display_parameter.point_title)!=null)&&(ci.parameter.point_id>=0))
-				ret_val+=str+Integer.toString(ci.parameter.point_id);
+			if(((str=in_d.display_parameter.primitive_title)!=null)&&(ci.parameter.primitive_id>=0))
+				ret_val+=str+Integer.toString(ci.parameter.primitive_id);
+			if(((str=in_d.display_parameter.vertex_title)!=null)&&(ci.parameter.vertex_id>=0))
+				ret_val+=str+Integer.toString(ci.parameter.vertex_id);
 			
 			if(ret_val.compareTo("")!=0)
 				if((str=in_d.display_parameter.value_title)!=null){
-					double my_min_value=in_d.display_parameter.value_min;
-					double my_max_value=in_d.display_parameter.value_max;
-					double my_value=my_min_value+ci.parameter.value*(my_max_value-my_min_value);
-					if(in_d.display_parameter.display_absolute_value_flag)
-						my_value=(my_value<0.0)?(0.0-my_value):my_value;
-						ret_val+=in_d.display_parameter.value_title;
-						ret_val+=format_change.double_to_decimal_string(my_value,display_precision);
+					double my_min_value[]=in_d.display_parameter.value_min;
+					double my_max_value[]=in_d.display_parameter.value_max;
+					double my_value[]=new double[ci.parameter.value.length];
+					for(int j=0,nj=my_value.length;j<nj;j++) {
+						my_value[j]=my_min_value[j]+ci.parameter.value[j]*(my_max_value[j]-my_min_value[j]);
+						if(in_d.display_parameter.display_absolute_value_flag)
+							my_value[j]=Math.abs(my_value[j]);
+					}
+					ret_val+=in_d.display_parameter.value_title;
+					for(int j=0,nj=my_value.length;j<nj;j++) {
+						ret_val+=format_change.double_to_decimal_string(my_value[j],display_precision);
+						ret_val+=(j>0)?",":"";
+					}
 				}
 			if(ret_val.compareTo("")!=0)
 				break;
 		}	
 		return ret_val;
 	}
-	private String caculate_fps_string(engine_kernel ek,client_information ci)
-	{
-		long my_current_time=ek.current_time.nanoseconds();
-		if((my_current_time-last_time)<=time_step)
-			return fps_string;
-		last_time=my_current_time;
-		
-		long fps=1000*1000*1000;
-		switch(fps_name) {
-		default:
-			return "";
-		case "data_time_length":
-			fps/=ci.statistics_client.data_time_length;
-			break;
-		case "render_time_length":
-			fps/=ci.statistics_client.render_time_length;
-			break;
-		case "read_time_length":
-			fps/=ci.statistics_client.read_time_length;
-			break;
-		case "render_interval_length":
-			fps/=ci.statistics_client.render_interval_length;
-			break;
-		}	
-		fps_string=" ["+Long.toString(fps)+"fps]";
-		
-		return fps_string;
-	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
-		if(!(cr.target.main_display_target_flag))
-			return true;
-
+		boolean no_time_length_flag=true;
+		
 		String new_display_information;
 		if((new_display_information=pickup_string(ci,ek.scene_par.display_precision)).isEmpty())
 			if((new_display_information=ci.message_display.get_display_message()).isEmpty())
 				if(ek.collector_stack.get_top_collector()!=null)
 					if((new_display_information=ek.collector_stack.get_top_collector().description)==null)
 						new_display_information="";
-		
-		new_display_information+=caculate_fps_string(ek,ci);
+					else
+						no_time_length_flag=false;
+		if(new_display_information.isEmpty()) {
+			display_information=new_display_information;
+			return true;
+		}
 		if(new_display_information.compareTo(display_information)!=0){
 			display_information=new_display_information;
 			update_component_parameter_version(0);
+			last_time=new Date().getTime();
 		}
+		if(no_time_length_flag)
+			if((new Date().getTime()-last_time)>max_time_length)
+				return true;
 		return false;
 	}
-	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
-		ci.request_response.print(data_buffer_id);
+		ci.request_response.print(0);
 	}
 	public void create_component_parameter(engine_kernel ek,client_information ci)
 	{

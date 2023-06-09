@@ -9,7 +9,6 @@ import kernel_part.part;
 
 public class component_core_3 extends component_core_2
 {
-	public int fix_render_driver_id;
 	public ArrayList<component_driver>	driver_array;
 	
 	public void destroy()
@@ -48,7 +47,7 @@ public class component_core_3 extends component_core_2
 			search_part_name=ccp.change_part_name.search_change_name(search_part_name,search_part_name);
 			parts=ccp.pcfps.search_part(search_part_name);
 		}
-		fix_render_driver_id=-1;
+
 		if(parts==null) {
 			driver_array=null;
 			return;
@@ -87,9 +86,9 @@ public class component_core_3 extends component_core_2
 		return;
 	}
 	public component_core_3(String token_string,file_reader fr,boolean part_list_flag,
-			boolean normalize_location_flag,double lod_precision_scale,component_construction_parameter ccp)
+			boolean normalize_location_flag,component_construction_parameter ccp)
 	{
-		super(token_string,fr,part_list_flag,normalize_location_flag,lod_precision_scale,ccp);
+		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
 		
 		create_driver(fr,ccp);
 	}

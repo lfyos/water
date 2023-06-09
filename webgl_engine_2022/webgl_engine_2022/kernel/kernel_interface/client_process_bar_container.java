@@ -12,10 +12,11 @@ public class client_process_bar_container
 	
 	public void destroy()
 	{
-		if(process_bar_array!=null)
+		if(process_bar_array!=null) {
 			for(int i=0,ni=process_bar_array.size();i<ni;i++)
 				process_bar_array.set(i,null);
-		process_bar_array=null;
+			process_bar_array=null;
+		}
 		default_process_bar=null;
 	}
 	public client_process_bar get_process_bar(int process_bar_id)

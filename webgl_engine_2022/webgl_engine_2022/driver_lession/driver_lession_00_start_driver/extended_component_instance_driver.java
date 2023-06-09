@@ -1,10 +1,10 @@
 package driver_lession_00_start_driver;
 
-import kernel_camera.camera_result;
 import kernel_component.component;
-import kernel_driver.component_instance_driver;
-import kernel_engine.client_information;
+import kernel_camera.camera_result;
 import kernel_engine.engine_kernel;
+import kernel_engine.client_information;
+import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
@@ -23,13 +23,13 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		return false;
 	}
-	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
-		ci.request_response.print(data_buffer_id);
+		ci.request_response.print(0);
 	}
 	public void create_component_parameter(engine_kernel ek,client_information ci)
 	{
-		ci.request_response.print(comp.component_id);
+		ci.request_response.print(0);
 	}
 	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{

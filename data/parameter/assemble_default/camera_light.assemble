@@ -10,7 +10,7 @@
 
 				/* 3name		*/			camera_0
 				/* 3type		*/			undefined_part
-				/* 3location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
+				/* 3location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    	
 				/* 3children number */		0
 		
 				/* 3name		*/			camera_1
@@ -28,7 +28,7 @@
 				/* 3type		*/			undefined_part
 				/* 3location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1    
 				/* 3children number */		0
-				
+
 		/* 2name		*/         light_root
 		/* 2type		*/         undefined_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  

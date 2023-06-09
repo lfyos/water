@@ -210,17 +210,18 @@ public class component_container
 					ek,request_response,ek.part_cont,change_part_name,
 					my_type_string_sorter,component_load_source_cont,default_display_bitmap);
 			try{
-				root_component=new component("",scene_f,false,false,1.0,ccp);
+				root_component=new component("",scene_f,false,false,ccp);
 			}catch(Exception e){
 				root_component=null;
 				debug_information.println("Create scene from file exception:",scene_f.directory_name+scene_f.file_name);
 				e.printStackTrace();
 			}
 			if(root_component!=null)
-				for(int i=0,ni=ek.system_par.max_process_component_load_number;(i<ni)&&(ccp.clsc.get_source_item_number()>0);i++)
-					root_component.append_component(
-						root_component.uniparameter.component_driver_lod_precision_scale,ccp);
-
+				for(int i=0,ni=ek.system_par.max_process_component_load_number;i<ni;i++) {
+					if(ccp.clsc.get_source_item_number()<=0)
+						break;
+					root_component.append_component(ccp);
+				}
 			debug_information.println();
 			debug_information.println("End loading assemble");
 			debug_information.println();

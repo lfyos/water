@@ -38,11 +38,8 @@ public class dispatch_part_request
 		
 		return null;
 	}
-	static public String[] do_dispatch(
-			int main_call_id,engine_kernel ek,client_information ci)
+	static public String[] do_dispatch(engine_kernel ek,client_information ci)
 	{
-		ci.statistics_client.register_system_call_execute_number(main_call_id,0);
-		
 		String str,request_charset=ci.request_response.implementor.get_request_charset();
 		if((str=ci.request_response.get_parameter("method"))==null){
 			debug_information.println(

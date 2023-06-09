@@ -6,41 +6,32 @@ import kernel_file_manager.travel_through_directory;
 
 public class test_1 extends travel_through_directory
 {
-	private static String match[]= {
-			"XMLHttpRequest",
-			"upload_string",
-			"upload_scene_image",
-			"upload_canvas_image"
-	};
 	public void operate_file(String file_name)
 	{
 		String str;
 		if((str=file_reader.get_text(file_name,"GBK"))==null)
 			return;
-		for(int index_id,i=0,ni=match.length;i<ni;i++)
-			if((index_id=str.indexOf(match[i]))>=0) {
-				index_id+=match[i].length();
-				if(str.charAt(index_id)!='_') {
-					debug_information.println(file_name);
-					return;
-				}
-			}
+		
+		if(str.indexOf("call_server")>=0)
+			debug_information.println(file_name);
 	}
+	
 	public test_1()
 	{
 		super(new String[]
 		{
-			"E:\\water_all\\data\\project",
-			"E:\\water_all\\webgl_engine_2022\\webgl_engine_2022\\build"
+//			"F:\\water_all\\data\\project",
+//			"F:\\water_all\\.git",
+//			"F:\\water_all\\webgl_engine_2022\\.metadata",
+//			"F:\\water_all\\webgl_engine_2022\\webgl_engine_2022\\build"
 		});
 	}
 	public static void main(String args[])
 	{
-		debug_information.println("Step	1:");
-		new test_1().do_travel("E:\\water_all\\data\\", false);
+		debug_information.println("Begin:");
 		
-		debug_information.println("Step	2:");
-		new test_1().do_travel("E:\\water_all\\webgl_engine_2022\\webgl_engine_2022\\", false);
+		new test_1().do_travel("F:\\water_all\\data\\parameter\\assemble_default\\", false);
+//		new test_1().do_travel("F:\\water_all\\webgl_engine_2022\\webgl_engine_2022\\", false);
 
 		debug_information.println("End");
 	}

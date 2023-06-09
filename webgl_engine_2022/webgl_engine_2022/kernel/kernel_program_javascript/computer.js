@@ -70,10 +70,10 @@ function construct_computation_object()
 	{
 		var i,j,k,p;
 		var b=[
-			[a[00],a[04],a[08],a[12]],
-			[a[01],a[05],a[09],a[13]],
-			[a[02],a[06],a[10],a[14]],
-			[a[03],a[07],a[11],a[15]]
+			[a[ 0],a[ 4],a[ 8],a[12]],
+			[a[ 1],a[ 5],a[ 9],a[13]],
+			[a[ 2],a[ 6],a[10],a[14]],
+			[a[ 3],a[ 7],a[11],a[15]]
 		];
 		var c=[
 			[1,0,0,0],
@@ -285,16 +285,50 @@ function construct_computation_object()
 		};
 		return false;
 	};
+	this.combine_box=function(b1,b2)
+	{
+		var ret_val=[
+			[
+				(b1[0][0]<b2[0][0])?b1[0][0]:b2[0][0],
+				(b1[0][1]<b2[0][1])?b1[0][1]:b2[0][1],
+				(b1[0][2]<b2[0][2])?b1[0][2]:b2[0][2],
+				1
+			],
+			[
+				(b1[1][0]>b2[1][0])?b1[1][0]:b2[1][0],
+				(b1[1][1]>b2[1][1])?b1[1][1]:b2[1][1],
+				(b1[1][2]>b2[1][2])?b1[1][2]:b2[1][2],
+				1
+			]
+		];
+		
+		ret_val=[
+			[
+				(ret_val[0][0]<ret_val[1][0])?ret_val[0][0]:ret_val[1][0],
+				(ret_val[0][1]<ret_val[1][1])?ret_val[0][1]:ret_val[1][1],
+				(ret_val[0][2]<ret_val[1][2])?ret_val[0][2]:ret_val[1][2],
+				1
+			],
+			[
+				(ret_val[0][0]>ret_val[1][0])?ret_val[0][0]:ret_val[1][0],
+				(ret_val[0][1]>ret_val[1][1])?ret_val[0][1]:ret_val[1][1],
+				(ret_val[0][2]>ret_val[1][2])?ret_val[0][2]:ret_val[1][2],
+				1
+			]
+		];
+		return ret_val;
+	};
 	
 	this.destroy=function()
 	{
 		this.standard_negative				=null;
-		
+	
 		this.matrix_multiplication			=null;
 		this.caculate_coordinate			=null;
+		this.create_scale_matrix			=null;
 		this.create_move_rotate_matrix		=null;
 		this.matrix_negative				=null;
-
+	
 		this.create_point_location			=null;
 		this.min_value						=null;
 		this.min_value2						=null;
@@ -313,7 +347,6 @@ function construct_computation_object()
 		this.insect_plane					=null;
 		this.plane_test						=null;
 		this.view_volume_clip_test			=null;
-		
-		this.destroy						=null;
+		this.combine_box					=null;
 	};
 };

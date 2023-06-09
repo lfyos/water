@@ -1,0 +1,23 @@
+
+			{
+				"face_normal_color"		:	[0.75,0.75,0.0,1.0],
+				"face_pickup_color"		:	[1.0,0.0,0.0,1.0],
+				
+				"edge_normal_color"		:	[0.75,0.75,0.0,1.0],
+				"edge_pickup_color"		:	[1.0,0.0,0.0,1.0],				
+				
+				"point_normal_color"	:	[0.75,0.75,0.0,1.0],
+				"point_pickup_color"	:	[1.0,0.0,0.0,1.0],
+			
+				"canvas_width"			:	8192,
+				"canvas_height"			:	32,
+				
+				"width_scale"			:	1.0,
+				"height_scale"			:	2.0,
+				"edge_scale"			:	0.5,
+				
+				"point_size"			:	8,
+				
+				"font"					:	"bold 32px Arial"
+			}
+			

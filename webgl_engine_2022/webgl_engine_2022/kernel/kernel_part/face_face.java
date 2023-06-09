@@ -3,7 +3,7 @@ package kernel_part;
 import kernel_file_manager.file_reader;
 import kernel_transformation.box;
 
-public class face_face 
+public class face_face
 {
 	public void destroy()
 	{
