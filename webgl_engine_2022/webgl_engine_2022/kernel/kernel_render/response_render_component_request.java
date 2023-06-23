@@ -185,7 +185,7 @@ public class response_render_component_request
 		proxy_url_directory+="&render="+(p.render_id)+"&part="+(p.part_id)+"&data_file=";
 		
 		int ret_val=0;
-		final String type_str[]={"face","edge","point"};
+		String type_str[]={"face","edge","point"};
 		
 		for(int i=0,ni=type_str.length;i<ni;i++){
 			ArrayList<buffer_object_file_modify_time_and_length_item> item_list=p.boftal.list.get(i);
@@ -248,15 +248,17 @@ public class response_render_component_request
 
 			String package_proxy_url;
 			if((package_proxy_url=ci.get_file_proxy_url(package_file_name,ek.system_par))==null)
-				package_proxy_url =ci.request_url_header;
-				package_proxy_url+="&command=buffer&operation=buffer_package&package=";
-				package_proxy_url+=(part_type_id+"_"+part_package_id);
+				package_proxy_url=ci.request_url_header
+					+"&command=buffer&operation=buffer_package&package="
+					+part_type_id+"_"+part_package_id;
 
 			ci.request_response.print((i<=requesting_number)?"[\"":",[\"").
 				print(package_proxy_url).print("\",",package_length).print(",[");
+
 			for(int j=0,nj=package_render_part_id.size();j<nj;j++){
 				int render_part_id[]=package_render_part_id.get(j);
-				int render_id=render_part_id[0],part_id =render_part_id[1];
+				int render_id		=render_part_id[0];
+				int part_id			=render_part_id[1];
 				part p=ek.render_cont.renders.get(render_id).parts.get(part_id);
 				ci.request_response.print((j<=0)?"[":",[",	p.render_id).
 									print(",",				p.part_id).
@@ -265,6 +267,7 @@ public class response_render_component_request
 				i+=response_buffer_object_proxy_request(p,ek,ci);
 				ci.request_response.print("]]");
 			}
+
 			ci.request_response.print("]]");
 		}
 		ci.request_response.print("]");
@@ -352,9 +355,9 @@ public class response_render_component_request
 		
 		long my_current_time=nanosecond_timer.absolute_nanoseconds();
 		
-		ci.statistics_client.all_time_length=my_current_time-ci.statistics_client.last_access_time;
-		ci.statistics_client.last_access_time=my_current_time;
-		ci.statistics_client.render_data_length=ci.request_response.output_data_length;
+		ci.statistics_client.all_time_length	=my_current_time-ci.statistics_client.last_access_time;
+		ci.statistics_client.last_access_time	=my_current_time;
+		ci.statistics_client.render_data_length	=ci.request_response.output_data_length;
 
 		return;
 	}

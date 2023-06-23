@@ -1,109 +1,145 @@
-function construct_component_render_object(max_render_number)
+function construct_component_render_parameter()
 {
-	this.component_render_object=new Array();
-	this.collect_array=new Array(max_render_number);
-	for(var i=0;i<max_render_number;i++)
-		this.collect_array[i]=new Array();
-	
 	this.destroy=function()
 	{
-		this.component_render_object		=null;
-		this.collect_array					=null;
+		this.get_render_list					=null;
+		this.modify_component_render_parameter	=null;
+		this.get_component_render_parameter		=null;
+		this.get_component_buffer_parameter		=null;
+	};
+	this.get_render_list=function(render_buffer_id,render)
+	{
+		var ret_val=new Array();
 		
-		this.get_render_list				=null;
-		this.get_component_render_data		=null;
-		this.modify_component_render_data	=null;
-		this.destroy						=null;		
+		for(var render_id=0,render_number=render.part_array.length;render_id<render_number;render_id++){
+			if(typeof(render.part_array[render_id])=="undefined")
+				continue;
+			for(var part_id=0,part_number=render.part_array[render_id].length;part_id<part_number;part_id++){
+				if(typeof(render.part_array[render_id][part_id])=="undefined")
+					continue;
+				var part_object=render.part_array[render_id][part_id];
+				var component_render_parameter=part_object.component_render_parameter;
+				if(render_buffer_id>=component_render_parameter.length)
+					continue;
+		    	if((component_render_parameter=component_render_parameter[render_buffer_id]).length<=0)
+		    		continue;
+		    	ret_val.push([render_id,part_id,component_render_parameter,part_object.component_buffer_parameter]);
+		    }
+		}
+    	return ret_val;
 	};
-	this.get_render_list=function(render_buffer_id)
-	{
-		var p=this.component_render_object;
-    	if(p.length<=render_buffer_id)
-    		for(var i=p.length;i<=render_buffer_id;i++)
-    			p[i]={
-    				render_data	:	new Array(),
-    				render_list	:	new Array()
-    			}
-    	p=p[render_buffer_id];
-    	
-    	var render_id_collect=new Array();
-    	for(var i=0,ni=p.render_list.length;i<ni;i++){
-    		var render_id	=p.render_list[i][0];
-    		var part_id		=p.render_list[i][1];
-    		var render_data	=p.render_data[render_id][part_id];
-    		
-    		if((p.render_list[i][2]=render_data.component_render_data).length<=0)
-    			render_data.in_render_list_flag=false;
-    		else if(this.collect_array[render_id].push(p.render_list[i])==1)
-    			render_id_collect.push(render_id);
-    	};
-    	var new_render_number=0;
-    	for(var pointer=0,i=0,ni=render_id_collect.length;i<ni;i++){
-    		var render_id=render_id_collect[i];
-    		var my_array=this.collect_array[render_id];
-    		new_render_number+=my_array.length;
-    		for(var j=0,nj=my_array.length;j<nj;j++)
-    			p.render_list[pointer++]=my_array[j];
-    		my_array.length=0;
-    	};
-    	if(p.render_list.length!=new_render_number)
-    		p.render_list.length=new_render_number;
-    	
-    	return p.render_list;
-	};
-	this.get_component_render_data=function(render_id,part_id,render_buffer_id)
-	{
-		var p=this.component_render_object;
-    	if(p.length<=render_buffer_id)
-    		for(var i=p.length;i<=render_buffer_id;i++)
-    			p[i]={
-    				render_data	:	new Array(),
-    				render_list	:	new Array()
-    			}
-
-    	p=p[render_buffer_id].render_data;
-		if(p.length<=render_id)
-    		for(var i=p.length;i<=render_id;i++)
-    			p[i]=new Array();
-
-    	p=p[render_id];
-    	if(p.length<=part_id)
-    		for(var i=p.length;i<=part_id;i++)
-    			p[i]={
-    				component_render_data	:	new Array(),
-    				in_render_list_flag		:	false
-    			};
-    	return p[part_id];
-	};
-	this.modify_component_render_data=function(render_buffer_id,component_append_data,component_delete_data)
+	
+	this.modify_component_render_parameter=function(
+			render_buffer_id,component_append_data,component_delete_data,render)
 	{
 		for(var i=0,ni=component_append_data.length;i<ni;){
 	    	var render_id				=component_append_data[i++];
 	    	var	part_id					=component_append_data[i++];
 	    	var	component_append_array	=component_append_data[i++];
-	    	
-	    	var p=this.get_component_render_data(render_id,part_id,render_buffer_id);
+
+    	    var part_object=render.part_array[render_id][part_id];
+    	    var p=part_object.component_render_parameter;
+    		if(p.length<=render_buffer_id)
+    			for(var i=p.length;i<=render_buffer_id;i++)
+    				p[i]=new Array();
+			p=p[render_buffer_id];
+ 
 	    	for(var j=0,nj=component_append_array.length;j<nj;){
-    	    	var instance_id		=component_append_array[j++];
-    	    	var instance_data	=component_append_array[j++];
-    	    	p.component_render_data[instance_id]=instance_data;
-    	    }
-    	    if(!(p.in_render_list_flag)){
-	    	    p.in_render_list_flag=true;
-	    	    this.component_render_object[render_buffer_id].render_list.push([render_id,part_id,null]);
+    	    	var instance_id			=component_append_array[j++];
+    	    	var new_instance_data	=component_append_array[j++];
+    	    	
+    	    	if(instance_id<p.length){	
+					if(typeof(part_object.part_driver_object.replace_render_parameter)=="function")
+						part_object.part_driver_object.replace_render_parameter(
+							instance_id,p[instance_id],new_instance_data,part_object,render_buffer_id);
+				}else{
+					if(typeof(part_object.part_driver_object.append_render_parameter)=="function")
+						part_object.part_driver_object.append_render_parameter(
+							instance_id,new_instance_data,part_object,render_buffer_id);
+				}
+				p[instance_id]=new_instance_data;
     	    }
 		}
 		for(var i=0,ni=component_delete_data.length;i<ni;){
 		   	var render_id				=component_delete_data[i++];
 		   	var	part_id					=component_delete_data[i++];
-		   	var	request_delete_id_array	=component_delete_data[i++];    	
-		   	var p=this.get_component_render_data(render_id,part_id,render_buffer_id);
-		   	for(var j=0,nj=request_delete_id_array.length;j<nj;){
-	   			var delete_index_id=request_delete_id_array[j++];
-	   			var pp=p.component_render_data.pop();
-	   			if(p.component_render_data.length!=delete_index_id)
-	   				p.component_render_data[delete_index_id]=pp;
-	   		};	
+		   	var	request_delete_id_array	=component_delete_data[i++];
+		   	
+		   	var part_object=render.part_array[render_id][part_id];
+		   	var p=part_object.component_render_parameter;
+    		if(p.length<=render_buffer_id)
+    			for(var i=p.length;i<=render_buffer_id;i++)
+    				p[i]=new Array();
+			p=p[render_buffer_id];
+			
+		   	for(var j=0,nj=request_delete_id_array.length;j<nj;j++){
+	   			var delete_index_id=request_delete_id_array[j];
+	   			if(typeof(part_object.part_driver_object.delete_render_parameter)=="function")
+					part_object.part_driver_object.delete_render_parameter(
+						delete_index_id,p[delete_index_id],part_object,render_buffer_id);
+	   			var last_instance_data=p.pop();
+	   			if(delete_index_id<p.length)
+	   				p[delete_index_id]=last_instance_data;
+	   		}
+		}
+	}
+	
+	this.get_component_render_parameter=function(response_data,render)
+	{
+		var p=response_data,render_buffer_id;
+		try{
+			render_buffer_id=p[0];
+			render.camera.modify_camera_data(render_buffer_id,p[1]);
+			this.modify_component_render_parameter(render_buffer_id,p[2][0],p[2][1],render);
+			if(p.length>=4){
+				if(p[3].length<4){
+					render.clip_plane_array[render_buffer_id]				=[0,0,0,0];
+					render.clip_plane_matrix_array[render_buffer_id]		=render.computer.create_move_rotate_matrix(0,0,0,0,0,0);
+				}else{
+					render.clip_plane_array[render_buffer_id]				=[p[3][0],p[3][1],p[3][2],p[3][3]];
+					render.clip_plane_matrix_array[render_buffer_id]	
+								=render.computer.project_to_plane_location( p[3][0],p[3][1],p[3][2],p[3][3],1.0);
+				};
+			}else if(typeof(render.clip_plane_array[render_buffer_id])=="undefined"){
+				render.clip_plane_array[render_buffer_id]					=[0,0,0,0];
+				render.clip_plane_matrix_array[render_buffer_id]			=render.computer.create_move_rotate_matrix(0,0,0,0,0,0);
+			};
+		}catch(e){
+			alert("get_component_render_parameter fail:	"+e.toString());
+			return -1;
 		};
+	    return render_buffer_id;
 	};
-};
+	this.get_component_buffer_parameter=function(buffer_data,render)
+	{
+		for(var i=0,ni=buffer_data.length;i<ni;i++){
+			var render_id		=buffer_data[i][0];
+			var part_id			=buffer_data[i][1];
+			var part_buffer_data=buffer_data[i][2];
+			var part_object=render.part_array[render_id][part_id];
+			var max_buffer_number=part_object.property.max_component_data_buffer_number;
+			
+			for(var j=0,nj=part_buffer_data.length;j<nj;j++){
+				var buffer_id			=part_buffer_data[j][0];
+				var buffer_data_item	=part_buffer_data[j][1];
+				var p=part_object.component_buffer_parameter;
+				while(p.length<=buffer_id)
+					p.push(new Array());
+					
+				p=p[buffer_id];
+				p.push(buffer_data_item);
+
+				if(typeof(part_object.part_driver_object.push_component_parameter)=="function")
+					part_object.part_driver_object.push_component_parameter(
+						buffer_id,buffer_data_item,part_object);
+
+				if(typeof(part_object.part_driver_object.shift_component_parameter)=="function")
+					for(;p.length>max_buffer_number;p.shift())
+						part_object.part_driver_object.shift_component_parameter(buffer_id,p[0],part_object);
+				else
+					while(p.length>max_buffer_number)
+						p.shift();
+			}
+		}
+	}
+}

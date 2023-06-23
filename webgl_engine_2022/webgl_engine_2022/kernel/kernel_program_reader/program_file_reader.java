@@ -1,69 +1,57 @@
 package kernel_program_reader;
 
-import kernel_common_class.class_file_reader;
-import kernel_common_class.common_reader;
-import kernel_file_manager.file_reader;
-import kernel_program_default.program_default_file_reader;
 import kernel_render.render;
+import kernel_engine.system_parameter;
+import kernel_common_class.common_reader;
+import kernel_common_class.class_file_reader;
 
 public class program_file_reader
 {
-	public program_file_reader()
-	{	
-	}
-	public static common_reader get_system_program_reader(
-			String type_name,String class_charset,String jar_file_charset)
+	public static common_reader get_system_program_reader(system_parameter system_par)
 	{
-		return class_file_reader.get_reader(type_name+"_shader.txt",
-				program_file_reader.class,class_charset,jar_file_charset);
-	}
-	public static common_reader get_render_program_reader(render r,
-			String type_name,String class_charset,String jar_file_charset)
-	{
-		common_reader reader=null;
-		
-		String file_name;
-		
-		switch(type_name) {
-		default:
-		case "decode":
-			file_name=r.driver.javascript_decode;
-			break;
-		case "draw":
-			file_name=r.driver.javascript_draw;
-			break;
-		case "vertex":
-			file_name=r.driver.vertex_shader;
-			break;
-		case "fragment":
-			file_name=r.driver.fragment_shader;
-			break;
-		case "geometry":
-			file_name=r.driver.geometry_shader;
-			break;
-		case "tess_control":
-			file_name=r.driver.tess_control_shader;
-			break;
-		case "tess_evalue":
-			file_name=r.driver.tess_evalue_shader;
-			break;
-		}
-		file_name=file_reader.separator(file_name);
-		reader=class_file_reader.get_reader(file_name,r.driver.getClass(),class_charset,jar_file_charset);
-		if(reader!=null)
-			if(reader.error_flag()){
-				reader.close();
-				reader=null;
-			}
-		if(reader!=null)
-			return reader;
-		
-		reader=program_default_file_reader.get_default_reader(type_name+"_"+file_name,class_charset,jar_file_charset);
+		common_reader reader=class_file_reader.get_reader(
+				"common_shader.txt",program_file_reader.class,
+				system_par.text_class_charset,system_par.text_jar_file_charset);
 		if(reader!=null)
 			if(reader.error_flag()){
 				reader.close();
 				reader=null;
 			}
 		return reader;
+	}
+	public static long get_system_program_last_time(system_parameter system_par)
+	{
+		common_reader reader=get_system_program_reader(system_par);
+		if(reader==null)
+			return 0;
+		if(reader.error_flag()) {
+			reader.close();
+			return 0;
+		}
+		reader.close();
+		return reader.lastModified_time;
+	}
+	public static common_reader get_render_program_reader(render r,system_parameter system_par)
+	{
+		common_reader reader=class_file_reader.get_reader("javascript.txt",r.driver.getClass(),
+				system_par.text_class_charset,system_par.text_jar_file_charset);
+		if(reader!=null)
+			if(reader.error_flag()){
+				reader.close();
+				reader=null;
+			}
+		return reader;
+	}
+	public static long get_render_program_last_time(render r,system_parameter system_par)
+	{
+		common_reader reader=get_render_program_reader(r,system_par);
+		if(reader==null)
+			return 0;
+		if(reader.error_flag()) {
+			reader.close();
+			return 0;
+		}
+		reader.close();
+		return reader.lastModified_time;
 	}
 }

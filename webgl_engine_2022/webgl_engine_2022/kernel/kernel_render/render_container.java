@@ -419,7 +419,9 @@ public class render_container
 		renders=new ArrayList<render>();
 		if(ren_con.renders!=null)
 			for(int i=0,ni=ren_con.renders.size();i<ni;i++)
-				renders.add(i,new render(i,ren_con.renders.get(i),request_response,system_par,scene_par));
+				renders.add(i,
+					new render(ren_con.renders.get(i),
+							request_response,system_par,scene_par));
 		system_part_package	=new part_package(ren_con.system_part_package);
 		type_part_package	=new part_package(ren_con.type_part_package);
 		scene_part_package	=new part_package(ren_con.scene_part_package);

@@ -31,9 +31,9 @@ var lfy_render;
 }
 %>
 
-function body_onload()
+async function body_onload()
 {
-	construct_render_object("my_canvas",user_name,pass_word,language,scene_name,link_name,
+	lfy_render=await construct_render_object("my_canvas",user_name,pass_word,language,scene_name,link_name,
 			//1.Object类型的绘图画布。如果是String类型,则系统使用document.getElementById("my_canvas")将其转换为Object类型数据。
 			//2.用户名	3.用户密码	4.语言	5.场景名称	6.连接名称,用于多人协同操作一个场景
 		[	//7.初始化参数
@@ -45,14 +45,6 @@ function body_onload()
 			["sub_directory",			sub_directory		],	//显示内容
 			["coordinate",				coordinate			]	//坐标系选择
 		],
-		function(my_render)	//8.创建场景成功后执行的函数
-		{
-			lfy_render=my_render;				//把场景变量保存到变量render中
-			document.title=lfy_render.title;	//设置网页标题
-//			lfy_render.system_call_processor.show_hide_component(false,"camera_operation_component");
-//			lfy_render.system_call_processor.show_hide_component(false,"caption_component");
-//			lfy_render.system_call_processor.turnonoff_level_of_detail(false);
-		},
 		function(			//9.进度条绘制函数，如果不配置该函数，则使用系统内部提供的默认进度条绘制函数
 				process_bar_canvas,				//绘制进度条的画布canvas
 				progress_bar_ctx,				//绘制进度条的2D上下文
@@ -80,6 +72,10 @@ function body_onload()
 			progress_bar_ctx.textAlign		="center";		
 			progress_bar_ctx.fillText(display_value,	process_bar_canvas.width*0.5,	process_bar_canvas.height*0.5);
 		});
+		document.title=lfy_render.title;	//设置网页标题
+//		lfy_render.system_call_processor.show_hide_component(false,"camera_operation_component");
+//		lfy_render.system_call_processor.show_hide_component(false,"caption_component");
+//		lfy_render.system_call_processor.turnonoff_level_of_detail(false);
 }
 function body_onresize()
 {

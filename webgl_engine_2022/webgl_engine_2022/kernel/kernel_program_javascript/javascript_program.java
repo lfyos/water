@@ -11,37 +11,33 @@ import kernel_network.client_request_response;
 
 public class javascript_program
 {
-	private String class_charset,jar_file_charset,javascript_file_name[];
 	private long last_modified_time;
-	
+	private static final String javascript_file_name[]=new String[] 
+	{
+		"call_server.js",		"camera.js",			"collector_loader.js",					"component_location.js",
+		"component_render.js",	"computer.js",			"decode.js",							"download_vertex_data.js",
+		"event_listener.js",	"framebuffer.js",		"init_ids_of_part_and_component.js",	"modifier_time.js",
+		"pickup.js",			"process_bar.js",		"render_main.js",						"render.js",
+		"system_buffer.js",		"utility.js",			"webgpu.js"
+	};
 	public void destroy()
 	{
-		javascript_file_name=null;
-	}
-	
-	public javascript_program(String my_class_charset,String my_jar_file_charset)
+	}	
+	public javascript_program(system_parameter system_par)
 	{
-		class_charset	=my_class_charset;
-		jar_file_charset=my_jar_file_charset;
-		
-		javascript_file_name=new String[] {
-			"buffer_object.js",		"camera.js",		"collector_loader.js",		"component_location.js",
-			"component_render.js",	"computer.js",		"deviceorientation.js",		"event_listener.js",
-			"framebuffer.js",		"pickup.js",		"program.js",				"modifier_time.js",
-			"render_main.js",		"render.js",		"uniform_block.js",			"utility.js",
-			"process_bar.js"
-		};
-		
 		last_modified_time=0;
-
 		for(int i=0,ni=javascript_file_name.length;i<ni;i++) {
-			common_reader cr=class_file_reader.get_reader(
-					javascript_file_name[i],getClass(),class_charset,jar_file_charset);
-			if(cr!=null) {
-				if(cr.lastModified_time>last_modified_time)
-					last_modified_time=cr.lastModified_time;
+			common_reader cr=class_file_reader.get_reader(javascript_file_name[i],
+				getClass(),system_par.js_class_charset,system_par.js_jar_file_charset);
+			if(cr==null)
+				continue;
+			if(cr.error_flag()){
 				cr.close();
+				continue;
 			}
+			if(cr.lastModified_time>last_modified_time)
+				last_modified_time=cr.lastModified_time;
+			cr.close();
 		}
 	}
 	
@@ -80,29 +76,35 @@ public class javascript_program
 			}
 		}
 		String str[]=new String[]{
-				"function "+function_name+"(my_canvas,my_user_name,my_pass_word,my_language_name,",
-				"		scene_name,link_name,initialization_parameter,initialization_function,progress_bar_function)",
+				"async function "+function_name+"(my_canvas,my_user_name,my_pass_word,my_language_name,",
+				"		scene_name,link_name,initialization_parameter,progress_bar_function)",
 				"{"
 		};
 		for(int i=0,ni=str.length;i<ni;i++)
 			request_response.println(str[i]);
 
 		for(int i=0,ni=javascript_file_name.length;i<ni;i++) {
-			common_reader cr=class_file_reader.get_reader(
-					javascript_file_name[i],getClass(),class_charset,jar_file_charset);
-			if(cr!=null){
-				cr.get_text("\t",request_response);
+			common_reader cr=class_file_reader.get_reader(javascript_file_name[i],
+					getClass(),system_par.js_class_charset,system_par.js_jar_file_charset);
+			if(cr==null)
+				continue;
+			if(cr.error_flag()){
 				cr.close();
+				continue;
 			}
+			cr.get_text("\t",request_response);
+			cr.close();
 		}
+		
 		str=new String[]{
-				"	return render_main("
+				"	var ret_val=await render_main("
 							+system_par.create_engine_sleep_time_length_scale	+","
 							+system_par.create_engine_sleep_time_length			+","
 							+system_par.create_engine_max_sleep_time_length		+",my_canvas,"		,
 				"		\""	+request_response.implementor.get_url()	+"\","							,
 				"		my_user_name,my_pass_word,my_language_name,scene_name,link_name,"			,
-				"		initialization_parameter,initialization_function,progress_bar_function);"	,
+				"		initialization_parameter,progress_bar_function);"	,
+				"	return ret_val;",
 				"};"
 		};
 		

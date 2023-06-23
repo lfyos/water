@@ -41,40 +41,47 @@ first_do_component_caculator+chinese			10.第一次计算组件数目
 create_first_class_package+english				11.create_first_class_packages
 create_first_class_package+chinese				11.生成第一类下载数据包
 
-create_second_class_package+english				12.create_second_class_packages
-create_second_class_package+chinese				12.生成第二类下载数据包
+create_first_boftal_file+english				12.create_first_boftal_file
+create_first_boftal_file+chinese				12.生成第一类零件缓存信息文件
 
-caculate_scene_data+english						13.caculate_scene_data 
-caculate_scene_data+chinese						13.计算场景相关数据
 
-second_do_component_caculator+english			14.second_do_component_caculator
-second_do_component_caculator+chinese			14.第二次计算组件数目
+create_second_class_package+english				13.create_second_class_packages
+create_second_class_package+chinese				13.生成第二类下载数据包
 
-create_shader+english							15.create_shaders 
-create_shader+chinese							15.生成着色程序
+create_second_boftal_file+english				14.create_second_boftal_file
+create_second_boftal_file+chinese				14.生成第二类零件缓存信息文件
 
-render_driver_initialization+english			16.part_driver_initialization 
-render_driver_initialization+chinese			16.零件驱动初始化
+caculate_scene_data+english						15.caculate_scene_data 
+caculate_scene_data+chinese						15.计算场景相关数据
 
-part_driver_initialization+english				17.part_driver_initialization 
-part_driver_initialization+chinese				17.零件驱动初始化
+second_do_component_caculator+english			16.second_do_component_caculator
+second_do_component_caculator+chinese			16.第二次计算组件数目
 
-component_driver_initialization+english			18.component_driver_initialization 
-component_driver_initialization+chinese			18.组件驱动初始化
+create_shader+english							17.create_shaders 
+create_shader+chinese							17.生成着色程序
 
-file_initialization_0+english					19.file_initialization_0 
-file_initialization_0+chinese					19.文件初始化_0
-file_initialization_1+english					19.file_initialization_1 
-file_initialization_1+chinese					19.文件初始化_1
-file_initialization_2+english					19.file_initialization_2 
-file_initialization_2+chinese					19.文件初始化_2
-file_initialization_3+english					19.file_initialization_3 
-file_initialization_3+chinese					19.文件初始化_3
-file_initialization_4+english					19.file_initialization_4 
-file_initialization_4+chinese					19.文件初始化_4
+render_driver_initialization+english			18.part_driver_initialization 
+render_driver_initialization+chinese			18.零件驱动初始化
 
-delete_part_file+english						21.delete_part_file
-delete_part_file+chinese						21.删除零件数据文件
+part_driver_initialization+english				19.part_driver_initialization 
+part_driver_initialization+chinese				19.零件驱动初始化
 
-load_termination+english						22.load_termination 
-load_termination+chinese						22.场景数据装入完毕
+component_driver_initialization+english			20.component_driver_initialization 
+component_driver_initialization+chinese			20.组件驱动初始化
+
+file_initialization_0+english					21.file_initialization_0 
+file_initialization_0+chinese					21.文件初始化_0
+file_initialization_1+english					22.file_initialization_1 
+file_initialization_1+chinese					22.文件初始化_1
+file_initialization_2+english					23.file_initialization_2 
+file_initialization_2+chinese					23.文件初始化_2
+file_initialization_3+english					24.file_initialization_3 
+file_initialization_3+chinese					24.文件初始化_3
+file_initialization_4+english					25.file_initialization_4 
+file_initialization_4+chinese					25.文件初始化_4
+
+delete_part_file+english						26.delete_part_file
+delete_part_file+chinese						26.删除零件数据文件
+
+load_termination+english						27.load_termination 
+load_termination+chinese						27.场景数据装入完毕

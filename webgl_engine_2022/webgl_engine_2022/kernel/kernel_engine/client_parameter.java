@@ -88,6 +88,25 @@ public class client_parameter
 			value=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("length"))!=null)
 			request_length=Integer.decode(str);
+		
+		if((str=ci.request_response.get_parameter("acknowledge"))!=null) 
+			for(int render_id,part_id,index_id;str.length()>0;) {
+				if((index_id=str.indexOf('_'))<0)
+					break;
+				render_id=Integer.parseInt(str.substring(0,index_id));
+				str=str.substring(index_id+1);				
+				if((index_id=str.indexOf('_'))<0)
+					break;
+				part_id=Integer.parseInt(str.substring(0,index_id));
+				str=str.substring(index_id+1);
+				if((render_id<0)||(part_id<0))
+					continue;
+				if(render_id>=ci.not_acknowledge_render_part_id.length)
+					continue;
+				if(render_id>=ci.not_acknowledge_render_part_id[render_id].length)
+					continue;
+				ci.not_acknowledge_render_part_id[render_id][part_id]=false;
+			}
 
 		if((str=ci.request_response.get_parameter("data_time"))==null)
 			ci.statistics_client.data_time_length=1;

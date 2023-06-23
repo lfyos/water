@@ -1,314 +1,153 @@
-function redraw(render,processs_bar_object)
-{
-	if(render.terminate_flag)
-		return;
-		
-	var redraw_object={
-			touch_time:			 0,
-			interval_length:	 1,
-			clear_interval_id:	-1	
-	};
-	
-	function render_routine()
-	{
-		if(render.terminate_flag)
-			clearInterval(redraw_object.clear_interval_id);
-		else{
-			var my_current_time=(new Date()).getTime();
-			redraw_object.interval_length=my_current_time-redraw_object.touch_time;
-			redraw_object.touch_time=my_current_time;
-			render.do_render(redraw_object.interval_length,processs_bar_object);
-			
-			window.requestAnimationFrame(render_routine);
-		}
-		return;
-	};
-	function touch_routine()
-	{
-		if(render.terminate_flag)
-			clearInterval(redraw_object.clear_interval_id);
-		else{
-			var my_current_time=(new Date()).getTime();
-			var my_interval_length=my_current_time-redraw_object.touch_time;
-			if(my_interval_length>(render.parameter.engine_touch_time_length/1000000)){
-				redraw_object.interval_length=my_interval_length;
-				redraw_object.touch_time=my_current_time;
-				render.do_render(redraw_object.interval_length,processs_bar_object);
-			}
-		}
-		return;
-	};
-	redraw_object.clear_interval_id=setInterval(touch_routine,render.parameter.engine_touch_time_length/1000000);
-	
-	render_routine();
-};
-
-async function render_initialization(initialization_url,render,user_initialization_function,processs_bar_object)
-{
-	var initialization_promise=await fetch(initialization_url);
-	if(!(initialization_promise.ok)){
-		alert("request render_initialization data fail: "+initialization_url);
-		return;
-	}
-	var response_data;
-	try{
-		response_data = await initialization_promise.json();
-	}catch(e){
-		alert("parse render_initialization data fail: "+e.toString());
-		alert(initialization_url);
-		return;
-	}
-	
-	var sorted_component_name_id		=response_data[0];
-	var	part_component_id_and_driver_id	=response_data[1];
-	var response_fun_array				=response_data[2];
-	var program_data					=response_data[3];
-			
-	render.process_part_component_id_and_driver_id(
-			sorted_component_name_id,part_component_id_and_driver_id);
-			
-	for(var i=0,ni=program_data.length;i<ni;i++){
-		var render_name			=program_data[i][0];
-		var permanent_render_id	=program_data[i][1];
-		var decode_function;
-		try{
-			decode_function=(eval("["+(program_data[i][2])+"]"))[0];
-		}catch(e){
-			decode_function=function()
-			{
-				var ret_val={
-					region_box	:	[[0,0,0,1],[1,1,1,1]],
-					item_size	:	4,
-					region_data	:	new Array()
-				};
-				return ret_val;
-			};
-			console.log("Error decode_function:	"+permanent_render_id+"		"+e.toString());
-			console.log(program_data[i][2]);
-		}
-		var attribute_map,draw_function;
-		try{
-			draw_function=(eval("["+(program_data[i][3])+"]"));
-			attribute_map=draw_function[0];
-			draw_function=draw_function[1];
-		}catch(e){
-			attribute_map=[];
-			draw_function=function(){};
-			console.log("Error draw_function:	"+permanent_render_id+"		"+e.toString());
-			console.log(program_data[i][3]);
-		}
-				
-		var vertex_program		=program_data[i][4];
-		var fragment_program	=program_data[i][5];
-		var geometry_program	=program_data[i][6];
-		var tess_control_Program=program_data[i][7];
-		var tess_evalueprogram	=program_data[i][8];
-		var shader_data			=program_data[i][9];
-				
-		render.render_program.compile_program(i,
-				render_name,
-				permanent_render_id,
-				decode_function,
-				attribute_map,
-				draw_function,
-				vertex_program,
-				fragment_program,
-				geometry_program,
-				tess_control_Program,
-				tess_evalueprogram,
-				shader_data);
-	};
-	render.render_program.create_sorted_render_program_id();
-		
-	for(var i=0,ni=response_fun_array.length;i<ni;i++){
-		if(typeof(response_fun_array[i])!="object")
-			continue;
-		var component_id=response_fun_array[i].component_id;
-		var component_name=response_fun_array[i].component_name;
-		var init_function=response_fun_array[i].initialization_function;
-		if(typeof(init_function)!="string"){
-			console.log("component init_function program is not string:	"+component_name+"		"+component_id);
-			console.log(response_fun_array[i].initialization_function);
-			continue;
-		}
-		if((init_function=init_function.trim()).length<=0){
-			console.log("component init_function program is empty:	"+component_name+"		"+component_id);
-			console.log(response_fun_array[i].initialization_function);
-			continue;
-		}
-		try{
-			init_function=(eval("["+init_function+"]"))[0];
-		}catch(e){
-			console.log("Error compile component init_function:	"
-				+component_name+"		"+component_id+"		"+e.toString());
-			console.log(response_fun_array[i].initialization_function);
-			continue;
-		}
-		if(typeof(init_function)!="function"){
-			console.log("component init_function is NOT FUNCTION:	"
-				+component_name+"		"+component_id+"		"+e.toString());
-			console.log(response_fun_array[i].initialization_function);
-			continue;
-		}
-		try{
-			init_function(component_name,component_id,render);
-		}catch(e){
-			console.log("Error execute component init_function:	"
-				+component_name+"		"+component_id+"		"+e.toString());
-			console.log(response_fun_array[i].initialization_function);
-			continue;
-		}
-	}
-	if(typeof(user_initialization_function)=="function")
-			user_initialization_function(render);
-			
-	redraw(render,processs_bar_object);
-};
-
-function create_webgl_context(my_canvas)
-{
-	var webgl_context_parameter_array=
-	[
-		{ 	
-			context_name:	"webgl2",
-			alpha:true,
-			depth:true,
-			antialias: true,
-    		stencil: true,
-    		premultipliedAlpha:true,
-    		preserveDrawingBuffer:true,
-    		powerPreference:"high-performance",
-			failIfMajorPerformanceCaveat:false
-		},
-		{ 	
-			context_name:	"experimental-webgl2",
-			alpha:true,
-			depth:true,
-			antialias: true,
-    		stencil: true,
-    		premultipliedAlpha:true,
-    		preserveDrawingBuffer:true,
-    		powerPreference:"high-performance",
-			failIfMajorPerformanceCaveat:false
-		}
-	];	
-	
-	for(var i=0,ni=webgl_context_parameter_array.length;i<ni;i++){
-		try{
-			var my_gl=my_canvas.getContext(
-					webgl_context_parameter_array[i].context_name,
-					webgl_context_parameter_array[i]);
-			if(my_gl!=null)
-				return my_gl;
-		}catch(e){
-	    	;
-		};
-	}
-	alert("Could not initialise WebGL2.0, enable WebGL2.0 please");
-    return null;
-}
-async function request_create_engine(create_engine_sleep_time_length_scale,
-	create_engine_sleep_time_length,create_engine_max_sleep_time_length,
-	request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,
-	my_user_initialization_function,processs_bar_object,process_bar_render)
-{
-	var engine_promise=await fetch(request_url+"&process_bar="+processs_bar_object.process_bar_id);
-	if(!(engine_promise.ok)){
-		alert("request_create_engine fail:"+engine_promise.status);
-		return;
-	}
-	var response_data;
-	try{
-		response_data = await engine_promise.json();
-	}catch(e){
-		alert("Web server error, or Create Too many scenes:  "+e.toString());
-		return;
-	}
-	
-	if(typeof(response_data)=="object"){
-		if(response_data==null){
-			alert("Web server error, response_data==null!");
-			return;
-		}
-		var render,initialization_url=response_data.pop();
-		render=new construct_render_routine(
-					processs_bar_object.process_bar_id,process_bar_render.canvas,process_bar_render.ctx,
-					my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,response_data);
-		render_initialization(initialization_url,render,my_user_initialization_function,processs_bar_object);
-		return;
-	}
-	if(typeof(response_data)!="boolean"){
-		alert("Web server error, response_data type is NOT boolean!");
-		return;
-	}
-	if(response_data){
-		alert("Web server error, get_client_interface fail!");
-		return;
-	}
-	var new_create_engine_sleep_time_length=create_engine_sleep_time_length;
-		new_create_engine_sleep_time_length*=create_engine_sleep_time_length_scale;
-	
-	if(new_create_engine_sleep_time_length>create_engine_max_sleep_time_length){
-		alert("Web server error,try too many times to create scene!");
-		return;
-	}
-	setTimeout(
-		function()
-		{
-			request_create_engine(create_engine_sleep_time_length_scale,
-						new_create_engine_sleep_time_length,create_engine_max_sleep_time_length,
-						request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,
-						my_user_initialization_function,processs_bar_object,process_bar_render);
-		},create_engine_sleep_time_length);
-	return;
-}
-
-async function render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render,my_canvas)
-{
-	do{
-		if(typeof(processs_bar_object.process_bar_id)=="number")
-			if(typeof(processs_bar_object.show_process_bar_interval)=="number")
-				if(processs_bar_object.process_bar_id>=0)
-					if(processs_bar_object.show_process_bar_interval>0)
-						break;
-		process_bar_render.destroy();
-		return;
-	}while(false);
-	
-	var data_promise=await fetch(process_bar_url+"&command=data&process_bar="+processs_bar_object.process_bar_id);
-	if(!(data_promise.ok)){
-		process_bar_render.destroy();
-		alert("render_show_process_bar fail:"+data_promise.status);
-		return;
-	}
-	var response_data;
-	try{
-		response_data = await data_promise.json();
-	}catch(e){
-		process_bar_render.destroy();
-		alert("parse render_show_process_bar fail:"+e.toString());
-		return;
-	}
-	setTimeout(
-		function()
-		{
-			render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render,my_canvas);
-		},processs_bar_object.show_process_bar_interval);
-	
-	process_bar_render.set_process_bar_data(response_data.caption,
-		response_data.current,		response_data.max,
-		response_data.time_length,	response_data.engine_time_length,
-		response_data.time_unit,	my_canvas);
-	return;
-}
-
 async function render_main(create_engine_sleep_time_length_scale,
 	create_engine_sleep_time_length,create_engine_max_sleep_time_length,
 	my_canvas,my_url,my_user_name,my_pass_word,my_language_name,
 	my_scene_name,my_link_name,my_initialization_parameter,
-	my_user_initialization_function,my_user_progress_bar_function)
+	user_process_bar_function)
 {
-	my_canvas		=(typeof(my_canvas			)!="string")?my_canvas	 :(document.getElementById(my_canvas));
+	function render_initialization(init_data,render)
+	{
+		var sorted_component_name_id		=init_data[0];
+		var	part_component_id_and_driver_id	=init_data[1];
+		var response_fun_array				=init_data[2];
+		var program_data					=init_data[3];
+		var common_shader_data				=init_data[4];
+
+		init_ids_of_part_and_component(
+			sorted_component_name_id,part_component_id_and_driver_id,render);
+
+		for(var i=0,ni=response_fun_array.length;i<ni;i++){
+			if(typeof(response_fun_array[i])!="object")
+				continue;
+			var component_id=response_fun_array[i].component_id;
+			var component_name=response_fun_array[i].component_name;
+			var init_function=response_fun_array[i].initialization_function;
+			if(typeof(init_function)!="string"){
+				console.log("component init_function program is not string:	"+component_name+"		"+component_id);
+				console.log(response_fun_array[i].initialization_function);
+				continue;
+			}
+			if((init_function=init_function.trim()).length<=0){
+				console.log("component init_function program is empty:	"+component_name+"		"+component_id);
+				console.log(response_fun_array[i].initialization_function);
+				continue;
+			}
+			try{
+				init_function=(eval("["+init_function+"]"))[0];
+			}catch(e){
+				console.log("Error compile component init_function:	"
+					+component_name+"		"+component_id+"		"+e.toString());
+				console.log(response_fun_array[i].initialization_function);
+				continue;
+			}
+			if(typeof(init_function)!="function"){
+				console.log("component init_function is NOT FUNCTION:	"
+					+component_name+"		"+component_id+"		"+e.toString());
+				console.log(response_fun_array[i].initialization_function);
+				continue;
+			}
+			try{
+				init_function(component_name,component_id,render);
+			}catch(e){
+				console.log("Error execute component init_function:	"
+					+component_name+"		"+component_id+"		"+e.toString());
+				console.log(response_fun_array[i].initialization_function);
+				continue;
+			}
+		}
+		
+		for(var i=0,ni=program_data.length;i<ni;i++){
+			var my_render_id			=	program_data[i][0];
+			var my_render_name			=	program_data[i][1];
+			var my_driver_function		=	program_data[i][2];
+			
+			render.render_driver[i]=null;
+			
+			try{
+				my_driver_function=(eval("["+my_driver_function+"]"))[0];
+			}catch(e){
+				alert("Error render driver_function:	"+my_render_name+"		"+e.toString());
+				continue;
+			}
+			if(typeof(my_driver_function)!="function"){
+				alert("render driver_function is not a function:	"+my_render_name);
+				continue;
+			}
+			try{
+				render.render_driver[i]=my_driver_function(render.render_initialize_data[my_render_id],render);
+			}catch(e){
+				render.render_driver[i]=null;
+				alert("create render driver fail	"+my_render_name);
+				continue;
+			}
+		};
+		
+		render.common_shader_data=common_shader_data;
+		
+		request_render_data(render);
+		
+		return render;
+	};
+	
+	async function request_create_engine(create_engine_sleep_time_length_scale,
+		create_engine_sleep_time_length,create_engine_max_sleep_time_length,
+		my_webgpu,request_url,my_url,my_user_name,my_pass_word,my_language_name,process_bar_id)
+	{
+		while(true){
+			var create_data,init_data;
+			var engine_promise=await fetch(request_url+"&process_bar="+process_bar_id);
+			if(!(engine_promise.ok)){
+				alert("request_create_engine fail:"+engine_promise.status);
+				return null;
+			}
+			try{
+				create_data = await engine_promise.json();
+			}catch(e){
+				alert("Web server error, or Create Too many scenes:  "+e.toString());
+				return null;
+			}
+			if(typeof(create_data)=="object"){
+				if(create_data==null){
+					alert("Web server error, response_data==null!");
+					return null;
+				}
+				var initialization_url=create_data.pop();
+				engine_promise=await fetch(initialization_url);
+				if(!(engine_promise.ok)){
+					alert("request render_initialization data fail: "+initialization_url);
+					return null;
+				}
+				try{
+					init_data = await engine_promise.json();
+				}catch(e){
+					alert("parse render_initialization data fail: "+e.toString());
+					alert(initialization_url);
+					return null;
+				}
+				try{
+					return render_initialization(init_data,
+							new construct_render_routine(my_webgpu,my_url,
+								my_user_name,my_pass_word,my_language_name,create_data));
+				}catch(e){
+					return null;
+				}
+			}
+			if(typeof(create_data)!="boolean"){
+				alert("Web server error, response_data type is NOT boolean!");
+				return null;
+			}
+			if(create_data){
+				alert("Web server error, get_client_interface fail!");
+				return null;
+			}
+			create_engine_sleep_time_length*=create_engine_sleep_time_length_scale;
+			if(create_engine_sleep_time_length>create_engine_max_sleep_time_length){
+				alert("Web server error,try too many times to create scene!");
+				return null;
+			}
+			await new Promise((resolve)=>{setTimeout(resolve,create_engine_sleep_time_length);});
+		};
+	}
+	
 	my_user_name	=(typeof(my_user_name		)!="string")?"NoName"	 :(my_user_name.trim());
 	my_pass_word	=(typeof(my_pass_word		)!="string")?"NoPassword":(my_pass_word.trim());
 	my_language_name=(typeof(my_language_name	)!="string")?"english"	 :(my_language_name.trim());
@@ -336,45 +175,18 @@ async function render_main(create_engine_sleep_time_length_scale,
 				request_url+="&"+parameter_name+"="+parameter_value;
 			};
 
-	var my_gl;
-	if((my_gl=create_webgl_context(my_canvas))==null)
-    	return ; 
-	var max_draw_buffers=my_gl.getParameter(my_gl.MAX_DRAW_BUFFERS); 
-	var max_color_attatchments=my_gl.getParameter(my_gl.MAX_COLOR_ATTACHMENTS);
-	if((max_draw_buffers<4)||(max_color_attatchments<4)){
-		alert(	  "MAX_DRAW_BUFFERS is "		+(max_draw_buffers.toString())
-				+",MAX_COLOR_ATTACHMENTS is "	+(max_color_attatchments.toString())
-				+",they are to small!,they must be equal or greater than 4");
-    	return ;
-	};
-	
-	var processs_bar_promise=await fetch(process_bar_url+"&command=request");
-	if(!(processs_bar_promise.ok)){
-		alert("render_main create process bar error,status is "+processs_bar_promise.status);
-		alert(process_bar_url+"&command=request");
-		return;
-	}
-	
-	var processs_bar_object;
-	
-	try{
-		processs_bar_object = await processs_bar_promise.json();
-	}catch(e){
-		alert("render_main error:"+e.toString());
-		alert(process_bar_url+"&command=request");
-		return;
-	}
-	
-	var process_bar_render	= new construct_process_bar(my_gl,my_user_progress_bar_function,
-				my_canvas.width,my_canvas.height,processs_bar_object.show_process_bar_interval);
-				
-	render_show_process_bar(process_bar_url,processs_bar_object,process_bar_render,my_canvas);
-		
-	request_create_engine(create_engine_sleep_time_length_scale,
+	var webgpu;
+	if((webgpu=await create_webgpu(my_canvas))==null)
+		return null;
+	var process_bar_object=new construct_process_bar(
+			webgpu,user_process_bar_function,process_bar_url);
+
+	var ret_val=await request_create_engine(create_engine_sleep_time_length_scale,
 			create_engine_sleep_time_length,create_engine_max_sleep_time_length,
-			request_url,my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,
-			my_user_initialization_function,processs_bar_object,process_bar_render);
-
-	return;
+			webgpu,request_url,my_url,my_user_name,my_pass_word,my_language_name,
+			await process_bar_object.start());
+	
+	process_bar_object.destroy();
+	
+	return ret_val;
 };
-

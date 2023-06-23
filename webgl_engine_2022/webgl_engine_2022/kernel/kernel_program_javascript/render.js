@@ -1,16 +1,17 @@
-function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcontext,
-	my_gl,my_user_name,my_pass_word,my_canvas,my_url,my_language_name,response_data)
+function construct_render_routine(my_webgpu,
+	my_url,my_user_name,my_pass_word,my_language_name,create_data)
 {
-    var my_channel_id					=response_data[0]
-    var	my_render_initialize_data		=response_data[1];
-	var	my_part_initialize_data			=response_data[2];
-	var	my_component_initialize_data	=response_data[3];
-	var	render_data						=response_data[4];
+    var my_channel_id					=create_data[0]
+    var	my_render_initialize_data		=create_data[1];
+	var	my_part_initialize_data			=create_data[2];
+	var	my_component_initialize_data	=create_data[3];
+	var	render_data						=create_data[4];
 	
 	var component_number				=render_data[0];
 	var render_number					=render_data[1];
 	var modifier_container_number		=render_data[2];
 	var camera_component_id				=render_data[3];
+	
     this.link_name						=render_data[4];
     this.title							=render_data[5];
     this.parameter						=render_data[6];
@@ -44,24 +45,15 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 
 	this.engine_start_time			=(new Date()).getTime();
 	this.last_event_time			=this.engine_start_time;
-	this.terminate_flag				=false;
-	this.process_bar_id				=my_process_bar_id;
-	this.text_canvas				=my_text_canvas;
-	this.text_2dcontext				=my_text_2dcontext;
-	this.gl							=my_gl;
-	
+
+	this.webgpu						=my_webgpu;
 	this.url						=my_url;
 	this.url_without_channel		=this.url
-					+"?user_name="+my_user_name		+"&pass_word="	+my_pass_word
-					+"&language=" +my_language_name	+"&process_bar="+my_process_bar_id;
+					+"?user_name="	+my_user_name
+					+"&pass_word="	+my_pass_word
+					+"&language="	+my_language_name;
 	this.url_with_channel			=this.url_without_channel
-					+"&channel="+my_channel_id.toString()
-
-	this.canvas						=my_canvas;
-	this.language_name				=my_language_name;
-	
-	this.debug_event_processor		=new Object();
-	this.debug_call_processor		=new Object();
+					+"&channel="	+my_channel_id.toString()
 	
 	this.user_event_processor		=new Object();
 	this.user_call_processor		=new Object();
@@ -90,7 +82,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		loading_number				:	-1,
 		loaded_length				:	-1,
 		
-		calling_server_number		:	0	
+		calling_server_number		:	0
 	};
 	this.view=
 	{
@@ -119,9 +111,9 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		
 		in_canvas_flag	:	false
 	};
-
-	this.event_listener				=new construct_event_listener(this);
 	
+	this.caller						=new construct_server_caller(this);
+	this.event_listener				=new construct_event_listener(this);
     this.computer					=new construct_computation_object();
      
     this.target_buffer				=new Array();
@@ -129,22 +121,24 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	this.clip_plane_array			=new Array();
 	this.clip_plane_matrix_array	=new Array();
 	
-	this.part_information			=new Array();
+	this.render_driver				=new Array(render_number);
+	this.part_array					=new Array(render_number);
+	for(var i=0;i<render_number;i++){
+		this.render_driver[i]		=null;
+		this.part_array[i]			=new Array();
+	}
 
-	this.component_location_data	=new construct_component_location_object(component_number,this.computer,this.gl);
-	this.component_render_data		=new construct_component_render_object(render_number);
+	this.component_location_data	=new construct_component_location_object(component_number,this.computer,this.webgpu);
+	this.component_render_data		=new construct_component_render_parameter(render_number);
 	this.modifier_time_parameter	=new construct_modifier_time_parameter(modifier_container_number);
-	this.render_program				=new construct_program_object	(this.gl,this.parameter);
-	this.buffer_object				=new construct_buffer_object	(this.gl,this.parameter);
-	this.camera						=new construct_camera_object	(camera_component_id,this.component_location_data,this.computer);
-	this.uniform_block				=new construct_uniform_block_object(this.gl);
+	this.vertex_data_downloader		=new construct_download_vertex_data(this.webgpu,this.parameter.max_loading_number);
+	this.camera						=new construct_camera_object(camera_component_id,this.component_location_data,this.computer);
+	this.system_buffer				=new construct_system_buffer(this);
 	this.deviceorientation			=new construct_deviceorientation(this.computer);
 	this.utility					=new construct_render_utility(this);
 	this.collector_loader			=new construct_collector_loader_object(this);
 	
 	this.engine_do_render_number	=new Array();
-
-	this.data_buffer				=new Array();
 	
 	this.pickup						=new construct_pickup_object();
 	this.pickup_array				=[
@@ -161,222 +155,19 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 	this.modifier_current_time		=new Array(modifier_container_number);
 	for(var i=0;i<modifier_container_number;i++)
 		this.modifier_current_time[i]=0;
-	
 	this.browser_current_time		=0;
 	
-	this.do_execute_render_number			=0;
-	this.collector_stack_version			=0;
+	this.do_execute_render_number	=0;
+	this.collector_stack_version	=0;
 
-	this.process_part_component_id_and_driver_id=function(
-			sorted_component_name_id,part_component_id_and_driver_id)
+	
+	this.terminate_flag				=false;
+	this.terminate=function()
 	{
-		var component_number=sorted_component_name_id.length;
-		this.component_array_sorted_by_name =new Array(component_number);
-		this.component_array_sorted_by_id	=new Array(component_number);
-		for(var i=0;i<component_number;i++){
-			var my_component_name		=sorted_component_name_id[i][0];
-			var my_component_id	 		=sorted_component_name_id[i][1];
-			var my_component_children	=sorted_component_name_id[i][2];
-			
-			var p={
-					component_name		:	my_component_name,
-					component_id		:	my_component_id,
-					component_parent	:	null,
-					component_children	:	my_component_children
-			};
-			this.component_array_sorted_by_name[i]=p;
-			this.component_array_sorted_by_id[my_component_id]=p;
-		};
-		for(var i=0;i<component_number;i++){
-			var p=this.component_array_sorted_by_id[i];
-			var my_component_children=new Array(p.component_children.length);
-			for(var j=0,nj=my_component_children.length;j<nj;j++)
-				my_component_children[j]=this.component_array_sorted_by_id[p.component_children[j]];
-			p.component_children=my_component_children;
-		};
-		for(var i=0;i<component_number;i++){
-			var p=this.component_array_sorted_by_id[i];
-			for(var j=0,nj=p.component_children.length;j<nj;j++)
-				p.component_children[j].component_parent=p;
-		};
-		var component_render_id_and_part_id=new Array(component_number);
-		for(var i=0;i<component_number;i++)
-			component_render_id_and_part_id[i]=new Array();
-		var permanent_render_part_id=new Array();
-		var render_number=part_component_id_and_driver_id.length;
-		for(var render_id=0;render_id<render_number;render_id++){
-			if(typeof(this.data_buffer[render_id])=="undefined")
-				this.data_buffer[render_id]=new Array();
-
-			permanent_render_part_id[render_id]=new Array();
-			if(typeof(this.part_initialize_data[render_id])=="undefined")
-				this.part_initialize_data[render_id]=new Array();
-			var part_number=part_component_id_and_driver_id[render_id].length;
-			for(var part_id=0;part_id<part_number;part_id++){
-				if(typeof(this.data_buffer[render_id][part_id])=="undefined")
-					this.data_buffer[render_id][part_id]=new Array();
-
-				var id_array=part_component_id_and_driver_id[render_id][part_id];
-				var permanent_part_id=id_array.pop();
-				var permanent_render_id=id_array.pop();
-				permanent_render_part_id[render_id][part_id]={
-						permanent_render_id	:	permanent_render_id,
-						permanent_part_id	:	permanent_part_id
-				};
-				for(var buffer_id=0,buffer_number=id_array.length;buffer_id<buffer_number;buffer_id++){
-					if(typeof(this.data_buffer[render_id][part_id][buffer_id])=="undefined")
-						this.data_buffer[render_id][part_id][buffer_id]=new Array();
-					
-					var component_id=id_array[buffer_id][0];
-					var driver_id=id_array[buffer_id][1];
-					component_render_id_and_part_id[component_id][driver_id]=[render_id,part_id,buffer_id];
-				}
-				if(typeof(this.part_initialize_data[render_id][part_id])=="undefined")
-					this.part_initialize_data[render_id][part_id]=null;
-			};
-		};
-		this.component_render_id_and_part_id=component_render_id_and_part_id;
-		this.permanent_render_part_id		=permanent_render_part_id;
-		this.part_component_id_and_driver_id=part_component_id_and_driver_id;
-		return;
-	}
-	this.get_component_buffer_parameter=function(buffer_data)
-	{
-		for(var i=0,ni=buffer_data.length;i<ni;i++){
-			var render_id		=buffer_data[i][0];
-			var part_id			=buffer_data[i][1];
-			var part_buffer_data=buffer_data[i][2];
-
-			if(typeof(this.data_buffer[render_id])=="undefined")
-				this.data_buffer[render_id]=new Array();
-			if(typeof(this.data_buffer[render_id][part_id])=="undefined")
-				this.data_buffer[render_id][part_id]=new Array();
-			for(var j=0,nj=part_buffer_data.length;j<nj;j++){
-				var buffer_id			=part_buffer_data[j][0];
-				var buffer_data_item	=part_buffer_data[j][1];
-				var p=this.data_buffer[render_id][part_id][buffer_id];
-				if(typeof(p)=="undefined"){
-					p=new Array();
-					this.data_buffer[render_id][part_id][buffer_id]=p;
-				}
-				p.push(buffer_data_item);
-				
-				if(typeof(this.part_information[render_id])=="undefined")
-					continue;
-				if(typeof(this.part_information[render_id][part_id])=="undefined")
-					continue;
-				var part_property=this.part_information[render_id][part_id].property;
-				var max_number=part_property.max_component_data_buffer_number;
-				while(p.length>max_number)
-					p.shift();
-			};
-		};
-	};
-	this.get_component_render_parameter=function(response_text)
-	{
-		var render_buffer_id;
-		try{
-			var p=response_text;
-			render_buffer_id=p[0];
-			this.camera.modify_camera_data(render_buffer_id,p[1]);
-			this.component_render_data.modify_component_render_data(render_buffer_id,p[2][0],p[2][1]);
-			if(p.length>=4){
-				if(p[3].length<4){
-					this.clip_plane_array[render_buffer_id]				=[0,0,0,0];
-					this.clip_plane_matrix_array[render_buffer_id]		=this.computer.create_move_rotate_matrix(0,0,0,0,0,0);
-				}else{
-					this.clip_plane_array[render_buffer_id]				=[p[3][0],p[3][1],p[3][2],p[3][3]];
-					this.clip_plane_matrix_array[render_buffer_id]	
-								=this.computer.project_to_plane_location( p[3][0],p[3][1],p[3][2],p[3][3],1.0);
-				};
-			}else if(typeof(this.clip_plane_array[render_buffer_id])=="undefined"){
-				this.clip_plane_array[render_buffer_id]					=[0,0,0,0];
-				this.clip_plane_matrix_array[render_buffer_id]			=this.computer.create_move_rotate_matrix(0,0,0,0,0,0);
-			};
-		}catch(e){
-			alert("get_component_render_parameter fail:	"+e.toString());
-			return -1;
-		};
-	    return render_buffer_id;
-	};
-	this.parse_current_information_request=function(current_information_request_response_data)
-	{
-		for(var p,i=0,ni=current_information_request_response_data.length;i<ni;i++){
-			switch((p=current_information_request_response_data[i])[0]){
-			case 0:
-				this.current.render_buffer_id=p[1];
-				break;
-			case 1:
-				this.current.target_id=p[1];
-				break;
-			case 2:
-				this.current.target_viewport_id=p[1];
-				break;
-			case 3:
-				this.current.camera_id=p[1];
-				break;
-			case 4:
-				this.current.camera_component_id=p[1];
-				break;
-			case 6:
-				this.current.high_or_low_precision_flag=(p[1]>0.5)?true:false;
-				break;
-			};
-		};
+		fetch(this.url_with_channel+"&command=termination");
+		this.terminate_flag=true;
 	};
 	
-	this.fetch_web_server_response_data=async function(request_string,processs_bar_object)
-	{
-		var fetch_start_time=(new Date()).getTime();
-		
-		var render_promise=await fetch(request_string);
-		if(!(render_promise.ok)){
-			if(this.terminate_flag)
-				return null;
-			processs_bar_object.process_bar_id=null;
-			this.can_do_render_request_flag	=false;
-			alert("request fetch_web_server_response_data fail: "+request_string);
-			return;
-		}
-		var response_data;
-		try{
-			response_data = await render_promise.json();
-		}catch(e){
-			if(this.terminate_flag)
-				return null;
-			processs_bar_object.process_bar_id=null;
-			this.can_do_render_request_flag	=false;
-			alert("parse fetch_web_server_response_data fail: "+e.toString());
-			alert(request_string);
-			return;
-		}
-
-		var fetch_end_time=(new Date()).getTime();
-		
-		processs_bar_object.process_bar_id=null;
-		this.can_do_render_request_flag	=true;
-		
-		this.collector_stack_version=response_data[0].shift();
-		this.modifier_current_time=this.modifier_time_parameter.modify_parameter(response_data[0]);
-		this.browser_current_time=(fetch_start_time+fetch_end_time)/2.0;
-		this.render_data=new Array();
-		for(var i=0,ni=response_data[1].length;i<ni;i++){
-			var render_buffer_id=this.get_component_render_parameter(response_data[1][i][0]);
-			var target_id		=response_data[1][i][1];
-			var do_render_number=response_data[1][i][2];
-			if(response_data[1][i].length>3)
-				this.target_buffer[target_id]=response_data[1][i][3];
-			this.render_data[i]=[render_buffer_id,target_id,(do_render_number>=0)?do_render_number:(1<<28)];
-		};
-		this.get_component_buffer_parameter(response_data[2]);
-		this.component_location_data.modify_component_location(response_data[3]);
-		this.parse_current_information_request(response_data[4]);
-		for(var p=response_data[5],i=0,ni=p.length;i<ni;i++)
-			this.buffer_object.buffer_head_request_queue.push(p[i]);
-		this.data_time_length=(new Date()).getTime()-fetch_end_time;
-
-		return;
-	};
 	this.render_component=function(render_list,render_buffer_id,parameter_channel_id,
 				method_id,project_matrix,viewport,render_do_render_number,pass_do_render_number)
 	{
@@ -396,7 +187,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
     			continue;
 	    	if(typeof(this.buffer_object.buffer_object[render_id][part_id])!="object")
 		    	continue;
-			if(this.part_information[render_id][part_id].find_error_flag)
+			if(this.part_array[render_id][part_id].find_error_flag)
 				continue;
 			if(typeof(this.engine_do_render_number[render_id])=="undefined")
 				this.engine_do_render_number[render_id]={
@@ -582,115 +373,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.gl.bindFramebuffer(this.gl.FRAMEBUFFER,null);
 		this.do_execute_render_number++;
 	};
-	this.can_do_render_request_flag=true;
 	this.render_request_start_time=0;
-	this.render_request=function(current_time,processs_bar_object)
-	{
-		if(this.terminate_flag){
-			processs_bar_object.process_bar_id=null;
-			return false;
-		}
-		if(!(this.can_do_render_request_flag))
-			return false;
-		
-		if((current_time-this.render_request_start_time)<(this.modifier_time_parameter.delay_time_length))
-			return false;
-			
-		this.can_do_render_request_flag	=false;
-		this.render_request_start_time	=(new Date()).getTime();
-		var min_value=this.computer.min_value();
-		var request_string=this.url_with_channel+"&command=component&method=update_render";
-
-		if(Math.abs(this.view_bak.x-this.view.x)>min_value){
-			this.view_bak.x=this.view.x;
-			request_string+="&x="+(this.view.x.toString());
-		};
-		if(Math.abs(this.view_bak.y-this.view.y)>min_value){
-			this.view_bak.y=this.view.y;
-			request_string+="&y="+(this.view.y.toString());
-		};
-		if(Math.abs(this.view_bak.canvas_width-this.canvas.width)>min_value){
-			this.view_bak.canvas_width=this.canvas.width;
-			request_string+="&width="+(this.canvas.width.toString());
-		};
-		if(Math.abs(this.view_bak.canvas_height-this.canvas.height)>min_value){
-			this.view_bak.canvas_height=this.canvas.height;
-			request_string+="&height="+(this.canvas.height.toString());
-		};
-		if(this.view_bak.in_canvas_flag^this.event_listener.mouse_inside_canvas_flag){
-			this.view_bak.in_canvas_flag=this.event_listener.mouse_inside_canvas_flag;
-			request_string+="&in_canvas="+(this.event_listener.mouse_inside_canvas_flag?"yes":"no");
-		};
-		
-		var id,value;
-
-		if(this.view_bak.component!=(id=this.pickup.component_id)){
-			this.view_bak.component=id;
-			request_string+="&component="+id.toString();
-		};
-		if(this.view_bak.body!=(id=this.pickup.body_id)){
-			this.view_bak.body=id;
-			request_string+="&body="+id.toString();
-		};
-		if(this.view_bak.face!=(id=this.pickup.face_id)){
-			this.view_bak.face=id;
-			request_string+="&face="+id.toString();
-		};
-		if(this.view_bak.loop!=(id=this.pickup.loop_id)){
-			this.view_bak.loop=id;
-			request_string+="&loop="+id.toString();
-		};
-		if(this.view_bak.edge!=(id=this.pickup.edge_id)){
-			this.view_bak.edge=id;
-			request_string+="&edge="+id.toString();
-		};
-		if(this.view_bak.vertex!=(id=this.pickup.vertex_id)){
-			this.view_bak.vertex=id;
-			request_string+="&vertex="+id.toString();
-		};
-		if(this.view_bak.point!=(id=this.pickup.point_id)){
-			this.view_bak.point=id;
-			request_string+="&point="+id.toString();
-		};
-		if(Math.abs(this.view_bak.depth-(value=this.pickup.depth))>min_value){
-			this.view_bak.depth=value;
-			request_string+="&depth="+(new Number(value)).toPrecision(6);
-		}
-		if(Math.abs(this.view_bak.value-(value=this.pickup.value))>min_value){
-			this.view_bak.value=value;
-			request_string+="&value="+(new Number(value)).toPrecision(6);
-		};
-		if(this.current.loaded_length!=(this.buffer_object.loaded_buffer_object_data_length)){
-			this.current.loaded_length=this.buffer_object.loaded_buffer_object_data_length;
-			request_string+="&loaded_length="+	this.buffer_object.loaded_buffer_object_file_number.toString();
-			request_string+="_"+ 				this.buffer_object.loaded_buffer_object_data_length.toString();
-			request_string+="_"+				this.buffer_object.loading_render_id.toString();
-			request_string+="_"+				this.buffer_object.loading_part_id.toString();
-		};
-		{
-			var requesting_number,max_request_number=this.parameter.max_loading_number;
-
-			requesting_number =this.buffer_object.current_loading_mesh_number;
-			requesting_number+=this.buffer_object.request_render_part_id.length;
-			requesting_number+=this.buffer_object.buffer_head_request_queue.length;
-			if((this.render_request_start_time-this.last_event_time)<=this.parameter.download_minimal_time_length)
-				if((this.render_request_start_time-this.engine_start_time)>this.parameter.download_start_time_length)
-					requesting_number=max_request_number;
-			request_string+="&requesting_number="+requesting_number+"_"+max_request_number;
-		};
-		
-		request_string+="&data_time="		+(this.data_time_length.toString());
-		request_string+="&render_time="		+(this.render_time_length.toString());
-		request_string+="&read_time="		+(this.pickup.read_time_length.toString());
-		request_string+="&render_interval="	+(this.render_interval_length.toString());
-		request_string+="&precision="		+(this.event_listener.mouse_down_flag?"false":"true");
-		request_string+="&length=";
-		request_string+=request_string.length.toString();
-
-		this.fetch_web_server_response_data(request_string,processs_bar_object);
-	
-		return true;
-	};
 	this.append_routine_function=function(my_routine_function)
 	{
 		this.routine_array.push(my_routine_function);
@@ -737,9 +420,9 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 				if((this.render_request_start_time-this.engine_start_time)>this.parameter.download_start_time_length)
 					break;
 
-			for(var i=this.buffer_object.current_loading_mesh_number,ni=this.parameter.max_loading_number;i<ni;)
-				i+=this.buffer_object.request_buffer_object_data(this);
-			this.buffer_object.process_buffer_head_request_queue(this);
+			for(var i=this.vertex_data_downloader.current_loading_mesh_number,ni=this.parameter.max_loading_number;i<ni;)
+				i+=this.vertex_data_downloader.request_buffer_object_data(this);
+			this.vertex_data_downloader.process_buffer_head_request_queue(this);
 			
 		}while(false);
 		
@@ -747,188 +430,6 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		this.render_time_length=(new Date()).getTime()-start_time;
 		
 		return this.terminate_flag;
-	};
-
-	this.terminate=function()
-	{
-		fetch(this.url_with_channel+"&command=termination");
-		
-		this.terminate_flag=true;
-		try{
-			this.destroy_terminated_data();
-		}catch(e){
-			;
-		}
-		this.destroy_terminated_data=null;
-		this.terminate=null;
-	}
-	this.destroy_terminated_data=function()
-	{	
-		this.collector_loader.destroy();
-		this.utility.destroy();
-		this.uniform_block.destroy();
-		this.event_listener.destroy();
-		this.deviceorientation.destroy();
-		this.camera.destroy();
-		this.component_render_data.destroy();
-		this.component_location_data.destroy();
-		this.buffer_object.destroy();
-		this.render_program.destroy();
-		this.computer.destroy();
-		this.modifier_time_parameter.destroy();
-		
-		var p=[
-			this.component_event_processor,
-			this.component_call_processor,
-			this.target_processor,
-			this.routine_array,
-		    this.target_buffer
-		];
-		
-		for(var i=0,ni=p.length;i<ni;i++){
-			for(var j=0,nj=p[i].length;j<nj;j++){
-				if(typeof(p[i][j])=="object")
-					if(typeof(p[i][j].destroy)=="function"){
-						p[i][j].destroy(this.gl,p[i][j],j);
-						p[i][j].destroy=null;
-					}
-				p[i][j]=null;
-			}
-			p[i].length=0;
-		}
-		
-		for(var i=0,ni=component_array_sorted_by_name.length;i<ni;i++)
-			this.component_array_sorted_by_name[i]=null;
-		this.component_array_sorted_by_name=null;
-		
-		for(var i=0,ni=component_array_sorted_by_id.length;i<ni;i++){
-			this.component_array_sorted_by_id[i].component_name		=null;
-			this.component_array_sorted_by_id[i].component_id		=-1;
-			this.component_array_sorted_by_id[i].component_parent	=null;
-			for(var j=0,nj=this.component_array_sorted_by_id[i].component_children.length;j<nj;j++)
-				this.component_array_sorted_by_id[i].component_children[j]=null;
-			this.component_array_sorted_by_id[i].component_children=null;
-			this.component_array_sorted_by_id[i]=null;
-		}
-
-	    this.link_name								=null;
-	    this.title									=null;
-	    this.parameter								=null;
-	    
-	    this.render_initialize_data					=null;
-		this.part_initialize_data					=null;
-		this.component_initialize_data				=null;
-
-		this.engine_start_time						=null;
-		this.last_event_time						=null;
-		this.process_bar_id							=null;
-		this.text_canvas							=null;
-		this.text_2dcontext							=null;
-		this.gl										=null;
-		this.url									=null;
-		this.url_without_channel					=null;
-		this.url_with_channel						=null;
-		this.canvas									=null;
-		this.language_name							=null;
-		
-		this.debug_event_processor					=null;
-		this.debug_call_processor					=null;
-		
-		this.user_event_processor					=null;
-		this.user_call_processor					=null;
-		
-		this.system_event_processor					=null;
-		this.system_call_processor					=null;
-
-		this.component_event_processor				=null;
-		this.component_call_processor				=null;
-		
-		this.event_component						=null;
-
-		this.target_processor						=null;
-		
-		this.routine_array							=null;
-		
-		this.current								=null;
-		this.view									=null;
-		this.view_bak								=null;
-
-		this.event_listener							=null;
-		
-	    this.computer								=null;
-	     
-	    this.target_buffer							=null;
-
-		this.clip_plane_array						=null;
-		this.clip_plane_matrix_array				=null;
-		
-		this.part_information						=null;
-
-		this.component_location_data				=null;
-		this.component_render_data					=null;
-		this.modifier_time_parameter				=null;
-		this.render_program							=null;
-		this.buffer_object							=null;
-		this.camera									=null;
-		this.uniform_block							=null;
-		this.deviceorientation						=null;
-		this.utility								=null;
-		this.collector_loader						=null;
-		
-		this.engine_do_render_number				=null;
-
-		this.data_buffer							=null;
-		this.pickup									=null;
-		
-		this.data_time_length						=null;
-		this.render_time_length						=null;
-		this.render_interval_length					=null;
-		
-		this.current_time							=null;
-		this.modifier_current_time					=null;
-		
-		this.browser_current_time					=null;
-		
-		this.do_execute_render_number				=0;
-		this.collector_stack_version				=0;
-
-		this.process_part_component_id_and_driver_id=null;
-		this.get_component_buffer_parameter			=null;
-		this.get_component_render_parameter			=null;
-		this.parse_current_information_request		=null;
-		this.fetch_web_server_response_data			=null;
-		this.render_component						=null;
-		this.render_routine							=null;
-		this.can_do_render_request_flag				=false;
-		this.render_request_start_time				=null;
-		this.render_request							=null;
-		this.append_routine_function				=null;
-		this.process_routine_function				=null;
-		this.do_render								=null;
-		this.get_component_event_processor			=null;
-		this.get_component_call_processor			=null;
-		this.get_component_object_by_component_id	=null;
-		this.get_component_object_by_component_name	=null;
-		this.get_component_processor				=null;
-		
-		this.call_server							=null;
-		
-		this.create_render_request_string			=null;
-		this.create_render_request_by_part_string	=null;
-		this.create_render_request_by_component_string=null;
-		this.create_part_request_string				=null;
-		this.create_part_request_by_component_string=null;
-		this.create_component_request_string		=null;
-		
-		this.call_server_engine						=null;
-		this.call_server_render						=null;
-		this.call_server_render_by_part				=null;
-		this.call_server_render_by_component		=null;
-		this.call_server_part						=null;
-		this.call_server_part_by_component			=null;
-		this.call_server_component					=null;
-
-		this.set_event_component					=null;
 	};
 	
 	this.get_component_event_processor=function(my_component_name_or_id)
@@ -1010,196 +511,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 					}
 		return null;
 	};
-	this.call_server=async function(request_string,response_type_string,upload_data,server_request_parameter)
-	{
-		if((typeof(server_request_parameter)!="object")||(server_request_parameter==null))
-			server_request_parameter=new Object();
-				
-		if((typeof(upload_data)!="undefined")&&(upload_data!=null))
-			server_request_parameter.body=upload_data;
-			
-		if((typeof(response_type_string)=="undefined")||(response_type_string==null))
-			response_type_string="json";
-
-		this.current.calling_server_number++;
-		
-		var server_promise=await fetch(request_string,server_request_parameter);
-		if(!(server_promise.ok)){
-			if(this.terminate_flag)
-				return null;
-			this.current.calling_server_number--;
-			alert("request call_server error,status is "+server_promise.status);
-			alert(request_string);
-			return null;
-		}
-		var response_data;
-		try{
-			switch(response_type_string){
-			case "arrayBuffer":
-				response_data= await server_promise.arrayBuffer();
-				break;
-			case "blob":
-				response_data= await server_promise.blob();
-				break;
-			case "formData":
-				response_data= await server_promise.formData();
-				break;
-			case "text":
-				response_data= await server_promise.text();
-				break;
-			case "json":
-				response_data= await server_promise.json();
-				break;
-			default:
-				response_data= null;
-				break;
-			}
-		}catch(e){
-			if(this.terminate_flag)
-				return null;
-			response_data= null;
-		}
-		
-		this.current.calling_server_number--;
-		
-		return response_data;
-	};
-	this.create_render_request_string=function(render_id_or_render_name,render_parameter)
-	{
-		var ret_val=this.url_with_channel+"&command=render&method=event";
-		if(typeof(render_id_or_render_name)=="string")
-			ret_val+="&event_render_name="+encodeURIComponent(encodeURIComponent(render_id_or_render_name));
-		else
-			ret_val+="&event_render_id="+render_id_or_render_name.toString();
-		for(var i=0,ni=render_parameter.length;i<ni;i++)
-			ret_val+="&"+render_parameter[i][0].toString()+"="+render_parameter[i][1].toString();		
-		return ret_val;
-	};
-	this.create_render_request_by_part_string=function(render_id_or_part_name,part_id_or_driver_id,render_parameter)
-	{
-		var ret_val=this.url_with_channel+"&command=render&method=event";
-		if(typeof(render_id_or_part_name)=="string"){
-			ret_val+="&event_part_name="+encodeURIComponent(encodeURIComponent(render_id_or_part_name));
-			ret_val+="&event_driver_id="+part_id_or_driver_id;
-		}else
-			ret_val+="&event_render_id="+render_id_or_part_name.toString()+"&event_part_id="+part_id_or_driver_id.toString();
-		for(var i=0,ni=render_parameter.length;i<ni;i++)
-			ret_val+="&"+render_parameter[i][0].toString()+"="+render_parameter[i][1].toString();		
-		return ret_val;
-	};
-	this.create_render_request_by_component_string=function(
-			component_id_or_component_name,component_driver_id,render_parameter)
-	{
-		var ret_val=this.url_with_channel+"&command=render&method=event";
-		if(typeof(component_id_or_component_name)=="string")
-			ret_val+="&event_component_name="+encodeURIComponent(encodeURIComponent(component_id_or_component_name));
-		else
-			ret_val+="&event_component_id="+component_id_or_component_name.toString();
-		if(typeof(component_driver_id)!="undefined")
-			ret_val+="&event_driver_id="+component_driver_id.toString();
-		for(var i=0,ni=render_parameter.length;i<ni;i++)
-			ret_val+="&"+render_parameter[i][0].toString()+"="+render_parameter[i][1].toString();
-		return ret_val;
-	};
-	this.create_part_request_string=function(render_id_or_part_name,part_id_or_driver_id,part_parameter)
-	{
-		var ret_val=this.url_with_channel+"&command=part&method=event";
-		if(typeof(render_id_or_part_name)=="string"){
-			ret_val+="&event_part_name="+encodeURIComponent(encodeURIComponent(render_id_or_part_name));
-			ret_val+="&event_driver_id="+part_id_or_driver_id;
-		}else
-			ret_val+="&event_render_id="+render_id_or_part_name.toString()+"&event_part_id="+part_id_or_driver_id.toString();
-		for(var i=0,ni=part_parameter.length;i<ni;i++)
-			ret_val+="&"+part_parameter[i][0].toString()+"="+part_parameter[i][1].toString();		
-		return ret_val;
-	};
-	this.create_part_request_by_component_string=function(
-			component_id_or_component_name,component_driver_id,part_parameter)
-	{
-		var ret_val=this.url_with_channel+"&command=part&method=event";
-		if(typeof(component_id_or_component_name)=="string")
-			ret_val+="&event_component_name="+encodeURIComponent(encodeURIComponent(component_id_or_component_name));
-		else
-			ret_val+="&event_component_id="+component_id_or_component_name.toString();
-		if(typeof(component_driver_id)!="undefined")
-			ret_val+="&event_driver_id="+component_driver_id.toString();
-		for(var i=0,ni=part_parameter.length;i<ni;i++)
-			ret_val+="&"+part_parameter[i][0].toString()+"="+part_parameter[i][1].toString();
-		return ret_val;
-	};
-	this.create_component_request_string=function(component_name_or_id,driver_id,component_parameter)
-	{
-		var ret_val=this.url_with_channel+"&command=component&method=event";
-		if(typeof(component_name_or_id)=="string")
-			ret_val+="&event_component_name="+encodeURIComponent(encodeURIComponent(component_name_or_id));
-		else
-			ret_val+="&event_component_id="+component_name_or_id.toString();
-		if(typeof(driver_id)!="undefined")
-			ret_val+="&event_driver_id="+driver_id.toString();
-		for(var i=0,ni=component_parameter.length;i<ni;i++)
-			ret_val+="&"+component_parameter[i][0].toString()+"="+component_parameter[i][1].toString();
-		return ret_val;
-	};
-	this.call_server_engine=async function(
-			engine_parameter,response_type_string,upload_data,server_request_parameter)
-	{
-		if(this.terminate_flag)
-			return null;
-		var request_string=this.url_with_channel;
-		for(var i=0,ni=engine_parameter.length;i<ni;i++)
-			request_string+="&"+engine_parameter[i][0].toString()+"="+engine_parameter[i][1].toString();
-		
-		return this.call_server(request_string,response_type_string,upload_data,server_request_parameter);
-	};
-	this.call_server_render=async function(
-		render_id_or_render_name,render_parameter,
-		response_type_string,upload_data,server_request_parameter)
-	{
-		var request_string=this.create_render_request_string(
-				render_id_or_render_name,render_parameter);
-		return this.call_server(request_string,response_type_string,upload_data,server_request_parameter);
-	};
-	this.call_server_render_by_part=async function(
-		render_id_or_part_name,part_id_or_driver_id,render_parameter,
-		response_type_string,upload_data,server_request_parameter)
-	{
-		var request_string=this.create_render_request_by_part_string(
-				render_id_or_part_name,part_id_or_driver_id,render_parameter);
-		return this.call_server(request_string,response_type_string,upload_data,server_request_parameter);
-	};
 	
-	this.call_server_render_by_component=async function(
-		component_id_or_component_name,component_driver_id,render_parameter,
-		response_type_string,upload_data,server_request_parameter)
-	{
-		var request_string=this.create_render_request_by_component_string(
-				component_id_or_component_name,component_driver_id,render_parameter);
-		return this.call_server(request_string,response_type_string,upload_data,server_request_parameter);
-	};
-	
-	this.call_server_part=async function(
-			render_id_or_part_name,part_id_or_driver_id,part_parameter,
-			response_type_string,upload_data,server_request_parameter)
-	{
-		var request_string=this.create_part_request_string(
-					render_id_or_part_name,part_id_or_driver_id,part_parameter);
-		return this.call_server(request_string,response_type_string,upload_data,server_request_parameter);
-	};
-	this.call_server_part_by_component=async function(
-			component_id_or_component_name,component_driver_id,part_parameter,
-			response_type_string,upload_data)
-	{
-		var request_string=this.create_part_request_by_component_string(
-					component_id_or_component_name,component_driver_id,part_parameter);
-		return this.call_server(request_string,response_type_string,upload_data,server_request_parameter);
-	};
-	this.call_server_component=async function(component_name_or_id,driver_id,
-			component_parameter,response_type_string,upload_data,server_request_parameter)
-	{
-		var request_string=this.create_component_request_string(
-					component_name_or_id,driver_id,component_parameter);
-		return this.call_server(request_string,response_type_string,upload_data,server_request_parameter);
-	};
 	this.set_event_component=function(event_component_name)
 	{
 		var cep,component_object,event_component_id
@@ -1216,6 +528,7 @@ function construct_render_routine(my_process_bar_id,my_text_canvas,my_text_2dcon
 		if(typeof(cep.set_event_component)!="function")
 			return;
 		cep.set_event_component(event_component_id,this);
+		
 		return;
 	};
 };

@@ -31,6 +31,8 @@ public class response_component_render_parameter
 		
 		for(int append_part_number=0,i=0,ni=pps.length;i<ni;i++){
 			int render_id=pps[i][0],part_id=pps[i][1];
+			if(ci.not_acknowledge_render_part_id[render_id][part_id]) 
+				continue;
 			if(collector.component_collector[render_id][part_id]==null)
 				continue;
 			component_render ren_buf=ci.render_buffer.component_buffer.get_render_buffer(

@@ -1,16 +1,16 @@
 function construct_camera_object(camera_component_id,my_component_location_data,my_computer)
 {
 	this.camera_object_parameter=new Array();
-	for(var i=0,n=camera_component_id.length;i<n;i++){
-		this.camera_object_parameter[i]=new Object();
-		this.camera_object_parameter[i].component_id		=camera_component_id[i];
-		this.camera_object_parameter[i].distance			=1.0;
-		this.camera_object_parameter[i].half_fovy_tanl		=1.0;
-		this.camera_object_parameter[i].near_value_ratio	=0.10;
-		this.camera_object_parameter[i].far_value_ratio		=10.0;
-		this.camera_object_parameter[i].projection_type_flag=false;
-		this.camera_object_parameter[i].light_camera_flag	=false;
-	}
+	for(var i=0,n=camera_component_id.length;i<n;i++)
+		this.camera_object_parameter[i]={
+			component_id		:	camera_component_id[i],
+			distance			:	1.0,
+			half_fovy_tanl		:	1.0,
+			near_value_ratio	:	0.10,
+			far_value_ratio		:	10.0,
+			projection_type_flag:	false,
+			light_camera_flag	:	false
+		}
 	
 	this.camera_render_parameter=new Array();
 	this.component_location_data=my_component_location_data;
@@ -19,12 +19,12 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 	this.destroy=function()
 	{
 		for(var i=0,ni=this.camera_object_parameter.length;i<ni;i++)
-			this.camera_object_parameter[i]=null;
-		this.camera_object_parameter				=null;
+			this.camera_object_parameter[i]	=null;
+		this.camera_object_parameter		=null;
 		
 		for(var i=0,ni=this.camera_render_parameter.length;i<ni;i++)
-			this.camera_render_parameter[i]=null;
-		this.camera_render_parameter				=null;
+			this.camera_render_parameter[i]	=null;
+		this.camera_render_parameter		=null;
 		
 		this.component_location_data				=null;
 		this.computer								=null;
@@ -35,8 +35,6 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 		this.compute_screen_move_matrix				=null;
 		this.compute_lookat_matrix					=null;
 		this.compute_camera_data					=null;	
-		
-		this.destroy								=null;
 	}
 	
 	this.modify_camera_data=function(render_buffer_id,camera_data_from_server)

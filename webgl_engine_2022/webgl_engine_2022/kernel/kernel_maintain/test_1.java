@@ -7,10 +7,7 @@ import kernel_file_manager.travel_through_directory;
 public class test_1 extends travel_through_directory
 {
 	private static String match[]= {
-			"XMLHttpRequest",
-			"upload_string",
-			"upload_scene_image",
-			"upload_canvas_image"
+			"encoder"
 	};
 	public void operate_file(String file_name)
 	{
@@ -26,21 +23,22 @@ public class test_1 extends travel_through_directory
 				}
 			}
 	}
+	
 	public test_1()
 	{
 		super(new String[]
 		{
-			"E:\\water_all\\data\\project",
-			"E:\\water_all\\webgl_engine_2022\\webgl_engine_2022\\build"
+//			"F:\\water_all\\data\\project",
+//			"E:\\water_all\\webgl_engine_2022\\webgl_engine_2022\\build"
 		});
 	}
 	public static void main(String args[])
 	{
 		debug_information.println("Step	1:");
-		new test_1().do_travel("E:\\water_all\\data\\", false);
+//		new test_1().do_travel("F:\\water_all\\data\\", false);
 		
-		debug_information.println("Step	2:");
-		new test_1().do_travel("E:\\water_all\\webgl_engine_2022\\webgl_engine_2022\\", false);
+//		debug_information.println("Step	2:");
+		new test_1().do_travel("E:\\webgl_engine_2022\\webgl_engine_2022\\", false);
 
 		debug_information.println("End");
 	}

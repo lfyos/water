@@ -20,6 +20,7 @@ import kernel_driver.component_instance_driver_container;
 
 public class client_information 
 {
+	public boolean							not_acknowledge_render_part_id[][];
 	public buffer_container					render_buffer;
 
 	public render_target_container			target_container;
@@ -47,7 +48,6 @@ public class client_information
 	public render_instance_driver_container		render_instance_driver_cont;
 	public part_instance_driver_container		part_instance_driver_cont;
 	public component_instance_driver_container	component_instance_driver_cont;
-	
 	
 	public display_message					message_display;
 	
@@ -270,6 +270,13 @@ public class client_information
 	public client_information(client_request_response my_request_response,client_process_bar my_process_bar,
 			engine_kernel ek,user_statistics my_statistics_user,engine_statistics my_statistics_engine)
 	{
+		not_acknowledge_render_part_id=new boolean[ek.render_cont.renders.size()][];
+		for(int i=0,ni=not_acknowledge_render_part_id.length;i<ni;i++) {
+			not_acknowledge_render_part_id[i]=new boolean[ek.render_cont.renders.get(i).parts.size()];
+			for(int j=0,nj=not_acknowledge_render_part_id[i].length;j<nj;j++)
+				not_acknowledge_render_part_id[i][j]=true;
+		}
+		
 		String str;
 		int new_max_loading_number,max_client_loading_number=ek.system_par.normal_loading_number;
 		if((str=my_request_response.get_parameter("max_loading_number"))!=null)	

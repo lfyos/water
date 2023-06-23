@@ -10,7 +10,6 @@ import kernel_engine.engine_kernel;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
-import kernel_file_manager.file_writer;
 import kernel_network.client_request_response;
 import kernel_component.component_load_source_container;
 
@@ -18,13 +17,7 @@ public class extended_render_driver extends render_driver
 {
 	public extended_render_driver()
 	{
-		super(	"create_frame.txt",
-				"javascript.draw.txt",
-				"vertex.shader.txt",
-				"fragment.shader.txt",
-				"geometry.shader.txt",
-				"tess_control.shader.txt",
-				"tess_evalue.shader.txt");
+		super();
 	}
 	public void destroy()
 	{
@@ -54,17 +47,6 @@ public class extended_render_driver extends render_driver
 		String par_list_file_name=file_reader.separator(render_fr.get_string());
 		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
 	}
-	public String create_include_shader_program(String shader_type_string,
-			//vertex,fragment,geometry,tess_control,tess_evalue
-			render rr,system_parameter system_par,scene_parameter scene_par)
-	{
-		return null;
-	}
-	public void create_shader_data(file_writer fw,render rr,system_parameter system_par,scene_parameter scene_par)
-	{
-		super.create_shader_data(fw, rr, system_par, scene_par);
-	}
-
 	public part_driver create_part_driver(file_reader part_fr,part p,
 			component_load_source_container component_load_source_cont,
 			system_parameter system_par,client_request_response request_response)

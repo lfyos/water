@@ -4,24 +4,22 @@ function construct_render_utility(my_render_instance)
 	
 	this.destroy=function()
 	{
-		this.render_instance=null;
+		this.render_instance			=null;
 		
-		this.get_pinpoint=null;
-		this.destroy_texture_image=null;
-		this.load_texture_image=null;
-		this.load_server_part_image=null;
+		this.get_pinpoint				=null;
+		this.destroy_texture_image		=null;
+		this.load_texture_image			=null;
+		this.load_server_part_image		=null;
 		this.load_server_component_image=null;
-		this.destroy_texture_video=null;
-		this.load_texture_video=null;
-		this.load_server_part_video=null;
+		this.destroy_texture_video		=null;
+		this.load_texture_video			=null;
+		this.load_server_part_video		=null;
 		this.load_server_component_video=null;
-		this.load_camera_video=null;
-		this.bind_camera_video=null;
-		this.set_clear_fullscreen=null;
-		this.decode_integer_from_pixel=null;
-		this.decode_float_from_pixel=null;
-		
-		this.destroy=null;
+		this.load_camera_video			=null;
+		this.bind_camera_video			=null;
+		this.set_clear_fullscreen		=null;
+		this.decode_integer_from_pixel	=null;
+		this.decode_float_from_pixel	=null;
 	}
 	
 	this.get_pinpoint=function()

@@ -1,6 +1,6 @@
-function construct_collector_loader_object(my_render_object)
+function construct_collector_loader_object(my_render)
 {
-	this.render_object=my_render_object;
+	this.render=my_render;
 	this.collector_data=new Array();
 	for(var i=0;i<8;i++)		
 		this.collector_data[i]={
@@ -15,11 +15,11 @@ function construct_collector_loader_object(my_render_object)
 			this.collector_data[i]=null;
 		};
 		this.collector_data=null;
-		this.render_object=null;
+		this.render=null;
 	};
 	this.collector_url=function(simple_list_flag,single_collector_flag,location_flag)
 	{
-		return this.render_object.url_with_channel+"&command=collector"
+		return this.render.url_with_channel+"&command=collector"
 									+"&simple="		+(simple_list_flag		?"true":"false")
 									+"&single="		+(single_collector_flag	?"true":"false")
 									+"&location="	+(location_flag			?"true":"false");
@@ -28,11 +28,11 @@ function construct_collector_loader_object(my_render_object)
 	{
 		var epcd=this.collector_data[(simple_list_flag?0:1)+(single_collector_flag?0:2)+(location_flag?0:4)];
 		
-		while((this.render_object.collector_stack_version!=epcd.collector_stack_version)&&(!(epcd.is_loading_collector_flag))){
+		while((this.render.collector_stack_version!=epcd.collector_stack_version)&&(!(epcd.is_loading_collector_flag))){
 			epcd.is_loading_collector_flag=true;
 			
 			var old_collector_stack_version=epcd.collector_stack_version;
-			epcd.collector_stack_version=this.render_object.collector_stack_version;
+			epcd.collector_stack_version=this.render.collector_stack_version;
 			
 			var load_collector_url=this.collector_url(simple_list_flag,single_collector_flag,location_flag);
 			

@@ -1,0 +1,189 @@
+function(component_name,component_id,render)
+{
+	render.default_vertex_data_decoder=
+	{
+		create_frame:
+			function(request_type_string,buffer_object_data)
+			{
+				var item_size=buffer_object_data.region_data.length/buffer_object_data.item_number;
+				
+				if(request_type_string!="frame"){
+					buffer_object_data.item_size=item_size;
+					return buffer_object_data;
+				}
+				var primitive_vertex_number=3;
+				var frame_creation_map=[0,1,1,2,2,0];
+				var region_data=buffer_object_data.region_data;
+				var new_region_data=new Array(region_data.length*frame_creation_map.length/primitive_vertex_number);
+			
+				for(var i=0,ni=region_data.length,pointer=0;i<ni;i+=item_size*primitive_vertex_number)
+					for(var j=0,nj=frame_creation_map.length;j<nj;j++)
+						for(var my_pointer=i+item_size*frame_creation_map[j],k=0,nk=item_size;k<nk;k++,my_pointer++)
+							new_region_data[pointer++]=(k==15)?1000:(region_data[my_pointer]);
+							
+				var new_buffer_object_data=new Object();
+				new_buffer_object_data.region_box=buffer_object_data.region_box;
+				new_buffer_object_data.region_data=new_region_data;
+				new_buffer_object_data.item_size=item_size;
+			
+				return new_buffer_object_data;
+			},
+		discard_all:
+			function(request_type_string,buffer_object_data)
+			{
+				var new_buffer_object_data=new Object();
+				new_buffer_object_data.region_box=buffer_object_data.region_box;
+				new_buffer_object_data.item_size=buffer_object_data.region_data.length/buffer_object_data.item_number;
+				new_buffer_object_data.region_data=new Array();
+				
+				return new_buffer_object_data;
+			},
+		edge_and_point:	
+			function(request_type_string,buffer_object_data)
+			{
+				var new_buffer_object_data=new Object();
+				new_buffer_object_data.region_box	=buffer_object_data.region_box;
+				new_buffer_object_data.item_size	=buffer_object_data.region_data.length/buffer_object_data.item_number;
+				
+				if((request_type_string=="edge")||(request_type_string=="point"))
+					new_buffer_object_data.region_data=buffer_object_data.region_data;
+				else
+					new_buffer_object_data.region_data=new Array();
+			
+				return new_buffer_object_data;
+			},
+		no_frame:
+			function(request_type_string,buffer_object_data)
+			{
+				var new_buffer_object_data=new Object();
+				
+				new_buffer_object_data.region_data=(request_type_string=="frame")?new Array():buffer_object_data.region_data;
+				new_buffer_object_data.region_box=buffer_object_data.region_box;
+				new_buffer_object_data.item_size=buffer_object_data.region_data.length/buffer_object_data.item_number;
+				
+				return new_buffer_object_data;
+			},
+		only_edge:
+			function(request_type_string,buffer_object_data)
+			{
+				var new_buffer_object_data=new Object();
+				new_buffer_object_data.region_box	=buffer_object_data.region_box;
+				new_buffer_object_data.item_size	=buffer_object_data.region_data.length/buffer_object_data.item_number;
+			
+				if(request_type_string=="edge")
+					new_buffer_object_data.region_data=buffer_object_data.region_data;
+				else
+					new_buffer_object_data.region_data=new Array();
+				return new_buffer_object_data;
+			},
+		only_face:
+			function(request_type_string,buffer_object_data)
+			{
+				var new_buffer_object_data=new Object();
+			
+				new_buffer_object_data.region_box=buffer_object_data.region_box;
+				new_buffer_object_data.region_data=(request_type_string!="face")?new Array():buffer_object_data.region_data;
+				new_buffer_object_data.item_size=buffer_object_data.region_data.length/buffer_object_data.item_number;
+			
+				return new_buffer_object_data;
+			},
+		voxel:
+			function (request_type_string,buffer_object_data)
+			{
+				var new_item_size,unit_vertex_map;
+				var item_size=buffer_object_data.region_data.length/buffer_object_data.item_number;
+			
+				switch(request_type_string){
+				default:
+				case "edge":
+				case "point":
+					buffer_object_data.item_size=item_size;
+					return buffer_object_data;
+				case "face":
+					new_item_size=item_size;
+					unit_vertex_map=[
+					    [8,			2,1,0,		0,3,2,		4,5,6,		6,7,4,		2,6,5,		5,1,2,		0,4,7,		7,3,0,		5,4,0,		0,1,5,		2,3,7,		7,6,2],
+					    [3,			0,1,2],
+					    [6,			1,0,2,		3,4,5,		1,2,5,		5,4,1,		0,1,4,		4,3,0,		2,0,3,		3,5,2],
+					    [4,			2,1,0,		1,2,3,		0,1,3,		2,0,3],
+					    [5,			2,1,0,		0,3,2,		1,2,4,		0,4,3,		0,1,4,		2,3,4],
+					    [4,			0,1,2,		2,3,0],
+					    [10,	
+									4,0,6,			6,2,5,			5,1,4,		6,5,4,
+									4,1,8,			8,3,7,			7,0,4,		4,8,7,
+									5,2,9,			9,3,8,			8,1,5,		5,9,8,
+									7,3,9,			9,2,6,			6,0,7,		7,9,6
+						],
+						[20,	
+									19,3,11,	11,0,16,	16,4,15,	15,7,19,		19,11,16,		16,15,19,
+									12,4,16,	16,0,8,		8,1,17,		17,5,12,		16,8,17,		17,12,16,
+									13,5,17,	17,1,9,		9,2,18,		18,6,13,		17,9,18,		18,13,17,
+									14,6,18,	18,2,10,	10,3,19,	19,7,14,		18,10,19,		19,14,18,
+									11,3,10,	10,2,9,		9,1,8,		8,0,11,			8,11,10,		10,9,8,
+									15,4,12,	12,5,13,	13,6,14,	14,7,15,		14,15,12,		12,13,14
+						]
+					];
+					break;		
+				case "frame":
+					for(var i=0,ni=buffer_object_data.region_data.length;i<ni;i+=item_size){
+						buffer_object_data.region_data[i+11]=0;
+						buffer_object_data.region_data[i+15]=-1;
+					}
+					new_item_size=(item_size<20)?item_size:20;
+					unit_vertex_map=[
+					    [8,			3,2,	2,1,	1,0,	0,3,		4,5,	5,6,	6,7,	7,4,		1,5,	4,0,	3,7,	6,2],
+					    [3,			0,1,	1,2,	2,0],
+					    [6,			1,0,	0,2,	2,1,				3,4,	4,5,	5,3,				1,4,	5,2,	3,0],
+					    [4,			0,2,	2,1,	1,0,				0,3,	1,3,	2,3],
+					    [5,			3,2,	2,1,	1,0,	0,3,		0,4,	1,4,	2,4,	3,4],
+					    [4,			0,1,	1,2,	2,3,	3,0],
+					    [10,
+									4,0,0,6,		6,2,2,5,		5,1,1,4,
+									4,1,1,8,		8,3,3,7,		7,0,0,4,
+									5,2,2,9,		9,3,3,8,		8,1,1,5,
+									7,3,3,9,		9,2,2,6,		6,0,0,7
+						],
+						[20,
+									19, 3, 3,11,	11, 0, 0,16,	16, 4, 4,15,	15, 7, 7,19,
+									12, 4, 4,16,	16, 0, 0, 8,	 8, 1, 1,17,	17, 5, 5,12,
+									13, 5, 5,17,	17, 1, 1, 9,	 9, 2, 2,18,	18, 6, 6,13,
+									14, 6, 6,18,	18, 2, 2,10,	10, 3, 3,19,	19, 7, 7,14,
+									11, 3, 3,10,	10, 2, 2, 9,	 9, 1, 1,8,	 	 8, 0, 0,11,	
+									15, 4, 4,12,	12, 5, 5,13,	13, 6, 6,14,	14, 7, 7,15
+						]
+					];
+					break;
+				}
+			
+				var data_collector=new Array();
+				for(var my_unit_vertex_map,i=0,p=buffer_object_data.region_data,ni=p.length;i<ni;){
+					if(item_size<20)
+						my_unit_vertex_map=(request_type_string=="face")?[3,0,1,2]:[3,0,1,1,2,2,0];
+					else{
+						if((i+19)>=ni)
+							break;
+						var unit_type_id=Math.round(p[i+19]);
+						if((unit_type_id<0)||(unit_type_id>=unit_vertex_map.length)){
+							new_buffer_object_data.region_data=[];
+							alert("Wrong UNIT TYPE	:	"+unit_type_id.toString());
+							return buffer_object_data;
+						}
+						my_unit_vertex_map=unit_vertex_map[unit_type_id];
+					}
+					for(var j=1,nj=my_unit_vertex_map.length;j<nj;j++){
+						var begin_pointer=i+(my_unit_vertex_map[j]*item_size);
+						for(var k=begin_pointer,nk=begin_pointer+new_item_size;k<nk;k++)
+							data_collector.push(p[k]);
+					}
+					i+=my_unit_vertex_map[0]*item_size;
+				}
+				return {
+						material_id		:	buffer_object_data.material_id,
+						region_box		:	buffer_object_data.region_box,
+						item_size		:	new_item_size,
+						item_number		:	data_collector.length/new_item_size,
+						region_data		:	data_collector
+					};
+			}
+	}
+}

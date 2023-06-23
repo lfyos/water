@@ -145,7 +145,7 @@ public class client_request_switcher
 		if(system_par==null) {
 			system_par=new system_parameter(network_implementor.get_application_directory(),
 					data_configure_environment_variable,proxy_configure_environment_variable);
-			program_javascript=new javascript_program(system_par.js_class_charset,system_par.js_jar_file_charset);
+			program_javascript=new javascript_program(system_par);
 		}
 	}
 	public void process_system_call(network_implementation network_implementor,

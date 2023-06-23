@@ -42,6 +42,8 @@ public class response_component_buffer_parameter
 		for(int i=0,ni=ek.process_part_sequence.process_parts_sequence.length;i<ni;i++){
 			int render_id=ek.process_part_sequence.process_parts_sequence[i][0];
 			int part_id=ek.process_part_sequence.process_parts_sequence[i][1];
+			if(ci.not_acknowledge_render_part_id[render_id][part_id]) 
+				continue;
 			for(component_link_list cll=collector.component_collector[render_id][part_id];cll!=null;cll=cll.next_list_item){
 				component_instance_driver in_dr;
 				if((in_dr=test_should_response_parameter(cll,current_touch_time,ek,ci,0))==null)

@@ -50,7 +50,7 @@ public class engine_kernel
 
 	public part_loader_container 			part_loader_cont;
 	
-	public long 							do_selection_version,program_last_time;
+	public long 							do_selection_version;
 
 	public void destroy()
 	{
@@ -130,14 +130,10 @@ public class engine_kernel
 		part_cont				=null;	
 		
 		do_selection_version	=1;
-		program_last_time		=0;
 	}
 	public long get_file_last_modified_time()
 	{
 		long ret_val=0;
-		
-		if(ret_val<program_last_time)
-			ret_val=program_last_time;
 		
 		if(ret_val<system_par.last_modified_time)
 			ret_val=system_par.last_modified_time;
@@ -392,11 +388,10 @@ public class engine_kernel
 		start_time=new Date().getTime();
 		if(boftal_container==null){
 			process_bar.set_process_bar(true,"create_shader","",1,2);
-			program_last_time=copy_program.copy_shader_programs(render_cont,system_par,scene_par);
-			new engine_initialization(true,program_last_time,this,request_response,process_bar);
+			new engine_initialization(true,this,request_response,process_bar);
 			debug_information.println("Create engine temp data time length:	",		new Date().getTime()-start_time);
 		}else{
-			new engine_initialization(false,program_last_time,this,request_response,process_bar);
+			new engine_initialization(false,this,request_response,process_bar);
 			debug_information.println("Doing engine_initialization time length:	",	new Date().getTime()-start_time);
 		}
 		debug_information.println();

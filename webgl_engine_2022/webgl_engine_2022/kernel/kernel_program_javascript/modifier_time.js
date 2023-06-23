@@ -2,6 +2,7 @@ function construct_modifier_time_parameter(modifier_container_number)
 {
 	this.delay_time_length		=0;
 	this.webserver_current_time	=0;
+	
 	this.timer_adjust_value		=new Array(modifier_container_number);
 	for(var i=0;i<modifier_container_number;i++)
 		this.timer_adjust_value[i]	=0;

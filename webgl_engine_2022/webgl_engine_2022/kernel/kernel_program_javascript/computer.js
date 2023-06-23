@@ -288,13 +288,16 @@ function construct_computation_object()
 	
 	this.destroy=function()
 	{
-		this.standard_negative				=null;
+//		this.destroy						=null;
 		
+		this.standard_negative				=null;
+	
 		this.matrix_multiplication			=null;
 		this.caculate_coordinate			=null;
+		this.create_scale_matrix			=null;
 		this.create_move_rotate_matrix		=null;
 		this.matrix_negative				=null;
-
+	
 		this.create_point_location			=null;
 		this.min_value						=null;
 		this.min_value2						=null;
@@ -313,7 +316,5 @@ function construct_computation_object()
 		this.insect_plane					=null;
 		this.plane_test						=null;
 		this.view_volume_clip_test			=null;
-		
-		this.destroy						=null;
 	};
 };

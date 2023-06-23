@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import kernel_part.part;
 import kernel_part.part_parameter;
 import kernel_part.part_container_for_part_search;
-
 import kernel_common_class.debug_information;
 import kernel_component.component_load_source_container;
 import kernel_driver.render_driver;
@@ -14,15 +13,16 @@ import kernel_engine.system_parameter;
 import kernel_engine.scene_parameter;
 import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
+import kernel_program_reader.program_file_reader;
 
 public class render
 {
 	public int render_id;
-	
 	public String render_name;
 	public render_driver driver;
+	public long program_last_time;
 	public ArrayList<part> parts;
-	
+
 	public void destroy()
 	{
 		if(render_name!=null)
@@ -43,23 +43,22 @@ public class render
 			driver=null;
 		}
 	}
-	public render(int my_render_id,
+	public render(
 			render r,client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{	
-		render_id=my_render_id;
-		render_name=r.render_name;
-		render_id=r.render_id;
-		driver=r.driver.clone(r,request_response,system_par,scene_par);
+		part p;
+		
+		render_name			=r.render_name;
+		render_id			=r.render_id;
+		driver				=r.driver.clone(r,request_response,system_par,scene_par);
+		program_last_time	=r.program_last_time;
 		
 		parts=new ArrayList<part>();
 		if(r.parts!=null)
-			for(int i=0,ni=r.parts.size();i<ni;i++){
-				part p;
+			for(int i=0,ni=r.parts.size();i<ni;i++)
 				if((p=r.parts.get(i))!=null)
-					p=new part(p,request_response,system_par,scene_par);
-				parts.add(i,p);
-			}
+					parts.add(i,new part(p,request_response,system_par,scene_par));
 	}
 	public render(int my_render_id,
 			String my_render_name,String my_driver_name,
@@ -69,8 +68,9 @@ public class render
 		render_id=my_render_id;
 		render_name=my_render_name;
 		driver=null;
-		parts=null;
-		
+		parts=new ArrayList<part>();
+		program_last_time=0;
+				
 		Object render_driver_object;
 		try{
 			render_driver_object=Class.forName(my_driver_name).getConstructor().newInstance();
@@ -87,40 +87,29 @@ public class render
 		render_driver original_driver=(render_driver)render_driver_object;
 		driver=original_driver.clone(null,request_response,system_par,scene_par);
 		original_driver.destroy();
-
-		return;
+		
+		program_last_time=program_file_reader.get_render_program_last_time(this,system_par);
 	}
 	public void delete_last_part()
 	{
-		int part_number=parts.size();
-		if(part_number<=0) 
-			return;
-		part p=parts.get(part_number-1);
-		p.destroy();
-		parts.remove(part_number-1);
-		return;
+		int part_number;
+		if((part_number=parts.size())>0)
+			parts.remove(part_number-1).destroy();
 	}
-	
 	public void add_part(part p)
 	{
-		if(p==null)
-			return;
-		
-		if(parts==null) 
-			parts=new ArrayList<part>();
-		
-		int part_number=parts.size();
-		parts.add(part_number, p);
-
-		p.render_id				=render_id;
-		p.part_id				=part_number;
-		p.part_from_id			=-1;
-		
-		p.permanent_render_id	=p.render_id;
-		p.permanent_part_id		=p.part_id;
-		p.permanent_part_from_id=-1;
-		
-		return;
+		if(p!=null){
+			int part_number=parts.size();
+			parts.add(part_number, p);
+	
+			p.render_id				=render_id;
+			p.part_id				=part_number;
+			p.part_from_id			=-1;
+			
+			p.permanent_render_id	=p.render_id;
+			p.permanent_part_id		=p.part_id;
+			p.permanent_part_from_id=-1;
+		}
 	}
 	public void add_part(component_load_source_container component_load_source_cont,
 			part_container_for_part_search pcps,render_driver r_driver,int part_type_id,

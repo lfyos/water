@@ -12,7 +12,6 @@ import kernel_engine.engine_kernel;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
-import kernel_file_manager.file_writer;
 import kernel_network.client_request_response;
 import kernel_component.component_load_source_container;
 
@@ -21,13 +20,7 @@ public class extended_render_driver extends render_driver
 	private String shader_material_file_name,light_file_name,file_charset;
 	public extended_render_driver()
 	{
-		super(	"voxel.txt",
-				"javascript.draw.txt",
-				"vertex.shader.txt",
-				"fragment.shader.txt",
-				"geometry.shader.txt",
-				"tess_control.shader.txt",
-				"tess_evalue.shader.txt");
+		super();
 		shader_material_file_name=null;
 		light_file_name=null;
 		file_charset=null;
@@ -100,17 +93,6 @@ public class extended_render_driver extends render_driver
 	{
 		return null;
 	}
-	public void create_shader_data(file_writer fw,render rr,system_parameter system_par,scene_parameter scene_par)
-	{
-		fw.println("		{");
-		fw.println(file_reader.get_text(light_file_name,file_charset));
-		if(!(new File(shader_material_file_name).exists()))
-			fw.println("			\"material\"	:	[]");
-		else
-			fw.println(file_reader.get_text(shader_material_file_name,file_charset));
-		fw.println("		}");
-		return;
-	}
 	public part_driver create_part_driver(file_reader part_fr,part p,
 			component_load_source_container component_load_source_cont,
 			system_parameter system_par,client_request_response request_response)
@@ -120,6 +102,7 @@ public class extended_render_driver extends render_driver
 	public render_instance_driver create_render_instance_driver(render r,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_render_instance_driver();
+		return new extended_render_instance_driver(
+						shader_material_file_name,light_file_name,file_charset);
 	}
 }
