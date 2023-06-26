@@ -23,9 +23,6 @@ function construct_pickup_object()
 	this.part_id			=-1;
 	this.buffer_id			=-1;
 	
-	this.pickup_time		=0;
-	this.read_time_length	=0;
-	
 	this.compare=function(p)
 	{
 		if(this.component_id!=p.component_id)
@@ -66,9 +63,6 @@ function construct_pickup_object()
 		ret_val.render_id		=this.render_id;
 		ret_val.part_id			=this.part_id;
 		ret_val.buffer_id		=this.buffer_id;
-		
-		ret_val.pickup_time		=this.pickup_time;
-		ret_val.read_time_length=this.read_time_length;
 		
 		return ret_val;
 	}

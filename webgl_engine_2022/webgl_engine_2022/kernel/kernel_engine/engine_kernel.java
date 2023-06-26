@@ -49,8 +49,6 @@ public class engine_kernel
 	public part_lru_manager					part_lru;
 
 	public part_loader_container 			part_loader_cont;
-	
-	public long 							do_selection_version;
 
 	public void destroy()
 	{
@@ -128,8 +126,6 @@ public class engine_kernel
 		
 		render_cont				=my_original_render;
 		part_cont				=null;	
-		
-		do_selection_version	=1;
 	}
 	public long get_file_last_modified_time()
 	{

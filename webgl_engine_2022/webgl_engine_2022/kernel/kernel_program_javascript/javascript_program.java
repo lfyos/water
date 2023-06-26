@@ -12,14 +12,16 @@ import kernel_network.client_request_response;
 public class javascript_program
 {
 	private long last_modified_time;
+	
 	private static final String javascript_file_name[]=new String[] 
 	{
 		"call_server.js",		"camera.js",			"collector_loader.js",					"component_location.js",
-		"component_render.js",	"computer.js",			"decode.js",							"download_vertex_data.js",
-		"event_listener.js",	"framebuffer.js",		"init_ids_of_part_and_component.js",	"modifier_time.js",
-		"pickup.js",			"process_bar.js",		"render_main.js",						"render.js",
-		"system_buffer.js",		"utility.js",			"webgpu.js"
+		"component_render.js",	"computer.js",			"download_vertex_data.js",				"draw_scene.js",
+		"event_listener.js",	"framebuffer.js",		"init_ids_of_part_and_component.js",	"manipulate_component_event.js",
+		"modifier_time.js",		"pickup.js",			"process_bar.js",						"render_main.js",
+		"render.js",			"system_buffer.js",		"utility.js",							"webgpu.js"
 	};
+	
 	public void destroy()
 	{
 	}	

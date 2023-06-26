@@ -17,13 +17,8 @@ public class statistics_client_information extends jason_creator
 		print("transportation_time_length",					cs.transportation_time_length);
 		print("caculate_time_length",						cs.caculate_time_length);
 		print("collect_time_length",						cs.collect_time_length);
-		print("output_time_length",							cs.output_time_length);
 		print("all_time_length",							cs.all_time_length);
 
-		print("data_time_length",							cs.data_time_length);
-		print("render_time_length",							cs.render_time_length);
-		print("read_time_length",							cs.read_time_length);
-		print("render_interval_length",						cs.render_interval_length);
 		print("render_data_length",							cs.render_data_length);
 		print("delay_time_length",							cs.delay_time_length);
 

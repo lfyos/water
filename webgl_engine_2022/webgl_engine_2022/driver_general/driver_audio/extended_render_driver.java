@@ -9,6 +9,7 @@ import kernel_engine.engine_kernel;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
 import kernel_driver.render_instance_driver;
 import kernel_network.client_request_response;
 import kernel_component.component_load_source_container;
@@ -46,6 +47,11 @@ public class extended_render_driver extends render_driver
 	{
 		String par_list_file_name=file_reader.separator(render_fr.get_string());
 		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
+	}
+	public void create_shader_data(file_writer f,render r,
+			engine_kernel ek,client_request_response request_response)
+	{
+		super.create_shader_data(f,r,ek,request_response);
 	}
 	public part_driver create_part_driver(file_reader part_fr,part p,
 			component_load_source_container component_load_source_cont,

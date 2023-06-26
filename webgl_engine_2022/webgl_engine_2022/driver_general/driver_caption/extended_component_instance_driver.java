@@ -116,9 +116,6 @@ public class extended_component_instance_driver extends component_instance_drive
 		case "read_time_length":
 			fps/=ci.statistics_client.read_time_length;
 			break;
-		case "render_interval_length":
-			fps/=ci.statistics_client.render_interval_length;
-			break;
 		}	
 		fps_string=" ["+Long.toString(fps)+"fps]";
 		

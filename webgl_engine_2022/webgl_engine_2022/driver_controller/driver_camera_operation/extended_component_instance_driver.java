@@ -37,7 +37,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		if(show_flag)
-			if(cr.target.selection_target_flag||cr.target.main_display_target_flag)
+			if(cr.target.main_display_target_flag)
 				return false;
 		return true;
 	}

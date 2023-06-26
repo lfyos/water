@@ -10,7 +10,6 @@ import kernel_file_manager.file_writer;
 import kernel_render.render_target;
 import kernel_part.part;
 import kernel_transformation.box;
-import kernel_render.target_viewport;
 
 public class extended_component_instance_driver extends component_instance_driver
 {

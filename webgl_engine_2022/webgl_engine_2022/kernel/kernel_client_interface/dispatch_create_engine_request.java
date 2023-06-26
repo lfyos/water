@@ -150,26 +150,17 @@ public class dispatch_create_engine_request
 																		//parameter	4	0
 		ci.request_response.print(",",ek.render_cont.renders.size());	//parameter	4	1
 		ci.request_response.print(",",ek.modifier_cont.length);			//parameter	4	2
-		ci.request_response.print(",[");								//parameter	4	3
-			if(ek.camera_cont!=null)
-				for(int i=0,n=ek.camera_cont.size();i<n;i++){
-					component eye_comp=ek.camera_cont.get(i).eye_component;
-					ci.request_response.print((i<=0)?"":",",(eye_comp==null)?-1:eye_comp.component_id);
-				}
-		ci.request_response.print("]");
-			
+		ci.request_response.print(",",
+				(ek.camera_cont==null)?0:ek.camera_cont.size());		//parameter	4	3
+		
 		ci.request_response.print(",\"",	ek.create_parameter.link_name);			//parameter	4	4
 		ci.request_response.print("\",",	jason_string.change_string(
 				ek.create_parameter.scene_title+ek.scene_par.scene_sub_directory));	//parameter	4	5
 	
 		ci.request_response.print(",{");							//parameter	4	6
-			
-		ci.request_response.print( "\"max_loading_number\":",ci.parameter.max_client_loading_number);
-			
-		ci.request_response.print(",\"total_buffer_object_data_length\":",	ek.process_part_sequence.total_buffer_object_text_data_length);
-		ci.request_response.print(",\"engine_touch_time_length\":",			ek.system_par.engine_touch_time_length);
-		ci.request_response.print(",\"download_start_time_length\":",		ek.system_par.download_start_time_length/1000000);
-		ci.request_response.print(",\"download_minimal_time_length\":",		ek.system_par.download_minimal_time_length/1000000);
+
+		ci.request_response.print( "\"max_loading_number\":",		ci.parameter.max_client_loading_number);
+		ci.request_response.print(",\"engine_touch_time_length\":",	ek.system_par.engine_touch_time_length);
 			
 		ci.request_response.print("}");
 		ci.request_response.print("],\"");

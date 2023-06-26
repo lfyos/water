@@ -85,10 +85,6 @@ public class dispatch_information_request
 				if((cc=ci.display_component_collector)!=null)
 					(new component_collector_with_component_information(cc,ek,ci)).output();
 				break;
-			case "selection":
-				if((cc=ci.selection_component_collector)!=null)
-					(new component_collector_with_component_information(cc,ek,ci)).output();
-				break;
 			case "target":
 				(new component_collector_of_target_information(ek,ci)).output();
 				break;

@@ -55,12 +55,13 @@ async function render_main(create_engine_sleep_time_length_scale,
 			}
 		}
 		
-		for(var i=0,ni=program_data.length;i<ni;i++){
-			var my_render_id			=	program_data[i][0];
-			var my_render_name			=	program_data[i][1];
-			var my_driver_function		=	program_data[i][2];
+		for(var render_id=0,render_number=program_data.length;render_id<render_number;render_id++){
+			var my_render_name				=	program_data[render_id][0];
+			var my_driver_function			=	program_data[render_id][1];
+			var my_shader_data				=	program_data[render_id][2];
 			
-			render.render_driver[i]=null;
+			render.render_shader_data[i]	=	my_shader_data;
+			render.render_driver[render_id]	=	null;
 			
 			try{
 				my_driver_function=(eval("["+my_driver_function+"]"))[0];
@@ -73,9 +74,10 @@ async function render_main(create_engine_sleep_time_length_scale,
 				continue;
 			}
 			try{
-				render.render_driver[i]=my_driver_function(render.render_initialize_data[my_render_id],render);
+				render.render_driver[render_id]=my_driver_function(render_id,my_render_name,
+					render.render_initialize_data[render_id],render.render_shader_data[i],render);
 			}catch(e){
-				render.render_driver[i]=null;
+				render.render_driver[render_id]=null;
 				alert("create render driver fail	"+my_render_name);
 				continue;
 			}
@@ -84,6 +86,7 @@ async function render_main(create_engine_sleep_time_length_scale,
 		render.common_shader_data=common_shader_data;
 		
 		request_render_data(render);
+		draw_scene(render);
 		
 		return render;
 	};

@@ -1,119 +1,127 @@
 package kernel_buffer;
 
-import kernel_network.client_request_response;
-import kernel_render.target_viewport;
+import java.util.ArrayList;
 
+import kernel_common_class.const_value;
+import kernel_render.render_target;
+import kernel_network.client_request_response;
 
 public class target_parameter_buffer 
 {
-	private long target_parameter[][];
-	private target_viewport viewport[][];
+	private ArrayList<render_target> render_target_buffer;
 	
 	public void destroy()
 	{
-		target_parameter=null;
-		viewport=null;
+		if(render_target_buffer!=null) {
+			render_target_buffer.clear();
+			render_target_buffer=null;
+		}
 	}
 	public target_parameter_buffer()
 	{
-		target_parameter=null;
-		viewport=null;
+		render_target_buffer=new ArrayList<render_target>();
 	}
-	public void clear_buffer(int target_id)
+	public void response_parameter(int render_buffer_id,
+			render_target rt,client_request_response client_interface)
 	{
-		if(target_parameter==null)
-			return;
-		if(target_id<0)
-			return;
-		if(target_id>=target_parameter.length)
-			return;
-		target_parameter[target_id]=null;
-	}
-	public boolean response_parameter(	client_request_response 	client_interface,
-		int target_id,					int render_target_id,		int parameter_channel_id,
-		int framebuffer_width,			int framebuffer_height,		int render_target_number,
-		target_viewport my_viewport[])
-	{
-		if(target_parameter==null){
-			target_parameter=new long[target_id+1][];
-			viewport=new target_viewport[target_parameter.length][];
-			
-			for(int i=0;i<target_parameter.length;i++){
-				target_parameter[i]=null;
-				viewport[i]=null;
-			}
-		}else if(target_id>=target_parameter.length){
-			long bak_target_parameter[][]=target_parameter;
-			target_viewport bak_viewport[][]=viewport;
-			target_parameter=new long[target_id+1][];
-			viewport=new target_viewport[target_parameter.length][];
-	
-			for(int i=0;i<bak_target_parameter.length;i++){
-				target_parameter[i]=bak_target_parameter[i];
-				viewport[i]=bak_viewport[i];
-			}
-			for(int i=bak_target_parameter.length;i<target_parameter.length;i++){
-				target_parameter[i]=null;
-				viewport[i]=null;
-			}
-		};
-		long new_target_parameter[]=new long[]
-		{
-				render_target_id,
-				parameter_channel_id,
-				framebuffer_width,
-				framebuffer_height,
-				render_target_number
-		};
-		boolean should_update_flag;
-		if(target_parameter[target_id]==null)
-			should_update_flag=true;
-		else{
-			should_update_flag=false;
-			for(int i=0,ni=new_target_parameter.length;i<ni;i++)
-				if(target_parameter[target_id][i]!=new_target_parameter[i]){
-					should_update_flag=true;
+		for(int last_id;(last_id=render_target_buffer.size())<=render_buffer_id;)
+			render_target_buffer.set(last_id,null);
+		render_target rt_buf=render_target_buffer.get(render_buffer_id);
+		render_target_buffer.set(render_buffer_id,rt);
+		
+		int print_number=0;
+		client_interface.print(",[");
+
+		do{
+			if(rt_buf!=null)
+				if(rt_buf.target_comonent_id==rt.target_comonent_id)
 					break;
+			client_interface.	print(((print_number++)<=0)?"0,":",0,",rt.target_comonent_id);
+		}while(false);
+		
+		do{
+			if(rt_buf!=null)
+				if(rt_buf.target_driver_id==rt.target_driver_id)
+					break;
+			client_interface.	print(((print_number++)<=0)?"1,":",1,",rt.target_driver_id);
+		}while(false);
+		
+		do{
+			if(rt_buf!=null)
+				if(rt_buf.target_texture_id==rt.target_texture_id)
+					break;
+			client_interface.	print(((print_number++)<=0)?"2,":",2,",rt.target_texture_id);
+		}while(false);
+
+		do{
+			if(rt_buf!=null)
+				if(rt_buf.camera_id==rt.camera_id)
+					break;
+			client_interface.	print(((print_number++)<=0)?"3,":",3,",rt.camera_id);
+		}while(false);
+
+		do{
+			if(rt_buf!=null)
+				if(rt_buf.view_volume_box.p[0].sub(rt.view_volume_box.p[0]).distance2()<const_value.min_value2)
+					if(rt_buf.view_volume_box.p[0].sub(rt.view_volume_box.p[0]).distance2()<const_value.min_value2)
+						break;
+			client_interface.	print(((print_number++)<=0)?"4,":",4,").
+								print(		rt.view_volume_box.p[0].x).
+								print(",",	rt.view_volume_box.p[0].y).
+								print(",",	rt.view_volume_box.p[0].z).
+								print(",",	rt.view_volume_box.p[1].x).
+								print(",",	rt.view_volume_box.p[1].y).
+								print(",",	rt.view_volume_box.p[1].z);
+		}while(false);
+		
+		do{
+			if(rt_buf!=null)
+				if(!((rt_buf.clip_plane!=null)^(rt.clip_plane!=null))) {
+					if(rt.clip_plane==null)
+						break;
+					double diff,sum=0;
+					diff=rt_buf.clip_plane.A-rt.clip_plane.A;	sum+=diff*diff;
+					diff=rt_buf.clip_plane.B-rt.clip_plane.B;	sum+=diff*diff;
+					diff=rt_buf.clip_plane.C-rt.clip_plane.C;	sum+=diff*diff;
+					diff=rt_buf.clip_plane.D-rt.clip_plane.D;	sum+=diff*diff;
+					if(sum<const_value.min_value2)
+						break;
 				}
-			if(!should_update_flag)
-				should_update_flag=target_viewport.is_not_same(viewport[target_id], my_viewport);
-		}
-		if(should_update_flag){
-			target_parameter[target_id]=new_target_parameter;
-			target_viewport vp[];
-			if(my_viewport==null){
-				viewport[target_id]=null;
-				vp=new target_viewport[]{new target_viewport()};
-			}else if(my_viewport.length<=0){
-				viewport[target_id]=null;
-				vp=new target_viewport[]{new target_viewport()};
-			}else{
-				vp=new target_viewport[my_viewport.length];
-				for(int i=0,ni=vp.length;i<ni;i++)
-					vp[i]=new target_viewport(my_viewport[i]);
-				viewport[target_id]=vp;
-			}
-			client_interface.print(",[",new_target_parameter);
-			
-			client_interface.print(",[");
-			for(int i=0,ni=vp.length;i<ni;i++){
-				client_interface.print((i<=0)?"[":",[",	vp[i].x);
-				client_interface.print(",",				vp[i].y);
-				client_interface.print(",",				vp[i].width);
-				client_interface.print(",",				vp[i].height);
-				client_interface.print(",",				vp[i].method_id);
-				
-				if(vp[i].clear_color!=null){
-					for(int j=0,nj=vp[i].clear_color.length;j<nj;j++)
-						client_interface.print((j<=0)?",[":",",vp[i].clear_color[j]);
-					client_interface.print("]");
+			if(rt.clip_plane==null)
+				client_interface.	print(((print_number++)<=0)?"5":",5");
+			else 
+				client_interface.	print(((print_number++)<=0)?"6,":",6,").
+									print(		rt.clip_plane.A).
+									print(",",	rt.clip_plane.B).
+									print(",",	rt.clip_plane.C).
+									print(",",	rt.clip_plane.D);
+		}while(false);
+		
+		do{
+			if(rt_buf!=null)
+				if(!((rt_buf.mirror_plane!=null)^(rt.mirror_plane!=null))){
+					if(rt.mirror_plane==null)
+						break;
+					double diff,sum=0;
+					diff=rt_buf.mirror_plane.A-rt.mirror_plane.A;	sum+=diff*diff;
+					diff=rt_buf.mirror_plane.B-rt.mirror_plane.B;	sum+=diff*diff;
+					diff=rt_buf.mirror_plane.C-rt.mirror_plane.C;	sum+=diff*diff;
+					diff=rt_buf.mirror_plane.D-rt.mirror_plane.D;	sum+=diff*diff;
+					if(sum<const_value.min_value2)
+						break;
 				}
-				client_interface.print("]");
-			}
-			client_interface.print("]");
-			
-			client_interface.print("]");
-		}
-		return should_update_flag;
+			if(rt.mirror_plane==null)
+				client_interface.	print(((print_number++)<=0)?"7":",7");
+			else 
+				client_interface.	print(((print_number++)<=0)?"8,":",8,").
+									print(		rt.mirror_plane.A).
+									print(",",	rt.mirror_plane.B).
+									print(",",	rt.mirror_plane.C).
+									print(",",	rt.mirror_plane.D);
+		}while(false);
+		
+		client_interface.print("]");
+		
+		return;
 	}
 }

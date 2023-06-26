@@ -4,8 +4,8 @@ public class client_statistics
 {
 	public long last_access_time;
 	
-	public long transportation_time_length,caculate_time_length,collect_time_length,output_time_length,all_time_length;
-	public long data_time_length,render_time_length,read_time_length,render_interval_length,render_data_length;
+	public long transportation_time_length,caculate_time_length,collect_time_length,all_time_length;
+	public long render_data_length;
 	public long delay_time_length;
 	
 	public int collect_component_number,clip_plane_component_number,update_component_parameter_number,should_update_component_parameter_number;
@@ -31,10 +31,6 @@ public class client_statistics
 	public void clear()
 	{
 		delay_time_length		=1;
-		data_time_length		=1;
-		render_time_length		=1;
-		read_time_length		=1;
-		render_interval_length	=1;
 		render_data_length		=1;
 				
 		last_access_time		=0;
@@ -114,7 +110,6 @@ public class client_statistics
 		loading_request_number			=my_loading_request_number;
 		
 		collect_time_length				=0;
-		output_time_length				=0;
 
 		collect_component_number		=0;
 		clip_plane_component_number		=0;
@@ -129,8 +124,8 @@ public class client_statistics
 		should_component_refresh_number	=0;
 		should_component_append_number	=0;
 		
-		update_location_number=0;
-		should_update_location_number=0;
+		update_location_number			=0;
+		should_update_location_number	=0;
 
 		top_box_component_number		=0;
 		bottom_box_component_number		=0;
@@ -138,12 +133,11 @@ public class client_statistics
 		hide_component_number			=0;
 		clip_component_number			=0;
 
-		lod_component_number=new int[1];
-		lod_component_number[0]=0;
+		lod_component_number			=new int[] {0};
 		
-		abandon_component_number=0;
-		no_driver_component_number=0;
-		not_load_component_number=0;
+		abandon_component_number		=0;
+		no_driver_component_number		=0;
+		not_load_component_number		=0;
 	}
 	public void modify_response_data_length(int content_type_id,long modify_length)
 	{

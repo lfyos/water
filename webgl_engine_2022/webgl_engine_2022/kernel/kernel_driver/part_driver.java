@@ -24,7 +24,7 @@ public class part_driver
 	{
 	}
 	public void initialize_part_driver(part p,engine_kernel ek,client_request_response request_response)
-	{
+	{	
 	}
 	public part_driver()
 	{
@@ -77,7 +77,6 @@ public class part_driver
 	{
 		return null;
 	}
-	
 	public component_driver create_component_driver(
 			file_reader fr,boolean rollback_flag,part my_component_part,
 			component_load_source_container component_load_source_cont,

@@ -25,11 +25,11 @@ public class component_location_buffer
 			location_collector=null;
 		}
 		
-		component_not_in_list_flag=null;
-		has_not_response_relative_location_flag=null;
+		component_not_in_list_flag				=null;
+		has_not_response_relative_location_flag	=null;
 		
-		component_location_version=null;
-		touch_time=null;
+		component_location_version				=null;
+		touch_time								=null;
 	}
 	
 	public component_location_buffer(engine_kernel ek)
@@ -54,21 +54,21 @@ public class component_location_buffer
 	}
 	private int []get_render_part_id(component comp,engine_kernel ek)
 	{
-		int render_id	=ek.process_part_sequence.process_parts_sequence[0][0];
-		int part_id		=ek.process_part_sequence.process_parts_sequence[0][1];
-
+		component_driver c_d;
 		if(comp.driver_number()>0)
-			for(int i=0,ni=comp.driver_number();i<ni;i++) {
-				component_driver c_d=comp.driver_array.get(i);
-				if(c_d!=null)
-					if(c_d.component_part!=null){
-						render_id	=c_d.component_part.render_id;
-						part_id		=c_d.component_part.part_id;
-						break;
-					}
-			}
-		int ret_val[]={render_id,part_id};
-		return ret_val;
+			for(int i=0,ni=comp.driver_number();i<ni;i++)
+				if((c_d=comp.driver_array.get(i))!=null)
+					if(c_d.component_part!=null)
+						return new int[] 
+							{
+								c_d.component_part.render_id,
+								c_d.component_part.part_id
+							};
+		return new int[] 
+			{
+				ek.process_part_sequence.process_parts_sequence[0][0],
+				ek.process_part_sequence.process_parts_sequence[0][1]
+			};
 	}
 	public void put_in_list(component response_component,engine_kernel ek)
 	{
@@ -77,7 +77,7 @@ public class component_location_buffer
 			int render_id=render_part_id[0],part_id=render_part_id[1];
 			
 			long my_touch_time=response_component.uniparameter.touch_time;
-			for(component comp=response_component;comp!=null;comp=ek.component_cont.get_component(comp.parent_component_id)){
+			for(component comp=response_component;comp!=null;comp=ek.component_cont.get_component(comp.parent_component_id))
 				if((comp.uniparameter.do_response_location_flag)||(has_not_response_relative_location_flag[comp.component_id]))
 					if(comp.get_location_version()!=component_location_version[comp.component_id])
 						if(component_not_in_list_flag[comp.component_id])
@@ -86,7 +86,6 @@ public class component_location_buffer
 								if((touch_time[comp.component_id]=comp.uniparameter.touch_time)<my_touch_time)
 									touch_time[comp.component_id]=my_touch_time;
 							}
-			}
 		}
 	}
 	private static void response_location_data(location loca,client_request_response request_response)
@@ -102,6 +101,7 @@ public class component_location_buffer
 		}
 		request_response.print((number<=0)?"[]":(","+code+"]"));		
 	}
+
 	public void response_location(engine_kernel ek,client_information ci)
 	{
 		if(ek.camera_cont!=null)
@@ -117,7 +117,7 @@ public class component_location_buffer
 	
 		ci.request_response.print(",[");
 		
-		for(int i=0,print_number=0,ni=ek.process_part_sequence.process_parts_sequence.length;i<ni;i++){
+		for(int response_number=0,i=0,ni=ek.process_part_sequence.process_parts_sequence.length;i<ni;i++){
 			int render_id			=ek.process_part_sequence.process_parts_sequence[i][0];
 			int part_id				=ek.process_part_sequence.process_parts_sequence[i][1];
 			component_link_list p	=location_collector.component_collector[render_id][part_id];
@@ -129,24 +129,20 @@ public class component_location_buffer
 						continue;
 			
 				component_location_version[p.comp.component_id]=p.comp.get_location_version();
-				ci.request_response.print(((print_number++)>0)?",[":"[",p.comp.component_id);
-				ci.request_response.print(",",p.comp.uniparameter.cacaulate_location_flag?"1 ,":"-1 ,");
+				
+				ci.request_response.print(((response_number++)<=0)?"[":",[",p.comp.component_id);
+				ci.request_response.print(",",p.comp.uniparameter.cacaulate_location_flag?"1,":"-1,");
 				response_location_data(p.comp.move_location,ci.request_response);
 				ci.statistics_client.update_location_number++;
 				total_response_location_number++;
 
 				if(has_not_response_relative_location_flag[p.comp.component_id]){
-					has_not_response_relative_location_flag[p.comp.component_id]=false;
 					ci.request_response.print(",");
+					has_not_response_relative_location_flag[p.comp.component_id]=false;
 					response_location_data(p.comp.relative_location,ci.request_response);
+					ci.request_response.print(",",p.comp.parent_component_id);
 					ci.statistics_client.update_location_number++;
 					total_response_location_number++;
-					
-					int parent_id=-1;
-					component parent=ek.component_cont.get_component(p.comp.parent_component_id);
-					if(parent!=null)
-						parent_id=parent.component_id;
-					ci.request_response.print(",",parent_id);
 				}
 				ci.request_response.print("]");
 			}
@@ -154,6 +150,7 @@ public class component_location_buffer
 		ci.request_response.print("]");
 		
 		ci.statistics_client.should_update_location_number=location_collector.component_number;
+		
 		location_collector.reset();
 	}
 	public void synchronize_location_version(component comp,engine_kernel ek,boolean update_flag)
@@ -171,7 +168,8 @@ public class component_location_buffer
 		if(location_collector.component_collector[render_id]==null)
 			return;
 		component_link_list q=null;
-		for(component_link_list p=location_collector.component_collector[render_id][part_id];p!=null;p=p.next_list_item)
+		component_link_list p=location_collector.component_collector[render_id][part_id];
+		for(;p!=null;p=p.next_list_item)
 			if(p.comp.component_id!=comp.component_id)
 				q=new component_link_list(p.comp,p.driver_id,q);
 		location_collector.component_collector[render_id][part_id]=q;

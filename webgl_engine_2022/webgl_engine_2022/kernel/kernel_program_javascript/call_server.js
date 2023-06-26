@@ -36,14 +36,12 @@ function construct_server_caller(my_render)
 			
 		if((typeof(response_type_string)=="undefined")||(response_type_string==null))
 			response_type_string="json";
-
-		this.render.current.calling_server_number++;
 		
 		var server_promise=await fetch(request_url,server_request_parameter);
 		if(!(server_promise.ok)){
 			if(this.render.terminate_flag)
 				return null;
-			this.render.current.calling_server_number--;
+
 			alert("request call_server error,status is "+server_promise.status);
 			alert(request_url);
 			return null;
@@ -75,9 +73,7 @@ function construct_server_caller(my_render)
 				return null;
 			response_data= null;
 		}
-		
-		this.render.current.calling_server_number--;
-		
+
 		return response_data;
 	};
 	this.create_render_request_string=function(render_id_or_render_name,render_parameter)

@@ -38,10 +38,7 @@ public class component_render
 	public long lastest_refresh_touch_time;
 	public long lastest_in_delete_touch_time;
 	public long lastest_out_delete_touch_time;
-	
-	public int do_append_instance_number;
-	public int do_delete_instance_number;
-	
+
 	public void destroy()
 	{
 		if(comp!=null)
@@ -91,10 +88,8 @@ public class component_render
 	public void clear_clip_flag(component_container component_cont)
 	{
 		for(int i=0;i<component_number;i++)
-			for(component p=comp[i];p!=null;){
+			for(component p=comp[i];p!=null;p=component_cont.get_component(p.parent_component_id))
 				p.clip.has_done_clip_flag=false;
-				p=component_cont.get_component(p.parent_component_id);
-			}
 	}
 	public void test_clip_flag_of_delete_component(
 			camera_result cr,component_container component_cont,int parameter_channel_id)
@@ -115,9 +110,6 @@ public class component_render
 		lastest_out_delete_touch_time	=0;
 		lastest_append_touch_time		=0;
 		lastest_refresh_touch_time		=0;
-		
-		do_append_instance_number=0;
-		do_delete_instance_number=0;
 	}
 	
 	public void mark(component_link_list cll,client_information ci,camera_result cam_result,int render_buffer_id)
@@ -130,7 +122,6 @@ public class component_render
 			flag[flag_id]=0;
 			instance_id[flag_id]=-1;
 		}
-		
 // set component flag in buffer
 		for(int i=0;i<component_number;i++){
 			component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp[i],driver_id[i]);
@@ -201,10 +192,14 @@ public class component_render
 		}
 		return;
 	}
-	public void create_delete_render_parameter(component_link_list p,long render_current_time,
-			engine_kernel ek,client_information ci,camera_result cam_result)
+	
+	public void create_delete_render_parameter(
+			response_flag create_flag,
+			int render_id,int part_id,int render_buffer_id,
+			component_link_list p,long render_current_time,
+			engine_kernel ek,client_information ci)
 	{
-		for(int print_number=0;p!=null;p=p.next_list_item) {
+		for(;p!=null;p=p.next_list_item) {
 			int flag_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
 			switch(flag[flag_id]&(1+2+4+8)){
 			case 1://last display(refresh),			this not display,DELETE
@@ -214,15 +209,32 @@ public class component_render
 						flag[flag_id]|=16;//become KEEP
 						break;
 					}
-				if((print_number++)>0)
-					ci.request_response.print(",");
-
 				int my_instance_id=instance_id[flag_id];
 				instance_id[flag_id]=-1;
 				
-				do_delete_instance_number++;
-				ci.request_response.print(my_instance_id);
-				
+				part my_part=p.comp.driver_array.get(p.driver_id).component_part;
+				if(create_flag.first_item_flag)
+					create_flag.first_item_flag=false;
+				else
+					ci.request_response.print(",");
+				if((create_flag.render_id!=my_part.render_id)||(create_flag.part_id!=my_part.part_id)) {
+					create_flag.render_id		=my_part.render_id;
+					create_flag.part_id			=my_part.part_id;
+					create_flag.render_buffer_id=render_buffer_id;
+					
+					ci.request_response.print("[",	my_part.render_id).
+										print(",",	my_part.part_id).
+										print(",",	render_buffer_id).
+										print(",",	my_instance_id).
+										print("]");
+				}else if(create_flag.render_buffer_id!=render_buffer_id) { 
+					create_flag.render_buffer_id=render_buffer_id;
+					ci.request_response.print("[",render_buffer_id).
+										print(",",my_instance_id).
+										print("]");
+				}else
+					ci.request_response.print(my_instance_id);
+			
 				flag[flag_id]|=32;
 				
 				component_number--;
@@ -242,7 +254,7 @@ public class component_render
 			case 1+4://last display(refresh),		this display(refresh),		REFRESH
 				break;
 			case 2+8://last display(not refresh),	this display(not refresh),	KEEP
-				break;		
+				break;
 			default://impossible
 				flag[flag_id]=0;
 				break;
@@ -251,7 +263,8 @@ public class component_render
 		return;
 	}
 	
-	public int create_append_render_parameter(int do_append_part_number,
+	public void create_append_render_parameter(
+			boolean append_or_refresh_flag,response_flag create_flag,
 			component_link_list cll,long render_current_time,
 			engine_kernel ek,client_information ci,
 			camera_result cam_result,int render_buffer_id)
@@ -263,20 +276,23 @@ public class component_render
 			default://impossible
 				flag[buffer_id]=0;
 				break;
-			case 1://last display(refresh),			this not display,DELETE,NO APPEND
-			case 2://last display(not refresh),		this not display,DELETE,NO APPEND
-			case 2+8://last display(not refresh),	this display(not refresh),KEEP,NO APPEND
+			case 1:		//last display(refresh),		this not display,			DELETE,NO APPEND
+			case 2:		//last display(not refresh),	this not display,			DELETE,NO APPEND
+			case 2+8:	//last display(not refresh),	this display(not refresh),	KEEP,NO APPEND
 				break;
-			case 1+4://last display(refresh),		this display(refresh),DELETE,DO ADD
-			case 4://last not display,				this display(refresh),		NOT EXIST,DO ADD
-			case 8://last not display,				this display(not refresh),	NOT EXIST,DO ADD
-				component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(p.comp,p.driver_id);
+			case 1+4:	//last display(refresh),		this display(refresh),		DELETE,		DO ADD
+			case 4:		//last not display,				this display(refresh),		NOT EXIST,	DO ADD
+			case 8:		//last not display,				this display(not refresh),	NOT EXIST,	DO ADD
+				
+				component_instance_driver in_dr=ci.component_instance_driver_cont.
+									get_component_instance_driver(p.comp,p.driver_id);
 				if(in_dr.get_component_parameter_version()<=0){
 					// 	if buffer parameter has not transfer to client broswer,
 					//	do not transfer render parameter to client broswer
 					flag[buffer_id]|=64;
 					continue;
 				}
+				
 				if((render_current_time-p.comp.uniparameter.touch_time)>ek.scene_par.touch_time_length)
 					if((ci.statistics_client.component_append_number+ci.statistics_client.component_refresh_number)>=ek.scene_par.most_component_append_number){
 						if(ci.parameter.comp==null){
@@ -287,8 +303,7 @@ public class component_render
 							flag[buffer_id]|=64;
 							continue;
 						}
-					}
-				
+					}	
 				int my_instance_id;
 				if(my_flag==(1+4))
 					my_instance_id=instance_id[buffer_id];
@@ -302,23 +317,32 @@ public class component_render
 				
 				flag[buffer_id]|=128;
 				
-				if((do_append_instance_number++)>0)
-					ci.request_response.print(",",my_instance_id);
-				else{
-					if((do_append_part_number++)>0)
-						ci.request_response.print(",");
-					part my_part=p.comp.driver_array.get(p.driver_id).component_part;
-					ci.request_response.print(		my_part.render_id);
-					ci.request_response.print(",",	my_part.part_id);
-					ci.request_response.print(",[",my_instance_id);
+				part my_part=p.comp.driver_array.get(p.driver_id).component_part;
+				
+				if(create_flag.first_item_flag) {
+					ci.request_response.print("[");
+					create_flag.first_item_flag=false;
+				}else
+					ci.request_response.print(",[");
+				
+				if((create_flag.render_id!=my_part.render_id)||(create_flag.part_id!=my_part.part_id)) {
+					create_flag.render_id		=my_part.render_id;
+					create_flag.part_id			=my_part.part_id;
+					create_flag.render_buffer_id=render_buffer_id;
+					ci.request_response.print(		my_part.render_id).
+										print(",",	my_part.part_id).
+										print(",",	render_buffer_id).print(",");
+				}else if(create_flag.render_buffer_id!=render_buffer_id) { 
+					create_flag.render_buffer_id=render_buffer_id;
+					ci.request_response.print(render_buffer_id).print(",");
 				}
-				ci.request_response.print(",");
+				ci.request_response.print(my_instance_id).print(",");
+				
 				try{
 					in_dr.create_render_parameter(render_buffer_id,
-						p.comp.driver_array.get(p.driver_id).same_part_component_driver_id,ek,ci,cam_result);
+						p.comp.driver_array.get(p.driver_id).same_part_component_driver_id,
+						ek,ci,cam_result);
 				}catch(Exception e){
-					part my_part=p.comp.driver_array.get(p.driver_id).component_part;
-					
 					debug_information.println("instance driver create_render_parameter fail:	",e.toString());
 					debug_information.println("Component name:	",	cll.comp.component_name);
 					debug_information.println("Driver ID:		",	cll.driver_id);
@@ -327,18 +351,20 @@ public class component_render
 					debug_information.println("Mesh file name:	",	my_part.directory_name+my_part.mesh_file_name);
 					e.printStackTrace();
 				}
-				
+				ci.request_response.print("]");
+
 				in_dr.update_component_render_version(render_buffer_id,
 						p.comp.driver_array.get(p.driver_id).get_component_render_version());
 				
-				if(flag[buffer_id]==((1+4)|128))
-					ci.statistics_client.component_refresh_number++;
-				else
+				if(append_or_refresh_flag)
 					ci.statistics_client.component_append_number++;
+				else
+					ci.statistics_client.component_refresh_number++;
+				
+				break;
 			}
 		}
-		return do_append_part_number;
-	}	
+	}
 	public void register_location(engine_kernel ek,client_information ci)
 	{
 		for(int i=0;i<component_number;i++){

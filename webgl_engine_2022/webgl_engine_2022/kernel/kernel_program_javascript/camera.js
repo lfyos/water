@@ -1,9 +1,10 @@
-function construct_camera_object(camera_component_id,my_component_location_data,my_computer)
+function construct_camera_object(camera_number,my_component_location_data,my_computer)
 {
 	this.camera_object_parameter=new Array();
-	for(var i=0,n=camera_component_id.length;i<n;i++)
+	
+	for(var i=0;i<camera_number;i++)
 		this.camera_object_parameter[i]={
-			component_id		:	camera_component_id[i],
+			component_id		:	0,
 			distance			:	1.0,
 			half_fovy_tanl		:	1.0,
 			near_value_ratio	:	0.10,
@@ -11,8 +12,6 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 			projection_type_flag:	false,
 			light_camera_flag	:	false
 		}
-	
-	this.camera_render_parameter=new Array();
 	this.component_location_data=my_component_location_data;
 	this.computer				=my_computer;
 	
@@ -21,10 +20,6 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 		for(var i=0,ni=this.camera_object_parameter.length;i<ni;i++)
 			this.camera_object_parameter[i]	=null;
 		this.camera_object_parameter		=null;
-		
-		for(var i=0,ni=this.camera_render_parameter.length;i<ni;i++)
-			this.camera_render_parameter[i]	=null;
-		this.camera_render_parameter		=null;
 		
 		this.component_location_data				=null;
 		this.computer								=null;
@@ -37,65 +32,35 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 		this.compute_camera_data					=null;	
 	}
 	
-	this.modify_camera_data=function(render_buffer_id,camera_data_from_server)
+	this.modify_camera_data=function(camera_data)
 	{
-		var all_camera_data		=camera_data_from_server[0];
-		var current_camera_data	=camera_data_from_server[1];
-		
-		for(var i=0,ni=all_camera_data.length;i<ni;i++){
-			var camera_id			=all_camera_data[i][0];
-			var parameter_type_id	=all_camera_data[i][1];
-			var parameter_value		=all_camera_data[i][2];
-			switch(parameter_type_id){
+		for(var i=0,ni=camera_data.length;i<ni;){
+			var camera_id=camera_data[i++];
+			var type_id=camera_data[i++];
+			var p=this.camera_object_parameter[camera_id];
+			
+			switch(type_id){
 			case 0:
-				this.camera_object_parameter[camera_id].distance=parameter_value;
-				break;
+				p.component_id			=camera_data[i++];						break;
 			case 1:
-				this.camera_object_parameter[camera_id].half_fovy_tanl=parameter_value;
-				break;
+				p.distance				=camera_data[i++];						break;
 			case 2:
-				this.camera_object_parameter[camera_id].near_value_ratio=parameter_value;
-				break;
+				p.half_fovy_tanl		=camera_data[i++];						break;
 			case 3:
-				this.camera_object_parameter[camera_id].far_value_ratio=parameter_value;
-				break;
+				p.near_value_ratio		=camera_data[i++];						break;
 			case 4:
-				this.camera_object_parameter[camera_id].projection_type_flag=(parameter_value>0.5)?true:false;
-				break;
+				p.far_value_ratio		=camera_data[i++];						break;
 			case 5:
-				this.camera_object_parameter[camera_id].light_camera_flag=(parameter_value>0.5)?true:false;
-				break;
+				p.projection_type_flag	=(camera_data[i++]>0.5)?true:false;		break;
+			case 6:
+				p.light_camera_flag		=(camera_data[i++]>0.5)?true:false;		break;
 			}
 		}
-		if(typeof(this.camera_render_parameter[render_buffer_id])=="undefined")
-			this.camera_render_parameter[render_buffer_id]=new Object();
-		
-		for(var i=0,ni=current_camera_data.length;i<ni;i++){
-			switch(current_camera_data[i][0]){
-			case 0:
-				this.camera_render_parameter[render_buffer_id].camera_id=current_camera_data[i][1];
-				break;
-			case 1:
-				var view_volume_box=current_camera_data[i];
-				view_volume_box=[	
-					[	view_volume_box[1],	view_volume_box[2],	view_volume_box[3],	1],
-					[	view_volume_box[4],	view_volume_box[5],	view_volume_box[6],	1]
-				];
-				this.camera_render_parameter[render_buffer_id].view_volume_box=view_volume_box;
-				break;
-			case 2:
-				this.camera_render_parameter[render_buffer_id].mirror_change_matrix	=
-					(current_camera_data[i].length<=1)?null:
-						this.computer.project_to_plane_location(
-							current_camera_data[i][1],current_camera_data[i][2],
-							current_camera_data[i][3],current_camera_data[i][4],2.0);
-				break;
-			}
-		}
-	};
-	this.compute_frustem_projection_matrix=function(render_buffer_id)
+	}
+	
+	this.compute_frustem_projection_matrix=function(camera_render_parameter)
 	{
-		var camera_id			=this.camera_render_parameter[render_buffer_id].camera_id;
+		var camera_id			=camera_render_parameter.camera_id;
 		
 		var camera_distance		=this.camera_object_parameter[camera_id].distance;
 		var near_value_ratio	=this.camera_object_parameter[camera_id].near_value_ratio;
@@ -158,9 +123,9 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 			]
 		};
 	};
-	this.compute_orthographic_projection_matrix=function(render_buffer_id)
+	this.compute_orthographic_projection_matrix=function(camera_render_parameter)
 	{
-		var camera_id		=this.camera_render_parameter[render_buffer_id].camera_id;
+		var camera_id		=camera_render_parameter.camera_id;
 		var camera_distance	=this.camera_object_parameter[camera_id].distance;
 		var near_value_ratio=this.camera_object_parameter[camera_id].near_value_ratio;
 		var far_value_ratio	=this.camera_object_parameter[camera_id].far_value_ratio;
@@ -221,9 +186,9 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 			]
 		};
 	};
-	this.compute_screen_move_matrix=function(render_buffer_id)
+	this.compute_screen_move_matrix=function(camera_render_parameter)
 	{
-		var view_volume_box=this.camera_render_parameter[render_buffer_id].view_volume_box;
+		var view_volume_box=camera_render_parameter.view_volume_box;
 		var x0=view_volume_box[0][0],y0=view_volume_box[0][1],z0=view_volume_box[0][2];
 		var x1=view_volume_box[1][0],y1=view_volume_box[1][1],z1=view_volume_box[1][2];
 		var dx=x1-x0,dy=y1-y0,dz=z1-z0;
@@ -246,13 +211,13 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 		};
 	};
 
-	this.compute_lookat_matrix=function(render_buffer_id)
+	this.compute_lookat_matrix=function(camera_render_parameter)
 	{
-		var camera_id			=this.camera_render_parameter[render_buffer_id].camera_id;
+		var camera_id			=camera_render_parameter.camera_id;
 		var camera_component_id	=this.camera_object_parameter[camera_id].component_id;
 		var camera_location		=this.component_location_data.get_component_location_routine(camera_component_id);
 		var camera_distance		=this.camera_object_parameter[camera_id].distance;
-		var mirror_change_matrix=this.camera_render_parameter[render_buffer_id].mirror_change_matrix;
+		var mirror_change_matrix=camera_render_parameter.mirror_change_matrix;
 
 		var lookat_matrix;
 		
@@ -283,14 +248,13 @@ function construct_camera_object(camera_component_id,my_component_location_data,
 			camera_location	:	camera_location
 		};
 	};
-	
-	this.compute_camera_data=function(render_buffer_id)
+	this.compute_camera_data=function(camera_render_parameter)
 	{	
-		var camera_id						=this.camera_render_parameter[render_buffer_id].camera_id;
-		var screen_move_matrix				=this.compute_screen_move_matrix(render_buffer_id);	
-		var frustem_projection_matrix		=this.compute_frustem_projection_matrix(render_buffer_id);
-		var orthographic_projection_matrix	=this.compute_orthographic_projection_matrix(render_buffer_id);
-		var lookat_matrix					=this.compute_lookat_matrix(render_buffer_id);
+		var camera_id						=camera_render_parameter.camera_id;
+		var screen_move_matrix				=this.compute_screen_move_matrix(camera_render_parameter);	
+		var frustem_projection_matrix		=this.compute_frustem_projection_matrix(camera_render_parameter);
+		var orthographic_projection_matrix	=this.compute_orthographic_projection_matrix(camera_render_parameter);
+		var lookat_matrix					=this.compute_lookat_matrix(camera_render_parameter);
 
 		var project_matrix=new  Object();
 

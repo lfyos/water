@@ -26,11 +26,9 @@ public class client_information
 	public render_target_container			target_container;
 	
 	public component_collector 				display_component_collector;
-	public component_collector 				selection_component_collector;
 	public ArrayList<component_collector> 	target_component_collector_list;
 	
 	public camera_result					display_camera_result;
-	public camera_result					selection_camera_result;
 	public ArrayList<camera_result>			target_camera_result_list;
 	
 	public plane							clip_plane;
@@ -91,11 +89,6 @@ public class client_information
 			display_component_collector=null;
 		}
 		
-		if(selection_component_collector!=null) {
-			selection_component_collector.destroy();
-			selection_component_collector=null;
-		}
-		
 		if(target_component_collector_list!=null) {
 			component_collector cc;
 			for(int i=0,ni=target_component_collector_list.size();i<ni;i++)
@@ -109,12 +102,6 @@ public class client_information
 			display_camera_result.destroy();
 			display_camera_result=null;
 		}
-		
-		if(selection_camera_result!=null) {
-			selection_camera_result.destroy();
-			selection_camera_result=null;
-		}
-		
 		if(target_camera_result_list!=null) {
 			camera_result cr;
 			for(int i=0,ni=target_camera_result_list.size();i<ni;i++)
@@ -262,11 +249,6 @@ public class client_information
 		}
 		return;
 	}
-	public void clear_target_buffer(int target_id)
-	{
-		render_buffer.target_buffer.clear_buffer(target_id);
-	}
-	
 	public client_information(client_request_response my_request_response,client_process_bar my_process_bar,
 			engine_kernel ek,user_statistics my_statistics_user,engine_statistics my_statistics_engine)
 	{
@@ -288,17 +270,15 @@ public class client_information
 		target_container				=new render_target_container();
 		
 		display_component_collector		=null;
-		selection_component_collector	=null;
 		target_component_collector_list=new ArrayList<component_collector>();
 
-		render_target rt=new render_target("default_render_target",-1,
-				0,0,new component[] {ek.component_cont.root_component},
-				null,null,0,0,1,null,null,true,false,true,true);
-		rt.main_display_target_flag=true;
+		render_target rt=new render_target(
+				ek.component_cont.root_component.component_id,0,0,
+				new component[] {ek.component_cont.root_component},new int[] {0},
+				0,0,null,null,null,true,true,true);
 	
 		display_camera_result		=new camera_result(ek.camera_cont.get(rt.camera_id),rt,ek.component_cont);
-		selection_camera_result		=display_camera_result;
-		target_camera_result_list	=new ArrayList<camera_result>();	
+		target_camera_result_list	=new ArrayList<camera_result>();
 		
 		clip_plane			=null;
 		

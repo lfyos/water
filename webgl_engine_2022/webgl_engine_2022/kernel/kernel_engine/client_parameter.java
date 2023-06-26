@@ -107,26 +107,6 @@ public class client_parameter
 					continue;
 				ci.not_acknowledge_render_part_id[render_id][part_id]=false;
 			}
-
-		if((str=ci.request_response.get_parameter("data_time"))==null)
-			ci.statistics_client.data_time_length=1;
-		else if((ci.statistics_client.data_time_length=1000000*Long.decode(str))<=0)
-			ci.statistics_client.data_time_length=1;
-		
-		if((str=ci.request_response.get_parameter("render_time"))==null)
-			ci.statistics_client.render_time_length=1;
-		else if((ci.statistics_client.render_time_length=1000000*Long.decode(str))<=0)
-			ci.statistics_client.render_time_length=1;
-
-		if((str=ci.request_response.get_parameter("read_time"))==null)
-			ci.statistics_client.read_time_length=1;
-		else if((ci.statistics_client.read_time_length=1000000*Long.decode(str))<=0)
-			ci.statistics_client.read_time_length=1;
-
-		if((str=ci.request_response.get_parameter("render_interval"))==null)
-			ci.statistics_client.render_interval_length=1;
-		else if((ci.statistics_client.render_interval_length=1000000*Long.decode(str))<=0)
-			ci.statistics_client.render_interval_length=1;
 		
 		switch(((str=ci.request_response.get_parameter("precision"))==null)?"":(str.toLowerCase())) {
 		default:

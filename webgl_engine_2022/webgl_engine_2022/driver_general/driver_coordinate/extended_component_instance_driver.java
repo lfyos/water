@@ -11,7 +11,6 @@ import kernel_part.part;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
-	private long 	do_selection_version;
 	private boolean	abandon_camera_display_flag,abandon_selected_display_flag;
 	
 	private int register_coordinate(
@@ -44,7 +43,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		super(my_comp,my_driver_id);
 		
-		do_selection_version=0;
 		abandon_camera_display_flag=my_abandon_camera_display_flag;
 		abandon_selected_display_flag=my_abandon_selected_display_flag;
 	}
@@ -53,11 +51,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
-		if(ek.do_selection_version!=do_selection_version){
-			do_selection_version=ek.do_selection_version;
-			comp.driver_array.get(driver_id).update_component_render_version();
-		}
-		return (cr.target.framebuffer_width<=0)?false:(cr.target.framebuffer_width<=0)?false:true;
+		return cr.target.main_display_target_flag?false:true;
 	}
 	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{

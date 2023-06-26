@@ -26,7 +26,7 @@ public class system_parameter
 	
 	public int response_block_size;
 	
-	public long engine_expire_time_length,engine_touch_time_length,download_start_time_length,download_minimal_time_length;
+	public long engine_expire_time_length,engine_touch_time_length;
 	
 	public int create_engine_concurrent_number;
 	public double create_engine_sleep_time_length_scale;
@@ -75,8 +75,6 @@ public class system_parameter
 		
 		engine_expire_time_length		=sp.engine_expire_time_length;
 		engine_touch_time_length		=sp.engine_touch_time_length;
-		download_start_time_length		=sp.download_start_time_length;
-		download_minimal_time_length	=sp.download_minimal_time_length;
 		
 		create_engine_concurrent_number			=sp.create_engine_concurrent_number;
 		create_engine_sleep_time_length_scale	=sp.create_engine_sleep_time_length_scale;
@@ -220,8 +218,6 @@ public class system_parameter
 		
 		engine_expire_time_length				=f.get_long();
 		engine_touch_time_length				=f.get_long();
-		download_start_time_length				=f.get_long();
-		download_minimal_time_length			=f.get_long();
 		
 		create_engine_concurrent_number			=f.get_int();
 		create_engine_sleep_time_length_scale	=f.get_double();

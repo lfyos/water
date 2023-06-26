@@ -57,8 +57,7 @@ public class dispatch_request_main
 			return null;
 		}
 	}
-	static public String[] get_engine_result(long delay_time_length,
-			engine_kernel ek,client_information ci)
+	static public String[] get_engine_result(long delay_time_length,engine_kernel ek,client_information ci)
 	{
 		ek.current_time.refresh_timer();
 		String ret_val[]=get_engine_result_routine(delay_time_length,ek,ci);

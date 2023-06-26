@@ -278,8 +278,4 @@ public class camera_result
 	{
 		return target.get_render_buffer_id(ci.parameter.high_or_low_precision_flag);
 	}
-	public double []caculate_view_coordinate(client_information ci)
-	{
-		return target.caculate_view_coordinate(ci.parameter.x,ci.parameter.y);
-	}
 }
