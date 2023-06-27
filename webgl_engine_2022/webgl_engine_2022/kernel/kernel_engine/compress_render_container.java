@@ -48,14 +48,9 @@ public class compress_render_container
 			}
 			public create_sorted_part()
 			{
-				int part_number=ret_val.size();
-				data_array=new part[part_number];
-				for(int i=0;i<part_number;i++)
-					data_array[i]=ret_val.get(i);
-				
+				data_array=ret_val.toArray(new part[ret_val.size()]);
 				do_sort();
-	
-				for(int i=0;i<part_number;i++)
+				for(int i=0,ni=data_array.length;i<ni;i++)
 					ret_val.set(i,data_array[i]);
 			}
 		};

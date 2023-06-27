@@ -18,8 +18,6 @@ public class system_parameter
 	public String local_data_charset,network_data_charset;
 	public String text_class_charset,text_jar_file_charset,js_class_charset,js_jar_file_charset;
 	
-	public long system_terminate_time;
-	
 	public String user_file_name,shader_file_name,default_parameter_directory;
 	
 	public int normal_loading_number,max_loading_number,max_material_id;
@@ -60,8 +58,6 @@ public class system_parameter
 		text_jar_file_charset			=new String(sp.text_jar_file_charset);
 		js_class_charset				=new String(sp.js_class_charset);
 		js_jar_file_charset				=new String(sp.js_jar_file_charset);
-		
-		system_terminate_time			=sp.system_terminate_time;
 		
 		user_file_name					=new String(sp.user_file_name);
 		shader_file_name				=new String(sp.shader_file_name);
@@ -175,9 +171,7 @@ public class system_parameter
 			js_jar_file_charset=Charset.defaultCharset().name();
 		if(js_jar_file_charset.compareTo("default_charset")==0)
 			js_jar_file_charset=Charset.defaultCharset().name();
-		
-		system_terminate_time=Long.MAX_VALUE;
-		
+
 		if((user_file_name=f.get_string())==null)
 			user_file_name="";
 		else

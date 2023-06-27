@@ -9,7 +9,6 @@ import kernel_buffer.component_render;
 import kernel_buffer.part_mesh_loader;
 import kernel_engine.client_information;
 import kernel_file_manager.file_directory;
-import kernel_common_class.nanosecond_timer;
 import kernel_component.component_collector;
 import kernel_component.component_link_list;
 import kernel_buffer.component_render_buffer;
@@ -27,8 +26,6 @@ public class response_render_component_request
 	{	
 		component_render ren_buf;
 		
-		long start_time=nanosecond_timer.absolute_nanoseconds();
-
 		int pps[][]=ek.process_part_sequence.process_parts_sequence;
 		int id_array[][][][]=ek.component_cont.part_component_id_and_driver_id;
 		component_render_buffer	buffer=ci.render_buffer.component_buffer;
@@ -40,7 +37,7 @@ public class response_render_component_request
 					ren_buf.clear_clip_flag(ek.component_cont);
 		}
 		
-		component_collector list_result=(new list_component_on_collector(true,false,
+		component_collector list_result=(new list_component_on_collector(false,
 			rt.do_discard_lod_flag,rt.do_selection_lod_flag,false,true,ek,ci,cam_result)).collector;
 		
 		long current_time=ek.current_time.nanoseconds();
@@ -59,11 +56,9 @@ public class response_render_component_request
 		render_data_list.add(render_data_list.size(),
 				new response_render_data(render_buffer_id,list_result,cam_result));
 		
-		ci.statistics_client.collect_time_length+=nanosecond_timer.absolute_nanoseconds()-start_time;
-		
 		return list_result;
 	}
-	private static void process_target(engine_kernel ek,client_information ci)
+	private static void process_target(engine_kernel ek,client_information ci,render_component_counter rcc)
 	{
 		int target_number=ci.target_container.get_render_target_number();
 		for(int pos;(pos=ci.target_component_collector_list.size())<target_number;){
@@ -115,7 +110,7 @@ public class response_render_component_request
 		}
 		ci.request_response.print("]");
 		
-		response_component_render_parameter.response(render_data_list,ek,ci);
+		response_component_render_parameter.response(render_data_list,ek,ci,rcc);
 	}
 	private static void response_parameter(engine_kernel ek,client_information ci,long delay_time_length)
 	{
@@ -284,11 +279,6 @@ public class response_render_component_request
 	}
 	public static void do_render(engine_kernel ek,client_information ci,long delay_time_length)
 	{
-		ci.statistics_client.transportation_time_length=ci.request_response.request_time-ci.statistics_client.last_access_time;
-		if(ci.statistics_client.transportation_time_length<=0)
-			ci.statistics_client.transportation_time_length=1;
-		ci.statistics_client.caculate_time_length=nanosecond_timer.absolute_nanoseconds()-ci.request_response.request_time;	
-
 		int my_loading_request_number=0,max_loading_request_number=ek.system_par.max_loading_number,index_id;
 		String str;
 		if((str=ci.request_response.get_parameter("requesting_number"))!=null)
@@ -304,24 +294,18 @@ public class response_render_component_request
 
 		display_data_load_message(ek,ci);
 
-		ci.statistics_client.start(delay_time_length,my_loading_request_number);
+		render_component_counter rcc=new render_component_counter();
 				
 		ci.request_response.print("[");
 		
 		response_parameter(ek,ci,delay_time_length);
-		process_target(ek,ci);
-		new response_component_buffer_parameter(ek,ci);
+		process_target(ek,ci,rcc);
+		new response_component_buffer_parameter(ek,ci,rcc);
 		ci.render_buffer.cam_buffer.response_camera_buffer_data(ci,ek.camera_cont);
-		ci.render_buffer.location_buffer.response_location(ek,ci);
+		ci.render_buffer.location_buffer.response_location(ek,ci,rcc);
 		response_buffer_object_request(ek,ci,my_loading_request_number,max_loading_request_number);
 		
 		ci.request_response.print("]");
-		
-		long my_current_time=nanosecond_timer.absolute_nanoseconds();
-		
-		ci.statistics_client.all_time_length	=my_current_time-ci.statistics_client.last_access_time;
-		ci.statistics_client.last_access_time	=my_current_time;
-		ci.statistics_client.render_data_length	=ci.request_response.output_data_length;
 
 		return;
 	}

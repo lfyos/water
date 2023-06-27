@@ -10,6 +10,9 @@ import kernel_network.client_request_response;
 
 import kernel_transformation.box;
 import kernel_transformation.point;
+
+import java.util.ArrayList;
+
 import kernel_common_class.debug_information;
 import kernel_common_class.jason_string;
 import kernel_component.component;
@@ -210,7 +213,7 @@ public class part
 
 		head_fw.println("\t],");
 		
-		head_fw.println("\t\"property\"\t\t:\t");
+		head_fw.println("\t\"property\"\t\t:");
 		head_fw.println("\t{");
 		head_fw.println("\t\t\"normal_part_flag\"\t\t\t\t\t:\t",	is_normal_part()	?"true,":"false,");
 		head_fw.println("\t\t\"bottom_box_flag\"\t\t\t\t\t:\t",		is_bottom_box_part()?"true,":"false,");
@@ -256,7 +259,21 @@ public class part
 			p_i.destroy();
 		}
 		
-		head_fw.println("\t}");
+		head_fw.println("\t},");
+		
+		head_fw.println("\t\"item_ids\"\t\t:");
+		head_fw.println("\t[");
+		
+		ArrayList<int[]> part_item_ids=part_mesh.id_manager.get_list();
+		for(int id_array[],i=0,ni=part_item_ids.size();i<ni;i++) {
+			if((id_array=part_item_ids.get(i))==null)
+				id_array=new int[] {};
+			head_fw.print("\t\t[",i);
+			for(int j=0,nj=id_array.length;j<nj;j++)
+				head_fw.print(",",id_array[j]);
+			head_fw.println((i<(ni-1))?"],":"]");
+		}
+		head_fw.println("\t]");
 		
 		head_fw.print  ("}");
 		

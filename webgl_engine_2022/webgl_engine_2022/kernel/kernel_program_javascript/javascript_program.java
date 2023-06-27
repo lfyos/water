@@ -17,8 +17,8 @@ public class javascript_program
 	{
 		"call_server.js",		"camera.js",			"collector_loader.js",					"component_location.js",
 		"component_render.js",	"computer.js",			"download_vertex_data.js",				"draw_scene.js",
-		"event_listener.js",	"framebuffer.js",		"init_ids_of_part_and_component.js",	"manipulate_component_event.js",
-		"modifier_time.js",		"pickup.js",			"process_bar.js",						"render_main.js",
+		"event_listener.js",	"framebuffer.js",		"init_ids_of_part_and_component.js",	"modifier_time.js",
+		"operate_component.js",	"pickup.js",			"process_bar.js",						"render_main.js",
 		"render.js",			"system_buffer.js",		"utility.js",							"webgpu.js"
 	};
 	

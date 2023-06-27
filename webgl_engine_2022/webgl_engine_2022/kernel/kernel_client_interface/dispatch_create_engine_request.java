@@ -132,10 +132,8 @@ public class dispatch_create_engine_request
 		return;
 	}
 	
-	static public void do_dispatch(int main_call_id,engine_kernel ek,client_information ci)
+	static public void do_dispatch(engine_kernel ek,client_information ci)
 	{
-		ci.statistics_client.register_system_call_execute_number(main_call_id,0);
-
 		ci.request_response.print("[ "+ci.channel_id+" ,");				//parameter	0
 		
 		do_response_init_render_data(ek,ci);							//parameter	1

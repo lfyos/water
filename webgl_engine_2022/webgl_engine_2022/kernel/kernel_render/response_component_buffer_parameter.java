@@ -17,7 +17,7 @@ public class response_component_buffer_parameter
 	
 	private component_instance_driver test_should_response_parameter(
 			component_link_list cll,long current_touch_time,
-			engine_kernel ek,client_information ci,int should_increase)
+			engine_kernel ek,client_information ci,render_component_counter rcc,int should_increase)
 	{
 		component_instance_driver in_dr;
 		if((in_dr=ci.component_instance_driver_cont.get_component_instance_driver(cll.comp,cll.driver_id))==null)
@@ -28,8 +28,7 @@ public class response_component_buffer_parameter
 		if(old_parameter_version==new_parameter_version)
 			return null;
 		
-		ci.statistics_client.should_update_component_parameter_number+=should_increase;
-		if(ci.statistics_client.update_component_parameter_number<ek.scene_par.most_update_parameter_number)
+		if(rcc.update_component_parameter_number<ek.scene_par.most_update_parameter_number)
 			return in_dr;
 		if((current_touch_time-cll.comp.uniparameter.touch_time)<=ek.scene_par.touch_time_length)
 			return in_dr;
@@ -38,10 +37,11 @@ public class response_component_buffer_parameter
 				return in_dr;
 		return null;
 	}
-	private void response(int render_id,int part_id,component_link_list cll,response_flag create_flag)
+	private void response(int render_id,int part_id,component_link_list cll,
+			response_flag create_flag,render_component_counter rcc)
 	{
 		for(component_instance_driver in_dr;cll!=null;cll=cll.next_list_item) {
-			if((in_dr=test_should_response_parameter(cll,current_touch_time,ek,ci,0))==null)
+			if((in_dr=test_should_response_parameter(cll,current_touch_time,ek,ci,rcc,0))==null)
 				continue;
 			part my_part=cll.comp.driver_array.get(cll.driver_id).component_part;
 			
@@ -74,12 +74,12 @@ public class response_component_buffer_parameter
 			}
 			ci.request_response.print("]");
 			
-			ci.statistics_client.update_component_parameter_number++;
+			rcc.update_component_parameter_number++;
 			in_dr.update_component_parameter_version(
 					cll.comp.driver_array.get(cll.driver_id).get_component_parameter_version());
 		}	
 	}
-	public response_component_buffer_parameter(	engine_kernel my_ek,client_information my_ci)
+	public response_component_buffer_parameter(	engine_kernel my_ek,client_information my_ci,render_component_counter rcc)
 	{
 		ek=my_ek;
 		ci=my_ci;
@@ -96,7 +96,7 @@ public class response_component_buffer_parameter
 			for(int j=0,nj=ci.target_component_collector_list.size();j<nj;j++)	
 				if((collector=ci.target_component_collector_list.get(j))!=null)
 					response(render_id,part_id,
-						collector.component_collector[render_id][part_id],create_flag);
+						collector.component_collector[render_id][part_id],create_flag,rcc);
 		}
 		ci.request_response.print("]");
 	}

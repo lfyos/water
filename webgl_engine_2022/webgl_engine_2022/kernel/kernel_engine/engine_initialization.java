@@ -273,9 +273,9 @@ public class engine_initialization
 						fw.println("],");
 					}
 					part p=r.parts.get(part_id);
-					fw.println("			",Integer.toString(p.permanent_render_id)+",");
-					fw.println("			",Integer.toString(p.permanent_part_id));
-					fw.println((part_id==(part_number-1))?"		]":"		],");
+					fw.	print  ("			",p.permanent_render_id).println(",").
+						println("			",p.permanent_part_id).
+						println((part_id==(part_number-1))?"		]":"		],");
 				}
 				fw.println();
 				fw.println((render_id==(render_number-1))?"	]":"	],");	

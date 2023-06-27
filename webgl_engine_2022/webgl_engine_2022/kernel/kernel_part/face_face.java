@@ -1,9 +1,11 @@
 package kernel_part;
 
+import kernel_common_class.system_id;
+import kernel_common_class.system_id_manager;
 import kernel_file_manager.file_reader;
 import kernel_transformation.box;
 
-public class face_face 
+public class face_face  extends system_id
 {
 	public void destroy()
 	{
@@ -22,8 +24,10 @@ public class face_face
 	
 	public box face_face_box;
 
-	public face_face(file_reader fr)
+	public face_face(file_reader fr,system_id_manager id_manager,int id_array[])
 	{
+		super(id_manager,id_array);
+		
 		String str;
 		
 		if((face_type=fr.get_string())==null)
@@ -54,8 +58,10 @@ public class face_face
 		return;
 	}
 	
-	public face_face(face_face s)
+	public face_face(face_face s,system_id_manager id_manager,int id_array[])
 	{
+		super(id_manager,id_array);
+
 		face_type=s.face_type;
 		face_parameter=s.face_parameter;
 		
@@ -64,8 +70,10 @@ public class face_face
 		
 		face_face_box=s.face_face_box;
 	}
-	public face_face(box b,int my_attribute_number)
+	public face_face(box b,int my_attribute_number,system_id_manager id_manager,int id_array[])
 	{
+		super(id_manager,id_array);
+	
 		face_type="unknown";
 		face_parameter=null;
 		

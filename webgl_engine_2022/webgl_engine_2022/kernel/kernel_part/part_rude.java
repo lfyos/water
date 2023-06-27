@@ -1,5 +1,6 @@
 package kernel_part;
 
+import kernel_common_class.system_id_manager;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_transformation.box;
@@ -17,6 +18,8 @@ public class part_rude
 				}
 			body_array=null;
 		}
+		if(id_manager!=null)
+			id_manager=null;
 	}
 	public void destroy()
 	{
@@ -41,6 +44,8 @@ public class part_rude
 	public body body_array[];
 	public box part_box;
 	public int total_face_primitive_number,total_edge_primitive_number,total_point_primitive_number;
+	
+	public system_id_manager id_manager;
 
 	public int body_number()
 	{
@@ -71,6 +76,8 @@ public class part_rude
 	}
 	public part_rude(part_rude s)
 	{
+		id_manager=new system_id_manager();
+		
 		origin_vertex_extra_data	=s.origin_vertex_extra_data;
 		origin_material				=s.origin_material;
 		default_material			=s.default_material;
@@ -85,7 +92,7 @@ public class part_rude
 		else{
 			body_array=new body[body_number];
 			for(int i=0;i<body_number;i++)
-				body_array[i]=new body(s.body_array[i]);
+				body_array[i]=new body(s.body_array[i],id_manager,new int[]{0,i});
 		}
 		
 		if((part_box=s.part_box)!=null)
@@ -97,6 +104,8 @@ public class part_rude
 	}
 	public part_rude(file_reader fr)
 	{
+		id_manager=new system_id_manager();
+		
 		String default_value="0";
 		
 		String version_string=fr.get_string();	//version code
@@ -132,7 +141,7 @@ public class part_rude
 			if((default_attribute_string[j]=fr.get_string())==null)
 				default_attribute_string[j]="1";
 		}
-		
+			
 		if(version_string.compareTo("simple")==0) {
 			body_array=null;
 			fr.mark_start();
@@ -149,6 +158,8 @@ public class part_rude
 			total_face_primitive_number	=fr.get_int();
 			total_edge_primitive_number	=fr.get_int();
 			total_point_primitive_number=fr.get_int();
+			
+			
 		}else {
 			int my_body_number;
 			if((my_body_number=fr.get_int())<=0)
@@ -156,7 +167,7 @@ public class part_rude
 			else{
 				body_array=new body[my_body_number];
 				for(int i=0;i<my_body_number;i++)
-					body_array[i]=new body(fr);
+					body_array[i]=new body(fr,id_manager,new int[] {0,i});
 			}
 			caculate_rp_box_and_primitive_number();
 		}
@@ -164,6 +175,8 @@ public class part_rude
 	}
 	public part_rude(int my_box_number,part my_reference_part[],location my_box_loca[],box my_box_array[])
 	{
+		id_manager=new system_id_manager();
+		
 		double max_distance_2=my_box_array[0].distance2();
 		int max_index_id=0;
 		for(int i=0;i<my_box_number;i++){
@@ -202,7 +215,11 @@ public class part_rude
 						default_attribute_double[j]=pr.default_attribute_double[j];
 				}
 			}
-		body_array=new body[]{new body(my_box_number,my_reference_part,my_box_loca,my_box_array)};
+		body_array=new body[]
+			{
+				new body(my_box_number,my_reference_part,
+						my_box_loca,my_box_array,id_manager,new int[]{0,0})
+			};
 		caculate_rp_box_and_primitive_number();
 		return;
 	}
@@ -244,6 +261,7 @@ public class part_rude
 		fw.println("/*	total_face_primitive_number			*/	",total_face_primitive_number);
 		fw.println("/*	total_edge_primitive_number			*/	",total_edge_primitive_number);
 		fw.println("/*	total_point_primitive_number		*/	",total_point_primitive_number);
+		fw.println();
 		
 		return;
 	}

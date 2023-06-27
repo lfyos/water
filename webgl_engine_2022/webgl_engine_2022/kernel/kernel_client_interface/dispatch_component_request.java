@@ -10,8 +10,7 @@ import kernel_render.response_render_component_request;
 
 public class dispatch_component_request
 {
-	static public String[] do_dispatch(int main_call_id,
-			long delay_time_length,engine_kernel ek,client_information ci)
+	static public String[] do_dispatch(long delay_time_length,engine_kernel ek,client_information ci)
 	{
 		String str;
 		component comp;
@@ -27,7 +26,6 @@ public class dispatch_component_request
 				"unknown method is in component_request_dispatch of dispatch_component_request\t:\t",str);
 			return null;
 		case "update_render":
-			ci.statistics_client.register_system_call_execute_number(main_call_id,0);
 			ci.parameter.get_call_parameter(ek,ci);
 			
 			for(int i=0,ni=ek.modifier_cont.length;i<ni;i++)
@@ -36,8 +34,6 @@ public class dispatch_component_request
 			response_render_component_request.do_render(ek,ci,delay_time_length);
 			return null;
 		case "event":
-			ci.statistics_client.register_system_call_execute_number(main_call_id,1);
-			
 			for(int i=0,ni=ek.modifier_cont.length;i<ni;i++)
 				ek.modifier_cont[i].process(ek,ci,false);
 			
@@ -73,7 +69,6 @@ public class dispatch_component_request
 					debug_information.println("Request end_driver_id is\t:\t",end_driver_id);
 					return null;
 				}
-				ci.statistics_client.register_component_response_execute_number(comp.component_id);
 				String ret_val[]=null;
 				for(int driver_id=end_driver_id;driver_id>=begin_driver_id;driver_id--){
 					component_instance_driver in_dr;
@@ -136,7 +131,6 @@ public class dispatch_component_request
 					debug_information.println("Request end_driver_id is\t:\t",end_driver_id);
 					return null;
 				}
-				ci.statistics_client.register_component_response_execute_number(comp.component_id);
 				String ret_val[]=null;
 				for(int driver_id=end_driver_id;driver_id>=begin_driver_id;driver_id--){
 					component_instance_driver in_dr;

@@ -17,7 +17,7 @@ import kernel_information.component_collector_of_target_information;
 
 public class dispatch_information_request
 {
-	public static String[] do_dispatch(int main_call_id,engine_kernel ek,client_information ci)
+	public static String[] do_dispatch(engine_kernel ek,client_information ci)
 	{
 		String str;
 		component_collector cc;
@@ -26,21 +26,9 @@ public class dispatch_information_request
 			str="engine";
 		switch(str) {
 		case "engine":
-			ci.statistics_client.register_system_call_execute_number(main_call_id,0);
-			if((str=ci.request_response.get_parameter("operation"))==null)
-				str="get";
-			switch(str) {
-			case "reset":
-				ci.statistics_client.clear();
-				ci.statistics_engine.clear();
-			case "get":
-				break;
-			}
-			
 			(new engine_information(ek,ci)).output();
 			break;
 		case "part":
-			ci.statistics_client.register_system_call_execute_number(main_call_id,1);
 			if((str=ci.request_response.get_parameter("operation"))==null)
 				str="sequence";
 			switch(str) {
@@ -56,7 +44,6 @@ public class dispatch_information_request
 			}
 			break;
 		case "component":
-			ci.statistics_client.register_system_call_execute_number(main_call_id,2);
 			if((str=ci.request_response.get_parameter("operation"))==null)
 				str="selected";
 			if(ek.component_cont.root_component!=null)
@@ -73,7 +60,6 @@ public class dispatch_information_request
 				}
 			break;
 		case "collector":
-			ci.statistics_client.register_system_call_execute_number(main_call_id,3);
 			if((str=ci.request_response.get_parameter("operation"))==null)
 				str="list";
 			switch(str) {
@@ -91,7 +77,6 @@ public class dispatch_information_request
 			}
 			break;
 		case "camera":
-			ci.statistics_client.register_system_call_execute_number(main_call_id,4);
 			(new engine_camera_information(ek,ci)).output();
 			break;
 		}

@@ -3,8 +3,10 @@ package kernel_part;
 import kernel_file_manager.file_reader;
 import kernel_transformation.box;
 import kernel_transformation.location;
+import kernel_common_class.system_id;
+import kernel_common_class.system_id_manager;
 
-public class body
+public class body extends system_id
 {
 	public String name;	
 	public face face_array[];
@@ -26,8 +28,10 @@ public class body
 		name=null;
 		body_box=null;
 	}
-	public body(body s)
+	public body(body s,system_id_manager id_manager,int id_array[])
 	{
+		super(id_manager,id_array);
+		
 		int face_number;
 		name=new String(s.name);
 		if((face_number=s.face_number())<=0)
@@ -35,7 +39,7 @@ public class body
 		else{
 			face_array=new face[face_number];
 			for(int i=0;i<face_number;i++)
-				face_array[i]=new face(s.face_array[i]);
+				face_array[i]=new face(s.face_array[i],id_manager,new int[] {1,id_array[1],i});
 		}
 		body_box=(s.body_box==null)?null:(new box(s.body_box));
 		total_face_primitive_number=s.total_face_primitive_number;
@@ -58,9 +62,10 @@ public class body
 			total_point_primitive_number+=face_array[i].fa_curve.total_point_primitive_number;
 		}
 	}
-	public body(file_reader fr)
-	
+	public body(file_reader fr,system_id_manager id_manager,int id_array[])
 	{
+		super(id_manager,id_array);
+		
 		name=fr.get_string();
 		name=(name==null)?"":name;
 		
@@ -72,17 +77,21 @@ public class body
 		}else{
 			face_array=new face[my_face_number];
 			for(int i=0;i<my_face_number;i++)
-				face_array[i]=new face(fr);
+				face_array[i]=new face(fr,id_manager,new int[] {1,id_array[1],i});
 		}
 		caculate_box_and_primitive_number();
 	}
 	
-	public body(int my_box_number,part my_reference_part[],location my_box_loca[],box my_box_array[])
+	public body(int my_box_number,part my_reference_part[],location my_box_loca[],box my_box_array[],
+			system_id_manager id_manager,int id_array[])
 	{
+		super(id_manager,id_array);
+	
 		name="box_body_with_"+my_box_number+"_faces";	
 		face_array=new face[my_box_number];
 		for(int i=0;i<my_box_number;i++)
-			face_array[i]=new face(my_reference_part[i],my_box_loca[i],my_box_array[i]);
+			face_array[i]=new face(my_reference_part[i],
+				my_box_loca[i],my_box_array[i],id_manager,new int[] {1,id_array[1],i});
 		caculate_box_and_primitive_number();
 	}
 }

@@ -1,7 +1,7 @@
 package kernel_interface;
 
 import kernel_common_class.nanosecond_timer;
-import kernel_engine.engine_statistics;
+import kernel_engine.create_engine_counter;
 import kernel_engine.system_parameter;
 import kernel_common_class.balance_tree;
 import kernel_common_class.balance_tree_item;
@@ -16,10 +16,10 @@ public class client_interface_container
 		
 		public client_interface_balance_tree_node front,back;
 		
-		public void destroy(engine_statistics statistics_engine)
+		public void destroy(create_engine_counter engine_counter)
 		{
 			if(interface_client!=null) {
-				interface_client.destroy(statistics_engine);
+				interface_client.destroy(engine_counter);
 				interface_client=null;
 			}
 			client_id=null;
@@ -44,7 +44,7 @@ public class client_interface_container
 	private balance_tree bt;
 	private client_interface_balance_tree_node first,last;
 	
-	public void destroy(engine_statistics statistics_engine)
+	public void destroy(create_engine_counter engine_counter)
 	{
 		if(bt!=null) {
 			bt.destroy();
@@ -53,16 +53,16 @@ public class client_interface_container
 		while(first!=null) {
 			client_interface_balance_tree_node p=first;
 			first=first.back;
-			p.destroy(statistics_engine);
+			p.destroy(engine_counter);
 		}
 		while(last!=null) {
 			client_interface_balance_tree_node p=last;
 			last=last.front;
-			p.destroy(statistics_engine);
+			p.destroy(engine_counter);
 		}
 	}
 	private void process_timeout(int max_client_interface_number,
-			long client_interface_life_time,engine_statistics statistics_engine)
+			long client_interface_life_time,create_engine_counter engine_counter)
 	{
 		while(first!=null){
 			long time_length=nanosecond_timer.absolute_nanoseconds()-first.interface_client.touch_time;
@@ -88,7 +88,7 @@ public class client_interface_container
 				first=first.back;
 				first.front=null;
 			}
-			p.destroy(statistics_engine);
+			p.destroy(engine_counter);
 		}
 	}
 	private void print_client_interface_information(String my_client_id,int max_client_interface_number)
@@ -101,7 +101,7 @@ public class client_interface_container
 	}
 	private client_interface get_client_interface_routine(
 			String my_user_name, String my_pass_word,String my_client_id,
-			system_parameter my_system_par,engine_statistics statistics_engine)
+			system_parameter my_system_par,create_engine_counter engine_counter)
 	{
 		client_interface_balance_tree_node p,new_p;
 		new_p=new client_interface_balance_tree_node(my_client_id+"/"+my_user_name);
@@ -163,14 +163,14 @@ public class client_interface_container
 	}
 	synchronized public client_interface get_client_interface(
 			system_parameter my_system_par,String my_user_name,String my_pass_word,
-			String my_client_id,engine_statistics statistics_engine)
+			String my_client_id,create_engine_counter engine_counter)
 	{
 		client_interface ret_val=null;
 		try{
 			ret_val=get_client_interface_routine(my_user_name, my_pass_word,
-					my_client_id,my_system_par,statistics_engine);
+					my_client_id,my_system_par,engine_counter);
 			process_timeout(my_system_par.max_client_interface_number,
-					my_system_par.engine_expire_time_length,statistics_engine);
+					my_system_par.engine_expire_time_length,engine_counter);
 		}catch(Exception e) {
 			debug_information.println("get_client_interface exception:\t",e.toString());
 			e.printStackTrace();

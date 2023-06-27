@@ -10,7 +10,6 @@ import kernel_engine.engine_call_result;
 import kernel_engine.system_parameter;
 import kernel_engine.proxy_information;
 import kernel_network.client_request_response;
-import kernel_engine.engine_statistics;
 
 public class proxy_downloader 
 {
@@ -27,8 +26,7 @@ public class proxy_downloader
 	{
 		ufb=new update_file_buffer(); 
 	}
-	public engine_call_result download(client_request_response request_response,
-			system_parameter system_par,engine_statistics statistics_engine)
+	public engine_call_result download(client_request_response request_response,system_parameter system_par)
 	{
 		String request_url=request_response.implementor.get_url();
 		String file_name;
@@ -178,8 +176,6 @@ public class proxy_downloader
 					return null;
 				}
 				f=new File(proxy_file_name);
-				statistics_engine.proxy_request_file_number++;
-				statistics_engine.proxy_request_data_length+=f.length();
 			}
 			proxy_charset_name=proxy_info.proxy_charset_name;
 			cccfn=new caculate_charset_compress_file_name(f,system_par,
@@ -206,9 +202,6 @@ public class proxy_downloader
 				return null;
 			}
 		}
-		
-		statistics_engine.proxy_response_file_number++;
-		statistics_engine.proxy_response_data_length+=f.length();
 		
 		request_response.response_content_type=(cccfn.content_type_str==null)?"text/plain":(cccfn.content_type_str);
 		

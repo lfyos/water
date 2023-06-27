@@ -7,13 +7,11 @@ import kernel_engine.engine_kernel;
 
 public class dispatch_collector_request
 {
-	static public String[] do_dispatch(int main_call_id,engine_kernel ek,client_information ci)
+	static public String[] do_dispatch(engine_kernel ek,client_information ci)
 	{
 		String str;
 		component_collector cc,all_part_list[];
 		boolean simple_list_flag=false,single_collector_flag=false,location_flag=false;
-		
-		ci.statistics_client.register_system_call_execute_number(main_call_id,0);
 		
 		if((str=ci.request_response.get_parameter("simple"))!=null)
 			switch(str.toLowerCase()) {

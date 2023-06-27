@@ -10,7 +10,7 @@ import kernel_component.component_load_source_container;
 import kernel_engine.part_package;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_directory;
-import kernel_engine.engine_statistics;
+import kernel_engine.create_engine_counter;
 import kernel_engine.engine_kernel_container;
 import kernel_network.client_request_response;
 import kernel_part.part;
@@ -94,7 +94,7 @@ public class engine_interface
 	private engine_kernel_container get_kernel_container_routine(
 			client_request_response request_response,
 			String client_scene_file_name,String client_scene_file_charset,
-			engine_statistics statistics_engine,system_parameter system_par)
+			create_engine_counter engine_counter,system_parameter system_par)
 	{
 		String scene_name,link_name,request_charset=request_response.implementor.get_request_charset();
 		if((scene_name=request_response.get_parameter("scene_name"))==null)
@@ -120,9 +120,9 @@ public class engine_interface
 		debug_information.println(request_response.implementor.get_client_id(),"	Create scene");
 		debug_information.print  ("scene_name:	",scene_name);
 		debug_information.println(",link_name:	",link_name);
-		debug_information.print  ("engine_interface engine_kernel_number:	",		statistics_engine.engine_kernel_number);
+		debug_information.print  ("engine_interface engine_kernel_number:	",		engine_counter.engine_kernel_number);
 		debug_information.println("/",system_par.max_engine_kernel_number);
-		debug_information.print  ("engine_interface engine_component_number:	",	statistics_engine.engine_component_number);
+		debug_information.print  ("engine_interface engine_component_number:	",	engine_counter.engine_component_number);
 		debug_information.println("/",system_par.max_engine_component_number);
 		
 		balance_tree_item bti;
@@ -139,15 +139,15 @@ public class engine_interface
 			ekbti.engine_kernel_cont.link_number++;
 			return ekbti.engine_kernel_cont;
 		}
-		if(   (statistics_engine.engine_kernel_number   >=system_par.max_engine_kernel_number)
-			||(statistics_engine.engine_component_number>=system_par.max_engine_component_number))
+		if(   (engine_counter.engine_kernel_number   >=system_par.max_engine_kernel_number)
+			||(engine_counter.engine_component_number>=system_par.max_engine_component_number))
 		{
 			debug_information.print  ("Create too many scenes or components:	",scene_name+"	"+link_name);
 			return null;
 		}
 		if((ekbti.engine_kernel_cont=new engine_kernel_container(scene_name,link_name,
 			request_response,system_par,client_scene_file_name,client_scene_file_charset,
-			original_render,part_loader_cont,statistics_engine)).ek==null)
+			original_render,part_loader_cont,engine_counter)).ek==null)
 		{
 			debug_information.print  ("Create scene fail:	",scene_name+"	"+link_name);
 			return null;
@@ -159,7 +159,7 @@ public class engine_interface
 	}
 	public engine_kernel_container get_kernel_container(client_request_response request_response,
 			String client_scene_file_name,String client_scene_file_charset,
-			engine_statistics statistics_engine,system_parameter system_par)
+			create_engine_counter engine_counter,system_parameter system_par)
 	{
 		engine_kernel_container ret_val=null;
 		client_interface_lock.lock();
@@ -169,7 +169,7 @@ public class engine_interface
 		
 		try {
 			ret_val=get_kernel_container_routine(request_response,
-				client_scene_file_name,client_scene_file_charset,statistics_engine,system_par);
+				client_scene_file_name,client_scene_file_charset,engine_counter,system_par);
 		}catch(Exception e) {
 			debug_information.println("get_kernel_container of engine_interface fail");
 			debug_information.println(e.toString());
@@ -179,7 +179,7 @@ public class engine_interface
 		client_interface_lock.unlock();
 		return ret_val;
 	}
-	public void destroy_scene(String my_scene_name,String my_link_name,engine_statistics statistics_engine)
+	public void destroy_scene(String my_scene_name,String my_link_name,create_engine_counter engine_counter)
 	{
 		client_interface_lock.lock();
 		while(bt!=null) {
@@ -200,12 +200,12 @@ public class engine_interface
 				if(ekbtl.engine_kernel_cont.ek!=null)
 					if(ekbtl.engine_kernel_cont.ek.component_cont!=null)
 						if(ekbtl.engine_kernel_cont.ek.component_cont.root_component!=null)
-							statistics_engine.update_kernel_component_number(-1,
+							engine_counter.update_kernel_component_number(-1,
 									-1-ekbtl.engine_kernel_cont.ek.component_cont.root_component.component_id);
 			ekbtl.destroy();
 			debug_information.println("engine_interface deletes scene,scene_name:	",	ekbtl.scene_name+"	,link_name:	"+ekbtl.link_name);
-			debug_information.println("engine_interface	engine_kernel_number:	",		statistics_engine.engine_kernel_number);
-			debug_information.println("engine_interface	engine_component_number:	",	statistics_engine.engine_component_number);
+			debug_information.println("engine_interface	engine_kernel_number:	",		engine_counter.engine_kernel_number);
+			debug_information.println("engine_interface	engine_component_number:	",	engine_counter.engine_component_number);
 			break;
 		}
 		client_interface_lock.unlock();
@@ -221,7 +221,7 @@ public class engine_interface
 					((engine_kernel_balance_tree_item)bti).destroy();
 		}
 	}
-	public void destroy(engine_statistics statistics_engine)
+	public void destroy(create_engine_counter engine_counter)
 	{
 		ReentrantLock my_client_interface_lock=client_interface_lock;
 		client_interface_lock=null;
@@ -243,8 +243,8 @@ public class engine_interface
 			part_loader_cont.destroy();
 			part_loader_cont=null;
 		}
-		statistics_engine.engine_kernel_number=0;
-		statistics_engine.engine_component_number=0;
+		engine_counter.engine_kernel_number=0;
+		engine_counter.engine_component_number=0;
 		my_client_interface_lock.unlock();
 	}
 	public engine_interface()

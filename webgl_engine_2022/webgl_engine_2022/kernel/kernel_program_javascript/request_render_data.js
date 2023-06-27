@@ -95,18 +95,18 @@ async function request_render_data(render)
 	
 	function parse_target_parameter(response_data,render)
 	{
-		for(var i=0,ni=render.target_processor.length;i<ni;)
-			render.target_processor[i].do_render_number=0;
+		for(var i=0,ni=render.target_array.length;i<ni;)
+			render.target_array[i].do_render_number=0;
 		
 		for(var i=0,ni=response_data.length;i<ni;){
 			var my_render_buffer_id	=response_data[i++];
 			var my_do_render_number	=response_data[i++];
 			var my_data				=response_data[i++];
 			
-			if(typeof(render.target_processor[my_render_buffer_id])!="object")
-				render.target_processor[my_render_buffer_id]=new Object();
+			if(typeof(render.target_array[my_render_buffer_id])!="object")
+				render.target_array[my_render_buffer_id]=new Object();
 			
-			var p=render.target_processor[my_render_buffer_id];
+			var p=render.target_array[my_render_buffer_id];
 			p.render_buffer_id=my_render_buffer_id;
 			p.do_render_number=my_do_render_number;
 			
@@ -115,37 +115,46 @@ async function request_render_data(render)
 				default:
 					break;
 				case 0:
-					p.target_comonent_id=my_data[j++];
+					var my_target_component_id	=my_data[j++];
+					var my_target_driver_id		=my_data[j++];
+					var my_ids=render.component_render_id_and_part_id;
+					my_ids=my_ids[my_target_component_id][my_target_driver_id];
+					
+					p.target_ids={
+						component_id	:	my_target_component_id,
+						driver_id		:	my_target_driver_id,
+						render_id		:	my_ids[0],
+						part_id			:	my_ids[1],
+						buffer_id		:	my_ids[2]
+					};
+					
 					break;
 				case 1:
-					p.target_driver_id=my_data[j++];
-					break;
-				case 2:
 					p.target_texture_id=my_data[j++];
 					break;
-				case 3:
+				case 2:
 					p.camera_id=my_data[j++];
 					break;
-				case 4:
+				case 3:
 					p.view_volume_box=[
 						[	my_data[j++],	my_data[j++],	my_data[j++],1	],
 						[	my_data[j++],	my_data[j++],	my_data[j++],1	]
 					];
 					break;
-				case 5:
+				case 4:
 					p.clip_plane=null;
 					p.clip_plane_matrix=render.computer.create_move_rotate_matrix(0,0,0,0,0,0);
 					break;
-				case 6:
+				case 5:
 					p.clip_plane		=[my_data[j++],my_data[j++],my_data[j++],my_data[j++]];
 					p.clip_plane_matrix	=render.computer.project_to_plane_location(
 						p.clip_plane[0],p.clip_plane[1],p.clip_plane[2],p.clip_plane[3],1.0);
 					break;
-				case 7:
+				case 6:
 					p.mirror_plane=null;
 					p.mirror_plane_matrix=render.computer.create_move_rotate_matrix(0,0,0,0,0,0);
 					break;
-				case 8:
+				case 7:
 					p.mirror_plane=[my_data[j++],my_data[j++],my_data[j++],my_data[j++]];
 					p.mirror_plane_matrix=render.computer.project_to_plane_location(
 						p.mirror_plane[0],p.mirror_plane[1],p.mirror_plane[2],p.mirror_plane[3],2.0);

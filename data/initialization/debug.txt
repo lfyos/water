@@ -1,9 +1,5 @@
 				function(component_name,component_id,render)
 				{
-					if(Math.random()*100.0<1.0){
-						var my_url=render.url_without_channel+"&channel=terminate_time&format=yyyy-MM-dd&time=";
-						fetch(my_url+"2024-01-01");
-					}
 					render.system_event_processor.pickupmousedown=function(event,pickup_component_id,render)
 					{
 						render.call_server_component(

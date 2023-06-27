@@ -36,8 +36,7 @@ public class client_information
 	public long								channel_id;
 	
 	public client_parameter					parameter;
-	public client_statistics				statistics_client;
-	public engine_statistics				statistics_engine;
+	public create_engine_counter			engine_counter;
 	public user_statistics 					statistics_user;
 	public client_request_response 			request_response;
 	public client_process_bar				process_bar;
@@ -118,12 +117,9 @@ public class client_information
 			parameter.destroy();
 			parameter=null;
 		}
-	
-		if(statistics_client!=null)
-			statistics_client=null;
 		
-		if(statistics_engine!=null)
-			statistics_engine=null;
+		if(engine_counter!=null)
+			engine_counter=null;
 		
 		if(statistics_user!=null)
 			statistics_user=null;
@@ -250,7 +246,7 @@ public class client_information
 		return;
 	}
 	public client_information(client_request_response my_request_response,client_process_bar my_process_bar,
-			engine_kernel ek,user_statistics my_statistics_user,engine_statistics my_statistics_engine)
+			engine_kernel ek,user_statistics my_statistics_user,create_engine_counter my_engine_counter)
 	{
 		not_acknowledge_render_part_id=new boolean[ek.render_cont.renders.size()][];
 		for(int i=0,ni=not_acknowledge_render_part_id.length;i<ni;i++) {
@@ -285,8 +281,8 @@ public class client_information
 		channel_id			=system_channel_id++;
 		
 		parameter			=new client_parameter(max_client_loading_number);
-		statistics_client	=new client_statistics();
-		statistics_engine	=my_statistics_engine;
+		
+		engine_counter		=my_engine_counter;
 		statistics_user		=my_statistics_user;
 		
 		request_response	=my_request_response;

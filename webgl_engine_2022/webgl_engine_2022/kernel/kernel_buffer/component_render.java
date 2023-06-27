@@ -8,7 +8,7 @@ import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_driver.component_instance_driver;
 import kernel_part.part;
-
+import kernel_render.render_component_counter;
 import kernel_common_class.debug_information;
 
 //	flag usage:
@@ -112,7 +112,8 @@ public class component_render
 		lastest_refresh_touch_time		=0;
 	}
 	
-	public void mark(component_link_list cll,client_information ci,camera_result cam_result,int render_buffer_id)
+	public void mark(component_link_list cll,client_information ci,
+			camera_result cam_result,int render_buffer_id,render_component_counter rcc)
 	{
 		clear_component_link_list();
 		
@@ -144,18 +145,16 @@ public class component_render
 				if(p.comp.uniparameter.touch_time>lastest_append_touch_time)
 					lastest_append_touch_time=p.comp.uniparameter.touch_time;
 				append_cll=new component_link_list(p.comp,p.driver_id,append_cll);
-				ci.statistics_client.should_component_append_number++;
 				break;
 			case 1://component in both buffer and link list, modified,should update 
 				flag[flag_id]|=4;
 				if(p.comp.uniparameter.touch_time>lastest_refresh_touch_time)
 					lastest_refresh_touch_time=p.comp.uniparameter.touch_time;
-				ci.statistics_client.should_component_refresh_number++;
 				refresh_cll=new component_link_list(p.comp,p.driver_id,refresh_cll);
 				break;
 			case 2://component in both buffer and link list, NOT modified, should NOT update 
 				flag[flag_id]|=8;
-				ci.statistics_client.component_keep_number++;
+				rcc.component_keep_number++;
 				keep_cll=new component_link_list(p.comp,p.driver_id,keep_cll);
 				break;
 			default://impossible
@@ -170,7 +169,6 @@ public class component_render
 			switch(flag[flag_id]){
 			case 1://last display(refresh),			this not display,DELETE
 			case 2://last display(not refresh),		this not display,DELETE
-				ci.statistics_client.should_component_delete_number++;
 				if(comp[i].clip.can_be_clipped_flag){
 					if(comp[i].uniparameter.touch_time>lastest_out_delete_touch_time)
 						lastest_out_delete_touch_time=comp[i].uniparameter.touch_time;
@@ -197,7 +195,7 @@ public class component_render
 			response_flag create_flag,
 			int render_id,int part_id,int render_buffer_id,
 			component_link_list p,long render_current_time,
-			engine_kernel ek,client_information ci)
+			engine_kernel ek,client_information ci,render_component_counter rcc)
 	{
 		for(;p!=null;p=p.next_list_item) {
 			int flag_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
@@ -205,7 +203,7 @@ public class component_render
 			case 1://last display(refresh),			this not display,DELETE
 			case 2://last display(not refresh),		this not display,DELETE
 				if((render_current_time-p.comp.uniparameter.touch_time)>ek.scene_par.touch_time_length)
-					if(ci.statistics_client.component_delete_number>=ek.scene_par.most_component_delete_number){
+					if(rcc.component_delete_number>=ek.scene_par.most_component_delete_number){
 						flag[flag_id]|=16;//become KEEP
 						break;
 					}
@@ -249,7 +247,7 @@ public class component_render
 				comp[component_number]=null;
 				driver_id[component_number]=-1;
 				
-				ci.statistics_client.component_delete_number++;
+				rcc.component_delete_number++;
 				break;
 			case 1+4://last display(refresh),		this display(refresh),		REFRESH
 				break;
@@ -267,7 +265,7 @@ public class component_render
 			boolean append_or_refresh_flag,response_flag create_flag,
 			component_link_list cll,long render_current_time,
 			engine_kernel ek,client_information ci,
-			camera_result cam_result,int render_buffer_id)
+			camera_result cam_result,int render_buffer_id,render_component_counter rcc)
 	{
 		for(component_link_list p=cll;p!=null;p=p.next_list_item){
 			int my_flag;
@@ -294,7 +292,7 @@ public class component_render
 				}
 				
 				if((render_current_time-p.comp.uniparameter.touch_time)>ek.scene_par.touch_time_length)
-					if((ci.statistics_client.component_append_number+ci.statistics_client.component_refresh_number)>=ek.scene_par.most_component_append_number){
+					if((rcc.component_append_number+rcc.component_refresh_number)>=ek.scene_par.most_component_append_number){
 						if(ci.parameter.comp==null){
 							flag[buffer_id]|=64;
 							continue;
@@ -357,9 +355,9 @@ public class component_render
 						p.comp.driver_array.get(p.driver_id).get_component_render_version());
 				
 				if(append_or_refresh_flag)
-					ci.statistics_client.component_append_number++;
+					rcc.component_append_number++;
 				else
-					ci.statistics_client.component_refresh_number++;
+					rcc.component_refresh_number++;
 				
 				break;
 			}

@@ -1,4 +1,4 @@
-function construct_manipulate_component_event(my_render)
+function construct_operate_component(my_render)
 {
 	this.render=my_render;
 	

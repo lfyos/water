@@ -12,7 +12,7 @@ public class response_component_render_parameter
 {
 	public static void response(
 			ArrayList<response_render_data> render_data_list,
-			engine_kernel ek,client_information ci)
+			engine_kernel ek,client_information ci,render_component_counter rcc)
 	{
 		int pps[][]=ek.process_part_sequence.process_parts_sequence;
 		int pcd[][][][]=ek.component_cont.part_component_id_and_driver_id;
@@ -34,14 +34,12 @@ public class response_component_render_parameter
 				if(ren_buf==null)
 					continue;
 				component_link_list cll=rrd.collector.component_collector[render_id][part_id];
-				ren_buf.mark(cll,ci,rrd.cam_result,rrd.render_buffer_id);
+				ren_buf.mark(cll,ci,rrd.cam_result,rrd.render_buffer_id,rcc);
 
 				for(int type_id=0;type_id<2;type_id++){
 					if((cll=(type_id==0)?ren_buf.append_cll:ren_buf.refresh_cll)==null)
 						continue;
-					int all_number=0;
-					all_number+=ci.statistics_client.component_append_number;
-					all_number+=ci.statistics_client.component_refresh_number;
+					int all_number=rcc.component_append_number+rcc.component_refresh_number;
 					if(all_number>ek.scene_par.most_component_append_number){
 						long lastest_touch_time=(type_id==0)
 								?ren_buf.lastest_append_touch_time:ren_buf.lastest_refresh_touch_time;
@@ -49,7 +47,7 @@ public class response_component_render_parameter
 							continue;
 					}
 					ren_buf.create_append_render_parameter((type_id==0)?true:false,create_flag,
-								cll,render_current_time,ek,ci,rrd.cam_result,rrd.render_buffer_id);
+						cll,render_current_time,ek,ci,rrd.cam_result,rrd.render_buffer_id,rcc);
 				}
 			}
 		}
@@ -71,18 +69,18 @@ public class response_component_render_parameter
 					if(type_id==0){
 						if((cll=ren_buf.delete_in_cll)==null)
 							continue;
-						if(ci.statistics_client.component_delete_number>ek.scene_par.most_component_delete_number)
+						if(rcc.component_delete_number>ek.scene_par.most_component_delete_number)
 							if((render_current_time-ren_buf.lastest_in_delete_touch_time)>ek.scene_par.touch_time_length)
 								continue;
 					}else{
 						if((cll=ren_buf.delete_out_cll)==null)
 							continue;
-						if(ci.statistics_client.component_delete_number>ek.scene_par.most_component_delete_number)
+						if(rcc.component_delete_number>ek.scene_par.most_component_delete_number)
 							if((render_current_time-ren_buf.lastest_out_delete_touch_time)>ek.scene_par.touch_time_length)
 								continue;
 					}
-					ren_buf.create_delete_render_parameter(create_flag,
-						render_id,part_id,rrd.render_buffer_id,cll,render_current_time,ek,ci);
+					ren_buf.create_delete_render_parameter(create_flag,render_id,part_id,
+							rrd.render_buffer_id,cll,render_current_time,ek,ci,rcc);
 				}
 			}
 		}

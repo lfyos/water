@@ -19,7 +19,7 @@ public class list_component_on_collector
 	private client_information ci;
 	private camera_result cam_result;
 	private boolean part_list_only_flag,do_discard_lod_flag,do_selection_lod_flag,discard_cross_clip_plane_flag;
-	private boolean discard_unload_component_flag,add_number_flag;
+	private boolean discard_unload_component_flag;
 	private int no_driver_component_number;
 	
 	private boolean register(component comp,int driver_id)
@@ -58,34 +58,12 @@ public class list_component_on_collector
 			debug_information.println("Part system name:",	my_part.system_name);
 			debug_information.println("Mesh file name:	",	my_part.directory_name+my_part.mesh_file_name);
 		}
-		if(abandon_display_flag){
-			if(add_number_flag)
-				ci.statistics_client.abandon_component_number++;
+		if(abandon_display_flag)
 			return false;
-		}
+		
 		if(discard_unload_component_flag)
-			if(ci.render_buffer.mesh_loader.load_test(ek.process_part_sequence,my_part)){
-				if(add_number_flag)
-					ci.statistics_client.not_load_component_number++;
+			if(ci.render_buffer.mesh_loader.load_test(ek.process_part_sequence,my_part))
 				return false;
-			}
-		if(add_number_flag){
-			if(my_part.is_top_box_part())
-				ci.statistics_client.top_box_component_number++;
-			if(my_part.is_bottom_box_part())
-				ci.statistics_client.bottom_box_component_number++;
-			if(driver_id>=ci.statistics_client.lod_component_number.length){
-				int bak[]=ci.statistics_client.lod_component_number;
-				ci.statistics_client.lod_component_number=new int[driver_id+1];
-				for(int i=0,n=bak.length;i<n;i++)
-					ci.statistics_client.lod_component_number[i]=bak[i];
-				for(int i=bak.length,n=ci.statistics_client.lod_component_number.length;i<n;i++)
-					ci.statistics_client.lod_component_number[i]=0;
-			}
-			ci.statistics_client.lod_component_number[driver_id]++;
-			if(comp.clip.clip_plane!=null)
-				ci.statistics_client.clip_plane_component_number++;
-		}
 		
 		collector.register_component(comp,driver_id);
 		
@@ -116,13 +94,10 @@ public class list_component_on_collector
 			lod_precision_scale*=my_lod_precision_scale;
 		lod_precision2*=lod_precision_scale*lod_precision_scale;
 
-		if(do_discard_lod_flag){
-			if(lod_precision2<=comp.uniparameter.discard_precision2){
-				if(add_number_flag)
-					ci.statistics_client.discard_component_number++;
+		if(do_discard_lod_flag)
+			if(lod_precision2<=comp.uniparameter.discard_precision2)
 				return true;
-			}
-		}
+	
 		if(do_selection_lod_flag){
 			int driver_number;
 			if((driver_number=comp.driver_number())<=0)
@@ -151,21 +126,14 @@ public class list_component_on_collector
 			return;
 		
 		comp.clip.clipper_test_depth=clipper_test_depth;
-		
-		if(add_number_flag)
-			ci.statistics_client.collect_component_number++;
-		
-		if(!(comp.get_effective_display_flag(cam_result.target.parameter_channel_id))){
-			if(add_number_flag)
-				ci.statistics_client.hide_component_number++;
+				
+		if(!(comp.get_effective_display_flag(cam_result.target.parameter_channel_id)))
 			return;
-		}
+	
 		comp.clip.has_done_clip_flag=false;
-		if(cam_result.clipper_test(comp,ek.component_cont,cam_result.target.parameter_channel_id)){
-			if(add_number_flag)
-				ci.statistics_client.clip_component_number++;
+		if(cam_result.clipper_test(comp,ek.component_cont,cam_result.target.parameter_channel_id))
 			return;
-		}		
+		
 		if(do_lod(comp))
 			return;
 		
@@ -176,8 +144,7 @@ public class list_component_on_collector
 				if(register(comp,i))
 					return;
 			no_driver_component_number++;
-			if(add_number_flag)
-				ci.statistics_client.no_driver_component_number++;
+			
 			return;
 		}
 		
@@ -200,8 +167,7 @@ public class list_component_on_collector
 		return;
 	}
 	
-	public list_component_on_collector(				
-		boolean my_add_number_flag,					boolean my_part_list_only_flag,
+	public list_component_on_collector(				boolean my_part_list_only_flag,
 		boolean my_do_discard_lod_flag,				boolean my_do_selection_lod_flag,
 		boolean my_discard_cross_clip_plane_flag,	boolean my_discard_unload_component_flag,
 		engine_kernel my_ek,						client_information my_ci,
@@ -210,7 +176,7 @@ public class list_component_on_collector
 		ek											=my_ek;
 		ci											=my_ci;
 		cam_result									=my_cam_result;		
-		add_number_flag								=my_add_number_flag;
+		
 		part_list_only_flag							=my_part_list_only_flag;
 		do_discard_lod_flag							=my_do_discard_lod_flag;
 		do_selection_lod_flag						=my_do_selection_lod_flag;

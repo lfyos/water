@@ -1,12 +1,9 @@
 package kernel_interface;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import kernel_common_class.debug_information;
 import kernel_common_class.nanosecond_timer;
 import kernel_engine.engine_call_result;
-import kernel_engine.engine_statistics;
+import kernel_engine.create_engine_counter;
 import kernel_engine.system_parameter;
 import kernel_network.client_request_response;
 import kernel_network.network_implementation;
@@ -19,7 +16,7 @@ public class client_request_switcher
 	private engine_interface engine_container;
 	private client_interface_container client_container;
 	private proxy_downloader download_proxy;
-	private engine_statistics statistics_engine;
+	private create_engine_counter engine_counter;
 	
 	private volatile int creation_engine_lock_number;
 	synchronized private int test_creation_engine_lock_number(int modify_number)
@@ -36,19 +33,19 @@ public class client_request_switcher
 			program_javascript=null;
 		}
 		if(engine_container!=null) {
-			engine_container.destroy(statistics_engine);
+			engine_container.destroy(engine_counter);
 			engine_container=null;
 		}
 		if(client_container!=null) {
-			client_container.destroy(statistics_engine);
+			client_container.destroy(engine_counter);
 			client_container=null;
 		}
 		if(download_proxy!=null) {
 			download_proxy.destroy();
 			download_proxy=null;
 		}
-		if(statistics_engine!=null)
-			statistics_engine=null;
+		if(engine_counter!=null)
+			engine_counter=null;
 		creation_engine_lock_number=0;
 	}
 	private engine_call_result system_call_switch(
@@ -58,15 +55,6 @@ public class client_request_switcher
 		
 		String str=request_response.get_parameter("channel");
 		switch((str==null)?"switch":str){
-		case "terminate_time":
-			try{
-				system_par.system_terminate_time=new SimpleDateFormat(
-					request_response.get_parameter("format")).parse(request_response.get_parameter("time")).getTime();
-			}catch(Exception e){
-				;
-			}
-			debug_information.println("system_terminate_time:",new Date(system_par.system_terminate_time).toString());
-			break;
 		case "switch":
 			if((str=system_par.switch_server.get_switch_server_url())!=null) {
 				String function_name=request_response.get_parameter("function_name");
@@ -97,25 +85,23 @@ public class client_request_switcher
 				system_par.text_class_charset,system_par.text_jar_file_charset);
 			break;
 		case "buffer":
-			ecr=download_proxy.download(request_response,system_par,statistics_engine);
+			ecr=download_proxy.download(request_response,system_par);
 			break;
 		case "proxy":
-			if((ecr=download_proxy.download(request_response,system_par,statistics_engine))!=null)
+			if((ecr=download_proxy.download(request_response,system_par))!=null)
 				ecr.date_string=null;
 			break;
 		case "process_bar":
 			ecr=client.process_bar(request_response);
 			break;
 		case "clear":
-			client.clear_all_engine(engine_container,statistics_engine);
+			client.clear_all_engine(engine_container,engine_counter);
 			break;
 		case "creation":
 			int creation_engine_lock_number=test_creation_engine_lock_number(1);
-			if((new Date().getTime()<system_par.system_terminate_time)
-				&&(creation_engine_lock_number<system_par.create_engine_concurrent_number))
-			{
-				ecr=client.execute_create_call(request_response,engine_container,statistics_engine);
-			}else{
+			if(creation_engine_lock_number<system_par.create_engine_concurrent_number)
+				ecr=client.execute_create_call(request_response,engine_container,engine_counter);
+			else{
 				ecr=new engine_call_result(null,null,null,null,null,"*");
 				request_response.println("false");
 				client.get_process_bar(request_response).set_process_bar(true,"wait_for_other_exit","",1,2);
@@ -134,7 +120,7 @@ public class client_request_switcher
 				e.printStackTrace();
 				break;
 			}
-			ecr=client.execute_system_call(channel_id,request_response,engine_container,statistics_engine);
+			ecr=client.execute_system_call(channel_id,request_response,engine_container,engine_counter);
 			break;
 		}
 		return ecr;
@@ -179,7 +165,7 @@ public class client_request_switcher
 		
 		String my_client_id=request_response.implementor.get_client_id();
 		client_interface client=client_container.get_client_interface(system_par,
-				my_user_name,my_pass_word,(my_client_id==null)?"NoClientID"	:my_client_id,statistics_engine);
+				my_user_name,my_pass_word,(my_client_id==null)?"NoClientID"	:my_client_id,engine_counter);
 		if(client!=null) {
 			engine_call_result ecr=system_call_switch(request_response,client);
 			if(ecr!=null){
@@ -198,24 +184,11 @@ public class client_request_switcher
 						compress_response_header=null;
 						ecr.compress_file_name=null;
 				}
-				long my_statistics[];		
-				if(ecr.file_name!=null){
-					statistics_engine.responsing_file_data_number++;
-					my_statistics=request_response.response_file_data(compress_response_header,ecr,system_par);
-					statistics_engine.responsing_file_data_number--;
 					
-					statistics_engine.file_download_number++;
-					statistics_engine.file_download_data_uncompress_length	+=my_statistics[0];
-					statistics_engine.file_download_data_compress_length	+=my_statistics[1];
-				}else{
-					statistics_engine.responsing_network_data_number++;
-					my_statistics=request_response.response_network_data(compress_response_header,ecr,system_par);
-					statistics_engine.responsing_network_data_number--;
-					
-					statistics_engine.network_data_number++;
-					statistics_engine.network_data_uncompress_length	+=my_statistics[0];
-					statistics_engine.network_data_compress_length		+=my_statistics[1];
-				}
+				if(ecr.file_name!=null)
+					request_response.response_file_data(compress_response_header,ecr,system_par);
+				else
+					request_response.response_network_data(compress_response_header,ecr,system_par);
 			}
 		}
 		request_response.destroy();
@@ -233,7 +206,7 @@ public class client_request_switcher
 		engine_container	=new engine_interface();
 		client_container	=new client_interface_container();
 		download_proxy		=new proxy_downloader();
-		statistics_engine	=new engine_statistics();
+		engine_counter		=new create_engine_counter();
 		
 		creation_engine_lock_number	=0;
 	}

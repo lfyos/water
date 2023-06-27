@@ -81,10 +81,8 @@ public class dispatch_buffer_request
 		}
 		return file_directory.part_file_directory(p,ek.system_par,ek.scene_par)+"mesh."+str+".gzip_text";
 	}
-	static public String do_dispatch(int main_call_id,engine_kernel ek,client_information ci)
+	static public String do_dispatch(engine_kernel ek,client_information ci)
 	{
-		ci.statistics_client.register_system_call_execute_number(main_call_id,0);
-		
 		String str=ci.request_response.get_parameter("operation");
 		str=(str==null)?"":(str.toLowerCase());
 		

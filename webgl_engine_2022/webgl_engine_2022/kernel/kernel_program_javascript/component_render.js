@@ -105,23 +105,17 @@ function construct_component_render_parameter()
 			var buffer_data_item=p.shift();
 			
 			var part_object=render.part_array[render_id][part_id];
-			var max_buffer_number=part_object.property.max_component_data_buffer_number;
 			
 			for(p=part_object.component_buffer_parameter;p.length<=buffer_id;)
 				p.push(new Array());					
 			p=p[buffer_id];
 			p.push(buffer_data_item);
 			
-			if(typeof(part_object.part_driver_object.push_component_parameter)=="function")
-				part_object.part_driver_object.push_component_parameter(
-					buffer_id,buffer_data_item,part_object);
-
-			if(typeof(part_object.part_driver_object.shift_component_parameter)=="function")
-				for(;p.length>max_buffer_number;p.shift())
-					part_object.part_driver_object.shift_component_parameter(buffer_id,p[0],part_object);
-			else
-				while(p.length>max_buffer_number)
-					p.shift();
+			while(p.length>part_object.property.max_component_data_buffer_number){
+				var shift_data=p.shift();
+				if(typeof(part_object.part_driver_object.shift_component_parameter)=="function")
+					part_object.part_driver_object.shift_component_parameter(buffer_id,shift_data,part_object);
+			}
 		}
 	}
 }

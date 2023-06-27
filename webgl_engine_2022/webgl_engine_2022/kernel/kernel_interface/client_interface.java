@@ -16,7 +16,7 @@ import kernel_network.client_request_response;
 import kernel_engine.system_parameter;
 import kernel_engine.engine_kernel;
 import kernel_engine.engine_call_result;
-import kernel_engine.engine_statistics;
+import kernel_engine.create_engine_counter;
 import kernel_engine.engine_kernel_container;
 import kernel_engine.engine_kernel_and_client_information_container;
 
@@ -68,7 +68,7 @@ public class client_interface
 	
 	private engine_call_result create_engine_routine(
 			engine_interface engine_container,ReentrantLock my_client_interface_lock,
-			client_request_response request_response,long delay_time_length,engine_statistics statistics_engine)
+			client_request_response request_response,long delay_time_length,create_engine_counter engine_counter)
 	{
 		if(statistics_user.user_engine_kernel_number>statistics_user.user_max_engine_kernel_number) {
 			debug_information.print  ("Create too many engine\t\t\t:\t",statistics_user.user_engine_kernel_number);
@@ -89,7 +89,7 @@ public class client_interface
 		my_client_interface_lock.unlock();
 		try{
 			create_ekll=engine_container.get_kernel_container(request_response,
-				client_scene_file_name,client_scene_file_charset,statistics_engine,system_par);
+				client_scene_file_name,client_scene_file_charset,engine_counter,system_par);
 		}catch(Exception e) {
 			create_ekll=null;
 			debug_information.println(
@@ -123,7 +123,7 @@ public class client_interface
 					engine_container.component_load_source_cont,
 					client_scene_file_name,client_scene_file_charset,
 					request_response,delay_time_length,statistics_user,
-					statistics_engine);
+					engine_counter);
 		}catch(Exception e) {
 			ecr=null;
 			debug_information.println("ec[channel_id].engine_kernel_link_list.get_engine_result fail");
@@ -163,7 +163,7 @@ public class client_interface
 	}
 	private engine_call_result create_engine(
 			engine_interface engine_container,ReentrantLock my_client_interface_lock,
-			client_request_response request_response,long delay_time_length,engine_statistics statistics_engine)
+			client_request_response request_response,long delay_time_length,create_engine_counter engine_counter)
 	{
 		debug_information.println();
 		debug_information.println("\n#####################################################################################################");
@@ -198,7 +198,7 @@ public class client_interface
 		debug_information.println("proxy_data_root_directory_name	:	",	system_par.proxy_par.proxy_data_root_directory_name);
 		
 		engine_call_result ret_val=create_engine_routine(engine_container,my_client_interface_lock,
-				request_response,delay_time_length,statistics_engine);
+				request_response,delay_time_length,engine_counter);
 		
 		now = Calendar.getInstance();  
 		long end_time=new Date().getTime();
@@ -219,7 +219,7 @@ public class client_interface
 		return ret_val;
 	}
 	private engine_call_result execute_system_call_routine(long channel_id,client_request_response request_response,
-			engine_interface engine_container,engine_statistics statistics_engine,ReentrantLock my_client_interface_lock)
+			engine_interface engine_container,create_engine_counter engine_counter,ReentrantLock my_client_interface_lock)
 	{
 		long delay_time_length;
 		if((delay_time_length=manager_delay.process_delay_time_length())<0){
@@ -265,7 +265,7 @@ public class client_interface
 			ecr=ecn.ek_ci.get_engine_result(
 					get_process_bar(request_response),engine_container.system_boftal_container,
 					engine_container.component_load_source_cont,client_scene_file_name,client_scene_file_charset,
-					request_response,delay_time_length,statistics_user,statistics_engine);
+					request_response,delay_time_length,statistics_user,engine_counter);
 		}catch(Exception e){
 			ecr=null;
 			debug_information.println("ecn.ek_ci.engine_kernel_link_list.get_engine_result fail");
@@ -309,7 +309,7 @@ public class client_interface
 	}
 	public engine_call_result execute_system_call(
 			long channel_id,client_request_response request_response,
-			engine_interface engine_container,engine_statistics statistics_engine)
+			engine_interface engine_container,create_engine_counter engine_counter)
 	{
 		if(channel_id<0){
 			debug_information.println("client_interface channel_id<0		",channel_id);
@@ -322,12 +322,12 @@ public class client_interface
 		ReentrantLock my_client_interface_lock=client_interface_lock;
 		my_client_interface_lock.lock();
 		
-		process_timeout(request_response,engine_container,statistics_engine);
+		process_timeout(request_response,engine_container,engine_counter);
 		
 		engine_call_result ret_val=null;
 		try{
 			ret_val=execute_system_call_routine(channel_id,request_response,
-					engine_container,statistics_engine,my_client_interface_lock);
+					engine_container,engine_counter,my_client_interface_lock);
 		}catch(Exception e) {
 			ret_val=null;
 			debug_information.println("execute_system_call of client_interface_base fail");
@@ -338,7 +338,7 @@ public class client_interface
 		return ret_val;
 	}
 	public engine_call_result execute_create_call(client_request_response request_response,
-			engine_interface engine_container,engine_statistics statistics_engine)
+			engine_interface engine_container,create_engine_counter engine_counter)
 	{
 		if(touch_time<=0) {
 			debug_information.println("client_interface touch_time<=0		",request_response.implementor.get_client_id());
@@ -348,7 +348,7 @@ public class client_interface
 		ReentrantLock my_client_interface_lock=client_interface_lock;
 		my_client_interface_lock.lock();
 		
-		process_timeout(request_response,engine_container,statistics_engine);
+		process_timeout(request_response,engine_container,engine_counter);
 		
 		engine_call_result ret_val=null;
 		try{
@@ -357,7 +357,7 @@ public class client_interface
 				debug_information.println("TIME OUT FOUND,Client ID is ",request_response.implementor.get_client_id());
 			else
 				ret_val=create_engine(engine_container,my_client_interface_lock,
-						request_response,delay_time_length,statistics_engine);
+						request_response,delay_time_length,engine_counter);
 		}catch(Exception e){
 			ret_val=null;
 			debug_information.println(
@@ -430,7 +430,7 @@ public class client_interface
 		return process_bar_cont.get_process_bar(process_bar_id);
 	}
 	private boolean destroy_ek_ci_node(ek_ci_balance_tree_node ecn,
-			engine_interface engine_container,engine_statistics statistics_engine)
+			engine_interface engine_container,create_engine_counter engine_counter)
 	{
 		engine_kernel ek;
 		if(ecn==null)
@@ -462,7 +462,7 @@ public class client_interface
 			engine_container.destroy_scene(
 				ecn.ek_ci.engine_kernel_cont.ek.create_parameter.scene_name,
 				ecn.ek_ci.engine_kernel_cont.ek.create_parameter.link_name,
-				statistics_engine);
+				engine_counter);
 			ecn.ek_ci.engine_kernel_cont=null;
 		}
 		if(first==last){
@@ -488,7 +488,7 @@ public class client_interface
 		return false;
 	}
 	private void process_timeout(client_request_response request_response,
-			engine_interface engine_container,engine_statistics statistics_engine)
+			engine_interface engine_container,create_engine_counter engine_counter)
 	{
 		while(first!=null){
 			if(first.ek_ci.access_lock_number>0)
@@ -510,17 +510,17 @@ public class client_interface
 				debug_information.print  (", time interval ",time_length);
 				debug_information.println(", max time interval  ",system_par.engine_expire_time_length);
 			}
-			if(destroy_ek_ci_node(first,engine_container,statistics_engine))
+			if(destroy_ek_ci_node(first,engine_container,engine_counter))
 				break;
 		}
 	}
-	public void clear_all_engine(engine_interface engine_container,engine_statistics statistics_engine)
+	public void clear_all_engine(engine_interface engine_container,create_engine_counter engine_counter)
 	{
 		ReentrantLock my_client_interface_lock=client_interface_lock;
 		my_client_interface_lock.lock();
 		while(true)
 			try{
-				if(destroy_ek_ci_node(first,engine_container,statistics_engine))
+				if(destroy_ek_ci_node(first,engine_container,engine_counter))
 					break;
 			}catch(Exception e) {
 				debug_information.println("clear_all_engine exception:	",e.toString());
@@ -530,7 +530,7 @@ public class client_interface
 		my_client_interface_lock.unlock();
 	}
 	
-	private void destroy_routine(engine_statistics statistics_engine)
+	private void destroy_routine(create_engine_counter engine_counter)
 	{	
 		for(ek_ci_balance_tree_node p=first;p!=null;p=p.back)
 			if(p.ek_ci!=null)
@@ -572,12 +572,12 @@ public class client_interface
 		if(statistics_user!=null)
 			statistics_user=null;
 	}
-	public void destroy(engine_statistics statistics_engine)
+	public void destroy(create_engine_counter engine_counter)
 	{
 		ReentrantLock my_client_interface_lock=client_interface_lock;
 		my_client_interface_lock.lock();
 		try{
-			destroy_routine(statistics_engine);
+			destroy_routine(engine_counter);
 		}catch(Exception e){
 			debug_information.println("destroy of client_interface_base fail:\t",e.toString());
 			e.printStackTrace();

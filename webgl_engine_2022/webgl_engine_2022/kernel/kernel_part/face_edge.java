@@ -1,10 +1,12 @@
 package kernel_part;
 
+import kernel_common_class.system_id;
+import kernel_common_class.system_id_manager;
 import kernel_file_manager.file_reader;
 import kernel_transformation.box;
 import kernel_transformation.point;
 
-public class face_edge 
+public class face_edge  extends system_id
 {
 	public void destroy()
 	{
@@ -42,8 +44,10 @@ public class face_edge
 	public box edge_box;
 	public int total_edge_primitive_number,total_point_primitive_number;
 	
-	public face_edge(face_edge s)
+	public face_edge(face_edge s,system_id_manager id_manager,int id_array[])
 	{
+		super(id_manager,id_array);
+	
 		curve_type				=s.curve_type;
 		curve_parameter			=s.curve_parameter;
 		
@@ -64,8 +68,10 @@ public class face_edge
 		total_point_primitive_number=s.total_point_primitive_number;
 	}
 	public face_edge(point my_start_point,point my_end_point,
-			String my_extra_data,String my_material[])
+			String my_extra_data,String my_material[],system_id_manager id_manager,int id_array[])
 	{
+		super(id_manager,id_array);
+		
 		curve_type="unknown";
 		curve_parameter=null;
 		
@@ -90,8 +96,10 @@ public class face_edge
 		total_edge_primitive_number	=2;
 		total_point_primitive_number=2;
 	}
-	public face_edge(file_reader fr)
+	public face_edge(file_reader fr,system_id_manager id_manager,int id_array[])
 	{
+		super(id_manager,id_array);
+	
 		curve_type=fr.get_string();
 		curve_type=(curve_type==null)?"":curve_type;
 		

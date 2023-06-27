@@ -8,6 +8,7 @@ import kernel_component.component_link_list;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_network.client_request_response;
+import kernel_render.render_component_counter;
 import kernel_transformation.location;
 
 public class component_location_buffer
@@ -88,7 +89,8 @@ public class component_location_buffer
 							}
 		}
 	}
-	private static void response_location_data(location loca,client_request_response request_response)
+	private static void response_location_data(location loca,
+			client_request_response request_response)
 	{
 		double parameter[]=loca.caculate_translation_rotation(true);
 		int code=0,number=0;
@@ -102,7 +104,7 @@ public class component_location_buffer
 		request_response.print((number<=0)?"[]":(","+code+"]"));		
 	}
 
-	public void response_location(engine_kernel ek,client_information ci)
+	public void response_location(engine_kernel ek,client_information ci,render_component_counter rcc)
 	{
 		if(ek.camera_cont!=null)
 			for(int i=0,ni=ek.camera_cont.size();i<ni;i++) {
@@ -112,7 +114,6 @@ public class component_location_buffer
 						||has_not_response_relative_location_flag[eye_component.component_id])
 							put_in_list(eye_component,ek);
 			}
-		int total_response_location_number=ci.statistics_client.update_location_number;
 		long my_current_time=ek.current_time.nanoseconds();
 	
 		ci.request_response.print(",[");
@@ -124,7 +125,7 @@ public class component_location_buffer
 			
 			for(;p!=null;p=p.next_list_item){
 				component_not_in_list_flag[p.comp.component_id]=true;
-				if(total_response_location_number>=ek.scene_par.most_update_location_number)
+				if(rcc.update_location_number>=ek.scene_par.most_update_location_number)
 					if((my_current_time-touch_time[p.comp.component_id])>ek.scene_par.touch_time_length)
 						continue;
 			
@@ -133,23 +134,19 @@ public class component_location_buffer
 				ci.request_response.print(((response_number++)<=0)?"[":",[",p.comp.component_id);
 				ci.request_response.print(",",p.comp.uniparameter.cacaulate_location_flag?"1,":"-1,");
 				response_location_data(p.comp.move_location,ci.request_response);
-				ci.statistics_client.update_location_number++;
-				total_response_location_number++;
+				rcc.update_location_number++;
 
 				if(has_not_response_relative_location_flag[p.comp.component_id]){
 					ci.request_response.print(",");
 					has_not_response_relative_location_flag[p.comp.component_id]=false;
 					response_location_data(p.comp.relative_location,ci.request_response);
 					ci.request_response.print(",",p.comp.parent_component_id);
-					ci.statistics_client.update_location_number++;
-					total_response_location_number++;
+					rcc.update_location_number++;
 				}
 				ci.request_response.print("]");
 			}
 		}
 		ci.request_response.print("]");
-		
-		ci.statistics_client.should_update_location_number=location_collector.component_number;
 		
 		location_collector.reset();
 	}

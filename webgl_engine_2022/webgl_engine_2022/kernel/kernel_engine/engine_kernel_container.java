@@ -34,7 +34,7 @@ public class engine_kernel_container
 	public engine_kernel_container(String my_scene_name,String my_link_name,
 			client_request_response request_response,system_parameter system_par,
 			String client_scene_file_name,String client_scene_file_charset,render_container original_render,
-			part_loader_container my_part_loader_cont,engine_statistics statistics_engine)
+			part_loader_container my_part_loader_cont,create_engine_counter engine_counter)
 	{
 		engine_kernel_create_parameter create_parameter=new engine_kernel_create_parameter(
 				my_scene_name,my_link_name,client_scene_file_name,client_scene_file_charset,system_par);

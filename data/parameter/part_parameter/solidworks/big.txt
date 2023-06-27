@@ -15,6 +15,7 @@
 /*	max_component_buffer_data_number	*/		4
 /*	max_part_load_thread_number			*/		8
 
+/*	do_create_part_ids_flag				*/		true
 /*	do_create_bottom_box_flag			*/		true
 
 /*	clear_buffer_head_file_flag			*/		false

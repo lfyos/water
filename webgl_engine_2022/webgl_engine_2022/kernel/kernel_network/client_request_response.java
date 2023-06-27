@@ -165,7 +165,7 @@ public class client_request_response extends common_writer
 		String str=get_parameter(name);
 		return (str==null)?0:Double.parseDouble(str);
 	}
-	public long[] response_network_data(String compress_response_header,engine_call_result ecr,system_parameter system_par)
+	public void response_network_data(String compress_response_header,engine_call_result ecr,system_parameter system_par)
 	{
 		try{
 			output_stream.close();
@@ -174,19 +174,13 @@ public class client_request_response extends common_writer
 			e.printStackTrace();
 		}
 		
-		long ret_val[]=new long[]{0,0};
 		byte data_buf[]=output_stream.toByteArray();
-		if(compress_response_header==null)
-			ret_val[0]+=data_buf.length;
-		else{
+		if(compress_response_header!=null){
 			byte compress_data_buf[]=compress_network_data.do_compress(data_buf,compress_response_header);
-			if(compress_data_buf==null) {
+			if(compress_data_buf==null)
 				compress_response_header=null;
-				ret_val[0]+=data_buf.length;
-			}else {
+			else
 				data_buf=compress_data_buf;
-				ret_val[1]+=data_buf.length;
-			}
 		}
 		implementor.set_response_http_header(
 			"public long[] response_network_data(String compress_response_header,engine_call_result ecr,system_parameter system_par)",
@@ -195,7 +189,7 @@ public class client_request_response extends common_writer
 		implementor.response_binary_data("response_network_data error",data_buf,data_buf.length);
 		implementor.terminate_response_binary_data("Error 3 in response_network_data");
 		
-		return ret_val;
+		return ;
 	}
 	
 	private String range_string;
@@ -264,7 +258,7 @@ public class client_request_response extends common_writer
 		return new long[] {begin_pointer,end_pointer};
 	}
 	
-	public long[] response_file_data(
+	public void response_file_data(
 		String compress_response_header,engine_call_result ecr,system_parameter system_par)
 	{
 		try{
@@ -302,13 +296,12 @@ public class client_request_response extends common_writer
 				file_name=ecr.charset_file_name;
 				network_data_charset=system_par.network_data_charset;
 			}
-		long ret_val[]=new long[]{0,0};
 		File f=new File(file_name);
 		
 		long file_length=f.length();
 		if(file_length<=0) {
 			debug_information.println("response_file_data find file length is ZERO:	",file_name);
-			return ret_val;
+			return;
 		}
 
 		if((ecr.compress_file_name!=null)&&(compress_response_header!=null))
@@ -343,7 +336,7 @@ public class client_request_response extends common_writer
 
 		long file_range[];
 		if((file_range=get_range(f.length(),system_par.response_block_size))==null)
-			return ret_val;
+			return;
 
 		error_msg=range_string+"\n"+error_msg;
 		implementor.set_response_http_header(
@@ -368,7 +361,6 @@ public class client_request_response extends common_writer
 					break;
 				if(implementor.response_binary_data(error_msg,data_buf,(int)length))
 					break;
-				ret_val[(compress_response_header==null)?0:1]+=length;
 			}
 		}catch(Exception e){
 			debug_information.println("Do response error:source\t",file_name);
@@ -389,7 +381,7 @@ public class client_request_response extends common_writer
 				;
 			}
 		implementor.terminate_response_binary_data(error_msg);
-		return ret_val;
+		return;
 	}
 	public common_writer print_routine(String str)
 	{

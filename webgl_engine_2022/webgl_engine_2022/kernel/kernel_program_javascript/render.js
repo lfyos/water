@@ -64,7 +64,7 @@ function construct_render_routine(my_webgpu,
 	
 	this.event_component			=new Object();
 
-	this.target_processor			=new Array();
+	this.target_array				=new Array();
 	
 	this.routine_array				=new Array();
 	
@@ -116,7 +116,7 @@ function construct_render_routine(my_webgpu,
 	this.vertex_data_downloader		=new construct_download_vertex_data(this.webgpu,this.parameter.max_loading_number);
 	this.camera						=new construct_camera_object(camera_number,this.component_location_data,this.computer);
 	this.system_buffer				=new construct_system_buffer(this);
-	this.manipulate_component_event	=new construct_manipulate_component_event(this);
+	this.operate_component			=new construct_operate_component(this);
 	this.collector_loader			=new construct_collector_loader_object(this);
 	
 	this.pickup						=new construct_pickup_object();
