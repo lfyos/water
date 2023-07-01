@@ -39,7 +39,7 @@ public class body extends system_id
 		else{
 			face_array=new face[face_number];
 			for(int i=0;i<face_number;i++)
-				face_array[i]=new face(s.face_array[i],id_manager,new int[] {1,id_array[1],i});
+				face_array[i]=new face(s.face_array[i],id_manager,new int[] {2,id_array[1],i});
 		}
 		body_box=(s.body_box==null)?null:(new box(s.body_box));
 		total_face_primitive_number=s.total_face_primitive_number;
@@ -77,7 +77,7 @@ public class body extends system_id
 		}else{
 			face_array=new face[my_face_number];
 			for(int i=0;i<my_face_number;i++)
-				face_array[i]=new face(fr,id_manager,new int[] {1,id_array[1],i});
+				face_array[i]=new face(fr,id_manager,new int[] {2,id_array[1],i});
 		}
 		caculate_box_and_primitive_number();
 	}
@@ -91,7 +91,7 @@ public class body extends system_id
 		face_array=new face[my_box_number];
 		for(int i=0;i<my_box_number;i++)
 			face_array[i]=new face(my_reference_part[i],
-				my_box_loca[i],my_box_array[i],id_manager,new int[] {1,id_array[1],i});
+				my_box_loca[i],my_box_array[i],id_manager,new int[] {2,id_array[1],i});
 		caculate_box_and_primitive_number();
 	}
 }

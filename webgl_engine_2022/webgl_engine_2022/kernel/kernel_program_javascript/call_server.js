@@ -72,6 +72,9 @@ function construct_server_caller(my_render)
 			if(this.render.terminate_flag)
 				return null;
 			response_data= null;
+			
+			alert("parse call_server response data fail:	"+request_url);
+			alert(e.toString());
 		}
 
 		return response_data;

@@ -4,13 +4,13 @@ function construct_camera_object(camera_number,my_component_location_data,my_com
 	
 	for(var i=0;i<camera_number;i++)
 		this.camera_object_parameter[i]={
-			component_id		:	0,
-			distance			:	1.0,
-			half_fovy_tanl		:	1.0,
-			near_value_ratio	:	0.10,
-			far_value_ratio		:	10.0,
-			projection_type_flag:	false,
-			light_camera_flag	:	false
+			component_id			:	0,
+			distance				:	1.0,
+			half_fovy_tanl			:	1.0,
+			near_value_ratio		:	0.10,
+			far_value_ratio			:	10.0,
+			projection_type_flag	:	false,
+			light_camera_flag		:	false
 		}
 	this.component_location_data=my_component_location_data;
 	this.computer				=my_computer;
@@ -215,29 +215,28 @@ function construct_camera_object(camera_number,my_component_location_data,my_com
 	{
 		var camera_id			=camera_render_parameter.camera_id;
 		var camera_component_id	=this.camera_object_parameter[camera_id].component_id;
-		var camera_location		=this.component_location_data.get_component_location_routine(camera_component_id);
+		var camera_location		=this.component_location_data.get_component_location(camera_component_id);
 		var camera_distance		=this.camera_object_parameter[camera_id].distance;
-		var mirror_change_matrix=camera_render_parameter.mirror_change_matrix;
+		var mirror_change_plane	=camera_render_parameter.mirror_plane;
+		var mirror_change_matrix=camera_render_parameter.mirror_plane_matrix;
 
 		var lookat_matrix;
 		
 		do{
-			if(typeof(mirror_change_matrix)!="undefined")
-				if(mirror_change_matrix!=null)
-					if(mirror_change_matrix.length>0){
-						lookat_matrix=this.computer.matrix_multiplication(
-										mirror_change_matrix,camera_location);
-						lookat_matrix=this.computer.matrix_multiplication(lookat_matrix,
-										this.computer.create_move_rotate_matrix(0,0,camera_distance,0,0,0));
-						lookat_matrix=this.computer.matrix_multiplication(lookat_matrix,
+			if((mirror_change_plane!=null)&&(mirror_change_matrix!=null))
+				if(mirror_change_matrix.length>=16){
+					lookat_matrix=this.computer.matrix_multiplication(mirror_change_matrix,camera_location);
+					lookat_matrix=this.computer.matrix_multiplication(lookat_matrix,
+						this.computer.create_move_rotate_matrix(0,0,camera_distance,0,0,0));
+					lookat_matrix=this.computer.matrix_multiplication(lookat_matrix,
 							[
 								1,	0,	0,	0,
 								0,	-1,	0,	0,
 								0,	0,	1,	0,
 								0,	0,	0,	1
 							]);
-						break;
-					}		
+					break;
+				}		
 			lookat_matrix=this.computer.matrix_multiplication(camera_location,
 					this.computer.create_move_rotate_matrix(0,0,camera_distance,0,0,0));
 		}while(false);
@@ -248,6 +247,7 @@ function construct_camera_object(camera_number,my_component_location_data,my_com
 			camera_location	:	camera_location
 		};
 	};
+	
 	this.compute_camera_data=function(camera_render_parameter)
 	{	
 		var camera_id						=camera_render_parameter.camera_id;
@@ -355,6 +355,14 @@ function construct_camera_object(camera_number,my_component_location_data,my_com
 		
 		project_matrix.center_plane	=this.computer.create_plane_from_two_point(
 				project_matrix.center_point,			project_matrix.eye_point);
+				
+		project_matrix.clip_plane			=camera_render_parameter.clip_plane;
+		project_matrix.clip_plane_matrix	=camera_render_parameter.clip_plane_matrix;
+		
+		project_matrix.mirror_plane			=camera_render_parameter.mirror_plane;
+		project_matrix.mirror_plane_matrix	=camera_render_parameter.mirror_plane_matrix;
+		
+		project_matrix.view_volume_box		=camera_render_parameter.view_volume_box;
 
 		return project_matrix;
 	};

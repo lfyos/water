@@ -266,32 +266,32 @@ public class client_information
 		target_container				=new render_target_container();
 		
 		display_component_collector		=null;
-		target_component_collector_list=new ArrayList<component_collector>();
+		target_component_collector_list	=new ArrayList<component_collector>();
 
-		render_target rt=new render_target(
+		render_target rt=new render_target(false,
 				ek.component_cont.root_component.component_id,0,0,
 				new component[] {ek.component_cont.root_component},new int[] {0},
 				0,0,null,null,null,true,true,true);
 	
-		display_camera_result		=new camera_result(ek.camera_cont.get(rt.camera_id),rt,ek.component_cont);
-		target_camera_result_list	=new ArrayList<camera_result>();
+		display_camera_result			=new camera_result(ek.camera_cont.get(rt.camera_id),rt,ek.component_cont);
+		target_camera_result_list		=new ArrayList<camera_result>();
 		
-		clip_plane			=null;
+		clip_plane						=null;
 		
-		channel_id			=system_channel_id++;
+		channel_id						=system_channel_id++;
 		
-		parameter			=new client_parameter(max_client_loading_number);
+		parameter						=new client_parameter(max_client_loading_number);
 		
-		engine_counter		=my_engine_counter;
-		statistics_user		=my_statistics_user;
+		engine_counter					=my_engine_counter;
+		statistics_user					=my_statistics_user;
 		
-		request_response	=my_request_response;
+		request_response				=my_request_response;
 		
-		process_bar			=my_process_bar;
+		process_bar						=my_process_bar;
 		
-		file_proxy_url_encode_flag=new boolean[0];
-		file_proxy_url_array=new String[0];
-		file_proxy_pointer	=0;
+		file_proxy_url_encode_flag		=new boolean[0];
+		file_proxy_url_array			=new String[0];
+		file_proxy_pointer				=0;
 		
 		render_instance_driver_cont		=new render_instance_driver_container(ek,request_response);
 		part_instance_driver_cont		=new part_instance_driver_container(ek,request_response);	

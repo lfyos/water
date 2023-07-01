@@ -1,11 +1,19 @@
 /*	########################	driver_general		#######################		*/
+/*	render_0	*/	render_target_register			driver_render_target_register.extended_render_driver	driver_general\render_target_register\render.list
+
+
+/*	******************************		driver_lession		********************************************	*/
+/*	render_23	*/	lession_00_start_driver			driver_lession_00_start_driver.extended_render_driver	driver_lession\lession_00_start_driver\render.list
+
+/*
+
+/*	########################	driver_general		#######################		*/
 /*	render_0	*/	audio					driver_audio.extended_render_driver						driver_general\audio\render.list
 /*	render_1	*/	background				driver_background.extended_render_driver				driver_general\background\render.list
 /*	render_2	*/	caption					driver_caption.extended_render_driver					driver_general\caption\render.list
 /*	render_3	*/	coordinate				driver_coordinate.extended_render_driver				driver_general\coordinate\render.list
 /*	render_4	*/	ground_grid				driver_ground_grid.extended_render_driver				driver_general\ground_grid\render.list
 /*	render_5	*/	proxy					driver_proxy.extended_render_driver						driver_general\proxy\render.list
-/*	render_6	*/	render_target_register	driver_render_target_register.extended_render_driver	driver_general\render_target_register\render.list
 /*	render_7	*/	ruler					driver_ruler.extended_render_driver						driver_general\ruler\render.list
 /*	render_8	*/	screen_rectangle		driver_screen_rectangle.extended_render_driver			driver_general\screen_rectangle\render.list
 /*	render_9	*/	show_component_box		driver_show_component_box.extended_render_driver		driver_general\show_component_box\render.list 
@@ -26,7 +34,6 @@
 /*	render_22	*/	movement				driver_movement.extended_render_driver					driver_controller\movement\render.list
 
 /*	******************************		driver_lession		********************************************	*/
-/*	render_23	*/	lession_00_start_driver							driver_lession_00_start_driver.extended_render_driver							driver_lession\lession_00_start_driver\render.list
 /*	render_24	*/	lession_01_modify_location_at_server			driver_lession_01_modify_location_at_server.extended_render_driver				driver_lession\lession_01_modify_location_at_server\render.list
 /*	render_25	*/	lession_02_modify_location_at_client			driver_lession_02_modify_location_at_client.extended_render_driver				driver_lession\lession_02_modify_location_at_client\render.list	
 /*	render_26	*/	lession_03_texture								driver_lession_03_texture.extended_render_driver								driver_lession\lession_03_texture\render.list	
@@ -62,4 +69,6 @@
 /*	########################	driver_project_boat_2011	#######################		*/
 /*	render_47	*/	boat		driver_opengl_fixed_pipeline.extended_render_driver		..\project\boat\part\render.list
 								..\project\boat\part\shader_material.txt				..\project\boat\part\light.txt			
+
+*/
 								

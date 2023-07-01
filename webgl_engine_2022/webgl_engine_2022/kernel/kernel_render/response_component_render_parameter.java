@@ -46,8 +46,8 @@ public class response_component_render_parameter
 						if((render_current_time-lastest_touch_time)>ek.scene_par.touch_time_length)
 							continue;
 					}
-					ren_buf.create_append_render_parameter((type_id==0)?true:false,create_flag,
-						cll,render_current_time,ek,ci,rrd.cam_result,rrd.render_buffer_id,rcc);
+					ren_buf.create_append_render_parameter(create_flag,cll,
+						render_current_time,ek,ci,rrd.cam_result,rrd.render_buffer_id,rcc);
 				}
 			}
 		}

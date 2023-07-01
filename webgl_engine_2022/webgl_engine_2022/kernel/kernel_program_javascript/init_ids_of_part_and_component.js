@@ -65,7 +65,7 @@ function init_ids_of_part_and_component(
 				component_system_id[my_component_system_id]=[
 					render_id,		part_id,	buffer_id,
 					component_id,	driver_id,
-					my_component_system_id
+					my_component_system_id,0,0
 				];
 			}
 			if(typeof(render.part_initialize_data[render_id][part_id])=="undefined")
@@ -78,5 +78,16 @@ function init_ids_of_part_and_component(
 	render.permanent_render_part_id			=permanent_render_part_id;
 	render.part_component_id_and_driver_id	=part_component_id_and_driver_id;
 	
+	var buffer_data=new Array();
+	for(var i=0,ni=render.component_system_id.length;i<ni;i++)
+		buffer_data=buffer_data.concat(render.component_system_id[i]);
+
+	render.system_buffer.ids_buffer=render.webgpu.device.createBuffer(
+		{
+			size	:	buffer_data.length*4,
+			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
+		});
+	render.webgpu.device.queue.writeBuffer(
+		render.system_buffer.ids_buffer,0,new Int32Array(buffer_data));
 	return;
 }

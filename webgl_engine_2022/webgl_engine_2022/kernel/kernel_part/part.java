@@ -264,14 +264,16 @@ public class part
 		head_fw.println("\t\"item_ids\"\t\t:");
 		head_fw.println("\t[");
 		
-		ArrayList<int[]> part_item_ids=part_mesh.id_manager.get_list();
-		for(int id_array[],i=0,ni=part_item_ids.size();i<ni;i++) {
-			if((id_array=part_item_ids.get(i))==null)
-				id_array=new int[] {};
-			head_fw.print("\t\t[",i);
-			for(int j=0,nj=id_array.length;j<nj;j++)
-				head_fw.print(",",id_array[j]);
-			head_fw.println((i<(ni-1))?"],":"]");
+		if(part_par.do_create_part_ids_flag){
+			ArrayList<int[]> part_item_ids=part_mesh.id_manager.get_list();
+			for(int id_array[],i=0,ni=part_item_ids.size();i<ni;i++) {
+				if((id_array=part_item_ids.get(i))==null)
+					id_array=new int[] {};
+				head_fw.print("\t\t[",i);
+				for(int j=0,nj=id_array.length;j<nj;j++)
+					head_fw.print(",",id_array[j]);
+				head_fw.println((i<(ni-1))?"],":"]");
+			}
 		}
 		head_fw.println("\t]");
 		

@@ -1,22 +1,16 @@
-function construct_component_location_object(my_component_number,my_computer,my_webgpu)
+function construct_component_location_object(my_component_number,my_computer)
 {
 	this.component_number	=my_component_number;
 	this.computer			=my_computer;
-	this.webgpu				=my_webgpu;
+	
 
 	this.version_id			=2;
-	this.unit_size			=128;
+	this.unit_size			=64;
 	this.identify_matrix	=[	1,	0,	0,	0,		0,	1,	0,	0,		0,	0,	1,	0,		0,	0,	0,	1];
-	
-	this.component_buffer=this.webgpu.device.createBuffer(
-		{
-			size	:	this.unit_size*this.component_number,
-			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
-		});
-	
+
 	this.component=new Array();
 	
-	for(var i=0,ni=this.component_number;i<ni;i++){
+	for(var i=0,ni=this.component_number;i<ni;i++)
 		this.component[i]={
 			relative_version_id		:	1,
 			absolute_version_id		:	0,
@@ -28,27 +22,16 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			absolute_location		:	this.identify_matrix,
 			
 			parent					:	-1
-		};
-		this.webgpu.device.queue.writeBuffer(this.component_buffer,
-			this.unit_size*i,new Float32Array(this.identify_matrix));
-		this.webgpu.device.queue.writeBuffer(this.component_buffer,
-			this.unit_size*i+this.identify_matrix.length*4,new Int32Array([i]));
-	}
-	
+		}
+
 	this.destroy=function()
 	{
-		if(this.component_buffer==null)
-			return;
-		this.component_buffer.destroy();
-		this.component_buffer=null;
-		
 		for(var i=0;i<this.component_number;i++){
 			this.component[i].absolute_location	=null;
 			this.component[i].move_matrix		=null;
 			this.component[i].relative			=null;
 			this.component[i]					=null;
 		};
-		this.webgpu		=null;
 		this.computer	=null;
 		this.component	=null;
 		
@@ -56,7 +39,6 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		this.decode_location				=null;
 		this.modify_component_location		=null;
 		this.get_one_component_location		=null;
-		this.get_component_location_routine	=null;
 		this.get_component_location			=null;
 	}
 	this.modify_one_component_location=function(component_id,loca)
@@ -105,7 +87,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		return ((component_id<0)||(component_id>=(this.component.length)))
 				?this.identify_matrix:(this.component[component_id].move_matrix);
 	};
-	this.get_component_location_routine=function(component_id)
+	this.get_component_location=function(component_id)
 	{
 		if((component_id<0)||(component_id>=(this.component.length)))
 			return this.identify_matrix;
@@ -137,7 +119,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		if(typeof(this.component[parent_id])=="undefined")
 			return this.identify_matrix;
 
-		var number=0,loca=this.get_component_location_routine(parent_id);
+		var number=0,loca=this.get_component_location(parent_id);
 
 		if(this.component[component_id].absolute_version_id<this.component[parent_id].absolute_version_id){
 			this.component[component_id].absolute_version_id=this.component[parent_id].absolute_version_id;
@@ -157,20 +139,6 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		
 		this.component[component_id].uniform_modify_flag=true;
 		
-		return loca;
-	};
-	this.get_component_location=function(component_id)
-	{
-		var loca;
-
-		if((loca=this.get_component_location_routine(component_id))==null)
-			loca=this.identify_matrix;
-			
-		if(this.component[component_id].uniform_modify_flag){
-			this.component[component_id].uniform_modify_flag=false;
-			this.webgpu.device.queue.writeBuffer(
-				this.component_buffer,this.unit_size*component_id,new Float32Array(loca));
-		}
 		return loca;
 	};
 };

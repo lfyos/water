@@ -6,7 +6,6 @@ public class modifier_container_timer
 {
 	private long timer_adjust_value,last_current_time;
 
-
 	public long get_timer_adjust_value()
 	{
 		return timer_adjust_value;

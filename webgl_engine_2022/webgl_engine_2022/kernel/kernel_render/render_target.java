@@ -6,6 +6,7 @@ import kernel_component.component;
 
 public class render_target
 {
+	public boolean do_render_flag;
 	public int target_id;
 	
 	public int target_comonent_id,target_driver_id,target_texture_id;
@@ -34,13 +35,17 @@ public class render_target
 		mirror_plane=null;
 	}
 	public render_target(
+			boolean my_do_render_flag,
 			int my_target_comonent_id,				int my_target_driver_id,		int my_target_texture_id,
 			component my_comp[],					int my_driver_id[],
 			int my_camera_id,						int my_parameter_channel_id,	box my_view_volume_box,
 			plane my_clip_plane,					plane my_mirror_plane,
 			boolean my_main_display_target_flag,	boolean my_do_discard_lod_flag,	boolean my_do_selection_lod_flag)
 	{
+		
 		target_id				=0;
+		do_render_flag			=my_do_render_flag;
+		
 		target_comonent_id		=my_target_comonent_id;
 		target_driver_id		=my_target_driver_id;
 		target_texture_id		=my_target_texture_id;

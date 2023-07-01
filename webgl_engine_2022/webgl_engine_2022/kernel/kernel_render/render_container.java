@@ -361,11 +361,20 @@ public class render_container
 		debug_information.println();
 		debug_information.println("Begin shader and part initialization,file name is ",shader_file_name);
 
-		for(String str;!(f_shader.eof());){
-			String render_name=(str=f_shader.get_string())==null?"":str.trim();
-			String driver_name=(str=f_shader.get_string())==null?"":str.trim();	
+		while(!(f_shader.eof())){
+			String render_name,driver_name;
+			if((render_name=f_shader.get_string())==null)
+				continue;
+			if((render_name=render_name.trim()).length()<=0)
+				continue;
+			if((driver_name=f_shader.get_string())==null)
+				continue;
+			if((driver_name=driver_name.trim()).length()<=0)
+				continue;
+			
 			debug_information.println("render name:	",	render_name);
 			debug_information.println("Driver name:	",	driver_name);
+			
 			int render_id=(renders==null)?0:(renders.size());
 			render ren=new render(render_id,render_name,driver_name,request_response,system_par,scene_par);
 			if(ren.driver==null) {

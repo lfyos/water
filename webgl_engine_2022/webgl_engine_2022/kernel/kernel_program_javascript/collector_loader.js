@@ -40,6 +40,7 @@ function construct_collector_loader_object(my_render)
 			if(!(load_collector_promise.ok)){
 				epcd.is_loading_collector_flag=false;
 				epcd.collector_stack_version=old_collector_stack_version;
+				
 				alert("request load_collector error,status is "+load_collector_promise.status);
 				alert(load_collector_url);
 				
@@ -54,6 +55,7 @@ function construct_collector_loader_object(my_render)
 			}catch(e){
 				epcd.is_loading_collector_flag=false;
 				epcd.collector_stack_version=old_collector_stack_version;
+				
 				alert("parse load_collector error,status is "+e.toString());
 				alert(load_collector_url);
 				

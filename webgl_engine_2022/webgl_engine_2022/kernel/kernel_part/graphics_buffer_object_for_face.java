@@ -20,7 +20,7 @@ public class graphics_buffer_object_for_face
 			for(int face_id=0,face_number=b.face_number();face_id<face_number;face_id++){
 				face_face ff=b.face_array[face_id].fa_face;
 				int primitive_number=ff.total_face_primitive_number,attribute_number=ff.attribute_number;
-				for(int vertex_id=0,primitive_id=0;primitive_id<primitive_number;primitive_id++){
+				for(int primitive_id=0;primitive_id<primitive_number;primitive_id++){
 					String material_str[]=p_i.get_primitive_material(body_id,face_id,primitive_id);
 					int primitive_vertex_number=p_i.get_primitive_vertex_number(body_id,face_id,primitive_id);
 					int material_id=caculate_material_id.caculate(
@@ -40,7 +40,7 @@ public class graphics_buffer_object_for_face
 						
 						gbo.register(material_str[0],material_str[1],material_str[2],material_str[3]);
 						
-						gbo.register(Integer.toString(body_id),Integer.toString(face_id),Integer.toString(vertex_id++),Integer.toString(flag));
+						gbo.register(ff.system_id,primitive_id,primitive_vertex_id,Integer.toString(flag));
 						
 						for(int attribute_id=0;attribute_id<attribute_number;attribute_id++){
 							my_data		=p_i.get_primitive_vertex_attribute_data(body_id,face_id,primitive_id,primitive_vertex_id,attribute_id);

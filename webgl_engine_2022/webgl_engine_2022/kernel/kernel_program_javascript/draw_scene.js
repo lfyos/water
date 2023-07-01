@@ -1,134 +1,77 @@
-
-function draw_scene_routine(render)
+function draw_scene_routine(render_data,render)
 {
-	var render_data=render.component_render_data.render_data;
-	var render_do_render_number=new Array();
+	var target_driver=render.part_driver[render_data.target_ids.render_id][render_data.target_ids.part_id];
 	
-	for(var i=0,ni=render_data.length,draw_buffer_id=0;i<ni;i++){
-		var render_buffer_id	=render_data[i][0];
-		var target_id			=render_data[i][1];
-		var do_render_number	=render_data[i][2];
+	if((typeof(target_driver)!="object")||(target_driver==null))
+		return;
+	if(typeof(target_driver.begin_render_target)!="function")
+		return;
 
-		if(do_render_number<0)
-			continue;
+	var method_array=target_driver.begin_render_target(render_data,render);
+	if((method_array==null)||(typeof(method_array)=="undefined"))
+		return;
+	if(method_array.length<=0)
+		return;
+	
+	var project_matrix	=render.camera.compute_camera_data(render_data);	
+	render.system_buffer.set_render_buffer(render_data.render_buffer_id,project_matrix);
+	
+	for(var i=0,ni=method_array.length;i<ni;i++){
+		if(typeof(target_driver.begin_render_method)=="function")
+			target_driver.begin_render_method(method_array[i],render_data,project_matrix,render);
 
-		render_data[i][2]--;
-			
-		var render_target_id	= render.target_buffer[target_id][0][0];
-		var parameter_channel_id= render.target_buffer[target_id][0][1];
-		var width				= render.target_buffer[target_id][0][2];
-		var height				= render.target_buffer[target_id][0][3];
-		var render_target_number= render.target_buffer[target_id][0][4];
-		var viewport			= render.target_buffer[target_id][1];
+		for(var render_id=0,render_number=render.part_array.length;render_id<render_number;render_id++){
+			if(typeof(render.part_array[render_id])=="undefined")
+				continue;
+			for(var part_id=0,part_number=render.part_array[render_id].length;part_id<part_number;part_id++){
+				var part_object=render.part_array[render_id][part_id];	
+				if((typeof(part_object)!="object")||(part_object==null))
+					continue;
+				var component_render_parameter=part_object.component_render_parameter;
+				var component_buffer_parameter=part_object.component_buffer_parameter;
+				if(render_data.render_buffer_id>=component_render_parameter.length)
+					continue;
+		    	component_render_parameter=component_render_parameter[render_data.render_buffer_id];
+		    	if(component_render_parameter.length<=0)
+		    		continue;
+		    		
+				var part_driver=render.part_driver[render_id][part_id];
+				if((part_driver==null)||(typeof(part_driver)!="object"))
+					continue;
+				if(typeof(part_driver.draw_component)!="function")
+					continue;
 
-		var project_matrix=render.camera.compute_camera_data(render_buffer_id);
-		var render_framebuffer;
-		var this_draw_buffer_id=-1;
-			
-		if((width>0)&&(height>0)){
-			if(typeof(render.target)=="undefined")
-				render.target=new Array();
-				
-				if(typeof(render.target[render_target_id])=="undefined")
-					render.target[render_target_id]=new construct_framebuffer(
-							render.gl,width,height,render_target_number);
-				else if((render.target[render_target_id].render_target_number!=render_target_number)
-					||(render.target[render_target_id].width!=width)||(render.target[render_target_id].height!=height))
-				{
-					render.target[render_target_id].delete_framebuffer(render.gl);
-					render.target[render_target_id]=new construct_framebuffer(render.gl,width,height,render_target_number);
-				};
-				if(typeof(render.target[target_id])=="undefined")
-					render.target[target_id]=new construct_framebuffer(render.gl,width,height,render_target_number);
-				
-				render.target[target_id].project_matrix=project_matrix;
-				render.gl.bindFramebuffer(render.gl.FRAMEBUFFER,render.target[render_target_id].frame);
-				
-				render_framebuffer=render.target[render_target_id];
-			}else{
-				width	=render.canvas.width;
-				height	=render.canvas.height;
-				
-				render.gl.bindFramebuffer(render.gl.FRAMEBUFFER,null);
-				
-				this_draw_buffer_id=draw_buffer_id++;
-				{
-					//According to draw_buffer_id, engine identifies drawing buffer here.Its parameter is as following.
-					//GL_NONE,GL_FRONT_LEFT,GL_FRONT_RIGHT,GL_BACK_LEFT,GL_BACK_RIGHT,GL_FRONT,GL_BACK,GL_LEFT,GL_RIGHT,GL_FRONT_AND_BACK
-					//At present, WebGL doesn't support multi-buffers. Maybe it will support in the future.
-					//					2019.08.05
-				};
-				render_framebuffer=null;
-			};
-			render.uniform_block.bind_target(project_matrix,render.clip_plane_array[render_buffer_id],
-					render.clip_plane_matrix_array[render_buffer_id],width,height,this_draw_buffer_id);
-			render.viewport			=new Object();
-			render.viewport.width		=width;
-			render.viewport.height	=height;
-			render.viewport.viewport	=viewport;
-			
-			if((target_id>=0)&&(target_id<(render.target_processor.length)))
-				if(typeof(render.target_processor[target_id])=="object")
-					if(typeof(render.target_processor[target_id].before_target_render)=="function")
-						render.target_processor[target_id].before_target_render(
-									target_id,render_target_id,width,height,render_target_number,this);
+		    	part_driver.draw_component(method_array[i],
+					component_render_parameter,component_buffer_parameter,
+					part_object,render_data,project_matrix,render);
+			}
+		}	
+		if(typeof(target_driver.end_render_method)=="function")
+			target_driver.end_render_method(
+				method_array[i],render_data,project_matrix,render);
+	}
+	
+	if(typeof(target_driver.end_render_target)=="function")
+			target_driver.end_render_target(render_data,render);
+	
+	if(render.webgpu.render_pass_encoder!=null){
+		try{
+			render.webgpu.render_pass_encoder.end();
+		}catch(e){
+			;
+		}
+		render.webgpu.render_pass_encoder=null;
+	}
+	return;
+}
 
-			var render_list=render.component_render_data.get_render_list(render_buffer_id);
-			var pass_do_render_number=new Array();
-			
-			for(var viewport_id=0,viewport_number=viewport.length;viewport_id<viewport_number;viewport_id++){
-				var method_id	=viewport[viewport_id][4];
-				var clear_color	=viewport[viewport_id][5];
-				var my_viewport=[
-					Math.round((viewport[viewport_id][0]+1.0)*width /2.0),
-					Math.round((viewport[viewport_id][1]+1.0)*height/2.0),
-					Math.round((viewport[viewport_id][2]    )*width /2.0),
-					Math.round((viewport[viewport_id][3]    )*height/2.0),
-					width,height,(render_framebuffer==null)?true:false
-				];
-				
-				my_viewport[2]=(my_viewport[2]<1)?1:(my_viewport[2]);
-				my_viewport[3]=(my_viewport[3]<1)?1:(my_viewport[3]);
-				
-				var my_clear_color=[0,0,0,0],my_clear_flag=0;
-				if(typeof(clear_color)!="undefined"){
-					this.gl.clearColor(clear_color[0],clear_color[1],clear_color[2],clear_color[3]);
-					this.gl.clearDepth(1.0);
-					this.gl.clearStencil(0);
-					
-					if((viewport_id<=0)&&(target_id==render_target_id)){
-						this.gl.disable(this.gl.SCISSOR_TEST);
-						this.gl.clear(this.gl.COLOR_BUFFER_BIT|this.gl.DEPTH_BUFFER_BIT|this.gl.STENCIL_BUFFER_BIT);
-					}else{
-						this.gl.enable(this.gl.SCISSOR_TEST);
-						this.gl.scissor(my_viewport[0],my_viewport[1],my_viewport[2],my_viewport[3]); 
-						this.gl.clear(this.gl.COLOR_BUFFER_BIT|this.gl.DEPTH_BUFFER_BIT|this.gl.STENCIL_BUFFER_BIT);
-					};
-					my_clear_color=[clear_color[0],clear_color[1],clear_color[2],clear_color[3]];
-					my_clear_flag=1;
-				};
-				
-				this.gl.disable(this.gl.SCISSOR_TEST);
-				this.gl.viewport(my_viewport[0],my_viewport[1],my_viewport[2],my_viewport[3]);
-				this.gl.enable(this.gl.DEPTH_TEST);
-				
-				this.uniform_block.bind_pass(method_id,my_clear_flag,my_viewport,my_clear_color);
-
-				this.render_component(render_list,render_buffer_id,parameter_channel_id,
-					method_id,project_matrix,my_viewport,render_do_render_number,pass_do_render_number);
-			};
-			if((target_id>=0)&&(target_id<(this.target_processor.length)))
-				if(typeof(this.target_processor[target_id])=="object")
-					if(typeof(this.target_processor[target_id].after_target_render)=="function")
-						this.target_processor[target_id].after_target_render(
-									target_id,render_target_id,width,height,render_target_number,this);
-		};
-		this.do_execute_render_number++;
-};
-
-async function draw_scene(render)
+async function draw_scene_main(render)
 {
 	while(!(render.terminate_flag)){
+		for(var i=render.vertex_data_downloader.current_loading_mesh_number,ni=render.parameter.max_loading_number;i<ni;)
+				i+=render.vertex_data_downloader.request_buffer_object_data(render);
+		render.vertex_data_downloader.process_buffer_head_request_queue(render);
+		
 		var start_time=(new Date()).getTime();
 		if(render.browser_current_time>0){
 			var pass_time=(start_time-render.browser_current_time)*1000*1000;
@@ -137,6 +80,7 @@ async function draw_scene(render)
 				render.current_time=new_current_time;
 			else
 				render.current_time++;
+
 			for(var i=0,ni=render.modifier_current_time.length;i<ni;i++){
 				new_current_time =render.modifier_time_parameter.caculate_current_time(i)+pass_time;
 				if(render.modifier_current_time[i]<new_current_time)
@@ -144,33 +88,32 @@ async function draw_scene(render)
 				else
 					render.modifier_current_time[i]++;
 			}
-		};
-		
+		}
+
 		var fun_array=render.routine_array;
 		render.routine_array=new Array();
 		for(var i=0,ni=fun_array.length;i<ni;i++)
 			if(typeof(fun_array[i])=="function")
 				if(fun_array[i](render))
 					render.routine_array.push(fun_array[i]);
+
+		await render.webgpu.device.queue.onSubmittedWorkDone();
 		
-		draw_scene_routine(render);
-		
-		do{
-			if((render.render_request_start_time-render.last_event_time)<=render.parameter.download_minimal_time_length)
-				if((render.render_request_start_time-render.engine_start_time)>render.parameter.download_start_time_length)
-					break;
-					
-			for(var i=render.vertex_data_downloader.current_loading_mesh_number,ni=render.parameter.max_loading_number;i<ni;)
-				i+=render.vertex_data_downloader.request_buffer_object_data(render);
-			render.vertex_data_downloader.process_buffer_head_request_queue(render);
-		}while(false);
-		
-		render.render_time_length=(new Date()).getTime()-start_time;
-		
-		await new Promise(resolve=>
-		{
-			window.requestAnimationFrame(resolve);
-			SetTimeout(resolve,render.parameter.engine_touch_time_length/1000000);
-		});
+		var command_encoder_buffer=new Array();
+		render.system_buffer.set_system_buffer();
+		for(var i=0,ni=render.render_buffer_array.length;i<ni;i++)
+			if(render.render_buffer_array[i].do_render_flag){
+				render.webgpu.command_encoder=render.webgpu.device.createCommandEncoder();
+				draw_scene_routine(render.render_buffer_array[i],render);
+				command_encoder_buffer.push(render.webgpu.command_encoder.finish());
+				render.webgpu.command_encoder=null;
+			}
+		render.webgpu.device.queue.submit(command_encoder_buffer);
+
+		await new Promise((resolve)=>
+			{
+				window.requestAnimationFrame(resolve);
+				setTimeout(resolve,render.parameter.engine_touch_time_length/1000000);
+			});
 	}
 }

@@ -16,7 +16,6 @@ function construct_render_routine(my_webgpu,
     this.title							=render_data[5];
     this.parameter						=render_data[6];
     
-    this.render_shader_data		=new Array();
     this.render_initialize_data	=new Array();
     for(var i=0,ni=my_render_initialize_data.length-1;i<ni;i+=2){
 		var my_data		=my_render_initialize_data[i+0];
@@ -64,7 +63,7 @@ function construct_render_routine(my_webgpu,
 	
 	this.event_component			=new Object();
 
-	this.target_array				=new Array();
+	this.render_buffer_array		=new Array();
 	
 	this.routine_array				=new Array();
 	
@@ -109,13 +108,12 @@ function construct_render_routine(my_webgpu,
 		this.part_driver[i]			=new Array();
 		this.part_array[i]			=new Array();
 	}
-
+	this.system_buffer				=new construct_system_buffer(component_number,this);
 	this.component_location_data	=new construct_component_location_object(component_number,this.computer,this.webgpu);
 	this.component_render_data		=new construct_component_render_parameter(render_number);
 	this.modifier_time_parameter	=new construct_modifier_time_parameter(modifier_container_number);
 	this.vertex_data_downloader		=new construct_download_vertex_data(this.webgpu,this.parameter.max_loading_number);
 	this.camera						=new construct_camera_object(camera_number,this.component_location_data,this.computer);
-	this.system_buffer				=new construct_system_buffer(this);
 	this.operate_component			=new construct_operate_component(this);
 	this.collector_loader			=new construct_collector_loader_object(this);
 	
@@ -144,80 +142,5 @@ function construct_render_routine(my_webgpu,
 	{
 		this.routine_array.push(my_routine_function);
 		return this.routine_array.length-1;
-	};
-	
-	this.render_component=function(render_list,render_buffer_id,parameter_channel_id,
-				method_id,project_matrix,viewport,render_do_render_number,pass_do_render_number)
-	{
-		for(var last_render_id=-1,i=0,ni=render_list.length;i<ni;i++){
-			var render_id			 =render_list[i][0];
-			var part_id				 =render_list[i][1];
-			var component_render_data=render_list[i][2];
-			if(typeof(this.render_program.render_program[render_id])!="object")
-    			continue;
-			var shader_program=this.render_program.render_program[render_id].shader_program;
-			if(typeof(shader_program)!="object")
-    			continue;
-			var draw_function=this.render_program.render_program[render_id].draw_function;
-			if(typeof(draw_function)!="function")
-    			continue;
-			if(typeof(this.buffer_object.buffer_object[render_id])!="object")
-    			continue;
-	    	if(typeof(this.buffer_object.buffer_object[render_id][part_id])!="object")
-		    	continue;
-			if(this.part_array[render_id][part_id].find_error_flag)
-				continue;
-			if(typeof(this.engine_do_render_number[render_id])=="undefined")
-				this.engine_do_render_number[render_id]={
-						render_do_render_number	:	0,
-						part_do_render_number	:	new Array()
-				};
-			if(typeof(this.engine_do_render_number[render_id].part_do_render_number[part_id])=="undefined")
-				this.engine_do_render_number[render_id].part_do_render_number[part_id]=0;
-			if(typeof(render_do_render_number[render_id])=="undefined")
-				render_do_render_number[render_id]={
-						render_do_render_number	:	0,
-						part_do_render_number	:	new Array()
-				};
-			if(typeof(render_do_render_number[render_id].part_do_render_number[part_id])=="undefined")
-				render_do_render_number[render_id].part_do_render_number[part_id]=0;
-			if(typeof(pass_do_render_number[render_id])=="undefined")
-				pass_do_render_number[render_id]={
-						render_do_render_number	:	0,
-						part_do_render_number	:	new Array()
-				};
-			if(typeof(pass_do_render_number[render_id].part_do_render_number[part_id])=="undefined")
-				pass_do_render_number[render_id].part_do_render_number[part_id]=0;
-			if(last_render_id!=render_id){
-				last_render_id=render_id;
-				this.gl.useProgram(shader_program);
-			};
-			
-			this.gl.bindVertexArray(null);
-			
-		    draw_function(				method_id,  	parameter_channel_id,
-		    	render_id,				part_id,		render_buffer_id,
-		    	component_render_data,	project_matrix,		
-		    	{
-		    		viewport_x0		:	viewport[0],
-		    		viewport_y0		:	viewport[1],
-		    		viewport_width	:	viewport[2],
-		    		viewport_height	:	viewport[3],
-		    		target_width	:	viewport[4],
-		    		target_height	:	viewport[5],
-		    		target_flag		:	viewport[6]
-		    	},
-		    	{
-		    		engine_render	:	(this.engine_do_render_number[render_id].render_do_render_number)++,
-		    		engine_part		:	(this.engine_do_render_number[render_id].part_do_render_number[part_id])++,
-			    		
-		    		render_render	:	(render_do_render_number[render_id].render_do_render_number)++,
-		    		render_part		:	(render_do_render_number[render_id].part_do_render_number[part_id])++,
-			    		
-		    		pass_render		:	(pass_do_render_number[render_id].render_do_render_number)++,
-		    		pass_part		:	(pass_do_render_number[render_id].part_do_render_number[part_id])++
-		    	},
-		    	this);
-		};
 	};
 };

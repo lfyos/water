@@ -103,7 +103,7 @@ public class client_parameter
 					continue;
 				if(render_id>=ci.not_acknowledge_render_part_id.length)
 					continue;
-				if(render_id>=ci.not_acknowledge_render_part_id[render_id].length)
+				if(part_id>=ci.not_acknowledge_render_part_id[render_id].length)
 					continue;
 				ci.not_acknowledge_render_part_id[render_id][part_id]=false;
 			}

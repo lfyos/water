@@ -5,15 +5,16 @@ import java.util.ArrayList;
 
 import kernel_part.part;
 import kernel_part.part_parameter;
-import kernel_part.part_container_for_part_search;
-import kernel_common_class.debug_information;
-import kernel_component.component_load_source_container;
 import kernel_driver.render_driver;
-import kernel_engine.system_parameter;
 import kernel_engine.scene_parameter;
+import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
+import kernel_common_class.class_file_reader;
+import kernel_common_class.common_reader;
+import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
-import kernel_program_reader.program_file_reader;
+import kernel_part.part_container_for_part_search;
+import kernel_component.component_load_source_container;
 
 public class render
 {
@@ -88,7 +89,19 @@ public class render
 		driver=original_driver.clone(null,request_response,system_par,scene_par);
 		original_driver.destroy();
 		
-		program_last_time=program_file_reader.get_render_program_last_time(this,system_par);
+		program_last_time=0;
+		String shader_file_name[]=driver.shader_file_name_array();
+		if(shader_file_name!=null)
+			for(int i=0,ni=shader_file_name.length;i<ni;i++) {
+				common_reader reader=class_file_reader.get_reader(shader_file_name[i],
+						driver.getClass(),system_par.text_class_charset,system_par.text_jar_file_charset);
+				if(reader!=null) {
+					if(!(reader.error_flag()))
+						if(program_last_time<reader.lastModified_time)
+							program_last_time=reader.lastModified_time;
+					reader.close();
+				}
+			}
 	}
 	public void delete_last_part()
 	{

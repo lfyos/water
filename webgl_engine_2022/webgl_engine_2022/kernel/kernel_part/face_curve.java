@@ -64,12 +64,12 @@ public class face_curve extends system_id
 		
 		f_loop=new face_loop[] 
 		{
-			new face_loop(p[0],p[1],p[3],p[2],my_extra_data,my_material,id_manager,new int[] {4,id_array[1],id_array[2],0}),		//left face
-			new face_loop(p[5],p[4],p[6],p[7],my_extra_data,my_material,id_manager,new int[] {4,id_array[1],id_array[2],1}),		//right face
-			new face_loop(p[1],p[0],p[4],p[5],my_extra_data,my_material,id_manager,new int[] {4,id_array[1],id_array[2],2}),		//down
-			new face_loop(p[2],p[3],p[7],p[6],my_extra_data,my_material,id_manager,new int[] {4,id_array[1],id_array[2],3}),		//up
-			new face_loop(p[0],p[2],p[6],p[4],my_extra_data,my_material,id_manager,new int[] {4,id_array[1],id_array[2],4}),		//front
-			new face_loop(p[1],p[5],p[7],p[3],my_extra_data,my_material,id_manager,new int[] {4,id_array[1],id_array[2],5})		//back
+			new face_loop(p[0],p[1],p[3],p[2],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],0}),		//left face
+			new face_loop(p[5],p[4],p[6],p[7],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],1}),		//right face
+			new face_loop(p[1],p[0],p[4],p[5],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],2}),		//down
+			new face_loop(p[2],p[3],p[7],p[6],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],3}),		//up
+			new face_loop(p[0],p[2],p[6],p[4],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],4}),		//front
+			new face_loop(p[1],p[5],p[7],p[3],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],5})		//back
 		};
 		
 		caculate_box_and_primitive_number();
@@ -85,7 +85,7 @@ public class face_curve extends system_id
 		else{
 			f_loop=new face_loop[my_face_loop_number];
 			for(int i=0;i<my_face_loop_number;i++)
-				f_loop[i]=new face_loop(fr,id_manager,new int[] {4,id_array[1],id_array[2],i});
+				f_loop[i]=new face_loop(fr,id_manager,new int[] {5,id_array[1],id_array[2],i});
 		}
 		caculate_box_and_primitive_number();
 	}
@@ -98,7 +98,7 @@ public class face_curve extends system_id
 		else{
 			f_loop=new face_loop[s.f_loop.length];
 			for(int i=0,ni=f_loop.length;i<ni;i++)
-				f_loop[i]=new face_loop(s.f_loop[i],id_manager,new int[] {4,id_array[1],id_array[2],i});
+				f_loop[i]=new face_loop(s.f_loop[i],id_manager,new int[] {5,id_array[1],id_array[2],i});
 		}
 		curve_box=s.curve_box;
 		total_edge_primitive_number	=s.total_edge_primitive_number;

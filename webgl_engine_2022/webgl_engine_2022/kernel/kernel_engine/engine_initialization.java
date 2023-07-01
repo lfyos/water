@@ -12,6 +12,7 @@ import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_file_manager.file_directory;
 import kernel_common_class.jason_string;
+import kernel_common_class.class_file_reader;
 import kernel_common_class.common_reader;
 import kernel_common_class.debug_information;
 import kernel_common_class.compress_file_data;
@@ -174,9 +175,23 @@ public class engine_initialization
 			render r=ek.render_cont.renders.get(i);
 			if(r==null)
 				continue;
-			if(last_time>=r.program_last_time)
+			if(last_time<r.program_last_time)
+				last_time=r.program_last_time;
+			String shader_file_name[];
+			if((shader_file_name=r.driver.shader_file_name_array())==null)
 				continue;
-			last_time=r.program_last_time;
+			for(int j=0,nj=shader_file_name.length;j<nj;j++) {
+				common_reader reader=class_file_reader.get_reader(
+					shader_file_name[i],r.driver.getClass(),
+					ek.system_par.text_class_charset,
+					ek.system_par.text_jar_file_charset);
+				if(reader!=null) {
+					if(!(reader.error_flag()))
+						if(last_time<reader.lastModified_time)
+							last_time=reader.lastModified_time;
+					reader.close();
+				}
+			}
 		}
 		
 		ArrayList<component> init_comp=new ArrayList<component>();
@@ -311,26 +326,27 @@ public class engine_initialization
 			int render_number=ek.render_cont.renders.size();
 			process_bar.set_process_bar(true,"file_initialization_4","",0,render_number);
 			for(int render_id=0;render_id<render_number;render_id++) {
-				common_reader reader;
-				String program_str=null;
 				render r=ek.render_cont.renders.get(render_id);
 				process_bar.set_process_bar(false,"file_initialization_4",r.render_name,render_id,render_number);
-				
-				if((reader=program_file_reader.get_render_program_reader(r,ek.system_par))!=null) {
-					program_str=reader.get_text();
-					reader.close();
+				fw.	println("[").print("	",jason_string.change_string(r.render_name));
+
+				String shader_file_name[]=r.driver.shader_file_name_array();
+				if(shader_file_name==null)
+					shader_file_name=new String[] {};
+				for(int i=0,ni=shader_file_name.length;i<ni;i++) {
+					String str="";
+					common_reader reader=class_file_reader.get_reader(
+						shader_file_name[i],r.driver.getClass(),
+						ek.system_par.text_class_charset,
+						ek.system_par.text_jar_file_charset);
+					if(reader!=null) {
+						if(!(reader.error_flag()))
+							str=reader.get_text();
+						reader.close();
+					}
+					fw.println(",").print("	",jason_string.change_string(str));
 				}
-				fw.	println("[").
-					print  ("	",	 jason_string.change_string(r.render_name)).
-					println(",").
-					print  ("	", 	 (program_str==null)?"null"
-									:((program_str=program_str.trim()).length()<=0)?"null"
-									:jason_string.change_string(program_str)).
-					println(",");
-				
-				r.driver.create_shader_data(fw,r,ek,request_response);
-				
-				fw.	println((render_id<(render_number-1))?"],":"]");
+				fw.	println().println((render_id<(render_number-1))?"],":"]");
 			}
 			process_bar.set_process_bar(false,"file_initialization_4","",render_number,render_number);
 		}

@@ -97,7 +97,6 @@ public class component_render
 		for(int i=0;i<component_number;i++)
 			cr.clipper_test(comp[i],component_cont,parameter_channel_id);
 	}
-	
 	private void clear_component_link_list()
 	{
 		delete_in_cll	=null;
@@ -111,7 +110,16 @@ public class component_render
 		lastest_append_touch_time		=0;
 		lastest_refresh_touch_time		=0;
 	}
-	
+	private component_link_list revere_component_link_list(component_link_list cll)
+	{
+		component_link_list ret_val=null;
+		for(component_link_list p;(p=cll)!=null;){
+			cll=cll.next_list_item;
+			p.next_list_item=ret_val;
+			ret_val=p;
+		}
+		return ret_val;
+	}
 	public void mark(component_link_list cll,client_information ci,
 			camera_result cam_result,int render_buffer_id,render_component_counter rcc)
 	{
@@ -119,54 +127,54 @@ public class component_render
 		
 // clear component flag in link list
 		for(component_link_list p=cll;p!=null;p=p.next_list_item){
-			int flag_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
-			flag[flag_id]=0;
-			instance_id[flag_id]=-1;
+			int buffer_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
+			flag[buffer_id]=0;
+			instance_id[buffer_id]=-1;
 		}
 // set component flag in buffer
 		for(int i=0;i<component_number;i++){
 			component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp[i],driver_id[i]);
 			long old_component_render_version=in_dr.get_component_render_version(render_buffer_id);
 			long new_component_render_version=comp[i].driver_array.get(driver_id[i]).get_component_render_version();
-			int flag_id=comp[i].driver_array.get(driver_id[i]).same_part_component_driver_id;
-			flag[flag_id]=(old_component_render_version!=new_component_render_version)?1:2;
-			instance_id[flag_id]=i;
+			int buffer_id=comp[i].driver_array.get(driver_id[i]).same_part_component_driver_id;
+			flag[buffer_id]=(old_component_render_version!=new_component_render_version)?1:2;
+			instance_id[buffer_id]=i;
 		}
 // append component flag in link list	
 		for(component_link_list p=cll;p!=null;p=p.next_list_item){
-			int flag_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
-			switch(flag[flag_id]){
+			int buffer_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
+			switch(flag[buffer_id]){
 			case 0://component not in buffer,but in link list 
 				component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(p.comp,p.driver_id);
 				long old_component_render_version=in_dr.get_component_render_version(render_buffer_id);
 				long new_component_render_version=p.comp.driver_array.get(p.driver_id).get_component_render_version();
-				flag[flag_id]|=(old_component_render_version!=new_component_render_version)?4:8;
+				flag[buffer_id]|=(old_component_render_version!=new_component_render_version)?4:8;
 				
 				if(p.comp.uniparameter.touch_time>lastest_append_touch_time)
 					lastest_append_touch_time=p.comp.uniparameter.touch_time;
 				append_cll=new component_link_list(p.comp,p.driver_id,append_cll);
 				break;
 			case 1://component in both buffer and link list, modified,should update 
-				flag[flag_id]|=4;
+				flag[buffer_id]|=4;
 				if(p.comp.uniparameter.touch_time>lastest_refresh_touch_time)
 					lastest_refresh_touch_time=p.comp.uniparameter.touch_time;
 				refresh_cll=new component_link_list(p.comp,p.driver_id,refresh_cll);
 				break;
 			case 2://component in both buffer and link list, NOT modified, should NOT update 
-				flag[flag_id]|=8;
+				flag[buffer_id]|=8;
 				rcc.component_keep_number++;
 				keep_cll=new component_link_list(p.comp,p.driver_id,keep_cll);
 				break;
 			default://impossible
-				flag[flag_id]=0;
+				flag[buffer_id]=0;
 				break;
 			}
 		}
 
 //create delete_cll, refresh_cll, keep_cll link list
 		for(int i=0;i<component_number;i++){
-			int flag_id=comp[i].driver_array.get(driver_id[i]).same_part_component_driver_id;
-			switch(flag[flag_id]){
+			int buffer_id=comp[i].driver_array.get(driver_id[i]).same_part_component_driver_id;
+			switch(flag[buffer_id]){
 			case 1://last display(refresh),			this not display,DELETE
 			case 2://last display(not refresh),		this not display,DELETE
 				if(comp[i].clip.can_be_clipped_flag){
@@ -184,33 +192,32 @@ public class component_render
 			case 2+8://last display(not refresh),	this display(not refresh),KEEP
 				break;	
 			default://impossible
-				flag[flag_id]=0;
+				flag[buffer_id]=0;
 				break;
 			}
 		}
 		return;
 	}
 	
-	public void create_delete_render_parameter(
-			response_flag create_flag,
+	public void create_delete_render_parameter(	response_flag create_flag,
 			int render_id,int part_id,int render_buffer_id,
-			component_link_list p,long render_current_time,
+			component_link_list cll,long render_current_time,
 			engine_kernel ek,client_information ci,render_component_counter rcc)
 	{
-		for(;p!=null;p=p.next_list_item) {
-			int flag_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
-			switch(flag[flag_id]&(1+2+4+8)){
+		for(;cll!=null;cll=cll.next_list_item) {
+			int buffer_id=cll.comp.driver_array.get(cll.driver_id).same_part_component_driver_id;
+			switch(flag[buffer_id]&(1+2+4+8)){
 			case 1://last display(refresh),			this not display,DELETE
 			case 2://last display(not refresh),		this not display,DELETE
-				if((render_current_time-p.comp.uniparameter.touch_time)>ek.scene_par.touch_time_length)
-					if(rcc.component_delete_number>=ek.scene_par.most_component_delete_number){
-						flag[flag_id]|=16;//become KEEP
+				if(rcc.component_delete_number>=ek.scene_par.most_component_delete_number)
+					if((render_current_time-cll.comp.uniparameter.touch_time)>ek.scene_par.touch_time_length){
+						flag[buffer_id]|=16;//become KEEP
 						break;
 					}
-				int my_instance_id=instance_id[flag_id];
-				instance_id[flag_id]=-1;
+				int my_instance_id=instance_id[buffer_id];
+				instance_id[buffer_id]=-1;
 				
-				part my_part=p.comp.driver_array.get(p.driver_id).component_part;
+				part my_part=cll.comp.driver_array.get(cll.driver_id).component_part;
 				if(create_flag.first_item_flag)
 					create_flag.first_item_flag=false;
 				else
@@ -232,21 +239,21 @@ public class component_render
 										print("]");
 				}else
 					ci.request_response.print(my_instance_id);
-			
-				flag[flag_id]|=32;
+
+				flag[buffer_id]|=32;
 				
 				component_number--;
 				if(my_instance_id<component_number) {
 					comp[my_instance_id]=comp[component_number];
 					driver_id[my_instance_id]=driver_id[component_number];
 					
-					flag_id=comp[my_instance_id].driver_array.
+					buffer_id=comp[my_instance_id].driver_array.
 							get(driver_id[my_instance_id]).same_part_component_driver_id;
-					instance_id[flag_id]=my_instance_id;
+					instance_id[buffer_id]=my_instance_id;
 				}
 				comp[component_number]=null;
 				driver_id[component_number]=-1;
-				
+
 				rcc.component_delete_number++;
 				break;
 			case 1+4://last display(refresh),		this display(refresh),		REFRESH
@@ -254,19 +261,21 @@ public class component_render
 			case 2+8://last display(not refresh),	this display(not refresh),	KEEP
 				break;
 			default://impossible
-				flag[flag_id]=0;
+				flag[buffer_id]=0;
 				break;
 			}
 		}
 		return;
 	}
 	
-	public void create_append_render_parameter(
-			boolean append_or_refresh_flag,response_flag create_flag,
+	public void create_append_render_parameter(response_flag create_flag,
 			component_link_list cll,long render_current_time,
 			engine_kernel ek,client_information ci,
 			camera_result cam_result,int render_buffer_id,render_component_counter rcc)
 	{
+		delete_in_cll=revere_component_link_list(delete_in_cll);
+		delete_out_cll=revere_component_link_list(delete_out_cll);
+		
 		for(component_link_list p=cll;p!=null;p=p.next_list_item){
 			int my_flag;
 			int buffer_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
@@ -290,9 +299,8 @@ public class component_render
 					flag[buffer_id]|=64;
 					continue;
 				}
-				
-				if((render_current_time-p.comp.uniparameter.touch_time)>ek.scene_par.touch_time_length)
-					if((rcc.component_append_number+rcc.component_refresh_number)>=ek.scene_par.most_component_append_number){
+				if((rcc.component_append_number+rcc.component_refresh_number)>=ek.scene_par.most_component_append_number)
+					if((render_current_time-p.comp.uniparameter.touch_time)>ek.scene_par.touch_time_length){
 						if(ci.parameter.comp==null){
 							flag[buffer_id]|=64;
 							continue;
@@ -301,18 +309,33 @@ public class component_render
 							flag[buffer_id]|=64;
 							continue;
 						}
-					}	
+					}
+
 				int my_instance_id;
-				if(my_flag==(1+4))
+				if(my_flag==(1+4)) {
+					rcc.component_refresh_number++;
 					my_instance_id=instance_id[buffer_id];
-				else{
+				}else if(delete_in_cll!=null){
+					rcc.component_refresh_number++;
+					int delete_buffer_id=delete_in_cll.comp.driver_array.get(
+							delete_in_cll.driver_id).same_part_component_driver_id;
+					my_instance_id=instance_id[delete_buffer_id];
+					delete_in_cll=delete_in_cll.next_list_item;
+				}else if(delete_out_cll!=null){
+					rcc.component_refresh_number++;
+					int delete_buffer_id=delete_out_cll.comp.driver_array.get(
+							delete_out_cll.driver_id).same_part_component_driver_id;
+					my_instance_id=instance_id[delete_buffer_id];
+					delete_out_cll=delete_out_cll.next_list_item;
+				}else{
+					rcc.component_append_number++;
 					my_instance_id=component_number++;
-					instance_id	[buffer_id]=my_instance_id;
 					
-					comp[my_instance_id]		=p.comp;
-					driver_id[my_instance_id]	=p.driver_id;
 				}
-				
+				comp[my_instance_id]		=p.comp;
+				driver_id[my_instance_id]	=p.driver_id;
+				instance_id[buffer_id]		=my_instance_id;
+
 				flag[buffer_id]|=128;
 				
 				part my_part=p.comp.driver_array.get(p.driver_id).component_part;
@@ -329,7 +352,8 @@ public class component_render
 					create_flag.render_buffer_id=render_buffer_id;
 					ci.request_response.print(		my_part.render_id).
 										print(",",	my_part.part_id).
-										print(",",	render_buffer_id).print(",");
+										print(",",	render_buffer_id).
+										print(",");
 				}else if(create_flag.render_buffer_id!=render_buffer_id) { 
 					create_flag.render_buffer_id=render_buffer_id;
 					ci.request_response.print(render_buffer_id).print(",");
@@ -353,21 +377,18 @@ public class component_render
 
 				in_dr.update_component_render_version(render_buffer_id,
 						p.comp.driver_array.get(p.driver_id).get_component_render_version());
-				
-				if(append_or_refresh_flag)
-					rcc.component_append_number++;
-				else
-					rcc.component_refresh_number++;
-				
+
 				break;
 			}
 		}
+		delete_in_cll=revere_component_link_list(delete_in_cll);
+		delete_out_cll=revere_component_link_list(delete_out_cll);
 	}
 	public void register_location(engine_kernel ek,client_information ci)
 	{
 		for(int i=0;i<component_number;i++){
-			int flag_id=comp[i].driver_array.get(driver_id[i]).same_part_component_driver_id;
-			switch(flag[flag_id]&(1+2+4+8)){
+			int buffer_id=comp[i].driver_array.get(driver_id[i]).same_part_component_driver_id;
+			switch(flag[buffer_id]&(1+2+4+8)){
 			case 4:		//last not display,				this display(refresh),		need position
 			case 8:		//last not display,				this display(not refresh),	need position
 			case 1+4:	//last display(refresh),		this display(refresh),		need position 	

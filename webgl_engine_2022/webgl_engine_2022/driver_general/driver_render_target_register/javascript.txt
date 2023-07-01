@@ -1,0 +1,87 @@
+function (render_id,render_name,init_data,text_array,common_shader_data,render)
+{
+	this.destroy=function()
+	{
+	
+	};
+	this.create_part_driver=function(part_object,render_driver,render)
+	{
+		this.destroy=function()
+		{
+		
+		};
+		this.draw_component=function (method_data,
+			component_render_parameter,component_buffer_parameter,
+			part_object,render_data,project_matrix,render)
+		{
+		};
+		
+		this.replace_render_parameter=function(instance_id,old_instance_data,new_instance_data,part_object,render_buffer_id)
+		{
+		
+		};
+		this.append_render_parameter=function(instance_id,new_instance_data,part_object,render_buffer_id)
+		{
+		
+		};
+		this.delete_render_parameter=function (instance_id,delete_instance_data,part_object,render_buffer_id)
+		{
+		
+		};
+		
+		this.append_component_parameter=function(buffer_id,append_data,part_object)
+		{
+		
+		};
+		this.shift_component_parameter=function (buffer_id,shift_data,part_object)
+		{
+		
+		};
+		
+		this.begin_render_target=function(render_data,render)
+		{
+			render.webgpu.render_pass_encoder = render.webgpu.command_encoder.beginRenderPass(
+			{
+				colorAttachments: [
+					{
+						view: render.webgpu.context.getCurrentTexture().createView(),
+						clearValue: { r: 0.0, g: 0.0, b: 0.0, a: 1.0 },
+						loadOp: 'clear',
+						storeOp: 'store'
+					}
+				]
+			});
+			
+			return [
+				{
+					method:	0
+				},
+				{
+					method:	1
+				},
+				{
+					method:	2
+				},
+				{
+					method:	3
+				},
+				{
+					method:	4
+				}
+			]
+		};	
+ 
+		this.end_render_target=function (render_data,render)
+		{
+		};
+		
+		this.begin_render_method=function (method_data,render_data,project_matrix,render)
+		{
+		
+		};
+		this.end_render_method=function (method_data,render_data,project_matrix,render)
+		{
+		
+		};
+	};
+}

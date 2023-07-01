@@ -98,7 +98,6 @@ public class camera_buffer
 			}else
 				ci.request_response.print(",",current_camera_id);
 			ci.request_response.print(",2,",half_fovy_tanl[current_camera_id]=cam.parameter.half_fovy_tanl);
-			ci.request_response.print(",");
 		}
 		if(Math.abs(cam.parameter.near_ratio-near_ratio[current_camera_id])>const_value.min_value){
 			if(create_flag.first_item_flag) {

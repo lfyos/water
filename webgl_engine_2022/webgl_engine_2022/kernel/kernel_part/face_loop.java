@@ -54,7 +54,7 @@ public class face_loop extends system_id
 				edge=new face_edge[s.edge.length];
 				for(int i=0,ni=edge.length;i<ni;i++)
 					edge[i]=new face_edge(s.edge[i],id_manager,
-									new int[] {5,id_array[1],id_array[2],id_array[3],i});
+									new int[] {6,id_array[1],id_array[2],id_array[3],i});
 			}
 		}
 		loop_box=(s.loop_box==null)?null:new box(s.loop_box);
@@ -72,7 +72,7 @@ public class face_loop extends system_id
 		else {
 			edge=new face_edge[my_edge_number];		
 			for(int i=0;i<my_edge_number;i++)
-				edge[i]=new face_edge(fr,id_manager,new int[] {5,id_array[1],id_array[2],id_array[3],i});
+				edge[i]=new face_edge(fr,id_manager,new int[] {6,id_array[1],id_array[2],id_array[3],i});
 		}
 		caculate_box_and_primitive_number();
 	}
@@ -83,10 +83,10 @@ public class face_loop extends system_id
 		super(id_manager,id_array);
 		
 		edge=new face_edge[4];
-		edge[0]=new face_edge(p0,p1,my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],id_array[3],0});
-		edge[1]=new face_edge(p1,p2,my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],id_array[3],1});
-		edge[2]=new face_edge(p2,p3,my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],id_array[3],2});
-		edge[3]=new face_edge(p3,p0,my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],id_array[3],3});
+		edge[0]=new face_edge(p0,p1,my_extra_data,my_material,id_manager,new int[] {6,id_array[1],id_array[2],id_array[3],0});
+		edge[1]=new face_edge(p1,p2,my_extra_data,my_material,id_manager,new int[] {6,id_array[1],id_array[2],id_array[3],1});
+		edge[2]=new face_edge(p2,p3,my_extra_data,my_material,id_manager,new int[] {6,id_array[1],id_array[2],id_array[3],2});
+		edge[3]=new face_edge(p3,p0,my_extra_data,my_material,id_manager,new int[] {6,id_array[1],id_array[2],id_array[3],3});
 		caculate_box_and_primitive_number();
 	}
 };

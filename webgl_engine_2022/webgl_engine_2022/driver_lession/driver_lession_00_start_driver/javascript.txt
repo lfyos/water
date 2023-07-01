@@ -1,0 +1,102 @@
+function (render_id,render_name,init_data,text_array,common_shader_data,render)
+{
+	var program=render.webgpu.device.createShaderModule(
+		{
+			code: text_array[0]
+		});
+	this.pipeline = render.webgpu.device.createRenderPipeline(
+	    {
+	    	layout: "auto",
+		    vertex: {
+				module: 	program,
+				entryPoint:"vertex_main",
+				buffers:[
+					{
+						arrayStride	:	80,
+						attributes	:	[
+							{	//vertex
+								format			:	"float32x4",
+								offset			:	0,
+								shaderLocation	:	0
+							},
+							{	//normal
+								format			:	"float32x4",
+								offset			:	16,
+								shaderLocation	:	1
+							},
+							{	//material
+								format			:	"float32x4",
+								offset			:	32,
+								shaderLocation	:	2
+							},
+							{	//ID
+								format			:	"float32x4",
+								offset			:	48,
+								shaderLocation	:	3
+							},
+							{	//attribute
+								format			:	"float32x4",
+								offset			:	64,
+								shaderLocation	:	4
+							}
+						]
+					}
+				]
+		    },
+			fragment: {
+				module: program,
+				entryPoint:"fragment_main",
+				targets: [
+					{
+				          format: render.webgpu.gpu.getPreferredCanvasFormat(),
+					}
+				],
+			},
+			primitive: {
+			      topology:"triangle-list",
+			}
+		});
+
+	this.create_part_driver=function(part_object,render_driver,render)
+	{
+		this.draw_component=function (method_data,
+			component_render_parameter,component_buffer_parameter,
+			part_object,render_data,project_matrix,render)
+		{
+			var p	=part_object.buffer_object.face.region_data;
+			var rpe	=render.webgpu.render_pass_encoder;
+			
+			rpe.setPipeline(render_driver.pipeline);
+			for(var i=0,ni=p.length;i<ni;i++){
+				rpe.setVertexBuffer(0,p[i].buffer);
+				rpe.draw(p[i].item_number);
+				rpe.draw(3);
+
+				console.log(JSON.stringify(p[i]))
+			}
+		}
+		this.decode_vertex_data=function(request_type_string,buffer_object_data,part_object)
+		{
+			var ret_val=
+			{
+				material_id		:	buffer_object_data.material_id,
+				region_box		:	buffer_object_data.region_box,
+				region_data		:	(request_type_string!="face")?new Array():buffer_object_data.region_data,
+				item_number		:	(request_type_string!="face")?0:(buffer_object_data.item_number),
+				item_size		:	(request_type_string!="face")?4:
+						(buffer_object_data.region_data.length/buffer_object_data.item_number),
+				private_data	:	null
+			};
+			return ret_val;
+		}
+		
+		this.destroy=function()
+		{
+		
+		}
+	}
+	this.destroy=function()
+	{
+
+	}
+}

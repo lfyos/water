@@ -4,11 +4,11 @@
 	
 		not_part_list
 		
-		file_program	initialization
+//		file_program	initialization
 	
 		mount			common.assemble
-		mount			background.assemble
+//		mount			background.assemble
 		mount			camera_light.assemble
-		mount			menu\root_menu.assemble
+//		mount			menu\root_menu.assemble
 		
 	/* 1children number */	0

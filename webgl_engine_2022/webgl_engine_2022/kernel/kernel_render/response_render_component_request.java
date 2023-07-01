@@ -60,6 +60,8 @@ public class response_render_component_request
 	}
 	private static void process_target(engine_kernel ek,client_information ci,render_component_counter rcc)
 	{
+		render_target rt;
+		camera_result cr;
 		int target_number=ci.target_container.get_render_target_number();
 		for(int pos;(pos=ci.target_component_collector_list.size())<target_number;){
 			ci.target_component_collector_list.add(pos,null);
@@ -68,50 +70,45 @@ public class response_render_component_request
 
 		ArrayList<render_target>target_list=ci.target_container.get_render_target();
 		
-		for(int i=0,ni=target_list.size();i<ni;i++) {
-			render_target rt;
+		for(int i=0,ni=target_list.size();i<ni;i++)
 			if((rt=target_list.get(i)).camera_id>=0)
 				if(rt.camera_id<ek.camera_cont.size())
 					ci.target_camera_result_list.set(rt.target_id,
 						new camera_result(ek.camera_cont.get(rt.camera_id),rt,ek.component_cont));
-		}
-		for(int i=0,ni=target_list.size();i<ni;i++) {
-			render_target rt;
-			camera_result cr;
+		
+		for(int i=0,ni=target_list.size();i<ni;i++)
 			if((rt=target_list.get(i)).main_display_target_flag)
 				if((cr=ci.target_camera_result_list.get(rt.target_id))!=null){
 					ci.display_camera_result=cr;
 					break;
 				}
-		}
 		
 		ArrayList<response_render_data> render_data_list=new ArrayList<response_render_data> (); 
 		
 		ci.request_response.print(",[");
-		for(int i=0,ni=target_list.size();i<ni;i++){
-			render_target rt=target_list.get(i);
-			camera_result cr=ci.target_camera_result_list.get(rt.target_id);
-			int render_buffer_id=cr.get_render_buffer_id(ci);
-			long do_render_number=ci.target_container.get_do_render_number(rt.target_id);
-			ci.render_buffer.location_buffer.put_in_list(cr.cam.eye_component,ek);
-			
-			if(i>0)
-				ci.request_response.print(",");
-			ci.request_response.print(render_buffer_id).print(",",do_render_number);
-			
-			component_collector collector=collect_render_parts(render_data_list,render_buffer_id,rt,ek,ci,cr);
-			
-			ci.target_component_collector_list.set(rt.target_id,collector);
-			if(ci.display_camera_result!=null)
-				if(ci.display_camera_result.target.target_id==rt.target_id)
-					ci.display_component_collector=collector;
-			
-			ci.render_buffer.target_buffer.response_parameter(render_buffer_id,rt,ci.request_response);
-		}
+		for(int response_number=0,i=0,ni=target_list.size();i<ni;i++)
+			if((rt=target_list.get(i))!=null)
+				if(rt.do_render_flag){
+					cr=ci.target_camera_result_list.get(rt.target_id);
+					int render_buffer_id=cr.get_render_buffer_id(ci);
+					ci.render_buffer.location_buffer.put_in_list(cr.cam.eye_component,ek);
+					
+					ci.request_response.print(((response_number++)<=0)?"":",",render_buffer_id);
+		
+					component_collector collector=collect_render_parts(render_data_list,render_buffer_id,rt,ek,ci,cr);
+
+					ci.target_component_collector_list.set(rt.target_id,collector);
+					if(ci.display_camera_result!=null)
+						if(ci.display_camera_result.target.target_id==rt.target_id)
+							ci.display_component_collector=collector;
+					
+					ci.render_buffer.target_buffer.response_parameter(render_buffer_id,rt,ci.request_response);
+				}
 		ci.request_response.print("]");
 		
 		response_component_render_parameter.response(render_data_list,ek,ci,rcc);
 	}
+
 	private static void response_parameter(engine_kernel ek,client_information ci,long delay_time_length)
 	{
 		long my_current_time_difference;
@@ -126,11 +123,11 @@ public class response_render_component_request
 			modifier_container_timer timer=ek.modifier_cont[i].get_timer();
 			modifier_parameter_buffer old_p=ci.render_buffer.modifier_parameter[i];
 			modifier_parameter_buffer new_p=new modifier_parameter_buffer(timer.get_timer_adjust_value());
-			if(new_p.timer_adjust_value!=old_p.timer_adjust_value){
-				ci.request_response.print(",",i);
-				ci.request_response.print(",",new_p.timer_adjust_value-old_p.timer_adjust_value);
-				ci.render_buffer.modifier_parameter[i]=new_p;
-			}
+			if(new_p.timer_adjust_value==old_p.timer_adjust_value)
+				continue;
+			ci.request_response.print(",",i);
+			ci.request_response.print(",",new_p.timer_adjust_value-old_p.timer_adjust_value);
+			ci.render_buffer.modifier_parameter[i]=new_p;
 		}
 		ci.request_response.print("]");
 	}
@@ -244,8 +241,8 @@ public class response_render_component_request
 
 		if((index_id=(str=str.substring(index_id+1)).indexOf("_"))<0)
 			return;
-		int render_id=Integer.decode(str.substring(0,index_id  ));
-		int part_id  =Integer.decode(str.substring(  index_id+1));
+		int loading_render_id=Integer.decode(str.substring(0,index_id  ));
+		int loading_part_id  =Integer.decode(str.substring(  index_id+1));
 			
 		if((str=ci.request_response.get_parameter("language"))==null)
 			str="english";
@@ -266,10 +263,10 @@ public class response_render_component_request
 			percentage/=total_length;
 			str+="K/"+Integer.toString((int)percentage)+"%]";
 		}
-		if((render_id>=0)&&(render_id<ek.render_cont.renders.size())) {
-			render r=ek.render_cont.renders.get(render_id);
-			if((part_id>=0)&&(part_id<r.parts.size())) {
-				part p=r.parts.get(part_id);
+		if((loading_render_id>=0)&&(loading_render_id<ek.render_cont.renders.size())) {
+			render r=ek.render_cont.renders.get(loading_render_id);
+			if((loading_part_id>=0)&&(loading_part_id<r.parts.size())) {
+				part p=r.parts.get(loading_part_id);
 				if(p!=null)
 					str+=":"+p.user_name;
 			}

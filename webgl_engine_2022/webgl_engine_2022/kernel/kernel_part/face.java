@@ -51,8 +51,8 @@ public class face  extends system_id
 		super(id_manager,id_array);
 		
 		name	=new String(s.name);
-		fa_face	=(s.fa_face ==null)?null:new face_face (s.fa_face,id_manager,new int[] {2,id_array[1],id_array[2]});
-		fa_curve=(s.fa_curve==null)?null:new face_curve(s.fa_curve,id_manager,new int[] {3,id_array[1],id_array[2]});
+		fa_face	=(s.fa_face ==null)?null:new face_face (s.fa_face,id_manager,new int[] {3,id_array[1],id_array[2]});
+		fa_curve=(s.fa_curve==null)?null:new face_curve(s.fa_curve,id_manager,new int[] {4,id_array[1],id_array[2]});
 		reference_part=s.reference_part;
 		face_box=(s.face_box==null)?null:new box(s.face_box);
 	}
@@ -62,8 +62,8 @@ public class face  extends system_id
 
 		name=fr.get_string();
 		name=(name==null)?"":name;
-		fa_face=new face_face(fr,id_manager,new int[]		{2,id_array[1],id_array[2]});
-		fa_curve=new face_curve(fr,id_manager,new int[]		{3,id_array[1],id_array[2]});
+		fa_face=new face_face(fr,id_manager,new int[]		{3,id_array[1],id_array[2]});
+		fa_curve=new face_curve(fr,id_manager,new int[]		{4,id_array[1],id_array[2]});
 		reference_part=null;
 		caculate_box();
 	}
@@ -92,11 +92,11 @@ public class face  extends system_id
 		if(my_material==null)
 			my_material=new String[] {"0","0","0","0"};
 		fa_curve=new face_curve(my_face_loca,my_face_box,my_extra_data,my_material,
-						id_manager,new int[] {3,id_array[1],id_array[2]});
+						id_manager,new int[] {4,id_array[1],id_array[2]});
 		fa_face=new face_face(fa_curve.curve_box,
 				(double_attribute_number<string_attribute_number)
 				?double_attribute_number:string_attribute_number,
-				id_manager,new int[] {2,id_array[1],id_array[2]});		
+				id_manager,new int[] {3,id_array[1],id_array[2]});		
 
 		reference_part=my_reference_part;
 		caculate_box();

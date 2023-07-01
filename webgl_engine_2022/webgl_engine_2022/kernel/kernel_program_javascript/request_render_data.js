@@ -1,3 +1,4 @@
+
 async function request_render_data(render)
 {
 	function create_request_url(render)
@@ -13,13 +14,13 @@ async function request_render_data(render)
 			render.view_bak.y=render.view.y;
 			request_url+="&y="+(render.view.y.toString());
 		};
-		if(Math.abs(render.view_bak.canvas_width-render.canvas.width)>min_value){
-			render.view_bak.canvas_width=render.canvas.width;
-			request_url+="&width="+(render.canvas.width.toString());
+		if(Math.abs(render.view_bak.canvas_width-render.webgpu.canvas.width)>min_value){
+			render.view_bak.canvas_width=render.webgpu.canvas.width;
+			request_url+="&width="+(render.webgpu.canvas.width.toString());
 		};
-		if(Math.abs(render.view_bak.canvas_height-render.canvas.height)>min_value){
-			render.view_bak.canvas_height=render.canvas.height;
-			request_url+="&height="+(render.canvas.height.toString());
+		if(Math.abs(render.view_bak.canvas_height-render.webgpu.canvas.height)>min_value){
+			render.view_bak.canvas_height=render.webgpu.canvas.height;
+			request_url+="&height="+(render.webgpu.canvas.height.toString());
 		};
 		if(render.view_bak.in_canvas_flag^render.event_listener.mouse_inside_canvas_flag){
 			render.view_bak.in_canvas_flag=render.event_listener.mouse_inside_canvas_flag;
@@ -95,21 +96,22 @@ async function request_render_data(render)
 	
 	function parse_target_parameter(response_data,render)
 	{
-		for(var i=0,ni=render.target_array.length;i<ni;)
-			render.target_array[i].do_render_number=0;
-		
+		for(var i=0,ni=render.render_buffer_array.length;i<ni;i++)
+			render.render_buffer_array[i].do_render_flag=false;
+
 		for(var i=0,ni=response_data.length;i<ni;){
 			var my_render_buffer_id	=response_data[i++];
-			var my_do_render_number	=response_data[i++];
 			var my_data				=response_data[i++];
-			
-			if(typeof(render.target_array[my_render_buffer_id])!="object")
-				render.target_array[my_render_buffer_id]=new Object();
-			
-			var p=render.target_array[my_render_buffer_id];
-			p.render_buffer_id=my_render_buffer_id;
-			p.do_render_number=my_do_render_number;
-			
+
+			while(my_render_buffer_id>=render.render_buffer_array.length)
+				render.render_buffer_array.push({
+					do_render_flag	:	false
+				});
+
+			var p=render.render_buffer_array[my_render_buffer_id];
+			p.do_render_flag	=true;
+			p.render_buffer_id	=my_render_buffer_id;
+
 			for(var j=0,nj=my_data.length;j<nj;)
 				switch(my_data[j++]){
 				default:
@@ -119,15 +121,15 @@ async function request_render_data(render)
 					var my_target_driver_id		=my_data[j++];
 					var my_ids=render.component_render_id_and_part_id;
 					my_ids=my_ids[my_target_component_id][my_target_driver_id];
-					
+
 					p.target_ids={
 						component_id	:	my_target_component_id,
 						driver_id		:	my_target_driver_id,
+
 						render_id		:	my_ids[0],
 						part_id			:	my_ids[1],
 						buffer_id		:	my_ids[2]
 					};
-					
 					break;
 				case 1:
 					p.target_texture_id=my_data[j++];
@@ -137,8 +139,8 @@ async function request_render_data(render)
 					break;
 				case 3:
 					p.view_volume_box=[
-						[	my_data[j++],	my_data[j++],	my_data[j++],1	],
-						[	my_data[j++],	my_data[j++],	my_data[j++],1	]
+						[	my_data[j++],	my_data[j++],	my_data[j++],	1	],
+						[	my_data[j++],	my_data[j++],	my_data[j++],	1	]
 					];
 					break;
 				case 4:
@@ -162,7 +164,8 @@ async function request_render_data(render)
 				}
 		}
 		return;
-	}	
+	}
+	
 	async function fetch_web_server_response_data(request_url,render)
 	{
 		var fetch_start_time=(new Date()).getTime();
@@ -177,6 +180,7 @@ async function request_render_data(render)
 			alert("request fetch_web_server_response_data fail: "+request_url);
 			return true;
 		}
+		
 		var response_data;
 		try{
 			response_data = await render_promise.json();
@@ -214,7 +218,7 @@ async function request_render_data(render)
 		if((my_delay_time_length-=(current_time-start_time))>0){
 			await new Promise(resolve=>
 			{
-				SetTimeout(resolve,my_delay_time_length);
+				setTimeout(resolve,my_delay_time_length);
 			});
 			continue;
 		}
@@ -224,7 +228,7 @@ async function request_render_data(render)
 		await new Promise(resolve=>
 		{
 			window.requestAnimationFrame(resolve);
-			SetTimeout(resolve,render.parameter.engine_touch_time_length/1000000);
+			setTimeout(resolve,render.parameter.engine_touch_time_length/1000000);
 		});
 	}
 }

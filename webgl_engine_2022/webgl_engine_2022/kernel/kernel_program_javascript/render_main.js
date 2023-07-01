@@ -21,47 +21,46 @@ async function render_main(create_engine_sleep_time_length_scale,
 			var component_id=response_fun_array[i].component_id;
 			var component_name=response_fun_array[i].component_name;
 			var init_function=response_fun_array[i].initialization_function;
+			
 			if(typeof(init_function)!="string"){
-				console.log("component init_function program is not string:	"+component_name+"		"+component_id);
-				console.log(response_fun_array[i].initialization_function);
+				alert("component init_function program is not string:	"+component_name+"		"+component_id);
+				alert(response_fun_array[i].initialization_function);
 				continue;
 			}
 			if((init_function=init_function.trim()).length<=0){
-				console.log("component init_function program is empty:	"+component_name+"		"+component_id);
-				console.log(response_fun_array[i].initialization_function);
+				alert("component init_function program is empty:	"+component_name+"		"+component_id);
+				alert(response_fun_array[i].initialization_function);
 				continue;
 			}
 			try{
 				init_function=(eval("["+init_function+"]"))[0];
 			}catch(e){
-				console.log("Error compile component init_function:	"
+				alert("Error compile component init_function:	"
 					+component_name+"		"+component_id+"		"+e.toString());
-				console.log(response_fun_array[i].initialization_function);
+				alert(response_fun_array[i].initialization_function);
 				continue;
 			}
 			if(typeof(init_function)!="function"){
-				console.log("component init_function is NOT FUNCTION:	"
+				alert("component init_function is NOT FUNCTION:	"
 					+component_name+"		"+component_id+"		"+e.toString());
-				console.log(response_fun_array[i].initialization_function);
+				alert(response_fun_array[i].initialization_function);
 				continue;
 			}
 			try{
 				init_function(component_name,component_id,render);
 			}catch(e){
-				console.log("Error execute component init_function:	"
+				alert("Error execute component init_function:	"
 					+component_name+"		"+component_id+"		"+e.toString());
-				console.log(response_fun_array[i].initialization_function);
+				alert(response_fun_array[i].initialization_function);
 				continue;
 			}
 		}
 		
 		for(var render_id=0,render_number=program_data.length;render_id<render_number;render_id++){
-			var my_render_name				=	program_data[render_id][0];
-			var my_driver_function			=	program_data[render_id][1];
-			var my_shader_data				=	program_data[render_id][2];
-			
-			render.render_shader_data[i]	=	my_shader_data;
-			render.render_driver[render_id]	=	null;
+			var my_render_name					=	program_data[render_id].shift();
+			var my_driver_function				=	program_data[render_id].shift();
+
+			render.render_driver[render_id]=null;
 			
 			try{
 				my_driver_function=(eval("["+my_driver_function+"]"))[0];
@@ -74,23 +73,22 @@ async function render_main(create_engine_sleep_time_length_scale,
 				continue;
 			}
 			try{
-				render.render_driver[render_id]=my_driver_function(render_id,my_render_name,
-					render.render_initialize_data[render_id],render.render_shader_data[i],render);
+				render.render_driver[render_id]=new my_driver_function(
+					render_id,my_render_name,render.render_initialize_data[render_id],
+					program_data[render_id],common_shader_data,render);
 			}catch(e){
 				render.render_driver[render_id]=null;
 				alert("create render driver fail	"+my_render_name);
+				alert(e.toString());
 				continue;
 			}
 		};
-		
-		render.common_shader_data=common_shader_data;
-		
 		request_render_data(render);
-		draw_scene(render);
+		draw_scene_main(render);
 		
 		return render;
 	};
-	
+
 	async function request_create_engine(create_engine_sleep_time_length_scale,
 		create_engine_sleep_time_length,create_engine_max_sleep_time_length,
 		my_webgpu,request_url,my_url,my_user_name,my_pass_word,my_language_name,process_bar_id)
@@ -126,13 +124,9 @@ async function render_main(create_engine_sleep_time_length_scale,
 					alert(initialization_url);
 					return null;
 				}
-				try{
-					return render_initialization(init_data,
-							new construct_render_routine(my_webgpu,my_url,
+				return render_initialization(init_data,
+						new construct_render_routine(my_webgpu,my_url,
 								my_user_name,my_pass_word,my_language_name,create_data));
-				}catch(e){
-					return null;
-				}
 			}
 			if(typeof(create_data)!="boolean"){
 				alert("Web server error, response_data type is NOT boolean!");

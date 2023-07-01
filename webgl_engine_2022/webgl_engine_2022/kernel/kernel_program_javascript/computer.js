@@ -285,7 +285,39 @@ function construct_computation_object()
 		};
 		return false;
 	};
-	
+	this.combine_box=function(b1,b2)
+	{
+		var ret_val=[
+			[
+				(b1[0][0]<b2[0][0])?b1[0][0]:b2[0][0],
+				(b1[0][1]<b2[0][1])?b1[0][1]:b2[0][1],
+				(b1[0][2]<b2[0][2])?b1[0][2]:b2[0][2],
+				1
+			],
+			[
+				(b1[1][0]>b2[1][0])?b1[1][0]:b2[1][0],
+				(b1[1][1]>b2[1][1])?b1[1][1]:b2[1][1],
+				(b1[1][2]>b2[1][2])?b1[1][2]:b2[1][2],
+				1
+			]
+		];
+		
+		ret_val=[
+			[
+				(ret_val[0][0]<ret_val[1][0])?ret_val[0][0]:ret_val[1][0],
+				(ret_val[0][1]<ret_val[1][1])?ret_val[0][1]:ret_val[1][1],
+				(ret_val[0][2]<ret_val[1][2])?ret_val[0][2]:ret_val[1][2],
+				1
+			],
+			[
+				(ret_val[0][0]>ret_val[1][0])?ret_val[0][0]:ret_val[1][0],
+				(ret_val[0][1]>ret_val[1][1])?ret_val[0][1]:ret_val[1][1],
+				(ret_val[0][2]>ret_val[1][2])?ret_val[0][2]:ret_val[1][2],
+				1
+			]
+		];
+		return ret_val;
+	};
 	this.destroy=function()
 	{
 //		this.destroy						=null;
