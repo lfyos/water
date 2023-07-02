@@ -1,21 +1,21 @@
-function construct_component_location_object(my_component_number,my_computer)
+function construct_component_location_object(my_component_number,my_computer,my_webgpu)
 {
 	this.component_number	=my_component_number;
 	this.computer			=my_computer;
-	
+	this.webgpu				=my_webgpu;
 
-	this.version_id			=2;
-	this.unit_size			=64;
+	this.version_id			=3;
 	this.identify_matrix	=[	1,	0,	0,	0,		0,	1,	0,	0,		0,	0,	1,	0,		0,	0,	0,	1];
 
-	this.component=new Array();
+	this.component	=new Array();
+	this.buffer		=new Array();
 	
-	for(var i=0,ni=this.component_number;i<ni;i++)
+	for(var i=0,ni=this.component_number;i<ni;i++){
 		this.component[i]={
-			relative_version_id		:	1,
-			absolute_version_id		:	0,
+			buffer_version_id		:	0,
+			relative_version_id		:	2,
+			absolute_version_id		:	1,
 			caculate_location_flag	:	false,
-			uniform_modify_flag		:	true,
 			
 			relative				:	this.identify_matrix,
 			move_matrix				:	this.identify_matrix,
@@ -23,6 +23,12 @@ function construct_component_location_object(my_component_number,my_computer)
 			
 			parent					:	-1
 		}
+		this.buffer[i]=this.webgpu.device.createBuffer(
+		{
+			size	:	Float32Array.BYTES_PER_ELEMENT*this.identify_matrix.length,
+			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
+		});
+	}
 
 	this.destroy=function()
 	{
@@ -31,9 +37,14 @@ function construct_component_location_object(my_component_number,my_computer)
 			this.component[i].move_matrix		=null;
 			this.component[i].relative			=null;
 			this.component[i]					=null;
+			
+			this.buffer[i].destroy();
+			this.buffer[i]=null;
 		};
 		this.computer	=null;
+		this.webgpu		=null;
 		this.component	=null;
+		this.buffer		=null;
 		
 		this.modify_one_component_location	=null;
 		this.decode_location				=null;
@@ -41,6 +52,7 @@ function construct_component_location_object(my_component_number,my_computer)
 		this.get_one_component_location		=null;
 		this.get_component_location			=null;
 	}
+	
 	this.modify_one_component_location=function(component_id,loca)
 	{
 		if((component_id>=0)&&(component_id<this.component.length)){
@@ -87,18 +99,26 @@ function construct_component_location_object(my_component_number,my_computer)
 		return ((component_id<0)||(component_id>=(this.component.length)))
 				?this.identify_matrix:(this.component[component_id].move_matrix);
 	};
+	this.get_component_version=function(component_id)
+	{
+		if((component_id<0)||(component_id>=(this.component.length)))
+			return 0;
+		if(typeof(this.component[component_id])!="object")
+			return 0;
+		return this.component[component_id].absolute_version_id;
+	}
+	
 	this.get_component_location=function(component_id)
 	{
 		if((component_id<0)||(component_id>=(this.component.length)))
 			return this.identify_matrix;
-		if(typeof(this.component[component_id])=="undefined")
+		if(typeof(this.component[component_id])!="object")
 			return this.identify_matrix;
 		
 		if(this.component[component_id].caculate_location_flag){
 			if(this.component[component_id].absolute_version_id<this.component[component_id].relative_version_id){
 				this.component[component_id].absolute_version_id=this.component[component_id].relative_version_id;
 				this.component[component_id].absolute_location	=this.component[component_id].move_matrix;
-				this.component[component_id].uniform_modify_flag=true;
 			}
 			return this.component[component_id].absolute_location;
 		}
@@ -110,12 +130,9 @@ function construct_component_location_object(my_component_number,my_computer)
 				this.component[component_id].absolute_version_id=this.component[component_id].relative_version_id;
 				this.component[component_id].absolute_location=this.computer.matrix_multiplication(
 						this.component[component_id].relative,this.component[component_id].move_matrix);
-				
-				this.component[component_id].uniform_modify_flag=true;
 			}
 			return this.component[component_id].absolute_location;
 		}
-
 		if(typeof(this.component[parent_id])=="undefined")
 			return this.identify_matrix;
 
@@ -137,8 +154,17 @@ function construct_component_location_object(my_component_number,my_computer)
 		loca=this.computer.matrix_multiplication(loca,this.component[component_id].move_matrix);
 		this.component[component_id].absolute_location=loca;
 		
-		this.component[component_id].uniform_modify_flag=true;
-		
 		return loca;
+	};
+	this.get_component_location_and_update_buffer=function(component_id)
+	{
+		if((component_id<0)||(component_id>=(this.component.length)))
+			return this.identify_matrix;
+		var loca=this.get_component_location(component_id);
+		var p=this.component[component_id];
+		if(p.buffer_version_id<p.absolute_version_id){
+			p.buffer_version_id=p.absolute_version_id;
+			this.render.webgpu.device.queue.writeBuffer(this.buffer[component_id],0,new Float32Array(loca));
+		}
 	};
 };

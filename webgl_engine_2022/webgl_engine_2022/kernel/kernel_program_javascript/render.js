@@ -11,10 +11,12 @@ function construct_render_routine(my_webgpu,
 	var render_number					=render_data[1];
 	var modifier_container_number		=render_data[2];
 	var camera_number					=render_data[3];
+	var max_target_number				=render_data[4];
+	var max_method_number				=render_data[5];
 	
-    this.link_name						=render_data[4];
-    this.title							=render_data[5];
-    this.parameter						=render_data[6];
+    this.link_name						=render_data[6];
+    this.title							=render_data[7];
+    this.parameter						=render_data[8];
     
     this.render_initialize_data	=new Array();
     for(var i=0,ni=my_render_initialize_data.length-1;i<ni;i+=2){
@@ -76,11 +78,9 @@ function construct_render_routine(my_webgpu,
 	{
 		x				:	-this.view.x,
 		y				:	-this.view.y,
-		
-		canvas_width	:	-1,
-		canvas_height	:	-1,
-		
+				
 		component		:	-2,
+		driver			:	-2,
 		
 		body			:	-2,
 		face			:	-2,
@@ -108,7 +108,28 @@ function construct_render_routine(my_webgpu,
 		this.part_driver[i]			=new Array();
 		this.part_array[i]			=new Array();
 	}
-	this.system_buffer				=new construct_system_buffer(component_number,this);
+	this.system_buffer				=new construct_system_buffer(max_target_number,max_method_number,this);
+	this.set_system_bindgroup_by_part=function(target_id,method_id,render_id,part_id,buffer_id)
+	{
+		if(this.webgpu.render_pass_encoder==null)
+			return;
+		var component_system_id=this.part_component_id_and_driver_id[render_id][part_id][buffer_id][2];
+		
+		this.webgpu.render_pass_encoder.setBindGroup(
+				this.system_buffer.system_bindgroup_id,
+				this.component_system_id_buffer[component_system_id].bindgroup_object,
+				[
+					this.system_buffer.method_buffer_stride*method_id,
+					this.system_buffer.target_buffer_stride*target_id
+				]);	
+	};
+	this.set_system_bindgroup_by_component=function(target_id,method_id,component_id,driver_id)
+	{
+		var p=this.component_render_id_and_part_id[component_id][driver_id];
+		var render_id=p[0],part_id=p[1],buffer_id=p[2];
+		this.set_system_bindgroup_by_part(target_id,method_id,render_id,part_id,buffer_id);
+	}
+
 	this.component_location_data	=new construct_component_location_object(component_number,this.computer,this.webgpu);
 	this.component_render_data		=new construct_component_render_parameter(render_number);
 	this.modifier_time_parameter	=new construct_modifier_time_parameter(modifier_container_number);

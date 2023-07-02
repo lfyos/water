@@ -16,6 +16,7 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 
 	if(typeof(this.process_bar_function)!="function"){
 		this.process_bar_function	=function(
+				webgpu_canvas_id,				//绘制结束后，绘制结果拷贝到哪个canvas 
 				process_bar_canvas,				//绘制进度条的画布canvas
 				process_bar_ctx,				//绘制进度条的2D上下文
 				process_bar_caption,			//进度条当前进度标题，该标题和语言有关，目前系统中仅仅配置了中文和英文相关标题
@@ -75,25 +76,28 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 				p=1.0;
 			}
 			
-			this.webgpu.canvas_2d.width		=this.webgpu.canvas.width;
-			this.webgpu.canvas_2d.height	=this.webgpu.canvas.height;
+			for(var i=0,ni=this.webgpu.canvas.length;i<ni;i++){
+				this.webgpu.canvas_2d.width		=this.webgpu.canvas[i].width;
+				this.webgpu.canvas_2d.height	=this.webgpu.canvas[i].height;
 			
-			this.process_bar_function(this.webgpu.canvas_2d,this.webgpu.context_2d,this.process_bar_caption,
-				(this.process_bar_current_last*(1.0-p)+this.process_bar_current*p)/this.process_bar_max,
-				this.process_bar_time_length,this.process_bar_engine_time_length,this.time_unit);
+				this.process_bar_function(i,
+					this.webgpu.canvas_2d,this.webgpu.context_2d,this.process_bar_caption,
+					(this.process_bar_current_last*(1.0-p)+this.process_bar_current*p)/this.process_bar_max,
+					this.process_bar_time_length,this.process_bar_engine_time_length,this.time_unit);
 	
-			this.webgpu.device.queue.copyExternalImageToTexture(
-				{
-					source	:this.webgpu.canvas_2d
-				},
-				{
-					texture	:this.webgpu.context.getCurrentTexture()
-				},
-				{
-					width	:	this.webgpu.canvas.width,
-					height	:	this.webgpu.canvas.height
-				}
-			);
+				this.webgpu.device.queue.copyExternalImageToTexture(
+					{
+						source	:this.webgpu.canvas_2d
+					},
+					{
+						texture	:this.webgpu.context[i].getCurrentTexture()
+					},
+					{
+						width	:	this.webgpu.canvas[i].width,
+						height	:	this.webgpu.canvas[i].height
+					}
+				);
+			}
 			await new Promise(resolve=>window.requestAnimationFrame(resolve));
 		}
 	};

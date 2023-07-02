@@ -1,126 +1,173 @@
 
-uniform system_information
-{	
-	int pickup_component_id;
-	int pickup_render_id;
-	int pickup_part_id;
-	int pickup_body_id;
-	int pickup_face_id;
-	int pickup_vertex_id;
-	int pickup_loop_id;
-	int pickup_edge_id;
-	int pickup_point_id;
-	
-	int highlight_component_id;
-	int highlight_body_id;
-	int highlight_face_id;
-	int tmp_int_0;
 
-	int year;
-	int month;
-	int day;
-	int hour;
-	int minute;
-	int second;
-	int millisecond;
-	
-	int microsecond;
-	int nanosecond;
-	
-	int canvas_width;
-	int canvas_height;
-	
-	float pickup_depth;
-	float pickup_value;
-	float tmp_float_0,tmp_float_1;
-	
-	vec4 light_position[8];
 
-}system_info;
-
-uniform target_information 
+struct method_information 
 {
-	mat4 projection_matrix;
-	mat4 negative_projection_matrix;
-	
-	mat4 other_projection_matrix;
-	mat4 other_negative_projection_matrix;
-	
-	mat4 screen_move_matrix;
-	mat4 negative_screen_move_matrix;
-	
-	mat4 lookat_matrix;
-	mat4 negative_lookat_matrix;
-	
-	mat4 camera_location;
-	mat4 clip_plane_matrix;
+	method_id	:	i32
+};
 
-	vec4 left_plane;
-	vec4 right_plane;
-	vec4 up_plane;
-	vec4 down_plane;
-	vec4 near_plane;
-	vec4 far_plane;
-	vec4 center_plane;
+@group(0) @binding(0)
+var<uniform> method_info: method_information; 
+
+
+
+
+
+struct target_information 
+{
+	projection_matrix					:	mat4x4<f32>,
+	negative_projection_matrix			:	mat4x4<f32>,
 	
-	vec4 clip_plane;
+	other_projection_matrix				:	mat4x4<f32>,
+	other_negative_projection_matrix	:	mat4x4<f32>,
 	
-	vec4 original_far_center_point;
-	vec4 original_center_point;
-	vec4 original_near_center_point;
-	vec4 original_eye_point;
+	screen_move_matrix					:	mat4x4<f32>,
+	negative_screen_move_matrix			:	mat4x4<f32>,
+	
+	lookat_matrix						:	mat4x4<f32>,
+	negative_lookat_matrix				:	mat4x4<f32>,
+	
+	camera_location						:	mat4x4<f32>,
+	clip_plane_matrix					:	mat4x4<f32>,
+
+	left_plane							:	vec4<f32>,
+	right_plane							:	vec4<f32>,
+	up_plane							:	vec4<f32>,
+	down_plane							:	vec4<f32>,
+	near_plane							:	vec4<f32>,
+	far_plane							:	vec4<f32>,
+	center_plane						:	vec4<f32>,
+	
+	clip_plane							:	vec4<f32>,
+	
+	original_far_center_point			:	vec4<f32>,
+	original_center_point				:	vec4<f32>,
+	original_near_center_point			:	vec4<f32>,
+	original_eye_point					:	vec4<f32>,
 		
-	vec4 far_center_point;
-	vec4 center_point;
-	vec4 near_center_point;
-	vec4 eye_point;
+	far_center_point					:	vec4<f32>,
+	center_point						:	vec4<f32>,
+	near_center_point					:	vec4<f32>,
+	eye_point							:	vec4<f32>,
 
-	vec4 left_down_near_point;
-	vec4 left_up_near_point;
-	vec4 right_down_near_point;
-	vec4 right_up_near_point;
+	left_down_near_point				:	vec4<f32>,
+	left_up_near_point					:	vec4<f32>,
+	right_down_near_point				:	vec4<f32>,
+	right_up_near_point					:	vec4<f32>,
 	
-	vec4 left_down_center_point;
-	vec4 left_up_center_point;
-	vec4 right_down_center_point;
-	vec4 right_up_center_point;
+	left_down_center_point				:	vec4<f32>,
+	left_up_center_point				:	vec4<f32>,
+	right_down_center_point				:	vec4<f32>,
+	right_up_center_point				:	vec4<f32>,
 	
-	vec4 left_down_far_point;
-	vec4 left_up_far_point;
-	vec4 right_down_far_point;
-	vec4 right_up_far_point;
+	left_down_far_point					:	vec4<f32>,
+	left_up_far_point					:	vec4<f32>,
+	right_down_far_point				:	vec4<f32>,
+	right_up_far_point					:	vec4<f32>,
+	
+	view_volume_box_p0					:	vec4<f32>,
+	view_volume_box_p1					:	vec4<f32>,
 
-	float target_aspect_value;
-	float half_fovy_tanl;
-	float near_value_ratio;
-	float far_value_ratio;
+	
+	half_fovy_tanl						:	f32,
+	near_value_ratio					:	f32,
+	far_value_ratio						:	f32,
 			
-	float distance;
-	float near_value;
-	float far_value;
+	distance							:	f32,
+	near_value							:	f32,
+	far_value							:	f32,
 	
-	int projection_type_flag;
-
-	int target_width;
-	int target_height;
-	int draw_buffer_id;
-
-}target_info;
-
-uniform pass_information 
-{
-	vec4	clear_color;
-	ivec4	viewport;
-	int		target_width;
-	int		target_height;
+	tmp_float_0							:	f32,
+	tmp_float_1							:	f32,
 	
-	int		method_id;
-	int		clear_flag;
-	int		tmp0,tmp1,tmp2;
-}pass_info;
+	projection_type_flag				:	i32,
+	tmp_int_0							:	i32,
+	tmp_int_1							:	i32,
+	tmp_int_2							:	i32
 
-uniform component_information 
+};
+@group(0) @binding(1)
+var<uniform> target_info: target_information; 
+
+
+
+
+
+
+struct location_information 
 {
-	mat4	model_matrix;
-	int		component_id;
-}component_info;
+	matrix		:	mat4x4<f32>
+};
+@group(0) @binding(2)
+var<uniform> location_info: location_information; 
+
+
+
+
+
+
+struct id_information 
+{
+	render_id							:	i32,
+	part_id								:	i32,
+	
+	buffer_id							:	i32,
+	
+	component_id						:	i32,
+	driver_id							:	i32,
+
+	component_system_id					:	i32
+};
+@group(0) @binding(3)	
+var<uniform> id_info: id_information; 
+
+
+
+
+
+
+struct system_information
+{	
+	pickup_component_id					:	i32,
+	pickup_driver_id					:	i32,
+	
+	pickup_render_id					:	i32,
+	pickup_part_id						:	i32,
+	
+	pickup_body_id						:	i32,
+	pickup_face_id						:	i32,
+	pickup_vertex_id					:	i32,
+	pickup_loop_id						:	i32,
+	pickup_edge_id						:	i32,
+	pickup_point_id						:	i32,
+	
+	highlight_component_id				:	i32,
+	highlight_body_id					:	i32,
+	highlight_face_id					:	i32,
+
+	year								:	i32,
+	month								:	i32,
+	day									:	i32,
+	hour								:	i32,
+	minute								:	i32,
+	second								:	i32,
+	millisecond							:	i32,
+	
+	microsecond							:	i32,
+	nanosecond							:	i32,
+	tmp_int_0							:	i32,
+	tmp_int_1							:	i32,
+
+	pickup_depth						:	i32,
+	pickup_value						:	i32,
+	tmp_float_0							:	i32,
+	tmp_float_1							:	i32,
+	
+	light_position						:	array<vec4<f32>,8>
+};
+
+@group(0) @binding(4)
+var<uniform> system_info: system_information;
+
+
+

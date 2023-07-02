@@ -1,21 +1,17 @@
 package kernel_part;
 
 import kernel_driver.part_driver;
+import kernel_transformation.box;
+import kernel_component.component;
+import kernel_transformation.point;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
-import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
-import kernel_network.client_request_response;
-
-import kernel_transformation.box;
-import kernel_transformation.point;
-
-import java.util.ArrayList;
-
-import kernel_common_class.debug_information;
 import kernel_common_class.jason_string;
-import kernel_component.component;
+import kernel_file_manager.file_directory;
+import kernel_common_class.debug_information;
+import kernel_network.client_request_response;
 
 public class part
 {
@@ -265,15 +261,15 @@ public class part
 		head_fw.println("\t[");
 		
 		if(part_par.do_create_part_ids_flag){
-			ArrayList<int[]> part_item_ids=part_mesh.id_manager.get_list();
-			for(int id_array[],i=0,ni=part_item_ids.size();i<ni;i++) {
-				if((id_array=part_item_ids.get(i))==null)
-					id_array=new int[] {};
+			for(int id_array[],i=0;(id_array=part_mesh.id_manager.get_system_id(i))!=null;i++) {
+				if(i>0)
+					head_fw.println(",");
 				head_fw.print("\t\t[",i);
 				for(int j=0,nj=id_array.length;j<nj;j++)
 					head_fw.print(",",id_array[j]);
-				head_fw.println((i<(ni-1))?"],":"]");
+				head_fw.print  ("]");
 			}
+			head_fw.println();
 		}
 		head_fw.println("\t]");
 		

@@ -362,7 +362,7 @@ public class engine_initialization
 			fw.	println("	",
 						 ( common_shader_str==null)?"null"
 						:((common_shader_str=common_shader_str.trim()).length()<=0)?"null"
-						:jason_string.change_string(common_shader_str));
+						:jason_string.change_string(common_shader_str+"\n"));
 		}
 		fw.println("]");
 		

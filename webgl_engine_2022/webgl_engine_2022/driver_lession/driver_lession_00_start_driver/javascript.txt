@@ -2,11 +2,17 @@ function (render_id,render_name,init_data,text_array,common_shader_data,render)
 {
 	var program=render.webgpu.device.createShaderModule(
 		{
-			code: text_array[0]
+			code: common_shader_data+text_array[0]
 		});
 	this.pipeline = render.webgpu.device.createRenderPipeline(
 	    {
-	    	layout: "auto",
+	    	layout: render.webgpu.device.createPipelineLayout(
+				{
+					bindGroupLayouts:[
+						render.system_bindgroup_layout
+					]
+				}),
+	    		
 		    vertex: {
 				module: 	program,
 				entryPoint:"vertex_main",
@@ -59,20 +65,28 @@ function (render_id,render_name,init_data,text_array,common_shader_data,render)
 
 	this.create_part_driver=function(part_object,render_driver,render)
 	{
-		this.draw_component=function (method_data,
+		this.draw_component=function (method_data,target_data,
 			component_render_parameter,component_buffer_parameter,
-			part_object,render_data,project_matrix,render)
+			project_matrix,part_object,render_driver,render)	
 		{
 			var p	=part_object.buffer_object.face.region_data;
 			var rpe	=render.webgpu.render_pass_encoder;
-			
-			rpe.setPipeline(render_driver.pipeline);
-			for(var i=0,ni=p.length;i<ni;i++){
-				rpe.setVertexBuffer(0,p[i].buffer);
-				rpe.draw(p[i].item_number);
-				rpe.draw(3);
 
-				console.log(JSON.stringify(p[i]))
+			rpe.setPipeline(render_driver.pipeline);
+
+			for(var i=0,ni=component_render_parameter.length;i<ni;i++){
+				var buffer_id=component_render_parameter[i];
+				render.set_system_bindgroup_by_part(
+					target_data.render_buffer_id,
+					method_data.method_id,
+					part_object.render_id,
+					part_object.part_id,
+					buffer_id);
+
+				for(var j=0,nj=p.length;j<nj;j++){
+					rpe.setVertexBuffer(0,p[j].buffer);
+					rpe.draw(p[i].item_number);
+				}
 			}
 		}
 		this.decode_vertex_data=function(request_type_string,buffer_object_data,part_object)

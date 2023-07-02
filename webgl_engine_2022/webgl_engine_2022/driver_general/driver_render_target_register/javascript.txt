@@ -10,10 +10,11 @@ function (render_id,render_name,init_data,text_array,common_shader_data,render)
 		{
 		
 		};
-		this.draw_component=function (method_data,
+		this.draw_component=function (method_data,target_data,
 			component_render_parameter,component_buffer_parameter,
-			part_object,render_data,project_matrix,render)
+			project_matrix,part_object,render_driver,render)
 		{
+		
 		};
 		
 		this.replace_render_parameter=function(instance_id,old_instance_data,new_instance_data,part_object,render_buffer_id)
@@ -44,29 +45,29 @@ function (render_id,render_name,init_data,text_array,common_shader_data,render)
 			{
 				colorAttachments: [
 					{
-						view: render.webgpu.context.getCurrentTexture().createView(),
+						view: render.webgpu.context[render.webgpu.current_canvas_id].getCurrentTexture().createView(),
 						clearValue: { r: 0.0, g: 0.0, b: 0.0, a: 1.0 },
 						loadOp: 'clear',
 						storeOp: 'store'
 					}
 				]
 			});
-			
+
 			return [
 				{
-					method:	0
+					method_id:	0
 				},
 				{
-					method:	1
+					method_id:	1
 				},
 				{
-					method:	2
+					method_id:	2
 				},
 				{
-					method:	3
+					method_id:	3
 				},
 				{
-					method:	4
+					method_id:	4
 				}
 			]
 		};	

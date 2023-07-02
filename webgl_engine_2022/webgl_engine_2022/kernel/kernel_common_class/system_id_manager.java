@@ -24,8 +24,4 @@ public class system_id_manager
 			return null;
 		return list.get(index_id);
 	}
-	public ArrayList<int[]> get_list()
-	{
-		return list;
-	}
 }

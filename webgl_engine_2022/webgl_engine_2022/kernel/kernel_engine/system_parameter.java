@@ -123,12 +123,19 @@ public class system_parameter
 
 		file_reader f=new file_reader(data_configure_file_name,Charset.defaultCharset().name());
 		if(f.error_flag()){
+			debug_information.println();
+			debug_information.println();
 			debug_information.println("Can't not open configure.txt on working directory");
 			debug_information.println("Check content in configure.txt on web server please");
 			debug_information.println("It probably contain error content or pointer to wrong directory");
 			debug_information.println("application_directory_name is ",application_directory_name);
 			debug_information.println("data_configure_file_name is ",data_configure_file_name);
 			debug_information.println("proxy_configure_file_name is ",proxy_configure_file_name);
+			debug_information.println("do System.exit(0)");
+			debug_information.println();
+			
+			System.exit(0);
+			return;
 		}
 		
 		if((local_data_charset=f.get_string())==null)

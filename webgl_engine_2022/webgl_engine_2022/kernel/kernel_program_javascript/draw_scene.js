@@ -14,7 +14,7 @@ function draw_scene_routine(render_data,render)
 		return;
 	
 	var project_matrix	=render.camera.compute_camera_data(render_data);	
-	render.system_buffer.set_render_buffer(render_data.render_buffer_id,project_matrix);
+	render.system_buffer.set_target_buffer(render_data.render_buffer_id,project_matrix);
 	
 	for(var i=0,ni=method_array.length;i<ni;i++){
 		if(typeof(target_driver.begin_render_method)=="function")
@@ -41,9 +41,9 @@ function draw_scene_routine(render_data,render)
 				if(typeof(part_driver.draw_component)!="function")
 					continue;
 
-		    	part_driver.draw_component(method_array[i],
+		    	part_driver.draw_component(method_array[i],render_data,
 					component_render_parameter,component_buffer_parameter,
-					part_object,render_data,project_matrix,render);
+					project_matrix,part_object,render.render_driver[render_id],render);
 			}
 		}	
 		if(typeof(target_driver.end_render_method)=="function")

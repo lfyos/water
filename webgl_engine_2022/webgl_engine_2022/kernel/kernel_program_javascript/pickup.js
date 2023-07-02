@@ -1,6 +1,7 @@
 function construct_pickup_object()
 {
 	this.component_id		=-1;
+	this.driver_id			=-1;
 	
 	this.body_id			=-1;
 	this.face_id			=-1;
@@ -27,6 +28,9 @@ function construct_pickup_object()
 	{
 		if(this.component_id!=p.component_id)
 			return true;
+		if(this.driver_id!=p.driver_id)
+			return true;
+
 		if(this.body_id!=p.body_id)
 			return true;
 		if(this.face_id!=p.face_id)
@@ -35,6 +39,7 @@ function construct_pickup_object()
 			return true;
 		if(this.edge_id!=p.edge_id)
 			return true;
+			
 		return false;
 	}
 	this.fork=function()
@@ -42,6 +47,7 @@ function construct_pickup_object()
 		var ret_val=new construct_pickup_object();
 
 		ret_val.component_id	=this.component_id;
+		ret_val.driver_id		=this.driver_id;
 		
 		ret_val.body_id			=this.body_id;
 		ret_val.face_id			=this.face_id;

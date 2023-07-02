@@ -33,8 +33,11 @@ var lfy_render;
 
 async function body_onload()
 {
-	lfy_render=await construct_render_object("my_canvas",user_name,pass_word,language,scene_name,link_name,
-			//1.Object类型的绘图画布。如果是String类型,则系统使用document.getElementById("my_canvas")将其转换为Object类型数据。
+	lfy_render=await construct_render_object(["my_canvas"],user_name,pass_word,language,scene_name,link_name,
+			//1.Object类型的绘图画布。
+			//	数组类型，可以同时渲染至多个canvas。
+			//	如果是String类型,则系统使用document.getElementById("my_canvas")将其转换为Object类型数据。
+			
 			//2.用户名	3.用户密码	4.语言	5.场景名称	6.连接名称,用于多人协同操作一个场景
 		[	//7.初始化参数
 			["change_part",				change_part			],	//part换名
@@ -46,6 +49,7 @@ async function body_onload()
 			["coordinate",				coordinate			]	//坐标系选择
 		],
 		function(			//9.进度条绘制函数，如果不配置该函数，则使用系统内部提供的默认进度条绘制函数
+				webgpu_canvas_id,				//绘制结束后，绘制结果拷贝到哪个canvas 
 				process_bar_canvas,				//绘制进度条的画布canvas
 				progress_bar_ctx,				//绘制进度条的2D上下文
 				process_bar_caption,			//进度条当前进度标题，该标题和语言有关，目前系统中仅仅配置了中文和英文相关标题

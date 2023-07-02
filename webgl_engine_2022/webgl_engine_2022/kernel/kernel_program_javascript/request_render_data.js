@@ -14,24 +14,14 @@ async function request_render_data(render)
 			render.view_bak.y=render.view.y;
 			request_url+="&y="+(render.view.y.toString());
 		};
-		if(Math.abs(render.view_bak.canvas_width-render.webgpu.canvas.width)>min_value){
-			render.view_bak.canvas_width=render.webgpu.canvas.width;
-			request_url+="&width="+(render.webgpu.canvas.width.toString());
-		};
-		if(Math.abs(render.view_bak.canvas_height-render.webgpu.canvas.height)>min_value){
-			render.view_bak.canvas_height=render.webgpu.canvas.height;
-			request_url+="&height="+(render.webgpu.canvas.height.toString());
-		};
-		if(render.view_bak.in_canvas_flag^render.event_listener.mouse_inside_canvas_flag){
-			render.view_bak.in_canvas_flag=render.event_listener.mouse_inside_canvas_flag;
-			request_url+="&in_canvas="+(render.event_listener.mouse_inside_canvas_flag?"yes":"no");
-		};
 		
 		var id,value;
 
-		if(render.view_bak.component!=(id=render.pickup.component_id)){
-			render.view_bak.component=id;
-			request_url+="&component="+id.toString();
+		if((render.view_bak.component!=render.pickup.component_id)||(render.view_bak.driver!=render.pickup.driver_id)){
+			render.view_bak.component	=render.pickup.component_id;
+			render.view_bak.driver		=render.pickup.driver_id;
+			request_url+="&component="	+render.pickup.component_id.toString();
+			request_url+="_"			+render.pickup.driver_id.toString();
 		};
 		if(render.view_bak.body!=(id=render.pickup.body_id)){
 			render.view_bak.body=id;

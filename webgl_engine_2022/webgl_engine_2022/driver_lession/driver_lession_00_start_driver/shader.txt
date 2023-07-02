@@ -14,6 +14,12 @@ fn vertex_main(
 @fragment
 fn fragment_main() -> @location(0) vec4<f32>
 {
-	return vec4(1.0, 0.0, 0.0, 1.0);
+	if(system_info.millisecond>700){
+		return vec4(1.0, 0.0, 0.0, 1.0);
+	}else if(system_info.millisecond>400){
+		return vec4(0.0, 1.0, 0.0, 1.0);
+	}else{
+		return vec4(0.0, 0.0, 1.0, 1.0);
+	}
 }
 
