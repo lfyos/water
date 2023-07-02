@@ -1,5 +1,5 @@
 /*	switch_time					*/		1000000000
-/*	distance    	 			*/		50
+/*	distance    	 			*/		10
 /*	fovy						*/		45
 /*	near						*/		0.1
 /*	far							*/		10
