@@ -1,0 +1,36 @@
+
+clear_parameter_channel_id:	4	5
+set_parameter_channel_id:	2	3
+
+
+
+set JAVA_OPTS=-server -Xms1920m -Xmx2148m -XX:MaxNewSize=512m -XX:MaxPermSize=256m
+
+-Xms2048m -Xmx2560m
+
+	URIEncoding="GB18030" 
+	URIEncoding="UTF-8"
+
+Access-Control-Allow-Headers			Content-Type,api_key,Authorization,X-Requested-With
+Access-Control-Allow-Methods			GET,POST,PUT,DELETE,HEAD,OPTIONS
+Access-Control-Allow-Origin				*
+
+
+<Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1" redirectPort="8443"/>
+<Connector connectionTimeout="20000" port="80"   protocol="HTTP/1.1" redirectPort="8443"/>
+<Connector 							 port="443"  protocol="HTTP/1.1"
+    	keystoreFile="E:/water_all/tomcat.keystore" keystorePass="123456"
+    	SSLEnabled="true" clientAuth="false" maxThreads="150" scheme="https" secure="true" sslProtocol="TLS"
+/>
+	my_user_name=encodeURIComponent(encodeURIComponent(my_user_name));
+	my_pass_word=encodeURIComponent(encodeURIComponent(my_pass_word));
+	my_scene_name=encodeURIComponent(encodeURIComponent(my_scene_name));
+	my_link_name=encodeURIComponent(encodeURIComponent(my_link_name));
+
+	try {
+		str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+		str=java.net.URLDecoder.decode(str,ek.system_par.network_data_charset);
+	}catch(Exception e){
+		;
+	}
+

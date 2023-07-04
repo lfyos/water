@@ -1,15 +1,30 @@
-
+/* 1name		*/			common_component_root
+/* 1type		*/			undefined_part
+/* 1location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+/* 1children number */		2
+	
+		/*	0	*/
 		/* 2name		*/         render_target_register_component
 		/* 2type		*/         render_target_register_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 		/* 2children number */		0
+		
+
+
+		/*	1	*/		
+		/* 2name		*/			coordinate
+		/* 2type		*/			coordinate_part
+		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+				/*	selection_length_scale		*/	1.0
+				/*	abandon display coordinate	*/	false
+				/*	abandon select coordinate	*/	false
+		/* 2children number */		0
+
+
+
+
 
 /*
-
-	/* 1name		*/         common_component_root
-	/* 1type		*/         undefined_part
-	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
-	/* 1children number */		17
 
 		/*	0	*/
 		/* 2name		*/	trace_primitive_component
@@ -101,13 +116,7 @@
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 		/* 2children number */     0	
 				
-		/*	14	*/		
-		/* 2name		*/			coordinate
-		/* 2type		*/			coordinate_part
-		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
-									/*	abandon display coordinate		*/		false
-									/*	abandon select coordinate		*/		false
-		/* 2children number */		0
+		
 		
 		
 		/*	15	*/
