@@ -32,7 +32,7 @@ async function create_webgpu(my_canvas)
 		webgpu.canvas_2d.width	=webgpu.canvas[0].width;
 		webgpu.canvas_2d.height	=webgpu.canvas[0].height;
 		webgpu.context_2d		=webgpu.canvas_2d.getContext("2d");
-		
+
 		return webgpu;
 
 	}catch(e){

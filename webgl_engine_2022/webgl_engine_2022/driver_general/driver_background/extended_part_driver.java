@@ -1,8 +1,9 @@
-package driver_coordinate;
+package driver_background;
 
 import kernel_component.component;
 import kernel_component.component_load_source_container;
 import kernel_driver.component_driver;
+
 import kernel_driver.part_driver;
 import kernel_driver.part_instance_driver;
 import kernel_engine.engine_kernel;
@@ -46,6 +47,9 @@ public class extended_part_driver extends part_driver
 			file_writer buffer_object_file_writer,part_container_for_part_search pcps,
 			system_parameter system_par,scene_parameter scene_par)
 	{
+		if(buffer_object_file_writer!=null)
+			file_writer.file_copy_with_brother(
+					p.directory_name+p.mesh_file_name,buffer_object_file_writer.directory_name);
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
@@ -59,16 +63,15 @@ public class extended_part_driver extends part_driver
 	{
 		return null;
 	}
-	
 	public component_driver create_component_driver(
 			file_reader fr,boolean rollback_flag,part my_component_part,
 			component_load_source_container component_load_source_cont,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_component_driver(my_component_part);
+		return new extended_component_driver(my_component_part,fr.get_int(),fr.get_string(),fr.get_int());
 	}
 	public part_instance_driver create_part_instance_driver(part p,
-				engine_kernel ek,client_request_response request_response)
+			engine_kernel ek,client_request_response request_response)
 	{
 		return new extended_part_instance_driver();
 	}

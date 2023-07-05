@@ -271,7 +271,7 @@ public class client_information
 		render_target rt=new render_target(false,
 				ek.component_cont.root_component.component_id,0,0,
 				new component[] {ek.component_cont.root_component},new int[] {0},
-				0,0,null,null,null,true,true,true);
+				0,0,null,null,null,true,true,true,true);
 	
 		display_camera_result			=new camera_result(ek.camera_cont.get(rt.camera_id),rt,ek.component_cont);
 		target_camera_result_list		=new ArrayList<camera_result>();

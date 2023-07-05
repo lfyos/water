@@ -35,7 +35,7 @@ function construct_server_caller(my_render)
 			server_request_parameter.body=upload_data;
 			
 		if((typeof(response_type_string)=="undefined")||(response_type_string==null))
-			response_type_string="json";
+			response_type_string="text";
 		
 		var server_promise=await fetch(request_url,server_request_parameter);
 		if(!(server_promise.ok)){

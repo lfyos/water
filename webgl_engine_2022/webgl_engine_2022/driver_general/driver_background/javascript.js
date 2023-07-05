@@ -4,18 +4,25 @@ function my_create_part_driver(part_object,render_driver,render)
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,render_driver,render)	
 	{
-		render.set_system_bindgroup_by_component(target_data.render_buffer_id,
-			method_data.method_id,project_matrix.camera_component_id,-1);
-
+		var p	=part_object.buffer_object.face.region_data;
 		var rpe	=render.webgpu.render_pass_encoder;
+
 		rpe.setPipeline(render_driver.pipeline);
 
-		var p=part_object.buffer_object.edge.region_data;
-		for(var i=0,ni=component_render_parameter.length;i<ni;i++)
+		for(var i=0,ni=component_render_parameter.length;i<ni;i++){
+			var buffer_id=component_render_parameter[i];
+			render.set_system_bindgroup_by_part(
+				target_data.render_buffer_id,
+				method_data.method_id,
+				part_object.render_id,
+				part_object.part_id,
+				buffer_id);
+
 			for(var j=0,nj=p.length;j<nj;j++){
 				rpe.setVertexBuffer(0,p[j].buffer);
 				rpe.draw(p[i].item_number);
 			}
+		}
 	}
 	this.decode_vertex_data=function(request_type_string,buffer_object_data,part_object)
 	{
@@ -23,9 +30,9 @@ function my_create_part_driver(part_object,render_driver,render)
 		{
 			material_id		:	buffer_object_data.material_id,
 			region_box		:	buffer_object_data.region_box,
-			region_data		:	(request_type_string!="edge")?new Array():buffer_object_data.region_data,
-			item_number		:	(request_type_string!="edge")?0:(buffer_object_data.item_number),
-			item_size		:	(request_type_string!="edge")?4:
+			region_data		:	(request_type_string!="face")?new Array():buffer_object_data.region_data,
+			item_number		:	(request_type_string!="face")?0:(buffer_object_data.item_number),
+			item_size		:	(request_type_string!="face")?4:
 						(buffer_object_data.region_data.length/buffer_object_data.item_number),
 			private_data	:	null
 		};
@@ -75,21 +82,6 @@ function main(	render_id,		render_name,
 							format			:	"float32x4",
 							offset			:	0,
 							shaderLocation	:	0
-						},
-						{	//normal
-							format			:	"float32x4",
-							offset			:	16,
-							shaderLocation	:	1
-						},
-						{	//material
-							format			:	"float32x4",
-							offset			:	32,
-							shaderLocation	:	2
-						},
-						{	//ID
-							format			:	"float32x4",
-							offset			:	48,
-							shaderLocation	:	3
 						}
 					]
 				}
@@ -104,19 +96,19 @@ function main(	render_id,		render_name,
 			targets	: 
 			[
 				{
-					format	:	render.webgpu.gpu.getPreferredCanvasFormat(),
+					format: render.webgpu.gpu.getPreferredCanvasFormat(),
 				}
 			],
 		},
 		primitive	:
 		{
-			topology:"line-list",
+			topology:"triangle-list",
 		},
 		depthStencil	:
 		{
 			format				:	"depth24plus-stencil8",
 			depthWriteEnabled	:	true,
-    		depthCompare		:	"less",
+    		depthCompare		:	 "less-equal",
 
    			stencilFront		:	{},
     		stencilBack			:	{},

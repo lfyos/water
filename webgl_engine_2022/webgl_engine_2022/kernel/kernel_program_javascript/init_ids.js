@@ -63,11 +63,11 @@ function init_ids_of_part_and_component(
 				var p=render.component_array_sorted_by_id[component_id].component_ids;
 				p[driver_id]=[render_id,part_id,buffer_id,my_component_system_id];
 				
-				component_system_id[my_component_system_id]=[
+				component_system_id.push([
 					render_id,		part_id,	buffer_id,
 					component_id,	driver_id,
 					my_component_system_id
-				];
+				]);
 			}
 			if(typeof(render.part_initialize_data[render_id][part_id])=="undefined")
 				render.part_initialize_data[render_id][part_id]=null;
@@ -77,14 +77,14 @@ function init_ids_of_part_and_component(
 	for(var i=0;i<component_number;i++){
 		var my_component_system_id=component_system_id.length;
 		render.component_array_sorted_by_id[i].component_system_id=my_component_system_id;
-		component_system_id[my_component_system_id]=[
+		component_system_id.push([
 			-1,	//render_id,
 			-1,	//part_id,
 			-1,	//buffer_id,
 			 i,	//component_id,
 			-1,	//driver_id,
 			my_component_system_id
-		];
+		]);
 		
 	};
 

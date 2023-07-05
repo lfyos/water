@@ -1,9 +1,11 @@
 package kernel_component;
 
-import kernel_common_class.debug_information;
-import kernel_file_manager.file_reader;
-import kernel_network.client_request_response;
+import kernel_transformation.point;
 import kernel_transformation.location;
+import kernel_file_manager.file_reader;
+import kernel_common_class.const_value;
+import kernel_common_class.debug_information;
+import kernel_network.client_request_response;
 
 public class component_core_2 extends component_core_1
 {
@@ -57,6 +59,31 @@ public class component_core_2 extends component_core_1
 					
 					return new location();
 				}
+			case "move":
+				return location.move_rotate(Double.parseDouble(name), fr.get_double(), fr.get_double(), 0, 0, 0);
+			case "rotate":
+				return location.move_rotate(0,0,0,Double.parseDouble(name), fr.get_double(), fr.get_double());	
+			case "move_rotate":
+				return location.move_rotate(
+						Double.parseDouble(name), 	fr.get_double(), fr.get_double(),
+						fr.get_double(), 			fr.get_double(), fr.get_double());
+			case "p0pxpy":
+			{
+				point p0=new point(Double.parseDouble(name),fr.get_double(),	fr.get_double());
+				point px=new point(fr.get_double(),			fr.get_double(),	fr.get_double());
+				point py=new point(fr.get_double(),			fr.get_double(),	fr.get_double());
+				point dx=px.sub(p0),dy=py.sub(p0),dz=dx.cross(dy);
+				if(dz.distance2()<const_value.min_value)
+					return location.move_rotate(p0.x,p0.y,p0.z,0,0,0);
+				if((dy=dz.cross(dx)).distance2()<const_value.min_value)
+					return location.move_rotate(p0.x,p0.y,p0.z,0,0,0);
+				return new location(
+								p0,
+								p0.add(dx.expand(1.0)),
+								p0.add(dy.expand(1.0)),
+								p0.add(dz.expand(1.0))
+						).multiply(location.standard_negative);
+			}
 			case "client_location":
 				if((name=request_response.get_parameter(name))!=null)
 					return new location(name,fr.get_string());

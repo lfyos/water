@@ -1,16 +1,25 @@
 /*	########################	driver_general		#######################		*/
 /*	render_0	*/	render_target_register			driver_render_target_register.extended_render_driver	driver_general\render_target_register\render.list
 /*	render_1	*/	coordinate						driver_coordinate.extended_render_driver				driver_general\coordinate\render.list
+/*	render_2	*/	background						driver_background.extended_render_driver				driver_general\background\render.list
 
 
 /*	******************************		driver_lession		********************************************	*/
 /*	render_23	*/	lession_00_start_driver			driver_lession_00_start_driver.extended_render_driver	driver_lession\lession_00_start_driver\render.list
 
+
+
+
+
+
+
+
+
+
 /*
 
 /*	########################	driver_general		#######################		*/
 /*	render_0	*/	audio					driver_audio.extended_render_driver						driver_general\audio\render.list
-/*	render_1	*/	background				driver_background.extended_render_driver				driver_general\background\render.list
 /*	render_2	*/	caption					driver_caption.extended_render_driver					driver_general\caption\render.list
 /*	render_4	*/	ground_grid				driver_ground_grid.extended_render_driver				driver_general\ground_grid\render.list
 /*	render_5	*/	proxy					driver_proxy.extended_render_driver						driver_general\proxy\render.list

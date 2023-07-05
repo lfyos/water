@@ -31,8 +31,8 @@ async function render_main(create_engine_sleep_time_length_scale,
 				request_url+="&"+parameter_name+"="+parameter_value;
 			};
 
-	var webgpu;
-	if((webgpu=await create_webgpu(my_canvas))==null)
+	var webgpu=await create_webgpu(my_canvas);
+	if(webgpu.error_flag)
 		return null;
 	var process_bar_object=new construct_process_bar(
 			webgpu,user_process_bar_function,process_bar_url);

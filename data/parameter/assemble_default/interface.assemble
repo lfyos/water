@@ -7,7 +7,7 @@
 //		file_program	initialization
 	
 		mount			common.assemble
-//		mount			background.assemble
+		mount			background.assemble
 		mount			camera_light.assemble
 //		mount			menu\root_menu.assemble
 		

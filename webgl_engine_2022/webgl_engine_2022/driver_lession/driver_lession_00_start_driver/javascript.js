@@ -116,13 +116,29 @@ function main(	render_id,		render_name,
 			targets	: 
 			[
 				{
-					format: render.webgpu.gpu.getPreferredCanvasFormat(),
+					format	:	render.webgpu.gpu.getPreferredCanvasFormat(),
 				}
 			],
 		},
 		primitive	:
 		{
 			topology:"triangle-list",
+		},
+		depthStencil	:
+		{
+			format				:	"depth24plus-stencil8",
+			depthWriteEnabled	:	true,
+    		depthCompare		:	"less",
+
+   			stencilFront		:	{},
+    		stencilBack			:	{},
+
+ 			stencilReadMask		:	0xFFFFFFFF,
+			stencilWriteMask	:	0xFFFFFFFF,
+			
+			depthBias			:	0,
+    		depthBiasSlopeScale	:	0,
+    		depthBiasClamp		:	0
 		}
 	};
 	
