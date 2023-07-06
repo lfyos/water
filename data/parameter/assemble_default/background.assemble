@@ -7,16 +7,16 @@
 				/* 3type		*/			background_part
 				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 									/*	mode					*/		1 
-									/*	directory	name		*/		picture_4/
 									/*	parameter_channel_id	*/		0
+									/*	directory_name			*/		picture_4/
 				/* 3children number */		0
 		
 		        /* 3name		*/			background_component_1
 				/* 3type		*/			background_part
 				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 									/*	mode					*/		1 
-									/*	directory	name		*/		picture_4/
 									/*	parameter_channel_id	*/		1
+									/*	directory_name			*/		picture_4/
 				/* 3children number */		0
 		
 		        
@@ -24,32 +24,32 @@
 				/* 3type		*/			background_part
 				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 									/*	mode					*/		1 
-									/*	directory	name		*/		picture_4/
 									/*	parameter_channel_id	*/		2
+									/*	directory_name			*/		picture_4/
 				/* 3children number */		0
 				
 				/* 3name		*/			background_component_3
 				/* 3type		*/			background_part
 				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 									/*	mode					*/		1 
-									/*	directory	name		*/		picture_4/
 									/*	parameter_channel_id	*/		3
+									/*	directory_name			*/		picture_4/
 				/* 3children number */		0
 				
 				/* 3name		*/			background_component_4
 				/* 3type		*/			background_part
 				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 									/*	mode					*/		1 
-									/*	directory	name		*/		picture_4/
 									/*	parameter_channel_id	*/		4
+									/*	directory_name			*/		picture_4/
 				/* 3children number */		0
 		
 		        /* 3name		*/			background_component_5
 				/* 3type		*/			background_part
 				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 									/*	mode					*/		1
-									/*	directory	name		*/		picture_4/
 									/*	parameter_channel_id	*/		5
+									/*	directory_name			*/		picture_4/
 				/* 3children number */		0
 		
 		        
@@ -57,14 +57,14 @@
 				/* 3type		*/			background_part
 				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 									/*	mode					*/		1 
-									/*	directory	name		*/		picture_4/
 									/*	parameter_channel_id	*/		6
+									/*	directory_name			*/		picture_4/
 				/* 3children number */		0
 				
 				/* 3name		*/			background_component_7
 				/* 3type		*/			background_part
 				/* 3location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 									/*	mode					*/		1 
-									/*	directory	name		*/		picture_4/
 									/*	parameter_channel_id	*/		7
+									/*	directory_name			*/		picture_4/
 				/* 3children number */		0

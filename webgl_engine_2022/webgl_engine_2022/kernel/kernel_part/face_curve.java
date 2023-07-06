@@ -64,11 +64,11 @@ public class face_curve extends system_id
 		
 		f_loop=new face_loop[] 
 		{
-			new face_loop(p[0],p[1],p[3],p[2],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],0}),		//left face
-			new face_loop(p[5],p[4],p[6],p[7],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],1}),		//right face
-			new face_loop(p[1],p[0],p[4],p[5],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],2}),		//down
-			new face_loop(p[2],p[3],p[7],p[6],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],3}),		//up
-			new face_loop(p[0],p[2],p[6],p[4],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],4}),		//front
+			new face_loop(p[0],p[1],p[3],p[2],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],0}),	//left face
+			new face_loop(p[5],p[4],p[6],p[7],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],1}),	//right face
+			new face_loop(p[1],p[0],p[4],p[5],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],2}),	//down
+			new face_loop(p[2],p[3],p[7],p[6],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],3}),	//up
+			new face_loop(p[0],p[2],p[6],p[4],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],4}),	//front
 			new face_loop(p[1],p[5],p[7],p[3],my_extra_data,my_material,id_manager,new int[] {5,id_array[1],id_array[2],5})		//back
 		};
 		

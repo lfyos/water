@@ -1,11 +1,12 @@
 struct to_vertex_struct
 {
-	@location(0) vertex_position		:	vec4<f32>
+	@location(0) vertex_position			:	vec4<f32>
 };
 
 struct vertex_to_fragment_struct
 {
-	@builtin(position)	vertex_position	:	vec4<f32>				
+	@location(0)		vertex_coord		:	vec4<f32>,
+	@builtin(position)	vertex_position		:	vec4<f32>				
 };
 
 struct from_fragment_struct
@@ -14,21 +15,69 @@ struct from_fragment_struct
 	@location(0) 			fragment_color	:	vec4<f32>
 };
 
+@group(1) @binding(0) var left_texture		:	texture_2d<f32>;
+@group(1) @binding(1) var right_texture		:	texture_2d<f32>;
+@group(1) @binding(2) var top_texture		:	texture_2d<f32>;
+@group(1) @binding(3) var down_texture		:	texture_2d<f32>;
+@group(1) @binding(4) var front_texture		:	texture_2d<f32>;
+@group(1) @binding(5) var back_texture		:	texture_2d<f32>;
+@group(1) @binding(6) var no_box_texture	:	texture_2d<f32>;
+@group(1) @binding(7) var texture_sampler	:	sampler;
+
 @vertex
 fn vertex_main(tvs:to_vertex_struct)->vertex_to_fragment_struct
 {
 	var vtfs:vertex_to_fragment_struct;
 	vtfs.vertex_position=tvs.vertex_position;
+	vtfs.vertex_coord	=tvs.vertex_position;
 	return vtfs;
 }
 
 @fragment
 fn fragment_main(vtfs	:	vertex_to_fragment_struct) -> from_fragment_struct
 {
-	var ffs	:	from_fragment_struct;
+	var p0=target_info.eye_point;
+
+	var pp:vec4<f32>;
+	if(target_info.projection_type_flag>0){
+		pp=target_info.negative_projection_matrix		*vtfs.vertex_coord;
+	}else{
+		pp=target_info.other_negative_projection_matrix	*vtfs.vertex_coord;
+	}
 	
-	ffs.fragment_color=vec4<f32>(0.5,0.5,0.5,1.0);
+	var dp=(pp/pp.w)-(p0/p0.w);
+	
+	var back_color	=textureSample(back_texture,	texture_sampler,	vec2<f32>((1.0+dp.x/dp.z)/2.0,(1.0-dp.y/dp.z)/2.0));
+	var front_color	=textureSample(front_texture,	texture_sampler,	vec2<f32>((1.0+dp.x/dp.z)/2.0,(1.0+dp.y/dp.z)/2.0));
+	var right_color	=textureSample(right_texture,	texture_sampler,	vec2<f32>((1.0-dp.z/dp.x)/2.0,(1.0-dp.y/dp.x)/2.0));
+	var left_color	=textureSample(left_texture,	texture_sampler,	vec2<f32>((1.0-dp.z/dp.x)/2.0,(1.0+dp.y/dp.x)/2.0));
+	
+	var top_color	=textureSample(top_texture,		texture_sampler,	vec2<f32>((1.0+dp.x/dp.y)/2.0,(1.0+dp.z/dp.y)/2.0));
+	var down_color	=textureSample(down_texture,	texture_sampler,	vec2<f32>((1.0-dp.x/dp.y)/2.0,(1.0+dp.z/dp.y)/2.0));
+	
+	
+	var ffs	:from_fragment_struct;
 	ffs.fragment_depth=0.999999;
 	
+	var ap=abs(dp);
+	if((ap.x>=ap.y)&&(ap.x>=ap.z)){
+	    if(dp.x>0.0){
+	    	ffs.fragment_color=right_color; 
+		}else{
+			ffs.fragment_color=left_color; 
+		}
+	}else if((ap.y>=ap.x)&&(ap.y>=ap.z)){
+		if(dp.y>0.0){
+			ffs.fragment_color=top_color; 
+		}else{
+			ffs.fragment_color=down_color;
+		}
+	}else{
+		if(dp.z>0.0){
+			ffs.fragment_color=back_color; 
+		}else{
+			ffs.fragment_color=front_color;
+		}
+	}
 	return 	ffs;
 }
