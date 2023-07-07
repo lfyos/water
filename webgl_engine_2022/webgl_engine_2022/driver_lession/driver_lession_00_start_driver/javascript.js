@@ -116,7 +116,10 @@ function main(	render_id,		render_name,
 			targets	: 
 			[
 				{
-					format	:	render.webgpu.gpu.getPreferredCanvasFormat(),
+					format		:	render.webgpu.gpu.getPreferredCanvasFormat()
+				},
+				{
+					format		:	"rgba32sint"
 				}
 			],
 		},

@@ -2,9 +2,14 @@ function my_create_part_driver(part_object,render_driver,render)
 {
 	this.should_update_server_flag=false;
 	this.current_canvas_id=render.webgpu.current_canvas_id;	
-	this.depth_texture=new Array(render.webgpu.canvas.length);
-	for(var i=0,ni=this.depth_texture.length;i<ni;i++)
-		this.depth_texture[i]=null;
+	
+	this.depth_texture	=new Array(render.webgpu.canvas.length);
+	this.id_texture		=new Array(render.webgpu.canvas.length);
+	
+	for(var i=0,ni=this.depth_texture.length;i<ni;i++){
+		this.depth_texture[i]	=null;
+		this.id_texture[i]		=null;
+	}
 
 	this.draw_component=function (method_data,target_data,
 			component_render_parameter,component_buffer_parameter,
@@ -41,42 +46,65 @@ function my_create_part_driver(part_object,render_driver,render)
 	
 	this.begin_render_target=function(render_data,render)
 	{
-		var my_texture,my_canvas=render.webgpu.canvas[render_data.target_texture_id];
+		var my_depth_texture,my_id_texture;
+		var my_gpu_texture		=render.webgpu.context[render_data.target_texture_id].getCurrentTexture();
+		
 		do{
-			var gpu_texture=render.webgpu.context[render_data.target_texture_id].getCurrentTexture();
-			if((my_texture=this.depth_texture[render_data.target_texture_id])!=null){
-				if((gpu_texture.width==my_texture.width)&&(gpu_texture.height==my_texture.height))
-					break;
-				my_texture.destroy();
+			my_depth_texture	=this.depth_texture	[render_data.target_texture_id];
+			my_id_texture		=this.id_texture	[render_data.target_texture_id];
+
+			if(my_depth_texture!=null){
+				if(my_gpu_texture.width==my_depth_texture.width)
+					if(my_gpu_texture.height==my_depth_texture.height)
+						break;
+				my_depth_texture.	destroy();
+				my_id_texture.		destroy();
 			}
+			
 			this.should_update_server_flag=true;
-			my_texture=render.webgpu.device.createTexture(
+			
+			this.depth_texture[render_data.target_texture_id]=render.webgpu.device.createTexture(
 				{
 					size	:
 					{
-						width	:	gpu_texture.width,
-						height	:	gpu_texture.height
+						width	:	my_gpu_texture.width,
+						height	:	my_gpu_texture.height
 					},
 					format	:	"depth24plus-stencil8",
-					usage	:	GPUTextureUsage.RENDER_ATTACHMENT,
+					usage	:	GPUTextureUsage.RENDER_ATTACHMENT
 				});
-			this.depth_texture[render_data.target_texture_id]=my_texture;
-		}while(false);
+			this.id_texture[render_data.target_texture_id]=render.webgpu.device.createTexture(
+				{
+					size	:
+					{
+						width	:	my_gpu_texture.width,
+						height	:	my_gpu_texture.height
+					},
+					format	:	"rgba32sint",
+					usage	:	GPUTextureUsage.RENDER_ATTACHMENT|GPUTextureUsage.COPY_SRC
+				});	
+		}while(true);
 		
 		render.webgpu.render_pass_encoder = render.webgpu.command_encoder.beginRenderPass(
 		{
 			colorAttachments		: 
 			[
 				{
-					view			:	render.webgpu.context[render_data.target_texture_id].getCurrentTexture().createView(),
+					view			:	my_gpu_texture.createView(),
 					clearValue		:	{ r: 0.0, g: 0.0, b: 0.0, a: 1.0 },
 					loadOp			:	"clear",
 					storeOp			:	"store"
-				}
+				},			
+				{
+					view			:	my_id_texture.createView(),
+					clearValue		:	{ r: -1, g: -1, b: -1, a: -1 },
+					loadOp			:	"clear",
+					storeOp			:	"store"
+				}			
 			],
 			depthStencilAttachment	:
 			{
-				view				:	my_texture.createView(),
+				view				:	my_depth_texture.createView(),
 				depthClearValue		:	1.0,
 				depthLoadOp			:	"clear",
 				depthStoreOp		:	"store",

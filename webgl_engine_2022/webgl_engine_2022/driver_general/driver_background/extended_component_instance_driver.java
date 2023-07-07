@@ -23,7 +23,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		extended_component_driver ecd=(extended_component_driver)(comp.driver_array.get(driver_id));
-		return (ecd.mode<0)||(cr.target.parameter_channel_id!=ecd.user_parameter_channel_id);
+		return (cr.target.parameter_channel_id!=ecd.user_parameter_channel_id);
 	}
 	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{

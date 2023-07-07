@@ -1,11 +1,11 @@
 
 
 
+
 struct method_information 
 {
 	method_id	:	i32
 };
-
 @group(0) @binding(0)
 var<uniform> method_info: method_information; 
 
@@ -165,9 +165,35 @@ struct system_information
 	
 	light_position						:	array<vec4<f32>,8>
 };
-
 @group(0) @binding(4)
 var<uniform> system_info: system_information;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

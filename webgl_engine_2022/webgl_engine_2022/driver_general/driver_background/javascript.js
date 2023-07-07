@@ -182,12 +182,16 @@ function my_create_part_driver(part_object,render_driver,render)
 
 		var p	=part_object.buffer_object.face.region_data;
 		var rpe	=render.webgpu.render_pass_encoder;
-		rpe.setPipeline(render_driver.pipeline);
 
 		for(var i=0,ni=component_render_parameter.length;i<ni;i++){
 			var buffer_id=component_render_parameter[i];
-			
 			if(this.texture_bind_group_array[buffer_id].texture_bindgroup==null)
+				continue;
+			if(this.texture_bind_group_array[buffer_id].mode>0)		
+				rpe.setPipeline(render_driver.box_pipeline);
+			else if(this.texture_bind_group_array[buffer_id].mode==0)
+				rpe.setPipeline(render_driver.no_box_pipeline);
+			else
 				continue;
 
 			render.webgpu.render_pass_encoder.setBindGroup(1,
@@ -371,9 +375,13 @@ function main(	render_id,		render_name,
 			targets	: 
 			[
 				{
-					format: render.webgpu.gpu.getPreferredCanvasFormat(),
+					format		:	render.webgpu.gpu.getPreferredCanvasFormat(),
+				},
+				{
+					format		:	"rgba32sint",
+					writeMask	:	0
 				}
-			],
+			]
 		},
 		primitive	:
 		{
@@ -396,8 +404,12 @@ function main(	render_id,		render_name,
     		depthBiasClamp		:	0
 		}
 	};
+
+	pipeline_descr.fragment.constants={no_box_mode:true};
+	this.no_box_pipeline = render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
-	this.pipeline = render.webgpu.device.createRenderPipeline(pipeline_descr);
+	pipeline_descr.fragment.constants={no_box_mode:false};
+	this.box_pipeline = render.webgpu.device.createRenderPipeline(pipeline_descr);
 
 	this.create_part_driver=my_create_part_driver;
 	
