@@ -31,7 +31,7 @@ public class create_assemble_part
 					continue;
 				if(comp_part.driver==null)
 					continue;
-				if(comp_part.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,null,null)==null)
+				if(comp_part.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null)==null)
 					continue;
 				can_create_assemble_part_name[p.component_id]=comp_part.part_par.assemble_part_name;
 				return comp_part.render_id;

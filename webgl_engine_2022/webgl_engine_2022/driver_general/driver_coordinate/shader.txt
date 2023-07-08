@@ -39,6 +39,6 @@ fn fragment_main(io:inout_struct) -> target_struct
 	var t:target_struct;
 	
 	t.color=io.color;
-	
+
 	return t;
 }

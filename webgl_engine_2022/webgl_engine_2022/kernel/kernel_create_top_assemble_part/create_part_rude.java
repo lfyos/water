@@ -32,7 +32,7 @@ public class create_part_rude
 		for(int i=0,ni=comp.driver_number();i<ni;i++) {
 			if((p=comp.driver_array.get(i).component_part)==null)
 				continue;
-			if((box_array[box_number]=p.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,null,null))==null)
+			if((box_array[box_number]=p.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null))==null)
 				continue;
 			if((my_distance2=box_array[box_number].distance2())<length2)
 				continue;

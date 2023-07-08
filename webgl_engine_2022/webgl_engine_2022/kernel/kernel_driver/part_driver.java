@@ -58,12 +58,13 @@ public class part_driver
 		return ret_val;
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
-			int body_id,int face_id,int loop_id,int edge_id,int point_id,
+			int body_id,int face_id,int primitive_id,int vertex_id,int loop_id,int edge_id,
 			point p0,point p1)
 	{
 		if(p.part_mesh==null)
 			return null;
-		caculate_part_items cpi=new caculate_part_items(p,body_id,face_id,loop_id,edge_id,point_id);
+		caculate_part_items cpi=new caculate_part_items(p,
+				body_id,face_id,primitive_id,vertex_id,loop_id,edge_id);
 		if((p0==null)||(p1==null))
 			return (cpi.my_box==null)?null:new box(cpi.my_box);
 		if(p1.sub(p0).distance2()<const_value.min_value2)

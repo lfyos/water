@@ -203,8 +203,9 @@ public class render_container
 						if(pcps.data_array[i].part_mesh!=null)
 							if(pcps.data_array[i].part_par.do_create_bottom_box_flag)
 								if(pcps.data_array[i].driver!=null)
-									if((b=pcps.data_array[i].secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,null,null))!=null)
-										p=pcps.data_array[i];
+									if((b=pcps.data_array[i].secure_caculate_part_box(
+											null,-1,-1,-1,-1,-1,-1,-1,null,null))!=null)
+												p=pcps.data_array[i];
 				}else {
 					p=null;
 					b=null;

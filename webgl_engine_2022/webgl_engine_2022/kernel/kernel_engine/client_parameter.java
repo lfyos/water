@@ -5,8 +5,8 @@ import kernel_component.component;
 
 public class client_parameter 
 {
-	public int driver_id,body_id,face_id,loop_id,edge_id,vertex_id,point_id;
-	public double x,y,depth,value;
+	public int driver_id,body_id,face_id,loop_id,edge_id,primitive_id,vertex_id;
+	public double x,y,depth,value[];
 	public boolean high_or_low_precision_flag;
 	
 	public int request_length,max_client_loading_number;
@@ -24,14 +24,14 @@ public class client_parameter
 		face_id		=-1;
 		loop_id		=-1;
 		edge_id		=-1;
+		primitive_id=-1;
 		vertex_id	=-1;
-		point_id	=-1;
 		
 		x			=0;
 		y			=0;
 		
 		depth=1.0;
-		value=-1.0;
+		value=new double[] {-2,-2,-2};
 		
 		high_or_low_precision_flag=true;
 
@@ -60,10 +60,10 @@ public class client_parameter
 			driver_id			=-1;
 			body_id				=-1;
 			face_id				=-1;
+			primitive_id		=-1;
 			vertex_id			=-1;
 			loop_id				=-1;
 			edge_id				=-1;
-			point_id			=-1;
 		}else{
 			if((str=ci.request_response.get_parameter("body"))!=null)
 				body_id=Integer.decode(str);
@@ -73,10 +73,10 @@ public class client_parameter
 				loop_id=Integer.decode(str);
 			if((str=ci.request_response.get_parameter("edge"))!=null)
 				edge_id=Integer.decode(str);
+			if((str=ci.request_response.get_parameter("primitive"))!=null)
+				primitive_id=Integer.decode(str);
 			if((str=ci.request_response.get_parameter("vertex"))!=null)
 				vertex_id=Integer.decode(str);
-			if((str=ci.request_response.get_parameter("point"))!=null)
-				point_id=Integer.decode(str);
 		}
 
 		if((str=ci.request_response.get_parameter("x"))!=null)
@@ -86,8 +86,16 @@ public class client_parameter
 		
 		if((str=ci.request_response.get_parameter("depth"))!=null)
 			depth=Double.parseDouble(str);
-		if((str=ci.request_response.get_parameter("value"))!=null)
-			value=Double.parseDouble(str);
+		if((str=ci.request_response.get_parameter("value"))!=null) {
+			if((index_id=str.indexOf('_'))>0) {
+				value[0]=Double.parseDouble(str.substring(0,index_id));
+				str=str.substring(index_id+1);
+				if((index_id=str.indexOf('_'))>0){
+					value[1]=Double.parseDouble(str.substring(0,index_id));
+					value[2]=Double.parseDouble(str.substring(index_id+1));
+				}
+			}
+		}
 		if((str=ci.request_response.get_parameter("length"))!=null)
 			request_length=Integer.decode(str);
 		

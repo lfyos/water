@@ -13,11 +13,11 @@ public class client_parameter_information extends jason_creator
 		
 		print("body_id",					cp.body_id);
 		print("face_id",					cp.face_id);
+		print("primitive_id",				cp.primitive_id);
 		print("vertex_id",					cp.vertex_id);
 		print("loop_id",					cp.loop_id);
 		print("edge_id",					cp.edge_id);
-		print("point_id",					cp.point_id);
-		
+
 		print("x",							cp.x);
 		print("y",							cp.y);
 		print("depth",						cp.depth);

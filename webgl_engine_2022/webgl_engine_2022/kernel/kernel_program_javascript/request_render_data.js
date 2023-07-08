@@ -39,28 +39,33 @@ async function request_render_data(render)
 			render.view_bak.edge=id;
 			request_url+="&edge="+id.toString();
 		};
+		if(render.view_bak.primitive!=(id=render.pickup.vertex_id)){
+			render.view_bak.primitive=id;
+			request_url+="&primitive="+id.toString();
+		};
 		if(render.view_bak.vertex!=(id=render.pickup.vertex_id)){
 			render.view_bak.vertex=id;
 			request_url+="&vertex="+id.toString();
-		};
-		if(render.view_bak.point!=(id=render.pickup.point_id)){
-			render.view_bak.point=id;
-			request_url+="&point="+id.toString();
 		};
 		if(Math.abs(render.view_bak.depth-(value=render.pickup.depth))>min_value){
 			render.view_bak.depth=value;
 			request_url+="&depth="+(new Number(value)).toPrecision(6);
 		}
-		if(Math.abs(render.view_bak.value-(value=render.pickup.value))>min_value){
-			render.view_bak.value=value;
-			request_url+="&value="+(new Number(value)).toPrecision(6);
-		};
+		var distance2=0;		
+		value=(render.view_bak.value[0]-render.pickup.value[0]);	distance2+=Math.abs(value);
+		value=(render.view_bak.value[1]-render.pickup.value[1]);	distance2+=Math.abs(value);
+		value=(render.view_bak.value[2]-render.pickup.value[2]);	distance2+=Math.abs(value);
 		
+		if(distance2>min_value){
+			render.view_bak.value=[render.pickup.value[0],render.pickup.value[1],render.pickup.value[2]];
+			request_url+="&value="	+(new Number(render.pickup.value[0])).toPrecision(6);
+			request_url+="_"		+(new Number(render.pickup.value[1])).toPrecision(6);
+			request_url+="_"		+(new Number(render.pickup.value[2])).toPrecision(6);
+		};
 		if(render.vertex_data_downloader.acknowledge_render_part_id!=null){
 			request_url+="&acknowledge="+render.vertex_data_downloader.acknowledge_render_part_id;
 			render.vertex_data_downloader.acknowledge_render_part_id=null;
 		};
-		
 		if(render.vertex_data_downloader.response_loaded_length!=(render.vertex_data_downloader.loaded_buffer_object_data_length)){
 			render.vertex_data_downloader.response_loaded_length=render.vertex_data_downloader.loaded_buffer_object_data_length;
 			request_url+="&loaded_length="+	render.vertex_data_downloader.loaded_buffer_object_file_number.toString();

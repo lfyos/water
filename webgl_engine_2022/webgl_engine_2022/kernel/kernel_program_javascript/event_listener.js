@@ -1,30 +1,37 @@
-function construct_event_listener(my_render)
+function construct_event_listener(my_canvas_id,my_render)
 {
-	this.render						=my_render;
+	this.canvas_id	=my_canvas_id;
+	this.render		=my_render;
+	this.canvas		=this.render.webgpu.canvas[this.canvas_id];
+
 	this.mouse_inside_canvas_flag	=false;
 	this.mouse_down_flag			=false;
 	this.mouse_down_flag_array		=[false,false,false,false,false];
 
 	this.set_render_view=function(event)
 	{
-		var rect=this.render.webgpu.canvas[this.render.webgpu.current_canvas_id].getBoundingClientRect();
+		this.render.webgpu.current_canvas_id=this.canvas_id;
+
+		var rect=this.canvas.getBoundingClientRect();
 		var left=rect.left,top=rect.top,right=rect.right,bottom=rect.bottom;
 		var width=right-left,height=bottom-top;
 		var x=event.clientX-left,y=event.clientY-top;
 		if((this.render.view.x=2.0*x/width-1.0)<-1.0)
 			this.render.view.x=-1.0;
-		else if(this.render.view.x >1.0)
+		else if(this.render.view.x>1.0)
 			this.render.view.x=1.0;
 		if((this.render.view.y=1.0-2.0*y/height)<-1.0)
 			this.render.view.y=-1.0;
 		else if(this.render.view.y>1.0)
 			this.render.view.y=1.0;
-		this.render.webgpu.canvas[this.render.webgpu.current_canvas_id].focus();
+		this.canvas.focus();
 	};
 	this.set_mobile_render_view=function(event)
 	{
+		this.render.webgpu.current_canvas_id=this.canvas_id;
+		
 		if(event.touches.length>0){
-			var btn=this.render.webgpu.canvas[this.render.webgpu.current_canvas_id];
+			var btn=this.canvas;
 			var x=event.touches[0].clientX-btn.offsetLeft;
 			var y=btn.clientHeight-(event.touches[0].clientY-btn.offsetTop);	
 			if((this.render.view.x=2.0*((x/btn.clientWidth )-0.5))<-1.0)
@@ -36,7 +43,7 @@ function construct_event_listener(my_render)
 			else if(this.render.view.y>1.0)
 				this.render.view.y=1.0;
 		}
-		this.render.webgpu.canvas[this.render.webgpu.current_canvas_id].focus();
+		this.canvas.focus();
 	};
 	this.caculate_component_event_processor=function (processor_component_object)
 	{
@@ -487,6 +494,7 @@ function construct_event_listener(my_render)
 
 		var ep,component_id;
 		event.preventDefault();
+		this.render.webgpu.current_canvas_id=this.canvas_id;
 		
 		if(this.render.system_event_processor.systemkeydown(event,this.render))
 			return;
@@ -519,6 +527,7 @@ function construct_event_listener(my_render)
 	
 		var ep,component_id;
 		event.preventDefault();
+		this.render.webgpu.current_canvas_id=this.canvas_id;
 
 		if(this.render.system_event_processor.systemkeypress(event,this.render))
 			return;
@@ -550,6 +559,7 @@ function construct_event_listener(my_render)
 			return;
 		var ep,component_id;
 		event.preventDefault();
+		this.render.webgpu.current_canvas_id=this.canvas_id;
 		
 		switch(event.keyCode){
 		case 48://0
@@ -597,6 +607,7 @@ function construct_event_listener(my_render)
 		var ep,component_id;
 		
 		event.preventDefault();
+		this.render.webgpu.current_canvas_id=this.canvas_id;
 		
 		if(this.render.system_event_processor.systemcontextmenu(event,this.render))
 			return;
@@ -619,176 +630,104 @@ function construct_event_listener(my_render)
 			if(ep.contextmenu(event,component_id,this.render))
 				return;
 	};
-	this.render.system_event_processor.systemgamepadconnected	=function(event,render){return false;};
-	this.render.system_event_processor.pickupgamepadconnected	=function(event,pickup_component_id,render){return false;};
-	this.render.system_event_processor.gamepadconnected			=function(event,render){return false;};
-	this.gamepadconnected_event_listener=function (event)
-	{
-		if(this.render.terminate_flag)
-			return;
-	
-		var ep,component_id;
-		event.preventDefault();
-		
-		if(this.render.system_event_processor.systemgamepadconnected(event,this.render))
-			return;
-		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
-				if(this.render.system_event_processor.pickupgamepadconnected(event,this.render.pickup.component_id,this.render))
-					return;
-				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
-					if(typeof(ep.pickupgamepadconnected)=="function")
-						if(ep.pickupgamepadconnected(event,this.render.pickup.component_id,this.render))
-							return;
-			}
-		if(this.render.system_event_processor.gamepadconnected(event,this.render))
-			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.gamepad))<0)
-			return;
-		this.render.event_component.gamepad.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];	
-		if(typeof(ep.gamepadconnected)=="function")
-			if(ep.gamepadconnected(event,component_id,this.render))
-				return;
-	};
-	this.render.system_event_processor.systemgamepaddisconnected	=function(event,render){return false;};
-	this.render.system_event_processor.pickupgamepaddisconnected	=function(event,pickup_component_id,render){return false;};
-	this.render.system_event_processor.gamepaddisconnected			=function(event,render){return false;};
-	this.gamepaddisconnected_event_listener=function (event)
-	{
-		if(this.render.terminate_flag)
-			return;
-
-		var ep,component_id;
-		event.preventDefault();
-		
-		if(this.render.system_event_processor.systemgamepaddisconnected(event,this.render))
-			return;
-		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
-				if(this.render.system_event_processor.pickupgamepaddisconnected(event,this.render.pickup.component_id,this.render))
-					return;
-				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
-					if(typeof(ep.pickupgamepaddisconnected)=="function")
-						if(ep.pickupgamepaddisconnected(event,this.render.pickup.component_id,this.render))
-							return;
-			}
-		if(this.render.system_event_processor.gamepaddisconnected(event,this.render))
-			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.gamepad))<0)
-			return;
-		this.render.event_component.gamepad.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];	
-		if(typeof(ep.gamepaddisconnected)=="function")
-			if(ep.gamepaddisconnected(event,component_id,this.render))
-				return;
-	};
 
 	var cur=this;
 	
-	let private_data	=new Array(this.render.webgpu.canvas.length);
-	this.mouseenter_fun	=new Array(this.render.webgpu.canvas.length);
-	
-	for(var i=0,ni=private_data.length;i<ni;i++)
-		private_data[i]={
-			canvas_id	:	i
-		};
-	for(var i=0,ni=this.mouseenter_fun.length;i<ni;i++){
-		let my_private_data=private_data[i];
-		this.mouseenter_fun[i]=function (event)
-		{	
-			if(cur.render==null)
-				return;
-			cur.render.webgpu.current_canvas_id=my_private_data.canvas_id;
-			cur.mouseenter_event_listener(event);
-		}
-	}
-	
 	function mousemove_fun(event)	
-	{		
+	{	
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.mousemove_event_listener(event);
 	};
 	function mousedown_fun(event)
-	{	
+	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.mousedown_event_listener(event);
 	};
 	function mouseup_fun(event)
-	{	
+	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.mouseup_event_listener(event);
 	};
 	function dblclick_fun(event)
-	{	
+	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.dblclick_event_listener(event);	
 	};
 	function mousewheel_fun(event)
-	{	
+	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.mousewheel_event_listener(event);
 	};
 	function mouseleave_fun(event)
-	{	
+	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.mouseleave_event_listener(event);
 	};
-	
+	function mouseenter_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.mouseenter_event_listener(event);
+	};
 	function mouseout_fun(event)
-	{	
+	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.mouseout_event_listener(event);
 	};
 	function mouseover_fun(event)
-	{	
+	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.mouseover_event_listener(event);
 	};
 	function touchstart_fun(event)
-	{	
+	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.touchstart_event_listener(event);
 	};
 	function touchend_fun(event)
-	{	
+	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.touchend_event_listener(event);
 	};
 	function touchmove_fun(event)
-	{	
+	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.touchmove_event_listener(event);
 	};
 	function keydown_fun(event)
-	{	
+	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.keydown_event_listener(event);
 	};
 	function keypress_fun(event)
-	{	
+	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.keypress_event_listener(event);	
 	};
 	function keyup_fun(event)
-	{	
+	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.keyup_event_listener(event);
 	};
 	function contextmenu_fun(event)
-	{	
+	{
+		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.contextmenu_event_listener(event);
-	};
-	function gamepadconnected_fun(event)
-	{	
-		if(cur.render!=null)
-			cur.gamepadconnected_event_listener(event);
-	};
-	function gamepaddisconnected_fun(event)
-	{
-		if(cur.render!=null)
-			cur.gamepaddisconnected_event_listener(event);
 	};
 	function beforeunload_fun()
 	{
@@ -803,74 +742,78 @@ function construct_event_listener(my_render)
 		};
 	};
 
-	for(var i=0,ni=this.render.webgpu.canvas.length;i<ni;i++){
-		this.render.webgpu.canvas[i].addEventListener(	"mousemove",			mousemove_fun,			false);
-		this.render.webgpu.canvas[i].addEventListener(	"mousedown",			mousedown_fun,			false);
-		this.render.webgpu.canvas[i].addEventListener(	"mouseup",				mouseup_fun,			false);
-		this.render.webgpu.canvas[i].addEventListener(	"dblclick",				dblclick_fun,			false);
-		this.render.webgpu.canvas[i].addEventListener(	"mousewheel",			mousewheel_fun,			false);
-		this.render.webgpu.canvas[i].addEventListener(	"DOMMouseScroll",		mousewheel_fun,			false);
-		this.render.webgpu.canvas[i].addEventListener(	"mouseleave",			mouseleave_fun,			false);
-		this.render.webgpu.canvas[i].addEventListener(	"mouseenter",			this.mouseenter_fun[i],	false);
-		this.render.webgpu.canvas[i].addEventListener(	"mouseout",				mouseout_fun,			false);
-		this.render.webgpu.canvas[i].addEventListener(	"mouseover",			mouseover_fun,			false);
-		
-		this.render.webgpu.canvas[i].addEventListener(	"touchstart",			touchstart_fun,			false);
-		this.render.webgpu.canvas[i].addEventListener(	"touchend",				touchend_fun,			false);
-		this.render.webgpu.canvas[i].addEventListener(	"touchmove",			touchmove_fun,			false);
-		
-		this.render.webgpu.canvas[i].addEventListener(	"keydown",				keydown_fun,			false);
-		this.render.webgpu.canvas[i].addEventListener(	"keypress",				keypress_fun,			false);
-		this.render.webgpu.canvas[i].addEventListener(	"keyup",				keyup_fun,				false);
-		
-		this.render.webgpu.canvas[i].addEventListener(	"contextmenu", 			contextmenu_fun,		false);
-	}
+	this.canvas.addEventListener(	"mousemove",			mousemove_fun,			false);
+	this.canvas.addEventListener(	"mousedown",			mousedown_fun,			false);
+	this.canvas.addEventListener(	"mouseup",				mouseup_fun,			false);
+	this.canvas.addEventListener(	"dblclick",				dblclick_fun,			false);
+	this.canvas.addEventListener(	"mousewheel",			mousewheel_fun,			false);
+	this.canvas.addEventListener(	"DOMMouseScroll",		mousewheel_fun,			false);
+	this.canvas.addEventListener(	"mouseleave",			mouseleave_fun,			false);
+	this.canvas.addEventListener(	"mouseenter",			mouseenter_fun,			false);
+	this.canvas.addEventListener(	"mouseout",				mouseout_fun,			false);
+	this.canvas.addEventListener(	"mouseover",			mouseover_fun,			false);
 	
-	window.addEventListener(				"gamepadconnected",		gamepadconnected_fun,	false);
-	window.addEventListener(				"gamepaddisconnected",	gamepaddisconnected_fun,false);
+	this.canvas.addEventListener(	"touchstart",			touchstart_fun,			false);
+	this.canvas.addEventListener(	"touchend",				touchend_fun,			false);
+	this.canvas.addEventListener(	"touchmove",			touchmove_fun,			false);
 	
-	window.addEventListener(				"beforeunload",			beforeunload_fun,		false);
+	this.canvas.addEventListener(	"keydown",				keydown_fun,			false);
+	this.canvas.addEventListener(	"keypress",				keypress_fun,			false);
+	this.canvas.addEventListener(	"keyup",				keyup_fun,				false);
 	
-	this.render.webgpu.canvas[0].focus();
+	this.canvas.addEventListener(	"contextmenu", 			contextmenu_fun,		false);
+
+	window.addEventListener(		"beforeunload",			beforeunload_fun,		false);
+	
+	this.canvas.focus();
 	
 	this.destroy=function()
 	{
 		window.removeEventListener("beforeunload",			beforeunload_fun);
 		
-		window.removeEventListener("gamepadconnected",		gamepadconnected_fun);
-		window.removeEventListener("gamepaddisconnected",	gamepaddisconnected_fun);
-		
 		if(this.render!=null)
-			if(this.render.webgpu.canvas!=null)
-				for(var i=0,ni=this.render.webgpu.canvas.length;i<ni;i++){
-					this.render.webgpu.canvas[i].removeEventListener(	"mousemove",			mousemove_fun);
-					this.render.webgpu.canvas[i].removeEventListener(	"mousedown",			mousedown_fun);
-					this.render.webgpu.canvas[i].removeEventListener(	"mouseup",				mouseup_fun);
-					this.render.webgpu.canvas[i].removeEventListener(	"dblclick",				dblclick_fun);
-					this.render.webgpu.canvas[i].removeEventListener(	"mousewheel",			mousewheel_fun);
-					this.render.webgpu.canvas[i].removeEventListener(	"DOMMouseScroll",		mousewheel_fun);
-					this.render.webgpu.canvas[i].removeEventListener(	"mouseleave",			mouseleave_fun);
-					this.render.webgpu.canvas[i].removeEventListener(	"mouseenter",			this.mouseenter_fun[i]);
-					this.render.webgpu.canvas[i].removeEventListener(	"mouseout",				mouseout_fun);
-					this.render.webgpu.canvas[i].removeEventListener(	"mouseover",			mouseover_fun);
-					
-					this.render.webgpu.canvas[i].removeEventListener(	"touchstart",			touchstart_fun);
-					this.render.webgpu.canvas[i].removeEventListener(	"touchend",				touchend_fun);
-					this.render.webgpu.canvas[i].removeEventListener(	"touchmove",			touchmove_fun);
-					
-					this.render.webgpu.canvas[i].removeEventListener(	"keydown",				keydown_fun);
-					this.render.webgpu.canvas[i].removeEventListener(	"keypress",				keypress_fun);
-					this.render.webgpu.canvas[i].removeEventListener(	"keyup",				keyup_fun);
-					
-					this.render.webgpu.canvas[i].removeEventListener(	"contextmenu", 			contextmenu_fun);
-				}
+			if(this.canvas!=null){
+				this.canvas.removeEventListener(	"mousemove",			mousemove_fun);
+				this.canvas.removeEventListener(	"mousedown",			mousedown_fun);
+				this.canvas.removeEventListener(	"mouseup",				mouseup_fun);
+				this.canvas.removeEventListener(	"dblclick",				dblclick_fun);
+				this.canvas.removeEventListener(	"mousewheel",			mousewheel_fun);
+				this.canvas.removeEventListener(	"DOMMouseScroll",		mousewheel_fun);
+				this.canvas.removeEventListener(	"mouseleave",			mouseleave_fun);
+				this.canvas.removeEventListener(	"mouseenter",			mouseenter_fun);
+				this.canvas.removeEventListener(	"mouseout",				mouseout_fun);
+				this.canvas.removeEventListener(	"mouseover",			mouseover_fun);
+				
+				this.canvas.removeEventListener(	"touchstart",			touchstart_fun);
+				this.canvas.removeEventListener(	"touchend",				touchend_fun);
+				this.canvas.removeEventListener(	"touchmove",			touchmove_fun);
+				
+				this.canvas.removeEventListener(	"keydown",				keydown_fun);
+				this.canvas.removeEventListener(	"keypress",				keypress_fun);
+				this.canvas.removeEventListener(	"keyup",				keyup_fun);
+				
+				this.canvas.removeEventListener(	"contextmenu", 			contextmenu_fun);
+			}
+
+		cur						=null;
+		mousemove_fun			=null;
+		mousedown_fun			=null;
+		mouseup_fun				=null;
+		dblclick_fun			=null;
+		mousewheel_fun			=null;
+		mouseleave_fun			=null;
+		mouseenter_fun			=null;
+		mouseout_fun			=null;
+		mouseover_fun			=null;
 		
-		if(this.mouseenter_fun!=null){
-			for(var i=0,ni=this.mouseenter_fun.length;i<ni;i++)
-				this.mouseenter_fun[i]=null;
-			this.mouseenter_fun=null;
-		}
-		
+		touchstart_fun			=null;
+		touchend_fun			=null;
+		touchmove_fun			=null;
+		keydown_fun				=null;
+		keypress_fun			=null;
+		keyup_fun				=null;
+		contextmenu_fun			=null;
+
 		this.set_render_view											=null;
 		this.set_mobile_render_view										=null;
 		this.caculate_pickup_event_processor							=null;
@@ -936,16 +879,9 @@ function construct_event_listener(my_render)
 		this.render.system_event_processor.contextmenu					=null;
 		this.contextmenu_event_listener									=null;
 		
-		this.render.system_event_processor.pickupgamepadconnected		=null;
-		this.render.system_event_processor.gamepadconnected				=null;
-		this.gamepadconnected_event_listener							=null;
-		
-		this.render.system_event_processor.pickupgamepaddisconnected	=null;
-		this.render.system_event_processor.gamepaddisconnected			=null;
-		this.gamepaddisconnected_event_listener							=null;
-		
 		this.destroy													=null;
 		
+		this.canvas														=null;
 		this.render														=null;
 	}
 };

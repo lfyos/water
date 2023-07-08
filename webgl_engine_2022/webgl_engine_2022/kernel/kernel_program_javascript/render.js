@@ -76,8 +76,8 @@ function construct_render_routine(my_webgpu,
 	};
 	this.view_bak=
 	{
-		x				:	-this.view.x,
-		y				:	-this.view.y,
+		x				:	-2,
+		y				:	-2,
 				
 		component		:	-2,
 		driver			:	-2,
@@ -86,17 +86,19 @@ function construct_render_routine(my_webgpu,
 		face			:	-2,
 		loop			:	-2,
 		edge			:	-2,
+		primitive		:	-2,
 		vertex			:	-2,
-		point			:	-2,
 		
 		depth			:	-2,
-		value			:	-2,
-		
-		in_canvas_flag	:	false
+		value			:	[-2,-2,-2]
 	};
 	
 	this.caller						=new construct_server_caller(this);
-	this.event_listener				=new construct_event_listener(this);
+	
+	this.event_listener				=new Array(this.webgpu.canvas.length);
+	for(var i=0,ni=this.event_listener.length;i<ni;i++)
+		this.event_listener[i]=new construct_event_listener(i,this);
+
     this.computer					=new construct_computation_object();
    	
 	this.render_driver				=new Array(render_number);

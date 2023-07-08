@@ -100,7 +100,7 @@ public class part_rude
 			for(int i=0;i<body_number;i++)
 				body_array[i]=new body(s.body_array[i],id_manager,new int[]{1,i});
 		}
-		
+
 		if((part_box=s.part_box)!=null)
 			part_box=new box(s.part_box);
 		

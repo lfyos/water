@@ -1,21 +1,26 @@
 function draw_scene_routine(render_data,render)
 {
-	var target_driver=render.part_driver[render_data.target_ids.render_id][render_data.target_ids.part_id];
-	
-	if((typeof(target_driver)!="object")||(target_driver==null))
+	var target_render_driver=render.render_driver[render_data.target_ids.render_id];
+	var target_part_object	=render.part_array[render_data.target_ids.render_id][render_data.target_ids.part_id];
+	var target_part_driver	=render.part_driver[render_data.target_ids.render_id][render_data.target_ids.part_id];
+		
+	if((typeof(target_part_driver)!="object")||(target_part_driver==null))
 		return;
-	if(typeof(target_driver.begin_render_target)!="function")
+	if(typeof(target_part_driver.begin_render_target)!="function")
 		return;
 
-	var method_array=target_driver.begin_render_target(render_data,render);
+	var method_array=target_part_driver.begin_render_target(
+			render_data,target_part_object,target_render_driver,render);
+	
 	if((method_array!=null)&&(typeof(method_array)!="undefined"))
 		if(method_array.length>0){
 			var project_matrix	=render.camera.compute_camera_data(render_data);	
 			render.system_buffer.set_target_buffer(render_data.render_buffer_id,project_matrix);
 			
 			for(var i=0,ni=method_array.length;i<ni;i++){
-				if(typeof(target_driver.begin_render_method)=="function")
-					target_driver.begin_render_method(method_array[i],render_data,project_matrix,render);
+				if(typeof(target_part_driver.begin_render_method)=="function")
+					target_part_driver.begin_render_method(method_array[i],render_data,
+							project_matrix,target_part_object,target_render_driver,render);
 		
 				for(var render_id=0,render_number=render.part_array.length;render_id<render_number;render_id++){
 					if(typeof(render.part_array[render_id])=="undefined")
@@ -43,21 +48,20 @@ function draw_scene_routine(render_data,render)
 							project_matrix,part_object,render.render_driver[render_id],render);
 					}
 				}	
-				if(typeof(target_driver.end_render_method)=="function")
-					target_driver.end_render_method(
-						method_array[i],render_data,project_matrix,render);
+				if(typeof(target_part_driver.end_render_method)=="function")
+					target_part_driver.end_render_method(method_array[i],render_data,
+							project_matrix,target_part_object,target_render_driver,render);
 			}
 		}
-	
-	if(typeof(target_driver.end_render_target)=="function")
-			target_driver.end_render_target(render_data,render);
 	
 	if(render.webgpu.render_pass_encoder!=null){
 		render.webgpu.render_pass_encoder.end();
 		render.webgpu.render_pass_encoder=null;
 	}
+	if(typeof(target_part_driver.end_render_target)=="function")
+		target_part_driver.end_render_target(
+				render_data,target_part_object,target_render_driver,render);
 }
-
 async function draw_scene_main(render)
 {
 	while(!(render.terminate_flag)){
@@ -90,8 +94,6 @@ async function draw_scene_main(render)
 				if(fun_array[i](render))
 					render.routine_array.push(fun_array[i]);
 
-		await render.webgpu.device.queue.onSubmittedWorkDone();
-		
 		var command_encoder_buffer=new Array();
 		render.system_buffer.set_system_buffer();
 		for(var i=0,ni=render.render_buffer_array.length;i<ni;i++)
@@ -102,6 +104,25 @@ async function draw_scene_main(render)
 				render.webgpu.command_encoder=null;
 			}
 		render.webgpu.device.queue.submit(command_encoder_buffer);
+
+		await render.webgpu.device.queue.onSubmittedWorkDone();
+		
+		for(var i=0,ni=render.render_buffer_array.length;i<ni;i++){
+			var render_data=render.render_buffer_array[i];
+			if(!(render_data.do_render_flag))
+				continue;
+
+			var target_render_driver=render.render_driver[render_data.target_ids.render_id];
+			var target_part_object	=render.part_array[render_data.target_ids.render_id][render_data.target_ids.part_id];
+			var target_part_driver	=render.part_driver[render_data.target_ids.render_id][render_data.target_ids.part_id];
+
+			if((typeof(target_part_driver)!="object")||(target_part_driver==null))
+				continue;
+			if(typeof(target_part_driver.complete_render_target)!="function")
+				continue;
+			await target_part_driver.complete_render_target(
+						render_data,target_part_object,target_render_driver,render);
+		}
 
 		await new Promise((resolve)=>
 			{

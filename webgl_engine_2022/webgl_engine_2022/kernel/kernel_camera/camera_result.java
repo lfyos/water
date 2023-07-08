@@ -208,8 +208,9 @@ public class camera_result
 		point p1=comp_negative_loca.multiply(negative_matrix.multiply(new point(0,0,parameter.depth+1.0)));
 
 		box my_box=parameter.comp.driver_array.get(driver_id).component_part.secure_caculate_part_box(
-					parameter.comp,driver_id,parameter.body_id,parameter.face_id,parameter.loop_id,
-					parameter.edge_id,parameter.point_id,p0,p1);
+					parameter.comp,driver_id,parameter.body_id,parameter.face_id,
+					parameter.primitive_id,parameter.vertex_id,parameter.loop_id,
+					parameter.edge_id,p0,p1);
 		
 		return (my_box==null)?null:(my_box.center());
 	}

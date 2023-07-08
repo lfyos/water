@@ -1,9 +1,12 @@
 function my_create_part_driver(part_object,render_driver,render)
 {
-	this.draw_component=function (method_data,target_data,
+	this.draw_component=function(method_data,target_data,
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,render_driver,render)	
 	{
+		if(method_data.method_id==0)
+			return;
+			
 		render.set_system_bindgroup_by_component(target_data.render_buffer_id,
 			method_data.method_id,project_matrix.camera_component_id,-1);
 

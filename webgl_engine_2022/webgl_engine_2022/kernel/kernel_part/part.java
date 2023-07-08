@@ -47,14 +47,15 @@ public class part
 	public buffer_object_file_modify_time_and_length boftal;
 	
 	public box secure_caculate_part_box(component comp,int driver_id,
-			int body_id,int face_id,int loop_id,int edge_id,int point_id,
+			int body_id,int face_id,int primitive_id,int vertex_id,int loop_id,int edge_id,
 			point p0,point p1)
 	{
 		if(driver==null)
 			debug_information.println("Find No driver part");
 		else
 			try{
-				return driver.caculate_part_box(this,comp,driver_id,body_id,face_id,loop_id,edge_id,point_id,p0,p1);
+				return driver.caculate_part_box(this,comp,driver_id,body_id,face_id,
+						primitive_id,vertex_id,loop_id,edge_id,p0,p1);
 			}catch(Exception e){
 				debug_information.println("secure_caculate_part_box fail:	",e.toString());
 				e.printStackTrace();
@@ -218,7 +219,7 @@ public class part
 				part_par.max_component_data_buffer_number+",");
 		
 		head_fw.print ("\t\t\"part_box\"\t\t\t\t\t\t\t:\t[");
-		box part_box=secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,null,null);
+		box part_box=secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null);
 		for(int i=0;(i<2)&&(part_box!=null);i++){
 			head_fw.print("[",part_box.p[i].x);
 			head_fw.print(",",part_box.p[i].y);

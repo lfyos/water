@@ -1,13 +1,16 @@
 function my_create_part_driver(part_object,render_driver,render)
 {
-	this.draw_component=function (method_data,target_data,
+	this.draw_component=function(method_data,target_data,
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,render_driver,render)	
 	{
 		var p	=part_object.buffer_object.face.region_data;
 		var rpe	=render.webgpu.render_pass_encoder;
 
-		rpe.setPipeline(render_driver.pipeline);
+		rpe.setPipeline(
+			(method_data.method_id!=0)
+			?(render_driver.pipeline)
+			:(render_driver.value_pipeline));
 
 		for(var i=0,ni=component_render_parameter.length;i<ni;i++){
 			var buffer_id=component_render_parameter[i];
@@ -116,10 +119,11 @@ function main(	render_id,		render_name,
 			targets	: 
 			[
 				{
-					format		:	render.webgpu.gpu.getPreferredCanvasFormat()
+					format		:	render.webgpu.gpu.getPreferredCanvasFormat(),
 				},
 				{
-					format		:	"rgba32sint"
+					format		:	"rgba32sint",
+					writeMask	:	GPUColorWrite.ALL
 				}
 			],
 		},
@@ -145,7 +149,10 @@ function main(	render_id,		render_name,
 		}
 	};
 	
-	this.pipeline = render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.pipeline 		= render.webgpu.device.createRenderPipeline(pipeline_descr);
+	
+	pipeline_descr.fragment.targets[0].format="rgba32float";
+	this.value_pipeline = render.webgpu.device.createRenderPipeline(pipeline_descr);
 
 	this.create_part_driver=my_create_part_driver;
 	

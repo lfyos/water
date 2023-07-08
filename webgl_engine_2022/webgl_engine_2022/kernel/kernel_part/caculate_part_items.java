@@ -95,14 +95,17 @@ public class caculate_part_items
 		my_face_loop=null;
 		my_face_edge=null;
 		
-		part_item_name="δ֪";
+		part_item_name="";
 	}
-	private void do_caculate_part_box(part_rude box_part_mesh,int body_id,int face_id,int loop_id,int edge_id,int point_id)
+	private void do_caculate_part_box(part_rude box_part_mesh,
+			int body_id,int face_id,int primitive_id,int vertex_id,int loop_id,int edge_id)
 	{
+		my_box=null;
+		
 		if((my_part_rude=box_part_mesh)==null)
 			return;
-		if(body_id==my_part_rude.body_number())
-			if((face_id==0)&&(loop_id==0)&&(edge_id==0)&&(point_id==0)){
+		if(vertex_id==0)
+			if((body_id<0)&&(face_id<0)&&(primitive_id<0)&&(loop_id<0)&&(edge_id<0)){
 				my_box=new box(new point(0,0,0));
 				return;
 			}
@@ -136,10 +139,10 @@ public class caculate_part_items
 		if((my_face_edge=my_face_loop.edge[edge_id])==null)
 			return ;
 		my_box=(my_face_edge.edge_box!=null)?(my_face_edge.edge_box):my_box;
-		if(point_id<0)
+		if(primitive_id<0)
 			return;
 		
-		switch(point_id){
+		switch(primitive_id){
 		case 0:
 			my_box=new box(new point(0,0,0));
 			return;
@@ -166,18 +169,20 @@ public class caculate_part_items
 		case "parabola":
 			point point_array[]=caculate_point_for_ellipse_hyperbola_parabola(
 					my_face_edge.curve_parameter,my_face_edge.curve_type);
-			if(point_id>=5)
-				if((point_id-5)<point_array.length)
-					my_box=new box(point_array[point_id-5]);
+			if(primitive_id>=5)
+				if((primitive_id-5)<point_array.length)
+					my_box=new box(point_array[primitive_id-5]);
 			return;
 		case "pickup_point_set":
-			if(my_face_edge.curve_parameter!=null)
-				if(point_id>=1000)
-					if((point_id-1000)<(my_face_edge.curve_parameter.length/3))
+			if(my_face_edge.curve_parameter!=null) {
+				primitive_id-=1000;
+				if(primitive_id>=0)
+					if(primitive_id<(my_face_edge.curve_parameter.length/3))
 						my_box=new box(new point(
-									my_face_edge.curve_parameter[3*point_id+0],
-									my_face_edge.curve_parameter[3*point_id+1],
-									my_face_edge.curve_parameter[3*point_id+2]));
+									my_face_edge.curve_parameter[3*primitive_id+0],
+									my_face_edge.curve_parameter[3*primitive_id+1],
+									my_face_edge.curve_parameter[3*primitive_id+2]));
+			}
 			return;
 		case "render_point_set":
 			return;
@@ -186,6 +191,7 @@ public class caculate_part_items
 	}
 	private location loca,neg_loca;
 	private point local_p0,local_p1,local_normal;
+
 	private void create_location(point pp0,point pp1,point origin,point axis)
 	{
 		point dx,dy,dz;
@@ -227,11 +233,11 @@ public class caculate_part_items
 		if(Math.abs(a)<const_value.min_value){
 			if(Math.abs(b)>const_value.min_value)
 				return loca.multiply(local_normal.scale(-c/b).add(local_p0));
-			part_item_name="��һ���޷������"+name;
+			part_item_name="dlt error:"+name;
 			return p_default;
 		}
 		if(dlt<0){
-			part_item_name="�ڶ����޷������"+name;
+			part_item_name="dlt<0 error:"+name;
 			return p_default;
 		}
 		dlt=Math.sqrt(dlt);
@@ -281,7 +287,7 @@ public class caculate_part_items
 		switch(my_face.fa_face.face_type) {
 		case "plane":
 		{
-			part_item_name="ƽ��";
+			part_item_name="plane";
 			point plane_point=new point(face_parameter[3],face_parameter[4],face_parameter[5]);
 			point plane_normal=new point(face_parameter[0],face_parameter[1],face_parameter[2]);
 			plane pl=new plane(plane_point,plane_point.add(plane_normal));
@@ -289,9 +295,9 @@ public class caculate_part_items
 		}
 		case "cylinder":
 		{
-			part_item_name="����";
+			part_item_name="cylinder";
 			if((my_face.fa_face.face_parameter_number()<7)||(p0==null)){
-				part_item_name="�����������:"+Integer.toString(my_face.fa_face.face_parameter_number());
+				part_item_name="cylinder:parameter error"+Integer.toString(my_face.fa_face.face_parameter_number());
 				return p0;
 			}
 				
@@ -306,13 +312,13 @@ public class caculate_part_items
 			double b=2*(local_p0.x*local_normal.x+local_p0.y*local_normal.y);
 			double c=local_p0.x*local_p0.x+local_p0.y*local_p0.y-radius*radius;
 			
-			return caculate_focus_point_from_abc(a,b,c,p0,"����");
+			return caculate_focus_point_from_abc(a,b,c,p0,"cylinder");
 		}
 		case "cone":
 		{
-			part_item_name="׶��";
+			part_item_name="cone";
 			if((my_face.fa_face.face_parameter_number()<8)||(p0==null)){
-				part_item_name="׶���������:"+Integer.toString(my_face.fa_face.face_parameter_number());
+				part_item_name="cone parameter error"+Integer.toString(my_face.fa_face.face_parameter_number());
 				return p0;
 			}				
 			double radius=face_parameter[6],half_angle=face_parameter[7];
@@ -327,13 +333,13 @@ public class caculate_part_items
 			double b=2*(local_p0.x*local_normal.x+local_p0.y*local_normal.y-tan2*(local_p0.z-h)*local_normal.z);
 			double c=local_p0.x*local_p0.x+local_p0.y*local_p0.y-tan2*(local_p0.z-h)*(local_p0.z-h);
 			
-			return caculate_focus_point_from_abc(a,b,c,p0,"׶��");
+			return caculate_focus_point_from_abc(a,b,c,p0,"cone");
 		}
 		case "sphere":
 		{
-			part_item_name="����";
+			part_item_name="";
 			if((my_face.fa_face.face_parameter_number()<4)||(p0==null)){
-				part_item_name="�����������:"+Integer.toString(my_face.fa_face.face_parameter_number());
+				part_item_name="sphere error parameter:"+Integer.toString(my_face.fa_face.face_parameter_number());
 				return p0;
 			}	
 			create_location(p0,p1,new point(face_parameter[0],face_parameter[1],face_parameter[2]),new point(0,0,1));
@@ -342,18 +348,19 @@ public class caculate_part_items
 			double a=local_normal.x*local_normal.x+local_normal.y*local_normal.y+local_normal.z*local_normal.z;
 			double b=2*(local_p0.x*local_normal.x+local_p0.y*local_normal.y+local_p0.z*local_normal.z);
 			double c=local_p0.x*local_p0.x+local_p0.y*local_p0.y+local_p0.z*local_p0.z-radius*radius;
-			return caculate_focus_point_from_abc(a,b,c,p0,"׶��");
+			return caculate_focus_point_from_abc(a,b,c,p0,"sphere");
 		}
 		case "torus":
-			part_item_name="����";
+			part_item_name="torus";
 			return p0;
 		}
 
-		part_item_name="δ֪����";
+		part_item_name="unknown part structure";
 		
 		return p0;
 	}
-	public caculate_part_items(part p,int body_id,int face_id,int loop_id,int edge_id,int point_id)
+	public caculate_part_items(part p,int body_id,int face_id,
+			int primitive_id,int vertex_id,int loop_id,int edge_id)
 	{
 		clear_all();
 		if(p==null)
@@ -362,7 +369,8 @@ public class caculate_part_items
 			return;
 		if((my_part_rude=p.part_mesh)==null)
 			return;
-		do_caculate_part_box(my_part_rude,body_id,face_id,loop_id,edge_id,point_id);
+		do_caculate_part_box(my_part_rude,
+				body_id,face_id,primitive_id,vertex_id,loop_id,edge_id);
 		return;
 	}
 }

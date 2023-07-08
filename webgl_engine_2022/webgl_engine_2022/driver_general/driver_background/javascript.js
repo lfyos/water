@@ -156,10 +156,13 @@ function my_create_part_driver(part_object,render_driver,render)
 {
 	this.texture_bind_group_array=new Array();
 	
-	this.draw_component=function (method_data,target_data,
+	this.draw_component=function(method_data,target_data,
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,render_driver,render)	
 	{	
+		if(method_data.method_id==0)
+			return;
+			
 		for(var i=0,ni=component_render_parameter.length;i<ni;i++){
 			var buffer_id=component_render_parameter[i];
 			while(buffer_id>=this.texture_bind_group_array.length)

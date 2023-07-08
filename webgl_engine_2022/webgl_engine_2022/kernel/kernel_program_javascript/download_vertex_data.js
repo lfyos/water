@@ -320,7 +320,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		return 1;
 	};
 	
-	this.create_part_array_and_vertex_data_request=function(
+	this.create_part_array_and_vertex_data_request=async function(
 			render_id,part_id,part_file_proxy_url,part_head_data,part_affiliated_data,render)
 	{
 		if(this.acknowledge_render_part_id==null)
@@ -397,7 +397,8 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			var my_create_part_fun=render_driver.create_part_driver
 			if(typeof(my_create_part_fun)=="function")
 				try{
-					render.part_driver[render_id][part_id]=new my_create_part_fun(part_object,render_driver,render);
+					var my_part_driver=new my_create_part_fun(part_object,render_driver,render);
+					render.part_driver[render_id][part_id]=my_part_driver;
 				}catch(e){
 					render.part_driver[render_id][part_id]=null;
 					alert("Create Part Driver Object fail:	"+e.toString());
@@ -452,7 +453,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			var part_head_data				=package_data_array[part_package_sequence_id].shift();
 			var part_affiliated_data		=package_data_array[part_package_sequence_id];
 
-			this.create_part_array_and_vertex_data_request(render_id,part_id,
+			await this.create_part_array_and_vertex_data_request(render_id,part_id,
 					part_file_proxy_url,part_head_data,part_affiliated_data,render);
 		}
 	}

@@ -15,10 +15,10 @@ public class part_container_for_process_sequence extends sorter<part,part>
 		double distance2_i=0,distance2_j=0;
 		
 		if(pi.driver!=null)
-			if((bi=pi.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,null,null))!=null)
+			if((bi=pi.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null))!=null)
 				distance2_i=bi.distance2();
 		if(pj.driver!=null)
-			if((bj=pj.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,null,null))!=null)
+			if((bj=pj.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null))!=null)
 				distance2_j=bj.distance2();
 		
 		if((distance2_i<=const_value.min_value2)&&(distance2_j>const_value.min_value2))	//parts without box, first be processed

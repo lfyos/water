@@ -42,12 +42,68 @@ public class extended_component_instance_driver extends component_instance_drive
 						null,	null,	(current_canvas_id==i),	true,	true,	true));
 		}
 	}
+	private void register_value_depth_target(engine_kernel ek,client_information ci)
+	{
+		render_target rt;
+		camera_result cr=ci.display_camera_result;
+		
+		if((ci.parameter.comp==null)||(current_canvas_id<0)||(current_canvas_id>=width_height.length))
+			rt=new render_target(
+				false,								//do_render_flag
+				comp.component_id,	driver_id,	-1,	//target IDS
+				new component[] 					//components
+				{
+					comp
+				},
+				null,								//driver_id
+				cr.target.camera_id,cr.target.parameter_channel_id,//camera_id,parameter_channel_id
+				cr.target.view_volume_box,			//view box
+				null,	null,						//clip_plane,mirror_plane
+				false,								//main_display_target_flag
+				false,								//canvas_display_target_flag
+				false,								//do_discard_lod_flag
+				false);								//do_selection_lod_flag
+		else{
+			int width	=width_height[current_canvas_id][0];
+			int height	=width_height[current_canvas_id][1];
+			box view_volume_box=new box(
+					ci.parameter.x*(double)width/(double)height,
+					ci.parameter.y,
+					-1,
+
+					ci.parameter.x*(double)width/(double)height+2.0/(double)height,
+					ci.parameter.y+2.0/(double)height,
+					1);
+			rt=new render_target(
+				true,								//do_render_flag
+				comp.component_id,	driver_id,	-1,	//target IDS
+				new component[] 					//components
+				{
+					ci.parameter.comp,comp
+				},
+				new int[]							//driver_id
+				{
+					0,driver_id
+				},
+				cr.target.camera_id,cr.target.parameter_channel_id,		//camera_id,parameter_channel_id
+				view_volume_box,					//view box
+				cr.target.clip_plane,null,			//clip_plane,mirror_plane
+				false,								//main_display_target_flag
+				false,								//canvas_display_target_flag
+				false,								//do_discard_lod_flag
+				false);								//do_selection_lod_flag
+		}
+		ci.target_container.register_target(rt);
+	}
 	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
 		register_target(ek,ci);
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
+		if(cr.target.main_display_target_flag)
+			if(ci.display_camera_result!=null)
+				register_value_depth_target(ek,ci);
 		return false;
 	}
 	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
@@ -93,9 +149,6 @@ public class extended_component_instance_driver extends component_instance_drive
 			}
 			register_target(ek,ci);
 		}
-
-		
-		
 		return null;
 	}
 }
