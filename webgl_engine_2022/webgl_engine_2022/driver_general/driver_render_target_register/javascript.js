@@ -2,9 +2,13 @@ function my_create_part_driver(part_object,render_driver,render)
 {
 	this.should_update_server_flag=true;
 	
+	this.color_texture	=new Array(render.webgpu.canvas.length);
+	this.canvas_copy	=new Array(render.webgpu.canvas.length);
 	this.depth_texture	=new Array(render.webgpu.canvas.length);
 	this.id_texture		=new Array(render.webgpu.canvas.length);
-	for(var i=0,ni=this.depth_texture.length;i<ni;i++){
+	for(var i=0,ni=this.color_texture.length;i<ni;i++){
+		this.canvas_copy[i]		=null;
+		this.color_texture[i]	=null;
 		this.depth_texture[i]	=null;
 		this.id_texture[i]		=null;
 	}
@@ -70,7 +74,7 @@ function my_create_part_driver(part_object,render_driver,render)
 			usage	:	GPUBufferUsage.MAP_READ|GPUBufferUsage.COPY_DST
 		});
 
-	this.draw_component=function (method_data,target_data,
+	this.draw_component=async function (method_data,target_data,
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,render_driver,render)	
 	{
@@ -200,36 +204,66 @@ function my_create_part_driver(part_object,render_driver,render)
 				height	:	1
 			});	
 	}
-
-	this.end_render_target=function(
+	
+	this.end_render_target=async function(
 			render_data,target_part_object,target_render_driver,render)
 	{
-		if(render_data.target_texture_id>=0)
-			this.copy_id_texture(render_data,target_part_object,target_render_driver,render);
-		else
+		if(render_data.target_texture_id<0)
 			this.copy_value_texture(render_data,target_part_object,target_render_driver,render);
+		else{
+			var my_gpu_texture=render.webgpu.context[render_data.target_texture_id].getCurrentTexture();
+			this.canvas_copy[render_data.target_texture_id].do_copy(true,
+				[
+					-1,-1,	 2, 2
+				],
+				[	 
+					 0, 1,	 1, -1
+				],			
+				my_gpu_texture,render.webgpu);
+			this.copy_id_texture(render_data,target_part_object,target_render_driver,render);
+		}
 	}
 	
-	this.begin_render_target_for_id=function(
+	this.begin_render_target_for_id=async function(
 			render_data,target_part_object,target_render_driver,render)
 	{
-		var my_depth_texture,my_id_texture;
+		var my_color_texture,my_canvas_copy,my_depth_texture,my_id_texture;
 		var my_gpu_texture=render.webgpu.context[render_data.target_texture_id].getCurrentTexture();
 		
 		do{
+			my_color_texture	=this.color_texture	[render_data.target_texture_id];
+			my_canvas_copy		=this.canvas_copy	[render_data.target_texture_id];
 			my_depth_texture	=this.depth_texture	[render_data.target_texture_id];
 			my_id_texture		=this.id_texture	[render_data.target_texture_id];
 
-			if(my_depth_texture!=null){
-				if(my_gpu_texture.width==my_depth_texture.width)
-					if(my_gpu_texture.height==my_depth_texture.height)
+			if(my_color_texture!=null){
+				if(my_gpu_texture.width==my_color_texture.width)
+					if(my_gpu_texture.height==my_color_texture.height)
 						break;
+				
+				my_color_texture.	destroy();
+				my_canvas_copy.		destroy();
 				my_depth_texture.	destroy();
 				my_id_texture.		destroy();
 			}
 			
 			this.should_update_server_flag=true;
 			
+			this.color_texture[render_data.target_texture_id]=render.webgpu.device.createTexture(
+				{
+					size	:
+					{
+						width	:	my_gpu_texture.width,
+						height	:	my_gpu_texture.height
+					},
+					format	:	"rgba32float",
+					usage	:	 GPUTextureUsage.RENDER_ATTACHMENT
+								|GPUTextureUsage.TEXTURE_BINDING
+								|GPUTextureUsage.COPY_SRC
+				});
+			this.canvas_copy[render_data.target_texture_id]=new render.texture_to_texture_copy(
+				this.color_texture[render_data.target_texture_id],my_gpu_texture.format,render.webgpu);
+
 			this.depth_texture[render_data.target_texture_id]=render.webgpu.device.createTexture(
 				{
 					size	:
@@ -257,7 +291,7 @@ function my_create_part_driver(part_object,render_driver,render)
 			colorAttachments		: 
 			[
 				{
-					view			:	my_gpu_texture.createView(),
+					view			:	my_color_texture.createView(),
 					clearValue		:	{ r: 0.0, g: 0.0, b: 0.0, a: 1.0 },
 					loadOp			:	"clear",
 					storeOp			:	"store"
@@ -299,8 +333,8 @@ function my_create_part_driver(part_object,render_driver,render)
 		];
 		return  ret_val;
 	};
-		
-	this.begin_render_target_for_value=function(
+
+	this.begin_render_target_for_value=async function(
 			render_data,target_part_object,target_render_driver,render)
 	{
 		render.webgpu.render_pass_encoder = render.webgpu.command_encoder.beginRenderPass(
@@ -342,13 +376,13 @@ function my_create_part_driver(part_object,render_driver,render)
 		return  ret_val;
 	};
 	
-	this.begin_render_target=function(render_data,target_part_object,target_render_driver,render)
+	this.begin_render_target=async function(render_data,target_part_object,target_render_driver,render)
 	{
 		if(render_data.target_texture_id>=0)
-			return this.begin_render_target_for_id(
+			return await this.begin_render_target_for_id(
 						render_data,target_part_object,target_render_driver,render);
 		else
-			return this.begin_render_target_for_value(
+			return await this.begin_render_target_for_value(
 						render_data,target_part_object,target_render_driver,render);
 	}
 
@@ -463,12 +497,14 @@ function my_create_part_driver(part_object,render_driver,render)
 	{
 	};
 }
+
 function main(	render_id,		render_name,
 				init_data,		text_array,
 				shader_code,	render)
 {
 	this.create_part_driver=my_create_part_driver;
 	this.destroy=function()
-	{	
+	{
+		
 	};
 }

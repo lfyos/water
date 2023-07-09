@@ -1,4 +1,4 @@
-function draw_scene_routine(render_data,render)
+async function draw_scene_routine(render_data,render)
 {
 	var target_render_driver=render.render_driver[render_data.target_ids.render_id];
 	var target_part_object	=render.part_array[render_data.target_ids.render_id][render_data.target_ids.part_id];
@@ -9,7 +9,7 @@ function draw_scene_routine(render_data,render)
 	if(typeof(target_part_driver.begin_render_target)!="function")
 		return;
 
-	var method_array=target_part_driver.begin_render_target(
+	var method_array=await target_part_driver.begin_render_target(
 			render_data,target_part_object,target_render_driver,render);
 	
 	if((method_array!=null)&&(typeof(method_array)!="undefined"))
@@ -19,7 +19,7 @@ function draw_scene_routine(render_data,render)
 			
 			for(var i=0,ni=method_array.length;i<ni;i++){
 				if(typeof(target_part_driver.begin_render_method)=="function")
-					target_part_driver.begin_render_method(method_array[i],render_data,
+					await target_part_driver.begin_render_method(method_array[i],render_data,
 							project_matrix,target_part_object,target_render_driver,render);
 		
 				for(var render_id=0,render_number=render.part_array.length;render_id<render_number;render_id++){
@@ -43,13 +43,13 @@ function draw_scene_routine(render_data,render)
 						if(typeof(part_driver.draw_component)!="function")
 							continue;
 		
-				    	part_driver.draw_component(method_array[i],render_data,
+				    	await part_driver.draw_component(method_array[i],render_data,
 							component_render_parameter,component_buffer_parameter,
 							project_matrix,part_object,render.render_driver[render_id],render);
 					}
 				}	
 				if(typeof(target_part_driver.end_render_method)=="function")
-					target_part_driver.end_render_method(method_array[i],render_data,
+					await target_part_driver.end_render_method(method_array[i],render_data,
 							project_matrix,target_part_object,target_render_driver,render);
 			}
 		}
@@ -59,7 +59,7 @@ function draw_scene_routine(render_data,render)
 		render.webgpu.render_pass_encoder=null;
 	}
 	if(typeof(target_part_driver.end_render_target)=="function")
-		target_part_driver.end_render_target(
+		await target_part_driver.end_render_target(
 				render_data,target_part_object,target_render_driver,render);
 }
 async function draw_scene_main(render)
@@ -99,7 +99,7 @@ async function draw_scene_main(render)
 		for(var i=0,ni=render.render_buffer_array.length;i<ni;i++)
 			if(render.render_buffer_array[i].do_render_flag){
 				render.webgpu.command_encoder=render.webgpu.device.createCommandEncoder();
-				draw_scene_routine(render.render_buffer_array[i],render);
+				await draw_scene_routine(render.render_buffer_array[i],render);
 				command_encoder_buffer.push(render.webgpu.command_encoder.finish());
 				render.webgpu.command_encoder=null;
 			}

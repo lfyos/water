@@ -11,7 +11,9 @@ async function download_external_texture(request_url,render)
 					height	:	my_imageBitmap.height
 				},
 				format		:	"rgba8unorm",
-				usage		:	GPUTextureUsage.TEXTURE_BINDING |GPUTextureUsage.COPY_DST	|GPUTextureUsage.RENDER_ATTACHMENT
+				usage		:	 GPUTextureUsage.TEXTURE_BINDING 
+								|GPUTextureUsage.COPY_DST
+								|GPUTextureUsage.RENDER_ATTACHMENT
 	    	});
 	render.webgpu.device.queue.copyExternalImageToTexture(
 		{
@@ -156,7 +158,7 @@ function my_create_part_driver(part_object,render_driver,render)
 {
 	this.texture_bind_group_array=new Array();
 	
-	this.draw_component=function(method_data,target_data,
+	this.draw_component=async function(method_data,target_data,
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,render_driver,render)	
 	{	
@@ -178,7 +180,7 @@ function my_create_part_driver(part_object,render_driver,render)
 			if((my_directory_name=this.texture_bind_group_array[buffer_id].directory_name)!=null){
 				this.texture_bind_group_array[buffer_id].directory_name=null;
 				destroy_texture_bind_group(this.texture_bind_group_array[buffer_id]);
-				create_texture_bind_group(my_directory_name,
+				await create_texture_bind_group(my_directory_name,
 					this.texture_bind_group_array[buffer_id],part_object,render_driver,render);
 			}
 		}
@@ -312,9 +314,7 @@ function create_texture_bindgroup_layout(render)
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
 			sampler		:
 			{
-				sampleType		:	"float",
-				viewDimension	:	"2d",
-				multisampled	:	false
+				type	:	"filtering"
 			}
 		}
 	];
@@ -378,7 +378,7 @@ function main(	render_id,		render_name,
 			targets	: 
 			[
 				{
-					format		:	render.webgpu.gpu.getPreferredCanvasFormat(),
+					format		:	"rgba32float"
 				},
 				{
 					format		:	"rgba32sint",

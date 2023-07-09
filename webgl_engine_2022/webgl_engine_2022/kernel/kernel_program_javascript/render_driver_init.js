@@ -1,8 +1,8 @@
 function render_driver_initialization(program_data,common_shader_code,render)
 {
 	for(var render_id=0,render_number=program_data.length;render_id<render_number;render_id++){
-		var my_init_data				=render.render_initialize_data[render_id];
-		var my_render_name				=program_data[render_id].shift();
+		var my_init_data	=render.render_initialize_data[render_id];
+		var my_render_name	=program_data[render_id].shift();
 		
 		str=program_data[render_id].shift();
 		var my_render_driver_function_code	=""

@@ -1,6 +1,6 @@
 function my_create_part_driver(part_object,render_driver,render)
 {
-	this.draw_component=function(method_data,target_data,
+	this.draw_component=async function(method_data,target_data,
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,render_driver,render)	
 	{
@@ -107,7 +107,7 @@ function main(	render_id,		render_name,
 			targets	: 
 			[
 				{
-					format		:	render.webgpu.gpu.getPreferredCanvasFormat(),
+					format		:	"rgba32float"
 				},
 				{
 					format		:	"rgba32sint",

@@ -175,4 +175,6 @@ function construct_render_routine(my_webgpu,
 		this.routine_array.push(my_routine_function);
 		return this.routine_array.length-1;
 	};
+	
+	this.texture_to_texture_copy	=construct_texture_to_texture_copy;
 };
