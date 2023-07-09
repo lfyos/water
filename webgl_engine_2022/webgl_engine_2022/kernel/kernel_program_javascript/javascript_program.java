@@ -16,13 +16,12 @@ public class javascript_program
 	
 	private static final String javascript_file_name[]=new String[] 
 	{
-		"call_server.js",			"camera.js",				"collector_loader.js",		"component_init_function.js",
-		"component_location.js",	"component_render.js",		"computer.js",				"copy_texture_to_texture.js",		
-		"download_vertex_data.js",	"draw_scene.js",			"event_listener.js",		"init_ids.js",
-		"init_system_bindgroup.js",	"modifier_time.js",			"operate_component.js",		"pickup.js",
-		"process_bar.js",			"render_driver_init.js",	"render_main.js",			"render.js",
-		"request_create_engine.js",	"request_render_data.js",	"system_buffer.js",			"utility.js",
-		"webgpu.js"
+		"call_server.js",		"camera.js",			"collector_loader.js",			"component_location.js",
+		"component_render.js",	"computer.js",			"copy_texture_to_texture.js",	"download_vertex_data.js",
+		"draw_scene.js",		"event_listener.js",	"init_ids.js",					"init_system_bindgroup.js",
+		"modifier_time.js",		"operate_component.js",	"pickup.js",					"process_bar.js",
+		"render_main.js",		"render.js",			"request_create_engine.js",		"request_render_data.js",
+		"system_buffer.js",		"utility.js",			"webgpu.js"
 	};
 	
 	public void destroy()
@@ -49,12 +48,6 @@ public class javascript_program
 	public engine_call_result create(
 			client_request_response request_response,system_parameter system_par)
 	{
-		String function_name;
-		if((function_name=request_response.get_parameter("function_name"))==null)
-			function_name="construct_render_object";
-		else if(function_name.compareTo("construct_render_object_routine")==0)
-			function_name="construct_render_object";
-
 		String last_modified_str=Long.toString(last_modified_time);
 		
 		String function_date;
@@ -63,7 +56,7 @@ public class javascript_program
 				function_date=null;
 		if(function_date==null){
 			String url=request_response.implementor.get_url();
-			url+="?channel=javascript&function_name="+function_name+"&function_date="+last_modified_str;
+			url+="?channel=javascript&function_date="+last_modified_str;
 			request_response.implementor.redirect_url(url,"*");
 			return null;
 		}
@@ -80,8 +73,9 @@ public class javascript_program
 				return null;
 			}
 		}
+		
 		String str[]=new String[]{
-				"async function "+function_name+"(my_canvas,my_user_name,my_pass_word,my_language_name,",
+				"export var main=async function(my_canvas,my_user_name,my_pass_word,my_language_name,",
 				"		scene_name,link_name,initialization_parameter,progress_bar_function)",
 				"{"
 		};

@@ -74,7 +74,7 @@ function my_create_part_driver(part_object,render_driver,render)
 			usage	:	GPUBufferUsage.MAP_READ|GPUBufferUsage.COPY_DST
 		});
 
-	this.draw_component=async function (method_data,target_data,
+	this.draw_component=function (method_data,target_data,
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,render_driver,render)	
 	{
@@ -205,7 +205,7 @@ function my_create_part_driver(part_object,render_driver,render)
 			});	
 	}
 	
-	this.end_render_target=async function(
+	this.end_render_target=function(
 			render_data,target_part_object,target_render_driver,render)
 	{
 		if(render_data.target_texture_id<0)
@@ -224,7 +224,7 @@ function my_create_part_driver(part_object,render_driver,render)
 		}
 	}
 	
-	this.begin_render_target_for_id=async function(
+	this.begin_render_target_for_id=function(
 			render_data,target_part_object,target_render_driver,render)
 	{
 		var my_color_texture,my_canvas_copy,my_depth_texture,my_id_texture;
@@ -334,7 +334,7 @@ function my_create_part_driver(part_object,render_driver,render)
 		return  ret_val;
 	};
 
-	this.begin_render_target_for_value=async function(
+	this.begin_render_target_for_value=function(
 			render_data,target_part_object,target_render_driver,render)
 	{
 		render.webgpu.render_pass_encoder = render.webgpu.command_encoder.beginRenderPass(
@@ -376,13 +376,13 @@ function my_create_part_driver(part_object,render_driver,render)
 		return  ret_val;
 	};
 	
-	this.begin_render_target=async function(render_data,target_part_object,target_render_driver,render)
+	this.begin_render_target=function(render_data,target_part_object,target_render_driver,render)
 	{
 		if(render_data.target_texture_id>=0)
-			return await this.begin_render_target_for_id(
+			return this.begin_render_target_for_id(
 						render_data,target_part_object,target_render_driver,render);
 		else
-			return await this.begin_render_target_for_value(
+			return this.begin_render_target_for_value(
 						render_data,target_part_object,target_render_driver,render);
 	}
 

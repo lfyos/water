@@ -158,7 +158,7 @@ function my_create_part_driver(part_object,render_driver,render)
 {
 	this.texture_bind_group_array=new Array();
 	
-	this.draw_component=async function(method_data,target_data,
+	this.draw_component=function(method_data,target_data,
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,render_driver,render)	
 	{	
@@ -180,7 +180,7 @@ function my_create_part_driver(part_object,render_driver,render)
 			if((my_directory_name=this.texture_bind_group_array[buffer_id].directory_name)!=null){
 				this.texture_bind_group_array[buffer_id].directory_name=null;
 				destroy_texture_bind_group(this.texture_bind_group_array[buffer_id]);
-				await create_texture_bind_group(my_directory_name,
+				create_texture_bind_group(my_directory_name,
 					this.texture_bind_group_array[buffer_id],part_object,render_driver,render);
 			}
 		}

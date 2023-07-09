@@ -166,7 +166,7 @@ public class dispatch_create_engine_request
 		ci.request_response.print("}");
 		ci.request_response.print("],\"");
 
-		String initialization_url=ek.scene_par.scene_proxy_directory_name+"initialization.gzip_text";
+		String initialization_url=ek.scene_par.scene_proxy_directory_name+"initialization.gzip_js";
 		if((initialization_url=ci.get_file_proxy_url(initialization_url,ek.system_par))==null)
 			initialization_url=ci.request_url_header+"&command=initialization";
 		ci.request_response.print(initialization_url,"\"");			//parameter	5   last

@@ -41,7 +41,7 @@ public class engine_initialization
 			
 			fw.println("\t\t\"component_id\"			:	",	comp.component_id+",");
 			fw.println("\t\t\"component_name\"			:	",	jason_string.change_string(comp.component_name)+",");
-			fw.println("\t\t\"initialization_function\"	:	",	jason_string.change_string(program_text));
+			fw.println("\t\t\"initialization_function\"	:	",	program_text);
 			
 			fw.print  ("\t}");
 		}
@@ -168,7 +168,7 @@ public class engine_initialization
 			engine_kernel ek,client_request_response request_response,client_process_bar process_bar)
 	{
 		component_initialization pi;
-		String destination_file_name=ek.scene_par.scene_proxy_directory_name+"initialization.gzip_text";
+		String destination_file_name=ek.scene_par.scene_proxy_directory_name+"initialization.gzip_js";
 		
 		long last_time=program_file_reader.get_system_program_last_time(ek.system_par);
 		for(int render_id=0,render_number=ek.render_cont.renders.size();render_id<render_number;render_id++) {
@@ -266,7 +266,7 @@ public class engine_initialization
 		
 		file_writer fw=new file_writer(destination_file_name,ek.system_par.network_data_charset);
 
-		fw.println("[");
+		fw.println("export var init_data=[");
 		
 		fw.println().println("[");
 		{
@@ -343,14 +343,20 @@ public class engine_initialization
 			for(int render_id=0;render_id<render_number;render_id++) {
 				render r=ek.render_cont.renders.get(render_id);
 				process_bar.set_process_bar(false,"file_initialization_4",r.render_name,render_id,render_number);
-				fw.	println("	[").print("		",jason_string.change_string(r.render_name)).println(",");
+				fw.	println("	[").print("		",jason_string.change_string(r.render_name));
 
 				String shader_file_name[][]=r.driver.shader_file_name_array();
 				if(shader_file_name==null)
 					shader_file_name=new String[][] {};
-				
 				for(int i=0,ni=shader_file_name.length;i<ni;i++) {
-					fw.println("		[");
+					fw.println(",");
+					if(i!=0)
+						fw.println("		[");
+					else{
+						fw.println("function(render_id,render_name,");
+						fw.println("	init_data,text_array,shader_code,render)");
+						fw.println("{");
+					}
 					for(int j=0,nj=shader_file_name[i].length;j<nj;j++){
 						common_reader reader;
 						int index_id=shader_file_name[i][j].lastIndexOf('.');
@@ -376,17 +382,28 @@ public class engine_initialization
 								str=reader.get_text();
 							reader.close();
 						}
-						fw.print("			",jason_string.change_string(str)).println((j==(nj-1))?"":",");
-					}					
-					fw.println((i==(ni-1))?"		]":"		],");
+						if(i==0)
+							fw.println(str);
+						else
+							fw.print("			",jason_string.change_string(str)).println((j==(nj-1))?"":",");
+					}	
+					
+					if(i!=0) 
+						fw.print  ("		]");
+					else{
+						fw.println("	return new main(render_id,render_name,");
+						fw.println("		init_data,text_array,shader_code,render);");
+						fw.print  ("}");
+					}
 				}
+				fw.println().println().println();
 				fw.println((render_id<(render_number-1))?"	],":"	]");
 			}
 			
 			process_bar.set_process_bar(false,"file_initialization_4","",render_number,render_number);
 		}
 		
-		fw.println("],").println("[");
+		fw.println("],");
 		{
 			String common_shader_str=null;
 			common_reader reader=program_file_reader.get_system_program_reader(ek.system_par);
@@ -396,13 +413,11 @@ public class engine_initialization
 				reader.close();
 			}			
 			fw.	println("	",
-						 ( common_shader_str==null)?"null"
-						:((common_shader_str=common_shader_str.trim()).length()<=0)?"null"
+						 ( common_shader_str==null)?"\"\""
+						:((common_shader_str=common_shader_str.trim()).length()<=0)?"\"\""
 						:jason_string.change_string(common_shader_str+"\n"));
 		}
-		fw.println("]");
-		
-		fw.println().println("]").println();
+		fw.println().println("];").println();
 		
 		fw.close();
 		

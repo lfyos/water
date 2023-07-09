@@ -3,7 +3,7 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 		my_webgpu,request_url,my_url,my_user_name,my_pass_word,my_language_name,process_bar_id)
 {
 	while(true){
-		var create_data,init_data;
+		var create_data;
 		var engine_promise=await fetch(request_url+"&process_bar="+process_bar_id);
 		if(!(engine_promise.ok)){
 			alert("request_create_engine fail:"+engine_promise.status);
@@ -21,18 +21,7 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 				return null;
 			}
 			var initialization_url=create_data.pop();
-			engine_promise=await fetch(initialization_url);
-			if(!(engine_promise.ok)){
-				alert("request render_initialization data fail: "+initialization_url);
-				return null;
-			}
-			try{
-				init_data = await engine_promise.json();
-			}catch(e){
-				alert("parse render_initialization data fail: "+e.toString());
-				alert(initialization_url);
-				return null;
-			}
+			var init_data=(await import(initialization_url)).init_data;
 				
 			var render=new construct_render_routine(my_webgpu,my_url,
 								my_user_name,my_pass_word,my_language_name,create_data);
@@ -47,9 +36,54 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 					
 			init_system_bindgroup(render);
 				
-			component_init_function(component_init_fun_array,render);
-				
-			render_driver_initialization(program_data,common_shader_code,render);
+			for(var i=0,ni=component_init_fun_array.length;i<ni;i++)
+				if(typeof(component_init_fun_array[i])=="object"){
+					var component_id=component_init_fun_array[i].component_id;
+					var component_name=component_init_fun_array[i].component_name;
+					var init_function=component_init_fun_array[i].initialization_function;
+			
+					if(typeof(init_function)!="function"){
+						alert("component init_function is NOT FUNCTION:	"
+							+component_name+"		"+component_id+"		"+e.toString());
+						alert(component_init_fun_array[i].initialization_function);
+						continue;
+					}
+					try{
+						init_function(component_name,component_id,render);
+					}catch(e){
+						alert("Error execute component init_function:	"
+							+component_name+"		"+component_id+"		"+e.toString());
+						alert(component_init_fun_array[i].initialization_function);
+						continue;
+					}
+				}
+
+			for(var render_id=0,render_number=program_data.length;render_id<render_number;render_id++){
+				var my_init_data				=render.render_initialize_data[render_id];
+				var my_render_name				=program_data[render_id].shift();
+				var my_render_driver_function	=program_data[render_id].shift();
+				var my_shader_program			=common_shader_code;	
+				var str=program_data[render_id].shift();
+				for(var i=0,ni=str.length;i<ni;i++)
+					my_shader_program+=str[i];
+		
+				render.render_driver[render_id]=null;
+				if(typeof(my_render_driver_function)!="function"){
+					alert("render my_render_driver_function is not a function:	"+my_render_name);
+					continue;
+				}
+				try{
+					render.render_driver[render_id]=my_render_driver_function(
+						render_id,				my_render_name,
+						my_init_data,			program_data[render_id].shift(),
+						my_shader_program,		render);
+				}catch(e){
+					render.render_driver[render_id]=null;
+					alert("create render driver fail	"+my_render_name);
+					alert(e.toString());
+					continue;
+				}
+			}
 				
 			request_render_data(render);
 				

@@ -1,5 +1,6 @@
 gzip_binary		gzip:nocharset:application/octet-stream
 gzip_text		gzip:nocharset:text/plain
+gzip_js			gzip:nocharset:application/javascript
 
 123             0000:nocharset:application/vnd.lotus-1-2-3
 3dml            1024:charset:text/vnd.in3d.3dml
