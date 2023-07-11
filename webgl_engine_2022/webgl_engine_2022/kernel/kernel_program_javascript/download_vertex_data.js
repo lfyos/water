@@ -179,21 +179,13 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			var frame_processed_buffer_object_data=vertex_data;
 				
 			if((typeof(part_driver)=="object")&&(part_driver!=null))
-				if(typeof(part_driver.decode_vertex_data)=="function")
-					try{
-						processed_buffer_object_data=part_driver.decode_vertex_data(
-							request_str,vertex_data,render.part_array[render_id][part_id]);
-						if(request_str=="face")
-							frame_processed_buffer_object_data=part_driver.decode_vertex_data(
-								"frame",vertex_data,render.part_array[render_id][part_id]);
-					}catch(e){
-						alert("Execute decode_function() fail:"+e.toString());
-						alert("request_str:"+request_str
-								+",request_file_id:"+request_file_id.toString()
-								+",begin_material_id:"+begin_material_id.toString()
-								+",end_material_id:"+end_material_id.toString());
-						continue;
-					}
+				if(typeof(part_driver.decode_vertex_data)=="function"){
+					processed_buffer_object_data=part_driver.decode_vertex_data(
+						request_str,vertex_data,render.part_array[render_id][part_id]);
+					if(request_str=="face")
+						frame_processed_buffer_object_data=part_driver.decode_vertex_data(
+							"frame",vertex_data,render.part_array[render_id][part_id]);	
+				}
 
 			if(processed_buffer_object_data.region_data.length>0){
 				processed_buffer_object_data.material_id=i;
@@ -396,17 +388,8 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		if((typeof(render_driver)=="object")&&(render_driver!=null)){
 			var my_create_part_fun=render_driver.create_part_driver
 			if(typeof(my_create_part_fun)=="function")
-				try{
-					var my_part_driver=new my_create_part_fun(part_object,render_driver,render);
-					render.part_driver[render_id][part_id]=my_part_driver;
-				}catch(e){
-					render.part_driver[render_id][part_id]=null;
-					alert("Create Part Driver Object fail:	"+e.toString());
-					alert("part user name:			"+part_object.information.user_name);
-					alert("part mesh_file:			"+part_object.information.mesh_file);
-				}	
+				render.part_driver[render_id][part_id]=new my_create_part_fun(part_object,render_driver,render);
 		}
-		
 		this.request_render_part_id.push([render_id,part_id,
 				part_head_data.data.max_buffer_object_data_length,
 				part_file_proxy_url,part_affiliated_data]);

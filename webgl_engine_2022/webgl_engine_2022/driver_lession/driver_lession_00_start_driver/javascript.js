@@ -7,10 +7,14 @@ function my_create_part_driver(part_object,render_driver,render)
 		var p	=part_object.buffer_object.face.region_data;
 		var rpe	=render.webgpu.render_pass_encoder;
 
-		rpe.setPipeline(render_driver.pipeline);
+		rpe.setPipeline(
+				(method_data.method_id==0)
+				?(render_driver.value_pipeline)
+				:(render_driver.color_pipeline));
 
 		for(var i=0,ni=component_render_parameter.length;i<ni;i++){
 			var buffer_id=component_render_parameter[i];
+			
 			render.set_system_bindgroup_by_part(
 				target_data.render_buffer_id,
 				method_data.method_id,
@@ -144,7 +148,11 @@ function main(	render_id,		render_name,
 		}
 	};
 
-	this.pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	pipeline_descr.fragment.targets[0].format=render.webgpu.gpu.getPreferredCanvasFormat();
+	this.color_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	
+	pipeline_descr.fragment.targets[0].format="rgba32float";
+	this.value_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	this.create_part_driver=my_create_part_driver;
 	

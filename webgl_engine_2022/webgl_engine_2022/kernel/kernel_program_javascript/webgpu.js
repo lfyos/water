@@ -1,5 +1,11 @@
 async function create_webgpu(my_canvas)
 {
+	if(!(Array.isArray(my_canvas)))
+		my_canvas=[my_canvas];
+	for(var i=0,ni=my_canvas.length;i<ni;i++)
+		if(typeof(my_canvas[i])=="string")
+			my_canvas[i]=document.getElementById(my_canvas[i]);
+		
 	var webgpu=new Object();
 	var devicePixelRatio = window.devicePixelRatio || 1;
 
@@ -16,9 +22,9 @@ async function create_webgpu(my_canvas)
 		webgpu.canvas				=new Array(my_canvas.length);
 		webgpu.context				=new Array(my_canvas.length);
 		for(var i=0,ni=webgpu.canvas.length;i<ni;i++){
-			webgpu.canvas [i]		=(typeof(my_canvas[i])!="string")?my_canvas[i]:(document.getElementById(my_canvas[i]));
+			webgpu.canvas [i]		= my_canvas[i];
 			webgpu.canvas [i].width = webgpu.canvas[i].clientWidth * devicePixelRatio;
-			webgpu.canvas [i].height= webgpu.canvas[i].clientHeight * devicePixelRatio;
+			webgpu.canvas [i].height= webgpu.canvas[i].clientHeight* devicePixelRatio;
 			webgpu.context[i]		= webgpu.canvas[i].getContext("webgpu");
 			webgpu.context[i].configure({
 				device	 :	webgpu.device,

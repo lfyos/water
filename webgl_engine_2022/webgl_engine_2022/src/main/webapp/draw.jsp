@@ -32,9 +32,9 @@ var lfy_render;
 
 async function body_onload()
 {
-	var p=await import("./interface.jsp");
-	
-	lfy_render=await p.main(["my_canvas"],user_name,pass_word,language,scene_name,link_name,
+	lfy_render=await (await import("./interface.jsp")).main(
+		["my_canvas"],
+		user_name,pass_word,language,scene_name,link_name,
 			//1.Object类型的绘图画布。
 			//	数组类型，可以同时渲染至多个canvas。
 			//	如果是String类型,则系统使用document.getElementById("my_canvas")将其转换为Object类型数据。

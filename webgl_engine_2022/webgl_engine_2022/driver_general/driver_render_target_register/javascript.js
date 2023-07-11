@@ -1,14 +1,10 @@
 function my_create_part_driver(part_object,render_driver,render)
 {
 	this.should_update_server_flag=true;
-	
-	this.color_texture	=new Array(render.webgpu.canvas.length);
-	this.canvas_copy	=new Array(render.webgpu.canvas.length);
+
 	this.depth_texture	=new Array(render.webgpu.canvas.length);
 	this.id_texture		=new Array(render.webgpu.canvas.length);
-	for(var i=0,ni=this.color_texture.length;i<ni;i++){
-		this.canvas_copy[i]		=null;
-		this.color_texture[i]	=null;
+	for(var i=0,ni=render.webgpu.canvas.length;i<ni;i++){
 		this.depth_texture[i]	=null;
 		this.id_texture[i]		=null;
 	}
@@ -160,6 +156,7 @@ function my_create_part_driver(part_object,render_driver,render)
 				height	:	1
 			});	
 	}
+	
 	this.copy_value_texture=function(
 			render_data,target_part_object,target_render_driver,render)
 	{
@@ -204,66 +201,36 @@ function my_create_part_driver(part_object,render_driver,render)
 				height	:	1
 			});	
 	}
-	
 	this.end_render_target=function(
 			render_data,target_part_object,target_render_driver,render)
 	{
 		if(render_data.target_texture_id<0)
 			this.copy_value_texture(render_data,target_part_object,target_render_driver,render);
-		else{
-			var my_gpu_texture=render.webgpu.context[render_data.target_texture_id].getCurrentTexture();
-			this.canvas_copy[render_data.target_texture_id].do_copy(true,
-				[
-					-1,-1,	 2, 2
-				],
-				[	 
-					 0, 1,	 1, -1
-				],			
-				my_gpu_texture,render.webgpu);
+		else
 			this.copy_id_texture(render_data,target_part_object,target_render_driver,render);
-		}
 	}
-	
+		
 	this.begin_render_target_for_id=function(
 			render_data,target_part_object,target_render_driver,render)
 	{
-		var my_color_texture,my_canvas_copy,my_depth_texture,my_id_texture;
+		var my_depth_texture,my_id_texture;
 		var my_gpu_texture=render.webgpu.context[render_data.target_texture_id].getCurrentTexture();
-		
+
 		do{
-			my_color_texture	=this.color_texture	[render_data.target_texture_id];
-			my_canvas_copy		=this.canvas_copy	[render_data.target_texture_id];
 			my_depth_texture	=this.depth_texture	[render_data.target_texture_id];
 			my_id_texture		=this.id_texture	[render_data.target_texture_id];
-
-			if(my_color_texture!=null){
-				if(my_gpu_texture.width==my_color_texture.width)
-					if(my_gpu_texture.height==my_color_texture.height)
-						break;
-				
-				my_color_texture.	destroy();
-				my_canvas_copy.		destroy();
-				my_depth_texture.	destroy();
-				my_id_texture.		destroy();
-			}
 			
+			if((my_depth_texture!=null)&&(my_id_texture!=null)){
+				if(my_gpu_texture.width==my_depth_texture.width)
+					if(my_gpu_texture.height==my_depth_texture.height)
+						if(my_gpu_texture.width==my_id_texture.width)
+							if(my_gpu_texture.height==my_id_texture.height)
+								break;
+				my_depth_texture.destroy();
+				my_id_texture.destroy();
+			}			
 			this.should_update_server_flag=true;
 			
-			this.color_texture[render_data.target_texture_id]=render.webgpu.device.createTexture(
-				{
-					size	:
-					{
-						width	:	my_gpu_texture.width,
-						height	:	my_gpu_texture.height
-					},
-					format	:	"rgba32float",
-					usage	:	 GPUTextureUsage.RENDER_ATTACHMENT
-								|GPUTextureUsage.TEXTURE_BINDING
-								|GPUTextureUsage.COPY_SRC
-				});
-			this.canvas_copy[render_data.target_texture_id]=new render.texture_to_texture_copy(
-				this.color_texture[render_data.target_texture_id],my_gpu_texture.format,render.webgpu);
-
 			this.depth_texture[render_data.target_texture_id]=render.webgpu.device.createTexture(
 				{
 					size	:
@@ -291,7 +258,7 @@ function my_create_part_driver(part_object,render_driver,render)
 			colorAttachments		: 
 			[
 				{
-					view			:	my_color_texture.createView(),
+					view			:	my_gpu_texture.createView(),
 					clearValue		:	{ r: 0.0, g: 0.0, b: 0.0, a: 1.0 },
 					loadOp			:	"clear",
 					storeOp			:	"store"
@@ -402,12 +369,12 @@ function my_create_part_driver(part_object,render_driver,render)
 		var primitive_id		=p[2];
 		var vertex_id			=p[3];
 
+		render.pickup.render_id		=-1;
 		render.pickup.part_id		=-1;
 		render.pickup.buffer_id		=-1;
 		render.pickup.component_id	=-1;
 		render.pickup.driver_id		=-1;
-		render.pickup.render_id		=-1;
-
+		
 		if((component_system_id>=0)&&(component_system_id<render.component_system_id.length)){
 			p=render.component_system_id[component_system_id];
 			render.pickup.render_id		=p[0];
@@ -417,6 +384,7 @@ function my_create_part_driver(part_object,render_driver,render)
 			render.pickup.component_id	=p[3];
 			render.pickup.driver_id		=p[4];
 		}
+		
 		render.pickup.body_id			=-1;
 		render.pickup.face_id			=-1;
 		render.pickup.loop_id			=-1;
@@ -436,6 +404,7 @@ function my_create_part_driver(part_object,render_driver,render)
 		my_item_ids=my_item_ids[part_system_id];
 		switch(my_item_ids[1]){
 		default:
+			return;
 		case 0:	// part origin id
 			render.pickup.vertex_id=0;
 			return;
@@ -497,7 +466,6 @@ function my_create_part_driver(part_object,render_driver,render)
 	{
 	};
 }
-
 function main(	render_id,		render_name,
 				init_data,		text_array,
 				shader_code,	render)
@@ -505,6 +473,5 @@ function main(	render_id,		render_name,
 	this.create_part_driver=my_create_part_driver;
 	this.destroy=function()
 	{
-		
 	};
 }

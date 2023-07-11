@@ -1,8 +1,8 @@
 struct vertex_to_fragment_struct
 {
 	@builtin(position)	vertex_position		:	vec4<f32>,	
-	@location(1)		vertex_id			:	vec4<f32>,
-	@location(0)		vertex_value		:	vec4<f32>
+	@location(0)		vertex_id			:	vec4<f32>,
+	@location(1)		vertex_value		:	vec4<f32>
 };
 struct fragment_to_target_struct
 {

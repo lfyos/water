@@ -6,19 +6,22 @@ function my_create_part_driver(part_object,render_driver,render)
 	{
 		if(method_data.method_id==0)
 			return;
-			
-		render.set_system_bindgroup_by_component(target_data.render_buffer_id,
-			method_data.method_id,project_matrix.camera_component_id,-1);
-
+		var p=part_object.buffer_object.edge.region_data;
 		var rpe	=render.webgpu.render_pass_encoder;
 		rpe.setPipeline(render_driver.pipeline);
+		
+		for(var i=0,ni=component_render_parameter.length;i<ni;i++){
+			render.set_system_bindgroup_by_component(
+				target_data.render_buffer_id,
+				method_data.method_id,
+				project_matrix.camera_component_id,
+				-1);
 
-		var p=part_object.buffer_object.edge.region_data;
-		for(var i=0,ni=component_render_parameter.length;i<ni;i++)
 			for(var j=0,nj=p.length;j<nj;j++){
 				rpe.setVertexBuffer(0,p[j].buffer);
 				rpe.draw(p[i].item_number);
 			}
+		}
 	}
 	this.decode_vertex_data=function(request_type_string,buffer_object_data,part_object)
 	{
@@ -107,7 +110,7 @@ function main(	render_id,		render_name,
 			targets	: 
 			[
 				{
-					format		:	"rgba32float"
+					format		:	render.webgpu.gpu.getPreferredCanvasFormat()
 				},
 				{
 					format		:	"rgba32sint",
@@ -138,7 +141,6 @@ function main(	render_id,		render_name,
 	};
 	
 	this.pipeline = render.webgpu.device.createRenderPipeline(pipeline_descr);
-
 	this.create_part_driver=my_create_part_driver;
 	
 	this.destroy=function()

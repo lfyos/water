@@ -79,12 +79,18 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 			for(var i=0,ni=this.webgpu.canvas.length;i<ni;i++){
 				this.webgpu.canvas_2d.width		=this.webgpu.canvas[i].width;
 				this.webgpu.canvas_2d.height	=this.webgpu.canvas[i].height;
+				this.webgpu.context_2d.width	=this.webgpu.canvas[i].width;
+				this.webgpu.context_2d.height	=this.webgpu.canvas[i].height;
 			
-				this.process_bar_function(i,
-					this.webgpu.canvas_2d,this.webgpu.context_2d,this.process_bar_caption,
-					(this.process_bar_current_last*(1.0-p)+this.process_bar_current*p)/this.process_bar_max,
-					this.process_bar_time_length,this.process_bar_engine_time_length,this.time_unit);
-	
+				try{
+					this.process_bar_function(i,
+						this.webgpu.canvas_2d,this.webgpu.context_2d,this.process_bar_caption,
+						(this.process_bar_current_last*(1.0-p)+this.process_bar_current*p)/this.process_bar_max,
+						this.process_bar_time_length,this.process_bar_engine_time_length,this.time_unit);
+				}catch(e){
+					console.log("Process bar drawing function error:"+e.toString);
+					continue;
+				}
 				this.webgpu.device.queue.copyExternalImageToTexture(
 					{
 						source	:this.webgpu.canvas_2d

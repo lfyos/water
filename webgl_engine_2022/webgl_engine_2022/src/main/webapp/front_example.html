@@ -30,6 +30,7 @@ async function body_onload()
 			document.title=lfy_render.title;	//设置网页标题
 		},
 		function(			//进度条绘制函数，如果不配置该函数，则使用系统内部提供的默认进度条绘制函数
+				webgpu_canvas_id,				//绘制结束后，绘制结果拷贝到哪个canvas 
 				process_bar_canvas,				//绘制进度条的画布canvas
 				progress_bar_ctx,				//绘制进度条的2D上下文
 				process_bar_caption,			//进度条当前进度标题，该标题和语言有关，目前系统中仅仅配置了中文和英文相关标题
