@@ -4,6 +4,13 @@ function my_create_part_driver(part_object,render_driver,render)
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,render_driver,render)	
 	{
+		switch(method_data.method_id){
+		case 0:
+		case 1:
+			break;
+		default:
+			return;
+		}
 		var p	=part_object.buffer_object.face.region_data;
 		var rpe	=render.webgpu.render_pass_encoder;
 

@@ -1,0 +1,47 @@
+struct vertex_to_fragment_struct
+{
+	@builtin(position)	vertex_position		:	vec4<f32>,	
+	@location(0)		vertex_material		:	vec4<f32>,
+	@location(1)		vertex_texture		:	vec4<f32>,
+	@location(2)		vertex_parameter	:	vec4<f32>
+};
+struct fragment_to_target_struct
+{
+	@location(0) 			color	:	vec4<f32>
+};
+
+@group(1) @binding(0) var caption_texture	:	texture_2d<f32>;
+@group(1) @binding(1) var caption_sampler	:	sampler;
+
+@vertex
+fn vertex_main(
+		@location(0) my_coord		:	vec4<f32>,
+		@location(1) my_material	:	vec4<f32>,
+		@location(2) my_texture		:	vec4<f32>,
+		@location(3) my_parameter	:	vec4<f32>
+	)->vertex_to_fragment_struct
+{
+	var vf:vertex_to_fragment_struct;
+	
+	vf.vertex_position	=my_coord;
+	vf.vertex_material	=my_material;
+	vf.vertex_texture	=my_texture;
+	vf.vertex_parameter	=my_parameter;
+
+	return vf;
+}
+
+@fragment
+fn fragment_main(vf	:	vertex_to_fragment_struct) ->  fragment_to_target_struct
+{	
+	var ft:fragment_to_target_struct;
+	
+	var texture_x=vf.vertex_parameter.x+vf.vertex_parameter.y*vf.vertex_texture.x;
+	var texture_y=vf.vertex_texture.y;
+	ft.color=textureSample(caption_texture,caption_sampler,vec2(texture_x,texture_y));
+	if(dot(ft.color.xyz,ft.color.xyz)<0.75){
+		discard;
+	}
+	ft.color=vf.vertex_material;
+	return ft;
+}

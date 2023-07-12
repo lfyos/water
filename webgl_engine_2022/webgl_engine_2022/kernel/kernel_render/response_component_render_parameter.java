@@ -27,17 +27,18 @@ public class response_component_render_parameter
 				continue;
 			for(int list_id=0,list_size=render_data_list.size();list_id<list_size;list_id++) {
 				response_render_data rrd=render_data_list.get(list_id);
-				if(rrd.collector.component_collector[render_id][part_id]==null)
-					continue;
 				component_render ren_buf=ci.render_buffer.component_buffer.get_render_buffer(
 						render_id,part_id,rrd.render_buffer_id,pcd[render_id][part_id].length);
 				if(ren_buf==null)
 					continue;
-				component_link_list cll=rrd.collector.component_collector[render_id][part_id];
-				ren_buf.mark(cll,ci,rrd.cam_result,rrd.render_buffer_id,rcc);
+				
+				ren_buf.mark(
+						rrd.collector.component_collector[render_id][part_id],
+						ci,rrd.cam_result,rrd.render_buffer_id,rcc);
 
 				for(int type_id=0;type_id<2;type_id++){
-					if((cll=(type_id==0)?ren_buf.append_cll:ren_buf.refresh_cll)==null)
+					component_link_list cll=(type_id==0)?ren_buf.append_cll:ren_buf.refresh_cll;
+					if(cll==null)
 						continue;
 					int all_number=rcc.component_append_number+rcc.component_refresh_number;
 					if(all_number>ek.scene_par.most_component_append_number){
@@ -59,8 +60,6 @@ public class response_component_render_parameter
 			for(int type_id=0;type_id<2;type_id++){
 				for(int list_id=0,list_size=render_data_list.size();list_id<list_size;list_id++) {
 					response_render_data rrd=render_data_list.get(list_id);
-					if(rrd.collector.component_collector[render_id][part_id]==null)
-						continue;
 					component_render ren_buf=ci.render_buffer.component_buffer.get_render_buffer(
 							render_id,part_id,rrd.render_buffer_id,pcd[render_id][part_id].length);
 					if(ren_buf==null)

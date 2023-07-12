@@ -73,7 +73,7 @@ public class graphics_buffer_object_for_edge
 										 tessellation_material_0[2],
 										 tessellation_material_0[3]);
 							
-							gbo.register(fe.system_id,i,curve_type_id,Integer.toString(flag));
+							gbo.register(fe.system_id,2*i+0,curve_type_id+curve_type_id+1,Integer.toString(flag));
 
 							gbo.vertex_begin(tessellation_location_1[0],tessellation_location_1[1],tessellation_location_1[2]);
 							
@@ -93,7 +93,7 @@ public class graphics_buffer_object_for_edge
 										 tessellation_material_1[2],
 										 tessellation_material_1[3]);
 	
-							gbo.register(fe.system_id,i,curve_type_id,Integer.toString(flag));
+							gbo.register(fe.system_id,2*i+1,curve_type_id+curve_type_id+1,Integer.toString(flag));
 							
 							if(gbo.test_end(max_file_data_length,false))
 								gbocc.expand_creater_array(material_id);

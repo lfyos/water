@@ -29,7 +29,7 @@ public class graphics_buffer_object_for_point
 				fe.parameter_material[0],fe.parameter_material[1],
 				fe.parameter_material[2],fe.parameter_material[3]);
 		
-		gbo.register(fe.system_id,3,curve_type_id,Integer.toString(flag));
+		gbo.register(fe.system_id,3,curve_type_id+curve_type_id,Integer.toString(flag));
 		
 		if(gbo.test_end(max_file_data_length,false))
 			gbocc.expand_creater_array(material_id);
@@ -54,7 +54,7 @@ public class graphics_buffer_object_for_point
 		gbo.register(fe.curve_parameter[3],fe.curve_parameter[4],fe.curve_parameter[5],"1");
 		gbo.register(fe.parameter_material[0],fe.parameter_material[1],fe.parameter_material[2],fe.parameter_material[3]);
 		
-		gbo.register(fe.system_id,4,curve_type_id,Integer.toString(flag));
+		gbo.register(fe.system_id,4,curve_type_id+curve_type_id,Integer.toString(flag));
 		
 		if(gbo.test_end(max_file_data_length,false))
 			gbocc.expand_creater_array(material_id);
@@ -85,7 +85,7 @@ public class graphics_buffer_object_for_point
 			gbo.register(normal.x,	normal.y,	normal.z,	"1");
 			gbo.register(fe.parameter_material[0],fe.parameter_material[1],fe.parameter_material[2],fe.parameter_material[3]);
 			
-			gbo.register(fe.system_id,point_i+5,curve_type_id,Integer.toString(flag));
+			gbo.register(fe.system_id,point_i+5,curve_type_id+curve_type_id,Integer.toString(flag));
 
 			if(gbo.test_end(max_file_data_length,false))
 				gbocc.expand_creater_array(material_id);
@@ -122,7 +122,7 @@ public class graphics_buffer_object_for_point
 			gbo.register(x,y,z,"1");
 			gbo.register(fe.parameter_material[0],fe.parameter_material[1],fe.parameter_material[2],fe.parameter_material[3]);
 			
-			gbo.register(fe.system_id,point_i+1000,curve_type_id,Integer.toString(flag));
+			gbo.register(fe.system_id,point_i+1000,curve_type_id+curve_type_id,Integer.toString(flag));
 			
 			if(gbo.test_end(max_file_data_length,false))
 				gbocc.expand_creater_array(material_id);
@@ -153,7 +153,7 @@ public class graphics_buffer_object_for_point
 			gbo.register(x,y,z,"1");
 			gbo.register(my_material[0],my_material[1],my_material[2],my_material[3]);
 			
-			gbo.register(fe.system_id,point_i+1000,curve_type_id,Integer.toString(flag));
+			gbo.register(fe.system_id,point_i+1000,curve_type_id+curve_type_id,Integer.toString(flag));
 
 			if(gbo.test_end(max_file_data_length,false))
 				gbocc.expand_creater_array(material_id);
@@ -179,7 +179,7 @@ public class graphics_buffer_object_for_point
 			gbo.register(fe.start_point_material[0],fe.start_point_material[1],
 					 fe.start_point_material[2],fe.start_point_material[3]);
 			
-			gbo.register(fe.system_id,1,curve_type_id,Integer.toString(flag));
+			gbo.register(fe.system_id,1,curve_type_id+curve_type_id,Integer.toString(flag));
 			
 			if(gbo.test_end(max_file_data_length,false))
 				gbocc.expand_creater_array(material_id);

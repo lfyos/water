@@ -51,7 +51,8 @@ function construct_component_render_parameter()
 			p[instance_id]=new_instance_data;
 		}
 		
-		for(var delete_index_id,render_id=-1,part_id=-1,render_buffer_id=-1,i=0,ni=component_delete_data.length;i<ni;i++){
+		var delete_index_id,render_id=-1,part_id=-1,render_buffer_id=-1;
+		for(var i=0,ni=component_delete_data.length;i<ni;i++){
 			if(typeof(delete_index_id=component_delete_data[i])!="number"){
 				switch(delete_index_id.length){
 				default:
@@ -86,8 +87,6 @@ function construct_component_render_parameter()
 	   		var last_instance_data=p.pop();
 	   		if(delete_index_id<p.length)
 	   			p[delete_index_id]=last_instance_data;
-	   		else if(delete_index_id>=p.length)
-	   			alert("error delete_index_id:"+delete_index_id);
 		}
 	}
 	this.modify_component_buffer_parameter=function(component_buffer_data,render)

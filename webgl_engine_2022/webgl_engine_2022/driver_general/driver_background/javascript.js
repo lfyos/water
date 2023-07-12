@@ -256,7 +256,7 @@ function my_create_part_driver(part_object,render_driver,render)
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,render_driver,render)	
 	{	
-		if(method_data.method_id==0)
+		if(method_data.method_id!=1)
 			return;
 			
 		for(var i=0,ni=component_render_parameter.length;i<ni;i++){

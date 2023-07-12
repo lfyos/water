@@ -141,6 +141,8 @@ public class caculate_part_items
 		my_box=(my_face_edge.edge_box!=null)?(my_face_edge.edge_box):my_box;
 		if(primitive_id<0)
 			return;
+		if((vertex_id%2)==1) 
+			return;
 		
 		switch(primitive_id){
 		case 0:
