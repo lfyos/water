@@ -6,6 +6,7 @@ interface_part
 	part\part.mp3
 	
 	/*	always_show_flag	*/		false
+	/*	depth_step			*/		0.00001
 
 interface_part
 	always_show_interface_part
@@ -15,4 +16,4 @@ interface_part
 	part\part.mp3
 	
 	/*	always_show_flag	*/		true
-	
+	/*	depth_step			*/		0.00001

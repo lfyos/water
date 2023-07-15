@@ -1,66 +1,91 @@
 function draw_scene_routine(render_data,render)
 {
-	var target_render_driver=render.render_driver[render_data.target_ids.render_id];
-	var target_part_object	=render.part_array[render_data.target_ids.render_id][render_data.target_ids.part_id];
-	var target_part_driver	=render.part_driver[render_data.target_ids.render_id][render_data.target_ids.part_id];
-		
-	if((typeof(target_part_driver)!="object")||(target_part_driver==null))
-		return;
-	if(typeof(target_part_driver.begin_render_target)!="function")
-		return;
-
-	var method_array=target_part_driver.begin_render_target(
-			render_data,target_part_object,target_render_driver,render);
-	
-	if((method_array!=null)&&(typeof(method_array)!="undefined"))
-		if(method_array.length>0){
-			var project_matrix	=render.camera.compute_camera_data(render_data);	
-			render.system_buffer.set_target_buffer(render_data.render_buffer_id,project_matrix);
+	var render_id	=render_data.target_ids.render_id;
+	var part_id		=render_data.target_ids.part_id;
+	var buffer_id	=render_data.target_ids.buffer_id;
 			
-			for(var i=0,ni=method_array.length;i<ni;i++){
-				if(typeof(target_part_driver.begin_render_method)=="function")
-					target_part_driver.begin_render_method(method_array[i],render_data,
-							project_matrix,target_part_object,target_render_driver,render);
+	var target_render_driver	=render.render_driver[render_id];
+	var target_part_driver		=render.part_driver[render_id][part_id];
+	var target_part_object		=render.part_array[render_id][part_id];
+	if((typeof(target_part_object)!="object")||(target_part_object==null))
+		return;
+	var target_component_driver	=target_part_object.component_driver_array[buffer_id];
+	if((typeof(target_component_driver)!="object")||(target_component_driver==null))
+		return;
+	if(typeof(target_component_driver.begin_render_target)!="function")
+		return;
+	var method_array=target_component_driver.begin_render_target(render_data,
+				target_part_object,target_part_driver,target_render_driver,render);
+	if(!(Array.isArray(method_array)))
+		return;
+	if(method_array.length<=0)
+		return;
 		
-				for(var render_id=0,render_number=render.part_array.length;render_id<render_number;render_id++){
-					if(typeof(render.part_array[render_id])=="undefined")
+	var project_matrix	=render.camera.compute_camera_data(render_data);	
+	render.system_buffer.set_target_buffer(render_data.render_buffer_id,project_matrix);
+			
+	for(var i=0,ni=method_array.length;i<ni;i++){
+		if(typeof(target_component_driver.begin_render_method)=="function")
+			target_component_driver.begin_render_method(
+				method_array[i],render_data,project_matrix,
+				target_part_object,target_part_driver,target_render_driver,render);
+		for(var render_id=0,render_number=render.part_array.length;render_id<render_number;render_id++){
+			if(typeof(render.part_array[render_id])=="undefined")
+				continue;
+			for(var part_id=0,part_number=render.part_array[render_id].length;part_id<part_number;part_id++){
+				var part_object=render.part_array[render_id][part_id];	
+				if((typeof(part_object)!="object")||(part_object==null))
+					continue;
+				var component_render_parameter	=part_object.component_render_parameter;
+				var component_buffer_parameter	=part_object.component_buffer_parameter;
+				var component_data_buffer_id	=part_object.component_data_buffer_id;
+				if(	  (render_data.render_buffer_id>=component_render_parameter.length)
+					||(render_data.render_buffer_id>=component_data_buffer_id.length))
 						continue;
-					for(var part_id=0,part_number=render.part_array[render_id].length;part_id<part_number;part_id++){
-						var part_object=render.part_array[render_id][part_id];	
-						if((typeof(part_object)!="object")||(part_object==null))
-							continue;
-						var component_render_parameter=part_object.component_render_parameter;
-						var component_buffer_parameter=part_object.component_buffer_parameter;
-						if(render_data.render_buffer_id>=component_render_parameter.length)
-							continue;
-				    	component_render_parameter=component_render_parameter[render_data.render_buffer_id];
-				    	if(component_render_parameter.length<=0)
-				    		continue;
-				    		
-						var part_driver=render.part_driver[render_id][part_id];
-						if((part_driver==null)||(typeof(part_driver)!="object"))
-							continue;
-						if(typeof(part_driver.draw_component)!="function")
-							continue;
-		
+			   	component_render_parameter	=component_render_parameter[render_data.render_buffer_id];
+			   	component_data_buffer_id	=component_data_buffer_id[render_data.render_buffer_id];
+			   	if((component_render_parameter.length<=0)||(component_data_buffer_id.length<=0))
+			   		continue;
+				var part_driver=render.part_driver[render_id][part_id];
+				if((typeof(part_driver)=="object")&&(part_driver!=null))
+					if(typeof(part_driver.draw_component)=="function"){
 				    	part_driver.draw_component(method_array[i],render_data,
 							component_render_parameter,component_buffer_parameter,
 							project_matrix,part_object,render.render_driver[render_id],render);
+							continue;
 					}
-				}	
-				if(typeof(target_part_driver.end_render_method)=="function")
-					target_part_driver.end_render_method(method_array[i],render_data,
-							project_matrix,target_part_object,target_render_driver,render);
+				var instance_number=component_render_parameter.length;
+				for(var instance_id=0;instance_id<instance_number;instance_id++){
+					var buffer_id=component_data_buffer_id[instance_id];
+					var component_driver=part_object.component_driver_array[buffer_id];
+					if((typeof(component_driver)=="object")&&(component_driver!=null))
+						if(typeof(component_driver.draw_component)=="function"){
+							render.set_system_bindgroup_by_part(
+								render_data.render_buffer_id,
+								method_array[i].method_id,
+								render_id,part_id,buffer_id);
+								component_driver.draw_component(method_array[i],render_data,
+									component_render_parameter[instance_id],
+									component_buffer_parameter[buffer_id],
+									project_matrix,part_object,part_driver,
+									render.render_driver[render_id],render);
+						}
+				}
 			}
 		}
+	}
 	
+	if(typeof(target_component_driver.end_render_method)=="function")
+		target_component_driver.end_render_method(
+			method_array[i],render_data,project_matrix,
+			target_part_object,target_part_driver,target_render_driver,render);
 	if(render.webgpu.render_pass_encoder!=null){
 		render.webgpu.render_pass_encoder.end();
 		render.webgpu.render_pass_encoder=null;
 	}
-	if(typeof(target_part_driver.end_render_target)=="function")
-		target_part_driver.end_render_target(
-				render_data,target_part_object,target_render_driver,render);
+	if(typeof(target_component_driver.end_render_target)=="function")
+		target_component_driver.end_render_target(render_data,
+			target_part_object,target_part_driver,target_render_driver,render);
 }
 async function draw_scene_main(render)
 {
@@ -112,16 +137,22 @@ async function draw_scene_main(render)
 			if(!(render_data.do_render_flag))
 				continue;
 
-			var target_render_driver=render.render_driver[render_data.target_ids.render_id];
-			var target_part_object	=render.part_array[render_data.target_ids.render_id][render_data.target_ids.part_id];
-			var target_part_driver	=render.part_driver[render_data.target_ids.render_id][render_data.target_ids.part_id];
-
-			if((typeof(target_part_driver)!="object")||(target_part_driver==null))
+			var render_id	=render_data.target_ids.render_id;
+			var part_id		=render_data.target_ids.part_id;
+			var buffer_id	=render_data.target_ids.buffer_id;
+			
+			var target_render_driver	=render.render_driver[render_id];
+			var target_part_driver		=render.part_driver[render_id][part_id];
+			var target_part_object		=render.part_array[render_id][part_id];
+			if((typeof(target_part_object)!="object")||(target_part_object==null))
 				continue;
-			if(typeof(target_part_driver.complete_render_target)!="function")
+			var target_component_driver	=target_part_object.component_driver_array[buffer_id];
+			if((typeof(target_component_driver)!="object")||(target_component_driver==null))
 				continue;
-			await target_part_driver.complete_render_target(
-						render_data,target_part_object,target_render_driver,render);
+			if(typeof(target_component_driver.complete_render_target)!="function")
+				continue;
+			await target_component_driver.complete_render_target(render_data,
+						target_part_object,target_part_driver,target_render_driver,render);
 		}
 
 		await new Promise((resolve)=>

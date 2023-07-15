@@ -336,7 +336,7 @@ public class component_render
 				}
 				comp[my_instance_id]		=p.comp;
 				driver_id[my_instance_id]	=p.driver_id;
-				instance_id[data_buffer_id]		=my_instance_id;
+				instance_id[data_buffer_id]	=my_instance_id;
 
 				flag[data_buffer_id]|=128;
 				
@@ -360,7 +360,9 @@ public class component_render
 					create_flag.render_buffer_id=render_buffer_id;
 					ci.request_response.print(render_buffer_id).print(",");
 				}
-				ci.request_response.print(my_instance_id).print(",");
+				ci.request_response.
+						print(data_buffer_id).print(",").
+						print(my_instance_id).print(",");
 				
 				try{
 					in_dr.create_render_parameter(render_buffer_id,

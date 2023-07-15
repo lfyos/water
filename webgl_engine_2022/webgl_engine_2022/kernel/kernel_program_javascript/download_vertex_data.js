@@ -336,8 +336,10 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			part_initialize_data			:	render.part_initialize_data[render_id][part_id],
 			component_initialize_data		:	new Array(),
 			
+			component_data_buffer_id		:	new Array(),
 			component_render_parameter		:	new Array(),
 			component_buffer_parameter		:	new Array(),
+			component_driver_array			:	new Array(),
 
 			buffer_object					:
 			{
@@ -378,24 +380,24 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		
 		var part_object=render.part_array[render_id][part_id];
 		for(var i=0,ni=part_object.part_component_id_and_driver_id.length;i<ni;i++){
-			var my_component_id					=part_object.part_component_id_and_driver_id[i][0];
-			var my_driver_id					=part_object.part_component_id_and_driver_id[i][1];
+			var my_component_id						=part_object.part_component_id_and_driver_id[i][0];
+			var my_driver_id						=part_object.part_component_id_and_driver_id[i][1];
 			part_object.component_initialize_data[i]=render.component_initialize_data[my_component_id][my_driver_id];
 		}
 		
 		var render_driver=render.render_driver[render_id];
 		render.part_driver[render_id][part_id]=null;
-		if((typeof(render_driver)=="object")&&(render_driver!=null)){
-			var my_create_part_fun=render_driver.create_part_driver
-			if(typeof(my_create_part_fun)=="function")
-				render.part_driver[render_id][part_id]=new my_create_part_fun(part_object,render_driver,render);
-		}
+		if((typeof(render_driver)=="object")&&(render_driver!=null))
+			if(typeof(render_driver.create_part_driver)=="function")
+				render.part_driver[render_id][part_id]=new render_driver.create_part_driver(
+					part_object.part_initialize_data,part_object,render_driver,render);
+	
 		this.request_render_part_id.push([render_id,part_id,
 				part_head_data.data.max_buffer_object_data_length,
 				part_file_proxy_url,part_affiliated_data]);
 		return;
 	};
-	
+
 	this.request_part_package=async function(package_proxy_url,package_length,package_data_head,render)
 	{
 		this.current_loading_mesh_number++;

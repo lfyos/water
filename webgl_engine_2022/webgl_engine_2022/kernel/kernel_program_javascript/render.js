@@ -19,17 +19,17 @@ function construct_render_routine(my_webgpu,
     this.parameter						=render_data[8];
     
     this.render_initialize_data	=new Array();
-    for(var i=0,ni=my_render_initialize_data.length-1;i<ni;i+=2){
-		var my_data		=my_render_initialize_data[i+0];
-		var render_id	=my_render_initialize_data[i+1];
+    for(var i=0,ni=my_render_initialize_data.length-1;i<ni;i++){
+		var my_data		=my_render_initialize_data[i++];
+		var render_id	=my_render_initialize_data[i++];
 		this.render_initialize_data[render_id]=my_data;
 	};
 
 	this.part_initialize_data=new Array();
-	for(var i=0,ni=my_part_initialize_data.length-1;i<ni;i+=3){
-		var my_data		=my_part_initialize_data[i+0];
-		var render_id	=my_part_initialize_data[i+1];
-		var part_id		=my_part_initialize_data[i+2];
+	for(var i=0,ni=my_part_initialize_data.length-1;i<ni;){
+		var my_data		=my_part_initialize_data[i++];
+		var render_id	=my_part_initialize_data[i++];
+		var part_id		=my_part_initialize_data[i++];
 		if(typeof(this.part_initialize_data[render_id])=="undefined")
 			this.part_initialize_data[render_id]=new Array();
 		this.part_initialize_data[render_id][part_id]=my_data;
@@ -38,13 +38,13 @@ function construct_render_routine(my_webgpu,
 	this.component_initialize_data=new Array(component_number);
 	for(var i=0;i<component_number;i++)
 		this.component_initialize_data[i]=new Array();
-	for(var i=0,ni=my_component_initialize_data.length-1;i<ni;i+=3){
-		var my_data				=my_component_initialize_data[i+0];
-		var my_component_id		=my_component_initialize_data[i+1];
-		var my_driver_id		=my_component_initialize_data[i+2];
+	for(var i=0,ni=my_component_initialize_data.length-1;i<ni;){
+		var my_data				=my_component_initialize_data[i++];
+		var my_component_id		=my_component_initialize_data[i++];
+		var my_driver_id		=my_component_initialize_data[i++];
 		this.component_initialize_data[my_component_id][my_driver_id]=my_data;
 	}
-	
+
 	this.webgpu						=my_webgpu;
 	this.url						=my_url;
 	this.url_without_channel		=this.url
@@ -110,6 +110,7 @@ function construct_render_routine(my_webgpu,
 		this.part_driver[i]			=new Array();
 		this.part_array[i]			=new Array();
 	}
+	
 	this.system_buffer				=new construct_system_buffer(max_target_number,max_method_number,this);
 	
 	this.set_system_bindgroup_by_component=function(target_id,method_id,component_id,driver_id)

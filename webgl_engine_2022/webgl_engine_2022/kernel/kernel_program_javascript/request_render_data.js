@@ -39,7 +39,7 @@ async function request_render_data(render)
 			render.view_bak.edge=id;
 			request_url+="&edge="+id.toString();
 		};
-		if(render.view_bak.primitive!=(id=render.pickup.vertex_id)){
+		if(render.view_bak.primitive!=(id=render.pickup.primitive_id)){
 			render.view_bak.primitive=id;
 			request_url+="&primitive="+id.toString();
 		};
@@ -208,7 +208,6 @@ async function request_render_data(render)
 		
 		return false;
 	};
-
 	for(var start_time=0;!(render.terminate_flag);){
 		var current_time=(new Date()).getTime();
 		var my_delay_time_length=render.modifier_time_parameter.delay_time_length;

@@ -1,6 +1,10 @@
-function my_create_part_driver(part_object,render_driver,render)
+function construct_component_driver(
+	component_id,	driver_id,		render_id,		part_id,		buffer_id,
+	init_data,		part_object,	part_driver,	render_driver,	render)
 {
-	this.should_update_server_flag=true;
+	this.component_id				=component_id;
+	this.driver_id					=driver_id;
+	this.should_update_server_flag	=true;
 
 	this.depth_texture	=new Array(render.webgpu.canvas.length);
 	this.id_texture		=new Array(render.webgpu.canvas.length);
@@ -70,40 +74,31 @@ function my_create_part_driver(part_object,render_driver,render)
 			usage	:	GPUBufferUsage.MAP_READ|GPUBufferUsage.COPY_DST
 		});
 
-	this.draw_component=function (method_data,target_data,
+	this.draw_component=function(method_data,render_data,
 			component_render_parameter,component_buffer_parameter,
-			project_matrix,part_object,render_driver,render)	
+			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		if(this.should_update_server_flag){
-			this.should_update_server_flag=false;
+		if(!this.should_update_server_flag)
+			return;
+		this.should_update_server_flag=false;
 			
-			var width_height_str="";
-			for(var i=0,ni=render.webgpu.context.length;i<ni;i++){
-				var my_texture=render.webgpu.context[i].getCurrentTexture();
-				width_height_str+=((i<=0)?"":"_")	+my_texture.width
-				width_height_str+="_"				+my_texture.height;
-			}
-			var par=[
-						["id"				,	render.webgpu.current_canvas_id],
-						["width_height"		,	width_height_str		]
-					];
-			for(var i=0,ni=component_render_parameter.length;i<ni;i++){
-				var buffer_id=component_render_parameter[i];
-				var p=component_buffer_parameter[buffer_id];
-				while(p.length>1)
-					p.shift();
-				var component_id=p[0][0],driver_id=p[0][1];
-				render.caller.call_server_component(component_id,driver_id,par);
-			}
+		var width_height_str="";
+		for(var i=0,ni=render.webgpu.context.length;i<ni;i++){
+			var my_texture=render.webgpu.context[i].getCurrentTexture();
+			width_height_str+=((i<=0)?"":"_")	+my_texture.width
+			width_height_str+="_"				+my_texture.height;
 		}
+		var par=[
+					["id"				,	render.webgpu.current_canvas_id],
+					["width_height"		,	width_height_str		]
+				];
+		render.caller.call_server_component(this.component_id,this.driver_id,par);
 	}
-	
-	this.copy_id_texture=function(
-			render_data,target_part_object,target_render_driver,render)
+	this.copy_id_texture=function(render_data,render)
 	{
 		if(render_data.target_texture_id!=render.webgpu.current_canvas_id)
 			return;
-				
+
 		var my_id_texture=this.id_texture[render_data.target_texture_id];
 		var texture_width=my_id_texture.width;
 		var texture_height=my_id_texture.height;
@@ -157,8 +152,7 @@ function my_create_part_driver(part_object,render_driver,render)
 			});	
 	}
 	
-	this.copy_value_texture=function(
-			render_data,target_part_object,target_render_driver,render)
+	this.copy_value_texture=function(render)
 	{
 		render.webgpu.command_encoder.copyTextureToTexture(
 			{	//source
@@ -201,17 +195,16 @@ function my_create_part_driver(part_object,render_driver,render)
 				height	:	1
 			});	
 	}
-	this.end_render_target=function(
-			render_data,target_part_object,target_render_driver,render)
+	this.end_render_target=function(render_data,
+			target_part_object,target_part_driver,target_render_driver,render)
 	{
 		if(render_data.target_texture_id<0)
-			this.copy_value_texture(render_data,target_part_object,target_render_driver,render);
+			this.copy_value_texture(render);
 		else
-			this.copy_id_texture(render_data,target_part_object,target_render_driver,render);
+			this.copy_id_texture(render_data,render);
 	}
-		
-	this.begin_render_target_for_id=function(
-			render_data,target_part_object,target_render_driver,render)
+
+	this.begin_render_target_for_id=function(render_data,render)
 	{
 		var my_depth_texture,my_id_texture;
 		var my_gpu_texture=render.webgpu.context[render_data.target_texture_id].getCurrentTexture();
@@ -301,8 +294,7 @@ function my_create_part_driver(part_object,render_driver,render)
 		return  ret_val;
 	};
 
-	this.begin_render_target_for_value=function(
-			render_data,target_part_object,target_render_driver,render)
+	this.begin_render_target_for_value=function(render)
 	{
 		render.webgpu.render_pass_encoder = render.webgpu.command_encoder.beginRenderPass(
 		{
@@ -342,19 +334,15 @@ function my_create_part_driver(part_object,render_driver,render)
 		];
 		return  ret_val;
 	};
-	
-	this.begin_render_target=function(render_data,target_part_object,target_render_driver,render)
+	this.begin_render_target=function(render_data,
+			target_part_object,target_part_driver,target_render_driver,render)
 	{
 		if(render_data.target_texture_id>=0)
-			return this.begin_render_target_for_id(
-						render_data,target_part_object,target_render_driver,render);
+			return this.begin_render_target_for_id(render_data,render);
 		else
-			return this.begin_render_target_for_value(
-						render_data,target_part_object,target_render_driver,render);
+			return this.begin_render_target_for_value(render);
 	}
-
-	this.complete_render_target_for_id=async function(
-			render_data,target_part_object,target_render_driver,render)
+	this.complete_render_target_for_id=async function(render_data,render)
 	{
 		if(render_data.target_texture_id!=render.webgpu.current_canvas_id)
 			return;
@@ -419,7 +407,7 @@ function my_create_part_driver(part_object,render_driver,render)
 			if(primitive_id>=0)
 				render.pickup.primitive_id=primitive_id;
 			if(vertex_id>=0)
-				render.pickup.vertex_id=vertex_id;
+				render.pickup.vertex_id=vertex_id;		
 			 return;
 		case 5:	//face loop ID
 			 render.pickup.body_id=my_item_ids[2];
@@ -438,8 +426,7 @@ function my_create_part_driver(part_object,render_driver,render)
 			return;
 		}
 	}
-	this.complete_render_target_for_value=async function(
-			render_data,target_part_object,target_render_driver,render)
+	this.complete_render_target_for_value=async function(render)
 	{
 		var my_buffer=this.value_buffer_for_value;
 		var my_length=Float32Array.BYTES_PER_ELEMENT*4;
@@ -451,27 +438,12 @@ function my_create_part_driver(part_object,render_driver,render)
 		render.pickup.value=[p[0],p[1],p[2]];
 		render.pickup.depth=p[3];
 	}
-	
-	this.complete_render_target=async function(
-			render_data,target_part_object,target_render_driver,render)
+	this.complete_render_target=async function(render_data,
+			target_part_object,target_part_driver,target_render_driver,render)
 	{
 		if(render_data.target_texture_id>=0)
-			await this.complete_render_target_for_id(
-								render_data,target_part_object,target_render_driver,render);
+			await this.complete_render_target_for_id(render_data,render);
 		else
-			await this.complete_render_target_for_value(
-								render_data,target_part_object,target_render_driver,render);
+			await this.complete_render_target_for_value(render);
 	}
-	this.destroy=function()
-	{
-	};
-}
-function main(	render_id,		render_name,
-				init_data,		text_array,
-				shader_code,	render)
-{
-	this.create_part_driver=my_create_part_driver;
-	this.destroy=function()
-	{
-	};
-}
+};

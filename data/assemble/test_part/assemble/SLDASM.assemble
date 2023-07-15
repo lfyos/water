@@ -9,8 +9,11 @@
 	/*	2:child_number	*/	0
 	
 	/*	2:name	*/	display_component
-	/*	2:type	*/	display_part
+	/*	2:type	*/	always_show_interface_part
 	/*	2:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
+	
+		false	1	0.25	0.9		root_menu.png
+	
 	/*	2:child_number	*/	0
 
 	/*	2:name	*/	display_component_1

@@ -17,9 +17,9 @@ public class response_component_render_parameter
 		int pps[][]=ek.process_part_sequence.process_parts_sequence;
 		int pcd[][][][]=ek.component_cont.part_component_id_and_driver_id;
 		long render_current_time=ek.current_time.nanoseconds();
-		response_flag create_flag=new response_flag();
-		
+
 		ci.request_response.print(",[");
+		response_flag create_flag=new response_flag();
 		
 		for(int i=0,ni=pps.length;i<ni;i++){
 			int render_id=pps[i][0],part_id=pps[i][1];

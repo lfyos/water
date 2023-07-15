@@ -1,61 +1,3 @@
-function my_create_part_driver(part_object,render_driver,render)
-{
-	this.draw_component=function(method_data,target_data,
-			component_render_parameter,component_buffer_parameter,
-			project_matrix,part_object,render_driver,render)	
-	{
-		switch(method_data.method_id){
-		case 0:
-		case 1:
-			break;
-		default:
-			return;
-		}
-		var p	=part_object.buffer_object.face.region_data;
-		var rpe	=render.webgpu.render_pass_encoder;
-
-		rpe.setPipeline(
-				(method_data.method_id==0)
-				?(render_driver.value_pipeline)
-				:(render_driver.color_pipeline));
-
-		for(var i=0,ni=component_render_parameter.length;i<ni;i++){
-			var buffer_id=component_render_parameter[i];
-			
-			render.set_system_bindgroup_by_part(
-				target_data.render_buffer_id,
-				method_data.method_id,
-				part_object.render_id,
-				part_object.part_id,
-				buffer_id);
-
-			for(var j=0,nj=p.length;j<nj;j++){
-				rpe.setVertexBuffer(0,p[j].buffer);
-				rpe.draw(p[i].item_number);
-			}
-		}
-	}
-	this.decode_vertex_data=function(request_type_string,buffer_object_data,part_object)
-	{
-		var ret_val=
-		{
-			material_id		:	buffer_object_data.material_id,
-			region_box		:	buffer_object_data.region_box,
-			region_data		:	(request_type_string!="face")?new Array():buffer_object_data.region_data,
-			item_number		:	(request_type_string!="face")?0:(buffer_object_data.item_number),
-			item_size		:	(request_type_string!="face")?4:
-						(buffer_object_data.region_data.length/buffer_object_data.item_number),
-			private_data	:	null
-		};
-		return ret_val;
-	}
-	this.destroy=function()
-	{
-			this.draw_component		=null;
-			this.decode_vertex_data	=null;
-	}
-}
-
 function main(	render_id,		render_name,
 				init_data,		text_array,
 				shader_code,	render)
@@ -64,7 +6,6 @@ function main(	render_id,		render_name,
 			{
 				code: shader_code
 			});
-			
 	var pipeline_descr=
 	{
 		layout: render.webgpu.device.createPipelineLayout(
@@ -161,7 +102,7 @@ function main(	render_id,		render_name,
 	pipeline_descr.fragment.targets[0].format="rgba32float";
 	this.value_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
-	this.create_part_driver=my_create_part_driver;
+	this.create_part_driver=construct_part_driver;
 	
 	this.destroy=function()
 	{

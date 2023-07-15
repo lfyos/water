@@ -71,8 +71,8 @@ public class extended_component_instance_driver extends component_instance_drive
 					ci.parameter.y,
 					-1,
 
-					ci.parameter.x*(double)width/(double)height+2.0/(double)height,
-					ci.parameter.y+2.0/(double)height,
+					ci.parameter.x*(double)width/(double)height+1.0/(double)height,
+					ci.parameter.y+1.0/(double)height,
 					1);
 			rt=new render_target(
 				true,								//do_render_flag
