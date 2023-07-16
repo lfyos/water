@@ -1,19 +1,27 @@
 /*	version								*/	2021.07.15
-/*	origin material						*/	0	0	0	0
-/*	default material					*/	0.0	0.0	0.0	1.0
+/*	origin material						*/	0	0	0	1
+/*	default material					*/	1	1	1	0
 /*	origin  vertex_location_extra_data	*/	1
 /*	default vertex_location_extra_data	*/	1
 /*	default vertex_normal_extra_data	*/	1
 /*	max_attribute_number				*/	0
 
 /*	body_number		*/	1
-	/*  body    0  name    */  Íø¸ñ	/*  face_number */	1
-	/*  body 0 face 0  name	*/	Íø¸ñÃæ
-	/*  face type	*/	unknown	/*  parameter number	*/	0	/*  parameter	*/
-	/*  total_face_primitive_number	*/  1
+	/*  body    0  name    */  my_body	/*  face_number */	1
+	/*  body 0 face 0  name	*/	my_face
+	/*  face type	*/	unknown	/*  parameter number	*/	0	/*  parameter	*/	
+	/*  total_face_primitive_number	*/  0
 	/*  face_attribute_number		*/  0
-	/*  face_face_box               */	0.0	0.0	0.0	1.0	1.0	0.0
+	/*  face_face_box               */	nobox
 
-	/*  loop number		*/	0
-
-
+	/*  loop number		*/	1
+		/*  body:0 face:0 loop 0 edge number	*/	1
+			/*  Edge NO.0   */
+			/*  curve type	*/  unknown	/*  parameter number	*/	0	/*  parameter	*/	
+			start_not_effective
+			end_not_effective
+			/*  parameter_point_extra_data  */	1
+			/*  parameter_point_material    */	1	0	0	1
+			/*  box definition  */	nobox
+			/*  total_edge_primitive_number		*/	5
+			/*  total_point_primitive_number	*/	0

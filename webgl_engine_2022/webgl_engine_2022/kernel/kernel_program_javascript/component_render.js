@@ -182,12 +182,12 @@ function construct_component_render_parameter(render_number)
 			if((typeof(part_driver)=="object")&&(part_driver!=null)){
 				if(typeof(part_driver.append_component_parameter)=="function")
 					part_driver.append_component_parameter(	component_id,	driver_id,
-							render_id,		part_id,		buffer_id,		buffer_data_item,
+							render_id,		part_id,		buffer_id,		buffer_data_item,p,
 							part_object,	part_driver,	render_driver,	render);
 								
-				if(typeof(part_driver.create_component_driver)=="function")
+				if(typeof(part_driver.new_component_driver)=="function")
 					if(typeof(part_object.component_driver_array[buffer_id])=="undefined"){
-						part_object.component_driver_array[buffer_id]=new part_driver.create_component_driver(
+						part_object.component_driver_array[buffer_id]=new part_driver.new_component_driver(
 							component_id,	driver_id,		render_id,			part_id,		buffer_id,
 							part_object.component_initialize_data[buffer_id],
 							part_object,	part_driver,	render_driver,		render);
@@ -198,21 +198,21 @@ function construct_component_render_parameter(render_number)
 				if((typeof(component_driver)=="object")&&(component_driver!=null))
 					if(typeof(component_driver.append_component_parameter)=="function")
 						component_driver.append_component_parameter(component_id,	driver_id,
-									render_id,		part_id,		buffer_id,		buffer_data_item,
+									render_id,		part_id,		buffer_id,		buffer_data_item,p,
 									part_object,	part_driver,	render_driver,	render);
 			}
 			while(p.length>part_object.property.max_component_data_buffer_number){
 				if((typeof(part_driver)=="object")&&(part_driver!=null))
 					if(typeof(part_driver.shift_component_parameter)=="function")
 						part_driver.shift_component_parameter(	component_id,	driver_id,
-								render_id,		part_id,		buffer_id,		p[0],
+								render_id,		part_id,		buffer_id,		p[0],p,
 								part_object,	part_driver,	render_driver,	render);
 				
 				var component_driver=part_object.component_driver_array[buffer_id];
 				if((typeof(component_driver)=="object")&&(component_driver!=null))
 					if(typeof(component_driver.shift_component_parameter)=="function")
 						component_driver.shift_component_parameter(	component_id,	driver_id,
-									render_id,		part_id,		buffer_id,		p[0],
+									render_id,		part_id,		buffer_id,		p[0],p,
 									part_object,	part_driver,	render_driver,	render);
 				p.shift();
 			}

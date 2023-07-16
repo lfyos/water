@@ -51,7 +51,7 @@ function construct_component_driver(
 		
 	this.append_component_parameter=function(
 		component_id,	driver_id,			render_id,		part_id,
-		buffer_id,		buffer_data_item,
+		buffer_id,		buffer_data_item,	buffer_data_array,
 		part_object,	part_driver,		render_driver,	render)
 	{
 		var my_texture_width	=part_object.material[0].texture_width;

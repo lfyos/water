@@ -112,7 +112,7 @@ function create_texture_bind_group()
 		this.no_box_texture=await download_external_texture(
 					render.caller.create_part_request_string(part_object.render_id,part_object.part_id,
 					[["file",my_directory_name+"/no_box.jpg"]]),render);
-	
+
 		var resource_entries=[
 			{	//left
 				binding		:	0,
@@ -204,7 +204,7 @@ function construct_component_driver(
 
 	this.append_component_parameter=function(
 		component_id,	driver_id,			render_id,		part_id,
-		buffer_id,		buffer_data_item,
+		buffer_id,		buffer_data_item,	buffer_data_array,
 		part_object,	part_driver,		render_driver,	render)
 	{
 		this.texture_bind_group.destroy();

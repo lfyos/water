@@ -388,8 +388,8 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		var render_driver=render.render_driver[render_id];
 		render.part_driver[render_id][part_id]=null;
 		if((typeof(render_driver)=="object")&&(render_driver!=null))
-			if(typeof(render_driver.create_part_driver)=="function")
-				render.part_driver[render_id][part_id]=new render_driver.create_part_driver(
+			if(typeof(render_driver.new_part_driver)=="function")
+				render.part_driver[render_id][part_id]=new render_driver.new_part_driver(
 					part_object.part_initialize_data,part_object,render_driver,render);
 	
 		this.request_render_part_id.push([render_id,part_id,

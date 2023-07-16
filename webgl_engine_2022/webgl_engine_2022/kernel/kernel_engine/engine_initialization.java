@@ -391,8 +391,8 @@ public class engine_initialization
 					if(i!=0) 
 						fw.print  ("		]");
 					else{
-						fw.println("	return new main(render_id,render_name,");
-						fw.println("		init_data,text_array,shader_code,render);");
+						fw.println("	return new new_render_driver(render_id,render_name,");
+						fw.println("					init_data,text_array,shader_code,render);");
 						fw.print  ("}");
 					}
 				}

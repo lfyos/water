@@ -1,0 +1,35 @@
+struct vertex_to_fragment_struct
+{
+	@builtin(position)	vertex_position		:	vec4<f32>,	
+	@location(1)		vertex_material		:	vec4<f32>
+};
+struct fragment_to_target_struct
+{
+	@location(0) 	color	:	vec4<f32>,
+	@location(1) 	id		:	vec4<i32>
+};
+
+@vertex
+fn vertex_main(
+		@location(0) my_coord		:	vec4<f32>,
+		@location(1) my_material	:	vec4<f32>,
+		@location(2) my_p0			:	vec4<f32>,
+		@location(3) my_p1			:	vec4<f32>
+	)->vertex_to_fragment_struct
+{	var vf:vertex_to_fragment_struct;
+
+	vf.vertex_position	=my_p0*my_coord+my_p1*(vec4(1.0,1.0,1.0,1.0)-my_coord);
+	vf.vertex_position	=target_info.projection_matrix*(location_info.matrix*vf.vertex_position);
+	vf.vertex_material	=my_material;
+
+	return vf;
+}
+
+@fragment
+fn fragment_main(vf	:	vertex_to_fragment_struct) -> fragment_to_target_struct
+{
+	var ft : fragment_to_target_struct;
+	ft.color=vf.vertex_material;
+	ft.id=vec4<i32>(0,0,0,0);
+	return ft;
+}

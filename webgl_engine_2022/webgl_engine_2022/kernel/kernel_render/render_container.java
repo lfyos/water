@@ -289,44 +289,44 @@ public class render_container
 				debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
 				continue;
 			}
-			if(get_part_list_result.length<=0) {
-				debug_information.println("get_part_list_result.length<=0");
-				debug_information.println("Driver name:		",	driver_name);
-				debug_information.println("Shader file:		",	shader_file_name);
-				debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
-				continue;
-			}
-			if(get_part_list_result[0]==null) {
-				debug_information.println("get_part_list_result[0]==null");
-				debug_information.println("Driver name:		",	driver_name);
-				debug_information.println("Shader file:		",	shader_file_name);
-				debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
-			}
 			
-			File par_list_f;			
-			if(!((par_list_f=new File(get_part_list_result[0])).exists())) {
-				debug_information.println("part list file:	",get_part_list_result[0]+"	not exist");
-				debug_information.println("Driver name:		",	driver_name);
-				debug_information.println("Shader file:		",	shader_file_name);
-				debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
-				continue;
+			for(int i=0,ni=get_part_list_result.length-1;i<ni;i++,i++){
+				if(get_part_list_result[i]==null) {
+					debug_information.println("get_part_list_result[i]==null");
+					debug_information.println("Driver name:		",	driver_name);
+					debug_information.println("Shader file:		",	shader_file_name);
+					debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
+					continue;
+				}
+				
+				File par_list_f;			
+				if(!((par_list_f=new File(get_part_list_result[i])).exists())) {
+					debug_information.println("part list file:	",get_part_list_result[i]+"	not exist");
+					debug_information.println("Driver name:		",	driver_name);
+					debug_information.println("Shader file:		",	shader_file_name);
+					debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
+					continue;
+				}
+				if(par_list_f.lastModified()<f_render_list.lastModified_time)
+					par_list_f.setLastModified(f_render_list.lastModified_time);
+				
+				debug_information.println();
+				debug_information.println("Begin load part list file:	",	get_part_list_result[i]);
+				debug_information.println("part parameter file:		",		part_parameter_file_name);
+	
+				String part_file_system_charset=get_part_list_result[i+1];
+				if(part_file_system_charset==null)
+					part_file_system_charset=f_render_list.get_charset();
+
+				int render_id=(renders==null)?0:renders.size();
+				ren.add_part(component_load_source_cont,pcps,ren.driver,part_type_id,
+					part_par,system_par,get_part_list_result[i],part_file_system_charset,
+					"part_mesh_"+Integer.toString(render_id)+"_",request_response);
+	
+				debug_information.println();
+				debug_information.println("End load part list file:	",	part_file_system_charset);
+				debug_information.println("part parameter file:		",	part_parameter_file_name);
 			}
-			if(par_list_f.lastModified()<f_render_list.lastModified_time)
-				par_list_f.setLastModified(f_render_list.lastModified_time);
-			
-			debug_information.println();
-			debug_information.println("Begin load part list file:	",	get_part_list_result[0]);
-			debug_information.println("part parameter file:		",		part_parameter_file_name);
-
-			int render_id=(renders==null)?0:renders.size();
-			ren.add_part(component_load_source_cont,
-				pcps,ren.driver,part_type_id,part_par,system_par,get_part_list_result[0],
-				(get_part_list_result.length>1)?get_part_list_result[1]:f_render_list.get_charset(),
-				"part_mesh_"+Integer.toString(render_id)+"_",request_response);
-
-			debug_information.println();
-			debug_information.println("End load part list file:	",	get_part_list_result[0]);
-			debug_information.println("part parameter file:		",	part_parameter_file_name);
 		}
 
 		f_render_list.close();
@@ -388,27 +388,29 @@ public class render_container
 				debug_information.print  ("render list file is NULL	",	driver_name);
 				continue;
 			}
-			if(render_list_file_name.length<2) {
-				debug_information.print  ("render_list_file_name.length<2	",	driver_name);
-				continue;
+			for(int i=0,ni=render_list_file_name.length-1;i<ni;i++,i++){
+				if(render_list_file_name[i]==null){
+					debug_information.print  ("render_list_file_name[0]==null	",	driver_name);
+					continue;
+				}
+				render_list_file_name[i]=file_reader.separator(render_list_file_name[i]);
+				if(!((f=new File(render_list_file_name[i])).exists())) {
+					debug_information.println(render_list_file_name[0],"		not exist");
+					continue;
+				}
+				if(f_shader.lastModified_time>f.lastModified())
+					f.setLastModified(f_shader.lastModified_time);
+	
+				String file_system_charset=render_list_file_name[i+1];
+				if(file_system_charset==null)
+					file_system_charset=f_shader.get_charset();
+				
+				load_one_shader(
+					component_load_source_cont,pcps,load_sub_directory_name,
+					driver_name,render_list_file_name[i],file_system_charset,
+					f_shader.directory_name+f_shader.file_name,
+					part_type_id,system_par,scene_par,ren,request_response);
 			}
-			if(render_list_file_name[0]==null) {
-				debug_information.print  ("render_list_file_name[0]==null	",	driver_name);
-				continue;
-			}
-			render_list_file_name[0]=file_reader.separator(render_list_file_name[0]);
-			if(!((f=new File(render_list_file_name[0])).exists())) {
-				debug_information.println(render_list_file_name[0],"		not exist");
-				continue;
-			}
-			if(f_shader.lastModified_time>f.lastModified())
-				f.setLastModified(f_shader.lastModified_time);
-
-			load_one_shader(
-				component_load_source_cont,pcps,load_sub_directory_name,
-				driver_name,render_list_file_name[0],render_list_file_name[1],
-				f_shader.directory_name+f_shader.file_name,
-				part_type_id,system_par,scene_par,ren,request_response);
 		}
 		debug_information.println();
 		debug_information.println("End shader and part initialization");

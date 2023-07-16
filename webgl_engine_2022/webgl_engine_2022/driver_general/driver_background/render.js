@@ -1,6 +1,5 @@
-function main(	render_id,		render_name,
-				init_data,		text_array,
-				shader_code,	render)
+function new_render_driver(
+	render_id,render_name,init_data,text_array,shader_code,render)
 {
 	var texture_bindgroup_layout_entries=[
 		{	//left
@@ -168,7 +167,7 @@ function main(	render_id,		render_name,
 	pipeline_descr.fragment.constants={no_box_mode:false};
 	this.box_pipeline = render.webgpu.device.createRenderPipeline(pipeline_descr);
 
-	this.create_part_driver=construct_part_driver;
+	this.new_part_driver=construct_part_driver;
 	
 	this.destroy=function()
 	{
