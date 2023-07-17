@@ -1,7 +1,7 @@
 /* 1name		*/			common_component_root
 /* 1type		*/			undefined_part
 /* 1location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
-/* 1children number */		3
+/* 1children number */		4
 	
 		/*	0	*/
 		/* 2name		*/         render_target_register_component
@@ -22,7 +22,15 @@
 		
 					/*		max_time_length		*/	60000
 		
-		/* 2children number */     0	
+		/* 2children number */     0
+		
+		/*	3	*/
+		/* 2name		*/         location_modifier_component
+		/* 2type		*/         location_modifier_part
+		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+								/*	modifier_container_id	*/	1
+		/* 2children number */		0
+		
 /*
 
 		/*	0	*/
@@ -67,12 +75,6 @@
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 		/* 2children number */		0
 		
-		/*	7	*/
-		/* 2name		*/         location_modifier_component
-		/* 2type		*/         location_modifier_part
-		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
-								/*	modifier_container_id	*/	1
-		/* 2children number */		0
 			
 		/*	8	*/
 		/* 2name		*/         manipulator_component
