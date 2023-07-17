@@ -10,7 +10,6 @@ import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
-	private int current_canvas_id;
 	private int width_height[][];
 	
 	public void destroy()
@@ -22,7 +21,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		super(my_comp,my_driver_id);
 		
-		current_canvas_id=0;
 		width_height=new int[][] 
 		{
 			new int[] {1,1}
@@ -30,6 +28,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	private void register_target(engine_kernel ek,client_information ci)
 	{
+		int current_canvas_id=ci.parameter.current_canvas_id;
 		for(int i=0,ni=width_height.length;i<ni;i++) {
 			int width=width_height[i][0],height=width_height[i][1];
 			double aspect_value=((double)width)/((double)height);
@@ -46,6 +45,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		render_target rt;
 		camera_result cr=ci.display_camera_result;
+		int current_canvas_id=ci.parameter.current_canvas_id;
 		
 		if((ci.parameter.comp==null)||(current_canvas_id<0)||(current_canvas_id>=width_height.length))
 			rt=new render_target(
@@ -117,12 +117,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{
 		String str;
-
-		if((str=ci.request_response.get_parameter("id"))!=null) {
-			if((current_canvas_id=Integer.parseInt(str))<0)
-				current_canvas_id=0;
-			register_target(ek,ci);
-		}
 		if((str=ci.request_response.get_parameter("width_height"))!=null) {
 			for(int i=0;str.length()>0;i++) {
 				int index_id=str.indexOf('_');

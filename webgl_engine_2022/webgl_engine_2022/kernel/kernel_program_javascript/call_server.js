@@ -76,7 +76,6 @@ function construct_server_caller(my_render)
 			alert("parse call_server response data fail:	"+request_url);
 			alert(e.toString());
 		}
-
 		return response_data;
 	};
 	this.create_render_request_string=function(render_id_or_render_name,render_parameter)

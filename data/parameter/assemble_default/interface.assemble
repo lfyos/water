@@ -4,6 +4,8 @@
 	
 		not_part_list
 		
+		file_program	initialization/system_initialization/initialization.txt
+		
 //		file_program	initialization
 	
 		mount			common.assemble

@@ -1,7 +1,7 @@
 /* 1name		*/			common_component_root
 /* 1type		*/			undefined_part
 /* 1location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
-/* 1children number */		4
+/* 1children number */		5
 	
 		/*	0	*/
 		/* 2name		*/         render_target_register_component
@@ -30,6 +30,14 @@
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 								/*	modifier_container_id	*/	1
 		/* 2children number */		0
+		
+		
+		/*	4	*/
+		/* 2name		*/         mouse_modify_location_component
+		/* 2type		*/         mouse_modify_location_part
+		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+		/* 2children number */     0
+		
 		
 /*
 
@@ -105,12 +113,6 @@
 									/*		modifier_container_id		*/			0
 		/* 2children number */		0
 				
-		/*	12	*/
-		/* 2name		*/         mouse_modify_location_component
-		/* 2type		*/         mouse_modify_location_part
-		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
-		/* 2children number */     0
-		
 		/*	15	*/
 		/* 2name		*/			component_marker_component_root
 		/* 2type		*/			undefined_part

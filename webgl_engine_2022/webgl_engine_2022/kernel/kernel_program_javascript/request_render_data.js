@@ -17,6 +17,10 @@ async function request_render_data(render)
 		
 		var id,value;
 
+		if(render.view_bak.canvas_id!=render.webgpu.current_canvas_id){
+			render.view_bak.canvas_id=render.webgpu.current_canvas_id;
+			request_url+="&canvas="	+render.webgpu.current_canvas_id.toString();
+		};
 		if((render.view_bak.component!=render.pickup.component_id)||(render.view_bak.driver!=render.pickup.driver_id)){
 			render.view_bak.component	=render.pickup.component_id;
 			render.view_bak.driver		=render.pickup.driver_id;

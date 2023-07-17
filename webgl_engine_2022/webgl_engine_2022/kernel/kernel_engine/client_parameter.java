@@ -5,7 +5,7 @@ import kernel_component.component;
 
 public class client_parameter 
 {
-	public int driver_id,body_id,face_id,loop_id,edge_id,primitive_id,vertex_id;
+	public int current_canvas_id,driver_id,body_id,face_id,loop_id,edge_id,primitive_id,vertex_id;
 	public double x,y,depth,value[];
 	public boolean high_or_low_precision_flag;
 	
@@ -19,6 +19,8 @@ public class client_parameter
 	}
 	public client_parameter(int my_max_client_loading_number)
 	{
+		current_canvas_id=0;
+		
 		driver_id	=-1;
 		body_id		=-1;
 		face_id		=-1;
@@ -83,6 +85,9 @@ public class client_parameter
 			x=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("y"))!=null)
 			y=Double.parseDouble(str);
+		
+		if((str=ci.request_response.get_parameter("canvas"))!=null)
+			current_canvas_id=Integer.decode(str);
 		
 		if((str=ci.request_response.get_parameter("depth"))!=null)
 			depth=Double.parseDouble(str);

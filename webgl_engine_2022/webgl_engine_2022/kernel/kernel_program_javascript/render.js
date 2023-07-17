@@ -78,6 +78,8 @@ function construct_render_routine(my_webgpu,
 	{
 		x				:	-2,
 		y				:	-2,
+		
+		canvas_id		:	-2,
 				
 		component		:	-2,
 		driver			:	-2,

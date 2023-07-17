@@ -47,13 +47,9 @@ function construct_event_listener(my_canvas_id,my_render)
 	};
 	this.caculate_component_event_processor=function (processor_component_object)
 	{
-		if(typeof(processor_component_object)!="object")
-			return -1;
 		var component_name=processor_component_object.component_name;
-		var component_object=this.render.get_component_processor(component_name);
-		if(typeof(component_object)!="object")
-			return -1;
-		if(component_object==null)
+		var component_object=this.render.operate_component.get_component_event_processor(component_name);
+		if((typeof(component_object)!="object")||(component_object==null))
 			return -1;
 		if(typeof(component_object.component_id)!="number")
 			return -1;

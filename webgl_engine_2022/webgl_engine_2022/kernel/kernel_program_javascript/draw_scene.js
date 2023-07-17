@@ -20,7 +20,7 @@ function draw_scene_routine(render_data,render)
 		return;
 	if(method_array.length<=0)
 		return;
-		
+
 	var project_matrix	=render.camera.compute_camera_data(render_data);	
 	render.system_buffer.set_target_buffer(render_data.render_buffer_id,project_matrix);
 			
