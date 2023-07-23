@@ -55,8 +55,7 @@ public class extended_render_driver extends render_driver
 			component_load_source_container component_load_source_cont,
 			system_parameter system_par,client_request_response request_response)
 	{
-		return new extended_part_driver(p,
-			part_fr.get_boolean(),part_fr.get_long(),system_par,request_response);
+		return new extended_part_driver(part_fr.get_boolean(),part_fr.get_long());
 	}
 	public render_instance_driver create_render_instance_driver(render r,
 			engine_kernel ek,client_request_response request_response)

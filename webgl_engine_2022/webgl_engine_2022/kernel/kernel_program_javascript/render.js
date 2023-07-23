@@ -1,12 +1,6 @@
-function construct_render_routine(my_webgpu,
-	my_url,my_user_name,my_pass_word,my_language_name,create_data)
+function construct_render_routine(my_webgpu,my_url,
+	my_user_name,my_pass_word,my_language_name,channel_id,render_data)
 {
-    var my_channel_id					=create_data[0]
-    var	my_render_initialize_data		=create_data[1];
-	var	my_part_initialize_data			=create_data[2];
-	var	my_component_initialize_data	=create_data[3];
-	var	render_data						=create_data[4];
-	
 	var component_number				=render_data[0];
 	var render_number					=render_data[1];
 	var modifier_container_number		=render_data[2];
@@ -17,33 +11,6 @@ function construct_render_routine(my_webgpu,
     this.link_name						=render_data[6];
     this.title							=render_data[7];
     this.parameter						=render_data[8];
-    
-    this.render_initialize_data	=new Array();
-    for(var i=0,ni=my_render_initialize_data.length-1;i<ni;i++){
-		var my_data		=my_render_initialize_data[i++];
-		var render_id	=my_render_initialize_data[i++];
-		this.render_initialize_data[render_id]=my_data;
-	};
-
-	this.part_initialize_data=new Array();
-	for(var i=0,ni=my_part_initialize_data.length-1;i<ni;){
-		var my_data		=my_part_initialize_data[i++];
-		var render_id	=my_part_initialize_data[i++];
-		var part_id		=my_part_initialize_data[i++];
-		if(typeof(this.part_initialize_data[render_id])=="undefined")
-			this.part_initialize_data[render_id]=new Array();
-		this.part_initialize_data[render_id][part_id]=my_data;
-	};
-	
-	this.component_initialize_data=new Array(component_number);
-	for(var i=0;i<component_number;i++)
-		this.component_initialize_data[i]=new Array();
-	for(var i=0,ni=my_component_initialize_data.length-1;i<ni;){
-		var my_data				=my_component_initialize_data[i++];
-		var my_component_id		=my_component_initialize_data[i++];
-		var my_driver_id		=my_component_initialize_data[i++];
-		this.component_initialize_data[my_component_id][my_driver_id]=my_data;
-	}
 
 	this.webgpu						=my_webgpu;
 	this.url						=my_url;
@@ -52,7 +19,7 @@ function construct_render_routine(my_webgpu,
 					+"&pass_word="	+my_pass_word
 					+"&language="	+my_language_name;
 	this.url_with_channel			=this.url_without_channel
-					+"&channel="	+my_channel_id.toString()
+					+"&channel="	+channel_id.toString()
 	
 	this.user_event_processor		=new Object();
 	this.user_call_processor		=new Object();

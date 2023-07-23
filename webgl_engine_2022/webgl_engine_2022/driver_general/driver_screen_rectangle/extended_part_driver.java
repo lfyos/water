@@ -20,8 +20,7 @@ import kernel_transformation.point;
 
 public class extended_part_driver extends part_driver
 {
-	public extended_part_driver(part p,
-			system_parameter system_par,client_request_response request_response)
+	public extended_part_driver()
 	{
 		super();
 	}
@@ -36,7 +35,7 @@ public class extended_part_driver extends part_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(p,system_par,request_response);
+		return new extended_part_driver();
 	}
 	public int caculate_material_id(
 			part p,String type_str,int body_id,int face_id,int loop_id,int edge_id,

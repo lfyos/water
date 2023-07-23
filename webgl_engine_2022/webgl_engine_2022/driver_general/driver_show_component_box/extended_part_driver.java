@@ -23,8 +23,7 @@ public class extended_part_driver extends part_driver
 	private boolean show_type_flag;
 	private long time_length;
 	
-	public extended_part_driver(part p,boolean my_show_type_flag,long my_time_length,
-			system_parameter system_par,client_request_response request_response)
+	public extended_part_driver(boolean my_show_type_flag,long my_time_length)
 	{
 		super();
 		show_type_flag=my_show_type_flag;
@@ -41,7 +40,7 @@ public class extended_part_driver extends part_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(p,show_type_flag,time_length,system_par,request_response);
+		return new extended_part_driver(show_type_flag,time_length);
 	}
 	public int caculate_material_id(
 			part p,String type_str,int body_id,int face_id,int loop_id,int edge_id,

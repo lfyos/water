@@ -21,7 +21,7 @@ public class javascript_program
 		"event_listener.js",	"init_ids.js",				"init_system_bindgroup.js",		"modifier_time.js",
 		"operate_component.js",	"pickup.js",				"process_bar.js",				"render_main.js",
 		"render.js",			"request_create_engine.js",	"request_render_data.js",		"system_buffer.js",
-		"utility.js",			"webgpu.js"
+		"webgpu.js"
 	};
 	
 	public void destroy()

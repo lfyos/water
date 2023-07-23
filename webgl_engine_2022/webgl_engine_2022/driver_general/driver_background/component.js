@@ -1,9 +1,9 @@
-async function download_external_texture(request_url,render)
+async function download_external_texture(render_id,part_id,file_name,render)
 {
-	var my_response 	=	await fetch(request_url);
-    var my_imageBitmap	=	await createImageBitmap(await my_response.blob());
-    
-	var my_texture 		=	render.webgpu.device.createTexture(
+    var my_imageBitmap=await createImageBitmap(
+			await render.caller.call_server_part(
+					render_id,part_id,[["file",file_name]],"blob"));
+	var my_texture=render.webgpu.device.createTexture(
 			{
 				size:
 				{
@@ -86,32 +86,24 @@ function create_texture_bind_group()
 	this.create=async function (
 		my_directory_name,part_object,render_driver,render)
 	{
+		var render_id	=part_object.render_id;
+		var part_id		=part_object.part_id;
 		this.is_busy_flag=true;
 		
 		this.left_texture=await download_external_texture(
-					render.caller.create_part_request_string(part_object.render_id,part_object.part_id,
-						[["file",my_directory_name+"/left.jpg"]]),render);
+				render_id,part_id,my_directory_name+"/left.jpg",render);
 		this.right_texture=await download_external_texture(
-					render.caller.create_part_request_string(part_object.render_id,part_object.part_id,
-						[["file",my_directory_name+"/right.jpg"]]),render);
-	
+				render_id,part_id,my_directory_name+"/right.jpg",render);
 		this.top_texture=await download_external_texture(
-					render.caller.create_part_request_string(part_object.render_id,part_object.part_id,
-						[["file",my_directory_name+"/top.jpg"]]),render);
+				render_id,part_id,my_directory_name+"/top.jpg",render);
 		this.down_texture=await download_external_texture(
-					render.caller.create_part_request_string(part_object.render_id,part_object.part_id,
-						[["file",my_directory_name+"/down.jpg"]]),render);
-		
+				render_id,part_id,my_directory_name+"/down.jpg",render);
 		this.front_texture=await download_external_texture(
-					render.caller.create_part_request_string(part_object.render_id,part_object.part_id,
-						[["file",my_directory_name+"/front.jpg"]]),render);
+				render_id,part_id,my_directory_name+"/front.jpg",render);
 		this.back_texture=await download_external_texture(
-					render.caller.create_part_request_string(part_object.render_id,part_object.part_id,
-					[["file",my_directory_name+"/back.jpg"]]),render);
-		
+				render_id,part_id,my_directory_name+"/back.jpg",render);
 		this.no_box_texture=await download_external_texture(
-					render.caller.create_part_request_string(part_object.render_id,part_object.part_id,
-					[["file",my_directory_name+"/no_box.jpg"]]),render);
+				render_id,part_id,my_directory_name+"/no_box.jpg",render);
 
 		var resource_entries=[
 			{	//left

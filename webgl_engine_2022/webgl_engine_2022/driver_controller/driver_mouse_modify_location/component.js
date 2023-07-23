@@ -418,14 +418,14 @@ function mousedown(event,component_id,render)
 		break;
 	case 2:	
 		if(event.ctrlKey||event.shiftKey||event.altKey){
-			render.caller.call_server_component(ep.part_initialize_data.movement_component_name,"all",
+			render.caller.call_server_component(ep.part_init_data.movement_component_name,"all",
 				[["operation","design"],["move_method","listdesignbuffer"]],"json").
 			then(
 				function(response_data)
 				{
 					if(response_data!=null)
 						if(response_data.movement.length>0){
-							var p=ep.part_initialize_data.movement_abstract_menu_component_name;
+							var p=ep.part_init_data.movement_abstract_menu_component_name;
 							p=render.operate_component.get_component_object_by_component_name(p);
 							if(p!=null){
 								var my_component_id=p.component_id;
@@ -439,7 +439,7 @@ function mousedown(event,component_id,render)
 			if(render.pickup.component_id>=0)
 				if((value=prompt("输入标注文字"))!=null)
 					if((value=value.trim()).length>0)
-						render.caller.call_server_component(ep.part_initialize_data.mark_component_name,"all",
+						render.caller.call_server_component(ep.part_init_data.mark_component_name,"all",
 							[["operation","append"],["value",encodeURIComponent(encodeURIComponent(value))]]);
 		}
 		break;
@@ -456,7 +456,7 @@ function mouseup(event,component_id,render)
 	if(ep.render_data==null)
 		return false;
 
-	render.caller.call_server_component(ep.part_initialize_data.movement_component_name,"all",
+	render.caller.call_server_component(ep.part_init_data.movement_component_name,"all",
 		[["operation","virtual_mount"],["virtual_mount","terminate_follow"]]);
 	switch(event.button){
 	case 0:
@@ -689,7 +689,7 @@ function construct_component_driver(
 {
 	var ep=new Object();
 	
-	ep.part_initialize_data	=part_driver.part_initialize_data;
+	ep.part_init_data	=part_driver.part_init_data;
 	
 	ep.send_mousemove_time	=0;			
 	ep.mouse_up_flag		=true;

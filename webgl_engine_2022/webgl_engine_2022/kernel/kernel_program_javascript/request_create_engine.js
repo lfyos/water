@@ -20,12 +20,46 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 				alert("Web server error, response_data==null!");
 				return null;
 			}
+
+			var my_channel_id					=create_data[0]
+		    var	my_render_initialize_data		=create_data[1];
+			var	my_part_initialize_data			=create_data[2];
+			var	my_component_initialize_data	=create_data[3];
+			var	my_render_data					=create_data[4];
+			
+			var render=new construct_render_routine(my_webgpu,my_url,
+					my_user_name,my_pass_word,my_language_name,my_channel_id,my_render_data);
+
+		    var render_init_data=new Array();
+		    for(var i=0,ni=my_render_initialize_data.length-1;i<ni;i++){
+				var my_data		=my_render_initialize_data[i++];
+				var render_id	=my_render_initialize_data[i++];
+				render_init_data[render_id]=my_data;
+			};
+
+			var part_init_data=new Array(render.part_driver.length);
+			for(var i=0,ni=part_init_data.length;i<ni;i++)
+				part_init_data[i]=new Array();
+			for(var i=0,ni=my_part_initialize_data.length-1;i<ni;){
+				var my_data		=my_part_initialize_data[i++];
+				var render_id	=my_part_initialize_data[i++];
+				var part_id		=my_part_initialize_data[i++];
+				part_init_data[render_id][part_id]=my_data;
+			};
+			
+			var component_init_data=new Array(render.component_location_data.component_number);
+			for(var i=0,ni=component_init_data.length;i<ni;i++)
+				component_init_data[i]=new Array();
+			for(var i=0,ni=my_component_initialize_data.length-1;i<ni;){
+				var my_data				=my_component_initialize_data[i++];
+				var my_component_id		=my_component_initialize_data[i++];
+				var my_driver_id		=my_component_initialize_data[i++];
+				component_init_data[my_component_id][my_driver_id]=my_data;
+			}
+			
 			var initialization_url=create_data.pop();
 			var init_data=(await import(initialization_url)).init_data;
-				
-			var render=new construct_render_routine(my_webgpu,my_url,
-								my_user_name,my_pass_word,my_language_name,create_data);
-				
+
 			var sorted_component_name_id		=init_data[0];
 			var part_component_id_and_driver_id	=init_data[1];
 			var component_init_fun_array		=init_data[2];
@@ -59,7 +93,6 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 				}
 
 			for(var render_id=0,render_number=program_data.length;render_id<render_number;render_id++){
-				var my_init_data				=render.render_initialize_data[render_id];
 				var my_render_name				=program_data[render_id].shift();
 				var my_render_driver_function	=program_data[render_id].shift();
 				var my_shader_program			=common_shader_code;	
@@ -74,9 +107,8 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 				}
 				try{
 					render.render_driver[render_id]=my_render_driver_function(
-						render_id,				my_render_name,
-						my_init_data,			program_data[render_id].shift(),
-						my_shader_program,		render);
+						render_id,my_render_name,render_init_data[render_id],
+						program_data[render_id].shift(),my_shader_program,render);
 				}catch(e){
 					render.render_driver[render_id]=null;
 					alert("create render driver fail	"+my_render_name);
@@ -87,7 +119,7 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 				
 			request_render_data(render);
 				
-			draw_scene_main(render);
+			draw_scene_main(part_init_data,component_init_data,render);
 				
 			return render;
 		}

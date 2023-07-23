@@ -26,17 +26,14 @@ function construct_component_render_parameter(render_number)
 			var instance_id			=p[1];
     	    var new_instance_data	=p[2];
     	    
-			var part_object					=render.part_array[render_id][part_id];
-			var part_driver					=render.part_driver[render_id][part_id];
-			var component_data_buffer_id	=part_object.component_data_buffer_id;
-    	    var render_parameter			=part_object.component_render_parameter; 
+			var part_object			=render.part_array[render_id][part_id];
+			var part_driver			=render.part_driver[render_id][part_id];
+			var render_driver		=render.render_driver[render_id];
+    	    var render_parameter	=part_object.component_render_parameter; 
     		
-    		while(render_parameter.length<=render_buffer_id){
-    			component_data_buffer_id.push(new Array());
+    		while(render_parameter.length<=render_buffer_id)
     			render_parameter.push(new Array());
-    		}
-    		component_data_buffer_id=component_data_buffer_id[render_buffer_id];
-			render_parameter		=render_parameter[render_buffer_id];
+			render_parameter=render_parameter[render_buffer_id];
 
     	    if(instance_id>render_parameter.length)
 				alert("error instance_id of component_render_parameter length:"
@@ -44,49 +41,49 @@ function construct_component_render_parameter(render_number)
 			else if(instance_id==render_parameter.length){
 				if((typeof(part_driver)=="object")&&(part_driver!=null))
 					if(typeof(part_driver.append_render_parameter)=="function")
-						part_driver.append_render_parameter(render_buffer_id,
-							instance_id,data_buffer_id,new_instance_data,
-							part_object,part_driver,render.render_driver[render_id],render);	
+						part_driver.append_render_parameter(
+							render_buffer_id,instance_id,data_buffer_id,new_instance_data,
+							part_object,part_driver,render_driver,render);	
 				var component_driver=part_object.component_driver_array[data_buffer_id];
 				if((typeof(component_driver)=="object")&&(component_driver!=null))
 					if(typeof(component_driver.show_component_parameter)=="function")
-						component_driver.show_component_parameter(render_buffer_id,instance_id,
-							data_buffer_id,new_instance_data,
-							part_object,part_driver,render.render_driver[render_id],render);
-			}else if(component_data_buffer_id[instance_id]==data_buffer_id){
+						component_driver.show_component_parameter(
+							render_buffer_id,instance_id,data_buffer_id,new_instance_data,
+							part_object,part_driver,render_driver,render);
+			}else if(render_parameter[instance_id][0]==data_buffer_id){
 				if((typeof(part_driver)=="object")&&(part_driver!=null))
 					if(typeof(part_driver.replace_render_parameter)=="function")
-						part_driver.replace_render_parameter(render_buffer_id,instance_id,
-							data_buffer_id,render_parameter[instance_id],new_instance_data,
-							part_object,part_driver,render.render_driver[render_id],render);			
+						part_driver.replace_render_parameter(
+							render_buffer_id,instance_id,data_buffer_id,
+							render_parameter[instance_id][1],new_instance_data,
+							part_object,part_driver,render_driver,render);			
 				var component_driver=part_object.component_driver_array[data_buffer_id];
 				if((typeof(component_driver)=="object")&&(component_driver!=null))
 					if(typeof(component_driver.replace_component_parameter)=="function")
-						component_driver.replace_component_parameter(render_buffer_id,instance_id,
-							data_buffer_id,render_parameter[instance_id],new_instance_data,
-							part_object,part_driver,render.render_driver[render_id],render);
+						component_driver.replace_component_parameter(
+							render_buffer_id,instance_id,data_buffer_id,
+							render_parameter[instance_id][1],new_instance_data,
+							part_object,part_driver,render_driver,render);
 			}else{
 				if((typeof(part_driver)=="object")&&(part_driver!=null))
 					if(typeof(part_driver.replace_render_component)=="function")
 						part_driver.replace_render_component(render_buffer_id,instance_id,
-							component_data_buffer_id[instance_id],	render_parameter[instance_id],
-							data_buffer_id,							new_instance_data,
-							part_object,part_driver,render.render_driver[render_id],render);
-				var component_driver=part_object.component_driver_array[component_data_buffer_id[instance_id]];
+							render_parameter[instance_id][0],	render_parameter[instance_id][1],
+							data_buffer_id,						new_instance_data,
+							part_object,part_driver,render_driver,render);
+				var component_driver=part_object.component_driver_array[render_parameter[instance_id][0]];
 				if((typeof(component_driver)=="object")&&(component_driver!=null))
 					if(typeof(component_driver.hide_component_parameter)=="function")
 						component_driver.hide_component_parameter(render_buffer_id,instance_id,
-							component_data_buffer_id[instance_id],render_parameter[instance_id],
-							part_object,part_driver,render.render_driver[render_id],render);
+							render_parameter[instance_id][0],render_parameter[instance_id][1],
+							part_object,part_driver,render_driver,render);
 				var component_driver=part_object.component_driver_array[data_buffer_id];
 				if((typeof(component_driver)=="object")&&(component_driver!=null))
 					if(typeof(component_driver.show_component_parameter)=="function")
 						component_driver.show_component_parameter(render_buffer_id,instance_id,
-							data_buffer_id,new_instance_data,
-							part_object,part_driver,render.render_driver[render_id],render);
+							data_buffer_id,new_instance_data,part_object,part_driver,render_driver,render);
 			}
-			component_data_buffer_id[instance_id]	=data_buffer_id;
-			render_parameter[instance_id]			=new_instance_data;
+			render_parameter[instance_id]=[data_buffer_id,new_instance_data];
 		}
 		
 		var delete_index_id,render_id=-1,part_id=-1,render_buffer_id=-1;
@@ -105,50 +102,46 @@ function construct_component_render_parameter(render_number)
 					break;
 				}
 			}
-			var part_object=render.part_array[render_id][part_id];
-			var part_driver=render.part_driver[render_id][part_id];
-			var data_buffer_id=part_object.component_data_buffer_id;
+			var part_object		=render.part_array[render_id][part_id];
+			var part_driver		=render.part_driver[render_id][part_id];
+			var render_driver	=render.render_driver[render_id];
+			
     	    var render_parameter=part_object.component_render_parameter; 
-    		while(render_parameter.length<=render_buffer_id){
-    			data_buffer_id.push(new Array());
+    		while(render_parameter.length<=render_buffer_id)
     			render_parameter.push(new Array());
-    		}
-    		data_buffer_id	=data_buffer_id[render_buffer_id];
 			render_parameter=render_parameter[render_buffer_id];
 	
 			if((typeof(part_driver)=="object")&&(part_driver!=null))
 				if(typeof(part_driver.delete_render_parameter)=="function"){
 						part_driver.delete_render_parameter(render_buffer_id,
 							delete_index_id,
-							data_buffer_id[delete_index_id],
-							render_parameter[delete_index_id],
+							render_parameter[delete_index_id][0],
+							render_parameter[delete_index_id][1],
 							
 							render_parameter.length-1,
-							data_buffer_id[render_parameter.length-1],
-							render_parameter[render_parameter.length-1],
+							render_parameter[render_parameter.length-1][0],
+							render_parameter[render_parameter.length-1][1],
 							
-							part_object,part_driver,render.render_driver[render_id],render);
+							part_object,part_driver,render_driver,render);
 				}
-			var component_driver=part_object.component_driver_array[data_buffer_id[delete_index_id]];
+
+			var component_driver=part_object.component_driver_array[render_parameter[delete_index_id][0]];
 			if((typeof(component_driver)=="object")&&(component_driver!=null))
-					if(typeof(component_driver.delete_component_parameter)=="function")
-						component_driver.delete_component_parameter(render_buffer_id,
-							delete_index_id,
-							data_buffer_id[delete_index_id],
-							render_parameter[delete_index_id],
+				if(typeof(component_driver.delete_component_parameter)=="function")
+					component_driver.delete_component_parameter(render_buffer_id,
+						delete_index_id,
+						render_parameter[delete_index_id][0],
+						render_parameter[delete_index_id][1],
 							
-							render_parameter.length-1,
-							data_buffer_id[render_parameter.length-1],
-							render_parameter[render_parameter.length-1],
+						render_parameter.length-1,
+						render_parameter[render_parameter.length-1][0],
+						render_parameter[render_parameter.length-1][1],
 							
-							part_object,part_driver,render.render_driver[render_id],render);
-	
-			var last_data_buffer_id	=data_buffer_id.pop();
-	   		var last_instance_data	=render_parameter.pop();
-	   		if(delete_index_id<render_parameter.length){
-				data_buffer_id[delete_index_id]		=last_data_buffer_id;
-	   			render_parameter[delete_index_id]	=last_instance_data;
-	   		}
+						part_object,part_driver,render_driver,render);
+
+	   		var last_instance_data=render_parameter.pop();
+	   		if(delete_index_id<render_parameter.length)
+	   			render_parameter[delete_index_id]=last_instance_data;
 		}
 	}
 	
@@ -184,16 +177,6 @@ function construct_component_render_parameter(render_number)
 					part_driver.append_component_parameter(	component_id,	driver_id,
 							render_id,		part_id,		buffer_id,		buffer_data_item,p,
 							part_object,	part_driver,	render_driver,	render);
-								
-				if(typeof(part_driver.new_component_driver)=="function")
-					if(typeof(part_object.component_driver_array[buffer_id])=="undefined"){
-						part_object.component_driver_array[buffer_id]=new part_driver.new_component_driver(
-							component_id,	driver_id,		render_id,			part_id,		buffer_id,
-							part_object.component_initialize_data[buffer_id],
-							part_object,	part_driver,	render_driver,		render);
-						if(typeof(part_object.component_driver_array[buffer_id])=="undefined")
-							part_object.component_driver_array[buffer_id]=null;
-					}
 				var component_driver=part_object.component_driver_array[buffer_id];
 				if((typeof(component_driver)=="object")&&(component_driver!=null))
 					if(typeof(component_driver.append_component_parameter)=="function")

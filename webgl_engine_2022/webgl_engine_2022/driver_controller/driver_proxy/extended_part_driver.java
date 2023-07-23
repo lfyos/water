@@ -1,4 +1,4 @@
-package driver_caption;
+package driver_proxy;
 
 import kernel_component.component;
 import kernel_component.component_load_source_container;
@@ -47,9 +47,6 @@ public class extended_part_driver extends part_driver
 			file_writer buffer_object_file_writer,part_container_for_part_search pcps,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		if(buffer_object_file_writer!=null) 
-			buffer_object_file_writer.print(
-				file_reader.get_text(p.directory_name+p.material_file_name,p.file_charset));
 		return super.create_part_mesh_and_buffer_object_head(p,buffer_object_file_writer,pcps,system_par,scene_par);
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
@@ -68,7 +65,7 @@ public class extended_part_driver extends part_driver
 			component_load_source_container component_load_source_cont,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_component_driver(my_component_part,fr.get_long());
+		return new extended_component_driver(my_component_part);
 	}
 	public part_instance_driver create_part_instance_driver(part p,
 			engine_kernel ek,client_request_response request_response)
