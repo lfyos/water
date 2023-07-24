@@ -1,7 +1,7 @@
 /* 1name		*/			common_component_root
 /* 1type		*/			undefined_part
 /* 1location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
-/* 1children number */		5
+/* 1children number */		10
 	
 		/*	0	*/
 		/* 2name		*/         render_target_register_component
@@ -39,51 +39,38 @@
 		/* 2children number */     0
 		
 		
-/*
+		/*	5	*/
+		/* 2name		*/         proxy_register_component
+		/* 2type		*/         proxy_register_part
+		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+		/* 2children number */		0
 
-		/*	0	*/
-		/* 2name		*/	trace_primitive_component
-		/* 2type		*/	trace_primitive_part
-		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
-		/* 2child_number	*/	0
-		
-		/*	1	*/
+		/*	6	*/
 		/* 2name		*/	show_pickup_component_box_component
 		/* 2type		*/	show_pickup_component_box_part
 		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 		/* 2child_number	*/	0
 		
-		/*	2	*/
+		/*	7	*/
 		/* 2name		*/	show_select_component_box_component
 		/* 2type		*/	show_select_component_box_part
 		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 		/* 2child_number	*/	0
-	
-		/*	3	*/
-		/* 2name		*/  component_pickup_component
-		/* 2type		*/  component_pickup_part
-		/* 2location	*/  1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
-		/* 2children number */		0
-	
-		/*	4	*/
-		/* 2name		*/         audio_component
-		/* 2type		*/         audio_part
-		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
-		/* 2children number */		0
-			
-		/*	5	*/
-		/* 2name		*/         proxy_component
-		/* 2type		*/         proxy_part
-		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
-		/* 2children number */		0
-				
-		/*	6	*/	
+		
+		/*	8	*/	
 		/* 2name		*/         screen_rectangle_component
 		/* 2type		*/         screen_rectangle_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 		/* 2children number */		0
-		
-			
+
+	
+		/*	9	*/
+		/* 2name		*/         audio_player_component
+		/* 2type		*/         audio_player_part
+		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+		/* 2children number */		0
+
+/*			
 		/*	8	*/
 		/* 2name		*/         manipulator_component
 		/* 2type		*/         manipulator_part
@@ -98,12 +85,7 @@
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 		/* 2children number */		0
 		
-		/*	10	*/
-		/* 2name		*/         render_target_register_component
-		/* 2type		*/         render_target_register_part
-		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
-		/* 2children number */		0
-
+		
 		/*	11	*/
 		/* 2name		*/         component_selection_component
 		/* 2type		*/         component_selection_part

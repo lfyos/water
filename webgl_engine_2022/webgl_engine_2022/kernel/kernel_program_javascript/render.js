@@ -82,7 +82,7 @@ function construct_render_routine(my_webgpu,my_url,
 	
 	this.system_buffer				=new construct_system_buffer(max_target_number,max_method_number,this);
 	
-	this.set_system_bindgroup_by_component=function(target_id,method_id,component_id,driver_id)
+	this.set_system_bindgroup=function(target_id,method_id,component_id,driver_id)
 	{
 		if((this.webgpu.render_pass_encoder==null)||(typeof(component_id)!="number"))
 			return;
@@ -105,11 +105,6 @@ function construct_render_routine(my_webgpu,my_url,
 					this.system_buffer.target_buffer_stride*target_id
 				]);
 	}
-	this.set_system_bindgroup_by_part=function(target_id,method_id,render_id,part_id,buffer_id)
-	{
-		var p=this.part_component_id_and_driver_id[render_id][part_id][buffer_id];
-		this.set_system_bindgroup_by_component(target_id,method_id,p[0],p[1])
-	};
 	
 	this.component_location_data	=new construct_component_location_object(component_number,this.computer,this.webgpu);
 	this.component_render_data		=new construct_component_render_parameter(render_number);

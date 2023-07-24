@@ -158,44 +158,44 @@ function construct_component_render_parameter(render_number)
 			case 2:
 				break;
 			}
-			var buffer_id		=p.shift();
+			var data_buffer_id	=p.shift();
 			var buffer_data_item=p.shift();
 			
 			var part_object		=render.part_array	[render_id][part_id];
 			var part_driver		=render.part_driver	[render_id][part_id];
 			var render_driver	=render.render_driver[render_id];
-			var component_id	=part_object.part_component_id_and_driver_id[buffer_id][0];
-			var driver_id		=part_object.part_component_id_and_driver_id[buffer_id][1];
+			var component_id	=part_object.part_component_id_and_driver_id[data_buffer_id][0];
+			var driver_id		=part_object.part_component_id_and_driver_id[data_buffer_id][1];
 
-			for(p=part_object.component_buffer_parameter;p.length<=buffer_id;)
+			for(p=part_object.component_buffer_parameter;p.length<=data_buffer_id;)
 				p.push(new Array());					
-			p=p[buffer_id];
+			p=p[data_buffer_id];
 			p.push(buffer_data_item);
 			
 			if((typeof(part_driver)=="object")&&(part_driver!=null)){
 				if(typeof(part_driver.append_component_parameter)=="function")
 					part_driver.append_component_parameter(	component_id,	driver_id,
-							render_id,		part_id,		buffer_id,		buffer_data_item,p,
+							render_id,		part_id,		data_buffer_id,	buffer_data_item,p,
 							part_object,	part_driver,	render_driver,	render);
-				var component_driver=part_object.component_driver_array[buffer_id];
+				var component_driver=part_object.component_driver_array[data_buffer_id];
 				if((typeof(component_driver)=="object")&&(component_driver!=null))
 					if(typeof(component_driver.append_component_parameter)=="function")
 						component_driver.append_component_parameter(component_id,	driver_id,
-									render_id,		part_id,		buffer_id,		buffer_data_item,p,
+									render_id,		part_id,		data_buffer_id,	buffer_data_item,p,
 									part_object,	part_driver,	render_driver,	render);
 			}
 			while(p.length>part_object.property.max_component_data_buffer_number){
 				if((typeof(part_driver)=="object")&&(part_driver!=null))
 					if(typeof(part_driver.shift_component_parameter)=="function")
 						part_driver.shift_component_parameter(	component_id,	driver_id,
-								render_id,		part_id,		buffer_id,		p[0],p,
+								render_id,		part_id,		data_buffer_id,	p[0],p,
 								part_object,	part_driver,	render_driver,	render);
 				
-				var component_driver=part_object.component_driver_array[buffer_id];
+				var component_driver=part_object.component_driver_array[data_buffer_id];
 				if((typeof(component_driver)=="object")&&(component_driver!=null))
 					if(typeof(component_driver.shift_component_parameter)=="function")
 						component_driver.shift_component_parameter(	component_id,	driver_id,
-									render_id,		part_id,		buffer_id,		p[0],p,
+									render_id,		part_id,		data_buffer_id,	p[0],p,
 									part_object,	part_driver,	render_driver,	render);
 				p.shift();
 			}

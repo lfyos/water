@@ -15,7 +15,7 @@ function construct_pickup_object()
 	
 	this.render_id			=-1;
 	this.part_id			=-1;
-	this.buffer_id			=-1;
+	this.data_buffer_id		=-1;
 	
 	this.compare=function(p)
 	{
@@ -54,7 +54,7 @@ function construct_pickup_object()
 		
 		ret_val.render_id		=this.render_id;
 		ret_val.part_id			=this.part_id;
-		ret_val.buffer_id		=this.buffer_id;
+		ret_val.data_buffer_id	=this.data_buffer_id;
 
 		return ret_val;
 	}

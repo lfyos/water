@@ -51,18 +51,19 @@ function init_ids_of_part_and_component(
 				permanent_part_id	:	id_array.pop(),
 				permanent_render_id	:	id_array.pop()
 			}
-			for(var buffer_id=0,buffer_number=id_array.length;buffer_id<buffer_number;buffer_id++){				
-				var component_id			=id_array[buffer_id][0];
-				var driver_id				=id_array[buffer_id][1];
+			var data_buffer_number=id_array.length;
+			for(var data_buffer_id=0;data_buffer_id<data_buffer_number;data_buffer_id++){				
+				var component_id			=id_array[data_buffer_id][0];
+				var driver_id				=id_array[data_buffer_id][1];
 				
 				var my_component_system_id	=component_system_id.length;
-				id_array[buffer_id][2]		=my_component_system_id;
+				id_array[data_buffer_id][2]		=my_component_system_id;
 				
 				var p=render.component_array_sorted_by_id[component_id].component_ids;
-				p[driver_id]=[render_id,part_id,buffer_id,my_component_system_id];
+				p[driver_id]=[render_id,part_id,data_buffer_id,my_component_system_id];
 				
 				component_system_id.push([
-					render_id,		part_id,	buffer_id,
+					render_id,		part_id,	data_buffer_id,
 					component_id,	driver_id,
 					my_component_system_id
 				]);
@@ -76,7 +77,7 @@ function init_ids_of_part_and_component(
 		component_system_id.push([
 			-1,	//render_id,
 			-1,	//part_id,
-			-1,	//buffer_id,
+			-1,	//data_buffer_id,
 			 i,	//component_id,
 			-1,	//driver_id,
 			my_component_system_id

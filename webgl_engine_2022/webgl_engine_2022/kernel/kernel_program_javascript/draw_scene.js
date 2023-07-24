@@ -1,15 +1,15 @@
 function draw_scene_routine(render_data,render)
 {
-	var render_id	=render_data.target_ids.render_id;
-	var part_id		=render_data.target_ids.part_id;
-	var buffer_id	=render_data.target_ids.buffer_id;
+	var render_id		=render_data.target_ids.render_id;
+	var part_id			=render_data.target_ids.part_id;
+	var data_buffer_id	=render_data.target_ids.data_buffer_id;
 			
 	var target_render_driver	=render.render_driver[render_id];
 	var target_part_driver		=render.part_driver[render_id][part_id];
 	var target_part_object		=render.part_array[render_id][part_id];
 	if((typeof(target_part_object)!="object")||(target_part_object==null))
 		return;
-	var target_component_driver	=target_part_object.component_driver_array[buffer_id];
+	var target_component_driver	=target_part_object.component_driver_array[data_buffer_id];
 	if((typeof(target_component_driver)!="object")||(target_component_driver==null))
 		return;
 	if(typeof(target_component_driver.begin_render_target)!="function")
@@ -45,11 +45,19 @@ function draw_scene_routine(render_data,render)
 			   	component_render_parameter=component_render_parameter[render_data.render_buffer_id];
 				var instance_number=component_render_parameter.length;
 				for(var instance_id=0;instance_id<instance_number;instance_id++){
-					var buffer_id=component_render_parameter[instance_id][0];
-					render.set_system_bindgroup_by_part(render_data.render_buffer_id,
-						method_array[i].method_id,render_id,part_id,buffer_id);
-					part_object.component_driver_array[buffer_id].draw_component(method_array[i],render_data,
-						component_render_parameter[instance_id][1],component_buffer_parameter[buffer_id],
+					var data_buffer_id		=component_render_parameter[instance_id][0];
+					var render_parameter	=component_render_parameter[instance_id][1];
+					var buffer_parameter	=component_buffer_parameter[data_buffer_id];
+					var component_driver	=part_object.component_driver_array[data_buffer_id];
+					var p					=part_object.part_component_id_and_driver_id[data_buffer_id];
+					var component_id		=p[0];
+					var driver_id			=p[1];
+		
+					render.set_system_bindgroup(render_data.render_buffer_id,
+								method_array[i].method_id,component_id,driver_id);
+					component_driver.draw_component(method_array[i],render_data,
+						render_id,part_id,data_buffer_id,component_id,driver_id,
+						render_parameter,buffer_parameter,
 						project_matrix,part_object,part_driver,render_driver,render);
 				}
 			}
@@ -119,16 +127,16 @@ async function draw_scene_main(part_init_data,component_init_data,render)
 			if(!(render_data.do_render_flag))
 				continue;
 
-			var render_id	=render_data.target_ids.render_id;
-			var part_id		=render_data.target_ids.part_id;
-			var buffer_id	=render_data.target_ids.buffer_id;
+			var render_id		=render_data.target_ids.render_id;
+			var part_id			=render_data.target_ids.part_id;
+			var data_buffer_id	=render_data.target_ids.data_buffer_id;
 			
 			var target_render_driver	=render.render_driver[render_id];
 			var target_part_driver		=render.part_driver[render_id][part_id];
 			var target_part_object		=render.part_array[render_id][part_id];
 			if((typeof(target_part_object)!="object")||(target_part_object==null))
 				continue;
-			var target_component_driver	=target_part_object.component_driver_array[buffer_id];
+			var target_component_driver	=target_part_object.component_driver_array[data_buffer_id];
 			if((typeof(target_component_driver)!="object")||(target_component_driver==null))
 				continue;
 			if(typeof(target_component_driver.complete_render_target)!="function")

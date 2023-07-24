@@ -12,5 +12,5 @@
 		/*	2:type			*/	undefined_part
 		/*	2:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
 				not_part_list		mount	interface.assemble
-//				not_part_list		mount	movement.assemble
+				not_part_list		mount	movement.assemble
 		/*	2:child_number	*/	0

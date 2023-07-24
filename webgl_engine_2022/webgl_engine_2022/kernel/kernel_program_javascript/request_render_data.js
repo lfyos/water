@@ -127,7 +127,7 @@ async function request_render_data(render)
 
 						render_id			:	my_ids[my_target_driver_id][0],
 						part_id				:	my_ids[my_target_driver_id][1],
-						buffer_id			:	my_ids[my_target_driver_id][2],
+						data_buffer_id		:	my_ids[my_target_driver_id][2],
 						
 						component_system_id	:	my_ids[my_target_driver_id][3]
 					};
