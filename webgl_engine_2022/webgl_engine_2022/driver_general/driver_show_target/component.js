@@ -7,9 +7,10 @@ function construct_component_driver(
 		render.component_event_processor[component_id]=new Object();
 		ep=render.component_event_processor[component_id];
 	}
-	ep.device=render.webgpu.device;
+	
 	ep.bindgroup_layout=render_driver.bindgroup_layout;
 	ep.bindgroup=null;
+	
 	ep.set_target=function(my_texture)
 	{
 		var resource_entries=[

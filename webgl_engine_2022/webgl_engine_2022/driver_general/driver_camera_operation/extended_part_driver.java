@@ -1,4 +1,4 @@
-package driver_render_target_register;
+package driver_camera_operation;
 
 import kernel_part.part;
 import kernel_driver.part_driver;
@@ -7,8 +7,9 @@ import kernel_component.component;
 import kernel_transformation.point;
 import kernel_engine.engine_kernel;
 import kernel_engine.scene_parameter;
-import kernel_driver.component_driver;
 import kernel_engine.system_parameter;
+import kernel_driver.component_driver;
+import kernel_common_class.const_value;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_driver.part_instance_driver;
@@ -17,9 +18,18 @@ import kernel_component.component_load_source_container;
 
 public class extended_part_driver extends part_driver
 {
-	public extended_part_driver()
+	private double x0,y0,scale;
+	private int modifier_container_id;
+	
+	public extended_part_driver(double my_x0,double my_y0,
+			double my_scale,int my_modifier_container_id)
 	{
 		super();
+		
+		x0=my_x0;
+		y0=my_y0;
+		scale=my_scale;
+		modifier_container_id=my_modifier_container_id;
 	}
 	public void destroy()
 	{	
@@ -32,7 +42,7 @@ public class extended_part_driver extends part_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver();
+		return new extended_part_driver(x0,y0,scale,modifier_container_id);
 	}
 	public int caculate_material_id(
 			part p,String type_str,int body_id,int face_id,int loop_id,int edge_id,
@@ -43,13 +53,27 @@ public class extended_part_driver extends part_driver
 	public void create_part_material_in_head(file_writer fw,
 			part p,system_parameter system_par,scene_parameter scene_par)
 	{
+		if(p.part_mesh.part_box==null)
+			return;
+		
+		double box_distance=p.part_mesh.part_box.distance();
+		if(box_distance<const_value.min_value)
+			return;
+
+		if(fw!=null) {
+			fw.print  ("		",	x0);
+			fw.print  (",",			y0);
+			fw.print  (",",			scale);
+			fw.println(",",			box_distance);
+			fw.print  (",1");
+		}
+		return;
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int loop_id,int edge_id,int point_id,
 			point p0,point p1)
 	{
-//		super.caculate_part_box(p,comp,driver_id,body_id,face_id,loop_id,edge_id,point_id,p0,p1);
-		return null;
+		return null;//super.caculate_part_box(p,comp,driver_id,body_id,face_id,loop_id,edge_id,point_id,p0,p1);
 	}
 	public String [][]assemble_file_name_and_file_charset(file_reader fr,part p,
 			engine_kernel ek,client_request_response request_response)
@@ -61,10 +85,10 @@ public class extended_part_driver extends part_driver
 			component_load_source_container component_load_source_cont,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_component_driver(my_component_part);
+		return new extended_component_driver(my_component_part,modifier_container_id);
 	}
 	public part_instance_driver create_part_instance_driver(part p,
-				engine_kernel ek,client_request_response request_response)
+			engine_kernel ek,client_request_response request_response)
 	{
 		return new extended_part_instance_driver();
 	}

@@ -47,7 +47,8 @@ function create_component_object()
 		case 0:
 			if(!(this.mousedown_flag))
 				break;
-			this.show_x+=render.view.x-this.mouse_x;
+			var p=render.webgpu.canvas[render.webgpu.current_canvas_id];
+			this.show_x+=(render.view.x-this.mouse_x)*(p.width/p.height);
 			this.show_y+=render.view.y-this.mouse_y;
 			this.mouse_x=render.view.x;
 			this.mouse_y=render.view.y;
@@ -73,9 +74,9 @@ function create_component_object()
 			var dy=this.mousedown_y-render.view.y;
 			if((dx*dx+dy*dy)>(2.0*0.01*0.01))
 				break;
-			this.x=		render.pickup.primitive_id	/(1000.0*1000.0);
-			this.y=1.0-	render.pickup.vertex_id		/(1000.0*1000.0);
-			
+			this.x=render.pickup.primitive_id	/(1000.0*1000.0);
+			this.y=render.pickup.vertex_id		/(1000.0*1000.0);
+
 			this.pickupmouseselect(event,component_id,render);
 			break;
 		case 2:
@@ -105,9 +106,11 @@ function create_component_object()
 	}
 	this.destroy=function(gl,ep,component_id)
 	{
-		this.pickupmousedown		=null;
-		this.pickupmouseup			=null;
-		this.pickupmousewheel		=null;
+		this.set_center=null;
+		this.pickupmousedown=null;
+		this.pickupmousemove=null;
+		this.pickupmouseup=null;
+		this.pickupmousewheel=null;
 	}
 }
 
@@ -217,7 +220,6 @@ function create_bind_group(init_data,render_driver,render)
 			this.texture=null;
 		}
 	};
-
 	this.create(init_data,render_driver,render);
 };
 
@@ -240,10 +242,15 @@ function construct_component_driver(
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		if(method_data.method_id!=1)
-			return;
-		if(this.image_bind_group.is_busy_flag)
-			return;
+		switch(method_data.method_id){
+		case 0:
+		case 5:
+			if(this.image_bind_group.is_busy_flag)
+				return;
+			break;
+		default:
+			return;	
+		}
 		if(this.ep.update_flag){
 			this.ep.update_flag=false;
 			if(this.init_data.type)
@@ -253,9 +260,8 @@ function construct_component_driver(
 					render.webgpu.context_2d.width	=this.init_data.canvas.canvas_width;
 					render.webgpu.context_2d.height	=this.init_data.canvas.canvas_height;
 
-					if(this.ep.update_canvas_texture(
-						render.webgpu.context_2d,this.init_data.canvas))
-							return;
+					if(this.ep.update_canvas_texture(render.webgpu.context_2d,this.init_data.canvas))
+						return;
 					render.webgpu.device.queue.copyExternalImageToTexture(
 						{
 							source	:	render.webgpu.canvas_2d
@@ -274,15 +280,21 @@ function construct_component_driver(
 		var x1=this.ep.hightlight[2],y1=this.ep.hightlight[3];
 		render.webgpu.device.queue.writeBuffer(this.image_bind_group.buffer,0,
 			new Float32Array(
-				[	this.ep.show_x,			this.ep.show_y,
-					this.init_data.dx,		this.init_data.dy,
+				[
+					this.ep.show_x,
+					this.ep.show_y,
+					this.init_data.dx,
+					this.init_data.dy,
 					this.init_data.depth,
-					(x0<x1)?x0:x1,			(y0<y1)?y0:y1,
-					(x0>x1)?x0:x1,			(y0>y1)?y0:y1
+					(x0<x1)?x0:x1,
+					(y0<y1)?y0:y1,
+					(x0>x1)?x0:x1,
+					(y0>y1)?y0:y1
 				]));
 
 		var rpe=render.webgpu.render_pass_encoder;
-		rpe.setPipeline(render_driver.pipeline);		
+		rpe.setPipeline((method_data.method_id==0)
+				?(render_driver.value_pipeline):(render_driver.color_pipeline));		
 		render.webgpu.render_pass_encoder.setBindGroup(1,this.image_bind_group.bindgroup);
 
 		var p=part_object.buffer_object.face.region_data;

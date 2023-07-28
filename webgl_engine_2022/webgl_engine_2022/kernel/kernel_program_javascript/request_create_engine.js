@@ -57,8 +57,15 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 				component_init_data[my_component_id][my_driver_id]=my_data;
 			}
 			
-			var initialization_url=create_data.pop();
-			var init_data=(await import(initialization_url)).init_data;
+			var init_data,initialization_url=create_data.pop();
+			try{
+				init_data=await import(initialization_url);
+			}catch(e){
+				console.log("download initialization program fail:	"+e.toString());
+				console.log(initialization_url);
+			}
+			
+			init_data=init_data.init_data;
 
 			var sorted_component_name_id		=init_data[0];
 			var part_component_id_and_driver_id	=init_data[1];
@@ -66,7 +73,8 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 			var program_data					=init_data[3];
 			var common_shader_code				=init_data[4];
 				
-			init_ids_of_part_and_component(sorted_component_name_id,part_component_id_and_driver_id,render);
+			init_ids_of_part_and_component(
+				sorted_component_name_id,part_component_id_and_driver_id,render);
 					
 			init_system_bindgroup(render);
 				

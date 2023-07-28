@@ -111,10 +111,12 @@ public class render_container
 			p=renders.get(p.render_id).parts.get(p.part_from_id);
 		return p;
 	}
-	public void load_part(int part_type,int part_flag,part_loader_container part_loader_cont,
-			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
+	public void load_part(int part_type,
+			int part_flag,part_loader_container part_loader_cont,
+			system_parameter system_par,scene_parameter scene_par,
 			buffer_object_file_modify_time_and_length_container boftal_container,
-			String process_bar_title,client_process_bar process_bar,ArrayList<part> part_list_for_delete_file)
+			String process_bar_title,client_process_bar process_bar,
+			ArrayList<part> part_list_for_delete_file)
 	{
 		if(renders==null)
 			return;
@@ -169,7 +171,7 @@ public class render_container
 				if((my_part_flag&part_flag)==0)
 					continue;
 				part_loader_cont.load(p,get_copy_from_part(p),-1,system_par,scene_par,
-						part_list_for_delete_file,already_loaded_part,pcps,boftal_container);
+						part_list_for_delete_file,already_loaded_part,boftal_container);
 							
 				if(process_bar!=null)
 					process_bar.set_process_bar(false,process_bar_title,"",load_number++,(all_number<1)?1:all_number);

@@ -21,7 +21,7 @@ function new_render_driver(
 			buffers			:
 			[
 				{
-					arrayStride	:	64,
+					arrayStride	:	80,
 					stepMode	:	"vertex",
 					attributes	:
 					[

@@ -17,7 +17,7 @@ function init_ids_of_part_and_component(
 				component_parent	:	null,
 				component_children	:	my_component_children,
 				component_ids		:	new Array(),
-				component_system_id	:	-1
+				system_bindgroup_id	:	-1
 		};
 		render.component_array_sorted_by_name[i]=p;
 		render.component_array_sorted_by_id[my_component_id]=p;
@@ -38,7 +38,7 @@ function init_ids_of_part_and_component(
 	};
 	
 	var permanent_render_part_id	=new Array();
-	var component_system_id			=new Array();
+	var system_bindgroup_id			=new Array();
 	
 	var render_number=part_component_id_and_driver_id.length;
 	for(var render_id=0;render_id<render_number;render_id++){
@@ -56,36 +56,36 @@ function init_ids_of_part_and_component(
 				var component_id			=id_array[data_buffer_id][0];
 				var driver_id				=id_array[data_buffer_id][1];
 				
-				var my_component_system_id	=component_system_id.length;
-				id_array[data_buffer_id][2]		=my_component_system_id;
+				var my_system_bindgroup_id	=system_bindgroup_id.length;
+				id_array[data_buffer_id][2]	=my_system_bindgroup_id;
 				
 				var p=render.component_array_sorted_by_id[component_id].component_ids;
-				p[driver_id]=[render_id,part_id,data_buffer_id,my_component_system_id];
+				p[driver_id]=[render_id,part_id,data_buffer_id,my_system_bindgroup_id];
 				
-				component_system_id.push([
+				system_bindgroup_id.push([
 					render_id,		part_id,	data_buffer_id,
 					component_id,	driver_id,
-					my_component_system_id
+					my_system_bindgroup_id
 				]);
 			}
 		};
 	};
 	
 	for(var i=0;i<component_number;i++){
-		var my_component_system_id=component_system_id.length;
-		render.component_array_sorted_by_id[i].component_system_id=my_component_system_id;
-		component_system_id.push([
+		var my_system_bindgroup_id=system_bindgroup_id.length;
+		render.component_array_sorted_by_id[i].system_bindgroup_id=my_system_bindgroup_id;
+		system_bindgroup_id.push([
 			-1,	//render_id,
 			-1,	//part_id,
 			-1,	//data_buffer_id,
 			 i,	//component_id,
 			-1,	//driver_id,
-			my_component_system_id
+			my_system_bindgroup_id
 		]);
 		
 	};
 
-	render.component_system_id				=component_system_id;
+	render.system_bindgroup_id				=system_bindgroup_id;
 	render.permanent_render_part_id			=permanent_render_part_id;
 	render.part_component_id_and_driver_id	=part_component_id_and_driver_id;
 

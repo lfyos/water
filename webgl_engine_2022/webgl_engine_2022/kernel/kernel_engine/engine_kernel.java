@@ -294,18 +294,16 @@ public class engine_kernel
 		ArrayList<part> part_list_for_delete_file=new ArrayList<part>();
 		
 		start_time=current_time;
-		render_cont.load_part((1<<1)+(1<<2),1,
-			part_loader_cont,system_par,scene_par,part_cont,boftal_container,
-			"load_first_class_part",process_bar,part_list_for_delete_file);
+		render_cont.load_part((1<<1)+(1<<2),1,part_loader_cont,system_par,scene_par,
+				boftal_container,"load_first_class_part",process_bar,part_list_for_delete_file);
 		debug_information.println("Load first class part time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		
 		start_time=current_time;
 		render_cont.create_bottom_box_part(part_cont,request_response,system_par,scene_par);
 		part_cont.execute_append();
-		render_cont.load_part((1<<1)+(1<<2),2,
-			part_loader_cont,system_par,scene_par,part_cont,boftal_container,
-			"load_second_class_part",process_bar,part_list_for_delete_file);
+		render_cont.load_part((1<<1)+(1<<2),2,part_loader_cont,system_par,scene_par,
+				boftal_container,"load_second_class_part",process_bar,part_list_for_delete_file);
 		debug_information.println("Load second class part time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
@@ -354,7 +352,7 @@ public class engine_kernel
 				request_response,part_list_for_delete_file,part_cont,boftal_container);	
 		part_cont.execute_append();
 		render_cont.load_part(
-				(1<<2),4,part_loader_cont,system_par,scene_par,part_cont,
+				(1<<2),4,part_loader_cont,system_par,scene_par,
 				boftal_container,"load_third_class_part",process_bar,part_list_for_delete_file);
 		debug_information.println("Create top assemble time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();

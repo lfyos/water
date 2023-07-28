@@ -34,8 +34,7 @@ function construct_component_driver(
 				data_buffer_id,		buffer_data_item,	buffer_data_array,
 				part_object,	part_driver,		render_driver,	render)
 	{
-		render.webgpu.device.queue.writeBuffer(this.buffer,0,
-				new Float32Array(buffer_data_item[0]));
+		render.webgpu.device.queue.writeBuffer(this.buffer,0,new Float32Array(buffer_data_item[0]));
 		this.box_component_id=buffer_data_item[1];
 	};
 };

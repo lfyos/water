@@ -111,7 +111,7 @@ struct id_information
 	render_id							:	i32,
 	part_id								:	i32,
 	
-	buffer_id							:	i32,
+	data_buffer_id						:	i32,
 	
 	component_id						:	i32,
 	driver_id							:	i32,

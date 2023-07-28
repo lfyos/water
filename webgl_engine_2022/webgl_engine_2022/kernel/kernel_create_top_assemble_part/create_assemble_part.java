@@ -311,7 +311,7 @@ public class create_assemble_part
 			}
 			part_loader_cont.load(add_part,render_cont.get_copy_from_part(add_part),
 				last_modified_time,system_par,scene_par,part_list_for_delete_file,
-				already_loaded_part,pcps,boftal_container);
+				already_loaded_part,boftal_container);
 			top_box_part.add(add_part_number++,add_part);
 			create_part_number+=my_create_part_number;	
 			

@@ -13,7 +13,6 @@ public class part_loader extends Thread
 	
 	private system_parameter system_par;
 	private scene_parameter scene_par;
-	private part_container_for_part_search pcps;
 
 	private volatile boolean is_loading_flag;
 	public boolean test_loading_flag()
@@ -27,10 +26,9 @@ public class part_loader extends Thread
 		copy_from_part=null;
 		system_par=null;
 		scene_par=null;
-		pcps=null;
 	}
 	public part_loader(part my_loaded_part,part my_copy_from_part,long my_last_modified_time,
-			system_parameter my_system_par,scene_parameter my_scene_par,part_container_for_part_search my_pcps)
+			system_parameter my_system_par,scene_parameter my_scene_par)
 	{
 		is_loading_flag			=true;
 		loaded_part				=my_loaded_part;
@@ -38,7 +36,6 @@ public class part_loader extends Thread
 		last_modified_time		=my_last_modified_time;
 		system_par				=my_system_par;
 		scene_par				=my_scene_par;
-		pcps					=my_pcps;
 		
 		start();
 	}
@@ -48,7 +45,7 @@ public class part_loader extends Thread
         debug_information.println();
 		try{
 			debug_information.println(
-				loaded_part.load_mesh_and_create_buffer_object(copy_from_part,last_modified_time,system_par,scene_par,pcps));
+				loaded_part.load_mesh_and_create_buffer_object(copy_from_part,last_modified_time,system_par,scene_par));
 		}catch(Exception e){
 			debug_information.println(
 	            	"Error in load_mesh_and_create_buffer_object_and_material_file:\t",loaded_part.system_name);

@@ -98,7 +98,7 @@ function new_render_driver(
 			targets		: 
 			[
 				{
-					format		:	render.webgpu.gpu.getPreferredCanvasFormat(),
+					format		:	"rgba32float",
 					blend		:
 					{
 						color	:
@@ -144,11 +144,20 @@ function new_render_driver(
 		}
 	};
 	
-	this.pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	pipeline_descr.fragment.targets[0].format=render.webgpu.gpu.getPreferredCanvasFormat();
+	this.color_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	
+	pipeline_descr.fragment.targets[0].format="rgba32float";
+	pipeline_descr.fragment.targets[0].blend=undefined;
+	this.value_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	
 	this.new_part_driver=construct_part_driver;
 	
 	this.destroy=function()
 	{
-		this.pipeline=null;
+		this.bindgroup_layout	=null;
+		this.color_pipeline		=null;
+		this.value_pipeline		=null;
+		this.new_part_driver	=null;
 	}
 }

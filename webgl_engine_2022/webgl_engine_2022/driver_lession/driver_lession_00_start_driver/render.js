@@ -17,7 +17,7 @@ function new_render_driver(
 
 		vertex:
 		{
-			module	:	my_module,
+			module		:	my_module,
 			entryPoint	:	"vertex_main",
 			buffers		:
 			[
@@ -51,14 +51,14 @@ function new_render_driver(
 						{	//attribute
 							format			:	"float32x4",
 							offset			:	64,
-							shaderLocation	:	4
+							shaderLocation	:	5
 						}
 					]
 				}
 			]
 		},
 		    
-		fragment	:
+		fragment		:
 		{
 			module		:	my_module,
 			

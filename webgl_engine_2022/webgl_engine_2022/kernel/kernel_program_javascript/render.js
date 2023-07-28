@@ -43,23 +43,25 @@ function construct_render_routine(my_webgpu,my_url,
 	};
 	this.view_bak=
 	{
-		x				:	-2,
-		y				:	-2,
+		x					:	-2,
+		y					:	-2,
 		
-		canvas_id		:	-2,
-				
-		component		:	-2,
-		driver			:	-2,
+		canvas_id			:	-2,
+					
+		component			:	-2,
+		driver				:	-2,
 		
-		body			:	-2,
-		face			:	-2,
-		loop			:	-2,
-		edge			:	-2,
-		primitive		:	-2,
-		vertex			:	-2,
+		primitive_type_id	:	-2,
 		
-		depth			:	-2,
-		value			:	[-2,-2,-2]
+		body				:	-2,
+		face				:	-2,
+		loop				:	-2,
+		edge				:	-2,
+		primitive			:	-2,
+		vertex				:	-2,
+		
+		depth				:	-2,
+		value				:	[-2,-2,-2]
 	};
 	
 	this.caller						=new construct_server_caller(this);
@@ -80,8 +82,7 @@ function construct_render_routine(my_webgpu,my_url,
 		this.part_array[i]			=new Array();
 	}
 	
-	this.system_buffer				=new construct_system_buffer(max_target_number,max_method_number,this);
-	
+	this.system_buffer=new construct_system_buffer(max_target_number,max_method_number,this);
 	this.set_system_bindgroup=function(target_id,method_id,component_id,driver_id)
 	{
 		if((this.webgpu.render_pass_encoder==null)||(typeof(component_id)!="number"))
@@ -89,21 +90,22 @@ function construct_render_routine(my_webgpu,my_url,
 
 		this.component_location_data.get_component_location_and_update_buffer(component_id);
 		
-		var component_system_id;
+		var system_bindgroup_id;
 		var p=this.component_array_sorted_by_id[component_id];
 		
 		driver_id=(typeof(driver_id)!="number")?-1:driver_id;
 		if((driver_id<0)||(driver_id>=p.component_ids.length))
-			component_system_id=p.component_system_id;
+			system_bindgroup_id=p.system_bindgroup_id;
 		else
-			component_system_id=p.component_ids[driver_id][3];
+			system_bindgroup_id=p.component_ids[driver_id][3];
 
-		this.webgpu.render_pass_encoder.setBindGroup(this.system_buffer.system_bindgroup_id,
-			this.component_system_id_buffer[component_system_id].bindgroup_object,
-				[
-					this.system_buffer.method_buffer_stride*method_id,
-					this.system_buffer.target_buffer_stride*target_id
-				]);
+		this.webgpu.render_pass_encoder.setBindGroup(
+			this.system_buffer.system_bindgroup_id,
+			this.system_bindgroup_array[system_bindgroup_id].bindgroup,
+			[
+				this.system_buffer.method_buffer_stride*method_id,
+				this.system_buffer.target_buffer_stride*target_id
+			]);
 	}
 	
 	this.component_location_data	=new construct_component_location_object(component_number,this.computer,this.webgpu);

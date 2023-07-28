@@ -326,7 +326,6 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			information						:	part_head_data.information,
 			material						:	part_head_data.material,
 			property						:	part_head_data.property,
-			item_ids						:	part_head_data.item_ids,
 			
 			part_component_id_and_driver_id	:	render.part_component_id_and_driver_id[render_id][part_id],
 

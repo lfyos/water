@@ -72,12 +72,12 @@ public class engine_interface
 			system_par.local_data_charset,"",part_type_id,system_par,null,request_response);
 		pcps.execute_append();
 		original_render.load_part(1<<part_type_id,1,part_loader_cont,
-				system_par,null,pcps,null,null,null,part_list_for_delete_file);
+				system_par,null,null,null,null,part_list_for_delete_file);
 		
 		original_render.create_bottom_box_part(pcps,request_response,system_par,null);
 		pcps.execute_append();
 		original_render.load_part(1<<part_type_id,2,part_loader_cont,
-				system_par,null,pcps,null,null,null,part_list_for_delete_file);
+				system_par,null,null,null,null,part_list_for_delete_file);
 		
 		debug_information.println("Begin create system_part_package");
 		original_render.system_part_package=new part_package(null,null,null,

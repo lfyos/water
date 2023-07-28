@@ -21,6 +21,7 @@ function construct_component_driver(
 	{
 		if(method_data.method_id!=1)
 			return;
+			
 		var diff=render.computer.min_value;
 		diff-=Math.abs(this.ep.data[2]-this.ep.data[0]);
 		diff-=Math.abs(this.ep.data[3]-this.ep.data[1]);

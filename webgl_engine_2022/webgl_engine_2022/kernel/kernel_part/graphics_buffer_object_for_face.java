@@ -12,8 +12,7 @@ public class graphics_buffer_object_for_face
 		double default_attribute_double[]=my_part.part_mesh.default_attribute_double;
 		String default_attribute_string[]=my_part.part_mesh.default_attribute_string;
 		int max_attribute_number=default_attribute_string.length;
-		
-		int flag=0;
+
 		gbocc=new graphics_buffer_object_creater_container();
 		for(int body_id=0,body_number=my_part.part_mesh.body_number();body_id<body_number;body_id++){
 			body b=my_part.part_mesh.body_array[body_id];
@@ -39,8 +38,7 @@ public class graphics_buffer_object_for_face
 						gbo.register(my_data,extra_data);
 						
 						gbo.register(material_str[0],material_str[1],material_str[2],material_str[3]);
-						
-						gbo.register(ff.system_id,primitive_id,primitive_vertex_id,Integer.toString(flag));
+						gbo.register(body_id,face_id,primitive_id,Integer.toString(primitive_vertex_id));
 						
 						for(int attribute_id=0;attribute_id<attribute_number;attribute_id++){
 							my_data		=p_i.get_primitive_vertex_attribute_data(body_id,face_id,primitive_id,primitive_vertex_id,attribute_id);

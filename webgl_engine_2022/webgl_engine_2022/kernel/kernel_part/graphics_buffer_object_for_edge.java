@@ -8,7 +8,6 @@ public class graphics_buffer_object_for_edge
 			part my_part,String my_file_name,String my_file_charset,
 			long max_file_data_length,long my_create_buffer_object_bitmap)
 	{
-		int flag=1;
 		gbocc=new graphics_buffer_object_creater_container();
 		
 		for(int body_id=0,body_number=my_part.part_mesh.body_number();body_id<body_number;body_id++){
@@ -31,8 +30,6 @@ public class graphics_buffer_object_for_edge
 							step=1;
 							break;	
 						}
-						int curve_type_id=curve_type.curve_type_id(fe.curve_type);
-						
 						double tessellation_location_0[]=null,tessellation_location_1[]=null;
 						String tessellation_extra_data_0=null,tessellation_extra_data_1=null;
 						String tessellation_material_0[]=null,tessellation_material_1[]=null;
@@ -73,7 +70,8 @@ public class graphics_buffer_object_for_edge
 										 tessellation_material_0[2],
 										 tessellation_material_0[3]);
 							
-							gbo.register(fe.system_id,2*i+0,curve_type_id+curve_type_id+1,Integer.toString(flag));
+							gbo.register(body_id,face_id,i,"0");
+							gbo.register(loop_id,edge_id,0,"0");
 
 							gbo.vertex_begin(tessellation_location_1[0],tessellation_location_1[1],tessellation_location_1[2]);
 							
@@ -92,8 +90,9 @@ public class graphics_buffer_object_for_edge
 										 tessellation_material_1[1],
 										 tessellation_material_1[2],
 										 tessellation_material_1[3]);
-	
-							gbo.register(fe.system_id,2*i+1,curve_type_id+curve_type_id+1,Integer.toString(flag));
+							
+							gbo.register(body_id,face_id,i,"1");
+							gbo.register(loop_id,edge_id,0,"0");
 							
 							if(gbo.test_end(max_file_data_length,false))
 								gbocc.expand_creater_array(material_id);

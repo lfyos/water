@@ -10,6 +10,9 @@ import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_common_class.jason_string;
 import kernel_file_manager.file_directory;
+
+import java.io.File;
+
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 
@@ -154,27 +157,26 @@ public class part
 			p_i=new primitive_from_box(part_mesh.body_array);
 		return p_i;
 	}
-	public part_rude call_part_driver_for_load_part_mesh(file_writer head_fw,
-			part_container_for_part_search pcps,system_parameter system_par,scene_parameter scene_par)
+	public void call_part_driver_for_load_part_mesh()
 	{
 		debug_information.println("Load part:	user name:"+user_name,
 				"	system name:"+system_name+"	mesh file:"		+directory_name+mesh_file_name);
-		
-		part_rude my_part_mesh=null;
-		try{
-			my_part_mesh=driver.create_part_mesh_and_buffer_object_head(this,head_fw,pcps,system_par,scene_par);
-		}catch(Exception e){
-			debug_information.println("create_mesh_and_material fail:",	e.toString());
-			debug_information.println("Part user name:",				user_name);
-			debug_information.println("Part system name:",				system_name);
-			debug_information.println("Mesh_file_name:",				directory_name+mesh_file_name);
-			debug_information.println("Material_file_name:",			directory_name+material_file_name);
-			e.printStackTrace();
+		if(!(is_normal_part()))
+			return;
+
+		String my_file_path=file_reader.separator(directory_name+mesh_file_name);
+		if(!(new File(my_file_path).exists())) {
+			part_mesh=null;
+			return;
 		}
-		return my_part_mesh;
+		file_reader fr=new file_reader(my_file_path,file_charset);
+		part_mesh=new part_rude(fr);
+		fr.close();
+		return;
 	}
-	private String create_mesh_and_material_routine(String part_temporary_file_directory,
-			part_container_for_part_search pcps,system_parameter system_par,scene_parameter scene_par)
+	private String create_mesh_and_material_routine(
+			String part_temporary_file_directory,
+			system_parameter system_par,scene_parameter scene_par)
 	{
 		String ret_val="";
 
@@ -204,10 +206,16 @@ public class part
 		head_fw.println("\t\"material\"\t\t:");
 		head_fw.println("\t[");
 		
-		part_rude my_part_mesh=call_part_driver_for_load_part_mesh(head_fw,pcps,system_par,scene_par);
-		if((part_mesh==null)&&(my_part_mesh!=null))
-			part_mesh=my_part_mesh;
-
+		try{
+			driver.create_part_material_in_head(head_fw,this,system_par,scene_par);
+		}catch(Exception e){
+			debug_information.println("create_mesh_and_material fail:",	e.toString());
+			debug_information.println("Part user name:",				user_name);
+			debug_information.println("Part system name:",				system_name);
+			debug_information.println("Mesh_file_name:",				directory_name+mesh_file_name);
+			debug_information.println("Material_file_name:",			directory_name+material_file_name);
+			e.printStackTrace();
+		}
 		head_fw.println("\t],");
 		
 		head_fw.println("\t\"property\"\t\t:");
@@ -256,24 +264,8 @@ public class part
 			p_i.destroy();
 		}
 		
-		head_fw.println("\t},");
-		
-		head_fw.println("\t\"item_ids\"\t\t:");
-		head_fw.println("\t[");
-		
-		if(part_par.do_create_part_ids_flag){
-			for(int id_array[],i=0;(id_array=part_mesh.id_manager.get_system_id(i))!=null;i++) {
-				if(i>0)
-					head_fw.println(",");
-				head_fw.print("\t\t[",i);
-				for(int j=0,nj=id_array.length;j<nj;j++)
-					head_fw.print(",",id_array[j]);
-				head_fw.print  ("]");
-			}
-			head_fw.println();
-		}
-		head_fw.println("\t]");
-		
+		head_fw.println("\t}");
+
 		head_fw.print  ("}");
 		
 		file_collector.create_head_data(head_fw,part_par.max_file_head_length);
@@ -297,8 +289,8 @@ public class part
 
 		return ret_val;
 	}
-	public String load_mesh_and_create_buffer_object(part copy_from_part,long last_modified_time,
-			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps)
+	public String load_mesh_and_create_buffer_object(part copy_from_part,
+			long last_modified_time,system_parameter system_par,scene_parameter scene_par)
 	{
 		String str;
 		
@@ -317,14 +309,10 @@ public class part
 		file_writer.file_delete(part_temporary_file_directory);
 		file_writer.make_directory(part_temporary_file_directory);
 		
-		try{
-			str+=create_mesh_and_material_routine(part_temporary_file_directory,pcps,system_par,scene_par);
-		}catch(Exception e) {
-			debug_information.println("create_mesh_and_material_routine exception:",
-				"\t"+system_name+"\t"+user_name+"\t"+e.toString());
-			e.printStackTrace();
-		}
+		call_part_driver_for_load_part_mesh();
 		
+		str+=create_mesh_and_material_routine(part_temporary_file_directory,system_par,scene_par);
+	
 		if(part_mesh!=null)
 			part_mesh.free_memory();
 		

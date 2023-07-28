@@ -18,12 +18,12 @@ function new_render_driver(
 
 		vertex:
 		{
-			module	:	my_module,
+			module		:	my_module,
 			entryPoint	:	"vertex_main",
 			buffers		:
 			[
 				{
-					arrayStride	:	64,
+					arrayStride	:	80,
 						
 					stepMode	:	"vertex",
 						
@@ -54,7 +54,7 @@ function new_render_driver(
 			]
 		},
 		    
-		fragment	:
+		fragment		:
 		{
 			module		:	my_module,
 			

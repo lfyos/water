@@ -4,12 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
+import kernel_engine.scene_parameter;
+import kernel_engine.system_parameter;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_directory;
 import kernel_common_class.debug_information;
 import kernel_common_class.exclusive_file_mutex;
-import kernel_engine.system_parameter;
-import kernel_file_manager.file_directory;
-import kernel_file_manager.file_reader;
-import kernel_engine.scene_parameter;
 
 public class part_loader_container
 {
@@ -90,7 +90,7 @@ public class part_loader_container
 	}
 	private void load_routine(	part my_part,part my_copy_from_part,
 			long last_modified_time,system_parameter system_par,scene_parameter scene_par,
-			ArrayList<part_loader> already_loaded_part,part_container_for_part_search pcps)
+			ArrayList<part_loader> already_loaded_part)
 	{
 		part_loader pl;
 		int max_part_load_thread_number=my_part.part_par.max_part_load_thread_number;
@@ -122,7 +122,7 @@ public class part_loader_container
 				continue;
 			}
 			
-			pl=new part_loader(my_part,my_copy_from_part,last_modified_time,system_par,scene_par,pcps);
+			pl=new part_loader(my_part,my_copy_from_part,last_modified_time,system_par,scene_par);
 			part_loader_list.add(pl);
 			already_loaded_part.add(pl);
 
@@ -139,7 +139,7 @@ public class part_loader_container
 	
 	private boolean fast_load_routine(long last_modified_time,
 			String part_temporary_file_directory,part my_part,part my_copy_from_part,
-			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
+			system_parameter system_par,scene_parameter scene_par,
 			buffer_object_file_modify_time_and_length_container boftal_container)
 	{
 		if((scene_par!=null)&&(boftal_container!=null)){
@@ -190,7 +190,7 @@ public class part_loader_container
 		return true;
 	}
 	public void load_part_mesh_head_only(part my_part,
-			part_container_for_part_search my_pcps,system_parameter my_system_par,scene_parameter my_scene_par)
+			system_parameter my_system_par,scene_parameter my_scene_par)
 	{
 		if(my_part.is_normal_part()){
 			String part_temporary_file_directory=file_directory.part_file_directory(my_part,my_system_par,my_scene_par);
@@ -199,21 +199,21 @@ public class part_loader_container
 					"wait for load_part_mesh_head_only:	"+my_part.directory_name+my_part.mesh_file_name);
 			if(my_part.part_mesh!=null)
 				my_part.part_mesh.destroy();
-			my_part.part_mesh=my_part.call_part_driver_for_load_part_mesh(null,my_pcps,my_system_par,my_scene_par);
+			my_part.call_part_driver_for_load_part_mesh();
 			efm.unlock();
 		}
 	}
 	
 	public void load(part my_part,part my_copy_from_part,long last_modified_time,
-			system_parameter system_par,scene_parameter scene_par,ArrayList<part> part_list_for_delete_file,
-			ArrayList<part_loader> already_loaded_part,part_container_for_part_search pcps,
+			system_parameter system_par,scene_parameter scene_par,
+			ArrayList<part> part_list_for_delete_file,ArrayList<part_loader> already_loaded_part,
 			buffer_object_file_modify_time_and_length_container boftal_container)
 	{
 		String part_temporary_file_directory=file_directory.part_file_directory(my_part,system_par,scene_par);
 		String lock_file_name=file_reader.separator(part_temporary_file_directory+"part.lock");
 		
 		if(fast_load_routine(last_modified_time,part_temporary_file_directory,
-				my_part,my_copy_from_part,system_par,scene_par,pcps,boftal_container))
+				my_part,my_copy_from_part,system_par,scene_par,boftal_container))
 		{
 			if(my_part.part_mesh!=null)
 				my_part.part_mesh.free_memory();
@@ -226,7 +226,7 @@ public class part_loader_container
 		
 		part_loader_container_lock.lock();
 		try{
-			load_routine(my_part,my_copy_from_part,last_modified_time,system_par,scene_par,already_loaded_part,pcps);
+			load_routine(my_part,my_copy_from_part,last_modified_time,system_par,scene_par,already_loaded_part);
 		}catch(Exception e) {
 			debug_information.println("load of part_loader_container fail");
 			debug_information.println(e.toString());

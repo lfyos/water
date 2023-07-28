@@ -5,7 +5,7 @@ import kernel_component.component;
 
 public class client_parameter 
 {
-	public int current_canvas_id,driver_id,body_id,face_id,loop_id,edge_id,primitive_id,vertex_id;
+	public int current_canvas_id,driver_id,primitive_type_id,body_id,face_id,loop_id,edge_id,primitive_id,vertex_id;
 	public double x,y,depth,value[];
 	public boolean high_or_low_precision_flag;
 	
@@ -19,18 +19,20 @@ public class client_parameter
 	}
 	public client_parameter(int my_max_client_loading_number)
 	{
-		current_canvas_id=0;
+		current_canvas_id	=0;
 		
-		driver_id	=-1;
-		body_id		=-1;
-		face_id		=-1;
-		loop_id		=-1;
-		edge_id		=-1;
-		primitive_id=-1;
-		vertex_id	=-1;
+		driver_id			=-1;
 		
-		x			=0;
-		y			=0;
+		primitive_type_id	=-1;
+		body_id				=-1;
+		face_id				=-1;
+		loop_id				=-1;
+		edge_id				=-1;
+		primitive_id		=-1;
+		vertex_id			=-1;
+		
+		x					=0;
+		y					=0;
 		
 		depth=1.0;
 		value=new double[] {-2,-2,-2};
@@ -60,6 +62,7 @@ public class client_parameter
 		}
 		if(comp==null){
 			driver_id			=-1;
+			primitive_type_id	=-1;
 			body_id				=-1;
 			face_id				=-1;
 			primitive_id		=-1;
@@ -67,6 +70,8 @@ public class client_parameter
 			loop_id				=-1;
 			edge_id				=-1;
 		}else{
+			if((str=ci.request_response.get_parameter("type"))!=null)
+				primitive_type_id=Integer.decode(str);
 			if((str=ci.request_response.get_parameter("body"))!=null)
 				body_id=Integer.decode(str);
 			if((str=ci.request_response.get_parameter("face"))!=null)
@@ -137,7 +142,6 @@ public class client_parameter
 		if(comp!=null)
 			if((my_part=comp.driver_array.get(driver_id).component_part)!=null)
 				if(ek.part_lru.touch(my_part.render_id,my_part.part_id))
-					ek.part_loader_cont.load_part_mesh_head_only(
-						my_part,ek.part_cont,ek.system_par,ek.scene_par);
+					ek.part_loader_cont.load_part_mesh_head_only(my_part,ek.system_par,ek.scene_par);
 	}
 }

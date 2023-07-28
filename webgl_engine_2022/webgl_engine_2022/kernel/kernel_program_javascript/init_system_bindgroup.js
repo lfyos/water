@@ -53,16 +53,16 @@ function init_system_bindgroup(render)
 			entries	:	system_bindgroup_layout_entries
 		});
 	
-	render.component_system_id_buffer=new Array(render.component_system_id.length);
-	for(var i=0,ni=render.component_system_id_buffer.length;i<ni;i++){
-		var p=render.component_system_id[i];
+	render.system_bindgroup_array=new Array(render.system_bindgroup_id.length);
+	for(var i=0,ni=render.system_bindgroup_array.length;i<ni;i++){
+		var p=render.system_bindgroup_id[i];
 		var my_component_id=p[3];
 		var my_buffer=render.webgpu.device.createBuffer(
 		{
-			size	:	Int32Array.BYTES_PER_ELEMENT*render.component_system_id[i].length,
+			size	:	Int32Array.BYTES_PER_ELEMENT*render.system_bindgroup_id[i].length,
 			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
 		});
-		render.webgpu.device.queue.writeBuffer(my_buffer,0,new Int32Array(render.component_system_id[i]));
+		render.webgpu.device.queue.writeBuffer(my_buffer,0,new Int32Array(render.system_bindgroup_id[i]));
 		
 		var my_bindgroup_entries=[
 			{	//method  buffer
@@ -94,7 +94,7 @@ function init_system_bindgroup(render)
 				resource	:
 				{
 					buffer	:	my_buffer,
-					size	:	Int32Array.BYTES_PER_ELEMENT*render.component_system_id[i].length
+					size	:	Int32Array.BYTES_PER_ELEMENT*render.system_bindgroup_id[i].length
 				}
 			},
 			{	// system buffer
@@ -113,9 +113,9 @@ function init_system_bindgroup(render)
 				entries	:	my_bindgroup_entries
 			});	
 
-		render.component_system_id_buffer[i]={
-			buffer				:	my_buffer,
-			bindgroup_object	:	my_bindgroup_object
+		render.system_bindgroup_array[i]={
+			buffer		:	my_buffer,
+			bindgroup	:	my_bindgroup_object
 		}
 	}
 }

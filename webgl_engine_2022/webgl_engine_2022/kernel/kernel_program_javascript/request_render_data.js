@@ -27,6 +27,10 @@ async function request_render_data(render)
 			request_url+="&component="	+render.pickup.component_id.toString();
 			request_url+="_"			+render.pickup.driver_id.toString();
 		};
+		if(render.view_bak.primitive_type_id!=(id=render.pickup.primitive_type_id)){
+			render.view_bak.primitive_type_id=id;
+			request_url+="&type="+id.toString();
+		};
 		if(render.view_bak.body!=(id=render.pickup.body_id)){
 			render.view_bak.body=id;
 			request_url+="&body="+id.toString();
@@ -127,9 +131,7 @@ async function request_render_data(render)
 
 						render_id			:	my_ids[my_target_driver_id][0],
 						part_id				:	my_ids[my_target_driver_id][1],
-						data_buffer_id		:	my_ids[my_target_driver_id][2],
-						
-						component_system_id	:	my_ids[my_target_driver_id][3]
+						data_buffer_id		:	my_ids[my_target_driver_id][2]
 					};
 					break;
 				case 1:
