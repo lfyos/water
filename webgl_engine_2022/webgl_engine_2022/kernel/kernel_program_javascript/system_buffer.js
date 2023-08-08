@@ -39,7 +39,6 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 //	init system_bindgroup_id
 	this.system_bindgroup_id	=0;
 	
-	
 	this.destroy=function()
 	{
 		this.render				=null;
@@ -124,18 +123,20 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 	this.set_target_buffer=function(target_id,project_matrix)
 	{
 		var int_data=[
-			project_matrix.projection_type_flag?1:0
+			project_matrix.projection_type_flag?1:0,
+			project_matrix.target_width,
+			project_matrix.target_height,
+			0
 		];
-
 		var matrix_array=[
 			project_matrix.matrix,
 			project_matrix.negative_matrix,
 			project_matrix.projection_type_flag
-				?project_matrix.orthographic_matrix
-				:project_matrix.frustem_matrix,
+				?(project_matrix.orthographic_matrix)
+				:(project_matrix.frustem_matrix),
 			project_matrix.projection_type_flag
-				?project_matrix.negative_orthographic_matrix
-				:project_matrix.negative_frustem_matrix,
+				?(project_matrix.negative_orthographic_matrix)
+				:(project_matrix.negative_frustem_matrix),
 				
 			project_matrix.screen_move_matrix,
 			project_matrix.negative_screen_move_matrix,
@@ -214,10 +215,11 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 
 			0,0
 		);
-
 		this.render.webgpu.device.queue.writeBuffer(this.target_buffer,	
-			this.target_buffer_stride*target_id,					new Float32Array(float_data));
+			this.target_buffer_stride*target_id,
+			new Float32Array(float_data));
 		this.render.webgpu.device.queue.writeBuffer(this.target_buffer,
-			this.target_buffer_stride*target_id+float_data.length*4,new Int32Array(int_data));
+			this.target_buffer_stride*target_id+float_data.length*Float32Array.BYTES_PER_ELEMENT,
+			new Int32Array(int_data));
 	};
 }

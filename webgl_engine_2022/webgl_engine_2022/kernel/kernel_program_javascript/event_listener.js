@@ -10,8 +10,6 @@ function construct_event_listener(my_canvas_id,my_render)
 
 	this.set_render_view=function(event)
 	{
-		this.render.webgpu.current_canvas_id=this.canvas_id;
-
 		var rect=this.canvas.getBoundingClientRect();
 		var left=rect.left,top=rect.top,right=rect.right,bottom=rect.bottom;
 		var width=right-left,height=bottom-top;
@@ -28,8 +26,6 @@ function construct_event_listener(my_canvas_id,my_render)
 	};
 	this.set_mobile_render_view=function(event)
 	{
-		this.render.webgpu.current_canvas_id=this.canvas_id;
-		
 		if(event.touches.length>0){
 			var btn=this.canvas;
 			var x=event.touches[0].clientX-btn.offsetLeft;
@@ -45,21 +41,7 @@ function construct_event_listener(my_canvas_id,my_render)
 		}
 		this.canvas.focus();
 	};
-	this.caculate_component_event_processor=function (processor_component_object)
-	{
-		var component_name=processor_component_object.component_name;
-		var component_object=this.render.operate_component.get_component_event_processor(component_name);
-		if((typeof(component_object)!="object")||(component_object==null))
-			return -1;
-		if(typeof(component_object.component_id)!="number")
-			return -1;
-		if(component_object.component_id<0)
-			return -1;
-		if(component_object.component_id>=(this.render.component_event_processor.length))
-			return -1;
-		var ep=this.render.component_event_processor[component_object.component_id];
-		return (typeof(ep)!="object")?-1:(ep==null)?-1:(component_object.component_id);
-	};
+	
 	this.render.system_event_processor.systemmousemove	=function(event,render)						{return false;};
 	this.render.system_event_processor.pickupmousemove	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.mousemove		=function(event,render)						{return false;};
@@ -67,6 +49,7 @@ function construct_event_listener(my_canvas_id,my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.render.webgpu.current_canvas_id=this.canvas_id;
 		this.mouse_inside_canvas_flag=true;
 		
 		var ep,component_id;
@@ -86,10 +69,11 @@ function construct_event_listener(my_canvas_id,my_render)
 			}
 		if(this.render.system_event_processor.mousemove(event,this.render))
 			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
-			return;
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.mouse.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
 		this.render.event_component.mouse.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];
 		if(typeof(ep.mousemove)=="function")
 			if(ep.mousemove(event,component_id,this.render))
 				return;
@@ -101,6 +85,8 @@ function construct_event_listener(my_canvas_id,my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.render.webgpu.current_canvas_id=this.canvas_id;
+		
 		this.mouse_inside_canvas_flag=true;
 		this.mouse_down_flag_array[event.button]=true;
 		this.mouse_down_flag=false;
@@ -125,14 +111,14 @@ function construct_event_listener(my_canvas_id,my_render)
 			}
 		if(this.render.system_event_processor.mousedown(event,this.render))
 			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
-			return;
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.mouse.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
 		this.render.event_component.mouse.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];			
 		if(typeof(ep.mousedown)=="function")
 			if(ep.mousedown(event,component_id,this.render))
-				return;
-		
+				return;	
 	};
 	this.render.system_event_processor.systemmouseup	=function(event,render)						{return false;};
 	this.render.system_event_processor.pickupmouseup	=function(event,pickup_component_id,render)	{return false;};
@@ -141,6 +127,8 @@ function construct_event_listener(my_canvas_id,my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.render.webgpu.current_canvas_id=this.canvas_id;
+		
 		this.mouse_inside_canvas_flag=true;
 		this.mouse_down_flag_array[event.button]=false;
 		this.mouse_down_flag=false;
@@ -165,10 +153,11 @@ function construct_event_listener(my_canvas_id,my_render)
 			}
 		if(this.render.system_event_processor.mouseup(event,this.render))
 			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
-			return;
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.mouse.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
 		this.render.event_component.mouse.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];
 		if(typeof(ep.mouseup)=="function")
 			if(ep.mouseup(event,component_id,this.render))
 				return;
@@ -181,6 +170,8 @@ function construct_event_listener(my_canvas_id,my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.render.webgpu.current_canvas_id=this.canvas_id;
+			
 		this.mouse_inside_canvas_flag=true;
 	
 		var ep,component_id;
@@ -201,10 +192,11 @@ function construct_event_listener(my_canvas_id,my_render)
 			}
 		if(this.render.system_event_processor.dblclick(event,this.render))
 			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
-			return;
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.mouse.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
 		this.render.event_component.mouse.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];	
 		if(typeof(ep.dblclick)=="function")
 			if(ep.dblclick(event,component_id,this.render))
 				return;
@@ -216,6 +208,8 @@ function construct_event_listener(my_canvas_id,my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.render.webgpu.current_canvas_id=this.canvas_id;
+		
 		this.mouse_inside_canvas_flag=true;
 		
 		var ep,component_id;
@@ -235,10 +229,11 @@ function construct_event_listener(my_canvas_id,my_render)
 			}
 		if(this.render.system_event_processor.mousewheel(event,this.render))
 			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
-			return;
-		this.render.event_component.mouse.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];			
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.mouse.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
+		this.render.event_component.mouse.component_name=component_id;		
 		if(typeof(ep.mousewheel)=="function")
 			if(ep.mousewheel(event,component_id,this.render))
 				return;
@@ -269,10 +264,11 @@ function construct_event_listener(my_canvas_id,my_render)
 			}
 		if(this.render.system_event_processor.mouseover(event,this.render))
 			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
-			return;
-		this.render.event_component.mouse.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];			
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.mouse.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
+		this.render.event_component.mouse.component_name=component_id;		
 		if(typeof(ep.mouseover)=="function")
 			if(ep.mouseover(event,component_id,this.render))
 				return;
@@ -303,10 +299,11 @@ function construct_event_listener(my_canvas_id,my_render)
 			}
 		if(this.render.system_event_processor.mouseout(event,this.render))
 			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
-			return;
-		this.render.event_component.mouse.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];			
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.mouse.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
+		this.render.event_component.mouse.component_name=component_id;		
 		if(typeof(ep.mouseout)=="function")
 			if(ep.mouseout(event,component_id,this.render))
 				return;
@@ -318,6 +315,8 @@ function construct_event_listener(my_canvas_id,my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.render.webgpu.current_canvas_id=this.canvas_id;
+		
 		this.mouse_inside_canvas_flag=true;
 		
 		var ep,component_id;
@@ -337,10 +336,11 @@ function construct_event_listener(my_canvas_id,my_render)
 			}
 		if(this.render.system_event_processor.mouseenter(event,this.render))
 			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
-			return;
-		this.render.event_component.mouse.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];			
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.mouse.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
+		this.render.event_component.mouse.component_name=component_id;		
 		if(typeof(ep.mouseenter)=="function")
 			if(ep.mouseenter(event,component_id,this.render))
 				return;
@@ -371,14 +371,52 @@ function construct_event_listener(my_canvas_id,my_render)
 			}
 		if(this.render.system_event_processor.mouseleave(event,this.render))
 			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
-			return;
-		this.render.event_component.mouse.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];			
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.mouse.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
+		this.render.event_component.mouse.component_name=component_id;		
 		if(typeof(ep.mouseleave)=="function")
 			if(ep.mouseleave(event,component_id,this.render))
 				return;
 	};
+	this.render.system_event_processor.systemcontextmenu=function(event,render)						{return false;};
+	this.render.system_event_processor.pickupcontextmenu=function(event,pickup_component_id,render)	{return false;};
+	this.render.system_event_processor.contextmenu		=function(event,render)						{return false;};
+	this.contextmenu_event_listener=function (event)
+	{
+		if(this.render.terminate_flag)
+			return;
+		this.render.webgpu.current_canvas_id=this.canvas_id;
+		
+		var ep,component_id;
+		
+		event.preventDefault();
+		this.render.webgpu.current_canvas_id=this.canvas_id;
+		
+		if(this.render.system_event_processor.systemcontextmenu(event,this.render))
+			return;
+		if(this.render.pickup.component_id>=0)
+			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
+				if(this.render.system_event_processor.pickupcontextmenu(event,this.render.pickup.component_id,this.render))
+					return;
+				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
+					if(typeof(ep.pickupcontextmenu)=="function")
+						if(ep.pickupcontextmenu(event,this.render.pickup.component_id,this.render))
+							return;
+			}
+		if(this.render.system_event_processor.contextmenu(event,this.render))
+			return;
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.mouse.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
+		this.render.event_component.mouse.component_name=component_id;
+		if(typeof(ep.contextmenu)=="function")
+			if(ep.contextmenu(event,component_id,this.render))
+				return;
+	};
+
 	this.render.system_event_processor.systemtouchstart	=function(event,render)						{return false;};
 	this.render.system_event_processor.pickuptouchstart	=function(event,pickup_component_id,render)	{return false;};
 	this.render.system_event_processor.touchstart		=function(event,render)						{return false;};
@@ -386,6 +424,7 @@ function construct_event_listener(my_canvas_id,my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.render.webgpu.current_canvas_id=this.canvas_id;
 
 		var ep,component_id;
 		event.preventDefault();
@@ -404,10 +443,11 @@ function construct_event_listener(my_canvas_id,my_render)
 			}
 		if(this.render.system_event_processor.touchstart(event,this.render))
 			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.touch))<0)
-			return;
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.touch.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
 		this.render.event_component.touch.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];	
 		if(typeof(ep.touchstart)=="function")
 			if(ep.touchstart(event,component_id,this.render))
 				return;
@@ -419,7 +459,8 @@ function construct_event_listener(my_canvas_id,my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
-	
+		this.render.webgpu.current_canvas_id=this.canvas_id;
+		
 		var ep,component_id;
 		event.preventDefault();
 		this.set_mobile_render_view(event);
@@ -437,10 +478,11 @@ function construct_event_listener(my_canvas_id,my_render)
 			}
 		if(this.render.system_event_processor.touchend(event,this.render))
 			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.touch))<0)
-			return;
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.touch.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
 		this.render.event_component.touch.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];	
 		if(typeof(ep.touchend)=="function")
 			if(ep.touchend(event,component_id,this.render))
 				return;
@@ -453,7 +495,8 @@ function construct_event_listener(my_canvas_id,my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
-	
+		this.render.webgpu.current_canvas_id=this.canvas_id;
+		
 		var ep,component_id;
 		event.preventDefault();
 		this.set_mobile_render_view(event);
@@ -471,10 +514,11 @@ function construct_event_listener(my_canvas_id,my_render)
 			}
 		if(this.render.system_event_processor.touchmove(event,this.render))
 			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.touch))<0)
-			return;
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.touch.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
 		this.render.event_component.touch.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];	
 		if(typeof(ep.touchmove)=="function")
 			if(ep.touchmove(event,component_id,this.render))
 				return;
@@ -487,7 +531,8 @@ function construct_event_listener(my_canvas_id,my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
-
+		this.render.webgpu.current_canvas_id=this.canvas_id;
+		
 		var ep,component_id;
 		event.preventDefault();
 		this.render.webgpu.current_canvas_id=this.canvas_id;
@@ -505,10 +550,11 @@ function construct_event_listener(my_canvas_id,my_render)
 			}
 		if(this.render.system_event_processor.keydown(event,this.render))
 			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.keyboard))<0)
-			return;
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.keyboard.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
 		this.render.event_component.keyboard.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];	
 		if(typeof(ep.keydown)=="function")
 			if(ep.keydown(event,component_id,this.render))
 				return;
@@ -520,7 +566,8 @@ function construct_event_listener(my_canvas_id,my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
-	
+		this.render.webgpu.current_canvas_id=this.canvas_id;
+		
 		var ep,component_id;
 		event.preventDefault();
 		this.render.webgpu.current_canvas_id=this.canvas_id;
@@ -538,10 +585,11 @@ function construct_event_listener(my_canvas_id,my_render)
 			}
 		if(this.render.system_event_processor.keypress(event,this.render))
 			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.keyboard))<0)
-			return;
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.keyboard.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
 		this.render.event_component.keyboard.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];	
 		if(typeof(ep.keypress)=="function")
 			if(ep.keypress(event,component_id,this.render))
 				return;
@@ -553,6 +601,8 @@ function construct_event_listener(my_canvas_id,my_render)
 	{
 		if(this.render.terminate_flag)
 			return;
+		this.render.webgpu.current_canvas_id=this.canvas_id;
+		
 		var ep,component_id;
 		event.preventDefault();
 		this.render.webgpu.current_canvas_id=this.canvas_id;
@@ -584,48 +634,16 @@ function construct_event_listener(my_canvas_id,my_render)
 			}
 		if(this.render.system_event_processor.keyup(event,this.render))
 			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.keyboard))<0)
-			return;
+		if((ep=this.render.operate_component.get_component_event_processor(
+			this.render.event_component.keyboard.component_name))==null)
+				return;
+		component_id=this.render.operate_component.last_operate_component_id;
 		this.render.event_component.keyboard.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];	
 		if(typeof(ep.keyup)=="function")
 			if(ep.keyup(event,component_id,this.render))
 				return;
 	};
-	this.render.system_event_processor.systemcontextmenu=function(event,render)						{return false;};
-	this.render.system_event_processor.pickupcontextmenu=function(event,pickup_component_id,render)	{return false;};
-	this.render.system_event_processor.contextmenu		=function(event,render)						{return false;};
-	this.contextmenu_event_listener=function (event)
-	{
-		if(this.render.terminate_flag)
-			return;
 	
-		var ep,component_id;
-		
-		event.preventDefault();
-		this.render.webgpu.current_canvas_id=this.canvas_id;
-		
-		if(this.render.system_event_processor.systemcontextmenu(event,this.render))
-			return;
-		if(this.render.pickup.component_id>=0)
-			if(this.render.pickup.component_id<(this.render.component_event_processor.length)){
-				if(this.render.system_event_processor.pickupcontextmenu(event,this.render.pickup.component_id,this.render))
-					return;
-				if(typeof(ep=this.render.component_event_processor[this.render.pickup.component_id])=="object")
-					if(typeof(ep.pickupcontextmenu)=="function")
-						if(ep.pickupcontextmenu(event,this.render.pickup.component_id,this.render))
-							return;
-			}
-		if(this.render.system_event_processor.contextmenu(event,this.render))
-			return;
-		if((component_id=this.caculate_component_event_processor(this.render.event_component.mouse))<0)
-			return;
-		this.render.event_component.mouse.component_name=component_id;
-		ep=this.render.component_event_processor[component_id];
-		if(typeof(ep.contextmenu)=="function")
-			if(ep.contextmenu(event,component_id,this.render))
-				return;
-	};
 
 	var cur=this;
 	
@@ -683,6 +701,12 @@ function construct_event_listener(my_canvas_id,my_render)
 		if(cur.render!=null)
 			cur.mouseover_event_listener(event);
 	};
+	function contextmenu_fun(event)
+	{
+		cur.render.last_event_time=(new Date()).getTime();
+		if(cur.render!=null)
+			cur.contextmenu_event_listener(event);
+	};
 	function touchstart_fun(event)
 	{
 		cur.render.last_event_time=(new Date()).getTime();
@@ -718,12 +742,6 @@ function construct_event_listener(my_canvas_id,my_render)
 		cur.render.last_event_time=(new Date()).getTime();
 		if(cur.render!=null)
 			cur.keyup_event_listener(event);
-	};
-	function contextmenu_fun(event)
-	{
-		cur.render.last_event_time=(new Date()).getTime();
-		if(cur.render!=null)
-			cur.contextmenu_event_listener(event);
 	};
 	function beforeunload_fun()
 	{
@@ -780,6 +798,8 @@ function construct_event_listener(my_canvas_id,my_render)
 				this.canvas.removeEventListener(	"mouseout",				mouseout_fun);
 				this.canvas.removeEventListener(	"mouseover",			mouseover_fun);
 				
+				this.canvas.removeEventListener(	"contextmenu", 			contextmenu_fun);
+				
 				this.canvas.removeEventListener(	"touchstart",			touchstart_fun);
 				this.canvas.removeEventListener(	"touchend",				touchend_fun);
 				this.canvas.removeEventListener(	"touchmove",			touchmove_fun);
@@ -787,8 +807,6 @@ function construct_event_listener(my_canvas_id,my_render)
 				this.canvas.removeEventListener(	"keydown",				keydown_fun);
 				this.canvas.removeEventListener(	"keypress",				keypress_fun);
 				this.canvas.removeEventListener(	"keyup",				keyup_fun);
-				
-				this.canvas.removeEventListener(	"contextmenu", 			contextmenu_fun);
 			}
 
 		cur						=null;
@@ -801,19 +819,19 @@ function construct_event_listener(my_canvas_id,my_render)
 		mouseenter_fun			=null;
 		mouseout_fun			=null;
 		mouseover_fun			=null;
+		contextmenu_fun			=null;
 		
 		touchstart_fun			=null;
 		touchend_fun			=null;
 		touchmove_fun			=null;
+		
 		keydown_fun				=null;
 		keypress_fun			=null;
 		keyup_fun				=null;
-		contextmenu_fun			=null;
 
 		this.set_render_view											=null;
 		this.set_mobile_render_view										=null;
-		this.caculate_pickup_event_processor							=null;
-		this.caculate_component_event_processor							=null;
+		
 		this.render.system_event_processor.pickupmousemove				=null;
 		this.render.system_event_processor.mousemove					=null;
 		this.mousemove_event_listener									=null;
@@ -850,6 +868,8 @@ function construct_event_listener(my_canvas_id,my_render)
 		this.render.system_event_processor.mouseover					=null;
 		this.mouseover_event_listener									=null;
 		
+		this.contextmenu_event_listener									=null;
+		
 		this.render.system_event_processor.pickuptouchstart				=null;
 		this.render.system_event_processor.touchstart					=null;
 		this.touchstart_event_listener									=null;
@@ -873,7 +893,6 @@ function construct_event_listener(my_canvas_id,my_render)
 		
 		this.render.system_event_processor.pickupcontextmenu			=null;
 		this.render.system_event_processor.contextmenu					=null;
-		this.contextmenu_event_listener									=null;
 		
 		this.destroy													=null;
 		

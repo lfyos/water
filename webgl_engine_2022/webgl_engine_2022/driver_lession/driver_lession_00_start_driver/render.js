@@ -51,7 +51,7 @@ function new_render_driver(
 						{	//attribute
 							format			:	"float32x4",
 							offset			:	64,
-							shaderLocation	:	5
+							shaderLocation	:	4
 						}
 					]
 				}

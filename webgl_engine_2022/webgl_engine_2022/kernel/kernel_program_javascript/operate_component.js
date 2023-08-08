@@ -1,6 +1,7 @@
 function construct_operate_component(my_render)
 {
 	this.render=my_render;
+	this.last_operate_component_id=-1;
 	
 	this.destroy=function()
 	{
@@ -35,6 +36,7 @@ function construct_operate_component(my_render)
 	};
 	this.get_component_event_processor=function(my_component_name_or_id)
 	{
+		this.last_operate_component_id=-1;
 		switch(typeof(my_component_name_or_id)){
 		case "string":
 			my_component_name_or_id=this.get_component_object_by_component_name(my_component_name_or_id);
@@ -50,10 +52,14 @@ function construct_operate_component(my_render)
 		if((my_component_name_or_id<0)||(my_component_name_or_id>=this.render.component_event_processor.length))
 			return null;
 		var ret_val=this.render.component_event_processor[my_component_name_or_id];
-		return (typeof(ret_val)=="undefined")?null:ret_val;
+		if((typeof(ret_val)!="object")||(ret_val==null))
+			return null;
+		this.last_operate_component_id=my_component_name_or_id;
+		return ret_val;
 	};
 	this.get_component_call_processor=function(my_component_name_or_id)
 	{
+		this.last_operate_component_id=-1;
 		switch(typeof(my_component_name_or_id)){
 		case "string":
 			my_component_name_or_id=this.get_component_object_by_component_name(my_component_name_or_id);
@@ -69,7 +75,10 @@ function construct_operate_component(my_render)
 		if((my_component_name_or_id<0)||(my_component_name_or_id>=this.render.component_call_processor.length))
 			return null;
 		var ret_val=this.render.component_call_processor[my_component_name_or_id];
-		return (typeof(ret_val)=="undefined")?null:ret_val;
+		if((typeof(ret_val)!="object")||(ret_val==null))
+			return null;
+		this.last_operate_component_id=my_component_name_or_id;
+		return ret_val;
 	};
 	this.set_event_component=function(my_component_name_or_id)
 	{

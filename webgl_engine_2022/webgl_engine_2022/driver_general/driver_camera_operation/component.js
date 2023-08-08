@@ -162,35 +162,17 @@ function construct_event_listener()
 
 function caculate_matrix(component_id,render_data,project_matrix,part_object,render)
 {
-	var x0					=part_object.material[0];
-	var y0					=part_object.material[1];
-	var scale				=part_object.material[2];
-	var box_distance		=part_object.material[3];
-			
-	var left_down_x			=render_data.view_volume_box[0][0];
-	var left_down_y			=render_data.view_volume_box[0][1];
-	var right_up_x			=render_data.view_volume_box[1][0];
-	var right_up_y			=render_data.view_volume_box[1][1];
-	
-	var view_x				=((left_down_x+right_up_x)+(right_up_x-left_down_x)*x0)/2.0;
-	var view_y				=((left_down_y+right_up_y)+(right_up_y-left_down_y)*y0)/2.0
-	
-	var p					=render.camera.camera_object_parameter[render_data.camera_id];
-	var distance			=p.distance;
-	var half_fovy_tanl		=p.half_fovy_tanl;
-	var camera_component_id	=p.component_id;
-	
-	var vertical_distance	=distance*half_fovy_tanl;
-	var offset_x			=view_x*vertical_distance;
-	var offset_y			=view_y*vertical_distance;
-	var offset_z			=project_matrix.distance-project_matrix.near_value-scale*vertical_distance*box_distance/2.0;
-		
-	var camera_loca			=render.component_location_data.get_component_location_routine(camera_component_id);	
-	var move_loca			=render.computer.create_move_rotate_matrix(offset_x,offset_y,offset_z,0,0,0);	
-	var loca				=render.computer.matrix_multiplication(camera_loca,move_loca);
-	render.component_location_data.modify_one_component_location(component_id,loca);
+	var x0				=part_object.material[0];
+	var y0				=part_object.material[1];
+	var scale			=part_object.material[2];
+	var box_distance	=part_object.material[3];
 
-	return vertical_distance*scale;
+	var view_distance	=render.computer.sub_operation(project_matrix.right_up_center_point,project_matrix.left_down_center_point);
+	var view_distance	=render.computer.distance(view_distance)*scale;
+	var z0				=render.computer.sub_operation(project_matrix.near_center_point,project_matrix.center_point);
+		z0				=render.computer.distance(z0)-view_distance/2.0;
+
+	return [x0,y0,z0,view_distance/box_distance];
 };
 
 function construct_component_driver(
@@ -205,39 +187,45 @@ function construct_component_driver(
 	this.parameter_buffer=render.webgpu.device.createBuffer(
 		{
 			size	:	Float32Array.BYTES_PER_ELEMENT*4,
-			usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.VERTEX 
+			usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.VERTEX
 		});
+
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,data_buffer_id,component_id,driver_id,
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
+		var p,rpe=render.webgpu.render_pass_encoder;
+		rpe.setVertexBuffer(1,this.parameter_buffer);
+
 		switch(method_data.method_id){
-		case 0:
-			var rpe=render.webgpu.render_pass_encoder;
-			var p=part_object.buffer_object.face.region_data;
+		case 0:p=part_object.buffer_object.face.region_data;
 			rpe.setPipeline(render_driver.value_pipeline);
-			rpe.setVertexBuffer(1,this.parameter_buffer);
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);
 				rpe.draw(p[i].item_number);
 			}
 			break;
 		case 1:
-			render.webgpu.device.queue.writeBuffer(this.parameter_buffer,0,new Float32Array([
-				caculate_matrix(component_id,render_data,project_matrix,part_object,render),0,0,1]));
+			render.webgpu.device.queue.writeBuffer(this.parameter_buffer,0,new Float32Array(
+					caculate_matrix(component_id,render_data,project_matrix,part_object,render)));
 
-			var rpe=render.webgpu.render_pass_encoder;
-			var p=part_object.buffer_object.face.region_data;
-			rpe.setPipeline(render_driver.triangle_pipeline);
-			rpe.setVertexBuffer(1,this.parameter_buffer);
+			p=part_object.buffer_object.face.region_data;
+			rpe.setPipeline(render_driver.color_pipeline);
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);
 				rpe.draw(p[i].item_number);
 			};
+
 			p=part_object.buffer_object.edge.region_data;
-			rpe.setPipeline(render_driver.edge_pipeline);
-			rpe.setVertexBuffer(1,this.parameter_buffer);
+			rpe.setPipeline(render_driver.line_pipeline);
+			for(var i=0,ni=p.length;i<ni;i++){
+				rpe.setVertexBuffer(0,p[i].buffer);
+				rpe.draw(p[i].item_number);
+			}
+
+			p=part_object.buffer_object.point.region_data;
+			rpe.setPipeline(render_driver.point_pipeline);
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);
 				rpe.draw(p[i].item_number);

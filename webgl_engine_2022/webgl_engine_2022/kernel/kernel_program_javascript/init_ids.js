@@ -70,7 +70,7 @@ function init_ids_of_part_and_component(
 			}
 		};
 	};
-	
+
 	for(var i=0;i<component_number;i++){
 		var my_system_bindgroup_id=system_bindgroup_id.length;
 		render.component_array_sorted_by_id[i].system_bindgroup_id=my_system_bindgroup_id;

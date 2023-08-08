@@ -6,7 +6,7 @@
 /*	low_precision_scale			*/		0.25
 /*	high_precision_scale		*/		0.50
 
-/*	frustrum					*/		yes
+/*	frustrum					*/		no
 /*	movement					*/		yes
 /*	direction					*/		yes
 /*	change_type_flag			*/		yes

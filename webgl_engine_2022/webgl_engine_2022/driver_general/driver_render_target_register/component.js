@@ -340,23 +340,27 @@ function construct_component_driver(
 		});
 		
 		var ret_val=
-		[
-			{
-				method_id:	1
-			},
-			{
-				method_id:	2
-			},
-			{
-				method_id:	3
-			},
-			{
-				method_id:	4
-			},
-			{
-				method_id:	5
-			}
-		];
+		{
+			target_width	:	my_gpu_texture.width,
+			target_height	:	my_gpu_texture.height,
+			method_array:[
+				{
+					method_id:	1
+				},
+				{
+					method_id:	2
+				},
+				{
+					method_id:	3
+				},
+				{
+					method_id:	4
+				},
+				{
+					method_id:	5
+				}
+			]
+		};
 		return  ret_val;
 	};
 
@@ -393,11 +397,15 @@ function construct_component_driver(
 		});
 		
 		var ret_val=
-		[
-			{
-				method_id:	0
-			}
-		];
+		{
+			target_width	:	this.value_texture_for_value.width,
+			target_height	:	this.value_texture_for_value.height,
+			method_array:[
+				{
+					method_id:	0
+				}
+			]
+		};
 		return  ret_val;
 	};
 	this.begin_render_target=function(render_data,

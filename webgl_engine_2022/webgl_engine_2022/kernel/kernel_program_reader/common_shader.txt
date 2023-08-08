@@ -68,7 +68,6 @@ struct target_information
 	view_volume_box_p0					:	vec4<f32>,
 	view_volume_box_p1					:	vec4<f32>,
 
-	
 	half_fovy_tanl						:	f32,
 	near_value_ratio					:	f32,
 	far_value_ratio						:	f32,
@@ -81,10 +80,9 @@ struct target_information
 	tmp_float_1							:	f32,
 	
 	projection_type_flag				:	i32,
-	tmp_int_0							:	i32,
-	tmp_int_1							:	i32,
+	target_width						:	i32,
+	target_height						:	i32,
 	tmp_int_2							:	i32
-
 };
 @group(0) @binding(1)
 var<uniform> target_info: target_information; 

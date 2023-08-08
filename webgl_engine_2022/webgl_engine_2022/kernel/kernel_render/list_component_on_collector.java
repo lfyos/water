@@ -95,9 +95,9 @@ public class list_component_on_collector
 		lod_precision2*=lod_precision_scale*lod_precision_scale;
 
 		if(do_discard_lod_flag)
-			if(lod_precision2<=comp.uniparameter.discard_precision2)
+			if(lod_precision2<=comp.uniparameter.discard_precision2) 
 				return true;
-	
+
 		if(do_selection_lod_flag){
 			int driver_number;
 			if((driver_number=comp.driver_number())<=0)

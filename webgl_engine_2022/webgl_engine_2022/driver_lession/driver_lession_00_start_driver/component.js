@@ -9,6 +9,7 @@ function construct_component_driver(
 	{
 		switch(method_data.method_id){
 		case 0:
+			break;
 		case 1:
 			break;
 		default:

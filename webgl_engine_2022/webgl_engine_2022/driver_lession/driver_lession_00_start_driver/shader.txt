@@ -16,7 +16,7 @@ fn vertex_main(
 		@location(1) my_normal		:	vec4<f32>,
 		@location(2) my_material	:	vec4<f32>,
 		@location(3) my_id			:	vec4<f32>,
-		@location(5) my_texture		:	vec4<f32>
+		@location(4) my_texture		:	vec4<f32>
 	)->vertex_to_fragment_struct
 {
 	var vf:vertex_to_fragment_struct;

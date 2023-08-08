@@ -53,27 +53,22 @@ public class extended_part_driver extends part_driver
 	public void create_part_material_in_head(file_writer fw,
 			part p,system_parameter system_par,scene_parameter scene_par)
 	{
-		if(p.part_mesh.part_box==null)
-			return;
-		
-		double box_distance=p.part_mesh.part_box.distance();
-		if(box_distance<const_value.min_value)
-			return;
-
-		if(fw!=null) {
-			fw.print  ("		",	x0);
-			fw.print  (",",			y0);
-			fw.print  (",",			scale);
-			fw.println(",",			box_distance);
-			fw.print  (",1");
-		}
-		return;
+		double box_distance=1.0,my_box_distance;
+		if(p.part_mesh.part_box!=null)
+			if((my_box_distance=p.part_mesh.part_box.distance())>const_value.min_value)
+				box_distance=my_box_distance;
+		fw.print  ("		",	x0);
+		fw.print  (",",			y0);
+		fw.print  (",",			scale);
+		fw.println(",",			box_distance);
+		fw.print  (",1");
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
-			int body_id,int face_id,int loop_id,int edge_id,int point_id,
+			int body_id,int face_id,int primitive_id,int vertex_id,int loop_id,int edge_id,
 			point p0,point p1)
 	{
-		return null;//super.caculate_part_box(p,comp,driver_id,body_id,face_id,loop_id,edge_id,point_id,p0,p1);
+		return null;
+//		return super.caculate_part_box(p,comp,driver_id,body_id,face_id,primitive_id,vertex_id,loop_id,edge_id,p0,p1);
 	}
 	public String [][]assemble_file_name_and_file_charset(file_reader fr,part p,
 			engine_kernel ek,client_request_response request_response)

@@ -97,7 +97,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 	this.get_one_component_location=function(component_id)
 	{
 		return ((component_id<0)||(component_id>=(this.component.length)))
-				?this.identify_matrix:(this.component[component_id].move_matrix);
+				?(this.identify_matrix):(this.component[component_id].move_matrix);
 	};
 	this.get_component_location=function(component_id)
 	{

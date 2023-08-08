@@ -6,6 +6,7 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 		switch(request_type_string){
 		case "face":
 		case "edge":
+		case "point":
 			giveup_flag=false;
 			break;
 		default:

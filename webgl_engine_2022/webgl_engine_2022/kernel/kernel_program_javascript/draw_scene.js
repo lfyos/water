@@ -14,16 +14,19 @@ function draw_scene_routine(render_data,render)
 		return;
 	if(typeof(target_component_driver.begin_render_target)!="function")
 		return;
-	var method_array=target_component_driver.begin_render_target(render_data,
+	var render_target=target_component_driver.begin_render_target(render_data,
 				target_part_object,target_part_driver,target_render_driver,render);
+	if((render_target==null)||(typeof(render_target)!="object"))
+		return;
+	var method_array=render_target.method_array;
 	if(!(Array.isArray(method_array)))
 		return;
 	if(method_array.length<=0)
 		return;
-
-	var project_matrix	=render.camera.compute_camera_data(render_data);	
+	var project_matrix=render.camera.compute_camera_data(render_data);
+	project_matrix.target_width	=render_target.target_width;
+	project_matrix.target_height=render_target.target_height;
 	render.system_buffer.set_target_buffer(render_data.render_buffer_id,project_matrix);
-			
 	for(var i=0,ni=method_array.length;i<ni;i++){
 		if(typeof(target_component_driver.begin_render_method)=="function")
 			target_component_driver.begin_render_method(
@@ -144,7 +147,6 @@ async function draw_scene_main(part_init_data,component_init_data,render)
 			await target_component_driver.complete_render_target(render_data,
 						target_part_object,target_part_driver,target_render_driver,render);
 		}
-
 		await new Promise((resolve)=>
 			{
 				window.requestAnimationFrame(resolve);

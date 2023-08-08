@@ -19,3 +19,4 @@
 /*	camera ID		*/		5		/*	direction:X,Y,Z		*/		-1		 0		 0			-1	 1	  0
 /*	camera ID		*/		6		/*	direction:X,Y,Z		*/		 0	 	-1		 0			 0	-1	 -1
 /*	camera ID		*/		7		/*	direction:X,Y,Z		*/		 0	 	 1	 	 0			 0	 1	  1
+

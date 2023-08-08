@@ -43,7 +43,7 @@ public class extended_component_driver  extends component_driver
 			debug_information.println("(ek.camera_cont==null)");
 			return;
 		}
-		if(ek.camera_cont.size()<=0) {
+		if(ek.camera_cont.size()<=0){
 			debug_information.println("(cam_array.length<=0)");
 			return;
 		}
@@ -80,17 +80,24 @@ public class extended_component_driver  extends component_driver
 			if(fr.eof())
 				break;
 			point dz=new point(fr),dy=new point(fr),dx=dy.cross(dz);
-			if((cam_id>=0)&&(cam_id<ek.camera_cont.size())&&(dx.distance2()>const_value.min_value2)){
-				dx=dx.expand(1.0);
-				dy=dz.cross(dx).expand(1.0);
-				dz=dz.expand(1.0);
-				location loca=new location(new point(),dx,dy,dz).multiply(location.standard_negative);
-				camera cam=ek.camera_cont.get(cam_id);
-				locate_camera loca_cam=new locate_camera(cam);
-				cam.eye_component.modify_location(loca_cam.locate(my_box,loca),ek.component_cont);
-				loca_cam.scale(Math.abs(cam.parameter.scale_value));
-				cam.parameter.distance=loca_cam.distance;
-			}
+		
+			if(cam_id<0)
+				continue;
+			if(cam_id>=ek.camera_cont.size())
+				continue;
+			if(dx.distance2()<const_value.min_value2)
+				continue;
+
+			dx=dx.expand(1.0);
+			dy=dz.cross(dx).expand(1.0);
+			dz=dz.expand(1.0);
+
+			location loca=new location(new point(),dx,dy,dz).multiply(location.standard_negative);
+			camera cam=ek.camera_cont.get(cam_id);
+			locate_camera loca_cam=new locate_camera(cam);
+			cam.eye_component.modify_location(loca_cam.locate(my_box,loca),ek.component_cont);
+			loca_cam.scale(Math.abs(cam.parameter.scale_value));
+			cam.parameter.distance=loca_cam.distance;
 		}while(true);
 		
 		fr.close();

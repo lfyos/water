@@ -25,7 +25,8 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		return false;
 	}
-	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,
+			int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(data_buffer_id);
 	}

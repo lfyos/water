@@ -43,15 +43,15 @@ public class extended_component_instance_driver extends component_instance_drive
 				return false;
 		return true;
 	}
-	public void create_render_parameter(int render_buffer_id,int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,
+			int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
-		ci.request_response.print(cr.target.main_display_target_flag?data_buffer_id:(-1-data_buffer_id));
+		ci.request_response.print(0);
 	}
 	public void create_component_parameter(int data_buffer_id,engine_kernel ek,client_information ci)
 	{
-		ci.request_response.print(comp.component_id);
+		ci.request_response.print(0);
 	}
-	
 	private boolean get_client_type_flag(client_information ci)
 	{
 		String str=ci.request_response.get_parameter("type");
@@ -135,7 +135,8 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		ci.display_camera_result.cam.mark_restore_stack();
 		ci.display_camera_result.cam.push_restore_stack(
-			ek.modifier_cont[modifier_container_id],true,loca,ci.display_camera_result.cam.parameter);
+			ek.modifier_cont[modifier_container_id],true,
+			loca,ci.display_camera_result.cam.parameter);
 	}
 	private void camera_direct(engine_kernel ek,client_information ci)
 	{
@@ -157,9 +158,9 @@ public class extended_component_instance_driver extends component_instance_drive
 		loca=lc.direction_locate(new point(x,y,z),loca,get_client_type_flag(ci));
 		ci.display_camera_result.cam.mark_restore_stack();
 		ci.display_camera_result.cam.push_restore_stack(
-			ek.modifier_cont[modifier_container_id],true,loca,ci.display_camera_result.cam.parameter);
+			ek.modifier_cont[modifier_container_id],true,
+			loca,ci.display_camera_result.cam.parameter);
 	}
-	
 	private void camera_rotate(engine_kernel ek,client_information ci)
 	{
 		String str;
@@ -194,7 +195,8 @@ public class extended_component_instance_driver extends component_instance_drive
 		
 		ci.display_camera_result.cam.mark_restore_stack();
 		ci.display_camera_result.cam.push_restore_stack(
-			ek.modifier_cont[modifier_container_id],true,loca,ci.display_camera_result.cam.parameter);
+			ek.modifier_cont[modifier_container_id],true,
+			loca,ci.display_camera_result.cam.parameter);
 	}
 	private void locate(engine_kernel ek,client_information ci)
 	{
@@ -356,10 +358,9 @@ public class extended_component_instance_driver extends component_instance_drive
 			}
 			return null;
 		case "change_type":
-		{	
+		{
 			if(ek.component_cont.root_component==null)
 				return null;
-
 			ek.modifier_cont[modifier_container_id].process(ek, ci,true);
 			if((str=ci.request_response.get_parameter("value"))==null)
 				return null;

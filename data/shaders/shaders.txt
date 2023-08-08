@@ -7,14 +7,16 @@
 /*	render_5	*/	screen_rectangle			driver_screen_rectangle.extended_render_driver			driver_general\screen_rectangle\render.list
 /*	render_6	*/	show_component_box			driver_show_component_box.extended_render_driver		driver_general\show_component_box\render.list
 /*	render_7	*/	render_target_register		driver_render_target_register.extended_render_driver	driver_general\render_target_register\render.list
+/*	render_8	*/	component_marker			driver_component_marker.extended_render_driver			driver_general\component_marker\render.list
 
 
 /*		########################	driver_controller		#######################			*/
-/*	render_8	*/	audio_player				driver_audio_player.extended_render_driver				driver_controller\audio_player\render.list
-/*	render_9	*/	proxy_register				driver_proxy_register.extended_render_driver			driver_controller\proxy_register\render.list
-/*	render_10	*/	location_modifier			driver_location_modifier.extended_render_driver			driver_controller\location_modifier\render.list	
-/*	render_11	*/	mouse_modify_location		driver_mouse_modify_location.extended_render_driver		driver_controller\mouse_modify_location\render.list
-/*	render_22	*/	movement					driver_movement.extended_render_driver					driver_controller\movement\render.list
+/*	render_9	*/	audio_player				driver_audio_player.extended_render_driver				driver_controller\audio_player\render.list
+/*	render_10	*/	proxy_register				driver_proxy_register.extended_render_driver			driver_controller\proxy_register\render.list
+/*	render_11	*/	location_modifier			driver_location_modifier.extended_render_driver			driver_controller\location_modifier\render.list	
+/*	render_12	*/	mouse_modify_location		driver_mouse_modify_location.extended_render_driver		driver_controller\mouse_modify_location\render.list
+/*	render_13	*/	camera_operation			driver_camera_operation.extended_render_driver			driver_controller\camera_operation\render.list
+/*	render_14	*/	movement					driver_movement.extended_render_driver					driver_controller\movement\render.list
 
 
 /*	******************************		driver_lession		********************************************	*/
@@ -26,11 +28,9 @@
 
 /*	########################	driver_general		#######################		*/
 
-/*	render_14	*/	component_marker		driver_component_marker.extended_render_driver			driver_general\component_marker\render.list
 /*	render_17	*/	distance_tag			driver_distance_tag.extended_render_driver				driver_general\distance_tag\render.list		
 
 /*		########################	driver_controller		#######################			*/
-/*	render_12	*/	camera_operation		driver_camera_operation.extended_render_driver			driver_controller\camera_operation\render.list
 /*	render_16	*/	component_selection		driver_component_selection.extended_render_driver		driver_controller\component_selection\render.list
 /*	render_19	*/	manipulator				driver_manipulator.extended_render_driver				driver_controller\manipulator\render.list
 

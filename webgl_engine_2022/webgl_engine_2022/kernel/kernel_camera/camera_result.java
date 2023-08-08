@@ -118,10 +118,10 @@ public class camera_result
 		right_up_far	=negative_matrix.multiply(new point( 1, 1, 1));
 		right_down_far	=negative_matrix.multiply(new point( 1,-1, 1));
 
-		left_up_near	=negative_matrix.multiply(new point(-1, 1,-1));
-		left_down_near	=negative_matrix.multiply(new point(-1,-1,-1));
-		right_up_near	=negative_matrix.multiply(new point( 1, 1,-1));
-		right_down_near	=negative_matrix.multiply(new point( 1,-1,-1));
+		left_up_near	=negative_matrix.multiply(new point(-1, 1, 0));
+		left_down_near	=negative_matrix.multiply(new point(-1,-1, 0));
+		right_up_near	=negative_matrix.multiply(new point( 1, 1, 0));
+		right_down_near	=negative_matrix.multiply(new point( 1,-1, 0));
 		
 		view_box=new box(new point[] 
 				{
@@ -204,8 +204,10 @@ public class camera_result
 			return null;
 		
 		location comp_negative_loca=parameter.comp.caculate_negative_absolute_location();
-		point p0=comp_negative_loca.multiply(negative_matrix.multiply(new point(0,0,parameter.depth+0.0)));
-		point p1=comp_negative_loca.multiply(negative_matrix.multiply(new point(0,0,parameter.depth+1.0)));
+		point p0=comp_negative_loca.multiply(negative_matrix.multiply(
+					new point(parameter.x,parameter.y,parameter.depth+0.0)));
+		point p1=comp_negative_loca.multiply(negative_matrix.multiply(
+					new point(parameter.x,parameter.y,parameter.depth+1.0)));
 
 		box my_box=parameter.comp.driver_array.get(driver_id).component_part.secure_caculate_part_box(
 					parameter.comp,driver_id,parameter.body_id,parameter.face_id,
