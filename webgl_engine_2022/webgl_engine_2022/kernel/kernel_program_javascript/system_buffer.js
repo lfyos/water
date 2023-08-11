@@ -18,7 +18,7 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 
 //	init target buffer:	binding point 1
 	this.target_buffer_stride	=2048;
-	this.target_buffer_size		=1168;
+	this.target_buffer_size		=1216;
 	this.target_buffer_number	=target_buffer_number;
 	this.target_buffer	=this.render.webgpu.device.createBuffer(
 		{
@@ -184,6 +184,10 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 			project_matrix.left_up_far_point,
 			project_matrix.right_down_far_point,
 			project_matrix.right_up_far_point,
+			
+			project_matrix.to_right_direction,
+			project_matrix.to_up_direction,
+			project_matrix.to_me_direction,
 			
 			project_matrix.view_volume_box[0],
 			project_matrix.view_volume_box[1]

@@ -36,15 +36,26 @@ function draw_scene_routine(render_data,render)
 			if(typeof(render.part_array[render_id])=="undefined")
 				continue;
 			var render_driver=render.render_driver[render_id];
-			for(var part_id=0,part_number=render.part_array[render_id].length;part_id<part_number;part_id++){
-				var part_object=render.part_array[render_id][part_id];	
+			var my_do_render_flag=render_driver.do_render_flag;
+			if(Array.isArray(my_do_render_flag))
+				if(typeof(my_do_render_flag=my_do_render_flag[method_array[i].method_id])=="boolean")
+					if(!my_do_render_flag)
+						continue;
+			for(var part_id=0,part_number=render.part_array[render_id].length;part_id<part_number;part_id++){	
+				var part_driver=render.part_driver[render_id][part_id];
+				var my_do_render_flag=part_driver.do_render_flag;
+				if(Array.isArray(my_do_render_flag))
+					if(typeof(my_do_render_flag=my_do_render_flag[method_array[i].method_id])=="boolean")
+						if(!my_do_render_flag)
+							continue;
+				
+				var part_object=render.part_array[render_id][part_id];
 				if((typeof(part_object)!="object")||(part_object==null))
 					continue;
 				var component_render_parameter	=part_object.component_render_parameter;
 				var component_buffer_parameter	=part_object.component_buffer_parameter;
 				if(render_data.render_buffer_id>=component_render_parameter.length)
 					continue;
-				var part_driver=render.part_driver[render_id][part_id];
 			   	component_render_parameter=component_render_parameter[render_data.render_buffer_id];
 				var instance_number=component_render_parameter.length;
 				for(var instance_id=0;instance_id<instance_number;instance_id++){

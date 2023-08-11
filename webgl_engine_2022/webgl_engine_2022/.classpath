@@ -4,7 +4,6 @@
 	<classpathentry kind="src" path="kernel"/>
 	<classpathentry kind="src" path="format_converter"/>
 	<classpathentry kind="src" path="driver_general"/>
-	<classpathentry kind="src" path="driver_controller"/>
 	<classpathentry kind="src" path="driver_lession"/>
 	<classpathentry kind="src" path="driver_project"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0">

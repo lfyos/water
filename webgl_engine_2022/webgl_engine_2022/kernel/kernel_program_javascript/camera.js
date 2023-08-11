@@ -334,6 +334,13 @@ function construct_camera_object(camera_number,my_component_location_data,my_com
 		project_matrix.right_down_far_point		=this.computer.caculate_coordinate(project_matrix.negative_matrix, 1,-1, 1);
 		project_matrix.right_up_far_point		=this.computer.caculate_coordinate(project_matrix.negative_matrix, 1, 1, 1);
 
+		project_matrix.to_me_direction			=this.computer.expand_operation(
+			this.computer.sub_operation(project_matrix.eye_point,project_matrix.center_point),1.0);
+		project_matrix.to_right_direction		=this.computer.expand_operation(
+			this.computer.sub_operation(project_matrix.right_down_center_point,project_matrix.left_down_center_point),1.0);
+		project_matrix.to_up_direction			=this.computer.expand_operation(
+			this.computer.cross_operation(project_matrix.to_me_direction,project_matrix.to_right_direction),1.0);
+
 		project_matrix.left_plane	=this.computer.create_plane_from_three_point(
 				project_matrix.left_down_near_point,	project_matrix.left_up_near_point,
 				project_matrix.left_up_far_point);		

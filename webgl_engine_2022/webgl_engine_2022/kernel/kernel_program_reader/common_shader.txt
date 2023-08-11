@@ -65,6 +65,10 @@ struct target_information
 	right_down_far_point				:	vec4<f32>,
 	right_up_far_point					:	vec4<f32>,
 	
+	to_right_direction					:	vec4<f32>,
+	to_up_direction						:	vec4<f32>,
+	to_me_direction						:	vec4<f32>,
+	
 	view_volume_box_p0					:	vec4<f32>,
 	view_volume_box_p1					:	vec4<f32>,
 

@@ -34,8 +34,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			double aspect_value=((double)width)/((double)height);
 	
 			ci.target_container.register_target(
-				new render_target(
-						true,	comp.component_id,	driver_id,	i,
+				new render_target(true,comp.component_id,	driver_id,	i,
 						new component[] {ek.component_cont.root_component},		null,	0,	2,
 						new box(-aspect_value,-1,-1,aspect_value,1,1),
 						null,	null,	(current_canvas_id==i),	true,	true,	true));
@@ -49,11 +48,11 @@ public class extended_component_instance_driver extends component_instance_drive
 		int driver_id_array[];
 		
 		if((ci.parameter.comp==null)||(current_canvas_id<0)||(current_canvas_id>=width_height.length)) {
-			comp_array=new component[] {comp};
-			driver_id_array=new int[] {driver_id};
+			comp_array=new component[]	{comp};
+			driver_id_array=new int[]	{driver_id};
 		}else {
-			comp_array=new component[] {ci.parameter.comp,comp};
-			driver_id_array=new int[] {0,driver_id};
+			comp_array=new component[]	{ci.parameter.comp,comp};
+			driver_id_array=new int[]	{0,driver_id};
 		}
 		
 		int width	=width_height[current_canvas_id][0];
@@ -65,8 +64,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				ci.parameter.x*(double)width/(double)height+1.0/(double)height,
 				ci.parameter.y+1.0/(double)height,
 				1);
-		render_target rt=new render_target(
-			true,								//do_render_flag
+		render_target rt=new render_target(true,
 			comp.component_id,	driver_id,	-1,	//target IDS
 			comp_array,		 					//components
 			driver_id_array,					//driver_id

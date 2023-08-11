@@ -43,9 +43,8 @@ public class render_target
 			boolean my_main_display_target_flag,	boolean my_canvas_display_target_flag,
 			boolean my_do_discard_lod_flag,			boolean my_do_selection_lod_flag)
 	{
-		
-		target_id				=0;
 		do_render_flag			=my_do_render_flag;
+		target_id				=0;
 		
 		target_comonent_id		=my_target_comonent_id;
 		target_driver_id		=my_target_driver_id;

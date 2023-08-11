@@ -36,7 +36,7 @@ struct vertex_to_fragment_struct
 struct fragment_to_target_struct
 {
 	@location(0) 			color	:	vec4<f32>,
-	@location(1) 	id				:	vec4<i32>,
+	@location(1) 			id		:	vec4<i32>,
 	@builtin(frag_depth)	depth	:	f32
 };
 
@@ -49,21 +49,36 @@ fn vertex_main(
 	var vf:vertex_to_fragment_struct;
 	
 	vf.vertex_texture=vec4(my_texture.x,1.0-my_texture.y,my_texture.zw);
+	
 	vf.vertex_position=location_info.matrix*marker_info.marker_position;
 	vf.vertex_position=target_info.projection_matrix*vf.vertex_position;
 	vf.vertex_position=vf.vertex_position/vf.vertex_position.w;
 	
+	var face_width	=marker_info.marker_face_x_scale/f32(target_info.target_width);
+	var face_height	=marker_info.marker_face_y_scale/f32(target_info.target_height);
+	var edge_height	=marker_info.marker_edge_y_scale;
+	if(vf.vertex_position.y+edge_height+face_height>1.0){
+		edge_height=1.0-vf.vertex_position.y-face_height;
+		if(edge_height<0.0){
+			edge_height=0.0;
+			if(vf.vertex_position.y+face_height>1.0){
+				face_height=1.0-vf.vertex_position.y;
+				if(face_height<0.0){
+					face_height=0.0;
+				}
+			}
+		}
+	}
 	switch(primitive_type){
 	default:	//face
 	{
-		vf.vertex_position.x=vf.vertex_position.x+my_coord.x*marker_info.marker_face_x_scale/f32(target_info.target_width);
-		vf.vertex_position.y=vf.vertex_position.y+marker_info.marker_edge_y_scale;
-		vf.vertex_position.y=vf.vertex_position.y+my_coord.y*marker_info.marker_face_y_scale/f32(target_info.target_height);
+		vf.vertex_position.x=vf.vertex_position.x+my_coord.x*face_width;
+		vf.vertex_position.y=vf.vertex_position.y+edge_height+my_coord.y*face_height;
 		break;
 	}
 	case 1:		//edge
 	{
-		vf.vertex_position.y=vf.vertex_position.y+my_coord.y*marker_info.marker_edge_y_scale;
+		vf.vertex_position.y=vf.vertex_position.y+my_coord.y*edge_height;
 		break;
 	}
 	case 2:		//point
@@ -85,6 +100,8 @@ fn fragment_main(vf	:	vertex_to_fragment_struct) -> fragment_to_target_struct
 	switch(primitive_type){
 	default:	//face
 	{
+		ft.depth=0.0;
+		
 		ft.color=textureSample(marker_texture,marker_sampler,vf.vertex_texture.xy);
 		if(dot(ft.color.rgb,ft.color.rgb)<0.75){
 			ft.color.a=0.0;
@@ -102,6 +119,7 @@ fn fragment_main(vf	:	vertex_to_fragment_struct) -> fragment_to_target_struct
 	}
 	case 1:	//edge
 	{
+		ft.depth=vf.vertex_position.z;
 		ft.color=vec4(marker_info.edge_normal_color.rgb,1.0);
 		if(   (system_info.pickup_component_id==marker_info.marker_component_id)
 			&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
@@ -113,6 +131,7 @@ fn fragment_main(vf	:	vertex_to_fragment_struct) -> fragment_to_target_struct
 	}
 	case 2:
 	{
+		ft.depth=vf.vertex_position.z;
 		ft.color=vec4(marker_info.point_normal_color.rgb,1.0);
 		if(   (system_info.pickup_component_id==marker_info.marker_component_id)
 			&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
