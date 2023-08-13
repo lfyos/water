@@ -9,9 +9,6 @@ function construct_component_driver(
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		if(method_data.method_id!=1)
-			return;
-		
 		var computer				=render.computer;
 		var component_location		=render.component_location_data;
 		

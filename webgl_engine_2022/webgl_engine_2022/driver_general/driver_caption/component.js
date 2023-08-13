@@ -97,9 +97,6 @@ function construct_component_driver(
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)
 	{
-		if(method_data.method_id!=1)
-			return;
-		
 		var my_texture_width	=part_object.material[0].texture_width;
 		var my_canvas_width		=part_object.material[0].canvas_width;
 		if(this.parameter.display_width>my_canvas_width){

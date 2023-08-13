@@ -50,8 +50,6 @@ function construct_component_driver(
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		if(method_data.method_id!=1)
-			return;
 		var ep=render.component_event_processor[this.component_id];
 		if(ep.bindgroup==null)
 			return;	

@@ -339,11 +339,7 @@ function construct_component_driver(
 			}
 		});
 		
-		var ret_val=
-		{
-			target_width	:	my_gpu_texture.width,
-			target_height	:	my_gpu_texture.height,
-			method_array:[
+		return [
 				{
 					method_id:	1
 				},
@@ -359,9 +355,7 @@ function construct_component_driver(
 				{
 					method_id:	5
 				}
-			]
-		};
-		return  ret_val;
+			];
 	};
 
 	this.begin_render_target_for_value=function(render)
@@ -396,22 +390,37 @@ function construct_component_driver(
 			}
 		});
 		
-		var ret_val=
-		{
-			target_width	:	this.value_texture_for_value.width,
-			target_height	:	this.value_texture_for_value.height,
-			method_array:[
-				{
-					method_id:	0
-				}
-			]
-		};
-		return  ret_val;
+		return 	[
+					{
+						method_id:	0
+					}
+				];
 	};
-	this.begin_render_target=function(render_data,
+	this.render_target_parameter=function(render_data,
 			target_part_object,target_part_driver,target_render_driver,render)
 	{
+		var my_gpu_texture;
+		
 		if(render_data.target_texture_id>=0)
+			my_gpu_texture=render.webgpu.context[render_data.target_texture_id].getCurrentTexture();
+		else
+			my_gpu_texture=this.value_texture_for_value;
+		
+		if(typeof(my_gpu_texture)!="object")
+			my_gpu_texture=null;
+		
+		return {
+					target_width	:	(my_gpu_texture==null)?1:my_gpu_texture.width,
+					target_height	:	(my_gpu_texture==null)?1:my_gpu_texture.height
+				};
+	}
+	
+	this.begin_render_target=function(target_sequence_id,
+			render_data,target_part_object,target_part_driver,target_render_driver,render)
+	{
+		if(target_sequence_id!=0)
+			return null;
+		else if(render_data.target_texture_id>=0)
 			return this.begin_render_target_for_id(render_data,render);
 		else
 			return this.begin_render_target_for_value(render);

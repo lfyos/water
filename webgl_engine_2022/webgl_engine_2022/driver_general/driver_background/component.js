@@ -172,11 +172,8 @@ function construct_component_driver(
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		if(method_data.method_id!=1)
-			return;
 		if(this.texture_bind_group.is_busy_flag)
 			return;
-		
 		var mode,rpe=render.webgpu.render_pass_encoder;
 		
 		if((mode=component_buffer_parameter[component_buffer_parameter.length-1][0])>0)	

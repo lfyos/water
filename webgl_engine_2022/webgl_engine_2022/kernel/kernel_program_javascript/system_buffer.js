@@ -120,12 +120,12 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 			int_data.length*4,	new Float32Array(float_data));
 	};
 
-	this.set_target_buffer=function(target_id,project_matrix)
+	this.set_target_buffer=function(target_id,project_matrix,target_parameter)
 	{
 		var int_data=[
 			project_matrix.projection_type_flag?1:0,
-			project_matrix.target_width,
-			project_matrix.target_height,
+			target_parameter.target_width,
+			target_parameter.target_height,
 			0
 		];
 		var matrix_array=[

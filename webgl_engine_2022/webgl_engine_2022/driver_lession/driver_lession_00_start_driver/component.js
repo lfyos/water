@@ -7,14 +7,6 @@ function construct_component_driver(
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		switch(method_data.method_id){
-		case 0:
-			break;
-		case 1:
-			break;
-		default:
-			return;
-		}
 		var rpe	=render.webgpu.render_pass_encoder;
 		rpe.setPipeline(
 			(method_data.method_id==0)

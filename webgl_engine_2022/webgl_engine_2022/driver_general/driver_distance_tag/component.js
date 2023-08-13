@@ -140,9 +140,6 @@ function construct_component_driver(
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		if(method_data.method_id!=5)
-			return;
-		
 		var p,rpe=render.webgpu.render_pass_encoder;
 		
 		for(var i=0,ni=this.tag_array.length;i<ni;i++){

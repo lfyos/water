@@ -199,7 +199,8 @@ function construct_component_driver(
 		rpe.setVertexBuffer(1,this.parameter_buffer);
 
 		switch(method_data.method_id){
-		case 0:p=part_object.buffer_object.face.region_data;
+		case 0:
+			p=part_object.buffer_object.face.region_data;
 			rpe.setPipeline(render_driver.value_pipeline);
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);

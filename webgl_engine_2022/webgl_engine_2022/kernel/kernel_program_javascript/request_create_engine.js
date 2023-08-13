@@ -116,12 +116,26 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 				try{
 					render.render_driver[render_id]=my_render_driver_function(
 						render_id,my_render_name,render_init_data[render_id],
-						program_data[render_id].shift(),my_shader_program,render);
+						program_data[render_id].shift(),my_shader_program,
+						render);
 				}catch(e){
 					render.render_driver[render_id]=null;
 					alert("create render driver fail	"+my_render_name);
 					alert(e.toString());
 					continue;
+				}
+	
+				if(Array.isArray(render.render_driver[render_id].method_render_flag)){
+					var my_method_render_flag=render.render_driver[render_id].method_render_flag;
+					if(my_method_render_flag.length>render.system_buffer.method_buffer_number)
+						my_method_render_flag.length=render.system_buffer.method_buffer_number;
+					for(var i=0,ni=render.system_buffer.method_buffer_number;i<ni;i++)
+						if(typeof(my_method_render_flag[i])!="boolean")
+							my_method_render_flag[i]=false;
+				}else{
+					render.render_driver[render_id].method_render_flag=new Array();
+					for(var i=0,ni=render.system_buffer.method_buffer_number;i<ni;i++)
+						render.render_driver[render_id].method_render_flag[i]=true;
 				}
 			}
 				

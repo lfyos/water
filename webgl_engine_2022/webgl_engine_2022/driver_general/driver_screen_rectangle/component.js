@@ -19,9 +19,6 @@ function construct_component_driver(
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		if(method_data.method_id!=1)
-			return;
-			
 		var diff=render.computer.min_value;
 		diff-=Math.abs(this.ep.data[2]-this.ep.data[0]);
 		diff-=Math.abs(this.ep.data[3]-this.ep.data[1]);

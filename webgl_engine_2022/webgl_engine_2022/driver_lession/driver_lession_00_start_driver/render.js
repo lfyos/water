@@ -103,6 +103,8 @@ function new_render_driver(
 	
 	this.new_part_driver=construct_part_driver;
 	
+	this.method_render_flag=[true,true];
+	
 	this.destroy=function()
 	{
 		this.pipeline=null;
