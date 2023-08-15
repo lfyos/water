@@ -11,9 +11,11 @@
 			
 				"canvas_width"			:	8192,
 				"canvas_height"			:	32,
+				
 				"width_scale"			:	1.0,
 				"height_scale"			:	2.0,
 				"edge_scale"			:	0.5,
+				
 				"font"					:	"bold 32px Arial"
 			}
 			

@@ -58,14 +58,25 @@ function init_component_event_processor()
 		}
 		return true;
 	};
+	this.destroy=function()
+	{
+		this.title			=null;
+	
+		this.mouseup		=null;
+		this.pickupkeydown	=null;
+		this.pickupdblclick	=null;
+		this.pickupmouseup	=null;
+		this.pickupmousedown=null;
+		this.pickupkeydown	=null;
+	}
 }
 function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
 	init_data,		part_object,	part_driver,	render_driver,	render)
 {
-	render.component_event_processor[component_id]=new init_component_event_processor();
-		
+	this.component_id=component_id;
 	this.marker_array=new Array();
+	render.component_event_processor[component_id]=new init_component_event_processor();
 	
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,data_buffer_id,component_id,driver_id,
@@ -80,25 +91,39 @@ function construct_component_driver(
 				this.marker_array[i].marker_component_id,-1);
 			rpe.setBindGroup(1,this.marker_array[i].bindgroup);
 
-			rpe.setPipeline(render_driver.face_pipeline);
-			p=part_object.buffer_object.face.region_data;
-			for(var j=0,nj=p.length;j<nj;j++){
-				rpe.setVertexBuffer(0,p[j].buffer);
-				rpe.draw(p[j].item_number);
-			}
-
-			rpe.setPipeline(render_driver.edge_pipeline);
-			p=part_object.buffer_object.edge.region_data;
-			for(var j=0,nj=p.length;j<nj;j++){
-				rpe.setVertexBuffer(0,p[j].buffer);
-				rpe.draw(p[j].item_number);
-			}
-
-			rpe.setPipeline(render_driver.point_pipeline);
-			p=part_object.buffer_object.point.region_data;
-			for(var j=0,nj=p.length;j<nj;j++){
-				rpe.setVertexBuffer(0,p[j].buffer);
-				rpe.draw(p[j].item_number);
+			switch(method_data.method_id){
+			default:
+				break;
+			case 0:
+				rpe.setPipeline(render_driver.id_pipeline);
+				p=part_object.buffer_object.face.region_data;
+				for(var j=0,nj=p.length;j<nj;j++){
+					rpe.setVertexBuffer(0,p[j].buffer);
+					rpe.draw(p[j].item_number);
+				}
+				break;
+			case 2:
+				rpe.setPipeline(render_driver.face_pipeline);
+				p=part_object.buffer_object.face.region_data;
+				for(var j=0,nj=p.length;j<nj;j++){
+					rpe.setVertexBuffer(0,p[j].buffer);
+					rpe.draw(p[j].item_number);
+				}
+	
+				rpe.setPipeline(render_driver.edge_pipeline);
+				p=part_object.buffer_object.edge.region_data;
+				for(var j=0,nj=p.length;j<nj;j++){
+					rpe.setVertexBuffer(0,p[j].buffer);
+					rpe.draw(p[j].item_number);
+				}
+	
+				rpe.setPipeline(render_driver.point_pipeline);
+				p=part_object.buffer_object.point.region_data;
+				for(var j=0,nj=p.length;j<nj;j++){
+					rpe.setVertexBuffer(0,p[j].buffer);
+					rpe.draw(p[j].item_number);
+				}
+				break;
 			}
 		}
 	}
@@ -235,6 +260,7 @@ function construct_component_driver(
 				layout	:	render_driver.bindgroup_layout,
 				entries	:	resource_entries
 			});
+			
 			this.marker_array[i]={
 				marker_component_id	:	my_marker_component_id,
 				texture				:	my_texture,
@@ -243,4 +269,22 @@ function construct_component_driver(
 			};
 		};
 	};
+
+	this.destroy=function(render)
+	{
+		if(this.marker_array!=null){
+			for(var i=0,ni=this.marker_array.length;i<ni;i++){
+				this.marker_array[i].buffer.destroy();
+				this.marker_array[i].texture.destroy();
+				this.marker_array[i].buffer		=null;
+				this.marker_array[i].texture	=null;
+				this.marker_array[i].bindgroup	=null;
+			}
+			this.marker_array=null;
+		}
+		if(render.component_event_processor[this.component_id]!=null){
+			render.component_event_processor[this.component_id].destroy(render);
+			render.component_event_processor[this.component_id]=null;
+		}
+	}
 };

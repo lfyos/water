@@ -33,10 +33,16 @@ struct vertex_to_fragment_struct
 	@builtin(position)	vertex_position		:	vec4<f32>,
 	@location(1)		vertex_texture		:	vec4<f32>
 };
-struct fragment_to_target_struct
+struct id_target_struct
+{
+	@location(0) 			id_0	:	vec4<i32>,
+	@location(1) 			id_1	:	vec4<i32>,
+	@builtin(frag_depth)	depth	:	f32
+};
+
+struct face_target_struct
 {
 	@location(0) 			color	:	vec4<f32>,
-	@location(1) 			id		:	vec4<i32>,
 	@builtin(frag_depth)	depth	:	f32
 };
 
@@ -46,17 +52,34 @@ fn vertex_main(
 		@location(1) my_texture		:	vec4<f32>
 	)->vertex_to_fragment_struct
 {
-	var vf:vertex_to_fragment_struct;
+	var vf					:	vertex_to_fragment_struct;
 	
-	vf.vertex_texture=vec4(my_texture.x,1.0-my_texture.y,my_texture.zw);
+	var width				:	i32;
+	var height				:	i32;
+	var projection_matrix	:	mat4x4<f32>;
+
+	if(primitive_type!=0){
+		width	=target_info.target_width;
+		height	=target_info.target_height;
+		projection_matrix=target_info.projection_matrix;
+	}else{
+		width	=system_info.current_canvas_width;
+		height	=system_info.current_canvas_height;
+		projection_matrix=mat4x4<f32>(
+				1.0/(f32(width)/f32(height)),	0.0,			0.0,			0.0,
+				0.0,							1.0,			0.0,			0.0,
+				0.0,							0.0,			0.5,			0.0,
+				0.0,							0.0,			0.5,			1.0
+			)*target_info.negative_screen_move_matrix*target_info.projection_matrix;
+	}
 	
-	vf.vertex_position=location_info.matrix*marker_info.marker_position;
-	vf.vertex_position=target_info.projection_matrix*vf.vertex_position;
+	vf.vertex_position=projection_matrix*(location_info.matrix*marker_info.marker_position);
 	vf.vertex_position=vf.vertex_position/vf.vertex_position.w;
 	
-	var face_width	=marker_info.marker_face_x_scale/f32(target_info.target_width);
-	var face_height	=marker_info.marker_face_y_scale/f32(target_info.target_height);
+	var face_width	=marker_info.marker_face_x_scale/f32(width);
+	var face_height	=marker_info.marker_face_y_scale/f32(height);
 	var edge_height	=marker_info.marker_edge_y_scale;
+	
 	if(vf.vertex_position.y+edge_height+face_height>1.0){
 		edge_height=1.0-vf.vertex_position.y-face_height;
 		if(edge_height<0.0){
@@ -69,78 +92,95 @@ fn vertex_main(
 			}
 		}
 	}
+	
 	switch(primitive_type){
 	default:	//face
 	{
 		vf.vertex_position.x=vf.vertex_position.x+my_coord.x*face_width;
 		vf.vertex_position.y=vf.vertex_position.y+edge_height+my_coord.y*face_height;
+		vf.vertex_position=target_info.screen_move_matrix*
+			(mat4x4<f32>(
+				f32(system_info.current_canvas_width)/f32(system_info.current_canvas_height),	
+										0.0,			0.0,			0.0,
+				0.0,					1.0,			0.0,			0.0,
+				0.0,					0.0,			2.0,			0.0,
+				0.0,					0.0,			-1.0,			1.0
+			)*vf.vertex_position);
+		vf.vertex_position=vf.vertex_position/vf.vertex_position.w;
 		break;
 	}
-	case 1:		//edge
+	case 1:		//face
+	{
+		vf.vertex_position.x=vf.vertex_position.x+my_coord.x*face_width;
+		vf.vertex_position.y=vf.vertex_position.y+edge_height+my_coord.y*face_height;
+	}
+	case 2:		//edge
 	{
 		vf.vertex_position.y=vf.vertex_position.y+my_coord.y*edge_height;
 		break;
 	}
-	case 2:		//point
+	case 3:		//point
 	{
 		break;
 	}
 	}
+	
+	vf.vertex_texture=vec4(my_texture.x,1.0-my_texture.y,my_texture.zw);
+	
 	return vf;
 }
 
 @fragment
-fn fragment_main(vf	:	vertex_to_fragment_struct) -> fragment_to_target_struct
+fn fragment_id_fun(vf	:	vertex_to_fragment_struct) -> id_target_struct
 {
-	var ft 	:	fragment_to_target_struct;
+	var ret_val	:	id_target_struct;
 	
-	ft.depth=0.0;
-	ft.id=vec4(marker_info.marker_system_id,marker_info.marker_body_id,0,0);
+	ret_val.depth=0.0;
+	ret_val.id_0=vec4(marker_info.marker_system_id,marker_info.marker_body_id,0,0);
+	ret_val.id_1=vec4(-1,-1,0,0);
 	
-	switch(primitive_type){
-	default:	//face
+	return ret_val;
+}
+@fragment
+fn fragment_face_fun(vf	:	vertex_to_fragment_struct) -> face_target_struct
+{
+	var ret_val	:	face_target_struct;
+	
+	ret_val.depth=0.0;
+	ret_val.color=textureSample(marker_texture,marker_sampler,vf.vertex_texture.xy);
+	if(dot(ret_val.color.rgb,ret_val.color.rgb)<0.75){
+		discard;
+		return ret_val;
+	}
+	ret_val.color=marker_info.face_normal_color;
+	if(   (system_info.pickup_component_id==marker_info.marker_component_id)
+		&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
+		&&(system_info.pickup_body_id==marker_info.marker_body_id))
 	{
-		ft.depth=0.0;
-		
-		ft.color=textureSample(marker_texture,marker_sampler,vf.vertex_texture.xy);
-		if(dot(ft.color.rgb,ft.color.rgb)<0.75){
-			ft.color.a=0.0;
-		}else{
-			ft.color.a=1.0;
-		}
-		ft.color=vec4(marker_info.face_normal_color.rgb,ft.color.a);
-		if(   (system_info.pickup_component_id==marker_info.marker_component_id)
-			&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
-			&&(system_info.pickup_body_id==marker_info.marker_body_id))
-		{
-			ft.color=vec4(marker_info.face_pickup_color.rgb,ft.color.a);
-		}
-		break;
+		ret_val.color=marker_info.face_pickup_color;
 	}
-	case 1:	//edge
+	return ret_val;
+}
+@fragment
+fn fragment_edge_fun(vf	:	vertex_to_fragment_struct) -> @location(0) vec4<f32>
+{
+	if(   (system_info.pickup_component_id==marker_info.marker_component_id)
+		&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
+		&&(system_info.pickup_body_id==marker_info.marker_body_id))
 	{
-		ft.depth=vf.vertex_position.z;
-		ft.color=vec4(marker_info.edge_normal_color.rgb,1.0);
-		if(   (system_info.pickup_component_id==marker_info.marker_component_id)
-			&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
-			&&(system_info.pickup_body_id==marker_info.marker_body_id))
-		{
-			ft.color=vec4(marker_info.edge_pickup_color.rgb,1.0);
-		}
-		break;
+		return marker_info.edge_pickup_color;
 	}
-	case 2:
+	return marker_info.edge_normal_color;
+}
+
+@fragment
+fn fragment_point_fun(vf	:	vertex_to_fragment_struct) -> @location(0) vec4<f32>
+{
+	if(   (system_info.pickup_component_id==marker_info.marker_component_id)
+		&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
+		&&(system_info.pickup_body_id==marker_info.marker_body_id))
 	{
-		ft.depth=vf.vertex_position.z;
-		ft.color=vec4(marker_info.point_normal_color.rgb,1.0);
-		if(   (system_info.pickup_component_id==marker_info.marker_component_id)
-			&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
-			&&(system_info.pickup_body_id==marker_info.marker_body_id))
-		{
-			ft.color=vec4(marker_info.point_pickup_color.rgb,1.0);
-		}
-		break;
-	}
-	}
-	return ft;
+		return marker_info.point_pickup_color;
+	}	
+	return marker_info.point_normal_color;
 }

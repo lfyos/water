@@ -61,7 +61,12 @@ public class extended_part_driver extends part_driver
 			component_load_source_container component_load_source_cont,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_component_driver(my_component_part);
+		String file_name=my_component_part.directory_name+my_component_part.material_file_name;
+		file_reader par_f=new file_reader(file_name,my_component_part.file_charset);
+		int camera_id=par_f.get_int(),parameter_channel_id=par_f.get_int();
+		par_f.close();
+		
+		return new extended_component_driver(my_component_part,camera_id,parameter_channel_id);
 	}
 	public part_instance_driver create_part_instance_driver(part p,
 				engine_kernel ek,client_request_response request_response)

@@ -33,7 +33,7 @@ async function create_webgpu(my_canvas)
 			alphaMode:	"premultiplied"
 		});
 	}
-		
+
 	webgpu.canvas_2d		=document.createElement("canvas");
 	webgpu.canvas_2d.width	=webgpu.canvas[0].width;
 	webgpu.canvas_2d.height	=webgpu.canvas[0].height;

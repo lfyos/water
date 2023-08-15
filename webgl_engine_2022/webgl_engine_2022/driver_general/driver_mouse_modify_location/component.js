@@ -500,7 +500,7 @@ function mousemove(event,component_id,render)
 }
 function dblclick(event,component_id,render)
 {
-	if(event.button=0)
+	if(event.button==0)
 		send_to_webserver(component_id,(ep.function_id<200)?"dblclick_view":"dblclick_component",render);
 		
 		return false;
@@ -727,6 +727,8 @@ function construct_component_driver(
 		ep=Object.assign(old_ep,ep);
 	render.component_event_processor[component_id]=ep;
 	
+	this.component_id=component_id;
+	
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,data_buffer_id,component_id,driver_id,
 			component_render_parameter,component_buffer_parameter,
@@ -753,5 +755,10 @@ function construct_component_driver(
 		ep.rotate_type_flag		=rotate_type_flag;
 		ep.change_type_flag		=change_type_flag;
 		ep.exchange_point_flag	=exchange_point_flag;
+	}
+	
+	this.destroy=function(render)
+	{
+		render.component_event_processor[component_id]=null;
 	}
 };

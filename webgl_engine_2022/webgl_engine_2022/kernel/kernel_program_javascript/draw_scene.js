@@ -30,7 +30,7 @@ function draw_scene_routine(render_data,render)
 			return;
 		for(var i=0,ni=method_array.length;i<ni;i++){
 			if(typeof(target_component_driver.begin_render_method)=="function")
-				target_component_driver.begin_render_method(
+				target_component_driver.begin_render_method(target_sequence_id,
 					method_array[i],render_data,project_matrix,
 					target_part_object,target_part_driver,target_render_driver,render);
 			for(var render_id=0,render_number=render.part_array.length;render_id<render_number;render_id++){
@@ -71,7 +71,7 @@ function draw_scene_routine(render_data,render)
 				}
 			}
 			if(typeof(target_component_driver.end_render_method)=="function")
-				target_component_driver.end_render_method(
+				target_component_driver.end_render_method(target_sequence_id,
 					method_array[i],render_data,project_matrix,
 					target_part_object,target_part_driver,target_render_driver,render);
 		}	
@@ -80,8 +80,8 @@ function draw_scene_routine(render_data,render)
 			render.webgpu.render_pass_encoder=null;
 		}
 		if(typeof(target_component_driver.end_render_target)=="function")
-			target_component_driver.end_render_target(render_data,
-				target_part_object,target_part_driver,target_render_driver,render);
+			target_component_driver.end_render_target(target_sequence_id,
+				render_data,target_part_object,target_part_driver,target_render_driver,render);
 	}
 }
 async function draw_scene_main(part_init_data,component_init_data,render)
@@ -123,9 +123,7 @@ async function draw_scene_main(part_init_data,component_init_data,render)
 			if(render.render_buffer_array[i].do_render_flag){
 				render.webgpu.command_encoder=render.webgpu.device.createCommandEncoder();
 				
-				
 				draw_scene_routine(render.render_buffer_array[i],render);
-				
 				
 				command_encoder_buffer.push(render.webgpu.command_encoder.finish());
 				render.webgpu.command_encoder=null;

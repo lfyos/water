@@ -4,38 +4,27 @@ struct vertex_to_fragment_struct
 	@location(0)		color		:	vec4<f32>
 };
 
-struct fragment_to_target_struct
-{
-	@location(0) 			color	:	vec4<f32>
-};
-
 @vertex
 fn vertex_main(
 		@location(0) my_position	:	vec4<f32>,
-		@location(1) my_normal		:	vec4<f32>,
-		@location(2) my_material	:	vec4<f32>,
-		@location(3) my_id			:	vec4<f32>
+		@location(2) my_material	:	vec4<f32>
 	)->vertex_to_fragment_struct
 {	
 	var p0=location_info.matrix*vec4<f32>(0.0,0.0,0.0,1.0);
 	p0=p0/p0[3];
 	
 	var pp=target_info.right_up_far_point-target_info.left_down_near_point;
-	pp=my_position*length(pp);
+	pp=my_position*length(pp.xyz);
 
 	var vf	:	vertex_to_fragment_struct;
 	
 	vf.color	=my_material;
-	vf.position	=target_info.projection_matrix*vec4<f32>(p0.xyz+pp.xyz,1.0);
+	vf.position	=target_info.projection_matrix*vec4((p0+pp).xyz,1.0);
 	return vf;
 }
 
 @fragment
-fn fragment_main(vf	:	vertex_to_fragment_struct) -> fragment_to_target_struct
+fn fragment_main(vf	:	vertex_to_fragment_struct) -> @location(0)	vec4<f32>
 {	
-	var ft	:	fragment_to_target_struct;
-	
-	ft.color=vf.color;
-
-	return ft;
+	return vf.color;
 }

@@ -79,32 +79,14 @@ function new_render_driver(
 		fragment		:
 		{
 			module		:	my_module,
-			
-			entryPoint	:	"fragment_main",
+			entryPoint	:	"fragment_id_fun",
 			targets	: 
 			[
 				{
-					format		:	render.webgpu.gpu.getPreferredCanvasFormat(),
-					blend		:
-					{
-						color	:
-						{
-							operation	:	"add",
-    						srcFactor	:	"src-alpha",
-							dstFactor	:	"one-minus-src-alpha"
-						},
-						alpha	:
-						{
-							operation	:	"add",
-    						srcFactor	:	"src-alpha",
-							dstFactor	:	"one-minus-src-alpha"
-						}
-					},
-					writeMask	:	GPUColorWrite. ALL
+					format		:	"rgba32sint"
 				},
 				{
-					format		:	"rgba32sint",
-					writeMask	:	GPUColorWrite. ALL
+					format		:	"rgba32sint"
 				}
 			],
 		},
@@ -129,29 +111,41 @@ function new_render_driver(
     		depthBiasClamp		:	0
 		}
 	};
-
+	
 	pipeline_descr.vertex.constants				={primitive_type:0};
-	pipeline_descr.fragment.constants			={primitive_type:0};
-	pipeline_descr.primitive.topology="triangle-list";
+	pipeline_descr.primitive.topology			="triangle-list";
+	pipeline_descr.fragment.entryPoint			="fragment_id_fun";
+	this.id_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	
+	pipeline_descr.fragment.targets.length		=1;
+	pipeline_descr.fragment.targets[0].format	=render.webgpu.gpu.getPreferredCanvasFormat();
+	if(render.parameter.multisample>1)
+		pipeline_descr.multisample={count:render.parameter.multisample};
+
+	pipeline_descr.vertex.constants				={primitive_type:1};
+	pipeline_descr.primitive.topology			="triangle-list";
+	pipeline_descr.fragment.entryPoint			="fragment_face_fun";
 	this.face_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
-	pipeline_descr.vertex.constants				={primitive_type:1};
-	pipeline_descr.fragment.constants			={primitive_type:1};
-	pipeline_descr.primitive.topology="line-list";
+	pipeline_descr.vertex.constants				={primitive_type:2};
+	pipeline_descr.primitive.topology			="line-list";
+	pipeline_descr.fragment.entryPoint			="fragment_edge_fun";
 	this.edge_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
-	pipeline_descr.vertex.constants				={primitive_type:2};
-	pipeline_descr.fragment.constants			={primitive_type:2};
-	pipeline_descr.primitive.topology="point-list";
+	pipeline_descr.vertex.constants				={primitive_type:3};
+	pipeline_descr.primitive.topology			="point-list";
+	pipeline_descr.fragment.entryPoint			="fragment_point_fun";
 	this.point_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 
 	this.new_part_driver=construct_part_driver;
 	
-	this.method_render_flag=[false,false,false,false,false,true];
+	this.method_render_flag=[true,false,true];
 	
 	this.destroy=function()
 	{
 		this.bindgroup_layout	=null;
+		
+		this.id_pipeline		=null;
 		this.face_pipeline		=null;
 		this.edge_pipeline		=null;
 		this.point_pipeline		=null;

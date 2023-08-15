@@ -38,10 +38,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
-		if(show_flag)
-			if(cr.target.main_display_target_flag)
-				return false;
-		return true;
+		return show_flag?false:true;
 	}
 	public void create_render_parameter(int render_buffer_id,
 			int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)

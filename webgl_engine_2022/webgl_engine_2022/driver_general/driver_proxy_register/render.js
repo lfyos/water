@@ -7,6 +7,7 @@ function new_render_driver(
 	
 	this.destroy=function()
 	{
-		this.new_part_driver=null;
+		this.new_part_driver	=null;
+		this.method_render_flag	=null;
 	}
 }

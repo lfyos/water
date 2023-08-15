@@ -86,4 +86,9 @@ function construct_component_driver(
 				this.location_data.push(location_item);
 		}	
 	}
+	this.destroy=function()
+	{
+		this.location_data	=null;
+		this.draw_component	=null;
+	}
 };

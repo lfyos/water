@@ -132,10 +132,6 @@ function new_render_driver(
 			[
 				{
 					format		:	render.webgpu.gpu.getPreferredCanvasFormat()
-				},
-				{
-					format		:	"rgba32sint",
-					writeMask	:	0
 				}
 			]
 		},
@@ -160,6 +156,9 @@ function new_render_driver(
     		depthBiasClamp		:	0
 		}
 	};
+	
+	if(render.parameter.multisample>1)
+		pipeline_descr.multisample={count:render.parameter.multisample};
 
 	pipeline_descr.fragment.constants={no_box_mode:true};
 	this.no_box_pipeline = render.webgpu.device.createRenderPipeline(pipeline_descr);
@@ -169,10 +168,15 @@ function new_render_driver(
 
 	this.new_part_driver=construct_part_driver;
 	
-	this.method_render_flag=[false,true];
+	this.method_render_flag=[false,false,true];
 	
 	this.destroy=function()
 	{
-		this.pipeline=null;
+		this.texture_bindgroup_layout=null;
+		
+		this.no_box_pipeline	=null;
+		this.box_pipeline		=null;
+		this.new_part_driver	=null;
+		this.method_render_flag	=null;
 	}
 }

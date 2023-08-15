@@ -35,10 +35,17 @@ struct vertex_to_fragment_struct
 		@builtin(position)	vertex_position		:	vec4<f32>,
 		@location(1)		vertex_texture		:	vec4<f32>
 };
-struct fragment_to_target_struct
+
+struct id_target_struct
+{
+		@location(0) 				id_0		:	vec4<i32>,
+		@location(1) 				id_1		:	vec4<i32>,
+		@builtin(frag_depth)		depth		:	f32
+};
+
+struct face_target_struct
 {
 		@location(0) 				color		:	vec4<f32>,
-		@location(1) 				id			:	vec4<i32>,
 		@builtin(frag_depth)		depth		:	f32
 };
 
@@ -49,28 +56,48 @@ fn vertex_main(
 	)->vertex_to_fragment_struct
 {
 	var vf:vertex_to_fragment_struct;
-	
+
 	switch(primitive_type){
-	default:	//face
+	default:	//face for selection
 		{
+			var width_height		:	vec4<f32>;
+			var projection_matrix	:	mat4x4<f32>;
+
+			if(primitive_type==1){
+				width_height=vec4(f32(target_info.target_width),f32(target_info.target_height),0.0,0.0);
+				projection_matrix=target_info.projection_matrix;
+			}else{
+				width_height=vec4(	f32(system_info.current_canvas_width),
+									f32(system_info.current_canvas_height),0.0,0.0);
+				projection_matrix=mat4x4<f32>(
+					1.0/(f32(system_info.current_canvas_width)/f32(system_info.current_canvas_height)),
+									0.0,			0.0,			0.0,
+					0.0,			1.0,			0.0,			0.0,
+					0.0,			0.0,			0.5,			0.0,
+					0.0,			0.0,			0.5,			1.0
+				)*target_info.negative_screen_move_matrix*target_info.projection_matrix;
+			}
+
 			var x_unit=normalize(tag_info.tag_dx);
 			var y_unit=normalize(tag_info.tag_dy);
 			var p_origin=tag_info.tag_p0+0.5*tag_info.tag_dx+1.0*tag_info.tag_dy;
-			var p0=target_info.projection_matrix*(p_origin);
-			var px=target_info.projection_matrix*(p_origin+x_unit);
-			var py=target_info.projection_matrix*(p_origin+y_unit);
-			var width_height=vec4(f32(target_info.target_width),f32(target_info.target_height),0.0,0.0);
+			
+			var p0=projection_matrix*(p_origin);
+			var px=projection_matrix*(p_origin+x_unit);
+			var py=projection_matrix*(p_origin+y_unit);
+
 			var x_scale=f32(tag_info.width_pixel_number) /length((px/px.w-p0/p0.w)*width_height);
 			var y_scale=f32(tag_info.height_pixel_number)/length((py/py.w-p0/p0.w)*width_height);
+			
 			vf.vertex_position=p_origin+my_coord.x*x_scale*x_unit
 					+(my_coord.y+tag_info.height_adjust)*y_scale*y_unit;
 			vf.vertex_position=target_info.projection_matrix*vf.vertex_position;
 			break;
 		}
-	case 1,2:	//edge,point
+	case 2,3:	//edge,point
 		{
 			vf.vertex_position=tag_info.tag_p0+my_coord.x*tag_info.tag_dx+my_coord.y*tag_info.tag_dy;
-			vf.vertex_position	=target_info.projection_matrix*vf.vertex_position;
+			vf.vertex_position=target_info.projection_matrix*vf.vertex_position;
 			break;
 		}
 	}
@@ -88,58 +115,62 @@ fn vertex_main(
 			vf.vertex_texture	=vec4(1.0-my_texture.x,1.0-my_texture.y,my_texture.zw);
 		}
 	}
+	
 	return vf;
 }
 
-@fragment
-fn fragment_main(vf	:	vertex_to_fragment_struct) -> fragment_to_target_struct
-{
-	var ft 	:	fragment_to_target_struct;
 
-	ft.id=vec4(tag_info.tag_system_id,tag_info.tag_body_id,0,0);
-	switch(primitive_type){
-	default:	//face
-		{
-			ft.depth=0.0;
-			ft.color=textureSample(tag_texture,tag_sampler,vf.vertex_texture.xy);
-			if(dot(ft.color.rgb,ft.color.rgb)<0.75){
-				ft.color.a=0.0;
-			}else{
-				ft.color.a=1.0;
-			}
-			ft.color=vec4(tag_info.face_normal_color.rgb,ft.color.a);
-			if(   (system_info.pickup_component_id==tag_info.tag_component_id)
-				&&(system_info.pickup_driver_id==tag_info.tag_driver_id)
-				&&(system_info.pickup_body_id==tag_info.tag_body_id))
-			{
-				ft.color=vec4(tag_info.face_pickup_color.rgb,ft.color.a);
-			}
-			break;
-		}
-	case 1:	//edge
-		{
-			ft.depth=vf.vertex_position.z/vf.vertex_position.w;
-			ft.color=vec4(tag_info.edge_normal_color.rgb,1.0);
-			if(   (system_info.pickup_component_id==tag_info.tag_component_id)
-				&&(system_info.pickup_driver_id==tag_info.tag_driver_id)
-				&&(system_info.pickup_body_id==tag_info.tag_body_id))
-			{
-				ft.color=vec4(tag_info.edge_pickup_color.rgb,1.0);
-			}
-			break;
-		}
-	case 2:
-		{
-			ft.depth=vf.vertex_position.z/vf.vertex_position.w;
-			ft.color=vec4(tag_info.point_normal_color.rgb,1.0);
-			if(   (system_info.pickup_component_id==tag_info.tag_component_id)
-				&&(system_info.pickup_driver_id==tag_info.tag_driver_id)
-				&&(system_info.pickup_body_id==tag_info.tag_body_id))
-			{
-				ft.color=vec4(tag_info.point_pickup_color.rgb,1.0);
-			}
-			break;
-		}
+@fragment
+fn fragment_id_fun(vf:vertex_to_fragment_struct) -> id_target_struct
+{
+	var its:id_target_struct;
+	its.id_0=vec4(tag_info.tag_system_id,tag_info.tag_body_id,0,0);
+	its.id_1=vec4(-1,-1,0,0);
+	its.depth=0.0;
+	return its;
+}
+
+@fragment
+fn fragment_face_fun(vf:vertex_to_fragment_struct) -> face_target_struct
+{
+	var fts	:	face_target_struct;
+	
+	fts.depth=0.0;
+	fts.color=textureSample(tag_texture,tag_sampler,vf.vertex_texture.xy);
+	if(dot(fts.color.rgb,fts.color.rgb)<0.75){
+		discard;
 	}
-	return ft;
+	
+	fts.color=tag_info.face_normal_color;
+	if(   (system_info.pickup_component_id==tag_info.tag_component_id)
+		&&(system_info.pickup_driver_id==tag_info.tag_driver_id)
+		&&(system_info.pickup_body_id==tag_info.tag_body_id))
+	{
+			fts.color=tag_info.face_pickup_color;
+	}
+	
+	return fts;
+}
+
+@fragment
+fn fragment_edge_fun(vf:vertex_to_fragment_struct) -> @location(0) vec4<f32>
+{
+	if(   (system_info.pickup_component_id==tag_info.tag_component_id)
+		&&(system_info.pickup_driver_id==tag_info.tag_driver_id)
+		&&(system_info.pickup_body_id==tag_info.tag_body_id))
+	{
+		return tag_info.edge_pickup_color;
+	}
+	return tag_info.edge_normal_color;
+}
+@fragment
+fn fragment_point_fun(vf:vertex_to_fragment_struct) -> @location(0) vec4<f32>
+{
+	if(   (system_info.pickup_component_id==tag_info.tag_component_id)
+		&&(system_info.pickup_driver_id==tag_info.tag_driver_id)
+		&&(system_info.pickup_body_id==tag_info.tag_body_id))
+	{
+		return tag_info.point_pickup_color;
+	}
+	return tag_info.point_normal_color;
 }

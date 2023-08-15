@@ -134,6 +134,8 @@ public class dispatch_create_engine_request
 	
 	static public void do_dispatch(engine_kernel ek,client_information ci)
 	{
+		String str;
+		
 		ci.request_response.print("[ "+ci.channel_id+" ,");				//parameter	0
 		
 		do_response_init_render_data(ek,ci);							//parameter	1
@@ -162,7 +164,10 @@ public class dispatch_create_engine_request
 
 		ci.request_response.print( "\"max_loading_number\":",		ci.parameter.max_client_loading_number);
 		ci.request_response.print(",\"engine_touch_time_length\":",	ek.system_par.engine_touch_time_length);
-			
+		
+		str=ci.request_response.get_parameter("multisample");
+		ci.request_response.print(",\"multisample\":",(str==null)?"1":((str=str.trim()).length()<=0)?"1":str);
+
 		ci.request_response.print("}");
 		ci.request_response.print("],\"");
 

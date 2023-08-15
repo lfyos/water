@@ -28,4 +28,11 @@ function construct_component_driver(
 		this.audio.src=render.caller.create_component_request_string(
 				component_id,driver_id,[["operation","audio"],["fresh",Math.random()]]);
 	};
+	
+	this.destroy=function()
+	{
+		this.audio=null;
+		this.draw_component=null;
+		this.append_component_parameter=null;
+	}
 };

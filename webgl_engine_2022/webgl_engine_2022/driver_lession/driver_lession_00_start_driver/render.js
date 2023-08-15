@@ -56,8 +56,7 @@ function new_render_driver(
 					]
 				}
 			]
-		},
-		    
+		},   
 		fragment		:
 		{
 			module		:	my_module,
@@ -71,7 +70,7 @@ function new_render_driver(
 				{
 					format		:	"rgba32sint"
 				}
-			],
+			]
 		},
 		primitive	:
 		{
@@ -94,16 +93,40 @@ function new_render_driver(
     		depthBiasClamp		:	0
 		}
 	};
-
-	pipeline_descr.fragment.targets[0].format=render.webgpu.gpu.getPreferredCanvasFormat();
-	this.color_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	pipeline_descr.fragment.entryPoint="fragment_id_fun";
+	pipeline_descr.fragment.targets=[
+		{
+			format:"rgba32sint"
+		},
+		{
+			format:"rgba32sint"
+		}
+	];
+	this.id_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
-	pipeline_descr.fragment.targets[0].format="rgba32float";
+	pipeline_descr.fragment.entryPoint="fragment_value_fun";
+	pipeline_descr.fragment.targets=[
+		{
+			format:"rgba32float"
+		}
+	];
 	this.value_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	
+	pipeline_descr.fragment.entryPoint="fragment_render_fun";
+	pipeline_descr.fragment.targets=[
+		{
+			format:render.webgpu.gpu.getPreferredCanvasFormat()
+		}
+	];
+	
+	if(render.parameter.multisample>1)
+		pipeline_descr.multisample={count:render.parameter.multisample};
+		
+	this.render_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	this.new_part_driver=construct_part_driver;
 	
-	this.method_render_flag=[true,true];
+	this.method_render_flag=[true,true,true];
 	
 	this.destroy=function()
 	{

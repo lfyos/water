@@ -47,7 +47,9 @@ async function body_onload()
 			["max_loading_number",		max_loading_number	],	//同时下载数量
 			
 			["sub_directory",			sub_directory		],	//显示内容
-			["coordinate",				coordinate			]	//坐标系选择
+			["coordinate",				coordinate			],	//坐标系选择
+			
+			["multisample",				4					]	//多重采样数
 		],
 		function(			//9.进度条绘制函数，如果不配置该函数，则使用系统内部提供的默认进度条绘制函数
 				webgpu_canvas_id,				//绘制结束后，绘制结果拷贝到哪个canvas 

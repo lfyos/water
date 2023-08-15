@@ -160,7 +160,7 @@ function construct_event_listener()
 	};
 };
 
-function caculate_matrix(component_id,render_data,project_matrix,part_object,render)
+function caculate_parameter(component_id,render_data,project_matrix,part_object,render)
 {
 	var x0				=part_object.material[0];
 	var y0				=part_object.material[1];
@@ -199,27 +199,26 @@ function construct_component_driver(
 		rpe.setVertexBuffer(1,this.parameter_buffer);
 
 		switch(method_data.method_id){
-		case 0:
+		case 0:		
 			p=part_object.buffer_object.face.region_data;
-			rpe.setPipeline(render_driver.value_pipeline);
+			rpe.setPipeline(render_driver.id_pipeline);
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);
 				rpe.draw(p[i].item_number);
 			}
 			break;
-		case 1:
+		case 2:
 			render.webgpu.device.queue.writeBuffer(this.parameter_buffer,0,new Float32Array(
-					caculate_matrix(component_id,render_data,project_matrix,part_object,render)));
-
+					caculate_parameter(component_id,render_data,project_matrix,part_object,render)));
 			p=part_object.buffer_object.face.region_data;
-			rpe.setPipeline(render_driver.color_pipeline);
+			rpe.setPipeline(render_driver.face_pipeline);
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);
 				rpe.draw(p[i].item_number);
 			};
 
 			p=part_object.buffer_object.edge.region_data;
-			rpe.setPipeline(render_driver.line_pipeline);
+			rpe.setPipeline(render_driver.edge_pipeline);
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);
 				rpe.draw(p[i].item_number);

@@ -25,7 +25,7 @@ function construct_component_driver(
 			rpe.draw(p[i].item_number);
 		}
 	};
-
+	
 	this.append_component_parameter=function(
 				component_id,	driver_id,			render_id,		part_id,
 				data_buffer_id,		buffer_data_item,	buffer_data_array,
@@ -34,4 +34,13 @@ function construct_component_driver(
 		render.webgpu.device.queue.writeBuffer(this.buffer,0,new Float32Array(buffer_data_item[0]));
 		this.box_component_id=buffer_data_item[1];
 	};
+	this.destroy=function()
+	{
+		if(this.buffer!=null)
+			this.buffer.destroy();
+		
+		this.buffer						=null;
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
+	}
 };

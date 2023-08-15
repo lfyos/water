@@ -8,10 +8,19 @@ function construct_component_driver(
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
 		var rpe	=render.webgpu.render_pass_encoder;
-		rpe.setPipeline(
-			(method_data.method_id==0)
-			?(render_driver.value_pipeline)
-			:(render_driver.color_pipeline));
+		switch(method_data.method_id){
+		default:
+			return;
+		case 0:
+			rpe.setPipeline(render_driver.id_pipeline);
+			break;
+		case 1:
+			rpe.setPipeline(render_driver.value_pipeline);
+			break;
+		case 2:
+			rpe.setPipeline(render_driver.render_pipeline);
+			break;
+		}
 		var p=part_object.buffer_object.face.region_data;
 		for(var i=0,ni=p.length;i<ni;i++){
 			rpe.setVertexBuffer(0,p[i].buffer);

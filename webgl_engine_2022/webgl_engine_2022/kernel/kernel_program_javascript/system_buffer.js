@@ -61,6 +61,8 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 
 	this.set_system_buffer=function()
 	{
+		var cur_canvas=this.render.webgpu.canvas[this.render.webgpu.current_canvas_id];
+		
 		var t=this.render.current_time;
 		var nanosecond=t%1000;		t=Math.floor((t-nanosecond)/1000);
 		var microsecond=t%1000;		t=Math.floor((t-microsecond)/1000);
@@ -84,6 +86,9 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 			this.render.highlight.body_id,
 			this.render.highlight.face_id,
 			
+			cur_canvas.width,
+			cur_canvas.height,
+			
 			da.getFullYear(),
 			da.getMonth(),
 			da.getDate(),
@@ -94,14 +99,13 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 			
 			microsecond,
 			nanosecond,
-			
-			0,0
 		];
 		
 		var float_data=[
 			this.render.pickup.depth,
-			this.render.pickup.value,
-			0,0
+			this.render.pickup.value[0],
+			this.render.pickup.value[1],
+			this.render.pickup.value[2]
 		];
 		
 		var camera_object_parameter=this.render.camera.camera_object_parameter;
@@ -115,9 +119,9 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 				float_data.push(light_position[0],light_position[1],light_position[2],light_position[3]);
 			}
 		this.render.webgpu.device.queue.writeBuffer(this.system_buffer,
-			0,					new Int32Array(int_data));
+			0,												new Int32Array(int_data));
 		this.render.webgpu.device.queue.writeBuffer(this.system_buffer,
-			int_data.length*4,	new Float32Array(float_data));
+			int_data.length*Int32Array.BYTES_PER_ELEMENT,	new Float32Array(float_data));
 	};
 
 	this.set_target_buffer=function(target_id,project_matrix,target_parameter)
@@ -148,7 +152,6 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 			
 			project_matrix.clip_plane_matrix
 		];
-		
 		var vector_array=[
 			project_matrix.left_plane,	
 			project_matrix.right_plane,

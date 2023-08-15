@@ -47,8 +47,7 @@ function construct_component_driver(
 			size	:	16,
 			usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.VERTEX 
 		});
-		
-		
+
 	this.append_component_parameter=function(
 		component_id,	driver_id,			render_id,		part_id,
 		data_buffer_id,	buffer_data_item,	buffer_data_array,

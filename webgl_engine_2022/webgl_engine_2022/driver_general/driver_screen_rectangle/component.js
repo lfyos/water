@@ -6,8 +6,10 @@ function construct_component_driver(
 		render.component_event_processor[component_id]={};
 		this.ep=render.component_event_processor[component_id];
 	}
-	this.ep.data=[0,0,0,0];
-	this.ep.data_bak=[-10000000,-10000000,10000000,10000000];
+	
+	this.component_id	=component_id;
+	this.ep.data		=[0,0,0,0];
+	this.ep.data_bak	=[-10000000,-10000000,10000000,10000000];
 	
 	this.buffer=this.method_buffer	=render.webgpu.device.createBuffer(
 		{
@@ -39,5 +41,14 @@ function construct_component_driver(
 			rpe.setVertexBuffer(0,p[i].buffer);
 			rpe.draw(p[i].item_number);
 		}
+	}
+	
+	this.destroy=function()
+	{
+		if(this.buffer!=null)
+			this.buffer.destroy();
+		this.ep				=null;
+		this.buffer			=null;
+		this.draw_component	=null;
 	}
 };

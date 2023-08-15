@@ -19,6 +19,10 @@ function new_render_driver(
 		{
 			module		:	my_module,
 			entryPoint	:	"vertex_main",
+			constants	:
+			{
+				primitive_type	:	0
+			},
 			buffers		:
 			[
 				{
@@ -67,21 +71,17 @@ function new_render_driver(
 				}
 			]
 		},
-
 		fragment		:
 		{
 			module		:	my_module,
-			
-			entryPoint	:	"fragment_main",
+			entryPoint	:	"fragment_id_fun",
 			targets	: 
 			[
 				{
-					format		:	"rgba32float",
-					writeMask	:	GPUColorWrite.ALL
+					format		:	"rgba32sint"
 				},
 				{
-					format		:	"rgba32sint",
-					writeMask	:	GPUColorWrite.ALL
+					format		:	"rgba32sint"
 				}
 			],
 		},
@@ -106,44 +106,41 @@ function new_render_driver(
     		depthBiasClamp		:	0
 		}
 	};
-
-	pipeline_descr.vertex.constants				={primitive_type:0};
-	pipeline_descr.fragment.constants			={primitive_type:0};
-	pipeline_descr.fragment.targets[0].format	="rgba32float";
-	pipeline_descr.fragment.targets[1].writeMask=GPUColorWrite.ALL;
-	pipeline_descr.primitive.topology			="triangle-list";
-	this.value_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
-
-	pipeline_descr.vertex.constants				={primitive_type:1};
-	pipeline_descr.fragment.constants			={primitive_type:1};
-	pipeline_descr.fragment.targets[0].format	=render.webgpu.gpu.getPreferredCanvasFormat();
-	pipeline_descr.fragment.targets[1].writeMask=GPUColorWrite.ALL;
-	pipeline_descr.primitive.topology			="triangle-list";
-	this.color_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
-	pipeline_descr.vertex.constants				={primitive_type:2};
-	pipeline_descr.fragment.constants			={primitive_type:2};
+	this.id_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	
+	pipeline_descr.fragment.targets.length		=1;
 	pipeline_descr.fragment.targets[0].format	=render.webgpu.gpu.getPreferredCanvasFormat();
-	pipeline_descr.fragment.targets[1].writeMask=0;
-	pipeline_descr.primitive.topology			="line-list";
-	this.line_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	if(render.parameter.multisample>1)
+		pipeline_descr.multisample={count:render.parameter.multisample};
 
+	pipeline_descr.fragment.entryPoint			="fragment_face_fun";
+	pipeline_descr.vertex.constants				={primitive_type:1};
+	this.face_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	
+	pipeline_descr.fragment.entryPoint			="fragment_edge_fun";
+	pipeline_descr.vertex.constants				={primitive_type:2};
+	pipeline_descr.primitive.topology			="line-list";
+	this.edge_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+
+	pipeline_descr.fragment.entryPoint			="fragment_point_fun";
 	pipeline_descr.vertex.constants				={primitive_type:3};
-	pipeline_descr.fragment.constants			={primitive_type:3};
-	pipeline_descr.fragment.targets[0].format	=render.webgpu.gpu.getPreferredCanvasFormat();
-	pipeline_descr.fragment.targets[1].writeMask=0;
 	pipeline_descr.primitive.topology			="point-list";
 	this.point_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	this.new_part_driver=construct_part_driver;
 	
-	this.method_render_flag=[true,true];
+	this.method_render_flag=[true,false,true];
 	
 	this.destroy=function()
 	{
-		this.value_pipeline	=null;
-		this.color_pipeline	=null;
-		this.line_pipeline	=null;
+		this.id_pipeline	=null;
+		this.face_pipeline	=null;
+		this.edge_pipeline	=null;
 		this.point_pipeline	=null;
+		
+		this.new_part_driver=null;
+		
+		this.method_render_flag=null;
 	}
 }

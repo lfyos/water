@@ -1,0 +1,39 @@
+/*	p0_component	*/	start_driver_component
+/*	px_component	*/	start_driver_component
+/*	tag_component	*/	system_root_component
+/*	type_id			*/	-1
+/*	p0				*/	0.5976377151275876	0.8751413965523174	5.788915981754794E-4
+/*	px				*/	0.8829326634021711	0.8012829350572621	5.797222257006851E-4
+/*	py				*/	0.6920083584558858	1.2396667563383308	-0.22281517368955311
+/*	tag_title		*/	null
+
+
+/*	extra_distance_tag	*/	false
+
+
+/*	p0_component	*/	start_driver_component
+/*	px_component	*/	start_driver_component
+/*	tag_component	*/	system_root_component
+/*	type_id			*/	-1
+/*	p0				*/	0.1623443397178379	0.9020198998581741	5.796338354848718E-4
+/*	px				*/	0.02705462452844065	0.11099131797824557	5.840362931466281E-4
+/*	py				*/	-0.15386159032236446	0.9561024500969683	0.3260350080677028
+/*	tag_title		*/	null
+
+
+/*	extra_distance_tag	*/	false
+
+
+/*	p0_component	*/	start_driver_component
+/*	px_component	*/	start_driver_component
+/*	tag_component	*/	system_root_component
+/*	type_id			*/	-1
+/*	p0				*/	0.30855600675659267	0.06792261469910477	-2.6752265517204776E-4
+/*	px				*/	0.9182268318437087	0.5540281564588536	5.797730201795304E-4
+/*	py				*/	0.6187112770647285	-0.32146929634858196	0.22745265630226344
+/*	tag_title		*/	null
+
+
+/*	extra_distance_tag	*/	false
+
+

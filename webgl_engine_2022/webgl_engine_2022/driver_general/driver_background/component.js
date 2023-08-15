@@ -174,6 +174,7 @@ function construct_component_driver(
 	{
 		if(this.texture_bind_group.is_busy_flag)
 			return;
+			
 		var mode,rpe=render.webgpu.render_pass_encoder;
 		
 		if((mode=component_buffer_parameter[component_buffer_parameter.length-1][0])>0)	
@@ -200,5 +201,14 @@ function construct_component_driver(
 		this.texture_bind_group.destroy();
 		this.texture_bind_group=new create_texture_bind_group();
 		this.texture_bind_group.create(buffer_data_item[1],part_object,render_driver,render);
+	}
+	this.destroy=function()
+	{
+		if(this.texture_bind_group!=null){
+			this.texture_bind_group.destroy();
+			this.texture_bind_group=null;
+		};
+		this.append_component_parameter=null;
+		this.draw_component=null;
 	}
 };

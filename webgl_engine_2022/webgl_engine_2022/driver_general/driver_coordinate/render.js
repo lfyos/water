@@ -52,8 +52,7 @@ function new_render_driver(
 					]
 				}
 			]
-		},
-		    
+		}, 
 		fragment		:
 		{
 			module		:	my_module,
@@ -63,10 +62,6 @@ function new_render_driver(
 			[
 				{
 					format		:	render.webgpu.gpu.getPreferredCanvasFormat()
-				},
-				{
-					format		:	"rgba32sint",
-					writeMask	:	0
 				}
 			],
 		},
@@ -92,13 +87,17 @@ function new_render_driver(
 		}
 	};
 	
-	this.pipeline = render.webgpu.device.createRenderPipeline(pipeline_descr);
-	this.new_part_driver=construct_part_driver;
+	if(render.parameter.multisample>1)
+		pipeline_descr.multisample={count:render.parameter.multisample};
 	
-	this.method_render_flag=[false,true];
+	this.pipeline			=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.new_part_driver	=construct_part_driver;
+	this.method_render_flag	=[false,false,true];
 	
 	this.destroy=function()
 	{
-		this.pipeline=null;
+		this.pipeline			=null;
+		this.new_part_driver	=null;
+		this.method_render_flag	=null;
 	}
 }

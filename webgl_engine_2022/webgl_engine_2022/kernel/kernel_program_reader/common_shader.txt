@@ -1,17 +1,9 @@
-
-
-
-
 struct method_information 
 {
 	method_id	:	i32
 };
 @group(0) @binding(0)
 var<uniform> method_info: method_information; 
-
-
-
-
 
 struct target_information 
 {
@@ -91,22 +83,12 @@ struct target_information
 @group(0) @binding(1)
 var<uniform> target_info: target_information; 
 
-
-
-
-
-
 struct location_information 
 {
 	matrix		:	mat4x4<f32>
 };
 @group(0) @binding(2)
 var<uniform> location_info: location_information; 
-
-
-
-
-
 
 struct id_information 
 {
@@ -122,11 +104,6 @@ struct id_information
 };
 @group(0) @binding(3)	
 var<uniform> id_info: id_information; 
-
-
-
-
-
 
 struct system_information
 {	
@@ -146,6 +123,9 @@ struct system_information
 	highlight_component_id				:	i32,
 	highlight_body_id					:	i32,
 	highlight_face_id					:	i32,
+	
+	current_canvas_width				:	i32,
+	current_canvas_height				:	i32,
 
 	year								:	i32,
 	month								:	i32,
@@ -154,21 +134,39 @@ struct system_information
 	minute								:	i32,
 	second								:	i32,
 	millisecond							:	i32,
-	
 	microsecond							:	i32,
 	nanosecond							:	i32,
-	tmp_int_0							:	i32,
-	tmp_int_1							:	i32,
-
-	pickup_depth						:	i32,
-	pickup_value						:	i32,
-	tmp_float_0							:	i32,
-	tmp_float_1							:	i32,
+	
+	pickup_depth						:	f32,
+	pickup_value_0						:	f32,
+	pickup_value_1						:	f32,
+	pickup_value_2						:	f32,
 	
 	light_position						:	array<vec4<f32>,8>
 };
 @group(0) @binding(4)
 var<uniform> system_info: system_information;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
