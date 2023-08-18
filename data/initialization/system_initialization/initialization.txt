@@ -1,7 +1,6 @@
 				function(component_name,component_id,render)
 				{ 	
-
-/*						
+/*				
 					render.event_component=
 					{
 						mouse	:
@@ -20,7 +19,7 @@
 							function_id	:	0
 						}
 					};
-															
+*/																			
 					render.event_component=
 					{
 						mouse	:
@@ -39,7 +38,7 @@
 							function_id	:	0
 						}
 					};
-*/
+/*
 					render.event_component=
 					{
 						mouse	:
@@ -57,5 +56,6 @@
 							component_name	:	"distance_tag_component",
 							function_id	:	0
 						}
-					};									
+					};
+*/									
 				}

@@ -75,10 +75,15 @@ struct target_information
 	tmp_float_0							:	f32,
 	tmp_float_1							:	f32,
 	
+	target_view_x0						:	i32,
+	target_view_y0						:	i32,
+	target_view_width					:	i32,
+	target_view_height					:	i32,
+	target_whole_view_width				:	i32,
+	target_whole_view_height			:	i32,
+	
 	projection_type_flag				:	i32,
-	target_width						:	i32,
-	target_height						:	i32,
-	tmp_int_2							:	i32
+	tmp_int_0							:	i32
 };
 @group(0) @binding(1)
 var<uniform> target_info: target_information; 
@@ -124,9 +129,13 @@ struct system_information
 	highlight_body_id					:	i32,
 	highlight_face_id					:	i32,
 	
-	current_canvas_width				:	i32,
-	current_canvas_height				:	i32,
-
+	main_target_view_x0					:	i32,
+	main_target_view_y0					:	i32,
+	main_target_view_width				:	i32,
+	main_target_view_height				:	i32,
+	main_target_whole_view_width		:	i32,
+	main_target_whole_view_height		:	i32,
+	
 	year								:	i32,
 	month								:	i32,
 	day									:	i32,
@@ -142,7 +151,11 @@ struct system_information
 	pickup_value_1						:	f32,
 	pickup_value_2						:	f32,
 	
-	light_position						:	array<vec4<f32>,8>
+	
+	main_target_screen_move_matrix			:	mat4x4<f32>,
+	main_target_negative_screen_move_matrix	:	mat4x4<f32>,
+	
+	light_position							:	array<vec4<f32>,8>
 };
 @group(0) @binding(4)
 var<uniform> system_info: system_information;

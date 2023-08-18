@@ -31,8 +31,8 @@ public class client_parameter
 		primitive_id		=-1;
 		vertex_id			=-1;
 		
-		x					=0;
-		y					=0;
+		x					=-10;
+		y					=-10;
 		
 		depth=1.0;
 		value=new double[] {-2,-2,-2};

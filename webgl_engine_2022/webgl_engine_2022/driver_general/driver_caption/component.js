@@ -64,8 +64,6 @@ function construct_component_driver(
 					
 		render.webgpu.canvas_2d.width	=my_texture_width;
 		render.webgpu.canvas_2d.height	=my_texture_height;
-		render.webgpu.context_2d.width	=my_texture_width;
-		render.webgpu.context_2d.height	=my_texture_height;
 	
 		render.webgpu.context_2d.fillStyle="rgb(0,0,0)";
 		render.webgpu.context_2d.fillRect(0,0,my_texture_width,my_texture_height);

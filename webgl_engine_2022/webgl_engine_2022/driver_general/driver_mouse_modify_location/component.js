@@ -500,6 +500,10 @@ function mousemove(event,component_id,render)
 }
 function dblclick(event,component_id,render)
 {
+	var ep=render.component_event_processor[component_id];
+	if(ep.render_data==null)
+		return false;
+		
 	if(event.button==0)
 		send_to_webserver(component_id,(ep.function_id<200)?"dblclick_view":"dblclick_component",render);
 		
@@ -725,8 +729,9 @@ function construct_component_driver(
 	var old_ep;
 	if(typeof(old_ep=render.component_event_processor[component_id])=="object")
 		ep=Object.assign(old_ep,ep);
+		
 	render.component_event_processor[component_id]=ep;
-	
+
 	this.component_id=component_id;
 	
 	this.draw_component=function(method_data,render_data,
@@ -735,7 +740,7 @@ function construct_component_driver(
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
 		while(component_buffer_parameter.length>1)
-			component_buffer_parameter.shift();	
+			component_buffer_parameter.shift();
 		var buffer_data=component_buffer_parameter[0];
 			
 		var component_id		=buffer_data[0];
@@ -756,7 +761,6 @@ function construct_component_driver(
 		ep.change_type_flag		=change_type_flag;
 		ep.exchange_point_flag	=exchange_point_flag;
 	}
-	
 	this.destroy=function(render)
 	{
 		render.component_event_processor[component_id]=null;

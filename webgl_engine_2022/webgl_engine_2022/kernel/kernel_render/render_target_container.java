@@ -38,9 +38,9 @@ public class render_target_container
 	{
 		return (target_array==null)?0:(target_array.size());
 	}
-	public ArrayList<render_target>get_render_target()
+	public render_target[]get_render_target()
 	{
-		return target_array;
+		return target_array.toArray(new render_target[target_array.size()]);
 	}
 	static private int compart_target(render_target s,render_target t)
 	{

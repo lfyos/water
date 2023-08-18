@@ -257,8 +257,6 @@ function construct_component_driver(
 				if(typeof(this.ep.update_canvas_texture)=="function"){
 					render.webgpu.canvas_2d.width	=this.init_data.canvas.canvas_width;
 					render.webgpu.canvas_2d.height	=this.init_data.canvas.canvas_height;
-					render.webgpu.context_2d.width	=this.init_data.canvas.canvas_width;
-					render.webgpu.context_2d.height	=this.init_data.canvas.canvas_height;
 
 					if(this.ep.update_canvas_texture(render.webgpu.context_2d,this.init_data.canvas))
 						return;

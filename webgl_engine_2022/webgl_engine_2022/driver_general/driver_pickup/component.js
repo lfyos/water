@@ -4,8 +4,6 @@ function construct_component_driver(
 {
 	this.component_id	=component_id;
 	this.driver_id		=driver_id;
-	this.width			=-1;
-	this.height			=-1;
 
 	this.id_depth_texture=render.webgpu.device.createTexture(
 		{
@@ -77,15 +75,6 @@ function construct_component_driver(
 
 //////////////////////////////////////////////////////////////////////////
 
-	this.render_target_parameter=function(render_data,
-			target_part_object,target_part_driver,target_render_driver,render)
-	{
-		return {
-					target_width	:	1,
-					target_height	:	1
-				};
-	}
-	
 	this.begin_render_target=function(target_sequence_id,
 			render_data,target_part_object,target_part_driver,target_render_driver,render)
 	{
@@ -120,11 +109,19 @@ function construct_component_driver(
 	   				stencilStoreOp		:	"store"
 				}
 			});
-			return [
+			return 	{
+				target_view		:	
+				{
+					width		:	1,
+					height		:	1
+				},
+				method_array	:
+				[
 					{
 						method_id:	0
 					}
-				];
+				]
+			};
 		case 1:
 			render.webgpu.render_pass_encoder = render.webgpu.command_encoder.beginRenderPass(
 			{
@@ -149,11 +146,19 @@ function construct_component_driver(
 	   				stencilStoreOp		:	"store"
 				}
 			});
-			return [
+			return 	{
+				target_view		:	
+				{
+					width		:	1,
+					height		:	1
+				},
+				method_array	:
+				[
 					{
 						method_id:	1
 					}
-				];
+				]
+			};
 		default:
 			return null;
 		}
@@ -309,14 +314,7 @@ function construct_component_driver(
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		var my_canvas=render.webgpu.canvas[render.webgpu.current_canvas_id];
-		if((my_canvas.width!=this.width)||(my_canvas.height!=this.height)){
-			this.width	=my_canvas.width;
-			this.height	=my_canvas.height;
-			render.caller.call_server_component(
-				this.component_id,this.driver_id,
-				[["width",this.width],["height",this.height]]);
-		}
+		
 	}
 	this.destroy=function()
 	{
@@ -345,21 +343,13 @@ function construct_component_driver(
 			this.value_depth_texture.destroy();
 			this.value_depth_texture=null;
 		}
-		if(this.value_texture_0!=null){	
-			this.value_texture_0.destroy();
-			this.value_texture_0=null;
+		if(this.value_texture!=null){
+			this.value_texture.destroy();
+			this.value_texture=null;
 		}
-		if(this.value_texture_1!=null){	
-			this.value_texture_1.destroy();
-			this.value_texture_1=null;
-		}
-		if(this.value_buffer_0!=null){	
-			this.value_buffer_0.destroy();
-			this.value_buffer_0	=null;
-		}
-		if(this.value_buffer_1!=null){	
-			this.value_buffer_1.destroy();
-			this.value_buffer_1	=null;
+		if(this.value_buffer!=null){	
+			this.value_buffer.destroy();
+			this.value_buffer=null;
 		}
 	}
 };

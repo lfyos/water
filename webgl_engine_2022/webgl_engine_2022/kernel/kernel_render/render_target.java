@@ -16,10 +16,11 @@ public class render_target
 	
 	public int camera_id,parameter_channel_id;
 	public box view_volume_box;
+	public render_target_view target_view;
 
 	public plane clip_plane,mirror_plane;
 
-	public boolean main_display_target_flag,canvas_display_target_flag;
+	public boolean main_display_target_flag;
 	public boolean do_discard_lod_flag,do_selection_lod_flag;
 
 	public void destroy()
@@ -30,41 +31,67 @@ public class render_target
 					comp[i]=null;
 		comp=null;
 		driver_id=null;
+		target_view=null;
 		view_volume_box=null;
 		clip_plane=null;
 		mirror_plane=null;
+	}
+	public render_target()
+	{
+		do_render_flag				=false;
+		target_id					=0;
+		
+		target_comonent_id			=0;
+		target_driver_id			=0;
+		target_texture_id			=0;
+		
+		comp						=null;
+		driver_id					=null;
+		
+		camera_id					=0;
+		parameter_channel_id		=0;
+		
+		target_view					=new render_target_view();
+		view_volume_box				=new box(-1,-1,-1,1,1,1);
+
+		clip_plane					=null;
+		mirror_plane				=null;
+
+		main_display_target_flag	=false;
+		do_discard_lod_flag			=false;
+		do_selection_lod_flag		=false;
 	}
 	public render_target(
 			boolean my_do_render_flag,
 			int my_target_comonent_id,				int my_target_driver_id,		int my_target_texture_id,
 			component my_comp[],					int my_driver_id[],
-			int my_camera_id,						int my_parameter_channel_id,	box my_view_volume_box,
+			int my_camera_id,						int my_parameter_channel_id,
+			render_target_view my_target_view,		box my_view_volume_box,					
 			plane my_clip_plane,					plane my_mirror_plane,
-			boolean my_main_display_target_flag,	boolean my_canvas_display_target_flag,
 			boolean my_do_discard_lod_flag,			boolean my_do_selection_lod_flag)
 	{
-		do_render_flag			=my_do_render_flag;
-		target_id				=0;
+		do_render_flag				=my_do_render_flag;
+		target_id					=0;
 		
-		target_comonent_id		=my_target_comonent_id;
-		target_driver_id		=my_target_driver_id;
-		target_texture_id		=my_target_texture_id;
+		target_comonent_id			=my_target_comonent_id;
+		target_driver_id			=my_target_driver_id;
+		target_texture_id			=my_target_texture_id;
 		
-		comp					=my_comp;
-		driver_id				=my_driver_id;
+		comp						=my_comp;
+		driver_id					=my_driver_id;
 		
-		camera_id				=my_camera_id;
-		parameter_channel_id	=my_parameter_channel_id;
-		if(my_view_volume_box==null)
-			view_volume_box=new box(-1,-1,-1,1,1,1);
-		else
-			view_volume_box=new box(my_view_volume_box);
+		camera_id					=my_camera_id;
+		parameter_channel_id		=my_parameter_channel_id;
+		
+		target_view					=(my_target_view==null)
+										?new render_target_view():new render_target_view(my_target_view);
+		view_volume_box				=(my_view_volume_box==null)
+										?new box(-1,-1,-1,1,1,1):new box(my_view_volume_box);
 
-		clip_plane				=my_clip_plane;
-		mirror_plane			=my_mirror_plane;
+		clip_plane					=my_clip_plane;
+		mirror_plane				=my_mirror_plane;
 
-		main_display_target_flag	=my_main_display_target_flag;
-		canvas_display_target_flag	=my_canvas_display_target_flag;
+		main_display_target_flag	=false;
 		do_discard_lod_flag			=my_do_discard_lod_flag;
 		do_selection_lod_flag		=my_do_selection_lod_flag;
 	}

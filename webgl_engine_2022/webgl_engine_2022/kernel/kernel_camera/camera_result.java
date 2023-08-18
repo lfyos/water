@@ -203,11 +203,13 @@ public class camera_result
 		if(!(parameter.comp.uniparameter.part_list_flag))
 			return null;
 		
+		double local_xy[]=target.target_view.caculate_view_local_xy(parameter.x, parameter.y);
+		
 		location comp_negative_loca=parameter.comp.caculate_negative_absolute_location();
 		point p0=comp_negative_loca.multiply(negative_matrix.multiply(
-					new point(parameter.x,parameter.y,parameter.depth+0.0)));
+					new point(local_xy[0],local_xy[1],parameter.depth+0.0)));
 		point p1=comp_negative_loca.multiply(negative_matrix.multiply(
-					new point(parameter.x,parameter.y,parameter.depth+1.0)));
+					new point(local_xy[0],local_xy[1],parameter.depth+1.0)));
 
 		box my_box=parameter.comp.driver_array.get(driver_id).component_part.secure_caculate_part_box(
 					parameter.comp,driver_id,parameter.body_id,parameter.face_id,

@@ -2,8 +2,8 @@ package kernel_buffer;
 
 import java.util.ArrayList;
 
-import kernel_common_class.const_value;
 import kernel_render.render_target;
+import kernel_common_class.const_value;
 import kernel_network.client_request_response;
 
 public class target_parameter_buffer 
@@ -113,6 +113,34 @@ public class target_parameter_buffer
 									print(",",	rt.mirror_plane.B).
 									print(",",	rt.mirror_plane.C).
 									print(",",	rt.mirror_plane.D);
+		}while(false);
+
+		do{
+			if(old_rt!=null)
+				if(!((old_rt.main_display_target_flag)^(rt.main_display_target_flag)))
+					break;
+			if(rt.main_display_target_flag)
+				client_interface.	print(((print_number++)<=0)?"8":",8");
+			else
+				client_interface.	print(((print_number++)<=0)?"9":",9");
+		}while(false);
+		
+		do{
+			if(old_rt!=null)
+				if(old_rt.target_view.view_x0==rt.target_view.view_x0)
+					if(old_rt.target_view.view_y0==rt.target_view.view_y0)
+						if(old_rt.target_view.view_width==rt.target_view.view_width)
+							if(old_rt.target_view.view_height==rt.target_view.view_height)
+								if(old_rt.target_view.whole_view_width==rt.target_view.whole_view_width)
+									if(old_rt.target_view.whole_view_height==rt.target_view.whole_view_height)
+										break;
+			client_interface.	print(((print_number++)<=0)?"10,":",10,").
+								print(		rt.target_view.view_x0).
+								print(",",	rt.target_view.view_y0).
+								print(",",	rt.target_view.view_width).
+								print(",",	rt.target_view.view_height).
+								print(",",	rt.target_view.whole_view_width).
+								print(",",	rt.target_view.whole_view_height);
 		}while(false);
 		
 		client_interface.print("]");

@@ -152,8 +152,6 @@ function construct_component_driver(
 			
 			render.webgpu.canvas_2d.width			=my_texture_width;
 			render.webgpu.canvas_2d.height			=my_texture_height;
-			render.webgpu.context_2d.width			=my_texture_width;
-			render.webgpu.context_2d.height			=my_texture_height;
 
 			render.webgpu.context_2d.font			=part_object.material[0].font;
 			render.webgpu.context_2d.textBaseline	="middle";

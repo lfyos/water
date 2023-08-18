@@ -268,8 +268,10 @@ public class client_information
 		display_component_collector		=null;
 		target_component_collector_list	=new ArrayList<component_collector>();
 
-		render_target rt=new render_target(false,ek.component_cont.root_component.component_id,0,0,
-			new component[]{ek.component_cont.root_component},null,0,0,null,null,null,true,true,true,true);
+		render_target rt=new render_target(
+				false,ek.component_cont.root_component.component_id,0,0,
+				new component[]{ek.component_cont.root_component},null,
+				0,0,null,null,null,null,true,true);
 	
 		display_camera_result			=new camera_result(ek.camera_cont.get(rt.camera_id),rt,ek.component_cont);
 		target_camera_result_list		=new ArrayList<camera_result>();

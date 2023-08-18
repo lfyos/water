@@ -32,7 +32,6 @@ public class extended_component_instance_driver extends component_instance_drive
 		display_parameter.body_title="Ìו";
 		display_parameter.face_title="Ãז";
 	}
-
 	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
 	}
@@ -299,8 +298,9 @@ public class extended_component_instance_driver extends component_instance_drive
 		if(ci.parameter.comp!=null){
 			location loca=ci.display_camera_result.negative_matrix;
 			loca=ci.parameter.comp.caculate_negative_absolute_location().multiply(loca);
-			p0=loca.multiply(new point(ci.parameter.x,ci.parameter.y,ci.parameter.depth));
-			p1=loca.multiply(new point(ci.parameter.x,ci.parameter.y,ci.parameter.depth+1.0));
+			double local_xy[]=ci.display_camera_result.target.target_view.caculate_view_local_xy(ci.parameter.x,ci.parameter.y);
+			p0=loca.multiply(new point(local_xy[0],local_xy[1],ci.parameter.depth));
+			p1=loca.multiply(new point(local_xy[0],local_xy[1],ci.parameter.depth+1.0));
 		}
 		lc.locate_on_components(ek.modifier_cont[modifier_container_id],
 				ek.component_cont,ci.display_camera_result,ci.parameter,null,scale_value,

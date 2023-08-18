@@ -35,25 +35,10 @@ function new_render_driver(
 							offset			:	0,
 							shaderLocation	:	0
 						},
-						{	//normal
-							format			:	"float32x4",
-							offset			:	16,
-							shaderLocation	:	1
-						},
-						{	//material
-							format			:	"float32x4",
-							offset			:	32,
-							shaderLocation	:	2
-						},
 						{	//ID
 							format			:	"float32x4",
 							offset			:	48,
-							shaderLocation	:	3
-						},
-						{	//attribute
-							format			:	"float32x4",
-							offset			:	64,
-							shaderLocation	:	4
+							shaderLocation	:	1
 						}
 					]
 				},
@@ -65,7 +50,7 @@ function new_render_driver(
 						{	//scale
 							format			:	"float32x4",
 							offset			:	0,
-							shaderLocation	:	5
+							shaderLocation	:	2
 						}
 					]
 				}

@@ -352,9 +352,12 @@ public class distance_tag_array
 				plane p_pl=(Math.abs(p_pl_up_dot)>=Math.abs(p_pl_right_dot))?p_pl_up:p_pl_right;
 				if(p_pl.error_flag)
 					return true;
+				
+				double local_xy[]=ci.display_camera_result.target.target_view.
+							caculate_view_local_xy(ci.parameter.x,ci.parameter.y);
 				global_py=p_pl.insection_point(
-						ci.display_camera_result.negative_matrix.multiply(new point(ci.parameter.x,ci.parameter.y,ci.parameter.depth+0)),
-						ci.display_camera_result.negative_matrix.multiply(new point(ci.parameter.x,ci.parameter.y,ci.parameter.depth+1)));
+						ci.display_camera_result.negative_matrix.multiply(new point(local_xy[0],local_xy[1],ci.parameter.depth+0)),
+						ci.display_camera_result.negative_matrix.multiply(new point(local_xy[0],local_xy[1],ci.parameter.depth+1)));
 				if(global_py==null)
 					return true;
 				global_py=(new plane(global_p0,global_px)).project_to_plane_location().multiply(global_py);

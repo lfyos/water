@@ -68,16 +68,16 @@ public class response_render_component_request
 			ci.target_camera_result_list.add(pos,null);
 		}
 
-		ArrayList<render_target>target_list=ci.target_container.get_render_target();
+		render_target target_list[]=ci.target_container.get_render_target();
 		
-		for(int i=0,ni=target_list.size();i<ni;i++)
-			if((rt=target_list.get(i)).camera_id>=0)
+		for(int i=0,ni=target_list.length;i<ni;i++)
+			if((rt=target_list[i]).camera_id>=0)
 				if(rt.camera_id<ek.camera_cont.size())
 					ci.target_camera_result_list.set(rt.target_id,
 						new camera_result(ek.camera_cont.get(rt.camera_id),rt,ek.component_cont));
 		
-		for(int i=0,ni=target_list.size();i<ni;i++)
-			if((rt=target_list.get(i)).main_display_target_flag)
+		for(int i=0,ni=target_list.length;i<ni;i++)
+			if((rt=target_list[i]).main_display_target_flag)
 				if((cr=ci.target_camera_result_list.get(rt.target_id))!=null){
 					ci.display_camera_result=cr;
 					break;
@@ -86,8 +86,8 @@ public class response_render_component_request
 		ArrayList<response_render_data> render_data_list=new ArrayList<response_render_data> (); 
 		
 		ci.request_response.print(",[");
-		for(int response_number=0,i=0,ni=target_list.size();i<ni;i++)
-			if((rt=target_list.get(i))!=null)
+		for(int response_number=0,i=0,ni=target_list.length;i<ni;i++)
+			if((rt=target_list[i])!=null)
 				if(rt.do_render_flag){
 					cr=ci.target_camera_result_list.get(rt.target_id);
 					int render_buffer_id=cr.get_render_buffer_id(ci);

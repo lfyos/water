@@ -118,7 +118,6 @@ function new_render_driver(
 	
 	pipeline_descr.fragment.targets.length		=1;
 	pipeline_descr.fragment.targets[0].format	=render.webgpu.gpu.getPreferredCanvasFormat();
-	
 	if(render.parameter.multisample>1)
 		pipeline_descr.multisample={count:render.parameter.multisample};
 

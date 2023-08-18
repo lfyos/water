@@ -95,12 +95,14 @@ public class extended_component_instance_driver extends component_instance_drive
 		view_volume_box=new box(
 				center.x+diff.x*my_x0,center.y+diff.y*my_y0,view_volume_box.p[0].z,
 				center.x+diff.x*my_x1,center.y+diff.y*my_y1,view_volume_box.p[1].z);
+		
+//pay attention,data structure modified!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!		
 		render_target cam_target=new render_target(
 				true,comp.component_id,driver_id,0,
 				new component[]{ek.component_cont.root_component},null,
 				ci.display_camera_result.target.camera_id,
 				ci.display_camera_result.target.parameter_channel_id,
-				view_volume_box,ci.clip_plane,null,false,false,false,false);
+				null,view_volume_box,ci.clip_plane,null,false,false);
 	
 		if(cam_target.view_volume_box.distance2()<const_value.min_value2)
 			return ;

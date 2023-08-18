@@ -1,6 +1,9 @@
 function construct_system_buffer(target_buffer_number,method_buffer_number,my_render)
 {
-	this.render					=my_render;
+	this.render						=my_render;
+	
+	this.main_target_project_matrix	=null;
+	this.main_target_view_parameter	=null;
 
 //	init method buffer:	binding point 0
 	this.method_buffer_stride	=this.render.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
@@ -18,7 +21,7 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 
 //	init target buffer:	binding point 1
 	this.target_buffer_stride	=2048;
-	this.target_buffer_size		=1216;
+	this.target_buffer_size		=1232;
 	this.target_buffer_number	=target_buffer_number;
 	this.target_buffer	=this.render.webgpu.device.createBuffer(
 		{
@@ -27,12 +30,10 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 		});
 
 //	init system buffer:	binding point 2
-	this.system_buffer_stride	=this.render.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
-	this.system_buffer_size		=240;
-	this.system_buffer_number	=1;
+	this.system_buffer_size		=384;
 	this.system_buffer	=this.render.webgpu.device.createBuffer(
 		{
-			size	:	this.system_buffer_stride*this.system_buffer_number,
+			size	:	this.system_buffer_size,
 			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
 		});
 
@@ -55,14 +56,15 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 			this.system_buffer.destroy();
 			this.system_buffer=null;
 		}
-		this.set_system_buffer		=null;
-		this.set_target_buffer		=null;
+		this.set_system_buffer=null;
+		this.set_target_buffer=null;
 	};
 
 	this.set_system_buffer=function()
 	{
-		var cur_canvas=this.render.webgpu.canvas[this.render.webgpu.current_canvas_id];
-		
+		if((this.main_target_project_matrix==null)||(this.main_target_view_parameter==null))
+			return;
+			
 		var t=this.render.current_time;
 		var nanosecond=t%1000;		t=Math.floor((t-nanosecond)/1000);
 		var microsecond=t%1000;		t=Math.floor((t-microsecond)/1000);
@@ -85,9 +87,13 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 			this.render.highlight.component_id,
 			this.render.highlight.body_id,
 			this.render.highlight.face_id,
-			
-			cur_canvas.width,
-			cur_canvas.height,
+
+			this.main_target_view_parameter.view_x0,
+			this.main_target_view_parameter.view_y0,
+			this.main_target_view_parameter.view_width,
+			this.main_target_view_parameter.view_height,
+			this.main_target_view_parameter.whole_view_width,
+			this.main_target_view_parameter.whole_view_height,
 			
 			da.getFullYear(),
 			da.getMonth(),
@@ -108,6 +114,9 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 			this.render.pickup.value[2]
 		];
 		
+		float_data=float_data.concat(this.main_target_project_matrix.screen_move_matrix);
+		float_data=float_data.concat(this.main_target_project_matrix.negative_screen_move_matrix);
+
 		var camera_object_parameter=this.render.camera.camera_object_parameter;
 		var component_location=this.render.component_location_data;
 		for(var i=0,ni=camera_object_parameter.length;i<ni;i++)
@@ -124,13 +133,24 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 			int_data.length*Int32Array.BYTES_PER_ELEMENT,	new Float32Array(float_data));
 	};
 
-	this.set_target_buffer=function(target_id,project_matrix,target_parameter)
+	this.set_target_buffer=function(render_data,project_matrix)
 	{
+		var target_id=render_data.render_buffer_id;
+		
+		if(render_data.main_display_target_flag){
+			this.main_target_project_matrix	=project_matrix;
+			this.main_target_view_parameter	=render_data.target_view_parameter;
+		}
 		var int_data=[
+			render_data.target_view_parameter.view_x0,
+			render_data.target_view_parameter.view_y0,
+			render_data.target_view_parameter.view_width,
+			render_data.target_view_parameter.view_height,
+			render_data.target_view_parameter.whole_view_width,
+			render_data.target_view_parameter.whole_view_height,
+			
 			project_matrix.projection_type_flag?1:0,
-			target_parameter.target_width,
-			target_parameter.target_height,
-			0
+			1
 		];
 		var matrix_array=[
 			project_matrix.matrix,

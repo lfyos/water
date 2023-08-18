@@ -3,19 +3,22 @@
 /*	render_0	*/	pickup						driver_pickup.extended_render_driver					driver_general\pickup\render.list
 /*	render_1	*/	caption						driver_caption.extended_render_driver					driver_general\caption\render.list
 /*	render_2	*/	movement					driver_movement.extended_render_driver					driver_general\movement\render.list
-/*	render_3	*/	background					driver_background.extended_render_driver				driver_general\background\render.list
-/*	render_4	*/	coordinate					driver_coordinate.extended_render_driver				driver_general\coordinate\render.list
-/*	render_5	*/	show_target					driver_show_target.extended_render_driver				driver_general\show_target\render.list 
-/*	render_6	*/	audio_player				driver_audio_player.extended_render_driver				driver_general\audio_player\render.list
-/*	render_7	*/	distance_tag				driver_distance_tag.extended_render_driver				driver_general\distance_tag\render.list
-/*	render_8	*/	proxy_register				driver_proxy_register.extended_render_driver			driver_general\proxy_register\render.list
-/*	render_9	*/	screen_rectangle			driver_screen_rectangle.extended_render_driver			driver_general\screen_rectangle\render.list
-/*	render_10	*/	camera_operation			driver_camera_operation.extended_render_driver			driver_general\camera_operation\render.list
-/*	render_11	*/	location_modifier			driver_location_modifier.extended_render_driver			driver_general\location_modifier\render.list	
-/*	render_12	*/	show_component_box			driver_show_component_box.extended_render_driver		driver_general\show_component_box\render.list
-/*	render_13	*/	mouse_modify_location		driver_mouse_modify_location.extended_render_driver		driver_general\mouse_modify_location\render.list
-/*	render_14	*/	render_target_register		driver_render_target_register.extended_render_driver	driver_general\render_target_register\render.list
-/*	render_15	*/	component_marker			driver_component_marker.extended_render_driver			driver_general\component_marker\render.list
+
+//	/*	render_3	*/	interface					driver_interface.extended_render_driver					driver_general\interface\render.list
+
+/*	render_4	*/	background					driver_background.extended_render_driver				driver_general\background\render.list
+/*	render_5	*/	coordinate					driver_coordinate.extended_render_driver				driver_general\coordinate\render.list
+/*	render_6	*/	show_target					driver_show_target.extended_render_driver				driver_general\show_target\render.list 
+/*	render_7	*/	audio_player				driver_audio_player.extended_render_driver				driver_general\audio_player\render.list
+/*	render_8	*/	distance_tag				driver_distance_tag.extended_render_driver				driver_general\distance_tag\render.list
+/*	render_9	*/	proxy_register				driver_proxy_register.extended_render_driver			driver_general\proxy_register\render.list
+/*	render_10	*/	component_marker			driver_component_marker.extended_render_driver			driver_general\component_marker\render.list
+/*	render_11	*/	screen_rectangle			driver_screen_rectangle.extended_render_driver			driver_general\screen_rectangle\render.list
+/*	render_12	*/	camera_operation			driver_camera_operation.extended_render_driver			driver_general\camera_operation\render.list
+/*	render_13	*/	location_modifier			driver_location_modifier.extended_render_driver			driver_general\location_modifier\render.list	
+/*	render_14	*/	show_component_box			driver_show_component_box.extended_render_driver		driver_general\show_component_box\render.list
+/*	render_15	*/	mouse_modify_location		driver_mouse_modify_location.extended_render_driver		driver_general\mouse_modify_location\render.list
+/*	render_16	*/	render_target_register		driver_render_target_register.extended_render_driver	driver_general\render_target_register\render.list
 
 
 /*	******************************		driver_lession		********************************************	*/
@@ -24,8 +27,6 @@
 
 
 /*
-
-/*	render_1	*/	interface					driver_interface.extended_render_driver					driver_general\interface\render.list
 
 /*		########################	driver_general		#######################			*/
 /*	render_16	*/	component_selection		driver_component_selection.extended_render_driver		driver_general\component_selection\render.list

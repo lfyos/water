@@ -12,22 +12,43 @@ function draw_scene_routine(render_data,render)
 	var target_component_driver	=target_part_object.component_driver_array[data_buffer_id];
 	if((typeof(target_component_driver)!="object")||(target_component_driver==null))
 		return;
-	if(typeof(target_component_driver.render_target_parameter)!="function")
-		return;
 	if(typeof(target_component_driver.begin_render_target)!="function")
 		return;
-	
 	var project_matrix=render.camera.compute_camera_data(render_data);
-	var target_parameter=target_component_driver.render_target_parameter(
-			render_data,target_part_object,target_part_driver,target_render_driver,render);
-	render.system_buffer.set_target_buffer(
-			render_data.render_buffer_id,project_matrix,target_parameter);
+	render.system_buffer.set_target_buffer(render_data,project_matrix);
 	
 	for(var target_sequence_id=0;;target_sequence_id++){
-		var method_array=target_component_driver.begin_render_target(target_sequence_id,
+		var render_target=target_component_driver.begin_render_target(target_sequence_id,
 				render_data,target_part_object,target_part_driver,target_render_driver,render);
+		if(render_target==null)
+			break;
+		if(typeof(render.webgpu.render_pass_encoder)!="object")
+			continue;
+		if(render.webgpu.render_pass_encoder==null)
+			continue;
+			
+		var method_array=render_target.method_array;
 		if(!(Array.isArray(method_array)))
-			return;
+			continue;
+		if(method_array.length<=0)
+			continue;
+
+		var view_x0=(render_data.target_view_parameter.view_x0<0)?0:
+			(render_data.target_view_parameter.view_x0>=render_target.target_view.width)
+			?(render_target.target_view.width-1):(render_data.target_view_parameter.view_x0);
+		var view_y0=(render_data.target_view_parameter.view_y0<0)?0:
+			(render_data.target_view_parameter.view_y0>=render_target.target_view.height)
+			?(render_target.target_view.height-1):(render_data.target_view_parameter.view_y0);
+		var view_width=(render_data.target_view_parameter.view_width<1)?1:
+			((render_data.target_view_parameter.view_width+view_x0)>render_target.target_view.width)
+			?(render_target.target_view.width-view_x0):(render_data.target_view_parameter.view_width);	
+		var view_height=(render_data.target_view_parameter.view_height<1)?1:
+			((render_data.target_view_parameter.view_height+view_y0)>render_target.target_view.height)
+			?(render_target.target_view.height-view_y0):(render_data.target_view_parameter.view_height);
+		
+		view_y0=render_target.target_view.height-view_y0-view_height;
+		render.webgpu.render_pass_encoder.setViewport(view_x0,view_y0,view_width,view_height,0,1);
+	
 		for(var i=0,ni=method_array.length;i<ni;i++){
 			if(typeof(target_component_driver.begin_render_method)=="function")
 				target_component_driver.begin_render_method(target_sequence_id,
@@ -84,6 +105,7 @@ function draw_scene_routine(render_data,render)
 				render_data,target_part_object,target_part_driver,target_render_driver,render);
 	}
 }
+
 async function draw_scene_main(part_init_data,component_init_data,render)
 {
 	while(!(render.terminate_flag)){
@@ -109,14 +131,14 @@ async function draw_scene_main(part_init_data,component_init_data,render)
 					render.modifier_current_time[i]++;
 			}
 		}
-
+		
 		var fun_array=render.routine_array;
 		render.routine_array=new Array();
 		for(var i=0,ni=fun_array.length;i<ni;i++)
 			if(typeof(fun_array[i])=="function")
 				if(fun_array[i](render))
 					render.routine_array.push(fun_array[i]);
-
+		
 		var command_encoder_buffer=new Array();
 		render.system_buffer.set_system_buffer();
 		for(var i=0,ni=render.render_buffer_array.length;i<ni;i++)

@@ -5,7 +5,14 @@ function construct_component_driver(
 	this.component_id				=component_id;
 	this.driver_id					=driver_id;
 	this.should_update_server_flag	=true;
-
+	
+	this.target_parameter=new Array();
+	for(var i=0,j=0,ni=init_data.length;i<ni;)
+		this.target_parameter[j++]={
+			canvas_id		:	init_data[i++],
+			load_operation	:	(init_data[i++]>0)?"clear":"load"
+		};
+		
 	this.multisample_texture=new Array(render.webgpu.canvas.length);
 	this.depth_texture		=new Array(render.webgpu.canvas.length);
 	for(var i=0,ni=render.webgpu.canvas.length;i<ni;i++){
@@ -26,8 +33,7 @@ function construct_component_driver(
 				width_height_str+="_"				+my_texture.height;
 			}
 			var par=[
-						["id"				,	render.webgpu.current_canvas_id],
-						["width_height"		,	width_height_str		]
+						["canvas_width_height",width_height_str]
 					];
 			render.caller.call_server_component(this.component_id,this.driver_id,par);
 		}
@@ -38,10 +44,17 @@ function construct_component_driver(
 	{
 		if(target_sequence_id!=0)
 			return null;
+		if(render_data.target_texture_id<0)
+			return null;
+		if(render_data.target_texture_id>=this.target_parameter.length)
+			return null;
 
-		var my_gpu_texture			=render.webgpu.context		[render_data.target_texture_id].getCurrentTexture();
-		var my_multisample_texture	=this.multisample_texture	[render_data.target_texture_id];
-		var my_depth_texture		=this.depth_texture			[render_data.target_texture_id];
+		var canvas_id		=this.target_parameter[render_data.target_texture_id].canvas_id;
+		var load_operation	=this.target_parameter[render_data.target_texture_id].load_operation;
+
+		var my_gpu_texture			=render.webgpu.context		[canvas_id].getCurrentTexture();
+		var my_multisample_texture	=this.multisample_texture	[canvas_id];
+		var my_depth_texture		=this.depth_texture			[canvas_id];
 		
 		do{
 			if(typeof(my_depth_texture)=="object")
@@ -66,7 +79,7 @@ function construct_component_driver(
 				texture_create_parameter.sampleCount=render.parameter.multisample;
 				
 			my_multisample_texture=render.webgpu.device.createTexture(texture_create_parameter);
-			this.multisample_texture[render_data.target_texture_id]=my_multisample_texture;	
+			this.multisample_texture[canvas_id]=my_multisample_texture;	
 			
 			var texture_create_parameter=
 				{
@@ -82,7 +95,7 @@ function construct_component_driver(
 				texture_create_parameter.sampleCount=render.parameter.multisample;
 					
 			my_depth_texture=render.webgpu.device.createTexture(texture_create_parameter);
-			this.depth_texture[render_data.target_texture_id]=my_depth_texture;
+			this.depth_texture[canvas_id]=my_depth_texture;
 
 			this.should_update_server_flag=true;
 		}while(false);
@@ -96,13 +109,13 @@ function construct_component_driver(
 					view			:	my_multisample_texture.createView(),
 					resolveTarget	:	my_gpu_texture.createView(),
 					clearValue		:	{ r: 0.0, g: 0.0, b: 0.0, a: 1.0 },
-					loadOp			:	"clear",
+					loadOp			:	load_operation,
 					storeOp			:	"store"
 				}
 				:{
 					view			:	my_gpu_texture.createView(),
 					clearValue		:	{ r: 0.0, g: 0.0, b: 0.0, a: 1.0 },
-					loadOp			:	"clear",
+					loadOp			:	load_operation,
 					storeOp			:	"store"
 				}
 			],
@@ -111,39 +124,38 @@ function construct_component_driver(
 				view				:	my_depth_texture.createView(),
 				
 				depthClearValue		:	1.0,
-				depthLoadOp			:	"clear",
+				depthLoadOp			:	load_operation,
 				depthStoreOp		:	"store",
 				
 				stencilClearValue	:	0,
-   				stencilLoadOp		:	"clear",
+   				stencilLoadOp		:	load_operation,
    				stencilStoreOp		:	"store"
 			}
 		});
-		return [
+		
+		return 	{
+				target_view		:	
 				{
-					method_id:	2
+					width		:	my_gpu_texture.width,
+					height		:	my_gpu_texture.height
 				},
-				{
-					method_id:	3
-				},
-				{
-					method_id:	4
-				},
-				{
-					method_id:	5
-				}
-			];
+				method_array	:
+				[
+					{
+						method_id:	2
+					},
+					{
+						method_id:	3
+					},
+					{
+						method_id:	4
+					},
+					{
+						method_id:	5
+					}
+				]
+			};
 	};
-	this.render_target_parameter=function(render_data,
-			target_part_object,target_part_driver,target_render_driver,render)
-	{
-		var my_gpu_texture=render.webgpu.context[render_data.target_texture_id].getCurrentTexture();
-		return {
-					target_width	:	my_gpu_texture.width,
-					target_height	:	my_gpu_texture.height
-				};
-	};
-	
 	this.destroy=function()
 	{
 		for(var i=0,ni=this.multisample_texture.length;i<ni;i++)

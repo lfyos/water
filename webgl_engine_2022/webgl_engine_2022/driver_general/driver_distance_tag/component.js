@@ -220,8 +220,6 @@ function construct_component_driver(
 			
 			render.webgpu.canvas_2d.width			=my_texture_width;
 			render.webgpu.canvas_2d.height			=my_texture_height;
-			render.webgpu.context_2d.width			=my_texture_width;
-			render.webgpu.context_2d.height			=my_texture_height;
 
 			render.webgpu.context_2d.font			=part_object.material[0].font;
 			render.webgpu.context_2d.textBaseline	="middle";
@@ -341,9 +339,10 @@ function construct_component_driver(
 	
 	this.destroy=function(render)
 	{
-		if(render.component_event_processor[this.component_id]!=null)
+		if(render.component_event_processor[this.component_id]!=null){
 			render.component_event_processor[this.component_id].destroy();
-			
+			render.component_event_processor[this.component_id]=null;
+		}	
 		if(this.tag_array!=null){
 			for(var i=0,ni=this.tag_array.length;i<ni;i++){
 				this.tag_array[i].buffer.destroy();

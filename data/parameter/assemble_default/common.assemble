@@ -37,6 +37,7 @@
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 		/* 2children number */     0
 		
+		
 		/*	5	*/
 		/* 2name		*/         audio_player_component
 		/* 2type		*/         audio_player_part
@@ -73,6 +74,7 @@
 		/* 2type		*/         screen_rectangle_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 		/* 2children number */		0
+
 
 		/*	11	*/
 		/* 2name		*/         camera_operation_component

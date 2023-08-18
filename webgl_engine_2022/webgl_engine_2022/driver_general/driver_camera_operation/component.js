@@ -160,21 +160,6 @@ function construct_event_listener()
 	};
 };
 
-function caculate_parameter(component_id,render_data,project_matrix,part_object,render)
-{
-	var x0				=part_object.material[0];
-	var y0				=part_object.material[1];
-	var scale			=part_object.material[2];
-	var box_distance	=part_object.material[3];
-
-	var view_distance	=render.computer.sub_operation(project_matrix.right_up_center_point,project_matrix.left_down_center_point);
-	var view_distance	=render.computer.distance(view_distance)*scale;
-	var z0				=render.computer.sub_operation(project_matrix.near_center_point,project_matrix.center_point);
-		z0				=render.computer.distance(z0)-view_distance/2.0;
-
-	return [x0,y0,z0,view_distance/box_distance];
-};
-
 function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
 	init_data,		part_object,	part_driver,	render_driver,	render)
@@ -184,11 +169,34 @@ function construct_component_driver(
 		ep=Object.assign(old_ep,ep);
 	render.component_event_processor[component_id]=ep;
 	
+	this.component_id=component_id;
+	this.main_render_buffer_id=0;
 	this.parameter_buffer=render.webgpu.device.createBuffer(
 		{
-			size	:	Float32Array.BYTES_PER_ELEMENT*4,
+			size	:	Float32Array.BYTES_PER_ELEMENT*4*render.system_buffer.target_buffer_number,
 			usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.VERTEX
 		});
+
+	this.save_buffer_data=function(render_data,project_matrix,part_object,render)
+	{
+		var x0				=part_object.material[0];
+		var y0				=part_object.material[1];
+		var scale			=part_object.material[2];
+		var box_distance	=part_object.material[3];
+		
+		var view_distance	=render.computer.sub_operation(
+									project_matrix.right_up_center_point,
+									project_matrix.left_down_center_point);
+			view_distance	=render.computer.distance(view_distance)*scale;
+		var z0				=render.computer.sub_operation(
+									project_matrix.near_center_point,
+									project_matrix.center_point);
+			z0				=render.computer.distance(z0)-view_distance/2.0;
+
+		render.webgpu.device.queue.writeBuffer(this.parameter_buffer,
+			Float32Array.BYTES_PER_ELEMENT*4*(render_data.render_buffer_id),
+			new Float32Array([x0,y0,z0,view_distance/box_distance]));
+	}
 
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,data_buffer_id,component_id,driver_id,
@@ -196,10 +204,16 @@ function construct_component_driver(
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
 		var p,rpe=render.webgpu.render_pass_encoder;
-		rpe.setVertexBuffer(1,this.parameter_buffer);
-
+		
+		if(render_data.main_display_target_flag)
+			this.main_render_buffer_id=render_data.render_buffer_id;
+			
 		switch(method_data.method_id){
-		case 0:		
+		case 0:	
+			rpe.setVertexBuffer(1,this.parameter_buffer,
+					Float32Array.BYTES_PER_ELEMENT*4*this.main_render_buffer_id,
+					Float32Array.BYTES_PER_ELEMENT*4);
+
 			p=part_object.buffer_object.face.region_data;
 			rpe.setPipeline(render_driver.id_pipeline);
 			for(var i=0,ni=p.length;i<ni;i++){
@@ -208,22 +222,25 @@ function construct_component_driver(
 			}
 			break;
 		case 2:
-			render.webgpu.device.queue.writeBuffer(this.parameter_buffer,0,new Float32Array(
-					caculate_parameter(component_id,render_data,project_matrix,part_object,render)));
+			this.save_buffer_data(render_data,project_matrix,part_object,render);
+			rpe.setVertexBuffer(1,this.parameter_buffer,
+					Float32Array.BYTES_PER_ELEMENT*4*render_data.render_buffer_id,
+					Float32Array.BYTES_PER_ELEMENT*4);
+		
 			p=part_object.buffer_object.face.region_data;
 			rpe.setPipeline(render_driver.face_pipeline);
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);
 				rpe.draw(p[i].item_number);
 			};
-
+	
 			p=part_object.buffer_object.edge.region_data;
 			rpe.setPipeline(render_driver.edge_pipeline);
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);
 				rpe.draw(p[i].item_number);
 			}
-
+	
 			p=part_object.buffer_object.point.region_data;
 			rpe.setPipeline(render_driver.point_pipeline);
 			for(var i=0,ni=p.length;i<ni;i++){
@@ -234,5 +251,22 @@ function construct_component_driver(
 		default:
 			break;
 		}
+	};
+	this.destroy=function(render)
+	{
+		var ep;
+		
+		if(typeof(ep=render.component_event_processor[this.component_id])=="object")
+			if(ep!=null)
+				if(typeof(ep.destroy)=="function")
+					ep.destroy(render);
+		render.component_event_processor[this.component_id]=null;
+		
+		if(this.parameter_buffer!=null){
+			this.parameter_buffer.destroy();
+			this.parameter_buffer=null;
+		}
+		this.save_buffer_data=null;
+		this.draw_component=null;
 	}
 };

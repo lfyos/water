@@ -164,6 +164,22 @@ async function request_render_data(render)
 					p.mirror_plane_matrix=render.computer.project_to_plane_location(
 						p.mirror_plane[0],p.mirror_plane[1],p.mirror_plane[2],p.mirror_plane[3],2.0);
 					break;
+				case 8:
+					p.main_display_target_flag=true;
+					break;
+				case 9:
+					p.main_display_target_flag=false;
+					break;
+				case 10:
+					p.target_view_parameter=new Object();
+					p.target_view_parameter.view_x0				=my_data[j++];
+					p.target_view_parameter.view_y0				=my_data[j++];
+					p.target_view_parameter.view_width			=my_data[j++];
+					p.target_view_parameter.view_height			=my_data[j++];
+					p.target_view_parameter.whole_view_width	=my_data[j++];
+					p.target_view_parameter.whole_view_height	=my_data[j++];
+
+					break;
 				}
 		}
 		return;
@@ -184,18 +200,7 @@ async function request_render_data(render)
 			return true;
 		}
 		
-		var response_data;
-		try{
-			response_data = await render_promise.json();
-		}catch(e){
-			if(render.terminate_flag)
-				return true;
-			alert("parse fetch_web_server_response_data fail: "+e.toString());
-			alert(request_url);
-			return true;
-		}
-		if(render.terminate_flag)
-			return true;
+		var response_data= await render_promise.json();
 		
 		var fetch_end_time=(new Date()).getTime();
 		

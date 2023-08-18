@@ -33,12 +33,15 @@ public class extended_component_instance_driver extends component_instance_drive
 			if(suspend.follow_mouse_component_id>=0)
 				if((follow_mouse_comp=ek.component_cont.get_component(suspend.follow_mouse_component_id))!=null)
 					if(follow_mouse_comp.component_box!=null) {
+						double local_xy[]=ci.display_camera_result.target.target_view.
+								caculate_view_local_xy(ci.parameter.x,ci.parameter.y);
+					
 						location loca=follow_mouse_comp.caculate_negative_absolute_location();
 						point p0=follow_mouse_comp.component_box.center();
 						point p1=cr.matrix.multiply(p0);
 						p0=loca.multiply(p0);
 						
-						p1=new point(ci.parameter.x,ci.parameter.y,p1.z);
+						p1=new point(local_xy[0],local_xy[1],p1.z);
 						p1=cr.negative_matrix.multiply(p1);
 						p1=loca.multiply(p1).sub(p0);
 

@@ -30,6 +30,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		if(tag_array.test_location_modify(ek,ci))
 			comp.driver_array.get(driver_id).update_component_parameter_version();
+		
 		int display_number=0;
 		for(int i=0,ni=tag_array.distance_tag_array.length;i<ni;i++){
 			component distance_comp;

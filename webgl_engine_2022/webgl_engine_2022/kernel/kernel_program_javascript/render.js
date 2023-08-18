@@ -38,8 +38,8 @@ function construct_render_routine(my_webgpu,my_url,
 	
 	this.view=
 	{
-		x		:	-0.0,
-		y		:	-0.0
+		x		:	-10.0,
+		y		:	-10.0
 	};
 	this.view_bak=
 	{

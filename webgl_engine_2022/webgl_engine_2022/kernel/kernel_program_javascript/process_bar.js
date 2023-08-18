@@ -79,8 +79,6 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 			for(var i=0,ni=this.webgpu.canvas.length;i<ni;i++){
 				this.webgpu.canvas_2d.width		=this.webgpu.canvas[i].width;
 				this.webgpu.canvas_2d.height	=this.webgpu.canvas[i].height;
-				this.webgpu.context_2d.width	=this.webgpu.canvas[i].width;
-				this.webgpu.context_2d.height	=this.webgpu.canvas[i].height;
 			
 				try{
 					this.process_bar_function(i,
