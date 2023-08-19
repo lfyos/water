@@ -83,15 +83,16 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 
 		this.destroy									=null;
 	};
-	this.save_data_into_buffer_object=function(object_pointer,buffer_object_data)
+	this.save_data_into_buffer_object=function(my_material_id,object_pointer,buffer_object_data)
 	{
+		var my_item_size=Math.round(buffer_object_data.item_size);
 		var my_region_data={
 				buffer			:	null,
 				
-				material_id		:	buffer_object_data.material_id,
+				material_id		:	my_material_id,
 
-				item_number		:	buffer_object_data.item_number,
-				item_size		:	buffer_object_data.region_data.length/buffer_object_data.item_number,
+				item_size		:	my_item_size,
+				item_number		:	buffer_object_data.region_data.length/my_item_size,
 
 				region_box		:	buffer_object_data.region_box,
 				private_data	:	buffer_object_data.private_data,
@@ -162,6 +163,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			end_material_id=my_material_id;
 		};
 		
+		var part_object=render.part_array[render_id][part_id];
 		var part_driver=render.part_driver[render_id][part_id];
 
 		for(var i=begin_material_id;i<=end_material_id;i++){
@@ -177,23 +179,19 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 				
 			if((typeof(part_driver)=="object")&&(part_driver!=null))
 				if(typeof(part_driver.decode_vertex_data)=="function"){
-					processed_buffer_object_data=part_driver.decode_vertex_data(
-						request_str,vertex_data,render.part_array[render_id][part_id]);
+					processed_buffer_object_data=part_driver.
+						decode_vertex_data(request_str,vertex_data,part_object);
 					if(request_str=="face")
-						frame_processed_buffer_object_data=part_driver.decode_vertex_data(
-							"frame",vertex_data,render.part_array[render_id][part_id]);	
+						frame_processed_buffer_object_data=part_driver.
+							decode_vertex_data("frame",vertex_data,part_object);	
 				}
-
-			if(processed_buffer_object_data.region_data.length>0){
-				processed_buffer_object_data.material_id=i;
-				this.save_data_into_buffer_object(object_pointer,processed_buffer_object_data);
-			}
-			if(request_str=="face"){
-				if(frame_processed_buffer_object_data.region_data.length>0){
-					frame_processed_buffer_object_data.material_id=i;
-					this.save_data_into_buffer_object(frame_object_pointer,frame_processed_buffer_object_data);
-				}
-			}
+			if(processed_buffer_object_data.region_data.length>0)
+				this.save_data_into_buffer_object(i,
+						object_pointer,processed_buffer_object_data);
+			if(request_str=="face")
+				if(frame_processed_buffer_object_data.region_data.length>0)
+					this.save_data_into_buffer_object(i,
+							frame_object_pointer,frame_processed_buffer_object_data);
 		}
 	};
 	

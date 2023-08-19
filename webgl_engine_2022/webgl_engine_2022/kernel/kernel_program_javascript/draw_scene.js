@@ -45,9 +45,19 @@ function draw_scene_routine(render_data,render)
 		var view_height=(render_data.target_view_parameter.view_height<1)?1:
 			((render_data.target_view_parameter.view_height+view_y0)>render_target.target_view.height)
 			?(render_target.target_view.height-view_y0):(render_data.target_view_parameter.view_height);
+		var whole_view_width=render_data.target_view_parameter.whole_view_width;
+		var whole_view_height=render_data.target_view_parameter.whole_view_height;
 		
-		view_y0=render_target.target_view.height-view_y0-view_height;
-		render.webgpu.render_pass_encoder.setViewport(view_x0,view_y0,view_width,view_height,0,1);
+		if(render_data.main_display_target_flag){
+			render.view.main_target_x=0.5*(render.view.x+1.0)*whole_view_width -view_x0;
+			render.view.main_target_x=2.0*render.view.main_target_x/view_width -1.0;
+
+			render.view.main_target_y=0.5*(render.view.y+1.0)*whole_view_height-view_y0;
+			render.view.main_target_y=2.0*render.view.main_target_y/view_height-1.0;
+		}
+
+		render.webgpu.render_pass_encoder.setViewport(
+			view_x0,render_target.target_view.height-view_y0-view_height,view_width,view_height,0,1);
 	
 		for(var i=0,ni=method_array.length;i<ni;i++){
 			if(typeof(target_component_driver.begin_render_method)=="function")

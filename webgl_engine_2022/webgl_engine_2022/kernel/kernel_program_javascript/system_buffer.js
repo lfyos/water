@@ -106,7 +106,7 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 			microsecond,
 			nanosecond,
 		];
-		
+
 		var float_data=[
 			this.render.pickup.depth,
 			this.render.pickup.value[0],

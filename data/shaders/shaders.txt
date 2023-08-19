@@ -3,9 +3,7 @@
 /*	render_0	*/	pickup						driver_pickup.extended_render_driver					driver_general\pickup\render.list
 /*	render_1	*/	caption						driver_caption.extended_render_driver					driver_general\caption\render.list
 /*	render_2	*/	movement					driver_movement.extended_render_driver					driver_general\movement\render.list
-
-//	/*	render_3	*/	interface					driver_interface.extended_render_driver					driver_general\interface\render.list
-
+/*	render_3	*/	interface					driver_interface.extended_render_driver					driver_general\interface\render.list
 /*	render_4	*/	background					driver_background.extended_render_driver				driver_general\background\render.list
 /*	render_5	*/	coordinate					driver_coordinate.extended_render_driver				driver_general\coordinate\render.list
 /*	render_6	*/	show_target					driver_show_target.extended_render_driver				driver_general\show_target\render.list 

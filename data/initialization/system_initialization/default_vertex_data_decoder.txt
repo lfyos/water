@@ -1,16 +1,16 @@
 function(component_name,component_id,render)
 {
-	render.default_vertex_data_decoder=
+	render.system_call_processor.default_vertex_data_decoder=
 	{
 		create_frame:
-			function(request_type_string,buffer_object_data)
+			function(request_type_string,buffer_object_data,part_object)
 			{
-				var item_size=buffer_object_data.region_data.length/buffer_object_data.item_number;
-				
 				if(request_type_string!="frame"){
-					buffer_object_data.item_size=item_size;
+					buffer_object_data.private_data=null;
 					return buffer_object_data;
 				}
+				var item_size=buffer_object_data.region_data.length/buffer_object_data.item_number;
+				
 				var primitive_vertex_number=3;
 				var frame_creation_map=[0,1,1,2,2,0];
 				var region_data=buffer_object_data.region_data;
@@ -22,76 +22,81 @@ function(component_name,component_id,render)
 							new_region_data[pointer++]=(k==15)?1000:(region_data[my_pointer]);
 							
 				var new_buffer_object_data=new Object();
+				
 				new_buffer_object_data.region_box=buffer_object_data.region_box;
 				new_buffer_object_data.region_data=new_region_data;
 				new_buffer_object_data.item_size=item_size;
+				new_buffer_object_data.private_data=null;
 			
 				return new_buffer_object_data;
 			},
 		discard_all:
-			function(request_type_string,buffer_object_data)
+			function(request_type_string,buffer_object_data,part_object)
 			{
 				var new_buffer_object_data=new Object();
+				
 				new_buffer_object_data.region_box=buffer_object_data.region_box;
-				new_buffer_object_data.item_size=buffer_object_data.region_data.length/buffer_object_data.item_number;
+				new_buffer_object_data.item_size=buffer_object_data.item_size;
 				new_buffer_object_data.region_data=new Array();
+				new_buffer_object_data.private_data=null;
 				
 				return new_buffer_object_data;
 			},
 		edge_and_point:	
-			function(request_type_string,buffer_object_data)
+			function(request_type_string,buffer_object_data,part_object)
 			{
 				var new_buffer_object_data=new Object();
 				new_buffer_object_data.region_box	=buffer_object_data.region_box;
-				new_buffer_object_data.item_size	=buffer_object_data.region_data.length/buffer_object_data.item_number;
+				new_buffer_object_data.item_size	=buffer_object_data.item_size;
 				
 				if((request_type_string=="edge")||(request_type_string=="point"))
 					new_buffer_object_data.region_data=buffer_object_data.region_data;
 				else
 					new_buffer_object_data.region_data=new Array();
-			
+				new_buffer_object_data.private_data=null;
 				return new_buffer_object_data;
 			},
 		no_frame:
-			function(request_type_string,buffer_object_data)
+			function(request_type_string,buffer_object_data,part_object)
 			{
 				var new_buffer_object_data=new Object();
 				
 				new_buffer_object_data.region_data=(request_type_string=="frame")?new Array():buffer_object_data.region_data;
 				new_buffer_object_data.region_box=buffer_object_data.region_box;
-				new_buffer_object_data.item_size=buffer_object_data.region_data.length/buffer_object_data.item_number;
-				
+				new_buffer_object_data.item_size=buffer_object_data.item_size;
+				new_buffer_object_data.private_data=null;
 				return new_buffer_object_data;
 			},
 		only_edge:
-			function(request_type_string,buffer_object_data)
+			function(request_type_string,buffer_object_data,part_object)
 			{
 				var new_buffer_object_data=new Object();
 				new_buffer_object_data.region_box	=buffer_object_data.region_box;
-				new_buffer_object_data.item_size	=buffer_object_data.region_data.length/buffer_object_data.item_number;
+				new_buffer_object_data.item_size	=buffer_object_data.item_size;
 			
 				if(request_type_string=="edge")
 					new_buffer_object_data.region_data=buffer_object_data.region_data;
 				else
 					new_buffer_object_data.region_data=new Array();
+				new_buffer_object_data.private_data=null;
 				return new_buffer_object_data;
 			},
 		only_face:
-			function(request_type_string,buffer_object_data)
+			function(request_type_string,buffer_object_data,part_object)
 			{
 				var new_buffer_object_data=new Object();
 			
 				new_buffer_object_data.region_box=buffer_object_data.region_box;
 				new_buffer_object_data.region_data=(request_type_string!="face")?new Array():buffer_object_data.region_data;
-				new_buffer_object_data.item_size=buffer_object_data.region_data.length/buffer_object_data.item_number;
-			
+				new_buffer_object_data.item_size=buffer_object_data.item_size;
+				new_buffer_object_data.private_data=null;
 				return new_buffer_object_data;
 			},
 		voxel:
-			function (request_type_string,buffer_object_data)
+			function (request_type_string,buffer_object_data,part_object)
 			{
 				var new_item_size,unit_vertex_map;
-				var item_size=buffer_object_data.region_data.length/buffer_object_data.item_number;
+				var item_size=buffer_object_data.item_size;
 			
 				switch(request_type_string){
 				default:
@@ -178,11 +183,10 @@ function(component_name,component_id,render)
 					i+=my_unit_vertex_map[0]*item_size;
 				}
 				return {
-						material_id		:	buffer_object_data.material_id,
 						region_box		:	buffer_object_data.region_box,
 						item_size		:	new_item_size,
-						item_number		:	data_collector.length/new_item_size,
-						region_data		:	data_collector
+						region_data		:	data_collector,
+						private_data	:	null
 					};
 			}
 	}

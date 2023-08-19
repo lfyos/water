@@ -1,37 +1,43 @@
-function create_component_object()
+function create_component_object(my_init_data,render)
 {
+	this.interface_data				=my_init_data;
+	
 	this.show_x =0;
 	this.show_y =0;
 
 	this.hightlight=[-1,-1,-1,-1];
 	
-	this.mousedown_flag=false;
-	this.mouse_x =render.view.x;
-	this.mouse_y =render.view.y;
-	this.mousedown_x=render.view.x;
-	this.mousedown_y=render.view.y;
+	this.mousedown_flag	=false;
+	this.mouse_x 		=render.view.main_target_x;
+	this.mouse_y 		=render.view.main_target_y;
+	this.mousedown_x	=render.view.main_target_x;
+	this.mousedown_y	=render.view.main_target_y;
 
 	this.x=0;
 	this.y=0;
 	this.id_base=0;
 	this.update_flag=false;
 	
-	this.set_center=function(dx,dy)
+	this.set_position=function(my_show_x,my_show_y)
 	{
-		this.show_x =render.view.x-dx/2;
-		this.show_y =render.view.y-dy/2;
-
-		return;
-	}
+		this.show_x =my_show_x;
+		this.show_y =my_show_y;
+	};
+	this.set_center=function(my_show_x,my_show_y)
+	{
+		this.show_x =my_show_x-this.interface_data.dx/2;
+		this.show_y =my_show_y-this.interface_data.dy/2;
+	};
 	this.pickupmousedown=function(event,component_id,render)
 	{
 		switch(event.button){
 		case 0:
 			this.mousedown_flag=true;
-			this.mouse_x 	=render.view.x;
-			this.mouse_y 	=render.view.y;
-			this.mousedown_x=render.view.x;
-			this.mousedown_y=render.view.y;
+			this.mousedown_x=render.view.main_target_x;
+			this.mousedown_y=render.view.main_target_y;			
+			this.mouse_x 	=render.view.main_target_x;
+			this.mouse_y 	=render.view.main_target_y;
+			
 			break;
 		case 2:
 			render.caller.call_server_component(component_id,"all",[["operation","hide"]]);
@@ -40,18 +46,18 @@ function create_component_object()
 			break;
 		}
 		return true;
-	}
+	};
 	this.pickupmousemove=function(event,component_id,render)
 	{
 		switch(event.button){
 		case 0:
 			if(!(this.mousedown_flag))
 				break;
-			var p=render.webgpu.canvas[render.webgpu.current_canvas_id];
-			this.show_x+=(render.view.x-this.mouse_x)*(p.width/p.height);
-			this.show_y+=render.view.y-this.mouse_y;
-			this.mouse_x=render.view.x;
-			this.mouse_y=render.view.y;
+			this.show_x+=render.view.main_target_x-this.mouse_x;
+			this.show_y+=render.view.main_target_y-this.mouse_y;
+			this.mouse_x=render.view.main_target_x;
+			this.mouse_y=render.view.main_target_y;
+			
 			break;
 		case 2:
 			break;
@@ -64,20 +70,19 @@ function create_component_object()
 	{
 		switch(event.button){
 		case 0:
-			if(!(this.mousedown_flag))
-				break;
-			this.mousedown_flag=false;
-			
-			if(typeof(this.pickupmouseselect)!="function")
-				break;
-			var dx=this.mousedown_x-render.view.x;
-			var dy=this.mousedown_y-render.view.y;
-			if((dx*dx+dy*dy)>(2.0*0.01*0.01))
-				break;
-			this.x=render.pickup.primitive_id	/(1000.0*1000.0);
-			this.y=render.pickup.vertex_id		/(1000.0*1000.0);
-
-			this.pickupmouseselect(event,component_id,render);
+			if(this.mousedown_flag){
+				this.mousedown_flag=false;
+				if(typeof(this.pickupmouseselect)=="function"){
+					var dx=this.mousedown_x-render.view.main_target_x;
+					var dy=this.mousedown_y-render.view.main_target_y;
+					if((dx*dx+dy*dy)<(2.0*0.01*0.01)){
+						this.x=render.pickup.body_id/(1000.0*1000.0);
+						this.y=render.pickup.face_id/(1000.0*1000.0);
+						
+						this.pickupmouseselect(event,component_id,render);
+					}
+				}
+			}
 			break;
 		case 2:
 			break;
@@ -85,7 +90,7 @@ function create_component_object()
 			break;
 		}
 		return true;
-	}
+	};
 	this.pickupmousewheel=function(event,component_id,render)
 	{
 		var mouse_wheel_number=0;
@@ -94,7 +99,7 @@ function create_component_object()
 		else if(typeof(event.detail)=="number")
 			mouse_wheel_number-=event.detail/5;				//for firefox
 		else
-			return;
+			return true;
 
 		var skip_array=[1,	5,	10,	50,	100,	500,	1000,	5000];
 	
@@ -103,15 +108,15 @@ function create_component_object()
 		this.update_flag=false;
 
 		return true;
-	}
-	this.destroy=function(gl,ep,component_id)
+	};
+	this.destroy=function()
 	{
-		this.set_center=null;
-		this.pickupmousedown=null;
-		this.pickupmousemove=null;
-		this.pickupmouseup=null;
-		this.pickupmousewheel=null;
-	}
+		this.set_center					=null;
+		this.pickupmousedown			=null;
+		this.pickupmousemove			=null;
+		this.pickupmouseup				=null;
+		this.pickupmousewheel			=null;
+	};
 }
 
 function create_bind_group(init_data,render_driver,render)
@@ -220,6 +225,7 @@ function create_bind_group(init_data,render_driver,render)
 			this.texture=null;
 		}
 	};
+	
 	this.create(init_data,render_driver,render);
 };
 
@@ -227,78 +233,83 @@ function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
 	init_data,		part_object,	part_driver,	render_driver,	render)
 {
-	var new_ep=new create_component_object();
+	var new_ep=new create_component_object(init_data,render);
 	var old_ep=render.component_event_processor[component_id];
 	if(typeof(old_ep)=="object")
-		new_ep=Object.assign(old_ep,new_ep);
+		if(old_ep!=null)
+			new_ep=Object.assign(old_ep,new_ep);
 	render.component_event_processor[component_id]=new_ep;
 	
-	this.init_data			=init_data;
-	this.image_bind_group	=new create_bind_group(this.init_data,render_driver,render);
-	this.ep					=render.component_event_processor[component_id];
+	this.component_id		=component_id;
+	this.image_bind_group	=new create_bind_group(init_data,render_driver,render);
 
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,data_buffer_id,component_id,driver_id,
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		switch(method_data.method_id){
-		case 0:
-		case 5:
-			if(this.image_bind_group.is_busy_flag)
-				return;
-			break;
-		default:
-			return;	
+		var ep=render.component_event_processor[component_id];
+		if(this.image_bind_group.is_busy_flag)
+			return;
+			
+		if((ep.update_flag)&&(ep.interface_data.type)&&(typeof(ep.update_canvas_texture)=="function")){
+			render.webgpu.canvas_2d.width	=ep.interface_data.canvas.canvas_width;
+			render.webgpu.canvas_2d.height	=ep.interface_data.canvas.canvas_height;
+			if(ep.update_canvas_texture(render.webgpu.context_2d,ep.interface_data.canvas))
+				render.webgpu.device.queue.copyExternalImageToTexture(
+					{
+						source	:	render.webgpu.canvas_2d
+					},
+					{
+						texture	:	this.image_bind_group.texture
+					},
+					{
+						width	:	ep.interface_data.canvas.canvas_width,
+						height	:	ep.interface_data.canvas.canvas_height
+					});
+			ep.update_flag=false;
 		}
-		if(this.ep.update_flag){
-			this.ep.update_flag=false;
-			if(this.init_data.type)
-				if(typeof(this.ep.update_canvas_texture)=="function"){
-					render.webgpu.canvas_2d.width	=this.init_data.canvas.canvas_width;
-					render.webgpu.canvas_2d.height	=this.init_data.canvas.canvas_height;
-
-					if(this.ep.update_canvas_texture(render.webgpu.context_2d,this.init_data.canvas))
-						return;
-					render.webgpu.device.queue.copyExternalImageToTexture(
-						{
-							source	:	render.webgpu.canvas_2d
-						},
-						{
-							texture	:	this.image_bind_group.texture
-						},
-						{
-							width	:	this.init_data.canvas.canvas_width,
-							height	:	this.init_data.canvas.canvas_height
-						});
-				}
+		if(render_data.main_display_target_flag){
+			var x0=ep.hightlight[0],y0=ep.hightlight[1];
+			var x1=ep.hightlight[2],y1=ep.hightlight[3];
+			render.webgpu.device.queue.writeBuffer(this.image_bind_group.buffer,0,
+				new Float32Array([
+						ep.show_x,
+						ep.show_y,
+						ep.interface_data.dx,
+						ep.interface_data.dy,
+						ep.interface_data.depth,
+						(x0<x1)?x0:x1,
+						(y0<y1)?y0:y1,
+						(x0>x1)?x0:x1,
+						(y0>y1)?y0:y1
+					]));
 		}
 		
-		var x0=this.ep.hightlight[0],y0=this.ep.hightlight[1];
-		var x1=this.ep.hightlight[2],y1=this.ep.hightlight[3];
-		render.webgpu.device.queue.writeBuffer(this.image_bind_group.buffer,0,
-			new Float32Array(
-				[
-					this.ep.show_x,
-					this.ep.show_y,
-					this.init_data.dx,
-					this.init_data.dy,
-					this.init_data.depth,
-					(x0<x1)?x0:x1,
-					(y0<y1)?y0:y1,
-					(x0>x1)?x0:x1,
-					(y0>y1)?y0:y1
-				]));
-
 		var rpe=render.webgpu.render_pass_encoder;
 		rpe.setPipeline((method_data.method_id==0)
-				?(render_driver.value_pipeline):(render_driver.color_pipeline));		
-		render.webgpu.render_pass_encoder.setBindGroup(1,this.image_bind_group.bindgroup);
-
+				?(render_driver.id_pipeline):(render_driver.color_pipeline));		
+		rpe.setBindGroup(1,this.image_bind_group.bindgroup);
 		var p=part_object.buffer_object.face.region_data;
 		for(var i=0,ni=p.length;i<ni;i++){
 			rpe.setVertexBuffer(0,p[i].buffer);
 			rpe.draw(p[i].item_number);
 		}
+	};
+
+	this.destroy=function(render)
+	{
+		var ep=render.component_event_processor[this.component_id];
+		if((typeof(ep)=="object")&&(ep!=null))
+			if(typeof(ep.destroy)=="function")
+				ep.destroy(render);
+		render.component_event_processor[this.component_id]=null;
+		
+		if(this.image_bind_group!=null){
+			this.image_bind_group.destroy(render);
+			this.image_bind_group=null;
+		}
+		
+		this.draw_component=null;
 	};
 };

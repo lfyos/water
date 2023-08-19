@@ -30,17 +30,14 @@ function new_render_driver(
 			}
 		}
 	];
-	
 	this.bindgroup_layout=render.webgpu.device.createBindGroupLayout(
 		{
 			entries	:layout_entries
 		});
-
 	var my_module=render.webgpu.device.createShaderModule(
 			{
 				code: shader_code
 			});
-			
 	var pipeline_descr=
 	{
 		layout: render.webgpu.device.createPipelineLayout(
@@ -67,25 +64,10 @@ function new_render_driver(
 							offset			:	0,
 							shaderLocation	:	0
 						},
-						{	//normal
-							format			:	"float32x4",
-							offset			:	16,
-							shaderLocation	:	1
-						},
-						{	//material
-							format			:	"float32x4",
-							offset			:	32,
-							shaderLocation	:	2
-						},
-						{	//id
-							format			:	"float32x4",
-							offset			:	48,
-							shaderLocation	:	3
-						},
 						{	//texture
 							format			:	"float32x4",
 							offset			:	64,
-							shaderLocation	:	4
+							shaderLocation	:	1
 						}
 					]
 				}
@@ -94,31 +76,14 @@ function new_render_driver(
 		fragment		:
 		{
 			module		:	my_module,
-			entryPoint	:	"fragment_main",
+			entryPoint	:	"fragment_id_fun",
 			targets		: 
 			[
 				{
-					format		:	"rgba32float",
-					blend		:
-					{
-						color	:
-						{
-							operation	:	"add",
-    						srcFactor	:	"src-alpha",
-							dstFactor	:	"one-minus-src-alpha"
-						},
-						alpha	:
-						{
-							operation	:	"add",
-    						srcFactor	:	"src-alpha",
-							dstFactor	:	"one-minus-src-alpha"	
-						}
-					},
-					writeMask	:	GPUColorWrite. ALL
+					format		:	"rgba32sint"
 				},
 				{
-					format		:	"rgba32sint",
-					writeMask	:	GPUColorWrite. ALL
+					format		:	"rgba32sint"
 				}
 			],
 		},
@@ -130,36 +95,28 @@ function new_render_driver(
 		{
 			format				:	"depth24plus-stencil8",
 			depthWriteEnabled	:	true,
-    		depthCompare		:	"less",
-
-   			stencilFront		:	{},
-    		stencilBack			:	{},
-
- 			stencilReadMask		:	0xFFFFFFFF,
-			stencilWriteMask	:	0xFFFFFFFF,
-			
-			depthBias			:	0,
-    		depthBiasSlopeScale	:	0,
-    		depthBiasClamp		:	0
+    		depthCompare		:	"less"
 		}
 	};
 	
-	pipeline_descr.fragment.targets[0].format=render.webgpu.gpu.getPreferredCanvasFormat();
-	this.color_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.id_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
-	pipeline_descr.fragment.targets[0].format="rgba32float";
-	pipeline_descr.fragment.targets[0].blend=undefined;
-	this.value_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	pipeline_descr.fragment.entryPoint			="fragment_color_fun";
+	pipeline_descr.fragment.targets.length		=1;
+	pipeline_descr.fragment.targets[0].format	=render.webgpu.gpu.getPreferredCanvasFormat();
+	if(render.parameter.multisample>1)
+		pipeline_descr.multisample={count:render.parameter.multisample};
+	this.color_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	this.new_part_driver=construct_part_driver;
 	
-	this.method_render_flag=[true,false,false,false,false,true];
+	this.method_render_flag=[true,false,true];
 	
 	this.destroy=function()
 	{
 		this.bindgroup_layout	=null;
-		this.color_pipeline		=null;
-		this.value_pipeline		=null;
+		this.id_pipeline		=null;
+		this.face_pipeline		=null;
 		this.new_part_driver	=null;
 	}
 }

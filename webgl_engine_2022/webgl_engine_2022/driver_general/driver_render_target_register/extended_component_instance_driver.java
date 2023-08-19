@@ -35,33 +35,34 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		for(int i=0,target_number=target_parameter.length;i<target_number;i++){
 			int canvas_id	=target_parameter[i].canvas_id;
-			
-			
+
 			int view_x0		=(int)(Math.round(target_parameter[i].target_x0		*canvas_width_height[canvas_id][0]));
 			int view_y0		=(int)(Math.round(target_parameter[i].target_y0		*canvas_width_height[canvas_id][1]));
 			int view_width	=(int)(Math.round(target_parameter[i].target_width	*canvas_width_height[canvas_id][0]));
 			int view_height	=(int)(Math.round(target_parameter[i].target_height	*canvas_width_height[canvas_id][1]));
 			
-			render_target_view rtv=new render_target_view(view_x0,view_y0,
-					view_width,view_height,canvas_width_height[canvas_id][0],canvas_width_height[canvas_id][1]);
-
-			double view_x=(ci.parameter.x+1.0)/2.0,view_y=(ci.parameter.y+1.0)/2.0;
-			double x0=target_parameter[i].target_x0;
-			double x1=target_parameter[i].target_x0+target_parameter[i].target_width;
-			double y0=target_parameter[i].target_y0;
-			double y1=target_parameter[i].target_y0+target_parameter[i].target_height;
-
+			render_target_view rtv=new render_target_view(
+				view_x0,view_y0,view_width,view_height,
+				canvas_width_height[canvas_id][0],canvas_width_height[canvas_id][1]);
+			
 			double aspect_value	=(double)(rtv.view_width)/(double)(rtv.view_height);
+			box view_volume_box=new box(-aspect_value,-1,-1,aspect_value,1,1);
+
 			render_target rt=new render_target(true,comp.component_id,	driver_id,	i,
 				new component[] {ek.component_cont.root_component},null,
 				target_parameter[i].camera_id,target_parameter[i].parameter_channel_id,
-				rtv,new box(-aspect_value,-1,-1,aspect_value,1,1),
-				ci.clip_plane,null,true,true);
+				rtv,view_volume_box,ci.clip_plane,null,true,true);
 			
-			if(ci.parameter.current_canvas_id==target_parameter[i].canvas_id)
-				if((x0<=view_x)&&(y0<=view_y)&&(view_x<=x1)&&(view_y<=y1))
+			if(ci.parameter.current_canvas_id==target_parameter[i].canvas_id) {
+				double view_x=(ci.parameter.x+1.0)/2.0;
+				double view_y=(ci.parameter.y+1.0)/2.0;
+				double x0=target_parameter[i].target_x0;
+				double x1=target_parameter[i].target_x0+target_parameter[i].target_width;
+				double y0=target_parameter[i].target_y0;
+				double y1=target_parameter[i].target_y0+target_parameter[i].target_height;
+				if((x0<=view_x)&&(view_x<=x1)&&(y0<=view_y)&&(view_y<=y1))
 					rt.main_display_target_flag=true;
-			
+			}
 			ci.target_container.register_target(rt);
 		}
 	}

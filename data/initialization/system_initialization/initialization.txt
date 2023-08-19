@@ -1,6 +1,5 @@
 				function(component_name,component_id,render)
-				{ 	
-/*				
+				{ 				
 					render.event_component=
 					{
 						mouse	:
@@ -18,44 +17,5 @@
 							component_name	:	"mouse_modify_location_component",
 							function_id	:	0
 						}
-					};
-*/																			
-					render.event_component=
-					{
-						mouse	:
-						{
-							component_name	:	"component_marker_component",
-							function_id	:	0
-						},
-						touch	:
-						{
-							component_name	:	"component_marker_component",
-							function_id	:	0
-						},
-						keyboard	:
-						{
-							component_name	:	"component_marker_component",
-							function_id	:	0
-						}
-					};
-/*
-					render.event_component=
-					{
-						mouse	:
-						{
-							component_name	:	"distance_tag_component",
-							function_id	:	0
-						},
-						touch	:
-						{
-							component_name	:	"distance_tag_component",
-							function_id	:	0
-						},
-						keyboard	:
-						{
-							component_name	:	"distance_tag_component",
-							function_id	:	0
-						}
-					};
-*/									
+					};	
 				}

@@ -12,8 +12,9 @@ function construct_event_listener(my_canvas_id,my_render)
 	{
 		var rect=this.canvas.getBoundingClientRect();
 		var left=rect.left,top=rect.top,right=rect.right,bottom=rect.bottom;
-		var width=right-left,height=bottom-top;
 		var x=event.clientX-left,y=event.clientY-top;
+		var width=right-left,height=bottom-top;
+		
 		if((this.render.view.x=2.0*x/width-1.0)<-1.0)
 			this.render.view.x=-1.0;
 		else if(this.render.view.x>1.0)
