@@ -305,6 +305,8 @@ public class distance_tag_array
 			case 0:	//input second point
 				if(ci.parameter.comp==null)
 					return true;
+				if(!(ci.parameter.comp.uniparameter.part_list_flag))
+					return true;
 				if((touch_point=ci.display_camera_result.caculate_local_focus_point(ci.parameter))==null)
 					return true;
 				comp_p0=ek.component_cont.get_component(p.p0_component_id);
@@ -391,6 +393,8 @@ public class distance_tag_array
 			case 0:	//input second point
 				if(ci.parameter.comp==null)
 					return true;
+				if(!(ci.parameter.comp.uniparameter.part_list_flag))
+					return true;
 				if((mark_point=ci.display_camera_result.caculate_local_focus_point(ci.parameter))==null)
 					return true;
 				
@@ -434,6 +438,8 @@ public class distance_tag_array
 		}
 		//input first point
 		if(ci.parameter.comp==null)
+			return true;
+		if(!(ci.parameter.comp.uniparameter.part_list_flag))
 			return true;
 		if((mark_point=ci.display_camera_result.caculate_local_focus_point(ci.parameter))==null)
 			return true;

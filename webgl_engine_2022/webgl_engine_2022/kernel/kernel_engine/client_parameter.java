@@ -6,7 +6,7 @@ import kernel_component.component;
 public class client_parameter 
 {
 	public int current_canvas_id,driver_id,primitive_type_id,body_id,face_id,loop_id,edge_id,primitive_id,vertex_id;
-	public double x,y,depth,value[];
+	public double x,y,main_target_x,main_target_y,depth,value[];
 	public boolean high_or_low_precision_flag;
 	
 	public int request_length,max_client_loading_number;
@@ -33,6 +33,8 @@ public class client_parameter
 		
 		x					=-10;
 		y					=-10;
+		main_target_x			=-10;
+		main_target_y			=-10;
 		
 		depth=1.0;
 		value=new double[] {-2,-2,-2};
@@ -90,6 +92,10 @@ public class client_parameter
 			x=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("y"))!=null)
 			y=Double.parseDouble(str);
+		if((str=ci.request_response.get_parameter("mtx"))!=null)
+			main_target_x=Double.parseDouble(str);
+		if((str=ci.request_response.get_parameter("mty"))!=null)
+			main_target_y=Double.parseDouble(str);
 		
 		if((str=ci.request_response.get_parameter("canvas"))!=null)
 			current_canvas_id=Integer.decode(str);

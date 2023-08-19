@@ -30,7 +30,7 @@
 
 				function(component_name,component_id,render)
 				{
-					render.caller.call_server_component(component_name,"all",[["operation","show"]]);
+					render.caller.call_server_component(component_name,"all",[["operation","hide"]]);
 				
 					render.component_event_processor[component_id]={
 						pickupmouseselect	:	function(event,component_id,render)

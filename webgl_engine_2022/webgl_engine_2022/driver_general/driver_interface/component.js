@@ -18,16 +18,6 @@ function create_component_object(my_init_data,render)
 	this.id_base=0;
 	this.update_flag=false;
 	
-	this.set_position=function(my_show_x,my_show_y)
-	{
-		this.show_x =my_show_x;
-		this.show_y =my_show_y;
-	};
-	this.set_center=function(my_show_x,my_show_y)
-	{
-		this.show_x =my_show_x-this.interface_data.dx/2;
-		this.show_y =my_show_y-this.interface_data.dy/2;
-	};
 	this.pickupmousedown=function(event,component_id,render)
 	{
 		switch(event.button){
@@ -249,6 +239,16 @@ function construct_component_driver(
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
 		var ep=render.component_event_processor[component_id];
+		while(component_buffer_parameter.length>0){
+			var p=component_buffer_parameter.shift();
+			
+			ep.show_x =p[0];
+			ep.show_y =p[1];
+			
+			ep.interface_data.dx=p[2];
+			ep.interface_data.dy=p[3];
+		}
+		
 		if(this.image_bind_group.is_busy_flag)
 			return;
 			
@@ -296,7 +296,6 @@ function construct_component_driver(
 			rpe.draw(p[i].item_number);
 		}
 	};
-
 	this.destroy=function(render)
 	{
 		var ep=render.component_event_processor[this.component_id];

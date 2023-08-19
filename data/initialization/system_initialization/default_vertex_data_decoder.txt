@@ -2,6 +2,18 @@ function(component_name,component_id,render)
 {
 	render.system_call_processor.default_vertex_data_decoder=
 	{
+		convert_point_to_face:
+			function(buffer_object_data)
+			{
+				var pointer=0,new_region_data=new Array(buffer_object_data.region_data.length*6);
+				for(var i=0,ni=buffer_object_data.region_data.length;i<ni;i+=buffer_object_data.item_size)
+					for(var j=0;j<6;j++)
+						for(var k=i,nk=buffer_object_data.item_size+i;k<nk;k++)
+							new_region_data[pointer++]=buffer_object_data.region_data[k];
+				buffer_object_data.region_data=new_region_data;
+				
+				return buffer_object_data;
+			},
 		create_frame:
 			function(request_type_string,buffer_object_data,part_object)
 			{

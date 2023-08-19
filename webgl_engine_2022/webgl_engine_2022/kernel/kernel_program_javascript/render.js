@@ -47,6 +47,8 @@ function construct_render_routine(my_webgpu,my_url,
 	{
 		x					:	-2,
 		y					:	-2,
+		main_target_x		:	-2,
+		main_target_y		:	-2,
 		
 		canvas_id			:	-2,
 					

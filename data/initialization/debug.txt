@@ -1,5 +1,6 @@
 				function(component_name,component_id,render)
 				{
+/*				
 					render.system_event_processor.pickupmousedown=function(event,pickup_component_id,render)
 					{
 						render.call_server_component(
@@ -7,9 +8,11 @@
 						render.user_call_processor.scene_mousedown(pickup_component_id,event);
 						return false;
 					};
+*/
 					render.system_event_processor.keydown=function(event,render)
 					{
 						switch(event.keyCode){
+/*						
 						case 27://Esc
 							render.system_call_processor.select_component("clear_all");
 							break;
@@ -40,6 +43,7 @@
 						case 32://space
 							render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]]);
 							break;
+*/							
 						case 90://z
 						case 88://x
 						case 67://c
@@ -47,7 +51,7 @@
 							var my_function_id;
 							switch(event.keyCode){
 							default:
-							case 90:	my_function_id=000;	break;	//z
+							case 90:	my_function_id=  0;	break;	//z
 							case 88:	my_function_id=100;	break;	//x	
 							case 67:	my_function_id=200;	break;	//c
 							case 86:	my_function_id=300;	break;	//v
@@ -58,24 +62,30 @@
 							render.event_component.mouse.	function_id		=my_function_id;
 							render.event_component.keyboard.function_id		=my_function_id;
 							render.event_component.touch.	function_id		=my_function_id;
-							render.set_event_component("mouse_modify_location_component");
+							render.system_call_processor.set_event_component("mouse_modify_location_component");
 							break;
 						case 66://b
 							render.event_component.mouse.	component_name	="component_selection_component";
 							render.event_component.keyboard.component_name	="component_selection_component";
 							render.event_component.mouse.	function_id		=0;
 							render.event_component.keyboard.function_id		=0;
-							render.set_event_component("component_selection_component");
+							render.system_call_processor.set_event_component("component_selection_component");
 							break;
 						case 78://n
 							render.event_component.mouse.	component_name	="distance_tag_component";
 							render.event_component.keyboard.component_name	="distance_tag_component";
 							render.event_component.mouse.	function_id		=0;
 							render.event_component.keyboard.function_id		=0;
-							render.set_event_component("distance_tag_component");
+							render.system_call_processor.set_event_component("distance_tag_component");
 							break;	
 						case 77://m
+							render.event_component.mouse.	component_name	="component_marker_component";
+							render.event_component.keyboard.component_name	="component_marker_component";
+							render.event_component.mouse.	function_id		=0;
+							render.event_component.keyboard.function_id		=0;
+							render.system_call_processor.set_event_component("distance_tag_component");
 							break;
+/*							
 						case 112://F1
 							render.user_call_processor.set_all_transparant_except_selection();
 							break;
@@ -103,6 +113,7 @@
 							break;
 						case 122://F11
 							break;
+*/							
 						case 123://F12
 							render.system_call_processor.set_menu_show("交互界面主菜单");
 							break;

@@ -4,6 +4,8 @@ import kernel_component.component;
 import kernel_camera.camera_result;
 import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
+import kernel_render.render_target_view;
+import kernel_common_class.const_value;
 import kernel_common_class.jason_string;
 import kernel_engine.client_information;
 import kernel_driver.component_instance_driver;
@@ -12,7 +14,7 @@ public class extended_component_instance_driver extends component_instance_drive
 {
 	private boolean menu_type;
 	private String file_name,file_charset;
-	private double dx,dy,depth;
+	private double x0,y0,dx,dy,depth;
 	private boolean hide_show_flag,always_show_flag;
 	
 	public void destroy()
@@ -32,13 +34,15 @@ public class extended_component_instance_driver extends component_instance_drive
 		file_charset=my_file_charset;
 		always_show_flag=my_always_show_flag;
 		
+		x0=0;
+		y0=0;
+		
 		dx=my_dx;
 		dy=my_dy;
 		depth=my_depth;
 
 		hide_show_flag=true;
 	}
-	
 	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
 		ci.request_response.println("{");
@@ -68,7 +72,49 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void create_component_parameter(int data_buffer_id,engine_kernel ek,client_information ci)
 	{
-		ci.request_response.print(0);
+		ci.request_response.print("[",x0).print(",",y0).print(",",dx).print(",",dy).print("]");
+	}
+	private void get_parameter(engine_kernel ek,client_information ci)
+	{
+		String str;
+		
+		if(ci.display_camera_result==null) 
+			return;
+		if((str=ci.request_response.get_parameter("dx"))!=null)
+			dx=Double.parseDouble(str);
+		if((str=ci.request_response.get_parameter("dy"))!=null)
+			dy=Double.parseDouble(str);
+		
+		if((str=ci.request_response.get_parameter("x0"))!=null)
+			x0=Double.parseDouble(str);
+		if((str=ci.request_response.get_parameter("y0"))!=null)
+			y0=Double.parseDouble(str);
+		
+		if((str=ci.request_response.get_parameter("center"))!=null) {
+			render_target_view tv=ci.display_camera_result.target.target_view;
+			double p[]=tv.caculate_view_local_xy(ci.parameter.x,ci.parameter.y);
+			x0=p[0]-dx/2.0;
+			y0=p[1]-dy/2.0;
+		}
+		if(x0>=1)
+			x0=1.0-const_value.min_value;
+		if((x0+dx)<=-1)
+			x0=-1-dx+const_value.min_value;
+		if(y0>=1)
+			y0=1.0-const_value.min_value;
+		if((y0+dy)<=-1)
+			y0=-1-dy+const_value.min_value;
+		
+		if((str=ci.request_response.get_parameter("all_in_view"))!=null){
+			if((x0+dx)>=1)
+				x0=1.0-dx-const_value.min_value;
+			if(x0<=-1)
+				x0=-1+const_value.min_value;
+			if((y0+dy)>=1)
+				y0=1.0-dy-const_value.min_value;
+			if(y0<=-1)
+				y0=-1+const_value.min_value;
+		}
 	}
 	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{
@@ -80,7 +126,9 @@ public class extended_component_instance_driver extends component_instance_drive
 			hide_show_flag=true;
 			return null;
 		case "show":
+			get_parameter(ek,ci);
 			hide_show_flag=false;
+			comp.driver_array.get(driver_id).update_component_parameter_version();
 			return null;
 		default:
 			return null;

@@ -5,12 +5,21 @@ function(component_name,component_id,render)
 	render.system_call_processor.set_menu_show=function(menu_name,par)
 	{
 		var my_par=(typeof(par)!="undefined")?par:[["center","center"],["all_in_view","all_in_view"]];
-		render.call_server_component(menu_name,"all",my_par.concat([["operation","show"]]));
+		render.caller.call_server_component(menu_name,"all",my_par.concat([["operation","show"]]));
 	};
 	render.system_call_processor.set_menu_hide=function(menu_name)
 	{
-		render.call_server_component(menu_name,"all",[["operation","hide"]]);
+		render.caller.call_server_component(menu_name,"all",[["operation","hide"]]);
 	};
+	render.system_call_processor.set_event_component=function(event_component_name)
+	{
+		var cep
+		if((cep=render.operate_component.get_component_event_processor(event_component_name))!=null)
+			if(typeof(cep.set_event_component)=="function")
+				cep.set_event_component(render.operate_component.last_operate_component_id,render);
+	};
+
+/*	
 //	system call for set mouse usage
 
 	if(typeof(render.system_call_processor.mouse_usage)=="undefined")
@@ -401,4 +410,5 @@ function(component_name,component_id,render)
 	{
 		return render.url_with_channel+"&command=information&method=camera";
 	};
+*/	
 }

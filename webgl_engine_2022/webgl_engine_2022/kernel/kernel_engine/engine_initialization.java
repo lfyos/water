@@ -266,7 +266,7 @@ public class engine_initialization
 		
 		file_writer fw=new file_writer(destination_file_name,ek.system_par.network_data_charset);
 
-		fw.println("export var init_data=[");
+		fw.println("export var initialization_data=[");
 		
 		fw.println().println("[");
 		{

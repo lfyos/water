@@ -89,14 +89,22 @@ function construct_component_driver(
 			render.set_system_bindgroup(
 				render_data.render_buffer_id,method_data.method_id,
 				this.marker_array[i].marker_component_id,-1);
+			
 			rpe.setBindGroup(1,this.marker_array[i].bindgroup);
 
 			switch(method_data.method_id){
 			default:
 				break;
 			case 0:
-				rpe.setPipeline(render_driver.id_pipeline);
+				rpe.setPipeline(render_driver.face_id_pipeline);
 				p=part_object.buffer_object.face.region_data;
+				for(var j=0,nj=p.length;j<nj;j++){
+					rpe.setVertexBuffer(0,p[j].buffer);
+					rpe.draw(p[j].item_number);
+				}
+				
+				rpe.setPipeline(render_driver.point_id_pipeline);
+				p=part_object.buffer_object.point.region_data;
 				for(var j=0,nj=p.length;j<nj;j++){
 					rpe.setVertexBuffer(0,p[j].buffer);
 					rpe.draw(p[j].item_number);
@@ -214,7 +222,8 @@ function construct_component_driver(
 				part_object.material[0].width_scale	*real_texture_width,
 				part_object.material[0].height_scale*my_texture_height,
 				part_object.material[0].edge_scale,
-				1.0
+				
+				part_object.material[0].point_size
 			];
 			
 			var my_buffer_integer_size	=Int32Array.  BYTES_PER_ELEMENT*integer_buffer_data.length;	

@@ -4,8 +4,8 @@
 	
 		not_part_list
 		
-		file_program	initialization/system_initialization/initialization.txt
-		file_program	initialization/system_initialization/default_vertex_data_decoder.txt
+		file_program	initialization/system_initialization
+		file_program	initialization/debug.txt
 		
 //		file_program	initialization
 	

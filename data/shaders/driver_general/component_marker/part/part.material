@@ -16,6 +16,8 @@
 				"height_scale"			:	2.0,
 				"edge_scale"			:	0.5,
 				
+				"point_size"			:	8,
+				
 				"font"					:	"bold 32px Arial"
 			}
 			

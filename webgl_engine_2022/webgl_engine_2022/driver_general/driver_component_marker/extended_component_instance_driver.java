@@ -25,8 +25,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		cmc=null;
 		display_flag=null;
 	}
-	public extended_component_instance_driver(
-			component my_comp,int my_driver_id,
+	public extended_component_instance_driver(component my_comp,int my_driver_id,
 			component_marker_container my_cmc,int my_modifier_container_id)
 	{
 		super(my_comp,my_driver_id);
@@ -240,6 +239,10 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;
 			}
 			if(operate_comp.component_id==comp.component_id) {
+				ci.request_response.println("-1");
+				break;
+			}
+			if(!(operate_comp.uniparameter.part_list_flag)) {
 				ci.request_response.println("-1");
 				break;
 			}

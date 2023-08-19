@@ -15,6 +15,15 @@ async function request_render_data(render)
 			request_url+="&y="+(render.view.y.toString());
 		};
 		
+		if(Math.abs(render.view_bak.main_target_x-render.view.main_target_x)>min_value){
+			render.view_bak.main_target_x=render.view.main_target_x;
+			request_url+="&mtx="+(render.view.main_target_x.toString());
+		};
+		if(Math.abs(render.view_bak.main_target_y-render.view.main_target_y)>min_value){
+			render.view_bak.main_target_y=render.view.main_target_y;
+			request_url+="&mty="+(render.view.main_target_y.toString());
+		};
+		
 		var id,value;
 
 		if(render.view_bak.canvas_id!=render.webgpu.current_canvas_id){

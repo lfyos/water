@@ -54,10 +54,10 @@ fn fragment_render_fun(vf:vertex_to_fragment_struct) ->@location(0) vec4<f32>
 	var t=system_info.second%6;
 
 	if(t<2){
-		return vec4(1.0, 0.0, 0.0, 1.0);
+		return vec4(1.0, 1.0, 0.0, 1.0);
 	}else if(t<4){
-		return vec4(0.0, 1.0, 0.0, 1.0);
+		return vec4(0.0, 1.0, 1.0, 1.0);
 	}else{
-		return vec4(0.0, 0.0, 1.0, 1.0);
+		return vec4(1.0, 0.0, 1.0, 1.0);
 	}
 }
