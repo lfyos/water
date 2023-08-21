@@ -86,9 +86,7 @@ function construct_component_driver(
 		var p,rpe=render.webgpu.render_pass_encoder;
 		
 		for(var i=0,ni=this.marker_array.length;i<ni;i++){
-			render.set_system_bindgroup(
-				render_data.render_buffer_id,method_data.method_id,
-				this.marker_array[i].marker_component_id,-1);
+			render.set_system_bindgroup(render_data.render_buffer_id,this.marker_array[i].marker_component_id,-1);
 			
 			rpe.setBindGroup(1,this.marker_array[i].bindgroup);
 

@@ -119,18 +119,12 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 					continue;
 				}
 	
-				if(Array.isArray(render.render_driver[render_id].method_render_flag)){
-					var my_method_render_flag=render.render_driver[render_id].method_render_flag;
-					if(my_method_render_flag.length>render.system_buffer.method_buffer_number)
-						my_method_render_flag.length=render.system_buffer.method_buffer_number;
-					for(var i=0,ni=render.system_buffer.method_buffer_number;i<ni;i++)
-						if(typeof(my_method_render_flag[i])!="boolean")
-							my_method_render_flag[i]=false;
-				}else{
+				if(!(Array.isArray(render.render_driver[render_id].method_render_flag)))
 					render.render_driver[render_id].method_render_flag=new Array();
-					for(var i=0,ni=render.system_buffer.method_buffer_number;i<ni;i++)
-						render.render_driver[render_id].method_render_flag[i]=true;
-				}
+				else
+					for(var i=0,ni=render.render_driver[render_id].method_render_flag.length;i<ni;i++)
+						if(typeof(render.render_driver[render_id].method_render_flag[i])!="boolean")
+							render.render_driver[render_id].method_render_flag[i]=false;
 			}
 				
 			request_render_data(render);

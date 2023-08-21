@@ -1,10 +1,3 @@
-struct method_information 
-{
-	method_id								:	i32
-};
-@group(0) @binding(0)
-var<uniform> method_info: method_information; 
-
 struct target_information 
 {
 	projection_matrix						:	mat4x4<f32>,
@@ -85,14 +78,14 @@ struct target_information
 	projection_type_flag					:	i32,
 	tmp_int_0								:	i32
 };
-@group(0) @binding(1)
+@group(0) @binding(0)
 var<uniform> target_info: target_information; 
 
 struct location_information 
 {
 	matrix									:	mat4x4<f32>
 };
-@group(0) @binding(2)
+@group(0) @binding(1)
 var<uniform> location_info: location_information; 
 
 struct id_information 
@@ -107,7 +100,7 @@ struct id_information
 
 	component_system_id						:	i32
 };
-@group(0) @binding(3)	
+@group(0) @binding(2)	
 var<uniform> id_info: id_information; 
 
 struct system_information
@@ -156,7 +149,7 @@ struct system_information
 	
 	light_position							:	array<vec4<f32>,8>
 };
-@group(0) @binding(4)
+@group(0) @binding(3)
 var<uniform> system_info: system_information;
 
 

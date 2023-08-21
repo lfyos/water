@@ -20,13 +20,14 @@ public class extended_component_driver  extends component_driver
 		screen_rectangle_component_name=null;
 	}
 	public extended_component_driver(part my_component_part,
-			String my_screen_rectangle_component_name,String my_audio_component,int my_modifier_container_id)
+			String my_screen_rectangle_component_name,
+			String my_audio_component,int my_modifier_container_id)
 	{
 		super(my_component_part);
 		
-		screen_rectangle_component_name=my_screen_rectangle_component_name;
-		audio_component=my_audio_component;
-		modifier_container_id=my_modifier_container_id;
+		screen_rectangle_component_name	=my_screen_rectangle_component_name;
+		audio_component					=my_audio_component;
+		modifier_container_id			=my_modifier_container_id;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)

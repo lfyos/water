@@ -15,7 +15,7 @@ function draw_scene_routine(render_data,render)
 	if(typeof(target_component_driver.begin_render_target)!="function")
 		return;
 	var project_matrix=render.camera.compute_camera_data(render_data);
-	render.system_buffer.set_target_buffer(render_data,project_matrix);
+	render.system_buffer.set_target_buffer(render_data,project_matrix,render);
 	
 	for(var target_sequence_id=0;;target_sequence_id++){
 		var render_target=target_component_driver.begin_render_target(target_sequence_id,
@@ -65,13 +65,19 @@ function draw_scene_routine(render_data,render)
 					method_array[i],render_data,project_matrix,
 					target_part_object,target_part_driver,target_render_driver,render);
 			for(var render_id=0,render_number=render.part_array.length;render_id<render_number;render_id++){
-				if(typeof(render.part_array[render_id])=="undefined")
+				if((typeof(render.part_array[render_id])!="object")||(render.part_array[render_id]==null))
 					continue;
 				var render_driver=render.render_driver[render_id];
+				if(method_array[i].method_id<0)
+					continue;
+				if(method_array[i].method_id>=render_driver.method_render_flag.length)
+					continue;	
 				if(!(render_driver.method_render_flag[method_array[i].method_id]))
 					continue;
 				for(var part_id=0,part_number=render.part_array[render_id].length;part_id<part_number;part_id++){	
 					var part_driver=render.part_driver[render_id][part_id];
+					if(method_array[i].method_id>=part_driver.method_render_flag.length)
+						continue;	
 					if(!(part_driver.method_render_flag[method_array[i].method_id]))
 						continue;
 					var part_object=render.part_array[render_id][part_id];
@@ -92,8 +98,7 @@ function draw_scene_routine(render_data,render)
 						var component_id		=p[0];
 						var driver_id			=p[1];
 			
-						render.set_system_bindgroup(render_data.render_buffer_id,
-									method_array[i].method_id,component_id,driver_id);
+						render.set_system_bindgroup(render_data.render_buffer_id,component_id,driver_id);
 						component_driver.draw_component(method_array[i],render_data,
 							render_id,part_id,data_buffer_id,component_id,driver_id,
 							render_parameter,buffer_parameter,
@@ -150,7 +155,7 @@ async function draw_scene_main(part_init_data,component_init_data,render)
 					render.routine_array.push(fun_array[i]);
 		
 		var command_encoder_buffer=new Array();
-		render.system_buffer.set_system_buffer();
+		render.system_buffer.set_system_buffer(render);
 		for(var i=0,ni=render.render_buffer_array.length;i<ni;i++)
 			if(render.render_buffer_array[i].do_render_flag){
 				render.webgpu.command_encoder=render.webgpu.device.createCommandEncoder();

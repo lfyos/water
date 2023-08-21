@@ -7,13 +7,9 @@ function construct_component_driver(
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		var rpe	=render.webgpu.render_pass_encoder;
-		rpe.setPipeline(render_driver.pipeline);
-		render.set_system_bindgroup(render_data.render_buffer_id,project_matrix.camera_component_id,-1);
-		var p=part_object.buffer_object.edge.region_data;
-		for(var i=0,ni=p.length;i<ni;i++){
-			rpe.setVertexBuffer(0,p[i].buffer);
-			rpe.draw(p[i].item_number);
-		}
+	}
+	this.destroy=function()
+	{
+		this.draw_component	=null;
 	}
 };

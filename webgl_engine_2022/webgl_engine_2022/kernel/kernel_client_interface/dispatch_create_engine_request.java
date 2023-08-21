@@ -154,13 +154,12 @@ public class dispatch_create_engine_request
 				(ek.camera_cont==null)?0:ek.camera_cont.size());		//parameter	4	3
 		
 		ci.request_response.print(",",ek.scene_par.max_target_number);	//parameter	4	4
-		ci.request_response.print(",",ek.scene_par.max_method_number);	//parameter	4	5
 		
-		ci.request_response.print(",\"",	ek.create_parameter.link_name);			//parameter	4	6
+		ci.request_response.print(",\"",	ek.create_parameter.link_name);			//parameter	4	5
 		ci.request_response.print("\",",	jason_string.change_string(
-				ek.create_parameter.scene_title+ek.scene_par.scene_sub_directory));	//parameter	4	7
+				ek.create_parameter.scene_title+ek.scene_par.scene_sub_directory));	//parameter	4	5
 	
-		ci.request_response.print(",{");							//parameter	4	8
+		ci.request_response.print(",{");							//parameter	4	7
 
 		ci.request_response.print( "\"max_loading_number\":",		ci.parameter.max_client_loading_number);
 		ci.request_response.print(",\"engine_touch_time_length\":",	ek.system_par.engine_touch_time_length);

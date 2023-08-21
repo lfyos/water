@@ -1,7 +1,7 @@
 /* 1name		*/			common_component_root
 /* 1type		*/			undefined_part
 /* 1location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
-/* 1children number */		15
+/* 1children number */		17
 
 		/*	0	*/
 		/* 2name		*/         render_target_register_component
@@ -29,8 +29,7 @@
 		/* 2type		*/			coordinate_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 		/* 2children number */		0
-	
-	
+
 		/*	4	*/
 		/* 2name		*/         mouse_modify_location_component
 		/* 2type		*/         mouse_modify_location_part
@@ -128,25 +127,22 @@
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 					/*	p0	*/		-0.25	 0.5
 					/*	p1	*/		 0.25	 1.0
-		/* 2children number */		0				
+		/* 2children number */		0	
+		
+						
 
-/*			
 		/*	15	*/
-		/* 2name		*/         manipulator_component
-		/* 2type		*/         manipulator_part
-		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
-							/*		audio_component						*/		audio_component
-							/*		modifier_container_id				*/		0
-		/* 2children number */		0
-				
-
-		/*	16	*/
 		/* 2name		*/         component_selection_component
 		/* 2type		*/         component_selection_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 									/* 		screen_rectangle_component	*/			screen_rectangle_component
 									/*		audio_component				*/			audio_component
 									/*		modifier_container_id		*/			0
+		/* 2children number */		0			
+		
+		/*	16	*/
+		/* 2name		*/         manipulator_component
+		/* 2type		*/         manipulator_part
+		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
 		/* 2children number */		0
-*/
 			

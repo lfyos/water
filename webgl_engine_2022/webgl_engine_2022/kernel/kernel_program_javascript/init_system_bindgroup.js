@@ -2,7 +2,7 @@ function init_system_bindgroup(render)
 {
 	var system_bindgroup_layout_entries=
 	[
-		{	//method  buffer
+		{	//target buffer
 			binding		:	0,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
 			buffer		:
@@ -11,17 +11,8 @@ function init_system_bindgroup(render)
 				hasDynamicOffset	:	true
 			}
 		},
-		{	//target buffer
-			binding		:	1,
-			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
-			buffer		:
-			{
-				type				:	"uniform",
-				hasDynamicOffset	:	true
-			}
-		},
 		{	// component buffer
-			binding		:	2,
+			binding		:	1,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
 			buffer		:
 			{
@@ -30,7 +21,7 @@ function init_system_bindgroup(render)
 			}
 		},
 		{	// id buffer
-			binding		:	3,
+			binding		:	2,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
 			buffer		:
 			{
@@ -39,7 +30,7 @@ function init_system_bindgroup(render)
 			}
 		},
 		{	// system buffer
-			binding		:	4,
+			binding		:	3,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
 			buffer		:
 			{
@@ -65,16 +56,8 @@ function init_system_bindgroup(render)
 		render.webgpu.device.queue.writeBuffer(my_buffer,0,new Int32Array(render.system_bindgroup_id[i]));
 		
 		var my_bindgroup_entries=[
-			{	//method  buffer
-				binding		:	0,
-				resource	:
-				{
-					buffer	:	render.system_buffer.method_buffer,
-					size	:	render.system_buffer.method_buffer_size
-				}
-			},
 			{	//target buffer
-				binding		:	1,
+				binding		:	0,
 				resource	:
 				{
 					buffer	:	render.system_buffer.target_buffer,
@@ -82,7 +65,7 @@ function init_system_bindgroup(render)
 				}
 			},
 			{	// component buffer
-				binding		:	2,
+				binding		:	1,
 				resource	:
 				{
 					buffer	:	render.component_location_data.buffer[my_component_id],
@@ -90,7 +73,7 @@ function init_system_bindgroup(render)
 				}
 			},
 			{	// id buffer
-				binding		:	3,
+				binding		:	2,
 				resource	:
 				{
 					buffer	:	my_buffer,
@@ -98,7 +81,7 @@ function init_system_bindgroup(render)
 				}
 			},
 			{	// system buffer
-				binding		:	4,
+				binding		:	3,
 				resource	:
 				{
 					buffer	:	render.system_buffer.system_buffer,

@@ -2,9 +2,10 @@ function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
 	init_data,		part_object,	part_driver,	render_driver,	render)
 {
-	if(typeof(this.ep=render.component_event_processor[component_id])!="object"){
-		render.component_event_processor[component_id]={};
-		this.ep=render.component_event_processor[component_id];
+	this.ep=render.component_event_processor[component_id];
+	if((typeof(this.ep)!="object")||(this.ep==null)){
+		this.ep=new Object();
+		render.component_event_processor[component_id]=this.ep;
 	}
 	
 	this.component_id	=component_id;

@@ -13,8 +13,7 @@ function construct_component_driver(
 			component_render_parameter,component_buffer_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		render.set_system_bindgroup(
-			render_data.render_buffer_id,method_data.method_id,this.box_component_id,-1);
+		render.set_system_bindgroup(render_data.render_buffer_id,this.box_component_id,-1);
 
 		var rpe	=render.webgpu.render_pass_encoder;
 		rpe.setPipeline(render_driver.pipeline);

@@ -1,0 +1,13 @@
+/*	p0_component	*/	start_driver_component
+/*	px_component	*/	start_driver_component
+/*	tag_component	*/	system_root_component
+/*	type_id			*/	-1
+/*	p0				*/	0.7416404032739529	0.8018986493583505	4.639326857178716E-4
+/*	px				*/	0.9063457287803312	0.11501670444443302	4.633758391547893E-4
+/*	py				*/	1.29577415380989	0.9347731654834655	-0.5855312848770157
+/*	tag_title		*/	null
+
+
+/*	extra_distance_tag	*/	false
+
+

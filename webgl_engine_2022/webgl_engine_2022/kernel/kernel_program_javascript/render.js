@@ -6,11 +6,9 @@ function construct_render_routine(my_webgpu,my_url,
 	var modifier_container_number		=render_data[2];
 	var camera_number					=render_data[3];
 	var max_target_number				=render_data[4];
-	var max_method_number				=render_data[5];
-	
-    this.link_name						=render_data[6];
-    this.title							=render_data[7];
-    this.parameter						=render_data[8];
+    this.link_name						=render_data[5];
+    this.title							=render_data[6];
+    this.parameter						=render_data[7];
 
 	this.webgpu						=my_webgpu;
 	this.url						=my_url;
@@ -86,8 +84,8 @@ function construct_render_routine(my_webgpu,my_url,
 		this.part_array[i]			=new Array();
 	}
 	
-	this.system_buffer=new construct_system_buffer(max_target_number,max_method_number,this);
-	this.set_system_bindgroup=function(target_id,method_id,component_id,driver_id)
+	this.system_buffer=new construct_system_buffer(max_target_number,this);
+	this.set_system_bindgroup=function(target_id,component_id,driver_id)
 	{
 		if((this.webgpu.render_pass_encoder==null)||(typeof(component_id)!="number"))
 			return;
@@ -107,7 +105,6 @@ function construct_render_routine(my_webgpu,my_url,
 			this.system_buffer.system_bindgroup_id,
 			this.system_bindgroup_array[system_bindgroup_id].bindgroup,
 			[
-				this.system_buffer.method_buffer_stride*method_id,
 				this.system_buffer.target_buffer_stride*target_id
 			]);
 	}

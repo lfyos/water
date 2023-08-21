@@ -37,15 +37,15 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
+		ci.request_response.print(screen_rectangle_component_id);
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
-		if(cr.target.main_display_target_flag){
-			if(ci.display_camera_result!=null)
-				if(ci.display_camera_result.cam.parameter.change_type_flag^change_type_flag){
-					change_type_flag=change_type_flag?false:true;
-					update_component_parameter_version(0);
-				}
+		if((cr.target.main_display_target_flag)&&(ci.display_camera_result!=null)){
+			if(ci.display_camera_result.cam.parameter.change_type_flag^change_type_flag){
+				change_type_flag=change_type_flag?false:true;
+				update_component_parameter_version(0);
+			}
 			return false;
 		}
 		return true;
@@ -53,14 +53,11 @@ public class extended_component_instance_driver extends component_instance_drive
 	public void create_render_parameter(int render_buffer_id,
 			int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
-		ci.request_response.print(data_buffer_id);
+		ci.request_response.print(0);
 	}
 	public void create_component_parameter(int data_buffer_id,engine_kernel ek,client_information ci)
 	{
-		ci.request_response.print("[",comp.component_id);
-		ci.request_response.print(",",screen_rectangle_component_id);
-		ci.request_response.print(",",change_type_flag?1:0);
-		ci.request_response.print("]");
+		ci.request_response.print(change_type_flag?"1":"0");
 	}
 	private void select_many_component(component comp,int driver_id,
 			int control_code,engine_kernel ek,client_information ci)
@@ -90,18 +87,21 @@ public class extended_component_instance_driver extends component_instance_drive
 		if(my_y0>my_y1) 
 			{double p=my_y0;my_y0=my_y1;my_y1=p;}
 		
-		box view_volume_box=ci.display_camera_result.target.view_volume_box;
+		render_target t=ci.display_camera_result.target;
+		double local_xy[]=t.target_view.caculate_view_local_xy(my_x0, my_y0);
+		my_x0=local_xy[0];	my_y0=local_xy[1];
+		
+		local_xy=t.target_view.caculate_view_local_xy(my_x1, my_y1);
+		my_x1=local_xy[0];	my_y1=local_xy[1];
+		
+		box view_volume_box=t.view_volume_box;
 		point center=view_volume_box.center(),diff=view_volume_box.p[1].sub(center);
 		view_volume_box=new box(
 				center.x+diff.x*my_x0,center.y+diff.y*my_y0,view_volume_box.p[0].z,
 				center.x+diff.x*my_x1,center.y+diff.y*my_y1,view_volume_box.p[1].z);
 		
-//pay attention,data structure modified!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!		
-		render_target cam_target=new render_target(
-				true,comp.component_id,driver_id,0,
-				new component[]{ek.component_cont.root_component},null,
-				ci.display_camera_result.target.camera_id,
-				ci.display_camera_result.target.parameter_channel_id,
+		render_target cam_target=new render_target(true,comp.component_id,driver_id,0,
+				new component[]{ek.component_cont.root_component},null,	t.camera_id,t.parameter_channel_id,
 				null,view_volume_box,ci.clip_plane,null,false,false);
 	
 		if(cam_target.view_volume_box.distance2()<const_value.min_value2)
@@ -146,13 +146,14 @@ public class extended_component_instance_driver extends component_instance_drive
 		
 		return;
 	}
-	private void select_single_component(component comp,int control_code,engine_kernel ek,client_information ci)
+	
+	private void select_single_component(
+			component comp,int control_code,engine_kernel ek,client_information ci)
 	{
 		String str;
 
 		if((str=ci.request_response.get_parameter("function"))==null)
 			return;
-		
 		driver_audio_player.extended_component_driver acd=(driver_audio_player.extended_component_driver)
 				(ek.component_cont.get_component(audio_component_id).driver_array.get(0));
 		
@@ -192,7 +193,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		component_collector collector=ek.collector_stack.get_top_collector();
 		
 		if(collector!=null)
-			if(collector.component_number==1) {
+			if(collector.component_number==1){
 				comp_array.add_collector(collector);
 				if(comp_array.comp_list.get(0).component_id==ci.parameter.comp.component_id){
 					if(acd!=null)

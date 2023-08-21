@@ -99,6 +99,7 @@ function new_render_driver(
 		}
 	};
 	
+	pipeline_descr.vertex.constants				={method_id:0};
 	this.id_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.fragment.entryPoint			="fragment_color_fun";
@@ -106,6 +107,8 @@ function new_render_driver(
 	pipeline_descr.fragment.targets[0].format	=render.webgpu.gpu.getPreferredCanvasFormat();
 	if(render.parameter.multisample>1)
 		pipeline_descr.multisample={count:render.parameter.multisample};
+	
+	pipeline_descr.vertex.constants				={method_id:2};
 	this.color_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	this.new_part_driver=construct_part_driver;

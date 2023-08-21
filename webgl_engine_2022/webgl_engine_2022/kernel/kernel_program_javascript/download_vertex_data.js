@@ -373,18 +373,12 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 				part_init_data[render_id][part_id],part_object,render_driver,render);
 		render.part_driver[render_id][part_id]=part_driver;
 
-		if(Array.isArray(part_driver.method_render_flag)){
-			var my_method_render_flag=part_driver.method_render_flag;
-			if(my_method_render_flag.length>render.system_buffer.method_buffer_number)
-				my_method_render_flag.length=render.system_buffer.method_buffer_number;
-			for(var i=0,ni=render.system_buffer.method_buffer_number;i<ni;i++)
-				if(typeof(my_method_render_flag[i])!="boolean")
-					my_method_render_flag[i]=false;
-		}else{
-			part_driver.method_render_flag=new Array();
-			for(var i=0,ni=render.system_buffer.method_buffer_number;i<ni;i++)
-				part_driver.method_render_flag[i]=true;
-		}
+		if(!(Array.isArray(part_driver.method_render_flag)))
+			part_driver.method_render_flag=render_driver.method_render_flag;
+		else
+			for(var i=0,ni=part_driver.method_render_flag.length;i<ni;i++)
+				if(typeof(part_driver.method_render_flag[i])!="boolean")
+					part_driver.method_render_flag[i]=false;
 
 		for(var i=0,ni=part_object.part_component_id_and_driver_id.length;i<ni;i++){
 			var my_component_id	=part_object.part_component_id_and_driver_id[i][0];

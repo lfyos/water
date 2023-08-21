@@ -7,28 +7,26 @@
 /*	render_4	*/	background					driver_background.extended_render_driver				driver_general\background\render.list
 /*	render_5	*/	coordinate					driver_coordinate.extended_render_driver				driver_general\coordinate\render.list
 /*	render_6	*/	show_target					driver_show_target.extended_render_driver				driver_general\show_target\render.list 
-/*	render_7	*/	audio_player				driver_audio_player.extended_render_driver				driver_general\audio_player\render.list
-/*	render_8	*/	distance_tag				driver_distance_tag.extended_render_driver				driver_general\distance_tag\render.list
-/*	render_9	*/	proxy_register				driver_proxy_register.extended_render_driver			driver_general\proxy_register\render.list
-/*	render_10	*/	component_marker			driver_component_marker.extended_render_driver			driver_general\component_marker\render.list
-/*	render_11	*/	screen_rectangle			driver_screen_rectangle.extended_render_driver			driver_general\screen_rectangle\render.list
-/*	render_12	*/	camera_operation			driver_camera_operation.extended_render_driver			driver_general\camera_operation\render.list
-/*	render_13	*/	location_modifier			driver_location_modifier.extended_render_driver			driver_general\location_modifier\render.list	
-/*	render_14	*/	show_component_box			driver_show_component_box.extended_render_driver		driver_general\show_component_box\render.list
-/*	render_15	*/	mouse_modify_location		driver_mouse_modify_location.extended_render_driver		driver_general\mouse_modify_location\render.list
-/*	render_16	*/	render_target_register		driver_render_target_register.extended_render_driver	driver_general\render_target_register\render.list
-
+/*	render_7	*/	manipulator					driver_manipulator.extended_render_driver				driver_general\manipulator\render.list
+/*	render_8	*/	audio_player				driver_audio_player.extended_render_driver				driver_general\audio_player\render.list
+/*	render_9	*/	distance_tag				driver_distance_tag.extended_render_driver				driver_general\distance_tag\render.list
+/*	render_10	*/	proxy_register				driver_proxy_register.extended_render_driver			driver_general\proxy_register\render.list
+/*	render_11	*/	component_marker			driver_component_marker.extended_render_driver			driver_general\component_marker\render.list
+/*	render_12	*/	screen_rectangle			driver_screen_rectangle.extended_render_driver			driver_general\screen_rectangle\render.list
+/*	render_13	*/	camera_operation			driver_camera_operation.extended_render_driver			driver_general\camera_operation\render.list
+/*	render_14	*/	location_modifier			driver_location_modifier.extended_render_driver			driver_general\location_modifier\render.list	
+/*	render_15	*/	show_component_box			driver_show_component_box.extended_render_driver		driver_general\show_component_box\render.list
+/*	render_16	*/	component_selection			driver_component_selection.extended_render_driver		driver_general\component_selection\render.list
+/*	render_17	*/	mouse_modify_location		driver_mouse_modify_location.extended_render_driver		driver_general\mouse_modify_location\render.list
+/*	render_18	*/	render_target_register		driver_render_target_register.extended_render_driver	driver_general\render_target_register\render.list
 
 /*	******************************		driver_lession		********************************************	*/
 
-/*	render_17	*/	lession_00_start_driver		driver_lession_00_start_driver.extended_render_driver	driver_lession\lession_00_start_driver\render.list
-
+/*	render_19	*/	lession_00_start_driver		driver_lession_00_start_driver.extended_render_driver	driver_lession\lession_00_start_driver\render.list
 
 /*
 
 /*		########################	driver_general		#######################			*/
-/*	render_16	*/	component_selection		driver_component_selection.extended_render_driver		driver_general\component_selection\render.list
-/*	render_19	*/	manipulator				driver_manipulator.extended_render_driver				driver_general\manipulator\render.list
 
 /*	******************************		driver_lession		********************************************	*/
 /*	render_24	*/	lession_01_modify_location_at_server			driver_lession_01_modify_location_at_server.extended_render_driver				driver_lession\lession_01_modify_location_at_server\render.list

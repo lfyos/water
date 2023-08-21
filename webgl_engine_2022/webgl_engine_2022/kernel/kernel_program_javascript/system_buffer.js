@@ -1,29 +1,13 @@
-function construct_system_buffer(target_buffer_number,method_buffer_number,my_render)
+function construct_system_buffer(target_buffer_number,render)
 {
-	this.render						=my_render;
-	
 	this.main_target_project_matrix	=null;
 	this.main_target_view_parameter	=null;
-
-//	init method buffer:	binding point 0
-	this.method_buffer_stride	=this.render.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
-	this.method_buffer_size		=4;
-	this.method_buffer_number	=method_buffer_number;
-	
-	this.method_buffer	=this.render.webgpu.device.createBuffer(
-		{
-			size	:	this.method_buffer_stride*this.method_buffer_number,
-			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
-		});
-	for(var i=0;i<this.method_buffer_number;i++)
-		this.render.webgpu.device.queue.writeBuffer(
-			this.method_buffer,this.method_buffer_stride*i,new Int32Array([i]));
 
 //	init target buffer:	binding point 1
 	this.target_buffer_stride	=2048;
 	this.target_buffer_size		=1232;
 	this.target_buffer_number	=target_buffer_number;
-	this.target_buffer	=this.render.webgpu.device.createBuffer(
+	this.target_buffer	=render.webgpu.device.createBuffer(
 		{
 			size	:	this.target_buffer_stride*this.target_buffer_number,
 			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
@@ -31,7 +15,7 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 
 //	init system buffer:	binding point 2
 	this.system_buffer_size		=384;
-	this.system_buffer	=this.render.webgpu.device.createBuffer(
+	this.system_buffer	=render.webgpu.device.createBuffer(
 		{
 			size	:	this.system_buffer_size,
 			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
@@ -42,12 +26,6 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 	
 	this.destroy=function()
 	{
-		this.render				=null;
-	
-		if(this.method_buffer!=null){
-			this.method_buffer.destroy();
-			this.method_buffer=null;
-		}
 		if(this.target_buffer!=null){
 			this.target_buffer.destroy();
 			this.target_buffer=null;
@@ -60,33 +38,33 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 		this.set_target_buffer=null;
 	};
 
-	this.set_system_buffer=function()
+	this.set_system_buffer=function(render)
 	{
 		if((this.main_target_project_matrix==null)||(this.main_target_view_parameter==null))
 			return;
 			
-		var t=this.render.current_time;
+		var t=render.current_time;
 		var nanosecond=t%1000;		t=Math.floor((t-nanosecond)/1000);
 		var microsecond=t%1000;		t=Math.floor((t-microsecond)/1000);
 		var da=new Date();			da.setTime(t);
 
 		var int_data=[
-			this.render.pickup.component_id,
-			this.render.pickup.driver_id,
+			render.pickup.component_id,
+			render.pickup.driver_id,
 			
-			this.render.pickup.render_id,
-			this.render.pickup.part_id,
+			render.pickup.render_id,
+			render.pickup.part_id,
 			
-			this.render.pickup.body_id,
-			this.render.pickup.face_id,
-			this.render.pickup.vertex_id,
-			this.render.pickup.loop_id,
-			this.render.pickup.edge_id,
-			this.render.pickup.point_id,
+			render.pickup.body_id,
+			render.pickup.face_id,
+			render.pickup.vertex_id,
+			render.pickup.loop_id,
+			render.pickup.edge_id,
+			render.pickup.point_id,
 			
-			this.render.highlight.component_id,
-			this.render.highlight.body_id,
-			this.render.highlight.face_id,
+			render.highlight.component_id,
+			render.highlight.body_id,
+			render.highlight.face_id,
 
 			this.main_target_view_parameter.view_x0,
 			this.main_target_view_parameter.view_y0,
@@ -108,32 +86,32 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 		];
 
 		var float_data=[
-			this.render.pickup.depth,
-			this.render.pickup.value[0],
-			this.render.pickup.value[1],
-			this.render.pickup.value[2]
+			render.pickup.depth,
+			render.pickup.value[0],
+			render.pickup.value[1],
+			render.pickup.value[2]
 		];
 		
 		float_data=float_data.concat(this.main_target_project_matrix.screen_move_matrix);
 		float_data=float_data.concat(this.main_target_project_matrix.negative_screen_move_matrix);
 
-		var camera_object_parameter=this.render.camera.camera_object_parameter;
-		var component_location=this.render.component_location_data;
+		var camera_object_parameter=render.camera.camera_object_parameter;
+		var component_location=render.component_location_data;
 		for(var i=0,ni=camera_object_parameter.length;i<ni;i++)
 			if(camera_object_parameter[i].light_camera_flag){
 				var light_component_id	=camera_object_parameter[i].component_id;
 				var light_distance		=camera_object_parameter[i].distance;
 				var light_matrix		=component_location.get_component_location(light_component_id);
-				var light_position		=this.render.computer.caculate_coordinate(light_matrix,0,0,light_distance);
+				var light_position		=render.computer.caculate_coordinate(light_matrix,0,0,light_distance);
 				float_data.push(light_position[0],light_position[1],light_position[2],light_position[3]);
 			}
-		this.render.webgpu.device.queue.writeBuffer(this.system_buffer,
+		render.webgpu.device.queue.writeBuffer(this.system_buffer,
 			0,												new Int32Array(int_data));
-		this.render.webgpu.device.queue.writeBuffer(this.system_buffer,
+		render.webgpu.device.queue.writeBuffer(this.system_buffer,
 			int_data.length*Int32Array.BYTES_PER_ELEMENT,	new Float32Array(float_data));
 	};
 
-	this.set_target_buffer=function(render_data,project_matrix)
+	this.set_target_buffer=function(render_data,project_matrix,render)
 	{
 		var target_id=render_data.render_buffer_id;
 		
@@ -242,10 +220,10 @@ function construct_system_buffer(target_buffer_number,method_buffer_number,my_re
 
 			0,0
 		);
-		this.render.webgpu.device.queue.writeBuffer(this.target_buffer,	
+		render.webgpu.device.queue.writeBuffer(this.target_buffer,	
 			this.target_buffer_stride*target_id,
 			new Float32Array(float_data));
-		this.render.webgpu.device.queue.writeBuffer(this.target_buffer,
+		render.webgpu.device.queue.writeBuffer(this.target_buffer,
 			this.target_buffer_stride*target_id+float_data.length*Float32Array.BYTES_PER_ELEMENT,
 			new Int32Array(int_data));
 	};
