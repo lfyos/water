@@ -2,6 +2,8 @@ function init_component_event_processor(component_id,init_data,render)
 {
 	render.component_event_processor[component_id]=
 	{
+		component_id				:	component_id,
+		pickup_tag_id				:	-1,
 		tag_point_id				:	0,
 		tag_menu_component_name		:	init_data,
 		mousemove_flag				:	true,
@@ -16,6 +18,11 @@ function init_component_event_processor(component_id,init_data,render)
 		},
 		pickupmouseup		:	function(event,component_id,render)
 		{
+			return true;
+		},
+		pickupmousemove		:	function(event,component_id,render)
+		{
+			render.component_event_processor[component_id].pickup_tag_id=render.pickup.body_id;
 			return true;
 		},
 		pickupmousedown		:	function(event,component_id,render)
@@ -155,18 +162,20 @@ function construct_component_driver(
 			rpe.setBindGroup(1,this.tag_array[i].bindgroup);
 			switch(method_data.method_id){
 			case 0:
-				rpe.setPipeline(render_driver.face_id_pipeline);
-				p=part_object.buffer_object.face.region_data;
-				for(var j=0,nj=p.length;j<nj;j++){
-					rpe.setVertexBuffer(0,p[j].buffer);
-					rpe.draw(p[j].item_number);
-				}
-				
-				rpe.setPipeline(render_driver.point_id_pipeline);
-				p=part_object.buffer_object.point.region_data;
-				for(var j=0,nj=p.length;j<nj;j++){
-					rpe.setVertexBuffer(0,p[j].buffer);
-					rpe.draw(p[j].item_number);
+				if(this.tag_array[i].can_do_pickup_flag){
+					rpe.setPipeline(render_driver.face_id_pipeline);
+					p=part_object.buffer_object.face.region_data;
+					for(var j=0,nj=p.length;j<nj;j++){
+						rpe.setVertexBuffer(0,p[j].buffer);
+						rpe.draw(p[j].item_number);
+					}
+					
+					rpe.setPipeline(render_driver.point_id_pipeline);
+					p=part_object.buffer_object.point.region_data;
+					for(var j=0,nj=p.length;j<nj;j++){
+						rpe.setVertexBuffer(0,p[j].buffer);
+						rpe.draw(p[j].item_number);
+					}
 				}
 				break;
 			case 2:
@@ -209,17 +218,17 @@ function construct_component_driver(
 		}
 		this.tag_array=new Array();
 		for(var i=0,ni=buffer_data_item.length;i<ni;i++){
-			var my_tag_text							=buffer_data_item[i][0].trim();
-			var my_p0_x								=buffer_data_item[i][1];
-			var my_p0_y								=buffer_data_item[i][2];
-			var my_p0_z								=buffer_data_item[i][3];
-			var my_dx_x								=buffer_data_item[i][4];
-			var my_dx_y								=buffer_data_item[i][5];
-			var my_dx_z								=buffer_data_item[i][6];
-			var my_dy_x								=buffer_data_item[i][7];
-			var my_dy_y								=buffer_data_item[i][8];
-			var my_dy_z								=buffer_data_item[i][9];
-			var can_do_selection_flag				=(buffer_data_item[i][10]>0.5)?true:false;
+			var my_tag_text							=buffer_data_item[i][ 0].trim();
+			var my_p0_x								=buffer_data_item[i][ 1];
+			var my_p0_y								=buffer_data_item[i][ 2];
+			var my_p0_z								=buffer_data_item[i][ 3];
+			var my_dx_x								=buffer_data_item[i][ 4];
+			var my_dx_y								=buffer_data_item[i][ 5];
+			var my_dx_z								=buffer_data_item[i][ 6];
+			var my_dy_x								=buffer_data_item[i][ 7];
+			var my_dy_y								=buffer_data_item[i][ 8];
+			var my_dy_z								=buffer_data_item[i][ 9];
+			var my_can_do_pickup_flag				=buffer_data_item[i][10];
 			
 			var my_texture_width					=part_object.material[0].canvas_width;
 			var my_texture_height					=part_object.material[0].canvas_height;
@@ -262,12 +271,7 @@ function construct_component_driver(
 						height	:	my_texture_height
 					});
 			var system_id=render.component_array_sorted_by_id[component_id].component_ids[driver_id][3];
-			var integer_buffer_data=[
-					can_do_selection_flag?component_id	:-2,
-					can_do_selection_flag?driver_id		:-2,
-					can_do_selection_flag?i				:-2,
-					can_do_selection_flag?system_id		:-2
-			];
+			var integer_buffer_data=[component_id,driver_id,i,system_id];
 			var p0=part_object.material[0].face_normal_color;
 			var p1=part_object.material[0].face_pickup_color;
 			var p2=part_object.material[0].edge_normal_color;
@@ -338,9 +342,10 @@ function construct_component_driver(
 				entries	:	resource_entries
 			});
 			this.tag_array[i]={
-				texture				:	my_texture,
-				buffer				:	my_buffer,
-				bindgroup			:	my_bindgroup
+				texture					:	my_texture,
+				buffer					:	my_buffer,
+				bindgroup				:	my_bindgroup,
+				can_do_pickup_flag		:	my_can_do_pickup_flag
 			};
 		};
 	};

@@ -4,45 +4,45 @@ function(component_name,component_id,render)
 		
 		pickupmouseselect	:	function(event,component_id,render)
 		{
-			var tag_ep=render.get_component_processor("distance_tag_component");
 			var ep=render.component_event_processor[component_id];
-			var function_id=Math.floor((1.0-ep.y)*14.0);
-
+			var tag_ep=render.operate_component.get_component_event_processor("distance_tag_component");
+			var function_id=Math.floor(ep.y*14.0);
+	
 			switch(function_id){
 			case 0:
-				render.call_server_component(tag_ep.component_id,"all",
+				render.caller.call_server_component(tag_ep.component_id,"all",
 					[["operation","clear"],["id",tag_ep.pickup_tag_id]]);
 				break;
 			case 1:
 				return;
 			case 2:
-				render.call_server_component(tag_ep.component_id,"all",
+				render.caller.call_server_component(tag_ep.component_id,"all",
 					[["operation","modify"],["id",tag_ep.pickup_tag_id]]);
 				render.event_component.mouse.	component_name	="distance_tag_component";
 				render.event_component.keyboard.component_name	="distance_tag_component";
 				render.event_component.mouse.	function_id		=0;
 				render.event_component.keyboard.function_id		=0;
-				render.set_event_component("distance_tag_component");
+				render.operate_component.set_event_component("distance_tag_component");
 				break;
 			case 3:
 				var tag_title;
 				if((tag_title=prompt("Input tag title"))!=null)
-					render.call_server_component(tag_ep.component_id,"all",
+					render.caller.call_server_component(tag_ep.component_id,"all",
 						[["operation","title"],["id",tag_ep.pickup_tag_id],
 						 ["title",encodeURIComponent(encodeURIComponent(tag_title))]]);
 				break;
 			case 4:
-				render.call_server_component(tag_ep.component_id,"all",
+				render.caller.call_server_component(tag_ep.component_id,"all",
 					[["operation","extra"],["id",tag_ep.pickup_tag_id]]);
 				break;
 			case 5:
 				return;
 			case 6:
-				render.call_server_component(tag_ep.component_id,"all",
+				render.caller.call_server_component(tag_ep.component_id,"all",
 					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","-1"]]);
 				break;
 			case 7:
-				render.call_server_component(tag_ep.component_id,"all",
+				render.caller.call_server_component(tag_ep.component_id,"all",
 					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","-2"]]);
 				break;
 			case 8:
@@ -54,7 +54,7 @@ function(component_name,component_id,render)
 			case 10:
 				return;
 			case 11:
-				render.call_server_component(tag_ep.component_id,"all",
+				render.caller.call_server_component(tag_ep.component_id,"all",
 					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","-3"]]);
 				break;
 			case 12:
@@ -63,7 +63,6 @@ function(component_name,component_id,render)
 			case 13:
 				render.system_call_processor.set_menu_show("tag_plane_angle_component");
 				break;	
-			
 			}
 			render.system_call_processor.set_menu_hide(component_id);					
 		}

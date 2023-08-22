@@ -1,6 +1,18 @@
 	/* 1name		*/        鼠标交互界面组件
 	/* 1type		*/         undefined_part
-	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+	/* 1location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1 
+	
+		token_program	鼠标交互界面
+		
+		function(component_name,component_id,render)
+		{
+			render.component_event_processor[component_id]={
+				mouse_usage		:	[0,0,0,0,0,0,0]
+			}
+		}
+		
+		鼠标交互界面
+	 
 	/* 1children number */		6
 	
 			/* 2name		*/	鼠标功能选择组件
@@ -16,47 +28,91 @@
 					render.component_event_processor[component_id]={
 						pickupmouseselect	:	function(event,component_id,render)
 						{
+							var mouse_usage=render.operate_component.
+									get_component_event_processor("鼠标交互界面组件").mouse_usage;
 							var function_id,ep=render.component_event_processor[component_id];
-							switch(function_id=Math.floor((1.0-ep.y)*7.0)){
+							
+							switch(function_id=Math.floor(ep.y*7.0)){
 							case 0:
-								if(ep.x<0.5)
-									render.system_call_processor.set_mouse_for_view_rotate(-1);
-								else
+								if(ep.x>0.5){
 									render.system_call_processor.set_menu_show("视口旋转组件");
+									break;
+								}
+								render.event_component.mouse.	component_name	="mouse_modify_location_component";
+								render.event_component.keyboard.component_name	="mouse_modify_location_component";
+								render.event_component.touch.	component_name	="mouse_modify_location_component";
+								render.event_component.mouse.	function_id		=mouse_usage[0];
+								render.event_component.keyboard.function_id		=mouse_usage[0];
+								render.event_component.touch.	function_id		=mouse_usage[0];
+								render.system_call_processor.set_event_component("mouse_modify_location_component");
+
 								break;
 							case 1:
-								if(ep.x<0.5)
-									render.system_call_processor.set_mouse_for_view_move(-1);
-								else
+								if(ep.x>0.5){
 									render.system_call_processor.set_menu_show("视口平移组件");
+									break;
+								}
+								render.event_component.mouse.	component_name	="mouse_modify_location_component";
+								render.event_component.keyboard.component_name	="mouse_modify_location_component";
+								render.event_component.touch.	component_name	="mouse_modify_location_component";
+								render.event_component.mouse.	function_id		=mouse_usage[1]+100;
+								render.event_component.keyboard.function_id		=mouse_usage[1]+100;
+								render.event_component.touch.	function_id		=mouse_usage[1]+100;
+								render.system_call_processor.set_event_component("mouse_modify_location_component");
+
 								break;
 							case 2:
-								if(ep.x<0.5)
-									render.system_call_processor.set_mouse_for_component_rotate(-1);
-								else
+								if(ep.x>0.5){
 									render.system_call_processor.set_menu_show("组件旋转组件");
+									break;
+								}
+								render.event_component.mouse.	component_name	="mouse_modify_location_component";
+								render.event_component.keyboard.component_name	="mouse_modify_location_component";
+								render.event_component.touch.	component_name	="mouse_modify_location_component";
+								render.event_component.mouse.	function_id		=mouse_usage[2]+200;
+								render.event_component.keyboard.function_id		=mouse_usage[2]+200;
+								render.event_component.touch.	function_id		=mouse_usage[2]+200;
+								render.system_call_processor.set_event_component("mouse_modify_location_component");
 								break;
 							case 3:
-								if(ep.x<0.5)
-									render.system_call_processor.set_mouse_for_component_move(-1);
-								else
+								if(ep.x>0.5){
 									render.system_call_processor.set_menu_show("组件平移组件");
+									break;
+								}
+								render.event_component.mouse.	component_name	="mouse_modify_location_component";
+								render.event_component.keyboard.component_name	="mouse_modify_location_component";
+								render.event_component.touch.	component_name	="mouse_modify_location_component";
+								render.event_component.mouse.	function_id		=mouse_usage[3]+300;
+								render.event_component.keyboard.function_id		=mouse_usage[3]+300;
+								render.event_component.touch.	function_id		=mouse_usage[3]+300;
+								render.system_call_processor.set_event_component("mouse_modify_location_component");
+								
 								break;
 							case 4:
-								if(ep.x<0.5)
-									render.system_call_processor.set_mouse_for_selection(-1);
-								else
+								if(ep.x>0.5){
 									render.system_call_processor.set_menu_show("内容选择组件");
+									break;
+								}
+								render.event_component.mouse.	component_name	="component_selection_component";
+								render.event_component.keyboard.component_name	="component_selection_component";
+								render.event_component.mouse.	function_id		=mouse_usage[4];
+								render.event_component.keyboard.function_id		=mouse_usage[4];
+								render.system_call_processor.set_event_component("component_selection_component");
+
 								break;
 							case 5:
-								render.system_call_processor.set_mouse_for_tag();
+								render.event_component.mouse.	component_name	="distance_tag_component";
+								render.event_component.keyboard.component_name	="distance_tag_component";
+								render.event_component.mouse.	function_id		=0;
+								render.event_component.keyboard.function_id		=0;
+								render.system_call_processor.set_event_component("distance_tag_component");
 								break;
 							default:
 								function_id=6;
 								render.system_call_processor.set_menu_show("交互界面主菜单");
 								break;
 							}
-							ep.hightlight=[0,1.0-function_id/7.0-1.0/7.0,1.0,1.0-function_id/7.0];
+							ep.hightlight=[0,function_id/7.0,1.0,function_id/7.0+1.0/7.0];
 						}
 					}
 				}
@@ -77,15 +133,28 @@
 					render.component_event_processor[component_id]={
 						pickupmouseselect	:	function(event,component_id,render)
 						{
+							var mouse_usage=render.operate_component.
+									get_component_event_processor("鼠标交互界面组件").mouse_usage;
 							var ep=render.component_event_processor[component_id];
-							var function_id=Math.floor((1.0-ep.y)*12.0);
+							var function_id=Math.floor(ep.y*12.0);
 							if((function_id<0)||(function_id>11))
 								return;
-							if(function_id==11)
+								
+							ep.hightlight=[0,function_id/12.0,1.0,function_id/12.0+1.0/12.0];
+							if(function_id==11){
 								render.system_call_processor.set_menu_show("鼠标功能选择组件");
-							else
-								render.system_call_processor.set_mouse_for_view_rotate(function_id);
-							ep.hightlight=[0,1.0-function_id/12.0-1.0/12.0,1.0,1.0-function_id/12.0];
+								return;
+							}
+							mouse_usage[0]=function_id;
+							render.event_component.mouse.	component_name	="mouse_modify_location_component";
+							render.event_component.keyboard.component_name	="mouse_modify_location_component";
+							render.event_component.touch.	component_name	="mouse_modify_location_component";
+							render.event_component.mouse.	function_id		=mouse_usage[0];
+							render.event_component.keyboard.function_id		=mouse_usage[0];
+							render.event_component.touch.	function_id		=mouse_usage[0];
+							render.system_call_processor.set_event_component("mouse_modify_location_component");
+							
+							return;							
 						}
 					};
 				}
@@ -106,15 +175,28 @@
 					render.component_event_processor[component_id]={
 						pickupmouseselect	:	function(event,component_id,render)
 						{
+							var mouse_usage=render.operate_component.
+									get_component_event_processor("鼠标交互界面组件").mouse_usage;
 							var ep=render.component_event_processor[component_id];
-							var function_id=Math.floor((1.0-ep.y)*18.0);
+							var function_id=Math.floor(ep.y*18.0);
 							if((function_id<0)||(function_id>17))
 								return;
-							if(function_id==17)
+							ep.hightlight=[0,function_id/18.0,1.0,function_id/18.0+1.0/18.0];
+							if(function_id==17){
 								render.system_call_processor.set_menu_show("鼠标功能选择组件");
-							else
-								render.system_call_processor.set_mouse_for_view_move(function_id);
-							ep.hightlight=[0,1.0-function_id/18.0-1.0/18.0,		1.0,1.0-function_id/18.0];
+								return;
+							}
+							mouse_usage[1]=function_id;
+							
+							render.event_component.mouse.	component_name	="mouse_modify_location_component";
+							render.event_component.keyboard.component_name	="mouse_modify_location_component";
+							render.event_component.touch.	component_name	="mouse_modify_location_component";
+							render.event_component.mouse.	function_id		=mouse_usage[1]+100;
+							render.event_component.keyboard.function_id		=mouse_usage[1]+100;
+							render.event_component.touch.	function_id		=mouse_usage[1]+100;
+							render.system_call_processor.set_event_component("mouse_modify_location_component");
+							
+							return;
 						}
 					};
 				}
@@ -134,15 +216,28 @@
 					render.component_event_processor[component_id]={
 						pickupmouseselect	:	function(event,component_id,render)
 						{
+							var mouse_usage=render.operate_component.
+									get_component_event_processor("鼠标交互界面组件").mouse_usage;
 							var ep=render.component_event_processor[component_id];
-							var function_id=Math.floor((1.0-ep.y)*12.0);
+							var function_id=Math.floor(ep.y*12.0);
 							if((function_id<0)||(function_id>11))
 								return;
-							if(function_id==11)
+							ep.hightlight=[0,function_id/12.0,1.0,function_id/12.0+1.0/12.0];
+							if(function_id==11){
 								render.system_call_processor.set_menu_show("鼠标功能选择组件");
-							else
-								render.system_call_processor.set_mouse_for_component_rotate(function_id);
-							ep.hightlight=[0,1.0-function_id/12.0-1.0/12.0,		1.0,1.0-function_id/12.0];
+								return;
+							}
+							mouse_usage[2]=function_id;
+
+							render.event_component.mouse.	component_name	="mouse_modify_location_component";
+							render.event_component.keyboard.component_name	="mouse_modify_location_component";
+							render.event_component.touch.	component_name	="mouse_modify_location_component";
+							render.event_component.mouse.	function_id		=mouse_usage[2]+200;
+							render.event_component.keyboard.function_id		=mouse_usage[2]+200;
+							render.event_component.touch.	function_id		=mouse_usage[2]+200;
+							render.system_call_processor.set_event_component("mouse_modify_location_component");
+							
+							return;
 						}
 					};
 				}
@@ -163,16 +258,28 @@
 					render.component_event_processor[component_id]={
 						pickupmouseselect	:	function(event,component_id,render)
 						{
+							var mouse_usage=render.operate_component.
+									get_component_event_processor("鼠标交互界面组件").mouse_usage;
 							var ep=render.component_event_processor[component_id];
-							var function_id=Math.floor((1.0-ep.y)*18.0);
+							var function_id=Math.floor(ep.y*18.0);
 							if((function_id<0)||(function_id>17))
 								return;
-							if(function_id==17)
+							ep.hightlight=[0,function_id/18.0,1.0,function_id/18.0+1.0/18.0];
+							if(function_id==17){
 								render.system_call_processor.set_menu_show("鼠标功能选择组件");
-							else
-								render.system_call_processor.set_mouse_for_component_move(function_id);
-								
-							ep.hightlight=[0,1.0-function_id/18.0-1.0/18.0,1.0,1.0-function_id/18.0];
+								return;
+							}
+							mouse_usage[3]=function_id;
+		
+							render.event_component.mouse.	component_name	="mouse_modify_location_component";
+							render.event_component.keyboard.component_name	="mouse_modify_location_component";
+							render.event_component.touch.	component_name	="mouse_modify_location_component";
+							render.event_component.mouse.	function_id		=mouse_usage[3]+300;
+							render.event_component.keyboard.function_id		=mouse_usage[3]+300;
+							render.event_component.touch.	function_id		=mouse_usage[3]+300;
+							render.system_call_processor.set_event_component("mouse_modify_location_component");
+							
+							return;
 						}
 					};
 				}
@@ -193,16 +300,26 @@
 					render.component_event_processor[component_id]={
 						pickupmouseselect	:	function(event,component_id,render)
 						{
+							var mouse_usage=render.operate_component.
+									get_component_event_processor("鼠标交互界面组件").mouse_usage;
 							var ep=render.component_event_processor[component_id];
-							var function_id=Math.floor((1.0-ep.y)*5.0);
+							var function_id=Math.floor(ep.y*5.0);
 							if((function_id<0)||(function_id>4))
 								return;
-							if(function_id==4)
+							ep.hightlight=[0,function_id/5.0,1.0,function_id/5.0+1.0/5.0];
+							
+							if(function_id==4){
 								render.system_call_processor.set_menu_show("鼠标功能选择组件");
-							else
-								render.system_call_processor.set_mouse_for_selection(function_id);
-								
-							ep.hightlight=[0,1.0-function_id/5.0-1.0/5.0,1.0,1.0-function_id/5.0];
+								return;
+							}
+							mouse_usage[4]=function_id;
+							render.event_component.mouse.	component_name	="component_selection_component";
+							render.event_component.keyboard.component_name	="component_selection_component";
+							render.event_component.mouse.	function_id		=mouse_usage[4];
+							render.event_component.keyboard.function_id		=mouse_usage[4];
+							render.system_call_processor.set_event_component("component_selection_component");
+							
+							return;
 						}
 					};
 				}

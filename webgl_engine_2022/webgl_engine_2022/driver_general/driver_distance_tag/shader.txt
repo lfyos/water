@@ -69,16 +69,6 @@ fn vertex_main(
 			vf.vertex_texture	=vec4(1.0-my_texture.x,1.0-my_texture.y,my_texture.zw);
 		}
 	}
-	
-	const point_texture_position=array<vec4<f32>,6>(
-			vec4(-1.0,-1.0,0.0,0.0),
-			vec4( 1.0,-1.0,0.0,0.0),
-			vec4( 1.0, 1.0,0.0,0.0),
-			
-			vec4( 1.0, 1.0,0.0,0.0),
-			vec4(-1.0, 1.0,0.0,0.0),
-			vec4(-1.0,-1.0,0.0,0.0)
-	);
 
 	switch(primitive_type){
 	default:	//face for selection

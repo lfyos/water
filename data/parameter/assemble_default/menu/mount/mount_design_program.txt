@@ -3,22 +3,21 @@ function(component_name,component_id,render)
 	render.component_event_processor[component_id]={
 		update_flag		:	true,
 		
-		active_list			:	function(coordinate_type)
+		active_list		:	function(coordinate_type)
 		{
 			if(typeof(coordinate_type)!="string")
 				coordinate_type="component";
-			render.call_server_component("movement_manager","all",
-				[["operation","design"],["move_method","get_location"],["coordinate",coordinate_type]]).
+			render.caller.call_server_component("movement_manager","all",[
+				["operation","design"],["move_method","get_location"],["coordinate",coordinate_type]],"json").
 			then(
 				function(response_data)
 				{
 					var ep=render.component_event_processor[component_id];
-					ep.update_flag	=false;
+					ep.update_flag	=true;
 					ep.response_data=response_data;
 					render.system_call_processor.set_menu_show(component_id,[]);
 				});
 		},
-		
 		pickupmouseselect	:	function(event,component_id,render)
 		{
 			var ep=render.component_event_processor[component_id];
@@ -132,15 +131,15 @@ function(component_name,component_id,render)
 					if((new_value=prompt("运动时间",Math.round(p.time_length/1000/1000)))==null)
 						return;
 					p.time_length=parseFloat(new_value)*1000*1000;
-					ep.update_flag=false;
+					ep.update_flag=true;
 					return;
 				case 10:
 					p.start_state_flag^=true;
-					ep.update_flag=false;
+					ep.update_flag=true;
 					return;
 				case 11:
 					p.terminate_state_flag^=true;
-					ep.update_flag=false;
+					ep.update_flag=true;
 					return;
 				case 12://add_point,
 					par=[["move_method","add_point"],["t",p.time_length]];
@@ -158,12 +157,12 @@ function(component_name,component_id,render)
 					break;
 				}
 				par=par.concat([["operation","design"],["coordinate",p.coordinate],["component_id",p.component_id]]);
-				render.call_server_component(
+				render.caller.call_server_component(
 					"movement_manager","all",par).
 				then(
 					function(response_data)
 					{
-						ep.update_flag	=false;
+						ep.update_flag	=true;
 						ep.response_data.movement_number=response_data.movement_number;
 					});
 				return;
@@ -218,9 +217,6 @@ function(component_name,component_id,render)
 			component_id,driver_id,instance_initialize_data,part_material,shader_data,render)
 		{
 			var ep=render.component_event_processor[component_id];
-			if(ep.update_flag)
-				return false;
-			ep.update_flag=true;
 			
 			render.text_canvas.width	=instance_initialize_data.canvas_width;
 			render.text_canvas.height	=instance_initialize_data.canvas_height;

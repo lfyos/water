@@ -17,7 +17,7 @@
 						pickupmouseselect	:	function(event,component_id,render)
 						{
 							var ep=render.component_event_processor[component_id];
-							var str,function_id=Math.floor((1.0-ep.y)*10.0);
+							var str,function_id=Math.floor(ep.y*10.0);
 							
 							switch(function_id){
 							case 0:
@@ -78,7 +78,7 @@
 						pickupmouseselect	:	function(event,component_id,render)
 						{
 							var ep=render.component_event_processor[component_id];
-							var function_id=Math.floor((1.0-ep.y)*19.0);
+							var function_id=Math.floor(ep.y*19.0);
 							
 							switch(function_id){
 							case 0://系统信息

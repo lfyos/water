@@ -33,9 +33,6 @@ public class list_component_on_collector
 		int driver_number=comp.driver_number();
 		if((driver_id<0)||(driver_id>=driver_number))
 			return false;
-		if((comp.fix_render_driver_id>=0)&&(comp.fix_render_driver_id<driver_number))
-			driver_id=comp.fix_render_driver_id;
-
 		if((my_part=comp.driver_array.get(driver_id).component_part)==null)
 			return false;
 		if((comp.clip.clip_plane!=null)&&discard_cross_clip_plane_flag)

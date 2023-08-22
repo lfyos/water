@@ -33,7 +33,8 @@ function construct_component_driver(
 				width_height_str+="_"				+my_texture.height;
 			}
 			var par=[
-						["canvas_width_height",width_height_str]
+						["operation",		"width_height"],
+						["width_height",	width_height_str]
 					];
 			render.caller.call_server_component(this.component_id,this.driver_id,par);
 		}

@@ -92,12 +92,6 @@ public class extended_component_instance_driver extends component_instance_drive
 		case "lod":
 			operate_lod_scale.lod_scale_request(ek, ci);
 			break;
-		case "fix_driver":
-			operate_fix_render_driver_id.fix_render_driver_id_request(ek, ci);
-			break;
-		case "render_assemble":
-			operate_display_assembly_flag.set_clear_display_assembly_flag_request(ek, ci);
-			break;
 		case "selection":
 			operate_selection.selection_request(
 					ci.display_camera_result.target.parameter_channel_id,ek, ci);

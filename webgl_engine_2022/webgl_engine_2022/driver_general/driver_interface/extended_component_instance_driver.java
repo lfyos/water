@@ -46,7 +46,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
 		ci.request_response.println("{");
-		
+
 		ci.request_response.print  ("	\"dx\"	:	",		dx).	println(",");
 		ci.request_response.print  ("	\"dy\"	:	",		dy).	println(",");
 		ci.request_response.print  ("	\"depth\"	:	",	depth).	println(",");
@@ -129,6 +129,9 @@ public class extended_component_instance_driver extends component_instance_drive
 			get_parameter(ek,ci);
 			hide_show_flag=false;
 			comp.driver_array.get(driver_id).update_component_parameter_version();
+			return null;
+		case "parameter":
+			get_parameter(ek,ci);
 			return null;
 		default:
 			return null;

@@ -1,3 +1,7 @@
+const point_texture_position=array<vec4<f32>,6>(
+		vec4(-1.0,-1.0,0.0,0.0),vec4( 1.0,-1.0,0.0,0.0),vec4( 1.0, 1.0,0.0,0.0),
+		vec4( 1.0, 1.0,0.0,0.0),vec4(-1.0, 1.0,0.0,0.0),vec4(-1.0,-1.0,0.0,0.0));
+
 struct target_information 
 {
 	projection_matrix						:	mat4x4<f32>,
@@ -151,42 +155,3 @@ struct system_information
 };
 @group(0) @binding(3)
 var<uniform> system_info: system_information;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

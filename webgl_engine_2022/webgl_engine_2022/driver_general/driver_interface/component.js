@@ -16,8 +16,15 @@ function create_component_object(my_init_data,render)
 	this.x=0;
 	this.y=0;
 	this.id_base=0;
-	this.update_flag=false;
+	this.update_flag=true;
 	
+	this.parameter_bak={
+		x	:	this.show_x,
+		y	:	this.show_y,
+		dx	:	this.interface_data.dx,
+		dy	:	this.interface_data.dy
+	}
+
 	this.pickupmousedown=function(event,component_id,render)
 	{
 		switch(event.button){
@@ -95,7 +102,7 @@ function create_component_object(my_init_data,render)
 	
 		this.id_base-=mouse_wheel_number*skip_array[(event.ctrlKey?1:0)+(event.shiftKey?2:0)+(event.altKey?4:0)];
 		this.id_base=(this.id_base<0)?0:Math.round(this.id_base);
-		this.update_flag=false;
+		this.update_flag=true;
 
 		return true;
 	};
@@ -225,13 +232,12 @@ function construct_component_driver(
 {
 	var new_ep=new create_component_object(init_data,render);
 	var old_ep=render.component_event_processor[component_id];
-	if(typeof(old_ep)=="object")
-		if(old_ep!=null)
-			new_ep=Object.assign(old_ep,new_ep);
+	if((typeof(old_ep)=="object")&&(old_ep!=null))
+		new_ep=Object.assign(old_ep,new_ep);
 	render.component_event_processor[component_id]=new_ep;
 	
-	this.component_id		=component_id;
-	this.image_bind_group	=new create_bind_group(init_data,render_driver,render);
+	this.interface_component_id		=component_id;
+	this.image_bind_group			=new create_bind_group(init_data,render_driver,render);
 
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,data_buffer_id,component_id,driver_id,
@@ -241,38 +247,50 @@ function construct_component_driver(
 		var ep=render.component_event_processor[component_id];
 		while(component_buffer_parameter.length>0){
 			var p=component_buffer_parameter.shift();
-			
 			ep.show_x =p[0];
 			ep.show_y =p[1];
-			
 			ep.interface_data.dx=p[2];
 			ep.interface_data.dy=p[3];
 		}
-		
 		if(this.image_bind_group.is_busy_flag)
 			return;
-			
-		if((ep.update_flag)&&(ep.interface_data.type)&&(typeof(ep.update_canvas_texture)=="function")){
-			render.webgpu.canvas_2d.width	=ep.interface_data.canvas.canvas_width;
-			render.webgpu.canvas_2d.height	=ep.interface_data.canvas.canvas_height;
-			if(ep.update_canvas_texture(render.webgpu.context_2d,ep.interface_data.canvas))
-				render.webgpu.device.queue.copyExternalImageToTexture(
-					{
-						source	:	render.webgpu.canvas_2d
-					},
-					{
-						texture	:	this.image_bind_group.texture
-					},
-					{
-						width	:	ep.interface_data.canvas.canvas_width,
-						height	:	ep.interface_data.canvas.canvas_height
-					});
+		if(ep.update_flag){
 			ep.update_flag=false;
+			if(ep.interface_data.type)
+				if(typeof(ep.update_canvas_texture)=="function"){
+					render.webgpu.canvas_2d.width	=ep.interface_data.canvas.canvas_width;
+					render.webgpu.canvas_2d.height	=ep.interface_data.canvas.canvas_height;
+					if(ep.update_canvas_texture(render.webgpu.context_2d,ep.interface_data.canvas,ep,render))
+						render.webgpu.device.queue.copyExternalImageToTexture(
+							{
+								source	:	render.webgpu.canvas_2d
+							},
+							{
+								texture	:	this.image_bind_group.texture
+							},
+							{
+								width	:	ep.interface_data.canvas.canvas_width,
+								height	:	ep.interface_data.canvas.canvas_height
+							});
+				}
 		}
+
 		if(render_data.main_display_target_flag){
+			if(	  (ep.parameter_bak.x !=ep.show_x)
+				||(ep.parameter_bak.y !=ep.show_y)
+				||(ep.parameter_bak.dx!=ep.interface_data.dx)
+				||(ep.parameter_bak.dy!=ep.interface_data.dy))
+			{
+				render.caller.call_server_component(component_id,"all",[["operation","parameter"],
+					["x0",ep.parameter_bak.x =ep.show_x],
+					["y0",ep.parameter_bak.y =ep.show_y],
+					["dx",ep.parameter_bak.dx=ep.interface_data.dx],
+					["dy",ep.parameter_bak.dy=ep.interface_data.dy]]);
+			}
 			var x0=ep.hightlight[0],y0=ep.hightlight[1];
 			var x1=ep.hightlight[2],y1=ep.hightlight[3];
-			render.webgpu.device.queue.writeBuffer(this.image_bind_group.buffer,0,
+			render.webgpu.device.queue.writeBuffer(
+				this.image_bind_group.buffer,0,
 				new Float32Array([
 						ep.show_x,
 						ep.show_y,
@@ -298,17 +316,16 @@ function construct_component_driver(
 	};
 	this.destroy=function(render)
 	{
-		var ep=render.component_event_processor[this.component_id];
+		var ep=render.component_event_processor[this.interface_component_id];
 		if((typeof(ep)=="object")&&(ep!=null))
 			if(typeof(ep.destroy)=="function")
 				ep.destroy(render);
-		render.component_event_processor[this.component_id]=null;
+		render.component_event_processor[this.interface_component_id]=null;
 		
 		if(this.image_bind_group!=null){
 			this.image_bind_group.destroy(render);
 			this.image_bind_group=null;
 		}
-		
 		this.draw_component=null;
 	};
 };

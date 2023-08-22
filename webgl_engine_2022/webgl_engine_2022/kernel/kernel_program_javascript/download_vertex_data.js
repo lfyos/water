@@ -443,6 +443,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 					part_init_data,component_init_data,render);
 		}
 	}
+	
 	this.process_buffer_head_request_queue=function(part_init_data,component_init_data,render)
 	{
 		while(true){

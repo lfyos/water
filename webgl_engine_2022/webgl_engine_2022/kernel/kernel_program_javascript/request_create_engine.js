@@ -77,7 +77,7 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 					var component_id=component_init_fun_array[i].component_id;
 					var component_name=component_init_fun_array[i].component_name;
 					var init_function=component_init_fun_array[i].initialization_function;
-			
+					
 					if(typeof(init_function)!="function"){
 						alert("component init_function is NOT FUNCTION:	"
 							+component_name+"		"+component_id+"		"+e.toString());
@@ -130,7 +130,7 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 			request_render_data(render);
 				
 			draw_scene_main(part_init_data,component_init_data,render);
-				
+			
 			return render;
 		}
 		if(typeof(create_data)!="boolean"){

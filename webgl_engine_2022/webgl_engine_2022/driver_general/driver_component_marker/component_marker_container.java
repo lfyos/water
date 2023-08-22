@@ -52,18 +52,17 @@ public class component_marker_container
 	}
 	public void clear_component_marker(long marker_id,engine_kernel ek)
 	{
-		boolean done_flag=false;
-		component_marker bak[]=component_marker_array;
-		component_marker_array=new component_marker[bak.length-1];
-		for(int i=0,j=0,ni=bak.length;i<ni;i++)
-			if(bak[i].marker_id==marker_id)
-				done_flag=true;
-			else
-				component_marker_array[j++]=bak[i];
-		if(done_flag)
-			write(ek);
-		else
-			component_marker_array=bak;
+		int number=0;
+		for(int i=0,ni=component_marker_array.length;i<ni;i++)
+			if(component_marker_array[i].marker_id!=marker_id)
+				component_marker_array[number++]=component_marker_array[i];
+		if(component_marker_array.length!=number){
+			component_marker bak[]=component_marker_array;
+			component_marker_array=new component_marker[number];
+			for(int i=0;i<number;i++)
+				component_marker_array[i]=bak[i];
+		}
+		write(ek);
 		return;
 	}
 	public void clear_all_component_marker(engine_kernel ek)

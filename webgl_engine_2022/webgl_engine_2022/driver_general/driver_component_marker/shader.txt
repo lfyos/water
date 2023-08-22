@@ -36,12 +36,14 @@ struct vertex_to_fragment_struct
 struct id_target_struct
 {
 	@location(0) 			id_0	:	vec4<i32>,
-	@location(1) 			id_1	:	vec4<i32>
+	@location(1) 			id_1	:	vec4<i32>,
+	@builtin(frag_depth)	depth	:	f32
 };
 
 struct color_target_struct
 {
-	@location(0) 			color	:	vec4<f32>
+	@location(0) 			color	:	vec4<f32>,
+	@builtin(frag_depth)	depth	:	f32
 };
 
 @vertex
@@ -97,17 +99,6 @@ fn vertex_main(
 			}
 		}
 	}
-	
-	const point_texture_position=array<vec4<f32>,6>(
-			vec4(-1.0,-1.0,0.0,0.0),
-			vec4( 1.0,-1.0,0.0,0.0),
-			vec4( 1.0, 1.0,0.0,0.0),
-			
-			vec4( 1.0, 1.0,0.0,0.0),
-			vec4(-1.0, 1.0,0.0,0.0),
-			vec4(-1.0,-1.0,0.0,0.0)
-	);
-	
 	switch(primitive_type){
 	default:	//face  id
 	{
@@ -153,6 +144,7 @@ fn fragment_face_id_fun(vf	:	vertex_to_fragment_struct) -> id_target_struct
 {
 	var ret_val	:	id_target_struct;
 	
+	ret_val.depth=0.0;
 	ret_val.id_0=vec4(marker_info.marker_system_id,marker_info.marker_body_id,0,0);
 	ret_val.id_1=vec4(-1,-1,0,0);
 	
@@ -164,6 +156,7 @@ fn fragment_point_id_fun(vf	:	vertex_to_fragment_struct) -> id_target_struct
 {
 	var ret_val	:	id_target_struct;
 	
+	ret_val.depth=vf.vertex_position.z/vf.vertex_position.w;
 	ret_val.id_0=vec4(marker_info.marker_system_id,marker_info.marker_body_id,0,2);
 	ret_val.id_1=vec4(0,0,0,0);
 	
@@ -178,6 +171,7 @@ fn fragment_face_fun(vf	:	vertex_to_fragment_struct) -> color_target_struct
 {
 	var ret_val	:	color_target_struct;
 	
+	ret_val.depth=0.0;
 	ret_val.color=textureSample(marker_texture,marker_sampler,vf.vertex_texture.xy);
 	if(dot(ret_val.color.rgb,ret_val.color.rgb)<0.75){
 		discard;
@@ -195,7 +189,8 @@ fn fragment_face_fun(vf	:	vertex_to_fragment_struct) -> color_target_struct
 fn fragment_edge_fun(vf	:	vertex_to_fragment_struct) -> color_target_struct
 {
 	var ret_val	:	color_target_struct;
-
+	
+	ret_val.depth=vf.vertex_position.z/vf.vertex_position.w;
 	ret_val.color=marker_info.edge_normal_color;
 	if(   (system_info.pickup_component_id==marker_info.marker_component_id)
 		&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
@@ -211,6 +206,7 @@ fn fragment_point_fun(vf	:	vertex_to_fragment_struct) -> color_target_struct
 {
 	var ret_val	:	color_target_struct;
 
+	ret_val.depth=vf.vertex_position.z/vf.vertex_position.w;
 	ret_val.color=marker_info.point_normal_color;
 	
 	if(   (system_info.pickup_component_id==marker_info.marker_component_id)

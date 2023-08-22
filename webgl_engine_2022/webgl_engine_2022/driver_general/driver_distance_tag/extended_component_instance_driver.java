@@ -75,7 +75,7 @@ public class extended_component_instance_driver extends component_instance_drive
 					print(",",p0.x).print(",",p0.y).print(",",p0.z).
 					print(",",dx.x).print(",",dx.y).print(",",dx.z).
 					print(",",dy.x).print(",",dy.y).print(",",dy.z).
-					print((p.state==2)?",1]":",0]");
+					print((p.state==2)?",true]":",false]");
 				pre_str=",[";
 				break;
 			}	

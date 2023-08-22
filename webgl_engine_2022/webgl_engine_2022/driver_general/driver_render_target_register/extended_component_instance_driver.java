@@ -12,7 +12,7 @@ import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
-	private int canvas_width_height[][];
+	private int main_target_id,canvas_width_height[][];
 	private render_target_parameter target_parameter[];
 
 	public void destroy()
@@ -25,6 +25,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		super(my_comp,my_driver_id);
 		
+		main_target_id=-1;
 		canvas_width_height=new int[][]	{new int[]{1,1}	};
 
 		part p=comp.driver_array.get(driver_id).component_part;
@@ -33,6 +34,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	private void register_target(engine_kernel ek,client_information ci)
 	{
+		main_target_id=-1;
 		for(int i=0,target_number=target_parameter.length;i<target_number;i++){
 			int canvas_id	=target_parameter[i].canvas_id;
 
@@ -60,8 +62,10 @@ public class extended_component_instance_driver extends component_instance_drive
 				double x1=target_parameter[i].target_x0+target_parameter[i].target_width;
 				double y0=target_parameter[i].target_y0;
 				double y1=target_parameter[i].target_y0+target_parameter[i].target_height;
-				if((x0<=view_x)&&(view_x<=x1)&&(y0<=view_y)&&(view_y<=y1))
+				if((x0<=view_x)&&(view_x<=x1)&&(y0<=view_y)&&(view_y<=y1)) {
 					rt.main_display_target_flag=true;
+					main_target_id=i;
+				}
 			}
 			ci.target_container.register_target(rt);
 		}
@@ -91,9 +95,18 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{
-		String str;
-		
-		if((str=ci.request_response.get_parameter("canvas_width_height"))!=null){
+		String str=ci.request_response.get_parameter("operation");
+		switch((str==null)?"":str) {
+		case "camera":
+			if((main_target_id<0)||(main_target_id>=target_parameter.length))
+				break;
+			if((str=ci.request_response.get_parameter("camera"))==null)
+				break;
+			target_parameter[main_target_id].camera_id=Integer.parseInt(str);
+			break;
+		case "width_height":
+			if((str=ci.request_response.get_parameter("width_height"))==null)
+				break;
 			for(int i=0;str.length()>0;i++) {
 				int index_id=str.indexOf('_');
 				if(index_id<0)
@@ -117,6 +130,21 @@ public class extended_component_instance_driver extends component_instance_drive
 				}
 				canvas_width_height[i]=new int[]{width,height};
 			}
+			break;
+		case "parameter_channel":
+			if((str=ci.request_response.get_parameter("parameter_channel"))==null)
+				break;
+			int parameter_channel_id=Integer.parseInt(str);
+			if((str=ci.request_response.get_parameter("target"))==null)
+				break;
+			int target_id=Integer.parseInt(str);
+			if(target_id<0)
+				for(target_id=0;target_id<target_parameter.length;target_id++)
+					target_parameter[target_id].parameter_channel_id=parameter_channel_id;
+			else
+				if(target_id<target_parameter.length)
+					target_parameter[target_id].parameter_channel_id=parameter_channel_id;
+			break;
 		}
 		return null;
 	}

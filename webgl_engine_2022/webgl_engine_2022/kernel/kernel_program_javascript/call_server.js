@@ -163,14 +163,14 @@ function construct_server_caller(my_render)
 		for(var i=0,ni=engine_parameter.length;i<ni;i++)
 			request_url+="&"+engine_parameter[i][0].toString()+"="+engine_parameter[i][1].toString();
 		
-		return this.call_server(request_url,response_type_string,upload_data,server_request_parameter);
+		return await this.call_server(request_url,response_type_string,upload_data,server_request_parameter);
 	};
 	this.call_server_render=async function(
 		render_id_or_render_name,render_parameter,
 		response_type_string,upload_data,server_request_parameter)
 	{
 		var request_url=this.create_render_request_string(render_id_or_render_name,render_parameter);
-		return this.call_server(request_url,response_type_string,upload_data,server_request_parameter);
+		return await this.call_server(request_url,response_type_string,upload_data,server_request_parameter);
 	};
 	this.call_server_render_by_part=async function(
 		render_id_or_part_name,part_id_or_driver_id,render_parameter,
@@ -178,7 +178,7 @@ function construct_server_caller(my_render)
 	{
 		var request_url=this.create_render_request_by_part_string(
 				render_id_or_part_name,part_id_or_driver_id,render_parameter);
-		return this.call_server(request_url,response_type_string,upload_data,server_request_parameter);
+		return await this.call_server(request_url,response_type_string,upload_data,server_request_parameter);
 	};
 	this.call_server_render_by_component=async function(
 		component_id_or_component_name,component_driver_id,render_parameter,
@@ -186,7 +186,7 @@ function construct_server_caller(my_render)
 	{
 		var request_url=this.create_render_request_by_component_string(
 				component_id_or_component_name,component_driver_id,render_parameter);
-		return this.call_server(request_url,response_type_string,upload_data,server_request_parameter);
+		return await this.call_server(request_url,response_type_string,upload_data,server_request_parameter);
 	};
 	this.call_server_part=async function(
 			render_id_or_part_name,part_id_or_driver_id,part_parameter,
@@ -194,7 +194,7 @@ function construct_server_caller(my_render)
 	{
 		var request_url=this.create_part_request_string(
 					render_id_or_part_name,part_id_or_driver_id,part_parameter);
-		return this.call_server(request_url,response_type_string,upload_data,server_request_parameter);
+		return await this.call_server(request_url,response_type_string,upload_data,server_request_parameter);
 	};
 	this.call_server_part_by_component=async function(
 			component_id_or_component_name,component_driver_id,part_parameter,
@@ -202,13 +202,13 @@ function construct_server_caller(my_render)
 	{
 		var request_url=this.create_part_request_by_component_string(
 					component_id_or_component_name,component_driver_id,part_parameter);
-		return this.call_server(request_url,response_type_string,upload_data,server_request_parameter);
+		return await this.call_server(request_url,response_type_string,upload_data,server_request_parameter);
 	};
 	this.call_server_component=async function(component_name_or_id,driver_id,
 			component_parameter,response_type_string,upload_data,server_request_parameter)
 	{
 		var request_url=this.create_component_request_string(
 					component_name_or_id,driver_id,component_parameter);
-		return this.call_server(request_url,response_type_string,upload_data,server_request_parameter);
+		return await this.call_server(request_url,response_type_string,upload_data,server_request_parameter);
 	};
 };

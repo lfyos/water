@@ -2,22 +2,19 @@
 	/* 1type		*/        undefined_part
 	/* 1location	*/        1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 
-
-/*
-
-		mount	mouse\mouse.assemble
-		mount	camera\camera.assemble
-		mount	content\content.assemble
-		mount	component\component.assemble
-		mount	mount\mount.assemble
-		mount	parameter\parameter.assemble
-		mount	list\list.assemble
-		mount	marker\marker.assemble
 		mount	tag\tag.assemble
+		mount	mouse\mouse.assemble		
+		mount	camera\camera.assemble
+		mount	marker\marker.assemble
+		mount	content\content.assemble
+		mount	component\component.assemble	
+/*
+		mount	list\list.assemble
+		mount	mount\mount.assemble	
+		mount	parameter\parameter.assemble	
 */
 
-			
-	/* 1children number */		1
+	/* 1children number */		3
 	
 	
 		/* 2name		*/	交互界面主菜单
@@ -30,7 +27,7 @@
 
 				function(component_name,component_id,render)
 				{
-					render.caller.call_server_component(component_name,"all",[["operation","hide"]]);
+					render.system_call_processor.set_menu_hide(component_name);
 				
 					render.component_event_processor[component_id]={
 						pickupmouseselect	:	function(event,component_id,render)
@@ -51,8 +48,8 @@
 							];
 							
 							if((function_id>=0)&&(function_id<show_component_name.length)){
-//								render.system_call_processor.set_menu_show(show_component_name[function_id]);
-								ep.hightlight=[0,function_id/9.0,		1.0,function_id/9.0+1.0/9.0];
+								render.system_call_processor.set_menu_show(show_component_name[function_id]);
+								ep.hightlight=[0,function_id/9.0,1.0,function_id/9.0+1.0/9.0];
 							}
 						}
 					}
@@ -75,6 +72,7 @@
 				{
 					render.system_call_processor.set_menu_show("交互界面菜单图标左",
 						[["x0",-1.0],["y0",1.0],["all_in_view","all_in_view"]]);
+
 					render.component_event_processor[component_id]={
 						pickupmouseselect	:	function(event,component_id,render)
 						{
@@ -87,8 +85,6 @@
 
 		/* 2child_number	*/	0
 
-
-	
 		/* 2name		*/	交互界面菜单图标右
 		/* 2type		*/	always_show_interface_part
 		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
@@ -101,6 +97,7 @@
 				{
 					render.system_call_processor.set_menu_show("交互界面菜单图标右",
 						[["x0",1.0],["y0",1.0],["all_in_view","all_in_view"]]);
+
 					render.component_event_processor[component_id]={
 						pickupmouseselect	:	function(event,component_id,render)
 						{
