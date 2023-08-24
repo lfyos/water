@@ -9,8 +9,8 @@ import kernel_part.part;
 
 public class extended_component_driver  extends component_driver
 {
-	public int mode,user_parameter_channel_id;
-	public String directory_name;
+	private int mode,user_parameter_channel_id;
+	private String directory_name;
 	
 	public void destroy()
 	{
@@ -38,6 +38,7 @@ public class extended_component_driver  extends component_driver
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_component_instance_driver(comp,driver_id);
+		return new extended_component_instance_driver(comp,driver_id,
+						mode,user_parameter_channel_id,directory_name);
 	}
 }

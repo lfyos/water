@@ -115,7 +115,7 @@ public class engine_kernel
 		current_time			=new nanosecond_timer();
 
 		modifier_cont			=new modifier_container[scene_par.max_modifier_container_number];
-		for(int i=0;i<scene_par.max_modifier_container_number;i++)
+		for(int i=0,ni=scene_par.max_modifier_container_number;i<ni;i++)
 			modifier_cont[i]=new modifier_container(current_time.nanoseconds());
 		
 		part_lru				=null;	

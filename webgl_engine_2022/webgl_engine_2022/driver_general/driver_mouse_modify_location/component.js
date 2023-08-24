@@ -2,7 +2,7 @@ function send_to_webserver(component_id,event_operation,render)
 {
 	var ep=render.component_event_processor[component_id];
 	var camera_component_id	=render.camera.camera_object_parameter[ep.render_data.camera_id].component_id;
-	var operate_component_id=((ep.function_id>=200)&&(ep.selected_component_id>=0))
+	var operate_component_id=((render.event_component.mouse.function_id>=200)&&(ep.selected_component_id>=0))
 					?(ep.selected_component_id):(camera_component_id);
 	
 	if(event_operation!="mousedown"){			
@@ -34,7 +34,7 @@ function send_location_to_webserver(command_str,component_id,render,do_delay_fla
 {
 	var ep=render.component_event_processor[component_id];
 	var camera_component_id	=render.camera.camera_object_parameter[ep.render_data.camera_id].component_id;
-	var operate_component_id=((ep.function_id>=200)&&(ep.selected_component_id>=0))
+	var operate_component_id=((render.event_component.mouse.function_id>=200)&&(ep.selected_component_id>=0))
 				?(ep.selected_component_id):(camera_component_id);
 	var current_time=(new Date()).getTime();
 	if(do_delay_flag)
@@ -75,7 +75,7 @@ function world_point_modifier(component_id,world_point_0,world_point_1,render)
 	if(ep.selected_component_id>=0)
 		selected_component_location=render.component_location_data.get_component_location(ep.selected_component_id);
 		
-	switch(ep.function_id%100){
+	switch(render.event_component.mouse.function_id%100){
 	case 2:
 		pl		=render.computer.create_plane_from_two_point(
 					center_point,render.computer.add_operation(center_point,[1,0,0,1]));
@@ -328,7 +328,7 @@ function change_matrix(component_id,vp_0,vp_1,render)
 	var center_point	=render.computer.caculate_coordinate(camera_component_location,0,0,0);
 	var eye_point		=render.computer.caculate_coordinate(camera_component_location,0,0,camera_distance);
 	
-	switch(ep.function_id%100){
+	switch(render.event_component.mouse.function_id%100){
 	case 0:
 		vp_1=render.computer.sub_operation(vp_1,vp_0);
 		vp_0=[0,0,0,1];
@@ -339,7 +339,7 @@ function change_matrix(component_id,vp_0,vp_1,render)
 	
 	var world_point,world_point_0,world_point_1,view_mix_point,world_point_diff;
 	
-	switch(Math.floor(ep.function_id/100)){
+	switch(Math.floor(render.event_component.mouse.function_id/100)){
 	default:
 		return;
 	case 0:
@@ -366,7 +366,7 @@ function change_matrix(component_id,vp_0,vp_1,render)
 	world_point_0	=world_point[0];
 	world_point_1	=world_point[1];
 
-	switch(Math.floor(ep.function_id/100)){
+	switch(Math.floor(render.event_component.mouse.function_id/100)){
 	case 0:
 		if(ep.rotate_type_flag)
 			camera_rotate(ep,world_point_0,world_point_1,center_point,render);
@@ -505,9 +505,9 @@ function dblclick(event,component_id,render)
 		return false;
 		
 	if(event.button==0)
-		send_to_webserver(component_id,(ep.function_id<200)?"dblclick_view":"dblclick_component",render);
+		send_to_webserver(component_id,(render.event_component.mouse.function_id<200)?"dblclick_view":"dblclick_component",render);
 		
-		return false;
+	return false;
 }
 function mousewheel(event,component_id,render)
 {
@@ -679,14 +679,6 @@ function keyup(event,component_id,render)
 	return false;
 };
 
-function set_event_component(my_component_id,my_render)
-{
-	var ep=my_render.component_event_processor[my_component_id];
-	ep.function_id		=my_render.event_component.mouse.function_id;
-	ep.bak_function_id	=my_render.event_component.mouse.function_id;
-	ep.selected_component_id=-1;
-};
-
 function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
 	init_data,		part_object,	part_driver,	render_driver,	render)
@@ -715,13 +707,9 @@ function construct_component_driver(
 	ep.keyup		=keyup;
 	ep.key_flag		=false;
 
-	ep.set_event_component=set_event_component;
-
 	ep.last_point=[0,0,0,1];
 	ep.touchstart_distance_2=1.0;
-			
-	ep.function_id		=0;
-	ep.bak_function_id	=0;
+
 	ep.selected_component_id=-1;
 			
 	ep.start_time=(new Date()).getTime();
@@ -733,22 +721,18 @@ function construct_component_driver(
 	render.component_event_processor[component_id]=ep;
 
 	this.component_id=component_id;
+	this.buffer_data=null;
 	
 	this.draw_component=function(method_data,render_data,
-			render_id,part_id,data_buffer_id,component_id,driver_id,
-			component_render_parameter,component_buffer_parameter,
+			render_id,part_id,component_id,driver_id,component_render_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		while(component_buffer_parameter.length>1)
-			component_buffer_parameter.shift();
-		var buffer_data=component_buffer_parameter[0];
-			
-		var component_id		=buffer_data[0];
-		var low_precision_scale	=buffer_data[1];
-		var mouse_rotate_scale	=buffer_data[2];
-		var rotate_type_flag	=(buffer_data[3]>0.5)?true:false;
-		var change_type_flag	=(buffer_data[4]>0.5)?true:false;
-		var exchange_point_flag	=(buffer_data[5]>0.5)?true:false;
+		var component_id		=this.buffer_data[0];
+		var low_precision_scale	=this.buffer_data[1];
+		var mouse_rotate_scale	=this.buffer_data[2];
+		var rotate_type_flag	=(this.buffer_data[3]>0.5)?true:false;
+		var change_type_flag	=(this.buffer_data[4]>0.5)?true:false;
+		var exchange_point_flag	=(this.buffer_data[5]>0.5)?true:false;
 			
 		var ep=render.component_event_processor[component_id];
 		
@@ -761,8 +745,22 @@ function construct_component_driver(
 		ep.change_type_flag		=change_type_flag;
 		ep.exchange_point_flag	=exchange_point_flag;
 	}
+	this.append_component_parameter=function(
+			component_id,		driver_id,		render_id,		part_id,
+			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
+	{
+		this.buffer_data=buffer_data_item;
+	}
 	this.destroy=function(render)
 	{
-		render.component_event_processor[component_id]=null;
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
+		
+		if(render.component_event_processor[this.component_id]!=null){
+			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
+				render.component_event_processor[this.component_id].destroy(render);
+			render.component_event_processor[this.component_id]=null;
+		}
+		this.buffer_data=null;
 	}
 };

@@ -28,6 +28,9 @@
 		/* 2name		*/			coordinate
 		/* 2type		*/			coordinate_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+		
+					/*	coordinate_length_scale	*/		1.25
+		
 		/* 2children number */		0
 
 		/*	4	*/

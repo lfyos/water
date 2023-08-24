@@ -22,7 +22,6 @@ function(component_name,component_id,render)
 				render.event_component.keyboard.component_name	="distance_tag_component";
 				render.event_component.mouse.	function_id		=0;
 				render.event_component.keyboard.function_id		=0;
-				render.operate_component.set_event_component("distance_tag_component");
 				break;
 			case 3:
 				var tag_title;

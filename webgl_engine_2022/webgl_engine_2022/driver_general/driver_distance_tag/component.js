@@ -152,8 +152,7 @@ function construct_component_driver(
 	init_component_event_processor(component_id,init_data,render);
 
 	this.draw_component=function(method_data,render_data,
-			render_id,part_id,data_buffer_id,component_id,driver_id,
-			component_render_parameter,component_buffer_parameter,
+			render_id,part_id,component_id,driver_id,component_render_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
 		var p,rpe=render.webgpu.render_pass_encoder;
@@ -205,9 +204,8 @@ function construct_component_driver(
 	}
 	
 	this.append_component_parameter=function(
-		component_id,	driver_id,			render_id,			part_id,
-		data_buffer_id,	buffer_data_item,	buffer_data_array,
-		part_object,	part_driver,		render_driver,		render)
+			component_id,		driver_id,		render_id,		part_id,
+			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
 	{
 		for(var i=0,ni=this.tag_array.length;i<ni;i++){
 			this.tag_array[i].buffer.destroy();
@@ -352,8 +350,12 @@ function construct_component_driver(
 	
 	this.destroy=function(render)
 	{
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
+		
 		if(render.component_event_processor[this.component_id]!=null){
-			render.component_event_processor[this.component_id].destroy();
+			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
+				render.component_event_processor[this.component_id].destroy(render);
 			render.component_event_processor[this.component_id]=null;
 		}	
 		if(this.tag_array!=null){

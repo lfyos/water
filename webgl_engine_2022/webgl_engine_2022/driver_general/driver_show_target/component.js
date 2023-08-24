@@ -22,8 +22,7 @@ function construct_component_driver(
 		});
 		
 	this.draw_component=function(method_data,render_data,
-			render_id,part_id,data_buffer_id,component_id,driver_id,
-			component_render_parameter,component_buffer_parameter,
+			render_id,part_id,component_id,driver_id,component_render_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
 		var ep=render.component_event_processor[this.component_id];
@@ -68,31 +67,30 @@ function construct_component_driver(
 	};
 	
 	this.append_component_parameter=function(
-				component_id,	driver_id,			render_id,			part_id,
-				data_buffer_id,	buffer_data_item,	buffer_data_array,
-				part_object,	part_driver,		render_driver,		render)
+			component_id,		driver_id,		render_id,		part_id,
+			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
 	{
 		render.webgpu.device.queue.writeBuffer(this.buffer,0,new Float32Array(buffer_data_item));
 	};
 	
-	this.detroy=function(render)
+	this.destroy=function(render)
 	{
-		var ep=render.component_event_processor[this.component_id];
-		if(typeof(ep)=="object")
-			if(ep!=null){
-				if(typeof(ep.destroy)=="function")
-					ep.destroy(render);
-				if(ep.texture!=null)
-					ep.texture.destroy();
-			}
-		render.component_event_processor[this.component_id]=null;
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
+		
+		if(render.component_event_processor[this.component_id]!=null){
+			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
+				render.component_event_processor[this.component_id].destroy(render);
+			if(render.component_event_processor[this.component_id].texture!=null)
+				render.component_event_processor[this.component_id].texture.destroy();	
+			render.component_event_processor[this.component_id]=null;
+		}
 		
 		this.bindgroup=null;
+		
 		if(this.buffer!=null){
 			this.buffer.destroy();
 			this.buffer=null;
 		};
-		this.draw_component=null;
-		this.append_component_parameter=null;
 	}
 };

@@ -53,7 +53,7 @@ public class render_driver
 				},
 				new String[] 
 				{
-						"shader.txt",
+						"shader.txt"
 				},
 				new String[] 
 				{

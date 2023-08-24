@@ -49,9 +49,8 @@ function construct_component_driver(
 		});
 
 	this.append_component_parameter=function(
-		component_id,	driver_id,			render_id,		part_id,
-		data_buffer_id,	buffer_data_item,	buffer_data_array,
-		part_object,	part_driver,		render_driver,	render)
+			component_id,		driver_id,		render_id,		part_id,
+			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
 	{
 		var my_texture_width	=part_object.material[0].texture_width;
 		var my_texture_height	=part_object.material[0].texture_height;
@@ -90,9 +89,8 @@ function construct_component_driver(
 	};	
 	
 	this.draw_component=function(method_data,render_data,
-			render_id,part_id,data_buffer_id,component_id,driver_id,
-			component_render_parameter,component_buffer_parameter,
-			project_matrix,part_object,part_driver,render_driver,render)
+			render_id,part_id,component_id,driver_id,component_render_parameter,
+			project_matrix,part_object,part_driver,render_driver,render)	
 	{
 		var my_texture_width	=part_object.material[0].texture_width;
 		var my_canvas_width		=part_object.material[0].canvas_width;
@@ -115,4 +113,22 @@ function construct_component_driver(
 			rpe.draw(p[i].item_number);
 		}
 	};
+	
+	this.destroy=function()
+	{
+		this.draw_component=null;
+		this.append_component_parameter=null;
+		
+		this.parameter=null;
+		this.texture_bindgroup=null;
+		
+		if(this.texture!=null){
+			this.texture.destroy();
+			this.texture=null;
+		}
+		if(this.vertex_buffer!=null){
+			this.vertex_buffer.destroy();
+			this.vertex_buffer=null;
+		}
+	}
 };

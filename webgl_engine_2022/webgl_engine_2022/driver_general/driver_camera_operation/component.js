@@ -199,8 +199,7 @@ function construct_component_driver(
 	}
 
 	this.draw_component=function(method_data,render_data,
-			render_id,part_id,data_buffer_id,component_id,driver_id,
-			component_render_parameter,component_buffer_parameter,
+			render_id,part_id,component_id,driver_id,component_render_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
 		var p,rpe=render.webgpu.render_pass_encoder;
@@ -252,21 +251,25 @@ function construct_component_driver(
 			break;
 		}
 	};
+	this.append_component_parameter=function(
+			component_id,		driver_id,		render_id,		part_id,
+			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
+	{
+	}
 	this.destroy=function(render)
 	{
-		var ep;
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
 		
-		if(typeof(ep=render.component_event_processor[this.component_id])=="object")
-			if(ep!=null)
-				if(typeof(ep.destroy)=="function")
-					ep.destroy(render);
-		render.component_event_processor[this.component_id]=null;
-		
+		if(render.component_event_processor[this.component_id]!=null){
+			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
+				render.component_event_processor[this.component_id].destroy(render);
+			render.component_event_processor[this.component_id]=null;
+		}
 		if(this.parameter_buffer!=null){
 			this.parameter_buffer.destroy();
 			this.parameter_buffer=null;
 		}
 		this.save_buffer_data=null;
-		this.draw_component=null;
 	}
 };

@@ -58,8 +58,9 @@ public class response_component_buffer_parameter
 			}
 			int data_buffer_id=cll.comp.driver_array.get(cll.driver_id).same_part_component_driver_id;
 			ci.request_response.print(data_buffer_id).print(",");
+			
 			try{
-				in_dr.create_component_parameter(data_buffer_id,ek,ci);
+				in_dr.create_component_parameter(ek,ci);
 			}catch(Exception e){
 				part p=cll.comp.driver_array.get(cll.driver_id).component_part;
 						

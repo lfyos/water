@@ -22,7 +22,7 @@ public class list_component_on_collector
 	private boolean discard_unload_component_flag;
 	private int no_driver_component_number;
 	
-	private boolean register(component comp,int driver_id)
+	private boolean register(component comp,int driver_id,int render_buffer_id)
 	{
 		if(part_list_only_flag)
 			if(!(comp.uniparameter.part_list_flag))
@@ -41,7 +41,6 @@ public class list_component_on_collector
 			return false;
 		
 		boolean abandon_display_flag=true;
-		int render_buffer_id=cam_result.get_render_buffer_id(ci);
 		try{
 			abandon_display_flag=in_dr.check(render_buffer_id,ek,ci,cam_result);
 		}catch(Exception e){
@@ -67,7 +66,7 @@ public class list_component_on_collector
 		return true;
 	}
 	
-	private boolean do_lod(component comp)
+	private boolean do_lod(component comp,int render_buffer_id)
 	{
 		if(!(do_discard_lod_flag||do_selection_lod_flag))
 			return false;
@@ -107,14 +106,14 @@ public class list_component_on_collector
 					if(comp.children_number()>0)
 						if(comp.driver_array.get(i).component_part.part_par.assembly_precision2<=lod_precision2)
 							return false;
-					if(register(comp,i))
+					if(register(comp,i,render_buffer_id))
 						return true;
 				}
 			return true;
 		}
 		return false;
 	}
-	private void collect(component comp,int clipper_test_depth)
+	private void collect(component comp,int render_buffer_id,int clipper_test_depth)
 	{
 		if(comp==null)
 			return;
@@ -131,14 +130,14 @@ public class list_component_on_collector
 		if(cam_result.clipper_test(comp,ek.component_cont,cam_result.target.parameter_channel_id))
 			return;
 		
-		if(do_lod(comp))
+		if(do_lod(comp,render_buffer_id))
 			return;
 		
 		int children_number	=comp.children_number();
 		int driver_number	=comp.driver_number();
 		if(children_number<=0){
 			for(int i=0;i<driver_number;i++)
-				if(register(comp,i))
+				if(register(comp,i,render_buffer_id))
 					return;
 			no_driver_component_number++;
 			
@@ -147,7 +146,7 @@ public class list_component_on_collector
 		
 		int old_no_driver_component_number=no_driver_component_number;
 		for(int i=0;i<children_number;i++)
-			collect(comp.children[i],clipper_test_depth+1);
+			collect(comp.children[i],render_buffer_id,clipper_test_depth+1);
 		comp.caculate_box(false);
 		
 		if(ek.scene_par.not_do_ancestor_render_flag)
@@ -157,7 +156,7 @@ public class list_component_on_collector
 		if(comp.get_can_display_assembly_flag(cam_result.target.parameter_channel_id))
 			for(int i=0;i<driver_number;i++)
 				if(comp.driver_array.get(i).component_part.is_normal_part())
-					if(register(comp,i)){
+					if(register(comp,i,render_buffer_id)){
 						no_driver_component_number=old_no_driver_component_number;
 						return;
 					}
@@ -184,6 +183,7 @@ public class list_component_on_collector
 		
 		no_driver_component_number=0;
 		
+		int render_buffer_id=cam_result.get_render_buffer_id(ci);			
 		component my_comp,pickup_comp=ci.parameter.comp;
 		for(component p=pickup_comp;p!=null;p=ek.component_cont.get_component(p.parent_component_id))
 			p.selected_component_family_flag=true;
@@ -192,10 +192,10 @@ public class list_component_on_collector
 				if(cam_result.target.driver_id!=null)
 					if(i<cam_result.target.driver_id.length)
 						if((my_driver_id=cam_result.target.driver_id[i])>=0) {
-							register(my_comp,my_driver_id);
+							register(my_comp,my_driver_id,render_buffer_id);
 							continue;
 						}
-				collect(my_comp,0);
+				collect(my_comp,0,render_buffer_id);
 			}
 		for(component p=pickup_comp;p!=null;p=ek.component_cont.get_component(p.parent_component_id))
 			p.selected_component_family_flag=false;

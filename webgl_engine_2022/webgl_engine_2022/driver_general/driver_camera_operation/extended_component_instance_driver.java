@@ -39,12 +39,11 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		return show_flag?false:true;
 	}
-	public void create_render_parameter(int render_buffer_id,
-			int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}
-	public void create_component_parameter(int data_buffer_id,engine_kernel ek,client_information ci)
+	public void create_component_parameter(engine_kernel ek,client_information ci)
 	{
 		ci.request_response.print(0);
 	}
@@ -309,7 +308,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{
 		String str;
-		double scale_value,value;
+		double scale_value;
 		
 		if((str=ci.request_response.get_parameter("operation"))==null)
 			return null;
@@ -396,14 +395,6 @@ public class extended_component_instance_driver extends component_instance_drive
 			}
 			return null;
 		}
-		case "display_precision":
-			if((str=ci.request_response.get_parameter("low_value"))!=null)
-				if((value=Double.parseDouble(str))>=(const_value.min_value))
-					ci.display_camera_result.cam.parameter.low_precision_scale=value;
-			if((str=ci.request_response.get_parameter("high_value"))!=null)
-				if((value=Double.parseDouble(str))>=(const_value.min_value))
-					ci.display_camera_result.cam.parameter.high_precision_scale=value;
-			return null;
 		case "show_hide":
 			update_component_parameter_version(0);
 			if((str=ci.request_response.get_parameter("show_hide"))!=null){

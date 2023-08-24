@@ -385,7 +385,8 @@ public class engine_initialization
 						if(i==0)
 							fw.println(str);
 						else
-							fw.print("			",jason_string.change_string(str)).println((j==(nj-1))?"":",");
+							fw.print("			",jason_string.change_string(str)).
+							println((j==(nj-1))?"":",");
 					}	
 					
 					if(i!=0) 

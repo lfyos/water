@@ -6,13 +6,15 @@ function construct_component_driver(
 	this.driver_id					=driver_id;
 	this.should_update_server_flag	=true;
 	
-	this.target_parameter=new Array();
-	for(var i=0,j=0,ni=init_data.length;i<ni;)
-		this.target_parameter[j++]={
+	this.clear_color		=new Array();
+	this.target_parameter	=new Array();
+	for(var i=0,j=0,ni=init_data.length;i<ni;j++){
+		this.clear_color		[j]=[0,0,0,1];
+		this.target_parameter	[j]={
 			canvas_id		:	init_data[i++],
 			load_operation	:	(init_data[i++]>0)?"clear":"load"
 		};
-		
+	}	
 	this.multisample_texture=new Array(render.webgpu.canvas.length);
 	this.depth_texture		=new Array(render.webgpu.canvas.length);
 	for(var i=0,ni=render.webgpu.canvas.length;i<ni;i++){
@@ -20,8 +22,7 @@ function construct_component_driver(
 		this.depth_texture[i]=null;
 	}
 	this.draw_component=function(method_data,render_data,
-			render_id,part_id,data_buffer_id,component_id,driver_id,
-			component_render_parameter,component_buffer_parameter,
+			render_id,part_id,component_id,driver_id,component_render_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
 		if(this.should_update_server_flag){
@@ -39,7 +40,12 @@ function construct_component_driver(
 			render.caller.call_server_component(this.component_id,this.driver_id,par);
 		}
 	}
-
+	this.append_component_parameter=function(
+			component_id,		driver_id,		render_id,		part_id,
+			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
+	{
+		this.clear_color=buffer_data_item;
+	}
 	this.begin_render_target=function(target_sequence_id,
 			render_data,target_part_object,target_part_driver,target_render_driver,render)
 	{
@@ -49,7 +55,8 @@ function construct_component_driver(
 			return null;
 		if(render_data.target_texture_id>=this.target_parameter.length)
 			return null;
-
+		
+		var clear_color		=this.clear_color[render_data.target_texture_id];
 		var canvas_id		=this.target_parameter[render_data.target_texture_id].canvas_id;
 		var load_operation	=this.target_parameter[render_data.target_texture_id].load_operation;
 
@@ -109,13 +116,13 @@ function construct_component_driver(
 				?{
 					view			:	my_multisample_texture.createView(),
 					resolveTarget	:	my_gpu_texture.createView(),
-					clearValue		:	{ r: 0.0, g: 0.0, b: 0.0, a: 1.0 },
+					clearValue		:	{ r: clear_color[0], g: clear_color[1], b: clear_color[2], a: clear_color[3] },
 					loadOp			:	load_operation,
 					storeOp			:	"store"
 				}
 				:{
 					view			:	my_gpu_texture.createView(),
-					clearValue		:	{ r: 0.0, g: 0.0, b: 0.0, a: 1.0 },
+					clearValue		:	{ r: clear_color[0], g: clear_color[1], b: clear_color[2], a: clear_color[3] },
 					loadOp			:	load_operation,
 					storeOp			:	"store"
 				}
@@ -157,8 +164,18 @@ function construct_component_driver(
 				]
 			};
 	};
-	this.destroy=function()
+	this.destroy=function(render)
 	{
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
+		this.begin_render_target		=null;
+		
+		if(render.component_event_processor[this.component_id]!=null){
+			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
+				render.component_event_processor[this.component_id].destroy(render);
+			render.component_event_processor[this.component_id]=null;
+		}
+		
 		for(var i=0,ni=this.multisample_texture.length;i<ni;i++)
 			if(this.multisample_texture[i]!=null){
 				this.multisample_texture[i].destroy();

@@ -10,7 +10,6 @@ function construct_operate_component(my_render)
 		this.get_component_object_by_component_name	=null;
 		this.get_component_event_processor			=null;
 		this.get_component_call_processor			=null;
-		this.set_event_component					=null;
 	};
 	this.get_component_object_by_component_id=function(my_component_id)
 	{
@@ -79,30 +78,5 @@ function construct_operate_component(my_render)
 			return null;
 		this.last_operate_component_id=my_component_name_or_id;
 		return ret_val;
-	};
-	this.set_event_component=function(my_component_name_or_id)
-	{
-		switch(typeof(my_component_name_or_id)){
-		case "string":
-			my_component_name_or_id=this.get_component_object_by_component_name(my_component_name_or_id);
-			if(my_component_name_or_id==null)
-				return;
-			my_component_name_or_id=my_component_name_or_id.component_id;
-			break;
-		case "number":
-			break;
-		default:
-			return;
-		}
-		if((my_component_name_or_id<0)||(my_component_name_or_id>=this.render.component_event_processor.length))
-			return;
-		var cep=this.render.component_event_processor[my_component_name_or_id];
-		if(typeof(cep)!="object")
-			return;
-		if(cep==null)
-			return;
-		if(typeof(cep.set_event_component)!="function")
-			return;
-		cep.set_event_component(my_component_name_or_id,this);
 	};
 }

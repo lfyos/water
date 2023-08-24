@@ -36,8 +36,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		return true;
 	}
-	public void create_render_parameter(int render_buffer_id,
-			int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(modifier_container_id);
 	}
@@ -54,7 +53,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		request_response.print((number<=0)?"[]":(","+code+"]"));
 	}
-	public void create_component_parameter(int data_buffer_id,engine_kernel ek,client_information ci)
+	public void create_component_parameter(engine_kernel ek,client_information ci)
 	{
 		int print_number=0;
 		ci.request_response.print("[");

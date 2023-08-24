@@ -215,16 +215,18 @@
 								if((new_blue=prompt("请输入蓝色值") )==null)
 									break;
 								render.caller.call_server_component("render_target_register_component","all",
-									[["operation","set_clear_color"],["target",0],["viewport",0],
+									[["operation","set_clear_color"],["target",-1],
 									 ["red",new_red],["green",new_green],["blue",new_blue],["alf","1.0"]]);	
 								break;
 							case 1:
+								alert("不支持");
+								break;
 							case 2:
 							case 3:
 								for(var i=0;i<8;i++)
 									render.caller.call_server_component(
 										"background_component_"+i.toString(),"all",
-										[["operation","mode"],["mode",function_id-1]]);
+										[["operation","mode"],["mode",function_id-2]]);
 								break;
 							case 4:
 								render.system_call_processor.set_menu_show("内容显示显示背景图片组件");
@@ -294,30 +296,18 @@
 							var ep=render.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*9.0);
 							
-							function show_hide_coordinate(render,camera_display_flag,selected_display_flag)
-							{
-								var par=[];
-								if(typeof(camera_display_flag)=="boolean")
-									par.push(["camera_display_flag",	camera_display_flag	 ?"true":"false"]);
-								if(typeof(selected_display_flag)=="boolean")
-									par.push(["selected_display_flag",	selected_display_flag?"true":"false"]);
-								render.caller.call_server_component("coordinate","all",par);
-							};
-
 							switch(function_id){
 							case 0:
 								return;
 							case 1:
-								show_hide_coordinate(render,true,"");
+							case 3:
+								render.caller.call_server_component("coordinate","all",
+									[["operation","onoff"],["main",(function_id==1)?"true":"false"]]);
 								break;
 							case 2:
-								show_hide_coordinate(render,"",true);
-								break;
-							case 3:
-								show_hide_coordinate(render,false,"");
-								break;
 							case 4:
-								show_hide_coordinate(render,"",false);
+								render.caller.call_server_component("coordinate","all",
+									[["operation","onoff"],["selection",(function_id==2)?"true":"false"]]);
 								break;
 							case 5:
 								return;

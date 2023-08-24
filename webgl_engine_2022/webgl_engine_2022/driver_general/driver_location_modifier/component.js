@@ -5,8 +5,7 @@ function construct_component_driver(
 	this.location_data=new Array();
 	
 	this.draw_component=function(method_data,render_data,
-			render_id,part_id,data_buffer_id,component_id,driver_id,
-			component_render_parameter,component_buffer_parameter,
+			render_id,part_id,component_id,driver_id,component_render_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
 		var computer				=render.computer;
@@ -14,10 +13,6 @@ function construct_component_driver(
 		
 		var modifier_container_id	=component_render_parameter;
 		var modifier_current_time	=render.modifier_current_time[modifier_container_id];
-		
-		while(component_buffer_parameter.length>0)
-			for(var p=component_buffer_parameter.shift();p.length>0;)
-				this.location_data.push(p.shift());
 		
 		var old_location_data=this.location_data;
 		this.location_data=new Array();
@@ -86,9 +81,25 @@ function construct_component_driver(
 				this.location_data.push(location_item);
 		}	
 	}
-	this.destroy=function()
+	
+	this.append_component_parameter=function(
+			component_id,		driver_id,		render_id,		part_id,
+			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
 	{
-		this.location_data	=null;
-		this.draw_component	=null;
+		while(buffer_data_item.length>0)
+			this.location_data.push(buffer_data_item.shift());
+	}
+
+	this.destroy=function(render)
+	{
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
+		
+		if(render.component_event_processor[this.component_id]!=null){
+			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
+				render.component_event_processor[this.component_id].destroy(render);
+			render.component_event_processor[this.component_id]=null;
+		}
+		this.location_data				=null;
 	}
 };

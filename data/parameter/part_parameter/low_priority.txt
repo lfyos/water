@@ -12,7 +12,6 @@
 
 /*	create_buffer_object_bitmap			*/		0x7fffffffffffffff	0x7fffffffffffffff	0x7fffffffffffffff
 
-/*	max_component_buffer_data_number	*/		4
 /*	max_part_load_thread_number			*/		8
 
 /*	do_create_part_ids_flag				*/		true

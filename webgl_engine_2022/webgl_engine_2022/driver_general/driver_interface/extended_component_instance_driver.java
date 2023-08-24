@@ -65,12 +65,11 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		return always_show_flag?false:hide_show_flag;
 	}
-	public void create_render_parameter(int render_buffer_id,
-			int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}
-	public void create_component_parameter(int data_buffer_id,engine_kernel ek,client_information ci)
+	public void create_component_parameter(engine_kernel ek,client_information ci)
 	{
 		ci.request_response.print("[",x0).print(",",y0).print(",",dx).print(",",dy).print("]");
 	}

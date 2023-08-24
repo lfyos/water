@@ -1,0 +1,39 @@
+/*	p0_component	*/	start_driver_component
+/*	px_component	*/	start_driver_component
+/*	tag_component	*/	system_root_component
+/*	type_id			*/	-1
+/*	p0				*/	0.15643454510869192	0.8419809884127505	9.406000713310103E-4
+/*	px				*/	0.08160966122266422	0.2416343552592597	2.718718783805141E-4
+/*	py				*/	-0.14179835625570886	0.8794889479542856	-0.301925368147931
+/*	tag_title		*/	null
+
+
+/*	extra_distance_tag	*/	false
+
+
+/*	p0_component	*/	start_driver_component
+/*	px_component	*/	start_driver_component
+/*	tag_component	*/	system_root_component
+/*	type_id			*/	-1
+/*	p0				*/	0.9541476010801438	0.618282023076012	-0.0011859286062769758
+/*	px				*/	0.32842238726240613	0.07151060790988861	0.008975986721333262
+/*	py				*/	1.2696966742166589	0.2529941901728491	-0.22574340694838668
+/*	tag_title		*/	null
+
+
+/*	extra_distance_tag	*/	false
+
+
+/*	p0_component	*/	start_driver_component
+/*	px_component	*/	start_driver_component
+/*	tag_component	*/	system_root_component
+/*	type_id			*/	-1
+/*	p0				*/	0.4823116574822317	0.7393835305377956	0.008977541124039368
+/*	px				*/	0.6507209904174264	0.4909885542188821	2.6623374052880955E-4
+/*	py				*/	0.7490082637320686	0.9066647813497917	0.394955795884728
+/*	tag_title		*/	毛主席万寿无疆，林副主席永远健康。
+
+
+/*	extra_distance_tag	*/	false
+
+

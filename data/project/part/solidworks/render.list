@@ -13,8 +13,8 @@ bridge_green	any_assemble_part_name	solidworks\big.coarse.txt		relative	bridge\g
 bridge_green	any_assemble_part_name	solidworks\small.txt			relative	bridge\green.小件.list			
 bridge_green	any_assemble_part_name	solidworks\high_priority.txt	relative	bridge\green.no_box.list		
 
-64_color		any_assemble_part_name	solidworks\parameter.txt		relative	64\color.list					
-64_green		any_assemble_part_name	solidworks\parameter.txt		relative	64\green.list					
+64_color		any_assemble_part_name	solidworks\parameter.txt		relative	64\color.list		
+64_green		any_assemble_part_name	solidworks\parameter.txt		relative	64\green.list
 
 87_color		any_assemble_part_name	solidworks\big.txt				relative	87\color.大件.list					
 87_color		any_assemble_part_name	solidworks\middle.txt			relative	87\color.中件.list				

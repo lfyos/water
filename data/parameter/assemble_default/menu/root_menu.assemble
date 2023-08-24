@@ -8,10 +8,10 @@
 		mount	marker\marker.assemble
 		mount	content\content.assemble
 		mount	component\component.assemble	
+		mount	parameter\parameter.assemble	
 /*
 		mount	list\list.assemble
-		mount	mount\mount.assemble	
-		mount	parameter\parameter.assemble	
+		mount	mount\mount.assemble
 */
 
 	/* 1children number */		3

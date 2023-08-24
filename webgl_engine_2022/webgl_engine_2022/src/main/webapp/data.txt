@@ -1,4 +1,3 @@
-25
 
 set JAVA_OPTS=-server -Xms1920m -Xmx2148m -XX:MaxNewSize=512m -XX:MaxPermSize=256m
 

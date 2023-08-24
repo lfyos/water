@@ -9,11 +9,11 @@ function construct_component_driver(
 			usage	:	GPUBufferUsage.VERTEX|GPUBufferUsage.COPY_DST
 		});
 	this.draw_component=function(method_data,render_data,
-			render_id,part_id,data_buffer_id,component_id,driver_id,
-			component_render_parameter,component_buffer_parameter,
+			render_id,part_id,component_id,driver_id,component_render_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		render.set_system_bindgroup(render_data.render_buffer_id,this.box_component_id,-1);
+		render.set_system_bindgroup(
+			render_data.render_buffer_id,this.box_component_id,-1);
 
 		var rpe	=render.webgpu.render_pass_encoder;
 		rpe.setPipeline(render_driver.pipeline);
@@ -26,20 +26,25 @@ function construct_component_driver(
 	};
 	
 	this.append_component_parameter=function(
-				component_id,	driver_id,			render_id,		part_id,
-				data_buffer_id,		buffer_data_item,	buffer_data_array,
-				part_object,	part_driver,		render_driver,	render)
+			component_id,		driver_id,		render_id,		part_id,
+			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
 	{
 		render.webgpu.device.queue.writeBuffer(this.buffer,0,new Float32Array(buffer_data_item[0]));
 		this.box_component_id=buffer_data_item[1];
 	};
-	this.destroy=function()
+	this.destroy=function(render)
 	{
-		if(this.buffer!=null)
-			this.buffer.destroy();
-		
-		this.buffer						=null;
 		this.draw_component				=null;
 		this.append_component_parameter	=null;
+		
+		if(render.component_event_processor[this.component_id]!=null){
+			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
+				render.component_event_processor[this.component_id].destroy(render);
+			render.component_event_processor[this.component_id]=null;
+		}
+		
+		if(this.buffer!=null)
+			this.buffer.destroy();
+		this.buffer						=null;
 	}
 };

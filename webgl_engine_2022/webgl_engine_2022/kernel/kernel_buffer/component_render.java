@@ -364,7 +364,7 @@ public class component_render
 						print(data_buffer_id).print(",").
 						print(my_instance_id).print(",");
 				try{
-					in_dr.create_render_parameter(render_buffer_id,data_buffer_id,ek,ci,cam_result);
+					in_dr.create_render_parameter(render_buffer_id,ek,ci,cam_result);
 				}catch(Exception e){
 					debug_information.println("instance driver create_render_parameter fail:	",e.toString());
 					debug_information.println("Component name:	",	cll.comp.component_name);

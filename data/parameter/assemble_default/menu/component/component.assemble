@@ -119,13 +119,18 @@
 							case 10:
 								select_operation_str="part_list";	break;
 							default:
-								function_id=11;						break;
-							}
-							if(function_id==11)
 								render.system_call_processor.set_menu_show("组件操作功能选择组件");
-							else
-								render.caller.call_server_component("manipulator_component","all",
-									[["event_method","selection"],["event_operation",select_operation_str]]);						
+								return;
+							}
+							
+							render.caller.call_server_component("manipulator_component","all",
+								[["event_method","selection"],["event_operation",select_operation_str]]).
+							then(
+								function()
+								{
+									render.caller.call_server_component(
+										"coordinate","all",[["operation","onoff"]]);
+								});					
 							ep.hightlight=[0,function_id/12.0,1.0,function_id/12.0+1.0/12.0];
 						}
 					};

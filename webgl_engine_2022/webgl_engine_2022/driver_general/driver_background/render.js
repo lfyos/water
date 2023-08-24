@@ -1,5 +1,4 @@
-function new_render_driver(
-	render_id,render_name,init_data,text_array,shader_code,render)
+function new_render_driver(	render_id,render_name,init_data,shader_code,text_array,render)
 {
 	var texture_bindgroup_layout_entries=[
 		{	//left
@@ -109,9 +108,7 @@ function new_render_driver(
 			[
 				{
 					arrayStride	:	64,
-						
 					stepMode	:	"vertex",
-						
 					attributes	:
 					[
 						{	//vertex
@@ -126,7 +123,6 @@ function new_render_driver(
 		fragment		:
 		{
 			module		:	my_module,
-			
 			entryPoint	:	"fragment_main",
 			targets	: 
 			[

@@ -1,6 +1,6 @@
 function create_component_object(my_init_data,render)
 {
-	this.interface_data				=my_init_data;
+	this.interface_data=my_init_data;
 	
 	this.show_x =0;
 	this.show_y =0;
@@ -238,20 +238,13 @@ function construct_component_driver(
 	
 	this.interface_component_id		=component_id;
 	this.image_bind_group			=new create_bind_group(init_data,render_driver,render);
-
+	this.save_parameter_number		=0;
+	
 	this.draw_component=function(method_data,render_data,
-			render_id,part_id,data_buffer_id,component_id,driver_id,
-			component_render_parameter,component_buffer_parameter,
+			render_id,part_id,component_id,driver_id,component_render_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
 		var ep=render.component_event_processor[component_id];
-		while(component_buffer_parameter.length>0){
-			var p=component_buffer_parameter.shift();
-			ep.show_x =p[0];
-			ep.show_y =p[1];
-			ep.interface_data.dx=p[2];
-			ep.interface_data.dy=p[3];
-		}
 		if(this.image_bind_group.is_busy_flag)
 			return;
 		if(ep.update_flag){
@@ -275,7 +268,7 @@ function construct_component_driver(
 				}
 		}
 
-		if(render_data.main_display_target_flag){
+		if((render_data.main_display_target_flag)||(this.save_parameter_number<=0)){
 			if(	  (ep.parameter_bak.x !=ep.show_x)
 				||(ep.parameter_bak.y !=ep.show_y)
 				||(ep.parameter_bak.dx!=ep.interface_data.dx)
@@ -302,6 +295,7 @@ function construct_component_driver(
 						(x0>x1)?x0:x1,
 						(y0>y1)?y0:y1
 					]));
+			this.save_parameter_number++;
 		}
 		
 		var rpe=render.webgpu.render_pass_encoder;
@@ -314,14 +308,28 @@ function construct_component_driver(
 			rpe.draw(p[i].item_number);
 		}
 	};
+	
+	this.append_component_parameter=function(
+			component_id,		driver_id,		render_id,		part_id,
+			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
+	{
+		var ep=render.component_event_processor[component_id];
+		ep.show_x			=buffer_data_item[0];
+		ep.show_y			=buffer_data_item[1];
+		ep.interface_data.dx=buffer_data_item[2];
+		ep.interface_data.dy=buffer_data_item[3];
+	};
+	
 	this.destroy=function(render)
 	{
-		var ep=render.component_event_processor[this.interface_component_id];
-		if((typeof(ep)=="object")&&(ep!=null))
-			if(typeof(ep.destroy)=="function")
-				ep.destroy(render);
-		render.component_event_processor[this.interface_component_id]=null;
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
 		
+		if(render.component_event_processor[this.interface_component_id]!=null){
+			if(typeof(render.component_event_processor[this.interface_component_id].destroy)=="function")
+				render.component_event_processor[this.interface_component_id].destroy(render);
+			render.component_event_processor[this.interface_component_id]=null;
+		}
 		if(this.image_bind_group!=null){
 			this.image_bind_group.destroy(render);
 			this.image_bind_group=null;

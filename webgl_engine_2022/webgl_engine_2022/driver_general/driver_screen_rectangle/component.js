@@ -18,8 +18,7 @@ function construct_component_driver(
 			usage	:	GPUBufferUsage.VERTEX|GPUBufferUsage.COPY_DST
 		});
 	this.draw_component=function(method_data,render_data,
-			render_id,part_id,data_buffer_id,component_id,driver_id,
-			component_render_parameter,component_buffer_parameter,
+			render_id,part_id,component_id,driver_id,component_render_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
 		var diff=render.computer.min_value;
@@ -43,13 +42,27 @@ function construct_component_driver(
 			rpe.draw(p[i].item_number);
 		}
 	}
-	
-	this.destroy=function()
+	this.append_component_parameter=function(
+			component_id,		driver_id,		render_id,		part_id,
+			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
 	{
-		if(this.buffer!=null)
+	}
+	this.destroy=function(render)
+	{
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
+		
+		if(render.component_event_processor[this.component_id]!=null){
+			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
+				render.component_event_processor[this.component_id].destroy(render);
+			render.component_event_processor[this.component_id]=null;
+		}
+		
+		this.ep=null;
+		if(this.buffer!=null){
 			this.buffer.destroy();
-		this.ep				=null;
-		this.buffer			=null;
-		this.draw_component	=null;
+			this.buffer=null;
+		}
+		
 	}
 };

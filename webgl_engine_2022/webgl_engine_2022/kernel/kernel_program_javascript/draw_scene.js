@@ -75,16 +75,13 @@ function draw_scene_routine(render_data,render)
 				if(!(render_driver.method_render_flag[method_array[i].method_id]))
 					continue;
 				for(var part_id=0,part_number=render.part_array[render_id].length;part_id<part_number;part_id++){	
-					var part_driver=render.part_driver[render_id][part_id];
-					if(method_array[i].method_id>=part_driver.method_render_flag.length)
-						continue;	
-					if(!(part_driver.method_render_flag[method_array[i].method_id]))
-						continue;
 					var part_object=render.part_array[render_id][part_id];
-					if((typeof(part_object)!="object")||(part_object==null))
+					if(	  (typeof(part_object)!="object")||(part_object==null))
+						continue;
+					var part_driver=render.part_driver[render_id][part_id];
+					if((typeof(part_driver)!="object")||(part_driver==null))
 						continue;
 					var component_render_parameter	=part_object.component_render_parameter;
-					var component_buffer_parameter	=part_object.component_buffer_parameter;
 					if(render_data.render_buffer_id>=component_render_parameter.length)
 						continue;
 				   	component_render_parameter=component_render_parameter[render_data.render_buffer_id];
@@ -92,16 +89,15 @@ function draw_scene_routine(render_data,render)
 					for(var instance_id=0;instance_id<instance_number;instance_id++){
 						var data_buffer_id		=component_render_parameter[instance_id][0];
 						var render_parameter	=component_render_parameter[instance_id][1];
-						var buffer_parameter	=component_buffer_parameter[data_buffer_id];
 						var component_driver	=part_object.component_driver_array[data_buffer_id];
 						var p					=part_object.part_component_id_and_driver_id[data_buffer_id];
 						var component_id		=p[0];
 						var driver_id			=p[1];
 			
-						render.set_system_bindgroup(render_data.render_buffer_id,component_id,driver_id);
+						render.set_system_bindgroup(
+							render_data.render_buffer_id,component_id,driver_id);
 						component_driver.draw_component(method_array[i],render_data,
-							render_id,part_id,data_buffer_id,component_id,driver_id,
-							render_parameter,buffer_parameter,
+							render_id,part_id,component_id,driver_id,render_parameter,
 							project_matrix,part_object,part_driver,render_driver,render);
 					}
 				}

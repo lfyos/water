@@ -217,7 +217,7 @@ public class component_container
 				e.printStackTrace();
 			}
 			if(root_component!=null)
-				for(int i=0,ni=ek.system_par.max_process_component_load_number;(i<ni);i++) {
+				for(int i=0,ni=ek.system_par.max_process_component_load_number;i<ni;i++) {
 					if(ccp.clsc.get_source_item_number()<=0)
 						break;
 					root_component.append_component(

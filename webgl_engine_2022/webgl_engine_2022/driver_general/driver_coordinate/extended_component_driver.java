@@ -9,13 +9,17 @@ import kernel_part.part;
 
 public class extended_component_driver extends component_driver
 {
+	private double coordinate_length_scale;
+	
 	public void destroy()
 	{
 		super.destroy();
 	}
-	public extended_component_driver(part component_part)
+	public extended_component_driver(part component_part,double my_coordinate_length_scale)
 	{
 		super(component_part);
+		
+		coordinate_length_scale=my_coordinate_length_scale;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
@@ -29,6 +33,6 @@ public class extended_component_driver extends component_driver
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_component_instance_driver(comp,driver_id);
+		return new extended_component_instance_driver(comp,driver_id,coordinate_length_scale);
 	}
 }

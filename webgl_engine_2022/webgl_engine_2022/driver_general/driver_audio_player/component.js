@@ -9,8 +9,7 @@ function construct_component_driver(
 	this.audio.hidden			="hidden";
 
 	this.draw_component=function(method_data,render_data,
-			render_id,part_id,data_buffer_id,component_id,driver_id,
-			component_render_parameter,component_buffer_parameter,
+			render_id,part_id,component_id,driver_id,component_render_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
 		if(this.should_response_flag)
@@ -20,9 +19,9 @@ function construct_component_driver(
 						[["operation","ended"],["fresh",Math.random()]]);
 			}
 	};
-	this.append_component_parameter=function(component_id,	driver_id,
-			render_id,		part_id,		data_buffer_id,	buffer_data_item,p,
-			part_object,	part_driver,	render_driver,	render)
+	this.append_component_parameter=function(
+			component_id,		driver_id,		render_id,		part_id,
+			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
 	{
 		this.should_response_flag=true;
 		this.audio.src=render.caller.create_component_request_string(

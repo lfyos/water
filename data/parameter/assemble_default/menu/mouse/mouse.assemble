@@ -44,8 +44,6 @@
 								render.event_component.mouse.	function_id		=mouse_usage[0];
 								render.event_component.keyboard.function_id		=mouse_usage[0];
 								render.event_component.touch.	function_id		=mouse_usage[0];
-								render.system_call_processor.set_event_component("mouse_modify_location_component");
-
 								break;
 							case 1:
 								if(ep.x>0.5){
@@ -58,8 +56,6 @@
 								render.event_component.mouse.	function_id		=mouse_usage[1]+100;
 								render.event_component.keyboard.function_id		=mouse_usage[1]+100;
 								render.event_component.touch.	function_id		=mouse_usage[1]+100;
-								render.system_call_processor.set_event_component("mouse_modify_location_component");
-
 								break;
 							case 2:
 								if(ep.x>0.5){
@@ -72,7 +68,6 @@
 								render.event_component.mouse.	function_id		=mouse_usage[2]+200;
 								render.event_component.keyboard.function_id		=mouse_usage[2]+200;
 								render.event_component.touch.	function_id		=mouse_usage[2]+200;
-								render.system_call_processor.set_event_component("mouse_modify_location_component");
 								break;
 							case 3:
 								if(ep.x>0.5){
@@ -85,8 +80,6 @@
 								render.event_component.mouse.	function_id		=mouse_usage[3]+300;
 								render.event_component.keyboard.function_id		=mouse_usage[3]+300;
 								render.event_component.touch.	function_id		=mouse_usage[3]+300;
-								render.system_call_processor.set_event_component("mouse_modify_location_component");
-								
 								break;
 							case 4:
 								if(ep.x>0.5){
@@ -97,21 +90,19 @@
 								render.event_component.keyboard.component_name	="component_selection_component";
 								render.event_component.mouse.	function_id		=mouse_usage[4];
 								render.event_component.keyboard.function_id		=mouse_usage[4];
-								render.system_call_processor.set_event_component("component_selection_component");
-
 								break;
 							case 5:
 								render.event_component.mouse.	component_name	="distance_tag_component";
 								render.event_component.keyboard.component_name	="distance_tag_component";
 								render.event_component.mouse.	function_id		=0;
 								render.event_component.keyboard.function_id		=0;
-								render.system_call_processor.set_event_component("distance_tag_component");
 								break;
 							default:
 								function_id=6;
 								render.system_call_processor.set_menu_show("交互界面主菜单");
 								break;
 							}
+
 							ep.hightlight=[0,function_id/7.0,1.0,function_id/7.0+1.0/7.0];
 						}
 					}
@@ -152,8 +143,6 @@
 							render.event_component.mouse.	function_id		=mouse_usage[0];
 							render.event_component.keyboard.function_id		=mouse_usage[0];
 							render.event_component.touch.	function_id		=mouse_usage[0];
-							render.system_call_processor.set_event_component("mouse_modify_location_component");
-							
 							return;							
 						}
 					};
@@ -194,8 +183,6 @@
 							render.event_component.mouse.	function_id		=mouse_usage[1]+100;
 							render.event_component.keyboard.function_id		=mouse_usage[1]+100;
 							render.event_component.touch.	function_id		=mouse_usage[1]+100;
-							render.system_call_processor.set_event_component("mouse_modify_location_component");
-							
 							return;
 						}
 					};
@@ -235,7 +222,6 @@
 							render.event_component.mouse.	function_id		=mouse_usage[2]+200;
 							render.event_component.keyboard.function_id		=mouse_usage[2]+200;
 							render.event_component.touch.	function_id		=mouse_usage[2]+200;
-							render.system_call_processor.set_event_component("mouse_modify_location_component");
 							
 							return;
 						}
@@ -277,7 +263,6 @@
 							render.event_component.mouse.	function_id		=mouse_usage[3]+300;
 							render.event_component.keyboard.function_id		=mouse_usage[3]+300;
 							render.event_component.touch.	function_id		=mouse_usage[3]+300;
-							render.system_call_processor.set_event_component("mouse_modify_location_component");
 							
 							return;
 						}
@@ -317,8 +302,7 @@
 							render.event_component.keyboard.component_name	="component_selection_component";
 							render.event_component.mouse.	function_id		=mouse_usage[4];
 							render.event_component.keyboard.function_id		=mouse_usage[4];
-							render.system_call_processor.set_event_component("component_selection_component");
-							
+
 							return;
 						}
 					};

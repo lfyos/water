@@ -6,7 +6,6 @@ function init_component_event_processor(screen_rectangle_component_id,render)
 	this.dp=[0.0,0.0,0.0,0.0];
 	this.mouse_up_flag=true;
 	this.change_type_flag=true;
-	this.function_id=0;
 			
 	this.control_code=function(event)
 	{
@@ -57,15 +56,16 @@ function init_component_event_processor(screen_rectangle_component_id,render)
 		if((dx*dx+dy*dy)<(render.computer.min_value2()))
 			render.caller.call_server_component(component_id,0,[
 						["operation",	"single"],
-						["function",	ep.function_id],	ep.control_code(event)]);
+						["function",	render.event_component.mouse.function_id],
+						ep.control_code(event)]);
 		else
 			render.caller.call_server_component(component_id,0,[
-						["operation",	"many"						],
-						["function",	ep.function_id				],
-						["x0",			ep.p0[0]					],
-						["y0",			ep.p0[1]					],
-						["x1",			render.view.main_target_x	],
-						["y1",			render.view.main_target_y	],
+						["operation",	"many"									],
+						["function",	render.event_component.mouse.function_id],
+						["x0",			ep.p0[0]								],
+						["y0",			ep.p0[1]								],
+						["x1",			render.view.main_target_x				],
+						["y1",			render.view.main_target_y				],
 						ep.control_code(event)]);
 		
 		return true;
@@ -94,10 +94,6 @@ function init_component_event_processor(screen_rectangle_component_id,render)
 		
 		return true;			
 	};
-	this.set_event_component=function(component_id,render)
-	{
-		render.component_event_processor[component_id].function_id=render.event_component.mouse.function_id;
-	};
 };
 
 function construct_component_driver(
@@ -113,18 +109,32 @@ function construct_component_driver(
 	
 	ep.camera_id		=0;
 	ep.change_type_flag	=true;
+	this.component_id	=component_id;
 
 	this.draw_component=function(method_data,render_data,
-			render_id,part_id,data_buffer_id,component_id,driver_id,
-			component_render_parameter,component_buffer_parameter,
+			render_id,part_id,component_id,driver_id,component_render_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		if(render_data.main_display_target_flag){
-			while(component_buffer_parameter.length>1)
-				component_buffer_parameter.shift();
-			var ep=render.component_event_processor[component_id];
-			ep.camera_id		=render_data.camera_id;
-			ep.change_type_flag	=(component_buffer_parameter[0]>0)?true:false;
+		if(render_data.main_display_target_flag)
+			render.component_event_processor[component_id].camera_id=render_data.camera_id;
+	}
+	
+	this.append_component_parameter=function(
+			component_id,		driver_id,		render_id,		part_id,
+			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
+	{
+		render.component_event_processor[component_id].change_type_flag=(buffer_data_item>0)?true:false;
+	}
+	
+	this.destroy=function(render)
+	{
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
+		
+		if(render.component_event_processor[this.component_id]!=null){
+			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
+				render.component_event_processor[this.component_id].destroy(render);
+			render.component_event_processor[this.component_id]=null;
 		}
 	}
 };

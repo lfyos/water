@@ -47,8 +47,14 @@ function(component_name,component_id,render)
 				ep.browse_type_flag^=true; 
 				ep.update_flag		=true;
 				
-				render.caller.call_server_component("manipulator_component","all",
-					[["component_id",ep.component_id],["event_method","selection"],["event_operation","swap_component"]]);
+				render.caller.call_server_component("manipulator_component","all",[
+						["component_id",ep.component_id],["event_method","selection"],
+						["event_operation","swap_component"]]).
+				then(
+					function(response_data)
+					{
+						render.caller.call_server_component("coordinate","all",[["operation","onoff"]]);
+					});
 				break;
 			default:
 				if(ep.browse_type_flag){

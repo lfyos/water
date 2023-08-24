@@ -97,36 +97,36 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 			for(var render_id=0,render_number=program_data.length;render_id<render_number;render_id++){
 				var my_render_name				=program_data[render_id].shift();
 				var my_render_driver_function	=program_data[render_id].shift();
-				var my_shader_program			=common_shader_code;	
-				var str=program_data[render_id].shift();
-				for(var i=0,ni=str.length;i<ni;i++)
-					my_shader_program+=str[i];
-		
+				var my_shader_program			=program_data[render_id].shift();
+				var my_render_data				=program_data[render_id].shift();
+				
+				var combined_shader_program=common_shader_code;
+				for(var i=0,ni=my_shader_program.length;i<ni;i++)
+					combined_shader_program+=my_shader_program[i];
+
 				render.render_driver[render_id]=null;
 				if(typeof(my_render_driver_function)!="function"){
 					alert("render my_render_driver_function is not a function:	"+my_render_name);
 					continue;
 				}
+				
 				try{
 					render.render_driver[render_id]=my_render_driver_function(
 						render_id,my_render_name,render_init_data[render_id],
-						program_data[render_id].shift(),my_shader_program,
-						render);
+						combined_shader_program,my_render_data,render);
 				}catch(e){
 					render.render_driver[render_id]=null;
 					alert("create render driver fail	"+my_render_name);
 					alert(e.toString());
 					continue;
 				}
-	
-				if(!(Array.isArray(render.render_driver[render_id].method_render_flag)))
-					render.render_driver[render_id].method_render_flag=new Array();
-				else
+				if(Array.isArray(render.render_driver[render_id].method_render_flag)){
 					for(var i=0,ni=render.render_driver[render_id].method_render_flag.length;i<ni;i++)
 						if(typeof(render.render_driver[render_id].method_render_flag[i])!="boolean")
 							render.render_driver[render_id].method_render_flag[i]=false;
+				}else
+					render.render_driver[render_id].method_render_flag=new Array();
 			}
-				
 			request_render_data(render);
 				
 			draw_scene_main(part_init_data,component_init_data,render);

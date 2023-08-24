@@ -23,7 +23,8 @@ public class component_core_7 extends component_core_6
 			multiparameter[parameter_channel_id].effective_display_flag=false;
 			if(multiparameter[parameter_channel_id].display_flag)
 				for(int i=0;i<child_number;i++)
-					multiparameter[parameter_channel_id].effective_display_flag|=children[i].get_effective_display_flag(parameter_channel_id);
+					multiparameter[parameter_channel_id].effective_display_flag
+						|=children[i].get_effective_display_flag(parameter_channel_id);
 		}
 		return multiparameter[parameter_channel_id].effective_display_flag^old_effective_display_flag;
 	}

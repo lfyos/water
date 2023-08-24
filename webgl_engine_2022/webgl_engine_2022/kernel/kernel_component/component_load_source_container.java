@@ -22,7 +22,10 @@ public class component_load_source_container
 	}
 	public void destroy()
 	{
-		list.clear();
+		if(list!=null) {
+			list.clear();
+			list=null;
+		}
 	}
 	public component[] get_source_item(String component_name,boolean part_list_flag,
 			boolean normalize_location_flag,double lod_scale,component_construction_parameter ccp)
@@ -44,9 +47,10 @@ public class component_load_source_container
 				component ret_val[]=new component[end_pointer-begin_pointer+1];
 				for(int i=0,ni=ret_val.length;i<ni;i++){
 					component_load_source_item p=list.remove(begin_pointer);
-					file_reader fr=new file_reader(p.component_file_name,p.component_file_charset);
+					file_reader fr=new file_reader(
+							p.component_file_name,p.component_file_charset);
 					ret_val[i]=new component(p.token_string,fr,
-							part_list_flag,normalize_location_flag,lod_scale,ccp);
+						part_list_flag,normalize_location_flag,lod_scale,ccp);
 					fr.close();
 				}
 				return ret_val;
@@ -68,9 +72,10 @@ public class component_load_source_container
 		for(insert_pointer=list.size()-1;insert_pointer>=0;insert_pointer--)
 			if(list.get(insert_pointer).component_name.compareTo(component_name)<=0)
 				break;
-		list.add(insert_pointer+1,
-				new component_load_source_item(component_name,
-						token_string,component_file_name,component_file_charset));
+		
+		component_load_source_item clsi=new component_load_source_item(
+			component_name,token_string,component_file_name,component_file_charset);
+		list.add(insert_pointer+1,clsi);
 	}
 	public int get_source_item_number()
 	{

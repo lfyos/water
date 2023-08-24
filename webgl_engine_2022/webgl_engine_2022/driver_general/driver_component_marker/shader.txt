@@ -101,40 +101,40 @@ fn vertex_main(
 	}
 	switch(primitive_type){
 	default:	//face  id
-	{
-		vf.vertex_position.x=vf.vertex_position.x+my_coord.x*face_width;
-		vf.vertex_position.y=vf.vertex_position.y+edge_height+my_coord.y*face_height;
-		
-		vf.vertex_position=system_info.main_target_negative_screen_move_matrix*vf.vertex_position;
-		vf.vertex_position=target_info.screen_move_matrix*vf.vertex_position;
-		break;
-	}
-	case 1:	//point id
-	{
-		vf.vertex_texture=point_texture_position[my_vertex_index%6];
-		vf.vertex_position=(vf.vertex_position/vf.vertex_position.w)
-			+(marker_info.point_size*vec4(1.0/f32(width),1.0/f32(height),0.0,0.0)*vf.vertex_texture);
+		{
+			vf.vertex_position.x=vf.vertex_position.x+my_coord.x*face_width;
+			vf.vertex_position.y=vf.vertex_position.y+edge_height+my_coord.y*face_height;
 			
-		vf.vertex_position=system_info.main_target_negative_screen_move_matrix*vf.vertex_position;
-		vf.vertex_position=target_info.screen_move_matrix*vf.vertex_position;
-	}
+			vf.vertex_position=system_info.main_target_negative_screen_move_matrix*vf.vertex_position;
+			vf.vertex_position=target_info.screen_move_matrix*vf.vertex_position;
+			break;
+		}
+	case 1:	//point id
+		{
+			vf.vertex_texture=point_texture_position[my_vertex_index%6];
+			vf.vertex_position=(vf.vertex_position/vf.vertex_position.w)
+				+(marker_info.point_size*vec4(1.0/f32(width),1.0/f32(height),0.0,0.0)*vf.vertex_texture);
+				
+			vf.vertex_position=system_info.main_target_negative_screen_move_matrix*vf.vertex_position;
+			vf.vertex_position=target_info.screen_move_matrix*vf.vertex_position;
+		}
 	case 2:		//face
-	{
-		vf.vertex_position.x=vf.vertex_position.x+my_coord.x*face_width;
-		vf.vertex_position.y=vf.vertex_position.y+edge_height+my_coord.y*face_height;
-	}
+		{
+			vf.vertex_position.x=vf.vertex_position.x+my_coord.x*face_width;
+			vf.vertex_position.y=vf.vertex_position.y+edge_height+my_coord.y*face_height;
+		}
 	case 3:		//edge
-	{
-		vf.vertex_position.y=vf.vertex_position.y+my_coord.y*edge_height;
-		break;
-	}
+		{
+			vf.vertex_position.y=vf.vertex_position.y+my_coord.y*edge_height;
+			break;
+		}
 	case 4:		//point
-	{
-		vf.vertex_texture=point_texture_position[my_vertex_index%6];
-		vf.vertex_position=(vf.vertex_position/vf.vertex_position.w)
-			+(marker_info.point_size*vec4(1.0/f32(width),1.0/f32(height),0.0,0.0)*vf.vertex_texture);
-		break;
-	}
+		{
+			vf.vertex_texture=point_texture_position[my_vertex_index%6];
+			vf.vertex_position=(vf.vertex_position/vf.vertex_position.w)
+				+(marker_info.point_size*vec4(1.0/f32(width),1.0/f32(height),0.0,0.0)*vf.vertex_texture);
+			break;
+		}
 	}
 	return vf;
 }

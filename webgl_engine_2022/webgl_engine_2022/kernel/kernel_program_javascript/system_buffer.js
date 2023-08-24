@@ -95,8 +95,9 @@ function construct_system_buffer(target_buffer_number,render)
 		float_data=float_data.concat(this.main_target_project_matrix.screen_move_matrix);
 		float_data=float_data.concat(this.main_target_project_matrix.negative_screen_move_matrix);
 
-		var camera_object_parameter=render.camera.camera_object_parameter;
 		var component_location=render.component_location_data;
+		var camera_object_parameter=render.camera.camera_object_parameter;
+		
 		for(var i=0,ni=camera_object_parameter.length;i<ni;i++)
 			if(camera_object_parameter[i].light_camera_flag){
 				var light_component_id	=camera_object_parameter[i].component_id;

@@ -4,6 +4,7 @@ import kernel_part.part;
 import kernel_transformation.box;
 import kernel_component.component;
 import kernel_camera.camera_result;
+import kernel_common_class.const_value;
 import kernel_engine.engine_kernel;
 import kernel_render.render_target;
 import kernel_render.render_target_view;
@@ -14,12 +15,16 @@ public class extended_component_instance_driver extends component_instance_drive
 {
 	private int main_target_id,canvas_width_height[][];
 	private render_target_parameter target_parameter[];
+	private double clear_color[][];
+	private boolean do_discard_lod_flag,do_selection_lod_flag;
 
 	public void destroy()
 	{
 		super.destroy();
 		
 		canvas_width_height=null;
+		target_parameter=null;
+		clear_color=null;
 	}
 	public extended_component_instance_driver(component my_comp,int my_driver_id)
 	{
@@ -31,6 +36,12 @@ public class extended_component_instance_driver extends component_instance_drive
 		part p=comp.driver_array.get(driver_id).component_part;
 		String file_name=p.directory_name+p.material_file_name;
 		target_parameter=render_target_parameter.load_parameter(file_name,p.file_charset);
+		
+		clear_color=new double[target_parameter.length][];
+		for(int i=0,ni=target_parameter.length;i<ni;i++)
+			clear_color[i]=new double[] {0,0,0,1};
+		do_discard_lod_flag		=true;
+		do_selection_lod_flag	=true;
 	}
 	private void register_target(engine_kernel ek,client_information ci)
 	{
@@ -52,8 +63,8 @@ public class extended_component_instance_driver extends component_instance_drive
 
 			render_target rt=new render_target(true,comp.component_id,	driver_id,	i,
 				new component[] {ek.component_cont.root_component},null,
-				target_parameter[i].camera_id,target_parameter[i].parameter_channel_id,
-				rtv,view_volume_box,ci.clip_plane,null,true,true);
+				target_parameter[i].camera_id,target_parameter[i].parameter_channel_id,rtv,
+				view_volume_box,ci.clip_plane,null,do_discard_lod_flag,do_selection_lod_flag);
 			
 			if(ci.parameter.current_canvas_id==target_parameter[i].canvas_id) {
 				double view_x=(ci.parameter.x+1.0)/2.0;
@@ -84,27 +95,37 @@ public class extended_component_instance_driver extends component_instance_drive
 		register_target(ek,ci);
 		return false;
 	}
-	public void create_render_parameter(int render_buffer_id,
-			int data_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{
 		ci.request_response.print("0");
 	}
-	public void create_component_parameter(int data_buffer_id,engine_kernel ek,client_information ci)
+	public void create_component_parameter(engine_kernel ek,client_information ci)
 	{
-		ci.request_response.print("0");
+		ci.request_response.print("[");
+		for(int i=0,ni=target_parameter.length;i<ni;i++)
+			ci.request_response.
+							print((i<=0)?"[":",[",	clear_color[i][0]).
+							print(",",				clear_color[i][1]).
+							print(",",				clear_color[i][2]).
+							print(",",				clear_color[i][3]).
+							print("]");
+		ci.request_response.print("]");
 	}
 	public String[] response_component_event(engine_kernel ek,client_information ci)
 	{
 		String str=ci.request_response.get_parameter("operation");
 		switch((str==null)?"":str) {
 		case "camera":
+		{
 			if((main_target_id<0)||(main_target_id>=target_parameter.length))
 				break;
 			if((str=ci.request_response.get_parameter("camera"))==null)
 				break;
 			target_parameter[main_target_id].camera_id=Integer.parseInt(str);
 			break;
+		}
 		case "width_height":
+		{
 			if((str=ci.request_response.get_parameter("width_height"))==null)
 				break;
 			for(int i=0;str.length()>0;i++) {
@@ -131,7 +152,9 @@ public class extended_component_instance_driver extends component_instance_drive
 				canvas_width_height[i]=new int[]{width,height};
 			}
 			break;
+		}
 		case "parameter_channel":
+		{
 			if((str=ci.request_response.get_parameter("parameter_channel"))==null)
 				break;
 			int parameter_channel_id=Integer.parseInt(str);
@@ -144,6 +167,62 @@ public class extended_component_instance_driver extends component_instance_drive
 			else
 				if(target_id<target_parameter.length)
 					target_parameter[target_id].parameter_channel_id=parameter_channel_id;
+			break;
+		}
+		case "set_clear_color":
+		{
+			if((str=ci.request_response.get_parameter("target"))==null)
+				break;
+			int target_id=Integer.parseInt(str);
+			int begin_target_id=0,end_target_id=target_parameter.length-1;
+			if((target_id>=0)&&(target_id<end_target_id)) {
+				begin_target_id=target_id;
+				end_target_id=target_id;
+			}
+			for(target_id=begin_target_id;target_id<=end_target_id;target_id++) {
+				if((str=ci.request_response.get_parameter("red"))!=null)
+					clear_color[target_id][0]=Double.parseDouble(str);
+				if((str=ci.request_response.get_parameter("green"))!=null)
+					clear_color[target_id][1]=Double.parseDouble(str);
+				if((str=ci.request_response.get_parameter("blue"))!=null)
+					clear_color[target_id][2]=Double.parseDouble(str);
+				if((str=ci.request_response.get_parameter("alf"))!=null)
+					clear_color[target_id][3]=Double.parseDouble(str);
+			}
+			update_component_parameter_version(0);
+			break;
+		}
+		case "display_precision":
+		{
+			double value;
+			if((str=ci.request_response.get_parameter("low_value"))!=null)
+				if((value=Double.parseDouble(str))>=(const_value.min_value))
+					ci.display_camera_result.cam.parameter.low_precision_scale=value;
+			if((str=ci.request_response.get_parameter("high_value"))!=null)
+				if((value=Double.parseDouble(str))>=(const_value.min_value))
+					ci.display_camera_result.cam.parameter.high_precision_scale=value;
+			break;
+		}
+		case "turnon_off_lod":
+			str=ci.request_response.get_parameter("discard");
+			switch((str==null)?"":str.toLowerCase()) {
+			case "true":
+				do_discard_lod_flag=true;
+				break;
+			case "false":
+				do_discard_lod_flag=false;
+				break;
+			}
+			
+			str=ci.request_response.get_parameter("selection");
+			switch((str==null)?"":str.toLowerCase()) {
+			case "true":
+				do_selection_lod_flag=true;
+				break;
+			case "false":
+				do_selection_lod_flag=false;
+				break;
+			}
 			break;
 		}
 		return null;
