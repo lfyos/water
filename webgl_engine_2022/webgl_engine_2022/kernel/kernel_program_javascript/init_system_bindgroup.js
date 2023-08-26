@@ -2,22 +2,22 @@ function init_system_bindgroup(render)
 {
 	var system_bindgroup_layout_entries=
 	[
-		{	//target buffer
+		{	// system buffer
 			binding		:	0,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
 			buffer		:
 			{
 				type				:	"uniform",
-				hasDynamicOffset	:	true
+				hasDynamicOffset	:	false
 			}
 		},
-		{	// component buffer
+		{	//target buffer
 			binding		:	1,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
 			buffer		:
 			{
 				type				:	"uniform",
-				hasDynamicOffset	:	false
+				hasDynamicOffset	:	true
 			}
 		},
 		{	// id buffer
@@ -26,16 +26,7 @@ function init_system_bindgroup(render)
 			buffer		:
 			{
 				type				:	"uniform",
-				hasDynamicOffset	:	false
-			}
-		},
-		{	// system buffer
-			binding		:	3,
-			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
-			buffer		:
-			{
-				type				:	"uniform",
-				hasDynamicOffset	:	false
+				hasDynamicOffset	:	true
 			}
 		}
 	];
@@ -44,61 +35,55 @@ function init_system_bindgroup(render)
 			entries	:	system_bindgroup_layout_entries
 		});
 	
-	render.system_bindgroup_array=new Array(render.system_bindgroup_id.length);
-	for(var i=0,ni=render.system_bindgroup_array.length;i<ni;i++){
-		var p=render.system_bindgroup_id[i];
-		var my_component_id=p[3];
-		var my_buffer=render.webgpu.device.createBuffer(
+	var system_stride		=render.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
+	var user_stride			=0;
+		user_stride+=render.component_location_data.identify_matrix.length*Float32Array.BYTES_PER_ELEMENT;
+		user_stride+=render.system_bindgroup_id[0].length*Int32Array.BYTES_PER_ELEMENT;
+	
+	render.system_buffer.id_stride=(system_stride<user_stride)?user_stride:system_stride;
+	render.system_buffer.id_buffer_size =user_stride;
+	
+	render.system_buffer.id_buffer=render.webgpu.device.createBuffer(
 		{
-			size	:	Int32Array.BYTES_PER_ELEMENT*render.system_bindgroup_id[i].length,
+			size	:	render.system_buffer.id_stride*render.system_bindgroup_id.length,
 			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
 		});
-		render.webgpu.device.queue.writeBuffer(my_buffer,0,new Int32Array(render.system_bindgroup_id[i]));
-		
-		var my_bindgroup_entries=[
-			{	//target buffer
-				binding		:	0,
-				resource	:
-				{
-					buffer	:	render.system_buffer.target_buffer,
-					size	:	render.system_buffer.target_buffer_size 
-				}
-			},
-			{	// component buffer
-				binding		:	1,
-				resource	:
-				{
-					buffer	:	render.component_location_data.buffer[my_component_id],
-					size	:	Float32Array.BYTES_PER_ELEMENT*render.component_location_data.identify_matrix.length
-				}
-			},
-			{	// id buffer
-				binding		:	2,
-				resource	:
-				{
-					buffer	:	my_buffer,
-					size	:	Int32Array.BYTES_PER_ELEMENT*render.system_bindgroup_id[i].length
-				}
-			},
-			{	// system buffer
-				binding		:	3,
-				resource	:
-				{
-					buffer	:	render.system_buffer.system_buffer,
-					size	:	render.system_buffer.system_buffer_size
-				}
-			}
-		];
-		
-		var my_bindgroup_object=render.webgpu.device.createBindGroup(
+	
+	var my_bindgroup_entries=[
+		{	// system buffer
+			binding		:	0,
+			resource	:
 			{
-				layout	:	render.system_bindgroup_layout,
-				entries	:	my_bindgroup_entries
-			});	
-
-		render.system_bindgroup_array[i]={
-			buffer		:	my_buffer,
-			bindgroup	:	my_bindgroup_object
+				buffer	:	render.system_buffer.system_buffer,
+				size	:	render.system_buffer.system_buffer_size
+			}
+		},
+		{	//target buffer
+			binding		:	1,
+			resource	:
+			{
+				buffer	:	render.system_buffer.target_buffer,
+				size	:	render.system_buffer.target_buffer_size 
+			}
+		},
+		{	// id buffer
+			binding		:	2,
+			resource	:
+			{
+				buffer	:	render.system_buffer.id_buffer,
+				size	:	render.system_buffer.id_buffer_size
+			}
 		}
-	}
+	];
+	render.system_buffer.system_bindgroup=render.webgpu.device.createBindGroup(
+	{
+		layout	:	render.system_bindgroup_layout,
+		entries	:	my_bindgroup_entries
+	});	
+	
+	render.system_buffer.location_version=new Array(render.system_bindgroup_id.length);
+	for(var i=0,ni=render.system_buffer.location_version.length;i<ni;i++)
+		render.system_buffer.location_version[i]=-1;
+
+	return;
 }

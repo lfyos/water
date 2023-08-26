@@ -2,23 +2,27 @@ function(component_name,component_id,render)
 {
 	render.component_event_processor[component_id]={
 		update_flag					:	false,
+		text_format					:	null,
+		
 		active_list					:	function()
 		{
 			render.component_event_processor[component_id].update_flag=false;
+			
 			render.system_call_processor.set_menu_show(component_id,
 				[["center","center"],["all_in_view","all_in_view"]]);
 		},
 		pickupmouseselect_routine		:	function(event,component_id,render)
 		{
 			var ep=render.component_event_processor[component_id];
-			if(ep.instance_initialize_data==null)
+			if(ep.text_format==null)
 				return;
-			var function_id =ep.instance_initialize_data.canvas_height;
-				function_id/=ep.instance_initialize_data.canvas_step;
-			if((function_id=Math.floor((1.0-ep.y)*function_id))<1)
+			var function_id =ep.text_format.canvas_height;
+				function_id/=ep.text_format.canvas_step;
+			if((function_id=Math.floor(ep.y*function_id))<1)
 				return;
 
-			var p=render.get_component_object_by_component_name("组件拼装拼装编辑组件");
+			var p=render.operate_component;
+				p=p.get_component_object_by_component_name("组件拼装拼装编辑组件");
 			var edit_ep=render.component_event_processor[p.component_id];
 			if(edit_ep.movement_data==null)
 				return;
@@ -27,8 +31,8 @@ function(component_name,component_id,render)
 			case 0:
 				return;
 			case  1:// 1.跳转拼装步骤
-				render.call_server_component("movement_manager","all",[["operation","design"],
-					["move_method","locate_camera"],["id",edit_ep.movement_data.movement_tree_id]]).
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
+					["move_method","locate_camera"],["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data)
 					{
@@ -38,8 +42,8 @@ function(component_name,component_id,render)
 					});
 				return;
 			case  2:// 2.拼装步骤删除
-				render.call_server_component("movement_manager","all",[["operation","design"],
-					["move_method","delete"],["id",edit_ep.movement_data.movement_tree_id]]).
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
+					["move_method","delete"],["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data)
 					{
@@ -49,8 +53,8 @@ function(component_name,component_id,render)
 					});
 				return;
 			case 3://"3.改变拼装组件"
-				render.call_server_component("movement_manager","all",[["operation","design"],
-					["move_method","change_component"],["id",edit_ep.movement_data.movement_tree_id]]).
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
+					["move_method","change_component"],["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data)
 					{
@@ -60,8 +64,8 @@ function(component_name,component_id,render)
 					});	
 				return;		
 			case  4:// 4.设置跟随组件
-				render.call_server_component("movement_manager","all",[["operation","design"],
-					["move_method","follow"],["id",edit_ep.movement_data.movement_tree_id]]).
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
+					["move_method","follow"],["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data)
 					{
@@ -71,8 +75,8 @@ function(component_name,component_id,render)
 					});
 				return;
 			case  5:// 5.拼装步骤上移
-				render.call_server_component("movement_manager","all",[["operation","design"],
-					["move_method","up"],["id",edit_ep.movement_data.movement_tree_id]]).
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
+					["move_method","up"],["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data,render)
 					{
@@ -82,8 +86,8 @@ function(component_name,component_id,render)
 					});
 				return;
 			case  6:// 6.拼装步骤下移
-				render.call_server_component("movement_manager","all",[["operation","design"],
-					["move_method","down"],["id",edit_ep.movement_data.movement_tree_id]]).
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
+					["move_method","down"],["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data)
 					{
@@ -93,8 +97,8 @@ function(component_name,component_id,render)
 					});
 				return;
 			case  7:// 7.解散下层拼装
-				render.call_server_component("movement_manager","all",[["operation","design"],
-					["move_method","fromchild"],["id",edit_ep.movement_data.movement_tree_id]]).
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
+					["move_method","fromchild"],["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data)
 					{
@@ -104,8 +108,8 @@ function(component_name,component_id,render)
 					});
 				return;
 			case  8:// 8.存入拼装缓存
-				render.call_server_component("movement_manager","all",[["operation","design"],
-					["move_method","tobuffer"],["id",edit_ep.movement_data.movement_tree_id]]).
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
+					["move_method","tobuffer"],["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data)
 					{
@@ -115,8 +119,8 @@ function(component_name,component_id,render)
 					});
 				return;
 			case  9:// 9.提取拼装缓存
-				render.call_server_component("movement_manager","all",[["operation","design"],
-					["move_method","frombuffer"],["id",edit_ep.movement_data.movement_tree_id]]).
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
+					["move_method","frombuffer"],["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data)
 					{
@@ -126,8 +130,8 @@ function(component_name,component_id,render)
 					});
 				return;
 			case  10:// 10.修改拼装信息
-				render.call_server_component("movement_manager","all",[["operation","design"],
-					["move_method","get"],["id",edit_ep.movement_data.movement_tree_id]]).
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
+					["move_method","get"],["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data)
 					{
@@ -152,8 +156,7 @@ function(component_name,component_id,render)
 							recursive_flag=confirm("修改孩子结点的描述信息及recursive_flag配音吗?");
 						par.push(["recursive",recursive_flag?"true":"false"]);
 						
-						render.call_server_component(
-									"movement_manager","all",par).
+						render.caller.call_server_component("movement_manager","all",par,"json").
 						then(
 							function(response_data)
 							{
@@ -166,20 +169,20 @@ function(component_name,component_id,render)
 			case 11://11.上传拼装配音
 				if(edit_ep.movement_data.children.length<=0)
 					window.open(
-						render.create_component_request_string("movement_manager","all",[["operation","design"],
+						render.caller.create_component_request_string("movement_manager","all",[["operation","design"],
 							["move_method","upload_audio_webpage"],["id",edit_ep.movement_data.movement_tree_id],
 							["change_name",encodeURIComponent(encodeURIComponent("upload_file%2Bchinese:上传拼装配音"))]]),
 					"_blank");
 				return;
 			case 12://12.打开拼装配音
 				window.open(
-					render.create_component_request_string("movement_manager","all",
+					render.caller.create_component_request_string("movement_manager","all",
 							[["operation","design"],["move_method","download_audio"],
 							 ["id",edit_ep.movement_data.movement_tree_id]]),
 					"_blank");
 				return;
 			case 13://13.放入右键缓存
-				render.call_server_component("movement_manager","all",[["operation","design"],
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
 					["move_method","todesignbuffer"],["id",edit_ep.movement_data.movement_tree_id]]).
 				then(
 					function(response_data)
@@ -188,8 +191,8 @@ function(component_name,component_id,render)
 					});
 				return;
 			case 14://14.选择拼装组件
-				render.call_server_component("movement_manager","all",[["operation","design"],
-					["move_method","collector"],["id",edit_ep.movement_data.movement_tree_id]]).
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
+					["move_method","collector"],["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data)
 					{
@@ -197,43 +200,43 @@ function(component_name,component_id,render)
 						if((list_id=response_data)<0)
 							return;
 						if(event.ctrlKey)
-							render.call_server_component("manipulator_component","all",
+							render.caller.call_server_component("manipulator_component","all",
 								[["event_method",	"part_list"],["operation",	"selection"],
 								 ["selection",		"select"],	 ["list_id",	list_id]]).
 							then(
 								function()
 								{
-									render.call_server_component("manipulator_component","all",
+									render.caller.call_server_component("manipulator_component","all",
 										[["event_method","part_list"],["operation","delete"],["list_id",list_id]]);
 								
 								});
 						else if(event.shiftKey)
-							render.call_server_component("manipulator_component","all",
+							render.caller.call_server_component("manipulator_component","all",
 								[["event_method",	"part_list"],["operation",	"selection"],
 								 ["selection",		"unselect"],	 ["list_id",	list_id]]).
 							then(
 								function()
 								{
-									render.call_server_component("manipulator_component","all",
+									render.caller.call_server_component("manipulator_component","all",
 										[["event_method","part_list"],["operation","delete"],["list_id",list_id]]);
 								
 								});
 						else
-							render.call_server_component("manipulator_component","all",
+							render.caller.call_server_component("manipulator_component","all",
 								[["event_method",	"part_list"],["operation",	"selection"],
 								 ["selection",		"swap"],	 ["list_id",	list_id]]).
 							then(
 								function()
 								{
-									render.call_server_component("manipulator_component","all",
+									render.caller.call_server_component("manipulator_component","all",
 										[["event_method","part_list"],["operation","delete"],["list_id",list_id]]);
 								
 								});
 					});
 				return;
 			case 15://"15.倒排拼装步骤"
-				render.call_server_component("movement_manager","all",[["operation","design"],
-					["move_method","reverse"],["id",edit_ep.movement_data.movement_tree_id]]).
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
+					["move_method","reverse"],["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data)
 					{
@@ -243,8 +246,8 @@ function(component_name,component_id,render)
 					});
 				return;
 			case 16://(ep.movement_data.direction.length<=0)?"16.指定拼装视角":"16.删除拼装视角"
-				render.call_server_component("movement_manager","all",[["operation","design"],
-					["move_method","view_direction"],["id",edit_ep.movement_data.movement_tree_id]]).
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
+					["move_method","view_direction"],["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data)
 					{
@@ -254,9 +257,9 @@ function(component_name,component_id,render)
 					});
 				return;
 			case 17://ep.movement_data.sequence_flag?"17.设置同步拼装":"17.设置顺序拼装",
-				render.call_server_component("movement_manager","all",[["operation","design"],
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
 					["move_method",edit_ep.movement_data.sequence_flag?"synchronization":"sequence"],
-					["id",edit_ep.movement_data.movement_tree_id]]).
+					["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data)
 					{
@@ -269,8 +272,8 @@ function(component_name,component_id,render)
 					//(ep.movement_data.scale_type==1)?"18.设置终点观测":
 					//(ep.movement_data.scale_type==2)?"18.设置起点终点观测":"18.设置上层观测"
 				
-				render.call_server_component("movement_manager","all",[["operation","design"],
-					["move_method","view_box"],["id",edit_ep.movement_data.movement_tree_id]]).
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
+					["move_method","view_box"],["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data)
 					{
@@ -292,10 +295,10 @@ function(component_name,component_id,render)
 							break;
 						}
 				}
-				render.call_server_component("movement_manager","all",
+				render.caller.call_server_component("movement_manager","all",
 					[["operation","design"],["component_part_selection",str],["restore","true"],
 					 ["move_method","component_part_selection"],
-					 ["id",edit_ep.movement_data.movement_tree_id]]).
+					 ["id",edit_ep.movement_data.movement_tree_id]],"json").
 				then(
 					function(response_data)
 					{
@@ -329,9 +332,9 @@ function(component_name,component_id,render)
 							 ["destatination_body_id",		render.pickup_array[1].body_id],
 							 ["destatination_face_id",		render.pickup_array[1].face_id]];
 					}
-				render.call_server_component("movement_manager","all",
+				render.caller.call_server_component("movement_manager","all",
 					par.concat([["operation","design"],["move_method","component_face_match"],
-								["restore","true"],["id",edit_ep.movement_data.movement_tree_id]])).
+								["restore","true"],["id",edit_ep.movement_data.movement_tree_id]],"json")).
 				then(
 					function(response_data)
 					{
@@ -363,9 +366,10 @@ function(component_name,component_id,render)
 				}else
 					scale_value=(mew_time_length-switch_camera_time_length)/edit_ep.movement_data.mount_only_time_length;
 
-				render.call_server_component("movement_manager","all",[["operation","design"],
+				render.caller.call_server_component("movement_manager","all",[["operation","design"],
 					 ["move_method","modify_time_length"],["id",edit_ep.movement_data.movement_tree_id],
-					 ["modify_type",modify_type?"true":"false"],["time_length",mew_time_length],["scale",scale_value]]).
+					 ["modify_type",modify_type?"true":"false"],["time_length",mew_time_length],
+					 ["scale",scale_value]],"json").
 				then(
 					function(response_data)
 					{
@@ -376,7 +380,7 @@ function(component_name,component_id,render)
 				return;
 			case 22://"22.当前拼装Jason数据"
 				window.open(
-					render.create_component_request_string("movement_manager","all",
+					render.caller.create_component_request_string("movement_manager","all",
 						[["operation","design"],["move_method","edit_jason"],
 						 ["id",edit_ep.movement_data.movement_tree_id]]),
 					"_blank");
@@ -389,7 +393,7 @@ function(component_name,component_id,render)
 		{
 			render.system_call_processor.set_menu_hide(component_id);
 			
-			render.call_server_component("movement_manager","all",
+			render.caller.call_server_component("movement_manager","all",
 				[["operation","movement"],["move_method","stop"]]).
 			then(
 				function(response_data)
@@ -398,28 +402,30 @@ function(component_name,component_id,render)
 					ep.pickupmouseselect_routine(event,component_id,render);
 				});
 		},
-		update_canvas_texture	:	function(render_id,part_id,buffer_id,
-			component_id,driver_id,instance_initialize_data,part_material,shader_data,render)
+
+		update_canvas_texture	:	function(canvas_2d,context_2d,text_format,component_id,render)
 		{
 			var ep=render.component_event_processor[component_id];
+			
+			ep.text_format=text_format;
+			
 			if(ep.update_flag)
 				return false;
 			ep.update_flag=true;
-
-			ep.instance_initialize_data			=instance_initialize_data;
 			
-			render.text_canvas.width			=ep.instance_initialize_data.canvas_width;
-			render.text_canvas.height			=ep.instance_initialize_data.canvas_height;
+			canvas_2d.width			=ep.text_format.canvas_width;
+			canvas_2d.height		=ep.text_format.canvas_height;
 		
-			render.text_2dcontext.fillStyle		=ep.instance_initialize_data.backgroundStyle;
-			render.text_2dcontext.fillRect(0,0,render.text_canvas.width,render.text_canvas.height);
+			context_2d.fillStyle	=ep.text_format.backgroundStyle;
+			context_2d.fillRect(0,0,canvas_2d.width,canvas_2d.height);
 
-			render.text_2dcontext.font			=ep.instance_initialize_data.font;
-			render.text_2dcontext.textBaseline	=ep.instance_initialize_data.textBaseline;
-			render.text_2dcontext.textAlign		=ep.instance_initialize_data.textAlign;
+			context_2d.font			=ep.text_format.font;
+			context_2d.textBaseline	=ep.text_format.textBaseline;
+			context_2d.textAlign	=ep.text_format.textAlign;
 			
 			
-			var p=render.get_component_object_by_component_name("组件拼装拼装编辑组件");
+			var p=render.operate_component;
+				p=p.get_component_object_by_component_name("组件拼装拼装编辑组件");
 			var edit_ep=render.component_event_processor[p.component_id];
 			if(edit_ep.movement_data==null)
 				return;
@@ -464,10 +470,10 @@ function(component_name,component_id,render)
 				"22.拼装Jason数据"
 			];
 					
-			render.text_2dcontext.fillStyle=edit_ep.movement_data.current_movement_flag
-				?(ep.instance_initialize_data.current_fillStyle):(ep.instance_initialize_data.fillStyle);
+			context_2d.fillStyle=edit_ep.movement_data.current_movement_flag
+				?(ep.text_format.current_fillStyle):(ep.text_format.fillStyle);
 			for(var i=0,ni=str_array.length;i<ni;i++)
-				render.text_2dcontext.fillText("    "+str_array[i],0,ep.instance_initialize_data.canvas_step*(i+1));
+				context_2d.fillText("    "+str_array[i],0,ep.text_format.canvas_step*(i+1));
 				
 			return true;
 		}

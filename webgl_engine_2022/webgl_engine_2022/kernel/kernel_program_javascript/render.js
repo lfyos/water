@@ -87,11 +87,6 @@ function construct_render_routine(my_webgpu,my_url,
 	this.system_buffer=new construct_system_buffer(max_target_number,this);
 	this.set_system_bindgroup=function(target_id,component_id,driver_id)
 	{
-		if((this.webgpu.render_pass_encoder==null)||(typeof(component_id)!="number"))
-			return;
-
-		this.component_location_data.get_component_location_and_update_buffer(component_id);
-		
 		var system_bindgroup_id;
 		var p=this.component_array_sorted_by_id[component_id];
 		
@@ -100,12 +95,28 @@ function construct_render_routine(my_webgpu,my_url,
 			system_bindgroup_id=p.system_bindgroup_id;
 		else
 			system_bindgroup_id=p.component_ids[driver_id][3];
-
-		this.webgpu.render_pass_encoder.setBindGroup(
-			this.system_buffer.system_bindgroup_id,
-			this.system_bindgroup_array[system_bindgroup_id].bindgroup,
+		
+		if(this.system_buffer.location_version[system_bindgroup_id]<0){
+			this.system_buffer.location_version[system_bindgroup_id]=0;
+			
+			var pos=this.system_buffer.id_stride*system_bindgroup_id;
+			pos+=this.component_location_data.identify_matrix.length*Float32Array.BYTES_PER_ELEMENT;
+			this.webgpu.device.queue.writeBuffer(this.system_buffer.id_buffer,pos,
+				new Int32Array(this.system_bindgroup_id[system_bindgroup_id]));
+		}
+		p=this.component_location_data.get_component_matrix_and_version(component_id);
+		
+		if(this.system_buffer.location_version[system_bindgroup_id]<p.version){
+			this.system_buffer.location_version[system_bindgroup_id]=p.version;
+			
+			this.webgpu.device.queue.writeBuffer(this.system_buffer.id_buffer,
+				this.system_buffer.id_stride*system_bindgroup_id,new Float32Array(p.matrix));
+		}
+		
+		this.webgpu.render_pass_encoder.setBindGroup(0,this.system_buffer.system_bindgroup,
 			[
-				this.system_buffer.target_buffer_stride*target_id
+				this.system_buffer.target_buffer_stride			*target_id,
+				this.system_buffer.id_stride					*system_bindgroup_id
 			]);
 	}
 	

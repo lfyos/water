@@ -23,7 +23,7 @@ fn vertex_main(
 {
 	var vf:vertex_to_fragment_struct;
 	
-	vf.vertex_position	=target_info.projection_matrix*(location_info.matrix*my_coord);
+	vf.vertex_position	=target_info.projection_matrix*(id_info.matrix*my_coord);
 	
 	vf.vertex_id_0	=vec4<f32>(f32(id_info.component_system_id),my_id.x,my_id.y,0.0);
 	vf.vertex_id_1	=vec4<f32>(-1.0,-1.0,my_id.z,my_id.w);

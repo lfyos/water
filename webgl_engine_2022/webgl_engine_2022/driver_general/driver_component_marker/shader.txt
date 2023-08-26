@@ -4,6 +4,12 @@ struct marker_information
 	marker_driver_id		:	i32,
 	marker_body_id			:	i32,
 	marker_system_id		:	i32,
+	
+	pickup_flag				:	i32,
+	
+	tmp_int_0				:	i32,
+	tmp_int_1				:	i32,
+	tmp_int_2				:	i32,
 
 	face_normal_color		:	vec4<f32>,
 	face_pickup_color		:	vec4<f32>,
@@ -80,7 +86,7 @@ fn vertex_main(
 			break;
 		}
 	}
-	vf.vertex_position=projection_matrix*(location_info.matrix*marker_info.marker_position);
+	vf.vertex_position=projection_matrix*(id_info.matrix*marker_info.marker_position);
 	vf.vertex_position=vf.vertex_position/vf.vertex_position.w;
 	
 	var face_width	=marker_info.marker_face_x_scale/f32(width);
@@ -157,6 +163,16 @@ fn fragment_point_id_fun(vf	:	vertex_to_fragment_struct) -> id_target_struct
 	var ret_val	:	id_target_struct;
 	
 	ret_val.depth=vf.vertex_position.z/vf.vertex_position.w;
+	if(marker_info.pickup_flag>0){
+		ret_val.depth=0.0;
+	}
+	if(   (system_info.pickup_component_id==marker_info.marker_component_id)
+		&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
+		&&(system_info.pickup_body_id==marker_info.marker_body_id))
+	{
+		ret_val.depth=0.0;
+	}
+	
 	ret_val.id_0=vec4(marker_info.marker_system_id,marker_info.marker_body_id,0,2);
 	ret_val.id_1=vec4(0,0,0,0);
 	
@@ -191,11 +207,16 @@ fn fragment_edge_fun(vf	:	vertex_to_fragment_struct) -> color_target_struct
 	var ret_val	:	color_target_struct;
 	
 	ret_val.depth=vf.vertex_position.z/vf.vertex_position.w;
+	if(marker_info.pickup_flag>0){
+		ret_val.depth=0.0;
+	}
+	
 	ret_val.color=marker_info.edge_normal_color;
 	if(   (system_info.pickup_component_id==marker_info.marker_component_id)
 		&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
 		&&(system_info.pickup_body_id==marker_info.marker_body_id))
 	{
+		ret_val.depth=0.0;
 		ret_val.color=marker_info.edge_pickup_color;
 	}
 	return ret_val;
@@ -207,12 +228,17 @@ fn fragment_point_fun(vf	:	vertex_to_fragment_struct) -> color_target_struct
 	var ret_val	:	color_target_struct;
 
 	ret_val.depth=vf.vertex_position.z/vf.vertex_position.w;
+	if(marker_info.pickup_flag>0){
+		ret_val.depth=0.0;
+	}
+
 	ret_val.color=marker_info.point_normal_color;
 	
 	if(   (system_info.pickup_component_id==marker_info.marker_component_id)
 		&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
 		&&(system_info.pickup_body_id==marker_info.marker_body_id))
 	{
+		ret_val.depth=0.0;
 		ret_val.color=marker_info.point_pickup_color;
 		if(system_info.millisecond>500){
 			discard;

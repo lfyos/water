@@ -14,17 +14,18 @@ function(component_name,component_id,render)
 				function(response_data)
 				{
 					return render.caller.call_server_component("movement_manager","all",
-						[["operation","design"],["move_method","edit_jason"]]);
+						[["operation","design"],["move_method","edit_jason"]],"json");
 				}).
 			then(
 				function(response_data)
 				{
 					var ep=render.component_event_processor[component_id];
-					
+						
 					ep.id_base					=0;
 					ep.type_flag				=my_type_flag;
-					ep.update_flag				=true;
+					ep.update_flag				=false;
 					ep.movement_data			=response_data;
+
 					render.system_call_processor.set_menu_show(component_id);
 				});
 		},
@@ -43,12 +44,12 @@ function(component_name,component_id,render)
 				if(typeof(ep.movement_data.parent)=="object")
 					render.caller.call_server_component("movement_manager","all",
 						[	["operation","design"],["move_method","edit_jason"],
-							["id",ep.movement_data.parent.movement_tree_id]]).
+							["id",ep.movement_data.parent.movement_tree_id]],"json").
 					then(
 						function(response_data)
 						{
 							ep.movement_data=response_data;
-							ep.update_flag=true;
+							ep.update_flag=false;
 							ep.id_base=0;
 						});
 				return;
@@ -59,12 +60,14 @@ function(component_name,component_id,render)
 				}else{
 					render.system_call_processor.set_menu_hide(component_id);
 					
-					render.caller.call_server_component("movement_manager","all",[["operation","design"],
-						["move_method","locate_camera"],["id",ep.movement_data.movement_tree_id]]).
+					render.caller.call_server_component("movement_manager","all",
+						[["operation","design"],["move_method","locate_camera"],
+						 ["id",ep.movement_data.movement_tree_id]
+						],"json").
 					then(
-						function(response_data,render)
+						function(response_data)
 						{
-							ep.update_flag=true;
+							ep.update_flag=false;
 							ep.movement_data=response_data;
 						});
 				}
@@ -75,12 +78,13 @@ function(component_name,component_id,render)
 					
 					render.caller.call_server_component("movement_manager","all",
 						[	["operation","design"],["move_method","edit_jason"],
-							["id",ep.movement_data.children[index_id].movement_tree_id]]).
+							["id",ep.movement_data.children[index_id].movement_tree_id]
+						],"json").
 					then(
 						function(response_data)
 						{
 							ep.movement_data=response_data;
-							ep.update_flag=true;
+							ep.update_flag=false;
 							ep.id_base=0;
 						});
 				return;
@@ -116,6 +120,7 @@ function(component_name,component_id,render)
 			
 			if(ep.movement_data==null)
 				return true;
+				
 			var str,my_text_width,text_position;
 			if(typeof(ep.movement_data.parent)!="undefined"){
 				context_2d.fillStyle=ep.movement_data.parent.current_movement_flag
@@ -134,7 +139,7 @@ function(component_name,component_id,render)
 			if((text_position=(canvas_2d.width-my_text_width)/2.0)<0)
 				text_position=0;
 			context_2d.fillText(str,text_position,ep.text_format.canvas_step);
-					
+
 			context_2d.fillStyle=ep.text_format.current_fillStyle;
 			for(var i=ep.id_base,j=2,ni=ep.movement_data.children.length,height;i<ni;i++,j++){
 				if((height=ep.text_format.canvas_step*j)>canvas_2d.height)

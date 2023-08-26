@@ -74,8 +74,9 @@ function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
 	init_data,		part_object,	part_driver,	render_driver,	render)
 {
-	this.component_id=component_id;
-	this.marker_array=new Array();
+	this.component_id	=component_id;
+	this.pickup_flag	=init_data;
+	this.marker_array	=new Array();
 	render.component_event_processor[component_id]=new init_component_event_processor();
 	
 	this.draw_component=function(method_data,render_data,
@@ -85,7 +86,8 @@ function construct_component_driver(
 		var p,rpe=render.webgpu.render_pass_encoder;
 		
 		for(var i=0,ni=this.marker_array.length;i<ni;i++){
-			render.set_system_bindgroup(render_data.render_buffer_id,this.marker_array[i].marker_component_id,-1);
+			render.set_system_bindgroup(render_data.render_buffer_id,
+						this.marker_array[i].marker_component_id,-1);
 			
 			rpe.setBindGroup(1,this.marker_array[i].bindgroup);
 
@@ -195,7 +197,10 @@ function construct_component_driver(
 					component_id,
 					driver_id,
 					i,
-					render.component_array_sorted_by_id[component_id].component_ids[driver_id][3]	
+					render.component_array_sorted_by_id[component_id].component_ids[driver_id][3],
+					
+					this.pickup_flag,
+					0,0,0	
 			];
 			var p0=part_object.material[0].face_normal_color;
 			var p1=part_object.material[0].face_pickup_color;

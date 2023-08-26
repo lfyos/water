@@ -65,7 +65,9 @@ function init_ids_of_part_and_component(
 				system_bindgroup_id.push([
 					render_id,		part_id,	data_buffer_id,
 					component_id,	driver_id,
-					my_system_bindgroup_id
+					my_system_bindgroup_id,
+					
+					-1,-1
 				]);
 			}
 		};
@@ -80,7 +82,9 @@ function init_ids_of_part_and_component(
 			-1,	//data_buffer_id,
 			 i,	//component_id,
 			-1,	//driver_id,
-			my_system_bindgroup_id
+			my_system_bindgroup_id,
+			
+			-1,-1
 		]);
 		
 	};

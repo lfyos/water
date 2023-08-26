@@ -95,7 +95,7 @@ function(component_name,component_id,render)
 					function(response_data)
 					{
 						return render.caller.call_server_component("movement_manager","all",
-									[["operation","design"],["move_method","retreat"]]);
+									[["operation","design"],["move_method","retreat"]],"json");
 					}).
 				then(
 					function(response_data)

@@ -3,7 +3,9 @@ struct vertex_to_fragment_struct
 	@builtin(position)	vertex_position		:	vec4<f32>,	
 	@location(0)		vertex_id_0			:	vec4<f32>,
 	@location(1)		vertex_id_1			:	vec4<f32>,
-	@location(2)		vertex_value		:	vec4<f32>
+	@location(2)		vertex_value		:	vec4<f32>,
+	
+	@location(3)		vertex_material		:	vec4<f32>
 };
 
 struct fragment_id_target_struct
@@ -23,11 +25,14 @@ fn vertex_main(
 {
 	var vf:vertex_to_fragment_struct;
 	
-	vf.vertex_position	=target_info.projection_matrix*(location_info.matrix*my_coord);
+	vf.vertex_position	=target_info.projection_matrix*(id_info.matrix*my_coord);
 	
 	vf.vertex_id_0	=vec4<f32>(f32(id_info.component_system_id),my_id.x,my_id.y,0.0);
 	vf.vertex_id_1	=vec4<f32>(-1.0,-1.0,my_id.z,my_id.w);
 	vf.vertex_value	=vec4<f32>(5.5,6.6,7.7,vf.vertex_position.z/vf.vertex_position.w);
+	
+	vf.vertex_material=vec4(my_material.rgb/2.0,1.0);
+	
 	return vf;
 }
 
@@ -51,13 +56,5 @@ fn fragment_value_fun(vf:vertex_to_fragment_struct) ->@location(0) vec4<f32>
 @fragment
 fn fragment_render_fun(vf:vertex_to_fragment_struct) ->@location(0) vec4<f32>
 {
-	var t=system_info.second%6;
-
-	if(t<2){
-		return vec4(1.0, 1.0, 0.0, 1.0);
-	}else if(t<4){
-		return vec4(0.0, 1.0, 1.0, 1.0);
-	}else{
-		return vec4(1.0, 0.0, 1.0, 1.0);
-	}
+	return vf.vertex_material;
 }

@@ -17,11 +17,11 @@ fn vertex_main(
 
 	if(my_parameter.w<0.0)
 	{
-		var p0=location_info.matrix*vec4<f32>(0.0,0.0,0.0,1.0);
+		var p0=id_info.matrix*vec4<f32>(0.0,0.0,0.0,1.0);
 		var len=length(target_info.right_up_far_point-target_info.left_down_near_point);
 		vf.position	=vec4((p0/p0.w+my_position*len).xyz,1.0);
 	}else{
-		vf.position	=location_info.matrix*vec4(my_position.xyz*my_parameter.w,1.0);
+		vf.position	=id_info.matrix*vec4(my_position.xyz*my_parameter.w,1.0);
 	}	
 	vf.position=target_info.projection_matrix*vf.position;
 	

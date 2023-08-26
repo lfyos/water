@@ -31,7 +31,7 @@ function(component_name,component_id,render)
 					function(response_data)
 					{
 						return render.caller.call_server_component("movement_manager","all",
-									[["operation","movement"],["move_method","search_jason"]]);
+							[["operation","movement"],["move_method","search_jason"]],"json");
 					}).
 				then(
 					function(response_data)
@@ -40,7 +40,8 @@ function(component_name,component_id,render)
 							return;
 						var my_component_id=render.operate_component.
 								get_component_object_by_component_name("组件拼装拼装查询组件").component_id;
-						render.component_event_processor[my_component_id].active_list(response_data,my_component_id,render);
+						var my_ep=render.component_event_processor[my_component_id];
+						my_ep.active_list(response_data,my_component_id,render);
 				});
 				break;
 			case 4:

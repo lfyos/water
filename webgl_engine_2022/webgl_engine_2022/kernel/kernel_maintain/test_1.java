@@ -12,7 +12,7 @@ public class test_1 extends travel_through_directory
 		if((str=file_reader.get_text(file_name,"GBK"))==null)
 			return;
 		
-		if(str.indexOf("update_canvas_texture")>=0)
+		if(str.indexOf("render.get_component_object_by_component_name")>=0)
 			debug_information.println(file_name);
 	}
 	

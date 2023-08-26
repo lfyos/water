@@ -120,8 +120,9 @@ function(component_name,component_id,render)
 						 ["operation","part_list_jason_component"]]),
 					"_blank");
 				break;
-			default:			
+			default:
 				render.system_call_processor.set_menu_show("交互界面主菜单");
+				render.system_call_processor.set_menu_hide(component_id);		
 				break;
 			}
 		}

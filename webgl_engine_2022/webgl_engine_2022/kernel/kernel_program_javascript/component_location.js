@@ -6,13 +6,11 @@ function construct_component_location_object(my_component_number,my_computer,my_
 
 	this.version_id			=3;
 	this.identify_matrix	=[	1,	0,	0,	0,		0,	1,	0,	0,		0,	0,	1,	0,		0,	0,	0,	1];
-
+	
 	this.component	=new Array();
-	this.buffer		=new Array();
 	
 	for(var i=0,ni=this.component_number;i<ni;i++){
 		this.component[i]={
-			buffer_version_id		:	0,
 			relative_version_id		:	2,
 			absolute_version_id		:	1,
 			caculate_location_flag	:	false,
@@ -23,11 +21,6 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			
 			parent					:	-1
 		}
-		this.buffer[i]=this.webgpu.device.createBuffer(
-		{
-			size	:	Float32Array.BYTES_PER_ELEMENT*this.identify_matrix.length,
-			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
-		});
 	}
 
 	this.destroy=function()
@@ -37,14 +30,11 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			this.component[i].move_matrix		=null;
 			this.component[i].relative			=null;
 			this.component[i]					=null;
-			
-			this.buffer[i].destroy();
-			this.buffer[i]=null;
+
 		};
 		this.computer	=null;
 		this.webgpu		=null;
 		this.component	=null;
-		this.buffer		=null;
 		
 		this.modify_one_component_location	=null;
 		this.decode_location				=null;
@@ -147,15 +137,17 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		
 		return loca;
 	};
-	this.get_component_location_and_update_buffer=function(component_id)
+	
+	this.get_component_matrix_and_version=function(component_id)
 	{
 		if((component_id<0)||(component_id>=(this.component.length)))
 			return this.identify_matrix;
-		var loca=this.get_component_location(component_id);
-		var p=this.component[component_id];
-		if(p.buffer_version_id>=p.absolute_version_id)
-			return;
-		p.buffer_version_id=p.absolute_version_id;
-		this.webgpu.device.queue.writeBuffer(this.buffer[component_id],0,new Float32Array(loca));
+		var my_matrix=this.get_component_location(component_id);
+		var my_version=this.component[component_id].absolute_version_id;
+		
+		return {
+			matrix	:	my_matrix,
+			version	:	my_version
+		};
 	};
 };

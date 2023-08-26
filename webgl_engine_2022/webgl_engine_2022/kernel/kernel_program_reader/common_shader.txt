@@ -1,6 +1,64 @@
-const point_texture_position=array<vec4<f32>,6>(
-		vec4(-1.0,-1.0,0.0,0.0),vec4( 1.0,-1.0,0.0,0.0),vec4( 1.0, 1.0,0.0,0.0),
-		vec4( 1.0, 1.0,0.0,0.0),vec4(-1.0, 1.0,0.0,0.0),vec4(-1.0,-1.0,0.0,0.0));
+
+
+
+struct system_information
+{	
+	pickup_component_id						:	i32,
+	pickup_driver_id						:	i32,
+	
+	pickup_render_id						:	i32,
+	pickup_part_id							:	i32,
+	
+	pickup_body_id							:	i32,
+	pickup_face_id							:	i32,
+	pickup_vertex_id						:	i32,
+	pickup_loop_id							:	i32,
+	pickup_edge_id							:	i32,
+	pickup_point_id							:	i32,
+	
+	highlight_component_id					:	i32,
+	highlight_body_id						:	i32,
+	highlight_face_id						:	i32,
+	
+	main_target_view_x0						:	i32,
+	main_target_view_y0						:	i32,
+	main_target_view_width					:	i32,
+	main_target_view_height					:	i32,
+	main_target_whole_view_width			:	i32,
+	main_target_whole_view_height			:	i32,
+	
+	year									:	i32,
+	month									:	i32,
+	day										:	i32,
+	hour									:	i32,
+	minute									:	i32,
+	second									:	i32,
+	millisecond								:	i32,
+	microsecond								:	i32,
+	nanosecond								:	i32,
+	
+	pickup_depth							:	f32,
+	pickup_value_0							:	f32,
+	pickup_value_1							:	f32,
+	pickup_value_2							:	f32,
+
+	main_target_screen_move_matrix			:	mat4x4<f32>,
+	main_target_negative_screen_move_matrix	:	mat4x4<f32>,
+	
+	light_position							:	array<vec4<f32>,8>
+};
+
+@group(0) @binding(0)
+var<uniform> system_info: system_information;
+
+
+
+
+
+
+
+
+
 
 struct target_information 
 {
@@ -82,18 +140,22 @@ struct target_information
 	projection_type_flag					:	i32,
 	tmp_int_0								:	i32
 };
-@group(0) @binding(0)
+@group(0) @binding(1)
 var<uniform> target_info: target_information; 
 
-struct location_information 
-{
-	matrix									:	mat4x4<f32>
-};
-@group(0) @binding(1)
-var<uniform> location_info: location_information; 
+
+
+
+
+
+
+
+
 
 struct id_information 
 {
+	matrix									:	mat4x4<f32>,
+	
 	render_id								:	i32,
 	part_id									:	i32,
 	
@@ -102,56 +164,39 @@ struct id_information
 	component_id							:	i32,
 	driver_id								:	i32,
 
-	component_system_id						:	i32
+	component_system_id						:	i32,
+	
+	tmp_int_0								:	i32,
+	tmp_int_1								:	i32
 };
 @group(0) @binding(2)	
 var<uniform> id_info: id_information; 
 
-struct system_information
-{	
-	pickup_component_id						:	i32,
-	pickup_driver_id						:	i32,
-	
-	pickup_render_id						:	i32,
-	pickup_part_id							:	i32,
-	
-	pickup_body_id							:	i32,
-	pickup_face_id							:	i32,
-	pickup_vertex_id						:	i32,
-	pickup_loop_id							:	i32,
-	pickup_edge_id							:	i32,
-	pickup_point_id							:	i32,
-	
-	highlight_component_id					:	i32,
-	highlight_body_id						:	i32,
-	highlight_face_id						:	i32,
-	
-	main_target_view_x0						:	i32,
-	main_target_view_y0						:	i32,
-	main_target_view_width					:	i32,
-	main_target_view_height					:	i32,
-	main_target_whole_view_width			:	i32,
-	main_target_whole_view_height			:	i32,
-	
-	year									:	i32,
-	month									:	i32,
-	day										:	i32,
-	hour									:	i32,
-	minute									:	i32,
-	second									:	i32,
-	millisecond								:	i32,
-	microsecond								:	i32,
-	nanosecond								:	i32,
-	
-	pickup_depth							:	f32,
-	pickup_value_0							:	f32,
-	pickup_value_1							:	f32,
-	pickup_value_2							:	f32,
 
-	main_target_screen_move_matrix			:	mat4x4<f32>,
-	main_target_negative_screen_move_matrix	:	mat4x4<f32>,
-	
-	light_position							:	array<vec4<f32>,8>
-};
-@group(0) @binding(3)
-var<uniform> system_info: system_information;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const point_texture_position=array<vec4<f32>,6>(
+		vec4(-1.0,-1.0,0.0,0.0),vec4( 1.0,-1.0,0.0,0.0),vec4( 1.0, 1.0,0.0,0.0),
+		vec4( 1.0, 1.0,0.0,0.0),vec4(-1.0, 1.0,0.0,0.0),vec4(-1.0,-1.0,0.0,0.0));
+
+
+
+

@@ -1,6 +1,4 @@
 			{
-				"background"		:	[10,10,10,1],
-				
 				"canvas_width"		:	1024,
 				"canvas_height"		:	512,
 				"canvas_step"		:	32,

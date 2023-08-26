@@ -2,7 +2,7 @@ function(component_name,component_id,render)
 {
 	render.component_event_processor[component_id]={
 		browse_type_flag			:	true,
-		update_flag					:	true,
+		update_flag					:	false,
 		component_id				:	-1,
 		
 		active_list					:	function()
@@ -14,7 +14,7 @@ function(component_name,component_id,render)
 				{
 					var ep=render.component_event_processor[component_id];
 					ep.browse_type_flag=true;
-					ep.update_flag=true;					
+					ep.update_flag=false;					
 					if((ep.component_id=response_data)>=0)
 						render.system_call_processor.set_menu_show(component_id);
 				});
@@ -37,15 +37,16 @@ function(component_name,component_id,render)
 				if((p=render.component_array_sorted_by_id[ep.component_id].component_parent)==null)
 					return;
 				ep.browse_type_flag	=true;
-				ep.update_flag		=true;
+				ep.update_flag		=false;
 				ep.component_id		=p.component_id;
 				
 				render.caller.call_server_component("manipulator_component","all",
-					[["component_id",ep.component_id],["event_method","selection"],["event_operation","select_component"]]);
+					[["component_id",ep.component_id],["event_method","selection"],
+					 ["event_operation","select_component"]]);
 				break;
 			case 1:
 				ep.browse_type_flag^=true; 
-				ep.update_flag		=true;
+				ep.update_flag		=false;
 				
 				render.caller.call_server_component("manipulator_component","all",[
 						["component_id",ep.component_id],["event_method","selection"],
@@ -63,7 +64,7 @@ function(component_name,component_id,render)
 					if((function_id-2)>=p.length)
 						return;
 					var  my_component_id=ep.component_id,child_component_id=p[function_id-2].component_id;
-					ep.update_flag=true;
+					ep.update_flag=false;
 					ep.component_id=child_component_id;
 					
 					render.caller.call_server_component("manipulator_component","all",
@@ -91,9 +92,9 @@ function(component_name,component_id,render)
 		{
 			var ep=render.component_event_processor[component_id];
 			
-			if(!(ep.update_flag))
+			if(ep.update_flag)
 				return false;
-			ep.update_flag=false;
+			ep.update_flag=true;
 			
 			canvas_2d.width			=text_format.canvas_width;
 			canvas_2d.height		=text_format.canvas_height;

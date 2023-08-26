@@ -84,15 +84,14 @@ function draw_scene_routine(render_data,render)
 					var component_render_parameter	=part_object.component_render_parameter;
 					if(render_data.render_buffer_id>=component_render_parameter.length)
 						continue;
-				   	component_render_parameter=component_render_parameter[render_data.render_buffer_id];
-					var instance_number=component_render_parameter.length;
-					for(var instance_id=0;instance_id<instance_number;instance_id++){
-						var data_buffer_id		=component_render_parameter[instance_id][0];
-						var render_parameter	=component_render_parameter[instance_id][1];
+				   	var render_parameter_array=component_render_parameter[render_data.render_buffer_id];
+					for(var j=0,nj=render_parameter_array.length;j<nj;j++){
+						var data_buffer_id		=render_parameter_array[j][0];
+						var render_parameter	=render_parameter_array[j][1];
 						var component_driver	=part_object.component_driver_array[data_buffer_id];
-						var p					=part_object.part_component_id_and_driver_id[data_buffer_id];
-						var component_id		=p[0];
-						var driver_id			=p[1];
+						var component_ids		=part_object.part_component_id_and_driver_id[data_buffer_id];
+						var component_id		=component_ids[0];
+						var driver_id			=component_ids[1];
 			
 						render.set_system_bindgroup(
 							render_data.render_buffer_id,component_id,driver_id);

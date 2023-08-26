@@ -15,7 +15,7 @@ fn vertex_main(
 	var vf:vertex_to_fragment_struct;
 
 	vf.vertex_position	=my_p0*my_coord+my_p1*(vec4(1.0,1.0,1.0,1.0)-my_coord);
-	vf.vertex_position	=target_info.projection_matrix*(location_info.matrix*vf.vertex_position);
+	vf.vertex_position	=target_info.projection_matrix*(id_info.matrix*vf.vertex_position);
 	vf.vertex_material	=my_material;
 
 	return vf;

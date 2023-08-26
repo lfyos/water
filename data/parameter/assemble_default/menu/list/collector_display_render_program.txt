@@ -7,7 +7,7 @@ function(component_name,component_id,render)
 		collector_list_object	:	new Array(),
 		request_array			:	new Array(),
 		item_number				:	1,
-		update_flag				:	true,
+		update_flag				:	false,
 
 		update_canvas_texture	:	function(
 				canvas_2d,context_2d,text_format,component_id,render)
@@ -40,7 +40,7 @@ function(component_name,component_id,render)
 					{
 						if(response_data.done_flag){
 							ep.collector_list_object=response_data.collector_data;
-							ep.update_flag=true;
+							ep.update_flag=false;
 							ep.id_base=0;
 						}else
 							ep.collector_stack_version=old_collector_stack_version;
@@ -48,9 +48,9 @@ function(component_name,component_id,render)
 				return false;
 			}
 			
-			if(!(ep.update_flag))
+			if(ep.update_flag)
 				return false;
-			ep.update_flag=false;
+			ep.update_flag=true;
 			
 			ep.request_array=new Array();
 			

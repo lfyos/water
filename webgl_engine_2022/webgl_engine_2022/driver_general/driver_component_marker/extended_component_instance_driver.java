@@ -36,6 +36,8 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
+		ci.request_response.print(cmc.pickup_flag?1:0);
+		
 		for(int i=0,ni=cmc.component_marker_array.length;i<ni;i++)
 			ci.render_buffer.location_buffer.put_in_list(
 				ek.component_cont.get_component(cmc.component_marker_array[i].marker_component_id),ek);

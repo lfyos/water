@@ -21,12 +21,12 @@
 /*	render_17	*/	mouse_modify_location		driver_mouse_modify_location.extended_render_driver		driver_general\mouse_modify_location\render.list
 /*	render_18	*/	render_target_register		driver_render_target_register.extended_render_driver	driver_general\render_target_register\render.list
 
-
-
 /*	########################	driver_project		#######################				*/
 /*	render_19	*/	solidworks	driver_opengl_fixed_pipeline.extended_render_driver		..\project\part\solidworks\render.list
 								..\project\part\solidworks\shader_material.txt			..\project\part\solidworks\light.txt
+
 /*
+
 /*	########################	various obj files		#######################			*/
 /*	render_20	*/	other_part	driver_opengl_fixed_pipeline.extended_render_driver		..\project\part\other_part\render.list
 								..\project\part\other_part\shader_material.txt			..\project\part\other_part\light.txt

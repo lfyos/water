@@ -21,9 +21,6 @@ function construct_system_buffer(target_buffer_number,render)
 			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
 		});
 
-//	init system_bindgroup_id
-	this.system_bindgroup_id	=0;
-	
 	this.destroy=function()
 	{
 		if(this.target_buffer!=null){
@@ -33,6 +30,16 @@ function construct_system_buffer(target_buffer_number,render)
 		if(this.system_buffer!=null){
 			this.system_buffer.destroy();
 			this.system_buffer=null;
+		}
+		if(this.id_buffer!=null){
+			this.id_buffer.destroy();
+			this.id_buffer=null;
+		}
+		if(this.system_bindgroup!=null){
+			this.system_bindgroup=null;
+		}
+		if(this.id_buffer_init_flag!=null){
+			this.id_buffer_init_flag=null;
 		}
 		this.set_system_buffer=null;
 		this.set_target_buffer=null;
