@@ -4,10 +4,7 @@
 	
 		not_part_list
 		
-		file_program	initialization/system_initialization
-		file_program	initialization/debug.txt
-		
-//		file_program	initialization
+		file_program	initialization
 	
 		mount			common.assemble
 		mount			background.assemble

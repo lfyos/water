@@ -1,4 +1,4 @@
-/*		audio_component					*/		audio_component
+/*		audio_component					*/		audio_player_component
 /*		modifier_container_id			*/		0
 /*		touch_time_length				*/		1000000000
 /*		save_component_name_or_id_flag	*/		true

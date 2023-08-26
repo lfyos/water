@@ -19,7 +19,7 @@
 			/* 2type		*/	interface_part
 			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 				
-				false		9		0.2		0.8		mouse.png		
+				false		9		0.2		0.9		mouse.png		
 
 				token_program	鼠标功能选择
 				
@@ -30,12 +30,15 @@
 						{
 							var mouse_usage=render.operate_component.
 									get_component_event_processor("鼠标交互界面组件").mouse_usage;
-							var function_id,ep=render.component_event_processor[component_id];
+							var ep=render.component_event_processor[component_id];
+							var function_id=Math.floor(ep.y*8.0);
+							ep.hightlight=[0,function_id/8.0,1.0,function_id/8.0+1.0/8.0];
 							
-							switch(function_id=Math.floor(ep.y*7.0)){
+							switch(function_id){
 							case 0:
 								if(ep.x>0.5){
 									render.system_call_processor.set_menu_show("视口旋转组件");
+									render.system_call_processor.set_menu_hide(component_id);
 									break;
 								}
 								render.event_component.mouse.	component_name	="mouse_modify_location_component";
@@ -48,6 +51,7 @@
 							case 1:
 								if(ep.x>0.5){
 									render.system_call_processor.set_menu_show("视口平移组件");
+									render.system_call_processor.set_menu_hide(component_id);
 									break;
 								}
 								render.event_component.mouse.	component_name	="mouse_modify_location_component";
@@ -60,6 +64,7 @@
 							case 2:
 								if(ep.x>0.5){
 									render.system_call_processor.set_menu_show("组件旋转组件");
+									render.system_call_processor.set_menu_hide(component_id);
 									break;
 								}
 								render.event_component.mouse.	component_name	="mouse_modify_location_component";
@@ -72,6 +77,7 @@
 							case 3:
 								if(ep.x>0.5){
 									render.system_call_processor.set_menu_show("组件平移组件");
+									render.system_call_processor.set_menu_hide(component_id);
 									break;
 								}
 								render.event_component.mouse.	component_name	="mouse_modify_location_component";
@@ -84,6 +90,7 @@
 							case 4:
 								if(ep.x>0.5){
 									render.system_call_processor.set_menu_show("内容选择组件");
+									render.system_call_processor.set_menu_hide(component_id);
 									break;
 								}
 								render.event_component.mouse.	component_name	="component_selection_component";
@@ -97,13 +104,17 @@
 								render.event_component.mouse.	function_id		=0;
 								render.event_component.keyboard.function_id		=0;
 								break;
+							case 6:
+								render.event_component.mouse.	component_name	="component_marker_component";
+								render.event_component.keyboard.component_name	="component_marker_component";
+								render.event_component.mouse.	function_id		=0;
+								render.event_component.keyboard.function_id		=0;
+								break;
 							default:
-								function_id=6;
 								render.system_call_processor.set_menu_show("交互界面主菜单");
+								render.system_call_processor.set_menu_hide(component_id);
 								break;
 							}
-
-							ep.hightlight=[0,function_id/7.0,1.0,function_id/7.0+1.0/7.0];
 						}
 					}
 				}
@@ -132,8 +143,10 @@
 								return;
 								
 							ep.hightlight=[0,function_id/12.0,1.0,function_id/12.0+1.0/12.0];
+							
 							if(function_id==11){
 								render.system_call_processor.set_menu_show("鼠标功能选择组件");
+								render.system_call_processor.set_menu_hide(component_id);
 								return;
 							}
 							mouse_usage[0]=function_id;
@@ -173,6 +186,7 @@
 							ep.hightlight=[0,function_id/18.0,1.0,function_id/18.0+1.0/18.0];
 							if(function_id==17){
 								render.system_call_processor.set_menu_show("鼠标功能选择组件");
+								render.system_call_processor.set_menu_hide(component_id);
 								return;
 							}
 							mouse_usage[1]=function_id;
@@ -212,6 +226,7 @@
 							ep.hightlight=[0,function_id/12.0,1.0,function_id/12.0+1.0/12.0];
 							if(function_id==11){
 								render.system_call_processor.set_menu_show("鼠标功能选择组件");
+								render.system_call_processor.set_menu_hide(component_id);
 								return;
 							}
 							mouse_usage[2]=function_id;
@@ -253,6 +268,7 @@
 							ep.hightlight=[0,function_id/18.0,1.0,function_id/18.0+1.0/18.0];
 							if(function_id==17){
 								render.system_call_processor.set_menu_show("鼠标功能选择组件");
+								render.system_call_processor.set_menu_hide(component_id);
 								return;
 							}
 							mouse_usage[3]=function_id;
@@ -295,6 +311,7 @@
 							
 							if(function_id==4){
 								render.system_call_processor.set_menu_show("鼠标功能选择组件");
+								render.system_call_processor.set_menu_hide(component_id);
 								return;
 							}
 							mouse_usage[4]=function_id;

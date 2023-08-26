@@ -245,9 +245,8 @@ public class component_core_4 extends component_core_3
 				if(create_child_number>0){
 					component my_children[]=new component[create_child_number];
 					for(int i=0;i<create_child_number;i++)
-						my_children[i]=new component(token_string,fr,uniparameter.part_list_flag,
-							uniparameter.normalize_location_flag,
-							uniparameter.component_driver_lod_precision_scale,ccp);
+						my_children[i]=new component(token_string,fr,
+							uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp);
 					append_child(my_children);
 				}
 				return;
@@ -394,8 +393,8 @@ public class component_core_4 extends component_core_3
 					
 					component this_child_comp=null;
 					try{
-						this_child_comp=new component(token_string,mount_fr,uniparameter.part_list_flag,
-								uniparameter.normalize_location_flag,uniparameter.component_driver_lod_precision_scale,ccp);
+						this_child_comp=new component(token_string,mount_fr,
+							uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp);
 					}catch(Exception e) {
 						this_child_comp=null;
 						debug_information.println("Create scene from ",afc.file_name_array[j]+" fail");
@@ -409,22 +408,22 @@ public class component_core_4 extends component_core_3
 			}
 		}
 	}
-	public void append_component(double lod_precision_scale,component_construction_parameter ccp)
+	public void append_component(component_construction_parameter ccp)
 	{
 		if(ccp.clsc.get_source_item_number()>0){
 			append_child(ccp.clsc.get_source_item(component_name,
-				uniparameter.part_list_flag,uniparameter.normalize_location_flag,lod_precision_scale,ccp));
+				uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp));
 			for(int i=0,ni=children_number();i<ni;i++)
-				children[i].append_component(lod_precision_scale,ccp);
+				children[i].append_component(ccp);
 		}
 	}
 	public component_core_4(String token_string,file_reader fr,boolean part_list_flag,
-			boolean normalize_location_flag,double lod_precision_scale,component_construction_parameter ccp)
+			boolean normalize_location_flag,component_construction_parameter ccp)
 	{
-		super(token_string,fr,part_list_flag,normalize_location_flag,lod_precision_scale,ccp);
+		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
 		
 		process_component_operation(token_string,fr,ccp);
-		append_child(ccp.clsc.get_source_item(component_name,uniparameter.part_list_flag,
-			uniparameter.normalize_location_flag,uniparameter.component_driver_lod_precision_scale,ccp));
+		append_child(ccp.clsc.get_source_item(component_name,
+			uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp));
 	}
 }

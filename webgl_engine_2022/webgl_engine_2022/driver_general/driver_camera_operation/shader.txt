@@ -1,4 +1,7 @@
-override primitive_type: i32;
+override primitive_type	: i32;
+
+override depth_start	: f32;
+override depth_end		: f32;
 
 struct vertex_to_fragment_struct
 {
@@ -25,31 +28,30 @@ fn vertex_main(
 		@location(2) my_position	:	vec4<f32>
 	)->vertex_to_fragment_struct
 {
+	var p=target_info.camera_location*vec4(0.0,0.0,0.0,1.0);
+	p=target_info.projection_matrix*vec4(p.xyz/p.w+my_coord.xyz*my_position.w,1.0);
+	
+	var p0=target_info.projection_matrix*(target_info.camera_location*vec4(0.0,	0.0,	 my_position.z/2.0,	1.0));
+	var p1=target_info.projection_matrix*(target_info.camera_location*vec4(0.0,	0.0,	-my_position.z/2.0,	1.0));
+
+	if(primitive_type==0){
+		p =system_info.main_target_screen_move_matrix*(target_info.negative_screen_move_matrix*p );
+		p0=system_info.main_target_screen_move_matrix*(target_info.negative_screen_move_matrix*p0);
+		p1=system_info.main_target_screen_move_matrix*(target_info.negative_screen_move_matrix*p1);
+	}
+	
+	p.z=depth_start+(depth_end-depth_start)*(p.z/p.w-p0.z/p0.w)/(p1.z/p1.w-p0.z/p0.w);
+	p=vec4(p.xy/p.w+my_position.xy,p.z,1.0);
+
+	if(primitive_type==0){
+		p=target_info.screen_move_matrix*(system_info.main_target_negative_screen_move_matrix*p);
+	}
+
 	var vf:vertex_to_fragment_struct;
 	
 	vf.vertex_id=my_id;
-
-	vf.vertex_position=target_info.camera_location*vec4(0.0,0.0,my_position.z,1.0);
-	vf.vertex_position=vec4(vf.vertex_position.xyz/vf.vertex_position.w+my_coord.xyz*my_position.w,1.0);
+	vf.vertex_position=p;
 	
-	if(target_info.projection_type_flag!=0){
-		vf.vertex_position=target_info.other_projection_matrix*vf.vertex_position;
-	}else{
-		vf.vertex_position=target_info.projection_matrix*vf.vertex_position;
-	}
-	
-	if(primitive_type==0){
-		vf.vertex_position=target_info.negative_screen_move_matrix*vf.vertex_position;
-		vf.vertex_position=system_info.main_target_screen_move_matrix*vf.vertex_position;
-		vf.vertex_position=vf.vertex_position/vf.vertex_position.w;
-		vf.vertex_position=vf.vertex_position+my_position*vec4(1.0,1.0,0.0,0.0);
-		vf.vertex_position=system_info.main_target_negative_screen_move_matrix*vf.vertex_position;
-		vf.vertex_position=target_info.screen_move_matrix*vf.vertex_position;
-		vf.vertex_position=vf.vertex_position/vf.vertex_position.w;
-	}else{
-		vf.vertex_position=vf.vertex_position/vf.vertex_position.w;
-		vf.vertex_position=vf.vertex_position+my_position*vec4(1.0,1.0,0.0,0.0);
-	}
 	return vf;
 };
 

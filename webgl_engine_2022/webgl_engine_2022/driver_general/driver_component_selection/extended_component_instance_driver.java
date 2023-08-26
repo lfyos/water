@@ -7,6 +7,7 @@ import kernel_engine.engine_kernel;
 import kernel_render.render_target;
 import kernel_transformation.point;
 import kernel_camera.locate_camera;
+import kernel_driver.component_driver;
 import kernel_common_class.const_value;
 import kernel_component.component_array;
 import kernel_engine.client_information;
@@ -153,16 +154,17 @@ public class extended_component_instance_driver extends component_instance_drive
 
 		if((str=ci.request_response.get_parameter("function"))==null)
 			return;
-		driver_audio_player.extended_component_driver acd=(driver_audio_player.extended_component_driver)
-				(ek.component_cont.get_component(audio_component_id).driver_array.get(0));
+		
+		driver_audio_player.extended_component_driver acd=null;
+		component_driver cd=ek.component_cont.get_component(audio_component_id).driver_array.get(0);
+		if(cd!=null)
+			acd=(driver_audio_player.extended_component_driver)cd;
 		
 		switch(Integer.decode(str)){
 		default:
 			break;
 		case 0:
 		case 1:
-			if(audio_component_id<0)
-				break;
 			if(acd!=null)
 				acd.set_audio(null);
 			component_selection cs=new component_selection(ek);

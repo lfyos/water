@@ -14,6 +14,7 @@
 /*	render_11	*/	component_marker			driver_component_marker.extended_render_driver			driver_general\component_marker\render.list
 /*	render_12	*/	screen_rectangle			driver_screen_rectangle.extended_render_driver			driver_general\screen_rectangle\render.list
 /*	render_13	*/	camera_operation			driver_camera_operation.extended_render_driver			driver_general\camera_operation\render.list
+						/*		depth_start,depth_end		*/		0.0		0.1
 /*	render_14	*/	location_modifier			driver_location_modifier.extended_render_driver			driver_general\location_modifier\render.list	
 /*	render_15	*/	show_component_box			driver_show_component_box.extended_render_driver		driver_general\show_component_box\render.list
 /*	render_16	*/	component_selection			driver_component_selection.extended_render_driver		driver_general\component_selection\render.list
@@ -21,25 +22,19 @@
 /*	render_18	*/	render_target_register		driver_render_target_register.extended_render_driver	driver_general\render_target_register\render.list
 
 
-/*
-
-
-
 
 /*	########################	driver_project		#######################				*/
 /*	render_19	*/	solidworks	driver_opengl_fixed_pipeline.extended_render_driver		..\project\part\solidworks\render.list
 								..\project\part\solidworks\shader_material.txt			..\project\part\solidworks\light.txt
-
+/*
 /*	########################	various obj files		#######################			*/
 /*	render_20	*/	other_part	driver_opengl_fixed_pipeline.extended_render_driver		..\project\part\other_part\render.list
 								..\project\part\other_part\shader_material.txt			..\project\part\other_part\light.txt
-
+								
 /*	########################	driver_project_boat_2011	#######################		*/
 /*	render_21	*/	boat		driver_opengl_fixed_pipeline.extended_render_driver		..\project\boat\part\render.list
 								..\project\boat\part\shader_material.txt				..\project\boat\part\light.txt	
-								
-								
-								
+															
 */
 
 

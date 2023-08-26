@@ -27,10 +27,12 @@
 						{
 							var ep=render.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*12.0);
+							ep.hightlight=[0,function_id/12.0,1.0,function_id/12.0+1.0/12.0];
 							var str;
 							
 							switch(function_id){
 							case 0:		//执行组件选择
+								render.system_call_processor.set_menu_hide(component_id);
 								render.system_call_processor.set_menu_show("组件操作选择操作组件");
 								break;
 							case 1:		//隐藏选择组件
@@ -65,11 +67,10 @@
 								render.operate_component.get_component_event_processor("组件操作组件浏览组件").active_list();
 								break; 
 							default:
-								function_id=11;
+								render.system_call_processor.set_menu_hide(component_id);
 								render.system_call_processor.set_menu_show("交互界面主菜单");
 								break;
 							}
-							ep.hightlight=[0,function_id/12.0,1.0,function_id/12.0+1.0/12.0];
 							return;
 						}
 					};
@@ -93,6 +94,7 @@
 						{
 							var ep=render.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*12.0);
+							ep.hightlight=[0,function_id/12.0,1.0,function_id/12.0+1.0/12.0];
 							var select_operation_str;
 							
 							switch(function_id){
@@ -120,6 +122,7 @@
 								select_operation_str="part_list";	break;
 							default:
 								render.system_call_processor.set_menu_show("组件操作功能选择组件");
+								render.system_call_processor.set_menu_hide(component_id);
 								return;
 							}
 							
@@ -130,8 +133,7 @@
 								{
 									render.caller.call_server_component(
 										"coordinate","all",[["operation","onoff"]]);
-								});					
-							ep.hightlight=[0,function_id/12.0,1.0,function_id/12.0+1.0/12.0];
+								});	
 						}
 					};
 				}

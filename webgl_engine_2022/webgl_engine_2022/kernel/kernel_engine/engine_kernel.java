@@ -4,28 +4,28 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
+import kernel_part.part;
 import kernel_camera.camera;
-import kernel_camera.camera_container_creator;
-import kernel_common_class.change_name;
-import kernel_common_class.nanosecond_timer;
 import kernel_component.component;
-import kernel_component.component_collector_stack;
+import kernel_driver.component_driver;
+import kernel_render.render_container;
+import kernel_file_manager.file_reader;
+import kernel_common_class.change_name;
+import kernel_driver.modifier_container;
+import kernel_part.part_loader_container;
+import kernel_file_manager.file_directory;
+import kernel_interface.client_process_bar;
 import kernel_component.component_container;
+import kernel_common_class.nanosecond_timer;
+import kernel_common_class.debug_information;
+import kernel_network.client_request_response;
+import kernel_camera.camera_container_creator;
+import kernel_common_class.exclusive_file_mutex;
+import kernel_component.component_collector_stack;
+import kernel_part.part_container_for_part_search;
 import kernel_component.component_load_source_container;
 import kernel_create_top_assemble_part.create_assemble_part;
-import kernel_driver.modifier_container;
-import kernel_file_manager.file_directory;
-import kernel_file_manager.file_reader;
-import kernel_network.client_request_response;
-import kernel_render.render_container;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
-import kernel_part.part;
-import kernel_part.part_container_for_part_search;
-import kernel_driver.component_driver;
-import kernel_part.part_loader_container;
-import kernel_common_class.debug_information;
-import kernel_common_class.exclusive_file_mutex;
-import kernel_interface.client_process_bar;
 
 public class engine_kernel
 {
@@ -204,7 +204,7 @@ public class engine_kernel
 			client_request_response request_response,ArrayList<part> part_list_for_delete_file,
 			part_container_for_part_search all_part_part_cont,
 			buffer_object_file_modify_time_and_length_container boftal_container)
-	{	
+	{		
 		if(create_parameter.create_top_part_expand_ratio>=1.0)
 			if(create_parameter.create_top_part_left_ratio>=1.0)
 				if(component_cont.root_component!=null){
@@ -223,7 +223,7 @@ public class engine_kernel
 						if(top_box_part.size()>0)
 							mount_top_box_part(component_cont.root_component,component_load_source_cont,
 								new part_container_for_part_search(top_box_part),request_response);
-				}
+				}			
 	}
 	private buffer_object_file_modify_time_and_length_container get_boftal_container(client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container)

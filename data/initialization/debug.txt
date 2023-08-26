@@ -11,17 +11,7 @@
 */
 					render.system_event_processor.keydown=function(event,render)
 					{
-						switch(event.keyCode){					
-						case 27://Esc
-							render.caller.call_server_component("manipulator_component","all",
-								[["event_method","selection"],["event_operation","clear_all"]]).
-							then(
-								function()
-								{
-									render.caller.call_server_component(
-										"coordinate","all",[["operation","onoff"]]);
-								});	
-							break;						
+						switch(event.keyCode){	
 						case 13://Enter
 							if(render.pickup.component_id>=0)
 								render.caller.call_server_component("manipulator_component","all",[
@@ -33,30 +23,51 @@
 									{
 										render.caller.call_server_component("coordinate","all",[["operation","onoff"]]);
 									});
+							break;				
+						case 27://Esc
+							render.caller.call_server_component("manipulator_component","all",
+								[["event_method","selection"],["event_operation","clear_all"]]).
+							then(
+								function()
+								{
+									render.caller.call_server_component(
+										"coordinate","all",[["operation","onoff"]]);
+								});	
 							break;
-/*							
 						case 37://left arrow
 							var par=[["operation","movement"],["move_method","continue"],["direct","backward"]];
 									if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
 										par.push(["single_step","true"]);
-									render.call_server_component("movement_manager","all",par);
+									render.caller.call_server_component("movement_manager","all",par);
 							break;
 						case 39://right arrow
 							var par=[["operation","movement"],["move_method","continue"],["direct","forward"]];
 									if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
 										par.push(["single_step","true"]);
-									render.call_server_component("movement_manager","all",par);
-							break;
+									render.caller.call_server_component("movement_manager","all",par);
+							break;						
 						case 38://up arrow
-							render.system_call_processor.select_component("parent");
+							render.caller.call_server_component("manipulator_component","all",
+								[["event_method","selection"],["event_operation","parent"]]).
+							then(
+								function()
+								{
+									render.caller.call_server_component("coordinate","all",[["operation","onoff"]]);
+								});		
 							break;
 						case 40://down arrow
-							render.system_call_processor.select_component("child");
-							break;
+							render.caller.call_server_component("manipulator_component","all",
+								[["event_method","selection"],["event_operation","child"]]).
+							then(
+								function()
+								{
+									render.caller.call_server_component("coordinate","all",[["operation","onoff"]]);
+								});	
+							break;				
 						case 32://space
-							render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]]);
-							break;
-*/							
+							render.caller.call_server_component("movement_manager","all",
+											[["operation","movement"],["move_method","stop"]]);
+							break;						
 						case 90://z
 						case 88://x
 						case 67://c

@@ -12,45 +12,40 @@ function(component_name,component_id,render)
 			ep.update_flag	=false;
 			ep.search_data	=response_data;
 			
-			render.system_call_processor.set_menu_show(component_id,
+			render.caller.system_call_processor.set_menu_show(component_id,
 				[["operation","show"],["center","center"],["dy",ep.search_data.length*0.075]]);
 		},
 		pickupmouseselect	:	function(event,component_id,render)
 		{
 			var ep=render.component_event_processor[component_id];
-			var function_id=Math.floor((1.0-ep.y)*(ep.search_data.length));
+			var function_id=Math.floor(ep.y*(ep.search_data.length));
 			
 			if((function_id>=0)&&(function_id<ep.search_data.length))
-				render.call_server_component("movement_manager","all",[
+				render.caller.call_server_component("movement_manager","all",[
 					["operation","design"],["move_method","locate_camera"],
 					["id",ep.search_data[function_id].movement_tree_id]]);
 			render.system_call_processor.set_menu_hide(component_id);
 		},
-		update_canvas_texture	:	function(render_id,part_id,buffer_id,
-			component_id,driver_id,instance_initialize_data,part_material,shader_data,render)
+		update_canvas_texture	:	function(canvas_2d,context_2d,text_format,component_id,render)
 		{
 			var ep=render.component_event_processor[component_id];
-			if(ep.update_flag)
-				return false;
-			ep.update_flag=true;
+
+			canvas_2d.width		=text_format.canvas_width;
+			canvas_2d.height	=text_format.canvas_step*ep.search_data.length;
+
+			context_2d.fillStyle	=text_format.backgroundStyle;
+			context_2d.fillRect(0,0,canvas_2d.width,canvas_2d.height);
 			
-			render.text_canvas.width	=instance_initialize_data.canvas_width;
-			render.text_canvas.height	=instance_initialize_data.canvas_step*ep.search_data.length;
-		
-			render.text_2dcontext.fillStyle=instance_initialize_data.backgroundStyle;
-			render.text_2dcontext.fillRect(0,0,render.text_canvas.width,render.text_canvas.height);
-					
-			render.text_2dcontext.fillStyle		=instance_initialize_data.fillStyle;
-			render.text_2dcontext.font			=instance_initialize_data.font;
-			render.text_2dcontext.textBaseline	=instance_initialize_data.textBaseline;
-			render.text_2dcontext.textAlign		=instance_initialize_data.textAlign;
+			context_2d.fillStyle	=text_format.fillStyle;
+			context_2d.font			=text_format.font;
+			context_2d.textBaseline	=text_format.textBaseline;
+			context_2d.textAlign	=text_format.textAlign;
 			
 			for(var i=0,ni=ep.search_data.length;i<ni;i++){
 				var str=" ";
 				for(var j=0,nj=ep.search_data[i].depth_number;j<nj;j++)
 					str+="  ";
-				render.text_2dcontext.fillText(
-					str+ep.search_data[i].node_name,0,instance_initialize_data.canvas_step*i);
+				context_2d.fillText(str+ep.search_data[i].node_name,0,text_format.canvas_step*i);
 			}
 			return true;
 		}

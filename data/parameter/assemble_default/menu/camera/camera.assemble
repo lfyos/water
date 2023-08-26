@@ -17,6 +17,7 @@
 							{
 								var ep=render.component_event_processor[component_id];
 								var function_id=Math.floor(ep.y*7.0);
+								ep.hightlight=[0,function_id/7.0,1.0,function_id/7.0+1.0/7.0];
 								switch(function_id){
 								default:
 									function_id=6;
@@ -38,7 +39,7 @@
 										"交互界面主菜单"
 									];
 									render.system_call_processor.set_menu_show(show_component_name[function_id]);
-									ep.hightlight=[0,function_id/7.0,		1.0,function_id/7.0+1.0/7.0];
+									render.system_call_processor.set_menu_hide(component_id);
 									break;
 								};
 								return;
@@ -64,14 +65,11 @@
 							{
 								var ep=render.component_event_processor[component_id];
 								var new_camera_id=Math.floor(ep.y*9.0);
-								if((new_camera_id<0)||(new_camera_id>8))
-									return;
-								
-								ep.hightlight=[0,new_camera_id/9.0,		1.0,new_camera_id/9.0+1.0/9.0];
-									
-								if(new_camera_id==8)
+								ep.hightlight=[0,new_camera_id/9.0,1.0,new_camera_id/9.0+1.0/9.0];
+								if((new_camera_id<0)||(new_camera_id>=8)){
 									render.system_call_processor.set_menu_show("相机功能选择组件");
-								else
+									render.system_call_processor.set_menu_hide(component_id);
+								}else
 									render.caller.call_server_component(
 										"render_target_register_component","all",
 										[["operation","camera"],["camera",new_camera_id]]);
@@ -97,6 +95,8 @@
 							{
 								var ep=render.component_event_processor[component_id];
 								var direction_id=Math.floor(ep.y*15.0);
+								ep.hightlight=[0,direction_id/15.0,1.0,direction_id/15.0+1.0/15.0];
+								
 								var direction_data=[
 										[+1,+1,+1],
 										[-1,+1,+1],
@@ -116,6 +116,7 @@
 								];
 								
 								if((direction_id<0)||(direction_id>=direction_data.length)){
+									render.system_call_processor.set_menu_hide(component_id);
 									render.system_call_processor.set_menu_show("相机功能选择组件");	
 									direction_id=direction_data.length;
 								}else{
@@ -126,7 +127,7 @@
 											["z",direction_data[direction_id][2]]
 										]);
 								}
-								ep.hightlight=[0,direction_id/15.0,		1.0,direction_id/15.0+1.0/15.0];
+								
 							}
 						}
 					}
@@ -149,6 +150,8 @@
 							{
 								var ep=render.component_event_processor[component_id];
 								var direction_id=Math.floor(ep.y*15.0);
+								ep.hightlight=[0,direction_id/15.0,	1.0,direction_id/15.0+1.0/15.0];
+								
 								var direction_data=[
 										[+1,+1,+1],
 										[-1,+1,+1],
@@ -168,6 +171,7 @@
 								];
 								
 								if((direction_id<0)||(direction_id>=direction_data.length)){
+									render.system_call_processor.set_menu_hide(component_id);
 									render.system_call_processor.set_menu_show("相机功能选择组件");
 									direction_id=direction_data.length;
 								}else{
@@ -178,7 +182,6 @@
 											["z",direction_data[direction_id][2]]
 										]);
 								}
-								ep.hightlight=[0,direction_id/15.0,	1.0,direction_id/15.0+1.0/15.0];
 							}
 						}
 					}
@@ -204,6 +207,7 @@
 							{
 								var ep=render.component_event_processor[component_id];
 								var function_id=Math.floor(ep.y*8.0);
+								ep.hightlight=[0,function_id/8.0,1.0,function_id/8.0+1.0/8.0];
 								
 								if(function_id==6){
 									var str=prompt("请 输入旋转角度",ep.rotate_angle.toString());
@@ -217,8 +221,8 @@
 								}
 
 								if((function_id<0)||(function_id>6)){
+									render.system_call_processor.set_menu_hide(component_id);
 									render.system_call_processor.set_menu_show("相机功能选择组件");
-									function_id=7;
 								}else{
 									var angle=ep.rotate_angle*Math.PI/180.0;
 									var rotate_array=[
@@ -239,8 +243,6 @@
 										 ["x1",rotate_array[1][0]],["y1",rotate_array[1][1]],["z1",rotate_array[1][2]]
 										]);
 								}
-								
-								ep.hightlight=[0,function_id/8.0,	1.0,function_id/8.0+1.0/8.0];
 							}
 						}
 					}
@@ -265,6 +267,7 @@
 								var ep=render.component_event_processor[component_id];
 								var current_time=(new Date()).getTime();
 								var function_id=Math.floor(ep.y*7.0);
+								ep.hightlight=[0,function_id/7.0,1.0,function_id/7.0+1.0/7.0];
 								
 								if((current_time-ep.last_time)<500)
 									return;
@@ -273,7 +276,7 @@
 								switch(function_id){
 								default:
 									render.system_call_processor.set_menu_show("相机功能选择组件");
-									function_id=6;
+									render.system_call_processor.set_menu_hide(component_id);
 									break;
 								case 0:
 									render.caller.call_server_component("camera_operation_component","all",
@@ -295,11 +298,12 @@
 										["face_id",		render.highlight.face_id]]);
 									break;
 								case 4:
+									alert("不支持");
 									break;
 								case 5:
+									alert("不支持");
 									break;
 								}
-								ep.hightlight=[0,function_id/7.0,1.0,function_id/7.0+1.0/7.0];
 							}
 						}
 					}
@@ -322,6 +326,7 @@
 						{
 							var ep=render.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*16.0);
+							ep.hightlight=[0,function_id/16.0,1.0,function_id/16.0+1.0/16.0];
 							
 							switch(function_id){
 							case 0:
@@ -361,10 +366,9 @@
 								break;
 							default:
 								render.system_call_processor.set_menu_show("相机功能选择组件");
-								function_id=15;
+								render.system_call_processor.set_menu_hide(component_id);
 								break;
 							}
-							ep.hightlight=[0,function_id/16.0,		1.0,function_id/16.0+1.0/16.0];
 						}
 					};
 				}

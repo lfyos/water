@@ -9,13 +9,13 @@ function(component_name,component_id,render)
 		item_number				:	1,
 		update_flag				:	true,
 
-		update_canvas_texture	:	function(render_id,part_id,buffer_id,
-			component_id,driver_id,instance_initialize_data,part_material,shader_data,render)
+		update_canvas_texture	:	function(
+				canvas_2d,context_2d,text_format,component_id,render)
 		{
 			var ep=render.component_event_processor[component_id];
+			
 			var old_collector_stack_version=ep.collector_stack_version;
 			if(render.collector_stack_version!=ep.collector_stack_version){
-				ep.update_flag=true;
 				ep.collector_stack_version=render.collector_stack_version;
 				ep.hightlight=[-1,-1,-1,-1];
 				
@@ -33,35 +33,40 @@ function(component_name,component_id,render)
 					break;
 				};
 				
-				render.collector_loader.load_collector(simple_list_flag,single_collector_flag,false).
-					then(	function(response_data)
-							{
-								if(response_data.done_flag){
-									ep.collector_list_object=response_data.collector_data;
-									ep.update_flag=false;
-									ep.id_base=0;
-								}else
-									ep.collector_stack_version=old_collector_stack_version;
-							});
-			}
-			if(ep.update_flag)
+				render.collector_loader.load_collector(
+					simple_list_flag,single_collector_flag,false).
+				then(
+					function(response_data)
+					{
+						if(response_data.done_flag){
+							ep.collector_list_object=response_data.collector_data;
+							ep.update_flag=true;
+							ep.id_base=0;
+						}else
+							ep.collector_stack_version=old_collector_stack_version;
+					});
 				return false;
-			ep.update_flag=true;
+			}
+			
+			if(!(ep.update_flag))
+				return false;
+			ep.update_flag=false;
+			
 			ep.request_array=new Array();
 			
 			var  str,p,list_type_flag=true;
-			ep.item_number	=instance_initialize_data.canvas_height/instance_initialize_data.canvas_step;
+			ep.item_number	=text_format.canvas_height/text_format.canvas_step;
 
-			render.text_canvas.width			=instance_initialize_data.canvas_width;
-			render.text_canvas.height			=instance_initialize_data.canvas_height;
+			canvas_2d.width			=text_format.canvas_width;
+			canvas_2d.height		=text_format.canvas_height;
 		
-			render.text_2dcontext.fillStyle		=instance_initialize_data.backgroundStyle;
-			render.text_2dcontext.fillRect(0,0,render.text_canvas.width,render.text_canvas.height);
+			context_2d.fillStyle	=text_format.backgroundStyle;
+			context_2d.fillRect(0,0,canvas_2d.width,canvas_2d.height);
 					
-			render.text_2dcontext.fillStyle		=instance_initialize_data.fillStyle;
-			render.text_2dcontext.font			=instance_initialize_data.font;
-			render.text_2dcontext.textBaseline	=instance_initialize_data.textBaseline;
-			render.text_2dcontext.textAlign		=instance_initialize_data.textAlign;
+			context_2d.fillStyle	=text_format.fillStyle;
+			context_2d.font			=text_format.font;
+			context_2d.textBaseline	=text_format.textBaseline;
+			context_2d.textAlign	=text_format.textAlign;
 			
 			if((p=ep.collector_list_object).length<=0)
 				return true;
@@ -74,7 +79,7 @@ function(component_name,component_id,render)
 					str+="/"+(p[ep.id_base+i].part_number);
 					str+="/"+(p[ep.id_base+i].component_number);
 					str+=":"+(p[ep.id_base+i].title);
-					render.text_2dcontext.fillText(str,0,instance_initialize_data.canvas_step*i);
+					context_2d.fillText(str,0,text_format.canvas_step*i);
 				}
 				return true;
 			case "complex":
@@ -110,7 +115,7 @@ function(component_name,component_id,render)
 					}
 				}
 			for(var i=0;(i<ep.item_number)&&((ep.id_base+i)<my_text_array.length);i++){
-				render.text_2dcontext.fillText(my_text_array[ep.id_base+i],0,instance_initialize_data.canvas_step*i);
+				context_2d.fillText(my_text_array[ep.id_base+i],0,text_format.canvas_step*i);
 				ep.request_array[i]=my_request_array[ep.id_base+i];
 			}
 			return true;
@@ -125,27 +130,30 @@ function(component_name,component_id,render)
 			else if(typeof(event.detail)=="number")
 				mouse_wheel_number-=event.detail/5;				//for firefox
 			else
-				return;
+				return true;
 			
 			var skip_array=[1,	5,	10,	50,	100,	500,	1000,	5000];
 
 			ep.id_base-=mouse_wheel_number*skip_array[(event.ctrlKey?1:0)+(event.shiftKey?2:0)+(event.altKey?4:0)];
 			ep.id_base=(ep.id_base<0)?0:Math.round(ep.id_base);
 			ep.update_flag=false;
-			return;
+			
+			return true;
 		},
 		pickupmouseselect		:	function(event,component_id,render)
 		{
 			var ep=render.component_event_processor[component_id];
-			var function_id=Math.floor((1.0-ep.y)*ep.item_number);
+			var function_id=Math.floor(ep.y*ep.item_number);
+			ep.hightlight=[0,function_id/ep.item_number,1.0,function_id/ep.item_number+1.0/ep.item_number];
+			
 			var p=ep.collector_list_object;
 
 			switch(ep.list_type){
 			case "collector":
 				var my_id=Math.round(ep.id_base+function_id);
 				if((my_id>=0)&&(my_id<p.length)){
-					var operate_ep=render.component_event_processor[
-							render.get_component_object_by_component_name("列表功能操作组件").component_id];
+					var operate_ep=render.component_event_processor[render.operate_component.
+							get_component_object_by_component_name("列表功能操作组件").component_id];
 					operate_ep.list_id	=p[my_id].list_id;
 					operate_ep.title	=p[my_id].title;
 					render.system_call_processor.set_menu_show("列表功能操作组件");
@@ -161,23 +169,22 @@ function(component_name,component_id,render)
 				var component_id=ep.request_array[function_id][2];
 				
 				if(event.ctrlKey)
-					render.call_server_component("manipulator_component","all",
+					render.caller.call_server_component("manipulator_component","all",
 						[["event_method","part_list"],	["operation",	"selection"],
 						 ["selection",	"select"],		["render_id",	render_id],
 						 ["part_id",	part_id],		["component_id",component_id]]);
 				else if(event.shiftKey)
-					render.call_server_component("manipulator_component","all",
+					render.caller.call_server_component("manipulator_component","all",
 						[["event_method","part_list"],	["operation",	"selection"],
 						 ["selection",	"unselect"],	["render_id",	render_id],
 						 ["part_id",	part_id],		["component_id",component_id]]);
 				else
-					render.call_server_component("manipulator_component","all",
+					render.caller.call_server_component("manipulator_component","all",
 						[["event_method","part_list"],	["operation",	"selection"],
 						 ["selection",	"swap"],		["render_id",	render_id],
 						 ["part_id",	part_id],		["component_id",component_id]]);
 				break;
 			}		
-			ep.hightlight=[0,1.0-function_id/ep.item_number-1.0/ep.item_number,		1.0,1.0-function_id/ep.item_number];
 		}
 	}
 }

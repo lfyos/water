@@ -223,8 +223,6 @@ public class part
 		head_fw.println("\t\t\"normal_part_flag\"\t\t\t\t\t:\t",	is_normal_part()	?"true,":"false,");
 		head_fw.println("\t\t\"bottom_box_flag\"\t\t\t\t\t:\t",		is_bottom_box_part()?"true,":"false,");
 		head_fw.println("\t\t\"top_box_flag\"\t\t\t\t\t\t:\t",		is_top_box_part()	?"true,":"false,");
-		head_fw.println("\t\t\"max_component_data_buffer_number\"\t:\t",
-				part_par.max_component_data_buffer_number+",");
 		
 		head_fw.print ("\t\t\"part_box\"\t\t\t\t\t\t\t:\t[");
 		box part_box=secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null);

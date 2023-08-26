@@ -40,8 +40,7 @@ function construct_system_buffer(target_buffer_number,render)
 
 	this.set_system_buffer=function(render)
 	{
-		if((this.main_target_project_matrix==null)||(this.main_target_view_parameter==null))
-			return;
+		var flag=((this.main_target_project_matrix==null)||(this.main_target_view_parameter==null));
 			
 		var t=render.current_time;
 		var nanosecond=t%1000;		t=Math.floor((t-nanosecond)/1000);
@@ -66,12 +65,12 @@ function construct_system_buffer(target_buffer_number,render)
 			render.highlight.body_id,
 			render.highlight.face_id,
 
-			this.main_target_view_parameter.view_x0,
-			this.main_target_view_parameter.view_y0,
-			this.main_target_view_parameter.view_width,
-			this.main_target_view_parameter.view_height,
-			this.main_target_view_parameter.whole_view_width,
-			this.main_target_view_parameter.whole_view_height,
+			flag?0:(this.main_target_view_parameter.view_x0),
+			flag?0:(this.main_target_view_parameter.view_y0),
+			flag?1:(this.main_target_view_parameter.view_width),
+			flag?1:(this.main_target_view_parameter.view_height),
+			flag?1:(this.main_target_view_parameter.whole_view_width),
+			flag?1:(this.main_target_view_parameter.whole_view_height),
 			
 			da.getFullYear(),
 			da.getMonth(),
@@ -92,9 +91,16 @@ function construct_system_buffer(target_buffer_number,render)
 			render.pickup.value[2]
 		];
 		
-		float_data=float_data.concat(this.main_target_project_matrix.screen_move_matrix);
-		float_data=float_data.concat(this.main_target_project_matrix.negative_screen_move_matrix);
-
+		if(flag)
+			float_data=float_data.concat(
+				[	1,0,0,0,	0,1,0,0,	0,0,1,0,	0,0,0,1,
+					1,0,0,0,	0,1,0,0,	0,0,1,0,	0,0,0,1
+				]);
+		else{
+			float_data=float_data.concat(this.main_target_project_matrix.screen_move_matrix);
+			float_data=float_data.concat(this.main_target_project_matrix.negative_screen_move_matrix);
+		}
+		
 		var component_location=render.component_location_data;
 		var camera_object_parameter=render.camera.camera_object_parameter;
 		

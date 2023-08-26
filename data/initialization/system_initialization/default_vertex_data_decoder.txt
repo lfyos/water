@@ -114,7 +114,6 @@ function(component_name,component_id,render)
 				default:
 				case "edge":
 				case "point":
-					buffer_object_data.item_size=item_size;
 					return buffer_object_data;
 				case "face":
 					new_item_size=item_size;
@@ -181,7 +180,6 @@ function(component_name,component_id,render)
 							break;
 						var unit_type_id=Math.round(p[i+19]);
 						if((unit_type_id<0)||(unit_type_id>=unit_vertex_map.length)){
-							new_buffer_object_data.region_data=[];
 							alert("Wrong UNIT TYPE	:	"+unit_type_id.toString());
 							return buffer_object_data;
 						}

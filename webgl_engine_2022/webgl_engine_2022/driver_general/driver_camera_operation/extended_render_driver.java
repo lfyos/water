@@ -15,9 +15,13 @@ import kernel_component.component_load_source_container;
 
 public class extended_render_driver extends render_driver
 {
+	private double depth_start,depth_end;
+	
 	public extended_render_driver()
 	{
 		super();
+		depth_start	=0.0;
+		depth_end	=0.1;
 	}
 	public void destroy()
 	{
@@ -37,6 +41,8 @@ public class extended_render_driver extends render_driver
 			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
 	{
 		String render_list_file_name=file_reader.separator(shader_fr.get_string());
+		depth_start	=shader_fr.get_double();
+		depth_end	=shader_fr.get_double();
 		return new String[] {shader_fr.directory_name+render_list_file_name,shader_fr.get_charset()};
 	}
 	public String[] get_part_list(
@@ -61,6 +67,6 @@ public class extended_render_driver extends render_driver
 	public render_instance_driver create_render_instance_driver(render r,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_render_instance_driver();
+		return new extended_render_instance_driver(depth_start,depth_end);
 	}
 }

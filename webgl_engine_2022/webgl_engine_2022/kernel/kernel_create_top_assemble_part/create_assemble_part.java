@@ -181,7 +181,6 @@ public class create_assemble_part
 				p.part_par.create_edge_buffer_object_bitmap,
 				p.part_par.create_point_buffer_object_bitmap,
 				
-				p.part_par.max_component_data_buffer_number,
 				p.part_par.max_part_load_thread_number,
 				
 				p.part_par.do_create_part_ids_flag,

@@ -8,6 +8,7 @@ import kernel_component.component_collector;
 import kernel_engine.client_information;
 import kernel_engine.engine_kernel;
 import kernel_part.part;
+import kernel_part.part_parameter;
 import kernel_transformation.box;
 import kernel_driver.component_instance_driver;
 
@@ -75,6 +76,7 @@ public class list_component_on_collector
 		box my_box;
 		if((my_box=comp.get_component_box(false))==null)
 			return false;
+		
 		my_box=cam_result.matrix.multiply(my_box);
 		my_box.p[1].z=my_box.p[0].z;
 		double lod_precision2=my_box.distance2();
@@ -88,10 +90,11 @@ public class list_component_on_collector
 				?cam_result.cam.parameter.high_precision_scale
 				:cam_result.cam.parameter.low_precision_scale)>const_value.min_value)
 			lod_precision_scale*=my_lod_precision_scale;
+		
 		lod_precision2*=lod_precision_scale*lod_precision_scale;
 
 		if(do_discard_lod_flag)
-			if(lod_precision2<=comp.uniparameter.discard_precision2) 
+			if(lod_precision2<=comp.uniparameter.discard_precision2)
 				return true;
 
 		if(do_selection_lod_flag){
@@ -101,14 +104,16 @@ public class list_component_on_collector
 			if(comp.children_number()>0)
 				if(!(comp.get_can_display_assembly_flag(cam_result.target.parameter_channel_id)))
 					return false;
-			for(int i=0;i<driver_number;i++)
-				if(comp.driver_array.get(i).component_part.part_par.discard_precision2<=lod_precision2){
+			for(int i=0;i<driver_number;i++) {
+				part_parameter part_par=comp.driver_array.get(i).component_part.part_par;
+				if(part_par.discard_precision2<=lod_precision2){
 					if(comp.children_number()>0)
-						if(comp.driver_array.get(i).component_part.part_par.assembly_precision2<=lod_precision2)
+						if(part_par.assembly_precision2<=lod_precision2)
 							return false;
 					if(register(comp,i,render_buffer_id))
 						return true;
 				}
+			}
 			return true;
 		}
 		return false;
@@ -140,7 +145,6 @@ public class list_component_on_collector
 				if(register(comp,i,render_buffer_id))
 					return;
 			no_driver_component_number++;
-			
 			return;
 		}
 		
@@ -195,9 +199,11 @@ public class list_component_on_collector
 							register(my_comp,my_driver_id,render_buffer_id);
 							continue;
 						}
-				collect(my_comp,0,render_buffer_id);
+				collect(my_comp,render_buffer_id,0);
 			}
 		for(component p=pickup_comp;p!=null;p=ek.component_cont.get_component(p.parent_component_id))
 			p.selected_component_family_flag=false;
 	}
-}
+}	
+		
+		

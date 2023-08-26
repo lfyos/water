@@ -91,12 +91,10 @@ public class response_render_component_request
 				if(rt.do_render_flag){
 					cr=ci.target_camera_result_list.get(rt.target_id);
 					int render_buffer_id=cr.get_render_buffer_id(ci);
-					ci.render_buffer.location_buffer.put_in_list(cr.cam.eye_component,ek);
 					
+					ci.render_buffer.location_buffer.put_in_list(cr.cam.eye_component,ek);
 					ci.request_response.print(((response_number++)<=0)?"":",",render_buffer_id);
-		
 					component_collector collector=collect_render_parts(render_data_list,render_buffer_id,rt,ek,ci,cr);
-
 					ci.target_component_collector_list.set(rt.target_id,collector);
 					if(ci.display_camera_result!=null)
 						if(ci.display_camera_result.target.target_id==rt.target_id)

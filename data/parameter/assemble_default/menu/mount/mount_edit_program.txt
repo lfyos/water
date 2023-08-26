@@ -4,25 +4,26 @@ function(component_name,component_id,render)
 		update_flag					:	false,
 		type_flag					:	true,
 		movement_data				:	null,
-		instance_initialize_data	:	null,
+		text_format					:	null,
 		
 		active_list					:	function(my_type_flag)
 		{
-			render.call_server_component("movement_manager","all",
+			render.caller.call_server_component("movement_manager","all",
 				[["operation","movement"],["move_method","stop"]]).
 			then(
 				function(response_data)
 				{
-					return render.call_server_component("movement_manager","all",
+					return render.caller.call_server_component("movement_manager","all",
 						[["operation","design"],["move_method","edit_jason"]]);
 				}).
 			then(
 				function(response_data)
 				{
 					var ep=render.component_event_processor[component_id];
+					
 					ep.id_base					=0;
 					ep.type_flag				=my_type_flag;
-					ep.update_flag				=false;
+					ep.update_flag				=true;
 					ep.movement_data			=response_data;
 					render.system_call_processor.set_menu_show(component_id);
 				});
@@ -30,40 +31,40 @@ function(component_name,component_id,render)
 		pickupmouseselect_routine		:	function(event,component_id,render)
 		{
 			var ep=render.component_event_processor[component_id];
-			if((ep.movement_data==null)||(ep.instance_initialize_data==null))
+			if((ep.movement_data==null)||(ep.text_format==null))
 				return;
 
-			var function_id =ep.instance_initialize_data.canvas_height;
-				function_id/=ep.instance_initialize_data.canvas_step;
-			if((function_id=Math.floor((1.0-ep.y)*function_id))<0)
+			var function_id =ep.text_format.canvas_height;
+				function_id/=ep.text_format.canvas_step;
+			if((function_id=Math.floor(ep.y*function_id))<0)
 				return;
 			switch(function_id){
 			case 0:
 				if(typeof(ep.movement_data.parent)=="object")
-					render.call_server_component("movement_manager","all",
+					render.caller.call_server_component("movement_manager","all",
 						[	["operation","design"],["move_method","edit_jason"],
 							["id",ep.movement_data.parent.movement_tree_id]]).
 					then(
 						function(response_data)
 						{
 							ep.movement_data=response_data;
-							ep.update_flag=false;
+							ep.update_flag=true;
 							ep.id_base=0;
 						});
 				return;
 			case 1:
 				if(ep.type_flag){
-					var p=render.get_component_object_by_component_name("组件拼装拼装操作组件");
+					var p=render.operate_component.get_component_object_by_component_name("组件拼装拼装操作组件");
 					render.component_event_processor[p.component_id].active_list();
 				}else{
 					render.system_call_processor.set_menu_hide(component_id);
 					
-					render.call_server_component("movement_manager","all",[["operation","design"],
+					render.caller.call_server_component("movement_manager","all",[["operation","design"],
 						["move_method","locate_camera"],["id",ep.movement_data.movement_tree_id]]).
 					then(
 						function(response_data,render)
 						{
-							ep.update_flag=false;
+							ep.update_flag=true;
 							ep.movement_data=response_data;
 						});
 				}
@@ -72,14 +73,14 @@ function(component_name,component_id,render)
 				var index_id=ep.id_base+function_id-2;
 				if((index_id>=0)&&(index_id<ep.movement_data.children.length))
 					
-					render.call_server_component("movement_manager","all",
+					render.caller.call_server_component("movement_manager","all",
 						[	["operation","design"],["move_method","edit_jason"],
 							["id",ep.movement_data.children[index_id].movement_tree_id]]).
 					then(
 						function(response_data)
 						{
 							ep.movement_data=response_data;
-							ep.update_flag=false;
+							ep.update_flag=true;
 							ep.id_base=0;
 						});
 				return;
@@ -87,7 +88,7 @@ function(component_name,component_id,render)
 		},
 		pickupmouseselect		:	function(event,component_id,render)
 		{
-			render.call_server_component("movement_manager","all",
+			render.caller.call_server_component("movement_manager","all",
 				[["operation","movement"],["move_method","stop"]]).
 			then(
 				function(response_data)
@@ -96,60 +97,57 @@ function(component_name,component_id,render)
 					ep.pickupmouseselect_routine(event,component_id,render);
 				});
 		},
-		update_canvas_texture	:	function(render_id,part_id,buffer_id,
-			component_id,driver_id,instance_initialize_data,part_material,shader_data,render)
+		
+		update_canvas_texture	:	function(canvas_2d,context_2d,text_format,component_id,render)
 		{
 			var ep=render.component_event_processor[component_id];
-			if(ep.update_flag)
-				return false;
-			ep.update_flag=true;
-
-			ep.instance_initialize_data			=instance_initialize_data;
-			
-			render.text_canvas.width			=ep.instance_initialize_data.canvas_width;
-			render.text_canvas.height			=ep.instance_initialize_data.canvas_height;
 		
-			render.text_2dcontext.fillStyle		=ep.instance_initialize_data.backgroundStyle;
-			render.text_2dcontext.fillRect(0,0,render.text_canvas.width,render.text_canvas.height);
+			ep.text_format			=text_format;
+			
+			canvas_2d.width			=ep.text_format.canvas_width;
+			canvas_2d.height		=ep.text_format.canvas_height;
+		
+			context_2d.fillStyle	=ep.text_format.backgroundStyle;
+			context_2d.fillRect(0,0,canvas_2d.width,canvas_2d.height);
 
-			render.text_2dcontext.font			=ep.instance_initialize_data.font;
-			render.text_2dcontext.textBaseline	=ep.instance_initialize_data.textBaseline;
-			render.text_2dcontext.textAlign		=ep.instance_initialize_data.textAlign;
+			context_2d.font			=ep.text_format.font;
+			context_2d.textBaseline	=ep.text_format.textBaseline;
+			context_2d.textAlign	=ep.text_format.textAlign;
 			
 			if(ep.movement_data==null)
 				return true;
 			var str,my_text_width,text_position;
 			if(typeof(ep.movement_data.parent)!="undefined"){
-				render.text_2dcontext.fillStyle=ep.movement_data.parent.current_movement_flag
-					?(ep.instance_initialize_data.current_fillStyle):(ep.instance_initialize_data.fillStyle);
-				my_text_width=render.text_2dcontext.measureText(ep.movement_data.parent.node_name).width;
-				if((text_position=(render.text_canvas.width-my_text_width)/2.0)<0)
+				context_2d.fillStyle=ep.movement_data.parent.current_movement_flag
+					?(ep.text_format.current_fillStyle):(ep.text_format.fillStyle);
+				my_text_width=context_2d.measureText(ep.movement_data.parent.node_name).width;
+				if((text_position=(canvas_2d.width-my_text_width)/2.0)<0)
 					text_position=0;
-				render.text_2dcontext.fillText(ep.movement_data.parent.node_name,text_position,0);
+				context_2d.fillText(ep.movement_data.parent.node_name,text_position,0);
 			}
 			
-			render.text_2dcontext.fillStyle=ep.movement_data.current_movement_flag
-				?(ep.instance_initialize_data.current_fillStyle):(ep.instance_initialize_data.fillStyle);
+			context_2d.fillStyle=ep.movement_data.current_movement_flag
+				?(ep.text_format.current_fillStyle):(ep.text_format.fillStyle);
 			str ="  "+ep.movement_data.node_name;
 			str+=ep.type_flag?"	点击操作拼装":"	点击拼装跳转";
-			my_text_width=render.text_2dcontext.measureText(str).width;
-			if((text_position=(render.text_canvas.width-my_text_width)/2.0)<0)
+			my_text_width=context_2d.measureText(str).width;
+			if((text_position=(canvas_2d.width-my_text_width)/2.0)<0)
 				text_position=0;
-			render.text_2dcontext.fillText(str,text_position,ep.instance_initialize_data.canvas_step);
+			context_2d.fillText(str,text_position,ep.text_format.canvas_step);
 					
-			render.text_2dcontext.fillStyle=ep.instance_initialize_data.current_fillStyle;
+			context_2d.fillStyle=ep.text_format.current_fillStyle;
 			for(var i=ep.id_base,j=2,ni=ep.movement_data.children.length,height;i<ni;i++,j++){
-				if((height=ep.instance_initialize_data.canvas_step*j)>render.text_canvas.height)
+				if((height=ep.text_format.canvas_step*j)>canvas_2d.height)
 					break;
 				if(ep.movement_data.children[i].current_movement_flag)
-					render.text_2dcontext.fillText("    "+(ep.movement_data.children[i].node_name),0,height);
+					context_2d.fillText("    "+(ep.movement_data.children[i].node_name),0,height);
 			}
-			render.text_2dcontext.fillStyle=ep.instance_initialize_data.fillStyle;
+			context_2d.fillStyle=ep.text_format.fillStyle;
 			for(var i=ep.id_base,j=2,ni=ep.movement_data.children.length,height;i<ni;i++,j++){
-				if((height=ep.instance_initialize_data.canvas_step*j)>render.text_canvas.height)
+				if((height=ep.text_format.canvas_step*j)>canvas_2d.height)
 					break;
 				if(!(ep.movement_data.children[i].current_movement_flag))
-					render.text_2dcontext.fillText("    "+(ep.movement_data.children[i].node_name),0,height);
+					context_2d.fillText("    "+(ep.movement_data.children[i].node_name),0,height);
 			}
 			return true;
 		}

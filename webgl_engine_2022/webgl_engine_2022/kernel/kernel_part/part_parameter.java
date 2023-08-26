@@ -11,7 +11,7 @@ public class part_parameter
 	public long		max_file_head_length,max_file_data_length,max_buffer_object_data_length;
 	public double	lod_precision_scale,assembly_precision2,discard_precision2,bottom_box_discard_precision2;
 	public long		create_face_buffer_object_bitmap,create_edge_buffer_object_bitmap,create_point_buffer_object_bitmap;
-	public int 		max_component_data_buffer_number,max_part_load_thread_number;
+	public int 		max_part_load_thread_number;
 	
 	public boolean	do_create_part_ids_flag,do_create_bottom_box_flag;
 	public boolean	clear_buffer_head_file_flag,clear_buffer_boftal_file_flag,clear_model_file_flag[];
@@ -43,7 +43,6 @@ public class part_parameter
 			long	my_create_edge_buffer_object_bitmap,
 			long	my_create_point_buffer_object_bitmap,
 			
-			int		my_max_component_data_buffer_number,
 			int		my_max_part_load_thread_number,
 			
 			boolean	my_do_create_part_ids_flag,
@@ -77,7 +76,6 @@ public class part_parameter
 		create_edge_buffer_object_bitmap=my_create_edge_buffer_object_bitmap;
 		create_point_buffer_object_bitmap=my_create_point_buffer_object_bitmap;
 		
-		max_component_data_buffer_number=(my_max_component_data_buffer_number<=0)?1:my_max_component_data_buffer_number;
 		max_part_load_thread_number		=(my_max_part_load_thread_number<=0)	?1:my_max_part_load_thread_number;
 		
 		do_create_part_ids_flag			=my_do_create_part_ids_flag;
@@ -122,7 +120,6 @@ public class part_parameter
 				create_edge_buffer_object_bitmap,
 				create_point_buffer_object_bitmap,
 				
-				max_component_data_buffer_number,
 				max_part_load_thread_number,
 
 				do_create_part_ids_flag,
@@ -161,7 +158,6 @@ public class part_parameter
 				create_edge_buffer_object_bitmap,
 				create_point_buffer_object_bitmap,
 				
-				max_component_data_buffer_number,
 				max_part_load_thread_number,
 
 				do_create_part_ids_flag,
@@ -204,7 +200,6 @@ public class part_parameter
 		create_edge_buffer_object_bitmap	=f.get_long();
 		create_point_buffer_object_bitmap	=f.get_long();
 		
-		max_component_data_buffer_number	=((max_component_data_buffer_number=f.get_int())<=0)?1:max_component_data_buffer_number;
 		max_part_load_thread_number			=((max_part_load_thread_number=f.get_int())<=0)?1:max_part_load_thread_number;
 		
 		do_create_part_ids_flag				=f.get_boolean();

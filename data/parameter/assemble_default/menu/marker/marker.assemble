@@ -19,6 +19,7 @@
 				{
 					var ep=render.component_event_processor[component_id];
 					var function_id=Math.floor(ep.y*12.0);
+					ep.hightlight=[0,function_id/12.0,1.0,function_id/12.0+1.0/12.0];
 					
 					switch(function_id){
 					case 0:
@@ -82,10 +83,9 @@
 						break;
 					default:
 						render.system_call_processor.set_menu_show("交互界面主菜单");
-						function_id=11;
+						render.system_call_processor.set_menu_hide(component_id);
 						break;
 					}
-					ep.hightlight=[0,function_id/12.0,		1.0,function_id/12.0+1.0/12.0];
 				}
 			}
 		}

@@ -247,27 +247,23 @@ function construct_component_driver(
 		var ep=render.component_event_processor[component_id];
 		if(this.image_bind_group.is_busy_flag)
 			return;
-		if(ep.update_flag){
-			ep.update_flag=false;
-			if(ep.interface_data.type)
-				if(typeof(ep.update_canvas_texture)=="function"){
-					render.webgpu.canvas_2d.width	=ep.interface_data.canvas.canvas_width;
-					render.webgpu.canvas_2d.height	=ep.interface_data.canvas.canvas_height;
-					if(ep.update_canvas_texture(render.webgpu.context_2d,ep.interface_data.canvas,ep,render))
-						render.webgpu.device.queue.copyExternalImageToTexture(
-							{
-								source	:	render.webgpu.canvas_2d
-							},
-							{
-								texture	:	this.image_bind_group.texture
-							},
-							{
-								width	:	ep.interface_data.canvas.canvas_width,
-								height	:	ep.interface_data.canvas.canvas_height
-							});
-				}
-		}
-
+		
+		if(ep.interface_data.type)
+			if(typeof(ep.update_canvas_texture)=="function")
+				if(ep.update_canvas_texture(
+						render.webgpu.canvas_2d,render.webgpu.context_2d,
+						ep.interface_data.canvas,component_id,render))
+					render.webgpu.device.queue.copyExternalImageToTexture(
+						{
+							source	:	render.webgpu.canvas_2d
+						},
+						{
+							texture	:	this.image_bind_group.texture
+						},
+						{
+							width	:	ep.interface_data.canvas.canvas_width,
+							height	:	ep.interface_data.canvas.canvas_height
+						});
 		if((render_data.main_display_target_flag)||(this.save_parameter_number<=0)){
 			if(	  (ep.parameter_bak.x !=ep.show_x)
 				||(ep.parameter_bak.y !=ep.show_y)

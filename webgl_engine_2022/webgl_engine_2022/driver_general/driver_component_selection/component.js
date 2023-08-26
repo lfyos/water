@@ -52,14 +52,16 @@ function init_component_event_processor(screen_rectangle_component_id,render)
 		
 		var dx=render.view.main_target_x-ep.p0[0];
 		var dy=render.view.main_target_y-ep.p0[1];
+		
+		var my_promise;
 				
 		if((dx*dx+dy*dy)<(render.computer.min_value2()))
-			render.caller.call_server_component(component_id,0,[
+			my_promise=render.caller.call_server_component(component_id,0,[
 						["operation",	"single"],
 						["function",	render.event_component.mouse.function_id],
 						ep.control_code(event)]);
 		else
-			render.caller.call_server_component(component_id,0,[
+			my_promise=render.caller.call_server_component(component_id,0,[
 						["operation",	"many"									],
 						["function",	render.event_component.mouse.function_id],
 						["x0",			ep.p0[0]								],
@@ -67,7 +69,11 @@ function init_component_event_processor(screen_rectangle_component_id,render)
 						["x1",			render.view.main_target_x				],
 						["y1",			render.view.main_target_y				],
 						ep.control_code(event)]);
-		
+		my_promise.then(
+			function(response_data)
+			{
+				render.caller.call_server_component("coordinate","all",[["operation","onoff"]]);
+			});
 		return true;
 	};
 			

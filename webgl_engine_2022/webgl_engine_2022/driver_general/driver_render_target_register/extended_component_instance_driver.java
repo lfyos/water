@@ -4,9 +4,9 @@ import kernel_part.part;
 import kernel_transformation.box;
 import kernel_component.component;
 import kernel_camera.camera_result;
-import kernel_common_class.const_value;
 import kernel_engine.engine_kernel;
 import kernel_render.render_target;
+import kernel_common_class.const_value;
 import kernel_render.render_target_view;
 import kernel_engine.client_information;
 import kernel_driver.component_instance_driver;
@@ -121,7 +121,10 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;
 			if((str=ci.request_response.get_parameter("camera"))==null)
 				break;
-			target_parameter[main_target_id].camera_id=Integer.parseInt(str);
+			int new_camera_id;
+			if((new_camera_id=Integer.parseInt(str))>=0)
+				if(new_camera_id<ek.camera_cont.size())
+					target_parameter[main_target_id].camera_id=new_camera_id;
 			break;
 		}
 		case "width_height":

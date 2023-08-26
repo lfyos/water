@@ -139,7 +139,7 @@
 		/* 2type		*/         component_selection_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
 									/* 		screen_rectangle_component	*/			screen_rectangle_component
-									/*		audio_component				*/			audio_component
+									/*		audio_component				*/			audio_player_component
 									/*		modifier_container_id		*/			0
 		/* 2children number */		0			
 		

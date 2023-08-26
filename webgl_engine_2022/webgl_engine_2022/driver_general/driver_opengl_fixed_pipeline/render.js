@@ -47,7 +47,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 							offset			:	48,
 							shaderLocation	:	3
 						},
-						{	//attribute
+						{	//texture
 							format			:	"float32x4",
 							offset			:	64,
 							shaderLocation	:	4
@@ -101,6 +101,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			format:"rgba32sint"
 		}
 	];
+	
 	this.id_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.fragment.entryPoint="fragment_value_fun";

@@ -18,6 +18,8 @@
 						{
 							var ep=render.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*6.0);
+							ep.hightlight=[0,function_id/6.0,1.0,function_id/6.0+1.0/6.0];
+							
 							var show_component_name=[
 									"内容显示显示方式组件",
 									"内容显示显示内容组件",
@@ -25,12 +27,12 @@
 									"内容显示显示背景组件",
 									"内容显示坐标轴方向按钮组件"
 							];
-							if((function_id<0)||(function_id>4)){
+							if((function_id<0)||(function_id>4))
 								render.system_call_processor.set_menu_show("交互界面主菜单");
-								function_id=5;
-							}else
+							else
 								render.system_call_processor.set_menu_show(show_component_name[function_id]);
-							ep.hightlight=[0,function_id/6.0,		1.0,function_id/6.0+1.0/6.0];
+								
+							render.system_call_processor.set_menu_hide(component_id);
 						}
 					};
 				}
@@ -65,6 +67,7 @@
 							};
 							var ep=render.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*15.0);
+							ep.hightlight=[0,function_id/15.0,1.0,function_id/15.0+1.0/15.0];
 						
 							switch(function_id){
 							case 0:
@@ -107,11 +110,11 @@
 								break;
 							case 14:
 								render.system_call_processor.set_menu_show("内容显示功能选择组件");
+								render.system_call_processor.set_menu_hide(component_id);
 								break;
 							default:
 								return;
 							}
-							ep.hightlight=[0,function_id/15.0,		1.0,function_id/15.0+1.0/15.0];
 						}
 					};
 				}
@@ -137,8 +140,8 @@
 							var ep=render.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*9.0);
 							if((function_id<0)||(function_id>7)){
-								function_id=8;
 								render.system_call_processor.set_menu_show("内容显示功能选择组件");
+								render.system_call_processor.set_menu_hide(component_id);
 							}else
 								render.caller.call_server_component("render_target_register_component","all",
 									[["operation","parameter_channel"],["target",-1],["parameter_channel",function_id]]);
@@ -170,12 +173,12 @@
 
 							if((function_id<0)||(function_id>11)){
 								render.system_call_processor.set_menu_show("内容显示功能选择组件");
-								function_id=12;
+								render.system_call_processor.set_menu_hide(component_id);
 							}else{
 								render.caller.call_server_component("manipulator_component","all",
 									[["event_method","display_value"],["display_value",function_id]]);
 							}
-							ep.hightlight=[0,function_id/13.0,		1.0,function_id/13.0+1.0/13.0];
+							ep.hightlight=[0,function_id/13.0,1.0,function_id/13.0+1.0/13.0];
 						}
 					}
 				}
@@ -200,6 +203,7 @@
 						{
 							var ep=render.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*6.0);
+							ep.hightlight=[0,function_id/6.0,1.0,function_id/6.0+1.0/6.0];
 
 							switch(function_id){
 							case 0:
@@ -230,13 +234,13 @@
 								break;
 							case 4:
 								render.system_call_processor.set_menu_show("内容显示显示背景图片组件");
+								render.system_call_processor.set_menu_hide(component_id);
 								break;
 							default:
-								function_id=5;
 								render.system_call_processor.set_menu_show("内容显示功能选择组件");
+								render.system_call_processor.set_menu_hide(component_id);
 								break;
 							}
-							ep.hightlight=[0,function_id/6.0,		1.0,function_id/6.0+1.0/6.0];
 						}
 					};
 				}
@@ -260,9 +264,10 @@
 						{
 							var ep=render.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*11.0);
+							ep.hightlight=[0,function_id/11.0,1.0,function_id/11.0+1.0/11.0];
 							if((function_id<0)||(function_id>9)){
-								function_id=10;
 								render.system_call_processor.set_menu_show("内容显示显示背景组件");
+								render.system_call_processor.set_menu_hide(component_id);
 							}else{
 								var picture_id="picture_"+function_id.toString()+"/";
 								for(var i=0;i<8;i++)
@@ -270,7 +275,7 @@
 										"background_component_"+i.toString(),"all",
 										[["operation","directory"],["directory",picture_id]]);
 							}							
-							ep.hightlight=[0,function_id/11.0,		1.0,function_id/11.0+1.0/11.0];
+							
 						}
 					};
 				}
@@ -295,6 +300,7 @@
 						{
 							var ep=render.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*9.0);
+							ep.hightlight=[0,function_id/9.0,1.0,function_id/9.0+1.0/9.0];
 							
 							switch(function_id){
 							case 0:
@@ -317,11 +323,10 @@
 									[["operation","show_hide"],["show_hide",(function_id==6)?"true":"false"]]);
 								break;
 							default:
-								function_id=8;
 								render.system_call_processor.set_menu_show("内容显示功能选择组件");
+								render.system_call_processor.set_menu_hide(component_id);
 								break;
-							}								
-							ep.hightlight=[0,function_id/9.0,		1.0,function_id/9.0+1.0/9.0];
+							}
 						}
 					};
 				}

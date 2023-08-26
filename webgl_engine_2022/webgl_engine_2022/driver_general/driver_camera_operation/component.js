@@ -188,14 +188,11 @@ function construct_component_driver(
 									project_matrix.right_up_center_point,
 									project_matrix.left_down_center_point);
 			view_distance	=render.computer.distance(view_distance)*scale;
-		var z0				=render.computer.sub_operation(
-									project_matrix.near_center_point,
-									project_matrix.center_point);
-			z0				=render.computer.distance(z0)-view_distance/2.0;
+		
+		var buffer_place	=4*render_data.render_buffer_id*Float32Array.BYTES_PER_ELEMENT;
 
-		render.webgpu.device.queue.writeBuffer(this.parameter_buffer,
-			Float32Array.BYTES_PER_ELEMENT*4*(render_data.render_buffer_id),
-			new Float32Array([x0,y0,z0,view_distance/box_distance]));
+		render.webgpu.device.queue.writeBuffer(this.parameter_buffer,buffer_place,
+			new Float32Array([x0,y0,view_distance,view_distance/box_distance]));
 	}
 
 	this.draw_component=function(method_data,render_data,
@@ -228,6 +225,7 @@ function construct_component_driver(
 		
 			p=part_object.buffer_object.face.region_data;
 			rpe.setPipeline(render_driver.face_pipeline);
+			
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);
 				rpe.draw(p[i].item_number);
@@ -235,6 +233,7 @@ function construct_component_driver(
 	
 			p=part_object.buffer_object.edge.region_data;
 			rpe.setPipeline(render_driver.edge_pipeline);
+
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);
 				rpe.draw(p[i].item_number);

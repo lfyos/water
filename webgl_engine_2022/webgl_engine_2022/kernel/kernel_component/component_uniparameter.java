@@ -13,25 +13,24 @@ public class component_uniparameter
 	public boolean display_part_name_or_component_name_flag;
 	
 	public component_uniparameter(long my_lastModified_time,
-			boolean my_normalize_location_flag,boolean my_part_list_flag,
-			double my_component_driver_lod_precision_scale)
+			boolean my_normalize_location_flag,boolean my_part_list_flag)
 	{
-		selected_flag					=false;
-		effective_selected_flag			=false;
-		selected_time					=0;
+		selected_flag						=false;
+		effective_selected_flag				=false;
+		selected_time						=0;
 		
-		normalize_location_flag			=my_normalize_location_flag;
-		part_list_flag					=my_part_list_flag;
+		normalize_location_flag				=my_normalize_location_flag;
+		part_list_flag						=my_part_list_flag;
 
-		discard_precision2				=-1.0;
-		transparency_value				=1.0;
-		component_driver_lod_precision_scale=my_component_driver_lod_precision_scale;
+		discard_precision2					=-1.0;
+		transparency_value					=1.0;
+		component_driver_lod_precision_scale=1.0;
 		
-		do_response_location_flag		=true;
-		cacaulate_location_flag			=false;
+		do_response_location_flag			=true;
+		cacaulate_location_flag				=false;
 		display_part_name_or_component_name_flag=true;
 		
-		touch_time						=0;
-		file_last_modified_time			=my_lastModified_time;
+		touch_time							=0;
+		file_last_modified_time				=my_lastModified_time;
 	}
 }

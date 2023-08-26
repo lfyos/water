@@ -99,7 +99,11 @@ async function request_render_data(render)
 			request_url+="&requesting_number="+requesting_number+"_"+max_request_number;
 		};
 		
-		request_url+="&precision="		+(render.event_listener.mouse_down_flag?"false":"true");
+		var mouse_down_flag=false;
+		for(var i=0,ni=render.event_listener.length;i<ni;i++)
+			mouse_down_flag|=render.event_listener[i].mouse_down_flag;
+
+		request_url+="&precision="+(mouse_down_flag?"false":"true");
 		request_url+="&length=";
 		request_url+=request_url.length.toString();
 

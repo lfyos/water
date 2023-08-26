@@ -96,11 +96,10 @@ public class extended_component_instance_driver extends component_instance_drive
 					ci.display_camera_result.target.parameter_channel_id,ek, ci);
 			break;
 		case "part_list":
-			if((my_comp=ek.component_cont.get_component(audio_component_id))==null)
-				break;
-			operate_part_list.part_list_request(
-				modifier_container_id,save_component_name_or_id_flag,comp,ek,ci,
-				(driver_audio_player.extended_component_driver)(my_comp.driver_array.get(0)));
+			if((my_comp=ek.component_cont.get_component(audio_component_id))!=null)
+				operate_part_list.part_list_request(
+						modifier_container_id,save_component_name_or_id_flag,comp,ek,ci,
+						(driver_audio_player.extended_component_driver)(my_comp.driver_array.get(0)));
 			break;
 		case "clip":
 			operate_clip_plane.clip_plane_request(modifier_container_id,ek, ci);
