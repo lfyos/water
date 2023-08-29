@@ -75,7 +75,6 @@ function construct_component_driver(
 	init_data,		part_object,	part_driver,	render_driver,	render)
 {
 	this.component_id	=component_id;
-	this.pickup_flag	=init_data;
 	this.marker_array	=new Array();
 	render.component_event_processor[component_id]=new init_component_event_processor();
 	
@@ -152,6 +151,7 @@ function construct_component_driver(
 			var my_marker_y							=buffer_data_item[i][2];
 			var my_marker_z							=buffer_data_item[i][3];
 			var my_marker_text						=buffer_data_item[i][4].trim();
+			var my_pickup_flag						=buffer_data_item[i][5];
 			
 			var my_texture_width					=part_object.material[0].canvas_width;
 			var my_texture_height					=part_object.material[0].canvas_height;
@@ -199,8 +199,7 @@ function construct_component_driver(
 					i,
 					render.component_array_sorted_by_id[component_id].component_ids[driver_id][3],
 					
-					this.pickup_flag,
-					0,0,0	
+					my_pickup_flag?1:0,			0,			0,			0
 			];
 			var p0=part_object.material[0].face_normal_color;
 			var p1=part_object.material[0].face_pickup_color;

@@ -72,7 +72,7 @@ function init_component_event_processor(screen_rectangle_component_id,render)
 		my_promise.then(
 			function(response_data)
 			{
-				render.caller.call_server_component("coordinate","all",[["operation","onoff"]]);
+				render.system_call_processor.update_coordinate_display();
 			});
 		return true;
 	};

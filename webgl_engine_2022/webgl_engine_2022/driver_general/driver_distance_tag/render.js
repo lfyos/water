@@ -109,10 +109,6 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 
  			stencilReadMask		:	0xFFFFFFFF,
 			stencilWriteMask	:	0xFFFFFFFF,
-			
-			depthBias			:	0,
-    		depthBiasSlopeScale	:	0,
-    		depthBiasClamp		:	0
 		}
 	};
 	
@@ -121,27 +117,22 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 	pipeline_descr.fragment.entryPoint			="fragment_face_id_fun";
 	this.face_id_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
-	pipeline_descr.vertex.constants				={primitive_type:1};
-	pipeline_descr.primitive.topology			="triangle-list";
-	pipeline_descr.fragment.entryPoint			="fragment_point_id_fun";
-	this.point_id_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
-	
 	pipeline_descr.fragment.targets.length		=1;
 	pipeline_descr.fragment.targets[0].format	=render.webgpu.gpu.getPreferredCanvasFormat();
 	if(render.parameter.multisample>1)
 		pipeline_descr.multisample={count:render.parameter.multisample};
 
-	pipeline_descr.vertex.constants				={primitive_type:2};
+	pipeline_descr.vertex.constants				={primitive_type:1};
 	pipeline_descr.primitive.topology			="triangle-list";
 	pipeline_descr.fragment.entryPoint			="fragment_face_fun";
 	this.face_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
-	pipeline_descr.vertex.constants				={primitive_type:3};
+	pipeline_descr.vertex.constants				={primitive_type:2};
 	pipeline_descr.primitive.topology			="line-list";
 	pipeline_descr.fragment.entryPoint			="fragment_edge_fun";
 	this.edge_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
-	pipeline_descr.vertex.constants				={primitive_type:4};
+	pipeline_descr.vertex.constants				={primitive_type:3};
 	pipeline_descr.primitive.topology			="triangle-list";
 	pipeline_descr.fragment.entryPoint			="fragment_point_fun";
 	this.point_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);

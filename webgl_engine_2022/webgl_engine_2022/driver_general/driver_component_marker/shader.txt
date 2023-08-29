@@ -163,9 +163,7 @@ fn fragment_point_id_fun(vf	:	vertex_to_fragment_struct) -> id_target_struct
 	var ret_val	:	id_target_struct;
 	
 	ret_val.depth=vf.vertex_position.z/vf.vertex_position.w;
-	if(marker_info.pickup_flag>0){
-		ret_val.depth=0.0;
-	}
+
 	if(   (system_info.pickup_component_id==marker_info.marker_component_id)
 		&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
 		&&(system_info.pickup_body_id==marker_info.marker_body_id))
@@ -210,7 +208,6 @@ fn fragment_edge_fun(vf	:	vertex_to_fragment_struct) -> color_target_struct
 	if(marker_info.pickup_flag>0){
 		ret_val.depth=0.0;
 	}
-	
 	ret_val.color=marker_info.edge_normal_color;
 	if(   (system_info.pickup_component_id==marker_info.marker_component_id)
 		&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
@@ -233,7 +230,6 @@ fn fragment_point_fun(vf	:	vertex_to_fragment_struct) -> color_target_struct
 	}
 
 	ret_val.color=marker_info.point_normal_color;
-	
 	if(   (system_info.pickup_component_id==marker_info.marker_component_id)
 		&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
 		&&(system_info.pickup_body_id==marker_info.marker_body_id))

@@ -31,7 +31,7 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 					my_user_name,my_pass_word,my_language_name,my_channel_id,my_render_data);
 
 		    var render_init_data=new Array();
-		    for(var i=0,ni=my_render_initialize_data.length-1;i<ni;i++){
+		    for(var i=0,ni=my_render_initialize_data.length-1;i<ni;){
 				var my_data		=my_render_initialize_data[i++];
 				var render_id	=my_render_initialize_data[i++];
 				render_init_data[render_id]=my_data;

@@ -14,6 +14,7 @@ import kernel_component.component;
 import kernel_component.component_container;
 import kernel_engine.client_information;
 import kernel_engine.client_parameter;
+import kernel_part.part;
 
 public class camera_result
 {
@@ -190,28 +191,28 @@ public class camera_result
 	}
 	public point caculate_local_focus_point(client_parameter parameter)
 	{
-		box my_box;
-		if(parameter.comp!=null)
-			if(parameter.comp.uniparameter.part_list_flag)
-				for(int driver_id=0,driver_number=parameter.comp.driver_number();driver_id<driver_number;driver_id++)
-					if(parameter.comp.driver_array.get(driver_id).component_part!=null){
-						double local_xy[]=target.target_view.caculate_view_local_xy(parameter.x, parameter.y);
-						location comp_negative_loca=parameter.comp.caculate_negative_absolute_location();
-						point p0=comp_negative_loca.multiply(negative_matrix.multiply(
-								new point(local_xy[0],local_xy[1],parameter.depth+0.0)));
-						point p1=comp_negative_loca.multiply(negative_matrix.multiply(
-								new point(local_xy[0],local_xy[1],parameter.depth+1.0)));
-						if((my_box=parameter.comp.driver_array.get(driver_id).component_part.secure_caculate_part_box(
-								parameter.comp,driver_id,parameter.body_id,parameter.face_id,
-								parameter.primitive_id,parameter.vertex_id,parameter.loop_id,
-								parameter.edge_id,p0,p1))!=null)
-									return my_box.center();
-					}
-		return null;
-	}
+		if(parameter.comp==null)
+			return null;
+		if(!(parameter.comp.uniparameter.part_list_flag))
+			return null;
+		if((parameter.driver_id<0)||(parameter.driver_id>=parameter.comp.driver_array.size()))
+			return null;
+		part p;
+		if((p=parameter.comp.driver_array.get(parameter.driver_id).component_part)==null)
+			return null;
 	
-	public boolean clipper_test(component comp,
-				component_container component_cont,int parameter_channel_id)
+		double local_xy[]=target.target_view.caculate_view_local_xy(parameter.x,parameter.y);
+		location comp_negative_loca=parameter.comp.caculate_negative_absolute_location();
+		point p0=comp_negative_loca.multiply(negative_matrix.multiply(
+					new point(local_xy[0],local_xy[1],parameter.depth+0.0)));
+		point p1=comp_negative_loca.multiply(negative_matrix.multiply(
+					new point(local_xy[0],local_xy[1],parameter.depth+1.0)));
+		box my_box=p.secure_caculate_part_box(parameter.comp,parameter.driver_id,
+					parameter.body_id,parameter.face_id,parameter.primitive_id,parameter.vertex_id,
+					parameter.loop_id,parameter.edge_id,p0,p1);
+		return (my_box==null)?null:my_box.center();
+	}
+	public boolean clipper_test(component comp,component_container component_cont,int parameter_channel_id)
 	{
 		if(comp.clip.has_done_clip_flag)
 			return comp.clip.can_be_clipped_flag;
@@ -238,7 +239,7 @@ public class camera_result
 		comp.caculate_location(component_cont);
 		comp.caculate_box(false);
 		
-		for(int i=0,ni=(comp_clip_plane==null)?0:comp_clip_plane.size();i<ni;i++){
+		for(int i=0,ni=comp_clip_plane.size();i<ni;i++){
 			plane my_comp_clip_plane=comp_clip_plane.get(i);
 			if(my_comp_clip_plane.error_flag)
 				continue;
@@ -254,18 +255,22 @@ public class camera_result
 				break;
 			}
 		}
-		if((comp.clip.clip_plane==null)||(comp.children_number()>0)||(comp.model_box==null))
+		
+		if((comp.clip.clip_plane.size()<=0)||(comp.children_number()>0)||(comp.model_box==null))
 			return false;
 		
 		tetrahedron undecided_box=new tetrahedron(comp.absolute_location,comp.model_box);
-		for(int i=0,ni=comp.clip.clip_plane.size();i<ni;i++){
+		
+		for(int i=0,ni=comp.clip.clip_plane.size();(i<ni)&&(undecided_box!=null);i++){
 			tetrahedron p=undecided_box;
 			undecided_box=null;
 			for(;p!=null;p=p.next)
 				undecided_box=p.clip_tetrahedron(comp.clip.clip_plane.get(i),undecided_box);
 		}
+		
 		if(undecided_box!=null)
 			return false;
+		
 		comp.clip.can_be_clipped_flag=true;
 		
 		return true;

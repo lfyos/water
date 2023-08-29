@@ -81,10 +81,6 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 
  			stencilReadMask		:	0xFFFFFFFF,
 			stencilWriteMask	:	0xFFFFFFFF,
-			
-			depthBias			:	0,
-    		depthBiasSlopeScale	:	0,
-    		depthBiasClamp		:	0
 		}
 	};
 	if(render.parameter.multisample>1)

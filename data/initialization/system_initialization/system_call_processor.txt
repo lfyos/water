@@ -9,4 +9,8 @@ function(component_name,component_id,render)
 	{
 		render.caller.call_server_component(menu_name,"all",[["operation","hide"]]);
 	};
+	render.system_call_processor.update_coordinate_display=function()
+	{
+		render.caller.call_server_component("coordinate","all",[["operation","onoff"]]);
+	};
 }

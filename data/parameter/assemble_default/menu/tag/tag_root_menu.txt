@@ -15,9 +15,10 @@ function(component_name,component_id,render)
 				break;
 			case 1:
 				return;
-			case 2:
+			case 2:						
 				render.caller.call_server_component(tag_ep.component_id,"all",
-					[["operation","modify"],["id",tag_ep.pickup_tag_id]]);
+					[["operation","modify"],["id",tag_ep.pickup_tag_id],
+					 ["modify",(ep.x<(1.0/3.0))?"p0":(ep.x>(2.0/3.0))?"px":"position"]]);
 				render.event_component.mouse.	component_name	="distance_tag_component";
 				render.event_component.keyboard.component_name	="distance_tag_component";
 				render.event_component.mouse.	function_id		=0;
@@ -62,7 +63,7 @@ function(component_name,component_id,render)
 			case 13:
 				render.system_call_processor.set_menu_show("tag_plane_angle_component");
 				break;	
-			}
+			}			
 			render.system_call_processor.set_menu_hide(component_id);					
 		}
 	}

@@ -109,7 +109,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		
 		camera_result cam_result=new camera_result(ci.display_camera_result.cam,cam_target,ek.component_cont);
 		component_collector collector=(new list_component_on_collector(
-			false,true,false,false,((function_id%2)==0)?true:false,ek,ci,cam_result)).collector;
+			true,false,false,((function_id%2)==0)?true:false,false,ek,ci,cam_result)).collector;
 		
 		if(collector.component_number<=0)
 			return;

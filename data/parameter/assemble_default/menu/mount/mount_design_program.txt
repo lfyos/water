@@ -158,7 +158,8 @@ function(component_name,component_id,render)
 						 ["terminate",	p.terminate_state_flag	?"true":"false"]];
 					break;
 				}
-				par=par.concat([["operation","design"],["coordinate",p.coordinate],["component_id",p.component_id]]);
+				par=par.concat([["operation","design"],
+							["coordinate",p.coordinate],["component_id",p.component_id]]);
 				render.caller.call_server_component("movement_manager","all",par,"json").
 					then(
 						function(response_data)

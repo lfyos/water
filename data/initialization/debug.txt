@@ -21,7 +21,7 @@
 								then(
 									function(response_data)
 									{
-										render.caller.call_server_component("coordinate","all",[["operation","onoff"]]);
+										render.system_call_processor.update_coordinate_display();
 									});
 							break;				
 						case 27://Esc
@@ -30,8 +30,7 @@
 							then(
 								function()
 								{
-									render.caller.call_server_component(
-										"coordinate","all",[["operation","onoff"]]);
+									render.system_call_processor.update_coordinate_display();
 								});	
 							break;
 						case 37://left arrow
@@ -52,7 +51,7 @@
 							then(
 								function()
 								{
-									render.caller.call_server_component("coordinate","all",[["operation","onoff"]]);
+									render.system_call_processor.update_coordinate_display();
 								});		
 							break;
 						case 40://down arrow
@@ -61,7 +60,7 @@
 							then(
 								function()
 								{
-									render.caller.call_server_component("coordinate","all",[["operation","onoff"]]);
+									render.system_call_processor.update_coordinate_display();
 								});	
 							break;				
 						case 32://space

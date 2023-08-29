@@ -6,25 +6,64 @@ function construct_component_driver(
 			render_id,part_id,component_id,driver_id,component_render_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		var rpe	=render.webgpu.render_pass_encoder;
+		var p,rpe	=render.webgpu.render_pass_encoder;
 		switch(method_data.method_id){
 		default:
 			return;
 		case 0:
-			rpe.setPipeline(render_driver.id_pipeline);
+			p=part_object.buffer_object.face.region_data;
+			rpe.setPipeline(render_driver.id_face_pipeline);
+			for(var i=0,ni=p.length;i<ni;i++){
+				rpe.setVertexBuffer(0,p[i].buffer);
+				rpe.draw(p[i].item_number);
+			}
+			p=part_object.buffer_object.point.region_data;
+			rpe.setPipeline(render_driver.id_point_pipeline);
+			for(var i=0,ni=p.length;i<ni;i++){
+				rpe.setVertexBuffer(0,p[i].buffer);
+				rpe.draw(p[i].item_number);
+			}
 			break;
 		case 1:
-			rpe.setPipeline(render_driver.value_pipeline);
+			p=part_object.buffer_object.face.region_data;
+			rpe.setPipeline(render_driver.value_face_pipeline);
+			for(var i=0,ni=p.length;i<ni;i++){
+				rpe.setVertexBuffer(0,p[i].buffer);
+				rpe.draw(p[i].item_number);
+			}
+			p=part_object.buffer_object.point.region_data;
+			rpe.setPipeline(render_driver.value_point_pipeline);
+			for(var i=0,ni=p.length;i<ni;i++){
+				rpe.setVertexBuffer(0,p[i].buffer);
+				rpe.draw(p[i].item_number);
+			}
 			break;
 		case 2:
-			rpe.setPipeline(render_driver.render_pipeline);
+			p=part_object.buffer_object.face.region_data;
+			rpe.setPipeline(render_driver.color_face_pipeline);
+			for(var i=0,ni=p.length;i<ni;i++){
+				rpe.setVertexBuffer(0,p[i].buffer);
+				rpe.draw(p[i].item_number);
+			}
+			
+			p=part_object.buffer_object.edge.region_data;
+			rpe.setPipeline(render_driver.color_edge_pipeline);
+			for(var i=0,ni=p.length;i<ni;i++){
+				rpe.setVertexBuffer(0,p[i].buffer);
+				rpe.draw(p[i].item_number);
+			}
+			if(render.pickup.component_id==component_id)
+				if(render.pickup.driver_id==driver_id){
+					p=part_object.buffer_object.point.region_data;
+					rpe.setPipeline(render_driver.color_pickup_point_pipeline);
+					for(var i=0,ni=p.length;i<ni;i++){
+						rpe.setVertexBuffer(0,p[i].buffer);
+						rpe.draw(p[i].item_number);
+					}
+			}
 			break;
 		}
-		var p=part_object.buffer_object.face.region_data;
-		for(var i=0,ni=p.length;i<ni;i++){
-			rpe.setVertexBuffer(0,p[i].buffer);
-			rpe.draw(p[i].item_number);
-		}
+		return;
 	}
 	this.append_component_parameter=function(
 			component_id,		driver_id,		render_id,		part_id,

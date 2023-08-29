@@ -150,16 +150,16 @@ function construct_component_driver(
 				method_array	:
 				[
 					{
-						method_id:	2
+						method_id:	2		//render before depth rendering
 					},
 					{
-						method_id:	3
+						method_id:	3		//render depth only
 					},
 					{
-						method_id:	4
+						method_id:	4		//render after depth rendering
 					},
 					{
-						method_id:	5
+						method_id:	5		//render for transparent rendering
 					}
 				]
 			};

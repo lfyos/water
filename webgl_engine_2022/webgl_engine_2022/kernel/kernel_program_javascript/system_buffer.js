@@ -63,10 +63,10 @@ function construct_system_buffer(target_buffer_number,render)
 			
 			render.pickup.body_id,
 			render.pickup.face_id,
-			render.pickup.vertex_id,
 			render.pickup.loop_id,
 			render.pickup.edge_id,
-			render.pickup.point_id,
+			render.pickup.primitive_id,
+			render.pickup.vertex_id,
 			
 			render.highlight.component_id,
 			render.highlight.body_id,

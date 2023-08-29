@@ -19,27 +19,6 @@ function construct_pickup_object()
 	this.depth				=-1;
 	this.value				=[-1,-1,-1];
 
-	this.compare=function(p)
-	{
-		if(this.component_id!=p.component_id)
-			return true;
-		if(this.driver_id!=p.driver_id)
-			return true;
-
-		if(this.primitive_type_id!=p.primitive_type_id)
-			return true;
-			
-		if(this.body_id!=p.body_id)
-			return true;
-		if(this.face_id!=p.face_id)
-			return true;
-		if(this.loop_id!=p.loop_id)
-			return true;
-		if(this.edge_id!=p.edge_id)
-			return true;
-			
-		return false;
-	}
 	this.fork=function()
 	{
 		var ret_val=new construct_pickup_object();

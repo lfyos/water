@@ -16,7 +16,7 @@ public class extended_render_instance_driver extends render_instance_driver
 		super.destroy();
 	}
 	public void response_init_render_data(render r,engine_kernel ek,client_information ci)
-	{	
+	{
 	}
 	public String[] response_render_event(render r,engine_kernel ek,client_information ci)
 	{

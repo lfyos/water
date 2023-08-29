@@ -11,6 +11,7 @@ import kernel_driver.component_instance_driver;
 public class extended_component_instance_driver extends component_instance_driver
 {
 	private distance_tag_array tag_array;
+	private boolean front_show_flag;
 
 	public void destroy()
 	{
@@ -21,6 +22,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		super(my_comp,my_driver_id);
 		tag_array=my_tag_array;
+		front_show_flag=false;
 	}
 	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
@@ -74,7 +76,7 @@ public class extended_component_instance_driver extends component_instance_drive
 					print(",",p0.x).print(",",p0.y).print(",",p0.z).
 					print(",",dx.x).print(",",dx.y).print(",",dx.z).
 					print(",",dy.x).print(",",dy.y).print(",",dy.z).
-					print((p.state==2)?",true]":",false]");
+					print((p.state==2)?",1":",0",front_show_flag?",1]":",0]");
 				pre_str=",[";
 				break;
 			}	
@@ -87,6 +89,22 @@ public class extended_component_instance_driver extends component_instance_drive
 		switch((str==null)?"":str) {
 		default:
 			break;
+		case "front_show":
+			str=ci.request_response.get_parameter("front_show");
+			switch((str==null)?"":str){
+			case "true":
+			case "yes":
+				front_show_flag=true;
+				break;
+			case "false":
+			case "no":
+				front_show_flag=false;
+				break;
+			default:
+				return null;
+			};
+			update_component_parameter_version(0);
+			return null;
 		case "mark":
 			if(tag_array.mark_distance_tag(ek,ci))
 				return null;

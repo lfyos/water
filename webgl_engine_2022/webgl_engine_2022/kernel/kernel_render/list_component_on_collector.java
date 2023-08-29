@@ -36,8 +36,11 @@ public class list_component_on_collector
 			return false;
 		if((my_part=comp.driver_array.get(driver_id).component_part)==null)
 			return false;
-		if((comp.clip.clip_plane!=null)&&discard_cross_clip_plane_flag)
-			return (comp.children_number()<=0)?true:false;
+		
+		if(discard_cross_clip_plane_flag)
+			if(comp.clip.clip_plane.size()>0)
+				return (comp.children_number()<=0)?true:false;
+	
 		if((in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp, driver_id))==null)
 			return false;
 		

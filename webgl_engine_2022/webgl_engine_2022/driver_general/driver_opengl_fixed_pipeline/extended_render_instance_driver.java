@@ -30,6 +30,7 @@ public class extended_render_instance_driver extends render_instance_driver
 		light_file_name				=null;
 		shader_material_file_name	=null;
 	}
+	
 	public void response_init_render_data(render r,engine_kernel ek,client_information ci)
 	{
 		ci.request_response.println("{");

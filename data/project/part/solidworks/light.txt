@@ -5,6 +5,7 @@
 				"edge"	:	false,
 				"point"	:	false
 			},
+			
 			"selected_material"			:
 			{
 				"vertex_color_type"		:	2,
@@ -24,3 +25,6 @@
 				0.20,	0.20,	0.20,	1.0,
 				0.20,	0.20,	0.20,	1.0
 			],
+			
+			"point_size"				:	12,
+			

@@ -73,11 +73,21 @@ function init_component_event_processor(component_id,init_data,render)
 					break;
 				case 2:
 					render.caller.call_server_component(component_id,"all",
-						[["operation","swap_component"],["id",pickup_tag_id],["p0","true"]]);
+						[["operation","swap_component"],["id",pickup_tag_id],["p0","true"]]).
+					then(
+						function(response_data)
+						{
+							render.system_call_processor.update_coordinate_display();
+						});
 					break;
 				case 3:
 					render.caller.call_server_component(component_id,"all",
-						[["operation","swap_component"],["id",pickup_tag_id],["px","true"]]);
+						[["operation","swap_component"],["id",pickup_tag_id],["px","true"]]).
+					then(
+						function(response_data)
+						{
+							render.system_call_processor.update_coordinate_display();
+						});
 					break;
 				}
 				break;
@@ -147,7 +157,7 @@ function construct_component_driver(
 	init_data,		part_object,	part_driver,	render_driver,	render)
 {
 	this.component_id=component_id;
-	
+	this.event_component_id=-1;
 	this.tag_array=new Array();
 	init_component_event_processor(component_id,init_data,render);
 
@@ -155,8 +165,21 @@ function construct_component_driver(
 			render_id,part_id,component_id,driver_id,component_render_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
 	{
-		var p,rpe=render.webgpu.render_pass_encoder;
+		var p;
 		
+		switch(typeof(p=render.event_component.mouse.component_name)){
+		case "string":
+			p=render.operate_component.get_component_object_by_component_name(p);
+			render.event_component.mouse.component_name=((p==null)?-1:(p.component_id));
+		case "number":
+			if(render.event_component.mouse.component_name!=this.event_component_id){
+				this.event_component_id=render.event_component.mouse.component_name;
+				render.caller.call_server_component(component_id,driver_id,[["operation","front_show"],
+						["front_show",(this.event_component_id==component_id)?"true":"false"]]);
+			}
+			break;
+		}
+		var rpe=render.webgpu.render_pass_encoder;
 		for(var i=0,ni=this.tag_array.length;i<ni;i++){
 			rpe.setBindGroup(1,this.tag_array[i].bindgroup);
 			switch(method_data.method_id){
@@ -164,13 +187,6 @@ function construct_component_driver(
 				if(this.tag_array[i].can_do_pickup_flag){
 					rpe.setPipeline(render_driver.face_id_pipeline);
 					p=part_object.buffer_object.face.region_data;
-					for(var j=0,nj=p.length;j<nj;j++){
-						rpe.setVertexBuffer(0,p[j].buffer);
-						rpe.draw(p[j].item_number);
-					}
-					
-					rpe.setPipeline(render_driver.point_id_pipeline);
-					p=part_object.buffer_object.point.region_data;
 					for(var j=0,nj=p.length;j<nj;j++){
 						rpe.setVertexBuffer(0,p[j].buffer);
 						rpe.draw(p[j].item_number);
@@ -226,7 +242,8 @@ function construct_component_driver(
 			var my_dy_x								=buffer_data_item[i][ 7];
 			var my_dy_y								=buffer_data_item[i][ 8];
 			var my_dy_z								=buffer_data_item[i][ 9];
-			var my_can_do_pickup_flag				=buffer_data_item[i][10];
+			var my_can_do_pickup_flag				=(buffer_data_item[i][10]>0)?true:false;
+			var my_front_show_flag					=(buffer_data_item[i][11]>0)?true:false;
 			
 			var my_texture_width					=part_object.material[0].canvas_width;
 			var my_texture_height					=part_object.material[0].canvas_height;
@@ -295,7 +312,9 @@ function construct_component_driver(
 				part_object.material[0].height_scale*my_texture_height,
 				my_height_adjust,
 				
-				part_object.material[0].point_size
+				part_object.material[0].point_size,
+				
+				(my_front_show_flag?0:my_can_do_pickup_flag?1:0),	0,0,0
 			];
 			
 			var my_buffer_integer_size	=Int32Array.  BYTES_PER_ELEMENT*integer_buffer_data.length;	

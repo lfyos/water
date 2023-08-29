@@ -138,6 +138,17 @@ public class distance_tag_array
 			ex_distance_tag=new distance_tag_item(distance_tag_array[tag_index]);
 		return;
 	}
+	private int test_direction(distance_tag_item t,engine_kernel ek,client_information ci)
+	{
+		component my_comp;
+		if((my_comp=ek.component_cont.get_component(t.p0_component_id))==null)
+			return 0;
+		point p0=ci.display_camera_result.matrix.multiply(my_comp.absolute_location.multiply(t.p0));
+		if((my_comp=ek.component_cont.get_component(t.px_component_id))==null)
+			return 0;
+		point px=ci.display_camera_result.matrix.multiply(my_comp.absolute_location.multiply(t.px));
+		return (p0.x<px.x)?1:2;
+	}
 	public boolean modify_distance_tag(engine_kernel ek,client_information ci)
 	{
 		for(int i=0,ni=distance_tag_array.length;i<ni;i++)
@@ -155,7 +166,34 @@ public class distance_tag_array
 		int tag_index=Integer.parseInt(str);
 		if((tag_index<0)||(tag_index>=distance_tag_array.length))
 			return true;
-		distance_tag_array[tag_index].state=1;
+		
+		if((str=ci.request_response.get_parameter("modify"))==null)
+			return true;
+		
+		int direction_type;
+		distance_tag_item t=distance_tag_array[tag_index];
+		if((direction_type=test_direction(t,ek,ci))==0)
+			return true;
+		
+		switch(str.trim().toLowerCase()){
+		default:
+			t.state=1;
+			break;
+		case "px":
+			distance_tag_array[tag_index]=new distance_tag_item(
+				(direction_type==1)	?t.p0				:t.px,
+				(direction_type==1)	?t.p0_component_id	:t.px_component_id,
+				ek.component_cont.root_component.component_id);
+			distance_tag_array[tag_index].state=0;
+			break;
+		case "p0":
+			distance_tag_array[tag_index]=new distance_tag_item(
+				(direction_type==2)	?t.p0				:t.px,
+				(direction_type==2)	?t.p0_component_id	:t.px_component_id,
+				ek.component_cont.root_component.component_id);
+			distance_tag_array[tag_index].state=0;
+			break;
+		}
 		return false;
 	}
 	public void swap_tag_component_selection(engine_kernel ek,client_information ci)
@@ -166,7 +204,14 @@ public class distance_tag_array
 		int tag_index=Integer.parseInt(str);
 		if((tag_index<0)||(tag_index>=distance_tag_array.length))
 			return;
-		component p0_comp=ek.component_cont.get_component(distance_tag_array[tag_index].p0_component_id);
+		
+		int direction_type;
+		distance_tag_item t=distance_tag_array[tag_index];
+		if((direction_type=test_direction(t,ek,ci))==0)
+			return;
+		
+		component p0_comp=ek.component_cont.get_component(
+				(direction_type==1)?t.p0_component_id:t.px_component_id);
 		if(p0_comp!=null)
 			if((str=ci.request_response.get_parameter("p0"))!=null)
 				switch(str.trim()) {
@@ -175,7 +220,8 @@ public class distance_tag_array
 					new component_selection(ek).switch_selected_flag(p0_comp,ek.component_cont);
 					break;
 				}
-		component px_comp=ek.component_cont.get_component(distance_tag_array[tag_index].px_component_id);
+		component px_comp=ek.component_cont.get_component(
+				(direction_type==2)?t.p0_component_id:t.px_component_id);
 		if(px_comp!=null)
 			if((str=ci.request_response.get_parameter("px"))!=null)
 				switch(str.trim()) {
@@ -194,6 +240,7 @@ public class distance_tag_array
 		int tag_index=Integer.parseInt(str);
 		if((tag_index<0)||(tag_index>=distance_tag_array.length))
 			return;
+		
 		box b0=null,bx=null,b;
 		boolean locate_type;
 		if((str=ci.request_response.get_parameter("type"))==null)
@@ -208,8 +255,14 @@ public class distance_tag_array
 				locate_type=false;
 				break;
 			}
+		int direction_type;
+		distance_tag_item t=distance_tag_array[tag_index];
+		if((direction_type=test_direction(t,ek,ci))==0)
+			return;
+		
 		component p0_comp;
-		if((p0_comp=ek.component_cont.get_component(distance_tag_array[tag_index].p0_component_id))!=null)
+		if((p0_comp=ek.component_cont.get_component(
+				(direction_type==1)?t.p0_component_id:t.px_component_id))!=null)
 			if((str=ci.request_response.get_parameter("p0"))!=null)
 				switch(str.trim()) {
 				case "true":
@@ -220,11 +273,12 @@ public class distance_tag_array
 						if((b0=p0_comp.get_component_box(true))!=null)
 							break;
 					}
-					b0=new box(p0_comp.absolute_location.multiply(distance_tag_array[tag_index].p0));	
+					b0=new box(p0_comp.absolute_location.multiply((direction_type==1)?t.p0:t.px));	
 					break;
 				}
 		component px_comp;
-		if((px_comp=ek.component_cont.get_component(distance_tag_array[tag_index].px_component_id))!=null)
+		if((px_comp=ek.component_cont.get_component(
+				(direction_type==2)?t.p0_component_id:t.px_component_id))!=null)
 			if((str=ci.request_response.get_parameter("px"))!=null)
 				switch(str.trim()) {
 				case "true":
@@ -235,7 +289,7 @@ public class distance_tag_array
 						if((bx=px_comp.get_component_box(true))!=null)
 							break;
 					}
-					bx=new box(px_comp.absolute_location.multiply(distance_tag_array[tag_index].px));
+					bx=new box(px_comp.absolute_location.multiply((direction_type==2)?t.p0:t.px));
 					break;
 				}
 		if(b0==null) {

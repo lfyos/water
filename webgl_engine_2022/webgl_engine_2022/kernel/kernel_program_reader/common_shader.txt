@@ -9,12 +9,13 @@ struct system_information
 	pickup_render_id						:	i32,
 	pickup_part_id							:	i32,
 	
+	
 	pickup_body_id							:	i32,
 	pickup_face_id							:	i32,
-	pickup_vertex_id						:	i32,
 	pickup_loop_id							:	i32,
 	pickup_edge_id							:	i32,
-	pickup_point_id							:	i32,
+	pickup_primitive_id						:	i32,
+	pickup_vertex_id						:	i32,
 	
 	highlight_component_id					:	i32,
 	highlight_body_id						:	i32,

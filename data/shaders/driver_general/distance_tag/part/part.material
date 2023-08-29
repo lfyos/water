@@ -13,7 +13,7 @@
 				"canvas_height"			:	32,
 				"height_adjust"			:	0.025,
 				
-				"point_size"			:	8,
+				"point_size"			:	12,
 				
 				"width_scale"			:	1.0,
 				"height_scale"			:	2.0,

@@ -484,7 +484,7 @@ function mousemove(event,component_id,render)
 		return false;
 	var this_point=[render.view.x,render.view.y,0,1];
 		
-	if(ep.key_flag)
+	if(event.ctrlKey||event.altKey||event.shiftKey)
 		ep.last_point=[
 			this_point[0]+ep.low_precision_scale*(ep.last_point[0]-this_point[0]),
 			this_point[1]+ep.low_precision_scale*(ep.last_point[1]-this_point[1]),
@@ -525,7 +525,7 @@ function mousewheel(event,component_id,render)
 			mouse_wheel_number-=event.detail/50.0;					//for firefox
 	else
 			return false;		
-	if(ep.key_flag)
+	if(event.ctrlKey||event.altKey||event.shiftKey)	
 		mouse_wheel_number*=ep.low_precision_scale;
 
 	if(ep.change_type_flag)
@@ -622,63 +622,6 @@ function mobile_phone(event,component_id,render)
 	}
 	return false;		
 }
-
-function keydown(event,component_id,render)
-{
-	var ep=render.component_event_processor[component_id];
-	switch(event.keyCode){
-	case 13:	//enter
-		break;
-	case 16:	//shift
-	case 17:	//control
-	case 18:	//alt
-		ep.key_flag=true;
-		break;
-	case 37:	//left arrow
-		break;
-	case 38:	//up arrow
-		break;
-	case 39:	//right arrow
-		break;
-	case 40:	//down arrow
-		break;
-	case 107:	//+
-		break;
-	case 109:	//-
-		break;
-	default:
-		break;
-	};
-	return false;
-};
-
-function keyup(event,component_id,render)
-{
-	var ep=render.component_event_processor[component_id];
-	switch(event.keyCode){
-	case 16:	//shift
-	case 17:	//control
-	case 18:	//alt
-		ep.key_flag=false;
-		break;
-	case 37:	//left arrow
-		break;
-	case 38:	//up arrow
-		break;
-	case 39:	//right arrow
-		break;
-	case 40:	//down arrow
-		break;
-	case 107:	//+
-		break;
-	case 109:	//-
-		break;
-	default:
-		break;
-	}
-	return false;
-};
-
 function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
 	init_data,		part_object,	part_driver,	render_driver,	render)
@@ -702,10 +645,6 @@ function construct_component_driver(
 	ep.touchstart	=mobile_phone;
 	ep.touchend		=mobile_phone;
 	ep.touchmove	=mobile_phone;
-
-	ep.keydown		=keydown;
-	ep.keyup		=keyup;
-	ep.key_flag		=false;
 
 	ep.last_point=[0,0,0,1];
 	ep.touchstart_distance_2=1.0;
