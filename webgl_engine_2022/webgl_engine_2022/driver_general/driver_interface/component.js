@@ -16,7 +16,7 @@ function create_component_object(my_init_data,render)
 	this.x=0;
 	this.y=0;
 	this.id_base=0;
-	this.update_flag=true;
+	this.update_flag=false;
 	
 	this.parameter_bak={
 		x	:	this.show_x,
@@ -98,11 +98,12 @@ function create_component_object(my_init_data,render)
 		else
 			return true;
 
-		var skip_array=[1,	5,	10,	50,	100,	500,	1000,	5000];
+		var skip_array=[1,10,100,1000];
 	
-		this.id_base-=mouse_wheel_number*skip_array[(event.ctrlKey?1:0)+(event.shiftKey?2:0)+(event.altKey?4:0)];
-		this.id_base=(this.id_base<0)?0:Math.round(this.id_base);
-		this.update_flag=true;
+		this.id_base-=mouse_wheel_number*skip_array[(event.ctrlKey?1:0)+(event.altKey?2:0)];
+		this.id_base =(event.shiftKey||(this.id_base<0))?0:Math.round(this.id_base);
+		
+		this.update_flag=false;
 
 		return true;
 	};

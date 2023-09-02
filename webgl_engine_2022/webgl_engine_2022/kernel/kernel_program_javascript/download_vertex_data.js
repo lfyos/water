@@ -148,7 +148,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			p.region_box	 = render.computer.combine_box(p.region_box,my_region_box);
 			p.item_number	+= my_item_number;
 		}
-		p.item_size=Math.round(p.region_data.length/my_item_number);
+		p.item_size=p.region_data.length/p.item_number;
 		
 		var begin_material_id,end_material_id;
 		if(object_pointer.loaded_number<=0){

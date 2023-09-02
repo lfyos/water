@@ -1,1 +1,1 @@
-sigma		driver_opengl_fixed_pipeline.extended_render_driver		cad\render.list		cad\shader_material.txt		cad\light.txt
+sigma		driver_opengl_fixed_pipeline.extended_render_driver		cad\render.list		cad\light.txt

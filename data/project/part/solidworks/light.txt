@@ -1,11 +1,4 @@
-			"pickup_exit_display_flag"	:
-			{
-				"face"	:	true,
-				"frame"	:	true,
-				"edge"	:	false,
-				"point"	:	false
-			},
-			
+		{
 			"selected_material"			:
 			{
 				"vertex_color_type"		:	2,
@@ -26,5 +19,14 @@
 				0.20,	0.20,	0.20,	1.0
 			],
 			
-			"point_size"				:	12,
+			"stride_and_offset"			:
+			[
+				{
+					"array_stride"			:	20,
+					"material_offset"		:	8
+				}
+			],
 			
+			"point_size"				:	12
+			
+		}

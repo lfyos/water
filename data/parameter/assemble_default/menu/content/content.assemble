@@ -59,10 +59,10 @@
 							{
 								render.caller.call_server_component("manipulator_component","all",
 									[	["event_method","show_hide_parameter"],
-										["hide_code",	 (hide_face_flag? 2:0)	+(hide_depth_flag? 4:0)	+(hide_frame_flag?8:0)
-														+(hide_edge_flag?16:0)	+(hide_point_flag?32:0)],
-										["show_code",	 (show_face_flag? 2:0)	+(show_depth_flag? 4:0)	+(show_frame_flag?8:0)
-														+(show_edge_flag?16:0)	+(show_point_flag?32:0)]
+										["hide_code",	 (hide_face_flag?64:0)	+(hide_depth_flag? 4:0)	+(hide_frame_flag?16:0)
+														+(hide_edge_flag? 8:0)	+(hide_point_flag?32:0)],
+										["show_code",	 (show_face_flag?64:0)	+(show_depth_flag? 4:0)	+(show_frame_flag?16:0)
+														+(show_edge_flag? 8:0)	+(show_point_flag?32:0)]
 									]);
 							};
 							var ep=render.component_event_processor[component_id];

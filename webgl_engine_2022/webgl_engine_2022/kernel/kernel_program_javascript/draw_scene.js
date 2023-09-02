@@ -16,21 +16,23 @@ function draw_scene_routine(render_data,render)
 		return;
 	var project_matrix=render.camera.compute_camera_data(render_data);
 	render.system_buffer.set_target_buffer(render_data,project_matrix,render);
-	
+
 	for(var target_sequence_id=0;;target_sequence_id++){
 		var render_target=target_component_driver.begin_render_target(target_sequence_id,
 				render_data,target_part_object,target_part_driver,target_render_driver,render);
 		if(render_target==null)
 			break;
-		if(typeof(render.webgpu.render_pass_encoder)!="object")
-			continue;
-		if(render.webgpu.render_pass_encoder==null)
-			continue;
-			
 		var method_array=render_target.method_array;
 		if(!(Array.isArray(method_array)))
 			continue;
 		if(method_array.length<=0)
+			continue;	
+		
+		render.webgpu.render_pass_encoder=render.webgpu.
+				command_encoder.beginRenderPass(render_target.pass_descriptor);
+		if(typeof(render.webgpu.render_pass_encoder)!="object")
+			continue;
+		if(render.webgpu.render_pass_encoder==null)
 			continue;
 
 		var view_x0=(render_data.target_view_parameter.view_x0<0)?0:
@@ -55,9 +57,18 @@ function draw_scene_routine(render_data,render)
 			render.view.main_target_y=0.5*(render.view.y+1.0)*whole_view_height-view_y0;
 			render.view.main_target_y=2.0*render.view.main_target_y/view_height-1.0;
 		}
-
+		var my_viewport={
+			x			:	view_x0,
+			y			:	render_target.target_view.height-view_y0-view_height,
+			width		:	view_width,
+			height		:	view_height,
+			min_depth	:	0,
+			max_depth	:	1
+		};
 		render.webgpu.render_pass_encoder.setViewport(
-			view_x0,render_target.target_view.height-view_y0-view_height,view_width,view_height,0,1);
+			my_viewport.x,			my_viewport.y,
+			my_viewport.width,		my_viewport.height,
+			my_viewport.min_depth,	my_viewport.max_depth);
 	
 		for(var i=0,ni=method_array.length;i<ni;i++){
 			if(typeof(target_component_driver.begin_render_method)=="function")
@@ -92,9 +103,9 @@ function draw_scene_routine(render_data,render)
 						var component_ids		=part_object.part_component_id_and_driver_id[data_buffer_id];
 						var component_id		=component_ids[0];
 						var driver_id			=component_ids[1];
-			
-						render.set_system_bindgroup(
-							render_data.render_buffer_id,component_id,driver_id);
+
+						render.system_buffer.set_system_bindgroup(
+							render_data.render_buffer_id,component_id,driver_id,render);
 						component_driver.draw_component(method_array[i],render_data,
 							render_id,part_id,component_id,driver_id,render_parameter,
 							project_matrix,part_object,part_driver,render_driver,render);
@@ -149,19 +160,16 @@ async function draw_scene_main(part_init_data,component_init_data,render)
 				if(fun_array[i](render))
 					render.routine_array.push(fun_array[i]);
 		
-		var command_encoder_buffer=new Array();
+		var my_command_buffer=new Array();
 		render.system_buffer.set_system_buffer(render);
 		for(var i=0,ni=render.render_buffer_array.length;i<ni;i++)
 			if(render.render_buffer_array[i].do_render_flag){
 				render.webgpu.command_encoder=render.webgpu.device.createCommandEncoder();
-				
 				draw_scene_routine(render.render_buffer_array[i],render);
-				
-				command_encoder_buffer.push(render.webgpu.command_encoder.finish());
+				my_command_buffer.push(render.webgpu.command_encoder.finish());
 				render.webgpu.command_encoder=null;
 			}
-		render.webgpu.device.queue.submit(command_encoder_buffer);
-
+		render.webgpu.device.queue.submit(my_command_buffer);
 		await render.webgpu.device.queue.onSubmittedWorkDone();
 		
 		for(var i=0,ni=render.render_buffer_array.length;i<ni;i++){
@@ -183,9 +191,11 @@ async function draw_scene_main(part_init_data,component_init_data,render)
 				continue;
 			if(typeof(target_component_driver.complete_render_target)!="function")
 				continue;
+
 			await target_component_driver.complete_render_target(render_data,
 						target_part_object,target_part_driver,target_render_driver,render);
 		}
+
 		await new Promise((resolve)=>
 			{
 				window.requestAnimationFrame(resolve);

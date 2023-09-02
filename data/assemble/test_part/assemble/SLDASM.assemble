@@ -1,13 +1,7 @@
 /*	1:name	*/	display_component_root
 /*	1:type	*/	display_part_root
 /*	1:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
-/*	1:child_number	*/	6
-
-	/*	2:name	*/		start_driver_component	
-	/*	2:type	*/		start_driver_part
-	/*	2:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
-	/*	2:child_number	*/	0
-	
+/*	1:child_number	*/	5
 	/*	2:name	*/	display_component
 	/*	2:type	*/	display_part
 	/*	2:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0

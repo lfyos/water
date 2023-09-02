@@ -24,7 +24,7 @@ public class extended_part_instance_driver extends part_instance_driver
 	}
 	public String[] response_part_event(part p,engine_kernel ek,client_information ci)
 	{			
-		String directory_name,file_name,path_name_1,path_name_2;
+		String directory_name,file_name,path_name_1;
 		if((file_name=ci.request_response.get_parameter("file"))==null)
 			return null;
 		String request_charset=ci.request_response.implementor.get_request_charset();
@@ -40,7 +40,7 @@ public class extended_part_instance_driver extends part_instance_driver
 		if(new File(path_name_1).exists())
 			return new String[]{path_name_1,p.file_charset};
 		
-		path_name_2=ek.system_par.proxy_par.proxy_data_root_directory_name+file_name;
+		String path_name_2=ek.system_par.proxy_par.proxy_data_root_directory_name+file_name;
 		if(new File(path_name_2).exists())
 			return new String[]{path_name_2,p.file_charset};
 		

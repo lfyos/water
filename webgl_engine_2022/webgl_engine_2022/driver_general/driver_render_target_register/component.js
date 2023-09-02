@@ -108,7 +108,7 @@ function construct_component_driver(
 			this.should_update_server_flag=true;
 		}while(false);
 		
-		render.webgpu.render_pass_encoder = render.webgpu.command_encoder.beginRenderPass(
+		var my_pass_descriptor=
 		{
 			colorAttachments		: 
 			[
@@ -139,27 +139,29 @@ function construct_component_driver(
    				stencilLoadOp		:	load_operation,
    				stencilStoreOp		:	"store"
 			}
-		});
+		};
 		
 		return 	{
-				target_view		:	
+				pass_descriptor		:	my_pass_descriptor,
+				
+				target_view			:	
 				{
-					width		:	my_gpu_texture.width,
-					height		:	my_gpu_texture.height
+					width			:	my_gpu_texture.width,
+					height			:	my_gpu_texture.height
 				},
-				method_array	:
+				method_array		:
 				[
 					{
-						method_id:	2		//render before depth rendering
+						method_id	:	2		//render before depth rendering
 					},
 					{
-						method_id:	3		//render depth only
+						method_id	:	3		//render depth only
 					},
 					{
-						method_id:	4		//render after depth rendering
+						method_id	:	4		//render after depth rendering
 					},
 					{
-						method_id:	5		//render for transparent rendering
+						method_id	:	5		//render for transparent rendering
 					}
 				]
 			};

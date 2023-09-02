@@ -83,7 +83,7 @@
 /*	direction					*/		no
 /*	change_type_flag			*/		no
 /*	scale						*/		-0.55
-/*	synchronize_location_flag	*/		no
+/*	synchronize_location_flag	*/		yes
 /*	light_camera_flag			*/		yes
 /*	name            			*/		light_0
 		        
@@ -101,7 +101,7 @@
 /*	direction					*/		no
 /*	change_type_flag			*/		no
 /*	scale						*/		-0.55
-/*	synchronize_location_flag	*/		no
+/*	synchronize_location_flag	*/		yes
 /*	light_camera_flag			*/		yes
 /*	name            			*/		light_1
 
@@ -121,7 +121,7 @@
 /*	direction					*/		no
 /*	change_type_flag			*/		no
 /*	scale						*/		-0.55
-/*	synchronize_location_flag	*/		no
+/*	synchronize_location_flag	*/		yes
 /*	light_camera_flag			*/		yes
 /*	name           				*/		light_2
 		        
@@ -138,6 +138,6 @@
 /*	direction					*/		no
 /*	change_type_flag			*/		no
 /*	scale						*/		-0.55
-/*	synchronize_location_flag	*/		no
+/*	synchronize_location_flag	*/		yes
 /*	light_camera_flag			*/		yes
 /*	name           				*/		light_3

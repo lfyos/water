@@ -2,6 +2,26 @@ function(component_name,component_id,render)
 {
 	render.system_call_processor.default_vertex_data_decoder=
 	{
+		modify_item_size:
+			function(buffer_object_data,new_item_size)
+			{
+				var old_item_size;
+				
+				if((old_item_size=buffer_object_data.item_size)!=new_item_size){
+					var pointer=0,new_region_data=new Array(
+						buffer_object_data.region_data.length*new_item_size/old_item_size);
+					for(var i=0,ni=buffer_object_data.region_data.length;i<ni;i+=old_item_size){
+						for(var j=0;(j<old_item_size)&&(j<new_item_size);j++)
+							new_region_data[pointer++]=buffer_object_data.region_data[i+j];
+						for(var j=old_item_size;j<new_item_size;j++)
+							new_region_data[pointer++]=1;
+					}
+					buffer_object_data.region_data	=new_region_data;
+					buffer_object_data.item_size	=new_item_size;
+				}
+				
+				return buffer_object_data;
+			},
 		convert_point_to_face:
 			function(buffer_object_data)
 			{
@@ -21,7 +41,7 @@ function(component_name,component_id,render)
 					buffer_object_data.private_data=null;
 					return buffer_object_data;
 				}
-				var item_size=buffer_object_data.region_data.length/buffer_object_data.item_number;
+				var item_size=buffer_object_data.item_size;
 				
 				var primitive_vertex_number=3;
 				var frame_creation_map=[0,1,1,2,2,0];

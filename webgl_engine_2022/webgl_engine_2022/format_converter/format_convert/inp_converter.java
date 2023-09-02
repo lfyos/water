@@ -4,6 +4,7 @@ import java.util.Date;
 
 import kernel_common_class.const_value;
 import kernel_common_class.debug_information;
+import kernel_common_class.format_change;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_transformation.plane;
@@ -361,11 +362,11 @@ public class inp_converter
 				sum_y+=vertex_location_data[vertex_id][1];
 				sum_z+=vertex_location_data[vertex_id][2];
 			}
-			double	attr0_x =sum_x/(double)(unit_data[i].length-3);
+			double	attr0_x =sum_x/(double)(unit_data[i].length-3);	
 			double	attr0_y =sum_y/(double)(unit_data[i].length-3);
 			double	attr0_z =sum_z/(double)(unit_data[i].length-3);
 			String	attr0_w =Integer.toString((int)(Math.round(unit_data[i][1])));
-					attr0_w+=","+Integer.toString(unit_data[i][0]);	//UNIT_TYPE,UNIT_ID										
+					attr0_w+=","+Integer.toString(unit_data[i][0]);
 			
 			for(int j=3,nj=unit_data[i].length;j<nj;j++) {
 				int vertex_id=vertex_id_map[unit_data[i][j]];
@@ -378,7 +379,7 @@ public class inp_converter
 				double	nx=vertex_normal_data[vertex_id][0];
 				double	ny=vertex_normal_data[vertex_id][1];
 				double	nz=vertex_normal_data[vertex_id][2];
-				double	nw=vertex_normal_data[vertex_id][3];
+				double	nw=vertex_normal_data[vertex_id][3];	//NORMAL_DISTANCE
 				
 				double	attr1[]=new double[attribute_number];
 				for(int k=0;k<attribute_number;k++) {
@@ -388,22 +389,24 @@ public class inp_converter
 					else
 						attr1[k]=(vertex_attribute_data[vertex_id][k]-attribute_min_value[k])/attr1[k];
 				}
-				
 				if(face_box==null)
 					face_box=new box(new point(px,py,pz));
 				else
 					face_box=face_box.add(new box(new point(px,py,pz)));
 				
-				default_attr_0=attr0_x +"	"+attr0_y +"	"+attr0_z +"	"+attr0_w;
-				default_attr_1=attr1[0]+"	"+attr1[1]+"	"+attr1[2]+"	"+attr1[3];
+				default_attr_0=attr0_x +"	"+attr0_y +"	"+attr0_z +"	"+attr0_w;	
+				default_attr_1=attr1[0]+"	"+attr1[1]+"	"+attr1[2]+"	"+attr1[3];	
 				for(int k=4;k<attribute_number;k++)
 					default_attr_1+=","+attr1[k];
 				
 				fw.println("/*	"+(j-3)+".location		*/	",px+"	"+py+"	"+pz+"	"+pw);
+						//	POSITION and VERTEX_ID
 				fw.println("/*	"+(j-3)+".normal		*/	",nx+"	"+ny+"	"+nz+"	"+nw);
+						//	NORMAL and NORMAL_LENGTH
 				fw.println("/*	"+(j-3)+".attribute_0	*/	",default_attr_0);
-				fw.print  ("/*	"+(j-3)+".attribute_1	*/	",default_attr_1);
-				fw.println();
+						//	CENTER_POSITION_FOR_CLIP,UNIT_TYPE,UNIT_ID
+				fw.println("/*	"+(j-3)+".attribute_1	*/	",default_attr_1);
+						// ALL ATTRIBUTES
 			}
 		}
 
@@ -485,62 +488,89 @@ public class inp_converter
 		debug_information.println("End convert inp mesh format");
 	}
 	
+	private static void value_short(String file_name,String file_charset)
+	{
+		int value_length=15;
+		
+		file_reader fr=new file_reader(file_name,file_charset);
+		file_writer fw=new file_writer(file_name+".short",file_charset);
+		
+		while(!(fr.eof())){
+			String str=fr.get_string();
+			if(str==null)
+				continue;
+			if((str=str.trim()).length()<=0)
+				continue;
+			for(int index_id;;)
+				if((index_id=str.indexOf(','))<0) {
+					double value=Double.parseDouble(str);
+					fw.println(format_change.double_to_decimal_string(value,value_length));
+					break;
+				}else{
+					double value=Double.parseDouble(str.substring(0,index_id));
+					fw.print(format_change.double_to_decimal_string(value,value_length),",");
+					str=str.substring(index_id+1);
+				}
+		}
+		fr.close();
+		fw.close();
+		file_writer.file_delete(file_name);
+		file_writer.file_rename(file_name+".short", file_name);
+	}
+	
 	public static void main(String args[])
 	{
 		debug_information.println("Begin");
 		
 		new inp_converter(
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_0\\part.inp",
+				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_0\\part.inp",
 				"GBK",
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_0\\part.inp.mesh",
-				"GBK");
+				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_0\\part.inp.mesh",
+				"GBK");	
+		value_short("F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_0\\part.inp.mesh.face", "GBK");
 		
 		new inp_converter(
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_1\\part.inp",
+				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_1\\part.inp",
 				"GBK",
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_1\\part.inp.mesh",
+				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_1\\part.inp.mesh",
 				"GBK");
+		value_short("F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_1\\part.inp.mesh.face", "GBK");
 		
 		new inp_converter(
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_2\\part.inp",
+				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_2\\part.inp",
 				"GBK",
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_2\\part.inp.mesh",
+				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_2\\part.inp.mesh",
 				"GBK");
+		value_short("F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_2\\part.inp.mesh.face", "GBK");
 		
 		new inp_converter(
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_3\\part.inp",
+				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_3\\part.inp",
 				"GBK",
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_3\\part.inp.mesh",
+				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_3\\part.inp.mesh",
 				"GBK");
-		new inp_converter(
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_4\\part.inp",
-				"GBK",
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_4\\part.inp.mesh",
-				"GBK");
+		value_short("F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_3\\part.inp.mesh.face", "GBK");
 		
 		new inp_converter(
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_5\\part.inp",
+				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_4\\part.inp",
 				"GBK",
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_5\\part.inp.mesh",
+				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_4\\part.inp.mesh",
 				"GBK");
+		value_short("F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_4\\part.inp.mesh.face", "GBK");
 		
 		new inp_converter(
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_6\\part.inp",
+				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_5\\part.inp",
 				"GBK",
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_6\\part.inp.mesh",
+				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_5\\part.inp.mesh",
 				"GBK");
+		value_short("F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_5\\part.inp.mesh.face", "GBK");
 		
 		new inp_converter(
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_7\\part.inp",
+				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_6\\part.inp",
 				"GBK",
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_7\\part.inp.mesh",
+				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_6\\part.inp.mesh",
 				"GBK");
+		value_short("F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_6\\part.inp.mesh.face", "GBK");
 		
-		new inp_converter(
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_8\\part.inp",
-				"GBK",
-				"E:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_8\\part.inp.mesh",
-				"GBK");
 		debug_information.println("End");
 	}
 }

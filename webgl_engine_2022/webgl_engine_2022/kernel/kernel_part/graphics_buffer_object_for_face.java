@@ -45,11 +45,12 @@ public class graphics_buffer_object_for_face
 							extra_data	=p_i.get_primitive_vertex_attribute_extra_data(body_id,face_id,primitive_id,primitive_vertex_id,attribute_id);
 							gbo.register(my_data,extra_data);
 						}
-						for(int attribute_id=attribute_number;attribute_id<max_attribute_number;attribute_id++)
+						for(int attribute_id=attribute_number;attribute_id<max_attribute_number;attribute_id++) {
 							gbo.register(	default_attribute_double[3*attribute_id+0],
 											default_attribute_double[3*attribute_id+1],
 											default_attribute_double[3*attribute_id+2],
 											default_attribute_string[  attribute_id  ]);
+						}
 					}
 					if(gbo.test_end(max_file_data_length,false))
 						gbocc.expand_creater_array(material_id);

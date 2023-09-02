@@ -49,3 +49,8 @@
 					"shininess"			:	8
 				}
 			],
+			
+			
+			"point_size"				:	12,
+			
+			

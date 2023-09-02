@@ -1,19 +1,60 @@
+struct material_information
+{
+	vertex_color_type			:	i32,
+	fragment_color_type			:	i32,
+	tmp_int_0					:	i32,
+	tmp_int_1					:	i32,
+									
+	vertex_color_parameter		:	vec4<f32>,
+	fragment_color_parameter	:	vec4<f32>,
+	
+	color						:	vec4<f32>,
+	ambient						:	vec4<f32>,
+	diffuse						:	vec4<f32>,
+	specular					:	vec4<f32>,
+	emission					:	vec4<f32>,
+	shininess					:	f32,
+	
+	tmp_float_0					:	f32,
+	tmp_float_1					:	f32,
+	tmp_float_2					:	f32,
+	
+	texture_matrix				:	array<mat4x4<f32>,4>,
+	
+	light_color_factor			:	array<vec4<f32>,4>
+};
+@group(1) @binding(0)
+var<uniform> material_info		:	material_information;
+
+@group(1) @binding(1) var texture_1	:	texture_2d<f32>;
+@group(1) @binding(2) var texture_2	:	texture_2d<f32>;
+@group(1) @binding(3) var texture_3	:	texture_2d<f32>;
+@group(1) @binding(4) var texture_4	:	texture_2d<f32>;
+
+@group(1) @binding(5) var sampler_1	:	sampler;
+@group(1) @binding(6) var sampler_2	:	sampler;
+@group(1) @binding(7) var sampler_3	:	sampler;
+@group(1) @binding(8) var sampler_4	:	sampler;
+
 const line_depth_bias	=0.0000025;
 const point_depth_bias	=0.0000050;
 
+override clip_type		: i32;
 override primitive_type	: i32;
 override point_size		: f32;
 
 struct vertex_to_fragment_struct
 {
 	@builtin(position)	vertex_position		:	vec4<f32>,
-		
-	@location(0)		vertex_id_0			:	vec4<f32>,
-	@location(1)		vertex_id_1			:	vec4<f32>,
-	@location(2)		vertex_value		:	vec4<f32>,
 	
-	@location(3)		vertex_material		:	vec4<f32>,
-	@location(4)		vertex_texture		:	vec4<f32>
+	@location(0)		vertex_location		:	vec4<f32>,
+		
+	@location(1)		vertex_id_0			:	vec4<f32>,
+	@location(2)		vertex_id_1			:	vec4<f32>,
+	@location(3)		vertex_value		:	vec4<f32>,
+	
+	@location(4)		vertex_color		:	vec4<f32>,
+	@location(5)		vertex_texture		:	vec4<f32>
 };
 
 struct fragment_id_target_struct
@@ -28,14 +69,96 @@ struct fragment_color_target_struct
 	@location(0) 	color			:	vec4<f32>,
 	@builtin(frag_depth)	depth	:		f32	
 };
+fn caculate_vertex_color(
+	my_coord		:	vec4<f32>,
+	my_normal		:	vec4<f32>,
+	my_material		:	vec4<f32>,
+	render_value	:	f32
+)->vec4<f32>
+{
+	if(i32(id_info.data[0].z)>0){
+		if(render_value<=1.0)
+			{return vec4(vec3(0.0,0.0,1.0)*(1.0-render_value)+vec3(0.0,1.0,1.0)*(render_value-0.0),1.0);}
+		if(render_value<=2.0)
+			{return vec4(vec3(0.0,1.0,1.0)*(2.0-render_value)+vec3(0.0,1.0,0.0)*(render_value-1.0),1.0);}
+		if(render_value<=3.0)
+			{return vec4(vec3(0.0,1.0,0.0)*(3.0-render_value)+vec3(1.0,1.0,0.0)*(render_value-2.0),1.0);}
+		else
+			{return vec4(vec3(1.0,1.0,0.0)*(4.0-render_value)+vec3(1.0,0.0,0.0)*(render_value-3.0),1.0);}
+	}
+	
+	var ret_val=vec4<f32>(0.0,0.0,0.0,1.0);
+	switch(material_info.vertex_color_type){
+	default:
+		{
+			break;
+		}
+	case 1,2:
+		{
+			var p0=id_info.matrix*vec4(				 my_coord.xyz,1.0);
+			var p1=id_info.matrix*vec4(my_normal.xyz+my_coord.xyz,1.0);
+			p0=p0/p0.w;
+			p1=p1/p1.w;
+			var normal_value=normalize(p1.xyz-p0.xyz);
+			var to_eye_value=normalize(target_info.eye_point.xyz/target_info.eye_point.w-p0.xyz);
+			
+			for (var i: i32 = 0; i < 4; i++) {
+				var to_light_value	=normalize(system_info.light_position[i].xyz/system_info.light_position[i].w-p0.xyz);
+				var half_value		=normalize(to_eye_value+to_light_value);
+				
+				var light_color	=vec4(0.0,0.0,0.0,0.0);
+				light_color		=light_color+material_info.ambient;
+				light_color		=light_color+    max(0.0,dot(to_light_value,normal_value))*material_info.diffuse;
+				light_color		=light_color+pow(max(0.0,dot(half_value,	normal_value)),material_info.shininess)*material_info.specular;
+				
+				if(material_info.vertex_color_type==1)
+					{light_color=my_material*light_color;}
+				else
+					{light_color=material_info.color*light_color;}
+				
+				ret_val=ret_val+material_info.light_color_factor[i]*light_color;
+			}
+			ret_val=ret_val+material_info.emission;
+			break;
+		}
+	}
+	return vec4<f32>(ret_val.rgb,1.0);
+}
+
+fn caculate_fragment_color(vf:vertex_to_fragment_struct)->vec4<f32>
+{
+	if(i32(id_info.data[0].z)<=0){
+		switch(material_info.fragment_color_type){
+		default:
+			{
+				break;
+			}
+		case 1:
+			{
+				var ret_val=material_info.texture_matrix[0]*vf.vertex_texture;
+				ret_val=textureSample(texture_1,sampler_1,(ret_val/ret_val.w).xy);
+				return vec4<f32>(ret_val.rgb,1.0);
+			}
+		case 2:
+			{
+				var ret_val=material_info.texture_matrix[0]*vf.vertex_texture;
+				ret_val=textureSample(texture_1,sampler_1,(ret_val/ret_val.w).xy);
+				if(ret_val.a<=material_info.vertex_color_parameter.x)
+					{discard;};
+				return vec4<f32>(ret_val.rgb,1.0);
+			}
+		}
+	}
+	return vec4<f32>(vf.vertex_color.rgb,1.0);
+}
 
 @vertex
 fn vertex_main(
-		@location(0) my_coord		:	vec4<f32>,
-		@location(1) my_normal		:	vec4<f32>,
-		@location(2) my_material	:	vec4<f32>,
-		@location(3) my_id			:	vec4<f32>,
-		@location(4) my_texture		:	vec4<f32>,
+		@location(0)			my_coord		:	vec4<f32>,
+		@location(1)			my_normal		:	vec4<f32>,
+		@location(2)			my_material		:	vec4<f32>,
+		@location(3)			my_id			:	vec4<f32>,
+		@location(4)			my_texture		:	vec4<f32>,
 		
 		@builtin(vertex_index)	my_vertex_index	:	u32
 		
@@ -43,14 +166,44 @@ fn vertex_main(
 {
 	var vf:vertex_to_fragment_struct;
 	
-	vf.vertex_position	=target_info.projection_matrix*(id_info.matrix*my_coord);
+	vf.vertex_location	=id_info.matrix*vec4(my_coord.xyz,1.0);
+	vf.vertex_location	=vf.vertex_location/vf.vertex_location.w;
+	
+	switch(clip_type){
+	case 2:
+		{
+			vf.vertex_position=target_info.clip_plane_matrix*vf.vertex_location;
+			break;
+		}
+	default:
+		{
+			vf.vertex_position=vf.vertex_location;
+			break;
+		}
+	}
+	vf.vertex_position	=target_info.projection_matrix*vf.vertex_position;
 	vf.vertex_position	=vf.vertex_position/vf.vertex_position.w;
 	
 	vf.vertex_id_0		=vec4<f32>(f32(id_info.component_system_id),my_id.x,my_id.y,0.0);
 	vf.vertex_id_1		=vec4<f32>(my_texture.x,my_texture.y,my_id.z,my_id.w);
-	vf.vertex_value		=vec4<f32>(5.5,6.6,7.7,vf.vertex_position.z);
 	
-	vf.vertex_material	=vec4(my_material.rgb,1.0);
+	if(i32(id_info.data[0].z)<=0)
+		{vf.vertex_value=vec4<f32>(0.0,0.0,0.0,vf.vertex_position.z);}
+	else{
+		switch((i32(id_info.data[0].z)-1)%4){
+		case 0:
+			{vf.vertex_value=vec4<f32>(my_material.x,	0.0,0.0,vf.vertex_position.z);break;}
+		case 1:
+			{vf.vertex_value=vec4<f32>(my_material.y,	0.0,0.0,vf.vertex_position.z);break;}
+		case 2:
+			{vf.vertex_value=vec4<f32>(my_material.z,	0.0,0.0,vf.vertex_position.z);break;}
+		case 3:
+			{vf.vertex_value=vec4<f32>(my_material.w,	0.0,0.0,vf.vertex_position.z);break;}
+		default:
+			{vf.vertex_value=vec4<f32>(0.0,				0.0,0.0,vf.vertex_position.z);break;}
+		}
+	}
+	vf.vertex_color		=caculate_vertex_color(my_coord,my_normal,my_material,vf.vertex_value.x*4.0);
 	vf.vertex_texture	=my_texture;
 	
 	switch(primitive_type){
@@ -83,155 +236,212 @@ fn vertex_main(
 			break;
 		}
 	}
-	
 	return vf;
 }
 
 @fragment
-fn fragment_id_face(vf:vertex_to_fragment_struct) -> fragment_id_target_struct
+fn fragment_id_function(vf:vertex_to_fragment_struct) -> fragment_id_target_struct
 {
 	var ret_val	:	fragment_id_target_struct;
 	
-	ret_val.depth=vf.vertex_value.w;
-	ret_val.id_0 =vec4(i32(vf.vertex_id_0.x),i32(vf.vertex_id_0.y),	i32(vf.vertex_id_0.z),0);
-	ret_val.id_1 =vec4(			-1,					 -1,			i32(vf.vertex_id_1.z),i32(vf.vertex_id_1.w));
+	switch(primitive_type){
+	default:	{}
+	case 0:		//face id  pickup
+		{
+			ret_val.depth=vf.vertex_value.w;
+			ret_val.id_0 =vec4(i32(vf.vertex_id_0.x),i32(vf.vertex_id_0.y),	i32(vf.vertex_id_0.z),0);
+			ret_val.id_1 =vec4(			-1,					 -1,			i32(vf.vertex_id_1.z),i32(vf.vertex_id_1.w));
+			
+			break;
+		}
+	case 1:		//point id pickup
+		{
+			ret_val.depth=vf.vertex_value.w-2.0*point_depth_bias;
+			ret_val.id_0 =vec4(i32(vf.vertex_id_0.x),i32(vf.vertex_id_0.y),i32(vf.vertex_id_0.z),2);
+			ret_val.id_1 =vec4(i32(vf.vertex_id_1.x),i32(vf.vertex_id_1.y),i32(vf.vertex_id_1.z),i32(vf.vertex_id_1.w));
 
-	return ret_val;
-}
-
-@fragment
-fn fragment_value_face(vf:vertex_to_fragment_struct) ->fragment_color_target_struct
-{
-	var ret_val	:	fragment_color_target_struct;
-	
-	ret_val.depth=vf.vertex_value.w;
-	ret_val.color=vf.vertex_value;
-	
-	return ret_val;
-}
-
-@fragment
-fn fragment_id_point(vf:vertex_to_fragment_struct) -> fragment_id_target_struct
-{
-	var ret_val	:	fragment_id_target_struct;
-	
-	ret_val.depth=vf.vertex_value.w-2.0*point_depth_bias;
-	ret_val.id_0 =vec4(i32(vf.vertex_id_0.x),i32(vf.vertex_id_0.y),i32(vf.vertex_id_0.z),2);
-	ret_val.id_1 =vec4(i32(vf.vertex_id_1.x),i32(vf.vertex_id_1.y),i32(vf.vertex_id_1.z),i32(vf.vertex_id_1.w));
-	
-	if(dot(vf.vertex_texture,vf.vertex_texture)>1.0)
-	{
-		discard;
+			if(dot(vf.vertex_texture,vf.vertex_texture)>1.0)
+				{discard;break;}
+			if(system_info.pickup_component_id!=id_info.component_id)
+				{break;}
+		  	if(system_info.pickup_driver_id!=id_info.driver_id)
+		  		{break;}
+			if(system_info.pickup_body_id!=i32(vf.vertex_id_0.y))
+				{break;}
+			if(system_info.pickup_face_id!=i32(vf.vertex_id_0.z))
+				{break;}
+			ret_val.depth=0.0;
+			break;
+		}
 	}
-	if(system_info.pickup_component_id	!=id_info.component_id)	{return ret_val;}
-  	if(system_info.pickup_driver_id		!=id_info.driver_id)	{return ret_val;}
-	if(system_info.pickup_body_id		!=i32(vf.vertex_id_0.y)){return ret_val;}
-	if(system_info.pickup_face_id		!=i32(vf.vertex_id_0.z)){return ret_val;}
-	
-	ret_val.depth=0.0;
-	
-	return ret_val;
-}
-
-@fragment
-fn fragment_value_point(vf:vertex_to_fragment_struct) ->fragment_color_target_struct
-{
-	var ret_val	:	fragment_color_target_struct;
-	
-	ret_val.depth=vf.vertex_value.w-2.0*point_depth_bias;
-	ret_val.color=vf.vertex_value;
-
-	if(dot(vf.vertex_texture,vf.vertex_texture)>1.0)
-	{
-		discard;
+		
+	switch(clip_type){
+	default:
+		{
+			break;
+		}
+	case 1:
+		{
+			if(dot(target_info.clip_plane,vf.vertex_location)>0.0)
+				{discard;}
+			break;
+		}
+	case 2:
+		{
+			if(dot(target_info.clip_plane,vf.vertex_location)<0.0)
+				{discard;}
+			break;
+		}
 	}
-	if(system_info.pickup_component_id	!=id_info.component_id)	{return ret_val;}
-  	if(system_info.pickup_driver_id		!=id_info.driver_id)	{return ret_val;}
-	if(system_info.pickup_body_id		!=i32(vf.vertex_id_0.y)){return ret_val;}
-	if(system_info.pickup_face_id		!=i32(vf.vertex_id_0.z)){return ret_val;}
-	
-	ret_val.depth=0.0;
-	
 	return ret_val;
 }
 
 @fragment
-fn fragment_color_face(vf:vertex_to_fragment_struct) ->fragment_color_target_struct
+fn fragment_value_function(vf:vertex_to_fragment_struct) ->fragment_color_target_struct
 {
 	var ret_val	:	fragment_color_target_struct;
 	
-	ret_val.color=vf.vertex_material;
-	ret_val.depth=vf.vertex_value.w;
-	
-	return ret_val;
-}
-
-@fragment
-fn fragment_color_edge(vf:vertex_to_fragment_struct) ->fragment_color_target_struct
-{
-	var ret_val	:	fragment_color_target_struct;
-	
-	ret_val.depth=vf.vertex_value.w-line_depth_bias;
-	ret_val.color=vec4<f32>(0.0,0.0,0.0,1.0);
-	
-	return ret_val;
-}
-
-@fragment
-fn fragment_color_frame(vf:vertex_to_fragment_struct) ->fragment_color_target_struct
-{
-	var ret_val	:	fragment_color_target_struct;
-	
-	ret_val.depth=vf.vertex_value.w-line_depth_bias;
-	ret_val.color=vec4<f32>(0.25,0.25,0.25,1.0);
-	
-	return ret_val;
-}
-
-@fragment
-fn fragment_color_pickup_point(vf:vertex_to_fragment_struct) ->fragment_color_target_struct
-{
-	var ret_val	:	fragment_color_target_struct;
-	
-	ret_val.depth=vf.vertex_value.w-2.0*point_depth_bias;
-	ret_val.color=vec4<f32>(0.0,0.0,0.0,1.0);
-
-	loop {
-  		if(system_info.pickup_component_id	!=id_info.component_id)	{break;}
-  		if(system_info.pickup_driver_id		!=id_info.driver_id)	{break;}
-		if(system_info.pickup_body_id		!=i32(vf.vertex_id_0.y)){break;}
-		if(system_info.pickup_face_id		!=i32(vf.vertex_id_0.z)){break;}
-		if(dot(vf.vertex_texture,vf.vertex_texture)>1.0)			{break;}
-		
-		var my_loop_id		=i32(vf.vertex_id_1.x);
-		var my_edge_id		=i32(vf.vertex_id_1.y);
-		var my_primitive_id	=i32(vf.vertex_id_1.z);
-		var my_vertex_id	=i32(vf.vertex_id_1.w);
-		
-		ret_val.depth=2.0*point_depth_bias;
-		ret_val.color=vec4<f32>(0.0,0.0,1.0,1.0);
-		if(system_info.pickup_loop_id		!=my_loop_id)		{return ret_val;}
-		if(system_info.pickup_edge_id		!=my_edge_id)		{return ret_val;}
-		
-		ret_val.depth=1.0*point_depth_bias;
-		ret_val.color=vec4<f32>(0.0,1.0,0.0,1.0);
-		if(system_info.pickup_primitive_id	!=my_primitive_id)	{return ret_val;}
-		if(system_info.pickup_vertex_id		!=my_vertex_id)		{return ret_val;}
-		
-		ret_val.depth=0.0*point_depth_bias;
-		ret_val.color=vec4<f32>(1.0,0.0,0.0,1.0);
-		return ret_val;
+	switch(primitive_type){
+	default:	{}
+	case 2:		//face value  pickup
+		{
+			ret_val.depth=vf.vertex_value.w;
+			ret_val.color=vf.vertex_value;
+			break;
+		}
+	case 3:		//point value pickup
+		{
+			ret_val.depth=vf.vertex_value.w-2.0*point_depth_bias;
+			ret_val.color=vf.vertex_value;
+			
+			if(dot(vf.vertex_texture,vf.vertex_texture)>1.0)
+				{discard;break;}
+			if(system_info.pickup_component_id!=id_info.component_id)
+				{break;}
+		  	if(system_info.pickup_driver_id!=id_info.driver_id)
+		  		{break;}
+			if(system_info.pickup_body_id!=i32(vf.vertex_id_0.y))
+				{break;}
+			if(system_info.pickup_face_id!=i32(vf.vertex_id_0.z))
+				{break;}
+			
+			ret_val.depth=0.0;
+			break;
+		}
 	}
-	discard;
+
+	switch(clip_type){
+	default:
+		{
+			break;
+		}
+	case 1:
+		{
+			if(dot(target_info.clip_plane,vf.vertex_location)>0.0)
+				{discard;}
+			break;
+		}
+	case 2:
+		{
+			if(dot(target_info.clip_plane,vf.vertex_location)<0.0)
+				{discard;}
+			break;
+		}
+	}
 	return ret_val;
 }
 
 @fragment
-fn fragment_color_normal_point(vf:vertex_to_fragment_struct) ->fragment_color_target_struct
+fn fragment_color_function(vf:vertex_to_fragment_struct) ->fragment_color_target_struct
 {
 	var ret_val	:	fragment_color_target_struct;
 	
-	ret_val.color=vec4<f32>(0.0,1.0,0.0,1.0);
-	ret_val.depth=vf.vertex_value.w-2.0*point_depth_bias;
+	switch(primitive_type){
+	default:	{}
+	case 4:		//face color 
+		{
+			ret_val.color=caculate_fragment_color(vf);
+			ret_val.depth=vf.vertex_value.w;
+			break;
+		}
+	case 5:		//edge color
+		{
+			ret_val.depth=vf.vertex_value.w-line_depth_bias;
+			ret_val.color=vec4<f32>(0.0,0.0,0.0,1.0);
+			break;
+		}
+	case 6:		//frame color
+		{
+			ret_val.depth=vf.vertex_value.w-line_depth_bias;
+			ret_val.color=vec4<f32>(0.25,0.25,0.25,1.0);
+			break;
+		}
+	case 7:		//pickup point color
+		{
+			ret_val.depth=vf.vertex_value.w-2.0*point_depth_bias;
+			ret_val.color=vec4<f32>(0.0,0.0,0.0,1.0);
+	
+			if(dot(vf.vertex_texture,vf.vertex_texture)>1.0)
+				{discard;break;}
+	  		if(system_info.pickup_component_id!=id_info.component_id)
+	  			{discard;break;}
+	  		if(system_info.pickup_driver_id!=id_info.driver_id)
+	  			{discard;break;}
+			if(system_info.pickup_body_id!=i32(vf.vertex_id_0.y))
+				{discard;break;}
+			if(system_info.pickup_face_id!=i32(vf.vertex_id_0.z))
+				{discard;break;}
+				
+			var my_loop_id		=i32(vf.vertex_id_1.x);
+			var my_edge_id		=i32(vf.vertex_id_1.y);
+			var my_primitive_id	=i32(vf.vertex_id_1.z);
+			var my_vertex_id	=i32(vf.vertex_id_1.w);
+			
+			ret_val.depth=2.0*point_depth_bias;
+			ret_val.color=vec4<f32>(0.0,0.0,1.0,1.0);
+			if(system_info.pickup_loop_id!=my_loop_id)
+				{break;}
+			if(system_info.pickup_edge_id!=my_edge_id)
+				{break;}
+			
+			ret_val.depth=1.0*point_depth_bias;
+			ret_val.color=vec4<f32>(0.0,1.0,0.0,1.0);
+			if(system_info.pickup_primitive_id!=my_primitive_id)
+				{break;}
+			if(system_info.pickup_vertex_id!=my_vertex_id)
+				{break;}
+			
+			ret_val.depth=0.0*point_depth_bias;
+			ret_val.color=vec4<f32>(1.0,0.0,0.0,1.0);
+			break;
+		}
+	case 8:	//normal point color
+		{
+			ret_val.color=vec4<f32>(0.0,1.0,0.0,1.0);
+			ret_val.depth=vf.vertex_value.w-2.0*point_depth_bias;
+			break;
+		}
+	}
+	
+	ret_val.color.w=id_info.data[0].x;
+
+	switch(clip_type){
+	default:
+		{
+			break;
+		}
+	case 1:
+		{
+			if(dot(target_info.clip_plane,vf.vertex_location)>0.0)
+				{discard;}
+			break;
+		}
+	case 2:
+		{
+			if(dot(target_info.clip_plane,vf.vertex_location)<0.0)
+				{discard;}
+			break;
+		}
+	}
 	return ret_val;
 }

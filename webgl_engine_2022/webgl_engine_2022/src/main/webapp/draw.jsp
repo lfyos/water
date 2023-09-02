@@ -80,9 +80,6 @@ async function body_onload()
 			progress_bar_ctx.fillText(display_value,	process_bar_canvas.width*0.5,	process_bar_canvas.height*0.5);
 		});
 		document.title=lfy_render.title;	//设置网页标题
-//		lfy_render.system_call_processor.show_hide_component(false,"camera_operation_component");
-//		lfy_render.system_call_processor.show_hide_component(false,"caption_component");
-//		lfy_render.system_call_processor.turnonoff_level_of_detail(false);
 }
 function body_onresize()
 {

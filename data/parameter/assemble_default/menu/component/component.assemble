@@ -56,7 +56,7 @@
 							case 8:	//取消透明
 								render.caller.call_server_component("manipulator_component","all",[
 									["event_method","transparency"],["flag","noselection_all"],
-									["transparency",(function_id==7)?0.05:1.0]]);
+									["transparency",(function_id==7)?0.1:1.0]]);
 								break;
 							case 9:	//设置显示精度
 								if((str=prompt("设置显示精度参数"))!=null)

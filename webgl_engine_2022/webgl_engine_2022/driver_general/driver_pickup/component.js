@@ -78,9 +78,11 @@ function construct_component_driver(
 	this.begin_render_target=function(target_sequence_id,
 			render_data,target_part_object,target_part_driver,target_render_driver,render)
 	{
+		var my_pass_descriptor;
+		
 		switch(target_sequence_id){
 		case 0:
-			render.webgpu.render_pass_encoder = render.webgpu.command_encoder.beginRenderPass(
+			my_pass_descriptor=
 			{
 				colorAttachments		: 
 				[
@@ -108,8 +110,10 @@ function construct_component_driver(
 	   				stencilLoadOp		:	"clear",
 	   				stencilStoreOp		:	"store"
 				}
-			});
+			};
 			return 	{
+				pass_descriptor	:	my_pass_descriptor,
+				
 				target_view		:	
 				{
 					width		:	1,
@@ -123,7 +127,7 @@ function construct_component_driver(
 				]
 			};
 		case 1:
-			render.webgpu.render_pass_encoder = render.webgpu.command_encoder.beginRenderPass(
+			my_pass_descriptor=
 			{
 				colorAttachments		: 
 				[
@@ -145,13 +149,16 @@ function construct_component_driver(
 	   				stencilLoadOp		:	"clear",
 	   				stencilStoreOp		:	"store"
 				}
-			});
+			};
 			return 	{
+				pass_descriptor	:	my_pass_descriptor,
+				
 				target_view		:	
 				{
 					width		:	1,
 					height		:	1
 				},
+				
 				method_array	:
 				[
 					{
@@ -323,6 +330,7 @@ function construct_component_driver(
 	{
 		this.draw_component				=null;
 		this.append_component_parameter	=null;
+		this.begin_render_target		=null;
 		
 		if(render.component_event_processor[this.component_id]!=null){
 			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")

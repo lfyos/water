@@ -18,7 +18,7 @@ async function create_webgpu(my_canvas)
 	webgpu.command_encoder		= null;
 	webgpu.render_pass_encoder	= null;
 	webgpu.compute_pass_encoder	= null;
-		
+	
 	webgpu.canvas				=new Array(my_canvas.length);
 	webgpu.context				=new Array(my_canvas.length);
 	for(var i=0,ni=webgpu.canvas.length;i<ni;i++){
@@ -38,6 +38,6 @@ async function create_webgpu(my_canvas)
 	webgpu.canvas_2d.width	=webgpu.canvas[0].width;
 	webgpu.canvas_2d.height	=webgpu.canvas[0].height;
 	webgpu.context_2d		=webgpu.canvas_2d.getContext("2d");
-		
+	
 	return webgpu;
 }

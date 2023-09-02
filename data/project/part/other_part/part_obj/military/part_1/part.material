@@ -18,11 +18,20 @@
 						"texture"					:	[
 							{
 								"texture_file"	:	"20131105014323218887.jpg",
-								"u_wrapmode"	:	"mirrored_repeat",
-								"v_wrapmode"	:	"mirrored_repeat",
-								"min_filter"	:	"linear",
-								"mag_filter"	:	"linear",
-								"matrix"		:	[1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0]
+								"parameter"			:
+								{
+									"addressModeU"	:	"mirror-repeat",
+									"addressModeV"	:	"mirror-repeat",
+									"magFilter"		:	"linear",
+									"minFilter"		:	"linear",
+									"mipmapFilter"	:	"linear"
+								},
+								"matrix"		:	[
+									1.0, 0.0,0.0,0.0,
+									0.0,-1.0,0.0,0.0,
+									0.0, 0.0,1.0,0.0,
+									0.0, 1.0,0.0,1.0
+								]
 							}
 						],
 						"color"		:	[0.0,	0.0,	0.0,	1.0],
@@ -39,11 +48,20 @@
 						"texture"					:	[
 							{
 								"texture_file"	:	"20131105014323218202.jpg",
-								"u_wrapmode"	:	"mirrored_repeat",
-								"v_wrapmode"	:	"mirrored_repeat",
-								"min_filter"	:	"linear",
-								"mag_filter"	:	"linear",
-								"matrix"		:	[1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0]
+								"parameter"			:
+								{
+									"addressModeU"	:	"mirror-repeat",
+									"addressModeV"	:	"mirror-repeat",
+									"magFilter"		:	"linear",
+									"minFilter"		:	"linear",
+									"mipmapFilter"	:	"linear"
+								},
+								"matrix"		:	[
+									1.0, 0.0,0.0,0.0,
+									0.0,-1.0,0.0,0.0,
+									0.0, 0.0,1.0,0.0,
+									0.0, 1.0,0.0,1.0
+								]
 							}
 						],
 						"color"		:	[0.0,	0.0,	0.0,	1.0],
@@ -60,11 +78,20 @@
 						"texture"					:	[
 							{
 								"texture_file"	:	"20110725114741269320.jpg",
-								"u_wrapmode"	:	"mirrored_repeat",
-								"v_wrapmode"	:	"mirrored_repeat",
-								"min_filter"	:	"linear",
-								"mag_filter"	:	"linear",
-								"matrix"		:	[1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0]
+								"parameter"			:
+								{
+									"addressModeU"	:	"mirror-repeat",
+									"addressModeV"	:	"mirror-repeat",
+									"magFilter"		:	"linear",
+									"minFilter"		:	"linear",
+									"mipmapFilter"	:	"linear"
+								},
+								"matrix"		:	[
+									1.0, 0.0,0.0,0.0,
+									0.0,-1.0,0.0,0.0,
+									0.0, 0.0,1.0,0.0,
+									0.0, 1.0,0.0,1.0
+								]
 							}
 						],
 						"color"		:	[0.0,	0.0,	0.0,	1.0],
@@ -81,11 +108,20 @@
 						"texture"					:	[
 							{
 								"texture_file"	:	"white.jpg",
-								"u_wrapmode"	:	"mirrored_repeat",
-								"v_wrapmode"	:	"mirrored_repeat",
-								"min_filter"	:	"linear",
-								"mag_filter"	:	"linear",
-								"matrix"		:	[1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0]
+								"parameter"			:
+								{
+									"addressModeU"	:	"mirror-repeat",
+									"addressModeV"	:	"mirror-repeat",
+									"magFilter"		:	"linear",
+									"minFilter"		:	"linear",
+									"mipmapFilter"	:	"linear"
+								},
+								"matrix"		:	[
+									1.0, 0.0,0.0,0.0,
+									0.0,-1.0,0.0,0.0,
+									0.0, 0.0,1.0,0.0,
+									0.0, 1.0,0.0,1.0
+								]
 							}
 						],
 						"color"		:	[0.0,	0.0,	0.0,	1.0],
@@ -102,11 +138,20 @@
 						"texture"					:	[
 							{
 								"texture_file"	:	"20110804114233000545.jpg",
-								"u_wrapmode"	:	"mirrored_repeat",
-								"v_wrapmode"	:	"mirrored_repeat",
-								"min_filter"	:	"linear",
-								"mag_filter"	:	"linear",
-								"matrix"		:	[1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,1.0]
+								"parameter"			:
+								{
+									"addressModeU"	:	"mirror-repeat",
+									"addressModeV"	:	"mirror-repeat",
+									"magFilter"		:	"linear",
+									"minFilter"		:	"linear",
+									"mipmapFilter"	:	"linear"
+								},
+								"matrix"		:	[
+									1.0, 0.0,0.0,0.0,
+									0.0,-1.0,0.0,0.0,
+									0.0, 0.0,1.0,0.0,
+									0.0, 1.0,0.0,1.0
+								]
 							}
 						],
 						"color"		:	[0.0,	0.0,	0.0,	1.0],

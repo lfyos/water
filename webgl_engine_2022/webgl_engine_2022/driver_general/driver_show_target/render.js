@@ -20,7 +20,6 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			}
 		}
 	];
-	
 	this.bindgroup_layout=render.webgpu.device.createBindGroupLayout(
 		{
 			entries	:layout_entries
@@ -118,6 +117,8 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 	this.pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	this.new_part_driver=construct_part_driver;
 	
+	this.render_material=init_data;
+	
 	this.method_render_flag=[false,false,true];
 	
 	this.destroy=function()
@@ -126,6 +127,9 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 		this.bindgroup_layout	=null;
 		
 		this.new_part_driver	=null;
+		
+		this.render_material	=null;
+		
 		this.method_render_flag	=null;
 	}
 }

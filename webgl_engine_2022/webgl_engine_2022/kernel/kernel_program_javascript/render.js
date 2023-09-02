@@ -28,7 +28,29 @@ function construct_render_routine(my_webgpu,my_url,
 	this.component_event_processor	=new Array(component_number);
 	this.component_call_processor	=new Array(component_number);
 	
-	this.event_component			=new Object();
+	this.event_component			=
+	{
+		mouse	:
+		{
+			component_name	:	null,
+			function_id	:	0
+		},
+		touch	:
+		{
+			component_name	:	null,
+			function_id	:	0
+		},
+		keyboard	:
+		{
+			component_name	:	null,
+			function_id	:	0
+		},
+		touch	:
+		{
+			component_name	:	null,
+			function_id	:	0
+		}
+	};
 
 	this.render_buffer_array		=new Array();
 	
@@ -65,7 +87,7 @@ function construct_render_routine(my_webgpu,my_url,
 		depth				:	-2,
 		value				:	[-2,-2,-2]
 	};
-	
+
 	this.caller						=new construct_server_caller(this);
 	
 	this.event_listener				=new Array(this.webgpu.canvas.length);
@@ -84,42 +106,7 @@ function construct_render_routine(my_webgpu,my_url,
 		this.part_array[i]			=new Array();
 	}
 	
-	this.system_buffer=new construct_system_buffer(max_target_number,this);
-	this.set_system_bindgroup=function(target_id,component_id,driver_id)
-	{
-		var system_bindgroup_id;
-		var p=this.component_array_sorted_by_id[component_id];
-		
-		driver_id=(typeof(driver_id)!="number")?-1:driver_id;
-		if((driver_id<0)||(driver_id>=p.component_ids.length))
-			system_bindgroup_id=p.system_bindgroup_id;
-		else
-			system_bindgroup_id=p.component_ids[driver_id][3];
-		
-		if(this.system_buffer.location_version[system_bindgroup_id]<0){
-			this.system_buffer.location_version[system_bindgroup_id]=0;
-			
-			var pos=this.system_buffer.id_stride*system_bindgroup_id;
-			pos+=this.component_location_data.identify_matrix.length*Float32Array.BYTES_PER_ELEMENT;
-			this.webgpu.device.queue.writeBuffer(this.system_buffer.id_buffer,pos,
-				new Int32Array(this.system_bindgroup_id[system_bindgroup_id]));
-		}
-		p=this.component_location_data.get_component_matrix_and_version(component_id);
-		
-		if(this.system_buffer.location_version[system_bindgroup_id]<p.version){
-			this.system_buffer.location_version[system_bindgroup_id]=p.version;
-			
-			this.webgpu.device.queue.writeBuffer(this.system_buffer.id_buffer,
-				this.system_buffer.id_stride*system_bindgroup_id,new Float32Array(p.matrix));
-		}
-		
-		this.webgpu.render_pass_encoder.setBindGroup(0,this.system_buffer.system_bindgroup,
-			[
-				this.system_buffer.target_buffer_stride			*target_id,
-				this.system_buffer.id_stride					*system_bindgroup_id
-			]);
-	}
-	
+	this.system_buffer				=new construct_system_buffer(max_target_number,this);
 	this.component_location_data	=new construct_component_location_object(component_number,this.computer,this.webgpu);
 	this.component_render_data		=new construct_component_render_parameter(render_number);
 	this.modifier_time_parameter	=new construct_modifier_time_parameter(modifier_container_number);

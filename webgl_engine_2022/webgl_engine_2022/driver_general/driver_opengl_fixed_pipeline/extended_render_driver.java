@@ -17,7 +17,7 @@ import kernel_component.component_load_source_container;
 
 public class extended_render_driver extends render_driver
 {
-	private String shader_material_file_name,light_file_name,file_charset;
+	private String light_file_name,file_charset;
 
 	public extended_render_driver()
 	{
@@ -25,23 +25,18 @@ public class extended_render_driver extends render_driver
 		
 		file_charset=null;
 		light_file_name=null;
-		shader_material_file_name=null;
 	}
-	public extended_render_driver(
-			String my_shader_material_file_name,
-			String my_light_file_name,String my_file_charset)
+	public extended_render_driver(String my_light_file_name,String my_file_charset)
 	{
 		super();
 		
 		file_charset=my_file_charset;
 		light_file_name=my_light_file_name;
-		shader_material_file_name=my_shader_material_file_name;
 	}
 	public void destroy()
 	{
 		super.destroy();
 		
-		shader_material_file_name=null;
 		light_file_name=null;
 		file_charset=null;
 	}
@@ -51,7 +46,7 @@ public class extended_render_driver extends render_driver
 	public render_driver clone(render parent_render,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_render_driver(shader_material_file_name,light_file_name,file_charset);
+		return new extended_render_driver(light_file_name,file_charset);
 	}
 	public String[] get_render_list(
 			int part_type_id,file_reader shader_fr,String load_sub_directory_name,
@@ -59,7 +54,6 @@ public class extended_render_driver extends render_driver
 			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
 	{
 		String render_list_file_name=shader_fr.directory_name+file_reader.separator(shader_fr.get_string());
-		shader_material_file_name	=shader_fr.directory_name+file_reader.separator(shader_fr.get_string());
 		light_file_name				=shader_fr.directory_name+file_reader.separator(shader_fr.get_string());
 		file_charset				=shader_fr.get_charset();
 		return (new File(render_list_file_name).exists())?new String[] {render_list_file_name,file_charset}:null;
@@ -109,6 +103,6 @@ public class extended_render_driver extends render_driver
 	public render_instance_driver create_render_instance_driver(render r,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_render_instance_driver(	shader_material_file_name,light_file_name,file_charset);
+		return new extended_render_instance_driver(	light_file_name,file_charset);
 	}
 }

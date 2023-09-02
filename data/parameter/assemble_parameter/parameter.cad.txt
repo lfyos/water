@@ -7,7 +7,7 @@
 /*	scene_cors_string							*/		*
 
 /*	multiparameter_number						*/		8
-/*	default_display_bitmap			2+16		*/		18
+/*	default_display_bitmap		1+2+8+64		*/		75
 
 /*	scene_component_name						*/		movement_manager
 

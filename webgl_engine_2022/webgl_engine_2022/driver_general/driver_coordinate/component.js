@@ -13,11 +13,11 @@ function construct_component_driver(
 		rpe.setPipeline(render_driver.pipeline);
 		
 		for(var i=0,ni=this.coordinate_component_id.length;i<ni;i++){
-			render.set_system_bindgroup(render_data.render_buffer_id,
+			render.system_buffer.set_system_bindgroup(render_data.render_buffer_id,
 				(this.coordinate_component_id[i]<0)
 					?(project_matrix.camera_component_id)
 					:(this.coordinate_component_id[i]),
-				-1);
+				-1,render);
 			rpe.setVertexBuffer(1,this.coodinate_buffer,
 					Float32Array.BYTES_PER_ELEMENT*4*i,Float32Array.BYTES_PER_ELEMENT*4);
 			

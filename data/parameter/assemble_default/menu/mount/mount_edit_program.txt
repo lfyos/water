@@ -105,7 +105,11 @@ function(component_name,component_id,render)
 		update_canvas_texture	:	function(canvas_2d,context_2d,text_format,component_id,render)
 		{
 			var ep=render.component_event_processor[component_id];
-		
+			
+			if(ep.update_flag)
+				return false;
+			ep.update_flag=true;
+			
 			ep.text_format			=text_format;
 			
 			canvas_2d.width			=ep.text_format.canvas_width;

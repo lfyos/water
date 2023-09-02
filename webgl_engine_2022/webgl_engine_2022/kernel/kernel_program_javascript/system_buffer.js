@@ -38,11 +38,10 @@ function construct_system_buffer(target_buffer_number,render)
 		if(this.system_bindgroup!=null){
 			this.system_bindgroup=null;
 		}
-		if(this.id_buffer_init_flag!=null){
-			this.id_buffer_init_flag=null;
-		}
-		this.set_system_buffer=null;
-		this.set_target_buffer=null;
+		this.set_system_buffer			=null;
+		this.set_target_buffer			=null;
+		this.set_system_bindgroup		=null;
+		this.set_system_bindgroup_data	=null;
 	};
 
 	this.set_system_buffer=function(render)
@@ -241,4 +240,60 @@ function construct_system_buffer(target_buffer_number,render)
 			this.target_buffer_stride*target_id+float_data.length*Float32Array.BYTES_PER_ELEMENT,
 			new Int32Array(int_data));
 	};
+	this.set_system_bindgroup=function(target_id,component_id,driver_id,render)
+	{
+		var system_bindgroup_id;
+		var p=render.component_array_sorted_by_id[component_id];
+		
+		driver_id=(typeof(driver_id)!="number")?-1:driver_id;
+		if((driver_id<0)||(driver_id>=p.component_ids.length))
+			system_bindgroup_id=p.system_bindgroup_id;
+		else
+			system_bindgroup_id=p.component_ids[driver_id][3];
+		
+		if(this.location_version[system_bindgroup_id]<0){
+			this.location_version[system_bindgroup_id]=0;
+			
+			var pos=this.id_stride*system_bindgroup_id;
+			pos+=Float32Array.BYTES_PER_ELEMENT*render.component_location_data.identify_matrix.length;
+			pos+=Float32Array.BYTES_PER_ELEMENT*this.id_buffer_data_length;
+			render.webgpu.device.queue.writeBuffer(this.id_buffer,pos,
+				new Int32Array(render.system_bindgroup_id[system_bindgroup_id]));
+		}
+		p=render.component_location_data.get_component_matrix_and_version(component_id);
+		if(this.location_version[system_bindgroup_id]<p.version){
+			this.location_version[system_bindgroup_id]=p.version;
+			render.webgpu.device.queue.writeBuffer(this.id_buffer,
+				this.id_stride*system_bindgroup_id,new Float32Array(p.matrix));
+		}
+		render.webgpu.render_pass_encoder.setBindGroup(0,this.system_bindgroup,
+			[
+				this.target_buffer_stride	*target_id,
+				this.id_stride				*system_bindgroup_id
+			]);
+	}
+	this.set_system_bindgroup_data=function(id_data,component_id,driver_id,render)
+	{
+		if(!(Array.isArray(id_data)))
+			return;
+		if(id_data.length<=0)
+			return;
+		if(id_data.length>this.id_buffer_data_length)
+			id_data.length=this.id_buffer_data_length;
+		
+		var system_bindgroup_id;
+		var p=render.component_array_sorted_by_id[component_id];
+		
+		driver_id=(typeof(driver_id)!="number")?-1:driver_id;
+		if((driver_id<0)||(driver_id>=p.component_ids.length))
+			system_bindgroup_id=p.system_bindgroup_id;
+		else
+			system_bindgroup_id=p.component_ids[driver_id][3];
+		
+		var pos=this.id_stride*system_bindgroup_id;
+			pos+=Float32Array.BYTES_PER_ELEMENT*render.component_location_data.identify_matrix.length;
+		render.webgpu.device.queue.writeBuffer(this.id_buffer,pos,new Float32Array(id_data));
+		
+		return;
+	}
 }

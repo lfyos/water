@@ -88,7 +88,7 @@ function init_ids_of_part_and_component(
 		]);
 		
 	};
-
+	
 	render.system_bindgroup_id				=system_bindgroup_id;
 	render.permanent_render_part_id			=permanent_render_part_id;
 	render.part_component_id_and_driver_id	=part_component_id_and_driver_id;

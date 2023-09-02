@@ -120,26 +120,6 @@ function(component_name,component_id,render)
 			}
 			return true;
 		},
-		pickupmousewheel		:	function(event,component_id,render)
-		{
-			var ep=render.component_event_processor[component_id];
-			
-			var mouse_wheel_number=0;
-			if(typeof(event.wheelDelta)=="number")
-				mouse_wheel_number+=event.wheelDelta/200.0;		//for chrome,opera
-			else if(typeof(event.detail)=="number")
-				mouse_wheel_number-=event.detail/5;				//for firefox
-			else
-				return true;
-			
-			var skip_array=[1,	5,	10,	50,	100,	500,	1000,	5000];
-
-			ep.id_base-=mouse_wheel_number*skip_array[(event.ctrlKey?1:0)+(event.shiftKey?2:0)+(event.altKey?4:0)];
-			ep.id_base=(ep.id_base<0)?0:Math.round(ep.id_base);
-			ep.update_flag=false;
-			
-			return true;
-		},
 		pickupmouseselect		:	function(event,component_id,render)
 		{
 			var ep=render.component_event_processor[component_id];

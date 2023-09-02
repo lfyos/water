@@ -246,25 +246,6 @@ obj_format_file_garden_part_7
 	garden\part_7\part.material
 	garden\part_7\part.description
 	garden\part_7\part.mp3
-obj_format_file_garden_part_8
-	obj_format_file_garden_part_8
-	garden\part_8\part.obj.mesh
-	garden\part_8\part.material
-	garden\part_8\part.description
-	garden\part_8\part.mp3
-obj_format_file_garden_part_9
-	obj_format_file_garden_part_9
-	garden\part_9\part.obj.mesh
-	garden\part_9\part.material
-	garden\part_9\part.description
-	garden\part_9\part.mp3
-obj_format_file_garden_part_10
-	obj_format_file_garden_part_10
-	garden\part_10\part.obj.mesh
-	garden\part_10\part.material
-	garden\part_10\part.description
-	garden\part_10\part.mp3
-
 
 
 obj_format_file_people_part_0
@@ -321,12 +302,7 @@ obj_format_file_people_part_8
 	people\part_8\part.material
 	people\part_8\part.description
 	people\part_8\part.mp3	
-obj_format_file_people_part_9
-	obj_format_file_people_part_9
-	people\part_9\part.obj.mesh
-	people\part_9\part.material
-	people\part_9\part.description
-	people\part_9\part.mp3	
+
 	
 	
 obj_format_file_earth_part_0

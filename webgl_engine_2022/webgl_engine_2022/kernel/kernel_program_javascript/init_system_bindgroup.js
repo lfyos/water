@@ -35,12 +35,15 @@ function init_system_bindgroup(render)
 			entries	:	system_bindgroup_layout_entries
 		});
 	
+	render.system_buffer.id_buffer_data_length =40;
+	
 	var system_stride		=render.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
 	var user_stride			=0;
-		user_stride+=render.component_location_data.identify_matrix.length*Float32Array.BYTES_PER_ELEMENT;
-		user_stride+=render.system_bindgroup_id[0].length*Int32Array.BYTES_PER_ELEMENT;
+		user_stride+=Float32Array.BYTES_PER_ELEMENT*render.component_location_data.identify_matrix.length;
+		user_stride+=Float32Array.BYTES_PER_ELEMENT*render.system_buffer.id_buffer_data_length;
+		user_stride+=Int32Array.BYTES_PER_ELEMENT*render.system_bindgroup_id[0].length;
 	
-	render.system_buffer.id_stride=(system_stride<user_stride)?user_stride:system_stride;
+	render.system_buffer.id_stride		=(system_stride<user_stride)?user_stride:system_stride;
 	render.system_buffer.id_buffer_size =user_stride;
 	
 	render.system_buffer.id_buffer=render.webgpu.device.createBuffer(

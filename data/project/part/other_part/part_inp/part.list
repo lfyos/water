@@ -47,19 +47,3 @@ inp_part_6
 	part.material
 	part_6\part.description
 	part_6\part.mp3
-	
-inp_part_7
-	inp_part_7
-	part_7\part.inp.mesh
-	part.material
-	part_7\part.description
-	part_7\part.mp3
-
-inp_part_8
-	inp_part_8
-	part_8\part.inp.mesh
-	part.material
-	part_8\part.description
-	part_8\part.mp3
-
-	

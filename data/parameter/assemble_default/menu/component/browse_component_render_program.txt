@@ -130,7 +130,7 @@ function(component_name,component_id,render)
 					context_2d.fillText(p.component_children[i].component_name,0,pos);
 				}
 			}else{
-				p=render.component_array_sorted_by_id[component_id].component_ids;
+				p=render.component_array_sorted_by_id[ep.component_id].component_ids;
 				for(var driver_id=0,driver_number=p.length;driver_id<driver_number;driver_id++){
 					if(pos>=text_format.canvas_height)
 						break;
