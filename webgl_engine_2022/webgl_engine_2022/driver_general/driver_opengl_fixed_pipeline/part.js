@@ -1,5 +1,6 @@
 function construct_part_driver(init_data,part_object,render_driver,render)
 {
+	this.render_material=render_driver.render_material;
 	this.material_bindgroup_flag=true;
 	this.material_bindgroup_array=new Array();
 
@@ -213,11 +214,10 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 		var	p=render.system_call_processor.default_vertex_data_decoder;
 		var	new_buffer_object_data=p.voxel(request_type_string,buffer_object_data,part_object);
 
-		if(new_buffer_object_data.item_size<20)
-			p.modify_item_size(new_buffer_object_data,20);
-		
 		if(request_type_string=="point")
 			p.convert_point_to_face(new_buffer_object_data);
+			
+		p.modify_item_size(new_buffer_object_data,this.render_material.array_stride);
 			
 		return new_buffer_object_data;
 	}

@@ -490,7 +490,7 @@ public class inp_converter
 	
 	private static void value_short(String file_name,String file_charset)
 	{
-		int value_length=15;
+		int value_length=12;
 		
 		file_reader fr=new file_reader(file_name,file_charset);
 		file_writer fw=new file_writer(file_name+".short",file_charset);
@@ -523,53 +523,53 @@ public class inp_converter
 		debug_information.println("Begin");
 		
 		new inp_converter(
-				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_0\\part.inp",
+				"F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_0\\part.inp",
 				"GBK",
-				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_0\\part.inp.mesh",
+				"F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_0\\part.inp.mesh",
 				"GBK");	
-		value_short("F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_0\\part.inp.mesh.face", "GBK");
+		value_short("F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_0\\part.inp.mesh.face", "GBK");
 		
 		new inp_converter(
-				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_1\\part.inp",
+				"F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_1\\part.inp",
 				"GBK",
-				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_1\\part.inp.mesh",
+				"F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_1\\part.inp.mesh",
 				"GBK");
-		value_short("F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_1\\part.inp.mesh.face", "GBK");
+		value_short("F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_1\\part.inp.mesh.face", "GBK");
 		
 		new inp_converter(
-				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_2\\part.inp",
+				"F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_2\\part.inp",
 				"GBK",
-				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_2\\part.inp.mesh",
+				"F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_2\\part.inp.mesh",
 				"GBK");
-		value_short("F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_2\\part.inp.mesh.face", "GBK");
+		value_short("F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_2\\part.inp.mesh.face", "GBK");
 		
 		new inp_converter(
-				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_3\\part.inp",
+				"F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_3\\part.inp",
 				"GBK",
-				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_3\\part.inp.mesh",
+				"F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_3\\part.inp.mesh",
 				"GBK");
-		value_short("F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_3\\part.inp.mesh.face", "GBK");
+		value_short("F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_3\\part.inp.mesh.face", "GBK");
 		
 		new inp_converter(
-				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_4\\part.inp",
+				"F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_4\\part.inp",
 				"GBK",
-				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_4\\part.inp.mesh",
+				"F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_4\\part.inp.mesh",
 				"GBK");
-		value_short("F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_4\\part.inp.mesh.face", "GBK");
+		value_short("F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_4\\part.inp.mesh.face", "GBK");
 		
 		new inp_converter(
-				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_5\\part.inp",
+				"F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_5\\part.inp",
 				"GBK",
-				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_5\\part.inp.mesh",
+				"F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_5\\part.inp.mesh",
 				"GBK");
-		value_short("F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_5\\part.inp.mesh.face", "GBK");
+		value_short("F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_5\\part.inp.mesh.face", "GBK");
 		
 		new inp_converter(
-				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_6\\part.inp",
+				"F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_6\\part.inp",
 				"GBK",
-				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_6\\part.inp.mesh",
+				"F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_6\\part.inp.mesh",
 				"GBK");
-		value_short("F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_6\\part.inp.mesh.face", "GBK");
+		value_short("F:\\water_all\\data\\project\\part\\inp_part\\part_inp\\part_6\\part.inp.mesh.face", "GBK");
 		
 		debug_information.println("End");
 	}

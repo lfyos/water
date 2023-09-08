@@ -31,7 +31,12 @@
 
 /*	########################	various obj files		#######################			*/
 /*	render_21	*/	other_part	driver_opengl_fixed_pipeline.extended_render_driver
-								..\project\part\other_part\render.list		..\project\part\other_part\light.txt													
+								..\project\part\obj_part\render.list		..\project\part\obj_part\light.txt
+
+/*	########################	various obj files		#######################			*/
+/*	render_22	*/	inp_part	driver_opengl_fixed_pipeline.extended_render_driver
+								..\project\part\inp_part\render.list		..\project\part\inp_part\light.txt													
+
 
 /*	******************************		driver_lession		********************************************	*/
 /*	render_22	*/	lession_00_start_driver		driver_lession_00_start_driver.extended_render_driver	driver_lession\lession_00_start_driver\render.list

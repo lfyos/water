@@ -19,13 +19,8 @@
 				0.40,	0.40,	0.40,	1.0
 			],
 			
-			"stride_and_offset"			:
-			[
-				{
-					"array_stride"			:	20,
-					"material_offset"		:	8
-				}
-			],
+			"array_stride"				:	20,
+			"material_offset"			:	[	8	],
 			
 			"point_size"				:	12
 		}	

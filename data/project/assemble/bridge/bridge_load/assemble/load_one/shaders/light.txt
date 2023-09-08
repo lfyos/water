@@ -1,4 +1,4 @@
-
+		{
 			"selected_material"			:
 			{
 				"vertex_color_type"		:	2,
@@ -19,7 +19,10 @@
 				0.20,	0.20,	0.20,	1.0
 			],
 			
+			"array_stride"				:	20,
+			"material_offset"			:	[	8	],
 			
-			"point_size"				:	12,
+			"point_size"				:	12
 			
+		}
 			

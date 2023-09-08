@@ -437,12 +437,12 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 				code: shader_code
 			});
 	
-	this.pipeline_array=new Array(this.render_material.stride_and_offset.length);
+	this.pipeline_array=new Array(this.render_material.material_offset.length);
 	
 	for(var i=0,ni=this.pipeline_array.length;i<ni;i++){
 		this.pipeline_array[i]=new create_one_render_driver(
-				this.render_material.stride_and_offset[i].array_stride,
-				this.render_material.stride_and_offset[i].material_offset,
+				this.render_material.array_stride,
+				this.render_material.material_offset[i],
 				this.material_bindgroup_layout,my_module,
 				this.render_material,render);
 	};

@@ -1,5 +1,3 @@
-//	chengguangqing	any_assemble_part_name	parameter.txt	relative	part_inp\part.list
-
 test			any_assemble_part_name	parameter.txt	relative	part_obj\part.list	
 test			any_assemble_part_name	parameter.txt	relative	part_obj\part.1000.list
 test			any_assemble_part_name	parameter.txt	relative	part_obj\boat.list	
