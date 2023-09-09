@@ -12,7 +12,14 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 			var my_material=part_object.material[0].material[i];
 			
 			var int_buffer_data=new Array();
-			int_buffer_data.push(my_material.vertex_color_type,my_material.fragment_color_type,0,1)
+			
+			p=(typeof(p=my_material.vertex_color_type)!="number")?2:p;
+			int_buffer_data.push(p);
+			
+			p=(typeof(p=my_material.fragment_color_type)!="number")?0:p;
+			int_buffer_data.push(p);
+			
+			int_buffer_data.push(0,1)
 			
 			var float_buffer_data=new Array();
 			
@@ -22,7 +29,7 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 			p=(typeof(p=my_material.fragment_color_parameter)=="undefined")?[0,0,0,1]:p;
 			float_buffer_data.push(p[0],p[1],p[2],p[3]);
 			
-			p=(typeof(p=my_material.color)=="undefined")?[0,0,0,1]:p;
+			p=(typeof(p=my_material.color)=="undefined")?[1,1,1,1]:p;
 			float_buffer_data.push(p[0],p[1],p[2],p[3]);
 			
 			p=(typeof(p=my_material.ambient)=="undefined")?[0,0,0,1]:p;
