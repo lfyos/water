@@ -168,6 +168,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 		
 		this.no_box_pipeline	=null;
 		this.box_pipeline		=null;
+		
 		this.new_part_driver	=null;
 		this.method_render_flag	=null;
 	}

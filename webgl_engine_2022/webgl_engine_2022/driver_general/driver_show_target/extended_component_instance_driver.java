@@ -12,6 +12,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	public void destroy()
 	{
 		super.destroy();
+		position=null;
 	}
 	public extended_component_instance_driver(component my_comp,int my_driver_id,double my_position[])
 	{

@@ -142,7 +142,8 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 	{
 		this.bindgroup_layout	=null;
 		
-		this.id_pipeline		=null;
+		this.face_id_pipeline	=null;
+		this.point_id_pipeline	=null;
 		this.face_pipeline		=null;
 		this.edge_pipeline		=null;
 		this.point_pipeline		=null;

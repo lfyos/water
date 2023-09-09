@@ -48,16 +48,6 @@ function init_component_event_processor()
 		}
 		return true;
 	};
-	this.pickupkeydown=function(event,component_id,render)
-	{
-		switch(event.keyCode){
-		case 46://del
-		case  8://backspace
-			render.caller.call_server_component(component_id,"all",[["operation","delete"]]);
-			break;
-		}
-		return true;
-	};
 	this.destroy=function()
 	{
 		this.title			=null;
@@ -67,7 +57,6 @@ function init_component_event_processor()
 		this.pickupdblclick	=null;
 		this.pickupmouseup	=null;
 		this.pickupmousedown=null;
-		this.pickupkeydown	=null;
 	}
 }
 function construct_component_driver(
@@ -144,6 +133,7 @@ function construct_component_driver(
 			this.marker_array[i].buffer		=null;
 			this.marker_array[i].texture	=null;
 			this.marker_array[i].bindgroup	=null;
+			this.marker_array[i]=null;
 		}
 		this.marker_array=new Array();
 		for(var i=0,ni=buffer_data_item.length;i<ni;i++){
@@ -280,24 +270,21 @@ function construct_component_driver(
 
 	this.destroy=function(render)
 	{
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
-		
-		if(render.component_event_processor[this.component_id]!=null){
-			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
-				render.component_event_processor[this.component_id].destroy(render);
-			render.component_event_processor[this.component_id]=null;
-		}
-		
 		if(this.marker_array!=null){
-			for(var i=0,ni=this.marker_array.length;i<ni;i++){
-				this.marker_array[i].buffer.destroy();
-				this.marker_array[i].texture.destroy();
-				this.marker_array[i].buffer		=null;
-				this.marker_array[i].texture	=null;
-				this.marker_array[i].bindgroup	=null;
-			}
+			for(var i=0,ni=this.marker_array.length;i<ni;i++)
+				if(this.marker_array[i]!=null){
+					this.marker_array[i].buffer.destroy();
+					this.marker_array[i].texture.destroy();
+					this.marker_array[i].buffer		=null;
+					this.marker_array[i].texture	=null;
+					this.marker_array[i].bindgroup	=null;
+					
+					this.marker_array[i]=null;
+				}
 			this.marker_array=null;
 		}
+		
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
 	}
 };

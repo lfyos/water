@@ -30,8 +30,10 @@ public class movement_suspend
 		}
 		if(match_array!=null) {
 			for(int i=0,ni=match_array.length;i<ni;i++) 
-				if(match_array[i]!=null)
+				if(match_array[i]!=null) {
+					match_array[i].destroy();
 					match_array[i]=null;
+				}
 			match_array=null;
 		}
 		match_number=0;

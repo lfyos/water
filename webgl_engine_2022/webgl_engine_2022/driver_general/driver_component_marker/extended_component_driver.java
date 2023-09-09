@@ -19,7 +19,10 @@ public class extended_component_driver  extends component_driver
 		super.destroy();
 		directory_comp_name=null;
 		file_name=null;
-		cmc=null;
+		if(cmc!=null) {
+			cmc.destroy();
+			cmc=null;
+		}
 	}
 	public extended_component_driver(
 			part my_component_part,int my_modifier_container_id,

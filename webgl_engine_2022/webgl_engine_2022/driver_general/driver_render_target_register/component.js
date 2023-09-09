@@ -168,15 +168,8 @@ function construct_component_driver(
 	};
 	this.destroy=function(render)
 	{
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
-		this.begin_render_target		=null;
-		
-		if(render.component_event_processor[this.component_id]!=null){
-			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
-				render.component_event_processor[this.component_id].destroy(render);
-			render.component_event_processor[this.component_id]=null;
-		}
+		this.clear_color=null;
+		this.target_parameter=null;
 		
 		for(var i=0,ni=this.multisample_texture.length;i<ni;i++)
 			if(this.multisample_texture[i]!=null){
@@ -190,5 +183,11 @@ function construct_component_driver(
 				this.depth_texture[i]=null;
 			}
 		this.depth_texture.length=0;
+		
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
+		this.begin_render_target		=null;
+		
+		return;
 	}
 };

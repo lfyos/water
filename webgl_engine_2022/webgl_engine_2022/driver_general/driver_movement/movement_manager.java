@@ -16,6 +16,7 @@ public class movement_manager
 		for(;push_pop_stack_link_list!=null;push_pop_stack_link_list=push_pop_stack_link_list.next_list)
 			file_writer.file_delete(push_pop_stack_link_list.str);
 	
+		id_creator		=null;
 		move_channel_id	=null;
 		parameter		=null;
 		directory_name	=null;

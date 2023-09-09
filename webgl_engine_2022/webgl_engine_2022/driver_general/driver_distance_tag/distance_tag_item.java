@@ -21,6 +21,18 @@ public class distance_tag_item
 	
 	public distance_tag_item extra_distance_tag;
 	
+	public void destroy()
+	{
+		if(extra_distance_tag!=null) {
+			extra_distance_tag.destroy();
+			extra_distance_tag=null;
+		}
+		p0=null;
+		px=null;
+		py=null;
+		tag_title=null;
+	}
+	
 	public distance_tag_item(distance_tag_item dti)
 	{
 		state				=dti.state;

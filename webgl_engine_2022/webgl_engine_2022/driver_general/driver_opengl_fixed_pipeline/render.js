@@ -303,6 +303,7 @@ function create_one_render_driver(array_stride,material_offset,
 	this.destroy=function()
 	{	
 		this.id_face_pipeline_no_clip		=null;
+		this.id_face_pipeline_do_clip		=null;
 		this.id_face_pipeline_do_close		=null;
 		this.id_point_pipeline				=null;
 		this.value_face_pipeline_no_clip	=null;
@@ -319,7 +320,7 @@ function create_one_render_driver(array_stride,material_offset,
 		this.color_frame_pipeline			=null;
 		this.color_pickup_point_pipeline	=null;
 		this.color_normal_point_pipeline	=null;
-	
+
 		return;
 	}
 }
@@ -446,24 +447,24 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 				this.material_bindgroup_layout,my_module,
 				this.render_material,render);
 	};
+	
 	this.destroy=function()
 	{
+		if(this.pipeline_array!=null){
+			for(var i=0,ni=this.pipeline_array.length;i<ni;i++)
+				if(this.pipeline_array[i]!=null){
+					this.pipeline_array[i].destroy();
+					this.pipeline_array[i]=null;
+				}
+			this.pipeline_array=null;
+		}
 		if(this.tmp_texture!=null){
 			this.tmp_texture.destroy();
 			this.tmp_texture=null;
-		}		
+		}	
 		this.render_material			=null;
 		this.material_bindgroup_layout	=null;
-		this.new_part_driver			=null;
 		this.method_render_flag			=null;
-		
-		if(this.pipeline_array!=null){
-			for(var i=0,ni=this.pipeline_array.length;i<ni;i++){
-				this.pipeline_array[i].destroy();
-				this.pipeline_array[i]=null;
-			}
-			this.pipeline_array=null;
-		}
-		return;
+		this.new_part_driver			=null;
 	}
 }

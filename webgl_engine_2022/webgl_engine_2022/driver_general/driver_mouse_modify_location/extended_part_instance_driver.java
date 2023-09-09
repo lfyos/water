@@ -21,6 +21,7 @@ public class extended_part_instance_driver extends part_instance_driver
 	public void destroy()
 	{
 		super.destroy();
+		
 		mark_component_name=null;
 		movement_component_name=null;
 		movement_abstract_menu_component_name=null;

@@ -109,11 +109,15 @@ function create_component_object(my_init_data,render)
 	};
 	this.destroy=function()
 	{
-		this.set_center					=null;
-		this.pickupmousedown			=null;
-		this.pickupmousemove			=null;
-		this.pickupmouseup				=null;
-		this.pickupmousewheel			=null;
+		this.interface_data		=null;
+		this.hightlight			=null;
+		this.parameter_bak		=null;
+		
+		this.set_center			=null;
+		this.pickupmousedown	=null;
+		this.pickupmousemove	=null;
+		this.pickupmouseup		=null;
+		this.pickupmousewheel	=null;
 	};
 }
 
@@ -211,7 +215,7 @@ function create_bind_group(init_data,render_driver,render)
 	this.destroy=function ()
 	{
 		this.should_delete_flag=true;
-		if(this.is_busy_flag)	
+		if(this.is_busy_flag)
 			return;
 
 		if(this.buffer!=null){
@@ -319,18 +323,11 @@ function construct_component_driver(
 	
 	this.destroy=function(render)
 	{
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
-		
-		if(render.component_event_processor[this.interface_component_id]!=null){
-			if(typeof(render.component_event_processor[this.interface_component_id].destroy)=="function")
-				render.component_event_processor[this.interface_component_id].destroy(render);
-			render.component_event_processor[this.interface_component_id]=null;
-		}
 		if(this.image_bind_group!=null){
 			this.image_bind_group.destroy(render);
 			this.image_bind_group=null;
 		}
-		this.draw_component=null;
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
 	};
 };

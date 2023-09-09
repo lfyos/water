@@ -41,8 +41,18 @@ public class distance_tag_array
 		directory_component_name	=null;
 		distance_tag_file_name		=null;
 		tag_root_menu_component_name=null;
-		distance_tag_array			=null;
-		ex_distance_tag				=null;
+		if(distance_tag_array!=null) {
+			for(int i=0,ni=distance_tag_array.length;i<ni;i++)
+				if(distance_tag_array[i]!=null) {
+					distance_tag_array[i].destroy();
+					distance_tag_array[i]=null;
+				}
+			distance_tag_array=null;
+		}
+		if(ex_distance_tag!=null) {
+			ex_distance_tag.destroy();
+			ex_distance_tag=null;
+		}
 	}
 	public void save(engine_kernel ek)
 	{

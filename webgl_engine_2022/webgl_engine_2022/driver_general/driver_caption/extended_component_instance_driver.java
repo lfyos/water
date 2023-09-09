@@ -20,6 +20,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	public void destroy()
 	{
 		super.destroy();
+		display_information=null;
 	}
 	public extended_component_instance_driver(component my_comp,int my_driver_id,long my_max_time_length)
 	{

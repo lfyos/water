@@ -6,7 +6,7 @@ function construct_component_driver(
 	if(typeof(ep)!="object"){
 		render.component_event_processor[component_id]=new Object();
 		ep=render.component_event_processor[component_id];
-	}
+	}	
 	ep.texture=null;
 	ep.set_target=function(my_texture)
 	{
@@ -20,7 +20,7 @@ function construct_component_driver(
 			size	:	Float32Array.BYTES_PER_ELEMENT*8,
 			usage	:	GPUBufferUsage.VERTEX|GPUBufferUsage.COPY_DST
 		});
-		
+	
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,component_id,driver_id,component_render_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	
@@ -75,22 +75,15 @@ function construct_component_driver(
 	
 	this.destroy=function(render)
 	{
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
-		
-		if(render.component_event_processor[this.component_id]!=null){
-			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
-				render.component_event_processor[this.component_id].destroy(render);
-			if(render.component_event_processor[this.component_id].texture!=null)
-				render.component_event_processor[this.component_id].texture.destroy();	
-			render.component_event_processor[this.component_id]=null;
-		}
-		
-		this.bindgroup=null;
-		
 		if(this.buffer!=null){
 			this.buffer.destroy();
 			this.buffer=null;
 		};
+		this.texture=null;
+		
+		this.bindgroup=null;
+		
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
 	}
 };

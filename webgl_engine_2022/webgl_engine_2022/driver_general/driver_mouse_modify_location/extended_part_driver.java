@@ -34,9 +34,11 @@ public class extended_part_driver extends part_driver
 	public void destroy()
 	{	
 		super.destroy();
+		
 		material_file_name=null;
 		mark_component_name=null;
 		movement_component_name=null;
+		movement_abstract_menu_component_name=null;
 	}
 	public void initialize_part_driver(part p,engine_kernel ek,client_request_response request_response)
 	{

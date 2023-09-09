@@ -15,6 +15,7 @@ public class extended_component_driver  extends component_driver
 	public void destroy()
 	{
 		super.destroy();
+		directory_name=null;
 	}
 	
 	public extended_component_driver(part my_component_part,

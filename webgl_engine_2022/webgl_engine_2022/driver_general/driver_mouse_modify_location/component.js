@@ -692,14 +692,9 @@ function construct_component_driver(
 	}
 	this.destroy=function(render)
 	{
+		this.buffer_data=null;
+		
 		this.draw_component				=null;
 		this.append_component_parameter	=null;
-		
-		if(render.component_event_processor[this.component_id]!=null){
-			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
-				render.component_event_processor[this.component_id].destroy(render);
-			render.component_event_processor[this.component_id]=null;
-		}
-		this.buffer_data=null;
 	}
 };

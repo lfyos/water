@@ -100,6 +100,17 @@ function init_component_event_processor(screen_rectangle_component_id,render)
 		
 		return true;			
 	};
+	this.destroy=function()
+	{
+		this.p0	=null;
+		this.dp	=null;
+		
+		this.control_code	=null;
+		this.mousedown		=null;
+		this.mousemove		=null;
+		this.mouseup		=null;
+		this.mousewheel		=null;
+	};
 };
 
 function construct_component_driver(
@@ -124,7 +135,6 @@ function construct_component_driver(
 		if(render_data.main_display_target_flag)
 			render.component_event_processor[component_id].camera_id=render_data.camera_id;
 	}
-	
 	this.append_component_parameter=function(
 			component_id,		driver_id,		render_id,		part_id,
 			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
@@ -136,11 +146,5 @@ function construct_component_driver(
 	{
 		this.draw_component				=null;
 		this.append_component_parameter	=null;
-		
-		if(render.component_event_processor[this.component_id]!=null){
-			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
-				render.component_event_processor[this.component_id].destroy(render);
-			render.component_event_processor[this.component_id]=null;
-		}
 	}
 };

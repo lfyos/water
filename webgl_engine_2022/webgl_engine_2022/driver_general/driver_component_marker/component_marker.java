@@ -21,4 +21,9 @@ public class component_marker
 		marker_y			=my_marker_y;
 		marker_z			=my_marker_z;
 	}
+	
+	public void destroy()
+	{
+		marker_text=null;
+	}
 }

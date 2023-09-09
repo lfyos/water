@@ -158,6 +158,17 @@ function construct_event_listener()
 		}
 		return true;
 	};
+	
+	this.destroy=function()
+	{
+		this.pickupcontextmenu	=null;
+		this.pickupdblclick		=null;
+		this.pickupmousedown	=null;
+		this.pickupkeydown		=null;
+		this.pickupkeypress		=null;
+		this.pickupmouseup		=null;
+		this.pickupkeyup		=null;
+	}
 };
 
 function construct_component_driver(
@@ -257,18 +268,12 @@ function construct_component_driver(
 	}
 	this.destroy=function(render)
 	{
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
-		
-		if(render.component_event_processor[this.component_id]!=null){
-			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
-				render.component_event_processor[this.component_id].destroy(render);
-			render.component_event_processor[this.component_id]=null;
-		}
 		if(this.parameter_buffer!=null){
 			this.parameter_buffer.destroy();
 			this.parameter_buffer=null;
 		}
-		this.save_buffer_data=null;
+		this.save_buffer_data			=null;
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
 	}
 };

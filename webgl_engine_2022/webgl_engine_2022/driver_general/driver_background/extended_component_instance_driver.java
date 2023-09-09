@@ -15,6 +15,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	public void destroy()
 	{
 		super.destroy();
+		directory_name=null;
 	}
 	public extended_component_instance_driver(component my_comp,int my_driver_id,
 			int my_mode,int my_user_parameter_channel_id,String my_directory_name)

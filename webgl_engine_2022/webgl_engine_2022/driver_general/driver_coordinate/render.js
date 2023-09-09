@@ -81,7 +81,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			stencilWriteMask	:	0xFFFFFFFF,
 		}
 	};
-	
+
 	if(render.parameter.multisample>1)
 		pipeline_descr.multisample={count:render.parameter.multisample};
 	

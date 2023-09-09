@@ -10,8 +10,7 @@ public class component_link_list {
 			for(component_link_list p=next_list_item;p!=null;){
 				component_link_list pp=p;
 				p=p.next_list_item;
-				if(pp.comp!=null)
-					pp.comp=null;
+				pp.comp=null;
 				pp.next_list_item=null;
 			}
 		}

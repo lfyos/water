@@ -118,8 +118,10 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 	{
 		this.bindgroup_layout	=null;
 		this.id_pipeline		=null;
-		this.face_pipeline		=null;
-		this.new_part_driver	=null;
+		this.color_pipeline		=null;
+		
 		this.method_render_flag	=null;
+		
+		this.new_part_driver	=null;
 	}
 }

@@ -57,7 +57,6 @@ public class extended_part_driver extends part_driver
 	{
 		return null;
 	}
-	
 	public component_driver create_component_driver(
 			file_reader fr,boolean rollback_flag,part my_component_part,
 			component_load_source_container component_load_source_cont,

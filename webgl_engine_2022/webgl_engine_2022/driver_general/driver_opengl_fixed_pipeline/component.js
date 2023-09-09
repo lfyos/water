@@ -130,19 +130,13 @@ function construct_component_driver(
 				this.display_parameter.display_value_id,
 				this.display_parameter.effective_selected_flag?1:0
 			],
-			component_id,driver_id,render)
-		
+			component_id,driver_id,render);
 	};
 	this.destroy=function(render)
 	{
 		this.display_parameter			=null;
+		this.draw						=null;
 		this.draw_component				=null;
 		this.append_component_parameter	=null;
-		
-		if(render.component_event_processor[this.component_id]!=null){
-			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
-				render.component_event_processor[this.component_id].destroy(render);
-			render.component_event_processor[this.component_id]=null;
-		}
 	};
 };

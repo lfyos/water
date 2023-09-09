@@ -23,7 +23,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
-		
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
 	{

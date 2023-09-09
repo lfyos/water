@@ -328,16 +328,6 @@ function construct_component_driver(
 	}
 	this.destroy=function(render)
 	{
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
-		this.begin_render_target		=null;
-		
-		if(render.component_event_processor[this.component_id]!=null){
-			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
-				render.component_event_processor[this.component_id].destroy(render);
-			render.component_event_processor[this.component_id]=null;
-		}
-		
 		if(this.id_depth_texture!=null){
 			this.id_depth_texture.destroy();
 			this.id_depth_texture=null;
@@ -371,5 +361,9 @@ function construct_component_driver(
 			this.value_buffer.destroy();
 			this.value_buffer=null;
 		}
+		
+		this.draw_component				=null;
+		this.append_component_parameter	=null;
+		this.begin_render_target		=null;
 	}
 };

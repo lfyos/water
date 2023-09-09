@@ -12,6 +12,20 @@ public class component_marker_container
 	public boolean global_private_flag,pickup_flag;
 	public component_marker component_marker_array[];
 	
+	public void destroy()
+	{
+		file_name=null;
+		file_charset=null;
+		if(component_marker_array!=null) {
+			for(int i=0,ni=component_marker_array.length;i<ni;i++)
+				if(component_marker_array[i]!=null) {
+					component_marker_array[i].destroy();
+					component_marker_array[i]=null;
+				}
+			component_marker_array=null;
+		}
+	}
+	
 	private void write(engine_kernel ek)
 	{
 		if((file_name==null)||(file_charset==null)||(!global_private_flag))
