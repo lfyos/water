@@ -20,7 +20,7 @@
 			],
 			
 			"array_stride"				:	32,
-			"material_offset"			:	[	8	],
+			"material_offset"			:	[	8,	21,	25,	28	],
 			
 			"point_size"				:	12
 			
