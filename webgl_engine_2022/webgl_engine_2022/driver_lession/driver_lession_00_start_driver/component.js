@@ -1,5 +1,5 @@
 function construct_component_driver(
-	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
+	driver_id,		render_id,		part_id,		data_buffer_id,
 	init_data,		part_object,	part_driver,	render_driver,	render)
 {
 	this.draw_component=function(method_data,render_data,
@@ -35,11 +35,5 @@ function construct_component_driver(
 	{
 		this.draw_component				=null;
 		this.append_component_parameter	=null;
-		
-		if(render.component_event_processor[this.component_id]!=null){
-			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
-				render.component_event_processor[this.component_id].destroy(render);
-			render.component_event_processor[this.component_id]=null;
-		}
 	}
 };
