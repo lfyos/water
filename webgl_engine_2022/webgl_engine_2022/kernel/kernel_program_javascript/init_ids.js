@@ -43,7 +43,6 @@ function init_ids_of_part_and_component(
 	var render_number=part_component_id_and_driver_id.length;
 	for(var render_id=0;render_id<render_number;render_id++){
 		permanent_render_part_id[render_id]=new Array();
-
 		var part_number=part_component_id_and_driver_id[render_id].length;
 		for(var part_id=0;part_id<part_number;part_id++){
 			var id_array=part_component_id_and_driver_id[render_id][part_id];
@@ -53,8 +52,8 @@ function init_ids_of_part_and_component(
 			}
 			var data_buffer_number=id_array.length;
 			for(var data_buffer_id=0;data_buffer_id<data_buffer_number;data_buffer_id++){				
-				var component_id			=id_array[data_buffer_id][0];
-				var driver_id				=id_array[data_buffer_id][1];
+				var component_id	=id_array[data_buffer_id][0];
+				var driver_id		=id_array[data_buffer_id][1];
 				
 				var my_system_bindgroup_id	=system_bindgroup_id.length;
 				id_array[data_buffer_id][2]	=my_system_bindgroup_id;
@@ -86,7 +85,6 @@ function init_ids_of_part_and_component(
 			
 			-1,-1
 		]);
-		
 	};
 	
 	render.system_bindgroup_id				=system_bindgroup_id;

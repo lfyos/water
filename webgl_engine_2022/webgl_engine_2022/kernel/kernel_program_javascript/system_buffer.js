@@ -2,6 +2,46 @@ function construct_system_buffer(target_buffer_number,render)
 {
 	this.main_target_project_matrix	=null;
 	this.main_target_view_parameter	=null;
+	
+	this.system_bindgroup_layout=render.webgpu.device.createBindGroupLayout(
+		{
+			entries	:	[
+				{	// system buffer
+					binding		:	0,
+					visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
+					buffer		:
+					{
+						type				:	"uniform",
+						hasDynamicOffset	:	false
+					}
+				},
+				{	//target buffer
+					binding		:	1,
+					visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
+					buffer		:
+					{
+						type				:	"uniform",
+						hasDynamicOffset	:	true
+					}
+				},
+				{	// id buffer
+					binding		:	2,
+					visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
+					buffer		:
+					{
+						type				:	"uniform",
+						hasDynamicOffset	:	true
+					}
+				}
+			]
+		});	
+//	init system buffer:	binding point 0
+	this.system_buffer_size		=384;
+	this.system_buffer	=render.webgpu.device.createBuffer(
+		{
+			size	:	this.system_buffer_size,
+			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
+		});
 
 //	init target buffer:	binding point 1
 	this.target_buffer_stride	=2048;
@@ -13,16 +53,75 @@ function construct_system_buffer(target_buffer_number,render)
 			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
 		});
 
-//	init system buffer:	binding point 2
-	this.system_buffer_size		=384;
-	this.system_buffer	=render.webgpu.device.createBuffer(
+	this.id_buffer			=null;
+	this.system_bindgroup	=null;
+	this.location_version	=null;
+	
+	this.id_buffer_data_length 	=40;
+	
+	this.init_id_buffer_and_system_bindgroup=function(render)
+	{
+		//	init id_buffer	:	binding point 2
+		
+		var system_stride			=render.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
+		var user_stride				=0;
+			user_stride+=Float32Array.BYTES_PER_ELEMENT*render.component_location_data.identify_matrix.length;
+			user_stride+=Float32Array.BYTES_PER_ELEMENT*this.id_buffer_data_length;
+			user_stride+=Int32Array.BYTES_PER_ELEMENT*render.system_bindgroup_id[0].length;
+			
+		this.id_stride		=(system_stride<user_stride)?user_stride:system_stride;
+		this.id_buffer_size =user_stride;
+			
+		this.id_buffer=render.webgpu.device.createBuffer(
+			{
+				size	:	this.id_stride*render.system_bindgroup_id.length,
+				usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
+			});
+			
+	// init system_bindgroup
+		this.system_bindgroup=render.webgpu.device.createBindGroup(
 		{
-			size	:	this.system_buffer_size,
-			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
+			layout	:	render.system_buffer.system_bindgroup_layout,
+			entries	:	[
+				{	// system buffer
+					binding		:	0,
+					resource	:
+					{
+						buffer	:	this.system_buffer,
+						size	:	this.system_buffer_size
+					}
+				},
+				{	//target buffer
+					binding		:	1,
+					resource	:
+					{
+						buffer	:	this.target_buffer,
+						size	:	this.target_buffer_size 
+					}
+				},
+				{	// id buffer
+					binding		:	2,
+					resource	:
+					{
+						buffer	:	this.id_buffer,
+						size	:	this.id_buffer_size
+					}
+				}
+			]
 		});
-
+	
+	//	init id location version
+	
+		this.location_version=new Array(render.system_bindgroup_id.length);
+		for(var i=0,ni=this.location_version.length;i<ni;i++)
+			this.location_version[i]=-1;
+	}
 	this.destroy=function()
 	{
+		this.system_bindgroup		=null;
+		this.system_bindgroup_layout=null;
+		this.location_version		=null;
+		
 		if(this.target_buffer!=null){
 			this.target_buffer.destroy();
 			this.target_buffer=null;
@@ -35,9 +134,7 @@ function construct_system_buffer(target_buffer_number,render)
 			this.id_buffer.destroy();
 			this.id_buffer=null;
 		}
-		if(this.system_bindgroup!=null){
-			this.system_bindgroup=null;
-		}
+		
 		this.set_system_buffer			=null;
 		this.set_target_buffer			=null;
 		this.set_system_bindgroup		=null;
@@ -123,7 +220,7 @@ function construct_system_buffer(target_buffer_number,render)
 		render.webgpu.device.queue.writeBuffer(this.system_buffer,
 			int_data.length*Int32Array.BYTES_PER_ELEMENT,	new Float32Array(float_data));
 	};
-
+	
 	this.set_target_buffer=function(render_data,project_matrix,render)
 	{
 		var target_id=render_data.render_buffer_id;
@@ -293,7 +390,7 @@ function construct_system_buffer(target_buffer_number,render)
 		var pos=this.id_stride*system_bindgroup_id;
 			pos+=Float32Array.BYTES_PER_ELEMENT*render.component_location_data.identify_matrix.length;
 		render.webgpu.device.queue.writeBuffer(this.id_buffer,pos,new Float32Array(id_data));
-		
+
 		return;
 	}
 }

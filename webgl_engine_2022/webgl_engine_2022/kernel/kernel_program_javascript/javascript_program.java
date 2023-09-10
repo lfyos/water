@@ -16,12 +16,11 @@ public class javascript_program
 	
 	private static final String javascript_file_name[]=new String[] 
 	{
-		"call_server.js",		"camera.js",				"collector_loader.js",			"component_location.js",
-		"component_render.js",	"computer.js",				"download_vertex_data.js",		"draw_scene.js",
-		"event_listener.js",	"init_ids.js",				"init_system_bindgroup.js",		"modifier_time.js",
-		"operate_component.js",	"pickup.js",				"process_bar.js",				"render_main.js",
-		"render.js",			"request_create_engine.js",	"request_render_data.js",		"system_buffer.js",
-		"webgpu.js"
+		"call_server.js",			"camera.js",				"collector_loader.js",			"component_location.js",
+		"component_render.js",		"computer.js",				"download_vertex_data.js",		"draw_scene.js",
+		"event_listener.js",		"init_ids.js",				"modifier_time.js",				"operate_component.js",	
+		"pickup.js",				"process_bar.js",			"render_main.js",				"render.js",
+		"request_create_engine.js",	"request_render_data.js",	"system_buffer.js",				"webgpu.js"
 	};
 	
 	public void destroy()

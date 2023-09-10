@@ -106,7 +106,6 @@ function construct_render_routine(my_webgpu,my_url,
 		this.part_array[i]			=new Array();
 	}
 	
-	this.system_buffer				=new construct_system_buffer(max_target_number,this);
 	this.component_location_data	=new construct_component_location_object(component_number,this.computer,this.webgpu);
 	this.component_render_data		=new construct_component_render_parameter(render_number);
 	this.modifier_time_parameter	=new construct_modifier_time_parameter(modifier_container_number);
@@ -114,6 +113,7 @@ function construct_render_routine(my_webgpu,my_url,
 	this.camera						=new construct_camera_object(camera_number,this.component_location_data,this.computer);
 	this.operate_component			=new construct_operate_component(this);
 	this.collector_loader			=new construct_collector_loader_object(this);
+	this.system_buffer				=new construct_system_buffer(max_target_number,this);
 	
 	this.pickup						=new construct_pickup_object();
 	this.pickup_array				=[

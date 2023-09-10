@@ -7,7 +7,7 @@ function create_one_render_driver(array_stride,material_offset,
 		{
 			bindGroupLayouts:
 			[
-				render.system_bindgroup_layout,
+				render.system_buffer.system_bindgroup_layout,
 				material_bindgroup_layout
 			]
 		}),

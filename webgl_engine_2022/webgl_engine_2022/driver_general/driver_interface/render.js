@@ -43,7 +43,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 		{
 			bindGroupLayouts:
 			[
-				render.system_bindgroup_layout,
+				render.system_buffer.system_bindgroup_layout,
 				this.bindgroup_layout
 			]
 		}),
