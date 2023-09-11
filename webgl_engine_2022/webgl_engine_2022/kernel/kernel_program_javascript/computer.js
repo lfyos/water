@@ -318,10 +318,9 @@ function construct_computation_object()
 		];
 		return ret_val;
 	};
+	
 	this.destroy=function()
 	{
-//		this.destroy						=null;
-		
 		this.standard_negative				=null;
 	
 		this.matrix_multiplication			=null;
@@ -348,5 +347,6 @@ function construct_computation_object()
 		this.insect_plane					=null;
 		this.plane_test						=null;
 		this.view_volume_clip_test			=null;
+		this.combine_box					=null;
 	};
 };

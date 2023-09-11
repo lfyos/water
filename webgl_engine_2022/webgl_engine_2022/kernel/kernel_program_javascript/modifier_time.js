@@ -8,6 +8,14 @@ function construct_modifier_time_parameter(modifier_container_number)
 	for(var i=0;i<modifier_container_number;i++)
 		this.timer_adjust_value[i]	=0;
 		
+	this.destroy=function()
+	{
+		this.timer_adjust_value		=null;
+		
+		this.caculate_current_time	=null;
+		this.modify_parameter		=null;
+	};
+		
 	this.caculate_current_time=function(index_id)
 	{
 		return this.webserver_current_time-this.timer_adjust_value[index_id];
@@ -25,13 +33,5 @@ function construct_modifier_time_parameter(modifier_container_number)
 		for(var i=0,ni=ret_val.length;i<ni;i++)
 			ret_val[i]=this.caculate_current_time(i);
 		return ret_val;
-	};
-
-	this.destroy=function()
-	{
-		this.timer_adjust_value		=null;
-		this.caculate_current_time	=null;
-		this.modify_parameter		=null;
-		this.destroy				=null;
 	};
 };

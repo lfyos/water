@@ -1,8 +1,24 @@
 async function download_external_texture(render_id,part_id,file_name,render)
 {
-    var my_imageBitmap=await createImageBitmap(
-			await render.caller.call_server_part(
-					render_id,part_id,[["file",file_name]],"blob"));
+	if(render.terminate_flag)
+		return null;
+	var my_imageBitmap;
+	try{
+		my_imageBitmap=await render.caller.call_server_part(
+					render_id,part_id,[["file",file_name]],"blob");
+	}catch(e){
+		return null;
+	}
+	if(render.terminate_flag)
+		return null;
+	try{
+   		my_imageBitmap=await createImageBitmap(my_imageBitmap);
+	}catch(e){
+		return null;
+	}
+	if(render.terminate_flag)
+		return null;
+		
 	var my_texture=render.webgpu.device.createTexture(
 			{
 				size:
@@ -104,55 +120,58 @@ function create_texture_bind_group()
 				render_id,part_id,my_directory_name+"/back.jpg",render);
 		this.no_box_texture=await download_external_texture(
 				render_id,part_id,my_directory_name+"/no_box.jpg",render);
-
-		var resource_entries=[
-			{	//left
-				binding		:	0,
-				resource	:	this.left_texture.createView()
-			},
-			{	//right
-				binding		:	1,
-				resource	:	this.right_texture.createView()
-			},
-			{	//top
-				binding		:	2,
-				resource	:	this.top_texture.createView()
-			},
-			{	//down
-				binding		:	3,
-				resource	:	this.down_texture.createView()
-			},
-			{	//front
-				binding		:	4,
-				resource	:	this.front_texture.createView()
-			},
-			{	//back
-				binding		:	5,
-				resource	:	this.back_texture.createView()
-			},
-			{	//no_box
-				binding		:	6,
-				resource	:	this.no_box_texture.createView()
-			},
-			{
-				//sampler
-				binding		:	7,
-				resource	:	render.webgpu.device.createSampler(
-					{
-						addressModeU	:	"mirror-repeat",
-						addressModeV	:	"mirror-repeat",
-						magFilter		:	"nearest",
-						minFilter		:	"nearest",
-						mipmapFilter	:	"nearest"
-					})
-			}
-		];
-		
-		this.texture_bindgroup=render.webgpu.device.createBindGroup(
-			{
-				layout		:	render_driver.texture_bindgroup_layout,
-				entries		:	resource_entries
-			});
+		if(render.terminate_flag)
+			this.texture_bindgroup=null;
+		else{
+			var resource_entries=[
+				{	//left
+					binding		:	0,
+					resource	:	this.left_texture.createView()
+				},
+				{	//right
+					binding		:	1,
+					resource	:	this.right_texture.createView()
+				},
+				{	//top
+					binding		:	2,
+					resource	:	this.top_texture.createView()
+				},
+				{	//down
+					binding		:	3,
+					resource	:	this.down_texture.createView()
+				},
+				{	//front
+					binding		:	4,
+					resource	:	this.front_texture.createView()
+				},
+				{	//back
+					binding		:	5,
+					resource	:	this.back_texture.createView()
+				},
+				{	//no_box
+					binding		:	6,
+					resource	:	this.no_box_texture.createView()
+				},
+				{
+					//sampler
+					binding		:	7,
+					resource	:	render.webgpu.device.createSampler(
+						{
+							addressModeU	:	"mirror-repeat",
+							addressModeV	:	"mirror-repeat",
+							magFilter		:	"nearest",
+							minFilter		:	"nearest",
+							mipmapFilter	:	"nearest"
+						})
+				}
+			];
+			
+			this.texture_bindgroup=render.webgpu.device.createBindGroup(
+				{
+					layout		:	render_driver.texture_bindgroup_layout,
+					entries		:	resource_entries
+				});
+		}
 		
 		this.is_busy_flag=false;
 		if(this.should_delete_flag)

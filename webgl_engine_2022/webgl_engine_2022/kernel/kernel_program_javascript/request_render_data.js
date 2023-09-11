@@ -201,19 +201,24 @@ async function request_render_data(render)
 	async function fetch_web_server_response_data(request_url,render)
 	{
 		var fetch_start_time=(new Date()).getTime();
+		
+		if(render.terminate_flag)
+			return true;
 		var render_promise=await fetch(request_url,
 				{
    					method	:	"POST",
    					cache	:	"no-cache"
    				});
+   		if(render.terminate_flag)
+			return true;
 		if(!(render_promise.ok)){
-			if(render.terminate_flag)
-				return true;
 			alert("request fetch_web_server_response_data fail: "+request_url);
 			return true;
 		}
 		
 		var response_data= await render_promise.json();
+		if(render.terminate_flag)
+			return true;
 		
 		var fetch_end_time=(new Date()).getTime();
 		
@@ -232,6 +237,7 @@ async function request_render_data(render)
 		
 		return false;
 	};
+	
 	for(var start_time=0;!(render.terminate_flag);){
 		var current_time=(new Date()).getTime();
 		var my_delay_time_length=render.modifier_time_parameter.delay_time_length;
@@ -240,15 +246,22 @@ async function request_render_data(render)
 			{
 				setTimeout(resolve,my_delay_time_length);
 			});
-			continue;
+			if(render.terminate_flag)
+				break;
+			else
+				continue;
 		}
+		if(render.terminate_flag)
+			break;
 		start_time=current_time;
-		if(await fetch_web_server_response_data(create_request_url(render),render))
+		if(await fetch_web_server_response_data(create_request_url(render),render)||(render.terminate_flag))
 			break;
 		await new Promise(resolve=>
 		{
 			window.requestAnimationFrame(resolve);
 			setTimeout(resolve,render.parameter.engine_touch_time_length/1000000);
 		});
+		if(render.terminate_flag)
+			break;
 	}
 }

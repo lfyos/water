@@ -125,6 +125,7 @@
 							render.highlight=render.pickup.fork();
 							break;
 						case 117://F6
+							render.destroy();
 							break;
 						case 118://F7
 							break;

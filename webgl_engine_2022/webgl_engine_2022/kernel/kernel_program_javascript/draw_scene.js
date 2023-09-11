@@ -126,7 +126,6 @@ function draw_scene_routine(render_data,render)
 				render_data,target_part_object,target_part_driver,target_render_driver,render);
 	}
 }
-
 async function draw_scene_main(part_init_data,component_init_data,render)
 {
 	while(!(render.terminate_flag)){
@@ -170,7 +169,12 @@ async function draw_scene_main(part_init_data,component_init_data,render)
 				render.webgpu.command_encoder=null;
 			}
 		render.webgpu.device.queue.submit(my_command_buffer);
+		
+		if(render.terminate_flag)
+			return	
 		await render.webgpu.device.queue.onSubmittedWorkDone();
+		if(render.terminate_flag)
+			return;
 		
 		for(var i=0,ni=render.render_buffer_array.length;i<ni;i++){
 			var render_data=render.render_buffer_array[i];
@@ -192,14 +196,22 @@ async function draw_scene_main(part_init_data,component_init_data,render)
 			if(typeof(target_component_driver.complete_render_target)!="function")
 				continue;
 
+			if(render.terminate_flag)
+				return;
 			await target_component_driver.complete_render_target(render_data,
 						target_part_object,target_part_driver,target_render_driver,render);
+			if(render.terminate_flag)
+				return;
 		}
 
+		if(render.terminate_flag)
+			return;
 		await new Promise((resolve)=>
 			{
 				window.requestAnimationFrame(resolve);
 				setTimeout(resolve,render.parameter.engine_touch_time_length/1000000);
 			});
+		if(render.terminate_flag)
+			return;
 	}
 }

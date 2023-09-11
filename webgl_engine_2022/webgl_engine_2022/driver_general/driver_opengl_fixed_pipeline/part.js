@@ -8,6 +8,9 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 
 	this.create_bind_group=async function(part_object,render_driver,render)
 	{
+		if(render.terminate_flag)
+			return;
+			
 		for(var p,i=0,ni=part_object.material[0].material.length;i<ni;i++){
 			var my_material=part_object.material[0].material[i];
 			
@@ -59,10 +62,16 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 					for(var k=0;k<16;k++)
 						p[16*j+k]=my_material.texture[j].matrix[k];
 					try{
-						var my_imageBitmap=await createImageBitmap(
-								await render.caller.call_server_part(
+						if(render.terminate_flag)
+							break;
+						var my_blob=await render.caller.call_server_part(
 										part_object.render_id,part_object.part_id,
-										[["file",my_material.texture[j].texture_file]],"blob"));
+										[["file",my_material.texture[j].texture_file]],"blob");
+						if(render.terminate_flag)
+							break;
+						var my_imageBitmap=await createImageBitmap(my_blob);
+						if(render.terminate_flag)
+							break;
 						var my_texture=render.webgpu.device.createTexture(
 								{
 									size:
@@ -94,7 +103,12 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 							+my_material.texture[j].texture_file);
 					}
 				}
-				
+			if(render.terminate_flag){
+				for(var j=0,nj=my_texture_array.length;j<nj;j++)
+					my_texture_array[j].destroy();
+				return;
+			}
+
 			float_buffer_data=float_buffer_data.concat(p).concat(
 					render_driver.render_material.light_color_factor);
 	
@@ -214,7 +228,6 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 			};
 		};
 		this.material_bindgroup_flag=false;
-		return;
 	}
 	this.decode_vertex_data=function(request_type_string,buffer_object_data,part_object)
 	{

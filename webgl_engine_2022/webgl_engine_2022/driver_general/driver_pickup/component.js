@@ -241,23 +241,47 @@ function construct_component_driver(
 	this.complete_render_target=async function(render_data,
 		target_part_object,target_part_driver,target_render_driver,render)
 	{
+		if(render.terminate_flag)
+			return;
+
 		var my_buffer=this.id_buffer_0;
 		var my_length=Int32Array.BYTES_PER_ELEMENT*4;
-		await my_buffer.mapAsync(GPUMapMode.READ,0,my_length);
+		try{
+			await my_buffer.mapAsync(GPUMapMode.READ,0,my_length);
+		}catch(e){
+			return;
+		}
 		var p_id_0=new Int32Array(my_buffer.getMappedRange(0,my_length).slice());
 		my_buffer.unmap();
 		
+		if(render.terminate_flag)
+			return;
+		
 		var my_buffer=this.id_buffer_1;
 		var my_length=Int32Array.BYTES_PER_ELEMENT*4;
-		await my_buffer.mapAsync(GPUMapMode.READ,0,my_length);
+		try{
+			await my_buffer.mapAsync(GPUMapMode.READ,0,my_length);
+		}catch(e){
+			return;
+		}
 		var p_id_1=new Int32Array(my_buffer.getMappedRange(0,my_length).slice());
 		my_buffer.unmap();
 		
+		if(render.terminate_flag)
+			return;
+		
 		var my_buffer=this.value_buffer;
 		var my_length=Float32Array.BYTES_PER_ELEMENT*4;
-		await my_buffer.mapAsync(GPUMapMode.READ,0,my_length);
+		try{
+			await my_buffer.mapAsync(GPUMapMode.READ,0,my_length);
+		}catch(e){
+			return;
+		}
 		var p_value=new Float32Array(my_buffer.getMappedRange(0,my_length).slice());
 		my_buffer.unmap();
+		
+		if(render.terminate_flag)
+			return;
 	
 		var system_bindgroup_id	=p_id_0[0];
 		var part_body_id		=p_id_0[1];

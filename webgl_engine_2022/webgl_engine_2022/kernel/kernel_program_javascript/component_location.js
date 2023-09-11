@@ -22,7 +22,6 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			parent					:	-1
 		}
 	}
-
 	this.destroy=function()
 	{
 		for(var i=0;i<this.component_number;i++){
@@ -32,17 +31,21 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			this.component[i]					=null;
 
 		};
-		this.computer	=null;
-		this.webgpu		=null;
-		this.component	=null;
+		this.component		=null;
 		
-		this.modify_one_component_location	=null;
-		this.decode_location				=null;
-		this.modify_component_location		=null;
-		this.get_one_component_location		=null;
-		this.get_component_location			=null;
+		this.computer		=null;
+		this.webgpu			=null;
+		this.identify_matrix=null;
+
+		this.modify_one_component_location		=null;
+		this.decode_location					=null;
+		this.modify_component_location			=null;
+		this.get_one_component_location			=null;
+		this.get_component_location				=null;
+		this.get_component_matrix_and_version	=null;
+		
+		return;
 	}
-	
 	this.modify_one_component_location=function(component_id,loca)
 	{
 		if((component_id>=0)&&(component_id<this.component.length)){

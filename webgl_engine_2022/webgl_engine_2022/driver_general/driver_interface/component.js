@@ -27,6 +27,9 @@ function create_component_object(my_init_data,render)
 
 	this.pickupmousedown=function(event,component_id,render)
 	{
+		if(render.terminate_flag)
+			return true;
+			
 		switch(event.button){
 		case 0:
 			this.mousedown_flag=true;
@@ -46,6 +49,8 @@ function create_component_object(my_init_data,render)
 	};
 	this.pickupmousemove=function(event,component_id,render)
 	{
+		if(render.terminate_flag)
+			return true;
 		switch(event.button){
 		case 0:
 			if(!(this.mousedown_flag))
@@ -65,6 +70,9 @@ function create_component_object(my_init_data,render)
 	}
 	this.pickupmouseup=function(event,component_id,render)
 	{
+		if(render.terminate_flag)
+			return true;
+			
 		switch(event.button){
 		case 0:
 			if(this.mousedown_flag){
@@ -90,6 +98,9 @@ function create_component_object(my_init_data,render)
 	};
 	this.pickupmousewheel=function(event,component_id,render)
 	{
+		if(render.terminate_flag)
+			return true;
+			
 		var mouse_wheel_number=0;
 		if(typeof(event.wheelDelta)=="number")
 			mouse_wheel_number+=event.wheelDelta/200.0;		//for chrome,opera
@@ -128,6 +139,13 @@ function create_bind_group(init_data,render_driver,render)
 	
 	this.create=async function(init_data,render_driver,render)
 	{
+		this.texture=null;
+		this.buffer=null;
+		this.bindgroup=null;
+		
+		if(render.terminate_flag)
+			return;
+			
 		if(init_data.type){
 			this.texture 		=	render.webgpu.device.createTexture(
 				{
@@ -143,8 +161,15 @@ function create_bind_group(init_data,render_driver,render)
 		    	});
 		}else{
 			var my_response 	=	await fetch(init_data.url);
+			if(render.terminate_flag){
+				this.is_busy_flag=false;
+				return;
+			}
 		   	var my_imageBitmap	=	await createImageBitmap(await my_response.blob());
-		    
+		   	if(render.terminate_flag){
+				this.is_busy_flag=false;
+				return;
+			}
 			this.texture 		=	render.webgpu.device.createTexture(
 				{
 					size:
@@ -226,8 +251,8 @@ function create_bind_group(init_data,render_driver,render)
 			this.texture.destroy();
 			this.texture=null;
 		}
+		this.bindgroup=null;
 	};
-	
 	this.create(init_data,render_driver,render);
 };
 

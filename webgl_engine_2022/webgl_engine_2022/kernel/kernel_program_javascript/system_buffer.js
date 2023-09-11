@@ -3,6 +3,9 @@ function construct_system_buffer(target_buffer_number,render)
 	this.main_target_project_matrix	=null;
 	this.main_target_view_parameter	=null;
 	
+	this.system_bindgroup	=null;
+	this.location_version	=null;
+	
 	this.system_bindgroup_layout=render.webgpu.device.createBindGroupLayout(
 		{
 			entries	:	[
@@ -54,11 +57,37 @@ function construct_system_buffer(target_buffer_number,render)
 		});
 
 	this.id_buffer			=null;
-	this.system_bindgroup	=null;
-	this.location_version	=null;
 	
+	this.destroy=function()
+	{
+		this.main_target_project_matrix	=null;
+		this.main_target_view_parameter	=null;
+		
+		this.system_bindgroup		=null;
+		this.location_version		=null;
+		this.system_bindgroup_layout=null;
+		
+		if(this.system_buffer!=null){
+			this.system_buffer.destroy();
+			this.system_buffer=null;
+		}
+		if(this.id_buffer!=null){
+			this.id_buffer.destroy();
+			this.id_buffer=null;
+		}
+		if(this.target_buffer!=null){
+			this.target_buffer.destroy();
+			this.target_buffer=null;
+		}
+		
+		this.init_id_buffer_and_system_bindgroup=null;
+		this.set_system_buffer					=null;
+		this.set_target_buffer					=null;
+		this.set_system_bindgroup				=null;
+		this.set_system_bindgroup_data			=null;
+	};
+
 	this.id_buffer_data_length 	=40;
-	
 	this.init_id_buffer_and_system_bindgroup=function(render)
 	{
 		//	init id_buffer	:	binding point 2
@@ -116,31 +145,7 @@ function construct_system_buffer(target_buffer_number,render)
 		for(var i=0,ni=this.location_version.length;i<ni;i++)
 			this.location_version[i]=-1;
 	}
-	this.destroy=function()
-	{
-		this.system_bindgroup		=null;
-		this.system_bindgroup_layout=null;
-		this.location_version		=null;
-		
-		if(this.target_buffer!=null){
-			this.target_buffer.destroy();
-			this.target_buffer=null;
-		}
-		if(this.system_buffer!=null){
-			this.system_buffer.destroy();
-			this.system_buffer=null;
-		}
-		if(this.id_buffer!=null){
-			this.id_buffer.destroy();
-			this.id_buffer=null;
-		}
-		
-		this.set_system_buffer			=null;
-		this.set_target_buffer			=null;
-		this.set_system_bindgroup		=null;
-		this.set_system_bindgroup_data	=null;
-	};
-
+	
 	this.set_system_buffer=function(render)
 	{
 		var flag=((this.main_target_project_matrix==null)||(this.main_target_view_parameter==null));

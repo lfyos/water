@@ -62,8 +62,8 @@ function body_onunload()
 {
 	if(typeof(lfy_render)=="object")
 		if(lfy_render!=null)
-			if(typeof(lfy_render.terminate)=="function")
-				lfy_render.terminate();
+			if(typeof(lfy_render.destroy)=="function")
+				lfy_render.destroy();
 }
 
 </script>

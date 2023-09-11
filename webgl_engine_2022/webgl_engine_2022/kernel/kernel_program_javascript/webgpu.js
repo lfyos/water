@@ -9,7 +9,6 @@ async function create_webgpu(my_canvas)
 	var webgpu=new Object();
 	var devicePixelRatio = window.devicePixelRatio || 1;
 
-	
 	webgpu.current_canvas_id	=0;
 		
 	webgpu.gpu					= await navigator.gpu;
@@ -39,5 +38,25 @@ async function create_webgpu(my_canvas)
 	webgpu.canvas_2d.height	=webgpu.canvas[0].height;
 	webgpu.context_2d		=webgpu.canvas_2d.getContext("2d");
 	
+	webgpu.destroy=function()
+	{
+		this.gpu					= null;
+		this.adapter				= null;
+		this.device					= null;
+		this.command_encoder		= null;
+		this.render_pass_encoder	= null;
+		this.compute_pass_encoder	= null;
+		
+		if(this.canvas!=null){
+			for(var i=0,ni=this.canvas.length;i<ni;i++)
+				this.canvas [i]= null;
+			this.canvas=null;
+		}
+		if(this.context!=null){
+			for(var i=0,ni=this.context.length;i<ni;i++)
+				this.context [i]= null;
+			this.context= null;
+		}
+	}
 	return webgpu;
 }

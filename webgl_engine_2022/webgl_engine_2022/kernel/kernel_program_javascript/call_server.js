@@ -28,6 +28,8 @@ function construct_server_caller(my_render)
 	
 	this.call_server=async function(request_url,response_type_string,upload_data,server_request_parameter)
 	{
+		var my_render=this.render;
+		
 		if((typeof(server_request_parameter)!="object")||(server_request_parameter==null))
 			server_request_parameter=new Object();
 				
@@ -38,10 +40,9 @@ function construct_server_caller(my_render)
 			response_type_string="text";
 		
 		var server_promise=await fetch(request_url,server_request_parameter);
+		if(my_render.terminate_flag)
+			return null;
 		if(!(server_promise.ok)){
-			if(this.render.terminate_flag)
-				return null;
-
 			alert("request call_server error,status is "+server_promise.status);
 			alert(request_url);
 			return null;
@@ -69,14 +70,11 @@ function construct_server_caller(my_render)
 				break;
 			}
 		}catch(e){
-			if(this.render.terminate_flag)
-				return null;
 			response_data= null;
-			
 			alert("parse call_server response data fail:	"+request_url);
 			alert(e.toString());
 		}
-		return response_data;
+		return my_render.terminate_flag?null:response_data;
 	};
 	this.create_render_request_string=function(render_id_or_render_name,render_parameter)
 	{

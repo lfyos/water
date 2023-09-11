@@ -2,11 +2,9 @@ function construct_component_render_parameter(render_number)
 {
 	this.destroy=function()
 	{
-		this.get_render_list					=null;
 		this.modify_component_render_parameter	=null;
 		this.modify_component_buffer_parameter	=null;
 	};
-	
 	this.modify_component_render_parameter=function(component_append_data,component_delete_data,render)
 	{
 		for(var p,render_id=-1,part_id=-1,render_buffer_id=-1,i=0,ni=component_append_data.length;i<ni;i++){
