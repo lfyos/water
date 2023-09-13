@@ -1,8 +1,7 @@
 async function render_main(create_engine_sleep_time_length_scale,
 	create_engine_sleep_time_length,create_engine_max_sleep_time_length,
 	my_canvas,my_url,my_user_name,my_pass_word,my_language_name,
-	my_scene_name,my_link_name,my_initialization_parameter,
-	user_process_bar_function)
+	my_scene_name,my_link_name,my_initialization_parameter,user_process_bar_function)
 {
 	my_user_name	=(typeof(my_user_name		)!="string")?"NoName"	 :(my_user_name.trim());
 	my_pass_word	=(typeof(my_pass_word		)!="string")?"NoPassword":(my_pass_word.trim());

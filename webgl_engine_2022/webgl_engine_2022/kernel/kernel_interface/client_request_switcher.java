@@ -128,7 +128,7 @@ public class client_request_switcher
 	synchronized private void create_system_parameter(network_implementation network_implementor,
 			String data_configure_environment_variable,String proxy_configure_environment_variable)
 	{
-		if(system_par==null) {
+		if(system_par==null){
 			system_par=new system_parameter(network_implementor.get_application_directory(),
 					data_configure_environment_variable,proxy_configure_environment_variable);
 			program_javascript=new javascript_program(system_par);
@@ -161,11 +161,10 @@ public class client_request_switcher
 				my_pass_word=java.net.URLDecoder.decode(my_pass_word,request_charset);
 			}catch(Exception e) {
 				;
-			}
-		
+			}	
 		String my_client_id=request_response.implementor.get_client_id();
 		client_interface client=client_container.get_client_interface(system_par,
-				my_user_name,my_pass_word,(my_client_id==null)?"NoClientID"	:my_client_id,engine_counter);
+			my_user_name,my_pass_word,(my_client_id==null)?"NoClientID":my_client_id,engine_counter);
 		if(client!=null) {
 			engine_call_result ecr=system_call_switch(request_response,client);
 			if(ecr!=null){
@@ -184,7 +183,6 @@ public class client_request_switcher
 						compress_response_header=null;
 						ecr.compress_file_name=null;
 				}
-					
 				if(ecr.file_name!=null)
 					request_response.response_file_data(compress_response_header,ecr,system_par);
 				else

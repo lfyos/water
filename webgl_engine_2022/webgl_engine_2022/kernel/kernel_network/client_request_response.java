@@ -258,8 +258,8 @@ public class client_request_response extends common_writer
 		return new long[] {begin_pointer,end_pointer};
 	}
 	
-	public void response_file_data(
-		String compress_response_header,engine_call_result ecr,system_parameter system_par)
+	public void response_file_data(	String compress_response_header,
+					engine_call_result ecr,system_parameter system_par)
 	{
 		try{
 			output_stream.close();
