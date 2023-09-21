@@ -104,7 +104,7 @@ public class system_parameter
 		String data_configure_file_name;
 		if((data_configure_file_name=System.getenv(data_configure_environment_variable))==null)
 			data_configure_file_name=data_configure_environment_variable;
-		data_configure_file_name	=file_reader.separator(data_configure_file_name.trim());
+		data_configure_file_name=file_reader.separator(data_configure_file_name.trim());
 		if(data_configure_file_name.charAt(0)=='.')
 			data_configure_file_name=application_directory_name+data_configure_file_name;
 		
@@ -114,7 +114,7 @@ public class system_parameter
 		proxy_configure_file_name=file_reader.separator(proxy_configure_file_name.trim());
 		if(proxy_configure_file_name.charAt(0)=='.')
 			proxy_configure_file_name=application_directory_name+proxy_configure_file_name;
-		
+
 		debug_information.println();
 		debug_information.println("data_configure_environment_variable:	",		data_configure_environment_variable);
 		debug_information.println("data_configure_file_name:		",			data_configure_file_name);
@@ -264,10 +264,8 @@ public class system_parameter
 		
 		proxy_par=new proxy_parameter(proxy_configure_file_name,local_data_charset);
 		language_change_name=new change_name(
-				new String[]{data_root_directory_name+language_change_file_name},
-				null,local_data_charset);
+				new String[]{data_root_directory_name+language_change_file_name},null,local_data_charset);
 		content_type_change_name=get_content_type_change_name.get_change_name(text_class_charset,text_jar_file_charset);
-		
 		switch_server=new switch_engine_server(data_root_directory_name+switch_server_url_file_name,local_data_charset);
 		
 		return;

@@ -13,7 +13,7 @@ public class client_request_switcher
 {
 	private system_parameter system_par;
 	private javascript_program program_javascript;
-	private engine_interface engine_container;
+	private engine_interface_container engine_container;
 	private client_interface_container client_container;
 	private proxy_downloader download_proxy;
 	private create_engine_counter engine_counter;
@@ -33,11 +33,11 @@ public class client_request_switcher
 			program_javascript=null;
 		}
 		if(engine_container!=null) {
-			engine_container.destroy(engine_counter);
+			engine_container.destroy();
 			engine_container=null;
 		}
 		if(client_container!=null) {
-			client_container.destroy(engine_counter);
+			client_container.destroy();
 			client_container=null;
 		}
 		if(download_proxy!=null) {
@@ -57,21 +57,11 @@ public class client_request_switcher
 		switch((str==null)?"switch":str){
 		case "switch":
 			if((str=system_par.switch_server.get_switch_server_url())!=null) {
-				String function_name=request_response.get_parameter("function_name");
-				
 				debug_information.println();
 				debug_information.println("client 		",		request_response.implementor.get_client_id());
 				debug_information.println("switch from	",		request_response.implementor.get_url());
 				debug_information.println("to		",			str);
-				
-				str+="?channel=javascript";
-				if(function_name==null)
-					debug_information.println("No function_name");
-				else{
-					str+="&function_name="+function_name;
-					debug_information.println("function_name	",	function_name);
-				}
-				request_response.implementor.redirect_url(str,"*");
+				request_response.implementor.redirect_url(str+"?channel=javascript","*");
 				break;
 			}
 		case "javascript":
@@ -125,22 +115,18 @@ public class client_request_switcher
 		}
 		return ecr;
 	}
-	synchronized private void create_system_parameter(network_implementation network_implementor,
-			String data_configure_environment_variable,String proxy_configure_environment_variable)
-	{
-		if(system_par==null){
-			system_par=new system_parameter(network_implementor.get_application_directory(),
-					data_configure_environment_variable,proxy_configure_environment_variable);
-			program_javascript=new javascript_program(system_par);
-		}
-	}
 	public void process_system_call(network_implementation network_implementor,
 			String data_configure_environment_variable,String proxy_configure_environment_variable)
 	{
-		if(system_par==null)
-			create_system_parameter(network_implementor,
-				data_configure_environment_variable,proxy_configure_environment_variable);
-		
+		if(system_par==null){
+			synchronized(this){
+				if(system_par==null){
+					system_par=new system_parameter(network_implementor.get_application_directory(),
+							data_configure_environment_variable,proxy_configure_environment_variable);
+					program_javascript=new javascript_program(system_par);
+				}
+			}
+		}
 		client_request_response request_response=new client_request_response(
 				system_par.network_data_charset,network_implementor);
 		
@@ -161,10 +147,10 @@ public class client_request_switcher
 				my_pass_word=java.net.URLDecoder.decode(my_pass_word,request_charset);
 			}catch(Exception e) {
 				;
-			}	
-		String my_client_id=request_response.implementor.get_client_id();
-		client_interface client=client_container.get_client_interface(system_par,
-			my_user_name,my_pass_word,(my_client_id==null)?"NoClientID":my_client_id,engine_counter);
+			}
+		client_interface client=client_container.get_client_interface(
+				my_user_name,my_pass_word,request_response.implementor.get_client_id(),system_par);
+		
 		if(client!=null) {
 			engine_call_result ecr=system_call_switch(request_response,client);
 			if(ecr!=null){
@@ -201,7 +187,7 @@ public class client_request_switcher
 		system_par			=null;
 		program_javascript	=null;
 		
-		engine_container	=new engine_interface();
+		engine_container	=new engine_interface_container();
 		client_container	=new client_interface_container();
 		download_proxy		=new proxy_downloader();
 		engine_counter		=new create_engine_counter();

@@ -20,7 +20,7 @@ import kernel_part.part_container_for_part_search;
 import kernel_engine.delete_part_files;
 import kernel_render.render_container;
 
-public class engine_interface
+public class engine_interface_container
 {
 	class engine_kernel_balance_tree_item extends balance_tree_item
 	{
@@ -145,9 +145,8 @@ public class engine_interface
 			debug_information.print  ("Create too many scenes or components:	",scene_name+"	"+link_name);
 			return null;
 		}
-		if((ekbti.engine_kernel_cont=new engine_kernel_container(scene_name,link_name,
-			request_response,system_par,client_scene_file_name,client_scene_file_charset,
-			original_render,part_loader_cont,engine_counter)).ek==null)
+		if((ekbti.engine_kernel_cont=new engine_kernel_container(scene_name,link_name,request_response,system_par,
+			client_scene_file_name,client_scene_file_charset,original_render,part_loader_cont)).ek==null)
 		{
 			debug_information.print  ("Create scene fail:	",scene_name+"	"+link_name);
 			return null;
@@ -221,7 +220,7 @@ public class engine_interface
 					((engine_kernel_balance_tree_item)bti).destroy();
 		}
 	}
-	public void destroy(create_engine_counter engine_counter)
+	public void destroy()
 	{
 		ReentrantLock my_client_interface_lock=client_interface_lock;
 		client_interface_lock=null;
@@ -243,11 +242,9 @@ public class engine_interface
 			part_loader_cont.destroy();
 			part_loader_cont=null;
 		}
-		engine_counter.engine_kernel_number=0;
-		engine_counter.engine_component_number=0;
 		my_client_interface_lock.unlock();
 	}
-	public engine_interface()
+	public engine_interface_container()
 	{
 		component_load_source_cont	=new component_load_source_container();
 		bt							=null;
