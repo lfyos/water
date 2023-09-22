@@ -249,7 +249,7 @@ public class engine_interface_container
 		component_load_source_cont	=new component_load_source_container();
 		bt							=null;
 		original_render				=null;
-		system_boftal_container	=null;
+		system_boftal_container		=null;
 		part_loader_cont			=new part_loader_container();
 		client_interface_lock		=new ReentrantLock();
 	}
