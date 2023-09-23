@@ -48,42 +48,13 @@ public class client_request_switcher
 			engine_counter=null;
 		creation_engine_lock_number=0;
 	}
-	private engine_call_result system_call_switch(client_request_response request_response)
+	private client_interface get_client_interface(client_request_response request_response)
 	{
-		engine_call_result ecr=null;
-		String channel_string=request_response.get_parameter("channel");
-		switch((channel_string==null)?"switch":channel_string){
-		case "switch":
-			if((channel_string=system_par.switch_server.get_switch_server_url(request_response,system_par))!=null){
-				debug_information.println();
-				debug_information.println("client 		",		request_response.implementor.get_client_id());
-				debug_information.println("switch from	",		request_response.implementor.get_url());
-				debug_information.println("to		",			channel_string);
-				request_response.implementor.redirect_url(channel_string+"?channel=javascript","*");
-				return null;
-			}
-		case "javascript":
-			return program_javascript.create(request_response,system_par);
-		case "readme":
-			return download_readme_file.download_driver_readme(request_response,
-				system_par.data_root_directory_name+system_par.shader_file_name,
-				system_par.local_data_charset,system_par.file_download_cors_string,
-				Long.toString(system_par.file_buffer_expire_time_length),
-				system_par.text_class_charset,system_par.text_jar_file_charset);
-		case "buffer":
-			return download_proxy.download(request_response,system_par);
-		case "proxy":
-			if((ecr=download_proxy.download(request_response,system_par))!=null)
-				ecr.date_string=null;
-			return ecr;
-		default:
-			break;
-		}
-		
 		String my_user_name,my_pass_word,request_charset=request_response.implementor.get_request_charset();
 		if((my_user_name=request_response.get_parameter("user_name"))==null)
 			my_user_name="NoName";
-		else try{
+		else 
+			try{
 				my_user_name=java.net.URLDecoder.decode(my_user_name,request_charset);
 				my_user_name=java.net.URLDecoder.decode(my_user_name,request_charset);
 			}catch(Exception e) {
@@ -98,28 +69,61 @@ public class client_request_switcher
 			}catch(Exception e) {
 				;
 			}
-		client_interface client=client_container.get_client_interface(
-				my_user_name,my_pass_word,request_response.implementor.get_client_id(),system_par);
+		return client_container.get_client_interface(my_user_name,my_pass_word,
+						request_response.implementor.get_client_id(),system_par);
 		
-		if(client==null)
-			return null;
-		
-		switch(channel_string){
+	}
+	private engine_call_result system_call_switch(client_request_response request_response)
+	{
+		engine_call_result ecr=null;
+		client_interface client=null;
+		String channel_string=request_response.get_parameter("channel");
+		switch((channel_string==null)?"switch":channel_string){
+		case "switch":
+			if((channel_string=system_par.switch_server.get_switch_server_url(request_response,system_par))!=null){
+				debug_information.println();
+				debug_information.println("client 		",		request_response.implementor.get_client_id());
+				debug_information.println("switch from	",		request_response.implementor.get_url());
+				debug_information.println("to		",			channel_string);
+				request_response.implementor.redirect_url(channel_string+"?channel=javascript","*");
+				break;
+			}
+		case "javascript":
+			ecr=program_javascript.create(request_response,system_par);
+			break;
+		case "readme":
+			ecr=download_readme_file.download_driver_readme(request_response,
+				system_par.data_root_directory_name+system_par.shader_file_name,
+				system_par.local_data_charset,system_par.file_download_cors_string,
+				Long.toString(system_par.file_buffer_expire_time_length),
+				system_par.text_class_charset,system_par.text_jar_file_charset);
+			break;
+		case "buffer":
+			ecr=download_proxy.download(request_response,system_par);
+			break;
+		case "proxy":
+			if((ecr=download_proxy.download(request_response,system_par))!=null)
+				ecr.date_string=null;
+			break;
 		case "process_bar":
-			ecr=client.process_bar(request_response);
+			if((client=get_client_interface(request_response))!=null)
+				ecr=client.process_bar(request_response);
 			break;
 		case "clear":
-			client.clear_all_engine(engine_container,engine_counter);
+			if((client=get_client_interface(request_response))!=null)
+				client.clear_all_engine(engine_container,engine_counter);
 			break;
 		case "creation":
-			if(test_creation_engine_lock_number(1)<system_par.create_engine_concurrent_number)
-				ecr=client.execute_create_call(request_response,engine_container,engine_counter);
-			else{
-				ecr=new engine_call_result(null,null,null,null,null,"*");
-				request_response.println("false");
-				client.get_process_bar(request_response).set_process_bar(true,"wait_for_other_exit","",1,2);
+			if((client=get_client_interface(request_response))!=null){
+				if(test_creation_engine_lock_number(1)<system_par.create_engine_concurrent_number)
+					ecr=client.execute_create_call(request_response,engine_container,engine_counter);
+				else{
+					ecr=new engine_call_result(null,null,null,null,null,"*");
+					request_response.println("false");
+					client.get_process_bar(request_response).set_process_bar(true,"wait_for_other_exit","",1,2);
+				}
+				test_creation_engine_lock_number(-1);
 			}
-			test_creation_engine_lock_number(-1);
 			break;
 		default:
 			long channel_id;
@@ -133,12 +137,14 @@ public class client_request_switcher
 				e.printStackTrace();
 				break;
 			}
-			ecr=client.execute_system_call(channel_id,request_response,engine_container,engine_counter);
+			if((client=get_client_interface(request_response))!=null)
+				ecr=client.execute_system_call(channel_id,request_response,engine_container,engine_counter);
 			break;
 		}
 		
 		long current_time=nanosecond_timer.absolute_nanoseconds();
-		client.touch_time=current_time;
+		if(client!=null)
+			client.touch_time=current_time;
 		if(request_response.request_time>0)
 			request_response.request_time=current_time;
 		return ecr;
