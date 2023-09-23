@@ -48,87 +48,37 @@ public class client_request_switcher
 			engine_counter=null;
 		creation_engine_lock_number=0;
 	}
-	private engine_call_result system_call_switch(
-			client_request_response request_response,client_interface client)
+	private engine_call_result system_call_switch(client_request_response request_response)
 	{
 		engine_call_result ecr=null;
-		
-		String str=request_response.get_parameter("channel");
-		switch((str==null)?"switch":str){
+		String channel_string=request_response.get_parameter("channel");
+		switch((channel_string==null)?"switch":channel_string){
 		case "switch":
-			if((str=system_par.switch_server.get_switch_server_url())!=null) {
+			if((channel_string=system_par.switch_server.get_switch_server_url(request_response,system_par))!=null){
 				debug_information.println();
 				debug_information.println("client 		",		request_response.implementor.get_client_id());
 				debug_information.println("switch from	",		request_response.implementor.get_url());
-				debug_information.println("to		",			str);
-				request_response.implementor.redirect_url(str+"?channel=javascript","*");
-				break;
+				debug_information.println("to		",			channel_string);
+				request_response.implementor.redirect_url(channel_string+"?channel=javascript","*");
+				return null;
 			}
 		case "javascript":
-			ecr=program_javascript.create(request_response,system_par);
-			break;
+			return program_javascript.create(request_response,system_par);
 		case "readme":
-			ecr=download_readme_file.download_driver_readme(request_response,
+			return download_readme_file.download_driver_readme(request_response,
 				system_par.data_root_directory_name+system_par.shader_file_name,
 				system_par.local_data_charset,system_par.file_download_cors_string,
 				Long.toString(system_par.file_buffer_expire_time_length),
 				system_par.text_class_charset,system_par.text_jar_file_charset);
-			break;
 		case "buffer":
-			ecr=download_proxy.download(request_response,system_par);
-			break;
+			return download_proxy.download(request_response,system_par);
 		case "proxy":
 			if((ecr=download_proxy.download(request_response,system_par))!=null)
 				ecr.date_string=null;
-			break;
-		case "process_bar":
-			ecr=client.process_bar(request_response);
-			break;
-		case "clear":
-			client.clear_all_engine(engine_container,engine_counter);
-			break;
-		case "creation":
-			int creation_engine_lock_number=test_creation_engine_lock_number(1);
-			if(creation_engine_lock_number<system_par.create_engine_concurrent_number)
-				ecr=client.execute_create_call(request_response,engine_container,engine_counter);
-			else{
-				ecr=new engine_call_result(null,null,null,null,null,"*");
-				request_response.println("false");
-				client.get_process_bar(request_response).set_process_bar(true,"wait_for_other_exit","",1,2);
-			}
-			test_creation_engine_lock_number(-1);
-			break;
+			return ecr;
 		default:
-			long channel_id;
-			try{
-				channel_id=Long.decode(str);
-			}catch(Exception e) {
-				debug_information.println("Channel id is wrong");
-				debug_information.println("client:",request_response.implementor.get_client_id());
-				debug_information.println("Channel:",str);
-				debug_information.println("exception:",e.toString());
-				e.printStackTrace();
-				break;
-			}
-			ecr=client.execute_system_call(channel_id,request_response,engine_container,engine_counter);
 			break;
 		}
-		return ecr;
-	}
-	public void process_system_call(network_implementation network_implementor,
-			String data_configure_environment_variable,String proxy_configure_environment_variable)
-	{
-		if(system_par==null){
-			synchronized(this){
-				if(system_par==null){
-					system_par=new system_parameter(network_implementor.get_application_directory(),
-							data_configure_environment_variable,proxy_configure_environment_variable);
-					program_javascript=new javascript_program(system_par);
-				}
-			}
-		}
-		client_request_response request_response=new client_request_response(
-				system_par.network_data_charset,network_implementor);
 		
 		String my_user_name,my_pass_word,request_charset=request_response.implementor.get_request_charset();
 		if((my_user_name=request_response.get_parameter("user_name"))==null)
@@ -151,36 +101,91 @@ public class client_request_switcher
 		client_interface client=client_container.get_client_interface(
 				my_user_name,my_pass_word,request_response.implementor.get_client_id(),system_par);
 		
-		if(client!=null) {
-			engine_call_result ecr=system_call_switch(request_response,client);
-			if(ecr!=null){
-				String compress_response_header;
-				if(ecr.compress_file_name==null)
-						compress_response_header=null;
-				else if((compress_response_header=request_response.implementor.get_header("Accept-Encoding"))==null)
-						ecr.compress_file_name=null;
-				else if((compress_response_header=compress_response_header.toLowerCase()).indexOf("gzip")>=0)
-						compress_response_header="gzip";
-				else if(compress_response_header.indexOf("deflate")>=0)
-						compress_response_header="deflate";
-				else if(compress_response_header.indexOf("br")>=0)
-						compress_response_header="br";
-				else{
-						compress_response_header=null;
-						ecr.compress_file_name=null;
-				}
-				if(ecr.file_name!=null)
-					request_response.response_file_data(compress_response_header,ecr,system_par);
-				else
-					request_response.response_network_data(compress_response_header,ecr,system_par);
+		if(client==null)
+			return null;
+		
+		switch(channel_string){
+		case "process_bar":
+			ecr=client.process_bar(request_response);
+			break;
+		case "clear":
+			client.clear_all_engine(engine_container,engine_counter);
+			break;
+		case "creation":
+			if(test_creation_engine_lock_number(1)<system_par.create_engine_concurrent_number)
+				ecr=client.execute_create_call(request_response,engine_container,engine_counter);
+			else{
+				ecr=new engine_call_result(null,null,null,null,null,"*");
+				request_response.println("false");
+				client.get_process_bar(request_response).set_process_bar(true,"wait_for_other_exit","",1,2);
 			}
+			test_creation_engine_lock_number(-1);
+			break;
+		default:
+			long channel_id;
+			try{
+				channel_id=Long.decode(channel_string);
+			}catch(Exception e) {
+				debug_information.println("Channel id is wrong");
+				debug_information.println("client:",request_response.implementor.get_client_id());
+				debug_information.println("Channel:",channel_string);
+				debug_information.println("exception:",e.toString());
+				e.printStackTrace();
+				break;
+			}
+			ecr=client.execute_system_call(channel_id,request_response,engine_container,engine_counter);
+			break;
 		}
-		request_response.destroy();
+		
 		long current_time=nanosecond_timer.absolute_nanoseconds();
+		client.touch_time=current_time;
 		if(request_response.request_time>0)
 			request_response.request_time=current_time;
-		if(client!=null)
-			client.touch_time=current_time;
+		return ecr;
+	}
+	synchronized private void init_system_par(network_implementation network_implementor,
+			String data_configure_environment_variable,String proxy_configure_environment_variable)
+	{
+		if(system_par==null){
+			system_par=new system_parameter(network_implementor.get_application_directory(),
+					data_configure_environment_variable,proxy_configure_environment_variable);
+			program_javascript=new javascript_program(system_par);
+		}
+	}
+	public void process_system_call(network_implementation network_implementor,
+			String data_configure_environment_variable,String proxy_configure_environment_variable)
+	{
+		if(system_par==null)
+			init_system_par(network_implementor,
+				data_configure_environment_variable,proxy_configure_environment_variable);
+		
+		client_request_response request_response=new client_request_response(
+			system_par.network_data_charset,network_implementor);
+		
+		engine_call_result ecr;
+		if((ecr=system_call_switch(request_response))!=null){
+			String compress_response_header;
+			if(ecr.compress_file_name==null)
+					compress_response_header=null;
+			else if((compress_response_header=request_response.implementor.get_header("Accept-Encoding"))==null)
+					ecr.compress_file_name=null;
+			else if((compress_response_header=compress_response_header.toLowerCase()).indexOf("gzip")>=0)
+					compress_response_header="gzip";
+			else if(compress_response_header.indexOf("deflate")>=0)
+					compress_response_header="deflate";
+			else if(compress_response_header.indexOf("br")>=0)
+					compress_response_header="br";
+			else{
+					compress_response_header=null;
+					ecr.compress_file_name=null;
+			}
+			if(ecr.file_name!=null)
+				request_response.response_file_data(compress_response_header,ecr,system_par);
+			else
+				request_response.response_network_data(compress_response_header,ecr,system_par);
+		}
+		request_response.destroy();
+		return;
 	}
 	public client_request_switcher()
 	{
