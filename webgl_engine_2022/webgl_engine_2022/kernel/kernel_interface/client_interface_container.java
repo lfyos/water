@@ -40,7 +40,7 @@ public class client_interface_container
 	}
 
 	private int client_interface_number;
-	private balance_tree bt;
+	private balance_tree<client_interface_balance_tree_node> bt;
 	private client_interface_balance_tree_node first,last;
 	
 	public void destroy()
@@ -74,8 +74,8 @@ public class client_interface_container
 			debug_information.print  ("Still active client_interface number is  ",client_interface_number-1);
 			debug_information.println("/",max_client_interface_number);
 
-			client_interface_balance_tree_node p=(client_interface_balance_tree_node)
-					(bt.search(new client_interface_balance_tree_node(first.client_id),false,true));
+			client_interface_balance_tree_node p;
+			p=bt.search(new client_interface_balance_tree_node(first.client_id),false,true);
 
 			if(first==last){
 				bt.destroy();
@@ -115,14 +115,14 @@ public class client_interface_container
 			first=p;
 			last=p;
 			
-			bt=new balance_tree(p);
+			bt=new balance_tree<client_interface_balance_tree_node>(p);
 
 			client_interface_number=1;
 			print_client_interface_information(my_client_id,my_system_par.max_client_interface_number);
 			
 			return p.interface_client;
 		}
-		if((p=(client_interface_balance_tree_node)(bt.search(new_p,true,false)))==null){
+		if((p=bt.search(new_p,true,false))==null){
 			p=new_p;
 			p.interface_client=new client_interface(my_system_par,my_user_name,my_pass_word,my_client_id);
 			client_interface_number++;

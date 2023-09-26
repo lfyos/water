@@ -1,9 +1,9 @@
 package kernel_common_class;
 
-public class balance_tree 
+public class balance_tree<effective_balance_tree_item extends balance_tree_item> 
 {
-	private balance_tree_item item;
-	private balance_tree left_child,right_child;
+	private effective_balance_tree_item item;
+	private balance_tree<effective_balance_tree_item> left_child,right_child;
 	private int balance,depth;
 	
 	public void destroy()
@@ -18,7 +18,7 @@ public class balance_tree
 			right_child=null;
 		}
 	}
-	public balance_tree(balance_tree_item my_item)
+	public balance_tree(effective_balance_tree_item my_item)
 	{
 		item=my_item;
 		left_child=null;
@@ -35,15 +35,15 @@ public class balance_tree
 	}
 	private void ll()
 	{
-		balance_tree_item bak;
+		effective_balance_tree_item bak;
 		bak				=item;
 		item			=left_child.item;
 		left_child.item	=bak;
 		
-		balance_tree left_tree		=left_child;
-		balance_tree left_left_tree	=left_child.left_child;
-		balance_tree left_right_tree=left_child.right_child;
-		balance_tree right_tree		=right_child;
+		balance_tree<effective_balance_tree_item> left_tree		=left_child;
+		balance_tree<effective_balance_tree_item> left_left_tree	=left_child.left_child;
+		balance_tree<effective_balance_tree_item> left_right_tree	=left_child.right_child;
+		balance_tree<effective_balance_tree_item> right_tree		=right_child;
 		
 		left_child					=left_left_tree;
 		right_child					=left_tree;
@@ -55,15 +55,15 @@ public class balance_tree
 	}
 	private void rr()
 	{
-		balance_tree_item bak;
-		bak				=item;
-		item			=right_child.item;
-		right_child.item=bak;
+		effective_balance_tree_item bak;
+		bak					=item;
+		item				=right_child.item;
+		right_child.item	=bak;
 		
-		balance_tree right_tree			=right_child;
-		balance_tree left_tree			=left_child;
-		balance_tree right_left_tree	=right_child.left_child;
-		balance_tree right_right_tree	=right_child.right_child;
+		balance_tree<effective_balance_tree_item> right_tree		=right_child;
+		balance_tree<effective_balance_tree_item> left_tree		=left_child;
+		balance_tree<effective_balance_tree_item> right_left_tree	=right_child.left_child;
+		balance_tree<effective_balance_tree_item> right_right_tree	=right_child.right_child;
 		
 		left_child						=right_tree;
 		right_child						=right_right_tree;
@@ -75,24 +75,24 @@ public class balance_tree
 	}
 	private void lr()
 	{
-		balance_tree_item bak;
+		effective_balance_tree_item bak;
 		bak							=item;
 		item						=left_child.right_child.item;
 		left_child.right_child.item	=bak;
 		
-		balance_tree left_tree				=left_child;
-		balance_tree left_right_tree		=left_child.right_child;
-		balance_tree left_left_tree			=left_child.left_child;
-		balance_tree left_right_left_tree	=left_child.right_child.left_child;
-		balance_tree left_right_right_tree	=left_child.right_child.right_child;
-		balance_tree right_tree				=right_child;
+		balance_tree<effective_balance_tree_item> left_tree				=left_child;
+		balance_tree<effective_balance_tree_item> left_right_tree		=left_child.right_child;
+		balance_tree<effective_balance_tree_item> left_left_tree		=left_child.left_child;
+		balance_tree<effective_balance_tree_item> left_right_left_tree	=left_child.right_child.left_child;
+		balance_tree<effective_balance_tree_item> left_right_right_tree	=left_child.right_child.right_child;
+		balance_tree<effective_balance_tree_item> right_tree			=right_child;
 		
-		left_child							=left_tree;
-		right_child							=left_right_tree;
-		left_child.left_child				=left_left_tree;
-		left_child.right_child				=left_right_left_tree;
-		right_child.left_child				=left_right_right_tree;
-		right_child.right_child				=right_tree;
+		left_child					=left_tree;
+		right_child					=left_right_tree;
+		left_child.left_child		=left_left_tree;
+		left_child.right_child		=left_right_left_tree;
+		right_child.left_child		=left_right_right_tree;
+		right_child.right_child		=right_tree;
 		
 		left_child.caculate_depth_and_balance();
 		right_child.caculate_depth_and_balance();
@@ -100,17 +100,17 @@ public class balance_tree
 	}
 	private void rl()
 	{
-		balance_tree_item bak;
+		effective_balance_tree_item bak;
 		bak							=item;
 		item						=right_child.left_child.item;
 		right_child.left_child.item	=bak;
 		
-		balance_tree left_tree				=left_child;
-		balance_tree right_tree				=right_child;
-		balance_tree right_left_tree		=right_child.left_child;
-		balance_tree right_left_left_tree	=right_child.left_child.left_child;
-		balance_tree right_left_right_tree	=right_child.left_child.right_child;
-		balance_tree right_right_tree		=right_child.right_child;
+		balance_tree<effective_balance_tree_item> left_tree				=left_child;
+		balance_tree<effective_balance_tree_item> right_tree			=right_child;
+		balance_tree<effective_balance_tree_item> right_left_tree		=right_child.left_child;
+		balance_tree<effective_balance_tree_item> right_left_left_tree	=right_child.left_child.left_child;
+		balance_tree<effective_balance_tree_item> right_left_right_tree	=right_child.left_child.right_child;
+		balance_tree<effective_balance_tree_item> right_right_tree		=right_child.right_child;
 		
 		left_child					=right_left_tree;
 		right_child					=right_tree;
@@ -123,11 +123,11 @@ public class balance_tree
 		right_child.caculate_depth_and_balance();
 		caculate_depth_and_balance();
 	}
-	private balance_tree_item search(balance_tree_item my_search_item,
-		balance_tree parent,boolean not_do_append_flag,boolean not_do_delete_flag)
+	private effective_balance_tree_item search(effective_balance_tree_item my_search_item,
+		balance_tree<effective_balance_tree_item> parent,boolean not_do_append_flag,boolean not_do_delete_flag)
 	{
 		int compare_result;
-		balance_tree_item ret_val;
+		effective_balance_tree_item ret_val;
 
 		if((compare_result=my_search_item.compare(item))==0){
 			ret_val=item;
@@ -160,18 +160,18 @@ public class balance_tree
 				return ret_val;
 			}
 			if(left_child.depth>=right_child.depth){
-				for(balance_tree tr,t=left_child;;t=tr)
+				for(balance_tree<effective_balance_tree_item> tr,t=left_child;;t=tr)
 					if((tr=t.right_child)==null){
-						balance_tree_item bak=t.item;
+						effective_balance_tree_item bak=t.item;
 						t.item=item;
 						item=bak;
 						ret_val=left_child.search(my_search_item,this,not_do_append_flag,not_do_delete_flag);
 						break;
 					}
 			}else{
-				for(balance_tree tl,t=right_child;;t=tl)
+				for(balance_tree<effective_balance_tree_item> tl,t=right_child;;t=tl)
 					if((tl=t.left_child)==null){
-						balance_tree_item bak=t.item;
+						effective_balance_tree_item bak=t.item;
 						t.item=item;
 						item=bak;
 						ret_val=right_child.search(my_search_item,this,not_do_append_flag,not_do_delete_flag);
@@ -182,7 +182,7 @@ public class balance_tree
 			if(left_child==null){
 				if(not_do_append_flag)
 					return null;
-				left_child=new balance_tree(my_search_item);
+				left_child=new balance_tree<effective_balance_tree_item>(my_search_item);
 				ret_val=null;
 			}else{
 				int old_depth=left_child.depth;
@@ -195,7 +195,7 @@ public class balance_tree
 			if(right_child==null){
 				if(not_do_append_flag)
 					return null;
-				right_child=new balance_tree(my_search_item);
+				right_child=new balance_tree<effective_balance_tree_item>(my_search_item);
 				ret_val=null;
 			}else{
 				int old_depth=right_child.depth;
@@ -219,19 +219,19 @@ public class balance_tree
 		}
 		return ret_val;
 	}
-	public balance_tree_item search(balance_tree_item my_search_item,boolean do_append_flag,boolean do_delete_flag)
+	public effective_balance_tree_item search(effective_balance_tree_item my_search_item,boolean do_append_flag,boolean do_delete_flag)
 	{
 		return search(my_search_item,null,do_append_flag?false:true,do_delete_flag?false:true);
 	}
-	public balance_tree get_left_child()
+	public balance_tree<effective_balance_tree_item> get_left_child()
 	{
 		return left_child;
 	}
-	public balance_tree get_right_child()
+	public balance_tree<effective_balance_tree_item> get_right_child()
 	{
 		return right_child;
 	}
-	public balance_tree_item get_item()
+	public effective_balance_tree_item get_item()
 	{
 		return item;
 	}

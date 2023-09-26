@@ -43,7 +43,7 @@ public class engine_interface_container
 			if(engine_kernel_cont!=null){
 				engine_kernel_cont.destroy();
 				engine_kernel_cont=null;
-			};
+			}
 		}
 		public engine_kernel_balance_tree_item(String my_scene_name,String my_link_name)
 		{
@@ -53,9 +53,9 @@ public class engine_interface_container
 		}
 	}
 	
-	private balance_tree bt;
-	public component_load_source_container component_load_source_cont;
+	private balance_tree<engine_kernel_balance_tree_item> bt;
 	private render_container original_render;
+	public component_load_source_container component_load_source_cont;
 	public buffer_object_file_modify_time_and_length_container system_boftal_container;
 	private part_loader_container part_loader_cont;
 	private ReentrantLock client_interface_lock;
@@ -125,11 +125,11 @@ public class engine_interface_container
 		debug_information.print  ("engine_interface engine_component_number:	",	engine_counter.engine_component_number);
 		debug_information.println("/",system_par.max_engine_component_number);
 		
-		balance_tree_item bti;
+		engine_kernel_balance_tree_item bti;
 		engine_kernel_balance_tree_item ekbti=new engine_kernel_balance_tree_item(scene_name,link_name);
 		
 		if(bt==null)
-			bt=new balance_tree(ekbti);
+			bt=new balance_tree<engine_kernel_balance_tree_item>(ekbti);
 		else if((bti=bt.search(ekbti,true,false))!=null) 
 			ekbti=(engine_kernel_balance_tree_item)bti;
 		
@@ -181,12 +181,10 @@ public class engine_interface_container
 	public void destroy_scene(String my_scene_name,String my_link_name,create_engine_counter engine_counter)
 	{
 		client_interface_lock.lock();
-		while(bt!=null) {
-			balance_tree_item original_bti=new engine_kernel_balance_tree_item(my_scene_name,my_link_name);
-			balance_tree_item search_bti=bt.search(original_bti,false,false);
-			if(search_bti==null)
+		for(engine_kernel_balance_tree_item ekbtl,original_bti;bt!=null;) {
+			original_bti=new engine_kernel_balance_tree_item(my_scene_name,my_link_name);
+			if((ekbtl=bt.search(original_bti,false,false))==null)
 				break;
-			engine_kernel_balance_tree_item ekbtl=(engine_kernel_balance_tree_item)search_bti;
 			if(ekbtl.engine_kernel_cont!=null)
 				if((--(ekbtl.engine_kernel_cont.link_number))>0)
 					break;
@@ -209,15 +207,15 @@ public class engine_interface_container
 		}
 		client_interface_lock.unlock();
 	}
-	private void destroy_engine_kernel_balance_tree(balance_tree ek_bt)
+	private void destroy_engine_kernel_balance_tree(
+			balance_tree<engine_kernel_balance_tree_item> ek_bt)
 	{
 		if(ek_bt!=null){
 			destroy_engine_kernel_balance_tree(ek_bt.get_left_child());
 			destroy_engine_kernel_balance_tree(ek_bt.get_right_child());
-			balance_tree_item bti=ek_bt.get_item();
-			if(bti!=null)
-				if(bti instanceof engine_kernel_balance_tree_item)
-					((engine_kernel_balance_tree_item)bti).destroy();
+			engine_kernel_balance_tree_item bti;
+			if((bti=ek_bt.get_item())!=null)
+				bti.destroy();
 		}
 	}
 	public void destroy()

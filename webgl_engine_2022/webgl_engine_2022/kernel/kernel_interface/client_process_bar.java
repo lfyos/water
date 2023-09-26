@@ -28,6 +28,6 @@ public class client_process_bar
 		process_title	=my_process_title;
 		ex_process_title=(my_ex_process_title==null)?"":my_ex_process_title;
 		max_process		=(my_max_process<1)?1:my_max_process;
-		current_process	=my_current_process;
+		current_process	=(my_current_process<0)?0:(my_current_process>max_process)?max_process:my_current_process;
 	}
 }
