@@ -22,29 +22,27 @@ import kernel_engine.engine_kernel_and_client_information_container;
 
 public class client_interface
 {
-	class ek_ci_balance_tree_node extends balance_tree_item
+	class ek_ci_balance_tree_node extends balance_tree_item<Long>
 	{
-		public long channel_id;
 		public engine_kernel_and_client_information_container ek_ci;
 		public ek_ci_balance_tree_node front,back;
 		
 		public void destroy()
 		{
+			super.destroy();
+			
 			ek_ci=null;
 			front=null;
 			back=null;
 		}
-		public int compare(balance_tree_item t)
+		public int compare(Long t)
 		{
-			if(t instanceof ek_ci_balance_tree_node) {
-				ek_ci_balance_tree_node p=(ek_ci_balance_tree_node)t;
-				return (channel_id<p.channel_id)?-1:(channel_id>p.channel_id)?1:0;
-			}
-			return 2;
+			return (super.compare_data<t)?-1:(super.compare_data>t)?1:0;
 		}
 		public ek_ci_balance_tree_node(long my_channel_id)
 		{
-			channel_id=my_channel_id;
+			super(my_channel_id);
+			
 			ek_ci=null;
 			front=null;
 			back=null;
@@ -60,7 +58,7 @@ public class client_interface
 	private user_statistics statistics_user;
 	private String client_scene_file_name,client_scene_file_charset,user_name;
 
-	private balance_tree<ek_ci_balance_tree_node> bt;
+	private balance_tree<Long,ek_ci_balance_tree_node> bt;
 	private ek_ci_balance_tree_node first,last;
 
 	private ReentrantLock client_interface_lock;
@@ -146,7 +144,7 @@ public class client_interface
 				(ekcic.client_information==null)?0:(ekcic.client_information.channel_id));
 		ecn.ek_ci=ekcic;
 		if(bt==null){
-			bt=new balance_tree<ek_ci_balance_tree_node>(ecn);
+			bt=new balance_tree<Long,ek_ci_balance_tree_node>(ecn);
 			first=ecn;
 			last=ecn;
 		}else{

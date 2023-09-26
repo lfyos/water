@@ -1,9 +1,10 @@
 package kernel_common_class;
 
-public class balance_tree<effective_balance_tree_item extends balance_tree_item> 
+public class balance_tree<balance_tree_compare_data_struct,
+		effective_balance_tree_item extends balance_tree_item<balance_tree_compare_data_struct>> 
 {
 	private effective_balance_tree_item item;
-	private balance_tree<effective_balance_tree_item> left_child,right_child;
+	private balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> left_child,right_child;
 	private int balance,depth;
 	
 	public void destroy()
@@ -40,10 +41,10 @@ public class balance_tree<effective_balance_tree_item extends balance_tree_item>
 		item			=left_child.item;
 		left_child.item	=bak;
 		
-		balance_tree<effective_balance_tree_item> left_tree		=left_child;
-		balance_tree<effective_balance_tree_item> left_left_tree	=left_child.left_child;
-		balance_tree<effective_balance_tree_item> left_right_tree	=left_child.right_child;
-		balance_tree<effective_balance_tree_item> right_tree		=right_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> left_tree		=left_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> left_left_tree	=left_child.left_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> left_right_tree	=left_child.right_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> right_tree		=right_child;
 		
 		left_child					=left_left_tree;
 		right_child					=left_tree;
@@ -60,10 +61,10 @@ public class balance_tree<effective_balance_tree_item extends balance_tree_item>
 		item				=right_child.item;
 		right_child.item	=bak;
 		
-		balance_tree<effective_balance_tree_item> right_tree		=right_child;
-		balance_tree<effective_balance_tree_item> left_tree		=left_child;
-		balance_tree<effective_balance_tree_item> right_left_tree	=right_child.left_child;
-		balance_tree<effective_balance_tree_item> right_right_tree	=right_child.right_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> right_tree		=right_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> left_tree		=left_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> right_left_tree	=right_child.left_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> right_right_tree	=right_child.right_child;
 		
 		left_child						=right_tree;
 		right_child						=right_right_tree;
@@ -80,12 +81,12 @@ public class balance_tree<effective_balance_tree_item extends balance_tree_item>
 		item						=left_child.right_child.item;
 		left_child.right_child.item	=bak;
 		
-		balance_tree<effective_balance_tree_item> left_tree				=left_child;
-		balance_tree<effective_balance_tree_item> left_right_tree		=left_child.right_child;
-		balance_tree<effective_balance_tree_item> left_left_tree		=left_child.left_child;
-		balance_tree<effective_balance_tree_item> left_right_left_tree	=left_child.right_child.left_child;
-		balance_tree<effective_balance_tree_item> left_right_right_tree	=left_child.right_child.right_child;
-		balance_tree<effective_balance_tree_item> right_tree			=right_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> left_tree			=left_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> left_right_tree		=left_child.right_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> left_left_tree		=left_child.left_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> left_right_left_tree	=left_child.right_child.left_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> left_right_right_tree=left_child.right_child.right_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> right_tree			=right_child;
 		
 		left_child					=left_tree;
 		right_child					=left_right_tree;
@@ -105,12 +106,12 @@ public class balance_tree<effective_balance_tree_item extends balance_tree_item>
 		item						=right_child.left_child.item;
 		right_child.left_child.item	=bak;
 		
-		balance_tree<effective_balance_tree_item> left_tree				=left_child;
-		balance_tree<effective_balance_tree_item> right_tree			=right_child;
-		balance_tree<effective_balance_tree_item> right_left_tree		=right_child.left_child;
-		balance_tree<effective_balance_tree_item> right_left_left_tree	=right_child.left_child.left_child;
-		balance_tree<effective_balance_tree_item> right_left_right_tree	=right_child.left_child.right_child;
-		balance_tree<effective_balance_tree_item> right_right_tree		=right_child.right_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> left_tree			=left_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> right_tree			=right_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> right_left_tree		=right_child.left_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> right_left_left_tree	=right_child.left_child.left_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> right_left_right_tree=right_child.left_child.right_child;
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> right_right_tree		=right_child.right_child;
 		
 		left_child					=right_left_tree;
 		right_child					=right_tree;
@@ -123,13 +124,15 @@ public class balance_tree<effective_balance_tree_item extends balance_tree_item>
 		right_child.caculate_depth_and_balance();
 		caculate_depth_and_balance();
 	}
-	private effective_balance_tree_item search(effective_balance_tree_item my_search_item,
-		balance_tree<effective_balance_tree_item> parent,boolean not_do_append_flag,boolean not_do_delete_flag)
+	private effective_balance_tree_item search(
+		effective_balance_tree_item my_search_item,
+		balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> parent,
+		boolean not_do_append_flag,boolean not_do_delete_flag)
 	{
 		int compare_result;
 		effective_balance_tree_item ret_val;
 
-		if((compare_result=my_search_item.compare(item))==0){
+		if((compare_result=my_search_item.compare(item.compare_data))==0){
 			ret_val=item;
 			if(not_do_delete_flag)
 				return ret_val;
@@ -160,7 +163,7 @@ public class balance_tree<effective_balance_tree_item extends balance_tree_item>
 				return ret_val;
 			}
 			if(left_child.depth>=right_child.depth){
-				for(balance_tree<effective_balance_tree_item> tr,t=left_child;;t=tr)
+				for(balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> tr,t=left_child;;t=tr)
 					if((tr=t.right_child)==null){
 						effective_balance_tree_item bak=t.item;
 						t.item=item;
@@ -169,7 +172,7 @@ public class balance_tree<effective_balance_tree_item extends balance_tree_item>
 						break;
 					}
 			}else{
-				for(balance_tree<effective_balance_tree_item> tl,t=right_child;;t=tl)
+				for(balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> tl,t=right_child;;t=tl)
 					if((tl=t.left_child)==null){
 						effective_balance_tree_item bak=t.item;
 						t.item=item;
@@ -182,7 +185,7 @@ public class balance_tree<effective_balance_tree_item extends balance_tree_item>
 			if(left_child==null){
 				if(not_do_append_flag)
 					return null;
-				left_child=new balance_tree<effective_balance_tree_item>(my_search_item);
+				left_child=new balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item>(my_search_item);
 				ret_val=null;
 			}else{
 				int old_depth=left_child.depth;
@@ -195,7 +198,7 @@ public class balance_tree<effective_balance_tree_item extends balance_tree_item>
 			if(right_child==null){
 				if(not_do_append_flag)
 					return null;
-				right_child=new balance_tree<effective_balance_tree_item>(my_search_item);
+				right_child=new balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item>(my_search_item);
 				ret_val=null;
 			}else{
 				int old_depth=right_child.depth;
@@ -223,11 +226,11 @@ public class balance_tree<effective_balance_tree_item extends balance_tree_item>
 	{
 		return search(my_search_item,null,do_append_flag?false:true,do_delete_flag?false:true);
 	}
-	public balance_tree<effective_balance_tree_item> get_left_child()
+	public balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> get_left_child()
 	{
 		return left_child;
 	}
-	public balance_tree<effective_balance_tree_item> get_right_child()
+	public balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> get_right_child()
 	{
 		return right_child;
 	}
