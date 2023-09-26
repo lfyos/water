@@ -22,29 +22,27 @@ import kernel_engine.engine_kernel_and_client_information_container;
 
 public class client_interface
 {
-	class ek_ci_balance_tree_node extends balance_tree_item
+	class ek_ci_balance_tree_node extends balance_tree_item<Long>
 	{
-		public long channel_id;
 		public engine_kernel_and_client_information_container ek_ci;
 		public ek_ci_balance_tree_node front,back;
 		
 		public void destroy()
 		{
+			super.destroy();
+			
 			ek_ci=null;
 			front=null;
 			back=null;
 		}
-		public int compare(balance_tree_item t)
+		public int compare(Long t)
 		{
-			if(t instanceof ek_ci_balance_tree_node) {
-				ek_ci_balance_tree_node p=(ek_ci_balance_tree_node)t;
-				return (channel_id<p.channel_id)?-1:(channel_id>p.channel_id)?1:0;
-			}
-			return 2;
+			return (super.compare_data<t)?-1:(super.compare_data>t)?1:0;
 		}
 		public ek_ci_balance_tree_node(long my_channel_id)
 		{
-			channel_id=my_channel_id;
+			super(my_channel_id);
+			
 			ek_ci=null;
 			front=null;
 			back=null;
@@ -57,10 +55,10 @@ public class client_interface
 	private client_process_bar_container process_bar_cont;
 
 	private delay_manager manager_delay;
-	private String client_scene_file_name,client_scene_file_charset;
 	private user_statistics statistics_user;
+	private String client_scene_file_name,client_scene_file_charset,user_name;
 
-	private balance_tree bt;
+	private balance_tree<Long,ek_ci_balance_tree_node> bt;
 	private ek_ci_balance_tree_node first,last;
 
 	private ReentrantLock client_interface_lock;
@@ -117,12 +115,9 @@ public class client_interface
 		
 		engine_call_result ecr=null;
 		try{
-			ecr=ekcic.get_engine_result(
-					cpb,engine_container.system_boftal_container,
-					engine_container.component_load_source_cont,
-					client_scene_file_name,client_scene_file_charset,
-					request_response,delay_time_length,statistics_user,
-					engine_counter);
+			ecr=ekcic.get_engine_result(cpb,engine_container.system_boftal_container,
+					engine_container.component_load_source_cont,client_scene_file_name,client_scene_file_charset,
+					request_response,delay_time_length,statistics_user,engine_counter);
 		}catch(Exception e) {
 			ecr=null;
 			debug_information.println("ec[channel_id].engine_kernel_link_list.get_engine_result fail");
@@ -149,7 +144,7 @@ public class client_interface
 				(ekcic.client_information==null)?0:(ekcic.client_information.channel_id));
 		ecn.ek_ci=ekcic;
 		if(bt==null){
-			bt=new balance_tree(ecn);
+			bt=new balance_tree<Long,ek_ci_balance_tree_node>(ecn);
 			first=ecn;
 			last=ecn;
 		}else{
@@ -178,14 +173,6 @@ public class client_interface
 		debug_information.print  (":",now.get(Calendar.SECOND));
 		debug_information.println(":",now.get(Calendar.MILLISECOND));
 
-		String request_charset=request_response.implementor.get_request_charset();
-		String user_name=request_response.get_parameter("user_name");
-		try{
-			user_name=java.net.URLDecoder.decode(user_name,request_charset);
-			user_name=java.net.URLDecoder.decode(user_name,request_charset);
-		}catch(Exception e) {
-			;
-		}
 		debug_information.println("Request Client ID		:	",	request_response.implementor.get_client_id());
 		debug_information.println("Request user name		:	",	user_name);
 		debug_information.println();
@@ -231,19 +218,12 @@ public class client_interface
 			return null;
 		}
 		
-		balance_tree_item bti=bt.search(new ek_ci_balance_tree_node(channel_id),false,false);
-		if(bti==null) {
+		ek_ci_balance_tree_node ecn;
+		if((ecn=bt.search(new ek_ci_balance_tree_node(channel_id),false,false))==null) {
 			debug_information.print  ("Search client_interface fail,Client ID is ",request_response.implementor.get_client_id());
 			debug_information.println(",channel_id is ",channel_id);
 			return null;
 		}
-		if(!(bti instanceof ek_ci_balance_tree_node)){
-			debug_information.print  ("Search client_interface find wrong node,Client ID is ",request_response.implementor.get_client_id());
-			debug_information.println(",channel_id is ",channel_id);
-			return null;
-		}
-		ek_ci_balance_tree_node ecn=(ek_ci_balance_tree_node)bti;
-		
 		if(ecn.ek_ci.client_information==null){
 			debug_information.println("ecn.ek_ci.client_information==null,Client ID is ",request_response.implementor.get_client_id());
 			debug_information.println(",channel_id is ",channel_id);
@@ -289,7 +269,7 @@ public class client_interface
 			ecn.front=null;
 			first.front=ecn;
 			first=ecn;
-		}else{	
+		}else{
 			if((ecn==last)||(first==last))
 				return ecr;
 			
@@ -344,7 +324,6 @@ public class client_interface
 			debug_information.println("client_interface touch_time<=0		",request_response.implementor.get_client_id());
 			return null;
 		}
-
 		ReentrantLock my_client_interface_lock=client_interface_lock;
 		my_client_interface_lock.lock();
 		
@@ -376,7 +355,7 @@ public class client_interface
 		if((str=request_response.get_parameter("command"))!=null)
 			switch(str){
 			case "request":
-				process_bar=process_bar_cont.get_process_bar(process_bar_cont.request_process_bar());
+				process_bar=process_bar_cont.request_process_bar();
 				process_bar.set_process_bar(true,"start_create_scene","", 0, 1);
 
 				request_response.println("{");
@@ -450,9 +429,9 @@ public class client_interface
 		debug_information.println("/",statistics_user.user_max_engine_component_number);
 		
 		if(ecn.ek_ci.client_information!=null) {
-			try {
+			try{
 				ecn.ek_ci.client_information.destroy();
-			}catch(Exception e) {
+			}catch(Exception e){
 				debug_information.println("Destroy client_information exception:	",e.toString());
 				e.printStackTrace();
 			}
@@ -468,7 +447,6 @@ public class client_interface
 		if(first==last){
 			bt.destroy();
 			bt=null;
-
 			first=null;
 			last=null;
 		}else{
@@ -529,7 +507,6 @@ public class client_interface
 			}
 		my_client_interface_lock.unlock();
 	}
-	
 	private void destroy_routine()
 	{	
 		for(ek_ci_balance_tree_node p=first;p!=null;p=p.back)
@@ -565,10 +542,14 @@ public class client_interface
 			process_bar_cont.destroy();
 			process_bar_cont=null;
 		}
+
 		if(client_scene_file_name!=null)
 			client_scene_file_name=null;
 		if(client_scene_file_charset!=null)
 			client_scene_file_charset=null;
+		if(user_name!=null)
+			user_name=null;
+
 		if(statistics_user!=null)
 			statistics_user=null;
 	}
@@ -592,8 +573,11 @@ public class client_interface
 		system_par	 			=new system_parameter(my_system_par);
 		process_bar_cont		=new client_process_bar_container(system_par.engine_expire_time_length);
 		manager_delay			=null;
+		
 		client_scene_file_name	=null;
 		client_scene_file_charset=null;
+		user_name				=my_user_name;
+		
 		statistics_user			=null;
 		
 		bt						=null;

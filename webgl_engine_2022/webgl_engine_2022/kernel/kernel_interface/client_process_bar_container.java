@@ -29,18 +29,20 @@ public class client_process_bar_container
 		ret_val.touch_time=nanosecond_timer.absolute_nanoseconds();
 		return ret_val;
 	};
-	synchronized public int request_process_bar()
+	public client_process_bar request_process_bar()
 	{
 		long current_time=nanosecond_timer.absolute_nanoseconds();
 		int process_bar_id,process_bar_number=process_bar_array.size();
 		for(process_bar_id=0;process_bar_id<process_bar_number;process_bar_id++) {
 			if((current_time-process_bar_array.get(process_bar_id).touch_time)>max_time_length) {
-				process_bar_array.set(process_bar_id,new client_process_bar(process_bar_id,current_time));
-				return process_bar_id;
+				client_process_bar ret_val=new client_process_bar(process_bar_id,current_time);
+				process_bar_array.set(process_bar_id,ret_val);
+				return ret_val;
 			}
 		}
-		process_bar_array.add(process_bar_number,new client_process_bar(process_bar_number,current_time));
-		return process_bar_number;
+		client_process_bar ret_val=new client_process_bar(process_bar_number,current_time);
+		process_bar_array.add(process_bar_number,ret_val);
+		return ret_val;
 	};
 	public client_process_bar_container(long my_max_time_length)
 	{

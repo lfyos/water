@@ -118,8 +118,8 @@ public class client_request_switcher
 				if(test_creation_engine_lock_number(1)<system_par.create_engine_concurrent_number)
 					ecr=client.execute_create_call(request_response,engine_container,engine_counter);
 				else{
-					ecr=new engine_call_result(null,null,null,null,null,"*");
 					request_response.println("false");
+					ecr=new engine_call_result(null,null,null,null,null,"*");
 					client.get_process_bar(request_response).set_process_bar(true,"wait_for_other_exit","",1,2);
 				}
 				test_creation_engine_lock_number(-1);

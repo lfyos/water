@@ -136,7 +136,6 @@ public class part_loader_container
 			return;
 		}
 	}
-	
 	private boolean fast_load_routine(long last_modified_time,
 			String part_temporary_file_directory,part my_part,part my_copy_from_part,
 			system_parameter system_par,scene_parameter scene_par,
