@@ -28,10 +28,8 @@ public class engine_interface_container
 		
 		public int compare(String[] t)
 		{
-			int ret_val;
-			if((ret_val=compare_data[0].compareTo(t[0]))==0)
-				ret_val=compare_data[1].compareTo(t[1]);
-			return ret_val;
+			int ret_val=compare_data[0].compareTo(t[0]);
+			return (ret_val!=0)?ret_val:compare_data[1].compareTo(t[1]);
 		}
 		public void destroy()
 		{
@@ -87,7 +85,7 @@ public class engine_interface_container
 		
 		delete_part_files.do_delete(part_list_for_delete_file,null,system_par,null);
 	}
-	private engine_kernel_container get_kernel_container_routine(
+	private engine_kernel_container create_engine_kernel_container_routine(
 			client_request_response request_response,
 			String client_scene_file_name,String client_scene_file_charset,
 			create_engine_counter engine_counter,system_parameter system_par)
@@ -95,20 +93,22 @@ public class engine_interface_container
 		String scene_name,link_name,request_charset=request_response.implementor.get_request_charset();
 		if((scene_name=request_response.get_parameter("scene_name"))==null)
 			scene_name="";
-		else try {
-			scene_name=java.net.URLDecoder.decode(scene_name,request_charset);
-			scene_name=java.net.URLDecoder.decode(scene_name,request_charset);
-		}catch(Exception e) {
-			;
-		}
+		else 
+			try {
+				scene_name=java.net.URLDecoder.decode(scene_name,request_charset);
+				scene_name=java.net.URLDecoder.decode(scene_name,request_charset);
+			}catch(Exception e) {
+				;
+			}
 		if((link_name=request_response.get_parameter("link_name"))==null)
 			link_name="";
-		else try {
-			link_name=java.net.URLDecoder.decode(link_name,request_charset);
-			link_name=java.net.URLDecoder.decode(link_name,request_charset);
-		}catch(Exception e) {
-			;
-		}
+		else 
+			try {
+				link_name=java.net.URLDecoder.decode(link_name,request_charset);
+				link_name=java.net.URLDecoder.decode(link_name,request_charset);
+			}catch(Exception e) {
+				;
+			}
 		
 		if(link_name.compareTo("")==0)
 			link_name=Double.toString(Math.random());
@@ -126,8 +126,8 @@ public class engine_interface_container
 		
 		if(bt==null)
 			bt=new balance_tree<String[],engine_kernel_balance_tree_item>(ekbti);
-		else if((bti=bt.search(ekbti,true,false))!=null) 
-			ekbti=(engine_kernel_balance_tree_item)bti;
+		else if((bti=bt.search(ekbti,true,false))!=null)
+			ekbti=bti;
 		
 		if(ekbti.engine_kernel_cont!=null) {
 			debug_information.println("Found created engine");
@@ -152,7 +152,8 @@ public class engine_interface_container
 		
 		return ekbti.engine_kernel_cont;
 	}
-	public engine_kernel_container get_kernel_container(client_request_response request_response,
+	public engine_kernel_container create_engine_kernel_container(
+			client_request_response request_response,
 			String client_scene_file_name,String client_scene_file_charset,
 			create_engine_counter engine_counter,system_parameter system_par)
 	{
@@ -163,7 +164,7 @@ public class engine_interface_container
 			load_render_container(request_response,system_par);
 		
 		try {
-			ret_val=get_kernel_container_routine(request_response,
+			ret_val=create_engine_kernel_container_routine(request_response,
 				client_scene_file_name,client_scene_file_charset,engine_counter,system_par);
 		}catch(Exception e) {
 			debug_information.println("get_kernel_container of engine_interface fail");

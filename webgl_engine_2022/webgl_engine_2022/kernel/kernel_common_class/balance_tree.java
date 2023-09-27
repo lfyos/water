@@ -4,7 +4,7 @@ public class balance_tree<balance_tree_compare_data_struct,
 		effective_balance_tree_item extends balance_tree_item<balance_tree_compare_data_struct>> 
 {
 	private effective_balance_tree_item item;
-	private balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item> left_child,right_child;
+	private balance_tree<balance_tree_compare_data_struct,effective_balance_tree_item>left_child,right_child;
 	private int balance,depth;
 	
 	public void destroy()

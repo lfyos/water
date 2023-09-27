@@ -56,7 +56,7 @@ public class client_interface
 
 	private delay_manager manager_delay;
 	private user_statistics statistics_user;
-	private String client_scene_file_name,client_scene_file_charset,user_name;
+	private String client_scene_file_name,client_scene_file_charset;
 
 	private balance_tree<Long,ek_ci_balance_tree_node> bt;
 	private ek_ci_balance_tree_node first,last;
@@ -85,7 +85,7 @@ public class client_interface
 
 		my_client_interface_lock.unlock();
 		try{
-			create_ekll=engine_container.get_kernel_container(request_response,
+			create_ekll=engine_container.create_engine_kernel_container(request_response,
 				client_scene_file_name,client_scene_file_charset,engine_counter,system_par);
 		}catch(Exception e) {
 			create_ekll=null;
@@ -173,8 +173,9 @@ public class client_interface
 		debug_information.print  (":",now.get(Calendar.SECOND));
 		debug_information.println(":",now.get(Calendar.MILLISECOND));
 
+		String my_user_name=request_response.get_parameter("user_name");
+		debug_information.println("Request user name		:	",	(my_user_name==null)?"NoName":my_user_name);
 		debug_information.println("Request Client ID		:	",	request_response.implementor.get_client_id());
-		debug_information.println("Request user name		:	",	user_name);
 		debug_information.println();
 		
 		debug_information.println("data_root_directory_name	:	",			system_par.data_root_directory_name);
@@ -239,11 +240,11 @@ public class client_interface
 		
 		ecn.ek_ci.access_lock_number++;
 		my_client_interface_lock.unlock();
-		
 		try{
-			ecr=ecn.ek_ci.get_engine_result(
-					get_process_bar(request_response),engine_container.system_boftal_container,
-					engine_container.component_load_source_cont,client_scene_file_name,client_scene_file_charset,
+			ecr=ecn.ek_ci.get_engine_result(get_process_bar(request_response),
+					engine_container.system_boftal_container,
+					engine_container.component_load_source_cont,
+					client_scene_file_name,client_scene_file_charset,
 					request_response,delay_time_length,statistics_user,engine_counter);
 		}catch(Exception e){
 			ecr=null;
@@ -251,7 +252,6 @@ public class client_interface
 			debug_information.println(e.toString());
 			e.printStackTrace();
 		}
-		
 		my_client_interface_lock.lock();
 		ecn.ek_ci.access_lock_number--;
 		
@@ -335,8 +335,7 @@ public class client_interface
 			if((delay_time_length=manager_delay.process_delay_time_length())<0)
 				debug_information.println("TIME OUT FOUND,Client ID is ",request_response.implementor.get_client_id());
 			else
-				ret_val=create_engine(engine_container,my_client_interface_lock,
-						request_response,delay_time_length,engine_counter);
+				ret_val=create_engine(engine_container,my_client_interface_lock,request_response,delay_time_length,engine_counter);
 		}catch(Exception e){
 			ret_val=null;
 			debug_information.println(
@@ -348,7 +347,7 @@ public class client_interface
 	
 		return ret_val;
 	}
-	private engine_call_result process_bar_routine(client_request_response request_response)
+	private engine_call_result process_process_bar_system_call_routine(client_request_response request_response)
 	{
 		String str,language_str;
 		client_process_bar process_bar;
@@ -388,11 +387,11 @@ public class client_interface
 			}
 		return new engine_call_result(null,null,null,null,null,"*");
 	}
-	public engine_call_result process_bar(client_request_response request_response)
+	public engine_call_result process_process_bar_system_call(client_request_response request_response)
 	{
 		ReentrantLock my_client_interface_lock=client_interface_lock;
 		my_client_interface_lock.lock();
-		engine_call_result ret_val=process_bar_routine(request_response);
+		engine_call_result ret_val=process_process_bar_system_call_routine(request_response);
 		my_client_interface_lock.unlock();
 		return ret_val;
 	}
@@ -509,22 +508,19 @@ public class client_interface
 	}
 	private void destroy_routine()
 	{	
-		for(ek_ci_balance_tree_node p=first;p!=null;p=p.back)
-			if(p.ek_ci!=null)
+		for(ek_ci_balance_tree_node p=first;p!=null;) {
+			if(p.ek_ci!=null) {
 				if(p.ek_ci.client_information!=null) {
 					p.ek_ci.client_information.destroy();
 					p.ek_ci.client_information=null;
 				}
-		for(ek_ci_balance_tree_node p=first;p!=null;p=p.back)
-			if(p.ek_ci!=null)
 				if(p.ek_ci.engine_kernel_cont!=null)
 					p.ek_ci.engine_kernel_cont=null;
-		for(ek_ci_balance_tree_node p=first,q;p!=null;){
-			q=p;
+			}
+			ek_ci_balance_tree_node destroy_node=p;
 			p=p.back;
-			q.destroy();
+			destroy_node.destroy();
 		}
-
 		first=null;
 		last=null;
 		
@@ -547,8 +543,6 @@ public class client_interface
 			client_scene_file_name=null;
 		if(client_scene_file_charset!=null)
 			client_scene_file_charset=null;
-		if(user_name!=null)
-			user_name=null;
 
 		if(statistics_user!=null)
 			statistics_user=null;
@@ -565,8 +559,7 @@ public class client_interface
 		}
 		my_client_interface_lock.unlock();
 	}
-	public client_interface(system_parameter my_system_par,
-			String my_user_name,String my_pass_word,String my_client_id)
+	public client_interface(String my_user_name,String my_pass_word,String my_client_id,system_parameter my_system_par)
 	{
 		touch_time				=0;
 		
@@ -576,7 +569,6 @@ public class client_interface
 		
 		client_scene_file_name	=null;
 		client_scene_file_charset=null;
-		user_name				=my_user_name;
 		
 		statistics_user			=null;
 		
@@ -590,7 +582,10 @@ public class client_interface
 		file_reader f=new file_reader(user_file_name,system_par.local_data_charset);
 		
 		if(f.error_flag()){
+			debug_information.print  ("user_name:",my_user_name);
+			debug_information.println(",client_id:",my_client_id);
 			debug_information.println("Can't not open user configure file,file name:		",user_file_name);
+			
 			f.close();
 			return;
 		}
