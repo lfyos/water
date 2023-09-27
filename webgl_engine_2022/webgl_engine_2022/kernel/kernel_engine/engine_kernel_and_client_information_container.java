@@ -18,15 +18,13 @@ public class engine_kernel_and_client_information_container
 	public client_information 		client_information;
 	public volatile int 			access_lock_number;
 	
-	public engine_kernel_and_client_information_container(
-			engine_kernel_container my_engine_kernel_cont)
+	public engine_kernel_and_client_information_container(engine_kernel_container my_engine_kernel_cont)
 	{
 		engine_kernel_cont	=my_engine_kernel_cont;
 		client_information	=null;
 		access_lock_number	=0;
 	}
-	private engine_call_result create_file_result(
-			client_information ci,String file_name,String file_charset)
+	private engine_call_result create_file_result(client_information ci,String file_name,String file_charset)
 	{
 		File f=new File(file_name);
 		if(f.exists())

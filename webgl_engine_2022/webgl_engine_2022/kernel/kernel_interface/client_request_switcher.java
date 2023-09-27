@@ -50,13 +50,15 @@ public class client_request_switcher
 	}
 	private client_interface get_client_interface(client_request_response request_response)
 	{
-		String my_user_name,my_pass_word,request_charset=request_response.implementor.get_request_charset();
+		String my_user_name,my_pass_word,my_client_id;
+		String my_request_charset=request_response.implementor.get_request_charset();
+
 		if((my_user_name=request_response.get_parameter("user_name"))==null)
 			my_user_name="NoName";
-		else 
+		else
 			try{
-				my_user_name=java.net.URLDecoder.decode(my_user_name,request_charset);
-				my_user_name=java.net.URLDecoder.decode(my_user_name,request_charset);
+				my_user_name=java.net.URLDecoder.decode(my_user_name,my_request_charset);
+				my_user_name=java.net.URLDecoder.decode(my_user_name,my_request_charset);
 			}catch(Exception e) {
 				;
 			}
@@ -64,14 +66,15 @@ public class client_request_switcher
 			my_pass_word="NoPassword";
 		else
 			try{
-				my_pass_word=java.net.URLDecoder.decode(my_pass_word,request_charset);
-				my_pass_word=java.net.URLDecoder.decode(my_pass_word,request_charset);
+				my_pass_word=java.net.URLDecoder.decode(my_pass_word,my_request_charset);
+				my_pass_word=java.net.URLDecoder.decode(my_pass_word,my_request_charset);
 			}catch(Exception e) {
 				;
 			}
-		return client_container.get_client_interface(my_user_name,my_pass_word,
-						request_response.implementor.get_client_id(),system_par);
+		if((my_client_id=request_response.implementor.get_client_id())==null)
+			my_client_id="NoClientID";
 		
+		return client_container.get_client_interface(my_user_name,my_pass_word,my_client_id	,system_par);
 	}
 	private engine_call_result system_call_switch(client_request_response request_response)
 	{
@@ -107,7 +110,7 @@ public class client_request_switcher
 			break;
 		case "process_bar":
 			if((client=get_client_interface(request_response))!=null)
-				ecr=client.process_bar(request_response);
+				ecr=client.process_process_bar_system_call(request_response);
 			break;
 		case "clear":
 			if((client=get_client_interface(request_response))!=null)
