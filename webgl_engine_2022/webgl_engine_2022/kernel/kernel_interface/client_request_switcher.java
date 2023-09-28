@@ -13,8 +13,9 @@ public class client_request_switcher
 {
 	private system_parameter system_par;
 	private javascript_program program_javascript;
+	private client_interface_container client_container[];
+	
 	private engine_interface_container engine_container;
-	private client_interface_container client_container;
 	private proxy_downloader download_proxy;
 	private create_engine_counter engine_counter;
 	
@@ -32,13 +33,17 @@ public class client_request_switcher
 			program_javascript.destroy();
 			program_javascript=null;
 		}
+		if(client_container!=null) {
+			for(int i=0,ni=client_container.length;i<ni;i++)
+				if(client_container[i]!=null) {
+					client_container[i].destroy();
+					client_container[i]=null;
+				}
+			client_container=null;
+		}
 		if(engine_container!=null) {
 			engine_container.destroy();
 			engine_container=null;
-		}
-		if(client_container!=null) {
-			client_container.destroy();
-			client_container=null;
 		}
 		if(download_proxy!=null) {
 			download_proxy.destroy();
@@ -71,10 +76,25 @@ public class client_request_switcher
 			}catch(Exception e) {
 				;
 			}
+		
 		if((my_client_id=request_response.implementor.get_client_id())==null)
 			my_client_id="NoClientID";
 		
-		return client_container.get_client_interface(my_user_name,my_pass_word,my_client_id	,system_par);
+		String my_container_str;
+		if((my_container_str=request_response.get_parameter("container"))==null)
+			return null;
+		
+		int my_container_id;
+		try{
+			my_container_id=Integer.decode(my_container_str);
+		}catch(Exception e) {
+			return null;
+		}
+		if(my_container_id<0)
+			return null;		
+		my_container_id%=system_par.max_client_container_number;
+		return client_container[my_container_id].get_client_interface(
+					my_user_name,my_pass_word,my_client_id,my_container_id,system_par);
 	}
 	private engine_call_result system_call_switch(client_request_response request_response)
 	{
@@ -159,6 +179,10 @@ public class client_request_switcher
 			system_par=new system_parameter(network_implementor.get_application_directory(),
 					data_configure_environment_variable,proxy_configure_environment_variable);
 			program_javascript=new javascript_program(system_par);
+			
+			client_container=new client_interface_container[system_par.max_client_container_number];
+			for(int i=0,ni=client_container.length;i<ni;i++)
+				client_container[i]=new client_interface_container();
 		}
 	}
 	public void process_system_call(network_implementation network_implementor,
@@ -200,9 +224,9 @@ public class client_request_switcher
 	{
 		system_par			=null;
 		program_javascript	=null;
+		client_container	=null;
 		
 		engine_container	=new engine_interface_container();
-		client_container	=new client_interface_container();
 		download_proxy		=new proxy_downloader();
 		engine_counter		=new create_engine_counter();
 		

@@ -14,12 +14,17 @@ async function render_main(create_engine_sleep_time_length_scale,
 	my_scene_name=encodeURIComponent(encodeURIComponent(my_scene_name));
 	my_link_name=encodeURIComponent(encodeURIComponent(my_link_name));
 	
+	var my_client_container_id=Math.floor(Math.random()*1000);
+	
 	var process_bar_url=my_url+"?channel=process_bar&language="+my_language_name;
 	process_bar_url+="&user_name="	+my_user_name		+"&pass_word="	+my_pass_word;
+	process_bar_url+="&container="	+my_client_container_id;
 	
 	var request_url=my_url+"?channel=creation&command=creation&language="	+my_language_name;
 	request_url+="&user_name="	+my_user_name		+"&pass_word="	+my_pass_word;
 	request_url+="&scene_name="	+my_scene_name		+"&link_name="	+my_link_name;
+	request_url+="&container="	+my_client_container_id;
+	
 	if(typeof(my_initialization_parameter)=="object")
 		if(typeof(my_initialization_parameter.length)=="number")
 			for(var i=0,ni=my_initialization_parameter.length;i<ni;i++){
@@ -38,8 +43,8 @@ async function render_main(create_engine_sleep_time_length_scale,
 
 	var ret_val=await request_create_engine(create_engine_sleep_time_length_scale,
 			create_engine_sleep_time_length,create_engine_max_sleep_time_length,
-			webgpu,request_url,my_url,my_user_name,my_pass_word,my_language_name,
-			await process_bar_object.start());
+			webgpu,request_url,my_url,my_user_name,my_pass_word,my_client_container_id,
+			my_language_name,await process_bar_object.start());
 	
 	process_bar_object.destroy();
 	
