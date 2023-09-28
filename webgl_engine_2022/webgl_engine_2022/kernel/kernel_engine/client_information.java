@@ -301,13 +301,15 @@ public class client_information
 		
 		String user_name	=request_response.get_parameter("user_name");
 		String pass_word	=request_response.get_parameter("pass_word");
+		String container	=request_response.get_parameter("container");
 		String language_str	=request_response.get_parameter("language");
 
 		request_url_header=request_response.implementor.get_url();
 		request_url_header+="?channel="		+Long.toString(channel_id);
-		request_url_header+="&user_name="	+((user_name==null)   ?"NoName"    :user_name.trim());
-		request_url_header+="&pass_word="	+((pass_word==null)   ?"NoPassword":pass_word.trim());
-		request_url_header+="&language="	+((language_str==null)?"english"   :language_str.trim());
+		request_url_header+="&user_name="	+((user_name==null)   ?"NoName"    	:user_name.trim());
+		request_url_header+="&pass_word="	+((pass_word==null)   ?"NoPassword"	:pass_word.trim());
+		request_url_header+="&container="	+((container==null)   ?"0"			:container.trim());
+		request_url_header+="&language="	+((language_str==null)?"english"   	:language_str.trim());
 		
 		return;
 	}

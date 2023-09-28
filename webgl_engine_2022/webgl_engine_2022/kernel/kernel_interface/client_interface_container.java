@@ -90,14 +90,18 @@ public class client_interface_container
 			p.destroy();
 		}
 	}
-	private void print_client_interface_information(String my_client_id,int max_client_interface_number)
+	private void print_client_interface_information(
+			String my_client_id,int my_container_id,int max_client_container_number,int max_client_interface_number)
 	{
 		debug_information.println("Create client_interface, creation request from ",my_client_id);
+		debug_information.print  ("Active container_number is ",my_container_id);
+		debug_information.println("/",max_client_container_number);
 		debug_information.print  ("Active client_interface number is  ",client_interface_number);
 		debug_information.println("/",max_client_interface_number);
 	}
 	private client_interface get_client_interface_routine(
-			String my_user_name,String my_pass_word,String my_client_id,system_parameter my_system_par)
+			String my_user_name,String my_pass_word,String my_client_id,
+			int my_container_id,system_parameter my_system_par)
 	{
 		client_interface_balance_tree_node p,new_p=new client_interface_balance_tree_node(my_client_id+"/"+my_user_name);
 		
@@ -114,7 +118,8 @@ public class client_interface_container
 			bt=new balance_tree<String,client_interface_balance_tree_node>(p);
 
 			client_interface_number=1;
-			print_client_interface_information(my_client_id,my_system_par.max_client_interface_number);
+			print_client_interface_information(my_client_id,my_container_id,
+					my_system_par.max_client_container_number,my_system_par.max_client_interface_number);
 			
 			return p.interface_client;
 		}
@@ -122,7 +127,8 @@ public class client_interface_container
 			p=new_p;
 			p.interface_client=new client_interface(my_user_name,my_pass_word,my_client_id,my_system_par);
 			client_interface_number++;
-			print_client_interface_information(my_client_id,my_system_par.max_client_interface_number);
+			print_client_interface_information(my_client_id,my_container_id,
+					my_system_par.max_client_container_number,my_system_par.max_client_interface_number);
 		}else{
 			p.interface_client.touch_time=nanosecond_timer.absolute_nanoseconds();
 			if(first==last)
@@ -157,10 +163,12 @@ public class client_interface_container
 		}
 	}
 	synchronized public client_interface get_client_interface(
-		String my_user_name,String my_pass_word,String my_client_id,system_parameter my_system_par)
+		String my_user_name,String my_pass_word,String my_client_id,
+		int my_container_id,system_parameter my_system_par)
 	{
 		try{
-			client_interface ret_val=get_client_interface_routine(my_user_name,my_pass_word,my_client_id,my_system_par);
+			client_interface ret_val=get_client_interface_routine(
+					my_user_name,my_pass_word,my_client_id,my_container_id,my_system_par);
 			process_timeout(my_system_par.max_client_interface_number,my_system_par.engine_expire_time_length);
 			return ret_val;
 		}catch(Exception e) {

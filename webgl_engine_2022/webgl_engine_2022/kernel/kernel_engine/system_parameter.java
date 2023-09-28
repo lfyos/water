@@ -32,7 +32,7 @@ public class system_parameter
 	
 	public long show_process_bar_interval,file_buffer_expire_time_length;
 	
-	public int max_client_interface_number;
+	public int max_client_container_number,max_client_interface_number;
 	
 	public int max_engine_kernel_number,max_engine_component_number;
 	
@@ -79,7 +79,8 @@ public class system_parameter
 		
 		show_process_bar_interval				=sp.show_process_bar_interval;
 		file_buffer_expire_time_length			=sp.file_buffer_expire_time_length;
-		
+
+		max_client_container_number		=sp.max_client_container_number;
 		max_client_interface_number		=sp.max_client_interface_number;
 		
 		max_engine_kernel_number		=sp.max_engine_kernel_number;
@@ -229,6 +230,7 @@ public class system_parameter
 		show_process_bar_interval				=f.get_long();
 		file_buffer_expire_time_length			=f.get_long();
 		
+		max_client_container_number				=f.get_int();
 		max_client_interface_number				=f.get_int();
 		
 		max_engine_kernel_number				=f.get_int();

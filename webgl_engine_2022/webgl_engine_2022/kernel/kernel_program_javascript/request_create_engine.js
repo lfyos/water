@@ -1,6 +1,7 @@
 async function request_create_engine(create_engine_sleep_time_length_scale,
 		create_engine_sleep_time_length,create_engine_max_sleep_time_length,
-		my_webgpu,request_url,my_url,my_user_name,my_pass_word,my_language_name,process_bar_id)
+		my_webgpu,request_url,my_url,my_user_name,my_pass_word,
+		my_client_container_id,my_language_name,process_bar_id)
 {
 	var create_data;
 	
@@ -49,7 +50,8 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 	var	my_render_data					=create_data[4];
 			
 	var render=new construct_render_routine(my_webgpu,my_url,
-			my_user_name,my_pass_word,my_language_name,my_channel_id,my_render_data);
+			my_user_name,my_pass_word,my_client_container_id,
+			my_language_name,my_channel_id,my_render_data);
 
 	var render_init_data=new Array();
 	for(var i=0,ni=my_render_initialize_data.length-1;i<ni;){
