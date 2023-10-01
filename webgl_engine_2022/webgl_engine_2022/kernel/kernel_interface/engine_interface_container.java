@@ -200,9 +200,9 @@ public class engine_interface_container
 									-1-ekbtl.engine_kernel_cont.ek.component_cont.root_component.component_id);
 			ekbtl.destroy();
 			
-			debug_information.println("engine_interface deletes scene,scene_name:	",	scene_name+"	,link_name:	"+link_name);
-			debug_information.println("engine_interface	engine_kernel_number:	",		engine_counter.engine_kernel_number);
-			debug_information.println("engine_interface	engine_component_number:	",	engine_counter.engine_component_number);
+			debug_information.println("engine_interface deletes scene,scene_name: ",scene_name+",link_name: "+link_name);
+			debug_information.println("engine_interface engine_kernel_number: ",	engine_counter.engine_kernel_number);
+			debug_information.println("engine_interface engine_component_number: ",	engine_counter.engine_component_number);
 			break;
 		}
 		client_interface_lock.unlock();

@@ -67,10 +67,10 @@ public class client_interface
 			engine_interface_container engine_container,ReentrantLock my_client_interface_lock,
 			client_request_response request_response,long delay_time_length,create_engine_counter engine_counter)
 	{
+		String str;
 		if(statistics_user.user_engine_kernel_number>statistics_user.user_max_engine_kernel_number) {
 			debug_information.print  ("client id:",request_response.implementor.get_client_id());
-			String str=request_response.get_parameter("container");
-			debug_information.println(",container id:",Integer.decode((str==null)?"0":str)%system_par.max_client_container_number);
+			debug_information.println(",container id:",((str=request_response.get_parameter("container"))==null)?"0":str);
 
 			debug_information.print  ("Create too many engine\t\t\t:\t",statistics_user.user_engine_kernel_number);
 			debug_information.println("/",statistics_user.user_max_engine_kernel_number);
@@ -78,8 +78,7 @@ public class client_interface
 		}
 		if(statistics_user.user_engine_component_number>statistics_user.user_max_engine_component_number) {
 			debug_information.print  ("client id:",request_response.implementor.get_client_id());
-			String str=request_response.get_parameter("container");
-			debug_information.println(",container id:",Integer.decode((str==null)?"0":str)%system_par.max_client_container_number);
+			debug_information.println(",container id:",((str=request_response.get_parameter("container"))==null)?"0":str);
 		
 			debug_information.print  ("Create too many component\t\t:\t",statistics_user.user_engine_component_number);
 			debug_information.println("/",statistics_user.user_max_engine_component_number);
@@ -111,9 +110,7 @@ public class client_interface
 
 		debug_information.println();
 		debug_information.print  ("client id:",request_response.implementor.get_client_id());
-		String str=request_response.get_parameter("container");
-		debug_information.print  (",container id:",
-				Integer.decode((str==null)?"0":str)%system_par.max_client_container_number);
+		debug_information.print  (",container id:",((str=request_response.get_parameter("container"))==null)?"0":str);
 		debug_information.print  (",link number is ",create_ekll.link_number);
 		debug_information.println((create_ekll.ek.component_cont==null)
 				?",assemble has not been loaded yet":",assemble has already been loaded");
@@ -190,8 +187,7 @@ public class client_interface
 		
 		debug_information.println("Request user name		:	",	(my_user_name==null)?"NoName":my_user_name);
 		debug_information.println("Request Client ID		:	",	(my_client_id==null)?"":my_client_id);
-		debug_information.println("container ID		:	",			
-				(my_container_str==null)?0:Integer.decode(my_container_str)%system_par.max_client_container_number);
+		debug_information.println("container ID		:	",			(my_container_str==null)?"0":my_container_str);
 		debug_information.println();
 		
 		debug_information.println("data_root_directory_name	:	",			system_par.data_root_directory_name);
@@ -375,8 +371,9 @@ public class client_interface
 				process_bar.set_process_bar(true,"start_create_scene","", 0, 1);
 
 				request_response.println("{");
-				request_response.println("	\"process_bar_id\"				:	",process_bar.process_bar_id+",");
-				request_response.println("	\"show_process_bar_interval\"	:	",system_par.show_process_bar_interval);
+				request_response.println("	\"process_bar_id\"				:	",	process_bar.process_bar_id+",");
+				request_response.println("	\"show_process_bar_interval\"	:	",	system_par.show_process_bar_interval+",");
+				request_response.println("	\"max_container_number\"	:	",		system_par.max_client_container_number);
 				request_response.println("}");
 				break;
 			case "data":
@@ -492,8 +489,7 @@ public class client_interface
 				String my_container_str=request_response.get_parameter("container");
 				debug_information.print  ("client_interface delete time out client_information found, client id is ");
 				debug_information.print  (request_response.implementor.get_client_id());
-				debug_information.println(",container ID is ",			
-						(my_container_str==null)?0:Integer.decode(my_container_str)%system_par.max_client_container_number);
+				debug_information.println(",container ID is ",(my_container_str==null)?"0":my_container_str);
 				
 				debug_information.println(
 					"((first.ek_ci.client_information==null)||(first.ek_ci.engine_kernel_link_list==null))");
@@ -505,8 +501,7 @@ public class client_interface
 				String my_container_str=request_response.get_parameter("container");
 				debug_information.print  ("client_interface delete time out client_information found, client id is ");
 				debug_information.print  (request_response.implementor.get_client_id());
-				debug_information.println(",container ID is ",			
-						(my_container_str==null)?0:Integer.decode(my_container_str)%system_par.max_client_container_number);
+				debug_information.println(",container ID is ",(my_container_str==null)?"0":my_container_str);
 				
 				debug_information.print  ("Channel is ",first.ek_ci.client_information.channel_id);
 				debug_information.print  (", time interval ",time_length);

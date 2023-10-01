@@ -1,12 +1,11 @@
 async function request_create_engine(create_engine_sleep_time_length_scale,
 		create_engine_sleep_time_length,create_engine_max_sleep_time_length,
-		my_webgpu,request_url,my_url,my_user_name,my_pass_word,
-		my_client_container_id,my_language_name,process_bar_id)
+		my_webgpu,request_url,my_url,my_user_name,my_pass_word,my_language_name,my_container_id)
 {
 	var create_data;
 	
 	for(var continue_flag=true;continue_flag;){
-		var engine_promise=await fetch(request_url+"&process_bar="+process_bar_id);
+		var engine_promise=await fetch(request_url);
 		if(!(engine_promise.ok)){
 			alert("request_create_engine fail:"+engine_promise.status);
 			return null;
@@ -49,9 +48,8 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 	var	my_component_initialize_data	=create_data[3];
 	var	my_render_data					=create_data[4];
 			
-	var render=new construct_render_routine(my_webgpu,my_url,
-			my_user_name,my_pass_word,my_client_container_id,
-			my_language_name,my_channel_id,my_render_data);
+	var render=new construct_render_routine(my_webgpu,my_url,my_user_name,my_pass_word,
+						my_language_name,my_container_id,my_channel_id,my_render_data);
 
 	var render_init_data=new Array();
 	for(var i=0,ni=my_render_initialize_data.length-1;i<ni;){
@@ -79,7 +77,7 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 		var my_driver_id		=my_component_initialize_data[i++];
 		component_init_data[my_component_id][my_driver_id]=my_data;
 	}
-			
+
 	var	initialization_url=create_data.pop();
 	var	init_data=(await import(initialization_url)).initialization_data;
 			
