@@ -33,6 +33,7 @@ public class client_information
 	
 	public plane							clip_plane;
 	
+	public int								container_id;
 	public long								channel_id;
 	
 	public client_parameter					parameter;
@@ -245,7 +246,8 @@ public class client_information
 		}
 		return;
 	}
-	public client_information(client_request_response my_request_response,client_process_bar my_process_bar,
+	public client_information(
+			int my_container_id,client_request_response my_request_response,client_process_bar my_process_bar,
 			engine_kernel ek,user_statistics my_statistics_user,create_engine_counter my_engine_counter)
 	{
 		not_acknowledge_render_part_id=new boolean[ek.render_cont.renders.size()][];
@@ -278,6 +280,7 @@ public class client_information
 		
 		clip_plane						=null;
 		
+		container_id					=my_container_id;
 		channel_id						=system_channel_id++;
 		
 		parameter						=new client_parameter(max_client_loading_number);
@@ -301,14 +304,13 @@ public class client_information
 		
 		String user_name	=request_response.get_parameter("user_name");
 		String pass_word	=request_response.get_parameter("pass_word");
-		String container	=request_response.get_parameter("container");
 		String language_str	=request_response.get_parameter("language");
 
 		request_url_header=request_response.implementor.get_url();
-		request_url_header+="?channel="		+Long.toString(channel_id);
+		request_url_header+="?channel="		+channel_id;
+		request_url_header+="&container="	+container_id;
 		request_url_header+="&user_name="	+((user_name==null)   ?"NoName"    	:user_name.trim());
 		request_url_header+="&pass_word="	+((pass_word==null)   ?"NoPassword"	:pass_word.trim());
-		request_url_header+="&container="	+((container==null)   ?"0"			:container.trim());
 		request_url_header+="&language="	+((language_str==null)?"english"   	:language_str.trim());
 		
 		return;

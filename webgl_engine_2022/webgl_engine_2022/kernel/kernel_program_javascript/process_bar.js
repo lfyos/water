@@ -154,9 +154,7 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 	
 	this.start=async function()
 	{
-		var my_client_container_id=Math.floor(Math.random()*10000);
-		var my_url=this.process_bar_url+"&command=request&container="+my_client_container_id.toString();
-		var process_bar_promise=await fetch(my_url);
+		var process_bar_promise=await fetch(this.process_bar_url+"&command=request");
 		if(!(process_bar_promise.ok)){
 			alert("render_main create process bar error,status is "+process_bar_promise.status);
 			alert(this.process_bar_url+"&command=request");
@@ -169,11 +167,9 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 			alert(this.process_bar_url+"&command=request");
 			return null;
 		}
-		this.process_bar_data.container_id=my_client_container_id%this.process_bar_data.max_container_number;
-		
 		this.request_process_bar_data();
 		this.draw_process_bar();
-		
+	
 		return this.process_bar_data;
 	};
 }

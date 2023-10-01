@@ -26,6 +26,7 @@ public class system_parameter_information extends jason_creator
 		print("engine_expire_time_length",				sp.engine_expire_time_length);
 		print("engine_touch_time_length",				sp.engine_touch_time_length);
 		
+		print("max_client_container_number",			sp.max_client_container_number);
 		print("max_client_interface_number",			sp.max_client_interface_number);
 		
 		print("max_engine_kernel_number",				sp.max_engine_kernel_number);

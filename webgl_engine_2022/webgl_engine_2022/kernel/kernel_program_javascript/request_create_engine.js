@@ -1,6 +1,6 @@
 async function request_create_engine(create_engine_sleep_time_length_scale,
 		create_engine_sleep_time_length,create_engine_max_sleep_time_length,
-		my_webgpu,request_url,my_url,my_user_name,my_pass_word,my_language_name,my_container_id)
+		my_webgpu,request_url,my_url,my_user_name,my_pass_word,my_language_name)
 {
 	var create_data;
 	
@@ -42,7 +42,8 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 		}
 	}
 	
-	var my_channel_id					=create_data[0]
+	var my_container_id					=create_data[0][0];
+	var my_channel_id					=create_data[0][1];
 	var	my_render_initialize_data		=create_data[1];
 	var	my_part_initialize_data			=create_data[2];
 	var	my_component_initialize_data	=create_data[3];

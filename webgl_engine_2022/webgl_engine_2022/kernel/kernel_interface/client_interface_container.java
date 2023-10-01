@@ -107,7 +107,7 @@ public class client_interface_container
 		
 		if(bt==null){
 			p=new_p;
-			p.interface_client=new client_interface(my_user_name,my_pass_word,my_client_id,my_system_par);
+			p.interface_client=new client_interface(my_container_id,my_user_name,my_pass_word,my_client_id,my_system_par);
 			
 			p.front=null;
 			p.back=null;
@@ -125,7 +125,7 @@ public class client_interface_container
 		}
 		if((p=bt.search(new_p,true,false))==null){
 			p=new_p;
-			p.interface_client=new client_interface(my_user_name,my_pass_word,my_client_id,my_system_par);
+			p.interface_client=new client_interface(my_container_id,my_user_name,my_pass_word,my_client_id,my_system_par);
 			client_interface_number++;
 			print_client_interface_information(my_client_id,my_container_id,
 					my_system_par.max_client_container_number,my_system_par.max_client_interface_number);
