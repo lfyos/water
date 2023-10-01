@@ -161,7 +161,6 @@ public class client_request_switcher
 				ecr=client.execute_system_call(channel_id,request_response,engine_container,engine_counter);
 			break;
 		}
-		
 		long current_time=nanosecond_timer.absolute_nanoseconds();
 		if(client!=null)
 			client.touch_time=current_time;

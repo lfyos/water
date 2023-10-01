@@ -64,8 +64,7 @@ public class engine_kernel_and_client_information_container
 			user_statistics statistics_user,create_engine_counter engine_counter)
 	{
 		if(engine_kernel_cont.ek==null){
-			debug_information.println(
-					"(ek==null) in function get_engine_result() of engine_container");
+			debug_information.println("(ek==null) in function get_engine_result() of engine_container");
 			return null;
 		}
 		if(engine_kernel_cont.initilization_flag){
