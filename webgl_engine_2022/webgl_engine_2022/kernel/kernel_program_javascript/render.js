@@ -1,6 +1,6 @@
-function construct_render_routine(
-	my_webgpu,my_url,my_user_name,my_pass_word,
-	my_client_container_id,my_language_name,channel_id,render_data)
+function construct_render_routine(my_webgpu,my_url,
+	my_user_name,my_pass_word,my_language_name,
+	my_container_id,my_channel_id,render_data)
 {
 	var component_number				=render_data[0];
 	var render_number					=render_data[1];
@@ -17,9 +17,9 @@ function construct_render_routine(
 					+"?user_name="	+my_user_name
 					+"&pass_word="	+my_pass_word
 					+"&language="	+my_language_name
-					+"&container="	+my_client_container_id;
+					+"&container="	+my_container_id;
 	this.url_with_channel			=this.url_without_channel
-					+"&channel="	+channel_id.toString();
+					+"&channel="	+my_channel_id.toString();
 	
 	this.user_event_processor		=new Object();
 	this.user_call_processor		=new Object();

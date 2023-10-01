@@ -50,6 +50,7 @@ public class client_interface
 	}
 
 	public long touch_time;
+	public int container_id;
 	
 	private system_parameter system_par;
 	private client_process_bar_container process_bar_cont;
@@ -69,8 +70,7 @@ public class client_interface
 	{
 		if(statistics_user.user_engine_kernel_number>statistics_user.user_max_engine_kernel_number) {
 			debug_information.print  ("client id:",request_response.implementor.get_client_id());
-			String str=request_response.get_parameter("container");
-			debug_information.println(",container id:",Integer.decode((str==null)?"0":str)%system_par.max_client_container_number);
+			debug_information.println(",container id:",container_id);
 
 			debug_information.print  ("Create too many engine\t\t\t:\t",statistics_user.user_engine_kernel_number);
 			debug_information.println("/",statistics_user.user_max_engine_kernel_number);
@@ -78,8 +78,7 @@ public class client_interface
 		}
 		if(statistics_user.user_engine_component_number>statistics_user.user_max_engine_component_number) {
 			debug_information.print  ("client id:",request_response.implementor.get_client_id());
-			String str=request_response.get_parameter("container");
-			debug_information.println(",container id:",Integer.decode((str==null)?"0":str)%system_par.max_client_container_number);
+			debug_information.println(",container id:",container_id);
 		
 			debug_information.print  ("Create too many component\t\t:\t",statistics_user.user_engine_component_number);
 			debug_information.println("/",statistics_user.user_max_engine_component_number);
@@ -89,14 +88,14 @@ public class client_interface
 		
 		cpb.set_process_bar(true,"start_create_kernel","",1,2);
 
-		engine_kernel_container create_ekll=null;
+		engine_kernel_container created_engine_kernel_only=null;
 
 		my_client_interface_lock.unlock();
 		try{
-			create_ekll=engine_container.create_engine_kernel_container(request_response,
+			created_engine_kernel_only=engine_container.create_engine_kernel_container(request_response,
 				client_scene_file_name,client_scene_file_charset,engine_counter,system_par);
 		}catch(Exception e) {
-			create_ekll=null;
+			created_engine_kernel_only=null;
 			debug_information.println(
 					"engine_container.get_kernel_container(request_response,system_par,user_par.scene_file_name) fail");
 			debug_information.println(e.toString());
@@ -104,30 +103,29 @@ public class client_interface
 		}
 		my_client_interface_lock.lock();
 		
-		if(create_ekll==null) {
+		if(created_engine_kernel_only==null) {
 			debug_information.println("Create engine result is null");
 			return null;
 		}
 
 		debug_information.println();
 		debug_information.print  ("client id:",request_response.implementor.get_client_id());
-		String str=request_response.get_parameter("container");
-		debug_information.print  (",container id:",
-				Integer.decode((str==null)?"0":str)%system_par.max_client_container_number);
-		debug_information.print  (",link number is ",create_ekll.link_number);
-		debug_information.println((create_ekll.ek.component_cont==null)
+		debug_information.print  (",container id:",container_id);
+		debug_information.print  (",link number is ",created_engine_kernel_only.link_number);
+		debug_information.println((created_engine_kernel_only.ek.component_cont==null)
 				?",assemble has not been loaded yet":",assemble has already been loaded");
 
-		engine_kernel_and_client_information_container ekcic=new engine_kernel_and_client_information_container(create_ekll);
+		engine_kernel_and_client_information_container created_ek_and_ci;
+		created_ek_and_ci=new engine_kernel_and_client_information_container(created_engine_kernel_only);
 		
-		ekcic.access_lock_number++;
+		created_ek_and_ci.access_lock_number++;
 		my_client_interface_lock.unlock();
 		
 		cpb.set_process_bar(true,"start_load_scene","",1,2);
 		
 		engine_call_result ecr=null;
 		try{
-			ecr=ekcic.get_engine_result(cpb,engine_container.system_boftal_container,
+			ecr=created_ek_and_ci.get_engine_result(container_id,cpb,engine_container.system_boftal_container,
 					engine_container.component_load_source_cont,client_scene_file_name,client_scene_file_charset,
 					request_response,delay_time_length,statistics_user,engine_counter);
 		}catch(Exception e) {
@@ -137,13 +135,13 @@ public class client_interface
 		}
 		
 		my_client_interface_lock.lock();
-		ekcic.access_lock_number--;
+		created_ek_and_ci.access_lock_number--;
 
-		if(create_ekll.ek!=null){
+		if(created_engine_kernel_only.ek!=null){
 			statistics_user.user_engine_kernel_number++;
-			if(create_ekll.ek.component_cont!=null) {
-				if(create_ekll.ek.component_cont.root_component!=null)
-					statistics_user.user_engine_component_number+=create_ekll.ek.component_cont.root_component.component_id+1;
+			if(created_engine_kernel_only.ek.component_cont!=null) {
+				if(created_engine_kernel_only.ek.component_cont.root_component!=null)
+					statistics_user.user_engine_component_number+=created_engine_kernel_only.ek.component_cont.root_component.component_id+1;
 			}
 		}
 		debug_information.print  ("Current user_engine_kernel_number is ",statistics_user.user_engine_kernel_number);
@@ -152,8 +150,8 @@ public class client_interface
 		debug_information.println("/",statistics_user.user_max_engine_component_number);
 
 		ek_ci_balance_tree_node ecn=new ek_ci_balance_tree_node(
-				(ekcic.client_information==null)?0:(ekcic.client_information.channel_id));
-		ecn.ek_ci=ekcic;
+				(created_ek_and_ci.client_information==null)?0:(created_ek_and_ci.client_information.channel_id));
+		ecn.ek_ci=created_ek_and_ci;
 		if(bt==null){
 			bt=new balance_tree<Long,ek_ci_balance_tree_node>(ecn);
 			first=ecn;
@@ -186,12 +184,10 @@ public class client_interface
 
 		String my_user_name=request_response.get_parameter("user_name");
 		String my_client_id=request_response.implementor.get_client_id();
-		String my_container_str=request_response.get_parameter("container");
 		
 		debug_information.println("Request user name		:	",	(my_user_name==null)?"NoName":my_user_name);
 		debug_information.println("Request Client ID		:	",	(my_client_id==null)?"":my_client_id);
-		debug_information.println("container ID		:	",			
-				(my_container_str==null)?0:Integer.decode(my_container_str)%system_par.max_client_container_number);
+		debug_information.println("Container ID			:	",		container_id);
 		debug_information.println();
 		
 		debug_information.println("data_root_directory_name	:	",			system_par.data_root_directory_name);
@@ -257,11 +253,10 @@ public class client_interface
 		ecn.ek_ci.access_lock_number++;
 		my_client_interface_lock.unlock();
 		try{
-			ecr=ecn.ek_ci.get_engine_result(get_process_bar(request_response),
-					engine_container.system_boftal_container,
-					engine_container.component_load_source_cont,
-					client_scene_file_name,client_scene_file_charset,
-					request_response,delay_time_length,statistics_user,engine_counter);
+			ecr=ecn.ek_ci.get_engine_result(container_id,get_process_bar(request_response),
+					engine_container.system_boftal_container,engine_container.component_load_source_cont,
+					client_scene_file_name,client_scene_file_charset,request_response,delay_time_length,
+					statistics_user,engine_counter);
 		}catch(Exception e){
 			ecr=null;
 			debug_information.println("ecn.ek_ci.engine_kernel_link_list.get_engine_result fail");
@@ -375,8 +370,9 @@ public class client_interface
 				process_bar.set_process_bar(true,"start_create_scene","", 0, 1);
 
 				request_response.println("{");
-				request_response.println("	\"process_bar_id\"				:	",process_bar.process_bar_id+",");
-				request_response.println("	\"show_process_bar_interval\"	:	",system_par.show_process_bar_interval);
+				request_response.println("	\"container_id\"				:	",	container_id+",");
+				request_response.println("	\"process_bar_id\"				:	",	process_bar.process_bar_id+",");
+				request_response.println("	\"show_process_bar_interval\"	:	",	system_par.show_process_bar_interval);
 				request_response.println("}");
 				break;
 			case "data":
@@ -484,52 +480,30 @@ public class client_interface
 	private void process_timeout(client_request_response request_response,
 			engine_interface_container engine_container,create_engine_counter engine_counter)
 	{
-		
 		while(first!=null){
 			if(first.ek_ci.access_lock_number>0)
-				return;
+				break;
 			if((first.ek_ci.client_information==null)||(first.ek_ci.engine_kernel_cont==null)) {
-				String my_container_str=request_response.get_parameter("container");
+				debug_information.println(
+						"((first.ek_ci.client_information==null)||(first.ek_ci.engine_kernel_link_list==null))");
 				debug_information.print  ("client_interface delete time out client_information found, client id is ");
 				debug_information.print  (request_response.implementor.get_client_id());
-				debug_information.println(",container ID is ",			
-						(my_container_str==null)?0:Integer.decode(my_container_str)%system_par.max_client_container_number);
-				
-				debug_information.println(
-					"((first.ek_ci.client_information==null)||(first.ek_ci.engine_kernel_link_list==null))");
-			}else {
+				debug_information.println(",container ID is ",container_id);
+			}else{
 				long request_time=first.ek_ci.client_information.request_response.request_time;
 				long time_length=nanosecond_timer.absolute_nanoseconds()-request_time;
 				if(time_length<system_par.engine_expire_time_length)
-					return;
-				String my_container_str=request_response.get_parameter("container");
+					break;
 				debug_information.print  ("client_interface delete time out client_information found, client id is ");
-				debug_information.print  (request_response.implementor.get_client_id());
-				debug_information.println(",container ID is ",			
-						(my_container_str==null)?0:Integer.decode(my_container_str)%system_par.max_client_container_number);
-				
-				debug_information.print  ("Channel is ",first.ek_ci.client_information.channel_id);
-				debug_information.print  (", time interval ",time_length);
-				debug_information.println(", max time interval  ",system_par.engine_expire_time_length);
+				debug_information.println(request_response.implementor.get_client_id());
+				debug_information.print  ("container ID is ",container_id);
+				debug_information.print  (",Channel is ",first.ek_ci.client_information.channel_id);
+				debug_information.print  (",time interval ",time_length);
+				debug_information.println(",max time interval  ",system_par.engine_expire_time_length);
 			}
 			if(destroy_ek_ci_node(first,engine_container,engine_counter))
 				break;
 		}
-	}
-	public void clear_all_engine(engine_interface_container engine_container,create_engine_counter engine_counter)
-	{
-		ReentrantLock my_client_interface_lock=client_interface_lock;
-		my_client_interface_lock.lock();
-		while(true)
-			try{
-				if(destroy_ek_ci_node(first,engine_container,engine_counter))
-					break;
-			}catch(Exception e) {
-				debug_information.println("clear_all_engine exception:	",e.toString());
-				e.printStackTrace();
-				break;
-			}
-		my_client_interface_lock.unlock();
 	}
 	private void destroy_routine()
 	{	
@@ -584,8 +558,10 @@ public class client_interface
 		}
 		my_client_interface_lock.unlock();
 	}
-	public client_interface(String my_user_name,String my_pass_word,String my_client_id,system_parameter my_system_par)
+	public client_interface(String my_user_name,String my_pass_word,
+			String my_client_id,int my_container_id,system_parameter my_system_par)
 	{
+		container_id			=my_container_id;
 		touch_time				=0;
 		
 		system_par	 			=new system_parameter(my_system_par);
@@ -622,16 +598,16 @@ public class client_interface
 			String user_name=f.get_string();
 			String pass_word=f.get_string();
 			String parameter_file_name=f.get_string();
-			String assemble_file_name=f.get_string();
+			String scene_file_name=f.get_string();
 			
-			if(assemble_file_name==null)
+			if(scene_file_name==null)
 				continue;
 			if(my_user_name.compareTo(user_name)!=0)
 				continue;
 			if(my_pass_word.compareTo(pass_word)!=0)
 				continue;
 			parameter_file_name=file_reader.separator(parameter_file_name);
-			assemble_file_name=f.directory_name+file_reader.separator(assemble_file_name);
+			scene_file_name=f.directory_name+file_reader.separator(scene_file_name);
 			
 			if(file_reader.is_exist(f.directory_name+parameter_file_name))
 				parameter_file_name=f.directory_name+parameter_file_name;
@@ -645,7 +621,7 @@ public class client_interface
 			manager_delay=new delay_manager(f);
 			f.close();
 			
-			client_scene_file_name=assemble_file_name;
+			client_scene_file_name=scene_file_name;
 			client_scene_file_charset=f.get_charset();
 			touch_time=nanosecond_timer.absolute_nanoseconds();
 

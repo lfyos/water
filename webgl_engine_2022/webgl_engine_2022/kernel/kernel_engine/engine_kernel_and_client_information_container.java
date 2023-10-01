@@ -56,7 +56,7 @@ public class engine_kernel_and_client_information_container
 				cccfn.file_name,file_charset,cccfn.charset_file_name,
 				cccfn.compress_file_name,null,engine_kernel_cont.ek.scene_par.scene_cors_string);
 	}
-	private engine_call_result get_engine_result_routine(
+	private engine_call_result get_engine_result_routine(int my_container_id,
 			component_load_source_container component_load_source_cont,client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container,
 			String client_scene_file_name,String client_scene_file_charset,
@@ -64,8 +64,7 @@ public class engine_kernel_and_client_information_container
 			user_statistics statistics_user,create_engine_counter engine_counter)
 	{
 		if(engine_kernel_cont.ek==null){
-			debug_information.println(
-					"(ek==null) in function get_engine_result() of engine_container");
+			debug_information.println("(ek==null) in function get_engine_result() of engine_container");
 			return null;
 		}
 		if(engine_kernel_cont.initilization_flag){
@@ -99,7 +98,7 @@ public class engine_kernel_and_client_information_container
 					"(ek.component_cont.root_component==null) in function get_engine_result() of engine_container");
 				return null;
 			}
-			client_information=new client_information(
+			client_information=new client_information(my_container_id,
 					my_request_response,process_bar,engine_kernel_cont.ek,statistics_user,engine_counter);
 		}
 		client_information.request_response=my_request_response;
@@ -129,7 +128,8 @@ public class engine_kernel_and_client_information_container
 			null,null,null,my_compress_file_name,null,
 			engine_kernel_cont.ek.scene_par.scene_cors_string);
 	}
-	public engine_call_result get_engine_result(client_process_bar process_bar,
+	public engine_call_result get_engine_result(
+			int my_container_id,client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container,
 			component_load_source_container component_load_source_cont,
 			String client_scene_file_name,String client_scene_file_charset,
@@ -141,7 +141,7 @@ public class engine_kernel_and_client_information_container
 		if((my_engine_kernel_container_lock=engine_kernel_cont.engine_kernel_container_lock)!=null){
 			my_engine_kernel_container_lock.lock();
 			try{
-				ret_val=get_engine_result_routine(
+				ret_val=get_engine_result_routine(my_container_id,
 						component_load_source_cont,process_bar,system_boftal_container,
 						client_scene_file_name,client_scene_file_charset,my_request_response,
 						delay_time_length,statistics_user,engine_counter);

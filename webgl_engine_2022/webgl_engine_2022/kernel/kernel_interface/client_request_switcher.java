@@ -14,6 +14,7 @@ public class client_request_switcher
 	private system_parameter system_par;
 	private javascript_program program_javascript;
 	private client_interface_container client_container[];
+	private int next_client_container_id;
 	
 	private engine_interface_container engine_container;
 	private proxy_downloader download_proxy;
@@ -80,18 +81,18 @@ public class client_request_switcher
 		if((my_client_id=request_response.implementor.get_client_id())==null)
 			my_client_id="NoClientID";
 		
-		String my_container_str;
-		if((my_container_str=request_response.get_parameter("container"))==null)
-			return null;
-		
 		int my_container_id;
-		try{
-			my_container_id=Integer.decode(my_container_str);
-		}catch(Exception e) {
-			return null;
-		}
-		if(my_container_id<0)
-			return null;		
+		String my_container_str;
+		if((my_container_str=request_response.get_parameter("container"))==null) {
+			my_container_id=next_client_container_id++;
+			next_client_container_id%=system_par.max_client_container_number;
+		}else		
+			try{
+				if((my_container_id=Integer.decode(my_container_str))<0)
+					return null;
+			}catch(Exception e){
+				return null;
+			}
 		my_container_id%=system_par.max_client_container_number;
 		return client_container[my_container_id].get_client_interface(
 					my_user_name,my_pass_word,my_client_id,my_container_id,system_par);
@@ -132,10 +133,6 @@ public class client_request_switcher
 			if((client=get_client_interface(request_response))!=null)
 				ecr=client.process_process_bar_system_call(request_response);
 			break;
-		case "clear":
-			if((client=get_client_interface(request_response))!=null)
-				client.clear_all_engine(engine_container,engine_counter);
-			break;
 		case "creation":
 			if((client=get_client_interface(request_response))!=null){
 				if(test_creation_engine_lock_number(1)<system_par.create_engine_concurrent_number)
@@ -164,7 +161,6 @@ public class client_request_switcher
 				ecr=client.execute_system_call(channel_id,request_response,engine_container,engine_counter);
 			break;
 		}
-		
 		long current_time=nanosecond_timer.absolute_nanoseconds();
 		if(client!=null)
 			client.touch_time=current_time;
@@ -231,5 +227,6 @@ public class client_request_switcher
 		engine_counter		=new create_engine_counter();
 		
 		creation_engine_lock_number	=0;
+		next_client_container_id=0;
 	}
 }

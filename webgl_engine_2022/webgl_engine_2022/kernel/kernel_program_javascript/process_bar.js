@@ -108,10 +108,13 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 	
 	this.request_process_bar_data=async function()
 	{
+		var process_bar=this.process_bar_url+"&command=data";
+		process_bar+="&container="	+this.process_bar_data.container_id;
+		process_bar+="&process_bar="+this.process_bar_data.process_bar_id;
+			
 		while(this.process_bar_data!=null){
 			var start_time=new Date().getTime();
-			var my_url=this.process_bar_url+"&command=data&process_bar=";
-			var data_promise=await fetch(my_url+this.process_bar_data.process_bar_id);
+			var data_promise=await fetch(process_bar);
 			if(!(data_promise.ok)){
 				this.destroy();
 				alert("render_show_process_bar fail:"+data_promise.status);
@@ -155,19 +158,18 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 		if(!(process_bar_promise.ok)){
 			alert("render_main create process bar error,status is "+process_bar_promise.status);
 			alert(this.process_bar_url+"&command=request");
-			return -1;
+			return null;
 		}
 		try{
 			this.process_bar_data = await process_bar_promise.json();
 		}catch(e){
 			alert("parse process_bar_object error:"+e.toString());
 			alert(this.process_bar_url+"&command=request");
-			return -1;
+			return null;
 		}
-		
-		this.draw_process_bar();
 		this.request_process_bar_data();
-		
-		return this.process_bar_data.process_bar_id;
+		this.draw_process_bar();
+	
+		return this.process_bar_data;
 	};
 }

@@ -136,7 +136,8 @@ public class dispatch_create_engine_request
 	{
 		String str;
 		
-		ci.request_response.print("[ "+ci.channel_id+" ,");				//parameter	0
+		ci.request_response.print("[[",ci.container_id);				//parameter	0
+		ci.request_response.print(",",ci.channel_id+"],");
 		
 		do_response_init_render_data(ek,ci);							//parameter	1
 		ci.request_response.print(",");
