@@ -88,14 +88,14 @@ public class client_interface
 		
 		cpb.set_process_bar(true,"start_create_kernel","",1,2);
 
-		engine_kernel_container create_ekll=null;
+		engine_kernel_container created_engine_kernel_only=null;
 
 		my_client_interface_lock.unlock();
 		try{
-			create_ekll=engine_container.create_engine_kernel_container(request_response,
+			created_engine_kernel_only=engine_container.create_engine_kernel_container(request_response,
 				client_scene_file_name,client_scene_file_charset,engine_counter,system_par);
 		}catch(Exception e) {
-			create_ekll=null;
+			created_engine_kernel_only=null;
 			debug_information.println(
 					"engine_container.get_kernel_container(request_response,system_par,user_par.scene_file_name) fail");
 			debug_information.println(e.toString());
@@ -103,7 +103,7 @@ public class client_interface
 		}
 		my_client_interface_lock.lock();
 		
-		if(create_ekll==null) {
+		if(created_engine_kernel_only==null) {
 			debug_information.println("Create engine result is null");
 			return null;
 		}
@@ -111,20 +111,21 @@ public class client_interface
 		debug_information.println();
 		debug_information.print  ("client id:",request_response.implementor.get_client_id());
 		debug_information.print  (",container id:",container_id);
-		debug_information.print  (",link number is ",create_ekll.link_number);
-		debug_information.println((create_ekll.ek.component_cont==null)
+		debug_information.print  (",link number is ",created_engine_kernel_only.link_number);
+		debug_information.println((created_engine_kernel_only.ek.component_cont==null)
 				?",assemble has not been loaded yet":",assemble has already been loaded");
 
-		engine_kernel_and_client_information_container ekcic=new engine_kernel_and_client_information_container(create_ekll);
+		engine_kernel_and_client_information_container created_ek_and_ci;
+		created_ek_and_ci=new engine_kernel_and_client_information_container(created_engine_kernel_only);
 		
-		ekcic.access_lock_number++;
+		created_ek_and_ci.access_lock_number++;
 		my_client_interface_lock.unlock();
 		
 		cpb.set_process_bar(true,"start_load_scene","",1,2);
 		
 		engine_call_result ecr=null;
 		try{
-			ecr=ekcic.get_engine_result(container_id,cpb,engine_container.system_boftal_container,
+			ecr=created_ek_and_ci.get_engine_result(container_id,cpb,engine_container.system_boftal_container,
 					engine_container.component_load_source_cont,client_scene_file_name,client_scene_file_charset,
 					request_response,delay_time_length,statistics_user,engine_counter);
 		}catch(Exception e) {
@@ -134,13 +135,13 @@ public class client_interface
 		}
 		
 		my_client_interface_lock.lock();
-		ekcic.access_lock_number--;
+		created_ek_and_ci.access_lock_number--;
 
-		if(create_ekll.ek!=null){
+		if(created_engine_kernel_only.ek!=null){
 			statistics_user.user_engine_kernel_number++;
-			if(create_ekll.ek.component_cont!=null) {
-				if(create_ekll.ek.component_cont.root_component!=null)
-					statistics_user.user_engine_component_number+=create_ekll.ek.component_cont.root_component.component_id+1;
+			if(created_engine_kernel_only.ek.component_cont!=null) {
+				if(created_engine_kernel_only.ek.component_cont.root_component!=null)
+					statistics_user.user_engine_component_number+=created_engine_kernel_only.ek.component_cont.root_component.component_id+1;
 			}
 		}
 		debug_information.print  ("Current user_engine_kernel_number is ",statistics_user.user_engine_kernel_number);
@@ -149,8 +150,8 @@ public class client_interface
 		debug_information.println("/",statistics_user.user_max_engine_component_number);
 
 		ek_ci_balance_tree_node ecn=new ek_ci_balance_tree_node(
-				(ekcic.client_information==null)?0:(ekcic.client_information.channel_id));
-		ecn.ek_ci=ekcic;
+				(created_ek_and_ci.client_information==null)?0:(created_ek_and_ci.client_information.channel_id));
+		ecn.ek_ci=created_ek_and_ci;
 		if(bt==null){
 			bt=new balance_tree<Long,ek_ci_balance_tree_node>(ecn);
 			first=ecn;

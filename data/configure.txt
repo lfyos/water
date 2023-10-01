@@ -27,7 +27,7 @@
 /*	file_buffer_expire_time_length,	unit:second								*/		365000000
 
 /*	max_client_container_number												*/		20
-/*	max_client_interface_number												*/		5
+/*	max_client_interface_number												*/		10
 
 /*	max_engine_kernel_number												*/		300
 /*	max_engine_component_number												*/		3000000

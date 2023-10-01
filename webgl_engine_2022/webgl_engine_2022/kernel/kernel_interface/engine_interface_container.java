@@ -97,19 +97,18 @@ public class engine_interface_container
 			try {
 				scene_name=java.net.URLDecoder.decode(scene_name,request_charset);
 				scene_name=java.net.URLDecoder.decode(scene_name,request_charset);
-			}catch(Exception e) {
+			}catch(Exception e){
 				;
 			}
 		if((link_name=request_response.get_parameter("link_name"))==null)
 			link_name="";
 		else 
-			try {
+			try{
 				link_name=java.net.URLDecoder.decode(link_name,request_charset);
 				link_name=java.net.URLDecoder.decode(link_name,request_charset);
-			}catch(Exception e) {
+			}catch(Exception e){
 				;
 			}
-		
 		if(link_name.compareTo("")==0)
 			link_name=Double.toString(Math.random());
 
@@ -138,16 +137,19 @@ public class engine_interface_container
 		if(   (engine_counter.engine_kernel_number   >=system_par.max_engine_kernel_number)
 			||(engine_counter.engine_component_number>=system_par.max_engine_component_number))
 		{
-			debug_information.print  ("Create too many scenes or components:	",scene_name+"	"+link_name);
+			debug_information.println("Create too many scenes or components:	",scene_name+"	"+link_name);
+			destroy_scene_routine(scene_name,link_name,engine_counter);
 			return null;
 		}
-		if((ekbti.engine_kernel_cont=new engine_kernel_container(scene_name,link_name,request_response,system_par,
-			client_scene_file_name,client_scene_file_charset,original_render,part_loader_cont)).ek==null)
-		{
-			debug_information.print  ("Create scene fail:	",scene_name+"	"+link_name);
+		ekbti.engine_kernel_cont=new engine_kernel_container(scene_name,link_name,request_response,system_par,
+			client_scene_file_name,client_scene_file_charset,original_render,part_loader_cont);
+		
+		if(ekbti.engine_kernel_cont.ek==null){
+			debug_information.println("Create scene fail:	",scene_name+"	"+link_name);
+			destroy_scene_routine(scene_name,link_name,engine_counter);
 			return null;
 		}
-		debug_information.print  ("Create scene success:	",scene_name+"	"+link_name);
+		debug_information.println("Create scene success:	",scene_name+"	"+link_name);
 		ekbti.engine_kernel_cont.link_number++;
 		
 		return ekbti.engine_kernel_cont;
@@ -175,9 +177,8 @@ public class engine_interface_container
 		client_interface_lock.unlock();
 		return ret_val;
 	}
-	public void destroy_scene(String my_scene_name,String my_link_name,create_engine_counter engine_counter)
+	private void destroy_scene_routine(String my_scene_name,String my_link_name,create_engine_counter engine_counter)
 	{
-		client_interface_lock.lock();
 		for(engine_kernel_balance_tree_item ekbtl,original_bti;bt!=null;) {
 			original_bti=new engine_kernel_balance_tree_item(my_scene_name,my_link_name);
 			if((ekbtl=bt.search(original_bti,false,false))==null)
@@ -190,8 +191,6 @@ public class engine_interface_container
 			else
 				bt.search(original_bti,false,true);
 			
-			String scene_name=ekbtl.compare_data[0],link_name=ekbtl.compare_data[1];
-			
 			if(ekbtl.engine_kernel_cont!=null)
 				if(ekbtl.engine_kernel_cont.ek!=null)
 					if(ekbtl.engine_kernel_cont.ek.component_cont!=null)
@@ -200,11 +199,15 @@ public class engine_interface_container
 									-1-ekbtl.engine_kernel_cont.ek.component_cont.root_component.component_id);
 			ekbtl.destroy();
 			
-			debug_information.println("engine_interface deletes scene,scene_name: ",scene_name+",link_name: "+link_name);
+			debug_information.println("engine_interface deletes scene,scene_name: ",my_scene_name+",link_name: "+my_link_name);
 			debug_information.println("engine_interface engine_kernel_number: ",	engine_counter.engine_kernel_number);
 			debug_information.println("engine_interface engine_component_number: ",	engine_counter.engine_component_number);
-			break;
 		}
+	}
+	public void destroy_scene(String my_scene_name,String my_link_name,create_engine_counter engine_counter)
+	{
+		client_interface_lock.lock();
+		destroy_scene_routine(my_scene_name,my_link_name,engine_counter);
 		client_interface_lock.unlock();
 	}
 	private void destroy_engine_kernel_balance_tree(
