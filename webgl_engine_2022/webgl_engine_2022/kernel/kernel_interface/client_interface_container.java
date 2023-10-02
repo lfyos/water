@@ -8,7 +8,7 @@ import kernel_common_class.debug_information;
 
 public class client_interface_container
 {
-	class client_interface_balance_tree_node extends balance_tree_item<String>
+	class client_interface_balance_tree_node extends balance_tree_item<String[]>
 	{
 		public client_interface interface_client;
 		public client_interface_balance_tree_node front,back;
@@ -24,13 +24,14 @@ public class client_interface_container
 			front=null;
 			back=null;
 		}
-		public int compare(String t)
+		public int compare(String t[])
 		{
-			return compare_data.compareTo(t);
+			int ret_val=compare_data[0].compareTo(t[0]);
+			return (ret_val!=0)?ret_val:compare_data[1].compareTo(t[1]);
 		}
-		public client_interface_balance_tree_node(String my_client_id)
+		public client_interface_balance_tree_node(String my_client_id,String my_user_name)
 		{
-			super(my_client_id);
+			super(new String[]{my_client_id,my_user_name});
 			
 			interface_client=null;
 			front=null;
@@ -39,7 +40,7 @@ public class client_interface_container
 	}
 
 	private int client_interface_number;
-	private balance_tree<String,client_interface_balance_tree_node> bt;
+	private balance_tree<String[],client_interface_balance_tree_node> bt;
 	private client_interface_balance_tree_node first,last;
 	
 	public void destroy()
@@ -67,14 +68,15 @@ public class client_interface_container
 				if(time_length<client_interface_life_time)
 					return;
 
-			debug_information.println("Delete client_interface, client id is ",first.compare_data);
+			debug_information.println("Delete client_interface, client id is ",first.compare_data[0]);
 			debug_information.print  ("Time interval ",time_length);
 			debug_information.println(", max time interval  ",client_interface_life_time);
 			debug_information.print  ("Still active client_interface number is  ",client_interface_number-1);
 			debug_information.println("/",max_client_interface_number);
 
 			client_interface_balance_tree_node p;
-			p=bt.search(new client_interface_balance_tree_node(first.compare_data),false,true);
+			p=new client_interface_balance_tree_node(first.compare_data[0],first.compare_data[1]);
+			p=bt.search(p,false,true);
 
 			if(first==last){
 				bt.destroy();
@@ -103,7 +105,7 @@ public class client_interface_container
 			String my_user_name,String my_pass_word,String my_client_id,
 			int my_container_id,system_parameter my_system_par)
 	{
-		client_interface_balance_tree_node p,new_p=new client_interface_balance_tree_node(my_client_id+"/"+my_user_name);
+		client_interface_balance_tree_node p,new_p=new client_interface_balance_tree_node(my_client_id,my_user_name);
 		
 		if(bt==null){
 			p=new_p;
@@ -115,7 +117,7 @@ public class client_interface_container
 			first=p;
 			last=p;
 			
-			bt=new balance_tree<String,client_interface_balance_tree_node>(p);
+			bt=new balance_tree<String[],client_interface_balance_tree_node>(p);
 
 			client_interface_number=1;
 			print_client_interface_information(my_client_id,my_container_id,

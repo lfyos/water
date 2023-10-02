@@ -5,19 +5,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.locks.ReentrantLock;
 
+import kernel_component.component;
+import kernel_engine.engine_kernel;
 import kernel_security.delay_manager;
-import kernel_common_class.debug_information;
+import kernel_engine.system_parameter;
+import kernel_file_manager.file_reader;
+import kernel_engine.engine_call_result;
 import kernel_common_class.jason_string;
 import kernel_common_class.balance_tree;
-import kernel_common_class.balance_tree_item;
-import kernel_common_class.nanosecond_timer;
-import kernel_file_manager.file_reader;
-import kernel_network.client_request_response;
-import kernel_engine.system_parameter;
-import kernel_engine.engine_kernel;
-import kernel_engine.engine_call_result;
 import kernel_engine.create_engine_counter;
+import kernel_common_class.nanosecond_timer;
+import kernel_common_class.balance_tree_item;
 import kernel_engine.engine_kernel_container;
+import kernel_common_class.debug_information;
+import kernel_network.client_request_response;
 import kernel_engine.engine_kernel_and_client_information_container;
 
 public class client_interface
@@ -137,18 +138,6 @@ public class client_interface
 		my_client_interface_lock.lock();
 		created_ek_and_ci.access_lock_number--;
 
-		if(created_engine_kernel_only.ek!=null){
-			statistics_user.user_engine_kernel_number++;
-			if(created_engine_kernel_only.ek.component_cont!=null) {
-				if(created_engine_kernel_only.ek.component_cont.root_component!=null)
-					statistics_user.user_engine_component_number+=created_engine_kernel_only.ek.component_cont.root_component.component_id+1;
-			}
-		}
-		debug_information.print  ("Current user_engine_kernel_number is ",statistics_user.user_engine_kernel_number);
-		debug_information.println("/",statistics_user.user_max_engine_kernel_number);
-		debug_information.print  ("Current user_engine_component_number is ",statistics_user.user_engine_component_number);
-		debug_information.println("/",statistics_user.user_max_engine_component_number);
-
 		ek_ci_balance_tree_node ecn=new ek_ci_balance_tree_node(
 				(created_ek_and_ci.client_information==null)?0:(created_ek_and_ci.client_information.channel_id));
 		ecn.ek_ci=created_ek_and_ci;
@@ -156,12 +145,27 @@ public class client_interface
 			bt=new balance_tree<Long,ek_ci_balance_tree_node>(ecn);
 			first=ecn;
 			last=ecn;
+		}else if(bt.search(ecn,true,false)!=null){
+			debug_information.println("Find same channel ID ");
+			ecn.destroy();
+			return null;
 		}else{
-			bt.search(ecn,true,false);
 			ecn.front=last;
 			last.back=ecn;
 			last=ecn;
 		}
+		if(created_engine_kernel_only.ek!=null)
+			if(created_engine_kernel_only.ek.component_cont!=null)
+				if(created_engine_kernel_only.ek.component_cont.root_component!=null) {
+					component root_component=created_engine_kernel_only.ek.component_cont.root_component;
+					statistics_user.user_engine_kernel_number++;
+					statistics_user.user_engine_component_number+=root_component.component_id+1;
+				}
+		debug_information.print  ("Current user_engine_kernel_number is ",statistics_user.user_engine_kernel_number);
+		debug_information.println("/",statistics_user.user_max_engine_kernel_number);
+		debug_information.print  ("Current user_engine_component_number is ",statistics_user.user_engine_component_number);
+		debug_information.println("/",statistics_user.user_max_engine_component_number);
+
 		return ecr;
 	}
 	private engine_call_result create_engine(
@@ -424,16 +428,15 @@ public class client_interface
 			engine_interface_container engine_container,create_engine_counter engine_counter)
 	{
 		engine_kernel ek;
-		if(ecn==null)
-			return true;
+		
 		if(ecn.ek_ci.access_lock_number>0)
 			return true;
-		if((ek=ecn.ek_ci.engine_kernel_cont.ek)!=null){
-			statistics_user.user_engine_kernel_number--;
+		if((ek=ecn.ek_ci.engine_kernel_cont.ek)!=null)
 			if(ek.component_cont!=null)
-				if(ek.component_cont.root_component!=null)
+				if(ek.component_cont.root_component!=null){
+					statistics_user.user_engine_kernel_number--;
 					statistics_user.user_engine_component_number-=ek.component_cont.root_component.component_id+1;
-		}
+				}
 		debug_information.println("Execute destroy_ek_ci_node");
 		debug_information.print  ("user_engine_kernel_number:",statistics_user.user_engine_kernel_number);
 		debug_information.println("/",statistics_user.user_max_engine_kernel_number);
