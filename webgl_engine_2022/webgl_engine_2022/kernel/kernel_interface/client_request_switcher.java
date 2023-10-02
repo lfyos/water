@@ -82,18 +82,21 @@ public class client_request_switcher
 			my_client_id="NoClientID";
 		
 		int my_container_id;
-		String my_container_str;
-		if((my_container_str=request_response.get_parameter("container"))==null) {
+		do {
+			String my_container_str;
+			if((my_container_str=request_response.get_parameter("container"))!=null)
+				try{
+					if((my_container_id=Integer.decode(my_container_str))>=0)
+						break;
+				}catch(Exception e){
+					;
+				}
 			my_container_id=next_client_container_id++;
-			next_client_container_id%=system_par.max_client_container_number;
-		}else		
-			try{
-				if((my_container_id=Integer.decode(my_container_str))<0)
-					return null;
-			}catch(Exception e){
-				return null;
-			}
-		my_container_id%=system_par.max_client_container_number;
+			next_client_container_id%=client_container.length;
+		}while(false);
+		
+		my_container_id%=client_container.length;
+		
 		return client_container[my_container_id].get_client_interface(
 					my_user_name,my_pass_word,my_client_id,my_container_id,system_par);
 	}
@@ -168,25 +171,26 @@ public class client_request_switcher
 			request_response.request_time=current_time;
 		return ecr;
 	}
-	synchronized private void init_system_par(network_implementation network_implementor,
-			String data_configure_environment_variable,String proxy_configure_environment_variable)
+	synchronized private void init(network_implementation network_implementor,
+		String data_configure_environment_variable,String proxy_configure_environment_variable)
 	{
 		if(system_par==null){
-			system_par=new system_parameter(network_implementor.get_application_directory(),
+			system_parameter my_system_par=new system_parameter(
+					network_implementor.get_application_directory(),
 					data_configure_environment_variable,proxy_configure_environment_variable);
-			program_javascript=new javascript_program(system_par);
+			program_javascript=new javascript_program(my_system_par);
 			
-			client_container=new client_interface_container[system_par.max_client_container_number];
+			client_container=new client_interface_container[my_system_par.max_client_container_number];
 			for(int i=0,ni=client_container.length;i<ni;i++)
 				client_container[i]=new client_interface_container();
+			system_par=my_system_par;
 		}
 	}
 	public void process_system_call(network_implementation network_implementor,
 			String data_configure_environment_variable,String proxy_configure_environment_variable)
 	{
 		if(system_par==null)
-			init_system_par(network_implementor,
-				data_configure_environment_variable,proxy_configure_environment_variable);
+			init(network_implementor,data_configure_environment_variable,proxy_configure_environment_variable);
 		
 		client_request_response request_response=new client_request_response(
 			system_par.network_data_charset,network_implementor);

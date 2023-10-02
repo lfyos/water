@@ -125,8 +125,7 @@ public class engine_kernel_and_client_information_container
 				my_compress_file_name="do_compress_flag";
 		
 		return new engine_call_result(
-			null,null,null,my_compress_file_name,null,
-			engine_kernel_cont.ek.scene_par.scene_cors_string);
+			null,null,null,my_compress_file_name,null,engine_kernel_cont.ek.scene_par.scene_cors_string);
 	}
 	public engine_call_result get_engine_result(
 			int my_container_id,client_process_bar process_bar,
