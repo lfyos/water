@@ -36,21 +36,21 @@ public class buffer_object_file_modify_time_and_length
 		buffer_object_total_file_length		=buffer_object_head_length;
 		
 		list=new ArrayList<ArrayList<buffer_object_file_modify_time_and_length_item>>();
-		for(int i=0,ni=fr.get_int();i<ni;i++) {
+		for(int i=0,ni=fr.get_int();i<ni;i++){
 			pp=new ArrayList<buffer_object_file_modify_time_and_length_item>();
 			list.add(i,pp);
 			for(int j=0,nj=fr.get_int();j<nj;j++){
 				p=new buffer_object_file_modify_time_and_length_item(
 						fr.get_long(),fr.get_long(),fr.get_boolean());
 				pp.add(pp.size(),p);
-				buffer_object_total_file_length+=(p.buffer_object_file_in_head_flag)?0:(p.buffer_object_text_file_length);
+				if(!(p.buffer_object_file_in_head_flag))
+					buffer_object_total_file_length+=p.buffer_object_text_file_length;
 			}
 		}
 		simple_part_mesh=new part_rude(fr);
 
 		return;
 	}
-	
 	public buffer_object_file_modify_time_and_length(
 		part_rude pr,String root_file_name,String file_charset)
 	{
@@ -84,7 +84,8 @@ public class buffer_object_file_modify_time_and_length
 				p=new buffer_object_file_modify_time_and_length_item(f.lastModified(),f.length(),
 						new File(root_file_name+file_type[i]+Long.toString(j)+".in_head_flag").exists());
 				pp.add(pp.size(),p);
-				buffer_object_total_file_length+=(p.buffer_object_file_in_head_flag)?0:(p.buffer_object_text_file_length);
+				if(!(p.buffer_object_file_in_head_flag))
+					buffer_object_total_file_length+=p.buffer_object_text_file_length;
 			}
 		}
 		
