@@ -439,6 +439,13 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			var part_package_sequence_id	=package_data_head[i][2];
 			var part_file_proxy_url			=package_data_head[i][3];
 			
+			if((part_package_sequence_id<0)||(part_package_sequence_id>=package_data_array.length)){
+				console.log("Package part_package_sequence_id is wrong:"
+					+part_package_sequence_id+"/"+package_data_array.length);
+				console.log(package_proxy_url);
+				continue;
+			}
+			
 			var part_head_data				=package_data_array[part_package_sequence_id].shift();
 			var part_affiliated_data		=package_data_array[part_package_sequence_id];
 

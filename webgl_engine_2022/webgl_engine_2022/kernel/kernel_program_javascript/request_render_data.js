@@ -216,7 +216,14 @@ async function request_render_data(render)
 			return true;
 		}
 		
-		var response_data= await render_promise.json();
+		var response_data;
+		try{
+			response_data=await render_promise.json();
+		}catch(e){
+			alert("parse fetch_web_server_response_data fail: "+e.toString());
+			alert(request_url);
+			return true;
+		}
 		if(render.terminate_flag)
 			return true;
 		

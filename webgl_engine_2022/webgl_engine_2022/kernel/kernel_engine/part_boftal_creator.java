@@ -25,8 +25,8 @@ public class part_boftal_creator extends sorter <part,String>
 	{
 		return file_directory.part_file_directory(s,system_par,scene_par).compareTo(t);
 	}
-	public part_boftal_creator(
-			String file_name,String file_charset,part my_data_array[],int part_type_id,
+	public part_boftal_creator(int part_type_id,
+			String file_name,String file_charset,part my_data_array[],
 			system_parameter my_system_par,scene_parameter my_scene_par,
 			client_process_bar process_bar,String process_bar_title)
 	{
@@ -81,8 +81,8 @@ public class part_boftal_creator extends sorter <part,String>
 		
 		if((process_bar!=null)&&(process_bar_title!=null))
 			process_bar.set_process_bar(false, process_bar_title,"",part_number,part_number);
-		
-		debug_information.println("Create boftal file: finished!	",
-				(process_bar_title==null)?"":process_bar_title);
+
+		debug_information.println(
+			"Create boftal file: finished!	",(process_bar_title==null)?"":process_bar_title);
 	}
 }

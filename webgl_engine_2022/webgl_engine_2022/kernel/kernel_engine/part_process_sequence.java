@@ -18,8 +18,14 @@ public class part_process_sequence
 	
 	public ArrayList<int[]>process_package_sequence;
 	
-	public ArrayList<ArrayList<int[]>> system_render_part_id,		type_render_part_id,		scene_render_part_id;
-	public int 							system_package_priority[],	type_package_priority[],	scene_package_priority[];
+	public ArrayList<ArrayList<int[]>>
+				system_package_render_part_id,
+				type_package_render_part_id,
+				scene_package_render_part_id;
+	public int 	
+				system_package_priority[],
+				type_package_priority[],
+				scene_package_priority[];
 	
 	public long all_buffer_object_head_package_last_modify_time;
 	
@@ -28,9 +34,10 @@ public class part_process_sequence
 		process_parts_sequence		=null;
 
 		process_package_sequence	=null;
-		system_render_part_id		=null;
-		type_render_part_id			=null;
-		scene_render_part_id		=null;
+		
+		system_package_render_part_id=null;
+		type_package_render_part_id	=null;
+		scene_package_render_part_id=null;
 		
 		system_package_priority		=null;
 		type_package_priority		=null;
@@ -98,16 +105,16 @@ public class part_process_sequence
 
 		process_package_sequence=new ArrayList<int[]>();
 		
-		system_render_part_id	=new ArrayList<ArrayList<int[]>>();
-		type_render_part_id		=new ArrayList<ArrayList<int[]>>();
-		scene_render_part_id	=new ArrayList<ArrayList<int[]>>();
+		system_package_render_part_id	=new ArrayList<ArrayList<int[]>>();
+		type_package_render_part_id		=new ArrayList<ArrayList<int[]>>();
+		scene_package_render_part_id	=new ArrayList<ArrayList<int[]>>();
 		
 		for(int i=0,ni=system_part_package.package_file_name.length;i<ni;i++)
-			system_render_part_id.add(new ArrayList<int[]>());
+			system_package_render_part_id.add(new ArrayList<int[]>());
 		for(int i=0,ni=type_part_package.package_file_name.length;i<ni;i++)
-			type_render_part_id.add(new ArrayList<int[]>());
+			type_package_render_part_id.add(new ArrayList<int[]>());
 		for(int i=0,ni=scene_part_package.package_file_name.length;i<ni;i++)
-			scene_render_part_id.add(new ArrayList<int[]>());
+			scene_package_render_part_id.add(new ArrayList<int[]>());
 
 		boolean system_flag[]	=new boolean[system_part_package.package_file_name.length];
 		boolean type_flag  []	=new boolean[type_part_package.  package_file_name.length];
@@ -133,7 +140,7 @@ public class part_process_sequence
 			switch(p.part_type_id){
 			default:
 			case 0:
-				part_id_list=system_render_part_id.get(p.part_package_id);
+				part_id_list=system_package_render_part_id.get(p.part_package_id);
 				part_id_list.add(part_id_list.size(),new int[] {p.render_id,p.part_id});
 				if(system_flag[p.part_package_id])
 					break;
@@ -148,7 +155,7 @@ public class part_process_sequence
 				
 				break;
 			case 1:
-				part_id_list=type_render_part_id.get(p.part_package_id);
+				part_id_list=type_package_render_part_id.get(p.part_package_id);
 				part_id_list.add(part_id_list.size(),new int[] {p.render_id,p.part_id});
 				
 				if(type_flag[p.part_package_id])
@@ -163,7 +170,7 @@ public class part_process_sequence
 					all_buffer_object_head_package_last_modify_time=type_part_package.package_last_time[p.part_package_id];
 				break;
 			case 2:
-				part_id_list=scene_render_part_id.get(p.part_package_id);
+				part_id_list=scene_package_render_part_id.get(p.part_package_id);
 				part_id_list.add(part_id_list.size(),new int[] {p.render_id,p.part_id});
 				if(scene_flag[p.part_package_id])
 					break;
@@ -182,9 +189,9 @@ public class part_process_sequence
 	
 	private void init_package_priority()
 	{
-		system_package_priority	=new int[system_render_part_id.size()];
-		type_package_priority	=new int[type_render_part_id.size()];
-		scene_package_priority	=new int[scene_render_part_id.size()];
+		system_package_priority	=new int[system_package_render_part_id.size()];
+		type_package_priority	=new int[type_package_render_part_id.size()];
+		scene_package_priority	=new int[scene_package_render_part_id.size()];
 		int pps_number=process_package_sequence.size();
 		
 		for(int i=0,ni=system_package_priority.length;i<ni;i++)
