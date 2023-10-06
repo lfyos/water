@@ -202,10 +202,11 @@ public class response_render_component_request
 			}
 
 			String package_proxy_url=ci.get_file_proxy_url(package_file_name,ek.system_par);
-			if(package_proxy_url==null)
-				package_proxy_url=ci.request_url_header
-					+"&command=buffer&operation=buffer_package&package="+part_type_id+"_"+part_package_id;
-
+			if(package_proxy_url==null) {
+				package_proxy_url =ci.request_url_header;
+				package_proxy_url+="&command=buffer&operation=buffer_package&package=";
+				package_proxy_url+=part_type_id+"_"+part_package_id;
+			}
 			ci.request_response.print((i<=requesting_number)?"[\"":",[\"").
 				print(package_proxy_url).print("\",",package_length).print(",[");
 

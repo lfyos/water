@@ -257,7 +257,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		return 1;
 	};
 	
-	this.create_part_array_and_vertex_data_request=async function(
+	this.create_part_array_and_vertex_data_request=function(
 			render_id,part_id,part_file_proxy_url,part_head_data,part_affiliated_data,
 			part_init_data,component_init_data,render)
 	{
@@ -315,7 +315,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		    		error_flag			:	false
 				}
 			},
-			destroy:function(render)
+			destroy						:	function(render)
 			{
 				var p;
 				for(var i=0,ni=this.component_driver_array.length;i<ni;i++){
@@ -392,21 +392,20 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 				component_init_data[my_component_id][my_driver_id],
 				part_object,part_driver,render_driver,render);
 		}		
-
+		
 		this.request_render_part_id.push([render_id,part_id,
 				part_head_data.data.max_buffer_object_data_length,
 				part_file_proxy_url,part_affiliated_data]);
+
 		return;
 	};
 
-	this.request_part_package=async function(
-			package_proxy_url,package_length,package_data_head,
-			part_init_data,component_init_data,render)
+	this.request_part_package=async function(package_proxy_url,package_length,
+			package_data_head,part_init_data,component_init_data,render)
 	{
-		this.current_loading_mesh_number++;
-		
 		if(render.terminate_flag)
 			return;
+		this.current_loading_mesh_number++;
 		var head_promise=await fetch(package_proxy_url);
 		if((!(head_promise.ok))||render.terminate_flag){
 			this.current_loading_mesh_number--;
@@ -426,7 +425,6 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			return;
 		}
 		this.current_loading_mesh_number--;
-	
 		if(render.terminate_flag)
 			return;
 
@@ -440,21 +438,23 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			var part_file_proxy_url			=package_data_head[i][3];
 			
 			if((part_package_sequence_id<0)||(part_package_sequence_id>=package_data_array.length)){
-				console.log("Package part_package_sequence_id is wrong:"
-					+part_package_sequence_id+"/"+package_data_array.length);
+				console.log("Package part_package_sequence_id is wrong"
+					+",render_id:"+render_id
+					+",part_id:"+part_id
+					+",part_package_sequence_id:"+part_package_sequence_id
+					+",package_data_array.length:"+package_data_array.length);
 				console.log(package_proxy_url);
 				continue;
 			}
-			
-			var part_head_data				=package_data_array[part_package_sequence_id].shift();
-			var part_affiliated_data		=package_data_array[part_package_sequence_id];
 
-			await this.create_part_array_and_vertex_data_request(render_id,part_id,
+			var part_head_data		=package_data_array[part_package_sequence_id].shift();
+			var part_affiliated_data=package_data_array[part_package_sequence_id];
+
+			this.create_part_array_and_vertex_data_request(render_id,part_id,
 					part_file_proxy_url,part_head_data,part_affiliated_data,
 					part_init_data,component_init_data,render);
 		}
 	}
-	
 	this.process_buffer_head_request_queue=function(part_init_data,component_init_data,render)
 	{
 		while(true){
@@ -469,8 +469,8 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			var package_length		=p[1];
 			var package_data_head	=p[2];
 
-			this.request_part_package(package_proxy_url,package_length,package_data_head,
-					part_init_data,component_init_data,render);
+			this.request_part_package(package_proxy_url,package_length,
+					package_data_head,part_init_data,component_init_data,render);
 		}
 	}
 }
