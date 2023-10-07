@@ -9,7 +9,7 @@ import kernel_file_manager.travel_through_directory;
 
 public class test_3 extends travel_through_directory
 {
-	public int sequence_id,test_file_number;
+	private int sequence_id,test_file_number;
 	private String directory_name,ex_directory_name;
 	public void operate_file(String file_name)
 	{
@@ -18,6 +18,23 @@ public class test_3 extends travel_through_directory
 		String ex_file_name=ex_directory_name+file_name.substring(directory_name.length());
 		
 		File f=new File(file_name),ex_f=new File(ex_file_name);
+		
+		if(f.exists()) {
+			if(!(ex_f.exists())){
+				debug_information.println(Integer.toString(sequence_id++),"	ex file  NOT  exist:	"+ex_file_name);
+				debug_information.println("file name 1:	",	file_name);
+				debug_information.println("file name 2:	",	ex_file_name);
+				return;
+			}
+		}else{
+			if(ex_f.exists()){
+				debug_information.println(Integer.toString(sequence_id++),"	file NOT  exist:	"+file_name);
+				debug_information.println("file name 1:	",	file_name);
+				debug_information.println("file name 2:	",	ex_file_name);
+			}
+			return;
+		}
+		
 		if(f.length()!=ex_f.length()) {
 			debug_information.println(Integer.toString(sequence_id++),".length:"+f.length()+"/"+ex_f.length());
 			debug_information.println("file name 1:	",	file_name);
@@ -85,14 +102,16 @@ public class test_3 extends travel_through_directory
 		}
 	}
 	
-	public test_3()
+	public test_3(String my_directory_name,String my_ex_directory_name)
 	{
 		sequence_id=0;
 		test_file_number=0;
-		directory_name="F:\\temp\\proxy_root_directory\\package_directory";
-		ex_directory_name="F:\\temp\\proxy_root_directory\\bak\\package_directory";
+		directory_name=my_directory_name;
+		ex_directory_name=my_ex_directory_name;
 		
 		do_travel(directory_name, true);
+		
+		debug_information.println("sequence_id:"+sequence_id+",test_file_number:"+test_file_number);
 	}
 	
 	public static void main(String args[])
@@ -100,11 +119,14 @@ public class test_3 extends travel_through_directory
 		debug_information.println("Begin");
 		
 		long tl=System.nanoTime();
-		test_3 t=new test_3();
+		new test_3(
+				"F:\\temp\\proxy_root_directory\\package_directory",
+				"F:\\temp\\proxy_root_directory\\bak\\package_directory");
+		new test_3(
+				"F:\\temp\\proxy_root_directory\\bak\\scene_directory",
+				"F:\\temp\\proxy_root_directory\\scene_directory");	
 		tl=System.nanoTime()-tl;
-		tl/=1000;
-		tl/=1000;
 		
-		debug_information.println("End:",t.sequence_id+"/"+t.test_file_number+"time length:"+tl);
+		debug_information.println("End,time length:",tl/1000);
 	}
 }
