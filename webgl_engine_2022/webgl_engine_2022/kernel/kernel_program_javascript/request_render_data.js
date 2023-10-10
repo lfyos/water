@@ -137,11 +137,9 @@ async function request_render_data(render)
 					var my_target_driver_id		=my_data[j++];
 					var my_ids=render.component_array_sorted_by_id;
 					my_ids=my_ids[my_target_component_id].component_ids;
-
 					p.target_ids={
 						component_id		:	my_target_component_id,
 						driver_id			:	my_target_driver_id,
-
 						render_id			:	my_ids[my_target_driver_id][0],
 						part_id				:	my_ids[my_target_driver_id][1],
 						data_buffer_id		:	my_ids[my_target_driver_id][2]
@@ -169,13 +167,15 @@ async function request_render_data(render)
 						p.clip_plane[0],p.clip_plane[1],p.clip_plane[2],p.clip_plane[3],1.0);
 					break;
 				case 6:
-					p.mirror_plane=null;
-					p.mirror_plane_matrix=render.computer.create_move_rotate_matrix(0,0,0,0,0,0);
+					p.camera_transformation_matrix=render.computer.create_move_rotate_matrix(0,0,0,0,0,0);
 					break;
 				case 7:
-					p.mirror_plane=[my_data[j++],my_data[j++],my_data[j++],my_data[j++]];
-					p.mirror_plane_matrix=render.computer.project_to_plane_location(
-						p.mirror_plane[0],p.mirror_plane[1],p.mirror_plane[2],p.mirror_plane[3],2.0);
+					p.camera_transformation_matrix=[
+							my_data[j++],my_data[j++],my_data[j++],my_data[j++],
+							my_data[j++],my_data[j++],my_data[j++],my_data[j++],
+							my_data[j++],my_data[j++],my_data[j++],my_data[j++],
+							my_data[j++],my_data[j++],my_data[j++],my_data[j++]
+						];
 					break;
 				case 8:
 					p.main_display_target_flag=true;
@@ -185,13 +185,12 @@ async function request_render_data(render)
 					break;
 				case 10:
 					p.target_view_parameter=new Object();
-					p.target_view_parameter.view_x0				=my_data[j++];
-					p.target_view_parameter.view_y0				=my_data[j++];
-					p.target_view_parameter.view_width			=my_data[j++];
-					p.target_view_parameter.view_height			=my_data[j++];
-					p.target_view_parameter.whole_view_width	=my_data[j++];
-					p.target_view_parameter.whole_view_height	=my_data[j++];
-
+					p.target_view_parameter.view_x0			=my_data[j++];
+					p.target_view_parameter.view_y0			=my_data[j++];
+					p.target_view_parameter.view_width		=my_data[j++];
+					p.target_view_parameter.view_height		=my_data[j++];
+					p.target_view_parameter.whole_view_width=my_data[j++];
+					p.target_view_parameter.whole_view_height=my_data[j++];
 					break;
 				}
 		}

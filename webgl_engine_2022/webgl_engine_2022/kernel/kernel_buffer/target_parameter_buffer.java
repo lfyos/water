@@ -93,26 +93,27 @@ public class target_parameter_buffer
 		}while(false);
 		
 		do{
-			if(old_rt!=null)
-				if(!((old_rt.mirror_plane!=null)^(rt.mirror_plane!=null))){
-					if(rt.mirror_plane==null)
+			if(old_rt!=null) {
+				if(!((old_rt.camera_transformation_matrix!=null)^(rt.camera_transformation_matrix!=null))){
+					if(rt.camera_transformation_matrix==null)
 						break;
-					double diff,sum=0;
-					diff=old_rt.mirror_plane.A-rt.mirror_plane.A;	sum+=diff*diff;
-					diff=old_rt.mirror_plane.B-rt.mirror_plane.B;	sum+=diff*diff;
-					diff=old_rt.mirror_plane.C-rt.mirror_plane.C;	sum+=diff*diff;
-					diff=old_rt.mirror_plane.D-rt.mirror_plane.D;	sum+=diff*diff;
+					double old_data[]=old_rt.camera_transformation_matrix.get_location_data();
+					double new_data[]=    rt.camera_transformation_matrix.get_location_data();
+					double sum=0;
+					for(int i=0,ni=old_data.length;i<ni;i++)
+						sum+=(new_data[i]-old_data[i])*(new_data[i]-old_data[i]);
 					if(sum<const_value.min_value2)
 						break;
 				}
-			if(rt.mirror_plane==null)
-				client_interface.	print(((print_number++)<=0)?"6":",6");
-			else 
-				client_interface.	print(((print_number++)<=0)?"7,":",7,").
-									print(		rt.mirror_plane.A).
-									print(",",	rt.mirror_plane.B).
-									print(",",	rt.mirror_plane.C).
-									print(",",	rt.mirror_plane.D);
+			}
+			if(rt.camera_transformation_matrix==null)
+				client_interface.print(((print_number++)<=0)?"6":",6");
+			else{
+				double new_data[]=rt.camera_transformation_matrix.get_location_data();
+				client_interface.print(((print_number++)<=0)?"7":",7");
+				for(int i=0,ni=new_data.length;i<ni;i++)
+					client_interface.print(",",new_data[i]);
+			}
 		}while(false);
 
 		do{

@@ -1,7 +1,5 @@
 package kernel_engine;
 
-import java.io.File;
-import java.nio.charset.Charset;
 import java.util.concurrent.locks.ReentrantLock;
 
 import kernel_client_interface.dispatch_request_main;
@@ -23,38 +21,6 @@ public class engine_kernel_and_client_information_container
 		engine_kernel_cont	=my_engine_kernel_cont;
 		client_information	=null;
 		access_lock_number	=0;
-	}
-	private engine_call_result create_file_result(client_information ci,String file_name,String file_charset)
-	{
-		File f=new File(file_name);
-		if(f.exists())
-			file_name=f.getAbsolutePath();
-		else{
-			debug_information.println("create_file_proxy_url error, file NOT exist\t",file_name);
-			return null;
-		}
-		if(!(f.isFile())){
-			debug_information.println("create_file_proxy_url error, file NOT normal file\t",file_name);
-			return null;
-		}
-		if(!(f.canRead())){
-			debug_information.println("create_file_proxy_url error, file CAN NOT read\t",file_name);
-			return null;
-		}
-		
-		String proxy_url;
-		if((proxy_url=ci.get_file_proxy_url(f,engine_kernel_cont.ek.system_par))!=null){
-			ci.request_response.implementor.redirect_url(
-					proxy_url,engine_kernel_cont.ek.scene_par.scene_cors_string);
-			return null;
-		}
-		caculate_charset_compress_file_name cccfn;
-		cccfn=new caculate_charset_compress_file_name(f,engine_kernel_cont.ek.system_par);
-		ci.request_response.response_content_type=cccfn.content_type_str;
-
-		return new engine_call_result(
-				cccfn.file_name,file_charset,cccfn.charset_file_name,
-				cccfn.compress_file_name,null,engine_kernel_cont.ek.scene_par.scene_cors_string);
 	}
 	private engine_call_result get_engine_result_routine(int my_container_id,
 			component_load_source_container component_load_source_cont,client_process_bar process_bar,
@@ -103,30 +69,9 @@ public class engine_kernel_and_client_information_container
 		}
 		client_information.request_response=my_request_response;
 
-		String file_name[]=dispatch_request_main.get_engine_result(
-				delay_time_length,engine_kernel_cont.ek,client_information);
-		if(file_name!=null) {
-			if(file_name.length<=0)
-				file_name=null;
-			else if(file_name[0]==null)
-				file_name=null;
-			else if(file_name.length<2)
-				file_name=new String[] {file_name[0],null};
-		}
-		if(file_name!=null) {
-			if(file_name[1]==null)
-				file_name[1]=Charset.defaultCharset().name();
-			return create_file_result(client_information,file_name[0],file_name[1]);
-		}
-
-		String my_compress_file_name=null;
-		if(engine_kernel_cont.ek.scene_par.compress_response_length>0)
-			if(client_information.request_response.output_data_length>=engine_kernel_cont.ek.scene_par.compress_response_length)
-				my_compress_file_name="do_compress_flag";
-		
-		return new engine_call_result(
-			null,null,null,my_compress_file_name,null,engine_kernel_cont.ek.scene_par.scene_cors_string);
+		return dispatch_request_main.get_engine_result(	delay_time_length,engine_kernel_cont.ek,client_information);
 	}
+	
 	public engine_call_result get_engine_result(
 			int my_container_id,client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container,
@@ -137,8 +82,10 @@ public class engine_kernel_and_client_information_container
 	{
 		engine_call_result ret_val=null;
 		ReentrantLock my_engine_kernel_container_lock;
+		
 		if((my_engine_kernel_container_lock=engine_kernel_cont.engine_kernel_container_lock)!=null){
 			my_engine_kernel_container_lock.lock();
+			
 			try{
 				ret_val=get_engine_result_routine(my_container_id,
 						component_load_source_cont,process_bar,system_boftal_container,
@@ -151,8 +98,10 @@ public class engine_kernel_and_client_information_container
 				e.printStackTrace();
 				ret_val=null;
 			};
+			
 			my_engine_kernel_container_lock.unlock();
 		}
+		
 		return ret_val;
 	}
 }

@@ -424,6 +424,9 @@ public class client_request_response extends common_writer
 	}
 	public common_writer reset()
 	{
+		output_data_length=0;
+		first_result=null;
+		last_result=null;
 		output_stream.reset();
 		return this;
 	}

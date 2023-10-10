@@ -99,22 +99,19 @@ public class system_parameter
 		proxy_par						=sp.proxy_par;
 		switch_server					=sp.switch_server;
 	}
-	public system_parameter(String application_directory_name,
-			String data_configure_environment_variable,String proxy_configure_environment_variable)
+	public system_parameter(
+			String data_configure_environment_variable,
+			String proxy_configure_environment_variable)
 	{
 		String data_configure_file_name;
 		if((data_configure_file_name=System.getenv(data_configure_environment_variable))==null)
 			data_configure_file_name=data_configure_environment_variable;
 		data_configure_file_name=file_reader.separator(data_configure_file_name.trim());
-		if(data_configure_file_name.charAt(0)=='.')
-			data_configure_file_name=application_directory_name+data_configure_file_name;
 		
 		String proxy_configure_file_name;
 		if((proxy_configure_file_name=System.getenv(proxy_configure_environment_variable))==null)
 			proxy_configure_file_name=proxy_configure_environment_variable;
 		proxy_configure_file_name=file_reader.separator(proxy_configure_file_name.trim());
-		if(proxy_configure_file_name.charAt(0)=='.')
-			proxy_configure_file_name=application_directory_name+proxy_configure_file_name;
 
 		debug_information.println();
 		debug_information.println("data_configure_environment_variable:	",		data_configure_environment_variable);
@@ -129,7 +126,6 @@ public class system_parameter
 			debug_information.println("Can't not open configure.txt on working directory");
 			debug_information.println("Check content in configure.txt on web server please");
 			debug_information.println("It probably contain error content or pointer to wrong directory");
-			debug_information.println("application_directory_name is ",application_directory_name);
 			debug_information.println("data_configure_file_name is ",data_configure_file_name);
 			debug_information.println("proxy_configure_file_name is ",proxy_configure_file_name);
 			debug_information.println("do System.exit(0)");

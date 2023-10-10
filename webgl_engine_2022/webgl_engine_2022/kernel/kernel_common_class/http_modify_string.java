@@ -9,7 +9,7 @@ public class http_modify_string
 {
 	private static  SimpleDateFormat data_format()
 	{
-		SimpleDateFormat sdf = new SimpleDateFormat("EEE,dd MMM yyyy HH:mm:ss 'GMT'", Locale.US);
+		SimpleDateFormat sdf = new SimpleDateFormat("EEE,dd MMM yyyy HH:mm:ss 'GMT'",Locale.US);
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		return sdf;
 	}

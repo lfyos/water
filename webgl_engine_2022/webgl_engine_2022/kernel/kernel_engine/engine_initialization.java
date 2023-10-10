@@ -385,11 +385,11 @@ public class engine_initialization
 						}
 						if(i==0)
 							fw.println(str);
-						else
-							fw.print("			",jason_string.change_string(str)).
-							println((j==(nj-1))?"":",");
-					}	
-					
+						else{
+							str=jason_string.change_string(str);
+							fw.print("			",str).println((j==(nj-1))?"":",");
+						}
+					}
 					if(i!=0) 
 						fw.print  ("		]");
 					else{

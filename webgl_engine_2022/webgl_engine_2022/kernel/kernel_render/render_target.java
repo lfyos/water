@@ -1,8 +1,9 @@
 package kernel_render;
 
+import kernel_component.component;
 import kernel_transformation.box;
 import kernel_transformation.plane;
-import kernel_component.component;
+import kernel_transformation.location;
 
 public class render_target
 {
@@ -18,7 +19,9 @@ public class render_target
 	public box view_volume_box;
 	public render_target_view target_view;
 
-	public plane clip_plane,mirror_plane;
+	public location camera_transformation_matrix;
+	
+	public plane clip_plane;
 
 	public boolean main_display_target_flag;
 	public boolean do_discard_lod_flag,do_selection_lod_flag;
@@ -34,7 +37,7 @@ public class render_target
 		target_view=null;
 		view_volume_box=null;
 		clip_plane=null;
-		mirror_plane=null;
+		camera_transformation_matrix=null;
 	}
 	public render_target()
 	{
@@ -55,7 +58,7 @@ public class render_target
 		view_volume_box				=new box(-1,-1,-1,1,1,1);
 
 		clip_plane					=null;
-		mirror_plane				=null;
+		camera_transformation_matrix=null;
 
 		main_display_target_flag	=false;
 		do_discard_lod_flag			=false;
@@ -67,7 +70,7 @@ public class render_target
 			component my_comp[],					int my_driver_id[],
 			int my_camera_id,						int my_parameter_channel_id,
 			render_target_view my_target_view,		box my_view_volume_box,					
-			plane my_clip_plane,					plane my_mirror_plane,
+			plane my_clip_plane,					location my_camera_transformation_matrix,
 			boolean my_do_discard_lod_flag,			boolean my_do_selection_lod_flag)
 	{
 		do_render_flag				=my_do_render_flag;
@@ -89,7 +92,7 @@ public class render_target
 										?new box(-1,-1,-1,1,1,1):new box(my_view_volume_box);
 
 		clip_plane					=my_clip_plane;
-		mirror_plane				=my_mirror_plane;
+		camera_transformation_matrix=my_camera_transformation_matrix;
 
 		main_display_target_flag	=false;
 		do_discard_lod_flag			=my_do_discard_lod_flag;
