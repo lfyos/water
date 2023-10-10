@@ -176,7 +176,6 @@ public class client_request_switcher
 	{
 		if(system_par==null){
 			system_parameter my_system_par=new system_parameter(
-					network_implementor.get_application_directory(),
 					data_configure_environment_variable,proxy_configure_environment_variable);
 			program_javascript=new javascript_program(my_system_par);
 			
@@ -186,8 +185,10 @@ public class client_request_switcher
 			system_par=my_system_par;
 		}
 	}
-	public void process_system_call(network_implementation network_implementor,
-			String data_configure_environment_variable,String proxy_configure_environment_variable)
+	public void process_system_call(
+			String data_configure_environment_variable,
+			String proxy_configure_environment_variable,
+			network_implementation network_implementor)
 	{
 		if(system_par==null)
 			init(network_implementor,data_configure_environment_variable,proxy_configure_environment_variable);

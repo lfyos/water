@@ -1,6 +1,6 @@
 <%@page import="java.io.File"%>
 <%@page import="java.io.InputStream"%>
-<%@page import="kernel_service.jsp_network_implementation"%>
+<%@page import="kernel_servlet.servlet_network_implementation"%>
 <%@page import="kernel_file_manager.file_writer"%>
 <%@page import="format_convert.protected_cadex_converter"%>
 <%@page import="format_convert.web_converter"%>
@@ -136,7 +136,7 @@ function file_name_change()
 			fw.close();
 			break;
 		}
-		InputStream is=new jsp_network_implementation(request,session,response,application).get_content_stream();
+		InputStream is=new servlet_network_implementation(request,response).get_content_stream();
 		if(is==null){
 			fw.close();
 			file_writer.file_delete(source_file_name);

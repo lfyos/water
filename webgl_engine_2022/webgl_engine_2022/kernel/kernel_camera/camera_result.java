@@ -74,18 +74,9 @@ public class camera_result
 	
 	private void basic_init()
 	{
-		if(target.mirror_plane==null)
-			camera_absolute_matrix=cam.eye_component.absolute_location;
-		else
-			camera_absolute_matrix=target.mirror_plane.reflect_by_plane_location().
-				multiply(cam.eye_component.absolute_location).
-				multiply(new location(new double[]
-					{
-							1,	 0,		0,		0,
-							0,	-1,		0,		0,
-							0,	 0,		1,		0,
-							0,	 0,		0,		1
-					}));
+		camera_absolute_matrix=cam.eye_component.absolute_location;
+		if(target.camera_transformation_matrix!=null)
+			camera_absolute_matrix=target.camera_transformation_matrix.multiply(camera_absolute_matrix);
 		
 		location negative_lookat_matrix	=camera_absolute_matrix.multiply(location.move_rotate(0,0,cam.parameter.distance,0,0,0));
 		location lookat_matrix			=negative_lookat_matrix.negative();

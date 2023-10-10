@@ -217,30 +217,10 @@ function construct_camera_object(camera_number,my_component_location_data,my_com
 		var camera_component_id	=this.camera_object_parameter[camera_id].component_id;
 		var camera_location		=this.component_location_data.get_component_location(camera_component_id);
 		var camera_distance		=this.camera_object_parameter[camera_id].distance;
-		var mirror_change_plane	=camera_render_parameter.mirror_plane;
-		var mirror_change_matrix=camera_render_parameter.mirror_plane_matrix;
-
-		var lookat_matrix;
-
-		do{
-			if((mirror_change_plane!=null)&&(mirror_change_matrix!=null))
-				if(mirror_change_matrix.length>=16){
-					lookat_matrix=this.computer.matrix_multiplication(mirror_change_matrix,camera_location);
-					lookat_matrix=this.computer.matrix_multiplication(lookat_matrix,
-						this.computer.create_move_rotate_matrix(0,0,camera_distance,0,0,0));
-					lookat_matrix=this.computer.matrix_multiplication(lookat_matrix,
-							[
-								1,	0,	0,	0,
-								0,	-1,	0,	0,
-								0,	0,	1,	0,
-								0,	0,	0,	1
-							]);
-					break;
-				}		
-			lookat_matrix=this.computer.matrix_multiplication(camera_location,
-					this.computer.create_move_rotate_matrix(0,0,camera_distance,0,0,0));
-		}while(false);
-		
+		var lookat_matrix		=camera_render_parameter.camera_transformation_matrix;
+		lookat_matrix			=this.computer.matrix_multiplication(lookat_matrix,camera_location);
+		lookat_matrix			=this.computer.matrix_multiplication(lookat_matrix,
+									this.computer.create_move_rotate_matrix(0,0,camera_distance,0,0,0));
 		return {
 			matrix			:	this.computer.matrix_negative(lookat_matrix),
 			negative_matrix	:	lookat_matrix,
@@ -365,9 +345,6 @@ function construct_camera_object(camera_number,my_component_location_data,my_com
 				
 		project_matrix.clip_plane			=camera_render_parameter.clip_plane;
 		project_matrix.clip_plane_matrix	=camera_render_parameter.clip_plane_matrix;
-		
-		project_matrix.mirror_plane			=camera_render_parameter.mirror_plane;
-		project_matrix.mirror_plane_matrix	=camera_render_parameter.mirror_plane_matrix;
 		
 		project_matrix.view_volume_box		=camera_render_parameter.view_volume_box;
 

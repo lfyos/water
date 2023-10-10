@@ -1,36 +1,25 @@
-package kernel_service;
+package kernel_servlet;
 
-import java.io.File;
 import java.io.InputStream;
 
-import javax.servlet.ServletOutputStream;
-
 import kernel_common_class.debug_information;
-import kernel_file_manager.file_reader;
 import kernel_network.network_implementation;
 import kernel_network.network_implementation_default_parameter;
 
-public class jsp_network_implementation implements network_implementation
+public class servlet_network_implementation implements network_implementation
 {
 	//request
-
 	private javax.servlet.http.HttpServletRequest	request;
 	private javax.servlet.http.HttpServletResponse 	response;
-	private javax.servlet.ServletContext			application;
-	private ServletOutputStream 					output_stream;
 	
 	private String request_charset,client_id;
 	
-	public jsp_network_implementation(
+	public servlet_network_implementation(
 			javax.servlet.http.HttpServletRequest	my_request,
-			javax.servlet.http.HttpSession			my_session,
-			javax.servlet.http.HttpServletResponse	my_response,
-			javax.servlet.ServletContext			my_application)
+			javax.servlet.http.HttpServletResponse	my_response)
 	{
 		request			=my_request;
 		response		=my_response;
-		application		=my_application;
-		output_stream	=null;
 
 		if((request_charset=request.getCharacterEncoding())==null)
 			request_charset=network_implementation_default_parameter.network_request_charset;
@@ -41,7 +30,6 @@ public class jsp_network_implementation implements network_implementation
 		}
 		if((client_id=request.getRemoteAddr())==null)
 			client_id="NoRemoteAddr";
-//		client_id =client_id+"/"+my_session.getId();
 	}
 	static private void print_error(boolean print_stack_trace_flag,
 			String front_msg,Exception e,String end_msg_1,String end_msg_2)
@@ -89,19 +77,6 @@ public class jsp_network_implementation implements network_implementation
 	{
 		return client_id;
 	}
-	public String get_application_directory()
-	{
-		String application_directory;
-		if((application_directory=application.getRealPath(""))==null)
-			application_directory="";
-		else {
-			int index_id;
-			application_directory=file_reader.separator(application_directory);
-			if((index_id=application_directory.lastIndexOf(File.separatorChar))>=0)
-				application_directory=application_directory.substring(0,index_id+1);
-		}
-		return application_directory;
-	}
 	public void redirect_url(String url,String cors_string)
 	{
 		response.setHeader("Access-Control-Allow-Origin",cors_string);
@@ -139,42 +114,32 @@ public class jsp_network_implementation implements network_implementation
 			response.setHeader("Cache-Control","public");
 			response.addHeader("Cache-Control","max-age="+max_age_string);
 		}
-		try{
-			output_stream=response.getOutputStream();
-		}catch(Exception e){
-			output_stream=null;
-			print_error(true,"output_stream=response.getOutputStream() fail:\t",e,"Client_id:"+client_id,error_msg);
-		}
 	}
 	public boolean response_binary_data(String error_msg,byte data_buf[],int length)
 	{
-		if(output_stream==null)
-			debug_information.println("response_binary_data find output_stream==null");
-		else
-			try{
-				output_stream.write(data_buf,0,length);
-				return false;
-			}catch(Exception e){
-				print_error(false,"response_binary_data fail:\t",e,"Client_id:"+client_id+"\n",error_msg);
-			}
-		return true;
+		try{
+			response.getOutputStream().write(data_buf,0,length);
+			return false;
+		}catch(Exception e){
+			print_error(false,"response_binary_data fail:\t",e,"Client_id:"+client_id,error_msg);
+			return true;
+		}
 	}
 	public void terminate_response_binary_data(String error_msg)
 	{
-		if(output_stream==null)
-			debug_information.println("terminate_response_binary_data find output_stream==null");
-		else
-			try{
-				output_stream.flush();
-			}catch(Exception e){
-				print_error(false,"terminate_response_binary_data:output_stream.flush() fail:\t",
+		try{
+			response.getOutputStream().flush();
+		}catch(Exception e){
+			print_error(false,
+					"terminate_response_binary_data:output_stream.flush() fail:\t",
 						e,"Client_id:"+client_id,error_msg);
-			}
+		}
 		try{
 			response.flushBuffer();
 		}catch(Exception e){
 			print_error(false,
-					"terminate_response_binary_data: response.flushBuffer() fail:\t",e,"Client_id:"+client_id+"\n",error_msg);
+					"terminate_response_binary_data: response.flushBuffer() fail:\t",
+					e,"Client_id:"+client_id+"\n",error_msg);
 		}
 	}
 	public InputStream get_content_stream()
@@ -185,5 +150,5 @@ public class jsp_network_implementation implements network_implementation
 			print_error(true,"get_input_stream() fail:\t",e,"Client_id:"+client_id,"");
 			return null;
 		}
-	};
+	}
 }

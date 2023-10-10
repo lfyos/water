@@ -13,7 +13,6 @@ public interface network_implementation
 	
 	public String get_url();
 	public String get_client_id();
-	public String get_application_directory();
 	
 	public void redirect_url(String url,String cors_string);
 	

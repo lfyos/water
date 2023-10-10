@@ -36,13 +36,13 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 	
 	this.save_data_into_buffer_object=function(my_material_id,object_pointer,buffer_object_data)
 	{
-		if(typeof(buffer_object_data.item_size)=="number"){
+		if((typeof(buffer_object_data.item_size)=="number")&&(typeof(buffer_object_data.item_number)!="number")){
 			buffer_object_data.item_size	=Math.round(buffer_object_data.item_size);
 			buffer_object_data.item_number	=Math.floor(buffer_object_data.region_data.length/buffer_object_data.item_size);
-		}else if(typeof(buffer_object_data.item_number)=="number"){
+		}else if((typeof(buffer_object_data.item_size)!="number")&&(typeof(buffer_object_data.item_number)=="number")){
 			buffer_object_data.item_number	=Math.floor(buffer_object_data.item_number);
 			buffer_object_data.item_size	=Math.floor(buffer_object_data.region_data.length/buffer_object_data.item_number);
-		}else
+		}else if((typeof(buffer_object_data.item_size)!="number")&&(typeof(buffer_object_data.item_number)!="number"))
 			return;
 
 		object_pointer.region_data.push(
