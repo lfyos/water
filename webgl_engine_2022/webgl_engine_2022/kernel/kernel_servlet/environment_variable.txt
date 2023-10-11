@@ -1,0 +1,2 @@
+/* data environment name	*/	liufuyan_data_configure
+/* proxy environment name	*/	liufuyan_proxy_configure

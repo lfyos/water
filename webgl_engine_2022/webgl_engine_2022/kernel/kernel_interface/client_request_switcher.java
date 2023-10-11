@@ -171,28 +171,9 @@ public class client_request_switcher
 			request_response.request_time=current_time;
 		return ecr;
 	}
-	synchronized private void init(network_implementation network_implementor,
-		String data_configure_environment_variable,String proxy_configure_environment_variable)
+	
+	public void process_system_call(network_implementation network_implementor)
 	{
-		if(system_par==null){
-			system_parameter my_system_par=new system_parameter(
-					data_configure_environment_variable,proxy_configure_environment_variable);
-			program_javascript=new javascript_program(my_system_par);
-			
-			client_container=new client_interface_container[my_system_par.max_client_container_number];
-			for(int i=0,ni=client_container.length;i<ni;i++)
-				client_container[i]=new client_interface_container();
-			system_par=my_system_par;
-		}
-	}
-	public void process_system_call(
-			String data_configure_environment_variable,
-			String proxy_configure_environment_variable,
-			network_implementation network_implementor)
-	{
-		if(system_par==null)
-			init(network_implementor,data_configure_environment_variable,proxy_configure_environment_variable);
-		
 		client_request_response request_response=new client_request_response(
 			system_par.network_data_charset,network_implementor);
 		
@@ -221,12 +202,18 @@ public class client_request_switcher
 		request_response.destroy();
 		return;
 	}
-	public client_request_switcher()
+	public client_request_switcher(
+			String data_configure_environment_variable,
+			String proxy_configure_environment_variable)
 	{
-		system_par			=null;
-		program_javascript	=null;
-		client_container	=null;
+		system_par=new system_parameter(
+				data_configure_environment_variable,proxy_configure_environment_variable);
+		program_javascript=new javascript_program(system_par);
 		
+		client_container=new client_interface_container[system_par.max_client_container_number];
+		for(int i=0,ni=client_container.length;i<ni;i++)
+			client_container[i]=new client_interface_container();
+
 		engine_container	=new engine_interface_container();
 		download_proxy		=new proxy_downloader();
 		engine_counter		=new create_engine_counter();

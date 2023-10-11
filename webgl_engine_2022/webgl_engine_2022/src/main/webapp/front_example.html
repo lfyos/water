@@ -7,7 +7,7 @@ var lfy_render;
 
 async function body_onload()
 {
-	lfy_render=await (await import("./interface.jsp")).main(
+	lfy_render=await (await import("./liufuyan_engine")).main(
 		["my_canvas"],		//Object类型的绘图画布。如果是String类型,则系统使用document.getElementById("my_canvas")将其转换为Object类型数据。
 		"NoName",			//用户名
 		"NoPassword",		//用户密码
