@@ -1,8 +1,21 @@
-		if(render.component_event_processor[this.component_id]!=null){
-			if(typeof(render.component_event_processor[this.component_id].destroy)=="function")
-				render.component_event_processor[this.component_id].destroy(render);
-			render.component_event_processor[this.component_id]=null;
-		}
+	<servlet>
+        <servlet-name>servlet_server</servlet-name>
+        <servlet-class>kernel_servlet.servlet_server</servlet-class>
+        <init-param>
+            <param-name>data_configure_environment_variable</param-name>
+            <param-value>liufuyan_data_configure</param-value>
+        </init-param>
+        <init-param>
+            <param-name>proxy_configure_environment_variable</param-name>
+            <param-value>liufuyan_proxy_configure</param-value>
+        </init-param>
+        <load-on-startup>10</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>	servlet_server		</servlet-name>
+     	<url-pattern>	webgpu_interface	</url-pattern>
+    </servlet-mapping>
 
 
 set JAVA_OPTS=-server -Xms1920m -Xmx2148m -XX:MaxNewSize=512m -XX:MaxPermSize=256m

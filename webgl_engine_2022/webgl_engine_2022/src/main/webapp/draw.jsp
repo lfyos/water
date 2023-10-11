@@ -32,7 +32,7 @@ var lfy_render;
 
 async function body_onload()
 {
-	lfy_render=await (await import("./interface.jsp")).main(
+	lfy_render=await (await import("./liufuyan_engine")).main(
 		["my_canvas"],
 		user_name,pass_word,language,scene_name,link_name,
 			//1.Object类型的绘图画布。
