@@ -99,19 +99,35 @@ public class system_parameter
 		proxy_par						=sp.proxy_par;
 		switch_server					=sp.switch_server;
 	}
-	public system_parameter(
-			String data_configure_environment_variable,
-			String proxy_configure_environment_variable)
+	public system_parameter(String data_configure_file_name)
 	{
-		String data_configure_file_name;
+		data_configure_file_name=file_reader.separator(data_configure_file_name);
+		file_reader f=new file_reader(data_configure_file_name,null);
+		if(f.error_flag()){
+			debug_information.println("Can't not open configure.txt on working directory:	",data_configure_file_name);
+			debug_information.println("do System.exit(0)");
+			System.exit(0);
+			return;
+		}
+		String data_configure_environment_variable=f.get_string();
+		String proxy_configure_environment_variable=f.get_string();
+		f.close();
+		
+		int index_id=data_configure_file_name.lastIndexOf(File.separatorChar);
+		String application_directory_name=data_configure_file_name.substring(0,index_id+1);
+	
 		if((data_configure_file_name=System.getenv(data_configure_environment_variable))==null)
 			data_configure_file_name=data_configure_environment_variable;
 		data_configure_file_name=file_reader.separator(data_configure_file_name.trim());
-		
+		if(data_configure_file_name.charAt(0)=='.')
+			data_configure_file_name=application_directory_name+data_configure_file_name;
+
 		String proxy_configure_file_name;
 		if((proxy_configure_file_name=System.getenv(proxy_configure_environment_variable))==null)
 			proxy_configure_file_name=proxy_configure_environment_variable;
 		proxy_configure_file_name=file_reader.separator(proxy_configure_file_name.trim());
+		if(proxy_configure_file_name.charAt(0)=='.')
+			proxy_configure_file_name=application_directory_name+proxy_configure_file_name;
 
 		debug_information.println();
 		debug_information.println("data_configure_environment_variable:	",		data_configure_environment_variable);
@@ -119,20 +135,11 @@ public class system_parameter
 		debug_information.println("proxy_configure_environment_variable:	",	proxy_configure_environment_variable);
 		debug_information.println("proxy_configure_file_name:		",			proxy_configure_file_name);
 
-		file_reader f=new file_reader(data_configure_file_name,Charset.defaultCharset().name());
+		f=new file_reader(data_configure_file_name,Charset.defaultCharset().name());
 		if(f.error_flag()){
-			debug_information.println();
-			debug_information.println();
-			debug_information.println("Can't not open configure.txt on working directory");
-			debug_information.println("Check content in configure.txt on web server please");
-			debug_information.println("It probably contain error content or pointer to wrong directory");
-			debug_information.println("data_configure_file_name is ",data_configure_file_name);
-			debug_information.println("proxy_configure_file_name is ",proxy_configure_file_name);
+			debug_information.println("Can't not open system_parameter file	",data_configure_file_name);
 			debug_information.println("do System.exit(0)");
-			debug_information.println();
-			
 			System.exit(0);
-			
 			return;
 		}
 		

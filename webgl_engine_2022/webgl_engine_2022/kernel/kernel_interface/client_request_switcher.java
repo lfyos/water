@@ -202,15 +202,12 @@ public class client_request_switcher
 		request_response.destroy();
 		return;
 	}
-	public client_request_switcher(
-			String data_configure_environment_variable,
-			String proxy_configure_environment_variable)
+	public client_request_switcher(String configure_file_name)
 	{
-		system_par=new system_parameter(
-				data_configure_environment_variable,proxy_configure_environment_variable);
-		program_javascript=new javascript_program(system_par);
+		system_par			=new system_parameter(configure_file_name);
+		program_javascript	=new javascript_program(system_par);
 		
-		client_container=new client_interface_container[system_par.max_client_container_number];
+		client_container	=new client_interface_container[system_par.max_client_container_number];
 		for(int i=0,ni=client_container.length;i<ni;i++)
 			client_container[i]=new client_interface_container();
 
@@ -219,6 +216,6 @@ public class client_request_switcher
 		engine_counter		=new create_engine_counter();
 		
 		creation_engine_lock_number	=0;
-		next_client_container_id=0;
+		next_client_container_id	=0;
 	}
 }
