@@ -203,11 +203,7 @@ async function request_render_data(render)
 		
 		if(render.terminate_flag)
 			return true;
-		var render_promise=await fetch(request_url,
-				{
-   					method	:	"POST",
-   					cache	:	"no-cache"
-   				});
+		var render_promise=await fetch(request_url,render.fetch_parameter.request_render_data);
    		if(render.terminate_flag)
 			return true;
 		if(!(render_promise.ok)){

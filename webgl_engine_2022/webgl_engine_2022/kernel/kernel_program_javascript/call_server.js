@@ -26,32 +26,15 @@ function construct_server_caller(my_render)
 		this.call_server_component						=null;
 	};
 	this.call_server=async function(request_url,response_type_string,server_request_parameter)
-	/*
-			server_request_parameter
-			{
-			    method: "POST", 						// *GET, POST, PUT, DELETE, etc.
-			    mode: "cors", 							// no-cors, *cors, same-origin 
-			    cache: "no-cache",						// *default, no-cache, reload, force-cache, only-if-cached
-			    credentials: "same-origin",		 		// include, *same-origin, omit
-			    headers: {
-			      "Content-Type": "application/json"	//"text/plain"	"image/png"	etc
-			    },
-			    redirect: "follow", 					// manual, *follow, error
-			    referrerPolicy: "no-referrer",			// no-referrer, *no-referrer-when-downgrade,
-												    	// origin, origin-when-cross-origin, same-origin, 
-												    	// strict-origin, strict-origin-when-cross-origin, unsafe-url
-			    body: JSON.stringify(data), 			// body data type must match "Content-Type" header
-			    										// example: uploaded_canvas.toDataURL()
-			  });
-	*/
 	{
 		var my_render;
 		if((my_render=this.render).terminate_flag)
 			return null;
+		
 		var server_promise=await fetch(request_url,
-				(typeof(server_request_parameter)!="object")?new Object():
-				(server_request_parameter==null)			?new Object():
-				server_request_parameter);
+				(typeof(server_request_parameter)!="object")?(my_render.fetch_parameter.call_server):
+				(server_request_parameter==null)			?(my_render.fetch_parameter.call_server):
+				(Object.assign(server_request_parameter,my_render.fetch_parameter.call_server)));
 		if(my_render.terminate_flag)
 			return null;
 		if(!(server_promise.ok)){

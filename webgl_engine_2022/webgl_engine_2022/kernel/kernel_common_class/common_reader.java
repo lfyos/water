@@ -241,11 +241,15 @@ public class common_reader
 	}
 	public int get_text(common_writer cw)
 	{
+		return get_text(cw,"");
+	}
+	public int get_text(common_writer cw,String pre_str)
+	{
 		int ret_val=0;
 		
 		for(String str;!(eof());)
 			if((str=get_line())!=null) {
-				cw.println(str);
+				cw.println(pre_str,str);
 				ret_val+=str.length();
 			}
 		return ret_val;

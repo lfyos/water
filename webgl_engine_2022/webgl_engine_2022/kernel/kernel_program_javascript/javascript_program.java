@@ -1,9 +1,11 @@
 package kernel_program_javascript;
 
+import java.io.File;
 import java.util.Date;
 
 import kernel_engine.engine_call_result;
 import kernel_engine.system_parameter;
+import kernel_file_manager.file_reader;
 import kernel_common_class.http_modify_string;
 import kernel_common_class.class_file_reader;
 import kernel_common_class.common_reader;
@@ -12,6 +14,7 @@ import kernel_network.client_request_response;
 
 public class javascript_program
 {
+	private String default_fetch_parameter_filename;
 	private long last_modified_time;
 	
 	private static final String javascript_file_name[]=new String[] 
@@ -28,7 +31,12 @@ public class javascript_program
 	}	
 	public javascript_program(system_parameter system_par)
 	{
-		last_modified_time=0;
+		default_fetch_parameter_filename =system_par.default_parameter_directory;
+		default_fetch_parameter_filename+="servlet_parameter/fetch_parameter/parameter.txt";
+		default_fetch_parameter_filename =file_reader.separator(default_fetch_parameter_filename);
+		
+		last_modified_time=new File(default_fetch_parameter_filename).lastModified();
+		
 		for(int i=0,ni=javascript_file_name.length;i<ni;i++) {
 			common_reader cr=class_file_reader.get_reader(javascript_file_name[i],
 				getClass(),system_par.js_class_charset,system_par.js_jar_file_charset);
@@ -73,13 +81,19 @@ public class javascript_program
 			}
 		}
 		
-		String str[]=new String[]{
-				"export var main=async function(my_canvas,my_user_name,my_pass_word,my_language_name,",
-				"		scene_name,link_name,initialization_parameter,progress_bar_function)",
-				"{"
+		String str[]=new String[]
+		{
+			"export var main=async function(my_canvas,my_user_name,my_pass_word,my_language_name,",
+			"		scene_name,link_name,initialization_parameter,progress_bar_function)",
+			"{"
 		};
 		for(int i=0,ni=str.length;i<ni;i++)
 			request_response.println(str[i]);
+		
+		request_response.println("	var default_fetch_parameter=");
+		file_reader fr=new file_reader(default_fetch_parameter_filename,system_par.local_data_charset);
+		fr.get_text(request_response,"	");
+		fr.close();
 
 		for(int i=0,ni=javascript_file_name.length;i<ni;i++) {
 			common_reader cr=class_file_reader.get_reader(javascript_file_name[i],
@@ -106,11 +120,10 @@ public class javascript_program
 							+system_par.create_engine_max_sleep_time_length		+",my_canvas,"		,
 				"		\""	+request_response.implementor.get_url()	+"\","							,
 				"		my_user_name,my_pass_word,my_language_name,scene_name,link_name,"			,
-				"		initialization_parameter,progress_bar_function);"	,
-				"	return ret_val;",
+				"		initialization_parameter,progress_bar_function,default_fetch_parameter);"	,
+				"	return ret_val;"																,
 				"};"
 		};
-		
 		for(int i=0,ni=str.length;i<ni;i++)
 			request_response.println(str[i]);
 		
