@@ -1,6 +1,6 @@
 function construct_render_routine(my_webgpu,my_url,
 	my_user_name,my_pass_word,my_language_name,
-	my_container_id,my_channel_id,render_data)
+	my_container_id,my_channel_id,render_data,default_fetch_parameter)
 {
 	var component_number				=render_data[0];
 	var render_number					=render_data[1];
@@ -11,6 +11,7 @@ function construct_render_routine(my_webgpu,my_url,
     this.title							=render_data[6];
     this.parameter						=render_data[7];
 
+	this.fetch_parameter			=default_fetch_parameter;
 	this.webgpu						=my_webgpu;
 	this.url						=my_url;
 	this.url_without_channel		=this.url

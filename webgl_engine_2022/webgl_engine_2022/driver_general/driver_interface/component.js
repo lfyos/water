@@ -160,7 +160,7 @@ function create_bind_group(init_data,render_driver,render)
 									|GPUTextureUsage.RENDER_ATTACHMENT
 		    	});
 		}else{
-			var my_response 	=	await fetch(init_data.url);
+			var my_response 	=	await fetch(init_data.url,render.fetch_parameter.call_server);
 			if(render.terminate_flag){
 				this.is_busy_flag=false;
 				return;

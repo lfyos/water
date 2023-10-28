@@ -106,7 +106,7 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 		}
 	};
 	
-	this.request_process_bar_data=async function()
+	this.request_process_bar_data=async function(default_fetch_parameter)
 	{
 		var process_bar=this.process_bar_url+"&command=data";
 		process_bar+="&container="	+this.process_bar_data.container_id;
@@ -114,7 +114,7 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 			
 		while(this.process_bar_data!=null){
 			var start_time=new Date().getTime();
-			var data_promise=await fetch(process_bar);
+			var data_promise=await fetch(process_bar,default_fetch_parameter.load_process_bar_data);
 			if(!(data_promise.ok)){
 				this.destroy();
 				alert("render_show_process_bar fail:"+data_promise.status);
@@ -152,9 +152,10 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 		};
 	};
 	
-	this.start=async function()
+	this.start=async function(default_fetch_parameter)
 	{
-		var process_bar_promise=await fetch(this.process_bar_url+"&command=request");
+		var process_bar_promise=await fetch(
+				this.process_bar_url+"&command=request",default_fetch_parameter.request_process_bar);
 		if(!(process_bar_promise.ok)){
 			alert("render_main create process bar error,status is "+process_bar_promise.status);
 			alert(this.process_bar_url+"&command=request");
@@ -167,7 +168,7 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 			alert(this.process_bar_url+"&command=request");
 			return null;
 		}
-		this.request_process_bar_data();
+		this.request_process_bar_data(default_fetch_parameter);
 		this.draw_process_bar();
 	
 		return this.process_bar_data;

@@ -43,7 +43,7 @@ function construct_collector_loader_object(my_render)
 			
 			var load_collector_url=this.collector_url(simple_list_flag,single_collector_flag,location_flag);
 			
-			var load_collector_promise=await fetch(load_collector_url);
+			var load_collector_promise=await fetch(load_collector_url,my_render.fetch_parameter.load_collector);
 			if((!(load_collector_promise.ok))||my_render.terminate_flag){
 				epcd.is_loading_collector_flag=false;
 				epcd.collector_stack_version=old_collector_stack_version;
