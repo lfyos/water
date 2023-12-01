@@ -379,7 +379,7 @@ public class render_container
 			debug_information.println("Driver name:	",	driver_name);
 			
 			int render_id=(renders==null)?0:(renders.size());
-			render ren=new render(render_id,render_name,driver_name,request_response,system_par,scene_par);
+			render ren=new render(render_id,f_shader,render_name,driver_name,request_response,system_par,scene_par);
 			if(ren.driver==null) {
 				debug_information.print  ("ren.driver==null		",driver_name);
 				continue;

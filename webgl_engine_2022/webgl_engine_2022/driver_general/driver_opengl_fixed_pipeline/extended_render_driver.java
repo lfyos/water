@@ -23,15 +23,8 @@ public class extended_render_driver extends render_driver
 	{
 		super();
 		
-		file_charset=null;
 		light_file_name=null;
-	}
-	public extended_render_driver(String my_light_file_name,String my_file_charset)
-	{
-		super();
-		
-		file_charset=my_file_charset;
-		light_file_name=my_light_file_name;
+		file_charset=null;
 	}
 	public void destroy()
 	{
@@ -40,13 +33,21 @@ public class extended_render_driver extends render_driver
 		light_file_name=null;
 		file_charset=null;
 	}
-	public void initialize_render_driver(int render_id,engine_kernel ek,client_request_response request_response)
-	{	
+	public render_driver create(file_reader f_shader,
+			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
+	{
+		return new extended_render_driver();
 	}
 	public render_driver clone(render parent_render,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_render_driver(light_file_name,file_charset);
+		extended_render_driver ret_val=new extended_render_driver();
+		ret_val.light_file_name	=this.light_file_name;
+		ret_val.file_charset	=this.file_charset;
+		return ret_val;
+	}
+	public void initialize_render_driver(int render_id,engine_kernel ek,client_request_response request_response)
+	{	
 	}
 	public String[] get_render_list(
 			int part_type_id,file_reader shader_fr,String load_sub_directory_name,
