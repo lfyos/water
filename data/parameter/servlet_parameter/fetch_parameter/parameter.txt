@@ -1,44 +1,44 @@
 {
-	request_process_bar:
+	request_process_bar	:
 	{
    		method	:	"POST",
    		cache	:	"no-cache"
    	},
-	load_process_bar_data:
-	{
-   		method	:	"POST",
-   		cache	:	"no-cache"
-   	},
-	
-	request_create_engine:
-	{
-   		method	:	"POST",
-   		cache	:	"no-cache"
-   	},
-	request_render_data:
+	load_process_bar_data	:
 	{
    		method	:	"POST",
    		cache	:	"no-cache"
    	},
 	
-	call_server:
+	request_create_engine	:
+	{
+   		method	:	"POST",
+   		cache	:	"no-cache"
+   	},
+	request_render_data	:
 	{
    		method	:	"POST",
    		cache	:	"no-cache"
    	},
 	
-	load_collector:
+	call_server	:
 	{
    		method	:	"POST",
    		cache	:	"no-cache"
    	},
 	
-	load_part_head:
+	load_collector	:
 	{
    		method	:	"POST",
    		cache	:	"no-cache"
    	},
-	load_part_data:
+	
+	load_part_head	:
+	{
+   		method	:	"POST",
+   		cache	:	"no-cache"
+   	},
+	load_part_data	:
 	{
    		method	:	"POST",
    		cache	:	"no-cache"

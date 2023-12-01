@@ -61,7 +61,7 @@ public class render
 				if((p=r.parts.get(i))!=null)
 					parts.add(i,new part(p,request_response,system_par,scene_par));
 	}
-	public render(int my_render_id,
+	public render(int my_render_id,file_reader f_shader,
 			String my_render_name,String my_driver_name,
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
@@ -86,7 +86,7 @@ public class render
 			return;
 	    }
 		render_driver original_driver=(render_driver)render_driver_object;
-		driver=original_driver.clone(null,request_response,system_par,scene_par);
+		driver=original_driver.create(f_shader,request_response,system_par,scene_par);
 		original_driver.destroy();
 		
 		program_last_time=0;
