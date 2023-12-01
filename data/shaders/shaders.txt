@@ -1,45 +1,44 @@
 /*	########################	driver_general		#######################		*/
 
-/*	render_0	*/	pickup						driver_pickup.extended_render_driver					driver_general\pickup\render.list
-/*	render_1	*/	caption						driver_caption.extended_render_driver					driver_general\caption\render.list
-/*	render_2	*/	movement					driver_movement.extended_render_driver					driver_general\movement\render.list
-/*	render_3	*/	interface					driver_interface.extended_render_driver					driver_general\interface\render.list
-/*	render_4	*/	background					driver_background.extended_render_driver				driver_general\background\render.list
-/*	render_5	*/	coordinate					driver_coordinate.extended_render_driver				driver_general\coordinate\render.list
-/*	render_6	*/	show_target					driver_show_target.extended_render_driver				driver_general\show_target\render.list 
-/*	render_7	*/	manipulator					driver_manipulator.extended_render_driver				driver_general\manipulator\render.list
-/*	render_8	*/	audio_player				driver_audio_player.extended_render_driver				driver_general\audio_player\render.list
-/*	render_9	*/	distance_tag				driver_distance_tag.extended_render_driver				driver_general\distance_tag\render.list
-/*	render_10	*/	proxy_register				driver_proxy_register.extended_render_driver			driver_general\proxy_register\render.list
-/*	render_11	*/	component_marker			driver_component_marker.extended_render_driver			driver_general\component_marker\render.list
-/*	render_12	*/	screen_rectangle			driver_screen_rectangle.extended_render_driver			driver_general\screen_rectangle\render.list
-/*	render_13	*/	camera_operation			driver_camera_operation.extended_render_driver			driver_general\camera_operation\render.list
-						/*		depth_start,depth_end		*/		0.0		0.1
-/*	render_14	*/	location_modifier			driver_location_modifier.extended_render_driver			driver_general\location_modifier\render.list	
-/*	render_15	*/	show_component_box			driver_show_component_box.extended_render_driver		driver_general\show_component_box\render.list
-/*	render_16	*/	component_selection			driver_component_selection.extended_render_driver		driver_general\component_selection\render.list
-/*	render_17	*/	mouse_modify_location		driver_mouse_modify_location.extended_render_driver		driver_general\mouse_modify_location\render.list
-/*	render_18	*/	render_target_register		driver_render_target_register.extended_render_driver	driver_general\render_target_register\render.list
+/*	render_0	*/	pickup											driver_pickup.extended_render_driver					driver_general\pickup\render.list
+/*	render_1	*/	caption											driver_caption.extended_render_driver					driver_general\caption\render.list
+/*	render_2	*/	movement										driver_movement.extended_render_driver					driver_general\movement\render.list
+/*	render_3	*/	interface										driver_interface.extended_render_driver					driver_general\interface\render.list
+/*	render_4	*/	background										driver_background.extended_render_driver				driver_general\background\render.list
+/*	render_5	*/	coordinate										driver_coordinate.extended_render_driver				driver_general\coordinate\render.list
+/*	render_6	*/	show_target										driver_show_target.extended_render_driver				driver_general\show_target\render.list 
+/*	render_7	*/	manipulator										driver_manipulator.extended_render_driver				driver_general\manipulator\render.list
+/*	render_8	*/	audio_player									driver_audio_player.extended_render_driver				driver_general\audio_player\render.list
+/*	render_9	*/	distance_tag									driver_distance_tag.extended_render_driver				driver_general\distance_tag\render.list
+/*	render_10	*/	driver_register_file_proxy						driver_register_file_proxy.extended_render_driver		driver_general\proxy_register\render.list
+/*	render_11	*/	component_marker								driver_component_marker.extended_render_driver			driver_general\component_marker\render.list
+/*	render_12	*/	screen_rectangle								driver_screen_rectangle.extended_render_driver			driver_general\screen_rectangle\render.list
+/*	render_13	*/	camera_operation								driver_camera_operation.extended_render_driver			driver_general\camera_operation\render.list
+																		/*		depth_start,depth_end		*/		0.0		0.1
+/*	render_14	*/	location_modifier								driver_location_modifier.extended_render_driver			driver_general\location_modifier\render.list	
+/*	render_15	*/	show_component_box								driver_show_component_box.extended_render_driver		driver_general\show_component_box\render.list
+/*	render_16	*/	component_selection								driver_component_selection.extended_render_driver		driver_general\component_selection\render.list
+/*	render_17	*/	mouse_modify_location							driver_mouse_modify_location.extended_render_driver		driver_general\mouse_modify_location\render.list
+/*	render_18	*/	render_target_register							driver_render_target_register.extended_render_driver	driver_general\render_target_register\render.list
 
 /*	########################	driver_project		#######################				*/
-/*	render_19	*/	solidworks	driver_opengl_fixed_pipeline.extended_render_driver
-								..\project\part\solidworks\render.list		..\project\part\solidworks\light.txt
-								
+/*	render_19	*/	solidworks										driver_opengl_fixed_pipeline.extended_render_driver
+																	..\project\part\solidworks\render.list		..\project\part\solidworks\light.txt
+							
 /*	########################	driver_project_boat_2011	#######################		*/
-/*	render_20	*/	boat		driver_opengl_fixed_pipeline.extended_render_driver
-								..\project\boat\part\render.list			..\project\boat\part\light.txt	
+/*	render_20	*/	boat											driver_opengl_fixed_pipeline.extended_render_driver
+																	..\project\boat\part\render.list			..\project\boat\part\light.txt	
 
 /*	########################	various obj files		#######################			*/
-/*	render_21	*/	other_part	driver_opengl_fixed_pipeline.extended_render_driver
-								..\project\part\obj_part\render.list		..\project\part\obj_part\light.txt
+/*	render_21	*/	other_part										driver_opengl_fixed_pipeline.extended_render_driver
+																	..\project\part\obj_part\render.list		..\project\part\obj_part\light.txt
 
 /*	########################	various obj files		#######################			*/
-/*	render_22	*/	inp_part	driver_opengl_fixed_pipeline.extended_render_driver
-								..\project\part\inp_part\render.list		..\project\part\inp_part\light.txt													
-
+/*	render_22	*/	inp_part										driver_opengl_fixed_pipeline.extended_render_driver
+																	..\project\part\inp_part\render.list		..\project\part\inp_part\light.txt
 
 /*	******************************		driver_lession		********************************************	*/
-/*	render_22	*/	lession_00_start_driver		driver_lession_00_start_driver.extended_render_driver	driver_lession\lession_00_start_driver\render.list
+/*	render_22	*/	lession_00_start_driver							driver_lession_00_start_driver.extended_render_driver	driver_lession\lession_00_start_driver\render.list
 
 /*
 /*	******************************		driver_lession		********************************************	*/
@@ -64,8 +63,8 @@
 /*	render_42	*/	lession_19_caculate_color						driver_lession_19_caculate_color.extended_render_driver							driver_lession\lession_19_caculate_color\render.list
 
 /*	########################	driver_project		#######################		*/
-/*	render_43	*/	territory	driver_territory.extended_render_driver					..\project\part\territory\render.list
-/*	render_44	*/	water		driver_water.extended_render_driver						..\project\part\water\render.list
+/*	render_43	*/	territory										driver_territory.extended_render_driver					..\project\part\territory\render.list
+/*	render_44	*/	water											driver_water.extended_render_driver						..\project\part\water\render.list
 
 */
-								
+						

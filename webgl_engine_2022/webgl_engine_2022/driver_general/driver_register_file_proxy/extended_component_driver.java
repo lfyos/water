@@ -1,4 +1,4 @@
-package driver_proxy_register;
+package driver_register_file_proxy;
 
 import kernel_component.component;
 import kernel_driver.component_driver;

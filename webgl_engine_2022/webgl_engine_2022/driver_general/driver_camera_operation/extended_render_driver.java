@@ -35,7 +35,10 @@ public class extended_render_driver extends render_driver
 	public render_driver clone(render parent_render,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_render_driver();
+		extended_render_driver ret_val=new extended_render_driver();
+		ret_val.depth_start	=this.depth_start;
+		ret_val.depth_end	=this.depth_end;
+		return ret_val;
 	}
 	public void initialize_render_driver(int render_id,engine_kernel ek,client_request_response request_response)
 	{
