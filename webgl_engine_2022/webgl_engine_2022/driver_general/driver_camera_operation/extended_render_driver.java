@@ -17,20 +17,25 @@ public class extended_render_driver extends render_driver
 {
 	private double depth_start,depth_end;
 	
+	public extended_render_driver()
+	{
+		super();
+		depth_start	=0.0;
+		depth_end	=0.1;
+	}
 	public void destroy()
 	{
 		super.destroy();
 	}
-	public extended_render_driver(file_reader f_shader,
+	public render_driver create(file_reader f_shader,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		depth_start	=0.0;
-		depth_end	=0.1;
+		return new extended_render_driver();
 	}
 	public render_driver clone(render parent_render,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		extended_render_driver ret_val=new extended_render_driver(null,request_response,system_par,scene_par);
+		extended_render_driver ret_val=new extended_render_driver();
 		ret_val.depth_start	=this.depth_start;
 		ret_val.depth_end	=this.depth_end;
 		return ret_val;

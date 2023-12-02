@@ -71,12 +71,10 @@ public class render
 		driver=null;
 		parts=new ArrayList<part>();
 		program_last_time=0;
-				
+		
 		Object render_driver_object;
 		try{
-			render_driver_object=Class.forName(my_driver_name).getDeclaredConstructor(
-					file_reader.class,client_request_response.class,system_parameter.class,scene_parameter.class).
-					newInstance(f_shader,request_response,system_par,scene_par);
+			render_driver_object=Class.forName(my_driver_name).getConstructor().newInstance();
 		}catch(Exception e){
 			debug_information.println("Create render driver fail:		",e.toString());
 			debug_information.println("Driver name is ",my_driver_name);
@@ -87,8 +85,10 @@ public class render
 			debug_information.println("render driver class name error:		",my_driver_name);
 			return;
 	    }
-		driver=(render_driver)render_driver_object;
-		
+		render_driver original_driver=(render_driver)render_driver_object;
+		driver=original_driver.create(f_shader,request_response,system_par,scene_par);
+		original_driver.destroy();
+
 		program_last_time=0;
 		String shader_file_name[][]=driver.shader_file_name_array();
 		if(shader_file_name!=null)
