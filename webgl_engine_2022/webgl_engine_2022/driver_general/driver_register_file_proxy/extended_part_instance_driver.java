@@ -1,4 +1,4 @@
-package driver_proxy_register;
+package driver_register_file_proxy;
 
 import kernel_driver.part_instance_driver;
 import kernel_engine.client_information;
