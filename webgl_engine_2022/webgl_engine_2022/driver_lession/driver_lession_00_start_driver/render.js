@@ -113,7 +113,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			format:render.webgpu.gpu.getPreferredCanvasFormat()
 		}
 	];
-	
+
 	if(render.parameter.multisample>1)
 		pipeline_descr.multisample={count:render.parameter.multisample};
 		
