@@ -31,14 +31,6 @@ public class extended_render_driver extends render_driver
 		light_file_name=null;
 		file_charset=null;
 	}
-	public render_driver create(file_reader f_shader,
-			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
-	{
-		extended_render_driver ret_val=new extended_render_driver();
-		ret_val.light_file_name	=this.light_file_name;
-		ret_val.file_charset	=this.file_charset;
-		return ret_val;
-	}
 	public render_driver clone(render parent_render,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{

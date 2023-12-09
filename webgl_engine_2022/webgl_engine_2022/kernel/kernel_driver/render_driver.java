@@ -12,17 +12,11 @@ import kernel_component.component_load_source_container;
 
 public class render_driver
 {
-	public void destroy()
-	{
-	}
 	public render_driver()
 	{
-		
 	}
-	public render_driver create(file_reader f_shader,
-			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
+	public void destroy()
 	{
-		return new render_driver();
 	}
 	public render_driver clone(render parent_render,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
