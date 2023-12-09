@@ -85,22 +85,20 @@ public class render
 			debug_information.println("render driver class name error:		",my_driver_name);
 			return;
 	    }
+		driver=(render_driver)render_driver_object;
 		String shader_file_name[][];
-		render_driver original_driver=(render_driver)render_driver_object;
-		if((driver=original_driver.create(f_shader,request_response,system_par,scene_par))!=null)
-			if((shader_file_name=driver.shader_file_name_array())!=null)
-				for(int i=0,ni=shader_file_name.length;i<ni;i++)
-					for(int j=0,nj=shader_file_name[i].length;j<nj;j++) {
-						common_reader reader=class_file_reader.get_reader(shader_file_name[i][j],
-								driver.getClass(),system_par.text_class_charset,system_par.text_jar_file_charset);
-						if(reader!=null) {
-							if(!(reader.error_flag()))
-								if(program_last_time<reader.lastModified_time)
-									program_last_time=reader.lastModified_time;
-							reader.close();
-						}
+		if((shader_file_name=driver.shader_file_name_array())!=null)
+			for(int i=0,ni=shader_file_name.length;i<ni;i++)
+				for(int j=0,nj=shader_file_name[i].length;j<nj;j++) {
+					common_reader reader=class_file_reader.get_reader(shader_file_name[i][j],
+							driver.getClass(),system_par.text_class_charset,system_par.text_jar_file_charset);
+					if(reader!=null) {
+						if(!(reader.error_flag()))
+							if(program_last_time<reader.lastModified_time)
+								program_last_time=reader.lastModified_time;
+						reader.close();
 					}
-		original_driver.destroy();
+				}
 	}
 	public void delete_last_part()
 	{
