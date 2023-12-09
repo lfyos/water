@@ -35,10 +35,12 @@ public class engine_kernel_and_client_information_container
 		}
 		if(engine_kernel_cont.initilization_flag){
 			engine_kernel_cont.initilization_flag=false;
-			if(engine_kernel_cont.ek.component_cont==null) {
+			if(engine_kernel_cont.ek.component_cont==null){
 				component_load_source_cont=new component_load_source_container(component_load_source_cont);
 				engine_kernel_cont.ek.load(component_load_source_cont,
 						my_request_response,process_bar,system_boftal_container);
+				component_load_source_cont.destroy();
+				
 				if(engine_kernel_cont.ek.component_cont.root_component!=null) {
 					engine_counter.update_kernel_component_number(1,
 							engine_kernel_cont.ek.component_cont.root_component.component_id+1);
@@ -56,7 +58,6 @@ public class engine_kernel_and_client_information_container
 					debug_information.println("/",engine_kernel_cont.ek.system_par.max_engine_component_number);
 				}
 			}
-			component_load_source_cont.destroy();
 		}
 		if(client_information==null){
 			if(engine_kernel_cont.ek.component_cont.root_component==null){

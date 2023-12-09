@@ -187,9 +187,9 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 	{
 		if(render.terminate_flag)
 			return this.max_loading_number;
-		if(this.request_render_part_id.length<=0)
-			return this.max_loading_number;
 		if(this.test_busy()<=0)
+			return this.max_loading_number;
+		if(this.request_render_part_id.length<=0)
 			return this.max_loading_number;
 
 		var p								=this.request_render_part_id[0];
@@ -433,9 +433,20 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			var part_package_sequence_id	=package_data_head[i][2];
 			var part_file_proxy_url			=package_data_head[i][3];
 			
-			var part_head_data		=package_data_array[part_package_sequence_id].shift();
-			var part_affiliated_data=package_data_array[part_package_sequence_id];
-
+			var part_head_data,part_affiliated_data;
+			
+			try{
+				part_head_data		=package_data_array[part_package_sequence_id].shift();
+				part_affiliated_data=package_data_array[part_package_sequence_id];
+			}catch(e){
+				alert("request_part_package error: "+e.toString());
+				alert(	"i: "						+i.toString()+
+						"render_id: "				+render_id.toString()+
+						"part_id: "					+part_id.toString()+
+						"part_package_sequence_id: "+part_package_sequence_id.toString());
+				alert("package_proxy_url: "+package_proxy_url);
+				continue;
+			}
 			this.create_part_array_and_vertex_data_request(render_id,part_id,
 					part_file_proxy_url,part_head_data,part_affiliated_data,
 					part_init_data,component_init_data,render);
@@ -444,12 +455,16 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 	
 	this.process_buffer_head_request_queue=function(part_init_data,component_init_data,render)
 	{
-		while(true){
+		do{
 			if(render.terminate_flag)
-				return;
-			if(this.buffer_head_request_queue.length<=0)
 				break;
+				
+			for(var i=this.current_loading_mesh_number,ni=render.parameter.max_loading_number;i<ni;)
+				i+=this.request_buffer_object_data(render);
+			
 			if(this.test_busy()<=0)
+				break;
+			if(this.buffer_head_request_queue.length<=0)
 				break;
 			var p=this.buffer_head_request_queue.shift();
 			var package_proxy_url	=p[0];
@@ -458,7 +473,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 
 			this.request_part_package(package_proxy_url,package_length,
 					package_data_head,part_init_data,component_init_data,render);
-		};
+		}while(true);
 	};
 	
 	this.test_busy=function()

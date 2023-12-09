@@ -129,9 +129,7 @@ function draw_scene_routine(render_data,render)
 async function draw_scene_main(part_init_data,component_init_data,render)
 {
 	while(!(render.terminate_flag)){
-		for(var i=render.vertex_data_downloader.current_loading_mesh_number,ni=render.parameter.max_loading_number;i<ni;)
-				i+=render.vertex_data_downloader.request_buffer_object_data(render);
-				
+		
 		render.vertex_data_downloader.process_buffer_head_request_queue(part_init_data,component_init_data,render);
 		
 		var start_time=(new Date()).getTime();

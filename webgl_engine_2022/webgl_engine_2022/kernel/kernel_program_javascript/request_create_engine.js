@@ -43,47 +43,47 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 		}
 	}
 	
-	var my_container_id					=create_data[0][0];
-	var my_channel_id					=create_data[0][1];
-	var	my_render_initialize_data		=create_data[1];
-	var	my_part_initialize_data			=create_data[2];
-	var	my_component_initialize_data	=create_data[3];
-	var	my_render_data					=create_data[4];
-			
+	var my_container_id			=create_data[0][0];
+	var my_channel_id			=create_data[0][1];
+	var	my_render_init_data		=create_data[1];
+	var	my_part_init_data		=create_data[2];
+	var	my_component_init_data	=create_data[3];
+	var	my_render_data			=create_data[4];
+	var my_init_promise			=import(create_data.pop());
+
 	var render=new construct_render_routine(
 			my_webgpu,my_url,my_user_name,my_pass_word,my_language_name,
 			my_container_id,my_channel_id,my_render_data,default_fetch_parameter);
 
 	var render_init_data=new Array();
-	for(var i=0,ni=my_render_initialize_data.length-1;i<ni;){
-		var my_data		=my_render_initialize_data[i++];
-		var render_id	=my_render_initialize_data[i++];
+	for(var i=0,ni=my_render_init_data.length-1;i<ni;){
+		var my_data		=my_render_init_data[i++];
+		var render_id	=my_render_init_data[i++];
 		render_init_data[render_id]=my_data;
 	};
 
 	var part_init_data=new Array(render.part_driver.length);
 	for(var i=0,ni=part_init_data.length;i<ni;i++)
 		part_init_data[i]=new Array();
-	for(var i=0,ni=my_part_initialize_data.length-1;i<ni;){
-		var my_data		=my_part_initialize_data[i++];
-		var render_id	=my_part_initialize_data[i++];
-		var part_id		=my_part_initialize_data[i++];
+	for(var i=0,ni=my_part_init_data.length-1;i<ni;){
+		var my_data		=my_part_init_data[i++];
+		var render_id	=my_part_init_data[i++];
+		var part_id		=my_part_init_data[i++];
 		part_init_data[render_id][part_id]=my_data;
 	};
 			
 	var component_init_data=new Array(render.component_location_data.component_number);
 	for(var i=0,ni=component_init_data.length;i<ni;i++)
 		component_init_data[i]=new Array();
-	for(var i=0,ni=my_component_initialize_data.length-1;i<ni;){
-		var my_data				=my_component_initialize_data[i++];
-		var my_component_id		=my_component_initialize_data[i++];
-		var my_driver_id		=my_component_initialize_data[i++];
+	for(var i=0,ni=my_component_init_data.length-1;i<ni;){
+		var my_data				=my_component_init_data[i++];
+		var my_component_id		=my_component_init_data[i++];
+		var my_driver_id		=my_component_init_data[i++];
 		component_init_data[my_component_id][my_driver_id]=my_data;
 	}
+	
+	var	init_data=(await my_init_promise).initialization_data;
 
-	var	initialization_url=create_data.pop();
-	var	init_data=(await import(initialization_url)).initialization_data;
-			
 	var	sorted_component_name_id		=init_data[0];
 	var	part_component_id_and_driver_id	=init_data[1];
 	var	component_init_fun_array		=init_data[2];
