@@ -105,23 +105,35 @@ function create_texture_bind_group()
 		var render_id	=part_object.render_id;
 		var part_id		=part_object.part_id;
 		this.is_busy_flag=true;
+				
+		render.vertex_data_downloader.current_loading_mesh_number+=7;
 		
-		this.left_texture=await download_external_texture(
+		this.left_texture	=download_external_texture(
 				render_id,part_id,my_directory_name+"/left.jpg",render);
-		this.right_texture=await download_external_texture(
+		this.right_texture	=download_external_texture(
 				render_id,part_id,my_directory_name+"/right.jpg",render);
-		this.top_texture=await download_external_texture(
+		this.top_texture	=download_external_texture(
 				render_id,part_id,my_directory_name+"/top.jpg",render);
-		this.down_texture=await download_external_texture(
+		this.down_texture	=download_external_texture(
 				render_id,part_id,my_directory_name+"/down.jpg",render);
-		this.front_texture=await download_external_texture(
+		this.front_texture	=download_external_texture(
 				render_id,part_id,my_directory_name+"/front.jpg",render);
-		this.back_texture=await download_external_texture(
+		this.back_texture	=download_external_texture(
 				render_id,part_id,my_directory_name+"/back.jpg",render);
-		this.no_box_texture=await download_external_texture(
+		this.no_box_texture	=download_external_texture(
 				render_id,part_id,my_directory_name+"/no_box.jpg",render);
+	
+		this.left_texture	=await (this.left_texture);
+		this.right_texture	=await (this.right_texture);
+		this.top_texture	=await (this.top_texture);
+		this.down_texture	=await (this.down_texture);
+		this.front_texture	=await (this.front_texture);
+		this.back_texture	=await (this.back_texture);
+		this.no_box_texture	=await (this.no_box_texture);		
+				
 		if(render.terminate_flag)
 			this.texture_bindgroup=null;
+
 		else{
 			var resource_entries=[
 				{	//left
@@ -172,8 +184,10 @@ function create_texture_bind_group()
 					entries		:	resource_entries
 				});
 		}
+		render.vertex_data_downloader.current_loading_mesh_number-=7;
 		
 		this.is_busy_flag=false;
+		
 		if(this.should_delete_flag)
 			this.destroy();
 		this.should_delete_flag=false;
@@ -194,7 +208,7 @@ function construct_component_driver(
 		if(this.texture_bind_group.is_busy_flag)
 			return;
 			
-		var mode,rpe=render.webgpu.render_pass_encoder;
+		var rpe=render.webgpu.render_pass_encoder;
 		
 		if(this.mode>0)	
 			rpe.setPipeline(render_driver.box_pipeline);

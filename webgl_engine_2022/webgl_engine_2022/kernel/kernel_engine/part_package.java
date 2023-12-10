@@ -68,13 +68,12 @@ public class part_package
 			public int package_compare(part s,part t)
 			{
 				int ret_val;
-				if((ret_val=s.part_par.process_sequence_id-t.part_par.process_sequence_id)!=0)
-					return ret_val;
 				if((ret_val=s.part_type_id-t.part_type_id)!=0)
+					return ret_val;
+				if((ret_val=s.part_par.process_sequence_id-t.part_par.process_sequence_id)!=0)
 					return ret_val;
 				if((ret_val=s.part_par.part_type_string.compareTo(t.part_par.part_type_string))!=0)
 					return ret_val;
-				
 				return 0;
 			}
 			public int compare_part(part pi,part pj)

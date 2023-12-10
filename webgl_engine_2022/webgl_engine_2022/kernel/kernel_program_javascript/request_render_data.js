@@ -91,7 +91,7 @@ async function request_render_data(render)
 			request_url+="_"+				render.vertex_data_downloader.loading_part_id.toString();
 		};
 		{
-			var requesting_number,max_request_number=render.parameter.max_loading_number;
+			var requesting_number,max_request_number=render.vertex_data_downloader.max_loading_number;
 
 			requesting_number =render.vertex_data_downloader.current_loading_mesh_number;
 			requesting_number+=render.vertex_data_downloader.request_render_part_id.length;

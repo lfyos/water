@@ -433,23 +433,23 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			var part_package_sequence_id	=package_data_head[i][2];
 			var part_file_proxy_url			=package_data_head[i][3];
 			
-			var part_head_data,part_affiliated_data;
-			
-			try{
-				part_head_data		=package_data_array[part_package_sequence_id].shift();
-				part_affiliated_data=package_data_array[part_package_sequence_id];
-			}catch(e){
-				alert("request_part_package error: "+e.toString());
-				alert(	"i: "						+i.toString()+
-						"render_id: "				+render_id.toString()+
-						"part_id: "					+part_id.toString()+
-						"part_package_sequence_id: "+part_package_sequence_id.toString());
-				alert("package_proxy_url: "+package_proxy_url);
-				continue;
-			}
-			this.create_part_array_and_vertex_data_request(render_id,part_id,
+			if((part_package_sequence_id<0)||(part_package_sequence_id>=package_data_array.length)){
+				console.log("package_proxy_url: "	+package_proxy_url);
+				console.log("i: "						+i.toString()+
+							"render_id: "				+render_id.toString()+
+							"part_id: "					+part_id.toString()+
+							"part_package_sequence_id: "+part_package_sequence_id.toString());
+				console.log("part_package_sequence_id: "+part_package_sequence_id);
+				console.log("package_data_array.length:"+package_data_array.length);
+				console.log();
+			}else{
+				var part_head_data		=package_data_array[part_package_sequence_id].shift();
+				var part_affiliated_data=package_data_array[part_package_sequence_id];
+		
+				this.create_part_array_and_vertex_data_request(render_id,part_id,
 					part_file_proxy_url,part_head_data,part_affiliated_data,
 					part_init_data,component_init_data,render);
+			}
 		}
 	};
 	
@@ -459,7 +459,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			if(render.terminate_flag)
 				break;
 				
-			for(var i=this.current_loading_mesh_number,ni=render.parameter.max_loading_number;i<ni;)
+			for(var i=this.current_loading_mesh_number,ni=this.max_loading_number;i<ni;)
 				i+=this.request_buffer_object_data(render);
 			
 			if(this.test_busy()<=0)
