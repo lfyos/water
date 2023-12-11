@@ -124,7 +124,7 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 		var my_render_name				=program_data[render_id].shift();
 		var my_render_driver_function	=program_data[render_id].shift();
 		var my_shader_program			=program_data[render_id].shift();
-		var my_render_data				=program_data[render_id].shift();
+		var my_text_array				=program_data[render_id].shift();
 				
 		var combined_shader_program=common_shader_code;
 		for(var i=0,ni=my_shader_program.length;i<ni;i++)
@@ -132,8 +132,8 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 					
 		render.render_driver[render_id]=my_render_driver_function(
 			render_id,my_render_name,render_init_data[render_id],
-			combined_shader_program,my_render_data,render);
-				
+			combined_shader_program,my_text_array,render);
+
 		if(Array.isArray(render.render_driver[render_id].method_render_flag)){
 			for(var i=0,ni=render.render_driver[render_id].method_render_flag.length;i<ni;i++)
 				if(typeof(render.render_driver[render_id].method_render_flag[i])!="boolean")

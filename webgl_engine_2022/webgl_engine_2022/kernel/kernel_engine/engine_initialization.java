@@ -355,7 +355,7 @@ public class engine_initialization
 						fw.println("		[");
 					else{
 						fw.println("function(render_id,render_name,");
-						fw.println("	init_data,text_array,shader_code,render)");
+						fw.println("	init_data,shader_code,text_array,render)");
 						fw.println("{");
 					}
 					for(int j=0,nj=shader_file_name[i].length;j<nj;j++){
@@ -394,7 +394,7 @@ public class engine_initialization
 						fw.print  ("		]");
 					else{
 						fw.println("	return new new_render_driver(render_id,render_name,");
-						fw.println("					init_data,text_array,shader_code,render);");
+						fw.println("					init_data,shader_code,text_array,render);");
 						fw.print  ("}");
 					}
 				}

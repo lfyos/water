@@ -1,21 +1,21 @@
-				function(component_name,component_id,render)
-				{ 				
-					render.event_component=
-					{
-						mouse	:
-						{
-							component_name	:	"mouse_modify_location_component",
-							function_id	:	0
-						},
-						touch	:
-						{
-							component_name	:	"mouse_modify_location_component",
-							function_id	:	0
-						},
-						keyboard	:
-						{
-							component_name	:	"mouse_modify_location_component",
-							function_id	:	0
-						}
-					};	
-				}
+function(component_name,component_id,render)
+{ 				
+	render.event_component=
+	{
+		mouse	:
+		{
+			component_name	:	"mouse_modify_location_component",
+			function_id	:	0
+		},
+		touch	:
+		{
+			component_name	:	"mouse_modify_location_component",
+			function_id	:	0
+		},
+		keyboard	:
+		{
+			component_name	:	"mouse_modify_location_component",
+			function_id	:	0
+		}
+	};	
+}

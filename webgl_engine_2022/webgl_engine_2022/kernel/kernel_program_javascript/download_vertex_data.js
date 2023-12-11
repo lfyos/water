@@ -434,13 +434,11 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			var part_file_proxy_url			=package_data_head[i][3];
 			
 			if((part_package_sequence_id<0)||(part_package_sequence_id>=package_data_array.length)){
-				console.log("package_proxy_url: "	+package_proxy_url);
-				console.log("i: "						+i.toString()+
-							"render_id: "				+render_id.toString()+
-							"part_id: "					+part_id.toString()+
-							"part_package_sequence_id: "+part_package_sequence_id.toString());
-				console.log("part_package_sequence_id: "+part_package_sequence_id);
-				console.log("package_data_array.length:"+package_data_array.length);
+				console.log("package_proxy_url: "			+package_proxy_url);
+				console.log("render_id: "					+render_id.toString()+
+							",part_id: "					+part_id.toString());
+				console.log("part_package_sequence_id: "	+part_package_sequence_id+
+							",package_data_array.length:"	+package_data_array.length);
 				console.log();
 			}else{
 				var part_head_data		=package_data_array[part_package_sequence_id].shift();
