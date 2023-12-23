@@ -9,11 +9,9 @@ public class test_1 extends travel_through_directory
 	public void operate_file(String file_name)
 	{
 		String str;
-		if((str=file_reader.get_text(file_name,"GBK"))==null)
-			return;
-		
-		if(str.indexOf("call_server")>=0)
-			debug_information.println(file_name);
+		if((str=file_reader.get_text(file_name,"GBK"))!=null)
+			if(str.indexOf("environment_sub_directory")>=0)
+				debug_information.println(file_name);
 	}
 	
 	public test_1()
@@ -30,8 +28,7 @@ public class test_1 extends travel_through_directory
 	{
 		debug_information.println("Begin:");
 		
-		new test_1().do_travel("F:\\water_all\\data\\parameter\\assemble_default\\", false);
-//		new test_1().do_travel("F:\\water_all\\webgl_engine_2022\\webgl_engine_2022\\", false);
+		new test_1().do_travel("F:\\water_all\\data\\", false);
 
 		debug_information.println("End");
 	}

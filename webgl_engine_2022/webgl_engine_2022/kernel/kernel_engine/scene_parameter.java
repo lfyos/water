@@ -9,14 +9,16 @@ import kernel_network.client_request_response;
 public class scene_parameter 
 {
 	public String change_part_string,change_component_string,mount_component_string,part_type_string;
+	
+	public String scene_sub_directory;
 
 	public String directory_name,extra_directory_name,parameter_charset,extra_parameter_charset;
 	public long parameter_last_modified_time,scene_last_modified_time;
 	
-	public String scene_sub_directory;
-	
 	public String type_proxy_directory_name,scene_proxy_directory_name;
-	public String type_shader_file_name,scene_shader_file_name,camera_file_name;
+	public String type_shader_directory_name,type_shader_file_name;
+	public String scene_shader_directory_name,scene_shader_file_name;
+	public String camera_file_name;
 	public String change_part_file_name,change_component_file_name;
 	public String type_string_file_name;
 	
@@ -63,6 +65,7 @@ public class scene_parameter
 	public scene_parameter(client_request_response request_response,
 			system_parameter system_par,engine_kernel_create_parameter ekcp)
 	{
+		
 		String str,request_charset=request_response.implementor.get_request_charset();
 
 		if((change_part_string=request_response.get_parameter("change_part"))==null)
@@ -109,18 +112,16 @@ public class scene_parameter
 		if((scene_sub_directory=request_response.get_parameter("sub_directory"))==null)
 			scene_sub_directory="";
 		else{
-			try {
+			try{
 				scene_sub_directory=java.net.URLDecoder.decode(scene_sub_directory,request_charset);
 				scene_sub_directory=java.net.URLDecoder.decode(scene_sub_directory,request_charset);
 				scene_sub_directory=scene_sub_directory.trim();
 			}catch(Exception e) {
-				;
 			}
 			if((scene_sub_directory=file_reader.separator(scene_sub_directory.trim())).length()>0)
 				if(scene_sub_directory.charAt(scene_sub_directory.length()-1)!=File.separatorChar)
 					scene_sub_directory+=File.separator;
 		}
-		
 		file_reader fr=new file_reader(ekcp.parameter_file_name,ekcp.parameter_charset);
 		
 		if((fr.error_flag())||(fr.eof()))
@@ -147,6 +148,7 @@ public class scene_parameter
 			scene_proxy_directory_name+=scene_sub_directory;
 		else
 			scene_proxy_directory_name+=File.separator+scene_sub_directory;
+
 		String str_array[]={change_part_string,change_component_string,mount_component_string,part_type_string};
 		for(int str_len,i=0,ni=str_array.length;i<ni;i++) {
 			if(str_array[i]==null)
@@ -160,17 +162,65 @@ public class scene_parameter
 				str_array[i]+=File.separatorChar;
 			scene_proxy_directory_name+=str_array[i];
 		}
-
+		
 		if((type_shader_file_name=fr.get_string())==null)
 			type_shader_file_name="";
 		else
 			type_shader_file_name=file_reader.separator(type_shader_file_name);
 		
+		switch(((type_shader_directory_name=fr.get_string())==null)?"relative":type_shader_directory_name){
+		case "absolute_sub_directory":
+			type_shader_file_name=scene_sub_directory+type_shader_file_name;
+		case "absolute":
+			type_shader_directory_name="";
+			break;
+		case "environment_sub_directory":
+			type_shader_file_name=scene_sub_directory+type_shader_file_name;
+		case "environment":
+			if((type_shader_directory_name=fr.get_string())!=null)
+				if((type_shader_directory_name=System.getenv(type_shader_directory_name))!=null)
+					if((type_shader_directory_name=file_reader.separator(type_shader_directory_name)).length()>0)
+						break;
+			type_shader_directory_name=null;
+			break;
+		case "relative_sub_directory":
+			type_shader_file_name=scene_sub_directory+type_shader_file_name;
+		case "relative":
+		default:
+			type_shader_directory_name=directory_name;
+			break;
+		}
+
 		if((scene_shader_file_name=fr.get_string())==null)
 			scene_shader_file_name="";
 		else
 			scene_shader_file_name=file_reader.separator(scene_shader_file_name);
 		
+		if((scene_shader_directory_name=fr.get_string())==null)
+			scene_shader_directory_name="relative";
+		switch(scene_shader_directory_name){
+		case "absolute_sub_directory":
+			scene_shader_file_name=scene_sub_directory+scene_shader_file_name;
+		case "absolute":
+			scene_shader_directory_name="";
+			break;
+		case "environment_sub_directory":
+			scene_shader_file_name=scene_sub_directory+scene_shader_file_name;
+		case "environment":
+			if((scene_shader_directory_name=fr.get_string())!=null)
+				if((scene_shader_directory_name=System.getenv(scene_shader_directory_name))!=null)
+					if((scene_shader_directory_name=file_reader.separator(scene_shader_directory_name)).length()>0)
+						break;
+			scene_shader_directory_name=null;
+			break;
+		case "relative_sub_directory":
+			scene_shader_file_name=scene_sub_directory+scene_shader_file_name;
+		case "relative":
+		default:
+			scene_shader_directory_name=null;
+			break;
+		}
+
 		if((camera_file_name=fr.get_string())==null)
 			camera_file_name="";
 		else

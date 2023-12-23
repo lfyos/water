@@ -152,10 +152,11 @@ public class engine_kernel
 	private void load_camera()
 	{
 		String camera_file_name;
+		
 		if(!(new File(camera_file_name=scene_par.directory_name+scene_par.camera_file_name).exists()))
 			if(!(new File(camera_file_name=scene_par.extra_directory_name+scene_par.camera_file_name).exists()))
 				camera_file_name=system_par.default_parameter_directory+"camera_parameter"+File.separator+scene_par.camera_file_name;
-		
+
 		file_reader f_camera=new file_reader(camera_file_name,scene_par.parameter_charset);
 		if(f_camera.error_flag()){
 			camera_cont=null;
@@ -271,22 +272,29 @@ public class engine_kernel
 				create_parameter.scene_directory_name+create_parameter.scene_file_name,
 				create_parameter.scene_charset);
 		if(!(scene_f.error_flag())){
-			create_parameter.scene_directory_name	=scene_f.directory_name;
-			create_parameter.scene_file_name		=scene_f.file_name;
+			create_parameter.scene_directory_name		=scene_f.directory_name;
+			create_parameter.scene_file_name			=scene_f.file_name;
 			if(scene_par.scene_last_modified_time<scene_f.lastModified_time)
 				scene_par.scene_last_modified_time=scene_f.lastModified_time;
+			
+			if(scene_par.scene_shader_directory_name==null)
+				scene_par.scene_shader_directory_name	=scene_f.directory_name;
 		}
+		
+		debug_information.println("type_shader_directory_name 	:	",	scene_par.type_shader_directory_name);
+		debug_information.println("type_shader_file_name 		:	",	scene_par.type_shader_file_name);
+		debug_information.println("scene_shader_directory_name	:	",	scene_par.scene_shader_directory_name);	
+		debug_information.println("scene_shader_file_name		:	",	scene_par.scene_shader_file_name);	
 		
 		render_cont=new render_container(render_cont,request_response,system_par,scene_par);
 		part_cont=new part_container_for_part_search(render_cont.part_array_list(-1));
 
 		render_cont.load_shader(component_load_source_cont,part_cont,scene_par.parameter_last_modified_time,
-				scene_par.directory_name+scene_par.type_shader_file_name,
-				scene_par.parameter_charset,"",1,system_par,scene_par,request_response);
+				scene_par.type_shader_directory_name+scene_par.type_shader_file_name,
+				scene_par.parameter_charset,1,system_par,scene_par,request_response);
 		render_cont.load_shader(component_load_source_cont,part_cont,scene_par.scene_last_modified_time,
-				create_parameter.scene_directory_name+scene_par.scene_shader_file_name,
-				create_parameter.scene_charset,
-				scene_par.scene_sub_directory,2,system_par,scene_par,request_response);
+				scene_par.scene_shader_directory_name+scene_par.scene_shader_file_name,
+				create_parameter.scene_charset,2,system_par,scene_par,request_response);
 		part_cont.execute_append();
 		debug_information.println("Load shaders time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
@@ -315,6 +323,7 @@ public class engine_kernel
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		
+	
 		start_time=current_time;
 		process_bar.set_process_bar(true,"load_component", "",1, 2);
 		component_cont=new component_container(
@@ -322,21 +331,33 @@ public class engine_kernel
 				scene_par.default_display_bitmap,request_response,
 				new change_name(
 						new String[]{
-								scene_par.extra_directory_name+scene_par.change_part_file_name,
-								scene_par.directory_name+scene_par.change_part_file_name,
+								scene_par.extra_directory_name			+scene_par.change_part_file_name,
+								scene_par.directory_name				+scene_par.change_part_file_name,
+								
+								scene_par.scene_shader_directory_name	+scene_par.change_part_file_name,
+								scene_par.type_shader_directory_name	+scene_par.change_part_file_name,
+								
 								scene_f.directory_name	+scene_par.change_part_file_name
 						},scene_par.change_part_string,scene_par.parameter_charset),
 				new change_name(
 						new String[]{
-								scene_par.extra_directory_name+scene_par.change_component_file_name,
-								scene_par.directory_name+scene_par.change_component_file_name,
-								scene_f.directory_name	+scene_par.change_component_file_name
+								scene_par.extra_directory_name			+scene_par.change_component_file_name,
+								scene_par.directory_name				+scene_par.change_component_file_name,
+								
+								scene_par.scene_shader_directory_name	+scene_par.change_component_file_name,
+								scene_par.type_shader_directory_name	+scene_par.change_component_file_name,
+								
+								scene_f.directory_name					+scene_par.change_component_file_name
 						},scene_par.change_component_string,scene_par.parameter_charset),
 				new part_type_string_sorter(
 						new String[]{
-								scene_par.extra_directory_name+scene_par.type_string_file_name,
-								scene_par.directory_name+scene_par.type_string_file_name,
-								create_parameter.scene_directory_name+scene_par.type_string_file_name
+								scene_par.extra_directory_name			+scene_par.type_string_file_name,
+								scene_par.directory_name				+scene_par.type_string_file_name,
+								
+								scene_par.type_shader_directory_name	+scene_par.type_string_file_name,
+								scene_par.scene_shader_directory_name	+scene_par.type_string_file_name,
+								
+								create_parameter.scene_directory_name	+scene_par.type_string_file_name
 						},scene_par.part_type_string,scene_par.parameter_charset));
 		
 		scene_f.close();
@@ -407,17 +428,18 @@ public class engine_kernel
 				"wait for load engine kernel:	"+scene_par.scene_proxy_directory_name);
 		
 		debug_information.println();
-		debug_information.println("type_shader_file_name 		:	",	scene_par.directory_name+scene_par.type_shader_file_name);
-		debug_information.println("scene_shader_file_name		:	",	create_parameter.scene_directory_name+scene_par.scene_shader_file_name);		
-		debug_information.println("camera_file_name		:	"		 ,	scene_par.directory_name+scene_par.camera_file_name);
-		debug_information.println("change_part_file_name		:	",	scene_par.directory_name+scene_par.change_part_file_name);
-		debug_information.println("change_component_file_name	:	",	scene_par.directory_name+scene_par.change_component_file_name);
+		debug_information.println("scene_par.directory_name	:	",		scene_par.directory_name);
 		debug_information.println("type_proxy_directory_name	:	",	scene_par.type_proxy_directory_name);
 		debug_information.println("scene_proxy_directory_name	:	",	scene_par.scene_proxy_directory_name);
-		debug_information.println("change_part_string		:	"	 ,	scene_par.change_part_string);
+			
+		debug_information.println("camera_file_name		:	",			scene_par.camera_file_name);
+		
+		debug_information.println("change_part_file_name		:	",	scene_par.change_part_file_name);
+		debug_information.println("change_component_file_name	:	",	scene_par.change_component_file_name);
+		
+		debug_information.println("change_part_string		:	",		scene_par.change_part_string);
 		debug_information.println("change_component_string		:	",	scene_par.change_component_string);
-		debug_information.println("part_type_string		:	"		 ,	scene_par.part_type_string);
-		debug_information.println("scene_sub_directory		:	"	 ,	scene_par.scene_sub_directory);
+		debug_information.println("part_type_string		:	",			scene_par.part_type_string);
 		
 		try {
 			load_routine(component_load_source_cont,request_response,process_bar,system_boftal_container);

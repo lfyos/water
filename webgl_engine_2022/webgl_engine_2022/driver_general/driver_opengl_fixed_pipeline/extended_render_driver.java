@@ -43,7 +43,7 @@ public class extended_render_driver extends render_driver
 	{	
 	}
 	public String[] get_render_list(
-			int part_type_id,file_reader shader_fr,String load_sub_directory_name,
+			int part_type_id,file_reader shader_fr,
 			component_load_source_container component_load_source_cont,
 			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
 	{
@@ -53,36 +53,12 @@ public class extended_render_driver extends render_driver
 		return (new File(render_list_file_name).exists())?new String[] {render_list_file_name,file_charset}:null;
 	}
 	public String[] get_part_list(
-			int part_type_id,file_reader render_fr,String load_sub_directory_name,part_parameter part_par,
+			int part_type_id,file_reader render_fr,part_parameter part_par,
 			component_load_source_container component_load_source_cont,
 			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
 	{
-		String part_list_file_name=render_fr.get_string();
-		
-		switch((part_list_file_name==null)?"":part_list_file_name){
-		default:
-			return null;
-		case "absulate":
-			part_list_file_name="";
-			break;
-		case "relative":
-			part_list_file_name=render_fr.directory_name;
-			break;
-		case "environment":
-			if((part_list_file_name=System.getenv(render_fr.get_string()))==null){
-				part_list_file_name=render_fr.directory_name;
-				break;
-			}
-			part_list_file_name=file_reader.separator(part_list_file_name);
-			if(part_list_file_name.charAt(part_list_file_name.length()-1)!=File.separatorChar)
-				part_list_file_name+=File.separatorChar;
-			if(part_type_id==2)
-				part_list_file_name+=load_sub_directory_name;
-			break;
-		}
-		part_list_file_name+=file_reader.separator(render_fr.get_string());
-		
-		return new String[] {part_list_file_name,render_fr.get_charset()};
+		String par_list_file_name=file_reader.separator(render_fr.get_string());
+		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
 	}
 	public String[][] shader_file_name_array()
 	{

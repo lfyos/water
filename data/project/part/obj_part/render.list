@@ -1,5 +1,5 @@
-test			any_assemble_part_name	parameter.txt	relative	part_obj\part.list	
-test			any_assemble_part_name	parameter.txt	relative	part_obj\part.1000.list
-test			any_assemble_part_name	parameter.txt	relative	part_obj\boat.list	
-test			any_assemble_part_name	parameter.txt	relative	part_stl\part.list
-liyixuan		any_assemble_part_name	parameter.txt	relative	part_liyixuan\part.list
+test			any_assemble_part_name	parameter.txt	part_obj\part.list	
+test			any_assemble_part_name	parameter.txt	part_obj\part.1000.list
+test			any_assemble_part_name	parameter.txt	part_obj\boat.list	
+test			any_assemble_part_name	parameter.txt	part_stl\part.list
+liyixuan		any_assemble_part_name	parameter.txt	part_liyixuan\part.list

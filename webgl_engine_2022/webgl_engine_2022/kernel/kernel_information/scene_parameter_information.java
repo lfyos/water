@@ -20,11 +20,11 @@ public class scene_parameter_information extends jason_creator
 		print("parameter_last_modified_time",				sp.parameter_last_modified_time);
 		print("scene_last_modified_time",					sp.scene_last_modified_time);
 		
-		print("scene_sub_directory",						sp.scene_sub_directory);
-		
 		print("type_proxy_directory_name",					sp.type_proxy_directory_name);
 		print("scene_proxy_directory_name",					sp.scene_proxy_directory_name);
+		print("type_shader_directory_name",					sp.type_shader_directory_name);
 		print("type_shader_file_name",						sp.type_shader_file_name);
+		print("scene_shader_directory_name",				sp.scene_shader_directory_name);
 		print("scene_shader_file_name",						sp.scene_shader_file_name);
 		print("camera_file_name",							sp.camera_file_name);
 		print("change_part_file_name",						sp.change_part_file_name);

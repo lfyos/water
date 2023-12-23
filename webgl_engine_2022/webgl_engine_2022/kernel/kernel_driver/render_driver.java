@@ -27,7 +27,7 @@ public class render_driver
 	{
 	}
 	public String[] get_render_list(
-			int part_type_id,file_reader shader_fr,String load_sub_directory_name,
+			int part_type_id,file_reader shader_fr,
 			component_load_source_container component_load_source_cont,
 			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
 	{
@@ -35,7 +35,7 @@ public class render_driver
 		return new String[] {shader_fr.directory_name+render_list_file_name,shader_fr.get_charset()};
 	}
 	public String[] get_part_list(
-			int part_type_id,file_reader render_fr,String load_sub_directory_name,part_parameter part_par,
+			int part_type_id,file_reader render_fr,part_parameter part_par,
 			component_load_source_container component_load_source_cont,
 			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
 	{

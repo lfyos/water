@@ -242,8 +242,8 @@ public class render_container
 			pcps.append_one_part(add_part);
 		}
 	}
-	private void load_one_shader(component_load_source_container component_load_source_cont,
-			part_container_for_part_search pcps,String load_sub_directory_name,
+	private void load_one_shader(
+			component_load_source_container component_load_source_cont,part_container_for_part_search pcps,
 			String driver_name,String render_list_file_name,String file_system_charset,String shader_file_name,
 			int part_type_id,system_parameter system_par,scene_parameter scene_par,
 			render ren,client_request_response request_response)
@@ -272,8 +272,7 @@ public class render_container
 
 			String get_part_list_result[];
 			try{
-				get_part_list_result=ren.driver.get_part_list(
-					part_type_id,f_render_list,load_sub_directory_name,part_par,
+				get_part_list_result=ren.driver.get_part_list(part_type_id,f_render_list,part_par,
 					component_load_source_cont,system_par,scene_par,request_response);
 			}catch(Exception e){
 				debug_information.println("Execute get_part_list fail:		",e.toString());
@@ -346,7 +345,7 @@ public class render_container
 	public void load_shader(
 		component_load_source_container component_load_source_cont,
 		part_container_for_part_search pcps,long last_modify_time,
-		String shader_file_name,String shader_file_charset,String load_sub_directory_name,
+		String shader_file_name,String shader_file_charset,
 		int part_type_id,system_parameter system_par,scene_parameter scene_par,
 		client_request_response request_response)
 	{
@@ -385,7 +384,7 @@ public class render_container
 				continue;
 			}
 			String render_list_file_name[]=ren.driver.get_render_list(part_type_id,f_shader,
-					load_sub_directory_name,component_load_source_cont,system_par,scene_par,request_response);
+					component_load_source_cont,system_par,scene_par,request_response);
 			if(render_list_file_name==null){
 				debug_information.print  ("render list file is NULL	",	driver_name);
 				continue;
@@ -407,8 +406,7 @@ public class render_container
 				if(file_system_charset==null)
 					file_system_charset=f_shader.get_charset();
 				
-				load_one_shader(
-					component_load_source_cont,pcps,load_sub_directory_name,
+				load_one_shader(component_load_source_cont,pcps,
 					driver_name,render_list_file_name[i],file_system_charset,
 					f_shader.directory_name+f_shader.file_name,
 					part_type_id,system_par,scene_par,ren,request_response);
