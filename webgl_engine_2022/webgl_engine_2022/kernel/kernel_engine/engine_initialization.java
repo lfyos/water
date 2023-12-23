@@ -237,23 +237,34 @@ public class engine_initialization
 				}
 				File f;
 				String real_file_name;
-				real_file_name=comp.component_directory_name+my_program_and_charset[0];
-				if(!(f=new File(real_file_name)).exists())
-					if(!(f=new File(real_file_name=ek.create_parameter.scene_directory_name+my_program_and_charset[0])).exists())
-						if(!(f=new File(real_file_name=ek.scene_par.directory_name+my_program_and_charset[0])).exists())
-							if(!(f=new File(real_file_name=ek.scene_par.extra_directory_name+my_program_and_charset[0])).exists())
-								if(!(f=new File(real_file_name=ek.system_par.data_root_directory_name+my_program_and_charset[0])).exists()){
-									comp.initialization.program_and_charset.set(j,null);
-									debug_information.print  (
-											"Not exist component init function,component name:	",comp.component_name);
-									debug_information.println("	file_name:	",my_program_and_charset[0]);
-									continue;
-								}
-				file_last_time flt=new file_last_time(f.getAbsolutePath());
-				if(last_time<flt.last_time)
-					last_time=flt.last_time;
+				do{
+					if((f=new File(real_file_name=comp.component_directory_name+my_program_and_charset[0])).exists())
+						break;
+					if((f=new File(real_file_name=ek.create_parameter.scene_directory_name+my_program_and_charset[0])).exists())
+						break;
+					if((f=new File(real_file_name=ek.scene_par.directory_name+my_program_and_charset[0])).exists())
+						break;
+					if((f=new File(real_file_name=ek.scene_par.extra_directory_name+my_program_and_charset[0])).exists())
+						break;
+					if((f=new File(real_file_name=ek.scene_par.scene_shader_directory_name+my_program_and_charset[0])).exists())
+						break;
+					if((f=new File(real_file_name=ek.scene_par.type_shader_directory_name+my_program_and_charset[0])).exists())
+						break;
+					if((f=new File(real_file_name=ek.system_par.data_root_directory_name+my_program_and_charset[0])).exists())
+						break;
+					real_file_name=null;
+				}while(false);
 				
-				comp.initialization.program_and_charset.set(j,new String[] {real_file_name,my_program_and_charset[1]});
+				if(real_file_name==null) {
+					debug_information.print  ("Not exist component init function,component name:	",comp.component_name);
+					debug_information.println("	file_name:	",my_program_and_charset[0]);
+					comp.initialization.program_and_charset.set(j,null);
+				}else {
+					file_last_time flt=new file_last_time(f.getAbsolutePath());
+					if(last_time<flt.last_time)
+						last_time=flt.last_time;
+					comp.initialization.program_and_charset.set(j,new String[] {real_file_name,my_program_and_charset[1]});
+				}
 			}
 		}
 		

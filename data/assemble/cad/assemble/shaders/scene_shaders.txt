@@ -1,1 +1,0 @@
-sigma		driver_opengl_fixed_pipeline.extended_render_driver		cad\render.list		cad\light.txt

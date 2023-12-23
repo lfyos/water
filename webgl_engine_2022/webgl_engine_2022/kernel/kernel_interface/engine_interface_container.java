@@ -63,7 +63,7 @@ public class engine_interface_container
 		original_render.load_shader(
 			component_load_source_cont,pcps,system_par.last_modified_time,
 			system_par.data_root_directory_name+system_par.shader_file_name,
-			system_par.local_data_charset,"",part_type_id,system_par,null,request_response);
+			system_par.local_data_charset,part_type_id,system_par,null,request_response);
 		pcps.execute_append();
 		original_render.load_part(1<<part_type_id,1,part_loader_cont,
 				system_par,null,null,null,null,part_list_for_delete_file);
