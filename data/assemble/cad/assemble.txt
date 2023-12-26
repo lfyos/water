@@ -1,1 +1,0 @@
-cad		cad		assemble/assemble.txt	8	8	parameter.txt	parameter.cad.txt

@@ -73,6 +73,7 @@ public class component_core_4 extends component_core_3
 		
 		String my_directory_name_array[]= {
 				fr.directory_name,
+				"",
 				ek.create_parameter.scene_directory_name	+"assemble_default"+File.separatorChar,
 				
 				ek.scene_par.scene_shader_directory_name	+"assemble_default"+File.separatorChar,
@@ -82,10 +83,12 @@ public class component_core_4 extends component_core_3
 				ek.scene_par.extra_directory_name			+"assemble_default"+File.separatorChar,
 				
 				ek.system_par.default_parameter_directory	+"assemble_default"+File.separatorChar,
-				""
+				
 		};
 		String charset_name_array[]=new String[]{
 				fr.get_charset(),
+				fr.get_charset(),
+				
 				ek.create_parameter.scene_charset,
 				
 				ek.create_parameter.scene_charset,
@@ -94,8 +97,7 @@ public class component_core_4 extends component_core_3
 				ek.scene_par.parameter_charset,
 				ek.scene_par.extra_parameter_charset,
 				
-				ek.system_par.local_data_charset,
-				fr.get_charset()
+				ek.system_par.local_data_charset
 		};
 		for(int i=0,ni=my_directory_name_array.length;i<ni;i++)
 			if(new File(my_directory_name_array[i]+my_file_name).exists()) 
