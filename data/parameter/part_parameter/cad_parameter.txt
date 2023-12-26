@@ -24,6 +24,3 @@
 /*	symmetry_flag						*/
 /*	location_match_direction			*/		3	false 1 0 0		false 0 1 0		false 0 0 1
 
-
-
-

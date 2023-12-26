@@ -93,19 +93,19 @@ function file_name_change()
 					try{
 						out.println(file_list[i]);
 									
-						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?scene_name=cad&coordinate=location.xyz.txt");
+						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?scene_name=test&coordinate=location.xyz.txt");
 						out.println("&sub_directory="+file_list[i]+"\"  target=\"_self\">xyz</a>");
-						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?scene_name=cad&coordinate=location.xyz.txt");
+						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?scene_name=test&coordinate=location.xyz.txt");
 						out.println("&sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">xyz</a>]");
 									
-						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?scene_name=cad&coordinate=location.yzx.txt");
+						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?scene_name=test&coordinate=location.yzx.txt");
 						out.println("&sub_directory="+file_list[i]+"\"  target=\"_self\">yzx</a>");
-						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?scene_name=cad&coordinate=location.yzx.txt");
+						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?scene_name=test&coordinate=location.yzx.txt");
 						out.println("&sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">yzx</a>]");
 									
-						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?scene_name=cad&coordinate=location.zxy.txt");
+						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?scene_name=test&coordinate=location.zxy.txt");
 						out.println("&sub_directory="+file_list[i]+"\"  target=\"_self\">zxy</a>");
-						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?scene_name=cad&coordinate=location.zxy.txt");
+						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?scene_name=test&coordinate=location.zxy.txt");
 						out.println("&sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">zxy</a>]");
 									
 						out.println("<br/>");

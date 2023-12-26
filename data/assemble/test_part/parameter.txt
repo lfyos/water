@@ -1,6 +1,6 @@
 /*	proxy_directory_name					*/		test_directory
-/*	type_shader_file_name					*/		shaders/type_shaders.txt		relative
-/*	scene_shader_file_name					*/		shaders/scene_shaders.txt		relative
+/*	type_shader_file_name					*/		type_shaders.txt			relative
+/*	scene_shader_file_name					*/		scene_shaders.txt			environment_sub_directory		liufuyan_scene_configure
 /*	camera_file_name						*/		orthongraphics/camera.txt
 /*	camera_file_name						*/		perspective/camera.txt
 /*	change_part_file_name					*/		assemble/change_part.txt

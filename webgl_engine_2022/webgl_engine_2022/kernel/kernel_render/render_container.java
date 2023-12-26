@@ -283,6 +283,7 @@ public class render_container
 				e.printStackTrace();
 				continue;
 			}
+			
 			if(get_part_list_result==null) {
 				debug_information.println("part list file is NULL");
 				debug_information.println("Driver name:		",	driver_name);
