@@ -167,7 +167,7 @@ async function request_render_data(render)
 						p.clip_plane[0],p.clip_plane[1],p.clip_plane[2],p.clip_plane[3],1.0);
 					break;
 				case 6:
-					p.camera_transformation_matrix=render.computer.create_move_rotate_matrix(0,0,0,0,0,0);
+					p.camera_transformation_matrix=render.computer.identity_matrix;
 					break;
 				case 7:
 					p.camera_transformation_matrix=[

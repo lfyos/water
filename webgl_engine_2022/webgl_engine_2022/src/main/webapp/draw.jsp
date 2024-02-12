@@ -84,8 +84,8 @@ async function body_onload()
 function body_onresize()
 {
 	var canvas_object=document.getElementById("my_canvas");
-	canvas_object.width	=window.innerWidth *0.975;
-	canvas_object.height=window.innerHeight*0.925;
+	canvas_object.width	=window.innerWidth *0.875;
+	canvas_object.height=window.innerHeight*0.875;
 }
 function body_onunload()
 {

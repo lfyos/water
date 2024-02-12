@@ -1,7 +1,17 @@
 function construct_computation_object()
 {
-	this.standard_negative=[-1,	1,	0,	0,	-1,	0,	1,	0,	-1,	0,	0,	1,	1,	0,	0,	0];
-	
+	this.standard_negative=[
+			-1,	1,	0,	0,
+			-1,	0,	1,	0,
+			-1,	0,	0,	1,
+			 1,	0,	0,	0
+		];
+	this.identity_matrix=[
+			1,	0,	0,	0,
+			0,	1,	0,	0,
+			0,	0,	1,	0,
+			0,	0,	0,	1
+		];
 	this.matrix_multiplication=function(s,t)
 	{
 		var result=new Array(16);
@@ -322,6 +332,7 @@ function construct_computation_object()
 	this.destroy=function()
 	{
 		this.standard_negative				=null;
+		this.identity_matrix				=null;
 	
 		this.matrix_multiplication			=null;
 		this.caculate_coordinate			=null;
