@@ -86,6 +86,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 	if(render.parameter.multisample>1)
 		pipeline_descr.multisample={count:render.parameter.multisample};
 	this.pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	
 	this.new_part_driver=construct_part_driver;
 	
 	this.method_render_flag=[false,false,true];

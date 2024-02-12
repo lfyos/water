@@ -165,8 +165,15 @@ public class dispatch_create_engine_request
 		ci.request_response.print( "\"max_loading_number\":",		ci.parameter.max_client_loading_number);
 		ci.request_response.print(",\"engine_touch_time_length\":",	ek.system_par.engine_touch_time_length);
 		
-		str=ci.request_response.get_parameter("multisample");
-		ci.request_response.print(",\"multisample\":",(str==null)?"1":((str=str.trim()).length()<=0)?"1":str);
+		int multisample=1;
+		if((str=ci.request_response.get_parameter("multisample"))!=null)
+			if(((str=str.trim()).length()>0))
+				try{
+					multisample=Integer.parseInt(str);
+				}catch(Exception e) {
+					multisample=1;
+				}
+		ci.request_response.print(",\"multisample\":",(multisample<=1)?1:multisample);
 
 		ci.request_response.print("}");
 		ci.request_response.print("],\"");

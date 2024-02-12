@@ -152,15 +152,14 @@ fn caculate_fragment_color(vf:vertex_to_fragment_struct)->vec4<f32>
 	return vec4<f32>(vf.vertex_color.rgb,1.0);
 }
 
-@vertex
-fn vertex_main(
-		@location(0)			my_coord		:	vec4<f32>,
-		@location(1)			my_normal		:	vec4<f32>,
-		@location(2)			my_material		:	vec4<f32>,
-		@location(3)			my_id			:	vec4<f32>,
-		@location(4)			my_texture		:	vec4<f32>,
+fn vertex_routine(
+		my_coord		:	vec4<f32>,
+		my_normal		:	vec4<f32>,
+		my_material		:	vec4<f32>,
+		my_id			:	vec4<f32>,
+		my_texture		:	vec4<f32>,
 		
-		@builtin(vertex_index)	my_vertex_index	:	u32
+		my_vertex_index	:	u32
 		
 	)->vertex_to_fragment_struct
 {
@@ -237,6 +236,55 @@ fn vertex_main(
 		}
 	}
 	return vf;
+}
+
+@vertex
+fn vertex_main(
+		@location(0)			my_coord		:	vec4<f32>,
+		@location(1)			my_normal		:	vec4<f32>,
+		@location(2)			my_material		:	vec4<f32>,
+		@location(3)			my_id			:	vec4<f32>,
+		@location(4)			my_texture		:	vec4<f32>,
+		
+		@builtin(vertex_index)	my_vertex_index	:	u32
+		
+	)->vertex_to_fragment_struct
+{
+	return vertex_routine(my_coord,my_normal,my_material,my_id,my_texture,my_vertex_index);
+}
+
+@vertex
+fn vertex_main_frame(
+		@location(0)			my_coord_0		:	vec4<f32>,
+		@location(1)			my_normal_0		:	vec4<f32>,
+		@location(2)			my_material_0	:	vec4<f32>,
+		@location(3)			my_id_0			:	vec4<f32>,
+		@location(4)			my_texture_0	:	vec4<f32>,
+		
+		@location(5)			my_coord_1		:	vec4<f32>,
+		@location(6)			my_normal_1		:	vec4<f32>,
+		@location(7)			my_material_1	:	vec4<f32>,
+		@location(8)			my_id_1			:	vec4<f32>,
+		@location(9)			my_texture_1	:	vec4<f32>,
+		
+		@location(10)			my_coord_2		:	vec4<f32>,
+		@location(11)			my_normal_2		:	vec4<f32>,
+		@location(12)			my_material_2	:	vec4<f32>,
+		@location(13)			my_id_2			:	vec4<f32>,
+		@location(14)			my_texture_2	:	vec4<f32>,
+		
+		@builtin(vertex_index)	my_vertex_index	:	u32
+		
+	)->vertex_to_fragment_struct
+{
+	switch(my_vertex_index%4){
+	default:
+		{return vertex_routine(my_coord_0,my_normal_0,my_material_0,my_id_0,my_texture_0,my_vertex_index);}
+	case 1:
+		{return vertex_routine(my_coord_1,my_normal_1,my_material_1,my_id_1,my_texture_1,my_vertex_index);}
+	case 2:
+		{return vertex_routine(my_coord_2,my_normal_2,my_material_2,my_id_2,my_texture_2,my_vertex_index);}
+	}
 }
 
 @fragment
@@ -419,6 +467,9 @@ fn fragment_color_function(vf:vertex_to_fragment_struct) ->fragment_color_target
 		{
 			ret_val.color=vec4<f32>(0.0,1.0,0.0,1.0);
 			ret_val.depth=vf.vertex_value.w-2.0*point_depth_bias;
+			
+			if(dot(vf.vertex_texture,vf.vertex_texture)>1.0)
+				{discard;break;}
 			break;
 		}
 	}

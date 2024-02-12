@@ -212,7 +212,7 @@ function construct_component_driver(
 				p=part_object.buffer_object.point.region_data;
 				for(var j=0,nj=p.length;j<nj;j++){
 					rpe.setVertexBuffer(0,p[j].buffer);
-					rpe.draw(p[j].item_number);
+					rpe.draw(6,p[j].item_number);
 				}
 				break;
 			}

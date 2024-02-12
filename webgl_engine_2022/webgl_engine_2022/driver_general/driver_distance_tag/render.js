@@ -135,6 +135,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 	pipeline_descr.vertex.constants				={primitive_type:3};
 	pipeline_descr.primitive.topology			="triangle-list";
 	pipeline_descr.fragment.entryPoint			="fragment_point_fun";
+	pipeline_descr.vertex.buffers[0].stepMode	="instance";
 	this.point_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 
 	this.new_part_driver=construct_part_driver;

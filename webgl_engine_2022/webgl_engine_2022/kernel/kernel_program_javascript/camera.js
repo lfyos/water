@@ -219,8 +219,12 @@ function construct_camera_object(camera_number,my_component_location_data,my_com
 		var camera_distance		=this.camera_object_parameter[camera_id].distance;
 		var lookat_matrix		=camera_render_parameter.camera_transformation_matrix;
 		lookat_matrix			=this.computer.matrix_multiplication(lookat_matrix,camera_location);
-		lookat_matrix			=this.computer.matrix_multiplication(lookat_matrix,
-									this.computer.create_move_rotate_matrix(0,0,camera_distance,0,0,0));
+		lookat_matrix			=this.computer.matrix_multiplication(lookat_matrix,[
+										1,	0,	0,					0,
+										0,	1,	0,					0,
+										0,	0,	1,					0,
+										0,	0,	camera_distance,	1
+								]);
 		return {
 			matrix			:	this.computer.matrix_negative(lookat_matrix),
 			negative_matrix	:	lookat_matrix,

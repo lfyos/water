@@ -95,7 +95,7 @@ function construct_component_driver(
 				p=part_object.buffer_object.point.region_data;
 				for(var j=0,nj=p.length;j<nj;j++){
 					rpe.setVertexBuffer(0,p[j].buffer);
-					rpe.draw(p[j].item_number);
+					rpe.draw(6,p[j].item_number);
 				}
 				break;
 			case 2:
@@ -117,7 +117,7 @@ function construct_component_driver(
 				p=part_object.buffer_object.point.region_data;
 				for(var j=0,nj=p.length;j<nj;j++){
 					rpe.setVertexBuffer(0,p[j].buffer);
-					rpe.draw(p[j].item_number);
+					rpe.draw(6,p[j].item_number);
 				}
 				break;
 			}
@@ -174,7 +174,8 @@ function construct_component_driver(
 			    	});
 	    	render.webgpu.device.queue.copyExternalImageToTexture(
 					{
-						source	:	render.webgpu.canvas_2d
+						source	:	render.webgpu.canvas_2d,
+						flipY 	:	true
 					},
 					{
 						texture	:	my_texture
