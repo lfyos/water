@@ -36,15 +36,22 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 	
 	this.save_data_into_buffer_object=function(my_material_id,object_pointer,buffer_object_data)
 	{
-		if((typeof(buffer_object_data.item_size)=="number")&&(typeof(buffer_object_data.item_number)!="number")){
-			buffer_object_data.item_size	=Math.round(buffer_object_data.item_size);
-			buffer_object_data.item_number	=Math.floor(buffer_object_data.region_data.length/buffer_object_data.item_size);
-		}else if((typeof(buffer_object_data.item_size)!="number")&&(typeof(buffer_object_data.item_number)=="number")){
-			buffer_object_data.item_number	=Math.floor(buffer_object_data.item_number);
-			buffer_object_data.item_size	=Math.floor(buffer_object_data.region_data.length/buffer_object_data.item_number);
-		}else if((typeof(buffer_object_data.item_size)!="number")&&(typeof(buffer_object_data.item_number)!="number"))
-			return;
-
+		var my_item_size,my_item_number;
+		
+		if(typeof(my_item_size=buffer_object_data.item_size)!="number")
+			my_item_size=-1;
+		else
+			my_item_size=Math.round(my_item_size);
+		
+		if(my_item_size<=0){
+			if(typeof(my_item_number=buffer_object_data.item_number)!="number")
+				return;
+			if((my_item_number=Math.round(my_item_number))<=0)
+				return;
+			my_item_size=Math.round(buffer_object_data.region_data.length/my_item_number);
+		}	
+		my_item_number=Math.floor(buffer_object_data.region_data.length/my_item_size);
+		
 		object_pointer.region_data.push(
 			{
 				buffer		:	this.webgpu.device.createBuffer(
@@ -54,8 +61,8 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 					}),
 				material_id	:	my_material_id,
 
-				item_size	:	buffer_object_data.item_size,
-				item_number	:	buffer_object_data.item_number,
+				item_size	:	my_item_size,
+				item_number	:	my_item_number,
 
 				region_box	:	buffer_object_data.region_box,
 				private_data:	buffer_object_data.private_data
@@ -99,7 +106,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			p.region_box	 = render.computer.combine_box(p.region_box,my_region_box);
 			p.item_number	+= my_item_number;
 		}
-		p.item_size=p.region_data.length/p.item_number;
+		p.item_size=Math.round(p.region_data.length/p.item_number);
 		
 		var begin_material_id,end_material_id;
 		if(object_pointer.loaded_number<=0){
