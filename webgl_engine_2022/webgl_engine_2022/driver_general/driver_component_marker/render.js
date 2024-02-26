@@ -109,10 +109,12 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 
 	pipeline_descr.vertex.constants				={primitive_type:0};
 	pipeline_descr.fragment.entryPoint			="fragment_face_id_fun";
+	pipeline_descr.vertex.buffers[0].stepMode	="vertex";
 	this.face_id_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.vertex.constants				={primitive_type:1};
 	pipeline_descr.fragment.entryPoint			="fragment_point_id_fun";
+	pipeline_descr.vertex.buffers[0].stepMode	="instance";
 	this.point_id_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.fragment.targets.length		=1;
@@ -122,16 +124,19 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 
 	pipeline_descr.vertex.constants				={primitive_type:2};
 	pipeline_descr.fragment.entryPoint			="fragment_face_fun";
+	pipeline_descr.vertex.buffers[0].stepMode	="vertex";
 	this.face_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.vertex.constants				={primitive_type:3};
 	pipeline_descr.fragment.entryPoint			="fragment_edge_fun";
 	pipeline_descr.primitive.topology			="line-list";
+	pipeline_descr.vertex.buffers[0].stepMode	="vertex";
 	this.edge_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.vertex.constants				={primitive_type:4};
 	pipeline_descr.fragment.entryPoint			="fragment_point_fun";
 	pipeline_descr.primitive.topology			="triangle-list";
+	pipeline_descr.vertex.buffers[0].stepMode	="instance";
 	this.point_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
 
 	this.new_part_driver=construct_part_driver;

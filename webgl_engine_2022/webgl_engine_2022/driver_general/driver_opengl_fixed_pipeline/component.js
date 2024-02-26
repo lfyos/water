@@ -4,7 +4,7 @@ function construct_component_driver(
 {
 	this.display_parameter=null;
 	
-	this.draw=function(render,part_driver,my_region_data,my_pipeline)
+	this.draw=function(vertex_number,instance_division,render,part_driver,my_region_data,my_pipeline)
 	{
 		var my_material=part_driver.material_bindgroup_array;
 		var my_material_number=my_material.length-1;
@@ -22,7 +22,10 @@ function construct_component_driver(
 				if((my_material_id>=0)&&(my_material_id<my_material.length)){
 					rpe.setBindGroup(1,my_material[my_material_id].bindgroup);
 					rpe.setVertexBuffer(0,my_region_data[i].buffer);
-					rpe.draw(my_region_data[i].item_number);
+					if(vertex_number>0)
+						rpe.draw(vertex_number,my_region_data[i].item_number/instance_division);
+					else
+						rpe.draw(my_region_data[i].item_number);
 				}
 			}
 	};
@@ -45,26 +48,26 @@ function construct_component_driver(
 			if((display_bitmap&1)!=0){
 				var p=part_object.buffer_object.face.region_data;
 				if(this.display_parameter.close_clip_plane_number<=0){
-					this.draw(render,part_driver,p,my_pipeline.id_face_pipeline_no_clip);
+					this.draw(0,1,render,part_driver,p,my_pipeline.id_face_pipeline_no_clip);
 				}else{
-					this.draw(render,part_driver,p,my_pipeline.id_face_pipeline_do_clip);
-					this.draw(render,part_driver,p,my_pipeline.id_face_pipeline_do_close);
+					this.draw(0,1,render,part_driver,p,my_pipeline.id_face_pipeline_do_clip);
+					this.draw(0,1,render,part_driver,p,my_pipeline.id_face_pipeline_do_close);
 				}
 				var p=part_object.buffer_object.point.region_data;
-				this.draw(render,part_driver,p,my_pipeline.id_point_pipeline);
+				this.draw(6,1,render,part_driver,p,my_pipeline.id_point_pipeline);
 			}
 			break;
 		case 1:
 			if((display_bitmap&2)!=0){			
 				var p=part_object.buffer_object.face.region_data;
 				if(this.display_parameter.close_clip_plane_number<=0)
-					this.draw(render,part_driver,p,my_pipeline.value_face_pipeline_no_clip);
+					this.draw(0,1,render,part_driver,p,my_pipeline.value_face_pipeline_no_clip);
 				else{
-					this.draw(render,part_driver,p,my_pipeline.value_face_pipeline_do_clip);
-					this.draw(render,part_driver,p,my_pipeline.value_face_pipeline_do_close);
+					this.draw(0,1,render,part_driver,p,my_pipeline.value_face_pipeline_do_clip);
+					this.draw(0,1,render,part_driver,p,my_pipeline.value_face_pipeline_do_close);
 				}
 				var p=part_object.buffer_object.point.region_data;
-				this.draw(render,part_driver,p,my_pipeline.value_point_pipeline);
+				this.draw(6,1,render,part_driver,p,my_pipeline.value_point_pipeline);
 			}		
 			break;
 		case 2:
@@ -73,39 +76,39 @@ function construct_component_driver(
 			if((display_bitmap&4)!=0){
 				var p=part_object.buffer_object.face.region_data;
 				if(this.display_parameter.close_clip_plane_number<=0)
-					this.draw(render,part_driver,p,my_pipeline.depth_face_pipeline_no_clip);
+					this.draw(0,1,render,part_driver,p,my_pipeline.depth_face_pipeline_no_clip);
 				else{
-					this.draw(render,part_driver,p,my_pipeline.depth_face_pipeline_do_clip);
-					this.draw(render,part_driver,p,my_pipeline.depth_face_pipeline_do_close);
+					this.draw(0,1,render,part_driver,p,my_pipeline.depth_face_pipeline_do_clip);
+					this.draw(0,1,render,part_driver,p,my_pipeline.depth_face_pipeline_do_close);
 				}
 			}		
 			break;
 		case 4:	
 			if((display_bitmap&8)!=0){
 				var p=part_object.buffer_object.edge.region_data;
-				this.draw(render,part_driver,p,my_pipeline.color_edge_pipeline);
+				this.draw(0,1,render,part_driver,p,my_pipeline.color_edge_pipeline);
 			}
 			if((display_bitmap&16)!=0){
-				var p=part_object.buffer_object.frame.region_data;
-				this.draw(render,part_driver,p,my_pipeline.color_frame_pipeline);
+				var p=part_object.buffer_object.face.region_data;
+				this.draw(4,3,render,part_driver,p,my_pipeline.color_frame_pipeline);
 			}
 			if((display_bitmap&32)!=0){
 				var p=part_object.buffer_object.point.region_data;
-				this.draw(render,part_driver,p,my_pipeline.color_normal_point_pipeline);
+				this.draw(6,1,render,part_driver,p,my_pipeline.color_normal_point_pipeline);
 			}
 			break;
 		case 5:
 			if((display_bitmap&64)!=0){
 				var p=part_object.buffer_object.face.region_data;
 				if(this.display_parameter.close_clip_plane_number<=0)
-					this.draw(render,part_driver,p,my_pipeline.color_face_pipeline_no_clip);
+					this.draw(0,1,render,part_driver,p,my_pipeline.color_face_pipeline_no_clip);
 				else{
-					this.draw(render,part_driver,p,my_pipeline.color_face_pipeline_do_clip);
-					this.draw(render,part_driver,p,my_pipeline.color_face_pipeline_do_close);
+					this.draw(0,1,render,part_driver,p,my_pipeline.color_face_pipeline_do_clip);
+					this.draw(0,1,render,part_driver,p,my_pipeline.color_face_pipeline_do_close);
 				}
 				if((render.pickup.component_id==component_id)&&(render.pickup.driver_id==driver_id)){
 					var p=part_object.buffer_object.point.region_data;
-					this.draw(render,part_driver,p,my_pipeline.color_pickup_point_pipeline);
+					this.draw(6,1,render,part_driver,p,my_pipeline.color_pickup_point_pipeline);
 				}
 			}
 			break;
