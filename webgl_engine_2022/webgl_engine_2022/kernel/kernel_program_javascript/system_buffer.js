@@ -92,15 +92,14 @@ function construct_system_buffer(target_buffer_number,render)
 	{
 		//	init id_buffer	:	binding point 2
 		
-		var system_stride			=render.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
-		var user_stride				=0;
-			user_stride+=Float32Array.BYTES_PER_ELEMENT*render.component_location_data.identify_matrix.length;
-			user_stride+=Float32Array.BYTES_PER_ELEMENT*this.id_buffer_data_length;
-			user_stride+=Int32Array.BYTES_PER_ELEMENT*render.system_bindgroup_id[0].length;
-			
-		this.id_stride		=(system_stride<user_stride)?user_stride:system_stride;
-		this.id_buffer_size =user_stride;
-			
+		this.id_buffer_size=0;
+		this.id_buffer_size+=Float32Array.BYTES_PER_ELEMENT*render.component_location_data.identify_matrix.length;
+		this.id_buffer_size+=Float32Array.BYTES_PER_ELEMENT*this.id_buffer_data_length;
+		this.id_buffer_size+=Int32Array.BYTES_PER_ELEMENT*render.system_bindgroup_id[0].length;
+		
+		for(this.id_stride=0;this.id_stride<this.id_buffer_size;)
+			this.id_stride+=render.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
+
 		this.id_buffer=render.webgpu.device.createBuffer(
 			{
 				size	:	this.id_stride*render.system_bindgroup_id.length,
