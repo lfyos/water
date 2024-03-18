@@ -49,7 +49,7 @@ function send_location_to_webserver(command_str,component_id,render,do_delay_fla
 					
 	str+="&data=";
 		
-	var move_loca=render.component_location_data.get_one_component_location(operate_component_id);
+	var move_loca=render.component_location_data.get_component_move_location(operate_component_id);
 	for(var i=0,ni=move_loca.length;i<ni;i++)
 		str+=((i==0)?"":",")+(move_loca[i].toString());
 
@@ -214,7 +214,7 @@ function camera_move(ep,world_point_0,world_point_1,render)
 	var diff			=render.computer.sub_operation(local_point_1,local_point_0);
 		loca			=render.computer.create_move_rotate_matrix(diff[0],diff[1],diff[2],0,0,0);
 		
-	var move_loca		=render.component_location_data.get_one_component_location(camera_component_id);
+	var move_loca		=render.component_location_data.get_component_move_location(camera_component_id);
 		move_loca		=render.computer.matrix_multiplication(move_loca,loca);
 		render.component_location_data.modify_one_component_location(camera_component_id,move_loca);
 		
@@ -233,7 +233,7 @@ function component_move(ep,world_point_0,world_point_1,render)
 								local_point_0[1]-local_point_1[1],
 								local_point_0[2]-local_point_1[2],
 								0,0,0);
-	var move_loca		=render.component_location_data.get_one_component_location(ep.selected_component_id);
+	var move_loca		=render.component_location_data.get_component_move_location(ep.selected_component_id);
 	var	new_move_loca	=render.computer.matrix_multiplication(move_loca,modify_loca);
 			
 	render.component_location_data.modify_one_component_location(ep.selected_component_id,new_move_loca);
@@ -290,7 +290,7 @@ function camera_rotate(ep,world_point_0,world_point_1,center_point,render)
 	var new_location				=render.computer.matrix_multiplication(left_adjust,camera_component_location);
 	var loca						=render.computer.matrix_multiplication(
 											render.computer.matrix_negative(camera_component_location),new_location);
-	var move_loca					=render.component_location_data.get_one_component_location(camera_component_id);
+	var move_loca					=render.component_location_data.get_component_move_location(camera_component_id);
 	move_loca						=render.computer.matrix_multiplication(move_loca,loca);
 	render.component_location_data.modify_one_component_location(camera_component_id,move_loca);
 	return true;
@@ -310,7 +310,7 @@ function component_rotate(ep,world_point_0,world_point_1,center_point,render)
 	var new_location	=render.computer.matrix_multiplication(left_adjust,selected_component_location);
 	var loca			=render.computer.matrix_multiplication(
 								render.computer.matrix_negative(selected_component_location),new_location);
-	var move_loca		=render.component_location_data.get_one_component_location(ep.selected_component_id);
+	var move_loca		=render.component_location_data.get_component_move_location(ep.selected_component_id);
 	move_loca			=render.computer.matrix_multiplication(move_loca,render.computer.matrix_negative(loca));
 	render.component_location_data.modify_one_component_location(ep.selected_component_id,move_loca);
 

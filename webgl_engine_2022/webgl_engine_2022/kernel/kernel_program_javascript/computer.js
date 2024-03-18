@@ -96,15 +96,17 @@ function construct_computation_object()
 			for(k=i,j=i+1;j<4;j++)
 				if(Math.abs(b[j][i])>Math.abs(b[k][i]))
 					k=j;
-			for(j=i;j<4;j++){
-				p=b[i][j];
-				b[i][j]=b[k][j];
-				b[k][j]=p;
-			}
-			for(j=0;j<4;j++){
-				p=c[i][j];
-				c[i][j]=c[k][j];
-				c[k][j]=p;
+			if(i!=k){		
+				for(j=i;j<4;j++){
+					p=b[i][j];
+					b[i][j]=b[k][j];
+					b[k][j]=p;
+				}
+				for(j=0;j<4;j++){
+					p=c[i][j];
+					c[i][j]=c[k][j];
+					c[k][j]=p;
+				}
 			}
 			for(j=i+1;j<4;j++){
 				p=b[j][i]/b[i][i];

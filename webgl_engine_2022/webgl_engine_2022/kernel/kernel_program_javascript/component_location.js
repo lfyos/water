@@ -11,7 +11,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 	
 	for(var i=0,ni=this.component_number;i<ni;i++){
 		this.component[i]={
-			relative_version_id		:	2,
+			move_version_id			:	2,
 			absolute_version_id		:	1,
 			caculate_location_flag	:	false,
 			
@@ -40,7 +40,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		this.modify_one_component_location		=null;
 		this.decode_location					=null;
 		this.modify_component_location			=null;
-		this.get_one_component_location			=null;
+		this.get_component_move_location		=null;
 		this.get_component_location				=null;
 		this.get_component_matrix_and_version	=null;
 		
@@ -49,8 +49,8 @@ function construct_component_location_object(my_component_number,my_computer,my_
 	this.modify_one_component_location=function(component_id,loca)
 	{
 		if((component_id>=0)&&(component_id<this.component.length)){
-			this.component[component_id].move_matrix		=loca;
-			this.component[component_id].relative_version_id=this.version_id++;
+			this.component[component_id].move_matrix	=loca;
+			this.component[component_id].move_version_id=this.version_id++;
 		}
 	};
 	this.decode_location=function(data)
@@ -81,13 +81,13 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			this.component[component_id].move_matrix			=this.decode_location(component_loca_buffer[i][2]);
 			
 			if(component_loca_buffer[i].length>3){
-				this.component[component_id].relative		=this.decode_location(component_loca_buffer[i][3]);
-				this.component[component_id].parent			=component_loca_buffer[i][4];
+				this.component[component_id].relative			=this.decode_location(component_loca_buffer[i][3]);
+				this.component[component_id].parent				=component_loca_buffer[i][4];
 			}
-			this.component[component_id].relative_version_id=my_version_id;
+			this.component[component_id].move_version_id		=my_version_id;
 		}
 	};
-	this.get_one_component_location=function(component_id)
+	this.get_component_move_location=function(component_id)
 	{
 		return ((component_id<0)||(component_id>=(this.component.length)))
 				?(this.identify_matrix):(this.component[component_id].move_matrix);
@@ -100,8 +100,8 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			return this.identify_matrix;
 		
 		if(this.component[component_id].caculate_location_flag){
-			if(this.component[component_id].absolute_version_id<this.component[component_id].relative_version_id){
-				this.component[component_id].absolute_version_id=this.component[component_id].relative_version_id;
+			if(this.component[component_id].absolute_version_id<this.component[component_id].move_version_id){
+				this.component[component_id].absolute_version_id=this.component[component_id].move_version_id;
 				this.component[component_id].absolute_location	=this.component[component_id].move_matrix;
 			}
 			return this.component[component_id].absolute_location;
@@ -110,8 +110,8 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		var parent_id;
 
 		if((parent_id=this.component[component_id].parent)<0){
-			if(this.component[component_id].absolute_version_id<this.component[component_id].relative_version_id){
-				this.component[component_id].absolute_version_id=this.component[component_id].relative_version_id;
+			if(this.component[component_id].absolute_version_id<this.component[component_id].move_version_id){
+				this.component[component_id].absolute_version_id=this.component[component_id].move_version_id;
 				this.component[component_id].absolute_location=this.computer.matrix_multiplication(
 						this.component[component_id].relative,this.component[component_id].move_matrix);
 			}
@@ -126,8 +126,8 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			this.component[component_id].absolute_version_id=this.component[parent_id].absolute_version_id;
 			number++;
 		}
-		if(this.component[component_id].absolute_version_id<this.component[component_id].relative_version_id){
-			this.component[component_id].absolute_version_id=this.component[component_id].relative_version_id;
+		if(this.component[component_id].absolute_version_id<this.component[component_id].move_version_id){
+			this.component[component_id].absolute_version_id=this.component[component_id].move_version_id;
 			number++;
 		}
 		
@@ -143,11 +143,15 @@ function construct_component_location_object(my_component_number,my_computer,my_
 	
 	this.get_component_matrix_and_version=function(component_id)
 	{
-		if((component_id<0)||(component_id>=(this.component.length)))
-			return this.identify_matrix;
-		var my_matrix=this.get_component_location(component_id);
-		var my_version=this.component[component_id].absolute_version_id;
+		var my_matrix,my_version;
 		
+		if((component_id<0)||(component_id>=(this.component.length))){
+			my_matrix	=this.identify_matrix;
+			my_version	=0;
+		}else{
+			my_matrix	=this.get_component_location(component_id);
+			my_version	=this.component[component_id].absolute_version_id;
+		}
 		return {
 			matrix	:	my_matrix,
 			version	:	my_version
