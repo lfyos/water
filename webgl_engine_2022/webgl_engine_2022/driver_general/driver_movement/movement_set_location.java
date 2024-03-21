@@ -41,7 +41,7 @@ public class movement_set_location  extends movement_design_base
 		String coordinate_str=ci.request_response.get_parameter("coordinate");
 		switch((coordinate_str==null)?"":coordinate_str){
 		case "view":
-			comp.modify_location(
+			comp.set_component_move_location(
 				move_rotate(
 					get_double(ci,"mx",0),get_double(ci,"my",0),get_double(ci,"mz",0),
 					get_double(ci,"rx",0),get_double(ci,"ry",0),get_double(ci,"rz",0),
@@ -50,7 +50,7 @@ public class movement_set_location  extends movement_design_base
 				ek.component_cont);
 			break;
 		case "camera":
-			comp.modify_location(
+			comp.set_component_move_location(
 				move_rotate(
 					get_double(ci,"mx",0),get_double(ci,"my",0),get_double(ci,"mz",0),
 					get_double(ci,"rx",0),get_double(ci,"ry",0),get_double(ci,"rz",0),
@@ -59,7 +59,7 @@ public class movement_set_location  extends movement_design_base
 				ek.component_cont);
 			break;
 		default:
-			comp.modify_location(
+			comp.set_component_move_location(
 				location.move_rotate(
 					get_double(ci,"mx",0),get_double(ci,"my",0),get_double(ci,"mz",0),
 					get_double(ci,"rx",0),get_double(ci,"ry",0),get_double(ci,"rz",0)),

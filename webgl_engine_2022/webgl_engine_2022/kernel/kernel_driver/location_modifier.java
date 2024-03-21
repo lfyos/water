@@ -61,7 +61,7 @@ public class location_modifier extends modifier_driver
 			p=(p<0.0)?0.0:(p>1.0)?1.0:p;
 		}
 		location loca=location.mix_location(start_location,terminate_location,p);
-		comp.modify_location(loca,ek.component_cont);
+		comp.set_component_move_location(loca,ek.component_cont);
 		comp.uniparameter.touch_time=ek.current_time.nanoseconds();
 		comp.uniparameter.do_response_location_flag=do_response_location_flag;
 	}
@@ -85,7 +85,7 @@ public class location_modifier extends modifier_driver
 		comp.uniparameter.do_response_location_flag=last_do_response_location_flag;
 		comp.uniparameter.touch_time=ek.current_time.nanoseconds();
 		if(terminated_flag)
-			comp.modify_location(terminate_location,ek.component_cont);
+			comp.set_component_move_location(terminate_location,ek.component_cont);
 	}
 	public boolean can_start(long my_current_time,engine_kernel ek,client_information ci)
 	{

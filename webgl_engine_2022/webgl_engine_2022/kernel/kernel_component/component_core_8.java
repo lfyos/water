@@ -79,7 +79,7 @@ public class component_core_8 extends component_core_7
 			parent_comp.recurse_caculate_location(component_cont);
 		caculate_location(component_cont);
 	}
-	public void modify_location(location new_move_location,component_container component_cont)
+	public void set_component_move_location(location new_move_location,component_container component_cont)
 	{	
 		component parent;
 		if((parent=component_cont.get_component(parent_component_id))==null)
