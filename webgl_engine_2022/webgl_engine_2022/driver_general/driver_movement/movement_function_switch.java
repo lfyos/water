@@ -812,7 +812,7 @@ public class movement_function_switch
 			return;
 		component moved_component;
 		if((moved_component=ek.component_cont.get_component(t.move.moved_component_id))!=null){
-			moved_component.modify_location(new location(),ek.component_cont);
+			moved_component.set_component_move_location(new location(),ek.component_cont);
 			moved_component.modify_display_flag(
 					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
 		}

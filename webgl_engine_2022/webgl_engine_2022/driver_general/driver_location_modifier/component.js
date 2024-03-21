@@ -63,7 +63,7 @@ function construct_component_driver(
 			loca=computer.create_point_location(p0,px,py,pz);
 			loca=computer.matrix_multiplication(loca,computer.standard_negative);
 							
-			component_location.modify_one_component_location(component_id,loca);
+			component_location.set_component_move_location(component_id,loca);
 			loca=component_location.get_component_location(component_id);
 						
 			for(var j=5,nj=location_item.length;j<nj;j+=2){
@@ -74,7 +74,7 @@ function construct_component_driver(
 					location_item[k+1]=follow_loca;
 				}
 				follow_loca=computer.matrix_multiplication(loca,follow_loca)
-				component_location.modify_one_component_location(follow_component_id,follow_loca);
+				component_location.set_component_move_location(follow_component_id,follow_loca);
 				component_location.component[follow_component_id].caculate_location_flag=true;
 			}
 			if(not_terminated_flag)

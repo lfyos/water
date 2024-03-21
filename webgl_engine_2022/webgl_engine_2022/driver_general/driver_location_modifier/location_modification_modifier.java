@@ -56,7 +56,7 @@ public class location_modification_modifier extends modifier_driver
 		if((comp=ek.component_cont.get_component(component_id))==null)
 			return false;
 		
-		comp.modify_location(my_loca,ek.component_cont);
+		comp.set_component_move_location(my_loca,ek.component_cont);
 		comp.uniparameter.touch_time=ek.current_time.nanoseconds();
 		comp.uniparameter.do_response_location_flag=my_do_response_location_flag;
 		
@@ -70,7 +70,7 @@ public class location_modification_modifier extends modifier_driver
 			for(int i=0,ni=follow_component_id.length;i<ni;i++)
 				if((follow_comp=ek.component_cont.get_component(follow_component_id[i]))!=null){
 					location loca=parent_and_relative_location.multiply(follow_component_location[i]);
-					follow_comp.modify_location(loca,ek.component_cont);
+					follow_comp.set_component_move_location(loca,ek.component_cont);
 					follow_comp.uniparameter.touch_time=ek.current_time.nanoseconds();
 					follow_comp.uniparameter.do_response_location_flag=my_do_response_location_flag;
 					follow_comp.uniparameter.cacaulate_location_flag=true;

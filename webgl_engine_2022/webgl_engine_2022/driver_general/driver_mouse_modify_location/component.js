@@ -216,7 +216,7 @@ function camera_move(ep,world_point_0,world_point_1,render)
 		
 	var move_loca		=render.component_location_data.get_component_move_location(camera_component_id);
 		move_loca		=render.computer.matrix_multiplication(move_loca,loca);
-		render.component_location_data.modify_one_component_location(camera_component_id,move_loca);
+		render.component_location_data.set_component_move_location(camera_component_id,move_loca);
 		
 		return true;
 }
@@ -236,7 +236,7 @@ function component_move(ep,world_point_0,world_point_1,render)
 	var move_loca		=render.component_location_data.get_component_move_location(ep.selected_component_id);
 	var	new_move_loca	=render.computer.matrix_multiplication(move_loca,modify_loca);
 			
-	render.component_location_data.modify_one_component_location(ep.selected_component_id,new_move_loca);
+	render.component_location_data.set_component_move_location(ep.selected_component_id,new_move_loca);
 		
 	return true;
 }
@@ -292,7 +292,7 @@ function camera_rotate(ep,world_point_0,world_point_1,center_point,render)
 											render.computer.matrix_negative(camera_component_location),new_location);
 	var move_loca					=render.component_location_data.get_component_move_location(camera_component_id);
 	move_loca						=render.computer.matrix_multiplication(move_loca,loca);
-	render.component_location_data.modify_one_component_location(camera_component_id,move_loca);
+	render.component_location_data.set_component_move_location(camera_component_id,move_loca);
 	return true;
 }
 function component_rotate(ep,world_point_0,world_point_1,center_point,render)
@@ -312,7 +312,7 @@ function component_rotate(ep,world_point_0,world_point_1,center_point,render)
 								render.computer.matrix_negative(selected_component_location),new_location);
 	var move_loca		=render.component_location_data.get_component_move_location(ep.selected_component_id);
 	move_loca			=render.computer.matrix_multiplication(move_loca,render.computer.matrix_negative(loca));
-	render.component_location_data.modify_one_component_location(ep.selected_component_id,move_loca);
+	render.component_location_data.set_component_move_location(ep.selected_component_id,move_loca);
 
 	return true;
 }

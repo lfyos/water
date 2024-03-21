@@ -105,7 +105,7 @@ public class extended_component_instance_driver extends component_instance_drive
 						}
 						data[i]=Double.parseDouble(str.substring(j,k++));
 					}
-					operate_component.modify_location((new location(data)).normalize(),ek.component_cont);
+					operate_component.set_component_move_location((new location(data)).normalize(),ek.component_cont);
 					ci.render_buffer.location_buffer.synchronize_location_version(operate_component,ek,update_flag);
 					
 					display_flag=true;
@@ -172,7 +172,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			get_data(true,operate_component,ek,ci);
 			if(operate_component!=null){
 				operate_component.uniparameter.do_response_location_flag=true;
-				operate_component.modify_location(operate_component.move_location,ek.component_cont);
+				operate_component.set_component_move_location(operate_component.move_location,ek.component_cont);
 				if(operate_component.component_id==camera_component_id)
 					ci.display_camera_result.cam.push_restore_stack(
 						ek.modifier_cont[modifier_container_id],false,

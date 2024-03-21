@@ -46,7 +46,7 @@ public class extended_component_instance_driver extends component_instance_drive
 
 						loca=location.move_rotate(p1.x,p1.y,p1.z,0,0,0);
 						loca=follow_mouse_comp.move_location.multiply(loca);
-						follow_mouse_comp.modify_location(loca,ek.component_cont);
+						follow_mouse_comp.set_component_move_location(loca,ek.component_cont);
 					}
 		}
 		if(cr.target.main_display_target_flag){

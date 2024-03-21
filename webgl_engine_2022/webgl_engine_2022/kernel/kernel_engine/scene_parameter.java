@@ -181,7 +181,7 @@ public class scene_parameter
 				if((type_shader_directory_name=System.getenv(type_shader_directory_name))!=null)
 					if((type_shader_directory_name=file_reader.separator(type_shader_directory_name)).length()>0)
 						break;
-			type_shader_directory_name=null;
+			type_shader_directory_name=directory_name;
 			break;
 		case "relative_sub_directory":
 			type_shader_file_name=scene_sub_directory+type_shader_file_name;

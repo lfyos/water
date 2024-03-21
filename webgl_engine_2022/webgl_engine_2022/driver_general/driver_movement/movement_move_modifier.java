@@ -119,7 +119,7 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 		comp.modify_display_flag(set_parameter_channel_id,!terminate_state_flag,ek.component_cont);
 		
 		if(terminate_state_flag)
-			comp.modify_location(new location(), ek.component_cont);
+			comp.set_component_move_location(new location(), ek.component_cont);
 		
 		if(follow_component_id!=null)
 			for(int i=0,ni=follow_component_id.length;i<ni;i++)
@@ -128,7 +128,7 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 					comp.modify_display_flag(set_parameter_channel_id,!terminate_state_flag,ek.component_cont);
 					
 					if(terminate_state_flag)
-						comp.modify_location(new location(),ek.component_cont);
+						comp.set_component_move_location(new location(),ek.component_cont);
 				}
 	}
 }

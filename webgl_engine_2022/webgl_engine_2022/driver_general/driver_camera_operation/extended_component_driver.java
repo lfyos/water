@@ -95,7 +95,7 @@ public class extended_component_driver  extends component_driver
 			location loca=new location(new point(),dx,dy,dz).multiply(location.standard_negative);
 			camera cam=ek.camera_cont.get(cam_id);
 			locate_camera loca_cam=new locate_camera(cam);
-			cam.eye_component.modify_location(loca_cam.locate(my_box,loca),ek.component_cont);
+			cam.eye_component.set_component_move_location(loca_cam.locate(my_box,loca),ek.component_cont);
 			loca_cam.scale(Math.abs(cam.parameter.scale_value));
 			cam.parameter.distance=loca_cam.distance;
 		}while(true);

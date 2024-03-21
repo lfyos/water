@@ -37,16 +37,16 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		this.webgpu			=null;
 		this.identify_matrix=null;
 
-		this.modify_one_component_location		=null;
 		this.decode_location					=null;
-		this.modify_component_location			=null;
+		this.set_component_move_location		=null;		
+		this.set_component_location				=null;
 		this.get_component_move_location		=null;
 		this.get_component_location				=null;
 		this.get_component_matrix_and_version	=null;
 		
 		return;
 	}
-	this.modify_one_component_location=function(component_id,loca)
+	this.set_component_move_location=function(component_id,loca)
 	{
 		if((component_id>=0)&&(component_id<this.component.length)){
 			this.component[component_id].move_matrix	=loca;
@@ -73,7 +73,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		return this.computer.create_move_rotate_matrix(
 				my_data[0],my_data[1],my_data[2],my_data[3],my_data[4],my_data[5]);
 	};
-	this.modify_component_location=function(component_loca_buffer)
+	this.set_component_location=function(component_loca_buffer)
 	{
 		for(var i=0,ni=component_loca_buffer.length,my_version_id=this.version_id++;i<ni;i++){
 			var component_id									= component_loca_buffer[i][0];
@@ -140,7 +140,6 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		
 		return loca;
 	};
-	
 	this.get_component_matrix_and_version=function(component_id)
 	{
 		var my_matrix,my_version;

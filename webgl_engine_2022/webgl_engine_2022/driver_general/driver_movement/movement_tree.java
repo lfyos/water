@@ -167,7 +167,7 @@ public class movement_tree {
 		component moved_component;
 		if((moved_component=component_cont.get_component(move.moved_component_id))==null)
 			return;
-		moved_component.modify_location(new location(),component_cont);
+		moved_component.set_component_move_location(new location(),component_cont);
 		moved_component.modify_display_flag(display_parameter_channel_id,true,component_cont);
 		moved_component.modify_display_flag(hide_parameter_channel_id,true,component_cont);
 		return;
@@ -218,7 +218,7 @@ public class movement_tree {
 			display_flag=true;
 			hide_flag=true;
 		}
-		moved_component.modify_location(display_flag?loca:new location(),component_cont);
+		moved_component.set_component_move_location(display_flag?loca:new location(),component_cont);
 		moved_component.modify_display_flag(display_parameter_channel_id,display_flag,component_cont);
 		moved_component.modify_display_flag(hide_parameter_channel_id,hide_flag,component_cont);
 		
@@ -233,7 +233,7 @@ public class movement_tree {
 				loca=main_loca.multiply(move.follow_component_location[i]);
 				loca=follow_component.caculate_negative_parent_and_relative_location().multiply(loca);
 				follow_component.uniparameter.cacaulate_location_flag=false;
-				follow_component.modify_location(loca,component_cont);
+				follow_component.set_component_move_location(loca,component_cont);
 				
 				follow_component.modify_display_flag(display_parameter_channel_id,display_flag,component_cont);
 				follow_component.modify_display_flag(hide_parameter_channel_id,hide_flag,component_cont);

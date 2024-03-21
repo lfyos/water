@@ -233,7 +233,7 @@ async function request_render_data(render)
 		render.component_render_data.modify_component_render_parameter(response_data[2],response_data[3],render);
 		render.component_render_data.modify_component_buffer_parameter(response_data[4],render);
 		render.camera.modify_camera_data(response_data[5]);
-		render.component_location_data.modify_component_location(response_data[6]);
+		render.component_location_data.set_component_location(response_data[6]);
 		for(var p=response_data[7],i=0,ni=p.length;i<ni;i++)
 			render.vertex_data_downloader.buffer_head_request_queue.push(p[i]);
 		
