@@ -14,11 +14,11 @@ public class file_directory
 		switch(part_type_id){
 		default:
 		case 0:
-			return system_par.proxy_par.proxy_data_root_directory_name;
+			return system_par.temporary_file_par.temporary_root_directory_name;
 		case 1:
-			return scene_par.type_proxy_directory_name;
+			return scene_par.type_temporary_directory_name;
 		case 2:
-			return scene_par.scene_proxy_directory_name;
+			return scene_par.scene_temporary_directory_name;
 		}
 	}
 	public static String render_file_directory(int part_type_id,

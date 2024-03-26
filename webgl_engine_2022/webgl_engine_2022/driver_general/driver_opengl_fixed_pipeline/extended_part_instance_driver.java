@@ -40,7 +40,7 @@ public class extended_part_instance_driver extends part_instance_driver
 		if(new File(path_name_1).exists())
 			return new String[]{path_name_1,p.file_charset};
 		
-		String path_name_2=ek.system_par.proxy_par.proxy_data_root_directory_name+file_name;
+		String path_name_2=ek.system_par.temporary_file_par.temporary_root_directory_name+file_name;
 		if(new File(path_name_2).exists())
 			return new String[]{path_name_2,p.file_charset};
 		

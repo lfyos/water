@@ -163,7 +163,7 @@ public class client_information
 			return null;
 		
 		String proxy_file_name=f.getAbsolutePath().replace(File.separatorChar,'/');
-		String proxy_directory_name=system_par.proxy_par.proxy_data_root_directory_name.replace(File.separatorChar,'/');
+		String proxy_directory_name=system_par.temporary_file_par.temporary_root_directory_name.replace(File.separatorChar,'/');
 		int proxy_directory_name_length=proxy_directory_name.length();
 		if(proxy_file_name.length()<=proxy_directory_name_length)
 			return null;

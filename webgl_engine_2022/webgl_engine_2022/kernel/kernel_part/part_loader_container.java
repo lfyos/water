@@ -144,7 +144,7 @@ public class part_loader_container
 		if((scene_par!=null)&&(boftal_container!=null)){
 			buffer_object_file_modify_time_and_length my_boftal;
 			String boftal_token_str=part_temporary_file_directory.substring(
-					system_par.proxy_par.proxy_data_root_directory_name.length());
+					system_par.temporary_file_par.temporary_root_directory_name.length());
 			if((my_boftal=boftal_container.search_boftal(boftal_token_str,0))!=null){
 				if(my_part.part_mesh==null)
 					my_part.part_mesh=my_boftal.simple_part_mesh;
@@ -170,7 +170,7 @@ public class part_loader_container
 		my_part.boftal=null;
 		if(boftal_container!=null){
 			String boftal_token_str=part_temporary_file_directory.substring(
-					system_par.proxy_par.proxy_data_root_directory_name.length());
+					system_par.temporary_file_par.temporary_root_directory_name.length());
 			my_part.boftal=boftal_container.search_boftal(boftal_token_str,boftal_last_modify_time);
 		}
 		if(my_part.boftal==null) {

@@ -168,7 +168,7 @@ public class engine_initialization
 			engine_kernel ek,client_request_response request_response,client_process_bar process_bar)
 	{
 		component_initialization pi;
-		String destination_file_name=ek.scene_par.scene_proxy_directory_name+"initialization.gzip_js";
+		String destination_file_name=ek.scene_par.scene_temporary_directory_name+"initialization.gzip_js";
 		
 		long last_time=program_file_reader.get_system_program_last_time(ek.system_par);
 		for(int render_id=0,render_number=ek.render_cont.renders.size();render_id<render_number;render_id++) {

@@ -198,7 +198,7 @@ public class client_interface
 		debug_information.println("shader_file_name		:	",				system_par.shader_file_name);
 		debug_information.println("user_file_name			:	",			system_par.user_file_name);
 		debug_information.println("default_parameter_directory	:	",		system_par.default_parameter_directory);
-		debug_information.println("proxy_data_root_directory_name	:	",	system_par.proxy_par.proxy_data_root_directory_name);
+		debug_information.println("temporary_root_directory_name	:	",	system_par.temporary_file_par.temporary_root_directory_name);
 		
 		engine_call_result ret_val=create_engine_routine(engine_container,
 			my_client_interface_lock,request_response,delay_time_length,engine_counter);

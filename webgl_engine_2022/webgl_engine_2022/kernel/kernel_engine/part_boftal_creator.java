@@ -58,7 +58,7 @@ public class part_boftal_creator extends sorter <part,String>
 		if((process_bar!=null)&&(process_bar_title!=null))
 			process_bar.set_process_bar(true, process_bar_title, "",0,part_number);
 
-		int cut_directory_length=system_par.proxy_par.proxy_data_root_directory_name.length();
+		int cut_directory_length=system_par.temporary_file_par.temporary_root_directory_name.length();
 		file_writer fw=new  file_writer(file_name,file_charset);
 		fw.println(part_number);
 		

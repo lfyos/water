@@ -31,7 +31,7 @@ public class dispatch_request_main
 			return null;
 		case "initialization":
 			return new String[] {
-				ek.scene_par.scene_proxy_directory_name+"initialization.gzip_js",
+				ek.scene_par.scene_temporary_directory_name+"initialization.gzip_js",
 				ek.system_par.network_data_charset
 			};
 		case "buffer":

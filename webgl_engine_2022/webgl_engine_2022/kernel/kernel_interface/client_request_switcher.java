@@ -17,7 +17,6 @@ public class client_request_switcher
 	private int next_client_container_id;
 	
 	private engine_interface_container engine_container;
-	private proxy_downloader download_proxy;
 	private create_engine_counter engine_counter;
 	
 	private volatile int creation_engine_lock_number;
@@ -45,10 +44,6 @@ public class client_request_switcher
 		if(engine_container!=null) {
 			engine_container.destroy();
 			engine_container=null;
-		}
-		if(download_proxy!=null) {
-			download_proxy.destroy();
-			download_proxy=null;
 		}
 		if(engine_counter!=null)
 			engine_counter=null;
@@ -126,10 +121,10 @@ public class client_request_switcher
 				system_par.text_class_charset,system_par.text_jar_file_charset);
 			break;
 		case "buffer":
-			ecr=download_proxy.download(request_response,system_par);
+			ecr=file_download_manager.download(request_response,system_par);
 			break;
 		case "proxy":
-			if((ecr=download_proxy.download(request_response,system_par))!=null)
+			if((ecr=file_download_manager.download(request_response,system_par))!=null)
 				ecr.date_string=null;
 			break;
 		case "process_bar":
@@ -202,9 +197,9 @@ public class client_request_switcher
 		request_response.destroy();
 		return;
 	}
-	public client_request_switcher(String configure_file_name)
+	public client_request_switcher(String webserver_configure_file_name)
 	{
-		system_par			=new system_parameter(configure_file_name);
+		system_par			=new system_parameter(webserver_configure_file_name);
 		program_javascript	=new javascript_program(system_par);
 		
 		client_container	=new client_interface_container[system_par.max_client_container_number];
@@ -212,7 +207,6 @@ public class client_request_switcher
 			client_container[i]=new client_interface_container();
 
 		engine_container	=new engine_interface_container();
-		download_proxy		=new proxy_downloader();
 		engine_counter		=new create_engine_counter();
 		
 		creation_engine_lock_number	=0;

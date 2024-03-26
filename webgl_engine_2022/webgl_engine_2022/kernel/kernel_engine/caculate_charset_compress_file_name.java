@@ -72,15 +72,21 @@ public class caculate_charset_compress_file_name
 	}
 	public caculate_charset_compress_file_name(File f,system_parameter system_par)
 	{
-		caculate(f,													system_par.content_type_change_name,
-				system_par.data_root_directory_name,				system_par.proxy_par.compress_data_root_directory_name,
-				system_par.proxy_par.proxy_data_root_directory_name,system_par.proxy_par.compress_proxy_data_root_directory_name);
+		caculate(f,									
+				system_par.content_type_change_name,
+				system_par.data_root_directory_name,
+				system_par.temporary_file_par.compress_data_root_directory_name,
+				system_par.temporary_file_par.temporary_root_directory_name,
+				system_par.temporary_file_par.compress_temporary_root_directory_name);
 	}
 	public caculate_charset_compress_file_name(File f,system_parameter system_par,
 				String proxy_data_root_directory_name,String compress_proxy_root_directory_name)
 	{
-		caculate(f,													system_par.content_type_change_name,
-				system_par.data_root_directory_name,				system_par.proxy_par.compress_data_root_directory_name,
-				proxy_data_root_directory_name,						compress_proxy_root_directory_name);
+		caculate(f,									
+				system_par.content_type_change_name,
+				system_par.data_root_directory_name,
+				system_par.temporary_file_par.compress_data_root_directory_name,
+				proxy_data_root_directory_name,	
+				compress_proxy_root_directory_name);
 	}
 }

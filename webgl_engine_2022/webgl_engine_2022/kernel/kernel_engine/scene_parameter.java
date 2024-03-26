@@ -15,7 +15,7 @@ public class scene_parameter
 	public String directory_name,extra_directory_name,parameter_charset,extra_parameter_charset;
 	public long parameter_last_modified_time,scene_last_modified_time;
 	
-	public String type_proxy_directory_name,scene_proxy_directory_name;
+	public String type_temporary_directory_name,scene_temporary_directory_name;
 	public String type_shader_directory_name,type_shader_file_name;
 	public String scene_shader_directory_name,scene_shader_file_name;
 	public String camera_file_name;
@@ -134,20 +134,20 @@ public class scene_parameter
 		if(parameter_last_modified_time<ekcp.scene_list_file_last_modified_time)
 			parameter_last_modified_time=ekcp.scene_list_file_last_modified_time;
 
-		if((type_proxy_directory_name=fr.get_string())==null)
-			type_proxy_directory_name="no_directory";
+		if((type_temporary_directory_name=fr.get_string())==null)
+			type_temporary_directory_name="no_directory";
 		else
-			type_proxy_directory_name=file_reader.separator(type_proxy_directory_name);
-		type_proxy_directory_name=system_par.proxy_par.proxy_data_root_directory_name
-				+"scene_directory"+File.separator+type_proxy_directory_name+File.separator;
+			type_temporary_directory_name=file_reader.separator(type_temporary_directory_name);
+		type_temporary_directory_name=system_par.temporary_file_par.temporary_root_directory_name
+				+"scene_directory"+File.separator+type_temporary_directory_name+File.separator;
 		
-		scene_proxy_directory_name=type_proxy_directory_name+file_reader.separator(ekcp.scene_name);
+		scene_temporary_directory_name=type_temporary_directory_name+file_reader.separator(ekcp.scene_name);
 		if(scene_sub_directory.length()<=0)
-			scene_proxy_directory_name+=File.separator;
+			scene_temporary_directory_name+=File.separator;
 		else if(scene_sub_directory.charAt(0)==File.separatorChar)
-			scene_proxy_directory_name+=scene_sub_directory;
+			scene_temporary_directory_name+=scene_sub_directory;
 		else
-			scene_proxy_directory_name+=File.separator+scene_sub_directory;
+			scene_temporary_directory_name+=File.separator+scene_sub_directory;
 
 		String str_array[]={change_part_string,change_component_string,mount_component_string,part_type_string};
 		for(int str_len,i=0,ni=str_array.length;i<ni;i++) {
@@ -160,7 +160,7 @@ public class scene_parameter
 				continue;
 			if(str_array[i].charAt(str_len-1)!=File.separatorChar)
 				str_array[i]+=File.separatorChar;
-			scene_proxy_directory_name+=str_array[i];
+			scene_temporary_directory_name+=str_array[i];
 		}
 		
 		if((type_shader_file_name=fr.get_string())==null)
