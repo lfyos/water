@@ -12,7 +12,8 @@ public class proxy_information
 	
 	public proxy_information(
 			String my_original_url,
-			String my_next_url,boolean my_encode_flag,
+			String my_next_url,
+			boolean my_encode_flag,
 			String my_proxy_root_directory_name,
 			String my_compress_proxy_root_directory_name,
 			String my_proxy_charset_name,
