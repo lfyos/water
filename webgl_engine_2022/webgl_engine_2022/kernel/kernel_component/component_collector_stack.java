@@ -305,7 +305,7 @@ public class component_collector_stack
 		component_collector_stack_file_charset	 =system_par.local_data_charset;
 		
 		if(component_cont.scene_component==null)
-			component_collector_stack_file_name =scene_par.scene_proxy_directory_name;
+			component_collector_stack_file_name =scene_par.scene_temporary_directory_name;
 		else
 			component_collector_stack_file_name =component_cont.scene_component.component_directory_name;
 		

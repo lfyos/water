@@ -1,3 +1,2 @@
-/*	data environment variable	*/		liufuyan_data_configure
-/*	proxy environment variable	*/		liufuyan_proxy_configure
-/*	scene environment variable	*/		liufuyan_scene_configure
+/*	data_file_configure environment variable		*/		liufuyan_data_file_configure
+/*	temporary_file_configure environment variable	*/		liufuyan_temporary_file_configure

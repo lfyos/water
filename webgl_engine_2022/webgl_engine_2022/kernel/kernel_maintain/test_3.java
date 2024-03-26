@@ -120,11 +120,11 @@ public class test_3 extends travel_through_directory
 		
 		long tl=System.nanoTime();
 		new test_3(
-				"F:\\temp\\proxy_root_directory\\package_directory",
-				"F:\\temp\\proxy_root_directory\\bak\\package_directory");
+				"F:\\temp\\temporary_root_directory\\package_directory",
+				"F:\\temp\\temporary_root_directory\\bak\\package_directory");
 		new test_3(
-				"F:\\temp\\proxy_root_directory\\bak\\scene_directory",
-				"F:\\temp\\proxy_root_directory\\scene_directory");	
+				"F:\\temp\\temporary_root_directory\\bak\\scene_directory",
+				"F:\\temp\\temporary_root_directory\\scene_directory");	
 		tl=System.nanoTime()-tl;
 		
 		debug_information.println("End,time length:",tl/1000);

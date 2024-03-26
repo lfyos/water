@@ -423,14 +423,14 @@ public class engine_kernel
 			client_request_response request_response,client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container)
 	{
-		String my_lock_name=scene_par.scene_proxy_directory_name+"engine.lock";
+		String my_lock_name=scene_par.scene_temporary_directory_name+"engine.lock";
 		exclusive_file_mutex efm=exclusive_file_mutex.lock(my_lock_name,
-				"wait for load engine kernel:	"+scene_par.scene_proxy_directory_name);
+				"wait for load engine kernel:	"+scene_par.scene_temporary_directory_name);
 		
 		debug_information.println();
-		debug_information.println("scene_par.directory_name	:	",		scene_par.directory_name);
-		debug_information.println("type_proxy_directory_name	:	",	scene_par.type_proxy_directory_name);
-		debug_information.println("scene_proxy_directory_name	:	",	scene_par.scene_proxy_directory_name);
+		debug_information.println("scene_par.directory_name		:	",	scene_par.directory_name);
+		debug_information.println("type_temporary_directory_name:	",	scene_par.type_temporary_directory_name);
+		debug_information.println("scene_temporary_directory_name:	",	scene_par.scene_temporary_directory_name);
 			
 		debug_information.println("camera_file_name		:	",			scene_par.camera_file_name);
 		

@@ -9,8 +9,8 @@
 		
 				not_part_list	not_normalize_location
 				
-				mount															interface.assemble
-				environment_sub_directory_mount		liufuyan_scene_configure	movement.assemble
+				mount																		interface.assemble
+				environment_sub_directory_mount		liufuyan_scene_directory_configure		movement.assemble
 		
 		/*	2:child_number	*/	0
 
@@ -21,8 +21,8 @@
 		
 				part_list		normalize_location
 				
-				mount															SLDASM.assemble
-				environment_sub_directory_mount		liufuyan_scene_configure	assemble.assemble
+				mount																		SLDASM.assemble
+				environment_sub_directory_mount		liufuyan_scene_directory_configure		assemble.assemble
 		
 		/*	2:child_number	*/	0
 		

@@ -69,7 +69,7 @@ function file_name_change()
 <%
 	response.setCharacterEncoding("UTF-8");
 
-	String directory_name=System.getenv("liufuyan_sigma_directory");
+	String directory_name=System.getenv("liufuyan_scene_directory_configure");
 
 	File f;
 	if((f=new File(directory_name)).exists())
