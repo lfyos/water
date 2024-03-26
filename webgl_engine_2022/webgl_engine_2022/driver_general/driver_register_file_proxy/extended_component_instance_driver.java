@@ -27,33 +27,14 @@ public class extended_component_instance_driver extends component_instance_drive
 				return;
 			}
 			String my_url;
-			f.mark_start();
-			if((my_url=f.get_string())==null){
-				f.mark_terminate(false);
+			if((my_url=f.get_string())==null)
 				continue;
-			}
-			boolean my_encode_flag;
-			switch(my_url.toLowerCase()) {
-			case "yes":
-			case "no":
-			case "true":
-			case "false":
-				f.mark_terminate(true);
-				my_encode_flag=f.get_boolean();
-				if(f.eof())
-					continue;
-				if((my_url=f.get_string())==null)
-					continue;
-				if((my_url=my_url.trim()).length()<=0)
-					continue;
-				break;
-			default:
-				f.mark_terminate(false);
+			if((my_url=my_url.trim()).length()<=0)
+				continue;
+			if(my_url.toLowerCase().compareTo("default_proxy_url")==0)
 				my_url=ci.request_response.implementor.get_url()+"?channel=buffer&file=";
-				my_encode_flag=true;
-				break;
-			}
-			ci.add_file_proxy_url(my_url,my_encode_flag);
+			
+			ci.add_file_proxy_url(my_url);
 		}
 	}
 	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)

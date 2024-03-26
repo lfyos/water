@@ -40,8 +40,7 @@ public class download_readme_file
 			if((request_time>=0)&&(current_time>=0)&&(request_time>=current_time)){
 				f.close();
 				request_response.implementor.response_not_modify(
-					"download_readme_file response_not_modify",
-					file_modified_str,max_age_string);
+					"download_readme_file response_not_modify",file_modified_str,max_age_string);
 				return null;
 			}
 		}
