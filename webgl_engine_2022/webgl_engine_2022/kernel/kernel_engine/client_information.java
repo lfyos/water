@@ -51,7 +51,6 @@ public class client_information
 	
 	public String 							request_url_header;
 	
-	private boolean						file_proxy_url_encode_flag[];
 	private String							file_proxy_url_array[];
 	private int 							file_proxy_pointer;
 	
@@ -132,10 +131,6 @@ public class client_information
 	{
 		return file_proxy_url_array;
 	}
-	public boolean[] get_all_file_proxy_encode_flag()
-	{
-		return file_proxy_url_encode_flag;
-	}
 	public String get_component_request_url_header(int component_id,String driver_id)
 	{
 		String  url_header;
@@ -178,48 +173,30 @@ public class client_information
 		
 		file_proxy_pointer=(++file_proxy_pointer)%(file_proxy_url_array.length);
 		String proxy_url=file_proxy_url_array[file_proxy_pointer];
-		if(!(file_proxy_url_encode_flag[file_proxy_pointer]))
-			return proxy_url+proxy_file_name;
 
-		long file_length=f.length(),last_modified_time=f.lastModified();
-		caculate_charset_compress_file_name cccfn=new caculate_charset_compress_file_name(f,system_par);
-		if(cccfn.charset_file_name!=null)
-			if((f=new File(cccfn.charset_file_name)).exists())
-				file_length=f.length();
-		if(cccfn.compress_file_name!=null)
-			if((f=new File(cccfn.compress_file_name)).exists())
-				file_length=f.length();
-		
-		String length_str=Long.toString(file_length);
+		long last_modified_time=f.lastModified();
+
 		String date_str=Long.toString(last_modified_time);
-		String original_url=request_response.implementor.get_url();
 		String code_str=request_response.implementor.get_request_charset();
 		try{
 			proxy_file_name	=java.net.URLEncoder.encode(java.net.URLEncoder.encode(proxy_file_name,	code_str),code_str);
-			length_str		=java.net.URLEncoder.encode(java.net.URLEncoder.encode(length_str,		code_str),code_str);
 			date_str		=java.net.URLEncoder.encode(java.net.URLEncoder.encode(date_str,		code_str),code_str);
-			original_url	=java.net.URLEncoder.encode(java.net.URLEncoder.encode(original_url,	code_str),code_str);
 		}catch(Exception e) {
 			;
 		}
-		return proxy_url+proxy_file_name+"&length="+length_str+"&date="+date_str+"&original="+original_url;
+		return proxy_url+proxy_file_name+"&date="+date_str;
 	}
-	public void add_file_proxy_url(String my_file_proxy_url,boolean my_encode_flag)
+	public void add_file_proxy_url(String my_file_proxy_url)
 	{
 		if(my_file_proxy_url==null)
 			return;
 		if((my_file_proxy_url=my_file_proxy_url.trim()).length()<=0)
 			return;
 		String bak_url[]=file_proxy_url_array;
-		boolean bak_flag[]=file_proxy_url_encode_flag;
 		file_proxy_url_array=new String[file_proxy_url_array.length+1];
-		file_proxy_url_encode_flag=new boolean[file_proxy_url_encode_flag.length+1];
-		for(int i=0,ni=bak_url.length;i<ni;i++) {
+		for(int i=0,ni=bak_url.length;i<ni;i++)
 			file_proxy_url_array[i]=bak_url[i];
-			file_proxy_url_encode_flag[i]=bak_flag[i];
-		}
 		file_proxy_url_array[file_proxy_url_array.length-1]=new String(my_file_proxy_url);
-		file_proxy_url_encode_flag[file_proxy_url_encode_flag.length-1]=my_encode_flag;
 		return;
 	}
 	public void delete_file_proxy_url(String my_file_proxy_url)
@@ -231,18 +208,13 @@ public class client_information
 		int new_file_proxy_number=0;
 		for(int i=0,ni=file_proxy_url_array.length;i<ni;i++)
 			if(my_file_proxy_url.compareTo(file_proxy_url_array[i])!=0){
-				file_proxy_url_array[new_file_proxy_number  ]=file_proxy_url_array[i];
-				file_proxy_url_encode_flag [new_file_proxy_number++]=file_proxy_url_encode_flag[i];
+				file_proxy_url_array[new_file_proxy_number++]=file_proxy_url_array[i];
 			}
 		if(file_proxy_url_array.length!=new_file_proxy_number){
 			String bak_url[]=file_proxy_url_array;
-			boolean bak_flag[]=file_proxy_url_encode_flag;
 			file_proxy_url_array=new String[new_file_proxy_number];
-			file_proxy_url_encode_flag=new boolean[new_file_proxy_number];
-			for(int i=0;i<new_file_proxy_number;i++) {
+			for(int i=0;i<new_file_proxy_number;i++)
 				file_proxy_url_array[i]=bak_url[i];
-				file_proxy_url_encode_flag[i]=bak_flag[i];
-			}
 		}
 		return;
 	}
@@ -291,8 +263,7 @@ public class client_information
 		request_response				=my_request_response;
 		
 		process_bar						=my_process_bar;
-		
-		file_proxy_url_encode_flag		=new boolean[0];
+
 		file_proxy_url_array			=new String[0];
 		file_proxy_pointer				=0;
 		

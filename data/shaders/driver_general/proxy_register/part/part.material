@@ -1,9 +1,6 @@
 		default_proxy_url
 
-//		true	https://192.168.226.1:9090/webgl_engine_2022/interface.jsp?channel=buffer&file=
-//		true	https://192.168.226.1:9090/webgl_engine_2022/interface.jsp?channel=proxy&file=
-	
-//		true	http://localhost:8080/webgl_engine_2022/interface.jsp?channel=buffer&file=
-//		true	http://localhost:8080/webgl_engine_2020/interface.jsp?channel=proxy&file=
-//		false	http://localhost:8080/webgl_engine_2020/interface.jsp?channel=buffer&file=
-//		false	http://localhost:8080/webgl_engine_2020/interface.jsp?channel=proxy&file=
+//		http://localhost:8080/webgl_engine_2022/graphics_engine_interface?channel=buffer&file=
+//		http://localhost:8080/webgl_engine_2020/graphics_engine_interface?channel=proxy&file=
+//		http://localhost:8080/webgl_engine_2020/graphics_engine_interface?channel=buffer&file=
+//		http://localhost:8080/webgl_engine_2020/graphics_engine_interface?channel=proxy&file=
