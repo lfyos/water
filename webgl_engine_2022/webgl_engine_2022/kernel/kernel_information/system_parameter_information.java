@@ -51,8 +51,8 @@ public class system_parameter_information extends jason_creator
 		print("max_engine_component_number",			sp.max_engine_component_number);
 		
 		print("max_buffer_object_head_package_length",	sp.max_buffer_object_head_package_length);
-		print("proxy_response_length",					sp.proxy_response_length);
-		print("compress_response_length",				sp.compress_response_length);
+		print("max_file_response_length",				sp.max_file_response_length);
+		print("min_compress_response_length",			sp.min_compress_response_length);
 		
 		print("file_download_cors_string",				sp.file_download_cors_string);
 		

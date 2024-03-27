@@ -163,7 +163,7 @@ public class client_information
 			return null;
 		if(!(f.exists()))
 			return null;
-		if(f.length()<system_par.proxy_response_length)
+		if(f.length()<system_par.max_file_response_length)
 			return null;
 		
 		String proxy_file_name=f.getAbsolutePath().replace(File.separatorChar,'/');

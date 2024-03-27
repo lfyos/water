@@ -66,9 +66,11 @@ public class dispatch_request_main
 		ek.process_reset();
 		
 		String cors_string=ek.scene_par.scene_cors_string;
-		long max_length	=ek.system_par.compress_response_length;
+		long min_compress_response_length=ek.system_par.min_compress_response_length;
 		long my_length	=ci.request_response.output_data_length;
-		String compress_file_name=((max_length<=0)||(my_length<max_length))?null:"do_compress_flag";
+		String compress_file_name="do_compress_flag";
+		if((min_compress_response_length<=0)||(my_length<min_compress_response_length))
+			compress_file_name=null;
 		
 		if(file_name==null)
 			return new engine_call_result(null,null,null,compress_file_name,null,cors_string);
@@ -87,20 +89,20 @@ public class dispatch_request_main
 		File f=new File(file_name[0]);
 		
 		if(!(f.exists())){
-			debug_information.println("create_file_proxy_url error, file NOT exist\t",f.getAbsolutePath());
+			debug_information.println("create engine_call_result error in get_engine_result,file NOT exist\t",f.getAbsolutePath());
 			return new engine_call_result(null,null,null,null,null,cors_string);
 		}
 		if(!(f.isFile())){
-			debug_information.println("create_file_proxy_url error, file NOT normal file\t",f.getAbsolutePath());
+			debug_information.println("create engine_call_result error in get_engine_result,file NOT normal file\t",f.getAbsolutePath());
 			return new engine_call_result(null,null,null,null,null,cors_string);
 		}
 		if(!(f.canRead())){
-			debug_information.println("create_file_proxy_url error, file CAN NOT read\t",f.getAbsolutePath());
+			debug_information.println("create engine_call_result error in get_engine_result,file CAN NOT read\t",f.getAbsolutePath());
 			return new engine_call_result(null,null,null,null,null,cors_string);
 		}
-		String proxy_url;
-		if((proxy_url=ci.get_file_proxy_url(f,ek.system_par))!=null){
-			ci.request_response.implementor.redirect_url(proxy_url,ek.scene_par.scene_cors_string);
+		String my_url=ci.get_file_proxy_url(f,ek.system_par);
+		if(my_url!=null){
+			ci.request_response.implementor.redirect_url(my_url,ek.scene_par.scene_cors_string);
 			return new engine_call_result(null,null,null,null,null,cors_string);
 		}
 		caculate_charset_compress_file_name cccfn=new caculate_charset_compress_file_name(f,ek.system_par);

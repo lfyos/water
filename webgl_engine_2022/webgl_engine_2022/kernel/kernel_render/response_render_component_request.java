@@ -129,14 +129,11 @@ public class response_render_component_request
 		}
 		ci.request_response.print("]");
 	}
-	private static int response_buffer_object_proxy_request(part p,engine_kernel ek,client_information ci)
+	private static int response_buffer_object_request(part p,engine_kernel ek,client_information ci)
 	{
 		String directory_name=file_directory.part_file_directory(p,ek.system_par,ek.scene_par)+"mesh.";
-		String proxy_url_directory=ci.request_url_header
-				+"&command=buffer&operation=buffer_data"
-				+"&render="+(p.render_id)
-				+"&part="+(p.part_id)
-				+"&data_file=";
+		String url_directory=ci.request_url_header+"&command=buffer&operation=buffer_data"
+								+"&render="+(p.render_id)+"&part="+(p.part_id)+"&data_file=";
 		
 		int ret_val=0;
 		String type_str[]={"face","edge","point"};
@@ -148,11 +145,10 @@ public class response_render_component_request
 				buffer_object_file_modify_time_and_length_item item=item_list.get(j);
 				ci.request_response.print((j<=0)?"[":",[");
 				if(!(item.buffer_object_file_in_head_flag)){
-					String proxy_url,file_name=directory_name+type_str[i]+Integer.toString(j)+".gzip_text";
-					if((proxy_url=ci.get_file_proxy_url(file_name,ek.system_par))==null)
-						proxy_url=proxy_url_directory+type_str[i]+j;
-					ci.request_response.print(item.buffer_object_text_file_length).
-										print(",\"",proxy_url).print("\"");
+					String my_url,file_name=directory_name+type_str[i]+Integer.toString(j)+".gzip_text";
+					if((my_url=ci.get_file_proxy_url(file_name,ek.system_par))==null)
+						my_url=url_directory+type_str[i]+j;
+					ci.request_response.print(item.buffer_object_text_file_length).print(",\"",my_url).print("\"");
 					ret_val++;
 				}
 				ci.request_response.print("]");
@@ -201,14 +197,14 @@ public class response_render_component_request
 				break;
 			}
 
-			String package_proxy_url=ci.get_file_proxy_url(package_file_name,ek.system_par);
-			if(package_proxy_url==null) {
-				package_proxy_url =ci.request_url_header;
-				package_proxy_url+="&command=buffer&operation=buffer_package&package=";
-				package_proxy_url+=part_type_id+"_"+part_package_id;
+			String package_url=ci.get_file_proxy_url(package_file_name,ek.system_par);
+			if(package_url==null) {
+				package_url =ci.request_url_header;
+				package_url+="&command=buffer&operation=buffer_package&package=";
+				package_url+=part_type_id+"_"+part_package_id;
 			}
 			ci.request_response.print((i<=requesting_number)?"[\"":",[\"").
-				print(package_proxy_url).print("\",",package_length).print(",[");
+				print(package_url).print("\",",package_length).print(",[");
 
 			for(int j=0,nj=package_render_part_id.size();j<nj;j++){
 				int render_part_id[]=package_render_part_id.get(j);
@@ -219,7 +215,7 @@ public class response_render_component_request
 									print(",",				p.part_id).
 									print(",",				p.part_package_sequence_id);
 				ci.request_response.print(",[");
-				i+=response_buffer_object_proxy_request(p,ek,ci);
+				i+=response_buffer_object_request(p,ek,ci);
 				ci.request_response.print("]]");
 			}
 			ci.request_response.print("]]");

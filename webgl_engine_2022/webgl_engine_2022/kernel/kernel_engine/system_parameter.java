@@ -37,7 +37,7 @@ public class system_parameter
 	public int max_engine_kernel_number,max_engine_component_number;
 	
 	public long max_buffer_object_head_package_length;
-	public long proxy_response_length,compress_response_length;
+	public long max_file_response_length,min_compress_response_length;
 	
 	public String file_download_cors_string;
 	
@@ -87,8 +87,8 @@ public class system_parameter
 		max_engine_kernel_number		=sp.max_engine_kernel_number;
 		max_engine_component_number		=sp.max_engine_component_number;
 		
-		proxy_response_length			=sp.proxy_response_length;
-		compress_response_length		=sp.compress_response_length;
+		max_file_response_length		=sp.max_file_response_length;
+		min_compress_response_length	=sp.min_compress_response_length;
 		max_buffer_object_head_package_length=sp.max_buffer_object_head_package_length;
 		
 		file_download_cors_string		=new String(sp.file_download_cors_string);
@@ -243,8 +243,8 @@ public class system_parameter
 		max_engine_kernel_number				=f.get_int();
 		max_engine_component_number				=f.get_int();
 
-		proxy_response_length					=f.get_long();
-		compress_response_length				=f.get_long();
+		max_file_response_length				=f.get_long();
+		min_compress_response_length			=f.get_long();
 		max_buffer_object_head_package_length	=f.get_long();
 
 		if((file_download_cors_string=f.get_string())==null)
