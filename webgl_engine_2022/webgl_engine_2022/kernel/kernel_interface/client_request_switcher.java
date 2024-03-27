@@ -123,10 +123,6 @@ public class client_request_switcher
 		case "buffer":
 			ecr=file_download_manager.download(request_response,system_par);
 			break;
-		case "proxy":
-			if((ecr=file_download_manager.download(request_response,system_par))!=null)
-				ecr.date_string=null;
-			break;
 		case "process_bar":
 			if((client=get_client_interface(request_response))!=null)
 				ecr=client.process_process_bar_system_call(request_response);

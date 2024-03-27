@@ -30,16 +30,12 @@
 /*	most_update_parameter_number				*/		500
 /*	most_update_location_number					*/		500
 
-
 /*	display_precision							*/		4
 
 /*	display_assemble_depth						*/		3
 
 /*	component_sort_type							*/		XYZ
 /*	component_sort_min_distance					*/		0.1
-
-/*	proxy_response_length						*/		256
-/*	compress_response_length					*/		1024
 
 /*	not_do_ancestor_render_flag					*/		yes
 /*	fast_load_flag								*/		yes

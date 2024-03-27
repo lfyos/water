@@ -8,17 +8,17 @@ public class caculate_charset_compress_file_name
 {
 	public String file_name,charset_file_name,compress_file_name,content_type_str;
 	public int content_type_id;
-	
+
 	private void caculate(
 			File f,									change_name content_type_change_name,
 			String data_root_directory_name,		String compress_data_root_directory_name,
-			String proxy_data_root_directory_name,	String compress_proxy_root_directory_name)
+			String temporary_root_directory_name,	String compress_temporary_root_directory_name)
 	{
 		file_name=f.getAbsolutePath();
-		if(file_name.indexOf(proxy_data_root_directory_name)==0){
-			String temp_file_name=file_name.substring(proxy_data_root_directory_name.length());
-			charset_file_name=compress_proxy_root_directory_name+temp_file_name+".charset";
-			compress_file_name=compress_proxy_root_directory_name+temp_file_name+".compress";
+		if(file_name.indexOf(temporary_root_directory_name)==0){
+			String temp_file_name=file_name.substring(temporary_root_directory_name.length());
+			charset_file_name=compress_temporary_root_directory_name+temp_file_name+".charset";
+			compress_file_name=compress_temporary_root_directory_name+temp_file_name+".compress";
 		}else if(file_name.indexOf(data_root_directory_name)==0){
 			String temp_file_name=file_name.substring(data_root_directory_name.length());
 			charset_file_name=compress_data_root_directory_name+temp_file_name+".charset";
@@ -72,21 +72,9 @@ public class caculate_charset_compress_file_name
 	}
 	public caculate_charset_compress_file_name(File f,system_parameter system_par)
 	{
-		caculate(f,									
-				system_par.content_type_change_name,
-				system_par.data_root_directory_name,
-				system_par.temporary_file_par.compress_data_root_directory_name,
-				system_par.temporary_file_par.temporary_root_directory_name,
-				system_par.temporary_file_par.compress_temporary_root_directory_name);
-	}
-	public caculate_charset_compress_file_name(File f,system_parameter system_par,
-				String proxy_data_root_directory_name,String compress_proxy_root_directory_name)
-	{
-		caculate(f,									
-				system_par.content_type_change_name,
-				system_par.data_root_directory_name,
-				system_par.temporary_file_par.compress_data_root_directory_name,
-				proxy_data_root_directory_name,	
-				compress_proxy_root_directory_name);
+		caculate(f,	system_par.content_type_change_name,system_par.data_root_directory_name,
+					system_par.temporary_file_par.compress_data_root_directory_name,
+					system_par.temporary_file_par.temporary_root_directory_name,
+					system_par.temporary_file_par.compress_temporary_root_directory_name);
 	}
 }

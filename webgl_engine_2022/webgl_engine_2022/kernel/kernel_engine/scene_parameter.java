@@ -58,8 +58,6 @@ public class scene_parameter
 	public int component_sort_type;
 	public double component_sort_min_distance;
 	
-	public long proxy_response_length,compress_response_length;
-	
 	public boolean not_do_ancestor_render_flag,fast_load_flag;
 
 	public scene_parameter(client_request_response request_response,
@@ -344,9 +342,6 @@ public class scene_parameter
 			component_sort_type=0;
 
 		component_sort_min_distance				=fr.get_double();
-		
-		proxy_response_length					=fr.get_long();
-		compress_response_length				=fr.get_long();
 		
 		not_do_ancestor_render_flag				=fr.get_boolean();
 		fast_load_flag							=fr.get_boolean();

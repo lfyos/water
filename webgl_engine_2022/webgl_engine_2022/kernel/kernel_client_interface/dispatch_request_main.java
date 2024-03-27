@@ -66,7 +66,7 @@ public class dispatch_request_main
 		ek.process_reset();
 		
 		String cors_string=ek.scene_par.scene_cors_string;
-		long max_length	=ek.scene_par.compress_response_length;
+		long max_length	=ek.system_par.compress_response_length;
 		long my_length	=ci.request_response.output_data_length;
 		String compress_file_name=((max_length<=0)||(my_length<max_length))?null:"do_compress_flag";
 		

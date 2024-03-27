@@ -64,9 +64,6 @@ public class scene_parameter_information extends jason_creator
 		print("component_sort_min_distance",				sp.component_sort_min_distance);
 		
 		print("not_do_ancestor_render_flag",				sp.not_do_ancestor_render_flag);
-
-		print("proxy_response_length",						sp.proxy_response_length);
-		print("compress_response_length",					sp.compress_response_length);
 	}
 	public scene_parameter_information(scene_parameter my_sp,client_information my_ci)
 	{

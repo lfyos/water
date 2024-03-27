@@ -32,6 +32,8 @@
 /*	max_engine_kernel_number												*/		300
 /*	max_engine_component_number												*/		3000000
 
+/*	proxy_response_length													*/		256
+/*	compress_response_length												*/		1024
 /*	max_buffer_object_head_package_length									*/		8000000
 	
 /*	file_download_cors_string												*/		*
