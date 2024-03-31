@@ -137,9 +137,7 @@ function(component_name,component_id,render)
 					var render_id=p[driver_id][0],part_id=p[driver_id][1];
 					var part_information	=render.part_array[render_id][part_id].information;
 					var part_property		=render.part_array[render_id][part_id].property;
-					var permanent_render_id	=render.permanent_render_part_id[render_id][part_id].permanent_render_id;
-					var permanent_part_id	=render.permanent_render_part_id[render_id][part_id].permanent_part_id;
-					
+										
 					str=(driver_id+1)+".";
 					if(part_property.normal_part_flag)
 						str+="ÆÕÍ¨Áã¼ş:";
@@ -147,8 +145,7 @@ function(component_name,component_id,render)
 						str+="µ×²ã°üÎ§ºĞ:";
 					if(part_property.top_box_flag)
 						str+="¶¥²ã°üÎ§ºĞ:";
-					str+="render_id:"+permanent_render_id+"/"+render_id;
-					str+=",part_id:"+permanent_part_id+"/"+part_id;
+					str+="render_id:"+render_id+",part_id:"+part_id;
 
 					context_2d.fillText(str,							0,						pos);
 					pos+=text_format.canvas_step;

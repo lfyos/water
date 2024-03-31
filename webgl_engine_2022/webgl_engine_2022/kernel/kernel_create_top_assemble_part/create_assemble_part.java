@@ -13,6 +13,7 @@ import kernel_part.part;
 import kernel_part.part_container_for_part_search;
 import kernel_part.part_loader;
 import kernel_part.part_parameter;
+import kernel_part.permanent_part_id_encoder;
 import kernel_part.part_loader_container;
 import kernel_render.render_container;
 
@@ -195,7 +196,7 @@ public class create_assemble_part
 	
 	public ArrayList<part> top_box_part;
 	
-	public create_assemble_part(ArrayList<part>part_list_for_delete_file,
+	public create_assemble_part(permanent_part_id_encoder encoder[],ArrayList<part>part_list_for_delete_file,
 			client_request_response request_response,component root_component,
 			double expand_ratio,double left_ratio,double create_top_part_assembly_precision2,
 			double create_top_part_discard_precision2,double discard_top_part_component_precision2,
@@ -290,7 +291,7 @@ public class create_assemble_part
 					comp_p.part_name,comp_p.part_name,null,assemble_part.material_file_name,null,null);
 			add_part.part_mesh=cpr.topbox_part_rude;
 				
-			render_cont.renders.get(assemble_part.render_id).add_part(add_part);
+			render_cont.renders.get(assemble_part.render_id).add_part(add_part,encoder);
 			add_part.part_from_id			=assemble_part.part_id;
 			add_part.permanent_part_from_id	=assemble_part.permanent_part_id;
 
@@ -318,10 +319,12 @@ public class create_assemble_part
 			
 			debug_information.println();
 			debug_information.println(add_part_number+".add top part		name:"+add_part.system_name);
-			debug_information.println(add_part_number+".add top part		"
-					+"render_id:"		+add_part.render_id		+"	permanent_render_id:"	+add_part.permanent_render_id
-					+"	part_id:"		+add_part.part_id		+"	permanent_part_id:"		+add_part.permanent_part_id
-					+"	part_from_id:"	+add_part.part_from_id	+"	permanent_part_from_id:"+add_part.permanent_part_from_id);
+			debug_information.println(add_part_number+".add top part	"
+					+"	render_id:"				+add_part.render_id
+					+"	part_id:"				+add_part.part_id
+					+"	part_from_id:"			+add_part.part_from_id
+					+"	permanent_part_id:"		+add_part.permanent_part_id
+					+"	permanent_part_from_id:"+add_part.permanent_part_from_id);
 			debug_information.println(add_part_number+".add top part		material:"		+add_part.directory_name+add_part.material_file_name);
 		}
 		

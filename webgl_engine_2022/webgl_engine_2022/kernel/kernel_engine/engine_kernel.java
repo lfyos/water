@@ -13,6 +13,7 @@ import kernel_file_manager.file_reader;
 import kernel_common_class.change_name;
 import kernel_driver.modifier_container;
 import kernel_part.part_loader_container;
+import kernel_part.permanent_part_id_encoder;
 import kernel_file_manager.file_directory;
 import kernel_interface.client_process_bar;
 import kernel_component.component_container;
@@ -203,14 +204,14 @@ public class engine_kernel
 	
 	private void load_create_assemble_part(component_load_source_container component_load_source_cont,
 			client_request_response request_response,ArrayList<part> part_list_for_delete_file,
-			part_container_for_part_search all_part_part_cont,
+			part_container_for_part_search all_part_part_cont,permanent_part_id_encoder encoder[],
 			buffer_object_file_modify_time_and_length_container boftal_container)
 	{		
 		if(create_parameter.create_top_part_expand_ratio>=1.0)
 			if(create_parameter.create_top_part_left_ratio>=1.0)
 				if(component_cont.root_component!=null){
 					ArrayList<part> top_box_part=(new create_assemble_part(
-							part_list_for_delete_file,
+							encoder,part_list_for_delete_file,
 							request_response,component_cont.root_component,
 							create_parameter.create_top_part_expand_ratio,
 							create_parameter.create_top_part_left_ratio,
@@ -230,34 +231,32 @@ public class engine_kernel
 			buffer_object_file_modify_time_and_length_container system_boftal_container)
 	{
 		if(scene_par==null)
-			return null;
+			return new buffer_object_file_modify_time_and_length_container();
 		if(!(scene_par.fast_load_flag))
-			return null;
+			return new buffer_object_file_modify_time_and_length_container();
+		
 		File f;
 		
-		String scene_file_name=file_directory.system_package_directory(2,system_par,scene_par)+"boftal_data.txt";
-		if(!((f=new File(scene_file_name)).exists()))
-			return null;
-		if(f.length()<=0)
-			return null;
-		String type_file_name=file_directory.system_package_directory(1,system_par,scene_par)+"boftal_data.txt";
-		if(!((f=new File(scene_file_name)).exists()))
-			return null;
-		if(f.length()<=0)
-			return null;
-						
-		buffer_object_file_modify_time_and_length_container scene_boftal_container;
-		scene_boftal_container=new buffer_object_file_modify_time_and_length_container(
-										process_bar,scene_file_name,system_par.local_data_charset);
 		buffer_object_file_modify_time_and_length_container type_boftal_container;
-		type_boftal_container=new buffer_object_file_modify_time_and_length_container(
+		type_boftal_container=new buffer_object_file_modify_time_and_length_container();
+		String type_file_name=file_directory.package_file_directory(1,system_par,scene_par)+"boftal_data.txt";
+		if((f=new File(type_file_name)).exists())
+			if(f.length()>0)
+				type_boftal_container=new buffer_object_file_modify_time_and_length_container(
 										process_bar,type_file_name,system_par.local_data_charset);
 		
-		buffer_object_file_modify_time_and_length_container ret_val;
-		ret_val=new buffer_object_file_modify_time_and_length_container(scene_boftal_container,type_boftal_container);
-		ret_val=new buffer_object_file_modify_time_and_length_container(ret_val,system_boftal_container);
+		buffer_object_file_modify_time_and_length_container scene_boftal_container;
+		scene_boftal_container=new buffer_object_file_modify_time_and_length_container();
+		String scene_file_name=file_directory.package_file_directory(2,system_par,scene_par)+"boftal_data.txt";
+		if((f=new File(scene_file_name)).exists())
+			if(f.length()>0)
+				scene_boftal_container=new buffer_object_file_modify_time_and_length_container(
+						process_bar,scene_file_name,system_par.local_data_charset);
 		
-		return ret_val;
+		return new buffer_object_file_modify_time_and_length_container(
+						new buffer_object_file_modify_time_and_length_container(
+								scene_boftal_container,type_boftal_container),
+						system_boftal_container);
 	}
 	private void load_routine(component_load_source_container component_load_source_cont,
 			client_request_response request_response,client_process_bar process_bar,
@@ -286,15 +285,20 @@ public class engine_kernel
 		debug_information.println("scene_shader_directory_name	:	",	scene_par.scene_shader_directory_name);	
 		debug_information.println("scene_shader_file_name		:	",	scene_par.scene_shader_file_name);	
 		
+		permanent_part_id_encoder encoder[]	=new permanent_part_id_encoder[] 
+		{
+			null,new permanent_part_id_encoder(),new permanent_part_id_encoder()
+		};
+		
 		render_cont=new render_container(render_cont,request_response,system_par,scene_par);
 		part_cont=new part_container_for_part_search(render_cont.part_array_list(-1));
 
 		render_cont.load_shader(component_load_source_cont,part_cont,scene_par.parameter_last_modified_time,
 				scene_par.type_shader_directory_name+scene_par.type_shader_file_name,
-				scene_par.parameter_charset,1,system_par,scene_par,request_response);
+				scene_par.parameter_charset,1,system_par,scene_par,encoder,request_response);
 		render_cont.load_shader(component_load_source_cont,part_cont,scene_par.scene_last_modified_time,
 				scene_par.scene_shader_directory_name+scene_par.scene_shader_file_name,
-				create_parameter.scene_charset,2,system_par,scene_par,request_response);
+				create_parameter.scene_charset,2,system_par,scene_par,encoder,request_response);
 		part_cont.execute_append();
 		debug_information.println("Load shaders time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
@@ -306,9 +310,9 @@ public class engine_kernel
 				boftal_container,"load_first_class_part",process_bar,part_list_for_delete_file);
 		debug_information.println("Load first class part time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
-		
+
 		start_time=current_time;
-		render_cont.create_bottom_box_part(part_cont,request_response,system_par,scene_par);
+		render_cont.create_bottom_box_part(part_cont,request_response,encoder,system_par,scene_par);
 		part_cont.execute_append();
 		render_cont.load_part((1<<1)+(1<<2),2,part_loader_cont,system_par,scene_par,
 				boftal_container,"load_second_class_part",process_bar,part_list_for_delete_file);
@@ -369,8 +373,8 @@ public class engine_kernel
 		component_cont.root_component.reset_component(component_cont);
 		
 		start_time=new Date().getTime();
-		load_create_assemble_part(component_load_source_cont,
-				request_response,part_list_for_delete_file,part_cont,boftal_container);	
+		load_create_assemble_part(component_load_source_cont,request_response,
+				part_list_for_delete_file,part_cont,encoder,boftal_container);	
 		part_cont.execute_append();
 		render_cont.load_part(
 				(1<<2),4,part_loader_cont,system_par,scene_par,
@@ -401,14 +405,9 @@ public class engine_kernel
 		load_camera();
 
 		start_time=new Date().getTime();
-		if(boftal_container==null){
-			process_bar.set_process_bar(true,"create_shader","",1,2);
-			new engine_initialization(true,this,request_response,process_bar);
-			debug_information.println("Create engine temp data time length:	",		new Date().getTime()-start_time);
-		}else{
-			new engine_initialization(false,this,request_response,process_bar);
-			debug_information.println("Doing engine_initialization time length:	",	new Date().getTime()-start_time);
-		}
+		process_bar.set_process_bar(true,"create_shader","",1,2);
+		new engine_initialization(this,request_response,process_bar);
+		debug_information.println("Create engine temp data time length:	",		new Date().getTime()-start_time);
 		debug_information.println();
 		
 		part_lru=new part_lru_manager(render_cont.renders,scene_par.part_lru_in_list_number);
@@ -429,7 +428,6 @@ public class engine_kernel
 		
 		debug_information.println();
 		debug_information.println("scene_par.directory_name		:	",	scene_par.directory_name);
-		debug_information.println("type_temporary_directory_name:	",	scene_par.type_temporary_directory_name);
 		debug_information.println("scene_temporary_directory_name:	",	scene_par.scene_temporary_directory_name);
 			
 		debug_information.println("camera_file_name		:	",			scene_par.camera_file_name);

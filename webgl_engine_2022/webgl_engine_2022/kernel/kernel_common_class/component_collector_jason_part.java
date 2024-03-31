@@ -122,7 +122,6 @@ public class component_collector_jason_part
 					print(pre_str,ci,"\"render_id\":		",		p.render_id,",");
 					print(pre_str,ci,"\"part_id\":		",			p.part_id,",");
 					print(pre_str,ci,"\"part_component_number\":",	collector.part_component_number[i][j],",");
-					print(pre_str,ci,"\"permanent_render_id\":	",	p.permanent_render_id,",");
 					print(pre_str,ci,"\"permanent_part_id\":	",	p.permanent_part_id,",");
 					print(pre_str,ci,"\"part_from_id\":		",		p.part_from_id,",");
 					print(pre_str,ci,"\"system_name\":		",		jason_string.change_string(p.system_name),",");

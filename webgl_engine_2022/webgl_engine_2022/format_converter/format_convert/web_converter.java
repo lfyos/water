@@ -15,7 +15,8 @@ public class web_converter
 				"NoPassword",		//用户密码
 				"cad",				//场景名称
 				new String[][] {	//初始化参数
-			 			new String[] {"sub_directory",		"a.step"},			//显示内容
+						new String[] {"type_sub_directory",	""},				//显示内容type
+			 			new String[] {"scene_sub_directory","a.step"},			//显示内容scene
 			 			new String[] {"coordinate",			"location.xyz.txt"},//坐标系选择
 			 			new String[] {"change_part",		""},				//part换名
 			 			new String[] {"change_component",	""},				//component换名

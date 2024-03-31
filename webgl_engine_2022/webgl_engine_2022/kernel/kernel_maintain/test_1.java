@@ -10,7 +10,7 @@ public class test_1 extends travel_through_directory
 	{
 		String str;
 		if((str=file_reader.get_text(file_name,"GBK"))!=null)
-			if(str.indexOf("environment_sub_directory")>=0)
+			if(str.indexOf("sub_directory")>=0)
 				debug_information.println(file_name);
 	}
 	
@@ -18,17 +18,17 @@ public class test_1 extends travel_through_directory
 	{
 		super(new String[]
 		{
-//			"F:\\water_all\\data\\project",
-//			"F:\\water_all\\.git",
-//			"F:\\water_all\\webgl_engine_2022\\.metadata",
-//			"F:\\water_all\\webgl_engine_2022\\webgl_engine_2022\\build"
+			"F:\\water_all\\data\\project",
+			"F:\\water_all\\.git",
+			"F:\\water_all\\webgl_engine_2022\\.metadata",
+			"F:\\water_all\\webgl_engine_2022\\webgl_engine_2022\\build"
 		});
 	}
 	public static void main(String args[])
 	{
 		debug_information.println("Begin:");
 		
-		new test_1().do_travel("F:\\water_all\\data\\", false);
+		new test_1().do_travel("F:\\water_all\\", false);
 
 		debug_information.println("End");
 	}

@@ -24,7 +24,8 @@ var lfy_render;
 	out.print  ("var change_part=\""	+(((str=request.getParameter("change_part"		 ))==null)?""			:str)+"\",");
 	out.print  ("change_component=\""	+(((str=request.getParameter("change_component"	 ))==null)?""			:str)+"\",");
 	out.print  ("part_type=\""			+(((str=request.getParameter("part_type"		 ))==null)?""			:str)+"\",");
-	out.print  ("sub_directory=\""		+(((str=request.getParameter("sub_directory"	 ))==null)?""			:str)+"\",");
+	out.print  ("type_sub_directory=\""	+(((str=request.getParameter("type_sub_directory" ))==null)?""			:str)+"\",");
+	out.print  ("scene_sub_directory=\""+(((str=request.getParameter("scene_sub_directory" ))==null)?""			:str)+"\",");
 	out.print  ("coordinate=\""			+(((str=request.getParameter("coordinate"		 ))==null)?"xyz"		:str)+"\",");
 	out.print  ("max_loading_number=\""	+(((str=request.getParameter("max_loading_number"))==null)?"5"			:str)+"\";");
 }
@@ -46,7 +47,8 @@ async function body_onload()
 			["part_type",				part_type			],	//part类型
 			["max_loading_number",		max_loading_number	],	//同时下载数量
 			
-			["sub_directory",			sub_directory		],	//显示内容
+			["type_sub_directory",		type_sub_directory	],	//显示内容type
+			["scene_sub_directory",		scene_sub_directory	],	//显示内容scene
 			["coordinate",				coordinate			],	//坐标系选择
 			
 			["multisample",				4					]	//多重采样数

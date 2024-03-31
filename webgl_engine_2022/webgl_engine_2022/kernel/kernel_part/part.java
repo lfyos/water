@@ -36,7 +36,7 @@ public class part
 	public int part_type_id,part_package_id,part_package_sequence_id;
 	
 	public int render_id,part_id,part_from_id;
-	public int permanent_render_id,permanent_part_id,permanent_part_from_id;
+	public int permanent_part_id,permanent_part_from_id;
 	
 	public part_driver driver;
 
@@ -294,8 +294,7 @@ public class part
 		
 		str =  "\tuser part name:\t\t\t"		+user_name;
 		str+="\n\tsystem part name:\t\t"		+system_name;
-		str+="\n\tpart permanent ID:\t\t"		+Integer.toString(permanent_render_id)+","
-												+Integer.toString(permanent_part_id);
+		str+="\n\tpart permanent ID:\t\t"		+Integer.toString(permanent_part_id);
 		str+="\n\tdirectory:\t\t\t"				+directory_name;
 		str+="\n\tmesh file name :\t\t"			+((mesh_file_name==null)?"no mesh file name":mesh_file_name);
 		str+="\n\tmaterial file name:\t\t"		+material_file_name;
@@ -330,7 +329,6 @@ public class part
 		part_id					=0;
 		part_from_id			=-1;
 		
-		permanent_render_id		=0;
 		permanent_part_id		=0;
 		permanent_part_from_id	=-1;
 		
@@ -362,7 +360,6 @@ public class part
 		part_id					=p.part_id;
 		part_from_id			=p.part_from_id;
 		
-		permanent_render_id		=p.permanent_render_id;
 		permanent_part_id		=p.permanent_part_id;
 		permanent_part_from_id	=p.permanent_part_from_id;
 		

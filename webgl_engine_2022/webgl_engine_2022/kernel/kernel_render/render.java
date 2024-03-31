@@ -9,8 +9,9 @@ import kernel_driver.render_driver;
 import kernel_engine.scene_parameter;
 import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
-import kernel_common_class.class_file_reader;
 import kernel_common_class.common_reader;
+import kernel_common_class.class_file_reader;
+import kernel_part.permanent_part_id_encoder;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
@@ -106,26 +107,26 @@ public class render
 		if((part_number=parts.size())>0)
 			parts.remove(part_number-1).destroy();
 	}
-	public void add_part(part p)
+	public void add_part(part p,permanent_part_id_encoder encoder[])
 	{
-		if(p!=null){
-			int part_number=parts.size();
-			parts.add(part_number, p);
+		if(p==null)
+			return;
+		int part_number=parts.size();
+		parts.add(part_number, p);
 	
-			p.render_id				=render_id;
-			p.part_id				=part_number;
-			p.part_from_id			=-1;
-			
-			p.permanent_render_id	=p.render_id;
-			p.permanent_part_id		=p.part_id;
-			p.permanent_part_from_id=-1;
-		}
+		p.render_id				=render_id;
+		p.part_id				=part_number;
+		p.part_from_id			=-1;
+		
+		p.permanent_part_id		=encoder[p.part_type_id].encoder(p.part_par.part_type_string);
+		p.permanent_part_from_id=-1;
 	}
+	
 	public void add_part(component_load_source_container component_load_source_cont,
 			part_container_for_part_search pcps,render_driver r_driver,int part_type_id,
 			part_parameter part_par,system_parameter system_par,
 			String file_name,String file_charset,String pre_buffer_object_file_name,
-			client_request_response request_response)
+			permanent_part_id_encoder encoder[],client_request_response request_response)
 	{
 		file_reader f=new file_reader(file_name,file_charset);
 		if(f.error_flag()) {
@@ -169,7 +170,7 @@ public class render
 					(description_file_name==null)	?"":description_file_name,		
 					(audio_file_name==null)			?"":audio_file_name);
 
-			add_part(my_part);
+			add_part(my_part,encoder);
 				
 			try{
 				my_part.driver=r_driver.create_part_driver(f,my_part,

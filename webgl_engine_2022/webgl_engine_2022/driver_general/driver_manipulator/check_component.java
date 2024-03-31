@@ -58,7 +58,6 @@ public class check_component
 					String str="part	"+i+"	";
 					ci.request_response.println(str+"use_name:		",			p.user_name);
 					ci.request_response.println(str+"system_name:		",		p.system_name);
-					ci.request_response.println(str+"permanent_render_id:	",	p.permanent_render_id);
 					ci.request_response.println(str+"permanent_part_id:	",		p.permanent_part_id);
 					ci.request_response.println(str+"render_id:		",			p.render_id);
 					ci.request_response.println(str+"part_id:		",			p.part_id);

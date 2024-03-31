@@ -94,19 +94,19 @@ function file_name_change()
 						out.println(file_list[i]);
 									
 						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?scene_name=test&coordinate=location.xyz.txt");
-						out.println("&sub_directory="+file_list[i]+"\"  target=\"_self\">xyz</a>");
+						out.println("&type_sub_directory=&scene_sub_directory="+file_list[i]+"\"  target=\"_self\">xyz</a>");
 						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?scene_name=test&coordinate=location.xyz.txt");
-						out.println("&sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">xyz</a>]");
+						out.println("&type_sub_directory=&scene_sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">xyz</a>]");
 									
 						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?scene_name=test&coordinate=location.yzx.txt");
-						out.println("&sub_directory="+file_list[i]+"\"  target=\"_self\">yzx</a>");
+						out.println("&type_sub_directory=&scene_sub_directory="+file_list[i]+"\"  target=\"_self\">yzx</a>");
 						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?scene_name=test&coordinate=location.yzx.txt");
-						out.println("&sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">yzx</a>]");
+						out.println("&type_sub_directory=&scene_sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">yzx</a>]");
 									
 						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?scene_name=test&coordinate=location.zxy.txt");
-						out.println("&sub_directory="+file_list[i]+"\"  target=\"_self\">zxy</a>");
+						out.println("&type_sub_directory=&scene_sub_directory="+file_list[i]+"\"  target=\"_self\">zxy</a>");
 						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?scene_name=test&coordinate=location.zxy.txt");
-						out.println("&sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">zxy</a>]");
+						out.println("&type_sub_directory=&scene_sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">zxy</a>]");
 									
 						out.println("<br/>");
 					}catch(Exception e){
@@ -162,7 +162,8 @@ function file_name_change()
 		
 		web_converter.do_convert(url,"NoName","NoPassword","cad",
 			new String[][]{
-			new String[] {"sub_directory",		file_name},			//显示内容
+			new String[] {"type_sub_directory",	""},				//显示内容type
+			new String[] {"scene_sub_directory",file_name},			//显示内容scene
  			new String[] {"coordinate",			"location.xyz.txt"},//坐标系选择
  			new String[] {"change_part",		""},				//part换名
  			new String[] {"change_component",	""},				//component换名

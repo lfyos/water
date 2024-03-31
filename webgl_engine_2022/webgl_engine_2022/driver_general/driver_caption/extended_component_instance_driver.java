@@ -55,8 +55,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				if(ci.parameter.comp.component_name!=null)
 					ret_val+=ci.parameter.comp.component_name;
 			}
-			ret_val+="["+Integer.toString(p.permanent_render_id);
-			ret_val+=","+Integer.toString(p.permanent_part_id)+"]";
+			ret_val+="["+p.permanent_part_id+"]";
 
 			String str;
 			if(((str=in_d.display_parameter.body_title)!=null)&&(ci.parameter.body_id>=0))

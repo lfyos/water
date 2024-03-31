@@ -332,7 +332,14 @@ public class component_core_4 extends component_core_3
 			case "mount":
 				assemble_file_name_array=file_mount(fr,ccp.ek);
 				break;
-			case "environment_sub_directory_mount":
+			case "environment_type_sub_directory_mount":
+				str=file_reader.separator(System.getenv(fr.get_string()));
+				if(str.charAt(str.length()-1)!=File.separatorChar)
+					str+=File.separatorChar;
+				fr.insert_string(new String[] {str+ccp.ek.scene_par.type_sub_directory+fr.get_string()});
+				assemble_file_name_array=file_mount(fr,ccp.ek);
+				break;
+			case "environment_scene_sub_directory_mount":
 				str=file_reader.separator(System.getenv(fr.get_string()));
 				if(str.charAt(str.length()-1)!=File.separatorChar)
 					str+=File.separatorChar;
@@ -342,7 +349,14 @@ public class component_core_4 extends component_core_3
 			case "charset_mount":
 				assemble_file_name_array=charset_file_mount(fr,ccp.ek);
 				break;
-			case "environment_sub_directory_charset_mount":
+			case "environment_type_sub_directory_charset_mount":
+				str=file_reader.separator(System.getenv(fr.get_string()));
+				if(str.charAt(str.length()-1)!=File.separatorChar)
+					str+=File.separatorChar;
+				fr.insert_string(new String[] {str+ccp.ek.scene_par.type_sub_directory+fr.get_string()});
+				assemble_file_name_array=charset_file_mount(fr,ccp.ek);
+				break;
+			case "environment_scene_sub_directory_charset_mount":
 				str=file_reader.separator(System.getenv(fr.get_string()));
 				if(str.charAt(str.length()-1)!=File.separatorChar)
 					str+=File.separatorChar;

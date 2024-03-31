@@ -129,7 +129,7 @@ public class part_package
 		package_last_time=new long	 [package_number];
 		package_file_name=new String [package_number];
 				
-		String package_directory_name=file_directory.system_package_directory(part_type_id,system_par,scene_par);
+		String package_directory_name=file_directory.package_file_directory(part_type_id,system_par,scene_par);
 		String package_data_file_name=package_directory_name+"package_data.txt";
 		String boftal_data_file_name =package_directory_name+"boftal_data.txt";
 		
@@ -196,7 +196,7 @@ public class part_package
 				else 
 					debug_information.println(
 						p.is_bottom_box_part()?"		Bottom box part":"		Top box part",
-						",permanent_render_id:"+p.permanent_render_id+",permanent_part_id:"	+p.permanent_part_id);
+						",permanent_part_id:"	+p.permanent_part_id);
 				String my_file_name=file_directory.part_file_directory(p,system_par,scene_par)+"mesh.head.gzip_text";
 				compress_file_data.do_uncompress(new File(my_tmp_file_name),
 						new File(my_file_name),system_par.response_block_size,"gzip");

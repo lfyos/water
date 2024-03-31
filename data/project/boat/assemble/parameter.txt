@@ -1,4 +1,3 @@
-/*	proxy_directory_name					*/		boat
 /*	type_shader_file_name					*/		shaders/type_shaders.txt		relative
 /*	scene_shader_file_name					*/		shaders/scene_shaders.txt		relative
 /*	camera_file_name						*/		orthongraphics/camera.txt
@@ -6,4 +5,3 @@
 /*	change_component_file_name				*/		assemble/change_component.txt
 /*	mount_component_file_name				*/		assemble/mount_component.txt
 /*	part_type_string_file_name				*/		part_type_string.txt
-
