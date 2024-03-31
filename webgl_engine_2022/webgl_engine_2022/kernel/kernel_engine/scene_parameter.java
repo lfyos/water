@@ -10,12 +10,12 @@ public class scene_parameter
 {
 	public String change_part_string,change_component_string,mount_component_string,part_type_string;
 	
-	public String scene_sub_directory;
+	public String type_sub_directory,scene_sub_directory;
 
 	public String directory_name,extra_directory_name,parameter_charset,extra_parameter_charset;
 	public long parameter_last_modified_time,scene_last_modified_time;
 	
-	public String type_temporary_directory_name,scene_temporary_directory_name;
+	public String scene_temporary_directory_name;
 	public String type_shader_directory_name,type_shader_file_name;
 	public String scene_shader_directory_name,scene_shader_file_name;
 	public String camera_file_name;
@@ -107,7 +107,23 @@ public class scene_parameter
 			}catch(Exception e) {
 				;
 			}
-		if((scene_sub_directory=request_response.get_parameter("sub_directory"))==null)
+		
+		if((type_sub_directory=request_response.get_parameter("type_sub_directory"))==null)
+			type_sub_directory="";
+		else {
+			try{
+				type_sub_directory=java.net.URLDecoder.decode(type_sub_directory,request_charset);
+				type_sub_directory=java.net.URLDecoder.decode(type_sub_directory,request_charset);
+				type_sub_directory=scene_sub_directory.trim();
+			}catch(Exception e) {
+				;
+			}
+			if((type_sub_directory=file_reader.separator(type_sub_directory.trim())).length()>0)
+				if(type_sub_directory.charAt(type_sub_directory.length()-1)!=File.separatorChar)
+					type_sub_directory+=File.separator;
+		}
+		
+		if((scene_sub_directory=request_response.get_parameter("scene_sub_directory"))==null)
 			scene_sub_directory="";
 		else{
 			try{
@@ -120,6 +136,7 @@ public class scene_parameter
 				if(scene_sub_directory.charAt(scene_sub_directory.length()-1)!=File.separatorChar)
 					scene_sub_directory+=File.separator;
 		}
+		
 		file_reader fr=new file_reader(ekcp.parameter_file_name,ekcp.parameter_charset);
 		
 		if((fr.error_flag())||(fr.eof()))
@@ -132,14 +149,16 @@ public class scene_parameter
 		if(parameter_last_modified_time<ekcp.scene_list_file_last_modified_time)
 			parameter_last_modified_time=ekcp.scene_list_file_last_modified_time;
 
-		if((type_temporary_directory_name=fr.get_string())==null)
-			type_temporary_directory_name="no_directory";
-		else
-			type_temporary_directory_name=file_reader.separator(type_temporary_directory_name);
-		type_temporary_directory_name=system_par.temporary_file_par.temporary_root_directory_name
-				+"scene_directory"+File.separator+type_temporary_directory_name+File.separator;
+		scene_temporary_directory_name=system_par.temporary_file_par.temporary_root_directory_name;
+		scene_temporary_directory_name+="scene_directory"+File.separator+file_reader.separator(ekcp.scene_name);
 		
-		scene_temporary_directory_name=type_temporary_directory_name+file_reader.separator(ekcp.scene_name);
+		if(type_sub_directory.length()<=0)
+			scene_temporary_directory_name+=File.separator;
+		else if(type_sub_directory.charAt(0)==File.separatorChar)
+			scene_temporary_directory_name+=type_sub_directory;
+		else
+			scene_temporary_directory_name+=File.separator+type_sub_directory;
+
 		if(scene_sub_directory.length()<=0)
 			scene_temporary_directory_name+=File.separator;
 		else if(scene_sub_directory.charAt(0)==File.separatorChar)
@@ -147,7 +166,13 @@ public class scene_parameter
 		else
 			scene_temporary_directory_name+=File.separator+scene_sub_directory;
 
-		String str_array[]={change_part_string,change_component_string,mount_component_string,part_type_string};
+		String str_array[]={
+				new String(change_part_string),
+				new String(change_component_string),
+				new String(mount_component_string),
+				new String(part_type_string)
+		};
+		
 		for(int str_len,i=0,ni=str_array.length;i<ni;i++) {
 			if(str_array[i]==null)
 				continue;
@@ -172,7 +197,9 @@ public class scene_parameter
 		case "absolute":
 			type_shader_directory_name="";
 			break;
-		case "environment_sub_directory":
+		case "environment_type_sub_directory":
+			type_shader_file_name=type_sub_directory+type_shader_file_name;
+		case "environment_scene_sub_directory":
 			type_shader_file_name=scene_sub_directory+type_shader_file_name;
 		case "environment":
 			if((type_shader_directory_name=fr.get_string())!=null)
@@ -202,7 +229,9 @@ public class scene_parameter
 		case "absolute":
 			scene_shader_directory_name="";
 			break;
-		case "environment_sub_directory":
+		case "environment_type_sub_directory":
+			scene_shader_file_name=type_sub_directory+scene_shader_file_name;
+		case "environment_scene_sub_directory":
 			scene_shader_file_name=scene_sub_directory+scene_shader_file_name;
 		case "environment":
 			if((scene_shader_directory_name=fr.get_string())!=null)

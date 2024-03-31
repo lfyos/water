@@ -312,12 +312,9 @@ public class engine_initialization
 						int driver_id	=id[render_id][part_id][i][1];
 						fw.print  ("			[",component_id);
 						fw.print  (",",driver_id);
-						fw.println("],");
+						fw.println((i==(ni-1))?"]":"],");
 					}
-					part p=r.parts.get(part_id);
-					fw.	print  ("			",p.permanent_render_id).println(",").
-						println("			",p.permanent_part_id).
-						println((part_id==(part_number-1))?"		]":"		],");
+					fw.println((part_id==(part_number-1))?"		]":"		],");
 				}
 				fw.println();
 				fw.println((render_id==(render_number-1))?"	]":"	],");	
@@ -443,7 +440,7 @@ public class engine_initialization
 
 		return;
 	}
-	public engine_initialization(boolean not_real_scene_fast_load_flag,
+	public engine_initialization(
 			engine_kernel ek,client_request_response request_response,client_process_bar process_bar)
 	{
 		component sort_component_array[];
@@ -467,8 +464,7 @@ public class engine_initialization
 		
 		debug_information.println();
 		debug_information.println("Begin create initialization file");
-		if(not_real_scene_fast_load_flag)
-			file_initialize(sort_component_array,ek,request_response,process_bar);
+		file_initialize(sort_component_array,ek,request_response,process_bar);
 		
 		for(int i=0,ni=sort_component_array.length;i<ni;i++)
 			if(sort_component_array[i].initialization!=null) {

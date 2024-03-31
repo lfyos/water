@@ -8,28 +8,28 @@ import kernel_engine.scene_parameter;
 
 public class file_directory 
 {
-	private static String render_root_directory(int part_type_id,
-			system_parameter system_par,scene_parameter scene_par)
+	public static String part_file_directory(
+		part p,system_parameter system_par,scene_parameter scene_par)
 	{
-		switch(part_type_id){
+		String part_directory=system_par.temporary_file_par.temporary_root_directory_name;
+		
+		switch(p.part_type_id){
 		default:
 		case 0:
-			return system_par.temporary_file_par.temporary_root_directory_name;
+			part_directory+="engine_part_directory"+File.separatorChar;
+			break;
 		case 1:
-			return scene_par.type_temporary_directory_name;
+			part_directory+="type_part_directory"+File.separatorChar;
+			break;
 		case 2:
-			return scene_par.scene_temporary_directory_name;
+			part_directory =scene_par.scene_temporary_directory_name;
+			part_directory+="scene_part_directory"+File.separatorChar;
+			break;
 		}
-	}
-	public static String render_file_directory(int part_type_id,
-			int permanent_render_id,system_parameter system_par,scene_parameter scene_par)
-	{
-		return render_root_directory(part_type_id,system_par,scene_par)
-				+"part_directory"+File.separator+"render_"+permanent_render_id+File.separator;
-	}
-	public static String part_file_directory(part p,system_parameter system_par,scene_parameter scene_par)
-	{
-		String part_directory=render_file_directory(p.part_type_id,p.permanent_render_id,system_par,scene_par);
+		part_directory+=file_reader.separator(p.part_par.part_type_string);
+		if(part_directory.charAt(part_directory.length()-1)!=File.separatorChar)
+			part_directory+=File.separatorChar;
+		
 		if(p.is_normal_part())
 			part_directory	+="part_";
 		else if(p.is_bottom_box_part())
@@ -38,11 +38,32 @@ public class file_directory
 			part_directory	+="part_top_box_";
 		else
 			part_directory	+="part_unknown_";
+		
 		return part_directory+p.permanent_part_id+File.separator;
 	}
-	public static String system_package_directory(
-			int part_type_id,system_parameter system_par,scene_parameter scene_par)
+	
+	public static String package_file_directory(
+		int part_type_id,system_parameter system_par,scene_parameter scene_par)
 	{
-		return  render_root_directory(part_type_id,system_par,scene_par)+"package_directory"+File.separator;
+		String package_directory=system_par.temporary_file_par.temporary_root_directory_name;
+		switch(part_type_id){
+		default:
+		case 0:
+			package_directory+="engine_package_directory"+File.separatorChar;
+			break;
+		case 1:
+			if(scene_par.type_sub_directory.length()>0)
+				package_directory+="type_package_directory"+File.separatorChar+scene_par.type_sub_directory;
+			else {
+				package_directory =scene_par.scene_temporary_directory_name;
+				package_directory+="type_package_directory"+File.separatorChar;
+			}
+			break;
+		case 2:
+			package_directory =scene_par.scene_temporary_directory_name;
+			package_directory+="scene_package_directory"+File.separatorChar;
+			break;
+		}
+		return package_directory;
 	}
 }

@@ -12,6 +12,13 @@ public class buffer_object_file_modify_time_and_length_container
 	private String boftal_file_name,boftal_token_array[];
 	private buffer_object_file_modify_time_and_length boftal_array[];
 	
+	public buffer_object_file_modify_time_and_length_container()
+	{
+		last_modify_time	=0;
+		boftal_file_name	=null;
+		boftal_token_array	=new String[] {};
+		boftal_array		=new buffer_object_file_modify_time_and_length[]{};
+	}
 	public buffer_object_file_modify_time_and_length_container(
 			buffer_object_file_modify_time_and_length_container s,
 			buffer_object_file_modify_time_and_length_container t)

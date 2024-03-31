@@ -1,4 +1,3 @@
-/*	proxy_directory_name					*/		bridge
 /*	type_shader_file_name					*/		shaders/type_shaders.txt		relative
 /*	scene_shader_file_name					*/		shaders/scene_shaders.txt		relative
 /*	camera_file_name						*/		orthongraphics/camera.txt

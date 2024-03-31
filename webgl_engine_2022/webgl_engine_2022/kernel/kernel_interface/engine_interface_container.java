@@ -16,6 +16,7 @@ import kernel_network.client_request_response;
 import kernel_part.part;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
 import kernel_part.part_loader_container;
+import kernel_part.permanent_part_id_encoder;
 import kernel_part.part_container_for_part_search;
 import kernel_engine.delete_part_files;
 import kernel_render.render_container;
@@ -57,18 +58,19 @@ public class engine_interface_container
 	private void load_render_container(client_request_response request_response,system_parameter system_par)
 	{
 		int part_type_id=0;
+		permanent_part_id_encoder encoder[]=new permanent_part_id_encoder[] {new permanent_part_id_encoder(),null,null};
 		ArrayList<part> part_list_for_delete_file=new ArrayList<part>();
 		original_render=new render_container();
 		part_container_for_part_search pcps=new part_container_for_part_search(new ArrayList<part>());
 		original_render.load_shader(
 			component_load_source_cont,pcps,system_par.last_modified_time,
 			system_par.data_root_directory_name+system_par.shader_file_name,
-			system_par.local_data_charset,part_type_id,system_par,null,request_response);
+			system_par.local_data_charset,part_type_id,system_par,null,encoder,request_response);
 		pcps.execute_append();
 		original_render.load_part(1<<part_type_id,1,part_loader_cont,
 				system_par,null,null,null,null,part_list_for_delete_file);
 		
-		original_render.create_bottom_box_part(pcps,request_response,system_par,null);
+		original_render.create_bottom_box_part(pcps,request_response,encoder,system_par,null);
 		pcps.execute_append();
 		original_render.load_part(1<<part_type_id,2,part_loader_cont,
 				system_par,null,null,null,null,part_list_for_delete_file);
@@ -78,7 +80,7 @@ public class engine_interface_container
 				original_render,part_type_id,system_par,null);
 		
 		system_boftal_container=new buffer_object_file_modify_time_and_length_container(null,
-				file_directory.system_package_directory(0,system_par,null)+"boftal_data.txt",
+				file_directory.package_file_directory(0,system_par,null)+"boftal_data.txt",
 				system_par.local_data_charset);
 		
 		debug_information.println("End create system_part_package");

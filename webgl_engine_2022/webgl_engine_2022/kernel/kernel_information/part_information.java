@@ -20,7 +20,6 @@ public class part_information extends jason_creator
 		print("render_id",					p.render_id);
 		print("part_id",					p.part_id);
 		print("part_from_id",				p.part_from_id);
-		print("permanent_render_id",		p.permanent_render_id);
 		print("permanent_part_id",			p.permanent_part_id);
 		print("permanent_part_from_id",		p.permanent_part_from_id);
 		

@@ -60,6 +60,7 @@ public class compress_render_container
 			part pp=ret_val.get(i);
 			pp.part_id=i;
 			pp.part_from_id=-1;
+			
 			if(pp.permanent_part_from_id>=0)
 				for(int begin_pointer=0,end_pointer=ret_val.size()-1;begin_pointer<=end_pointer;){
 					int middle_pointer=(begin_pointer+end_pointer)/2;

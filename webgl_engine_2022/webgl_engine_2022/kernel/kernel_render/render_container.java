@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import kernel_part.part;
 import kernel_part.part_rude;
+import kernel_part.permanent_part_id_encoder;
 import kernel_part.part_loader;
 import kernel_transformation.box;
 import kernel_part.part_parameter;
@@ -111,8 +112,9 @@ public class render_container
 			p=renders.get(p.render_id).parts.get(p.part_from_id);
 		return p;
 	}
-	public void load_part(int part_type,
-			int part_flag,part_loader_container part_loader_cont,
+	public void load_part(
+			int part_type,int part_normal_bottom_box_top_box_flag,
+			part_loader_container part_loader_cont,
 			system_parameter system_par,scene_parameter scene_par,
 			buffer_object_file_modify_time_and_length_container boftal_container,
 			String process_bar_title,client_process_bar process_bar,
@@ -144,7 +146,7 @@ public class render_container
 				my_part_flag+=p.is_bottom_box_part()?2:0;
 				my_part_flag+=p.is_top_box_part()	?4:0;
 							
-				if((my_part_flag&part_flag)==0)
+				if((my_part_flag&part_normal_bottom_box_top_box_flag)==0)
 					continue;
 				all_number++;
 			}
@@ -168,7 +170,7 @@ public class render_container
 				my_part_flag+=p.is_bottom_box_part()?2:0;
 				my_part_flag+=p.is_top_box_part()	?4:0;
 							
-				if((my_part_flag&part_flag)==0)
+				if((my_part_flag&part_normal_bottom_box_top_box_flag)==0)
 					continue;
 				part_loader_cont.load(p,get_copy_from_part(p),-1,system_par,scene_par,
 						part_list_for_delete_file,already_loaded_part,boftal_container);
@@ -191,7 +193,8 @@ public class render_container
 	}
 	
 	public void create_bottom_box_part(part_container_for_part_search pcps,
-			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
+			client_request_response request_response,permanent_part_id_encoder encoder[],
+			system_parameter system_par,scene_parameter scene_par)
 	{
 		for(int i=0,j=0,part_number=pcps.get_number();i<part_number;i=j){
 			for(j=i;j<part_number;j++)
@@ -223,7 +226,7 @@ public class render_container
 			render r=renders.get(p.render_id);
 			if(r==null)
 				continue;
-			r.add_part(add_part);
+			r.add_part(add_part,encoder);
 			add_part.part_from_id			=p.part_id;
 			add_part.permanent_part_from_id	=p.permanent_part_id;
 			try {
@@ -246,7 +249,7 @@ public class render_container
 			component_load_source_container component_load_source_cont,part_container_for_part_search pcps,
 			String driver_name,String render_list_file_name,String file_system_charset,String shader_file_name,
 			int part_type_id,system_parameter system_par,scene_parameter scene_par,
-			render ren,client_request_response request_response)
+			render ren,permanent_part_id_encoder encoder[],client_request_response request_response)
 	{
 		file_reader f_render_list=new file_reader(render_list_file_name,file_system_charset);
 		while(!(f_render_list.eof())){
@@ -323,7 +326,7 @@ public class render_container
 				int render_id=(renders==null)?0:renders.size();
 				ren.add_part(component_load_source_cont,pcps,ren.driver,part_type_id,
 					part_par,system_par,get_part_list_result[i],part_file_system_charset,
-					"part_mesh_"+Integer.toString(render_id)+"_",request_response);
+					"part_mesh_"+Integer.toString(render_id)+"_",encoder,request_response);
 	
 				debug_information.println();
 				debug_information.println("End load part list file:	",	part_file_system_charset);
@@ -348,7 +351,7 @@ public class render_container
 		part_container_for_part_search pcps,long last_modify_time,
 		String shader_file_name,String shader_file_charset,
 		int part_type_id,system_parameter system_par,scene_parameter scene_par,
-		client_request_response request_response)
+		permanent_part_id_encoder encoder[],client_request_response request_response)
 	{
 		File f;
 		if((f=new File(shader_file_name)).lastModified()<last_modify_time)
@@ -410,7 +413,7 @@ public class render_container
 				load_one_shader(component_load_source_cont,pcps,
 					driver_name,render_list_file_name[i],file_system_charset,
 					f_shader.directory_name+f_shader.file_name,
-					part_type_id,system_par,scene_par,ren,request_response);
+					part_type_id,system_par,scene_par,ren,encoder,request_response);
 			}
 		}
 		debug_information.println();
