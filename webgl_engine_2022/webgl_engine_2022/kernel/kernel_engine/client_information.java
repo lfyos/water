@@ -286,7 +286,7 @@ public class client_information
 		request_url_header+="&container="	+container_id;
 		request_url_header+="&user_name="	+((user_name==null)   ?"NoName"    	:user_name.trim());
 		request_url_header+="&pass_word="	+((pass_word==null)   ?"NoPassword"	:pass_word.trim());
-		request_url_header+="&language="	+((language_str==null)?"english"   	:language_str.trim());
+		request_url_header+="&language="	+((language_str==null)?"chinese"   	:language_str.trim());
 		
 		return;
 	}

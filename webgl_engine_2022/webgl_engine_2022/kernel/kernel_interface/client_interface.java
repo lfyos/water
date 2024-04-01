@@ -383,7 +383,7 @@ public class client_interface
 				if((process_bar=get_process_bar(request_response))==null)
 					break;
 				language_str=request_response.get_parameter("language");
-				str=process_bar.process_title+"+"+((language_str==null)?"english":language_str);
+				str=process_bar.process_title+"+"+((language_str==null)?"chinese":language_str);
 				str=system_par.language_change_name.search_change_name(str,process_bar.process_title);
 				str=jason_string.change_string(str+" "+process_bar.ex_process_title);
 				

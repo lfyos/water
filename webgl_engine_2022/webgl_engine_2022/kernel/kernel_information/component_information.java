@@ -12,10 +12,8 @@ public class component_information extends jason_creator
 		part_information pi[]=new part_information[0];
 		String component_name="unknown";
 		int component_id=-1,child_number=0,driver_number=0;
-		boolean dynamic_location_flag=false;
 
 		if(comp!=null){
-			dynamic_location_flag=comp.get_dynamic_location_flag();
 			component_name=comp.component_name;
 			component_id=comp.component_id;
 			child_number=comp.children_number();
@@ -31,7 +29,6 @@ public class component_information extends jason_creator
 		print("move_location",			comp.move_location.get_location_data());
 		print("child_number",			child_number);
 		print("driver_number",			driver_number);
-		print("dynamic_location_flag",	dynamic_location_flag);
 		print("part",					pi);
 	}
 	public component_information(component my_comp,client_information my_ci)

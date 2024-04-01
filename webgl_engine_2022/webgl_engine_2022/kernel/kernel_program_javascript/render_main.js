@@ -1,49 +1,54 @@
-async function render_main(create_engine_sleep_time_length_scale,
-	create_engine_sleep_time_length,create_engine_max_sleep_time_length,
-	my_canvas,my_url,my_user_name,my_pass_word,my_language_name,
-	my_scene_name,my_link_name,my_initialization_parameter,user_process_bar_function,
-	default_fetch_parameter)
+async function render_main(
+	my_canvas,my_create_parameter,user_process_bar_function,
+	my_url,default_fetch_parameter,create_engine_sleep_time_length_scale,
+	create_engine_sleep_time_length,create_engine_max_sleep_time_length)
 {
 	var webgpu=await create_webgpu(my_canvas);
 	if(webgpu.error_flag)
 		return null;
+		
+	if(typeof(my_create_parameter)!="object")
+		my_create_parameter={};
+	else if(my_create_parameter==null)
+		my_create_parameter={};
+		
+	my_create_parameter.user_name	=(typeof(my_create_parameter.user_name)	!="string")	?"NoName"		:(my_create_parameter.user_name.trim());
+	my_create_parameter.user_name	=(my_create_parameter.user_name.length<=0)			?"NoName"		:(my_create_parameter.user_name);
 	
-	my_user_name	=(typeof(my_user_name		)!="string")?"NoName"	 :(my_user_name.trim());
-	my_pass_word	=(typeof(my_pass_word		)!="string")?"NoPassword":(my_pass_word.trim());
-	my_language_name=(typeof(my_language_name	)!="string")?"english"	 :(my_language_name.trim());
-	my_scene_name	=(typeof(my_scene_name		)!="string")?""			 :(my_scene_name.trim());
-	my_link_name	=(typeof(my_link_name		)!="string")?""			 :(my_link_name.trim());
+	my_create_parameter.pass_word	=(typeof(my_create_parameter.pass_word)	!="string")	?"NoPassword"	:(my_create_parameter.pass_word.trim());
+	my_create_parameter.pass_word	=(my_create_parameter.pass_word.length<=0)			?"NoPassword"	:(my_create_parameter.pass_word);
 	
-	my_user_name=encodeURIComponent(encodeURIComponent(my_user_name));
-	my_pass_word=encodeURIComponent(encodeURIComponent(my_pass_word));
-	my_scene_name=encodeURIComponent(encodeURIComponent(my_scene_name));
-	my_link_name=encodeURIComponent(encodeURIComponent(my_link_name));
+	my_create_parameter.language	=(typeof(my_create_parameter.language)	!="string")	?"chinese"		:(my_create_parameter.language.trim());
+	my_create_parameter.language	=(my_create_parameter.language.length<=0)			?"chinese"		:(my_create_parameter.language);
 	
-	var process_bar_url=my_url+"?channel=process_bar&language="+my_language_name;
-	process_bar_url+="&user_name="	+my_user_name		+"&pass_word="	+my_pass_word;
-	var process_bar_object=new construct_process_bar(webgpu,user_process_bar_function,process_bar_url);		
+	my_create_parameter.scene_name	=(typeof(my_create_parameter.scene_name)!="string")	?""				:(my_create_parameter.scene_name.trim());
+	my_create_parameter.link_name	=(typeof(my_create_parameter.link_name)	!="string")	?""				:(my_create_parameter.link_name.trim());	
+	
+	var my_create_parameter_string="";
+	for (var my_item_name in my_create_parameter){
+		var my_item_value=my_create_parameter[my_item_name].toString().trim();
+		my_create_parameter_string+="&"+my_item_name+"="+my_item_value;
+	}
+	var process_bar_object=new construct_process_bar(webgpu,user_process_bar_function,
+			my_url+"?channel=process_bar"+my_create_parameter_string);
 	var process_bar_data=await process_bar_object.start(default_fetch_parameter);
 	if(process_bar_data==null)
 		return null;
 
-	var request_url=my_url+"?channel=creation&command=creation&language="+my_language_name;
-	request_url+="&user_name="	+my_user_name		+"&pass_word="	+my_pass_word;
-	request_url+="&scene_name="	+my_scene_name		+"&link_name="	+my_link_name;
+	var request_url=my_url+"?channel=creation&command=creation";
 	request_url+="&container="	+process_bar_data.container_id;
 	request_url+="&process_bar="+process_bar_data.process_bar_id;
+	request_url+=my_create_parameter_string;
 	
-	if(typeof(my_initialization_parameter)=="object")
-		if(typeof(my_initialization_parameter.length)=="number")
-			for(var i=0,ni=my_initialization_parameter.length;i<ni;i++){
-				var parameter_item	=my_initialization_parameter[i];
-				var parameter_name	=parameter_item[0].toString().trim();
-				var parameter_value	=parameter_item[1].toString().trim();
-
-				request_url+="&"+parameter_name+"="+parameter_value;
-			};
-	var ret_val=await request_create_engine(create_engine_sleep_time_length_scale,
-			create_engine_sleep_time_length,create_engine_max_sleep_time_length,webgpu,
-			request_url,my_url,my_user_name,my_pass_word,my_language_name,default_fetch_parameter);
+	var ret_val=await request_create_engine(
+			create_engine_sleep_time_length_scale,
+			create_engine_sleep_time_length,
+			create_engine_max_sleep_time_length,
+			webgpu,request_url,my_url,
+			my_create_parameter.user_name,
+			my_create_parameter.pass_word,
+			my_create_parameter.language,
+			default_fetch_parameter);
 	
 	process_bar_object.destroy();
 	

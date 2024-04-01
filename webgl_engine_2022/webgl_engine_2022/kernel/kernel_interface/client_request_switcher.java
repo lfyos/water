@@ -52,27 +52,11 @@ public class client_request_switcher
 	private client_interface get_client_interface(client_request_response request_response)
 	{
 		String my_user_name,my_pass_word,my_client_id;
-		String my_request_charset=request_response.implementor.get_request_charset();
-
+		
 		if((my_user_name=request_response.get_parameter("user_name"))==null)
 			my_user_name="NoName";
-		else
-			try{
-				my_user_name=java.net.URLDecoder.decode(my_user_name,my_request_charset);
-				my_user_name=java.net.URLDecoder.decode(my_user_name,my_request_charset);
-			}catch(Exception e) {
-				;
-			}
 		if((my_pass_word=request_response.get_parameter("pass_word"))==null)
 			my_pass_word="NoPassword";
-		else
-			try{
-				my_pass_word=java.net.URLDecoder.decode(my_pass_word,my_request_charset);
-				my_pass_word=java.net.URLDecoder.decode(my_pass_word,my_request_charset);
-			}catch(Exception e) {
-				;
-			}
-		
 		if((my_client_id=request_response.implementor.get_client_id())==null)
 			my_client_id="NoClientID";
 		

@@ -83,8 +83,7 @@ public class javascript_program
 		
 		String str[]=new String[]
 		{
-			"export var main=async function(my_canvas,my_user_name,my_pass_word,my_language_name,",
-			"		scene_name,link_name,initialization_parameter,progress_bar_function)",
+			"export var main=async function(my_canvas,my_create_parameter,user_process_bar_function)",
 			"{"
 		};
 		for(int i=0,ni=str.length;i<ni;i++)
@@ -114,14 +113,12 @@ public class javascript_program
 		}
 		
 		str=new String[]{
-				"	var ret_val=await render_main("
-							+system_par.create_engine_sleep_time_length_scale	+","
-							+system_par.create_engine_sleep_time_length			+","
-							+system_par.create_engine_max_sleep_time_length		+",my_canvas,"		,
-				"		\""	+request_response.implementor.get_url()	+"\","							,
-				"		my_user_name,my_pass_word,my_language_name,scene_name,link_name,"			,
-				"		initialization_parameter,progress_bar_function,default_fetch_parameter);"	,
-				"	return ret_val;"																,
+				"	return await render_main(my_canvas,my_create_parameter,user_process_bar_function,",
+				"				\""	+request_response.implementor.get_url()+"\",",
+				"				default_fetch_parameter,"+
+									system_par.create_engine_sleep_time_length_scale+","+
+									system_par.create_engine_sleep_time_length		+","+
+									system_par.create_engine_max_sleep_time_length	+");",
 				"};"
 		};
 		for(int i=0,ni=str.length;i<ni;i++)

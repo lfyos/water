@@ -1,5 +1,5 @@
-/*	type_shader_file_name					*/		shaders/type_shaders.txt		relative
-/*	scene_shader_file_name					*/		shaders/scene_shaders.txt		relative
+/*	type_shader_file_name					*/		shaders/type_shaders.txt		relative_directory
+/*	scene_shader_file_name					*/		shaders/scene_shaders.txt		relative_directory
 /*	camera_file_name						*/		orthongraphics/camera.txt
 /*	change_part_file_name					*/		assemble/change_part.»ìÉ«.txt
 /*	change_component_file_name				*/		assemble/change_component.»ìÉ«.txt

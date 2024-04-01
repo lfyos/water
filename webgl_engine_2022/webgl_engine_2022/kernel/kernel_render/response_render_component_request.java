@@ -242,7 +242,7 @@ public class response_render_component_request
 		int loading_part_id  =Integer.decode(str.substring(  index_id+1));
 			
 		if((str=ci.request_response.get_parameter("language"))==null)
-			str="english";
+			str="chinese";
 		else
 			str=str.toLowerCase().trim();
 		str=ek.system_par.language_change_name.search_change_name("load+"+str,"Load");

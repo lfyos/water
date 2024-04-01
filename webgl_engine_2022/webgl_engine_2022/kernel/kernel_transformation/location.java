@@ -51,7 +51,6 @@ public class location
 	}
 	public location(String str,String ch)
 	{
-		int ch_length;
 		a=new double [][]
 		{
 			{ 1, 0, 0, 0},
@@ -59,19 +58,20 @@ public class location
 			{ 0, 0, 1, 0},
 			{ 0, 0, 0, 1}
 		};
-		if(ch==null)
+		if((str==null)||(ch==null))
 			return;
+		int index_id,ch_length;
 		if((ch_length=ch.length())<=0)
 			return;
 		for(int i=0;i<4;i++)
-			for(int index_id,j=0;j<4;j++){
-				if((index_id=str.indexOf(ch))<0) {
+			for(int j=0;j<4;j++)
+				if((index_id=str.indexOf(ch))>=0) {
+					a[j][i]=Double.parseDouble(str.substring(0,index_id));
+					str=str.substring(index_id+ch_length);
+				}else {
 					a[j][i]=Double.parseDouble(str);
 					return;
 				}
-				a[j][i]=Double.parseDouble(str.substring(0,index_id));
-				str=str.substring(index_id+ch_length);
-			}
 	}
 	public location(
 			double d00,double d01,double d02,double d03,
