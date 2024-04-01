@@ -10,16 +10,11 @@ import kernel_network.client_request_response;
 public class component_core_2 extends component_core_1
 {
 	public location relative_location;
-	private boolean dynamic_location_flag;
 	
 	public void destroy()
 	{
 		super.destroy();
 		relative_location=null;
-	}
-	public boolean get_dynamic_location_flag()
-	{
-		return dynamic_location_flag;
 	}
 	private location input_location_from_file(String file_name,String file_charset)
 	{
@@ -32,8 +27,6 @@ public class component_core_2 extends component_core_1
 	{
 		String command=fr.get_string(),name=fr.get_string();
 		
-		dynamic_location_flag=true;
-		
 		if((command==null)||(name==null))
 			return new location();
 		if((command=command.trim()).isEmpty())
@@ -44,7 +37,6 @@ public class component_core_2 extends component_core_1
 		try {
 			switch(command.toLowerCase()){
 			default:
-				dynamic_location_flag=false;
 				try {
 					return new location(
 							Double.parseDouble(command),Double.parseDouble(name),	fr.get_double(),		fr.get_double(),

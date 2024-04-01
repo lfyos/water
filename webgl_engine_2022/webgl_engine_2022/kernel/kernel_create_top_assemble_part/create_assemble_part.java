@@ -42,19 +42,14 @@ public class create_assemble_part
 		}
 		
 		int do_test_result=do_test(p.children[0]);
-		if(p.children[0].get_dynamic_location_flag()){
-			do_test_result=-1;
-			can_create_assemble_part_name[p.component_id]=null;
-		}else
-			can_create_assemble_part_name[p.component_id]=can_create_assemble_part_name[p.children[0].component_id];
+		can_create_assemble_part_name[p.component_id]=can_create_assemble_part_name[p.children[0].component_id];
 		
 		for(int child_do_test_result,i=1,n=p.children.length;i<n;i++) {
 			if((child_do_test_result=do_test(p.children[i]))>=0)
 				if(do_test_result==child_do_test_result)
-					if(!(p.children[i].get_dynamic_location_flag()))
-						if(can_create_assemble_part_name[p.component_id].compareTo(
-								can_create_assemble_part_name[p.children[i].component_id])==0)
-									continue;
+					if(can_create_assemble_part_name[p.component_id].compareTo(
+						can_create_assemble_part_name[p.children[i].component_id])==0)
+							continue;
 			do_test_result=-1;
 			can_create_assemble_part_name[p.component_id]=null;
 		}
