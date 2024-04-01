@@ -1,4 +1,4 @@
-/*	type_shader_file_name			*/	type_shaders.txt			relative
+/*	type_shader_file_name			*/	type_shaders.txt			relative_directory
 
 /*	scene_shader_file_name			*/	scene_shaders.txt			environment_scene_sub_directory		liufuyan_scene_directory_configure
 
