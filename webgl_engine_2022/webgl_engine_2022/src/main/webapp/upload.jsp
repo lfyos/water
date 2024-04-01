@@ -93,20 +93,20 @@ function file_name_change()
 					try{
 						out.println(file_list[i]);
 									
-						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?scene_name=test&coordinate=location.xyz.txt");
-						out.println("&type_sub_directory=&scene_sub_directory="+file_list[i]+"\"  target=\"_self\">xyz</a>");
-						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?scene_name=test&coordinate=location.xyz.txt");
-						out.println("&type_sub_directory=&scene_sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">xyz</a>]");
+						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?coordinate=location.xyz.txt");
+						out.println("&scene_sub_directory="+file_list[i]+"\"  target=\"_self\">xyz</a>");
+						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?coordinate=location.xyz.txt");
+						out.println("&scene_sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">xyz</a>]");
 									
-						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?scene_name=test&coordinate=location.yzx.txt");
-						out.println("&type_sub_directory=&scene_sub_directory="+file_list[i]+"\"  target=\"_self\">yzx</a>");
-						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?scene_name=test&coordinate=location.yzx.txt");
-						out.println("&type_sub_directory=&scene_sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">yzx</a>]");
+						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?coordinate=location.yzx.txt");
+						out.println("&scene_sub_directory="+file_list[i]+"\"  target=\"_self\">yzx</a>");
+						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?coordinate=location.yzx.txt");
+						out.println("&scene_sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">yzx</a>]");
 									
-						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?scene_name=test&coordinate=location.zxy.txt");
-						out.println("&type_sub_directory=&scene_sub_directory="+file_list[i]+"\"  target=\"_self\">zxy</a>");
-						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?scene_name=test&coordinate=location.zxy.txt");
-						out.println("&type_sub_directory=&scene_sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">zxy</a>]");
+						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?coordinate=location.zxy.txt");
+						out.println("&scene_sub_directory="+file_list[i]+"\"  target=\"_self\">zxy</a>");
+						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?coordinate=location.zxy.txt");
+						out.println("&scene_sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">zxy</a>]");
 									
 						out.println("<br/>");
 					}catch(Exception e){

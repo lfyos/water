@@ -92,25 +92,13 @@ public class engine_interface_container
 			String client_scene_file_name,String client_scene_file_charset,
 			create_engine_counter engine_counter,system_parameter system_par)
 	{
-		String scene_name,link_name,request_charset=request_response.implementor.get_request_charset();
+		String scene_name,link_name;
 		if((scene_name=request_response.get_parameter("scene_name"))==null)
 			scene_name="";
-		else 
-			try {
-				scene_name=java.net.URLDecoder.decode(scene_name,request_charset);
-				scene_name=java.net.URLDecoder.decode(scene_name,request_charset);
-			}catch(Exception e){
-				;
-			}
+		
 		if((link_name=request_response.get_parameter("link_name"))==null)
 			link_name="";
-		else 
-			try{
-				link_name=java.net.URLDecoder.decode(link_name,request_charset);
-				link_name=java.net.URLDecoder.decode(link_name,request_charset);
-			}catch(Exception e){
-				;
-			}
+		
 		if(link_name.compareTo("")==0)
 			link_name=Double.toString(Math.random());
 

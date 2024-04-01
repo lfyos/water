@@ -64,78 +64,41 @@ public class scene_parameter
 			system_parameter system_par,engine_kernel_create_parameter ekcp)
 	{
 		
-		String str,request_charset=request_response.implementor.get_request_charset();
+		String str;
 
 		if((change_part_string=request_response.get_parameter("change_part"))==null)
 			change_part_string="";
 		else
-			try {
-				change_part_string=java.net.URLDecoder.decode(change_part_string,request_charset);
-				change_part_string=java.net.URLDecoder.decode(change_part_string,request_charset);
-				change_part_string=change_part_string.trim();
-			}catch(Exception e) {
-				;
-			}
+			change_part_string=change_part_string.trim();
 
 		if((change_component_string=request_response.get_parameter("change_component"))==null)
 			change_component_string="";
 		else
-			try {
-				change_component_string=java.net.URLDecoder.decode(change_component_string,request_charset);
-				change_component_string=java.net.URLDecoder.decode(change_component_string,request_charset);
-				change_component_string=change_component_string.trim();
-			}catch(Exception e) {
-				;
-			}
+			change_component_string=change_component_string.trim();
+
 		if((mount_component_string=request_response.get_parameter("mount_component"))==null)
 			mount_component_string="";
 		else
-			try {
-				mount_component_string=java.net.URLDecoder.decode(mount_component_string,request_charset);
-				mount_component_string=java.net.URLDecoder.decode(mount_component_string,request_charset);
-				mount_component_string=mount_component_string.trim();
-			}catch(Exception e) {
-				;
-			}
+			mount_component_string=mount_component_string.trim();
+
 		if((part_type_string=request_response.get_parameter("part_type"))==null)
 			part_type_string="";
 		else
-			try {
-				part_type_string=java.net.URLDecoder.decode(part_type_string,request_charset);
-				part_type_string=java.net.URLDecoder.decode(part_type_string,request_charset);
-				part_type_string=part_type_string.trim();
-			}catch(Exception e) {
-				;
-			}
+			part_type_string=part_type_string.trim();
 		
 		if((type_sub_directory=request_response.get_parameter("type_sub_directory"))==null)
 			type_sub_directory="";
-		else {
-			try{
-				type_sub_directory=java.net.URLDecoder.decode(type_sub_directory,request_charset);
-				type_sub_directory=java.net.URLDecoder.decode(type_sub_directory,request_charset);
-				type_sub_directory=scene_sub_directory.trim();
-			}catch(Exception e) {
-				;
-			}
+		else
 			if((type_sub_directory=file_reader.separator(type_sub_directory.trim())).length()>0)
 				if(type_sub_directory.charAt(type_sub_directory.length()-1)!=File.separatorChar)
 					type_sub_directory+=File.separator;
-		}
 		
 		if((scene_sub_directory=request_response.get_parameter("scene_sub_directory"))==null)
 			scene_sub_directory="";
-		else{
-			try{
-				scene_sub_directory=java.net.URLDecoder.decode(scene_sub_directory,request_charset);
-				scene_sub_directory=java.net.URLDecoder.decode(scene_sub_directory,request_charset);
-				scene_sub_directory=scene_sub_directory.trim();
-			}catch(Exception e) {
-			}
+		else
 			if((scene_sub_directory=file_reader.separator(scene_sub_directory.trim())).length()>0)
 				if(scene_sub_directory.charAt(scene_sub_directory.length()-1)!=File.separatorChar)
 					scene_sub_directory+=File.separator;
-		}
 		
 		file_reader fr=new file_reader(ekcp.parameter_file_name,ekcp.parameter_charset);
 		

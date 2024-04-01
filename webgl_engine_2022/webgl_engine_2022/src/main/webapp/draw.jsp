@@ -16,18 +16,19 @@ var lfy_render;
 <%
 {
 	String str;
-	out.print  ("var user_name=\""		+(((str=request.getParameter("user_name"		 ))==null)?"NoName"		:str)+"\",");
-	out.print  ("pass_word=\""			+(((str=request.getParameter("pass_word"		 ))==null)?"NoPassword"	:str)+"\",");
-	out.print  ("language=\""			+(((str=request.getParameter("language"			 ))==null)?"chinese"	:str)+"\",");
-	out.print  ("scene_name=\""			+(((str=request.getParameter("scene_name"		 ))==null)?""			:str)+"\",");
-	out.println("link_name=\""			+(((str=request.getParameter("link_name"		 ))==null)?""			:str)+"\";");
-	out.print  ("var change_part=\""	+(((str=request.getParameter("change_part"		 ))==null)?""			:str)+"\",");
-	out.print  ("change_component=\""	+(((str=request.getParameter("change_component"	 ))==null)?""			:str)+"\",");
-	out.print  ("part_type=\""			+(((str=request.getParameter("part_type"		 ))==null)?""			:str)+"\",");
-	out.print  ("type_sub_directory=\""	+(((str=request.getParameter("type_sub_directory" ))==null)?""			:str)+"\",");
-	out.print  ("scene_sub_directory=\""+(((str=request.getParameter("scene_sub_directory" ))==null)?""			:str)+"\",");
-	out.print  ("coordinate=\""			+(((str=request.getParameter("coordinate"		 ))==null)?"xyz"		:str)+"\",");
-	out.print  ("max_loading_number=\""	+(((str=request.getParameter("max_loading_number"))==null)?"5"			:str)+"\";");
+	out.print  ("var my_user_name=\""		+(((str=request.getParameter("user_name"		 ))==null)?""	:str)+"\",");
+	out.print  ("my_pass_word=\""			+(((str=request.getParameter("pass_word"		 ))==null)?""	:str)+"\",");
+	out.print  ("my_language=\""			+(((str=request.getParameter("language"			 ))==null)?""	:str)+"\",");
+	out.print  ("my_scene_name=\""			+(((str=request.getParameter("scene_name"		 ))==null)?""	:str)+"\",");
+	out.println("my_link_name=\""			+(((str=request.getParameter("link_name"		 ))==null)?""	:str)+"\";");
+	
+	out.print  ("var my_change_part=\""		+(((str=request.getParameter("change_part"		 ))==null)?""	:str)+"\",");
+	out.print  ("my_change_component=\""	+(((str=request.getParameter("change_component"	 ))==null)?""	:str)+"\",");
+	out.print  ("my_part_type=\""			+(((str=request.getParameter("part_type"		 ))==null)?""	:str)+"\",");
+	out.print  ("my_type_sub_directory=\""	+(((str=request.getParameter("type_sub_directory"))==null)?""	:str)+"\",");
+	out.print  ("my_scene_sub_directory=\""	+(((str=request.getParameter("scene_sub_directory"))==null)?""	:str)+"\",");
+	out.print  ("my_coordinate=\""			+(((str=request.getParameter("coordinate"		 ))==null)?"xyz":str)+"\",");
+	out.print  ("my_max_loading_number=\""	+(((str=request.getParameter("max_loading_number"))==null)?"5"	:str)+"\";");
 }
 %>
 
@@ -35,24 +36,24 @@ async function body_onload()
 {
 	lfy_render=await (await import("./graphics_engine_interface")).main(
 		["my_canvas"],
-		user_name,pass_word,language,scene_name,link_name,
-			//1.Object类型的绘图画布。
-			//	数组类型，可以同时渲染至多个canvas。
-			//	如果是String类型,则系统使用document.getElementById("my_canvas")将其转换为Object类型数据。
+		{
+			user_name			:	my_user_name,				//用户名	
+			pass_word			:	my_pass_word,				//用户密码
+			language			:	my_language,				//语言
+			scene_name			:	my_scene_name,				//场景名称
+			link_name			:	my_link_name,				//连接名称,用于多人协同操作一个场景
 			
-			//2.用户名	3.用户密码	4.语言	5.场景名称	6.连接名称,用于多人协同操作一个场景
-		[	//7.初始化参数
-			["change_part",				change_part			],	//part换名
-			["change_component",		change_component	],	//component换名
-			["part_type",				part_type			],	//part类型
-			["max_loading_number",		max_loading_number	],	//同时下载数量
+			change_part			:	my_change_part,				//part换名
+			change_component	:	my_change_component,		//component换名
+			part_type			:	my_part_type,				//part类型
+			type_sub_directory	:	my_type_sub_directory,		//显示内容type
+			scene_sub_directory	:	my_scene_sub_directory,		//显示内容scene
 			
-			["type_sub_directory",		type_sub_directory	],	//显示内容type
-			["scene_sub_directory",		scene_sub_directory	],	//显示内容scene
-			["coordinate",				coordinate			],	//坐标系选择
+			coordinate			:	my_coordinate,				//坐标系选择
+			max_loading_number	:	my_max_loading_number,		//同时下载数量
 			
-			["multisample",				4					]	//多重采样数
-		],
+			multisample			:	4							//多重采样数
+		},
 		function(			//9.进度条绘制函数，如果不配置该函数，则使用系统内部提供的默认进度条绘制函数
 				webgpu_canvas_id,				//绘制结束后，绘制结果拷贝到哪个canvas 
 				process_bar_canvas,				//绘制进度条的画布canvas
