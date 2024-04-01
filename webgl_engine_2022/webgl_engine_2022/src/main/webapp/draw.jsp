@@ -27,8 +27,8 @@ var lfy_render;
 	out.print  ("my_part_type=\""			+(((str=request.getParameter("part_type"		 ))==null)?""	:str)+"\",");
 	out.print  ("my_type_sub_directory=\""	+(((str=request.getParameter("type_sub_directory"))==null)?""	:str)+"\",");
 	out.print  ("my_scene_sub_directory=\""	+(((str=request.getParameter("scene_sub_directory"))==null)?""	:str)+"\",");
-	out.print  ("my_coordinate=\""			+(((str=request.getParameter("coordinate"		 ))==null)?"xyz":str)+"\",");
-	out.print  ("my_max_loading_number=\""	+(((str=request.getParameter("max_loading_number"))==null)?"5"	:str)+"\";");
+	
+	out.print  ("my_coordinate=\""			+(((str=request.getParameter("coordinate"		 ))==null)?""	:str)+"\";");
 }
 %>
 
@@ -50,8 +50,8 @@ async function body_onload()
 			scene_sub_directory	:	my_scene_sub_directory,		//显示内容scene
 			
 			coordinate			:	my_coordinate,				//坐标系选择
-			max_loading_number	:	my_max_loading_number,		//同时下载数量
 			
+			max_loading_number	:	5					,		//同时下载数量
 			multisample			:	4							//多重采样数
 		},
 		function(			//9.进度条绘制函数，如果不配置该函数，则使用系统内部提供的默认进度条绘制函数
