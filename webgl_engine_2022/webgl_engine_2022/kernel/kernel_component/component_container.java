@@ -1,23 +1,21 @@
 package kernel_component;
 
-import kernel_common_class.change_name;
-import kernel_common_class.debug_information;
+import kernel_transformation.box;
 import kernel_engine.engine_kernel;
-import kernel_engine.part_type_string_sorter;
+import kernel_engine.scene_parameter;
 import kernel_file_manager.file_reader;
 import kernel_interface.client_process_bar;
+import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
-import kernel_transformation.box;
 
 public class component_container 
 {
 	public component root_component,scene_component;
+	public scene_parameter	scene_par;
 	
 	public int original_part_number,part_component_number,exist_part_component_number,top_assemble_component_number;
 	public int render_component_id_and_driver_id[][][],part_component_id_and_driver_id[][][][];
 	public long total_face_primitive_number,total_edge_primitive_number,total_point_primitive_number;
-	
-	public change_name change_part_name,change_component_name;
 	
 	private component component_pointer[],sort_component_pointer[];
 	
@@ -34,14 +32,6 @@ public class component_container
 		render_component_id_and_driver_id=null;
 		part_component_id_and_driver_id=null;
 		
-		if(change_part_name!=null) {
-			change_part_name.destroy();
-			change_part_name=null;
-		}
-		if(change_component_name!=null) {
-			change_component_name.destroy();
-			change_component_name=null;
-		}
 		if(sort_component_pointer!=null) {
 			for(int i=0,ni=sort_component_pointer.length;i<ni;i++)
 				if(sort_component_pointer[i]!=null) {
@@ -74,8 +64,8 @@ public class component_container
 	public component search_component(String my_search_component_name)
 	{
 		if(my_search_component_name!=null){
-			String search_component_name=change_component_name.search_change_name(
-						my_search_component_name,my_search_component_name);
+			String search_component_name=scene_par.change_component_name.
+					search_change_name(my_search_component_name,my_search_component_name);
 			for(int i=0,j=sort_component_pointer.length-1;i<=j;){
 				int mid=(i+j)/2;
 				int result=sort_component_pointer[mid].component_name.compareTo(search_component_name);
@@ -169,13 +159,13 @@ public class component_container
 	
 	public component_container(file_reader scene_f,engine_kernel ek,
 			component_load_source_container component_load_source_cont,
-			long default_display_bitmap,client_request_response request_response,
-			change_name my_change_part_name,change_name my_change_component_name,
-			part_type_string_sorter my_type_string_sorter)
+			long default_display_bitmap,client_request_response request_response)
 	{
 		{
 			root_component=null;
 			scene_component=null;
+			
+			scene_par							=ek.scene_par;
 			
 			original_part_number				=0;
 			
@@ -191,9 +181,6 @@ public class component_container
 			
 			component_pointer					=null;
 			sort_component_pointer				=null;
-			
-			change_part_name					=my_change_part_name;
-			change_component_name				=my_change_component_name;
 		}
 		{
 			if(scene_f.eof()){
@@ -207,8 +194,7 @@ public class component_container
 			debug_information.println("Begin loading scene");
 
 			component_construction_parameter ccp=new component_construction_parameter(
-					ek,request_response,ek.part_cont,change_part_name,
-					my_type_string_sorter,component_load_source_cont,default_display_bitmap);
+					ek,request_response,ek.part_cont,component_load_source_cont,default_display_bitmap);
 			try{
 				root_component=new component("",scene_f,false,false,ccp);
 			}catch(Exception e){

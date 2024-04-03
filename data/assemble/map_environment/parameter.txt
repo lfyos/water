@@ -2,7 +2,6 @@
 /*	scene_shader_file_name					*/		shaders/scene_shaders.txt		relative_directory
 /*	camera_file_name						*/		orthongraphics/camera.txt
 /*	camera_file_name						*/		perspective/camera.txt
-/*	change_part_file_name					*/		assemble/change_part.txt
 /*	change_component_file_name				*/		assemble/change_component.txt
 /*	part_type_string_file_name				*/		part_type_string.txt
 

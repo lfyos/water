@@ -1,5 +1,7 @@
 package kernel_common_class;
 
+import java.util.ArrayList;
+
 import kernel_file_manager.file_reader;
 
 public class change_name extends sorter<String[],String>
@@ -105,26 +107,19 @@ public class change_name extends sorter<String[],String>
 	}
 	private void init(common_reader f_array[],String change_string)
 	{
-		int change_number=0;
-		data_array=new String[100][];
+		String change_pair[];
+		ArrayList<String[]>my_data_array=new ArrayList<String[]>();
 		
 		if(f_array!=null)
 			for(int i=0,ni=f_array.length;i<ni;i++)
 				while(!(f_array[i].eof())){
-					String change_pair[]=new String[]
-							{f_array[i].get_string(),f_array[i].get_line()};
+					change_pair=new String[]{f_array[i].get_string(),f_array[i].get_line()};
 					if((change_pair[0]==null)||(change_pair[1]==null))
 						continue;
 					if((change_pair[0]=change_pair[0].trim()).length()<=0)
 						continue;
 					change_pair[1]=change_pair[1].trim();
-					if(change_number>=data_array.length){
-						String bak[][]=data_array;
-						data_array=new String[change_number+100][];
-						for(int j=0,nj=bak.length;j<nj;j++)
-							data_array[j]=bak[j];
-					}
-					data_array[change_number++]=change_pair;
+					my_data_array.add(change_pair);
 				}
 
 		if(change_string!=null)
@@ -132,33 +127,25 @@ public class change_name extends sorter<String[],String>
 				int index_id=change_string.indexOf(";");
 				String my_str=(index_id<0)?change_string:(change_string.substring(0,index_id));
 				change_string=(index_id<0)?"":(change_string.substring(index_id+1));
-				
 				if((index_id=my_str.indexOf(":"))>0){
-					if(change_number>=data_array.length){
-						String bak[][]=data_array;
-						data_array=new String[data_array.length+100][];
-						for(int j=0;j<bak.length;j++)
-							data_array[j]=bak[j];
-					}
-					data_array[change_number++]=new String[]
-						{
-							my_str.substring(0,index_id).trim(),
-							my_str.substring(index_id+1).trim()
-						};
+					change_pair=new String[]{my_str.substring(0,index_id).trim(),my_str.substring(index_id+1).trim()};
+					my_data_array.add(change_pair);
 				}
 			}
-		if(change_number<=0)
+		int number=my_data_array.size();
+		switch(number) {
+		case 0:
 			data_array=null;
-		else if(data_array.length==change_number)
-			do_sort();
-		else {
-			String bak[][]=data_array;
-			data_array=new String[change_number][];
-			for(int i=0;i<change_number;i++)
-				data_array[i]=bak[i];
+			break;
+		case 1:
+			data_array=new String[][]{my_data_array.get(0)};
+			break;
+		default:
+			data_array=my_data_array.toArray(new String[number][]);
 			do_sort();
 		}
 	}
+	
 	public change_name()
 	{
 		init(null,null);

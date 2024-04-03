@@ -69,7 +69,7 @@ function file_name_change()
 <%
 	response.setCharacterEncoding("UTF-8");
 
-	String directory_name=System.getenv("liufuyan_scene_directory_configure");
+	String directory_name=System.getenv("liufuyan_scene_directory_configure")+"sigma/";
 
 	File f;
 	if((f=new File(directory_name)).exists())
@@ -89,24 +89,23 @@ function file_name_change()
 							continue;
 						file_list[i]=file_list[i].substring(0,index_id);
 					}
-					
 					try{
 						out.println(file_list[i]);
 									
 						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?coordinate=location.xyz.txt");
-						out.println("&scene_sub_directory="+file_list[i]+"\"  target=\"_self\">xyz</a>");
+						out.println("&scene_sub_directory=sigma/"+file_list[i]+"\"  target=\"_self\">xyz</a>");
 						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?coordinate=location.xyz.txt");
-						out.println("&scene_sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">xyz</a>]");
+						out.println("&scene_sub_directory=sigma/"+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">xyz</a>]");
 									
 						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?coordinate=location.yzx.txt");
-						out.println("&scene_sub_directory="+file_list[i]+"\"  target=\"_self\">yzx</a>");
+						out.println("&scene_sub_directory=sigma/"+file_list[i]+"\"  target=\"_self\">yzx</a>");
 						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?coordinate=location.yzx.txt");
-						out.println("&scene_sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">yzx</a>]");
+						out.println("&scene_sub_directory=sigma/"+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">yzx</a>]");
 									
 						out.print(  "&nbsp;&nbsp;[<a href=\"draw.jsp?coordinate=location.zxy.txt");
-						out.println("&scene_sub_directory="+file_list[i]+"\"  target=\"_self\">zxy</a>");
+						out.println("&scene_sub_directory=sigma/"+file_list[i]+"\"  target=\"_self\">zxy</a>");
 						out.print(  "&nbsp;,&nbsp;<a href=\"draw.jsp?coordinate=location.zxy.txt");
-						out.println("&scene_sub_directory="+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">zxy</a>]");
+						out.println("&scene_sub_directory=sigma/"+file_list[i]+"&link_name="+file_list[i]+"\"  target=\"_self\">zxy</a>]");
 									
 						out.println("<br/>");
 					}catch(Exception e){

@@ -1,17 +1,14 @@
 /*	1:name	*/	system_root_component
 /*	1:type	*/	undefined_part
 /*	1:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
-/*	1:child_number	*/	3
+/*	1:child_number	*/	2
 
 		/*	2:name			*/	not_part_list_component
 		/*	2:type			*/	undefined_part
 		/*	2:location		*/	relative_file_location	coordinate
 		
-				not_part_list	not_normalize_location
+				not_part_list	mount	interface.assemble
 				
-				mount																		interface.assemble
-				environment_scene_sub_directory_mount	liufuyan_scene_directory_configure	movement.assemble
-		
 		/*	2:child_number	*/	0
 
 		
@@ -19,17 +16,9 @@
 		/*	2:type			*/	undefined_part
 		/*	2:location		*/	relative_file_location	coordinate
 		
-				part_list		not_normalize_location
-				environment_scene_sub_directory_mount	liufuyan_scene_directory_configure	assemble.assemble
-		
-		/*	2:child_number	*/	0
-		
-		
-		/*	2:name			*/	main_test_component		
-		/*	2:type			*/	undefined_part
-		/*	2:location		*/	relative_file_location	coordinate
-		
-				part_list		normalize_location		mount	SLDASM.assemble
+				part_list		mount	SLDASM.assemble
 				
+				environment_scene_sub_directory_mount	liufuyan_scene_directory_configure	root.assemble
+		
 		/*	2:child_number	*/	0
 		

@@ -10,7 +10,6 @@ import kernel_component.component;
 import kernel_driver.component_driver;
 import kernel_render.render_container;
 import kernel_file_manager.file_reader;
-import kernel_common_class.change_name;
 import kernel_driver.modifier_container;
 import kernel_part.part_loader_container;
 import kernel_part.permanent_part_id_encoder;
@@ -330,39 +329,8 @@ public class engine_kernel
 	
 		start_time=current_time;
 		process_bar.set_process_bar(true,"load_component", "",1, 2);
-		component_cont=new component_container(
-				scene_f,this,component_load_source_cont,
-				scene_par.default_display_bitmap,request_response,
-				new change_name(
-						new String[]{
-								scene_par.extra_directory_name			+scene_par.change_part_file_name,
-								scene_par.directory_name				+scene_par.change_part_file_name,
-								
-								scene_par.scene_shader_directory_name	+scene_par.change_part_file_name,
-								scene_par.type_shader_directory_name	+scene_par.change_part_file_name,
-								
-								scene_f.directory_name	+scene_par.change_part_file_name
-						},scene_par.change_part_string,scene_par.parameter_charset),
-				new change_name(
-						new String[]{
-								scene_par.extra_directory_name			+scene_par.change_component_file_name,
-								scene_par.directory_name				+scene_par.change_component_file_name,
-								
-								scene_par.scene_shader_directory_name	+scene_par.change_component_file_name,
-								scene_par.type_shader_directory_name	+scene_par.change_component_file_name,
-								
-								scene_f.directory_name					+scene_par.change_component_file_name
-						},scene_par.change_component_string,scene_par.parameter_charset),
-				new part_type_string_sorter(
-						new String[]{
-								scene_par.extra_directory_name			+scene_par.type_string_file_name,
-								scene_par.directory_name				+scene_par.type_string_file_name,
-								
-								scene_par.type_shader_directory_name	+scene_par.type_string_file_name,
-								scene_par.scene_shader_directory_name	+scene_par.type_string_file_name,
-								
-								create_parameter.scene_directory_name	+scene_par.type_string_file_name
-						},scene_par.part_type_string,scene_par.parameter_charset));
+		component_cont=new component_container(scene_f,this,
+				component_load_source_cont,scene_par.default_display_bitmap,request_response);
 		
 		scene_f.close();
 		process_bar.set_process_bar(false,"load_component","", 2, 2);
@@ -427,17 +395,14 @@ public class engine_kernel
 				"wait for load engine kernel:	"+scene_par.scene_temporary_directory_name);
 		
 		debug_information.println();
-		debug_information.println("scene_par.directory_name		:	",	scene_par.directory_name);
-		debug_information.println("scene_temporary_directory_name:	",	scene_par.scene_temporary_directory_name);
+		debug_information.println("scene_par.directory_name	:	",			scene_par.directory_name);
+		debug_information.println("scene_temporary_directory_name	:	",	scene_par.scene_temporary_directory_name);
 			
-		debug_information.println("camera_file_name		:	",			scene_par.camera_file_name);
+		debug_information.println("camera_file_name		:	",				scene_par.camera_file_name);
 		
-		debug_information.println("change_part_file_name		:	",	scene_par.change_part_file_name);
-		debug_information.println("change_component_file_name	:	",	scene_par.change_component_file_name);
-		
-		debug_information.println("change_part_string		:	",		scene_par.change_part_string);
-		debug_information.println("change_component_string		:	",	scene_par.change_component_string);
-		debug_information.println("part_type_string		:	",			scene_par.part_type_string);
+		debug_information.println("change_part_string		:	",			scene_par.change_part_string);
+		debug_information.println("change_component_string		:	",		scene_par.change_component_string);
+		debug_information.println("part_type_string		:	",				scene_par.part_type_string);
 		
 		try {
 			load_routine(component_load_source_cont,request_response,process_bar,system_boftal_container);

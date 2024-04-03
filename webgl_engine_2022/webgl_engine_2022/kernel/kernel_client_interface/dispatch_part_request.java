@@ -74,13 +74,7 @@ public class dispatch_part_request
 				}
 				part p;
 				ArrayList<part> parts;
-				String part_name=str;
-				String search_part_name=ek.component_cont.change_part_name.search_change_name(part_name,part_name);
-				if((parts=ek.part_cont.search_part(search_part_name))==null){
-					search_part_name=ek.component_cont.change_part_name.search_change_name(search_part_name,search_part_name);
-					parts=ek.part_cont.search_part(search_part_name);
-				}
-				if(parts!=null)
+				if((parts=ek.part_cont.search_part(str))!=null)
 					if((str=ci.request_response.get_parameter("event_driver_id"))==null){
 						for(int i=0,ni=parts.size();i<ni;i++)
 							if((p=parts.get(i))!=null)

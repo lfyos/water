@@ -2,10 +2,12 @@ package kernel_component;
 
 import java.util.ArrayList;
 
-import kernel_common_class.debug_information;
-import kernel_driver.component_driver;
-import kernel_file_manager.file_reader;
 import kernel_part.part;
+import kernel_driver.component_driver;
+import kernel_common_class.change_name;
+import kernel_file_manager.file_reader;
+import kernel_engine.part_type_string_sorter;
+import kernel_common_class.debug_information;
 
 public class component_core_3 extends component_core_2
 {
@@ -40,45 +42,51 @@ public class component_core_3 extends component_core_2
 	private void create_driver(file_reader fr,component_construction_parameter ccp)
 	{
 		part p;
-		ArrayList<part> parts;
+		ArrayList<part> search_parts;
+		change_name change_part_name;
 		
-		String search_part_name=ccp.change_part_name.search_change_name(part_name,part_name);
-		if((parts=ccp.pcfps.search_part(search_part_name))==null){
-			search_part_name=ccp.change_part_name.search_change_name(search_part_name,search_part_name);
-			parts=ccp.pcfps.search_part(search_part_name);
+		if((change_part_name=ccp.get_change_part_name())==null)
+			search_parts=ccp.pcfps.search_part(part_name);
+		else{
+			String search_part_name=change_part_name.search_change_name(part_name,part_name);
+			if((search_parts=ccp.pcfps.search_part(search_part_name))==null){
+				search_part_name=change_part_name.search_change_name(search_part_name,search_part_name);
+				search_parts=ccp.pcfps.search_part(search_part_name);
+			}
 		}
-
-		if(parts==null) {
+		if(search_parts==null){
 			driver_array=null;
 			return;
 		}
 		
-		int part_number=parts.size(),effective_part_number=0;
-		part part_array[]=new part[part_number];
-		int type_string_number=ccp.type_string_sorter.get_number();
-		for(int i=0;i<part_number;i++) {
-			if((p=parts.get(i))==null)
-				continue;
-			if(type_string_number>0)
-				if(ccp.type_string_sorter.search(p.part_par.part_type_string)<0)
-					continue;
-			part_array[effective_part_number++]=p;
-		}
+		ArrayList<part> effective_parts=new ArrayList<part>();
+		part_type_string_sorter ptss=ccp.get_part_type_string_sorter();
+		int type_string_number=(ptss==null)?0:ptss.get_number();
+		
+		for(int i=0,part_number=search_parts.size();i<part_number;i++)
+			if((p=search_parts.get(i))!=null){
+				if(type_string_number>0)
+					if(ptss.search(p.part_par.part_type_string)<0)
+						continue;
+				effective_parts.add(p);
+			}
 		
 		driver_array=new ArrayList<component_driver>();
 		
-		for(int i=0;i<effective_part_number;i++){
-			boolean rollback_flag=(i<(effective_part_number-1))?true:false;
+		for(int i=0,effective_part_number=effective_parts.size();i<effective_part_number;i++){
 			fr.mark_start();
+			p=effective_parts.get(i);
+			boolean rollback_flag=(i<(effective_part_number-1))?true:false;
+			
 			try{
-				driver_array.add(i,part_array[i].driver.create_component_driver(
-						fr,rollback_flag,part_array[i],ccp.clsc,ccp.ek,ccp.request_response));
+				driver_array.add(i,p.driver.create_component_driver(
+						fr,rollback_flag,p,ccp.clsc,ccp.ek,ccp.request_response));
 			}catch(Exception e){
 				debug_information.println("create_component_driver fail:	",e.toString());
-				debug_information.println("Part user name:",	part_array[i].user_name);
-				debug_information.println("Part system name:",	part_array[i].system_name);
-				debug_information.println("Mesh_file_name:",	part_array[i].directory_name+part_array[i].mesh_file_name);
-				debug_information.println("Material_file_name:",part_array[i].directory_name+part_array[i].material_file_name);
+				debug_information.println("Part user name:",	p.user_name);
+				debug_information.println("Part system name:",	p.system_name);
+				debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);
+				debug_information.println("Material_file_name:",p.directory_name+p.material_file_name);
 				e.printStackTrace();
 			}
 			fr.mark_terminate(rollback_flag);

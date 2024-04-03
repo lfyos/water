@@ -7,6 +7,8 @@ import kernel_part.part;
 import kernel_engine.engine_kernel;
 import kernel_driver.component_driver;
 import kernel_file_manager.file_reader;
+import kernel_common_class.change_name;
+import kernel_engine.part_type_string_sorter;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 import kernel_file_manager.travel_through_directory;
@@ -188,10 +190,16 @@ public class component_core_4 extends component_core_3
 			return null;
 		}
 		ArrayList<part> par;
-		String search_part_name=ccp.change_part_name.search_change_name(external_part_name,external_part_name);
-		if((par=ccp.pcfps.search_part(search_part_name))==null){
-			search_part_name=ccp.change_part_name.search_change_name(search_part_name,search_part_name);
+		String search_part_name=external_part_name;
+		change_name change_part_name;
+		if((change_part_name=ccp.get_change_part_name())==null)
 			par=ccp.pcfps.search_part(search_part_name);
+		else{
+			search_part_name=change_part_name.search_change_name(search_part_name,search_part_name);
+			if((par=ccp.pcfps.search_part(search_part_name))==null){
+				search_part_name=change_part_name.search_change_name(search_part_name,search_part_name);
+				par=ccp.pcfps.search_part(search_part_name);
+			}
 		}
 		if(par==null) {
 			debug_information.println(
@@ -264,6 +272,51 @@ public class component_core_4 extends component_core_3
 					append_child(my_children);
 				}
 				return;
+			case "push_file_part_type_string":
+				ccp.push_part_type_string_sorter(
+					new part_type_string_sorter(
+						new String[] {fr.directory_name+file_reader.separator(fr.get_string())},
+						ccp.ek.scene_par.part_type_string,fr.get_charset()));
+				continue;
+			case "push_string_part_type_string":
+				if((str=fr.get_string())==null)
+					str=ccp.ek.scene_par.part_type_string;
+				else if((str=str.trim()).length()<=0)
+					str=ccp.ek.scene_par.part_type_string;
+				else if(str.charAt(0)==';')
+					str=ccp.ek.scene_par.part_type_string+str;
+				else
+					str=ccp.ek.scene_par.part_type_string+";"+str;
+				ccp.push_part_type_string_sorter(
+					new part_type_string_sorter(new String[] {},str,fr.get_charset()));
+				continue;
+			case "pop_part_type_string":	
+				ccp.pop_part_type_string_sorter();
+				continue;
+
+			case "push_file_part_change_name":
+				ccp.push_change_part_name(
+					new change_name(
+						new String[] {fr.directory_name+file_reader.separator(fr.get_string())},
+						ccp.ek.scene_par.change_part_string,fr.get_charset()));
+				continue;
+			case "push_string_part_change_name":
+				if((str=fr.get_string())==null)
+					str=ccp.ek.scene_par.change_part_string;
+				else if((str=str.trim()).length()<=0)
+					str=ccp.ek.scene_par.change_part_string;
+				else if(str.charAt(0)==';')
+					str=ccp.ek.scene_par.change_part_string+str;
+				else
+					str=ccp.ek.scene_par.change_part_string+";"+str;
+				
+				ccp.push_change_part_name(
+					new change_name(new String[] {},str,fr.get_charset()));
+				continue;
+			case "pop_part_change_name":
+				ccp.pop_change_part_name();
+				continue;
+				
 			case "token_program":
 			case "file_program":
 			case "charset_file_program":
