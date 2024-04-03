@@ -79,7 +79,9 @@ public class dispatch_buffer_request
 				"No data_file in do_buffer_dispatch of dispatch_system_request");
 			return null;
 		}
-		return file_directory.part_file_directory(p,ek.system_par,ek.scene_par)+"mesh."+str+".gzip_text";
+		str=file_directory.part_file_directory(p,ek.system_par,ek.scene_par)+"mesh."+str+".gzip_text";
+		
+		return str;
 	}
 	static public String do_dispatch(engine_kernel ek,client_information ci)
 	{
@@ -106,12 +108,16 @@ public class dispatch_buffer_request
 				switch(Integer.decode(str.substring(0,index_id))){
 				default:
 				case 0:
-					return ek.render_cont.system_part_package.package_file_name[package_id];
+					str=ek.render_cont.system_part_package.package_file_name[package_id];
+					break;
 				case 1:
-					return ek.render_cont.type_part_package.package_file_name[package_id];
+					str=ek.render_cont.type_part_package.package_file_name[package_id];
+					break;
 				case 2:
-					return ek.render_cont.scene_part_package.package_file_name[package_id];
+					str=ek.render_cont.scene_part_package.package_file_name[package_id];
+					break;
 				}
+				return str;
 			}catch(Exception e) {
 				debug_information.println(
 					"Wrong package in do_buffer_dispatch of dispatch_system_request\t:\t",

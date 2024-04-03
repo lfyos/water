@@ -26,9 +26,6 @@ public class scene_parameter_information extends jason_creator
 		print("scene_shader_directory_name",				sp.scene_shader_directory_name);
 		print("scene_shader_file_name",						sp.scene_shader_file_name);
 		print("camera_file_name",							sp.camera_file_name);
-		print("change_part_file_name",						sp.change_part_file_name);
-		print("change_component_file_name",					sp.change_component_file_name);
-		print("type_string_file_name",						sp.type_string_file_name);
 		
 		print("inserted_component_name",					sp.inserted_component_name);
 		print("inserted_part_name",							sp.inserted_part_name);
