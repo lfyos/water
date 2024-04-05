@@ -3,8 +3,8 @@
 /*	1:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
 /*	1:child_number	*/	5
 
-	/*	2:name	*/	display_component_0
-	/*	2:type	*/	display_part_0
+	/*	2:name	*/	display_component
+	/*	2:type	*/	display_part
 	/*	2:location	*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
 	/*	2:child_number	*/	0
 

@@ -1,1 +1,1 @@
-map_environment	ª∑æ≥”≥…‰≤‚ ‘	assemble/assemble.txt	0	0	parameter.txt	parameter.xyz.txt
+map_environment		assemble/assemble.txt	0	0	parameter.txt	parameter.xyz.txt

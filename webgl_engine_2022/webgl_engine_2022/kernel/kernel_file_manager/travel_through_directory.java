@@ -15,6 +15,10 @@ public class travel_through_directory
 	}
 	public void operate_file(String file_name)
 	{
+		
+	}
+	public void operate_directory_and_file(String directory_name,String file_name,String path_name)
+	{
 	}
 	public void do_travel(String file_name,boolean sort_file_name_flag)
 	{
@@ -52,8 +56,10 @@ public class travel_through_directory
 						do_travel(path_name+File.separator+file_list[i],sort_file_name_flag);
 				}
 				operate_directory_terminate(path_name);
-			}else
+			}else{
+				operate_directory_and_file(f.getParent(),f.getName(),path_name);
 				operate_file(path_name);
+			}
 		}
 	}
 	public travel_through_directory(String my_exclude_file_name[])

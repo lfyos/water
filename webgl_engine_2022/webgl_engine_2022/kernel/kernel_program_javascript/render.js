@@ -8,8 +8,7 @@ function construct_render_routine(my_webgpu,my_url,
 	var camera_number					=render_data[3];
 	var max_target_number				=render_data[4];
     this.link_name						=render_data[5];
-    this.title							=render_data[6];
-    this.parameter						=render_data[7];
+    this.parameter						=render_data[6];
 
 	this.fetch_parameter			=default_fetch_parameter;
 	this.webgpu						=my_webgpu;

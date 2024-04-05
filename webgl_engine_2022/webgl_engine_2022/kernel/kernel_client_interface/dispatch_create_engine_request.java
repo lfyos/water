@@ -6,7 +6,6 @@ import kernel_engine.engine_kernel;
 import kernel_engine.client_information;
 import kernel_file_manager.file_directory;
 import kernel_common_class.debug_information;
-import kernel_common_class.jason_string;
 import kernel_driver.component_instance_driver;
 import kernel_driver.component_instance_driver_container;
 import kernel_driver.part_instance_driver;
@@ -156,11 +155,9 @@ public class dispatch_create_engine_request
 		
 		ci.request_response.print(",",ek.scene_par.max_target_number);	//parameter	4	4
 		
-		ci.request_response.print(",\"",	ek.create_parameter.link_name);		//parameter	4	5
-		ci.request_response.print("\",",	
-				jason_string.change_string(ek.create_parameter.scene_title));	//parameter	4	5
+		ci.request_response.print(",\"",ek.create_parameter.link_name).print("\"");		//parameter	4	5
 	
-		ci.request_response.print(",{");							//parameter	4	7
+		ci.request_response.print(",{");							//parameter	4	6
 
 		ci.request_response.print( "\"max_loading_number\":",		ci.parameter.max_client_loading_number);
 		ci.request_response.print(",\"engine_touch_time_length\":",	ek.system_par.engine_touch_time_length);

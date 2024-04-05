@@ -82,7 +82,6 @@ async function body_onload()
 			progress_bar_ctx.textAlign		="center";		
 			progress_bar_ctx.fillText(display_value,	process_bar_canvas.width*0.5,	process_bar_canvas.height*0.5);
 		});
-		document.title=lfy_render.title;	//设置网页标题
 }
 function body_onresize()
 {
