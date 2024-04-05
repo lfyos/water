@@ -1,1 +1,1 @@
-test	²âÊÔ¸Ë¼ş		assemble/assemble.txt	0	0	parameter.txt	parameter.xyz.txt
+test	assemble/assemble.txt	0	0	parameter.txt	parameter.xyz.txt

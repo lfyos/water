@@ -13,7 +13,6 @@ public class engine_kernel_create_parameter
 	public double	create_top_part_left_ratio;
 	public String	link_name;
 	public String	scene_name;
-	public String	scene_title;
 	public String	scene_directory_name;
 	public String	scene_file_name;
 	public String	scene_charset;
@@ -46,7 +45,6 @@ public class engine_kernel_create_parameter
 					f_type.directory_name+my_mount_file_name,f_type.get_charset());
 			while(!(f_name.eof())){
 				String scene_search_name	=f_name.get_string();
-				scene_title					=f_name.get_string();
 				scene_file_name				=f_name.get_string();
 				create_top_part_expand_ratio=f_name.get_long();
 				create_top_part_left_ratio	=f_name.get_long();
@@ -67,7 +65,7 @@ public class engine_kernel_create_parameter
 				
 				if(!(file_reader.is_exist(f_name.directory_name+scene_file_name))) {
 					debug_information.println("Find unexist scene_assembly_file_name:",
-						scene_search_name+"\t"+scene_title+"\t"+scene_file_name);
+						scene_search_name+"\t"+"\t"+scene_file_name);
 					continue;
 				}
 				if(file_reader.is_exist(f_name.directory_name+parameter_file_name))
@@ -77,7 +75,7 @@ public class engine_kernel_create_parameter
 						+"assemble_parameter"+File.separator+parameter_file_name;
 					if(!(file_reader.is_exist(parameter_file_name))) {
 						debug_information.println("Find unexist scene parameter_file_name:",
-								scene_search_name+"\t"+scene_title+"\t"+parameter_file_name);
+								scene_search_name+"\t"+"\t"+parameter_file_name);
 						continue;
 					}
 				}
@@ -88,13 +86,12 @@ public class engine_kernel_create_parameter
 						+"assemble_parameter"+File.separator+extra_parameter_file_name;
 					if(!(file_reader.is_exist(extra_parameter_file_name))) {
 						debug_information.println("Find unexist scene extra_parameter_file_name:",
-								scene_search_name+"\t"+scene_title+"\t"+extra_parameter_file_name);
+								scene_search_name+"\t"+"\t"+extra_parameter_file_name);
 						continue;
 					}
 				}
 				
 				debug_information.println("scene_name	              	:	",	scene_search_name);
-				debug_information.println("scene_title              	:	",	scene_title);
 				debug_information.println("scene_file_name          	:	",	f_name.directory_name+scene_file_name);
 				debug_information.println("parameter_file_name		:	",		parameter_file_name);
 				debug_information.println("extra_parameter_file_name	:	",	extra_parameter_file_name);
