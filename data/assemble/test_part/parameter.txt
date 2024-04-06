@@ -10,3 +10,7 @@
 									
 /*	change_component_file_name	*/		change_component.txt
 										environment_scene_sub_directory		liufuyan_scene_directory_configure
+
+										
+/*	client_parameter_name		*/		client_sub_directory		
+										

@@ -27,7 +27,7 @@ var lfy_render;
 	out.print  ("my_part_type=\""			+(((str=request.getParameter("part_type"		 ))==null)?""	:str)+"\",");
 	out.print  ("my_type_sub_directory=\""	+(((str=request.getParameter("type_sub_directory"))==null)?""	:str)+"\",");
 	out.print  ("my_scene_sub_directory=\""	+(((str=request.getParameter("scene_sub_directory"))==null)?""	:str)+"\",");
-	
+	out.print  ("my_client_sub_directory=\""+(((str=request.getParameter("client_sub_directory"))==null)?""	:str)+"\",");
 	out.print  ("my_coordinate=\""			+(((str=request.getParameter("coordinate"		 ))==null)?""	:str)+"\";");
 }
 %>
@@ -37,22 +37,23 @@ async function body_onload()
 	lfy_render=await (await import("./graphics_engine_interface")).main(
 		["my_canvas"],
 		{
-			user_name			:	my_user_name,				//用户名	
-			pass_word			:	my_pass_word,				//用户密码
-			language			:	my_language,				//语言
-			scene_name			:	my_scene_name,				//场景名称
-			link_name			:	my_link_name,				//连接名称,用于多人协同操作一个场景
+			user_name				:	my_user_name,				//用户名	
+			pass_word				:	my_pass_word,				//用户密码
+			language				:	my_language,				//语言
+			scene_name				:	my_scene_name,				//场景名称
+			link_name				:	my_link_name,				//连接名称,用于多人协同操作一个场景
 			
-			change_part			:	my_change_part,				//part换名
-			change_component	:	my_change_component,		//component换名
-			part_type			:	my_part_type,				//part类型
-			type_sub_directory	:	my_type_sub_directory,		//显示内容type
-			scene_sub_directory	:	my_scene_sub_directory,		//显示内容scene
+			change_part				:	my_change_part,				//part换名
+			change_component		:	my_change_component,		//component换名
+			part_type				:	my_part_type,				//part类型
+			type_sub_directory		:	my_type_sub_directory,		//显示内容type
+			scene_sub_directory		:	my_scene_sub_directory,		//显示内容scene
+			client_sub_directory	:	my_client_sub_directory,	//显示内容client
 			
-			coordinate			:	my_coordinate,				//坐标系选择
+			coordinate				:	my_coordinate,				//坐标系选择
 			
-			max_loading_number	:	5					,		//同时下载数量
-			multisample			:	4							//多重采样数
+			max_loading_number		:	5					,		//同时下载数量
+			multisample				:	4							//多重采样数
 		},
 		function(			//9.进度条绘制函数，如果不配置该函数，则使用系统内部提供的默认进度条绘制函数
 				webgpu_canvas_id,				//绘制结束后，绘制结果拷贝到哪个canvas 

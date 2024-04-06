@@ -42,7 +42,7 @@ public class component_core_5 extends component_core_4
 			}
 			for(int collect_number=0,i=0,ni=children.length;i<ni;i++) {
 				String id_str="_"+(ccp.ek.scene_par.inserted_component_and_part_id++);
-				fr.insert_string(new String[]
+				fr.push_string_array(new String[]
 				{
 					ccp.ek.scene_par.inserted_component_name+id_str,
 					ccp.ek.scene_par.inserted_part_name+id_str,

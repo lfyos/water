@@ -1,6 +1,7 @@
 package kernel_engine;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import kernel_common_class.change_name;
 import kernel_common_class.debug_information;
@@ -9,7 +10,7 @@ import kernel_network.client_request_response;
 
 public class scene_parameter 
 {
-	public String change_part_string,change_component_string,mount_component_string,part_type_string;
+	public String change_part_string,change_component_string,part_type_string;
 	
 	public String type_sub_directory,scene_sub_directory;
 
@@ -21,7 +22,7 @@ public class scene_parameter
 	public String scene_shader_directory_name,scene_shader_file_name;
 	public String camera_file_name;
 	
-	public change_name change_component_name;
+	public change_name change_component_name,client_parameter_name;
 	
 	public int part_lru_in_list_number;
 	
@@ -141,11 +142,6 @@ public class scene_parameter
 		else
 			change_component_string=change_component_string.trim();
 
-		if((mount_component_string=request_response.get_parameter("mount_component"))==null)
-			mount_component_string="";
-		else
-			mount_component_string=mount_component_string.trim();
-
 		if((part_type_string=request_response.get_parameter("part_type"))==null)
 			part_type_string="";
 		else
@@ -164,37 +160,6 @@ public class scene_parameter
 			if((scene_sub_directory=file_reader.separator(scene_sub_directory.trim())).length()>0)
 				if(scene_sub_directory.charAt(scene_sub_directory.length()-1)!=File.separatorChar)
 					scene_sub_directory+=File.separator;
-
-		scene_temporary_directory_name=system_par.temporary_file_par.temporary_root_directory_name;
-		scene_temporary_directory_name+="scene_directory"+File.separator+file_reader.separator(ekcp.scene_name);
-		if(type_sub_directory.length()<=0)
-			scene_temporary_directory_name+=File.separator;
-		else if(type_sub_directory.charAt(0)==File.separatorChar)
-			scene_temporary_directory_name+=type_sub_directory;
-		else
-			scene_temporary_directory_name+=File.separator+type_sub_directory;
-
-		if(scene_sub_directory.length()>0){
-			if(scene_sub_directory.charAt(0)==File.separatorChar)
-				scene_temporary_directory_name+=scene_sub_directory.substring(1);
-			else
-				scene_temporary_directory_name+=scene_sub_directory;
-		}
-		
-		String str_array[]={change_part_string,change_component_string,mount_component_string,part_type_string};
-		for(int str_len,i=0,ni=str_array.length;i<ni;i++) {
-			if(str_array[i]==null)
-				continue;
-			str_array[i]=new String(str_array[i]).replace(':','/').replace(';','/').
-					replace('/',File.separatorChar).replace('\\',File.separatorChar).
-					replace(" ", "").replace("\t","").replace("\r","").replace("\n","");
-			str_array[i]=file_reader.separator(str_array[i]);
-			if((str_len=str_array[i].length())<=0)
-				continue;
-			if(str_array[i].charAt(str_len-1)!=File.separatorChar)
-				str_array[i]+=File.separatorChar;
-			scene_temporary_directory_name+=str_array[i];
-		}
 
 		file_reader parameter_fr=new file_reader(ekcp.parameter_file_name,ekcp.parameter_charset);
 		
@@ -237,6 +202,60 @@ public class scene_parameter
 				new String[]{get_directory_name_and_file_name(parameter_fr)[0]},
 				change_component_string,parameter_fr.get_charset());
 		
+		
+		ArrayList<String[]> my_client_parameter_name=new ArrayList<String[]>();
+		for(String parameter_name,parameter_value;!(parameter_fr.eof());) {
+			if((parameter_name=parameter_fr.get_string())==null)
+				continue;
+			if((parameter_name=parameter_name.trim()).length()<=0)
+				continue;
+			if((parameter_value=request_response.get_parameter(parameter_name))==null)
+				continue;
+			if((parameter_value=parameter_value.trim()).length()<=0)
+				continue;
+			my_client_parameter_name.add(new String[]{parameter_name,parameter_value});
+		}
+		client_parameter_name=new change_name();
+		client_parameter_name.data_array=my_client_parameter_name.toArray(
+				new String[my_client_parameter_name.size()][]);
+		client_parameter_name.do_sort();
+		
+		scene_temporary_directory_name=system_par.temporary_file_par.temporary_root_directory_name;
+		scene_temporary_directory_name+="scene_directory"+File.separator+file_reader.separator(ekcp.scene_name);
+		if(type_sub_directory.length()<=0)
+			scene_temporary_directory_name+=File.separator;
+		else if(type_sub_directory.charAt(0)==File.separatorChar)
+			scene_temporary_directory_name+=type_sub_directory;
+		else
+			scene_temporary_directory_name+=File.separator+type_sub_directory;
+
+		if(scene_sub_directory.length()>0){
+			if(scene_sub_directory.charAt(0)==File.separatorChar)
+				scene_temporary_directory_name+=scene_sub_directory.substring(1);
+			else
+				scene_temporary_directory_name+=scene_sub_directory;
+		}
+		String str_array[]={change_part_string,change_component_string,part_type_string};
+		for(int str_len,i=0,ni=str_array.length;i<ni;i++) {
+			if(str_array[i]==null)
+				continue;
+			str_array[i]=new String(str_array[i]).replace(':','/').replace(';','/').
+					replace('/',File.separatorChar).replace('\\',File.separatorChar).
+					replace(" ", "").replace("\t","").replace("\r","").replace("\n","");
+			str_array[i]=file_reader.separator(str_array[i]);
+			if((str_len=str_array[i].length())<=0)
+				continue;
+			if(str_array[i].charAt(str_len-1)!=File.separatorChar)
+				str_array[i]+=File.separatorChar;
+			scene_temporary_directory_name+=str_array[i];
+		}
+		for(int i=0,ni=client_parameter_name.get_number();i<ni;i++) {
+			str=client_parameter_name.data_array[i][1];
+			if(str.charAt(str.length()-1)!=File.separatorChar)
+				str+=File.separatorChar;
+			str=client_parameter_name.data_array[i][0]+"_"+str;
+			scene_temporary_directory_name+=file_reader.separator(str);
+		}
 		parameter_fr.close();
 
 		part_lru_in_list_number=extra_parameter_fr.get_int();
