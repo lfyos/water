@@ -1,1 +1,0 @@
-part_bridge		²ğ×°Ê½èìÁº¸Ë¼ş		assemble/part/single_part/assemble.txt		0	0	parameter.part.txt	parameter.xyz.txt

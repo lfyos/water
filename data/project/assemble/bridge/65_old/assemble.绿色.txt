@@ -1,3 +1,0 @@
-
-65_green_old		六五式铁路军用桥墩			assemble/3_4/assemble.txt		0	0	parameter.绿色.txt		parameter.yzx.txt
-

@@ -66,6 +66,8 @@ public class component_construction_parameter
 		pcfps					=my_pcfps;
 		
 		change_part_name_list	=new ArrayList<change_name>();
+		change_part_name_list.add(
+			new change_name(new String[]{},ek.scene_par.change_part_string,null));
 		type_string_sorter_list	=new ArrayList<part_type_string_sorter>();
 		
 		clsc					=my_clsc;

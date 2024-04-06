@@ -132,10 +132,14 @@ public class part_process_sequence
 			int render_id	=process_parts_sequence[i][0];
 			int part_id		=process_parts_sequence[i][1];
 			part p=render_cont.renders.get(render_id).parts.get(part_id);
-			ArrayList<int[]>part_id_list;
+			
+			if((p.part_package_id<0)||(p.part_package_sequence_id<0))
+				continue;
 			
 			if(all_buffer_object_head_package_last_modify_time<p.boftal.buffer_object_head_last_modify_time)
 				all_buffer_object_head_package_last_modify_time=p.boftal.buffer_object_head_last_modify_time;
+			
+			ArrayList<int[]>part_id_list;
 			
 			switch(p.part_type_id){
 			default:

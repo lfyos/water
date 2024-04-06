@@ -196,9 +196,7 @@ public class part_loader_container
 			String lock_file_name=file_reader.separator(part_temporary_file_directory+"part.lock");
 			exclusive_file_mutex efm=exclusive_file_mutex.lock(lock_file_name,
 					"wait for load_part_mesh_head_only:	"+my_part.directory_name+my_part.mesh_file_name);
-			if(my_part.part_mesh!=null)
-				my_part.part_mesh.destroy();
-			my_part.call_part_driver_for_load_part_mesh();
+			my_part.load_part_mesh();
 			efm.unlock();
 		}
 	}

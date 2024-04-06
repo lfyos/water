@@ -1,74 +1,50 @@
 /*	########################	driver_general		#######################		*/
 
-/*	render_0	*/	pickup											driver_pickup.extended_render_driver					driver_general\pickup\render.list
-/*	render_1	*/	caption											driver_caption.extended_render_driver					driver_general\caption\render.list
-/*	render_2	*/	movement										driver_movement.extended_render_driver					driver_general\movement\render.list
-/*	render_3	*/	interface										driver_interface.extended_render_driver					driver_general\interface\render.list
-/*	render_4	*/	background										driver_background.extended_render_driver				driver_general\background\render.list
-/*	render_5	*/	coordinate										driver_coordinate.extended_render_driver				driver_general\coordinate\render.list
-/*	render_6	*/	show_target										driver_show_target.extended_render_driver				driver_general\show_target\render.list 
-/*	render_7	*/	manipulator										driver_manipulator.extended_render_driver				driver_general\manipulator\render.list
-/*	render_8	*/	audio_player									driver_audio_player.extended_render_driver				driver_general\audio_player\render.list
-/*	render_9	*/	distance_tag									driver_distance_tag.extended_render_driver				driver_general\distance_tag\render.list
-/*	render_10	*/	driver_register_file_proxy						driver_register_file_proxy.extended_render_driver		driver_general\proxy_register\render.list
-/*	render_11	*/	component_marker								driver_component_marker.extended_render_driver			driver_general\component_marker\render.list
-/*	render_12	*/	screen_rectangle								driver_screen_rectangle.extended_render_driver			driver_general\screen_rectangle\render.list
-/*	render_13	*/	camera_operation								driver_camera_operation.extended_render_driver			driver_general\camera_operation\render.list
-																		/*		depth_start,depth_end		*/		0.0		0.1
-/*	render_14	*/	location_modifier								driver_location_modifier.extended_render_driver			driver_general\location_modifier\render.list	
-/*	render_15	*/	show_component_box								driver_show_component_box.extended_render_driver		driver_general\show_component_box\render.list
-/*	render_16	*/	component_selection								driver_component_selection.extended_render_driver		driver_general\component_selection\render.list
-/*	render_17	*/	mouse_modify_location							driver_mouse_modify_location.extended_render_driver		driver_general\mouse_modify_location\render.list
-/*	render_18	*/	render_target_register							driver_render_target_register.extended_render_driver	driver_general\render_target_register\render.list
+/*	render_0	*/	pickup							driver_pickup.extended_render_driver					driver_general\pickup\render.list
+/*	render_1	*/	caption							driver_caption.extended_render_driver					driver_general\caption\render.list
+/*	render_2	*/	movement						driver_movement.extended_render_driver					driver_general\movement\render.list
+/*	render_3	*/	interface						driver_interface.extended_render_driver					driver_general\interface\render.list
+/*	render_4	*/	background						driver_background.extended_render_driver				driver_general\background\render.list
+/*	render_5	*/	coordinate						driver_coordinate.extended_render_driver				driver_general\coordinate\render.list
+/*	render_6	*/	show_target						driver_show_target.extended_render_driver				driver_general\show_target\render.list 
+/*	render_7	*/	manipulator						driver_manipulator.extended_render_driver				driver_general\manipulator\render.list
+/*	render_8	*/	audio_player					driver_audio_player.extended_render_driver				driver_general\audio_player\render.list
+/*	render_9	*/	distance_tag					driver_distance_tag.extended_render_driver				driver_general\distance_tag\render.list
+/*	render_10	*/	component_marker				driver_component_marker.extended_render_driver			driver_general\component_marker\render.list
+/*	render_11	*/	screen_rectangle				driver_screen_rectangle.extended_render_driver			driver_general\screen_rectangle\render.list
+/*	render_12	*/	camera_operation				driver_camera_operation.extended_render_driver			driver_general\camera_operation\render.list
+															/*		depth_start,depth_end		*/		0.0		0.1
+/*	render_13	*/	location_modifier				driver_location_modifier.extended_render_driver			driver_general\location_modifier\render.list	
+/*	render_14	*/	show_component_box				driver_show_component_box.extended_render_driver		driver_general\show_component_box\render.list
+/*	render_15	*/	component_selection				driver_component_selection.extended_render_driver		driver_general\component_selection\render.list
+/*	render_16	*/	mouse_modify_location			driver_mouse_modify_location.extended_render_driver		driver_general\mouse_modify_location\render.list
+/*	render_17	*/	render_target_register			driver_render_target_register.extended_render_driver	driver_general\render_target_register\render.list
+/*	render_18	*/	driver_register_file_proxy		driver_register_file_proxy.extended_render_driver		driver_general\proxy_register\render.list
+													
+/*	******************************		driver_lession		********************************************	*/
 
+/*	render_19	*/	lession_00_start_driver							driver_lession_00_start_driver.extended_render_driver							driver_lession\lession_00_start_driver\render.list
 
 /*
 
-
-/*	########################	driver_project		#######################				*/
-/*	render_19	*/	solidworks										driver_opengl_fixed_pipeline.extended_render_driver
-																	..\project\part\solidworks\render.list		..\project\part\solidworks\light.txt
-							
-/*	########################	driver_project_boat_2011	#######################		*/
-/*	render_20	*/	boat											driver_opengl_fixed_pipeline.extended_render_driver
-																	..\project\boat\part\render.list			..\project\boat\part\light.txt	
-
-/*	########################	various obj files		#######################			*/
-/*	render_21	*/	other_part										driver_opengl_fixed_pipeline.extended_render_driver
-																	..\project\part\obj_part\render.list		..\project\part\obj_part\light.txt
-
-/*	########################	various obj files		#######################			*/
-/*	render_22	*/	inp_part										driver_opengl_fixed_pipeline.extended_render_driver
-																	..\project\part\inp_part\render.list		..\project\part\inp_part\light.txt
-
-/*	******************************		driver_lession		********************************************	*/
-/*	render_22	*/	lession_00_start_driver							driver_lession_00_start_driver.extended_render_driver	driver_lession\lession_00_start_driver\render.list
-
-
-/*	******************************		driver_lession		********************************************	*/
-/*	render_24	*/	lession_01_modify_location_at_server			driver_lession_01_modify_location_at_server.extended_render_driver				driver_lession\lession_01_modify_location_at_server\render.list
-/*	render_25	*/	lession_02_modify_location_at_client			driver_lession_02_modify_location_at_client.extended_render_driver				driver_lession\lession_02_modify_location_at_client\render.list	
-/*	render_26	*/	lession_03_texture								driver_lession_03_texture.extended_render_driver								driver_lession\lession_03_texture\render.list	
-/*	render_27	*/	lession_04_texture_with_discard					driver_lession_04_texture_with_discard.extended_render_driver					driver_lession\lession_04_texture_with_discard\render.list		
-/*	render_28	*/	lession_05_create_grid							driver_lession_05_create_grid.extended_render_driver							driver_lession\lession_05_create_grid\render.list	
-/*	render_29	*/	lession_06_create_grid_with_movement			driver_lession_06_create_grid_with_movement.extended_render_driver				driver_lession\lession_06_create_grid_with_movement\render.list	
-/*	render_30	*/	lession_07_texture_with_discard_and_movement	driver_lession_07_texture_with_discard_and_movement.extended_render_driver		driver_lession\lession_07_texture_with_discard_and_movement\render.list
-/*	render_31	*/	lession_08_display_point						driver_lession_08_display_point.extended_render_driver							driver_lession\lession_08_display_point\render.list
-/*	render_32	*/	lession_09_display_many_points					driver_lession_09_display_many_points.extended_render_driver					driver_lession\lession_09_display_many_points\render.list
-/*	render_33	*/	lession_10_pickup_component						driver_lession_10_pickup_component.extended_render_driver						driver_lession\lession_10_pickup_component\render.list
-/*	render_34	*/	lession_11_canvas_texture						driver_lession_11_canvas_texture.extended_render_driver							driver_lession\lession_11_canvas_texture\render.list
-/*	render_35	*/	lession_12_video_texture						driver_lession_12_video_texture.extended_render_driver							driver_lession\lession_12_video_texture\render.list
-/*	render_36	*/	lession_13_camera_texture						driver_lession_13_camera_texture.extended_render_driver							driver_lession\lession_13_camera_texture\render.list
-/*	render_37	*/	lession_14_material_and_display_face_edge_point	driver_lession_14_material_and_display_face_edge_point.extended_render_driver	driver_lession\lession_14_material_and_display_face_edge_point\render.list
-/*	render_38	*/	lession_15_clip									driver_lession_15_clip.extended_render_driver									driver_lession\lession_15_clip\render.list
-/*	render_39	*/	lession_16_heightmap							driver_lession_16_heightmap.extended_render_driver								driver_lession\lession_16_heightmap\render.list
-/*	render_40	*/	lession_17_environment_mapping_texture			driver_lession_17_environment_mapping_texture.extended_render_driver			driver_lession\lession_17_environment_mapping_texture\render.list
-/*	render_41	*/	lession_18_dynamic_environment_mapping_texture	driver_lession_18_dynamic_environment_mapping_texture.extended_render_driver	driver_lession\lession_18_dynamic_environment_mapping_texture\render.list
-/*	render_42	*/	lession_19_caculate_color						driver_lession_19_caculate_color.extended_render_driver							driver_lession\lession_19_caculate_color\render.list
-
-/*	########################	driver_project		#######################		*/
-/*	render_43	*/	territory										driver_territory.extended_render_driver					..\project\part\territory\render.list
-/*	render_44	*/	water											driver_water.extended_render_driver						..\project\part\water\render.list
+/*	render_20	*/	lession_01_modify_location_at_server			driver_lession_01_modify_location_at_server.extended_render_driver				driver_lession\lession_01_modify_location_at_server\render.list
+/*	render_21	*/	lession_02_modify_location_at_client			driver_lession_02_modify_location_at_client.extended_render_driver				driver_lession\lession_02_modify_location_at_client\render.list	
+/*	render_22	*/	lession_03_texture								driver_lession_03_texture.extended_render_driver								driver_lession\lession_03_texture\render.list	
+/*	render_23	*/	lession_04_texture_with_discard					driver_lession_04_texture_with_discard.extended_render_driver					driver_lession\lession_04_texture_with_discard\render.list		
+/*	render_24	*/	lession_05_create_grid							driver_lession_05_create_grid.extended_render_driver							driver_lession\lession_05_create_grid\render.list	
+/*	render_25	*/	lession_06_create_grid_with_movement			driver_lession_06_create_grid_with_movement.extended_render_driver				driver_lession\lession_06_create_grid_with_movement\render.list	
+/*	render_26	*/	lession_07_texture_with_discard_and_movement	driver_lession_07_texture_with_discard_and_movement.extended_render_driver		driver_lession\lession_07_texture_with_discard_and_movement\render.list
+/*	render_27	*/	lession_08_display_point						driver_lession_08_display_point.extended_render_driver							driver_lession\lession_08_display_point\render.list
+/*	render_28	*/	lession_09_display_many_points					driver_lession_09_display_many_points.extended_render_driver					driver_lession\lession_09_display_many_points\render.list
+/*	render_29	*/	lession_10_pickup_component						driver_lession_10_pickup_component.extended_render_driver						driver_lession\lession_10_pickup_component\render.list
+/*	render_30	*/	lession_11_canvas_texture						driver_lession_11_canvas_texture.extended_render_driver							driver_lession\lession_11_canvas_texture\render.list
+/*	render_31	*/	lession_12_video_texture						driver_lession_12_video_texture.extended_render_driver							driver_lession\lession_12_video_texture\render.list
+/*	render_32	*/	lession_13_camera_texture						driver_lession_13_camera_texture.extended_render_driver							driver_lession\lession_13_camera_texture\render.list
+/*	render_33	*/	lession_14_material_and_display_face_edge_point	driver_lession_14_material_and_display_face_edge_point.extended_render_driver	driver_lession\lession_14_material_and_display_face_edge_point\render.list
+/*	render_34	*/	lession_15_clip									driver_lession_15_clip.extended_render_driver									driver_lession\lession_15_clip\render.list
+/*	render_35	*/	lession_16_heightmap							driver_lession_16_heightmap.extended_render_driver								driver_lession\lession_16_heightmap\render.list
+/*	render_36	*/	lession_17_environment_mapping_texture			driver_lession_17_environment_mapping_texture.extended_render_driver			driver_lession\lession_17_environment_mapping_texture\render.list
+/*	render_37	*/	lession_18_dynamic_environment_mapping_texture	driver_lession_18_dynamic_environment_mapping_texture.extended_render_driver	driver_lession\lession_18_dynamic_environment_mapping_texture\render.list
+/*	render_38	*/	lession_19_caculate_color						driver_lession_19_caculate_color.extended_render_driver							driver_lession\lession_19_caculate_color\render.list
 
 */
-						

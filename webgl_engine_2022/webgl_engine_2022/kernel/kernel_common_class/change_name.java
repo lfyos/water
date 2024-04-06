@@ -27,10 +27,6 @@ public class change_name extends sorter<String[],String>
 			ret_val[i]=data_array[i][1];
 		return ret_val;
 	}
-	public int search(String my_search_name)
-	{
-		return super.search(my_search_name);
-	}
 	public String get_search_result(int search_id,String fail_result)
 	{	
 		return ((search_id>=0)&&(search_id<data_array.length))?(data_array[search_id][1]):fail_result;

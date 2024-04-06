@@ -105,6 +105,9 @@ public class part_package
 					package_number++;
 					my_package_length=0;
 				}
+				
+				if(my_package_length>0)
+					package_number++;
 
 				part_package=new part_arraylist[package_number];
 				for(int i=0;i<package_number;i++)

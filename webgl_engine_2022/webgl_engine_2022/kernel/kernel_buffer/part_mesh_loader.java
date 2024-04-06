@@ -69,6 +69,12 @@ public class part_mesh_loader
 	}
 	public boolean load_test(part_process_sequence pps,part p)
 	{
+		if((p.part_type_id<0)||(p.part_package_id<0)||(p.part_package_sequence_id<0))
+			return false;
+		if(p.part_type_id>=package_loaded_flag.length)
+			return false;
+		if(p.part_package_id>=package_loaded_flag[p.part_type_id].length)
+			return false;
 		if(package_loaded_flag[p.part_type_id][p.part_package_id])
 			return false;
 		

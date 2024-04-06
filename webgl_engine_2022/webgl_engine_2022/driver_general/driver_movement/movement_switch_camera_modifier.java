@@ -222,12 +222,10 @@ public class movement_switch_camera_modifier extends modifier_driver
 		cc.description=information_string;	
 		cc.audio_file_name=sound_file_name;
 		
-		if(sound_file_name==null)
-			return;
-		driver_audio_player.extended_component_driver acd=get_acd(ek);
-		if(acd==null)
-			return;
-		acd.set_audio(sound_file_name);
+		driver_audio_player.extended_component_driver acd;
+		if((acd=get_acd(ek))!=null)
+			if(sound_file_name!=null)
+				acd.set_audio(sound_file_name);
 	}
 	public void modify(long my_current_time,engine_kernel ek,client_information ci)
 	{

@@ -175,7 +175,7 @@ public class common_reader
 			}
 		}
 	}
-	public void insert_string(String str_array[])
+	public void push_string_array(String str_array[])
 	{
 		for(int i=str_array.length-1;i>=0;i--)
 			queue_string=new string_link_list(str_array[i],queue_string);

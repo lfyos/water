@@ -1,3 +1,0 @@
-
-part_87			八七式铁路军用梁杆件			assemble/part/single_part/assemble.txt		0	0	parameter.part.txt	parameter.zyx.txt
-
