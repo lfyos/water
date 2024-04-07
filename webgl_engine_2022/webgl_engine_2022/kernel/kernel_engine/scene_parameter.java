@@ -10,7 +10,7 @@ import kernel_network.client_request_response;
 
 public class scene_parameter 
 {
-	public String change_part_string,change_component_string,part_type_string;
+	public String change_part_string,part_type_string;
 	
 	public String type_sub_directory,scene_sub_directory;
 
@@ -136,11 +136,9 @@ public class scene_parameter
 			change_part_string="";
 		else
 			change_part_string=change_part_string.trim();
-
-		if((change_component_string=request_response.get_parameter("change_component"))==null)
-			change_component_string="";
-		else
-			change_component_string=change_component_string.trim();
+		
+		String change_component_string=request_response.get_parameter("change_component");
+		change_component_string=(change_component_string==null)?"":change_component_string.trim();
 
 		if((part_type_string=request_response.get_parameter("part_type"))==null)
 			part_type_string="";

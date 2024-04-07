@@ -1,4 +1,0 @@
-
-part_83			八三式铁路轻型军用桥墩杆件		assemble/part/assemble.txt		0	0	parameter.part.txt		parameter.yzx.txt
-
-

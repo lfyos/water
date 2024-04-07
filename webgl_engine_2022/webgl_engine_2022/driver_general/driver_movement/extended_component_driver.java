@@ -72,6 +72,7 @@ public class extended_component_driver  extends component_driver
 						mouse_modify_location_component_name,virtual_mount_root_component_name),
 				move_channel_id);
 		debug_information.println("End loading movement information\t",movement_directory_name+design_file_name);
+
 		return;
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,

@@ -10,7 +10,6 @@ public class scene_parameter_information extends jason_creator
 	public void print()
 	{
 		print("change_part_string",							sp.change_part_string);
-		print("change_component_string",					sp.change_component_string);
 		print("part_type_string",							sp.part_type_string);
 		
 		print("directory_name",								sp.directory_name);

@@ -5,6 +5,6 @@ mouse_modify_location_part
 	part\part.description
 	part\part.mp3
 	
-	/*	mark_component_name						*/	component_marker_component
-	/*	movement_component_name					*/	movement_manager
-	/*	movement_abstract_menu_component_name	*/	组件拼装拼装提取组件
+	/*	mark_component_name						*/		component_marker_component
+	/*	movement_component_name					*/		movement_manager
+	/*	movement_abstract_menu_component_name	*/		组件拼装拼装提取组件

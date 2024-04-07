@@ -24,7 +24,7 @@ public class extended_part_instance_driver extends part_instance_driver
 	}
 	public String[] response_part_event(part p,engine_kernel ek,client_information ci)
 	{			
-		String directory_name,file_name,path_name_1;
+		String file_name,path_name_1,path_name_2,path_name_3;
 		if((file_name=ci.request_response.get_parameter("file"))==null)
 			return null;
 		String request_charset=ci.request_response.implementor.get_request_charset();
@@ -35,17 +35,23 @@ public class extended_part_instance_driver extends part_instance_driver
 			return null;
 		}
 		file_name=file_reader.separator(file_name);
-		directory_name=new File(p.directory_name+p.material_file_name).getParent();
-		path_name_1=file_reader.separator(directory_name)+File.separator+file_name;
+		
+		path_name_1=new File(p.directory_name+p.material_file_name).getParent();
+		path_name_1=file_reader.separator(path_name_1)+File.separator+file_name;
 		if(new File(path_name_1).exists())
 			return new String[]{path_name_1,p.file_charset};
 		
-		String path_name_2=ek.system_par.temporary_file_par.temporary_root_directory_name+file_name;
+		path_name_2=ek.system_par.temporary_file_par.temporary_root_directory_name+file_name;
 		if(new File(path_name_2).exists())
 			return new String[]{path_name_2,p.file_charset};
 		
+		path_name_3=ek.system_par.temporary_file_par.root_directory_name+file_name;
+		if(new File(path_name_3).exists())
+			return new String[]{path_name_3,p.file_charset};
+		
 		debug_information.println("File 1 does NOT exist :	",path_name_1);
 		debug_information.println("File 2 does NOT exist :	",path_name_2);
+		debug_information.println("File 3 does NOT exist :	",path_name_3);
 		
 		return null;
 	}

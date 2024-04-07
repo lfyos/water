@@ -290,8 +290,6 @@ public class component_core_4 extends component_core_3
 					str=ccp.ek.scene_par.part_type_string;
 				else if((str=str.trim()).length()<=0)
 					str=ccp.ek.scene_par.part_type_string;
-				else if(str.charAt(0)==';')
-					str=ccp.ek.scene_par.part_type_string+str;
 				else
 					str=ccp.ek.scene_par.part_type_string+";"+str;
 				ccp.push_part_type_string_sorter(
@@ -312,8 +310,6 @@ public class component_core_4 extends component_core_3
 					str=ccp.ek.scene_par.change_part_string;
 				else if((str=str.trim()).length()<=0)
 					str=ccp.ek.scene_par.change_part_string;
-				else if(str.charAt(0)==';')
-					str=ccp.ek.scene_par.change_part_string+str;
 				else
 					str=ccp.ek.scene_par.change_part_string+";"+str;
 				
@@ -415,6 +411,31 @@ public class component_core_4 extends component_core_3
 				
 				fr.get_string();
 				continue;
+			case "client_select_mount":
+			{
+				String select_token=fr.get_string();
+				String select_file_name=fr.get_string();
+				String assemble_file_name=fr.get_string();
+				if((select_token==null)||(select_file_name==null)||(assemble_file_name==null))
+					continue;
+				if((select_token=ccp.ek.scene_par.client_parameter_name.search_change_name(select_token,null))==null)
+					continue;
+				select_file_name=file_reader.separator(select_file_name.trim());
+				file_reader f_select=new file_reader(fr.directory_name+select_file_name,fr.get_charset());
+				for(assemble_file_name_array=null;!(f_select.eof());){
+					String my_select_token=f_select.get_string();
+					String my_select_directory_name=f_select.get_string();	
+					if((my_select_token!=null)&&(my_select_directory_name!=null))
+						if(select_token.compareTo(my_select_token)==0){
+							fr.push_string_array(new String[]
+								{fr.directory_name+my_select_directory_name+assemble_file_name});
+							assemble_file_name_array=file_mount(fr,ccp.ek,true);
+							break;
+						}
+				}
+				f_select.close();
+				break;
+			}
 			case "environment_type_sub_directory_mount":
 				if((str=fr.get_string())!=null) 
 					if((str=System.getenv(str))!=null) 

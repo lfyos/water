@@ -98,7 +98,6 @@ public class part_rude
 	}
 	public part_rude(file_reader fr)
 	{
-		
 		String default_value="0";
 		
 		String version_string=fr.get_string();	//version code
@@ -134,7 +133,6 @@ public class part_rude
 			if((default_attribute_string[j]=fr.get_string())==null)
 				default_attribute_string[j]="1";
 		}
-			
 		if(version_string.compareTo("simple")==0) {
 			body_array=null;
 			fr.mark_start();

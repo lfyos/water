@@ -1,1 +1,0 @@
-part_65			六五式铁路军用桥墩杆件			assemble/part/assemble.txt		0	0	parameter.part.txt		parameter.yzx.txt

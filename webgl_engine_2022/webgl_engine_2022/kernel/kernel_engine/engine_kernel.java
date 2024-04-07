@@ -326,7 +326,6 @@ public class engine_kernel
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		
-	
 		start_time=current_time;
 		process_bar.set_process_bar(true,"load_component", "",1, 2);
 		component_cont=new component_container(scene_f,this,
@@ -401,7 +400,6 @@ public class engine_kernel
 		debug_information.println("camera_file_name		:	",				scene_par.camera_file_name);
 		
 		debug_information.println("change_part_string		:	",			scene_par.change_part_string);
-		debug_information.println("change_component_string		:	",		scene_par.change_component_string);
 		debug_information.println("part_type_string		:	",				scene_par.part_type_string);
 		
 		try {

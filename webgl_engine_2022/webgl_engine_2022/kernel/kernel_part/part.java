@@ -10,9 +10,6 @@ import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_common_class.jason_string;
 import kernel_file_manager.file_directory;
-
-import java.io.File;
-
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 
@@ -157,22 +154,19 @@ public class part
 			p_i=new primitive_from_box(part_mesh.body_array);
 		return p_i;
 	}
-	public void call_part_driver_for_load_part_mesh()
+	public void load_part_mesh()
 	{
 		debug_information.println("Load part:	user name:"+user_name,
 				"	system name:"+system_name+"	mesh file:"		+directory_name+mesh_file_name);
-		if(!(is_normal_part()))
-			return;
-
-		String my_file_path=file_reader.separator(directory_name+mesh_file_name);
-		if(!(new File(my_file_path).exists())) {
+		if(is_normal_part()){
+			if(part_mesh!=null)
+				part_mesh.destroy();
 			part_mesh=null;
-			return;
+			String my_file_path=file_reader.separator(directory_name+mesh_file_name);
+			file_reader fr=new file_reader(my_file_path,file_charset);
+			part_mesh=new part_rude(fr);
+			fr.close();
 		}
-		file_reader fr=new file_reader(my_file_path,file_charset);
-		part_mesh=new part_rude(fr);
-		fr.close();
-		return;
 	}
 	private String create_mesh_and_material_routine(
 			String part_temporary_file_directory,
@@ -306,7 +300,7 @@ public class part
 		file_writer.file_delete(part_temporary_file_directory);
 		file_writer.make_directory(part_temporary_file_directory);
 		
-		call_part_driver_for_load_part_mesh();
+		load_part_mesh();
 		
 		str+=create_mesh_and_material_routine(part_temporary_file_directory,system_par,scene_par);
 	
