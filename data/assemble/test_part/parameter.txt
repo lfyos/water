@@ -1,16 +1,5 @@
-/*	type_shader_file_name		*/		type_shaders.txt
-										environment_type_sub_directory		liufuyan_scene_directory_configure
-
-/*	scene_shader_file_name		*/		scene_shaders.txt
-										environment_scene_sub_directory		liufuyan_scene_directory_configure
-
-/*	camera_file_name			*/	
-										orthongraphics/camera.txt
-									//	perspective/camera.txt	
-									
-/*	change_component_file_name	*/		change_component.txt
-										environment_scene_sub_directory		liufuyan_scene_directory_configure
-
-										
-/*	client_parameter_name		*/		client_sub_directory		
-										
+/*	type_shader_file_name		*/	type_shaders.txt				environment_directory	liufuyan_scene_directory_configure
+/*	scene_shader_file_name		*/	scene_shaders.txt				environment_directory	liufuyan_scene_directory_configure
+/*	change_component_file_name	*/	change_component.txt			environment_directory	liufuyan_scene_directory_configure
+/*	camera_file_name			*/	orthongraphics/camera.txt	//	perspective/camera.txt
+/*	client_parameter_name		*/	client_sub_directory
