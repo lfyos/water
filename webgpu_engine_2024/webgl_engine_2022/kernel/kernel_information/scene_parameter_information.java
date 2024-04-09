@@ -21,9 +21,7 @@ public class scene_parameter_information extends jason_creator
 		
 		print("scene_temporary_directory_name",				sp.scene_temporary_directory_name);
 		
-		print("type_shader_directory_name","");
-		for(int i=0,ni=sp.type_shader_directory_name.length;i<ni;i++)
-			print("		"+i+"		",sp.type_shader_directory_name[i]);
+		print("type_shader_directory_name",					sp.type_shader_directory_name);
 		
 		print("type_shader_file_name",						sp.type_shader_file_name);
 		print("scene_shader_directory_name",				sp.scene_shader_directory_name);

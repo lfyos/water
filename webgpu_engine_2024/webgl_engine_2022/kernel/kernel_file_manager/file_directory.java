@@ -29,7 +29,8 @@ public class file_directory
 			else{
 				debug_information.println(
 						"Find error part_type_id in part_file_directory	:	",p.part_type_id);
-				part_directory+="error_directory_"+p.part_type_id+File.separatorChar;
+				part_directory+="error_directory_"+p.part_type_id
+						+"_"+scene_par.type_sub_directory.length+File.separatorChar;
 			}
 			break;
 		}
@@ -64,12 +65,13 @@ public class file_directory
 		default:
 			package_directory=system_par.temporary_file_par.temporary_root_directory_name;
 			package_directory+="type_package_directory"+File.separatorChar;
+			
 			if(((part_type_id-2)>=0)&&((part_type_id-2)<scene_par.type_sub_directory.length))
 				package_directory+=scene_par.type_sub_directory[part_type_id-2];
 			else{
-				debug_information.println(
-						"Find error part_type_id in package_file_directory	:	",part_type_id);
-				package_directory+="error_package_directory"+part_type_id+File.separatorChar;
+				package_directory+="error_package_directory_"+part_type_id;
+				package_directory+="_"+scene_par.type_sub_directory.length;
+				package_directory+=File.separatorChar;
 			}
 			break;
 		}

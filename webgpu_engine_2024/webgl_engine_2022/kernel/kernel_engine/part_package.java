@@ -136,7 +136,8 @@ public class part_package
 		package_last_time=new long	 [package_number];
 		package_file_name=new String [package_number];
 				
-		String package_directory_name=file_directory.package_file_directory(part_type_id,system_par,scene_par);
+		String package_directory_name=file_directory.package_file_directory(
+					part_type_id,system_par,scene_par);
 		String package_data_file_name=package_directory_name+"package_data.txt";
 		String boftal_data_file_name =package_directory_name+"boftal_data.txt";
 		
