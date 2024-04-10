@@ -236,8 +236,10 @@ public class engine_initialization
 					if((f=new File(real_file_name=ek.scene_par.scene_shader_directory_name+my_program_and_charset[0])).exists())
 						break;
 					f=null;
-					for(int k=0,nk=ek.scene_par.type_shader_directory_name.length;k<nk;k++) {
-						real_file_name=ek.scene_par.type_shader_directory_name[k]+my_program_and_charset[0];
+					for(int k=0,nk=ek.scene_par.type_sub_directory.length;k<nk;k++) {
+						real_file_name =ek.scene_par.type_shader_directory_name;
+						real_file_name+=ek.scene_par.type_sub_directory[k];
+						real_file_name+=my_program_and_charset[0];
 						if((f=new File(real_file_name)).exists())
 							break;
 						f=null;

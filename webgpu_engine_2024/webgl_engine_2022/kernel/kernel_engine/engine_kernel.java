@@ -240,8 +240,8 @@ public class engine_kernel
 		ArrayList<buffer_object_file_modify_time_and_length_container> type_boftal_container_list;
 		type_boftal_container_list=new ArrayList<buffer_object_file_modify_time_and_length_container>();
 		for(int i=0,ni=scene_par.type_sub_directory.length;i<ni;i++) {
-			String type_file_name=file_directory.package_file_directory(i+2,system_par,scene_par)+"boftal_data.txt";
-			if((f=new File(type_file_name)).exists())
+			String type_file_name=file_directory.package_file_directory(i+2,system_par,scene_par);
+			if((f=new File(type_file_name+="boftal_data.txt")).exists())
 				if(f.length()>0)
 					type_boftal_container_list.add(
 						new buffer_object_file_modify_time_and_length_container(
@@ -286,26 +286,25 @@ public class engine_kernel
 				scene_par.scene_shader_directory_name	=scene_f.directory_name;
 		}
 		
-		debug_information.println("type_shader_directory_name:");
-		for(int i=0,ni=scene_par.type_shader_directory_name.length;i<ni;i++)
-			debug_information.println("			",i+"	"+scene_par.type_shader_directory_name[i]);
+		debug_information.println("type_shader_directory_name:",scene_par.type_shader_directory_name);
 		
 		debug_information.println("type_shader_file_name 		:	",	scene_par.type_shader_file_name);
 		debug_information.println("scene_shader_directory_name	:	",	scene_par.scene_shader_directory_name);	
 		debug_information.println("scene_shader_file_name		:	",	scene_par.scene_shader_file_name);	
 		
-		permanent_part_id_encoder encoder[]	=new permanent_part_id_encoder[] 
-		{
-			null,new permanent_part_id_encoder(),new permanent_part_id_encoder()
-		};
+		permanent_part_id_encoder encoder[]	=new permanent_part_id_encoder[scene_par.type_sub_directory.length+2];
+		encoder[0]=null;
+		for(int i=1,ni=encoder.length;i<ni;i++)
+			encoder[i]=new permanent_part_id_encoder();
 		
 		render_cont=new render_container(render_cont,request_response,system_par,scene_par);
 		part_cont=new part_container_for_part_search(render_cont.part_array_list(-1));
 
-		for(int i=0,ni=scene_par.type_shader_directory_name.length;i<ni;i++)
+		for(int i=0,ni=scene_par.type_sub_directory.length;i<ni;i++)
 			render_cont.load_shader(
 				component_load_source_cont,part_cont,scene_par.parameter_last_modified_time,
-				scene_par.type_shader_directory_name[i]+scene_par.type_shader_file_name,
+				scene_par.type_shader_directory_name
+					+scene_par.type_sub_directory[i]+scene_par.type_shader_file_name,
 				scene_par.parameter_charset,i+2,system_par,scene_par,encoder,request_response);
 		render_cont.load_shader(
 				component_load_source_cont,part_cont,scene_par.scene_last_modified_time,
@@ -319,9 +318,13 @@ public class engine_kernel
 		
 		ArrayList<part> part_list_for_delete_file=new ArrayList<part>();
 		
+		long part_type_code=0;
+		for(int i=0,ni=scene_par.type_sub_directory.length;i<ni;i++)
+			part_type_code|=((long)1)<<(2+i);
+		
 		start_time=current_time;
-		render_cont.load_part((1<<1)+(1<<2),1,part_loader_cont,system_par,scene_par,
-				boftal_container,"load_first_class_part",process_bar,part_list_for_delete_file);
+		render_cont.load_part(part_type_code,1,part_loader_cont,system_par,scene_par,
+				boftal_container,part_list_for_delete_file,process_bar,"load_first_class_part");
 		debug_information.println("Load first class part time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 
@@ -329,15 +332,15 @@ public class engine_kernel
 		render_cont.create_bottom_box_part(part_cont,request_response,encoder,system_par,scene_par);
 		part_cont.execute_append();
 		
-		render_cont.load_part((1<<1)+(1<<2),2,part_loader_cont,system_par,scene_par,
-				boftal_container,"load_second_class_part",process_bar,part_list_for_delete_file);
+		render_cont.load_part(part_type_code,2,part_loader_cont,system_par,scene_par,
+				boftal_container,part_list_for_delete_file,process_bar,"load_second_class_part");
 		debug_information.println("Load second class part time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 
 		start_time=current_time;
 		
-		render_cont.type_part_package=new part_package[scene_par.type_sub_directory.length];
+		render_cont.type_part_package=new part_package[scene_par.type_sub_directory.length+2];
 		for(int i=0,ni=render_cont.type_part_package.length;i<ni;i++)
 			render_cont.type_part_package[i]=new part_package(process_bar,
 				"create_first_class_package","create_first_boftal_file",render_cont,i+2,system_par,scene_par);
@@ -363,8 +366,8 @@ public class engine_kernel
 				part_list_for_delete_file,part_cont,encoder,boftal_container);	
 		part_cont.execute_append();
 		render_cont.load_part(
-				(1<<2),4,part_loader_cont,system_par,scene_par,
-				boftal_container,"load_third_class_part",process_bar,part_list_for_delete_file);
+				part_type_code,4,part_loader_cont,system_par,scene_par,
+				boftal_container,part_list_for_delete_file,process_bar,"load_third_class_part");
 		debug_information.println("Create top assemble time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		start_time=current_time;

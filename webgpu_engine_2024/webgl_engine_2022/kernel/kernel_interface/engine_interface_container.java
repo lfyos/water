@@ -58,7 +58,7 @@ public class engine_interface_container
 	private void load_render_container(client_request_response request_response,system_parameter system_par)
 	{
 		int part_type_id=0;
-		permanent_part_id_encoder encoder[]=new permanent_part_id_encoder[] {new permanent_part_id_encoder(),null,null};
+		permanent_part_id_encoder encoder[]=new permanent_part_id_encoder[] {new permanent_part_id_encoder()};
 		ArrayList<part> part_list_for_delete_file=new ArrayList<part>();
 		original_render=new render_container();
 		part_container_for_part_search pcps=new part_container_for_part_search(new ArrayList<part>());
@@ -67,13 +67,13 @@ public class engine_interface_container
 			system_par.data_root_directory_name+system_par.shader_file_name,
 			system_par.local_data_charset,part_type_id,system_par,null,encoder,request_response);
 		pcps.execute_append();
-		original_render.load_part(1<<part_type_id,1,part_loader_cont,
-				system_par,null,null,null,null,part_list_for_delete_file);
+		original_render.load_part(((long)1)<<part_type_id,1,part_loader_cont,
+				system_par,null,null,part_list_for_delete_file,null,null);
 		
 		original_render.create_bottom_box_part(pcps,request_response,encoder,system_par,null);
 		pcps.execute_append();
-		original_render.load_part(1<<part_type_id,2,part_loader_cont,
-				system_par,null,null,null,null,part_list_for_delete_file);
+		original_render.load_part(((long)1)<<part_type_id,2,part_loader_cont,
+				system_par,null,null,part_list_for_delete_file,null,null);
 		
 		debug_information.println("Begin create system_part_package");
 		original_render.system_part_package=new part_package(null,null,null,

@@ -3,6 +3,7 @@ package kernel_engine;
 import java.io.File;
 import java.util.ArrayList;
 
+import kernel_common_class.cut_string;
 import kernel_common_class.change_name;
 import kernel_common_class.debug_information;
 import kernel_file_manager.file_reader;
@@ -18,7 +19,7 @@ public class scene_parameter
 	public long parameter_last_modified_time,scene_last_modified_time;
 	
 	public String scene_temporary_directory_name;
-	public String type_shader_directory_name[],type_shader_file_name;
+	public String type_shader_directory_name,type_shader_file_name;
 	
 	public String scene_shader_directory_name,scene_shader_file_name;
 	public String camera_file_name;
@@ -96,6 +97,60 @@ public class scene_parameter
 			file_reader.separator(path_file_name)
 		};
 	}
+	
+	private void get_type_sub_directory(client_request_response request_response)
+	{
+		String my_str,str;
+		if((str=request_response.get_parameter("type_sub_directory"))==null) {
+			type_sub_directory=new String[] {};
+			return;
+		}
+		ArrayList<String> list=new ArrayList<String>();
+		for(int index_id;((str=str.trim()).length()>0);){
+			if((index_id=str.indexOf(';'))==0){
+				str=str.substring(1);
+				continue;
+			}
+			if(index_id<0){
+				my_str=str;
+				str="";
+			}else {	
+				my_str=str.substring(0,index_id);
+				str=str.substring(index_id+1);
+			}
+			if((my_str=cut_string.do_cut(my_str)).length()<=0)
+				continue;
+			my_str+=File.separator;
+			for(int j=0,nj=list.size();j<nj;j++)
+				if(list.get(j).compareTo(my_str)==0) {
+					my_str=null;
+					break;
+				}
+			if(my_str!=null)
+				list.add(my_str);
+		}
+		type_sub_directory=list.toArray(new String[list.size()]);
+	}
+	private void get_client_parameter_name(
+		file_reader parameter_fr,client_request_response request_response)
+	{
+		ArrayList<String[]> my_client_parameter_name=new ArrayList<String[]>();
+		for(String parameter_name,parameter_value;!(parameter_fr.eof());) {
+			if((parameter_name=parameter_fr.get_string())==null)
+				continue;
+			if((parameter_name=cut_string.do_cut(parameter_name)).length()<=0)
+				continue;
+			if((parameter_value=request_response.get_parameter(parameter_name))==null)
+				continue;
+			if((parameter_value=cut_string.do_cut(parameter_value)).length()<=0)
+				continue;
+			my_client_parameter_name.add(new String[]{parameter_name,parameter_value});
+		}
+		client_parameter_name=new change_name();
+		client_parameter_name.data_array=my_client_parameter_name.toArray(
+				new String[my_client_parameter_name.size()][]);
+		client_parameter_name.do_sort();
+	}
 	public scene_parameter(client_request_response request_response,
 			system_parameter system_par,engine_kernel_create_parameter ekcp)
 	{
@@ -114,30 +169,7 @@ public class scene_parameter
 		else
 			part_type_string=part_type_string.trim();
 		
-		if((str=request_response.get_parameter("type_sub_directory"))==null) 
-			type_sub_directory=new String[] {};
-		else{
-			String my_str;
-			ArrayList<String> list=new ArrayList<String>();
-			for(int index_id;((str=str.trim()).length()>0);){
-				if((index_id=str.indexOf(';'))==0){
-					str=str.substring(1);
-					continue;
-				}else if(index_id<0) {
-					my_str=str;
-					str="";
-				}else {	
-					my_str=str.substring(0,index_id);
-					str=str.substring(index_id+1);
-				}
-				if((my_str=my_str.trim()).length()>0) {
-					if(my_str.charAt(my_str.length()-1)!=File.separatorChar)
-						my_str+=File.separator;
-					list.add(my_str);
-				}
-			}
-			type_sub_directory=list.toArray(new String[list.size()]);
-		}
+		get_type_sub_directory(request_response);
 		
 		if((scene_sub_directory=request_response.get_parameter("scene_sub_directory"))==null)
 			scene_sub_directory="";
@@ -169,11 +201,9 @@ public class scene_parameter
 		scene_last_modified_time=parameter_last_modified_time;
 
 		String gdnafa[]=get_directory_name_and_file_name(parameter_fr);
+		type_shader_directory_name	=gdnafa[0];
 		type_shader_file_name		=gdnafa[1];
-		type_shader_directory_name	=new String[type_sub_directory.length];
-		for(int i=0,ni=type_shader_directory_name.length;i<ni;i++) 
-			type_shader_directory_name[i]=gdnafa[0]+type_sub_directory[i];
-		
+
 		gdnafa=get_directory_name_and_file_name(parameter_fr);
 		scene_shader_directory_name	=gdnafa[0];
 		scene_shader_file_name		=scene_sub_directory+gdnafa[1];
@@ -188,22 +218,7 @@ public class scene_parameter
 		else
 			camera_file_name=file_reader.separator(camera_file_name);
 		
-		ArrayList<String[]> my_client_parameter_name=new ArrayList<String[]>();
-		for(String parameter_name,parameter_value;!(parameter_fr.eof());) {
-			if((parameter_name=parameter_fr.get_string())==null)
-				continue;
-			if((parameter_name=parameter_name.trim()).length()<=0)
-				continue;
-			if((parameter_value=request_response.get_parameter(parameter_name))==null)
-				continue;
-			if((parameter_value=parameter_value.trim()).length()<=0)
-				continue;
-			my_client_parameter_name.add(new String[]{parameter_name,parameter_value});
-		}
-		client_parameter_name=new change_name();
-		client_parameter_name.data_array=my_client_parameter_name.toArray(
-				new String[my_client_parameter_name.size()][]);
-		client_parameter_name.do_sort();
+		get_client_parameter_name(parameter_fr,request_response);
 		
 		scene_temporary_directory_name=system_par.temporary_file_par.temporary_root_directory_name;
 		scene_temporary_directory_name+="scene_directory"+File.separator;
@@ -236,10 +251,8 @@ public class scene_parameter
 			scene_temporary_directory_name+=str_array[i];
 		}
 		for(int i=0,ni=client_parameter_name.get_number();i<ni;i++) {
-			str=client_parameter_name.data_array[i][1];
-			if(str.charAt(str.length()-1)!=File.separatorChar)
-				str+=File.separatorChar;
-			str=client_parameter_name.data_array[i][0]+"_"+str;
+			str =client_parameter_name.data_array[i][0]+File.separatorChar;
+			str+=client_parameter_name.data_array[i][1]+File.separatorChar;
 			scene_temporary_directory_name+=file_reader.separator(str);
 		}
 		parameter_fr.close();

@@ -107,12 +107,12 @@ public class render_container
 		return p;
 	}
 	public void load_part(
-			int part_type,int part_normal_bottom_box_top_box_flag,
+			long part_type,int part_normal_bottom_box_top_box_flag,
 			part_loader_container part_loader_cont,
 			system_parameter system_par,scene_parameter scene_par,
 			buffer_object_file_modify_time_and_length_container boftal_container,
-			String process_bar_title,client_process_bar process_bar,
-			ArrayList<part> part_list_for_delete_file)
+			ArrayList<part> part_list_for_delete_file,
+			client_process_bar process_bar,String process_bar_title)
 	{
 		if(renders==null)
 			return;
@@ -133,7 +133,7 @@ public class render_container
 			for(int j=0,part_number=r.parts.size();j<part_number;j++) {
 				if((p=r.parts.get(j))==null)
 					continue;
-				if(((1<<p.part_type_id)&part_type)==0)
+				if(((((long)1)<<p.part_type_id)&part_type)==0)
 					continue;
 				int my_part_flag=0;
 				my_part_flag+=p.is_normal_part()	?1:0;
@@ -157,7 +157,7 @@ public class render_container
 			for(int j=0,part_number=r.parts.size();j<part_number;j++) {
 				if((p=r.parts.get(j))==null)
 					continue;
-				if(((1<<p.part_type_id)&part_type)==0)
+				if(((((long)1)<<p.part_type_id)&part_type)==0)
 					continue;
 				int my_part_flag=0;
 				my_part_flag+=p.is_normal_part()	?1:0;
@@ -170,7 +170,8 @@ public class render_container
 						part_list_for_delete_file,already_loaded_part,boftal_container);
 							
 				if(process_bar!=null)
-					process_bar.set_process_bar(false,process_bar_title,"",load_number++,(all_number<1)?1:all_number);
+					process_bar.set_process_bar(false,
+							process_bar_title,"",load_number++,(all_number<1)?1:all_number);
 			}
 		}
 		
