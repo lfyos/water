@@ -76,8 +76,8 @@ public class engine_interface_container
 				system_par,null,null,part_list_for_delete_file,null,null);
 		
 		debug_information.println("Begin create system_part_package");
-		original_render.system_part_package=new part_package(null,null,null,
-				original_render,part_type_id,system_par,null);
+		original_render.system_part_package=new part_package(
+				null,null,null,original_render,part_type_id,system_par,null);
 		
 		system_boftal_container=new buffer_object_file_modify_time_and_length_container(null,
 				file_directory.package_file_directory(0,system_par,null)+"boftal_data.txt",

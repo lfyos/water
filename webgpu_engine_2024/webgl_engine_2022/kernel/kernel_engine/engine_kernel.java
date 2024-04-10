@@ -250,7 +250,8 @@ public class engine_kernel
 		
 		buffer_object_file_modify_time_and_length_container scene_boftal_container;
 		scene_boftal_container=new buffer_object_file_modify_time_and_length_container();
-		String scene_file_name=file_directory.package_file_directory(1,system_par,scene_par)+"boftal_data.txt";
+		String scene_file_name=file_directory.package_file_directory(
+				1,system_par,scene_par)+"boftal_data.txt";
 		if((f=new File(scene_file_name)).exists())
 			if(f.length()>0)
 				scene_boftal_container=new buffer_object_file_modify_time_and_length_container(
@@ -340,10 +341,11 @@ public class engine_kernel
 
 		start_time=current_time;
 		
-		render_cont.type_part_package=new part_package[scene_par.type_sub_directory.length+2];
+		render_cont.type_part_package=new part_package[scene_par.type_sub_directory.length];
 		for(int i=0,ni=render_cont.type_part_package.length;i<ni;i++)
 			render_cont.type_part_package[i]=new part_package(process_bar,
-				"create_first_class_package","create_first_boftal_file",render_cont,i+2,system_par,scene_par);
+				"create_first_class_package","create_first_boftal_file",
+				render_cont,i+2,system_par,scene_par);
 		debug_information.println("Create first part package time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
