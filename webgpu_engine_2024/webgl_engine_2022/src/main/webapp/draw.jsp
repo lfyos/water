@@ -27,6 +27,7 @@ var lfy_render;
 	out.print  ("my_part_type=\""			+(((str=request.getParameter("part_type"		 ))==null)?""	:str)+"\",");
 	out.print  ("my_type_sub_directory=\""	+(((str=request.getParameter("type_sub_directory"))==null)?""	:str)+"\",");
 	out.print  ("my_scene_sub_directory=\""	+(((str=request.getParameter("scene_sub_directory"))==null)?""	:str)+"\",");
+	out.print  ("my_scene_tmp_directory=\""	+(((str=request.getParameter("scene_tmp_directory"))==null)?""	:str)+"\",");
 	out.print  ("my_client_sub_directory=\""+(((str=request.getParameter("client_sub_directory"))==null)?""	:str)+"\",");
 	out.print  ("my_coordinate=\""			+(((str=request.getParameter("coordinate"		 ))==null)?""	:str)+"\";");
 }
@@ -48,6 +49,7 @@ async function body_onload()
 			part_type				:	my_part_type,				//part类型
 			type_sub_directory		:	my_type_sub_directory,		//显示内容type
 			scene_sub_directory		:	my_scene_sub_directory,		//显示内容scene
+			scene_tmp_directory		:	my_scene_tmp_directory,		//显示内容scene tmp directory
 			client_sub_directory	:	my_client_sub_directory,	//显示内容client
 			
 			coordinate				:	my_coordinate,				//坐标系选择

@@ -320,8 +320,8 @@ public class engine_kernel
 		ArrayList<part> part_list_for_delete_file=new ArrayList<part>();
 		
 		long part_type_code=0;
-		for(int i=0,ni=scene_par.type_sub_directory.length;i<ni;i++)
-			part_type_code|=((long)1)<<(2+i);
+		for(int i=0,ni=scene_par.type_sub_directory.length;i<=ni;i++)
+			part_type_code|=((long)1)<<(1+i);
 		
 		start_time=current_time;
 		render_cont.load_part(part_type_code,1,part_loader_cont,system_par,scene_par,
