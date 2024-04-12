@@ -25,6 +25,7 @@ var lfy_render;
 	out.print  ("var my_change_part=\""		+(((str=request.getParameter("change_part"		 ))==null)?""	:str)+"\",");
 	out.print  ("my_change_component=\""	+(((str=request.getParameter("change_component"	 ))==null)?""	:str)+"\",");
 	out.print  ("my_part_type=\""			+(((str=request.getParameter("part_type"		 ))==null)?""	:str)+"\",");
+	out.print  ("my_fast_load=\""			+(((str=request.getParameter("fast_load"		 ))==null)?""	:str)+"\",");
 	out.print  ("my_type_sub_directory=\""	+(((str=request.getParameter("type_sub_directory"))==null)?""	:str)+"\",");
 	out.print  ("my_scene_sub_directory=\""	+(((str=request.getParameter("scene_sub_directory"))==null)?""	:str)+"\",");
 	out.print  ("my_scene_tmp_directory=\""	+(((str=request.getParameter("scene_tmp_directory"))==null)?""	:str)+"\",");
@@ -46,7 +47,10 @@ async function body_onload()
 			
 			change_part				:	my_change_part,				//part换名
 			change_component		:	my_change_component,		//component换名
+			
 			part_type				:	my_part_type,				//part类型
+			fast_load				:	my_fast_load,				//快速装在scene信息
+			
 			type_sub_directory		:	my_type_sub_directory,		//显示内容type
 			scene_sub_directory		:	my_scene_sub_directory,		//显示内容scene
 			scene_tmp_directory		:	my_scene_tmp_directory,		//显示内容scene tmp directory

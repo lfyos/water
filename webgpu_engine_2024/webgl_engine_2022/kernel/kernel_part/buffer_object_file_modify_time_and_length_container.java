@@ -3,7 +3,6 @@ package kernel_part;
 import java.io.File;
 
 import kernel_file_manager.file_reader;
-import kernel_file_manager.file_writer;
 import kernel_interface.client_process_bar;
 
 public class buffer_object_file_modify_time_and_length_container 
@@ -107,23 +106,18 @@ public class buffer_object_file_modify_time_and_length_container
 		fr.close();
 	}
 	
-	public buffer_object_file_modify_time_and_length search_boftal(	
-				String boftal_token,long my_boftal_last_modify_time)
+	public buffer_object_file_modify_time_and_length search_boftal(String boftal_token)
 	{
-		if(last_modify_time<my_boftal_last_modify_time) {
-			if(boftal_file_name!=null)
-				file_writer.file_delete(boftal_file_name);
-		}else
-			for(int begin_pointer=0,end_pointer=boftal_token_array.length-1;begin_pointer<=end_pointer;) {
-				int middle_pointer=(begin_pointer+end_pointer)/2;
-				int cmp_result=boftal_token_array[middle_pointer].compareTo(boftal_token);
-				if(cmp_result>0)
-					end_pointer=middle_pointer-1;
-				else if(cmp_result<0)
-					begin_pointer=middle_pointer+1;
-				else 
-					return boftal_array[middle_pointer];
-			}
+		for(int begin_pointer=0,end_pointer=boftal_token_array.length-1;begin_pointer<=end_pointer;) {
+			int middle_pointer=(begin_pointer+end_pointer)/2;
+			int cmp_result=boftal_token_array[middle_pointer].compareTo(boftal_token);
+			if(cmp_result>0)
+				end_pointer=middle_pointer-1;
+			else if(cmp_result<0)
+				begin_pointer=middle_pointer+1;
+			else 
+				return boftal_array[middle_pointer];
+		}
 		return null;
 	}
 }

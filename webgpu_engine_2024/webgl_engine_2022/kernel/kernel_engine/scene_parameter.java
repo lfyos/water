@@ -203,7 +203,7 @@ public class scene_parameter
 		}
 		
 		if(my_temporary_directory_name.length()<=0)
-			my_temporary_directory_name="no_user_directory"+File.separatorChar;;
+			my_temporary_directory_name="no_parameter_directory"+File.separatorChar;;
 		
 		scene_temporary_directory_name+=my_temporary_directory_name;
 	}
@@ -372,8 +372,9 @@ public class scene_parameter
 		component_sort_min_distance				=extra_parameter_fr.get_double();
 		
 		not_do_ancestor_render_flag				=extra_parameter_fr.get_boolean();
-		fast_load_flag							=extra_parameter_fr.get_boolean();
 		
+		fast_load_flag=request_response.get_boolean("fast_load",false);
+
 		extra_parameter_fr.close();
 
 		return;

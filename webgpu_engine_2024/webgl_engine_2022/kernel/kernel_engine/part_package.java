@@ -149,8 +149,15 @@ public class part_package
 			boolean not_create_flag=true;
 			file_reader fr=new file_reader(package_data_file_name,system_par.local_data_charset);
 			for(int i=0;i<package_number;i++) {
-				String my_package_file_name=package_directory_name+"package_"+i+".gzip_text";
-				File f=new File(my_package_file_name);
+				package_length[i]	=fr.get_long();
+				package_last_time[i]=fr.get_long();
+				package_file_name[i]=package_directory_name+"package_"+i+".gzip_text";
+				
+				if(scene_par!=null)
+					if(scene_par.fast_load_flag)
+						continue;
+				
+				File f=new File(package_file_name[i]);
 				if(	(!(f.exists()))
 					||(f.lastModified()>=package_data_last_time)
 					||(ppc.part_package[i].last_time>=package_data_last_time))
@@ -158,9 +165,7 @@ public class part_package
 					not_create_flag=false;
 					break;
 				}
-				package_length[i]	=fr.get_long();
-				package_last_time[i]=fr.get_long();
-				package_file_name[i]=my_package_file_name;
+				
 			}
 			fr.close();
 			if(not_create_flag) 
@@ -235,6 +240,7 @@ public class part_package
 					break;
 				}
 		}
+		
 		if(do_create_flag) {
 			new part_boftal_creator(
 					part_type_id,boftal_data_file_name,system_par.local_data_charset,

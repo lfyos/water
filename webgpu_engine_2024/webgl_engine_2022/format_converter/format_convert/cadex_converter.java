@@ -1874,9 +1874,12 @@ public class cadex_converter
 			return new cadex.BRep_Reader();
 		}
 	}
-	public static boolean do_convert(String source_file_name,
-			String target_directory_name,String target_charset,String class_charset,
-			double chordal_deflection,double angular_deflection,int max_step_number)
+	
+	public static boolean do_convert(
+			String source_file_name,String target_directory_name,
+			String target_charset,String class_charset,
+			double chordal_deflection,double angular_deflection,
+			int max_step_number)
 	{
 		if(target_charset==null)
 			target_charset=Charset.defaultCharset().name();
@@ -2006,7 +2009,9 @@ public class cadex_converter
 		double angular_deflection	=Double.parseDouble(args[5]);
 		int	max_step_number			=Integer.parseInt(  args[6]);
 		
-		do_convert(source_file_name,target_directory_name,target_charset,class_charset,
-				chordal_deflection,angular_deflection,max_step_number);
+		do_convert(source_file_name,target_directory_name,
+				target_charset,class_charset,
+				chordal_deflection,angular_deflection,
+				max_step_number);
 	}
 }

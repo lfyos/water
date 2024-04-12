@@ -58,6 +58,9 @@ public class engine_interface_container
 	private void load_render_container(client_request_response request_response,system_parameter system_par)
 	{
 		int part_type_id=0;
+		buffer_object_file_modify_time_and_length_container boftal_container[];
+		boftal_container=new buffer_object_file_modify_time_and_length_container[] {};
+		
 		permanent_part_id_encoder encoder[]=new permanent_part_id_encoder[] {new permanent_part_id_encoder()};
 		ArrayList<part> part_list_for_delete_file=new ArrayList<part>();
 		original_render=new render_container();
@@ -68,12 +71,12 @@ public class engine_interface_container
 			system_par.local_data_charset,part_type_id,system_par,null,encoder,request_response);
 		pcps.execute_append();
 		original_render.load_part(((long)1)<<part_type_id,1,part_loader_cont,
-				system_par,null,null,part_list_for_delete_file,null,null);
+				system_par,null,boftal_container,part_list_for_delete_file,null,null);
 		
 		original_render.create_bottom_box_part(pcps,request_response,encoder,system_par,null);
 		pcps.execute_append();
 		original_render.load_part(((long)1)<<part_type_id,2,part_loader_cont,
-				system_par,null,null,part_list_for_delete_file,null,null);
+				system_par,null,boftal_container,part_list_for_delete_file,null,null);
 		
 		debug_information.println("Begin create system_part_package");
 		original_render.system_part_package=new part_package(

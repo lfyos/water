@@ -8,9 +8,9 @@ public class test_2
 	{
 		debug_information.println("Begin:");
 		
-		new format_convert.inp_converter(
-				"F:\\water_all\\data\\project\\part\\other_part\\part_inp\\part_1\\part.inp", null,
-				"F:\\temp\\tmp.mesh", null);
+		format_convert.cadex_converter.do_convert(
+				"E:\\tmp\\plant_modeling.obj","E:\\temp\\", 
+				null,null,0.01,0.01,50);
 		
 		debug_information.println("End");
 	}

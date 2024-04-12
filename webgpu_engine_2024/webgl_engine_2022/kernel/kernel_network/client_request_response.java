@@ -145,12 +145,16 @@ public class client_request_response extends common_writer
 	{
 		String str=get_parameter(name);
 		switch((str==null)?"":(str.trim().toLowerCase())) {
+		case "ok":
 		case "yes":
 		case "true":
 			return true;
+			
 		case "no":
 		case "false":
+		case "cancel":
 			return false;
+			
 		default:
 			return default_value;
 		}

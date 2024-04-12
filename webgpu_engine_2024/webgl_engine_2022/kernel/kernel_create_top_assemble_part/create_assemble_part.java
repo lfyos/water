@@ -197,7 +197,7 @@ public class create_assemble_part
 			double create_top_part_discard_precision2,double discard_top_part_component_precision2,
 			render_container render_cont,part_loader_container part_loader_cont,
 			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
-			buffer_object_file_modify_time_and_length_container boftal_container,long last_modified_time)
+			buffer_object_file_modify_time_and_length_container boftal_container[],long last_modified_time)
 	{
 		int max_component_number			=root_component.component_id+1;
 		
