@@ -1,9 +1,8 @@
 package driver_audio_player;
 
-import java.io.File;
-
 import kernel_component.component;
 import kernel_camera.camera_result;
+import kernel_common_class.debug_information;
 import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
 import kernel_engine.client_information;
@@ -67,17 +66,16 @@ public class extended_component_instance_driver extends component_instance_drive
 					try {
 						str=java.net.URLDecoder.decode(str,request_charset);
 						str=java.net.URLDecoder.decode(str,request_charset);
-					}catch(Exception e) {
+					}catch(Exception e){
 						acd.set_audio(null);
+						debug_information.println("audio play operation fail:	",e.toString());
 						break;
 					}
-					str=file_reader.separator(comp.component_directory_name+str);
-					if(new File(str).exists()) {
-						acd.set_audio(str);
-						break;
-					}
+					acd.set_audio(comp.component_directory_name+str);
+					break;
 				}
 			acd.set_audio(null);
+			debug_information.println("audio play file name is empty");
 			break;
 		default:
 			break;

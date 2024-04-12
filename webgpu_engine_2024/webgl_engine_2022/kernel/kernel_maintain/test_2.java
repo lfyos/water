@@ -8,9 +8,13 @@ public class test_2
 	{
 		debug_information.println("Begin:");
 		
-		format_convert.cadex_converter.do_convert(
-				"E:\\tmp\\plant_modeling.obj","E:\\temp\\", 
-				null,null,0.01,0.01,50);
+		format_convert.cadex_converter.main(new String[]
+			{			
+				"E:\\tmp\\plant_modeling.obj",
+				"E:\\temp\\", 
+				null,		null,
+				"0.01",		"0.01",		"50"
+			});
 		
 		debug_information.println("End");
 	}

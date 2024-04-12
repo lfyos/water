@@ -109,7 +109,7 @@ async function request_render_data(render)
 
 		return request_url;
 	};
-	
+
 	function parse_target_parameter(response_data,render)
 	{
 		for(var i=0,ni=render.render_buffer_array.length;i<ni;i++)
