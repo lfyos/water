@@ -45,10 +45,9 @@ public class part_package
 		for(int i=0,ni=package_last_time.length;i<ni;i++)
 			package_last_time[i]=pp.package_last_time[i];
 	}
-	public part_package(
-			client_process_bar process_bar,
+	public part_package(client_process_bar process_bar,
 			String package_process_bar_title,
-			String boftal_process_bar_title,
+			String boftal_process_bar_title,String ex_process_title,
 			render_container rc,int part_type_id,
 			system_parameter system_par,scene_parameter scene_par)
 	{
@@ -178,7 +177,8 @@ public class part_package
 		
 		for(int i=0;i<package_number;i++){
 			if(process_bar!=null)
-				process_bar.set_process_bar((i<=0),package_process_bar_title,"",i,package_number);
+				process_bar.set_process_bar((i<=0),
+					package_process_bar_title,ex_process_title,i,package_number);
 			
 			String my_tmp_file_name		=package_directory_name+"package_"+i+".tmp";
 			String my_package_file_name	=package_directory_name+"package_"+i+".gzip_text";
@@ -226,7 +226,9 @@ public class part_package
 		}
 
 		if(process_bar!=null)
-			process_bar.set_process_bar(false,package_process_bar_title,"",package_number,package_number);
+			process_bar.set_process_bar(false,
+					package_process_bar_title,ex_process_title,
+					package_number,package_number);
 
 		boolean do_create_flag;
 		if((!(package_data_f.exists()))||(!(boftal_data_f.exists())))
@@ -242,9 +244,10 @@ public class part_package
 		}
 		
 		if(do_create_flag) {
-			new part_boftal_creator(
-					part_type_id,boftal_data_file_name,system_par.local_data_charset,
-					ppc.data_array,system_par,scene_par,process_bar,boftal_process_bar_title);
+			new part_boftal_creator(part_type_id,
+					boftal_data_file_name,system_par.local_data_charset,
+					ppc.data_array,system_par,scene_par,
+					process_bar,boftal_process_bar_title,ex_process_title);
 			
 			file_writer fw=new file_writer(package_data_file_name,system_par.local_data_charset);
 			for(int i=0;i<package_number;i++)

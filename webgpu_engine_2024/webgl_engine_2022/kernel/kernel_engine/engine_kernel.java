@@ -326,7 +326,8 @@ public class engine_kernel
 		
 		start_time=current_time;
 		render_cont.load_part(part_type_code,1,part_loader_cont,system_par,scene_par,
-				boftal_container,part_list_for_delete_file,process_bar,"load_first_class_part");
+				boftal_container,part_list_for_delete_file,process_bar,
+				"load_first_class_part","normal_part");
 		debug_information.println("Load first class part time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 
@@ -335,7 +336,8 @@ public class engine_kernel
 		part_cont.execute_append();
 		
 		render_cont.load_part(part_type_code,2,part_loader_cont,system_par,scene_par,
-				boftal_container,part_list_for_delete_file,process_bar,"load_second_class_part");
+				boftal_container,part_list_for_delete_file,process_bar,"load_second_class_part",
+				"bottom_box_part");
 		debug_information.println("Load second class part time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
@@ -346,6 +348,7 @@ public class engine_kernel
 		for(int i=0,ni=render_cont.type_part_package.length;i<ni;i++)
 			render_cont.type_part_package[i]=new part_package(process_bar,
 				"create_first_class_package","create_first_boftal_file",
+				"(type:"+(i+1)+"/"+ni+")",
 				render_cont,i+2,system_par,scene_par);
 		debug_information.println("Create first part package time length:	",
 				(current_time=new Date().getTime())-start_time);
@@ -370,15 +373,19 @@ public class engine_kernel
 		part_cont.execute_append();
 		render_cont.load_part(
 				part_type_code,4,part_loader_cont,system_par,scene_par,
-				boftal_container,part_list_for_delete_file,process_bar,"load_third_class_part");
-		debug_information.println("Create top assemble time length:	",(current_time=new Date().getTime())-start_time);
+				boftal_container,part_list_for_delete_file,process_bar,
+				"load_third_class_part","top_box_part");
+		debug_information.println("Create top assemble time length:	",
+				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		start_time=current_time;
 		
 		render_cont.scene_part_package=new part_package(process_bar,
-				"create_second_class_package","create_second_boftal_file",render_cont,1,system_par,scene_par);
+				"create_second_class_package","create_second_boftal_file","scene",
+				render_cont,1,system_par,scene_par);
 		
-		debug_information.println("Create second part package time length:	",(current_time=new Date().getTime())-start_time);
+		debug_information.println("Create second part package time length:	",
+				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 		start_time=current_time;
 		
