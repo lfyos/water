@@ -77,9 +77,10 @@ public class render
 		try{
 			render_driver_object=Class.forName(my_driver_name).getConstructor().newInstance();
 		}catch(Exception e){
+			e.printStackTrace();
 			debug_information.println("Create render driver fail:		",e.toString());
 			debug_information.println("Driver name is ",my_driver_name);
-			e.printStackTrace();
+			
 			return;
 		}
 		if(!(render_driver_object instanceof render_driver)){
@@ -176,13 +177,14 @@ public class render
 				my_part.driver=r_driver.create_part_driver(f,my_part,
 						component_load_source_cont,system_par,request_response);
 			}catch(Exception e){
+				e.printStackTrace();
+				
 				my_part.driver=null;
 				debug_information.println("Create part driver fail:",e.toString());
 				debug_information.println("Part user name:	",		my_part.user_name);
 				debug_information.println("Part system name:	",	my_part.system_name);
 				debug_information.println("Directory name:	",		my_part.directory_name);
 				debug_information.println("Mesh file name:	",		my_part.mesh_file_name);
-				e.printStackTrace();
 			}
 			if(my_part.driver!=null)
 				pcps.append_one_part(my_part);

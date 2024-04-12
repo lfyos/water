@@ -230,13 +230,16 @@ public class render_container
 			try {
 				add_part.driver=p.driver.clone(p,add_part,request_response,system_par,scene_par);
 			}catch(Exception e) {
+				
+				e.printStackTrace();
+				
 				debug_information.println("Execte part driver clone() fail");
 				debug_information.println("Part user name:",	p.user_name);
 				debug_information.println("Part system name:",	p.system_name);
 				debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);
 				debug_information.println("Material_file_name:",p.directory_name+p.material_file_name);
 				debug_information.println(e.toString());
-				e.printStackTrace();
+				
 				r.delete_last_part();
 				continue;
 			}
@@ -276,12 +279,13 @@ public class render_container
 				get_part_list_result=ren.driver.get_part_list(part_type_id,f_render_list,part_par,
 					component_load_source_cont,system_par,scene_par,request_response);
 			}catch(Exception e){
+				e.printStackTrace();
+				
 				debug_information.println("Execute get_part_list fail:		",e.toString());
 				debug_information.println("Driver name:		",	driver_name);
 				debug_information.println("Shader file:		",	shader_file_name);
 				debug_information.println("render file:		",	f_render_list.directory_name+f_render_list.file_name);
-								
-				e.printStackTrace();
+
 				continue;
 			}
 			

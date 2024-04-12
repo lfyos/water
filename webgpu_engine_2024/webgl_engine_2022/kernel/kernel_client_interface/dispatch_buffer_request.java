@@ -118,10 +118,12 @@ public class dispatch_buffer_request
 				}
 				return str;
 			}catch(Exception e) {
+				e.printStackTrace();
+				
 				debug_information.println(
 					"Wrong package in do_buffer_dispatch of dispatch_system_request\t:\t",
 					str+"\t"+e.toString());
-				e.printStackTrace();
+				
 				return null;
 			}
 		case "buffer_data":

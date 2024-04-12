@@ -132,8 +132,10 @@ public class stl_converter
 				dr.skipBytes(256*f+e);
 			}
 		}catch(Exception e){
-			debug_information.println(e.toString());
 			e.printStackTrace();
+			
+			debug_information.println(e.toString());
+			
 		}
 		if(dw!=null)
 			try{
@@ -196,8 +198,10 @@ public class stl_converter
 				output_triangle(stl_data[0],stl_data[1],stl_data[2],stl_data[3],fw);
 			}
 		}catch(Exception e){
-			debug_information.println(e.toString());
 			e.printStackTrace();
+			
+			debug_information.println(e.toString());
+			
 		}
 		if(dr!=null)
 			try{

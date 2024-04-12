@@ -22,8 +22,10 @@ public class component_instance_driver_container
 							try {
 								component_driver_array[i][j].destroy();
 							}catch(Exception e) {
-								debug_information.println("instance driver destroy fail:	",e.toString());
 								e.printStackTrace();
+								
+								debug_information.println("instance driver destroy fail:	",e.toString());
+								
 							}
 							component_driver_array[i][j]=null;
 						}
@@ -75,6 +77,8 @@ public class component_instance_driver_container
 				try{
 					i_d=c_d.create_component_instance_driver(comp,i,ek,request_response);
 				}catch(Exception e){
+					e.printStackTrace();
+					
 					i_d=null;
 					debug_information.println("create_instance_driver fail:	",e.toString());
 					
@@ -87,7 +91,6 @@ public class component_instance_driver_container
 					debug_information.println("Directory name:	",		c_d.component_part.directory_name);
 					debug_information.println("Mesh file name:	",		c_d.component_part.mesh_file_name);
 					
-					e.printStackTrace();
 				}
 				component_driver_array[comp.component_id][i]=i_d;
 			}

@@ -104,6 +104,8 @@ public class component_instance_driver
 					try{
 						ret_val=in_dr.response_component_event(ek,ci);
 					}catch(Exception e){
+						e.printStackTrace();
+						
 						ret_val=null;
 						part my_part=comp.driver_array.get(driver_id).component_part;
 						
@@ -113,7 +115,7 @@ public class component_instance_driver
 						debug_information.println("Part user name:	",	my_part.user_name);
 						debug_information.println("Part system name:",	my_part.system_name);
 						debug_information.println("Mesh file name:	",	my_part.directory_name+my_part.mesh_file_name);
-						e.printStackTrace();
+						
 					}
 					my_result=new network_result(ret_val);
 					my_result.next=ci.request_response.get_network_result();

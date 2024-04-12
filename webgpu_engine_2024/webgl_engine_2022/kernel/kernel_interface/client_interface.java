@@ -96,11 +96,12 @@ public class client_interface
 			created_engine_kernel_only=engine_container.create_engine_kernel_container(request_response,
 				client_scene_file_name,client_scene_file_charset,engine_counter,system_par);
 		}catch(Exception e) {
+			e.printStackTrace();
+			
 			created_engine_kernel_only=null;
 			debug_information.println(
 					"engine_container.get_kernel_container(request_response,system_par,user_par.scene_file_name) fail");
 			debug_information.println(e.toString());
-			e.printStackTrace();
 		}
 		my_client_interface_lock.lock();
 		
@@ -130,9 +131,10 @@ public class client_interface
 					engine_container.component_load_source_cont,client_scene_file_name,client_scene_file_charset,
 					request_response,delay_time_length,statistics_user,engine_counter);
 		}catch(Exception e) {
+			e.printStackTrace();
+			
 			ecr=null;
 			debug_information.println("ec[channel_id].engine_kernel_link_list.get_engine_result fail");
-			e.printStackTrace();
 		}
 		
 		my_client_interface_lock.lock();
@@ -262,10 +264,12 @@ public class client_interface
 					client_scene_file_name,client_scene_file_charset,request_response,delay_time_length,
 					statistics_user,engine_counter);
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			ecr=null;
 			debug_information.println("ecn.ek_ci.engine_kernel_link_list.get_engine_result fail");
 			debug_information.println(e.toString());
-			e.printStackTrace();
+			
 		}
 		my_client_interface_lock.lock();
 		ecn.ek_ci.access_lock_number--;
@@ -322,10 +326,12 @@ public class client_interface
 			ret_val=execute_system_call_routine(channel_id,request_response,
 					engine_container,engine_counter,my_client_interface_lock);
 		}catch(Exception e) {
+			e.printStackTrace();
+			
 			ret_val=null;
 			debug_information.println("execute_system_call of client_interface_base fail");
 			debug_information.println(e.toString());
-			e.printStackTrace();
+			
 		}
 		
 		process_timeout(request_response,engine_container,engine_counter);
@@ -353,11 +359,12 @@ public class client_interface
 			else
 				ret_val=create_engine(engine_container,my_client_interface_lock,request_response,delay_time_length,engine_counter);
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			ret_val=null;
 			debug_information.println(
 					"execute_create_call of client_interface_base fail");
 			debug_information.println(e.toString());
-			e.printStackTrace();
 		}
 		my_client_interface_lock.unlock();
 	
@@ -447,8 +454,9 @@ public class client_interface
 			try{
 				ecn.ek_ci.client_information.destroy();
 			}catch(Exception e){
-				debug_information.println("Destroy client_information exception:	",e.toString());
 				e.printStackTrace();
+				
+				debug_information.println("Destroy client_information exception:	",e.toString());
 			}
 			ecn.ek_ci.client_information=null;
 		}
@@ -556,8 +564,9 @@ public class client_interface
 		try{
 			destroy_routine();
 		}catch(Exception e){
-			debug_information.println("destroy of client_interface_base fail:\t",e.toString());
 			e.printStackTrace();
+			
+			debug_information.println("destroy of client_interface_base fail:\t",e.toString());
 		}
 		my_client_interface_lock.unlock();
 	}

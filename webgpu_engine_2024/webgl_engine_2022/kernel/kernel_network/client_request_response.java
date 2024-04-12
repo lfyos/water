@@ -174,8 +174,8 @@ public class client_request_response extends common_writer
 		try{
 			output_stream.close();
 		}catch(Exception e){
-			debug_information.println("Error 1 in response_network_data\t",e.toString());
 			e.printStackTrace();
+			debug_information.println("Error 1 in response_network_data\t",e.toString());
 		}
 		
 		byte data_buf[]=output_stream.toByteArray();
@@ -268,8 +268,8 @@ public class client_request_response extends common_writer
 		try{
 			output_stream.close();
 		}catch(Exception e){
-			debug_information.println("Error 1 in response_file_data\t",e.toString());
 			e.printStackTrace();
+			debug_information.println("Error 1 in response_file_data\t",e.toString());
 		}
 		
 		String file_name=ecr.file_name,network_data_charset=ecr.file_charset,error_msg;
@@ -291,8 +291,9 @@ public class client_request_response extends common_writer
 						file_writer.charset_copy(file_name,ecr.file_charset,
 								ecr.charset_file_name,system_par.network_data_charset);
 				}catch(Exception e) {
-					debug_information.println("response_file_data exception 1\t",e.toString());
 					e.printStackTrace();
+					
+					debug_information.println("response_file_data exception 1\t",e.toString());
 				}
 				
 				efm.unlock();
@@ -330,8 +331,9 @@ public class client_request_response extends common_writer
 							f=new File(compress_file_name);
 					}
 				}catch(Exception e) {
-					debug_information.println("response_file_data exception 2\t",e.toString());
 					e.printStackTrace();
+					
+					debug_information.println("response_file_data exception 2\t",e.toString());
 				}
 				
 				efm.unlock();
@@ -367,10 +369,11 @@ public class client_request_response extends common_writer
 					break;
 			}
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println("Do response error:source\t",file_name);
 			debug_information.println("Do response error:target\t",ecr.compress_file_name);
 			debug_information.println("Do response error:error\t",e.toString());
-			e.printStackTrace();
 		}
 		if(s_buf!=null)
 			try {
@@ -410,9 +413,10 @@ public class client_request_response extends common_writer
 			try{
 				return decoder.decode(str);
 			}catch(Exception e) {
+				e.printStackTrace();
+				
 				debug_information.println("Base64.Decoder fail");
 				debug_information.println(e.toString());
-				e.printStackTrace();
 			}
 		}
 		return null;
@@ -441,9 +445,10 @@ public class client_request_response extends common_writer
 			if(display_content_flag)
 				debug_information.print(new String(data,get_charset()));
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			String str="write_routine int client_request_response exception:\t";
 			debug_information.println(str,e.toString());
-			e.printStackTrace();
 		}
 		return this;
 	}

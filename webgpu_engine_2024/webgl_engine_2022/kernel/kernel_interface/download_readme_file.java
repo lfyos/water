@@ -69,10 +69,12 @@ public class download_readme_file
 		try{
 			my_class=Class.forName(path_name);
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println(
 					"Find render driver class fail in download_readme_file:		",path_name);
 			debug_information.println(e.toString());
-			e.printStackTrace();
+			
 			return null;
 		}
 

@@ -93,10 +93,10 @@ public class engine_kernel_and_client_information_container
 						client_scene_file_name,client_scene_file_charset,my_request_response,
 						delay_time_length,statistics_user,engine_counter);
 			}catch(Exception e){
+				e.printStackTrace();
 				debug_information.println(
 						"get_engine_result function of engine_kernel_link_list fail!");
 				debug_information.println(e.toString());
-				e.printStackTrace();
 				ret_val=null;
 			};
 			

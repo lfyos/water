@@ -43,10 +43,12 @@ public class zip_file
 			f.close();
 			return true;
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println("source_file_name:	",source_file_name);
 			debug_information.println("target_file_name:	",target_file_name);
 			debug_information.println("zip_file execption:	",e.toString());
-			e.printStackTrace();
+			
 		}
 		
 		if(fw!=null)
@@ -116,10 +118,12 @@ public class zip_file
 						new File(zip_file_name).delete();
 				}
 			}catch(Exception e) {
+				e.printStackTrace();
+				
 				debug_information.println("directory_name:	",directory_name);
 				debug_information.println("zip_file_name:	",zip_file_name);
 				debug_information.println("unzip_directory execption:	",e.toString());
-				e.printStackTrace();
+				
 			}
 			efm.unlock();
 		}

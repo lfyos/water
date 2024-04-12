@@ -99,11 +99,13 @@ public class engine_initialization
 			try{
 				r.driver.initialize_render_driver(render_id,ek,request_response);
 			}catch(Exception e){
+				e.printStackTrace();
+				
 				debug_information.println("Render driver initialize_part_driver fail:	",e.toString());
 				debug_information.println("Render class name:		",	r.driver.getClass().getName());
 				debug_information.println("render_id:		",			render_id);
 				debug_information.println("render_name:		",			r.render_name);
-				e.printStackTrace();
+				
 			}
 		}
 		process_bar.set_process_bar(false,"render_driver_initialization","", render_number, render_number);
@@ -126,6 +128,8 @@ public class engine_initialization
 				try {
 					my_p.driver.initialize_part_driver(my_p,ek,request_response);
 				}catch(Exception e){
+					e.printStackTrace();
+					
 					debug_information.println("Part driver initialize_part_driver fail:	",e.toString());
 						
 					debug_information.println("Part user name:		",	my_p.user_name);
@@ -134,7 +138,7 @@ public class engine_initialization
 					debug_information.println("Part material_file_name:",my_p.directory_name+my_p.material_file_name);
 					debug_information.println("part_file_directory:",
 							file_directory.part_file_directory(my_p,ek.system_par,ek.scene_par));
-					e.printStackTrace();
+					
 				}
 		}
 		process_bar.set_process_bar(false,"part_driver_initialization","", number, number);
@@ -152,12 +156,14 @@ public class engine_initialization
 				try{
 					cd.initialize_component_driver(sort_component_array[i],j,ek,request_response);
 				}catch(Exception e) {
+					e.printStackTrace();
+					
 					debug_information.println("Component driver initialize fail:	",e.toString());
 					debug_information.println("Component name:",sort_component_array[i].component_name);
 					debug_information.println("Component file:",
 							sort_component_array[i].component_directory_name+sort_component_array[i].component_file_name);
 					debug_information.println("Component driver id:",j);
-					e.printStackTrace();
+					
 				}
 			}
 		}

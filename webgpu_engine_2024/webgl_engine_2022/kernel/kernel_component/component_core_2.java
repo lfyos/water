@@ -44,10 +44,11 @@ public class component_core_2 extends component_core_1
 							fr.get_double(),			fr.get_double(),			fr.get_double(),		fr.get_double(),
 							fr.get_double(),			fr.get_double(),			fr.get_double(),		fr.get_double());
 				}catch(Exception e) {
+					e.printStackTrace();
+					
 					debug_information.println("Component location error:	",command+"	"+name);
 					debug_information.println("Component location file:		",fr.directory_name+fr.file_name);
 					debug_information.println(e.toString());
-					e.printStackTrace();
 					
 					return new location();
 				}
@@ -104,8 +105,10 @@ public class component_core_2 extends component_core_1
 				return new location();
 			}
 		}catch(Exception e){
-			debug_information.println("private location input_location fail:	",e.toString());
 			e.printStackTrace();
+			
+			debug_information.println("private location input_location fail:	",e.toString());
+
 			return new location();
 		}
 	}

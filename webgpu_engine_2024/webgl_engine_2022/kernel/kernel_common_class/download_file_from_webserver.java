@@ -28,10 +28,11 @@ public class download_file_from_webserver
 			out.close();
 			return true;
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println(
 					"download_file_from_webserver:save_to_file() fail:",
 					e.toString()+"		url:"+my_url+"		file:"+file_name);
-			e.printStackTrace();
 		}
 		if(out!=null)
 			try{
@@ -58,8 +59,8 @@ public class download_file_from_webserver
 			for(int len;(len=gzis.read(buffer))>=0;)  
 			   os.write(buffer,0,len);
 		}catch(Exception e){
+			e.printStackTrace();
 			uncompress_fail_flag=true;
-			e.printStackTrace();  
 		}
 		if(os!=null)
 			try {
@@ -128,10 +129,11 @@ public class download_file_from_webserver
 			try{
 				stream.close();
 			}catch(Exception e) {
+				e.printStackTrace();
+				
 				debug_information.println(
 						"When do file download,stream.close() fail,url is "+urlPath+",file is ",file_name);
 				debug_information.println(e.toString());
-				e.printStackTrace();
 			}
 			stream=null;
 		}

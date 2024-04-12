@@ -27,8 +27,9 @@ public class dispatch_render_request
 			try{
 				return my_render_instance_driver.response_render_event(r,ek,ci);
 			}catch(Exception e){
-				debug_information.println("execute render response_render_event fail:",e.toString());
 				e.printStackTrace();
+				
+				debug_information.println("execute render response_render_event fail:",e.toString());
 			}
 		debug_information.println("Render  name:	",	r.render_name);
 		debug_information.println("Render  ID:	",		r.render_id);

@@ -60,8 +60,8 @@ public class part
 				return driver.caculate_part_box(this,comp,driver_id,body_id,face_id,
 						primitive_id,vertex_id,loop_id,edge_id,p0,p1);
 			}catch(Exception e){
-				debug_information.println("secure_caculate_part_box fail:	",e.toString());
 				e.printStackTrace();
+				debug_information.println("secure_caculate_part_box fail:	",e.toString());
 			}
 		debug_information.println("Part user name:",	user_name);
 		debug_information.println("Part system name:",	system_name);
@@ -85,12 +85,14 @@ public class part
 			try{
 				driver.destroy();
 			}catch(Exception e) {
+				e.printStackTrace();
+				
 				debug_information.println("Destroy part driver fail:",e.toString());
 				debug_information.println("Part user name:		",	user_name);
 				debug_information.println("Part system name:	",	system_name);
 				debug_information.println("Directory name:		",	directory_name);
 				debug_information.println("Mesh file name:		",	mesh_file_name);
-				e.printStackTrace();
+				
 			}
 			driver=null;
 		}
@@ -206,12 +208,13 @@ public class part
 		try{
 			driver.create_part_material_in_head(head_fw,this,system_par,scene_par);
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println("create_mesh_and_material fail:",	e.toString());
 			debug_information.println("Part user name:",				user_name);
 			debug_information.println("Part system name:",				system_name);
 			debug_information.println("Mesh_file_name:",				directory_name+mesh_file_name);
 			debug_information.println("Material_file_name:",			directory_name+material_file_name);
-			e.printStackTrace();
 		}
 		head_fw.println("\t],");
 		
@@ -395,6 +398,9 @@ public class part
 		try{
 			driver=p.driver.clone(p,this,request_response,system_par,scene_par);
 		}catch(Exception e){
+			
+			e.printStackTrace();
+			
 			driver=null;
 			debug_information.println("Part clone fail");
 			debug_information.println(e.toString());
@@ -402,7 +408,7 @@ public class part
 			debug_information.println("Part system name:	",	p.system_name);
 			debug_information.println("Directory name:	",		p.directory_name);
 			debug_information.println("Mesh file name:	",		p.mesh_file_name);
-			e.printStackTrace();
+			
 		}
 	}
 }

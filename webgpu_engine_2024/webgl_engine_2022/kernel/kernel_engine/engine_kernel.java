@@ -183,12 +183,14 @@ public class engine_kernel
 				try{
 					cd=p.driver.create_component_driver(null,false,p,component_load_source_cont,this,request_response);
 				}catch(Exception e){
+					e.printStackTrace();
+					
 					debug_information.println("create_component_driver fail int mount_top_box_part():	",e.toString());
 					debug_information.println("Part user name:",	p.user_name);
 					debug_information.println("Part system name:",	p.system_name);
 					debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);
 					debug_information.println("Material_file_name:",p.directory_name+p.material_file_name);
-					e.printStackTrace();
+					
 					cd=null;
 				}
 				if(cd!=null){
@@ -437,8 +439,10 @@ public class engine_kernel
 		try {
 			load_routine(component_load_source_cont,request_response,process_bar,system_boftal_container);
 		}catch(Exception e) {
-			debug_information.println("Engine load exception:	",e.toString());
 			e.printStackTrace();
+			
+			debug_information.println("Engine load exception:	",e.toString());
+			
 		}finally {
 			efm.unlock();
 		}

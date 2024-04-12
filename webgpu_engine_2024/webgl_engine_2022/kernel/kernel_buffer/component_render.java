@@ -366,13 +366,15 @@ public class component_render
 				try{
 					in_dr.create_render_parameter(render_buffer_id,ek,ci,cam_result);
 				}catch(Exception e){
+					e.printStackTrace();
+					
 					debug_information.println("instance driver create_render_parameter fail:	",e.toString());
 					debug_information.println("Component name:	",	cll.comp.component_name);
 					debug_information.println("Driver ID:		",	cll.driver_id);
 					debug_information.println("Part user name:	",	my_part.user_name);
 					debug_information.println("Part system name:",	my_part.system_name);
 					debug_information.println("Mesh file name:	",	my_part.directory_name+my_part.mesh_file_name);
-					e.printStackTrace();
+					
 				}
 				ci.request_response.print("]");
 

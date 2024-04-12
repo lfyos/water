@@ -26,8 +26,9 @@ public class dispatch_part_request
 			try{
 				return my_part_instance_driver.response_part_event(p, ek, ci);
 			}catch(Exception e){
-				debug_information.println("execute response_part_event fail:",e.toString());
 				e.printStackTrace();
+				
+				debug_information.println("execute response_part_event fail:",e.toString());
 			}
 		}
 

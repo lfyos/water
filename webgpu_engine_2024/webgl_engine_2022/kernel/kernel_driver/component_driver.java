@@ -14,13 +14,14 @@ public class component_driver
 			try {
 				component_part.destroy();
 			}catch(Exception e) {
+				e.printStackTrace();
+				
 				debug_information.println("Execute part destroy() fail:	",e.toString());
 				debug_information.println("Part user name:",			component_part.user_name);
 				debug_information.println("Part system name:",			component_part.system_name);
 				debug_information.println("Part mesh_file_name:",		component_part.directory_name+component_part.mesh_file_name);
 				debug_information.println("Part material_file_name:",	component_part.directory_name+component_part.material_file_name);
 
-				e.printStackTrace();
 			}
 			component_part=null;
 		}

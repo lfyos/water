@@ -147,9 +147,11 @@ function file_name_change()
 				fw.write(buffer,0,my_length);
 			fw.close();
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			fw.close();
 			file_writer.file_delete(source_file_name);
-			e.printStackTrace();
+			
 			break;
 		}
 		protected_cadex_converter.do_convert(source_file_name,directory_name+file_name,"1800000");

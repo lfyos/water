@@ -199,9 +199,11 @@ public class component_container
 			try{
 				root_component=new component("",scene_f,false,false,ccp);
 			}catch(Exception e){
+				e.printStackTrace();
+				
 				root_component=null;
 				debug_information.println("Create scene from file exception:",scene_f.directory_name+scene_f.file_name);
-				e.printStackTrace();
+				
 			}
 			
 			if(root_component!=null)

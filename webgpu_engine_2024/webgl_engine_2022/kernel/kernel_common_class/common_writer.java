@@ -227,9 +227,11 @@ public class common_writer
 	        s_buf.close();
 			s_stream.close();
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println("print_file exception:\t",e.toString());
 			debug_information.println(f.getAbsolutePath());
-			e.printStackTrace();
+			
 		}
 		return this;
 	}
