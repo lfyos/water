@@ -285,7 +285,7 @@ public class part
 		return ret_val;
 	}
 	public String load_mesh_and_create_buffer_object(part copy_from_part,
-			long last_modified_time,system_parameter system_par,scene_parameter scene_par)
+			system_parameter system_par,scene_parameter scene_par)
 	{
 		class part_temporary_file_directory_deleter extends travel_through_directory
 		{
@@ -314,7 +314,7 @@ public class part
 			new part_temporary_file_directory_deleter().do_travel(part_temporary_file_directory,false);
 		else
 			file_writer.make_directory(part_temporary_file_directory);
-		
+
 		load_part_mesh();
 		
 		str+=create_mesh_and_material_routine(part_temporary_file_directory,system_par,scene_par);

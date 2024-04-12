@@ -110,9 +110,9 @@ public class render_container
 			long part_type,int part_normal_bottom_box_top_box_flag,
 			part_loader_container part_loader_cont,
 			system_parameter system_par,scene_parameter scene_par,
-			buffer_object_file_modify_time_and_length_container boftal_container,
+			buffer_object_file_modify_time_and_length_container boftal_container[],
 			ArrayList<part> part_list_for_delete_file,
-			client_process_bar process_bar,String process_bar_title)
+			client_process_bar process_bar,String process_bar_title,String ex_process_bar_title)
 	{
 		if(renders==null)
 			return;
@@ -146,7 +146,8 @@ public class render_container
 			}
 		}
 		if(process_bar!=null)
-			process_bar.set_process_bar(true,process_bar_title,"",0,(all_number<1)?1:all_number);
+			process_bar.set_process_bar(true,
+				process_bar_title,ex_process_bar_title,0,(all_number<1)?1:all_number);
 		
 		ArrayList<part_loader> already_loaded_part=new ArrayList<part_loader>();
 		for(int i=0,ni=renders.size();i<ni;i++) {
@@ -166,19 +167,21 @@ public class render_container
 							
 				if((my_part_flag&part_normal_bottom_box_top_box_flag)==0)
 					continue;
-				part_loader_cont.load(p,get_copy_from_part(p),-1,system_par,scene_par,
+				part_loader_cont.load(p,get_copy_from_part(p),0,system_par,scene_par,
 						part_list_for_delete_file,already_loaded_part,boftal_container);
 							
 				if(process_bar!=null)
 					process_bar.set_process_bar(false,
-							process_bar_title,"",load_number++,(all_number<1)?1:all_number);
+							process_bar_title,ex_process_bar_title,
+							load_number++,(all_number<1)?1:all_number);
 			}
 		}
 		
 		part_loader_container.wait_for_completion(already_loaded_part,system_par,scene_par);
 		if(process_bar!=null)
 			process_bar.set_process_bar(false,
-					process_bar_title,"",(all_number<1)?1:all_number,(all_number<1)?1:all_number);
+					process_bar_title,ex_process_bar_title,
+					(all_number<1)?1:all_number,(all_number<1)?1:all_number);
 		
 		debug_information.println();
 		debug_information.println("End loading part meshes\t",load_number);

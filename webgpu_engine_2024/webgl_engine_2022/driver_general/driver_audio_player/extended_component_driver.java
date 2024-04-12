@@ -1,6 +1,7 @@
 package driver_audio_player;
 
 import kernel_part.part;
+import kernel_common_class.debug_information;
 import kernel_component.component;
 import kernel_engine.engine_kernel;
 import kernel_driver.component_driver;
@@ -58,7 +59,9 @@ public class extended_component_driver  extends component_driver
 				audio_file_name=new_audio_file_name;
 				terminate_flag=false;
 				update_component_parameter_version();
-			}
+			}else
+				debug_information.println(
+						"audio file NOT exist:	",new_audio_file_name);
 			return;
 		}
 		if(new_audio_file_name==null){
@@ -72,7 +75,9 @@ public class extended_component_driver  extends component_driver
 			audio_file_name=new_audio_file_name;
 			terminate_flag=false;
 			update_component_parameter_version();
-		}
+		}else
+			debug_information.println(
+					"audio file NOT exist:	",new_audio_file_name);
 	}
 	public String get_audio_file_name()
 	{

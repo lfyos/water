@@ -38,4 +38,4 @@
 /*	component_sort_min_distance					*/		0.1
 
 /*	not_do_ancestor_render_flag					*/		yes
-/*	fast_load_flag								*/		yes
+

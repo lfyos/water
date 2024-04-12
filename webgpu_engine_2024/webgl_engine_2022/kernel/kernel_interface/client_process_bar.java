@@ -25,8 +25,8 @@ public class client_process_bar
 	{
 		if(reset_time_flag)
 			start_time	=nanosecond_timer.absolute_nanoseconds();
-		process_title	=my_process_title;
-		ex_process_title=(my_ex_process_title==null)?"":my_ex_process_title;
+		process_title	=(my_process_title==null)		?"":my_process_title.trim();
+		ex_process_title=(my_ex_process_title==null)	?"":my_ex_process_title.trim();
 		max_process		=(my_max_process<1)?1:my_max_process;
 		current_process	=(my_current_process<0)?0:(my_current_process>max_process)?max_process:my_current_process;
 	}

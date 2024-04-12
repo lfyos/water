@@ -232,7 +232,7 @@ function construct_camera_object(camera_number,my_component_location_data,my_com
 			camera_location	:	camera_location
 		};
 	};
-	
+
 	this.compute_camera_data=function(camera_render_parameter)
 	{	
 		var camera_id						=camera_render_parameter.camera_id;
