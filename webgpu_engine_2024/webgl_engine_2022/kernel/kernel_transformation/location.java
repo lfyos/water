@@ -130,15 +130,13 @@ public class location
 	}
 	public location multiply(location b)
 	{
-		double x[]=new double[16];
-		
-		for(int i=0;i<4;i++)
-			for(int j=0;j<4;j++){
-				x[i+4*j]=0;
-				for(int k=0;k<4;k++)
-					x[i+4*j]+=a[i][k]*(b.a[k][j]);
-			}
-		return new location(x);
+		int i,j,k;
+		double c[]=new double[16];
+		for(i=0;i<4;i++)
+			for(j=0;j<4;j++)
+				for(c[i+4*j]=0,k=0;k<4;k++)
+					c[i+4*j]+=a[i][k]*(b.a[k][j]);
+		return new location(c);
 	}
 	public point multiply(point b)
 	{
@@ -214,61 +212,43 @@ public class location
 	}
 	public location negative()
 	{
-		double b[][]={
-				{a[0][0],a[0][1],a[0][2],a[0][3]},
-				{a[1][0],a[1][1],a[1][2],a[1][3]},
-				{a[2][0],a[2][1],a[2][2],a[2][3]},
-				{a[3][0],a[3][1],a[3][2],a[3][3]}
+		int i,j,k;
+		double p,b[][]={
+				{a[0][0],a[0][1],a[0][2],a[0][3],	1, 0, 0, 0},
+				{a[1][0],a[1][1],a[1][2],a[1][3],	0, 1, 0, 0},
+				{a[2][0],a[2][1],a[2][2],a[2][3],	0, 0, 1, 0},
+				{a[3][0],a[3][1],a[3][2],a[3][3],	0, 0, 0, 1}
 		};
-		double c[][]={
-				{ 1, 0, 0, 0},
-				{ 0, 1, 0, 0},
-				{ 0, 0, 1, 0},
-				{ 0, 0, 0, 1}
-		};
-		for(int i=0;i<3;i++){
-			int k=i;
-			for(int j=i+1;j<4;j++)
+		for(i=0;i<3;i++){
+			for(k=i,j=i+1;j<4;j++)
 				if(Math.abs(b[j][i])>Math.abs(b[k][i]))
 					k=j;
-			if(i!=k){
-				for(int j=i;j<4;j++){
-					double p=b[i][j];
+			if(i!=k)
+				for(j=i;j<8;j++){
+					p=b[i][j];
 					b[i][j]=b[k][j];
 					b[k][j]=p;
 				}
-				for(int j=0;j<4;j++){
-					double p=c[i][j];
-					c[i][j]=c[k][j];
-					c[k][j]=p;
-				}
-			}
-			for(int j=i+1;j<4;j++){
-				double p=b[j][i]/b[i][i];
-				for(k=i+1;k<4;k++)
+			for(j=i+1;j<4;j++)
+				for(p=b[j][i]/b[i][i],k=i+1;k<8;k++)
 					b[j][k]-=p*b[i][k];
-				for(k=0;k<4;k++)
-					c[j][k]-=p*c[i][k];
-			}
 		}
-		for(int i=3;i>0;i--)
-			for(int j=0;j<i;j++){
-				double p=b[j][i]/b[i][i];
-				for(int k=0;k<4;k++)
-					c[j][k]-=p*c[i][k];
-			}
-		for(int i=0;i<4;i++){
-			double p=b[i][i];
-			for(int j=0;j<4;j++)
-				c[i][j]/=p;
-		}
+		for(i=3;i>0;i--)
+			for(j=0;j<i;j++)
+				for(p=b[j][i]/b[i][i],k=4;k<8;k++)
+					b[j][k]-=p*b[i][k];
+		
+		for(i=0;i<4;i++)
+			for(p=b[i][i],j=4;j<8;j++)
+				b[i][j]/=p;
+		
 		return new location(
 			new double []
 					{
-						c[0][0],c[1][0],c[2][0],c[3][0],
-						c[0][1],c[1][1],c[2][1],c[3][1],
-						c[0][2],c[1][2],c[2][2],c[3][2],
-						c[0][3],c[1][3],c[2][3],c[3][3]
+						b[0][4],b[1][4],b[2][4],b[3][4],
+						b[0][5],b[1][5],b[2][5],b[3][5],
+						b[0][6],b[1][6],b[2][6],b[3][6],
+						b[0][7],b[1][7],b[2][7],b[3][7]
 					});
 	}
 	public static location caculate_location_from_three_point(point p0,point dx,point dy,boolean modify_flag)

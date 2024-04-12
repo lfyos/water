@@ -14,12 +14,13 @@ function construct_computation_object()
 		];
 	this.matrix_multiplication=function(s,t)
 	{
-		var result=new Array(16);
-		for(var i=0;i<4;i++)
-			for(var j=0,k,result_value;j<4;j++){
-				for(result_value=0,k=0;k<4;k++)
-					result_value+=s[i+4*k]*t[k+4*j];
-				result[i+4*j]=result_value;
+		var i,j,k,p,result=new Array(16);
+		
+		for(i=0;i<4;i++)
+			for(j=0;j<4;j++){
+				for(p=0,k=0;k<4;k++)
+					p+=s[i+4*k]*t[k+4*j];
+				result[i+4*j]=p;
 			}
 		return result;
 	};
@@ -78,60 +79,42 @@ function construct_computation_object()
 	};
 	this.matrix_negative=function(a)
 	{
-		var i,j,k,p;
-		var b=[
-			[a[ 0],a[ 4],a[ 8],a[12]],
-			[a[ 1],a[ 5],a[ 9],a[13]],
-			[a[ 2],a[ 6],a[10],a[14]],
-			[a[ 3],a[ 7],a[11],a[15]]
-		];
-		var c=[
-			[1,0,0,0],
-			[0,1,0,0],
-			[0,0,1,0],
-			[0,0,0,1]
+		var i,j,k;
+		var p,b=[
+			[a[ 0],a[ 4],a[ 8],a[12],	1,0,0,0],
+			[a[ 1],a[ 5],a[ 9],a[13],	0,1,0,0],
+			[a[ 2],a[ 6],a[10],a[14],	0,0,1,0],
+			[a[ 3],a[ 7],a[11],a[15],	0,0,0,1]
 		];
 			
 		for(i=0;i<3;i++){
 			for(k=i,j=i+1;j<4;j++)
 				if(Math.abs(b[j][i])>Math.abs(b[k][i]))
 					k=j;
-			if(i!=k){		
-				for(j=i;j<4;j++){
+			if(i!=k)		
+				for(j=i;j<8;j++){
 					p=b[i][j];
 					b[i][j]=b[k][j];
 					b[k][j]=p;
 				}
-				for(j=0;j<4;j++){
-					p=c[i][j];
-					c[i][j]=c[k][j];
-					c[k][j]=p;
-				}
-			}
-			for(j=i+1;j<4;j++){
-				p=b[j][i]/b[i][i];
-				for(k=i+1;k<4;k++)
+			for(j=i+1;j<4;j++)
+				for(p=b[j][i]/b[i][i],k=i+1;k<8;k++)
 					b[j][k]-=p*b[i][k];
-				for(k=0;k<4;k++)
-					c[j][k]-=p*c[i][k];
-			}
 		}
 		for(i=3;i>0;i--)
-			for(j=0;j<i;j++){
-				p=b[j][i]/b[i][i];
-				for(k=0;k<4;k++)
-					c[j][k]-=p*c[i][k];
-			}
-		for(i=0;i<4;i++){
-			p=b[i][i];
-			for(j=0;j<4;j++)
-				c[i][j]/=p;
-		}
+			for(j=0;j<i;j++)
+				for(p=b[j][i]/b[i][i],k=4;k<8;k++)
+					b[j][k]-=p*b[i][k];
+			
+		for(i=0;i<4;i++)
+			for(p=b[i][i],j=4;j<8;j++)
+				b[i][j]/=p;
+
 		return [
-			c[0][0],c[1][0],c[2][0],c[3][0],
-			c[0][1],c[1][1],c[2][1],c[3][1],
-			c[0][2],c[1][2],c[2][2],c[3][2],
-			c[0][3],c[1][3],c[2][3],c[3][3]
+			b[0][4],b[1][4],b[2][4],b[3][4],
+			b[0][5],b[1][5],b[2][5],b[3][5],
+			b[0][6],b[1][6],b[2][6],b[3][6],
+			b[0][7],b[1][7],b[2][7],b[3][7]
 		];
 	};
 
