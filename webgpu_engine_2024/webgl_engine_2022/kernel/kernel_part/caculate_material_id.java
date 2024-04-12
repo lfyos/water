@@ -15,6 +15,8 @@ public class caculate_material_id
 				p,type_str,body_id,face_id,loop_id,edge_id,
 				material_x,material_y,material_z,material_w);
 		}catch(Exception e) {
+			e.printStackTrace();
+			
 			debug_information.println("Execte part caculate_material_id() fail",e.toString());
 			
 			debug_information.print ("body_id:",body_id);
@@ -26,7 +28,6 @@ public class caculate_material_id
 			debug_information.println("Part system name:",	p.system_name);
 			debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);
 			debug_information.println("Material_file_name:",p.directory_name+p.material_file_name);
-			e.printStackTrace();
 		}
 		return (max_material_id+material_id%max_material_id)%max_material_id;
 	}

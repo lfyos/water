@@ -30,10 +30,12 @@ public class compress_file_data
 
 			ret_val=false;
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println("Do GZIP file compress error:source\t",f.getAbsolutePath());
 			debug_information.println("Do GZIP file compress error:target\t",gf.getAbsolutePath());
 			debug_information.println("Do GZIP file compress error:error\t",e.toString());
-			e.printStackTrace();
+			
 			ret_val=true;
 		}
 		
@@ -77,10 +79,12 @@ public class compress_file_data
 
 			ret_val=false;
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println("Do GZIP file uncompress error:source\t",gf.getAbsolutePath());
 			debug_information.println("Do GZIP file uncompress error:target\t",f.getAbsolutePath());
 			debug_information.println("Do GZIP file uncompress error:error\t",e.toString());
-			e.printStackTrace();
+			
 			ret_val=true;
 		}
 		if(fos!=null)
@@ -124,10 +128,12 @@ public class compress_file_data
 
 			ret_val=false;
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println("Do DEFLATE file compress error:source\t",f.getAbsolutePath());
 			debug_information.println("Do DEFLATE file compress error:target\t",gf.getAbsolutePath());
 			debug_information.println("Do DEFLATE file compress error:error\t",e.toString());
-			e.printStackTrace();
+			
 			ret_val=true;
 		}
 		if(zos!=null)
@@ -171,10 +177,12 @@ public class compress_file_data
 
 			ret_val=false;
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println("Do DEFLATE file uncompress error:source\t",gf.getAbsolutePath());
 			debug_information.println("Do DEFLATE file uncompress error:target\t",f.getAbsolutePath());
 			debug_information.println("Do DEFLATE file uncompress error:error\t",e.toString());
-			e.printStackTrace();
+			
 			ret_val=true;
 		}
 		if(fos!=null)

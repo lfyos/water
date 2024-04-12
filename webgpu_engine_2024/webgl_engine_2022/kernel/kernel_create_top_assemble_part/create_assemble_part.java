@@ -293,13 +293,14 @@ public class create_assemble_part
 			try{
 				add_part.driver=assemble_part.driver.clone(assemble_part,add_part,request_response,system_par,scene_par);
 			}catch(Exception e) {
+				e.printStackTrace();
+				
 				debug_information.println("Execte part clone() fail",e.toString());
 				debug_information.println("Part user name:",	add_part.user_name);
 				debug_information.println("Part system name:",	add_part.system_name);
 				debug_information.println("Mesh_file_name:",	add_part.directory_name+add_part.mesh_file_name);
 				debug_information.println("Material_file_name:",add_part.directory_name+add_part.material_file_name);
 				debug_information.println("Temp directory:",	file_directory.part_file_directory(add_part,system_par,scene_par));
-				e.printStackTrace();
 				
 				render_cont.renders.get(assemble_part.render_id).delete_last_part();
 				continue;

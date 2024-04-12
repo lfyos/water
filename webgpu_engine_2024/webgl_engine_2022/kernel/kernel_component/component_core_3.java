@@ -25,8 +25,10 @@ public class component_core_3 extends component_core_2
 				try {
 					c_d.destroy();
 				}catch(Exception e) {
-					debug_information.println("Execute component driver destroy fail:	",e.toString());
 					e.printStackTrace();
+					
+					debug_information.println("Execute component driver destroy fail:	",e.toString());
+					
 				}
 				driver_array.set(i,null);
 			}
@@ -82,12 +84,13 @@ public class component_core_3 extends component_core_2
 				comp_driver=p.driver.create_component_driver(
 						fr,rollback_flag,p,ccp.clsc,ccp.ek,ccp.request_response);
 			}catch(Exception e){
+				e.printStackTrace();
+				
 				debug_information.println("create_component_driver fail:	",e.toString());
 				debug_information.println("Part user name:",	p.user_name);
 				debug_information.println("Part system name:",	p.system_name);
 				debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);
 				debug_information.println("Material_file_name:",p.directory_name+p.material_file_name);
-				e.printStackTrace();
 			}
 			if(comp_driver!=null)
 				driver_array.add(comp_driver);

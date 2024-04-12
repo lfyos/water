@@ -28,9 +28,11 @@ public class file_reader extends common_reader
 		try{
 			return new FileInputStream(f);
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println("file_reader open file error:\t",my_user_file_name);
 			debug_information.println(e.toString());
-			e.printStackTrace();
+			
 			return null;
 		}
 	}

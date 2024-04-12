@@ -15,7 +15,6 @@ function construct_computation_object()
 	this.matrix_multiplication=function(s,t)
 	{
 		var i,j,k,p,result=new Array(16);
-		
 		for(i=0;i<4;i++)
 			for(j=0;j<4;j++){
 				for(p=0,k=0;k<4;k++)
@@ -86,7 +85,6 @@ function construct_computation_object()
 			[a[ 2],a[ 6],a[10],a[14],	0,0,1,0],
 			[a[ 3],a[ 7],a[11],a[15],	0,0,0,1]
 		];
-			
 		for(i=0;i<3;i++){
 			for(k=i,j=i+1;j<4;j++)
 				if(Math.abs(b[j][i])>Math.abs(b[k][i]))
@@ -105,11 +103,9 @@ function construct_computation_object()
 			for(j=0;j<i;j++)
 				for(p=b[j][i]/b[i][i],k=4;k<8;k++)
 					b[j][k]-=p*b[i][k];
-			
 		for(i=0;i<4;i++)
 			for(p=b[i][i],j=4;j<8;j++)
 				b[i][j]/=p;
-
 		return [
 			b[0][4],b[1][4],b[2][4],b[3][4],
 			b[0][5],b[1][5],b[2][5],b[3][5],

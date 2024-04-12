@@ -34,11 +34,11 @@ public class servlet_network_implementation implements network_implementation
 	static private void print_error(boolean print_stack_trace_flag,
 			String front_msg,Exception e,String end_msg_1,String end_msg_2)
 	{
+		if(print_stack_trace_flag)
+			e.printStackTrace();
 		debug_information.println();
 		debug_information.println(front_msg,e.toString());
 		debug_information.println(end_msg_1,end_msg_2);
-		if(print_stack_trace_flag)
-			e.printStackTrace();
 		return;
 	}
 	public void set_status_code(int new_code)

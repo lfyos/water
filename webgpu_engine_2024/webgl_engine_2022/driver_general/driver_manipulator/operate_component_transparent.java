@@ -56,8 +56,10 @@ public class operate_component_transparent
 				}
 				break;
 			}catch(Exception e){
-				kernel_common_class.debug_information.println("Parse parameter error in transparent_component",e.toString());
 				e.printStackTrace();
+				
+				kernel_common_class.debug_information.println("Parse parameter error in transparent_component",e.toString());
+				
 				return;
 			}
 		}while(false);

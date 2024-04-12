@@ -34,10 +34,11 @@ public class dispatch_create_engine_request
 			try {
 				r_i_driver.response_init_render_data(r,ek,ci);
 			}catch(Exception e){
+				e.printStackTrace();
+				
 				debug_information.println("Render driver response_init_data fail:	",e.toString());
 				debug_information.println("Driver name:		",r.driver.getClass().getName());
 				debug_information.println("render_id:		",render_id);
-				e.printStackTrace();
 			}
 			if(ci.request_response.output_data_length!=old_length){
 				ci.request_response.print(",",render_id).print(",");
@@ -65,6 +66,8 @@ public class dispatch_create_engine_request
 				try {
 					my_part_instance_driver.response_init_part_data(my_p,ek,ci);
 				}catch(Exception e){
+					e.printStackTrace();
+					
 					debug_information.println("Part driver response_init_data fail:	",e.toString());
 					
 					debug_information.println("Part user name:		",	my_p.user_name);
@@ -73,7 +76,6 @@ public class dispatch_create_engine_request
 					debug_information.println("Part material_file_name:",my_p.directory_name+my_p.material_file_name);
 					debug_information.println("part_file_directory:",
 							file_directory.part_file_directory(my_p,ek.system_par,ek.scene_par));
-					e.printStackTrace();
 				}
 				if(ci.request_response.output_data_length!=old_length){
 					ci.request_response.print(",",render_id);
@@ -109,12 +111,13 @@ public class dispatch_create_engine_request
 				try {
 					i_d.response_init_component_data(ek, ci);
 				}catch(Exception e) {
+					e.printStackTrace();
+					
 					debug_information.println("response_init_component_data fail:	",e.toString());
 					debug_information.println("component_name:",comp_array[i].component_name);
 					debug_information.println("component file:",
 							comp_array[i].component_directory_name+comp_array[i].component_file_name);
 					debug_information.println("component driver id:",driver_id);
-					e.printStackTrace();
 				}
 				if(ci.request_response.output_data_length!=old_length){
 					ci.request_response.print(",",comp_array[i].component_id);

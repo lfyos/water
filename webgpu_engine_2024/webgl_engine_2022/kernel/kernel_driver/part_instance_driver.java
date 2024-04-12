@@ -45,13 +45,14 @@ public class part_instance_driver
 				try{
 					return part_instance.response_part_event(p,ek,ci);
 				}catch(Exception e){
+					e.printStackTrace();
+					
 					debug_information.println("Execute part response_part_event fail:",e.toString());
 					debug_information.println("Part user name:",	p.user_name);
 					debug_information.println("Part system name:",	p.system_name);
 					debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);
 					debug_information.println("Material_file_name:",p.directory_name+p.material_file_name);
 					
-					e.printStackTrace();
 				}
 		}
 		return null;

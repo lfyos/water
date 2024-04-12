@@ -128,11 +128,13 @@ public class client_request_switcher
 			try{
 				channel_id=Long.decode(channel_string);
 			}catch(Exception e) {
+				e.printStackTrace();
+				
 				debug_information.println("Channel id is wrong");
 				debug_information.println("client:",request_response.implementor.get_client_id());
 				debug_information.println("Channel:",channel_string);
 				debug_information.println("exception:",e.toString());
-				e.printStackTrace();
+				
 				break;
 			}
 			if((client=get_client_interface(request_response))!=null)

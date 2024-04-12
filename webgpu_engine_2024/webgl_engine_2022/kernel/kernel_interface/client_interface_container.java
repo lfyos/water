@@ -174,8 +174,10 @@ public class client_interface_container
 			process_timeout(my_system_par.max_client_interface_number,my_system_par.engine_expire_time_length);
 			return ret_val;
 		}catch(Exception e) {
-			debug_information.println("get_client_interface exception:\t",e.toString());
 			e.printStackTrace();
+			
+			debug_information.println("get_client_interface exception:\t",e.toString());
+			
 			return null;
 		}
 	}

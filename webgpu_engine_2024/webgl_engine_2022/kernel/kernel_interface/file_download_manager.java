@@ -45,9 +45,10 @@ public class file_download_manager
 			file_date=java.net.URLDecoder.decode(file_date,	request_charset);
 			
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println("Decode parameter fail in downloader,url is ",request_url);
 			debug_information.println(e.toString());
-			e.printStackTrace();
 			debug_information.println();
 			return null;
 		}

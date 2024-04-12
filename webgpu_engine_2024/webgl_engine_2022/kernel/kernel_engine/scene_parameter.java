@@ -373,7 +373,7 @@ public class scene_parameter
 		
 		not_do_ancestor_render_flag				=extra_parameter_fr.get_boolean();
 		
-		fast_load_flag=request_response.get_boolean("fast_load",false);
+		fast_load_flag=request_response.get_boolean("fast_load",true);
 
 		extra_parameter_fr.close();
 

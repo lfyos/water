@@ -68,6 +68,8 @@ public class common_reader
 		try{
 			input_stream_reader=new InputStreamReader(input_stream,charset_name);
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			try {
 				input_stream.close();
 				buffered_input_stream.close();
@@ -80,7 +82,7 @@ public class common_reader
 			orginal_input_stream=null;
 			
 			debug_information.println("file_reader reset exception:\t",e.toString());
-			e.printStackTrace();
+		
 			return;
 		}
 		reader=new BufferedReader(input_stream_reader);
@@ -104,8 +106,10 @@ public class common_reader
 			try{
 				reader.close();
 			}catch(Exception e){
-				debug_information.println("file_reader close exception:\t",e.toString());
 				e.printStackTrace();
+				
+				debug_information.println("file_reader close exception:\t",e.toString());
+				
 			}
 			reader=null;
 		}

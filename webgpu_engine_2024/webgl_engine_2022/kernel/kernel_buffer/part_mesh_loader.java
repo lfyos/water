@@ -108,7 +108,7 @@ public class part_mesh_loader
 				my_priority=pps.scene_package_priority[p.part_package_id];
 				break;
 			default:
-				my_priority=pps.type_package_priority[p.part_type_id][p.part_package_id];
+				my_priority=pps.type_package_priority[p.part_type_id-2][p.part_package_id];
 				break;
 			}
 			if(last_priority<=my_priority)

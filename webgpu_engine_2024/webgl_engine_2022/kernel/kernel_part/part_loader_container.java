@@ -46,12 +46,13 @@ public class part_loader_container
 		try{			
 			pl.join();
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println(e.toString());
 			debug_information.println("Error:\twait_for_completion:\t"+pl.loaded_part.system_name);
 			debug_information.println("		",pl.loaded_part.directory_name+pl.loaded_part.mesh_file_name);
 			debug_information.println("		",pl.loaded_part.directory_name+pl.loaded_part.material_file_name);
 			debug_information.println("		",file_directory.part_file_directory(pl.loaded_part,system_par, scene_par));
-			e.printStackTrace();
 		}
 		if(display_flag)
 			if(!(pl.test_loading_flag())) {
@@ -232,9 +233,11 @@ public class part_loader_container
 		try{
 			load_routine(my_part,my_copy_from_part,system_par,scene_par,already_loaded_part);
 		}catch(Exception e) {
+			e.printStackTrace();
+			
 			debug_information.println("load of part_loader_container fail");
 			debug_information.println(e.toString());
-			e.printStackTrace();
+
 		}
 		part_loader_container_lock.unlock();
 		

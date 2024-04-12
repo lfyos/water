@@ -76,6 +76,8 @@ public class dispatch_component_request
 						try{
 							ret_val=in_dr.response_component_event(ek,ci);
 						}catch(Exception e){
+							e.printStackTrace();
+							
 							ret_val=null;
 							part my_part=comp.driver_array.get(driver_id).component_part;
 							debug_information.println("1.Execute response_component_event fail:	",e.toString());
@@ -84,7 +86,7 @@ public class dispatch_component_request
 							debug_information.println("Part user name:	",	my_part.user_name);
 							debug_information.println("Part system name:",	my_part.system_name);
 							debug_information.println("Mesh file name:	",	my_part.directory_name+my_part.mesh_file_name);
-							e.printStackTrace();
+							
 						}
 					}
 				}
@@ -96,6 +98,8 @@ public class dispatch_component_request
 					str=java.net.URLDecoder.decode(str,request_charset);
 					str=java.net.URLDecoder.decode(str,request_charset);
 				}catch(Exception e) {
+					e.printStackTrace();
+					
 					debug_information.println(
 							"Can't decode component name in component_request_dispatch of dispatch_component_request\t:\t",str);
 					return null;
@@ -138,6 +142,8 @@ public class dispatch_component_request
 						try{
 							ret_val=in_dr.response_component_event(ek,ci);
 						}catch(Exception e){
+							e.printStackTrace();
+							
 							ret_val=null;
 							part my_part=comp.driver_array.get(driver_id).component_part;
 							
@@ -147,7 +153,7 @@ public class dispatch_component_request
 							debug_information.println("Part user name:	",	my_part.user_name);
 							debug_information.println("Part system name:",	my_part.system_name);
 							debug_information.println("Mesh file name:	",	my_part.directory_name+my_part.mesh_file_name);
-							e.printStackTrace();
+							
 						}
 					}
 				}

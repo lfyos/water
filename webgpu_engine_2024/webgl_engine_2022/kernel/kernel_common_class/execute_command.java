@@ -43,12 +43,13 @@ public class execute_command extends Thread
 		try{
 			process=Runtime.getRuntime().exec(cmd);
 		}catch(Exception e) {
+			e.printStackTrace();
+			
 			save_result("execute_command start exception:"+name+"	:	"+e.toString());
 			if(cmd!=null)
 				for(int i=0,ni=cmd.length;i<ni;i++)
 					save_result(cmd[i]);
-			
-			e.printStackTrace();
+
 			return;
 		}
 
@@ -61,20 +62,22 @@ public class execute_command extends Thread
 					osw.write("\n");
 				}
 			}catch(Exception e) {
-				save_result("execute_command send parameter exception:"+name+"	:	"+e.toString());
 				e.printStackTrace();
+				save_result("execute_command send parameter exception:"+name+"	:	"+e.toString());
 			}
 			try {
 				osw.close();
 			}catch(Exception e) {
-				save_result("execute_command send parameter close writer exception:"+name+"	:	"+e.toString());
 				e.printStackTrace();
+				
+				save_result("execute_command send parameter close writer exception:"+name+"	:	"+e.toString());
 			}
 			try {
 				os.close();
 			}catch(Exception e) {
-				save_result("execute_command send parameter close stream exception:"+name+"	:	"+e.toString());
 				e.printStackTrace();
+				
+				save_result("execute_command send parameter close stream exception:"+name+"	:	"+e.toString());
 			}
 		}
 
@@ -88,27 +91,31 @@ public class execute_command extends Thread
 			for(String str;(str=reader.readLine())!= null;)
 				save_result(str);
 		}catch(Exception e) {
-			save_result("execute_command read message exception:"+name+"	:	"+e.toString());
 			e.printStackTrace();
+			
+			save_result("execute_command read message exception:"+name+"	:	"+e.toString());
 		}
 		
 		try {
 			reader.close();
 		}catch(Exception e) {
-			save_result("execute_command close console 3 exception:"+name+"	:	"+e.toString());
 			e.printStackTrace();
+			
+			save_result("execute_command close console 3 exception:"+name+"	:	"+e.toString());
 		}
 		try {
 			isr.close();
 		}catch(Exception e) {
-			save_result("execute_command close console 2 exception:"+name+"	:	"+e.toString());
 			e.printStackTrace();
+			
+			save_result("execute_command close console 2 exception:"+name+"	:	"+e.toString());
 		}
 		try {
 			is.close();
 		}catch(Exception e) {
-			save_result("execute_command close console 1 exception:"+name+"	:	"+e.toString());
 			e.printStackTrace();
+			
+			save_result("execute_command close console 1 exception:"+name+"	:	"+e.toString());
 		}
 		
 		is=process.getErrorStream();
@@ -119,32 +126,37 @@ public class execute_command extends Thread
 			for(String str;(str=reader.readLine())!= null;)
 				save_result(str);
 		}catch(Exception e) {
-			save_result("execute_command read exception message exception:"+name+"	:	"+e.toString());
 			e.printStackTrace();
+			
+			save_result("execute_command read exception message exception:"+name+"	:	"+e.toString());
 		}
 		try {
 			reader.close();
 		}catch(Exception e) {
-			save_result("execute_command close exception 3 exception:"+name+"	:	"+e.toString());
 			e.printStackTrace();
+			
+			save_result("execute_command close exception 3 exception:"+name+"	:	"+e.toString());
 		}
 		try {
 			isr.close();
 		}catch(Exception e) {
-			save_result("execute_command close exception 2 exception:"+name+"	:	"+e.toString());
 			e.printStackTrace();
+			
+			save_result("execute_command close exception 2 exception:"+name+"	:	"+e.toString());
 		}
 		try {
 			is.close();
 		}catch(Exception e) {
-			save_result("execute_command close exception 1 exception:"+name+"	:	"+e.toString());
 			e.printStackTrace();
+			
+			save_result("execute_command close exception 1 exception:"+name+"	:	"+e.toString());
 		}
 		try {
 			process.waitFor();
 		}catch(Exception e) {
-			save_result("execute_command process.waitFor() exception:"+name+"	:	"+e.toString());
 			e.printStackTrace();
+			
+			save_result("execute_command process.waitFor() exception:"+name+"	:	"+e.toString());
 		}
 		
 		finished_flag=true;

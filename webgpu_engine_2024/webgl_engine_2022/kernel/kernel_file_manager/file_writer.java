@@ -52,10 +52,11 @@ public class file_writer extends common_writer
 			fos=new FileOutputStream(f);
 			bos=new BufferedOutputStream(fos);			
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			error_flag=true;
 			debug_information.println("file_writer exception:\t",e.toString());
 			debug_information.println(directory_name,file_name);
-			e.printStackTrace();
 		}
 	}
 	public static void make_directory(String directory_name)
@@ -82,9 +83,10 @@ public class file_writer extends common_writer
 	        s_buf.close();
 			s_stream.close();
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println("file_writer copy_file_data exception:\t",e.toString());
 			debug_information.println(s_file.getAbsolutePath());
-			e.printStackTrace();
 		}
 		return total_length;
 	}
@@ -122,12 +124,13 @@ public class file_writer extends common_writer
 			d_buf.close();
 			d_stream.close();
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println("file_writer merge_file exception:\t",e.toString());
 			if(source_file_name!=null)
 				for(int i=0,ni=source_file_name.length;i<ni;i++)
 					debug_information.println(source_file_name[i]);
 			debug_information.println(destination_file_name);
-			e.printStackTrace();
 		}
 		return total_length;
 	}
@@ -160,10 +163,11 @@ public class file_writer extends common_writer
 				d_buf.close();
 				d_stream.close();
 			}catch(Exception e){
+				e.printStackTrace();
+				
 				debug_information.println("file_writer file_copy_routine exception:\t",e.toString());
 				debug_information.println(source_file_name);
 				debug_information.println(destination_file_name);
-				e.printStackTrace();
 			}
 		}
 		return total_length;
@@ -206,10 +210,12 @@ public class file_writer extends common_writer
 		try{
 			enter_byte=("\n").getBytes(destination_charset);
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println("file_writer charset_copy can not get byte of enter:\t",e.toString());
 			debug_information.println(source_file_name);
 			debug_information.println(destination_file_name);
-			e.printStackTrace();
+			
 			return;
 		}
 		
@@ -241,10 +247,12 @@ public class file_writer extends common_writer
 				d_buf.write(enter_byte);
 			}
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println("file_writer charset_copy exception:\t",e.toString());
 			debug_information.println(source_file_name);
 			debug_information.println(destination_file_name);
-			e.printStackTrace();
+			
 		}
 		if(d_buf!=null)
 			try{
@@ -292,18 +300,21 @@ public class file_writer extends common_writer
 				bos.close();
 				bos=null;
 			}catch(Exception e){
+				e.printStackTrace();
+				
 				debug_information.println("file_writer close exception 1:\t",e.toString());
 				debug_information.println(directory_name,file_name);
-				e.printStackTrace();
 			}
 		if(fos!=null)
 			try{
 				fos.close();
 				fos=null;
 			}catch(Exception e){
+				e.printStackTrace();
+				
 				debug_information.println("file_writer close exception 2:\t",e.toString());
 				debug_information.println(directory_name,file_name);
-				e.printStackTrace();
+				
 			}
 	}
 	public common_writer flush()
@@ -311,16 +322,18 @@ public class file_writer extends common_writer
 		try {
 			bos.flush();
 		}catch(Exception e) {
+			e.printStackTrace();
+			
 			debug_information.println("bos flush int file writer exception:\t",e.toString());
 			debug_information.println(directory_name,file_name);
-			e.printStackTrace();
 		}
 		try {
 			fos.flush();
 		}catch(Exception e) {
+			e.printStackTrace();
+			
 			debug_information.println("fos flush int file writer exception:\t",e.toString());
 			debug_information.println(directory_name,file_name);
-			e.printStackTrace();
 		}
 		return this;
 	}
@@ -330,9 +343,10 @@ public class file_writer extends common_writer
 		try{
 			bos.write(data,offset,length);
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println("write_routine int file writer exception:\t",e.toString());
 			debug_information.println(directory_name,file_name);
-			e.printStackTrace();
 		}
 		return this;
 	};

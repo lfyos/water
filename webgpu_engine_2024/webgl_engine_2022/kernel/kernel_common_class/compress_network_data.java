@@ -20,9 +20,11 @@ public class compress_network_data
 
 			return ret_val;
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println(
 					"Do GZIP network compress error:error\t",e.toString());
-			e.printStackTrace();
+			
 			return null;
 		}
 	}
@@ -40,9 +42,10 @@ public class compress_network_data
 
 			return ret_val;
 		}catch(Exception e){
+			e.printStackTrace();
+			
 			debug_information.println(
 					"Do DEFLATE network compress error:error\t",e.toString());
-			e.printStackTrace();
 			
 			return null;
 		}

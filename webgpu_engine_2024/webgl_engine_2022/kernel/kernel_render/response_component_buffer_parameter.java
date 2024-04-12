@@ -62,16 +62,16 @@ public class response_component_buffer_parameter
 			try{
 				in_dr.create_component_parameter(ek,ci);
 			}catch(Exception e){
+				e.printStackTrace();
+				
 				part p=cll.comp.driver_array.get(cll.driver_id).component_part;
-						
+				
 				debug_information.println("create_component_parameter in instance_driver fail:	",e.toString());
 				debug_information.println("Component name:	",	cll.comp.component_name);
 				debug_information.println("Driver ID:		",	cll.driver_id);
 				debug_information.println("Part user name:	",	p.user_name);
 				debug_information.println("Part system name:",	p.system_name);
 				debug_information.println("Mesh file name:	",	p.directory_name+p.mesh_file_name);
-						
-				e.printStackTrace();
 			}
 			ci.request_response.print("]");
 			

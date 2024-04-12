@@ -242,10 +242,12 @@ public class component_core_4 extends component_core_3
 		try {
 			ret_val=p.driver.assemble_file_name_and_file_charset(fr,p,ccp.ek,ccp.request_response);
 		}catch(Exception e) {
+			e.printStackTrace();
+			
 			debug_information.println(
 				"external_part_driver driver assemble_file_name_and_file_charset execption:	",
 				"component_name:	"+component_name+"		external_part_name:	"+external_part_name);
-			e.printStackTrace();
+			
 			return null;
 		}
 		if(ret_val==null) {
@@ -276,11 +278,13 @@ public class component_core_4 extends component_core_3
 				try {
 					create_child_number=Integer.decode(str);
 				}catch(Exception e){
+					e.printStackTrace();
+					
 					fr.close();
 					debug_information.println("Find error child_number:	",str);
 					debug_information.println("File name:	 ",fr.directory_name+fr.file_name);
 					debug_information.println("Error:	",e.toString());
-					e.printStackTrace();
+					
 					create_child_number=0;
 				}
 				if(create_child_number>0){
@@ -599,10 +603,11 @@ public class component_core_4 extends component_core_3
 						this_child_comp=new component(token_string,mount_fr,
 							uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp);
 					}catch(Exception e) {
+						e.printStackTrace();
+						
 						this_child_comp=null;
 						debug_information.println("Create scene from ",afc.file_name_array[j]+" fail");
 						debug_information.println("			",fr.directory_name+fr.file_name);
-						e.printStackTrace();
 					}
 					if(this_child_comp!=null)
 						append_child(new component[] {this_child_comp});

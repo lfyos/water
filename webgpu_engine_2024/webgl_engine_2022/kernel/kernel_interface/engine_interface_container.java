@@ -162,9 +162,10 @@ public class engine_interface_container
 			ret_val=create_engine_kernel_container_routine(request_response,
 				client_scene_file_name,client_scene_file_charset,engine_counter,system_par);
 		}catch(Exception e) {
+			e.printStackTrace();
+			
 			debug_information.println("get_kernel_container of engine_interface fail");
 			debug_information.println(e.toString());
-			e.printStackTrace();
 			ret_val=null;
 		}
 		client_interface_lock.unlock();
