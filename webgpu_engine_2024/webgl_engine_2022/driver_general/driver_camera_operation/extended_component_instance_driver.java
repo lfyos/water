@@ -215,6 +215,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		if((str=ci.request_response.get_parameter("component_id"))!=null)
 			locate_comp=ek.component_cont.get_component(Integer.decode(str));
+		
 		if(locate_comp!=null){
 			boolean mandatory_movement_flag=true,mandatory_scale_flag=true;
 			if((str=ci.request_response.get_parameter("mandatory_movement"))!=null)
@@ -285,6 +286,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				my_box,null,scale_value,true,mandatory_movement_flag,mandatory_scale_flag);
 			return;
 		}
+		
 		point p0=null,p1=null;
 		
 		if((str=ci.request_response.get_parameter("clear_pickup"))!=null)

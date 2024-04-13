@@ -14,7 +14,7 @@ import kernel_network.client_request_response;
 
 public class javascript_program
 {
-	private String default_fetch_parameter_filename;
+	private String default_fetch_parameter_filename,default_draw_process_bar_filename;
 	private long last_modified_time;
 	
 	private static final String javascript_file_name[]=new String[] 
@@ -32,10 +32,18 @@ public class javascript_program
 	public javascript_program(system_parameter system_par)
 	{
 		default_fetch_parameter_filename =system_par.default_parameter_directory;
-		default_fetch_parameter_filename+="servlet_parameter/fetch_parameter/parameter.txt";
+		default_fetch_parameter_filename+="network_parameter/fetch_parameter.txt";
 		default_fetch_parameter_filename =file_reader.separator(default_fetch_parameter_filename);
 		
-		last_modified_time=new File(default_fetch_parameter_filename).lastModified();
+		long t1=last_modified_time=new File(default_fetch_parameter_filename).lastModified();
+		
+		default_draw_process_bar_filename =system_par.default_parameter_directory;
+		default_draw_process_bar_filename+="javascript_program/draw_process_bar.txt";
+		default_draw_process_bar_filename =file_reader.separator(default_draw_process_bar_filename);
+		
+		long t2=new File(default_draw_process_bar_filename).lastModified();
+		
+		last_modified_time=(t1>t2)?t1:t2;
 		
 		for(int i=0,ni=javascript_file_name.length;i<ni;i++) {
 			common_reader cr=class_file_reader.get_reader(javascript_file_name[i],
@@ -92,6 +100,13 @@ public class javascript_program
 		request_response.println("	var default_fetch_parameter=");
 		file_reader fr=new file_reader(default_fetch_parameter_filename,system_par.local_data_charset);
 		fr.get_text(request_response,"	");
+		request_response.println();
+		fr.close();
+		
+		request_response.println("	var default_user_process_bar_function=");
+		fr=new file_reader(default_draw_process_bar_filename,system_par.local_data_charset);
+		fr.get_text(request_response,"	");
+		request_response.println();
 		fr.close();
 
 		for(int i=0,ni=javascript_file_name.length;i<ni;i++) {
@@ -113,7 +128,10 @@ public class javascript_program
 		}
 		
 		str=new String[]{
-				"	return await render_main(my_canvas,my_create_parameter,user_process_bar_function,",
+				"	return await render_main(my_canvas,my_create_parameter,",
+				"				(typeof(user_process_bar_function)==\"function\")",
+				"					?user_process_bar_function",
+				"					:default_user_process_bar_function,",
 				"				\""	+request_response.implementor.get_url()+"\",",
 				"				default_fetch_parameter,"+
 									system_par.create_engine_sleep_time_length_scale+","+

@@ -1,12 +1,10 @@
-package kernel_servlet;
+package kernel_network;
 
 import java.io.InputStream;
 
 import kernel_common_class.debug_information;
-import kernel_network.network_implementation;
-import kernel_network.network_implementation_default_parameter;
 
-public class servlet_network_implementation implements network_implementation
+public class network implements network_implementation
 {
 	//request
 	private javax.servlet.http.HttpServletRequest	request;
@@ -14,7 +12,7 @@ public class servlet_network_implementation implements network_implementation
 	
 	private String request_charset,client_id;
 	
-	public servlet_network_implementation(
+	public network(
 			javax.servlet.http.HttpServletRequest	my_request,
 			javax.servlet.http.HttpServletResponse	my_response)
 	{
@@ -151,4 +149,5 @@ public class servlet_network_implementation implements network_implementation
 			return null;
 		}
 	}
+
 }

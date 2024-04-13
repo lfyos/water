@@ -14,37 +14,6 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 	this.time_unit						="";
 	this.set_time						=new Date().getTime();
 
-	if(typeof(this.process_bar_function)!="function"){
-		this.process_bar_function	=function(
-				webgpu_canvas_id,				//绘制结束后，绘制结果拷贝到哪个canvas 
-				process_bar_canvas,				//绘制进度条的画布canvas
-				process_bar_ctx,				//绘制进度条的2D上下文
-				process_bar_caption,			//进度条当前进度标题，该标题和语言有关，目前系统中仅仅配置了中文和英文相关标题
-				process_bar_value,				//进度条当前进度，取值范围0.00~1.00
-				process_bar_time_length,		//进度条当前进度经过的时间，单位是毫秒
-				process_bar_engine_time_length,	//进度条所有进度经过的时间，单位是毫秒
-				time_unit)						//和语言有关时间单位标题，比如中文是秒，英文是second
-		{
-			var p_separator=Math.round(process_bar_canvas.width*process_bar_value);
-			process_bar_ctx.fillStyle="rgb(127,127,127)";
-			process_bar_ctx.fillRect(0,			0,	p_separator,				process_bar_canvas.height);
-			process_bar_ctx.fillStyle="rgb(255,255,255)";
-			process_bar_ctx.fillRect(p_separator,	0,	process_bar_canvas.width,	process_bar_canvas.height);
-			
-			if((process_bar_value=(Math.round(1000.0*process_bar_value)/10.0).toString()).indexOf(".")<0)
-				process_bar_value+=".0";
-			var display_value=process_bar_caption+":"+process_bar_value+"%,";
-			display_value+=(Math.round(process_bar_time_length/1000.0)).toString()+time_unit+",";
-			display_value+=(Math.round(process_bar_engine_time_length/1000.0)).toString()+time_unit;
-			
-			process_bar_ctx.font			="bold 48px Arial";
-			process_bar_ctx.textBaseline	="middle";
-			process_bar_ctx.fillStyle		="rgb(192,192,192)";
-			process_bar_ctx.textAlign		="center";		
-			process_bar_ctx.fillText(display_value,process_bar_canvas.width/2.0,process_bar_canvas.height/2.0);
-			return;
-		}
-	}
 	this.destroy=function()
 	{
 		this.webgpu							=null;

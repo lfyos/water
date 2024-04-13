@@ -1,14 +1,15 @@
 package kernel_camera;
 
-import kernel_common_class.const_value;
-import kernel_component.component_container;
-import kernel_driver.modifier_container;
-import kernel_engine.client_parameter;
 import kernel_part.part;
 import kernel_transformation.box;
-import kernel_transformation.location;
+import kernel_component.component;
 import kernel_transformation.plane;
 import kernel_transformation.point;
+import kernel_engine.client_parameter;
+import kernel_transformation.location;
+import kernel_common_class.const_value;
+import kernel_driver.modifier_container;
+import kernel_component.component_container;
 
 public class locate_camera
 {
@@ -168,7 +169,8 @@ public class locate_camera
 		point py=dir.multiply(new point(0,1,0)).sub(p0).expand(1.0);
 		point pz=dir.multiply(new point(0,0,1)).sub(p0).expand(1.0);
 			
-		location loca=new location(center_point,center_point.add(px),center_point.add(py),center_point.add(pz));
+		location loca=new location(	center_point,
+			center_point.add(px),center_point.add(py),center_point.add(pz));
 		loca=loca.multiply(location.standard_negative).normalize();
 		loca=cam.eye_component.caculate_negative_absolute_location().multiply(loca);
 
@@ -249,6 +251,21 @@ public class locate_camera
 		}
 		return false;
 	}
+	public boolean locate_on_origin(modifier_container modifier_cont,
+			component_container component_cont,client_parameter par,
+			boolean switch_camera_flag,boolean mandatory_movement_flag,boolean mandatory_scale_flag)
+	{
+		component comp;
+		if((comp=par.comp)==null){
+			if((comp=component_cont.search_component())==null)
+				return false;;
+			if(!(comp.uniparameter.effective_selected_flag))
+				return false;
+		}
+		locate(comp.absolute_location.multiply(new point(0,0,0)),null);
+		return locate_on_components(modifier_cont,
+					switch_camera_flag,mandatory_movement_flag,mandatory_scale_flag);
+	}
 	public boolean locate_on_components(
 			modifier_container modifier_cont,box my_box,location dir,double my_scale_value,
 			boolean switch_camera_flag,boolean mandatory_movement_flag,boolean mandatory_scale_flag)
@@ -264,12 +281,14 @@ public class locate_camera
 	public void locate_on_components(
 			modifier_container modifier_cont,component_container component_cont,
 			camera_result display_camera_result,client_parameter par,location dir,
-			double my_scale_value,long start_time,boolean switch_camera_flag,
-			boolean mandatory_movement_flag,boolean mandatory_scale_flag,point p0,point p1)
+			double my_scale_value,long start_time,
+			boolean switch_camera_flag,	boolean mandatory_movement_flag,boolean mandatory_scale_flag,
+			point p0,point p1)
 	{
 		if(locate(component_cont,display_camera_result,par,dir,p0,p1)!=null){
 			scale(my_scale_value);
-			locate_on_components(modifier_cont,switch_camera_flag,mandatory_movement_flag,mandatory_scale_flag);
+			locate_on_components(modifier_cont,
+				switch_camera_flag,mandatory_movement_flag,mandatory_scale_flag);
 		}
 	}
 }

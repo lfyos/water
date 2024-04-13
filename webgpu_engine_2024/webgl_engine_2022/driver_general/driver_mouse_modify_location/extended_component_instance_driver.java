@@ -187,7 +187,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		case "dblclick_view_no_pickup":
 			ci.parameter.comp=null;
 		case "dblclick_view":
-			if(str.compareTo("touchend")==0) {
+			if(str.compareTo("touchend")==0){
 				if(ci.parameter.comp==null)
 					return null;
 				if((ci.parameter.x<view_range[0])||(ci.parameter.x>view_range[1]))
@@ -209,6 +209,13 @@ public class extended_component_instance_driver extends component_instance_drive
 					ci.parameter,null,ci.display_camera_result.cam.parameter.scale_value,
 					ek.modifier_cont[modifier_container_id].get_timer().get_current_time(),
 					true,true,true,p0,p1);
+			return null;
+		case "dblclick_origin_no_pickup":
+			ci.parameter.comp=null;
+		case "dblclick_origin":
+			(new locate_camera(ci.display_camera_result.cam)).locate_on_origin(
+					ek.modifier_cont[modifier_container_id],ek.component_cont,
+					ci.parameter,true,true,true);
 			return null;
 		case "dblclick_component":
 			component_array c_a=new component_array();

@@ -504,8 +504,19 @@ function dblclick(event,component_id,render)
 	if(ep.render_data==null)
 		return false;
 		
-	if(event.button==0)
-		send_to_webserver(component_id,(render.event_component.mouse.function_id<200)?"dblclick_view":"dblclick_component",render);
+	if(event.button!=0)
+		return false;
+		
+	var event_operation;
+	
+	if(render.event_component.mouse.function_id>=200)
+		event_operation="dblclick_component";
+	else if(event.ctrlKey)
+		event_operation=event.shiftKey?"dblclick_origin_no_pickup":"dblclick_origin";
+	else
+		event_operation=event.shiftKey?"dblclick_view_no_pickup":"dblclick_view";
+			
+	send_to_webserver(component_id,event_operation,render);
 		
 	return false;
 }
