@@ -18,7 +18,7 @@
 		
 				part_list		mount	SLDASM.assemble
 				
-				environment_scene_sub_directory_mount	liufuyan_scene_directory_configure	root.assemble
+				environment_scene_sub_directory_mount	lfy_user_dir	root.assemble
 		
 		/*	2:child_number	*/	0
 		

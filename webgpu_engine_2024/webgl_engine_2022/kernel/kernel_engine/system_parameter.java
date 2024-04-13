@@ -116,22 +116,25 @@ public class system_parameter
 		String temporary_file_configure_environment_variable=f.get_string();
 		f.close();
 
-		int index_id=webserver_configure_file_name.lastIndexOf(File.separatorChar);
-		String application_directory_name=webserver_configure_file_name.substring(0,index_id+1);
-		
 		String data_file_configure_file_name;
 		if((data_file_configure_file_name=System.getenv(data_file_configure_environment_variable))==null)
 			data_file_configure_file_name=data_file_configure_environment_variable;
 		data_file_configure_file_name=file_reader.separator(data_file_configure_file_name.trim());
 		if(data_file_configure_file_name.charAt(0)=='.')
-			data_file_configure_file_name=application_directory_name+data_file_configure_file_name;
+			data_file_configure_file_name=f.directory_name+data_file_configure_file_name;
+		if(data_file_configure_file_name.charAt(data_file_configure_file_name.length()-1)!=File.separatorChar)
+			data_file_configure_file_name+=File.separatorChar;
+		data_file_configure_file_name+="configure.txt";
 
 		String temporary_file_configure_file_name;
 		if((temporary_file_configure_file_name=System.getenv(temporary_file_configure_environment_variable))==null)
 			temporary_file_configure_file_name=temporary_file_configure_environment_variable;
 		temporary_file_configure_file_name=file_reader.separator(temporary_file_configure_file_name.trim());
 		if(temporary_file_configure_file_name.charAt(0)=='.')
-			temporary_file_configure_file_name=application_directory_name+temporary_file_configure_file_name;
+			temporary_file_configure_file_name=f.directory_name+temporary_file_configure_file_name;
+		if(temporary_file_configure_file_name.charAt(temporary_file_configure_file_name.length()-1)!=File.separatorChar)
+			temporary_file_configure_file_name+=File.separatorChar;
+		temporary_file_configure_file_name+="configure.txt";
 
 		debug_information.println();
 		debug_information.println("data_file_configure_environment_variable:	",		data_file_configure_environment_variable);

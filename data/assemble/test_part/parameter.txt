@@ -1,5 +1,5 @@
-/*	type_shader_file_name		*/	type_shaders.txt				environment_directory	liufuyan_scene_directory_configure
-/*	scene_shader_file_name		*/	scene_shaders.txt				environment_directory	liufuyan_scene_directory_configure
-/*	change_component_file_name	*/	change_component.txt			environment_directory	liufuyan_scene_directory_configure
+/*	type_shader_file_name		*/	type_shaders.txt				environment_directory	lfy_user_dir
+/*	scene_shader_file_name		*/	scene_shaders.txt				environment_directory	lfy_user_dir
+/*	change_component_file_name	*/	change_component.txt			environment_directory	lfy_user_dir
 /*	camera_file_name			*/	orthongraphics/camera.txt	//	perspective/camera.txt
 /*	client_parameter_name		*/	client_sub_directory

@@ -36,7 +36,7 @@ var lfy_render;
 
 async function body_onload()
 {
-	lfy_render=await (await import("./graphics_engine_interface")).main(
+	lfy_render=await (await import("./lfy_webgpu_engine")).main(
 		["my_canvas"],
 		{
 			user_name				:	my_user_name,				//用户名	

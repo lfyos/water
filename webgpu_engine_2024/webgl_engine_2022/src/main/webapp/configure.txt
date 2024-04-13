@@ -1,2 +1,2 @@
-/*	data_file_configure environment variable		*/		liufuyan_data_file_configure
-/*	temporary_file_configure environment variable	*/		liufuyan_temporary_file_configure
+/*	data_file_configure environment variable		*/		lfy_data_dir
+/*	temporary_file_configure environment variable	*/		lfy_temp_dir

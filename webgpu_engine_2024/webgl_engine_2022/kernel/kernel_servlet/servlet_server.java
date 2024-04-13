@@ -14,7 +14,7 @@ import kernel_interface.client_request_switcher;
 	name="servlet_server",
 	urlPatterns = 
 	{ 
-		"/graphics_engine_interface" 
+		"/lfy_webgpu_engine" 
 	},
 	asyncSupported = true
 )
