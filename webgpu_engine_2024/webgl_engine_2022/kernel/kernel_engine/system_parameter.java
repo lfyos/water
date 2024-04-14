@@ -102,47 +102,19 @@ public class system_parameter
 		temporary_file_par				=sp.temporary_file_par;
 		switch_server					=sp.switch_server;
 	}
-	public system_parameter(String webserver_configure_file_name)
+	public system_parameter(
+			String data_file_configure_file_name,
+			String temporary_file_configure_file_name)
 	{
-		webserver_configure_file_name=file_reader.separator(webserver_configure_file_name);
-		file_reader f=new file_reader(webserver_configure_file_name,null);
-		if(f.error_flag()){
-			debug_information.println("Can't not open configure.txt on working directory:	",webserver_configure_file_name);
-			debug_information.println("do System.exit(0)");
-			System.exit(0);
-			return;
-		}
-		String      data_file_configure_environment_variable=f.get_string();
-		String temporary_file_configure_environment_variable=f.get_string();
-		f.close();
-
-		String data_file_configure_file_name;
-		if((data_file_configure_file_name=System.getenv(data_file_configure_environment_variable))==null)
-			data_file_configure_file_name=data_file_configure_environment_variable;
-		data_file_configure_file_name=file_reader.separator(data_file_configure_file_name.trim());
-		if(data_file_configure_file_name.charAt(0)=='.')
-			data_file_configure_file_name=f.directory_name+data_file_configure_file_name;
-		if(data_file_configure_file_name.charAt(data_file_configure_file_name.length()-1)!=File.separatorChar)
-			data_file_configure_file_name+=File.separatorChar;
-		data_file_configure_file_name+="configure.txt";
-
-		String temporary_file_configure_file_name;
-		if((temporary_file_configure_file_name=System.getenv(temporary_file_configure_environment_variable))==null)
-			temporary_file_configure_file_name=temporary_file_configure_environment_variable;
-		temporary_file_configure_file_name=file_reader.separator(temporary_file_configure_file_name.trim());
-		if(temporary_file_configure_file_name.charAt(0)=='.')
-			temporary_file_configure_file_name=f.directory_name+temporary_file_configure_file_name;
-		if(temporary_file_configure_file_name.charAt(temporary_file_configure_file_name.length()-1)!=File.separatorChar)
-			temporary_file_configure_file_name+=File.separatorChar;
-		temporary_file_configure_file_name+="configure.txt";
+		data_file_configure_file_name		=file_reader.separator(data_file_configure_file_name);
+		temporary_file_configure_file_name	=file_reader.separator(temporary_file_configure_file_name);
 
 		debug_information.println();
-		debug_information.println("data_file_configure_environment_variable:	",		data_file_configure_environment_variable);
-		debug_information.println("data_file_configure_file_name:		",				data_file_configure_file_name);
-		debug_information.println("temporary_file_configure_environment_variable:	",	temporary_file_configure_environment_variable);
-		debug_information.println("temporary_file_configure_file_name:		",			temporary_file_configure_file_name);
+		debug_information.println("data_file_configure_file_name:		",	data_file_configure_file_name);
+		debug_information.println("temporary_file_configure_file_name:	",	temporary_file_configure_file_name);
 
-		f=new file_reader(data_file_configure_file_name,Charset.defaultCharset().name());
+		file_reader f=new file_reader(data_file_configure_file_name,Charset.defaultCharset().name());
+		
 		if(f.error_flag()){
 			debug_information.println("Can't not open system_parameter file	",data_file_configure_file_name);
 			debug_information.println("do System.exit(0)");

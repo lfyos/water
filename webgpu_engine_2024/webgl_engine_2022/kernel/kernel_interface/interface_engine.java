@@ -2,14 +2,14 @@ package kernel_interface;
 
 import kernel_common_class.debug_information;
 import kernel_common_class.nanosecond_timer;
-import kernel_engine.engine_call_result;
 import kernel_engine.create_engine_counter;
+import kernel_engine.engine_call_result;
 import kernel_engine.system_parameter;
 import kernel_network.client_request_response;
 import kernel_network.network_implementation;
 import kernel_program_javascript.javascript_program;
 
-public class client_request_switcher
+public class interface_engine 
 {
 	private system_parameter system_par;
 	private javascript_program program_javascript;
@@ -84,9 +84,11 @@ public class client_request_switcher
 		engine_call_result ecr=null;
 		client_interface client=null;
 		String channel_string=request_response.get_parameter("channel");
+
 		switch((channel_string==null)?"switch":channel_string){
 		case "switch":
-			if((channel_string=system_par.switch_server.get_switch_server_url(request_response,system_par))!=null){
+			channel_string=system_par.switch_server.get_switch_server_url(request_response,system_par);
+			if(channel_string!=null){
 				debug_information.println();
 				debug_information.println("client 		",		request_response.implementor.get_client_id());
 				debug_information.println("switch from	",		request_response.implementor.get_url());
@@ -179,9 +181,13 @@ public class client_request_switcher
 		request_response.destroy();
 		return;
 	}
-	public client_request_switcher(String webserver_configure_file_name)
+	public interface_engine(
+			String data_file_configure_file_name,
+			String temporary_file_configure_file_name)
 	{
-		system_par			=new system_parameter(webserver_configure_file_name);
+		system_par			=new system_parameter(
+									data_file_configure_file_name,
+									temporary_file_configure_file_name);
 		program_javascript	=new javascript_program(system_par);
 		
 		client_container	=new client_interface_container[system_par.max_client_container_number];

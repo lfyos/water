@@ -1,2 +1,0 @@
-/*	data_file_configure environment variable		*/		lfy_data_dir
-/*	temporary_file_configure environment variable	*/		lfy_temp_dir
