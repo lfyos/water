@@ -7,7 +7,10 @@ var lfy_render;
 
 async function body_onload()
 {
-	lfy_render=await (await import("./lfy_webgpu_engine")).main(
+	var servlet_url	="./webgpu_interface.servlet";
+	var jsp_url		="./webgpu_interface.jsp";
+	
+	lfy_render=await (await import(jsp_url)).main(
 		["my_canvas"],		//Object类型的绘图画布。如果是String类型,则系统使用document.getElementById("my_canvas")将其转换为Object类型数据。
 		
 		{	

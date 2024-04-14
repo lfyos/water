@@ -36,7 +36,10 @@ var lfy_render;
 
 async function body_onload()
 {
-	lfy_render=await (await import("./lfy_webgpu_engine")).main(
+	var servlet_url	="./webgpu_interface.servlet";
+	var jsp_url		="./webgpu_interface.jsp";
+	
+	lfy_render=await (await import(jsp_url)).main(
 		["my_canvas"],
 		{
 			user_name				:	my_user_name,				//用户名	
@@ -82,8 +85,8 @@ function body_onunload()
 
 <body onload="body_onresize();body_onload();" onresize="body_onresize();" onunload="body_onunload();" >
 
-<div align="center">
-<canvas id="my_canvas"		tabindex="0"	></canvas>
+<div align	="center">
+<canvas id	="my_canvas"	tabindex="0"	></canvas>
 </div>
 
 </body>

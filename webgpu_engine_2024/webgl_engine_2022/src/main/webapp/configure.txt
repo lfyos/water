@@ -1,0 +1,2 @@
+/*	data directory environment variable			*/		lfy_data_dir
+/*	temporary directory environment variable	*/		lfy_temp_dir
