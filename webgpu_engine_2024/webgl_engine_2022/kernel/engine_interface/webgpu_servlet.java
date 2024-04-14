@@ -22,7 +22,7 @@ public class webgpu_servlet extends HttpServlet
     
     public webgpu_servlet() 
     {
-    	engine=new webgpu_engine();
+    	engine=new webgpu_engine("lfy_data_dir","lfy_temp_dir");
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException 

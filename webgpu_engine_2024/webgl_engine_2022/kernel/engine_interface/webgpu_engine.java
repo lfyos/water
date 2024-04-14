@@ -13,31 +13,39 @@ import kernel_network.network;
 public class webgpu_engine 
 {
 	private interface_engine engine;
-    
-    public webgpu_engine() 
-    {
+	
+	public webgpu_engine(String data_environment_variable_name,String temp_environment_variable_name)
+	{
         String data_dir_name,temp_dir_name;
         
-		if((data_dir_name=System.getenv("lfy_data_dir"))==null) {
-			debug_information.println("data_file_configure_directory_name is null,its environment is lfy_data_dir");
+		if((data_dir_name=System.getenv(data_environment_variable_name))==null) {
+			debug_information.println(
+					"data_file_configure_directory_name is null,its environment is ",
+					data_environment_variable_name);
 			System.exit(0);
 			return;
 		}
 		if((data_dir_name=file_reader.separator(data_dir_name.trim())).length()<=0) {
-			debug_information.println("data_file_configure_directory_name is empty,its environment is lfy_data_dir");
+			debug_information.println(
+					"data_file_configure_directory_name is empty,its environment is ",
+					data_environment_variable_name);
 			System.exit(0);
 			return;
 		}
 		if(data_dir_name.charAt(data_dir_name.length()-1)!=File.separatorChar)
 			data_dir_name+=File.separatorChar;
 		
-		if((temp_dir_name=System.getenv("lfy_temp_dir"))==null) {
-			debug_information.println("temp_file_configure_directory_name is null,its environment is temp_dir");
+		if((temp_dir_name=System.getenv(temp_environment_variable_name))==null) {
+			debug_information.println(
+					"temp_file_configure_directory_name is null,its environment is ",
+					temp_environment_variable_name);
 			System.exit(0);
 			return;
 		}
 		if((temp_dir_name=file_reader.separator(temp_dir_name.trim())).length()<=0) {
-			debug_information.println("temp_file_configure_directory_name is empty,its environment is temp_dir");
+			debug_information.println(
+					"temp_file_configure_directory_name is empty,its environment is ",
+					temp_environment_variable_name);
 			System.exit(0);
 			return;
 		}
@@ -48,7 +56,8 @@ public class webgpu_engine
 		String temp_file_name=temp_dir_name+"configure.txt";
 		
 		if(!(new File(data_file_name).exists())) {
-			debug_information.println("data_file_configure_file NOT exist,its environment is lfy_data_dir");
+			debug_information.println(
+					"data_configure_file is NOT exist,its file_name is ",data_file_name);
 			debug_information.println(data_file_name);
 			System.exit(0);
 			return;
