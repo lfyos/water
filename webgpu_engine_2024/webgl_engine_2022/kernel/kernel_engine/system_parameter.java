@@ -226,9 +226,8 @@ public class system_parameter
 			file_download_cors_string="*";
 		else {
 			String cores_file_name=f.directory_name+file_reader.separator(file_download_cors_string);
-			if(!(new File(cores_file_name).exists()))
-				file_download_cors_string=file_download_cors_string.trim();
-			else{
+			file_download_cors_string=file_download_cors_string.trim();
+			if(new File(cores_file_name).exists()){
 				file_download_cors_string="";
 				for(file_reader cors_fr=new file_reader(cores_file_name,f.get_charset());;) {
 					if(cors_fr.eof()){
@@ -236,7 +235,7 @@ public class system_parameter
 						break;
 					}
 					String str;
-					if((str=cors_fr.get_line())!=null)
+					if((str=cors_fr.get_string())!=null)
 						if((str=str.trim()).length()>0)
 							file_download_cors_string+=str;
 				}

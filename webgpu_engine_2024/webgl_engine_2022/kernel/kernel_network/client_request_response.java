@@ -186,6 +186,7 @@ public class client_request_response extends common_writer
 			else
 				data_buf=compress_data_buf;
 		}
+		
 		implementor.set_response_http_header(
 			"public long[] response_network_data(String compress_response_header,engine_call_result ecr,system_parameter system_par)",
 			get_charset(),response_content_type,compress_response_header,ecr.cors_string,ecr.date_string,

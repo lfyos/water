@@ -130,9 +130,8 @@ public class client_interface
 			ecr=created_ek_and_ci.get_engine_result(container_id,cpb,engine_container.system_boftal_container,
 					engine_container.component_load_source_cont,client_scene_file_name,client_scene_file_charset,
 					request_response,delay_time_length,statistics_user,engine_counter);
-		}catch(Exception e) {
+		}catch(Exception e){
 			e.printStackTrace();
-			
 			ecr=null;
 			debug_information.println("ec[channel_id].engine_kernel_link_list.get_engine_result fail");
 		}
