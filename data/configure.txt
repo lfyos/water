@@ -36,8 +36,6 @@
 /*	min_compress_response_length											*/		1024
 /*	max_buffer_object_head_package_length									*/		8000000
 
-,
-	
 /*	file_download_cors_string												*/		*
 
 /*	max_process_component_load_number										*/		5

@@ -109,7 +109,7 @@ public class dispatch_buffer_request
 				case 0:
 					str=ek.render_cont.system_part_package.package_file_name[package_id];
 					break;
-				case 2:
+				case 1:
 					str=ek.render_cont.scene_part_package.package_file_name[package_id];
 					break;
 				default:

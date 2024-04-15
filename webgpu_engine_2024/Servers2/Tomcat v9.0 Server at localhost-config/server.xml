@@ -17,7 +17,7 @@
 --><!-- Note:  A "Server" is not itself a "Container", so you may not
      define subcomponents such as "Valves" at this level.
      Documentation at /docs/config/server.html
- --><Server port="8005" shutdown="SHUTDOWN">
+ --><Server port="9005" shutdown="SHUTDOWN">
   <Listener className="org.apache.catalina.startup.VersionLoggerListener"/>
   <!-- Security listener. Documentation at /docs/config/listeners.html
   <Listener className="org.apache.catalina.security.SecurityListener" />
@@ -61,10 +61,9 @@
          Define a non-SSL/TLS HTTP/1.1 Connector on port 8080
     -->
 
-    <Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1" redirectPort="8443"	URIEncoding="UTF-8"	/>
-    <Connector connectionTimeout="20000" port="80"   protocol="HTTP/1.1" redirectPort="8443"	URIEncoding="UTF-8"	/>
- 
-    <Connector connectionTimeout="20000" port="9090"	protocol="HTTP/1.1"						URIEncoding="UTF-8"	
+    <Connector connectionTimeout="20000" port="9090" protocol="HTTP/1.1" redirectPort="9443"	URIEncoding="UTF-8"	/>
+   
+    <Connector connectionTimeout="20000" port="9091"	protocol="HTTP/1.1"						URIEncoding="UTF-8"	
     	keystoreFile="F:/water_all/tomcat.keystore" 	keystorePass="123456"
     	SSLEnabled="true" clientAuth="false" maxThreads="150" scheme="https" secure="true" sslProtocol="TLS"
     />
@@ -114,7 +113,7 @@
     -->
 
     <!-- Define an AJP 1.3 Connector on port 8009 -->
-    <Connector port="8009" protocol="AJP/1.3" redirectPort="8443"/>
+    <Connector port="9009" protocol="AJP/1.3" redirectPort="9443"/>
 
 
     <!-- An Engine represents the entry point (within Catalina) that processes

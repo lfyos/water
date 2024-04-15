@@ -1,6 +1,7 @@
-		default_proxy_url
+//		default_proxy_url
 
-//		http://localhost:8080/webgl_engine_2022/graphics_engine_interface?channel=buffer&file=
+//		http://localhost:8080/interface.jsp?channel=buffer&file=
+		
 //		http://localhost:8080/webgl_engine_2020/graphics_engine_interface?channel=proxy&file=
 //		http://localhost:8080/webgl_engine_2020/graphics_engine_interface?channel=buffer&file=
 //		http://localhost:8080/webgl_engine_2020/graphics_engine_interface?channel=proxy&file=

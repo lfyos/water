@@ -24,7 +24,7 @@
     
     <servlet-mapping>
 		<servlet-name>webgpu_server</servlet-name>
-		<url-pattern>/webgpu_interface.servlet</url-pattern>
+		<url-pattern>/interface.servlet</url-pattern>
 	</servlet-mapping>
 
   <!-- ======================== Introduction ============================== -->
