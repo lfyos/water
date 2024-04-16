@@ -9,9 +9,13 @@ public class http_modify_string
 {
 	private static  SimpleDateFormat data_format()
 	{
-		SimpleDateFormat sdf = new SimpleDateFormat("EEE,dd MMM yyyy HH:mm:ss 'GMT'",Locale.US);
+		SimpleDateFormat sdf=new SimpleDateFormat("EEE,dd MMM yyyy HH:mm:ss:SS 'GMT'",Locale.US);
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		return sdf;
+	}
+	public static String string(long t)
+	{
+		return string(new Date(t));
 	}
 	public static String string(Date da)
 	{

@@ -1,7 +1,6 @@
 package kernel_program_javascript;
 
 import java.io.File;
-import java.util.Date;
 
 import kernel_engine.engine_call_result;
 import kernel_engine.system_parameter;
@@ -63,31 +62,27 @@ public class javascript_program
 	public engine_call_result create(
 			client_request_response request_response,system_parameter system_par)
 	{
-		String last_modified_str=Long.toString(last_modified_time);
-		
 		String function_date;
 		if((function_date=request_response.get_parameter("function_date"))!=null)
-			if(function_date.compareTo(last_modified_str)!=0)
+			if(Long.parseLong(function_date)!=last_modified_time)
 				function_date=null;
+		
 		if(function_date==null){
 			String url=request_response.implementor.get_url();
-			url+="?channel=javascript&function_date="+last_modified_str;
+			url+="?channel=javascript&function_date="+last_modified_time;
 			request_response.implementor.redirect_url(url,"*");
 			return null;
 		}
 
-		String request_modified_str=request_response.implementor.get_header("If-Modified-Since");
-		String file_modified_str=http_modify_string.string(new Date(last_modified_time));
-		if(request_modified_str!=null){
-			long current_time=http_modify_string.parse(file_modified_str);
-			long request_time=http_modify_string.parse(request_modified_str);
-			if((request_time>=0)&&(current_time>=0)&&(request_time>=current_time)){
+		String request_modified_str;
+		if((request_modified_str=request_response.implementor.get_header("If-Modified-Since"))!=null)
+			if(last_modified_time<=http_modify_string.parse(request_modified_str)){
 				request_response.implementor.response_not_modify(
-					"javascript_program response_not_modify()",file_modified_str,
+					"javascript_program response_not_modify()",
+					http_modify_string.string(last_modified_time),
 					Long.toString(system_par.file_buffer_expire_time_length));
 				return null;
 			}
-		}
 		
 		String str[]=new String[]
 		{
@@ -144,6 +139,7 @@ public class javascript_program
 		
 		request_response.response_content_type="application/javascript";
 
-		return new engine_call_result(null,null,null,null,file_modified_str,"*");
+		return new engine_call_result(null,null,null,null,
+				http_modify_string.string(last_modified_time),"*");
 	}
 }
