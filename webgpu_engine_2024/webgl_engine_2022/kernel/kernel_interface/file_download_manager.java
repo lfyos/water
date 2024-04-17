@@ -1,7 +1,6 @@
 package kernel_interface;
 
 import java.io.File;
-import java.util.Date;
 
 import kernel_common_class.debug_information;
 import kernel_common_class.http_modify_string;
@@ -66,22 +65,17 @@ public class file_download_manager
 			debug_information.println(file_date);
 			debug_information.println(real_file_date);
 			return null;
-		}		
-		String request_modified_str,current_modified_str=http_modify_string.string(new Date(f.lastModified()));
+		}
+		String request_modified_str;
 		if((request_modified_str=request_response.implementor.get_header("If-Modified-Since"))!=null)
 			if(http_modify_string.parse(request_modified_str)>=f.lastModified()){
 				request_response.implementor.response_not_modify(
 					"response_not_modify in execute_file_call of client_interface\n file name is "+file_name,
-					current_modified_str,Long.toString(system_par.file_buffer_expire_time_length));
+					system_par.system_cors_string);
 				return null;
 			}
-
 		caculate_charset_compress_file_name cccfn=new caculate_charset_compress_file_name(f,system_par);
-		request_response.response_content_type=(cccfn.content_type_str==null)?"text/plain":(cccfn.content_type_str);
 
-		return new engine_call_result(
-				cccfn.file_name,system_par.network_data_charset,
-				cccfn.charset_file_name,cccfn.compress_file_name,
-				current_modified_str,system_par.file_download_cors_string);
+		return new engine_call_result(cccfn,system_par.network_data_charset,system_par.system_cors_string);
 	}
 }

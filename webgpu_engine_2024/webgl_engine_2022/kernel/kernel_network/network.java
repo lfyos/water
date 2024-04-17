@@ -3,6 +3,7 @@ package kernel_network;
 import java.io.InputStream;
 
 import kernel_common_class.debug_information;
+import kernel_common_class.http_modify_string;
 
 public class network implements network_implementation
 {
@@ -84,33 +85,34 @@ public class network implements network_implementation
 			print_error(true,"Error in sendRedirect\t",e,"URL:\t",url);
 		}
 	}
-	public void response_not_modify(String error_msg,String date_string,String max_age_string)
+	public void response_not_modify(String error_msg,String cors_string)
 	{
-		try{
-			response.setHeader("Cache-Control","public");
-			response.setHeader("Last-Modified",date_string);
-			response.addHeader("Cache-Control","max-age="+max_age_string);
+		response.setHeader("Access-Control-Allow-Origin",cors_string);
+		try{	
 			response.sendError(javax.servlet.http.HttpServletResponse.SC_NOT_MODIFIED);
 		}catch(Exception e){
 			print_error(true,"Error in response_not_modify\t",e,"Client_id:"+client_id,error_msg);
 		}
 	}
 	public void set_response_http_header(
-			String error_msg,String server_response_charset,String content_type,
-			String compress_response_header,String cors_string,String date_string,String max_age_string)
+			String server_response_charset,String content_type,
+			String compress_response_header,
+			String cors_string,long last_time,long max_time_length)
 	{
 		response.setCharacterEncoding(server_response_charset);
 		response.setContentType(content_type);
 
 		if(compress_response_header!=null)
 			response.setHeader("Content-Encoding",compress_response_header);
+		
 		response.setHeader("Access-Control-Allow-Origin",cors_string);
-		if(date_string==null)
+		
+		if(last_time<=0)
 			response.setHeader("Cache-Control","no-store");
 		else {
-			response.setHeader("Last-Modified",date_string);
 			response.setHeader("Cache-Control","public");
-			response.addHeader("Cache-Control","max-age="+max_age_string);
+			response.addHeader("Cache-Control","max-age="+max_time_length);
+			response.setHeader("Last-Modified",http_modify_string.string(last_time));
 		}
 	}
 	public boolean response_binary_data(String error_msg,byte data_buf[],int length)

@@ -408,7 +408,7 @@ public class client_interface
 				request_response.println("}");
 				break;	
 			}
-		return new engine_call_result(null,null,null,null,null,"*");
+		return new engine_call_result(system_par.system_cors_string,request_response.response_content_type);
 	}
 	public engine_call_result process_process_bar_system_call(client_request_response request_response)
 	{

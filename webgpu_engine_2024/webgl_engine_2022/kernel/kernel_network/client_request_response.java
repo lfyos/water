@@ -169,7 +169,7 @@ public class client_request_response extends common_writer
 		String str=get_parameter(name);
 		return (str==null)?0:Double.parseDouble(str);
 	}
-	public void response_network_data(String compress_response_header,engine_call_result ecr,system_parameter system_par)
+	public void response_network_data(engine_call_result ecr,system_parameter system_par)
 	{
 		try{
 			output_stream.close();
@@ -178,19 +178,19 @@ public class client_request_response extends common_writer
 			debug_information.println("Error 1 in response_network_data\t",e.toString());
 		}
 		
-		byte data_buf[]=output_stream.toByteArray();
-		if(compress_response_header!=null){
-			byte compress_data_buf[]=compress_network_data.do_compress(data_buf,compress_response_header);
-			if(compress_data_buf==null)
-				compress_response_header=null;
-			else
-				data_buf=compress_data_buf;
-		}
+		String compress_response_header="gzip";
+		byte data_buf[]=output_stream.toByteArray(),compress_data_buf[];
+		
+		if(data_buf.length<=system_par.min_compress_response_length)
+			compress_response_header=null;
+		else if((compress_data_buf=compress_network_data.do_compress(data_buf,compress_response_header))==null)
+			compress_response_header=null;
+		else 
+			data_buf=compress_data_buf;
 		
 		implementor.set_response_http_header(
-			"public long[] response_network_data(String compress_response_header,engine_call_result ecr,system_parameter system_par)",
-			get_charset(),response_content_type,compress_response_header,ecr.cors_string,ecr.date_string,
-			Long.toString(system_par.file_buffer_expire_time_length));
+			get_charset(),ecr.response_content_type,compress_response_header,ecr.cors_string,
+			ecr.last_modified_time,system_par.file_buffer_expire_time_length);
 		implementor.response_binary_data("response_network_data error",data_buf,data_buf.length);
 		implementor.terminate_response_binary_data("Error 3 in response_network_data");
 		
@@ -263,8 +263,7 @@ public class client_request_response extends common_writer
 		return new long[] {begin_pointer,end_pointer};
 	}
 	
-	public void response_file_data(	String compress_response_header,
-					engine_call_result ecr,system_parameter system_par)
+	public void response_file_data(	engine_call_result ecr,system_parameter system_par)
 	{
 		try{
 			output_stream.close();
@@ -272,84 +271,75 @@ public class client_request_response extends common_writer
 			e.printStackTrace();
 			debug_information.println("Error 1 in response_file_data\t",e.toString());
 		}
+
+		String file_name=ecr.file_name;
+		String network_data_charset=ecr.file_charset;
+		String compress_response_header="gzip";
 		
-		String file_name=ecr.file_name,network_data_charset=ecr.file_charset,error_msg;
-		
+		String error_msg;
 		error_msg ="\nfile_name is "+file_name;
 		error_msg ="\file_charset is "+ecr.file_charset;
 		error_msg+="\ncharset_file_name is "+ecr.charset_file_name;
 		error_msg+="\ncompress_file_name is "+ecr.compress_file_name;
 		error_msg+="\ncharset_name is "+system_par.network_data_charset;
-
-		if((ecr.charset_file_name!=null)&&(ecr.file_charset!=null))
-			if(system_par.network_data_charset.compareTo(ecr.file_charset)!=0){
-				exclusive_file_mutex efm=exclusive_file_mutex.lock(
-					ecr.charset_file_name+".lock","wait for create charset file name:"+ecr.charset_file_name);
-				try {
-					long s=new File(file_name).lastModified();
-					long t=new File(ecr.charset_file_name).lastModified();
-					if(s>=t)
-						file_writer.charset_copy(file_name,ecr.file_charset,
-								ecr.charset_file_name,system_par.network_data_charset);
-				}catch(Exception e) {
-					e.printStackTrace();
-					
-					debug_information.println("response_file_data exception 1\t",e.toString());
-				}
-				
-				efm.unlock();
-				
-				file_name=ecr.charset_file_name;
-				network_data_charset=system_par.network_data_charset;
-			}
-		File f=new File(file_name);
 		
-		long file_length=f.length();
-		if(file_length<=0) {
-			debug_information.println("response_file_data find file length is ZERO:	",file_name);
-			return;
-		}
-
-		if((ecr.compress_file_name!=null)&&(compress_response_header!=null))
-			switch(ecr.compress_file_name){
-			case "gzip":
-			case "deflate":
-			case "br":
-				compress_response_header=ecr.compress_file_name;
-				break;
-			default:
+		File f;
+		
+		if(ecr.already_compress_file_flag)
+			f=new File(file_name);
+		else{
+			if((ecr.charset_file_name!=null)&&(ecr.file_charset!=null))
+				if(system_par.network_data_charset.compareTo(ecr.file_charset)!=0){
+					exclusive_file_mutex efm=exclusive_file_mutex.lock(
+						ecr.charset_file_name+".lock","wait for create charset file name:"+ecr.charset_file_name);
+					try {
+						if(new File(ecr.charset_file_name).lastModified()<=new File(file_name).lastModified())
+							file_writer.charset_copy(file_name,ecr.file_charset,
+									ecr.charset_file_name,system_par.network_data_charset);
+					}catch(Exception e){
+						e.printStackTrace();
+						debug_information.println("response_file_data exception 1\t",e.toString());
+					}
+					efm.unlock();
+					file_name=ecr.charset_file_name;
+					network_data_charset=system_par.network_data_charset;
+				}
+			if((f=new File(file_name)).length()<=0){
+				debug_information.println("response_file_data find file length is ZERO:	",file_name);
+				return;
+			}
+			if(ecr.compress_file_name==null)
+				compress_response_header=null;
+			else {
 				String compress_file_name=ecr.compress_file_name+"."+compress_response_header;
 				exclusive_file_mutex efm=exclusive_file_mutex.lock(
-					compress_file_name+".lock","wait for create compress file name:"+compress_file_name);
-				try {
+						compress_file_name+".lock","wait for create compress file name:"+compress_file_name);
+				try{
 					File gf=new File(compress_file_name);
 					if(f.lastModified()<gf.lastModified())
 						f=gf;
-					else{
-						if(compress_file_data.do_compress(f,gf,system_par.response_block_size,compress_response_header))
+					else if(compress_file_data.do_compress(f,gf,
+							system_par.response_block_size,compress_response_header))
 							compress_response_header=null;
-						else
+					else
 							f=new File(compress_file_name);
-					}
-				}catch(Exception e) {
+				}catch(Exception e){
 					e.printStackTrace();
-					
 					debug_information.println("response_file_data exception 2\t",e.toString());
 				}
-				
 				efm.unlock();
-				break;
 			}
-
+		}
+		
 		long file_range[];
 		if((file_range=get_range(f.length(),system_par.response_block_size))==null)
 			return;
-
 		error_msg=range_string+"\n"+error_msg;
+		
 		implementor.set_response_http_header(
-			error_msg,network_data_charset,response_content_type,
-			compress_response_header,ecr.cors_string,ecr.date_string,
-			Long.toString(system_par.file_buffer_expire_time_length));
+			network_data_charset,ecr.response_content_type,
+			compress_response_header,ecr.cors_string,ecr.last_modified_time,
+			system_par.file_buffer_expire_time_length);
 
 		byte data_buf[]=new byte[system_par.response_block_size];
 		FileInputStream 	s_stream=null;
@@ -357,8 +347,7 @@ public class client_request_response extends common_writer
 		try{
 			s_stream=new FileInputStream(f);
 			s_buf	=new BufferedInputStream(s_stream);	
-			if(file_range[0]!=0)
-				s_buf.skip(file_range[0]);
+			s_buf.skip(file_range[0]);
 			
 			for(long i=file_range[0],length;i<=file_range[1];i+=length){
 				length=file_range[1]-i+1;
@@ -391,6 +380,7 @@ public class client_request_response extends common_writer
 		implementor.terminate_response_binary_data(error_msg);
 		return;
 	}
+	
 	public common_writer print_routine(String str)
 	{
 		if(parameter!=null)

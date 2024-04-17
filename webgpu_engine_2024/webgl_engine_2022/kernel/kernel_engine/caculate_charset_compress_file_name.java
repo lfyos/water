@@ -2,79 +2,77 @@ package kernel_engine;
 
 import java.io.File;
 
-import kernel_common_class.change_name;
+import kernel_common_class.debug_information;
 
 public class caculate_charset_compress_file_name
 {
-	public String file_name,charset_file_name,compress_file_name,content_type_str;
-	public int content_type_id;
+	public String file_name;
+	public long last_modified_time;
+	
+	public String charset_file_name,compress_file_name;
+	
+	public boolean already_compress_file_flag;
+	
+	public String response_content_type;
 
-	private void caculate(
-			File f,									change_name content_type_change_name,
-			String data_root_directory_name,		String compress_data_root_directory_name,
-			String temporary_root_directory_name,	String compress_temporary_root_directory_name)
-	{
-		file_name=f.getAbsolutePath();
-		if(file_name.indexOf(temporary_root_directory_name)==0){
-			String temp_file_name=file_name.substring(temporary_root_directory_name.length());
-			charset_file_name=compress_temporary_root_directory_name+temp_file_name+".charset";
-			compress_file_name=compress_temporary_root_directory_name+temp_file_name+".compress";
-		}else if(file_name.indexOf(data_root_directory_name)==0){
-			String temp_file_name=file_name.substring(data_root_directory_name.length());
-			charset_file_name=compress_data_root_directory_name+temp_file_name+".charset";
-			compress_file_name=compress_data_root_directory_name+temp_file_name+".compress";
-		}else{
-			charset_file_name=null;
-			compress_file_name=null;
-		}
-		
-		int index_id;
-		String ext_file_name="txt",fail_response_content_type="text/plain";
-		if((index_id=file_name.lastIndexOf('.'))<0){
-			content_type_str=fail_response_content_type;
-			content_type_id=-1;
-		}else{
-			ext_file_name=file_name.substring(index_id+1);
-			content_type_id=content_type_change_name.search(ext_file_name);
-			content_type_str=content_type_change_name.get_search_result(content_type_id,fail_response_content_type);
-		}
-		
-		if((index_id=content_type_str.indexOf(":"))==0){
-			compress_file_name=null;
-			content_type_str=content_type_str.substring(1);
-		}else if(index_id>0){
-			String compress_response_header=content_type_str.substring(0,index_id).toLowerCase();
-			switch(compress_response_header) {
-			case "gzip":
-			case "deflate":
-			case "br":
-				compress_file_name=compress_response_header;
-				break;
-			default:
-				long compress_length=Long.decode(compress_response_header);
-				if((compress_length<=0)||(f.length()<compress_length))
-					compress_file_name=null;
-				break;
-			}
-			content_type_str=content_type_str.substring(index_id+1);
-		}else
-			compress_file_name=null;
-			
-		if((index_id=content_type_str.indexOf(":"))==0){
-			charset_file_name=null;
-			content_type_str=content_type_str.substring(1);
-		}else if(index_id>0){
-			if(content_type_str.substring(0,index_id).compareTo("charset")!=0)
-				charset_file_name=null;
-			content_type_str=content_type_str.substring(index_id+1);
-		}else
-			charset_file_name=null;
-	}
 	public caculate_charset_compress_file_name(File f,system_parameter system_par)
 	{
-		caculate(f,	system_par.content_type_change_name,system_par.data_root_directory_name,
-					system_par.temporary_file_par.compress_data_root_directory_name,
-					system_par.temporary_file_par.temporary_root_directory_name,
-					system_par.temporary_file_par.compress_temporary_root_directory_name);
+		file_name			=f.getAbsolutePath();
+		last_modified_time	=f.lastModified();
+
+		if(file_name.indexOf(system_par.temporary_file_par.temporary_root_directory_name)!=0){
+			charset_file_name	=null;
+			compress_file_name	=null;
+		}else{
+			int dir_length=system_par.temporary_file_par.temporary_root_directory_name.length();
+			String dir_name=system_par.temporary_file_par.compress_temporary_root_directory_name;
+			dir_name+=file_name.substring(dir_length);
+			charset_file_name	=dir_name+".charset";
+			compress_file_name	=dir_name+".compress";
+		}
+		already_compress_file_flag	=false;
+		response_content_type		="text/plain";
+		
+		int index_id;
+		String str,compress_str;
+		
+		do{
+			if((index_id=file_name.lastIndexOf('.'))>=0)
+				if((index_id=system_par.content_type_change_name.search(file_name.substring(index_id+1)))>=0)
+					if((str=system_par.content_type_change_name.get_search_result(index_id,null))!=null)
+						if((index_id=str.indexOf(":"))>=0)
+							break;
+			compress_file_name=null;
+			return;
+		}while(false);
+		
+		compress_str=str.substring(0,index_id).toLowerCase();
+		str=str.substring(index_id+1);
+		
+		switch(compress_str) {
+		case "gzip":
+			compress_file_name=null;
+			already_compress_file_flag=true;
+			break;
+		default:
+			try{
+				long compress_length=Long.decode(compress_str);
+				if((compress_length<=0)||(f.length()<compress_length))
+					compress_file_name=null;
+			}catch(Exception e) {
+				debug_information.println("Unknown compress_str:	",compress_str);
+				compress_file_name=null;
+			}
+			break;
+		}
+
+		if((index_id=str.indexOf(":"))<0) {
+			response_content_type=str.trim();
+			charset_file_name=null;
+		}else{
+			response_content_type=str.substring(index_id+1);
+			if(str.substring(0,index_id).compareTo("charset")!=0)
+				charset_file_name=null;
+		}
 	}
 }

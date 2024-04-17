@@ -16,10 +16,13 @@ public interface network_implementation
 	
 	public void redirect_url(String url,String cors_string);
 	
-	public void response_not_modify(String error_msg,String date_string,String max_age_string);
+
+	public void response_not_modify(String error_msg,String cors_string);
 	public void set_response_http_header(
-			String error_msg,String server_response_charset,String content_type,
-			String compress_response_header,String cors_string,String date_string,String max_age_string);
+					String server_response_charset,String content_type,
+					String compress_response_header,
+					String cors_string,long last_time,long max_time_length);
+	
 	public boolean response_binary_data(String error_msg,byte data_buf[],int length);
 	public void terminate_response_binary_data(String error_msg);
 	

@@ -64,51 +64,53 @@ public class dispatch_request_main
 		ek.current_time.refresh_timer();
 		String file_name[]=get_engine_result_routine(delay_time_length,ek,ci);
 		ek.process_reset();
-		
-		String cors_string=ek.scene_par.scene_cors_string;
-		long min_compress_response_length=ek.system_par.min_compress_response_length;
-		long my_length	=ci.request_response.output_data_length;
-		String compress_file_name="do_compress_flag";
-		if((min_compress_response_length<=0)||(my_length<min_compress_response_length))
-			compress_file_name=null;
+
+		String scene_cors_string	=ek.scene_par.scene_cors_string;
+		String response_content_type=ci.request_response.response_content_type;
 		
 		if(file_name==null)
-			return new engine_call_result(null,null,null,compress_file_name,null,cors_string);
+			return new engine_call_result(scene_cors_string,response_content_type);
 		if(file_name.length<=0)
-			return new engine_call_result(null,null,null,compress_file_name,null,cors_string);
+			return new engine_call_result(scene_cors_string,response_content_type);
 		if(file_name[0]==null)
-			return new engine_call_result(null,null,null,compress_file_name,null,cors_string);
-		
+			return new engine_call_result(scene_cors_string,response_content_type);
+
 		ci.request_response.reset();
-		
-		if(file_name.length<=1)
-			file_name=new String[] {file_name[0],null};
-		if(file_name[1]==null)
-			file_name[1]=Charset.defaultCharset().name();
 		
 		File f=new File(file_name[0]);
 		
 		if(!(f.exists())){
-			debug_information.println("create engine_call_result error in get_engine_result,file NOT exist\t",f.getAbsolutePath());
-			return new engine_call_result(null,null,null,null,null,cors_string);
+			debug_information.println(
+				"create engine_call_result error in get_engine_result,file NOT exist\t",
+				f.getAbsolutePath());
+			return null;
 		}
 		if(!(f.isFile())){
-			debug_information.println("create engine_call_result error in get_engine_result,file NOT normal file\t",f.getAbsolutePath());
-			return new engine_call_result(null,null,null,null,null,cors_string);
+			debug_information.println(
+				"create engine_call_result error in get_engine_result,file NOT normal file\t",
+				f.getAbsolutePath());
+			return null;
 		}
 		if(!(f.canRead())){
-			debug_information.println("create engine_call_result error in get_engine_result,file CAN NOT read\t",f.getAbsolutePath());
-			return new engine_call_result(null,null,null,null,null,cors_string);
+			debug_information.println(
+				"create engine_call_result error in get_engine_result,file CAN NOT read\t",
+				f.getAbsolutePath());
+			return null;
 		}
-		String my_url=ci.get_file_proxy_url(f,ek.system_par);
-		if(my_url!=null){
-			ci.request_response.implementor.redirect_url(my_url,ek.scene_par.scene_cors_string);
-			return new engine_call_result(null,null,null,null,null,cors_string);
+		
+		String url;
+		if((url=ci.get_file_proxy_url(file_name[0],ek.system_par))!=null) {
+			ci.request_response.implementor.redirect_url(url,ek.scene_par.scene_cors_string);
+			return null;
 		}
-		caculate_charset_compress_file_name cccfn=new caculate_charset_compress_file_name(f,ek.system_par);
-		ci.request_response.response_content_type=cccfn.content_type_str;
 
-		return new engine_call_result(cccfn.file_name,file_name[1],
-			cccfn.charset_file_name,cccfn.compress_file_name,null,cors_string);
+		caculate_charset_compress_file_name cccf;
+		cccf=new caculate_charset_compress_file_name(f,ek.system_par);
+		
+		if(file_name.length>1)
+			if(file_name[1]!=null)
+				return new engine_call_result(cccf,	file_name[1],scene_cors_string);
+		
+		return new engine_call_result(cccf,Charset.defaultCharset().name(),scene_cors_string);
 	}
 }

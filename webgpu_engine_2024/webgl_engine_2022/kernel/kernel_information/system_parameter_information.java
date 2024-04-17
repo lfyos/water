@@ -12,7 +12,6 @@ public class system_parameter_information extends jason_creator
 		print("system_data_root_directory_name",		sp.data_root_directory_name);
 		print("temporary_root_directory_name",			sp.temporary_file_par.temporary_root_directory_name);
 		
-		print("compress_data_root_directory_name",		sp.temporary_file_par.compress_data_root_directory_name);
 		print("compress_temporary_root_directory_name",	sp.temporary_file_par.compress_temporary_root_directory_name);
 		
 		print("local_data_charset",						sp.local_data_charset);
@@ -54,7 +53,7 @@ public class system_parameter_information extends jason_creator
 		print("max_file_response_length",				sp.max_file_response_length);
 		print("min_compress_response_length",			sp.min_compress_response_length);
 		
-		print("file_download_cors_string",				sp.file_download_cors_string);
+		print("system_cors_string",						sp.system_cors_string);
 		
 		return;
 	}

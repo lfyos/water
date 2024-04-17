@@ -15,11 +15,7 @@ public class http_modify_string
 	}
 	public static String string(long t)
 	{
-		return string(new Date(t));
-	}
-	public static String string(Date da)
-	{
-		return data_format().format(da);
+		return data_format().format(new Date(t));
 	}
 	public static long parse(String str)
 	{

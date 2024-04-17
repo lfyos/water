@@ -24,7 +24,7 @@
 /*	create_engine_max_sleep_time_length									 	*/		600000
 
 /*	show_process_bar_interval,	unit:millisecond							*/		1000
-/*	file_buffer_expire_time_length,	unit:second								*/		365000000
+/*	file_buffer_expire_time_length,	unit:second								*/		360000
 
 /*	max_client_container_number												*/		20
 /*	max_client_interface_number												*/		10
@@ -36,7 +36,7 @@
 /*	min_compress_response_length											*/		1024
 /*	max_buffer_object_head_package_length									*/		8000000
 
-/*	file_download_cors_string												*/		*
+/*	system_cors_string														*/		*
 
 /*	max_process_component_load_number										*/		5
 /*	max_process_modifier_number												*/		5
