@@ -70,17 +70,15 @@ public class javascript_program
 		if(function_date==null){
 			String url=request_response.implementor.get_url();
 			url+="?channel=javascript&function_date="+last_modified_time;
-			request_response.implementor.redirect_url(url,"*");
+			request_response.implementor.redirect_url(url,system_par.system_cors_string);
 			return null;
 		}
 
 		String request_modified_str;
 		if((request_modified_str=request_response.implementor.get_header("If-Modified-Since"))!=null)
-			if(last_modified_time<=http_modify_string.parse(request_modified_str)){
+			if(http_modify_string.parse(request_modified_str)>=last_modified_time){
 				request_response.implementor.response_not_modify(
-					"javascript_program response_not_modify()",
-					http_modify_string.string(last_modified_time),
-					Long.toString(system_par.file_buffer_expire_time_length));
+					"javascript_program response_not_modify()",system_par.system_cors_string);
 				return null;
 			}
 		
@@ -136,10 +134,8 @@ public class javascript_program
 		};
 		for(int i=0,ni=str.length;i<ni;i++)
 			request_response.println(str[i]);
-		
-		request_response.response_content_type="application/javascript";
 
-		return new engine_call_result(null,null,null,null,
-				http_modify_string.string(last_modified_time),"*");
+		return new engine_call_result(system_par.system_cors_string,
+							last_modified_time,"application/javascript");
 	}
 }

@@ -386,7 +386,8 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		if(render.terminate_flag)
 			return;
 		this.current_loading_mesh_number++;
-		var head_promise=await fetch(package_proxy_url,render.fetch_parameter.load_part_head);
+		var head_promise=await fetch(package_proxy_url,
+					render.fetch_parameter.load_part_package);
 		this.current_loading_mesh_number--;
 		if(render.terminate_flag)
 			return;

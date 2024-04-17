@@ -147,7 +147,7 @@ public class response_render_component_request
 				if(!(item.buffer_object_file_in_head_flag)){
 					String my_url,file_name=directory_name+type_str[i]+Integer.toString(j)+".gzip_text";
 					if((my_url=ci.get_file_proxy_url(file_name,ek.system_par))==null)
-						my_url=url_directory+type_str[i]+j;
+						my_url=url_directory+type_str[i]+j+"&random="+Math.random();
 					ci.request_response.print(item.buffer_object_text_file_length).print(",\"",my_url).print("\"");
 					ret_val++;
 				}
@@ -196,11 +196,12 @@ public class response_render_component_request
 				break;
 			}
 
-			String package_url=ci.get_file_proxy_url(package_file_name,ek.system_par);
-			if(package_url==null) {
+			String package_url;
+			if((package_url=ci.get_file_proxy_url(package_file_name,ek.system_par))==null) {
 				package_url =ci.request_url_header;
 				package_url+="&command=buffer&operation=buffer_package&package=";
 				package_url+=part_type_id+"_"+part_package_id;
+				package_url+="&random="+Math.random();
 			}
 			ci.request_response.print((i<=requesting_number)?"[\"":",[\"").
 				print(package_url).print("\",",package_length).print(",[");

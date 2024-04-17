@@ -155,10 +155,8 @@ public class client_information
 	}
 	public String get_file_proxy_url(String file_name,system_parameter system_par)
 	{
-		return get_file_proxy_url(new File(file_name),system_par);
-	}
-	public String get_file_proxy_url(File f,system_parameter system_par)
-	{
+		File f=new File(file_name);
+		
 		if(file_proxy_url_array.length<=0)
 			return null;
 		if(!(f.exists()))
@@ -179,16 +177,13 @@ public class client_information
 		String proxy_url=file_proxy_url_array[file_proxy_pointer];
 
 		long last_modified_time=f.lastModified();
-
-		String date_str=Long.toString(last_modified_time);
 		String code_str=request_response.implementor.get_request_charset();
 		try{
 			proxy_file_name	=java.net.URLEncoder.encode(java.net.URLEncoder.encode(proxy_file_name,	code_str),code_str);
-			date_str		=java.net.URLEncoder.encode(java.net.URLEncoder.encode(date_str,		code_str),code_str);
 		}catch(Exception e) {
 			;
 		}
-		return proxy_url+proxy_file_name+"&date="+date_str;
+		return proxy_url+proxy_file_name+"&date="+last_modified_time;
 	}
 	public void add_file_proxy_url(String my_file_proxy_url)
 	{

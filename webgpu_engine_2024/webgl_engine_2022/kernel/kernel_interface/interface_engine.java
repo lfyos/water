@@ -93,18 +93,12 @@ public class interface_engine
 				debug_information.println("client 		",		request_response.implementor.get_client_id());
 				debug_information.println("switch from	",		request_response.implementor.get_url());
 				debug_information.println("to		",			channel_string);
-				request_response.implementor.redirect_url(channel_string+"?channel=javascript","*");
+				request_response.implementor.redirect_url(
+					channel_string+"?channel=javascript",system_par.system_cors_string);
 				break;
 			}
 		case "javascript":
 			ecr=program_javascript.create(request_response,system_par);
-			break;
-		case "readme":
-			ecr=download_readme_file.download_driver_readme(request_response,
-				system_par.data_root_directory_name+system_par.shader_file_name,
-				system_par.local_data_charset,system_par.file_download_cors_string,
-				Long.toString(system_par.file_buffer_expire_time_length),
-				system_par.text_class_charset,system_par.text_jar_file_charset);
 			break;
 		case "buffer":
 			ecr=file_download_manager.download(request_response,system_par);
@@ -119,7 +113,8 @@ public class interface_engine
 					ecr=client.execute_create_call(request_response,engine_container,engine_counter);
 				else{
 					request_response.println("false");
-					ecr=new engine_call_result(null,null,null,null,null,"*");
+					ecr=new engine_call_result(system_par.system_cors_string,
+										request_response.response_content_type);
 					client.get_process_bar(request_response).set_process_bar(true,"wait_for_other_exit","",1,2);
 				}
 				test_creation_engine_lock_number(-1);
@@ -156,28 +151,14 @@ public class interface_engine
 		client_request_response request_response=new client_request_response(
 			system_par.network_data_charset,network_implementor);
 		
-		engine_call_result ecr;
-		if((ecr=system_call_switch(request_response))!=null){
-			String compress_response_header;
-			if(ecr.compress_file_name==null)
-					compress_response_header=null;
-			else if((compress_response_header=request_response.implementor.get_header("Accept-Encoding"))==null)
-					ecr.compress_file_name=null;
-			else if((compress_response_header=compress_response_header.toLowerCase()).indexOf("gzip")>=0)
-					compress_response_header="gzip";
-			else if(compress_response_header.indexOf("deflate")>=0)
-					compress_response_header="deflate";
-			else if(compress_response_header.indexOf("br")>=0)
-					compress_response_header="br";
-			else{
-					compress_response_header=null;
-					ecr.compress_file_name=null;
-			}
-			if(ecr.file_name!=null)
-				request_response.response_file_data(compress_response_header,ecr,system_par);
+		engine_call_result ecr=system_call_switch(request_response);
+		
+		if(ecr!=null)
+			if(ecr.file_name!=null) 
+				request_response.response_file_data(ecr,system_par);
 			else
-				request_response.response_network_data(compress_response_header,ecr,system_par);
-		}
+				request_response.response_network_data(ecr,system_par);
+		
 		request_response.destroy();
 		return;
 	}
