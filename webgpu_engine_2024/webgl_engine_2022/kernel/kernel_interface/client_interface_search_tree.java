@@ -41,12 +41,19 @@ public class client_interface_search_tree
 		if((ret_val=tree.search(new String[] {my_client_id,my_user_name}))!=null) 
 			return ret_val;
 
-		ret_val=new client_interface(my_user_name,my_pass_word,
-					my_client_id,my_container_id,my_system_par);
-		tree.add(new String[] {my_client_id,my_user_name},ret_val);
+		ret_val=client_interface.create(
+			my_user_name,my_pass_word,my_client_id,my_container_id,
+			my_system_par,engine_search_tree,engine_counter);
 		
-		debug_information.println("Create client_interface,creation request from ",my_client_id);
-		debug_information.println("creation user name from is ",my_user_name);
+		if(ret_val==null) 
+			debug_information.println("Create client_interface fail");
+		else{
+			debug_information.println("Create client_interface success");
+			tree.add(new String[] {my_client_id,my_user_name},ret_val);
+		}
+		
+		debug_information.print  ("Creation request from ",my_client_id);
+		debug_information.println(",user name is ",my_user_name);
 		debug_information.print  ("Active container_number is ",my_container_id);
 		debug_information.println("/",my_system_par.max_client_container_number);
 		debug_information.print  ("Active client_interface number is  ",tree.size());
@@ -65,7 +72,7 @@ public class client_interface_search_tree
 	
 	public client_interface_search_tree()
 	{
-		class comparator implements Comparator<String[]>
+		class my_comparator implements Comparator<String[]>
 		{
 			public int compare(String[] obj1, String[] obj2)
 			{
@@ -76,6 +83,6 @@ public class client_interface_search_tree
 					return obj1[1].compareTo(obj2[1]);
 			}
 		}
-		tree=new tree_search_container<String[],client_interface>(new comparator());
+		tree=new tree_search_container<String[],client_interface>(new my_comparator());
 	}
 }

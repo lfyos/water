@@ -203,7 +203,7 @@ public class engine_kernel_container_search_tree
 	}
 	public engine_kernel_container_search_tree()
 	{
-		class comparator implements Comparator<String[]>
+		class my_comparator implements Comparator<String[]>
 		{
 			public int compare(String[] obj1, String[] obj2)
 			{
@@ -214,7 +214,7 @@ public class engine_kernel_container_search_tree
 			}
 		};
 		
-		tree=new tree_search_container<String[],engine_kernel_container>(new comparator());
+		tree=new tree_search_container<String[],engine_kernel_container>(new my_comparator());
 		
 		component_load_source_cont		=new component_load_source_container();
 		

@@ -486,10 +486,10 @@ public class client_interface
 		}
 		my_client_interface_lock.unlock();
 	}
-	public client_interface(String my_user_name,String my_pass_word,
+	private client_interface(String my_user_name,String my_pass_word,
 			String my_client_id,int my_container_id,system_parameter my_system_par)
 	{
-		class comparator implements Comparator<Long>
+		class my_comparator implements Comparator<Long>
 		{
 			public int compare(Long obj1,Long obj2)
 			{
@@ -498,7 +498,8 @@ public class client_interface
 			}
 		}
 		
-		tree=new tree_search_container<Long,engine_kernel_and_client_information_container>(new comparator());
+		tree=new tree_search_container<Long,
+			engine_kernel_and_client_information_container>(new my_comparator());
 		
 		container_id			=my_container_id;
 		
@@ -561,5 +562,21 @@ public class client_interface
 			
 			return;
 		}
+	}
+	public static client_interface create(
+			String my_user_name,String my_pass_word,
+			String my_client_id,int my_container_id,
+			system_parameter my_system_par,
+			engine_kernel_container_search_tree engine_search_tree,
+			create_engine_counter engine_counter)
+	{
+		client_interface ret_val=new client_interface(
+				my_user_name,my_pass_word,
+				my_client_id,my_container_id,my_system_par);
+		if(ret_val.client_scene_file_name!=null)
+			if(ret_val.client_scene_file_charset!=null)
+				return ret_val;
+		ret_val.destroy(engine_search_tree,engine_counter);
+		return null;
 	}
 }

@@ -25,9 +25,9 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	private TreeMap<KEY_TYPE,tree_node> tree;
 	private tree_node first,last;
 	
-	public tree_search_container(Comparator<KEY_TYPE> compa)
+	public tree_search_container(Comparator<KEY_TYPE> my_comparator)
 	{
-		tree=new TreeMap<KEY_TYPE,tree_node>(compa);
+		tree=new TreeMap<KEY_TYPE,tree_node>(my_comparator);
 		
 		first=null;
 		last=null;
