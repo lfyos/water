@@ -1,22 +1,25 @@
-package kernel_interface;
+package engine_interface;
 
-import kernel_common_class.debug_information;
-import kernel_common_class.nanosecond_timer;
-import kernel_engine.create_engine_counter;
-import kernel_engine.engine_call_result;
 import kernel_engine.system_parameter;
-import kernel_network.client_request_response;
+import kernel_engine.engine_call_result;
+import kernel_interface.client_interface;
+import kernel_engine.create_engine_counter;
 import kernel_network.network_implementation;
+import kernel_common_class.debug_information;
+import kernel_interface.file_download_manager;
+import kernel_network.client_request_response;
 import kernel_program_javascript.javascript_program;
+import kernel_interface.client_interface_search_tree;
+import kernel_engine.engine_kernel_container_search_tree;
 
-public class interface_engine 
+public class system_engine 
 {
 	private system_parameter system_par;
 	private javascript_program program_javascript;
-	private client_interface_container client_container[];
+	private client_interface_search_tree client_interface_search_tree_array[];
 	private int next_client_container_id;
 	
-	private engine_interface_container engine_container;
+	private engine_kernel_container_search_tree engine_search_tree;
 	private create_engine_counter engine_counter;
 	
 	private volatile int creation_engine_lock_number;
@@ -33,17 +36,17 @@ public class interface_engine
 			program_javascript.destroy();
 			program_javascript=null;
 		}
-		if(client_container!=null) {
-			for(int i=0,ni=client_container.length;i<ni;i++)
-				if(client_container[i]!=null) {
-					client_container[i].destroy();
-					client_container[i]=null;
+		if(client_interface_search_tree_array!=null) {
+			for(int i=0,ni=client_interface_search_tree_array.length;i<ni;i++)
+				if(client_interface_search_tree_array[i]!=null) {
+					client_interface_search_tree_array[i].destroy(engine_search_tree,engine_counter);
+					client_interface_search_tree_array[i]=null;
 				}
-			client_container=null;
+			client_interface_search_tree_array=null;
 		}
-		if(engine_container!=null) {
-			engine_container.destroy();
-			engine_container=null;
+		if(engine_search_tree!=null) {
+			engine_search_tree.destroy();
+			engine_search_tree=null;
 		}
 		if(engine_counter!=null)
 			engine_counter=null;
@@ -71,15 +74,17 @@ public class interface_engine
 					;
 				}
 			my_container_id=next_client_container_id++;
-			next_client_container_id%=client_container.length;
+			next_client_container_id%=client_interface_search_tree_array.length;
 		}while(false);
 		
-		my_container_id%=client_container.length;
+		my_container_id%=client_interface_search_tree_array.length;
 		
-		return client_container[my_container_id].get_client_interface(
-					my_user_name,my_pass_word,my_client_id,my_container_id,system_par);
+		return client_interface_search_tree_array[my_container_id].get_client_interface(
+								my_user_name,my_pass_word,my_client_id,my_container_id,
+								system_par,engine_search_tree,engine_counter);
 	}
-	private engine_call_result system_call_switch(client_request_response request_response)
+	private engine_call_result system_call_switch(
+				client_request_response request_response)
 	{
 		engine_call_result ecr=null;
 		client_interface client=null;
@@ -110,7 +115,7 @@ public class interface_engine
 		case "creation":
 			if((client=get_client_interface(request_response))!=null){
 				if(test_creation_engine_lock_number(1)<system_par.create_engine_concurrent_number)
-					ecr=client.execute_create_call(request_response,engine_container,engine_counter);
+					ecr=client.execute_create_call(request_response,engine_search_tree,engine_counter);
 				else{
 					request_response.println("false");
 					ecr=new engine_call_result(system_par.system_cors_string,
@@ -135,34 +140,31 @@ public class interface_engine
 				break;
 			}
 			if((client=get_client_interface(request_response))!=null)
-				ecr=client.execute_system_call(channel_id,request_response,engine_container,engine_counter);
+				ecr=client.execute_system_call(channel_id,
+						request_response,engine_search_tree,engine_counter);
 			break;
 		}
-		long current_time=nanosecond_timer.absolute_nanoseconds();
-		if(client!=null)
-			client.touch_time=current_time;
-		if(request_response.request_time>0)
-			request_response.request_time=current_time;
 		return ecr;
 	}
 	
 	public void process_system_call(network_implementation network_implementor)
 	{
-		client_request_response request_response=new client_request_response(
-			system_par.network_data_charset,network_implementor);
+		engine_call_result ecr;
+		client_request_response request_response;
 		
-		engine_call_result ecr=system_call_switch(request_response);
-		
-		if(ecr!=null)
+		request_response=new client_request_response(
+				system_par.network_data_charset,network_implementor);
+
+		if((ecr=system_call_switch(request_response))!=null) {
 			if(ecr.file_name!=null) 
 				request_response.response_file_data(ecr,system_par);
 			else
 				request_response.response_network_data(ecr,system_par);
-		
+		}
 		request_response.destroy();
-		return;
 	}
-	public interface_engine(
+	
+	public system_engine(
 			String data_file_configure_file_name,
 			String temporary_file_configure_file_name)
 	{
@@ -171,11 +173,12 @@ public class interface_engine
 									temporary_file_configure_file_name);
 		program_javascript	=new javascript_program(system_par);
 		
-		client_container	=new client_interface_container[system_par.max_client_container_number];
-		for(int i=0,ni=client_container.length;i<ni;i++)
-			client_container[i]=new client_interface_container();
+		client_interface_search_tree_array=new client_interface_search_tree[
+		                          system_par.max_client_container_number];
+		for(int i=0,ni=client_interface_search_tree_array.length;i<ni;i++)
+			client_interface_search_tree_array[i]=new client_interface_search_tree();
 
-		engine_container	=new engine_interface_container();
+		engine_search_tree	=new engine_kernel_container_search_tree();
 		engine_counter		=new create_engine_counter();
 		
 		creation_engine_lock_number	=0;

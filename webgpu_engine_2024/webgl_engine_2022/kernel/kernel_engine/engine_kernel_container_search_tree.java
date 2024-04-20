@@ -1,61 +1,33 @@
-package kernel_interface;
+package kernel_engine;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.concurrent.locks.ReentrantLock;
 
-import kernel_common_class.balance_tree;
-import kernel_common_class.balance_tree_item;
 import kernel_common_class.debug_information;
+import kernel_common_class.tree_search_container;
 import kernel_component.component_load_source_container;
-import kernel_engine.part_package;
-import kernel_engine.system_parameter;
 import kernel_file_manager.file_directory;
-import kernel_engine.create_engine_counter;
-import kernel_engine.engine_kernel_container;
 import kernel_network.client_request_response;
-import kernel_part.part;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
+import kernel_part.part;
+import kernel_part.part_container_for_part_search;
 import kernel_part.part_loader_container;
 import kernel_part.permanent_part_id_encoder;
-import kernel_part.part_container_for_part_search;
-import kernel_engine.delete_part_files;
 import kernel_render.render_container;
 
-public class engine_interface_container
+public class engine_kernel_container_search_tree 
 {
-	class engine_kernel_balance_tree_item extends balance_tree_item<String[]>
-	{
-		public engine_kernel_container engine_kernel_cont;
-		
-		public int compare(String[] t)
-		{
-			int ret_val=compare_data[0].compareTo(t[0]);
-			return (ret_val!=0)?ret_val:compare_data[1].compareTo(t[1]);
-		}
-		public void destroy()
-		{
-			super.destroy();
-			
-			if(engine_kernel_cont!=null){
-				engine_kernel_cont.destroy();
-				engine_kernel_cont=null;
-			}
-		}
-		public engine_kernel_balance_tree_item(String my_scene_name,String my_link_name)
-		{
-			super(new String[] {my_scene_name,my_link_name});
-			engine_kernel_cont=null;
-		}
-	}
+	private tree_search_container<String[],engine_kernel_container> tree;
 	
-	private balance_tree<String[],engine_kernel_balance_tree_item> bt;
 	private render_container original_render;
 	public component_load_source_container component_load_source_cont;
 	public buffer_object_file_modify_time_and_length_container system_boftal_container;
 	private part_loader_container part_loader_cont;
-	private ReentrantLock client_interface_lock;
+	private ReentrantLock engine_interface_container_lock;
 	
-	private void load_render_container(client_request_response request_response,system_parameter system_par)
+	private void load_render_container(
+		client_request_response request_response,system_parameter system_par)
 	{
 		int part_type_id=0;
 		buffer_object_file_modify_time_and_length_container boftal_container[];
@@ -113,47 +85,72 @@ public class engine_interface_container
 		debug_information.print  ("engine_interface engine_component_number:	",	engine_counter.engine_component_number);
 		debug_information.println("/",system_par.max_engine_component_number);
 		
-		engine_kernel_balance_tree_item bti;
-		engine_kernel_balance_tree_item ekbti=new engine_kernel_balance_tree_item(scene_name,link_name);
 		
-		if(bt==null)
-			bt=new balance_tree<String[],engine_kernel_balance_tree_item>(ekbti);
-		else if((bti=bt.search(ekbti,true,false))!=null)
-			ekbti=bti;
-		
-		if(ekbti.engine_kernel_cont!=null) {
-			debug_information.println("Found created engine");
-			
-			ekbti.engine_kernel_cont.link_number++;
-			return ekbti.engine_kernel_cont;
+		if(tree.search(new String[]{scene_name,link_name})!=null) {
+			tree.search_value.update_link_number(1);
+			return tree.search_value;
 		}
 		if(   (engine_counter.engine_kernel_number   >=system_par.max_engine_kernel_number)
-			||(engine_counter.engine_component_number>=system_par.max_engine_component_number))
+				||(engine_counter.engine_component_number>=system_par.max_engine_component_number))
 		{
 			debug_information.println("Create too many scenes or components:	",scene_name+"	"+link_name);
-			destroy_scene_routine(scene_name,link_name,engine_counter);
+			destroy_engine_kernel_container_routine(scene_name,link_name,engine_counter);
 			return null;
 		}
-		ekbti.engine_kernel_cont=new engine_kernel_container(scene_name,link_name,request_response,system_par,
-			client_scene_file_name,client_scene_file_charset,original_render,part_loader_cont);
 		
-		if(ekbti.engine_kernel_cont.ek==null){
+		engine_kernel_container engine_kernel_cont=new engine_kernel_container(
+			scene_name,link_name,request_response,system_par,
+			client_scene_file_name,client_scene_file_charset,
+			original_render,part_loader_cont);
+		
+		if(engine_kernel_cont.ek==null){
 			debug_information.println("Create scene fail:	",scene_name+"	"+link_name);
-			destroy_scene_routine(scene_name,link_name,engine_counter);
+			destroy_engine_kernel_container_routine(scene_name,link_name,engine_counter);
+			engine_kernel_cont.destroy();
 			return null;
 		}
 		debug_information.println("Create scene success:	",scene_name+"	"+link_name);
-		ekbti.engine_kernel_cont.link_number++;
+		engine_kernel_cont.update_link_number(1);
 		
-		return ekbti.engine_kernel_cont;
+		tree.add(new String[]{scene_name,link_name},engine_kernel_cont);
+	
+		return engine_kernel_cont;
 	}
+	private void destroy_engine_kernel_container_routine(
+			String my_scene_name,String my_link_name,create_engine_counter engine_counter)
+	{
+		for(String key[]={my_scene_name,my_link_name};tree.search(key)!=null;) {
+			if(tree.search_value.update_link_number(-1)>0)
+				return;
+			tree.remove(key);
+
+			if(tree.search_value.ek!=null)
+				if(tree.search_value.ek.component_cont!=null)
+					if(tree.search_value.ek.component_cont.root_component!=null)
+							engine_counter.update_kernel_component_number(-1,
+									-1-tree.search_value.ek.component_cont.root_component.component_id);
+			
+			tree.search_value.destroy();
+			
+			debug_information.println(
+					"engine_interface deletes scene,scene_name: ",
+					my_scene_name+",link_name: "+my_link_name);
+			debug_information.println(
+					"engine_interface engine_kernel_number: ",
+					engine_counter.engine_kernel_number);
+			debug_information.println(
+					"engine_interface engine_component_number: ",
+					engine_counter.engine_component_number);
+		}
+	}
+	
 	public engine_kernel_container create_engine_kernel_container(
 			client_request_response request_response,
 			String client_scene_file_name,String client_scene_file_charset,
 			create_engine_counter engine_counter,system_parameter system_par)
 	{
 		engine_kernel_container ret_val=null;
-		client_interface_lock.lock();
+		engine_interface_container_lock.lock();
 		
 		if(original_render==null)
 			load_render_container(request_response,system_par);
@@ -168,62 +165,27 @@ public class engine_interface_container
 			debug_information.println(e.toString());
 			ret_val=null;
 		}
-		client_interface_lock.unlock();
+		engine_interface_container_lock.unlock();
 		return ret_val;
 	}
-	private void destroy_scene_routine(String my_scene_name,String my_link_name,create_engine_counter engine_counter)
+	public void destroy_engine_kernel_container(
+			String my_scene_name,String my_link_name,
+			create_engine_counter engine_counter)
 	{
-		for(engine_kernel_balance_tree_item ekbtl,original_bti;bt!=null;) {
-			original_bti=new engine_kernel_balance_tree_item(my_scene_name,my_link_name);
-			if((ekbtl=bt.search(original_bti,false,false))==null)
-				break;
-			if(ekbtl.engine_kernel_cont!=null)
-				if((--(ekbtl.engine_kernel_cont.link_number))>0)
-					break;
-			if((bt.get_left_child()==null)&&(bt.get_right_child()==null))	
-				bt=null;
-			else
-				bt.search(original_bti,false,true);
-			
-			if(ekbtl.engine_kernel_cont!=null)
-				if(ekbtl.engine_kernel_cont.ek!=null)
-					if(ekbtl.engine_kernel_cont.ek.component_cont!=null)
-						if(ekbtl.engine_kernel_cont.ek.component_cont.root_component!=null)
-							engine_counter.update_kernel_component_number(-1,
-									-1-ekbtl.engine_kernel_cont.ek.component_cont.root_component.component_id);
-			ekbtl.destroy();
-			
-			debug_information.println("engine_interface deletes scene,scene_name: ",my_scene_name+",link_name: "+my_link_name);
-			debug_information.println("engine_interface engine_kernel_number: ",	engine_counter.engine_kernel_number);
-			debug_information.println("engine_interface engine_component_number: ",	engine_counter.engine_component_number);
-		}
-	}
-	public void destroy_scene(String my_scene_name,String my_link_name,create_engine_counter engine_counter)
-	{
-		client_interface_lock.lock();
-		destroy_scene_routine(my_scene_name,my_link_name,engine_counter);
-		client_interface_lock.unlock();
-	}
-	private void destroy_engine_kernel_balance_tree(
-			balance_tree<String[],engine_kernel_balance_tree_item> ek_bt)
-	{
-		if(ek_bt!=null){
-			destroy_engine_kernel_balance_tree(ek_bt.get_left_child());
-			destroy_engine_kernel_balance_tree(ek_bt.get_right_child());
-			engine_kernel_balance_tree_item bti;
-			if((bti=ek_bt.get_item())!=null)
-				bti.destroy();
-		}
+		engine_interface_container_lock.lock();
+		destroy_engine_kernel_container_routine(
+				my_scene_name,my_link_name,engine_counter);
+		engine_interface_container_lock.unlock();
 	}
 	public void destroy()
 	{
-		ReentrantLock my_client_interface_lock=client_interface_lock;
-		client_interface_lock=null;
+		ReentrantLock my_client_interface_lock=engine_interface_container_lock;
+		engine_interface_container_lock=null;
 		my_client_interface_lock.lock();
-		if(bt!=null) {
-			destroy_engine_kernel_balance_tree(bt);
-			bt.destroy();
-			bt=null;
+		
+		while(tree.first_touch_time()>=0) {
+			tree.search_value.destroy();
+			tree.remove(tree.search_key);
 		}
 		if(component_load_source_cont!=null) {
 			component_load_source_cont.destroy();
@@ -239,13 +201,26 @@ public class engine_interface_container
 		}
 		my_client_interface_lock.unlock();
 	}
-	public engine_interface_container()
+	public engine_kernel_container_search_tree()
 	{
-		component_load_source_cont	=new component_load_source_container();
-		bt							=null;
-		original_render				=null;
-		system_boftal_container		=null;
-		part_loader_cont			=new part_loader_container();
-		client_interface_lock		=new ReentrantLock();
+		class comparator implements Comparator<String[]>
+		{
+			public int compare(String[] obj1, String[] obj2)
+			{
+				int ret_val;
+				if((ret_val=obj1[0].compareTo(obj2[0]))==0)
+					ret_val=obj1[1].compareTo(obj2[1]);
+				return ret_val;
+			}
+		};
+		
+		tree=new tree_search_container<String[],engine_kernel_container>(new comparator());
+		
+		component_load_source_cont		=new component_load_source_container();
+		
+		original_render					=null;
+		system_boftal_container			=null;
+		part_loader_cont				=new part_loader_container();
+		engine_interface_container_lock	=new ReentrantLock();
 	}
 }

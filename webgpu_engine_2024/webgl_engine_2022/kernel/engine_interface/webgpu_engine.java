@@ -7,12 +7,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import kernel_common_class.debug_information;
 import kernel_file_manager.file_reader;
-import kernel_interface.interface_engine;
 import kernel_network.network;
 
 public class webgpu_engine 
 {
-	private interface_engine engine;
+	private system_engine engine;
 	
 	public webgpu_engine()
 	{
@@ -86,7 +85,7 @@ public class webgpu_engine
 			System.exit(0);
 			return;
 		}
-		engine=new interface_engine(data_file_name,temp_file_name);	
+		engine=new system_engine(data_file_name,temp_file_name);	
     }
     public void process_call(HttpServletRequest request,HttpServletResponse response)
 	{
