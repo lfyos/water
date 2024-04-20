@@ -1,27 +1,26 @@
 package kernel_network;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.Base64;
 import java.io.InputStream;
 import java.io.FileInputStream;
-import java.util.Base64;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 
-import kernel_common_class.debug_information;
-import kernel_common_class.exclusive_file_mutex;
-import kernel_common_class.nanosecond_timer;
-import kernel_engine.engine_call_result;
 import kernel_engine.system_parameter;
+import kernel_file_manager.file_writer;
+import kernel_engine.engine_call_result;
 import kernel_common_class.common_reader;
 import kernel_common_class.common_writer;
+import kernel_common_class.debug_information;
 import kernel_common_class.compress_file_data;
+import kernel_common_class.exclusive_file_mutex;
 import kernel_common_class.compress_network_data;
-import kernel_file_manager.file_writer;
+
 
 public class client_request_response extends common_writer
 {
 	public network_implementation implementor;
-	public long request_time;
 	public String response_content_type;
 	public boolean display_content_flag;
 	
@@ -68,8 +67,6 @@ public class client_request_response extends common_writer
 		last_result			=null;
 		
 		output_stream		=new ByteArrayOutputStream();
-		
-		request_time=nanosecond_timer.absolute_nanoseconds();
 		
 		response_content_type="text/plain";
 		

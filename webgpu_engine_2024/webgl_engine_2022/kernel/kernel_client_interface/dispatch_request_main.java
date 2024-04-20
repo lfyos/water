@@ -49,10 +49,6 @@ public class dispatch_request_main
 			return dispatch_collector_request.do_dispatch(ek, ci);
 		case "information":
 			return dispatch_information_request.do_dispatch(ek,ci);
-		case "termination":
-			ci.request_response.request_time=0;
-			ci.process_bar.touch_time=0;
-			return null;
 		default:
 			debug_information.println(
 				"Unknown command in do_get_engine_result_routine() of dispatch_request_main\t:\t",str);

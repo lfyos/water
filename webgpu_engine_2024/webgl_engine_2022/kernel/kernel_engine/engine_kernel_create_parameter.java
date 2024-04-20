@@ -11,8 +11,7 @@ public class engine_kernel_create_parameter
 	
 	public double	create_top_part_expand_ratio;
 	public double	create_top_part_left_ratio;
-	public String	link_name;
-	public String	scene_name;
+	
 	public String	scene_directory_name;
 	public String	scene_file_name;
 	public String	scene_charset;
@@ -22,11 +21,12 @@ public class engine_kernel_create_parameter
 	public String	extra_parameter_file_name;
 	public String	extra_parameter_charset;
 	
-	public engine_kernel_create_parameter(String test_scenename,String my_link_name,
-			String client_scene_file_name,String client_scene_file_charset,system_parameter system_par)
+	public engine_kernel_create_parameter(
+			String my_scene_name,String my_link_name,
+			String client_scene_file_name,String client_scene_file_charset,
+			system_parameter system_par)
 	{
 		success_load_parameter_flag=false;
-		link_name=my_link_name;
 		
 		file_reader f_type=new file_reader(client_scene_file_name,client_scene_file_charset);
 		if(f_type.error_flag()){
@@ -55,8 +55,8 @@ public class engine_kernel_create_parameter
 					break;
 				if(extra_parameter_file_name.compareTo("")==0)
 					break;
-				if(test_scenename!=null)
-					if(test_scenename.compareTo(scene_search_name)!=0)
+				if(my_scene_name!=null)
+					if(my_scene_name.compareTo(scene_search_name)!=0)
 						continue;
 				
 				scene_file_name				=file_reader.separator(scene_file_name);
@@ -99,7 +99,6 @@ public class engine_kernel_create_parameter
 				f_name.close();
 				f_type.close();
 				
-				scene_name							=scene_search_name;
 				scene_directory_name				=f_name.directory_name;
 				scene_charset						=f_name.get_charset();
 				parameter_charset					=f_name.get_charset();
@@ -107,7 +106,8 @@ public class engine_kernel_create_parameter
 				scene_list_file_last_modified_time	=(f_type.lastModified_time<f_name.lastModified_time)
 													?f_name.lastModified_time:f_type.lastModified_time;
 				
-				success_load_parameter_flag=true;
+				success_load_parameter_flag			=true;
+				
 				return;
 			}
 			f_name.close();

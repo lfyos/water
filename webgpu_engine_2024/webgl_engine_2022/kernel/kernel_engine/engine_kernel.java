@@ -29,6 +29,8 @@ import kernel_part.buffer_object_file_modify_time_and_length_container;
 
 public class engine_kernel
 {
+	public String scene_name,link_name;
+	
 	public engine_kernel_create_parameter 	create_parameter;
 
 	public system_parameter		 			system_par;
@@ -91,6 +93,8 @@ public class engine_kernel
 			process_part_sequence=null;
 		}
 		
+		scene_name=null;
+		link_name=null;
 		create_parameter=null;
 		system_par=null;
 		scene_par=null;
@@ -98,13 +102,18 @@ public class engine_kernel
 		
 		part_loader_cont=null;
 	}
-	public engine_kernel(engine_kernel_create_parameter my_create_parameter,
+	public engine_kernel(String my_scene_name,String my_link_name,
+			engine_kernel_create_parameter my_create_parameter,
 			client_request_response request_response,system_parameter my_system_parameter,
 			render_container my_original_render,part_loader_container my_part_loader_cont)
 	{
+		scene_name				=my_scene_name;
+		link_name				=my_link_name;
+		
 		create_parameter		=my_create_parameter;
 		system_par				=my_system_parameter;
-		scene_par				=new scene_parameter(request_response,system_par,create_parameter);
+		scene_par				=new scene_parameter(
+						my_scene_name,request_response,system_par,create_parameter);
 		
 		component_cont			=null;
 		camera_cont				=null;

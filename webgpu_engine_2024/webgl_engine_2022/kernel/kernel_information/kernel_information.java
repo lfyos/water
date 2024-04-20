@@ -14,8 +14,8 @@ public class kernel_information extends jason_creator
 		cci=new component_container_information(
 				ek.create_parameter.scene_directory_name,
 				ek.create_parameter.scene_file_name,ek.component_cont,ci);
-		print("scene_name",						ek.create_parameter.scene_name);
-		print("link_name",						ek.create_parameter.link_name);
+		print("scene_name",						ek.scene_name);
+		print("link_name",						ek.link_name);
 		
 		print("system_par",						new system_parameter_information(ek.system_par,ci));
 		print("scene_par",						new scene_parameter_information(ek.scene_par,ci));

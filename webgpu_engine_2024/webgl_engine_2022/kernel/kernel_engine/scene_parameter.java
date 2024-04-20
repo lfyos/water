@@ -152,8 +152,8 @@ public class scene_parameter
 		client_parameter_name.do_sort();
 	}
 	private void caculate_scene_temporary_directory_name(
-			client_request_response request_response,
-			String change_component_string,String scene_name,system_parameter system_par)
+			String scene_name,client_request_response request_response,
+			String change_component_string,system_parameter system_par)
 	{
 		String str;
 		
@@ -207,7 +207,8 @@ public class scene_parameter
 		
 		scene_temporary_directory_name+=my_temporary_directory_name;
 	}
-	public scene_parameter(client_request_response request_response,
+	public scene_parameter(
+			String my_scene_name,client_request_response request_response,
 			system_parameter system_par,engine_kernel_create_parameter ekcp)
 	{
 		String str;
@@ -276,8 +277,8 @@ public class scene_parameter
 		
 		get_client_parameter_name(parameter_fr,request_response);
 		
-		caculate_scene_temporary_directory_name(request_response,
-				change_component_string,ekcp.scene_name,system_par);
+		caculate_scene_temporary_directory_name(my_scene_name,
+				request_response,change_component_string,system_par);
 		
 		parameter_fr.close();
 

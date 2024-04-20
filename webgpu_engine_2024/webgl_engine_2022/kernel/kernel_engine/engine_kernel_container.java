@@ -9,11 +9,31 @@ import kernel_render.render_container;
 
 public class engine_kernel_container
 {
+	private volatile int link_number;
+	
 	public engine_kernel ek;
-	public int link_number;
 	public boolean initilization_flag;
+	
 	public volatile ReentrantLock engine_kernel_container_lock;
-
+	
+	public int get_link_number()
+	{
+		return link_number;
+	}
+	public int update_link_number(int modify_number)
+	{
+		int ret_val;
+		
+		ReentrantLock my_engine_kernel_container_lock;
+		if((my_engine_kernel_container_lock=engine_kernel_container_lock)==null)
+			return 0;
+		
+		my_engine_kernel_container_lock.lock();
+		link_number+=modify_number;
+		ret_val=link_number;
+		my_engine_kernel_container_lock.unlock();
+		return ret_val;
+	}
 	public void destroy()
 	{
 		ReentrantLock my_engine_kernel_container_lock;
@@ -41,15 +61,14 @@ public class engine_kernel_container
 		if(!(create_parameter.success_load_parameter_flag))
 			create_parameter=new engine_kernel_create_parameter(
 					null,my_link_name,client_scene_file_name,client_scene_file_charset,system_par);
-		if(!(create_parameter.success_load_parameter_flag)){
-			ek=null;
+		
+		ek=null;
+		if(create_parameter.success_load_parameter_flag)
+			ek=new engine_kernel(my_scene_name,my_link_name,create_parameter,
+					request_response,system_par,original_render,my_part_loader_cont);
+		else	
 			debug_information.println("Cann't Create scene:	",my_scene_name+"	"+my_link_name);
-		}else {
-			ek=new engine_kernel(create_parameter,request_response,
-						system_par,original_render,my_part_loader_cont);
-			create_parameter.scene_name=my_scene_name;
-			create_parameter.link_name=my_link_name;
-		}
+
 		link_number=0;
 		initilization_flag=true;
 		engine_kernel_container_lock=new ReentrantLock();

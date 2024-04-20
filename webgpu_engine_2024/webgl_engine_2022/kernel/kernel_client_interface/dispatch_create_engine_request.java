@@ -158,7 +158,7 @@ public class dispatch_create_engine_request
 		
 		ci.request_response.print(",",ek.scene_par.max_target_number);	//parameter	4	4
 		
-		ci.request_response.print(",\"",ek.create_parameter.link_name).print("\"");		//parameter	4	5
+		ci.request_response.print(",\"",ek.link_name).print("\"");		//parameter	4	5
 	
 		ci.request_response.print(",{");							//parameter	4	6
 

@@ -14,7 +14,7 @@ public class engine_kernel_and_client_information_container
 {
 	public engine_kernel_container	engine_kernel_cont;
 	public client_information 		client_information;
-	public volatile int 			access_lock_number;
+	private volatile int 			access_lock_number;
 	
 	public engine_kernel_and_client_information_container(engine_kernel_container my_engine_kernel_cont)
 	{
@@ -22,10 +22,14 @@ public class engine_kernel_and_client_information_container
 		client_information	=null;
 		access_lock_number	=0;
 	}
+	synchronized public int lock_number(int modify_number) 
+	{
+		access_lock_number+=modify_number;
+		return access_lock_number;
+	}
 	private engine_call_result get_engine_result_routine(int my_container_id,
 			component_load_source_container component_load_source_cont,client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container,
-			String client_scene_file_name,String client_scene_file_charset,
 			client_request_response my_request_response,long delay_time_length,
 			user_statistics statistics_user,create_engine_counter engine_counter)
 	{
@@ -46,16 +50,19 @@ public class engine_kernel_and_client_information_container
 							engine_kernel_cont.ek.component_cont.root_component.component_id+1);
 
 					debug_information.print  ("engine_interface load scene,scene_name:",
-							engine_kernel_cont.ek.create_parameter.scene_name);
-					debug_information.println(",link_name:",engine_kernel_cont.ek.create_parameter.link_name);
+							engine_kernel_cont.ek.scene_name);
+					debug_information.println(",link_name:",
+							engine_kernel_cont.ek.link_name);
 					
 					debug_information.print  ("engine_interface engine_kernel_number:",
 							engine_counter.engine_kernel_number);
-					debug_information.println("/",engine_kernel_cont.ek.system_par.max_engine_kernel_number);
+					debug_information.println("/",engine_kernel_cont.
+							ek.system_par.max_engine_kernel_number);
 					
 					debug_information.print  ("engine_interface engine_component_number:",
 							engine_counter.engine_component_number);
-					debug_information.println("/",engine_kernel_cont.ek.system_par.max_engine_component_number);
+					debug_information.println("/",
+							engine_kernel_cont.ek.system_par.max_engine_component_number);
 				}
 			}
 		}
@@ -77,7 +84,6 @@ public class engine_kernel_and_client_information_container
 			int my_container_id,client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container,
 			component_load_source_container component_load_source_cont,
-			String client_scene_file_name,String client_scene_file_charset,
 			client_request_response my_request_response,long delay_time_length,
 			user_statistics statistics_user,create_engine_counter engine_counter)
 	{
@@ -90,8 +96,7 @@ public class engine_kernel_and_client_information_container
 			try{
 				ret_val=get_engine_result_routine(my_container_id,
 						component_load_source_cont,process_bar,system_boftal_container,
-						client_scene_file_name,client_scene_file_charset,my_request_response,
-						delay_time_length,statistics_user,engine_counter);
+						my_request_response,delay_time_length,statistics_user,engine_counter);
 			}catch(Exception e){
 				e.printStackTrace();
 				debug_information.println(
@@ -99,10 +104,8 @@ public class engine_kernel_and_client_information_container
 				debug_information.println(e.toString());
 				ret_val=null;
 			};
-			
 			my_engine_kernel_container_lock.unlock();
 		}
-		
 		return ret_val;
 	}
 }
