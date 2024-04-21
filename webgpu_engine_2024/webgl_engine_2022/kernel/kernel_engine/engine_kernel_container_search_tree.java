@@ -85,10 +85,10 @@ public class engine_kernel_container_search_tree
 		debug_information.print  ("engine_interface engine_component_number:	",	engine_counter.engine_component_number);
 		debug_information.println("/",system_par.max_engine_component_number);
 		
-		
-		if(tree.search(new String[]{scene_name,link_name})!=null) {
-			tree.search_value.update_link_number(1);
-			return tree.search_value;
+		engine_kernel_container p;
+		if((p=tree.search(new String[]{scene_name,link_name}))!=null) {
+			p.update_link_number(1);
+			return p;
 		}
 		if(   (engine_counter.engine_kernel_number   >=system_par.max_engine_kernel_number)
 				||(engine_counter.engine_component_number>=system_par.max_engine_component_number))
@@ -119,18 +119,19 @@ public class engine_kernel_container_search_tree
 	private void destroy_engine_kernel_container_routine(
 			String my_scene_name,String my_link_name,create_engine_counter engine_counter)
 	{
-		for(String key[]={my_scene_name,my_link_name};tree.search(key)!=null;) {
-			if(tree.search_value.update_link_number(-1)>0)
+		engine_kernel_container p;
+		for(String key[]={my_scene_name,my_link_name};(p=tree.search(key))!=null;) {
+			if(p.update_link_number(-1)>0)
 				return;
 			tree.remove(key);
 
-			if(tree.search_value.ek!=null)
-				if(tree.search_value.ek.component_cont!=null)
-					if(tree.search_value.ek.component_cont.root_component!=null)
+			if(p.ek!=null)
+				if(p.ek.component_cont!=null)
+					if(p.ek.component_cont.root_component!=null)
 							engine_counter.update_kernel_component_number(-1,
-									-1-tree.search_value.ek.component_cont.root_component.component_id);
+									-1-p.ek.component_cont.root_component.component_id);
 			
-			tree.search_value.destroy();
+			p.destroy();
 			
 			debug_information.println(
 					"engine_interface deletes scene,scene_name: ",
@@ -191,8 +192,10 @@ public class engine_kernel_container_search_tree
 		my_lock.lock();
 		
 		while(tree.first_touch_time()>=0) {
-			tree.search_value.destroy();
-			tree.remove(tree.search_key);
+			String my_key[]					=tree.get_first_key();
+			engine_kernel_container my_value=tree.get_first_value();
+			my_value.destroy();
+			tree.remove(my_key);
 		}
 		if(component_load_source_cont!=null) {
 			component_load_source_cont.destroy();

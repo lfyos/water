@@ -31,21 +31,27 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		
 		first=null;
 		last=null;
-		
-		search_key=null;
-		search_value=null;
 	}
 
-	public KEY_TYPE search_key;
-	public VALUE_TYPE search_value;
-	
 	public long first_touch_time()
 	{
 		if(first==null)
 			return -1;
-		search_key=first.key;
-		search_value=first.value;
 		return first.touch_time;
+	}
+	public KEY_TYPE get_first_key()
+	{
+		if(first==null)
+			return null;
+		else
+			return first.key;
+	}
+	public VALUE_TYPE get_first_value()
+	{
+		if(first==null)
+			return null;
+		else
+			return first.value;
 	}
 	public int size()
 	{
@@ -67,9 +73,6 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 			last.back=p;
 			last=p;
 		}
-		
-		search_key=p.key;
-		search_value=p.value;
 		
 		p.touch_time=nanosecond_timer.absolute_nanoseconds();
 		
@@ -111,9 +114,6 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 			first.front=p;
 			first=p;
 		}
-		
-		search_key=p.key;
-		search_value=p.value;
 		p.touch_time=0;
 		
 		return p.value;
@@ -154,9 +154,6 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 			last.back=p;
 			last=p;
 		}
-
-		search_key=p.key;
-		search_value=p.value;
 		
 		p.touch_time=nanosecond_timer.absolute_nanoseconds();
 		
@@ -189,9 +186,6 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		
 		p.front=null;
 		p.back=null;
-		
-		search_key=p.key;
-		search_value=p.value;
 		
 		return p.value;
 	}

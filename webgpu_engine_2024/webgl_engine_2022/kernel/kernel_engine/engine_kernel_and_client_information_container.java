@@ -14,7 +14,7 @@ public class engine_kernel_and_client_information_container
 {
 	public engine_kernel_container	engine_kernel_cont;
 	public client_information 		client_information;
-	private volatile int 			access_lock_number;
+	private int 					access_lock_number;
 	
 	public engine_kernel_and_client_information_container(engine_kernel_container my_engine_kernel_cont)
 	{
@@ -77,7 +77,8 @@ public class engine_kernel_and_client_information_container
 		}
 		client_information.request_response=my_request_response;
 
-		return dispatch_request_main.get_engine_result(	delay_time_length,engine_kernel_cont.ek,client_information);
+		return dispatch_request_main.get_engine_result(
+					delay_time_length,engine_kernel_cont.ek,client_information);
 	}
 	
 	public engine_call_result get_engine_result(client_process_bar process_bar,

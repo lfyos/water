@@ -14,7 +14,6 @@ import kernel_engine.engine_kernel_container_search_tree;
 
 public class system_engine 
 {
-	private int next_client_container_id;
 	private client_interface_search_tree client_interface_search_tree_array[];
 	
 	private system_parameter system_par;
@@ -86,15 +85,20 @@ public class system_engine
 			ecr=client.process_process_bar_system_call(request_response);
 			break;
 		case "creation":
-			if((client=client_interface_search_tree_array[request_response.container_id].get_client_interface(
-					request_response,system_par,engine_search_tree,engine_counter))==null)
-				break;
-			if(test_creation_engine_lock_number(1)<system_par.create_engine_concurrent_number)
-				ecr=client.execute_create_call(request_response,engine_search_tree,engine_counter);
-			else{
-				request_response.println("false");
+			client=client_interface_search_tree_array[request_response.container_id].
+						get_client_interface(request_response,system_par,engine_search_tree,engine_counter);
+			if(client==null){
 				ecr=new engine_call_result(system_par.system_cors_string,request_response.response_content_type);
+				request_response.reset().println("1");
+				break;
+			}
+			if(test_creation_engine_lock_number(1)>=system_par.create_engine_concurrent_number){
+				ecr=new engine_call_result(system_par.system_cors_string,request_response.response_content_type);
+				request_response.reset().println("null");
 				client.get_process_bar(request_response).set_process_bar(true,"wait_for_other_exit","",1,2);
+			}else if((ecr=client.execute_create_call(request_response,engine_search_tree,engine_counter))==null) {
+				ecr=new engine_call_result(system_par.system_cors_string,request_response.response_content_type);
+				request_response.reset().println("2");
 			}
 			test_creation_engine_lock_number(-1);
 			break;
@@ -107,43 +111,37 @@ public class system_engine
 		}
 		return ecr;
 	}
-	
 	public void process_system_call(network_implementation network_implementor)
 	{
-		engine_call_result ecr;
-		client_request_response request_response;
-		
-		request_response=new client_request_response(
-				system_par.network_data_charset,network_implementor);
-		if(request_response.container_id<0) {
-			request_response.container_id=next_client_container_id++;
-			next_client_container_id%=client_interface_search_tree_array.length;
-		};
+		client_request_response request_response=new client_request_response(
+							system_par.network_data_charset,network_implementor);
+		if(request_response.container_id<0){
+			double my_container_id=Math.random()*client_interface_search_tree_array.length;
+			request_response.container_id=(int)(Math.floor(my_container_id));
+		}
 		request_response.container_id%=client_interface_search_tree_array.length;
 
-		if((ecr=system_call_switch(request_response))!=null) {
+		engine_call_result ecr;
+		if((ecr=system_call_switch(request_response))!=null)
 			if(ecr.file_name!=null) 
 				request_response.response_file_data(ecr,system_par);
 			else
 				request_response.response_network_data(ecr,system_par);
-		}
 		request_response.destroy();
 	}
-	
 	public system_engine(
 			String data_file_configure_file_name,
 			String temporary_file_configure_file_name)
 	{
 		system_par			=new system_parameter(
-									data_file_configure_file_name,
-									temporary_file_configure_file_name);
+				data_file_configure_file_name,
+				temporary_file_configure_file_name);
 		program_javascript	=new javascript_program(system_par);
 		
-		client_interface_search_tree_array=new client_interface_search_tree[
-		                          system_par.max_client_container_number];
-		for(int i=0,ni=client_interface_search_tree_array.length;i<ni;i++)
+		int number=system_par.max_client_container_number;
+		client_interface_search_tree_array=new client_interface_search_tree[number];
+		for(int i=0;i<number;i++)
 			client_interface_search_tree_array[i]=new client_interface_search_tree();
-		next_client_container_id=0;
 
 		engine_search_tree	=new engine_kernel_container_search_tree();
 		engine_counter		=new create_engine_counter();

@@ -55,12 +55,9 @@ public class client_request_response extends common_writer
 			p.next=null;
 			p.result=null;
 		}
-		while(last_result!=null) {
-			network_result p=last_result;
-			last_result=last_result.next;
-			p.next=null;
-			p.result=null;
-		}
+		if(last_result!=null)
+			last_result=null;
+		
 		if(output_stream!=null) {
 			output_stream=null;
 		}
@@ -443,14 +440,23 @@ public class client_request_response extends common_writer
 		}
 		return this;
 	}
-	public common_writer reset()
+	public client_request_response reset()
 	{
-		output_data_length=0;
-		first_result=null;
-		last_result=null;
 		output_stream.reset();
+		output_data_length=0;
+		
+		while(first_result!=null) {
+			network_result p=first_result;
+			first_result=first_result.next;
+			p.next=null;
+			p.result=null;
+		}
+		if(last_result!=null)
+			last_result=null;
+		
 		return this;
 	}
+	
 	public common_writer write_routine(byte data[],int offset,int length)
 	{
 		try{
