@@ -8,7 +8,7 @@ public class browser_information extends jason_creator
 	
 	public void print()
 	{
-		print("client_id",			ci.request_response.implementor.get_client_id());
+		print("client_id",			ci.request_response.client_id);
 		print("client_charset",		ci.request_response.implementor.get_request_charset());
 		print("channel_id",			ci.channel_id);
 		print("url",				ci.request_response.implementor.get_url());

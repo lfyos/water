@@ -19,15 +19,15 @@ public class webgpu_servlet extends HttpServlet
 	protected void doGet(HttpServletRequest request,HttpServletResponse response)
 						throws ServletException,IOException 
 	{
-		engine.process_call(request, response);
+		engine.process_system_call(request, response);
 	}
 	protected void doPost(HttpServletRequest request,HttpServletResponse response)
 						throws ServletException,IOException 
 	{
-		engine.process_call(request,response);
+		engine.process_system_call(request,response);
 	}
-	public void process_call(HttpServletRequest request,HttpServletResponse response)
+	public void process_system_call(HttpServletRequest request,HttpServletResponse response)
 	{
-		engine.process_call(request,response);
+		engine.process_system_call(request,response);
 	}
 }

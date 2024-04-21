@@ -23,13 +23,6 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 				continue_flag=false;
 				break;
 			}
-			alert("Web server error, create scene response data == null!");
-			return null;
-		case "boolean":
-			if(create_data){
-				alert("Web server error, get_client_interface fail!");
-				return null;
-			}
 			create_engine_sleep_time_length*=create_engine_sleep_time_length_scale;
 			if(create_engine_sleep_time_length>create_engine_max_sleep_time_length){
 				alert("Web server error,try too many times to create scene!");
@@ -37,6 +30,9 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 			}
 			await new Promise((resolve)=>{setTimeout(resolve,create_engine_sleep_time_length);});
 			break;
+		case "number":
+			alert("Web server create scene fail:	"+create_data.toString());
+			return null;
 		default:
 			alert("Web server error, response_data type error!");
 			return null;

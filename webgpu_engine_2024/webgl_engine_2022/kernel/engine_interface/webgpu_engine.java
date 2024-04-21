@@ -24,8 +24,11 @@ public class webgpu_engine
 			engine=null;
 		}
 	}
-	private void create(HttpServletRequest request)
+	private synchronized void create(HttpServletRequest request)
 	{
+		if(engine!=null)
+			return;
+		
 		String configure_file_name=request.getSession().getServletContext().getRealPath("configure.txt");
 		if(!(new File(configure_file_name).exists())) {
 			debug_information.println(
@@ -87,7 +90,8 @@ public class webgpu_engine
 		}
 		engine=new system_engine(data_file_name,temp_file_name);	
     }
-    public void process_call(HttpServletRequest request,HttpServletResponse response)
+
+    public void process_system_call(HttpServletRequest request,HttpServletResponse response)
 	{
     	if(engine==null)
     		create(request);

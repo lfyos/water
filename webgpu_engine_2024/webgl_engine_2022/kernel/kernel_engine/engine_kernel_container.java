@@ -57,10 +57,10 @@ public class engine_kernel_container
 			render_container original_render,part_loader_container my_part_loader_cont)
 	{
 		engine_kernel_create_parameter create_parameter=new engine_kernel_create_parameter(
-				my_scene_name,my_link_name,client_scene_file_name,client_scene_file_charset,system_par);
+				my_scene_name,client_scene_file_name,client_scene_file_charset,system_par);
 		if(!(create_parameter.success_load_parameter_flag))
 			create_parameter=new engine_kernel_create_parameter(
-					null,my_link_name,client_scene_file_name,client_scene_file_charset,system_par);
+					null,client_scene_file_name,client_scene_file_charset,system_par);
 		
 		ek=null;
 		if(create_parameter.success_load_parameter_flag)

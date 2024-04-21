@@ -23,6 +23,9 @@ public class client_request_response extends common_writer
 	public network_implementation implementor;
 	public String response_content_type;
 	public boolean display_content_flag;
+
+	public int container_id;
+	public String channel_string,user_name,pass_word,client_id,language_str;
 	
 	private network_parameter parameter[];
 	private network_result first_result,last_result;
@@ -31,6 +34,12 @@ public class client_request_response extends common_writer
 
 	public void destroy()
 	{
+		channel_string=null;
+		user_name=null;
+		pass_word=null;
+		client_id=null;
+		language_str=null;
+		
 		if(implementor!=null) {
 			implementor=null;
 		}
@@ -46,12 +55,9 @@ public class client_request_response extends common_writer
 			p.next=null;
 			p.result=null;
 		}
-		while(last_result!=null) {
-			network_result p=last_result;
-			last_result=last_result.next;
-			p.next=null;
-			p.result=null;
-		}
+		if(last_result!=null)
+			last_result=null;
+		
 		if(output_stream!=null) {
 			output_stream=null;
 		}
@@ -59,7 +65,7 @@ public class client_request_response extends common_writer
 	public client_request_response(String charset_name,network_implementation my_implementor)
 	{
 		super(charset_name,"[",",","]");
-		
+				
 		implementor			=my_implementor;
 		
 		parameter			=null;
@@ -71,6 +77,22 @@ public class client_request_response extends common_writer
 		response_content_type="text/plain";
 		
 		display_content_flag=false;
+		
+		channel_string	=((channel_string=get_parameter("channel"))==null)	?"switch"		:channel_string.trim();
+		user_name		=((user_name=get_parameter("user_name"))==null)		?"NoName"		:user_name.trim();
+		pass_word		=((pass_word=get_parameter("pass_word"))==null)		?"NoPassword"	:pass_word.trim();
+		client_id		=((client_id=implementor.get_client_id())==null)	?"NoClientID"	:client_id.trim();
+		language_str	=((language_str=get_parameter("language"))==null)	?"chinese"		:language_str.trim();
+		
+		String my_container_str;
+		if((my_container_str=get_parameter("container"))!=null)
+			try{
+				container_id=Integer.decode(my_container_str);
+				return;
+			}catch(Exception e){
+				debug_information.println("Error container_id:	",my_container_str);
+			}
+		container_id=-1;
 	}
 	private void inset_result(String result[])
 	{
@@ -418,14 +440,23 @@ public class client_request_response extends common_writer
 		}
 		return this;
 	}
-	public common_writer reset()
+	public client_request_response reset()
 	{
-		output_data_length=0;
-		first_result=null;
-		last_result=null;
 		output_stream.reset();
+		output_data_length=0;
+		
+		while(first_result!=null) {
+			network_result p=first_result;
+			first_result=first_result.next;
+			p.next=null;
+			p.result=null;
+		}
+		if(last_result!=null)
+			last_result=null;
+		
 		return this;
 	}
+	
 	public common_writer write_routine(byte data[],int offset,int length)
 	{
 		try{

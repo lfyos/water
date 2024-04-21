@@ -26,7 +26,7 @@
 /*	show_process_bar_interval,	unit:millisecond							*/		1000
 /*	file_buffer_expire_time_length,	unit:second								*/		360000
 
-/*	max_client_container_number												*/		20
+/*	max_client_container_number												*/		15
 /*	max_client_interface_number												*/		10
 
 /*	max_engine_kernel_number												*/		300

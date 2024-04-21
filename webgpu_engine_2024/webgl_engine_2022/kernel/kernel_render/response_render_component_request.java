@@ -240,12 +240,9 @@ public class response_render_component_request
 			return;
 		int loading_render_id=Integer.decode(str.substring(0,index_id  ));
 		int loading_part_id  =Integer.decode(str.substring(  index_id+1));
-			
-		if((str=ci.request_response.get_parameter("language"))==null)
-			str="chinese";
-		else
-			str=str.toLowerCase().trim();
-		str=ek.system_par.language_change_name.search_change_name("load+"+str,"Load");
+		
+		str=ek.system_par.language_change_name.search_change_name(
+				"load+"+ci.request_response.language_str,"Load");
 
 		long total_length=ek.process_part_sequence.total_buffer_object_text_data_length;
 		if(ek.process_part_sequence.total_buffer_object_text_data_length>0){
