@@ -14,7 +14,7 @@ public class engine_kernel_and_client_information_container
 {
 	public engine_kernel_container	engine_kernel_cont;
 	public client_information 		client_information;
-	private int 					access_lock_number;
+	private volatile int 			access_lock_number;
 	
 	public engine_kernel_and_client_information_container(engine_kernel_container my_engine_kernel_cont)
 	{
