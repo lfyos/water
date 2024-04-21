@@ -21,8 +21,7 @@ public class engine_kernel_create_parameter
 	public String	extra_parameter_file_name;
 	public String	extra_parameter_charset;
 	
-	public engine_kernel_create_parameter(
-			String my_scene_name,String my_link_name,
+	public engine_kernel_create_parameter(String my_scene_name,
 			String client_scene_file_name,String client_scene_file_charset,
 			system_parameter system_par)
 	{
@@ -44,7 +43,7 @@ public class engine_kernel_create_parameter
 			file_reader f_name=new file_reader(
 					f_type.directory_name+my_mount_file_name,f_type.get_charset());
 			while(!(f_name.eof())){
-				String scene_search_name	=f_name.get_string();
+				String my_scene_search_name	=f_name.get_string();
 				scene_file_name				=f_name.get_string();
 				create_top_part_expand_ratio=f_name.get_long();
 				create_top_part_left_ratio	=f_name.get_long();
@@ -56,7 +55,7 @@ public class engine_kernel_create_parameter
 				if(extra_parameter_file_name.compareTo("")==0)
 					break;
 				if(my_scene_name!=null)
-					if(my_scene_name.compareTo(scene_search_name)!=0)
+					if(my_scene_name.compareTo(my_scene_search_name)!=0)
 						continue;
 				
 				scene_file_name				=file_reader.separator(scene_file_name);
@@ -65,7 +64,7 @@ public class engine_kernel_create_parameter
 				
 				if(!(file_reader.is_exist(f_name.directory_name+scene_file_name))) {
 					debug_information.println("Find unexist scene_assembly_file_name:",
-						scene_search_name+"\t"+"\t"+scene_file_name);
+						my_scene_search_name+"\t"+"\t"+scene_file_name);
 					continue;
 				}
 				if(file_reader.is_exist(f_name.directory_name+parameter_file_name))
@@ -75,7 +74,7 @@ public class engine_kernel_create_parameter
 						+"assemble_parameter"+File.separator+parameter_file_name;
 					if(!(file_reader.is_exist(parameter_file_name))) {
 						debug_information.println("Find unexist scene parameter_file_name:",
-								scene_search_name+"\t"+"\t"+parameter_file_name);
+							my_scene_search_name+"\t"+"\t"+parameter_file_name);
 						continue;
 					}
 				}
@@ -86,12 +85,12 @@ public class engine_kernel_create_parameter
 						+"assemble_parameter"+File.separator+extra_parameter_file_name;
 					if(!(file_reader.is_exist(extra_parameter_file_name))) {
 						debug_information.println("Find unexist scene extra_parameter_file_name:",
-								scene_search_name+"\t"+"\t"+extra_parameter_file_name);
+							my_scene_search_name+"\t"+"\t"+extra_parameter_file_name);
 						continue;
 					}
 				}
 				
-				debug_information.println("scene_name	              	:	",	scene_search_name);
+				debug_information.println("scene_name	              	:	",	my_scene_search_name);
 				debug_information.println("scene_file_name          	:	",	f_name.directory_name+scene_file_name);
 				debug_information.println("parameter_file_name		:	",		parameter_file_name);
 				debug_information.println("extra_parameter_file_name	:	",	extra_parameter_file_name);

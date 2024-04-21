@@ -84,15 +84,15 @@ public class client_request_response extends common_writer
 		client_id		=((client_id=implementor.get_client_id())==null)	?"NoClientID"	:client_id.trim();
 		language_str	=((language_str=get_parameter("language"))==null)	?"chinese"		:language_str.trim();
 		
-		container_id	=-1;
 		String my_container_str;
 		if((my_container_str=get_parameter("container"))!=null)
 			try{
-				if((container_id=Integer.decode(my_container_str))<0)
-					debug_information.println("Container_id<0:	",my_container_str);
+				container_id=Integer.decode(my_container_str);
+				return;
 			}catch(Exception e){
 				debug_information.println("Error container_id:	",my_container_str);
 			}
+		container_id=-1;
 	}
 	private void inset_result(String result[])
 	{
