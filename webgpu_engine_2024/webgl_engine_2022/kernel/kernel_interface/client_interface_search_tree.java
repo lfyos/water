@@ -21,7 +21,8 @@ public class client_interface_search_tree
 			create_engine_counter engine_counter)
 	{
 		for(long my_touch_time;(my_touch_time=tree.first_touch_time())>0;){
-			String client_interface_key[]=tree.get_first_key();
+			String 				my_key[]=tree.get_first_key();
+			client_interface 	my_value=tree.get_first_value();
 			
 			int size=tree.size();
 			long time_length=nanosecond_timer.absolute_nanoseconds()-my_touch_time;
@@ -30,17 +31,15 @@ public class client_interface_search_tree
 				if(size<my_system_par.max_client_interface_number)
 					if(time_length<my_system_par.engine_expire_time_length)
 						break;
-			
-			
-
-			debug_information.println("Delete client_interface, client id is ",client_interface_key[0]);
-			debug_information.println("Delete client_interface, user name is ",client_interface_key[1]);
+			debug_information.println("Delete client_interface, client id is ",my_key[0]);
+			debug_information.println("Delete client_interface, user name is ",my_key[1]);
 			debug_information.print  ("Time interval ",time_length);
 			debug_information.println(", max time interval  ",my_system_par.engine_expire_time_length);
 			debug_information.print  ("Still active client_interface number is  ",size-1);
 			debug_information.println("/",my_system_par.max_client_interface_number);
-				
-			tree.remove(client_interface_key).destroy(engine_search_tree,engine_counter);
+			
+			my_value.destroy(engine_search_tree,engine_counter);
+			tree.remove(my_key);
 		}
 	}
 	public client_interface get_client_interface(

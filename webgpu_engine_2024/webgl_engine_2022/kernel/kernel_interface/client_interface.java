@@ -358,11 +358,11 @@ public class client_interface
 			engine_kernel_container_search_tree engine_search_tree,create_engine_counter engine_counter)
 	{
 		for(long touch_time;(touch_time=tree.first_touch_time())>=0;){
-			String key[]=tree.get_first_key();
-			engine_kernel_and_client_information_container p=tree.get_first_value();
-			if(p.lock_number(0)>0)
+			String 											my_key[]=tree.get_first_key();
+			engine_kernel_and_client_information_container	my_value=tree.get_first_value();
+			if(my_value.lock_number(0)>0)
 				break;
-			if((p.client_information==null)||(p.engine_kernel_cont==null)) {
+			if((my_value.client_information==null)||(my_value.engine_kernel_cont==null)) {
 				debug_information.println();
 				debug_information.println(
 						"((first.ek_ci.client_information==null)||(first.ek_ci.engine_kernel_link_list==null))");
@@ -377,14 +377,14 @@ public class client_interface
 				debug_information.print  ("client_interface delete time out client_information found, client id is ");
 				debug_information.println(request_response.client_id);
 				debug_information.print  ("container ID is ",request_response.container_id);
-				debug_information.print  (",Channel is ",p.client_information.channel_id);
+				debug_information.print  (",Channel is ",	my_value.client_information.channel_id);
 				debug_information.print  (",time interval ",time_length);
 				debug_information.println(",max time interval  ",system_par.engine_expire_time_length);
 			}
 			
-			if(p.engine_kernel_cont!=null) {
+			if(my_value.engine_kernel_cont!=null) {
 				engine_kernel ek;
-				if((ek=p.engine_kernel_cont.ek)!=null)
+				if((ek=my_value.engine_kernel_cont.ek)!=null)
 					if(ek.component_cont!=null)
 						if(ek.component_cont.root_component!=null){
 							statistics_user.user_engine_kernel_number--;
@@ -397,48 +397,50 @@ public class client_interface
 			debug_information.print  ("user_engine_component_number:",statistics_user.user_engine_component_number);
 			debug_information.println("/",statistics_user.user_max_engine_component_number);
 			
-			if(p.client_information!=null) {
+			if(my_value.client_information!=null) {
 				try{
-					p.client_information.destroy();
+					my_value.client_information.destroy();
 				}catch(Exception e){
 					e.printStackTrace();
 					
 					debug_information.println("Destroy client_information exception:	",e.toString());
 				}
-				p.client_information=null;
+				my_value.client_information=null;
 			}
-			if(p.engine_kernel_cont!=null) {
-				if(p.engine_kernel_cont.ek!=null)
+			if(my_value.engine_kernel_cont!=null) {
+				if(my_value.engine_kernel_cont.ek!=null)
 					engine_search_tree.destroy_engine_kernel_container(
-							p.engine_kernel_cont.ek.scene_name,
-							p.engine_kernel_cont.ek.link_name,engine_counter);
-				p.engine_kernel_cont=null;
+							my_value.engine_kernel_cont.ek.scene_name,
+							my_value.engine_kernel_cont.ek.link_name,engine_counter);
+				my_value.engine_kernel_cont=null;
 			}
-			tree.remove(key);
+			tree.remove(my_key);
 		}
 	}
 	private void destroy_routine(
 			engine_kernel_container_search_tree engine_search_tree,
 			create_engine_counter engine_counter)
 	{	
-		engine_kernel_and_client_information_container p;
+		String my_key[];
+		engine_kernel_and_client_information_container my_value;
 		
 		if(tree!=null) {
 			while(tree.first_touch_time()>0){
-				p=tree.remove(tree.get_first_key());
+				my_key=tree.get_first_key();
+				my_value=tree.remove(my_key);
 				
-				if(p.client_information!=null) {
-					p.client_information.destroy();
-					p.client_information=null;
+				if(my_value.client_information!=null) {
+					my_value.client_information.destroy();
+					my_value.client_information=null;
 				}
-				if(p.engine_kernel_cont!=null) {
-					if(p.engine_kernel_cont.ek!=null) {
+				if(my_value.engine_kernel_cont!=null) {
+					if(my_value.engine_kernel_cont.ek!=null) {
 						engine_search_tree.destroy_engine_kernel_container(
-								p.engine_kernel_cont.ek.scene_name,
-								p.engine_kernel_cont.ek.link_name,
+								my_value.engine_kernel_cont.ek.scene_name,
+								my_value.engine_kernel_cont.ek.link_name,
 								engine_counter);
 					};
-					p.engine_kernel_cont=null;
+					my_value.engine_kernel_cont=null;
 				}
 			}
 			tree=null;
