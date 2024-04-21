@@ -27,7 +27,7 @@ public class engine_kernel_and_client_information_container
 		access_lock_number+=modify_number;
 		return access_lock_number;
 	}
-	private engine_call_result get_engine_result_routine(int my_container_id,
+	private engine_call_result get_engine_result_routine(
 			component_load_source_container component_load_source_cont,client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container,
 			client_request_response my_request_response,long delay_time_length,
@@ -72,16 +72,15 @@ public class engine_kernel_and_client_information_container
 					"(ek.component_cont.root_component==null) in function get_engine_result() of engine_container");
 				return null;
 			}
-			client_information=new client_information(my_container_id,
-					my_request_response,process_bar,engine_kernel_cont.ek,statistics_user,engine_counter);
+			client_information=new client_information(my_request_response,
+					process_bar,engine_kernel_cont.ek,statistics_user,engine_counter);
 		}
 		client_information.request_response=my_request_response;
 
 		return dispatch_request_main.get_engine_result(	delay_time_length,engine_kernel_cont.ek,client_information);
 	}
 	
-	public engine_call_result get_engine_result(
-			int my_container_id,client_process_bar process_bar,
+	public engine_call_result get_engine_result(client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container,
 			component_load_source_container component_load_source_cont,
 			client_request_response my_request_response,long delay_time_length,
@@ -94,7 +93,7 @@ public class engine_kernel_and_client_information_container
 			my_engine_kernel_container_lock.lock();
 			
 			try{
-				ret_val=get_engine_result_routine(my_container_id,
+				ret_val=get_engine_result_routine(
 						component_load_source_cont,process_bar,system_boftal_container,
 						my_request_response,delay_time_length,statistics_user,engine_counter);
 			}catch(Exception e){

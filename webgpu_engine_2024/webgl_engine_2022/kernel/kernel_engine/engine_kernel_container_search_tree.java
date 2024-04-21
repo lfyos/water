@@ -1,11 +1,10 @@
 package kernel_engine;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.concurrent.locks.ReentrantLock;
 
 import kernel_common_class.debug_information;
-import kernel_common_class.tree_search_container;
+import kernel_common_class.tree_string_search_container;
 import kernel_component.component_load_source_container;
 import kernel_file_manager.file_directory;
 import kernel_network.client_request_response;
@@ -18,13 +17,14 @@ import kernel_render.render_container;
 
 public class engine_kernel_container_search_tree 
 {
-	private tree_search_container<String[],engine_kernel_container> tree;
+	private tree_string_search_container<engine_kernel_container> tree;
 	
 	private render_container original_render;
 	public component_load_source_container component_load_source_cont;
 	public buffer_object_file_modify_time_and_length_container system_boftal_container;
 	private part_loader_container part_loader_cont;
-	private ReentrantLock engine_interface_container_lock;
+	
+	private volatile ReentrantLock engine_interface_container_lock;
 	
 	private void load_render_container(
 		client_request_response request_response,system_parameter system_par)
@@ -77,7 +77,7 @@ public class engine_kernel_container_search_tree
 		if(link_name.compareTo("")==0)
 			link_name=Double.toString(Math.random());
 
-		debug_information.println(request_response.implementor.get_client_id(),"	Create scene");
+		debug_information.println(request_response.client_id,"	Create scene");
 		debug_information.print  ("scene_name:	",scene_name);
 		debug_information.println(",link_name:	",link_name);
 		debug_information.print  ("engine_interface engine_kernel_number:	",		engine_counter.engine_kernel_number);
@@ -149,9 +149,12 @@ public class engine_kernel_container_search_tree
 			String client_scene_file_name,String client_scene_file_charset,
 			create_engine_counter engine_counter,system_parameter system_par)
 	{
-		engine_kernel_container ret_val=null;
-		engine_interface_container_lock.lock();
+		ReentrantLock my_lock;
+		if((my_lock=engine_interface_container_lock)==null)
+			return null;
+		my_lock.lock();
 		
+		engine_kernel_container ret_val=null;
 		if(original_render==null)
 			load_render_container(request_response,system_par);
 		
@@ -165,23 +168,27 @@ public class engine_kernel_container_search_tree
 			debug_information.println(e.toString());
 			ret_val=null;
 		}
-		engine_interface_container_lock.unlock();
+		my_lock.unlock();
 		return ret_val;
 	}
 	public void destroy_engine_kernel_container(
 			String my_scene_name,String my_link_name,
 			create_engine_counter engine_counter)
 	{
-		engine_interface_container_lock.lock();
+		ReentrantLock my_lock;
+		if((my_lock=engine_interface_container_lock)==null)
+			return;
+		my_lock.lock();
 		destroy_engine_kernel_container_routine(
 				my_scene_name,my_link_name,engine_counter);
-		engine_interface_container_lock.unlock();
+		my_lock.unlock();
 	}
 	public void destroy()
 	{
-		ReentrantLock my_client_interface_lock=engine_interface_container_lock;
-		engine_interface_container_lock=null;
-		my_client_interface_lock.lock();
+		ReentrantLock my_lock;
+		if((my_lock=engine_interface_container_lock)==null)
+			return;
+		my_lock.lock();
 		
 		while(tree.first_touch_time()>=0) {
 			tree.search_value.destroy();
@@ -199,22 +206,14 @@ public class engine_kernel_container_search_tree
 			part_loader_cont.destroy();
 			part_loader_cont=null;
 		}
-		my_client_interface_lock.unlock();
+		
+		engine_interface_container_lock=null;
+		
+		my_lock.unlock();
 	}
 	public engine_kernel_container_search_tree()
 	{
-		class my_comparator implements Comparator<String[]>
-		{
-			public int compare(String[] obj1, String[] obj2)
-			{
-				int ret_val;
-				if((ret_val=obj1[0].compareTo(obj2[0]))==0)
-					ret_val=obj1[1].compareTo(obj2[1]);
-				return ret_val;
-			}
-		};
-		
-		tree=new tree_search_container<String[],engine_kernel_container>(new my_comparator());
+		tree=new tree_string_search_container<engine_kernel_container>();
 		
 		component_load_source_cont		=new component_load_source_container();
 		

@@ -15,8 +15,7 @@ public class web_page
 	{
 		language_change_name=my_language_change_name;
 		
-		language_str=my_ci.request_response.get_parameter("language");
-		language_str=(language_str==null)?"chinese":(language_str.trim());
+		language_str=my_ci.request_response.language_str;
 	
 		(out=my_ci.request_response).response_content_type="text/html";
 
