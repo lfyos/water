@@ -95,7 +95,7 @@ public class system_engine
 			if(test_creation_engine_lock_number(1)>=system_par.create_engine_concurrent_number){
 				ecr=new engine_call_result(system_par.system_cors_string,request_response.response_content_type);
 				request_response.reset().println("null");
-				client.get_process_bar(request_response).set_process_bar(true,"wait_for_other_exit","",1,2);
+				client.set_process_bar(request_response,true,"wait_for_other_exit","",1,2);
 			}else if((ecr=client.execute_create_call(request_response,engine_search_tree,engine_counter))==null) {
 				ecr=new engine_call_result(system_par.system_cors_string,request_response.response_content_type);
 				request_response.reset().println("2");

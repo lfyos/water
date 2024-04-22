@@ -88,10 +88,10 @@ public class engine_kernel_and_client_information_container
 			user_statistics statistics_user,create_engine_counter engine_counter)
 	{
 		engine_call_result ret_val=null;
-		ReentrantLock my_engine_kernel_container_lock;
+		ReentrantLock my_lock;
 		
-		if((my_engine_kernel_container_lock=engine_kernel_cont.engine_kernel_container_lock)!=null){
-			my_engine_kernel_container_lock.lock();
+		if((my_lock=engine_kernel_cont.engine_kernel_container_lock)!=null){
+			my_lock.lock();
 			
 			try{
 				ret_val=get_engine_result_routine(
@@ -104,7 +104,7 @@ public class engine_kernel_and_client_information_container
 				debug_information.println(e.toString());
 				ret_val=null;
 			};
-			my_engine_kernel_container_lock.unlock();
+			my_lock.unlock();
 		}
 		return ret_val;
 	}

@@ -27,6 +27,7 @@ public class client_process_bar_container
 		else
 			ret_val=process_bar_array.get(process_bar_id);
 		ret_val.touch_time=nanosecond_timer.absolute_nanoseconds();
+		
 		return ret_val;
 	};
 	public client_process_bar request_process_bar()
