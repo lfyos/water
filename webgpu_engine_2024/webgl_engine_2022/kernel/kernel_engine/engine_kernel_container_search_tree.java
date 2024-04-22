@@ -144,7 +144,6 @@ public class engine_kernel_container_search_tree
 					engine_counter.engine_component_number);
 		}
 	}
-	
 	public engine_kernel_container create_engine_kernel_container(
 			client_request_response request_response,
 			String client_scene_file_name,String client_scene_file_charset,

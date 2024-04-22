@@ -24,21 +24,20 @@ public class engine_kernel_container
 	{
 		int ret_val;
 		
-		ReentrantLock my_engine_kernel_container_lock;
-		if((my_engine_kernel_container_lock=engine_kernel_container_lock)==null)
+		ReentrantLock my_lock;
+		if((my_lock=engine_kernel_container_lock)==null)
 			return 0;
-		
-		my_engine_kernel_container_lock.lock();
+		my_lock.lock();
 		link_number+=modify_number;
 		ret_val=link_number;
-		my_engine_kernel_container_lock.unlock();
+		my_lock.unlock();
 		return ret_val;
 	}
 	public void destroy()
 	{
-		ReentrantLock my_engine_kernel_container_lock;
-		if((my_engine_kernel_container_lock=engine_kernel_container_lock)!=null){
-			my_engine_kernel_container_lock.lock();
+		ReentrantLock my_lock;
+		if((my_lock=engine_kernel_container_lock)!=null){
+			my_lock.lock();
 			if(ek!=null) {
 				ek.destroy();
 				ek=null;
@@ -48,7 +47,7 @@ public class engine_kernel_container
 			
 			link_number=0;
 			
-			my_engine_kernel_container_lock.unlock();
+			my_lock.unlock();
 		}
 	}
 	public engine_kernel_container(String my_scene_name,String my_link_name,

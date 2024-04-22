@@ -12,7 +12,7 @@ import kernel_network.client_request_response;
 
 public class client_interface_search_tree 
 {
-	private ReentrantLock client_interface_search_tree_lock;
+	private volatile ReentrantLock client_interface_search_tree_lock;
 	private tree_string_search_container<client_interface> tree;
 	
 	private void process_timeout_client_interface(
@@ -48,12 +48,11 @@ public class client_interface_search_tree
 			engine_kernel_container_search_tree engine_search_tree,
 			create_engine_counter engine_counter)
 	{
-		ReentrantLock my_lock;
 		client_interface ret_val;
 		
+		ReentrantLock my_lock;
 		if((my_lock=client_interface_search_tree_lock)==null)
 			return null;
-		
 		my_lock.lock();
 		
 		process_timeout_client_interface(true,my_system_par,engine_search_tree,engine_counter);
@@ -86,10 +85,8 @@ public class client_interface_search_tree
 			create_engine_counter engine_counter)
 	{
 		ReentrantLock my_lock;
-		
 		if((my_lock=client_interface_search_tree_lock)==null)
 			return;
-		
 		my_lock.lock();
 		
 		process_timeout_client_interface(false,
