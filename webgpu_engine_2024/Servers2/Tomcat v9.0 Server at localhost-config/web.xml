@@ -20,11 +20,20 @@
  	<servlet>
         <servlet-name>webgpu_server</servlet-name>
         <servlet-class>engine_interface.webgpu_servlet</servlet-class>
+		<init-param>
+            <param-name>data_environment_variable</param-name>
+            <param-value>lfy_data_dir</param-value>
+        </init-param>
+        <init-param>
+            <param-name>temp_environment_variable</param-name>
+            <param-value>lfy_temp_dir</param-value>
+        </init-param>
     </servlet>
     
     <servlet-mapping>
 		<servlet-name>webgpu_server</servlet-name>
 		<url-pattern>/interface.servlet</url-pattern>
+		
 	</servlet-mapping>
 
   <!-- ======================== Introduction ============================== -->

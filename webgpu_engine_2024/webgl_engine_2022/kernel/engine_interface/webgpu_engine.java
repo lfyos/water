@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kernel_common_class.debug_information;
+import kernel_engine.system_engine;
 import kernel_file_manager.file_reader;
 import kernel_network.network;
 
@@ -17,31 +18,23 @@ public class webgpu_engine
 	{
 		engine=null;
 	}
-	public void destroy()
-	{
-		if(engine!=null) {
-			engine.destroy();
-			engine=null;
-		}
-	}
-	private synchronized void create(HttpServletRequest request)
+	synchronized void create(
+			String data_environment_variable_name,
+			String temp_environment_variable_name)
 	{
 		if(engine!=null)
 			return;
 		
-		String configure_file_name=request.getSession().getServletContext().getRealPath("configure.txt");
-		if(!(new File(configure_file_name).exists())) {
-			debug_information.println(
-					"webserver_configure_file is NOT exist,its file_name is ",
-					configure_file_name);
+		if(data_environment_variable_name==null) {
+			debug_information.println("data_environment_variable_name is null");
 			System.exit(0);
 			return;
 		}
-		file_reader f=new file_reader(configure_file_name,null);
-		String data_environment_variable_name=f.get_string();
-		String temp_environment_variable_name=f.get_string();
-		f.close();
-		
+		if(temp_environment_variable_name==null) {
+			debug_information.println("temp_environment_variable_name is null");
+			System.exit(0);
+			return;
+		}
         String data_dir_name;
 		if((data_dir_name=System.getenv(data_environment_variable_name))==null) {
 			debug_information.println(
@@ -89,12 +82,22 @@ public class webgpu_engine
 			return;
 		}
 		engine=new system_engine(data_file_name,temp_file_name);	
-    }
-
-    public void process_system_call(HttpServletRequest request,HttpServletResponse response)
+	}
+	public void destroy()
+	{
+		if(engine!=null) {
+			engine.destroy();
+			engine=null;
+		}
+	}
+    public void process_system_call(
+    		HttpServletRequest request,
+    		HttpServletResponse response,
+    		String data_environment_variable_name,
+			String temp_environment_variable_name)
 	{
     	if(engine==null)
-    		create(request);
-    	engine.process_system_call(new network(request,response));	
+    		create(data_environment_variable_name,temp_environment_variable_name);
+    	engine.process_system_call(new network(request,response));
 	}
 }
