@@ -18,12 +18,21 @@ public class webgpu_engine
 	{
 		engine=null;
 	}
-	synchronized void create(
-			String data_environment_variable_name,
-			String temp_environment_variable_name)
+	synchronized void create(HttpServletRequest request)
 	{
 		if(engine!=null)
 			return;
+		
+		String configure_file_name=request.getSession().getServletContext().getRealPath("configure.txt");
+		if(!(new File(configure_file_name).exists())) {
+			debug_information.println("webserver_configure_file is NOT exist,its file_name is ",configure_file_name);
+			System.exit(0);
+			return;
+		}
+		file_reader f=new file_reader(configure_file_name,null);
+		String data_environment_variable_name=f.get_string();
+		String temp_environment_variable_name=f.get_string();
+		f.close();
 		
 		if(data_environment_variable_name==null) {
 			debug_information.println("data_environment_variable_name is null");
@@ -90,14 +99,10 @@ public class webgpu_engine
 			engine=null;
 		}
 	}
-    public void process_system_call(
-    		HttpServletRequest request,
-    		HttpServletResponse response,
-    		String data_environment_variable_name,
-			String temp_environment_variable_name)
+    public void process_system_call(HttpServletRequest request,HttpServletResponse response)
 	{
     	if(engine==null)
-    		create(data_environment_variable_name,temp_environment_variable_name);
+    		create(request);
     	engine.process_system_call(new network(request,response));
 	}
 }

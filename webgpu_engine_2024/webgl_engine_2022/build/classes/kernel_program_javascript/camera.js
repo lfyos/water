@@ -70,7 +70,7 @@ function construct_camera_object(camera_number,my_component_location_data,my_com
 		var near_value			=near_value_ratio*camera_distance;
 		var far_value			=far_value_ratio*camera_distance;	
 		
-		var top_value			=near_value*half_fovy_tanl;
+		var top_value			=camera_distance*half_fovy_tanl;
 		var bottom_value		=(-top_value);
 		
 		var right_value			=top_value;
@@ -79,13 +79,13 @@ function construct_camera_object(camera_number,my_component_location_data,my_com
 		return {
 			matrix			:
 			[
-				2.0*near_value/(right_value-left_value),
+				2.0*camera_distance/(right_value-left_value),
 				0,
 				0,
 				0,
 				
 				0,
-				2.0*near_value/(top_value-bottom_value),
+				2.0*camera_distance/(top_value-bottom_value),
 				0,
 				0,
 				
@@ -101,13 +101,13 @@ function construct_camera_object(camera_number,my_component_location_data,my_com
 			],
 			negative_matrix	:
 			[
-				(right_value-left_value)/(2.0*near_value),
+				(right_value-left_value)/(2.0*camera_distance),
 				0.0,
 				0.0,
 				0.0,
 				
 				0.0,
-				(top_value-bottom_value)/(2.0*near_value),
+				(top_value-bottom_value)/(2.0*camera_distance),
 				0.0,
 				0.0,
 				
@@ -116,8 +116,8 @@ function construct_camera_object(camera_number,my_component_location_data,my_com
 				0.0,
 				(near_value-far_value)/(2.0*near_value*far_value),
 				
-				(right_value+left_value)/(2.0*near_value),
-				(top_value+bottom_value)/(2.0*near_value),
+				(right_value+left_value)/(2.0*camera_distance),
+				(top_value+bottom_value)/(2.0*camera_distance),
 				-1.0,
 				(near_value+far_value)/(2.0*near_value*far_value)
 			]
