@@ -14,32 +14,27 @@ public class projection_matrix
 		double far_value=far_value_ratio*distance;	
 		double top_value,bottom_value,right_value,left_value;
 	
-		top_value=near_value*half_fovy_tanl;
-		bottom_value=(-top_value);
-		right_value=top_value;
-		left_value=(-right_value);
-		
-		frustem_matrix=new location(new double[]
-		{
-				2.0*near_value/(right_value-left_value),			0.0,													0.0,												0.0,
-				0.0,												2.0*near_value/(top_value-bottom_value),				0.0,												0.0,
-				(right_value+left_value)/(right_value-left_value),	(top_value+bottom_value)/(top_value-bottom_value),		(near_value+far_value)/(near_value-far_value),		-1.0,
-				0.0,												0.0,													2.0*near_value*far_value/(near_value-far_value),	0.0
-		});
-		negative_frustem_matrix=new location(new double[]
-		{
-				(right_value-left_value)/(2.0*near_value),			0.0,										0.0,													0.0,
-				0.0,												(top_value-bottom_value)/(2.0*near_value),	0.0,													0.0,
-				0.0,												0.0,										0.0,		(near_value-far_value)/(2.0*near_value*far_value),
-				(right_value+left_value)/(2.0*near_value),			(top_value+bottom_value)/(2.0*near_value),	-1.0,		(near_value+far_value)/(2.0*near_value*far_value)
-		});
-		
 		top_value=distance*half_fovy_tanl;
 		bottom_value=(-top_value);
 		right_value=top_value;
 		left_value=(-right_value);
 		
 		
+		frustem_matrix=new location(new double[]
+		{
+				2.0*distance/(right_value-left_value),				0.0,													0.0,												0.0,
+				0.0,												2.0*distance/(top_value-bottom_value),					0.0,												0.0,
+				(right_value+left_value)/(right_value-left_value),	(top_value+bottom_value)/(top_value-bottom_value),		(near_value+far_value)/(near_value-far_value),		-1.0,
+				0.0,												0.0,													2.0*near_value*far_value/(near_value-far_value),	0.0
+		});
+		negative_frustem_matrix=new location(new double[]
+		{
+				(right_value-left_value)/(2.0*distance),			0.0,										0.0,													0.0,
+				0.0,												(top_value-bottom_value)/(2.0*distance),	0.0,													0.0,
+				0.0,												0.0,										0.0,		(near_value-far_value)/(2.0*near_value*far_value),
+				(right_value+left_value)/(2.0*distance),			(top_value+bottom_value)/(2.0*distance),	-1.0,		(near_value+far_value)/(2.0*near_value*far_value)
+		});
+
 		orthographic_matrix=new location(new double[]
 		{
 				2.0/(right_value-left_value),						0.0,												0.0,												0.0,

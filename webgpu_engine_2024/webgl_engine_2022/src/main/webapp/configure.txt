@@ -1,0 +1,2 @@
+/*	data_environment_variable	*/	lfy_data_dir
+/*	temp_environment_variable	*/	lfy_temp_dir
