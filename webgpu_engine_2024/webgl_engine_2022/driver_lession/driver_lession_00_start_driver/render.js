@@ -79,7 +79,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 		{
 			format				:	"depth24plus-stencil8",
 			depthWriteEnabled	:	true,
-    		depthCompare		:	"less",
+    		depthCompare		:	"less-equal",
 
    			stencilFront		:	{},
     		stencilBack			:	{},

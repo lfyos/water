@@ -80,7 +80,7 @@ function create_one_render_driver(array_stride,material_offset,
 		{
 			format				:	"depth24plus-stencil8",
 			depthWriteEnabled	:	true,
-    		depthCompare		:	"less",
+    		depthCompare		:	"less-equal",
 
    			stencilFront		:	{},
     		stencilBack			:	{},
