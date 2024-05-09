@@ -142,6 +142,6 @@ public class system_engine
 		engine_search_tree	=new engine_kernel_container_search_tree();
 		engine_counter		=new create_engine_counter();
 		
-		creation_engine_lock_number	=0;
+		creation_engine_lock_number=0;
 	}
 }

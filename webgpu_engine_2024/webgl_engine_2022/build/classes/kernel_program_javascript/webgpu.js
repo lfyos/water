@@ -10,7 +10,7 @@ async function create_webgpu(my_canvas)
 	var devicePixelRatio = window.devicePixelRatio || 1;
 
 	webgpu.current_canvas_id	=0;
-		
+
 	webgpu.gpu					= await navigator.gpu;
 	webgpu.adapter				= await webgpu.gpu.requestAdapter();
 	webgpu.device				= await webgpu.adapter.requestDevice();
