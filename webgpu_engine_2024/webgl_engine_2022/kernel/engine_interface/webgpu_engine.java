@@ -90,7 +90,7 @@ public class webgpu_engine
 			System.exit(0);
 			return;
 		}
-		engine=new system_engine(data_file_name,temp_file_name);	
+		engine=new system_engine(data_file_name,temp_file_name);
 	}
 	public void destroy()
 	{

@@ -152,7 +152,6 @@ function create_one_render_driver(array_stride,material_offset,
     	passOp			:	"zero"
 	};
 
-	
 	pipeline_descr.fragment.targets=id_target;
 
 	pipeline_descr.primitive.topology="triangle-list";
