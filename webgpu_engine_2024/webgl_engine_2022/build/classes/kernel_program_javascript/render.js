@@ -6,9 +6,9 @@ function construct_render_routine(my_webgpu,my_url,
 	var render_number					=render_data[1];
 	var modifier_container_number		=render_data[2];
 	var camera_number					=render_data[3];
-	var max_target_number				=render_data[4];
-    this.link_name						=render_data[5];
-    this.parameter						=render_data[6];
+	
+    this.link_name						=render_data[4];
+    this.parameter						=render_data[5];
 
 	this.fetch_parameter			=default_fetch_parameter;
 	this.webgpu						=my_webgpu;
@@ -115,7 +115,7 @@ function construct_render_routine(my_webgpu,my_url,
 	this.camera						=new construct_camera_object(camera_number,this.component_location_data,this.computer);
 	this.operate_component			=new construct_operate_component(this);
 	this.collector_loader			=new construct_collector_loader_object(this);
-	this.system_buffer				=new construct_system_buffer(max_target_number,this);
+	this.system_buffer				=null;
 	
 	this.pickup						=new construct_pickup_object();
 	this.pickup_array				=[

@@ -139,7 +139,9 @@ public class dispatch_create_engine_request
 		String str;
 		
 		ci.request_response.print("[[",ci.request_response.container_id);//parameter0
-		ci.request_response.print(",",ci.channel_id+"],");
+		ci.request_response.print(",",ci.channel_id);
+		ci.request_response.print(",",ek.scene_par.max_target_number);
+		ci.request_response.print("],");
 		
 		do_response_init_render_data(ek,ci);							//parameter	1
 		ci.request_response.print(",");
@@ -155,12 +157,10 @@ public class dispatch_create_engine_request
 		ci.request_response.print(",",ek.modifier_cont.length);			//parameter	4	2
 		ci.request_response.print(",",
 				(ek.camera_cont==null)?0:ek.camera_cont.size());		//parameter	4	3
-		
-		ci.request_response.print(",",ek.scene_par.max_target_number);	//parameter	4	4
-		
-		ci.request_response.print(",\"",ek.link_name).print("\"");		//parameter	4	5
+
+		ci.request_response.print(",\"",ek.link_name).print("\"");		//parameter	4	4
 	
-		ci.request_response.print(",{");							//parameter	4	6
+		ci.request_response.print(",{");								//parameter	4	5
 
 		ci.request_response.print( "\"max_loading_number\":",		ci.parameter.max_client_loading_number);
 		ci.request_response.print(",\"engine_touch_time_length\":",	ek.system_par.engine_touch_time_length);

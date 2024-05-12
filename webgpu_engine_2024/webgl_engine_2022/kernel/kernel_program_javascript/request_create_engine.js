@@ -41,6 +41,7 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 	
 	var my_container_id			=create_data[0][0];
 	var my_channel_id			=create_data[0][1];
+	var my_max_target_number	=create_data[0][2];
 	var	my_render_init_data		=create_data[1];
 	var	my_part_init_data		=create_data[2];
 	var	my_component_init_data	=create_data[3];
@@ -88,8 +89,10 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 				
 	init_ids_of_part_and_component(
 		sorted_component_name_id,part_component_id_and_driver_id,render);
-					
-	render.system_buffer.init_id_buffer_and_system_bindgroup(render);
+	
+	if(render.system_buffer!=null)
+		render.system_buffer.destroy();
+	render.system_buffer=new construct_system_buffer(render,my_max_target_number);
 				
 	for(var i=0,ni=component_init_fun_array.length;i<ni;i++){
 		if(typeof(component_init_fun_array[i])!="object")
