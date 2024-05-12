@@ -1,4 +1,4 @@
-function construct_system_buffer(target_buffer_number,render)
+function construct_system_buffer(render,my_max_target_number)
 {
 	this.main_target_project_matrix	=null;
 	this.main_target_view_parameter	=null;
@@ -6,144 +6,125 @@ function construct_system_buffer(target_buffer_number,render)
 	this.system_bindgroup	=null;
 	this.location_version	=null;
 	
-	this.system_bindgroup_layout=render.webgpu.device.createBindGroupLayout(
-		{
-			entries	:	[
-				{	// system buffer
-					binding		:	0,
-					visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
-					buffer		:
-					{
-						type				:	"uniform",
-						hasDynamicOffset	:	false
-					}
-				},
-				{	//target buffer
-					binding		:	1,
-					visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
-					buffer		:
-					{
-						type				:	"uniform",
-						hasDynamicOffset	:	true
-					}
-				},
-				{	// id buffer
-					binding		:	2,
-					visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
-					buffer		:
-					{
-						type				:	"uniform",
-						hasDynamicOffset	:	true
-					}
-				}
-			]
-		});	
+	var my_system_bindgroup_layout_entries=[
+		{	// system buffer
+			binding		:	0,
+			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
+			buffer		:
+			{
+				type				:	"uniform",
+				hasDynamicOffset	:	false
+			}
+		},
+		{	//target buffer
+			binding		:	1,
+			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
+			buffer		:
+			{
+				type				:	"uniform",
+				hasDynamicOffset	:	true
+			}
+		},
+		{	// id buffer
+			binding		:	2,
+			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
+			buffer		:
+			{
+				type				:	"uniform",
+				hasDynamicOffset	:	true
+			}
+		}
+	];
+	this.system_bindgroup_layout=render.webgpu.device.createBindGroupLayout({
+		entries	:	my_system_bindgroup_layout_entries
+	});	
 //	init system buffer:	binding point 0
-	this.system_buffer_size		=384;
+	var my_system_buffer_size=0;
+	
+	my_system_buffer_size+=Int32Array.	BYTES_PER_ELEMENT*28;
+	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4;
+	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*32;
+	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4*
+				(render.camera.camera_object_parameter.length);
+	
 	this.system_buffer	=render.webgpu.device.createBuffer(
 		{
-			size	:	this.system_buffer_size,
+			size	:	my_system_buffer_size,
 			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
 		});
 
 //	init target buffer:	binding point 1
-	this.target_buffer_stride	=2048;
-	this.target_buffer_size		=1232;
-	this.target_buffer_number	=target_buffer_number;
+
+	var my_target_buffer_size=0;
+	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*16*10;
+	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4*33;
+	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*8;
+	my_target_buffer_size+=Int32Array.	BYTES_PER_ELEMENT*8;
+	
+	for(this.target_buffer_stride=0;this.target_buffer_stride<my_target_buffer_size;)
+		this.target_buffer_stride+=render.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
+	
+	this.target_buffer_number=my_max_target_number;
 	this.target_buffer	=render.webgpu.device.createBuffer(
 		{
 			size	:	this.target_buffer_stride*this.target_buffer_number,
 			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
 		});
 
-	this.id_buffer			=null;
+	//	init id_buffer	:	binding point 2
 	
-	this.destroy=function()
-	{
-		this.main_target_project_matrix	=null;
-		this.main_target_view_parameter	=null;
+	this.id_buffer_data_length=40;
+	var my_id_buffer_size=0;
+	my_id_buffer_size+=Float32Array.BYTES_PER_ELEMENT*render.component_location_data.identify_matrix.length;
+	my_id_buffer_size+=Float32Array.BYTES_PER_ELEMENT*this.id_buffer_data_length;
+	my_id_buffer_size+=Int32Array.BYTES_PER_ELEMENT*render.system_bindgroup_id[0].length;
 		
-		this.system_bindgroup		=null;
-		this.location_version		=null;
-		this.system_bindgroup_layout=null;
-		
-		if(this.system_buffer!=null){
-			this.system_buffer.destroy();
-			this.system_buffer=null;
-		}
-		if(this.id_buffer!=null){
-			this.id_buffer.destroy();
-			this.id_buffer=null;
-		}
-		if(this.target_buffer!=null){
-			this.target_buffer.destroy();
-			this.target_buffer=null;
-		}
-		
-		this.init_id_buffer_and_system_bindgroup=null;
-		this.set_system_buffer					=null;
-		this.set_target_buffer					=null;
-		this.set_system_bindgroup				=null;
-		this.set_system_bindgroup_data			=null;
-	};
+	for(this.id_stride=0;this.id_stride<my_id_buffer_size;)
+		this.id_stride+=render.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
 
-	this.id_buffer_data_length 	=40;
-	this.init_id_buffer_and_system_bindgroup=function(render)
-	{
-		//	init id_buffer	:	binding point 2
-		
-		this.id_buffer_size=0;
-		this.id_buffer_size+=Float32Array.BYTES_PER_ELEMENT*render.component_location_data.identify_matrix.length;
-		this.id_buffer_size+=Float32Array.BYTES_PER_ELEMENT*this.id_buffer_data_length;
-		this.id_buffer_size+=Int32Array.BYTES_PER_ELEMENT*render.system_bindgroup_id[0].length;
-		
-		for(this.id_stride=0;this.id_stride<this.id_buffer_size;)
-			this.id_stride+=render.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
-
-		this.id_buffer=render.webgpu.device.createBuffer(
-			{
-				size	:	this.id_stride*render.system_bindgroup_id.length,
-				usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
-			});
-			
-	// init system_bindgroup
-		this.system_bindgroup=render.webgpu.device.createBindGroup(
+	this.id_buffer=render.webgpu.device.createBuffer(
 		{
-			layout	:	render.system_buffer.system_bindgroup_layout,
-			entries	:	[
-				{	// system buffer
-					binding		:	0,
-					resource	:
-					{
-						buffer	:	this.system_buffer,
-						size	:	this.system_buffer_size
-					}
-				},
-				{	//target buffer
-					binding		:	1,
-					resource	:
-					{
-						buffer	:	this.target_buffer,
-						size	:	this.target_buffer_size 
-					}
-				},
-				{	// id buffer
-					binding		:	2,
-					resource	:
-					{
-						buffer	:	this.id_buffer,
-						size	:	this.id_buffer_size
-					}
-				}
-			]
+			size	:	this.id_stride*render.system_bindgroup_id.length,
+			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
 		});
+		
+	// init system_bindgroup
+	this.system_bindgroup=render.webgpu.device.createBindGroup(
+	{
+		layout	:	this.system_bindgroup_layout,
+		entries	:	[
+			{	// system buffer
+				binding		:	0,
+				resource	:
+				{
+					buffer	:	this.system_buffer,
+					size	:	my_system_buffer_size
+				}
+			},
+			{	//target buffer
+				binding		:	1,
+				resource	:
+				{
+					buffer	:	this.target_buffer,
+					size	:	my_target_buffer_size 
+				}
+			},
+			{	// id buffer
+				binding		:	2,
+				resource	:
+				{
+					buffer	:	this.id_buffer,
+					size	:	my_id_buffer_size
+				}
+			}
+		]
+	});
 	
 	//	init id location version
 	
-		this.location_version=new Array(render.system_bindgroup_id.length);
-		for(var i=0,ni=this.location_version.length;i<ni;i++)
-			this.location_version[i]=-1;
-	}
+	this.location_version=new Array(render.system_bindgroup_id.length);
+	for(var i=0,ni=this.location_version.length;i<ni;i++)
+		this.location_version[i]=-1;
 	
 	this.set_system_buffer=function(render)
 	{
@@ -396,5 +377,31 @@ function construct_system_buffer(target_buffer_number,render)
 		render.webgpu.device.queue.writeBuffer(this.id_buffer,pos,new Float32Array(id_data));
 
 		return;
-	}
+	};
+	this.destroy=function()
+	{
+		this.main_target_project_matrix	=null;
+		this.main_target_view_parameter	=null;
+		
+		this.system_bindgroup		=null;
+		this.location_version		=null;
+		this.system_bindgroup_layout=null;
+		
+		if(this.system_buffer!=null){
+			this.system_buffer.destroy();
+			this.system_buffer=null;
+		}
+		if(this.id_buffer!=null){
+			this.id_buffer.destroy();
+			this.id_buffer=null;
+		}
+		if(this.target_buffer!=null){
+			this.target_buffer.destroy();
+			this.target_buffer=null;
+		}
+		this.set_system_buffer					=null;
+		this.set_target_buffer					=null;
+		this.set_system_bindgroup				=null;
+		this.set_system_bindgroup_data			=null;
+	};
 }

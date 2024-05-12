@@ -205,7 +205,6 @@ function construct_component_driver(
 		render.webgpu.device.queue.writeBuffer(this.parameter_buffer,buffer_place,
 			new Float32Array([x0,y0,view_distance,view_distance/box_distance]));
 	}
-
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,component_id,driver_id,component_render_parameter,
 			project_matrix,part_object,part_driver,render_driver,render)	

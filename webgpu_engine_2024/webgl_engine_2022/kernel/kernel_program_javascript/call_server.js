@@ -1,3 +1,4 @@
+
 function construct_server_caller(my_render)
 {
 	this.render=my_render;
