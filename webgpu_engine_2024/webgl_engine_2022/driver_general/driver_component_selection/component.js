@@ -100,17 +100,6 @@ function init_component_event_processor(screen_rectangle_component_id,render)
 		
 		return true;			
 	};
-	this.destroy=function()
-	{
-		this.p0	=null;
-		this.dp	=null;
-		
-		this.control_code	=null;
-		this.mousedown		=null;
-		this.mousemove		=null;
-		this.mouseup		=null;
-		this.mousewheel		=null;
-	};
 };
 
 function construct_component_driver(
@@ -140,11 +129,5 @@ function construct_component_driver(
 			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
 	{
 		render.component_event_processor[component_id].change_type_flag=(buffer_data_item>0)?true:false;
-	}
-	
-	this.destroy=function(render)
-	{
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
 	}
 };

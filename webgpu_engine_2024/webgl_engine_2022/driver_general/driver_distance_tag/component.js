@@ -138,17 +138,6 @@ function init_component_event_processor(component_id,init_data,render)
 				break;
 			}
 			return true;
-		},
-		destroy				:	function()
-		{
-			this.tag_menu_component_name=null;
-			this.pickupdblclick			=null;
-			this.pickupcontextmenu		=null;
-			this.pickupmouseup			=null;
-			this.pickupmousedown		=null;
-			this.pickupkeydown			=null;
-			this.mousemove				=null;
-			this.mousedown				=null;
 		}
 	};
 }
@@ -367,21 +356,17 @@ function construct_component_driver(
 		};
 	};
 	
-	this.destroy=function(render)
+	this.destroy=function()
 	{
-		if(this.tag_array!=null){
-			for(var i=0,ni=this.tag_array.length;i<ni;i++)
-				if(this.tag_array[i]!=null){
-					this.tag_array[i].buffer.destroy();
-					this.tag_array[i].texture.destroy();
-					this.tag_array[i].buffer	=null;
-					this.tag_array[i].texture	=null;
-					this.tag_array[i].bindgroup	=null;
-					this.tag_array[i]=null;
-				}
-			this.tag_array=null;
+		for(var i=0,ni=this.tag_array.length;i<ni;i++){
+			if(this.tag_array[i].buffer!=null){
+				this.tag_array[i].buffer.destroy();
+				this.tag_array[i].buffer=null;
+			}
+			if(this.tag_array[i].texture!=null){
+				this.tag_array[i].texture.destroy();
+				this.tag_array[i].texture=null;
+			}
 		}
-		this.append_component_parameter		=null;
-		this.draw_component					=null;
 	};
 };

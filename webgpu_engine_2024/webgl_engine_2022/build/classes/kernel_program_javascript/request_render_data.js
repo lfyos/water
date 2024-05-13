@@ -1,4 +1,3 @@
-
 async function request_render_data(render)
 {
 	function create_request_url(render)

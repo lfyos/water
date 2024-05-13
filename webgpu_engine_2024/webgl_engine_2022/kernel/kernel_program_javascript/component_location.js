@@ -7,7 +7,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 	this.version_id			=3;
 	this.identify_matrix	=[	1,	0,	0,	0,		0,	1,	0,	0,		0,	0,	1,	0,		0,	0,	0,	1];
 	
-	this.component	=new Array();
+	this.component			=new Array();
 	
 	for(var i=0,ni=this.component_number;i<ni;i++){
 		this.component[i]={
@@ -21,30 +21,6 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			
 			parent					:	-1
 		}
-	}
-	this.destroy=function()
-	{
-		for(var i=0;i<this.component_number;i++){
-			this.component[i].absolute_location	=null;
-			this.component[i].move_matrix		=null;
-			this.component[i].relative			=null;
-			this.component[i]					=null;
-
-		};
-		this.component		=null;
-		
-		this.computer		=null;
-		this.webgpu			=null;
-		this.identify_matrix=null;
-
-		this.decode_location					=null;
-		this.set_component_move_location		=null;		
-		this.set_component_location				=null;
-		this.get_component_move_location		=null;
-		this.get_component_location				=null;
-		this.get_component_matrix_and_version	=null;
-		
-		return;
 	}
 	this.set_component_move_location=function(component_id,loca)
 	{

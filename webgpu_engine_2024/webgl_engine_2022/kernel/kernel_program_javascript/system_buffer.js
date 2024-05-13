@@ -382,13 +382,6 @@ function construct_system_buffer(render,my_max_target_number)
 	};
 	this.destroy=function()
 	{
-		this.main_target_project_matrix	=null;
-		this.main_target_view_parameter	=null;
-		
-		this.system_bindgroup		=null;
-		this.location_version		=null;
-		this.system_bindgroup_layout=null;
-		
 		if(this.system_buffer!=null){
 			this.system_buffer.destroy();
 			this.system_buffer=null;
@@ -401,9 +394,5 @@ function construct_system_buffer(render,my_max_target_number)
 			this.target_buffer.destroy();
 			this.target_buffer=null;
 		}
-		this.set_system_buffer					=null;
-		this.set_target_buffer					=null;
-		this.set_system_bindgroup				=null;
-		this.set_system_bindgroup_data			=null;
 	};
 }

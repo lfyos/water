@@ -15,23 +15,6 @@ function construct_camera_object(camera_number,my_component_location_data,my_com
 	this.component_location_data=my_component_location_data;
 	this.computer				=my_computer;
 	
-	this.destroy=function()
-	{
-		for(var i=0,ni=this.camera_object_parameter.length;i<ni;i++)
-			this.camera_object_parameter[i]	=null;
-		this.camera_object_parameter		=null;
-		
-		this.component_location_data				=null;
-		this.computer								=null;
-
-		this.modify_camera_data						=null;
-		this.compute_frustem_projection_matrix		=null;
-		this.compute_orthographic_projection_matrix	=null;
-		this.compute_screen_move_matrix				=null;
-		this.compute_lookat_matrix					=null;
-		this.compute_camera_data					=null;	
-	}
-	
 	this.modify_camera_data=function(camera_data)
 	{
 		for(var i=0,ni=camera_data.length;i<ni;){

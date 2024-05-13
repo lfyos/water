@@ -239,11 +239,8 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 	
 	this.new_component_driver=construct_component_driver;
 	
-	this.destroy_routine=async function()
+	this.destroy=function()
 	{
-		while(this.material_bindgroup_flag)
-			await new Promise((resolve)=>{setTimeout(resolve,1000);});
-
 		if(this.material_bindgroup_array!=null){
 			for(var i=0,ni=this.material_bindgroup_array.length;i<ni;i++){
 				if(this.material_bindgroup_array[i].texture_array!=null)
@@ -252,30 +249,13 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 							this.material_bindgroup_array[i].texture_array[j].destroy();
 							this.material_bindgroup_array[i].texture_array[j]=null;
 						}
-				this.material_bindgroup_array[i].texture_array=null;
-				
-				if(this.material_bindgroup_array[i].buffer!=null)
+				if(this.material_bindgroup_array[i].buffer!=null){
 					this.material_bindgroup_array[i].buffer.destroy();
-				this.material_bindgroup_array[i].buffer	=null;
-				
-				this.material_bindgroup_array[i].bindgroup=null;
+					this.material_bindgroup_array[i].buffer	=null;
+				}
 			}
-			this.material_bindgroup_array=null;
 		}
 	}
-	
-	this.destroy=function()
-	{
-		if(this.destroy_routine!=null)
-			this.destroy_routine();
-		this.destroy_routine=null;
-
-		this.decode_vertex_data		=null;
-		this.new_component_driver	=null;
-		
-		this.render_material		=null;
-	}
-	
 	this.create_bind_group(part_object,render_driver,render);
 	
 	return;

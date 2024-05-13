@@ -816,153 +816,60 @@ function construct_event_listener(my_canvas_id,my_render)
 						cur.render.destroy();
 	};
 
-	this.canvas.addEventListener(	"mousemove",			mousemove_fun,			false);
-	this.canvas.addEventListener(	"mousedown",			mousedown_fun,			false);
-	this.canvas.addEventListener(	"mouseup",				mouseup_fun,			false);
-	this.canvas.addEventListener(	"dblclick",				dblclick_fun,			false);
-	this.canvas.addEventListener(	"mousewheel",			mousewheel_fun,			false);
-	this.canvas.addEventListener(	"DOMMouseScroll",		mousewheel_fun,			false);
-	this.canvas.addEventListener(	"mouseleave",			mouseleave_fun,			false);
-	this.canvas.addEventListener(	"mouseenter",			mouseenter_fun,			false);
-	this.canvas.addEventListener(	"mouseout",				mouseout_fun,			false);
-	this.canvas.addEventListener(	"mouseover",			mouseover_fun,			false);
+	this.canvas.addEventListener("mousemove",		mousemove_fun,		false);
+	this.canvas.addEventListener("mousedown",		mousedown_fun,		false);
+	this.canvas.addEventListener("mouseup",			mouseup_fun,		false);
+	this.canvas.addEventListener("dblclick",		dblclick_fun,		false);
+	this.canvas.addEventListener("mousewheel",		mousewheel_fun,		false);
+	this.canvas.addEventListener("DOMMouseScroll",	mousewheel_fun,		false);
+	this.canvas.addEventListener("mouseleave",		mouseleave_fun,		false);
+	this.canvas.addEventListener("mouseenter",		mouseenter_fun,		false);
+	this.canvas.addEventListener("mouseout",		mouseout_fun,		false);
+	this.canvas.addEventListener("mouseover",		mouseover_fun,		false);
 	
-	this.canvas.addEventListener(	"touchstart",			touchstart_fun,			false);
-	this.canvas.addEventListener(	"touchend",				touchend_fun,			false);
-	this.canvas.addEventListener(	"touchmove",			touchmove_fun,			false);
+	this.canvas.addEventListener("touchstart",		touchstart_fun,		false);
+	this.canvas.addEventListener("touchend",		touchend_fun,		false);
+	this.canvas.addEventListener("touchmove",		touchmove_fun,		false);
 	
-	this.canvas.addEventListener(	"keydown",				keydown_fun,			false);
-	this.canvas.addEventListener(	"keypress",				keypress_fun,			false);
-	this.canvas.addEventListener(	"keyup",				keyup_fun,				false);
+	this.canvas.addEventListener("keydown",			keydown_fun,		false);
+	this.canvas.addEventListener("keypress",		keypress_fun,		false);
+	this.canvas.addEventListener("keyup",			keyup_fun,			false);
 	
-	this.canvas.addEventListener(	"contextmenu", 			contextmenu_fun,		false);
+	this.canvas.addEventListener("contextmenu", 	contextmenu_fun,	false);
 
-	window.addEventListener(		"beforeunload",			beforeunload_fun,		false);
+	window.addEventListener(	 "beforeunload",	beforeunload_fun,	false);
 	
 	this.canvas.focus();
 	
 	this.destroy=function()
 	{
-		window.removeEventListener("beforeunload",beforeunload_fun);
-		
 		if(this.canvas!=null){
-			this.canvas.removeEventListener(	"mousemove",			mousemove_fun);
-			this.canvas.removeEventListener(	"mousedown",			mousedown_fun);
-			this.canvas.removeEventListener(	"mouseup",				mouseup_fun);
-			this.canvas.removeEventListener(	"dblclick",				dblclick_fun);
-			this.canvas.removeEventListener(	"mousewheel",			mousewheel_fun);
-			this.canvas.removeEventListener(	"DOMMouseScroll",		mousewheel_fun);
-			this.canvas.removeEventListener(	"mouseleave",			mouseleave_fun);
-			this.canvas.removeEventListener(	"mouseenter",			mouseenter_fun);
-			this.canvas.removeEventListener(	"mouseout",				mouseout_fun);
-			this.canvas.removeEventListener(	"mouseover",			mouseover_fun);
+			window.removeEventListener("beforeunload",beforeunload_fun);
+			
+			this.canvas.removeEventListener("mousemove",		mousemove_fun);
+			this.canvas.removeEventListener("mousedown",		mousedown_fun);
+			this.canvas.removeEventListener("mouseup",			mouseup_fun);
+			this.canvas.removeEventListener("dblclick",			dblclick_fun);
+			this.canvas.removeEventListener("mousewheel",		mousewheel_fun);
+			this.canvas.removeEventListener("DOMMouseScroll",	mousewheel_fun);
+			this.canvas.removeEventListener("mouseleave",		mouseleave_fun);
+			this.canvas.removeEventListener("mouseenter",		mouseenter_fun);
+			this.canvas.removeEventListener("mouseout",			mouseout_fun);
+			this.canvas.removeEventListener("mouseover",		mouseover_fun);
 				
-			this.canvas.removeEventListener(	"contextmenu", 			contextmenu_fun);
-				
-			this.canvas.removeEventListener(	"touchstart",			touchstart_fun);
-			this.canvas.removeEventListener(	"touchend",				touchend_fun);
-			this.canvas.removeEventListener(	"touchmove",			touchmove_fun);
-				
-			this.canvas.removeEventListener(	"keydown",				keydown_fun);
-			this.canvas.removeEventListener(	"keypress",				keypress_fun);
-			this.canvas.removeEventListener(	"keyup",				keyup_fun);
+			this.canvas.removeEventListener("contextmenu", 		contextmenu_fun);
+					
+			this.canvas.removeEventListener("touchstart",		touchstart_fun);
+			this.canvas.removeEventListener("touchend",			touchend_fun);
+			this.canvas.removeEventListener("touchmove",		touchmove_fun);
+					
+			this.canvas.removeEventListener("keydown",			keydown_fun);
+			this.canvas.removeEventListener("keypress",			keypress_fun);
+			this.canvas.removeEventListener("keyup",			keyup_fun);
+			
+			this.canvas=null;
 		}
-
-		cur						=null;
-		
-		beforeunload_fun		=null;
-		
-		mousemove_fun			=null;
-		mousedown_fun			=null;
-		mouseup_fun				=null;
-		dblclick_fun			=null;
-		mousewheel_fun			=null;
-		mouseleave_fun			=null;
-		mouseenter_fun			=null;
-		mouseout_fun			=null;
-		mouseover_fun			=null;
-		
-		contextmenu_fun			=null;
-		
-		touchstart_fun			=null;
-		touchend_fun			=null;
-		touchmove_fun			=null;
-		
-		keydown_fun				=null;
-		keypress_fun			=null;
-		keyup_fun				=null;
-
-		this.set_render_view											=null;
-		this.set_mobile_render_view										=null;
-		
-		this.render.system_event_processor.pickupmousemove				=null;	
-		this.render.system_event_processor.mousemove					=null;
-		this.mousemove_event_listener									=null;
-		
-		this.render.system_event_processor.pickupmousedown				=null;
-		this.render.system_event_processor.mousedown					=null;
-		this.mousedown_event_listener									=null;
-		
-		this.render.system_event_processor.pickupmouseup				=null;
-		this.render.system_event_processor.mouseup						=null;
-		this.mouseup_event_listener										=null;
-		
-		this.render.system_event_processor.pickupdblclick				=null;
-		this.render.system_event_processor.dblclick						=null;
-		this.dblclick_event_listener									=null;
-		
-		this.render.system_event_processor.pickupmousewheel				=null;
-		this.render.system_event_processor.mousewheel					=null;
-		this.mousewheel_event_listener									=null;
-
-		this.render.system_event_processor.pickupmouseleave				=null;
-		this.render.system_event_processor.mouseleave					=null;
-		this.mouseleave_event_listener									=null;
-		
-		this.render.system_event_processor.pickupmouseenter				=null;
-		this.render.system_event_processor.mouseenter					=null;
-		this.mouseenter_event_listener									=null;
-		
-		this.render.system_event_processor.pickupmouseout				=null;
-		this.render.system_event_processor.mouseout						=null;
-		this.mouseout_event_listener									=null;
-		
-		this.render.system_event_processor.pickupmouseover				=null;
-		this.render.system_event_processor.mouseover					=null;
-		this.mouseover_event_listener									=null;
-
-		this.render.system_event_processor.pickuptouchstart				=null;
-		this.render.system_event_processor.touchstart					=null;
-		this.touchstart_event_listener									=null;
-		
-		this.render.system_event_processor.pickuptouchend				=null;
-		this.render.system_event_processor.touchend						=null;
-		this.touchend_event_listener									=null;
-		
-		this.render.system_event_processor.pickuptouchmove				=null;
-		this.render.system_event_processor.touchmove					=null;
-		this.touchmove_event_listener									=null;
-		
-		this.render.system_event_processor.pickupkeydown				=null;
-		this.render.system_event_processor.keydown						=null;
-		this.keydown_event_listener										=null;
-		
-		this.render.system_event_processor.pickupkeypress				=null;
-		this.render.system_event_processor.keypress						=null;
-		this.keypress_event_listener									=null;
-		
-		this.render.system_event_processor.pickupkeyup					=null;
-		this.render.system_event_processor.keyup						=null;
-		this.keyup_event_listener										=null;
-		
-		this.render.system_event_processor.pickupcontextmenu			=null;
-		this.render.system_event_processor.contextmenu					=null;
-		this.contextmenu_event_listener									=null;
-		
-		this.destroy													=null;
-
-		this.canvas														=null;
-		this.render														=null;
-		this.mouse_down_flag_array										=null;
+		if(this.render!=null)
+			this.render=null;
 	}
 };

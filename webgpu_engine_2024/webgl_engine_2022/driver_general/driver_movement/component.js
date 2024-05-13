@@ -17,10 +17,5 @@ function construct_component_driver(
 			ep=render.component_call_processor[component_id];
 		}
 		ep.suspend_status=buffer_data_item;	
-	};
-	this.destroy=function(render)
-	{
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
 	}
 };

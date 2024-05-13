@@ -698,11 +698,4 @@ function construct_component_driver(
 	{
 		this.buffer_data=buffer_data_item;
 	}
-	this.destroy=function(render)
-	{
-		this.buffer_data=null;
-		
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
-	}
 };

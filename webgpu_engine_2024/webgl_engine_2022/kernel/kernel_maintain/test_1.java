@@ -10,9 +10,7 @@ public class test_1 extends travel_through_directory
 	{
 		String str;
 		if((str=file_reader.get_text(file_name,"GBK"))!=null) {
-			if(str.indexOf("get_component_object_by_component_name")>=0)
-				debug_information.println(file_name);
-			if(str.indexOf("get_component_object_by_component_id")>=0)
+			if(str.indexOf("destroy")>=0)
 				debug_information.println(file_name);
 		}
 	}
@@ -21,7 +19,7 @@ public class test_1 extends travel_through_directory
 	{
 		super(new String[]
 		{
-			"F:\\water_all\\.git",
+//			"F:\\water_all\\.git",
 //			"F:\\water_all\\webgpu_engine_2024"
 		});
 	}
@@ -29,7 +27,7 @@ public class test_1 extends travel_through_directory
 	{
 		debug_information.println("Begin:");
 		
-		new test_1().do_travel("F:\\water_all\\", false);
+		new test_1().do_travel("F:\\water_all\\data", false);
 
 		debug_information.println("End");
 	}

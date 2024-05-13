@@ -118,18 +118,6 @@ function create_component_object(my_init_data,render)
 
 		return true;
 	};
-	this.destroy=function()
-	{
-		this.interface_data		=null;
-		this.hightlight			=null;
-		this.parameter_bak		=null;
-		
-		this.set_center			=null;
-		this.pickupmousedown	=null;
-		this.pickupmousemove	=null;
-		this.pickupmouseup		=null;
-		this.pickupmousewheel	=null;
-	};
 }
 
 function create_bind_group(init_data,render_driver,render)
@@ -237,7 +225,7 @@ function create_bind_group(init_data,render_driver,render)
 			this.destroy();
 	};
 	
-	this.destroy=function ()
+	this.destroy=function()
 	{
 		this.should_delete_flag=true;
 		if(this.is_busy_flag)
@@ -251,7 +239,6 @@ function create_bind_group(init_data,render_driver,render)
 			this.texture.destroy();
 			this.texture=null;
 		}
-		this.bindgroup=null;
 	};
 	this.create(init_data,render_driver,render);
 };
@@ -344,15 +331,5 @@ function construct_component_driver(
 		ep.show_y			=buffer_data_item[1];
 		ep.interface_data.dx=buffer_data_item[2];
 		ep.interface_data.dy=buffer_data_item[3];
-	};
-	
-	this.destroy=function(render)
-	{
-		if(this.image_bind_group!=null){
-			this.image_bind_group.destroy(render);
-			this.image_bind_group=null;
-		}
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
 	};
 };

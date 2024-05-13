@@ -113,15 +113,4 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 	this.new_part_driver=construct_part_driver;
 	
 	this.method_render_flag=[true,false,true];
-	
-	this.destroy=function()
-	{
-		this.bindgroup_layout	=null;
-		this.id_pipeline		=null;
-		this.color_pipeline		=null;
-		
-		this.method_render_flag	=null;
-		
-		this.new_part_driver	=null;
-	}
 }

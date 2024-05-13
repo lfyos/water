@@ -158,17 +158,6 @@ function construct_event_listener()
 		}
 		return true;
 	};
-	
-	this.destroy=function()
-	{
-		this.pickupcontextmenu	=null;
-		this.pickupdblclick		=null;
-		this.pickupmousedown	=null;
-		this.pickupkeydown		=null;
-		this.pickupkeypress		=null;
-		this.pickupmouseup		=null;
-		this.pickupkeyup		=null;
-	}
 };
 
 function construct_component_driver(
@@ -265,14 +254,11 @@ function construct_component_driver(
 			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
 	{
 	}
-	this.destroy=function(render)
+	this.destroy=function()
 	{
 		if(this.parameter_buffer!=null){
 			this.parameter_buffer.destroy();
 			this.parameter_buffer=null;
 		}
-		this.save_buffer_data			=null;
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
 	}
 };
