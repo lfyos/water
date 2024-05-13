@@ -146,14 +146,14 @@ function construct_render_routine(my_webgpu,my_url,
 				case "boolean":
 					if(p.has_completed_execute_destroy_function_flag)
 						return;
+					p.has_completed_execute_destroy_function_flag=true;
+					break;
+				case "object":
 					break;
 				default:
-					execute_destroy_function(p.has_completed_execute_destroy_function_flag,
-						name+"/has_completed_execute_destroy_function_flag");
+					p.has_completed_execute_destroy_function_flag=true;
 					break;
 				}
-				p.has_completed_execute_destroy_function_flag=true;
-				
 				if(typeof(p.destroy)=="function"){
 					try{
 						p.destroy();
@@ -179,14 +179,14 @@ function construct_render_routine(my_webgpu,my_url,
 				case "boolean":
 					if(p.has_completed_execute_delete_function_flag)
 						return;
+					p.has_completed_execute_delete_function_flag=true;
+					break;
+				case "object":
 					break;
 				default:
-					execute_delete_function(p.has_completed_execute_delete_function_flag,
-							name+"/has_completed_execute_delete_function_flag");
+					p.has_completed_execute_delete_function_flag=true;
 					break;
 				}
-				p.has_completed_execute_delete_function_flag=true;
-				
 				for(var key in p){
 					execute_delete_function(p[key],name+"/"+key);
 					try{
