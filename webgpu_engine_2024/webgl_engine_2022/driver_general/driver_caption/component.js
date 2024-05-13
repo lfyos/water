@@ -116,9 +116,6 @@ function construct_component_driver(
 	
 	this.destroy=function()
 	{
-		this.parameter=null;
-		this.texture_bindgroup=null;
-		
 		if(this.texture!=null){
 			this.texture.destroy();
 			this.texture=null;
@@ -127,8 +124,5 @@ function construct_component_driver(
 			this.vertex_buffer.destroy();
 			this.vertex_buffer=null;
 		}
-		
-		this.draw_component=null;
-		this.append_component_parameter=null;
 	}
 };

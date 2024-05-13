@@ -3,12 +3,6 @@ function construct_operate_component(my_render)
 	this.render=my_render;
 	this.last_operate_component_id=-1;
 	
-	this.destroy=function()
-	{
-		this.render							=null;
-		this.get_component_object			=null;
-		this.get_component_call_processor	=null;
-	};
 	this.get_component_object=function(my_component_name_or_id)
 	{
 		switch(typeof(my_component_name_or_id)){

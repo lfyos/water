@@ -17,23 +17,6 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 	
 	this.acknowledge_render_part_id		=null; 
 	
-	this.destroy=function()
-	{
-		this.webgpu										=null;
-		this.request_render_part_id						=null;
-		this.buffer_head_request_queue					=null;
-		this.acknowledge_render_part_id					=null;
-	
-		this.test_busy									=null
-		this.request_part_package						=null;
-		this.fetch_buffer_object_data					=null;
-		this.process_buffer_object_data					=null
-		this.request_buffer_object_data					=null;
-		this.save_data_into_buffer_object				=null;
-		this.process_buffer_head_request_queue			=null;
-		this.create_part_array_and_vertex_data_request	=null;
-	};
-	
 	this.save_data_into_buffer_object=function(my_material_id,object_pointer,buffer_object_data)
 	{
 		var my_item_size,my_item_number;
@@ -300,61 +283,21 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		    		error_flag			:	false
 				}
 			},
-			destroy						:	function(render)
+			destroy						:	function()
 			{
-				var p;
-				for(var i=0,ni=this.component_driver_array.length;i<ni;i++){
-					if(typeof(p=this.component_driver_array[i])=="object")
-						if(p!=null)
-							if(typeof(p.destroy)=="function")
-								p.destroy(render);
-					this.component_driver_array[i]=null;
-				}
-				this.component_driver_array=null;
-				
-				var data_array=[this.buffer_object.face,this.buffer_object.edge,this.buffer_object.point];
-				
-				for(var i=0,ni=data_array.length;i<ni;i++){
-					for(var j=0,nj=data_array[i].region_data.length;j<nj;j++){
+				var data_array=[
+						this.buffer_object.face,
+						this.buffer_object.edge,
+						this.buffer_object.point
+				];
+				for(var i=0,ni=data_array.length;i<ni;i++)
+					for(var p,j=0,nj=data_array[i].region_data.length;j<nj;j++)
 						if(typeof(p=data_array[i].region_data[j])=="object")
-							if(p!=null){
-								if(typeof(p.private_data)=="object")
-									if(p.private_data!=null)
-										if(typeof(p.private_data.destroy)=="function")
-											p.private_data.destroy(render);
-								p.private_data=null;
-								
-								p.buffer.destroy();
-								p.buffer=null;
-						
-								p.region_box=null;
-							}
-						data_array[i].region_data[j]=null;
-					}
-					data_array[i].region_data=null;
-					
-					for(var j=0,nj=data_array[i].data_collector.length;j<nj;j++){
-						if(typeof(data_array[i].data_collector[j])=="object")
-							if(data_array[i].data_collector[j]!=null){
-								data_array[i].data_collector[j].region_data=null;
-								data_array[i].data_collector[j].region_box=null;
-							}
-						data_array[i].data_collector[j]=null;
-					}
-					data_array[i].data_collector=null;
-					data_array[i].server_region_data=null;
-				}
-				
-				this.buffer_object.face=null;
-				this.buffer_object.edge=null;
-				this.buffer_object.point=null;
-				this.buffer_object=null;
-				
-				this.information					=null;
-				this.material						=null;
-				this.property						=null;
-				this.part_component_id_and_driver_id=null;
-				this.component_render_parameter		=null;
+							if(p!=null)
+								if(p.buffer!=null){
+									p.buffer.destroy();
+									p.buffer=null;
+								}
 			}
 		}
 

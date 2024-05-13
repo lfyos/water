@@ -120,16 +120,4 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 	this.render_material=init_data;
 	
 	this.method_render_flag=[false,false,true];
-	
-	this.destroy=function()
-	{
-		this.pipeline			=null;
-		this.bindgroup_layout	=null;
-		
-		this.new_part_driver	=null;
-		
-		this.render_material	=null;
-		
-		this.method_render_flag	=null;
-	}
 }

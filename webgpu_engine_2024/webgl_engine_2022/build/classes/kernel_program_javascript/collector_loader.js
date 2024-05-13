@@ -9,20 +9,6 @@ function construct_collector_loader_object(my_render)
 			collector_stack_data		:	null,
 			is_loading_collector_flag	:	false
 		};
-	this.destroy=function()
-	{
-		this.render=null;
-		
-		for(var i=0,ni=this.collector_data.length;i<ni;i++){
-			this.collector_data[i].collector_stack_data=null;
-			this.collector_data[i]=null;
-		};
-		this.collector_data=null;
-		
-		this.collector_url=null;
-		this.load_collector=null;
-	};
-	
 	this.collector_url=function(simple_list_flag,single_collector_flag,location_flag)
 	{
 		return this.render.url_with_channel+"&command=collector"

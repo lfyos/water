@@ -129,7 +129,7 @@ function create_texture_bind_group()
 		this.down_texture	=await (this.down_texture);
 		this.front_texture	=await (this.front_texture);
 		this.back_texture	=await (this.back_texture);
-		this.no_box_texture	=await (this.no_box_texture);		
+		this.no_box_texture	=await (this.no_box_texture);
 				
 		if(render.terminate_flag)
 			this.texture_bindgroup=null;
@@ -234,14 +234,5 @@ function construct_component_driver(
 		this.texture_bind_group.destroy();
 		this.texture_bind_group=new create_texture_bind_group();
 		this.texture_bind_group.create(buffer_data_item[1],part_object,render_driver,render);
-	}
-	this.destroy=function()
-	{
-		if(this.texture_bind_group!=null){
-			this.texture_bind_group.destroy();
-			this.texture_bind_group=null;
-		};
-		this.append_component_parameter=null;
-		this.draw_component=null;
 	}
 };

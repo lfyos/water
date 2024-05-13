@@ -142,17 +142,4 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 	
 	this.method_render_flag=[true,false,true];
 	
-	this.destroy=function()
-	{
-		this.bindgroup_layout	=null;
-		
-		this.face_id_pipeline	=null;
-		this.face_pipeline		=null;
-		this.edge_pipeline		=null;
-		this.point_pipeline		=null;
-		
-		this.new_part_driver	=null;
-		
-		this.method_render_flag	=null;
-	}
 }

@@ -15,7 +15,7 @@ function construct_component_driver(
 	
 	this.bindgroup=null;
 	this.component_id=component_id;
-	this.buffer=this.method_buffer	=render.webgpu.device.createBuffer(
+	this.buffer=render.webgpu.device.createBuffer(
 		{
 			size	:	Float32Array.BYTES_PER_ELEMENT*8,
 			usage	:	GPUBufferUsage.VERTEX|GPUBufferUsage.COPY_DST
@@ -73,17 +73,11 @@ function construct_component_driver(
 		render.webgpu.device.queue.writeBuffer(this.buffer,0,new Float32Array(buffer_data_item));
 	};
 	
-	this.destroy=function(render)
+	this.destroy=function()
 	{
 		if(this.buffer!=null){
 			this.buffer.destroy();
 			this.buffer=null;
 		};
-		this.texture=null;
-		
-		this.bindgroup=null;
-		
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
 	}
 };

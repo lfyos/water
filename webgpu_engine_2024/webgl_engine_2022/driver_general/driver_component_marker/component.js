@@ -48,16 +48,6 @@ function init_component_event_processor()
 		}
 		return true;
 	};
-	this.destroy=function()
-	{
-		this.title			=null;
-	
-		this.mouseup		=null;
-		this.pickupkeydown	=null;
-		this.pickupdblclick	=null;
-		this.pickupmouseup	=null;
-		this.pickupmousedown=null;
-	}
 }
 function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
@@ -269,23 +259,20 @@ function construct_component_driver(
 		};
 	};
 
-	this.destroy=function(render)
+	this.destroy=function()
 	{
 		if(this.marker_array!=null){
 			for(var i=0,ni=this.marker_array.length;i<ni;i++)
 				if(this.marker_array[i]!=null){
-					this.marker_array[i].buffer.destroy();
-					this.marker_array[i].texture.destroy();
-					this.marker_array[i].buffer		=null;
-					this.marker_array[i].texture	=null;
-					this.marker_array[i].bindgroup	=null;
-					
-					this.marker_array[i]=null;
+					if(this.marker_array[i].buffer!=null){
+						this.marker_array[i].buffer.destroy();
+						this.marker_array[i].buffer=null;
+					}
+					if(this.marker_array[i].texture!=null){
+						this.marker_array[i].texture.destroy();
+						this.marker_array[i].texture=null;
+					}
 				}
-			this.marker_array=null;
 		}
-		
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
 	}
 };

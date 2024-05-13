@@ -309,36 +309,4 @@ function construct_computation_object()
 		];
 		return ret_val;
 	};
-	
-	this.destroy=function()
-	{
-		this.standard_negative				=null;
-		this.identity_matrix				=null;
-	
-		this.matrix_multiplication			=null;
-		this.caculate_coordinate			=null;
-		this.create_scale_matrix			=null;
-		this.create_move_rotate_matrix		=null;
-		this.matrix_negative				=null;
-	
-		this.create_point_location			=null;
-		this.min_value						=null;
-		this.min_value2						=null;
-		this.dot_operation					=null;
-		this.cross_operation				=null;
-		this.add_operation					=null;
-		this.sub_operation					=null;
-		this.mix_operation					=null;
-		this.distance						=null;
-		this.scale_operation				=null;
-		this.expand_operation				=null;
-		this.create_plane_from_two_point	=null;
-		this.create_plane_from_three_point	=null;
-		this.project_to_plane_location		=null;
-		this.shoot_to_plane_location		=null;
-		this.insect_plane					=null;
-		this.plane_test						=null;
-		this.view_volume_clip_test			=null;
-		this.combine_box					=null;
-	};
 };

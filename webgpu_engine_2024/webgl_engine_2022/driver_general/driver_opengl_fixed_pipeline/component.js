@@ -135,11 +135,4 @@ function construct_component_driver(
 			],
 			component_id,driver_id,render);
 	};
-	this.destroy=function(render)
-	{
-		this.display_parameter			=null;
-		this.draw						=null;
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
-	};
 };

@@ -48,15 +48,11 @@ function construct_component_driver(
 		render.webgpu.device.queue.writeBuffer(
 			this.coodinate_buffer,0,new Float32Array(buffer_data));
 	};
-	this.destroy=function(render)
+	this.destroy=function()
 	{
 		if(this.coodinate_buffer!=null){
 			this.coodinate_buffer.destroy();
 			this.coodinate_buffer=null;
 		}
-		this.coordinate_component_id=null;
-		
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
 	}
 };

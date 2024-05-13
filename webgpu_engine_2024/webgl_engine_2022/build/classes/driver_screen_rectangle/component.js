@@ -12,7 +12,7 @@ function construct_component_driver(
 	this.ep.data		=[0,0,0,0];
 	this.ep.data_bak	=[-10000000,-10000000,10000000,10000000];
 	
-	this.buffer=this.method_buffer	=render.webgpu.device.createBuffer(
+	this.buffer=render.webgpu.device.createBuffer(
 		{
 			size	:	Float32Array.BYTES_PER_ELEMENT*4,
 			usage	:	GPUBufferUsage.VERTEX|GPUBufferUsage.COPY_DST
@@ -47,18 +47,11 @@ function construct_component_driver(
 			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
 	{
 	}
-	this.destroy=function(render)
+	this.destroy=function()
 	{
-		if(this.ep!=null){
-			this.ep.data	=null;
-			this.ep.data_bak=null;
-			this.ep			=null;
-		};
 		if(this.buffer!=null){
 			this.buffer.destroy();
 			this.buffer=null;
 		}
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
 	}
 };

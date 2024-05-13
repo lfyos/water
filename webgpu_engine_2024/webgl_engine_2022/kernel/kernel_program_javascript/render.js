@@ -136,193 +136,63 @@ function construct_render_routine(my_webgpu,my_url,
 	
 	this.destroy=function()
 	{
+		function execute_destroy_function(p,name)
+		{
+			if(Array.isArray(p)){
+				for(var i=0,ni=p.length;i<ni;i++)
+					execute_destroy_function(p[i],name+"["+i+"]");
+			}else if((typeof(p)=="object")&&(p!=null)){
+				if(typeof(p.has_completed_destroy_flag)=="boolean")
+					if(p.has_completed_destroy_flag)
+						return;
+				p.has_completed_destroy_flag=true;
+				
+				if(typeof(p.destroy)=="function"){
+					try{
+						p.destroy();
+					}catch(e){
+						alert("destroy:"+name+"/"+key+"error:"+e.toString());
+					}
+					p.destroy=null;
+				}
+				for(var key in p)
+					execute_destroy_function(p[key],name+"/"+key);
+			}
+		}
+		function execute_delete_function(p,name)
+		{
+			if(Array.isArray(p)){
+				for(var i=0,ni=p.length;i<ni;i++){
+					execute_delete_function(p[i],name+"["+i+"]");
+					p[i]=true;
+				}
+				p.length=0;
+			}else if((typeof(p)=="object")&&(p!=null)){
+				if(typeof(p.has_completed_delete_flag)=="boolean")
+					if(p.has_completed_delete_flag)
+						return;
+				p.has_completed_delete_flag=true;
+				for(var key in p){
+					execute_delete_function(p[key],name+"/"+key);
+					try{
+						p[key]=true;
+					}catch(e){
+						alert("delete:"+name+"/"+key+"error:"+e.toString());
+					}
+				}
+			}
+		}
 		if(this.terminate_flag)
 			return;
 		this.terminate_flag=true;
 
 		fetch(this.url_with_channel+"&command=termination");
 		
-		if(this.event_listener!=null)
-			for(var i=0,ni=this.event_listener.length;i<ni;i++){
-				if(typeof(this.event_listener[i])=="object")
-					if(this.event_listener[i]!=null)
-						if(typeof(this.event_listener[i].destroy)=="function")
-							this.event_listener[i].destroy(this);
-				this.event_listener[i]=null;
-			}
-		this.event_listener=null;
-
-		if(typeof(this.user_event_processor)=="object")
-			if(this.user_event_processor!=null)
-				if(typeof(this.user_event_processor.destroy)=="function")
-					this.user_event_processor.destroy(this);
-		this.user_event_processor=null;
+		this.destroy=null;
 		
-		if(typeof(this.user_call_processor)=="object")
-			if(this.user_call_processor!=null)
-				if(typeof(this.user_call_processor.destroy)=="function")
-					this.user_call_processor.destroy(this);	
-		this.user_call_processor=null;
-		
-		if(typeof(this.system_event_processor)=="object")
-			if(this.system_event_processor!=null)
-				if(typeof(this.system_event_processor.destroy)=="function")
-					this.system_event_processor.destroy(this);	
-		this.system_event_processor=null;
-
-		if(typeof(this.system_call_processor)=="object")
-			if(this.system_call_processor!=null)
-				if(typeof(this.system_call_processor.destroy)=="function")
-					this.system_call_processor.destroy(this);	
-		this.system_call_processor=null;
-		
-		if(this.component_event_processor!=null)
-			for(var i=0,ni=this.component_event_processor.length;i<ni;i++){
-				if(typeof(this.component_event_processor[i])=="object")
-					if(this.component_event_processor[i]!=null)
-						if(typeof(this.component_event_processor[i].destroy)=="function")
-							this.component_event_processor[i].destroy(this);
-				this.component_event_processor[i]=null;
-			}
-		this.component_event_processor=null;
-		
-		if(this.component_call_processor!=null)
-			for(var i=0,ni=this.component_call_processor.length;i<ni;i++){
-				if(typeof(this.component_call_processor[i])=="object")
-					if(this.component_call_processor[i]!=null)
-						if(typeof(this.component_call_processor[i].destroy)=="function")
-							this.component_call_processor[i].destroy(this);
-				this.component_call_processor[i]=null;
-			}
-		this.component_call_processor=null;
-		
-		if(this.render_driver!=null)
-			for(var i=0,ni=this.render_driver.length;i<ni;i++){
-				if(typeof(this.render_driver[i])=="object")
-					if(this.render_driver[i]!=null)
-						if(typeof(this.render_driver[i].destroy)=="function")
-							this.render_driver[i].destroy(this);
-				this.render_driver[i]=null;
-			}
-		this.render_driver=null;
-		
-		if(this.part_driver!=null)
-			for(var i=0,ni=this.part_driver.length;i<ni;i++){
-				for(var j=0,nj=this.part_driver[i].length;j<nj;j++){
-					if(typeof(this.part_driver[i][j])=="object")
-						if(this.part_driver[i][j]!=null)
-							if(typeof(this.part_driver[i][j].destroy)=="function")
-								this.part_driver[i][j].destroy(this);
-					this.part_driver[i][j]=null;
-				}
-				this.part_driver[i]=null;
-			}
-		this.part_driver=null;
-		
-		if(this.part_array!=null)
-			for(var i=0,ni=this.part_array.length;i<ni;i++){
-				for(var j=0,nj=this.part_array[i].length;j<nj;j++){
-					if(typeof(this.part_array[i][j])=="object")
-						if(this.part_array[i][j]!=null)
-							if(typeof(this.part_array[i][j].destroy)=="function")
-								this.part_array[i][j].destroy(this);
-					this.part_array[i][j]=null;
-				}
-				this.part_array[i]=null;
-			}
-		this.part_array=null;
-
-		this.link_name			=null;
-		this.title				=null;
-		this.parameter			=null;
-		this.url				=null;
-		this.url_without_channel=null;
-		this.url_with_channel	=null;
-			
-		this.event_component	=null;
-		this.render_buffer_array=null;
-		this.routine_array		=null;
-			
-		this.view		=null;
-		this.view_bak	=null;
-		
-		if(this.caller!=null)
-			this.caller.destroy(this);
-		this.caller=null;
-
-		if(this.component_location_data!=null)
-			this.component_location_data.destroy(this);
-		this.component_location_data=null;
-		
-		if(this.component_render_data!=null)
-			this.component_render_data.destroy(this);
-		this.component_render_data=null;
-		
-		if(this.modifier_time_parameter!=null)
-			this.modifier_time_parameter.destroy(this);
-		this.modifier_time_parameter=null;
-		
-		if(this.vertex_data_downloader!=null)
-			this.vertex_data_downloader.destroy(this);
-		this.vertex_data_downloader=null;
-		
-		if(this.camera!=null)
-			this.camera.destroy(this);
-		this.camera=null;
-		
-		if(this.operate_component!=null)
-			this.operate_component.destroy(this);
-		this.operate_component=null;
-		
-		if(this.collector_loader!=null)
-			this.collector_loader.destroy(this);
-		this.collector_loader=null;
-		
-		if(this.system_buffer!=null)
-			this.system_buffer.destroy(this);
-		this.system_buffer=null;
-		
-		if(this.computer!=null)
-			this.computer.destroy(this);
-		this.computer=null;
-		
-		if(this.webgpu!=null)
-			this.webgpu.destroy();
-		this.webgpu=null;
-			
-		this.pickup					=null;
-		this.pickup_array			=null;
-		this.highlight				=null;
-			
-		this.current_time			=null;
-		this.modifier_current_time	=null;
-		
-		this.append_routine_function=null;
-		
-//################################################################################################
-		
-		if(this.component_array_sorted_by_id!=null){
-			for(var i=0,ni=this.component_array_sorted_by_id.length;i<ni;i++){
-				var p=this.component_array_sorted_by_id[i];
-				for(var key in p)
-					p[key]=null;
-				this.component_array_sorted_by_id[i]=null;
-			}
-			this.component_array_sorted_by_id=null;
-		}
-		if(this.component_object!=null){
-			for(var component_key in this.component_object){
-				var p=this.component_object[component_key];
-				for(var item_key in p)
-					p[item_key]=null;
-				this.component_object[component_key]=null;
-			}
-			this.component_object=null;
-		}
-		this.system_bindgroup_id				=null;
-		this.part_component_id_and_driver_id	=null;
+		execute_destroy_function(this,"");
+		execute_delete_function(this,"");
 	};
-	
 	this.append_routine_function=function(my_routine_function)
 	{
 		this.routine_array.push(my_routine_function);

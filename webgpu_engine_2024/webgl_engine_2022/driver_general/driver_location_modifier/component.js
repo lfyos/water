@@ -89,13 +89,4 @@ function construct_component_driver(
 		while(buffer_data_item.length>0)
 			this.location_data.push(buffer_data_item.shift());
 	}
-
-	this.destroy=function(render)
-	{
-		this.location_data				=null;
-		
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
-
-	}
 };

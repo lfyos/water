@@ -12,9 +12,4 @@ function construct_component_driver(
 			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
 	{
 	}
-	this.destroy=function(render)
-	{
-		this.draw_component				=null;
-		this.append_component_parameter	=null;
-	}
 };

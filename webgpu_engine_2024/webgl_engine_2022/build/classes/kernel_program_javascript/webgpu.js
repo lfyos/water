@@ -47,16 +47,12 @@ async function create_webgpu(my_canvas)
 		this.render_pass_encoder	= null;
 		this.compute_pass_encoder	= null;
 		
-		if(this.canvas!=null){
-			for(var i=0,ni=this.canvas.length;i<ni;i++)
-				this.canvas [i]= null;
-			this.canvas=null;
-		}
-		if(this.context!=null){
-			for(var i=0,ni=this.context.length;i<ni;i++)
-				this.context [i]= null;
-			this.context= null;
-		}
+		this.canvas					=null;
+		this.context				=null;
+		
+		this.canvas_2d				=null;
+		this.context_2d				=null;
 	}
+	
 	return webgpu;
 }

@@ -3,29 +3,6 @@ function construct_server_caller(my_render)
 {
 	this.render=my_render;
 	
-	this.destroy=function()
-	{
-		this.render=null;
-
-		this.call_server								=null;
-		
-		this.create_render_request_string				=null;
-		this.create_render_request_by_part_string		=null;
-		this.create_render_request_by_component_string	=null;
-		this.create_part_request_string					=null;
-		this.create_part_request_by_component_string	=null;
-		this.create_component_request_string			=null;
-		
-		this.call_server_engine							=null;
-		this.call_server_render							=null;
-		this.call_server_render_by_part					=null;
-		
-		this.call_server_render_by_component			=null;
-		
-		this.call_server_part							=null;
-		this.call_server_part_by_component				=null;
-		this.call_server_component						=null;
-	};
 	this.call_server=async function(request_url,response_type_string,server_request_parameter)
 	{
 		var my_render;
