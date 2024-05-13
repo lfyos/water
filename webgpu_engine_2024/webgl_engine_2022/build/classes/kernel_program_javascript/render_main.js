@@ -1,7 +1,6 @@
 async function render_main(
-	my_canvas,my_create_parameter,user_process_bar_function,
-	my_url,default_fetch_parameter,create_engine_sleep_time_length_scale,
-	create_engine_sleep_time_length,create_engine_max_sleep_time_length)
+	my_canvas,my_create_parameter,user_process_bar_function,my_url,default_fetch_parameter,
+	create_engine_sleep_time_length_scale,create_engine_sleep_time_length,create_engine_max_sleep_time_length)
 {
 	var webgpu=await create_webgpu(my_canvas);
 	if(webgpu.error_flag)

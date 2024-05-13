@@ -32,7 +32,7 @@ function(component_name,component_id,render)
 				break;;							
 			case 6:
 				display_ep=render.component_event_processor[render.operate_component.
-					get_component_object_by_component_name("列表功能显示组件").component_id];
+					get_component_object("列表功能显示组件").component_id];
 				display_ep.collector_stack_version=0;
 				display_ep.list_type="simple";
 				
@@ -43,7 +43,7 @@ function(component_name,component_id,render)
 				break;
 			case 7:
 				display_ep=render.component_event_processor[render.operate_component.
-					get_component_object_by_component_name("列表功能显示组件").component_id];
+					get_component_object("列表功能显示组件").component_id];
 				display_ep.collector_stack_version=0;
 				display_ep.list_type="complex";
 		
@@ -54,7 +54,7 @@ function(component_name,component_id,render)
 				break;
 			case 8:
 				display_ep=render.component_event_processor[render.operate_component.
-					get_component_object_by_component_name("列表功能显示组件").component_id];
+					get_component_object("列表功能显示组件").component_id];
 				display_ep.collector_stack_version=0;
 				display_ep.list_type="collector";
 				
@@ -65,7 +65,7 @@ function(component_name,component_id,render)
 				break;
 			case 9:
 				var operate_ep=render.component_event_processor[render.operate_component.
-					get_component_object_by_component_name("列表功能操作组件").component_id];
+					get_component_object("列表功能操作组件").component_id];
 				
 				if((operate_ep.title=prompt("请输入操作列表的标题"))!=null)
 					if((operate_ep.title=operate_ep.title.trim())!=""){

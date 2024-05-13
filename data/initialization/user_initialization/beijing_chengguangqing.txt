@@ -32,7 +32,7 @@
 					};
 					render.user_call_processor.get_component_tree=function()
 					{
-						return render.get_component_object_by_component_name("system_root_component").component_children[0];
+						return render.get_component_object("system_root_component").component_children[0];
 					};
 					render.user_call_processor.set_all_transparant_except_selection=function()
 					{

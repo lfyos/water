@@ -119,7 +119,6 @@ public class javascript_program
 			cr.get_text("\t",request_response);
 			cr.close();
 		}
-		
 		str=new String[]{
 				"	return await render_main(my_canvas,my_create_parameter,",
 				"				(typeof(user_process_bar_function)==\"function\")",

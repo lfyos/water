@@ -150,7 +150,7 @@ function(component_name,component_id,render)
 		{
 			//在指定的拼装步骤挂起，挂起后执行fun函数
 			
-			var p=render.get_component_object_by_component_name("movement_manager");
+			var p=render.get_component_object("movement_manager");
 			var start_time=(new Date()).getTime();
 		
 			render.call_server_component("movement_manager","all",[["operation","movement"],["move_method","stop"]]).

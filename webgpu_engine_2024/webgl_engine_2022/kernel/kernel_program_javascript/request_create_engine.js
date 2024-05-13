@@ -6,7 +6,8 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 	var create_data;
 	
 	for(var continue_flag=true;continue_flag;){
-		var engine_promise=await fetch(request_url,default_fetch_parameter.request_create_engine);
+		var engine_promise=await fetch(request_url,
+					default_fetch_parameter.request_create_engine);
 		if(!(engine_promise.ok)){
 			alert("request_create_engine fail:"+engine_promise.status);
 			return null;
@@ -46,7 +47,7 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 	var	my_part_init_data		=create_data[2];
 	var	my_component_init_data	=create_data[3];
 	var	my_render_data			=create_data[4];
-	var my_init_promise			=import(create_data.pop());
+	var	my_init_promise			=import(create_data.pop());
 
 	var render=new construct_render_routine(
 			my_webgpu,my_url,my_user_name,my_pass_word,my_language_name,
@@ -78,7 +79,7 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 		var my_driver_id		=my_component_init_data[i++];
 		component_init_data[my_component_id][my_driver_id]=my_data;
 	}
-	
+
 	var	init_data=(await my_init_promise).initialization_data;
 
 	var	sorted_component_name_id		=init_data[0];
@@ -87,8 +88,8 @@ async function request_create_engine(create_engine_sleep_time_length_scale,
 	var	program_data					=init_data[3];
 	var	common_shader_code				=init_data[4];
 				
-	init_ids_of_part_and_component(
-		sorted_component_name_id,part_component_id_and_driver_id,render);
+	init_ids_of_part_and_component(render,
+		sorted_component_name_id,part_component_id_and_driver_id);
 	
 	if(render.system_buffer!=null)
 		render.system_buffer.destroy();

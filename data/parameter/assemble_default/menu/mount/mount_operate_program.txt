@@ -22,7 +22,7 @@ function(component_name,component_id,render)
 				return;
 
 			var p=render.operate_component;
-				p=p.get_component_object_by_component_name("组件拼装拼装编辑组件");
+				p=p.get_component_object("组件拼装拼装编辑组件");
 			var edit_ep=render.component_event_processor[p.component_id];
 			if(edit_ep.movement_data==null)
 				return;
@@ -425,7 +425,7 @@ function(component_name,component_id,render)
 			
 			
 			var p=render.operate_component;
-				p=p.get_component_object_by_component_name("组件拼装拼装编辑组件");
+				p=p.get_component_object("组件拼装拼装编辑组件");
 			var edit_ep=render.component_event_processor[p.component_id];
 			if(edit_ep.movement_data==null)
 				return;
