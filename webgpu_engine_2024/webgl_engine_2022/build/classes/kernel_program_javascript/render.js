@@ -142,10 +142,17 @@ function construct_render_routine(my_webgpu,my_url,
 				for(var i=0,ni=p.length;i<ni;i++)
 					execute_destroy_function(p[i],name+"["+i+"]");
 			}else if((typeof(p)=="object")&&(p!=null)){
-				if(typeof(p.has_completed_destroy_flag)=="boolean")
-					if(p.has_completed_destroy_flag)
+				switch(typeof(p.has_completed_execute_destroy_function_flag)){
+				case "boolean":
+					if(p.has_completed_execute_destroy_function_flag)
 						return;
-				p.has_completed_destroy_flag=true;
+					break;
+				default:
+					execute_destroy_function(p.has_completed_execute_destroy_function_flag,
+						name+"/has_completed_execute_destroy_function_flag");
+					break;
+				}
+				p.has_completed_execute_destroy_function_flag=true;
 				
 				if(typeof(p.destroy)=="function"){
 					try{
@@ -168,10 +175,18 @@ function construct_render_routine(my_webgpu,my_url,
 				}
 				p.length=0;
 			}else if((typeof(p)=="object")&&(p!=null)){
-				if(typeof(p.has_completed_delete_flag)=="boolean")
-					if(p.has_completed_delete_flag)
+				switch(typeof(p.has_completed_execute_delete_function_flag)){
+				case "boolean":
+					if(p.has_completed_execute_delete_function_flag)
 						return;
-				p.has_completed_delete_flag=true;
+					break;
+				default:
+					execute_delete_function(p.has_completed_execute_delete_function_flag,
+							name+"/has_completed_execute_delete_function_flag");
+					break;
+				}
+				p.has_completed_execute_delete_function_flag=true;
+				
 				for(var key in p){
 					execute_delete_function(p[key],name+"/"+key);
 					try{
@@ -187,9 +202,7 @@ function construct_render_routine(my_webgpu,my_url,
 		this.terminate_flag=true;
 
 		fetch(this.url_with_channel+"&command=termination");
-		
-		this.destroy=null;
-		
+
 		execute_destroy_function(this,"");
 		execute_delete_function(this,"");
 	};
