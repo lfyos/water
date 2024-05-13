@@ -39,7 +39,7 @@ function(component_name,component_id,render)
 						if(response_data.length<=0)
 							return;
 						var my_component_id=render.operate_component.
-								get_component_object_by_component_name("组件拼装拼装查询组件").component_id;
+								get_component_object("组件拼装拼装查询组件").component_id;
 						var my_ep=render.component_event_processor[my_component_id];
 						my_ep.active_list(response_data,my_component_id,render);
 				});
@@ -64,7 +64,7 @@ function(component_name,component_id,render)
 					function(response_data)
 					{
 						var my_component_id=render.operate_component.
-								get_component_object_by_component_name("组件拼装拼装编辑组件").component_id;
+								get_component_object("组件拼装拼装编辑组件").component_id;
 						render.component_event_processor[my_component_id].active_list(false);
 					});
 				break;

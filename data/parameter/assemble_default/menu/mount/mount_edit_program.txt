@@ -55,7 +55,7 @@ function(component_name,component_id,render)
 				return;
 			case 1:
 				if(ep.type_flag){
-					var p=render.operate_component.get_component_object_by_component_name("组件拼装拼装操作组件");
+					var p=render.operate_component.get_component_object("组件拼装拼装操作组件");
 					render.component_event_processor[p.component_id].active_list();
 				}else{
 					render.system_call_processor.set_menu_hide(component_id);

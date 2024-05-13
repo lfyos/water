@@ -133,7 +133,7 @@ function(component_name,component_id,render)
 				var my_id=Math.round(ep.id_base+function_id);
 				if((my_id>=0)&&(my_id<p.length)){
 					var operate_ep=render.component_event_processor[render.operate_component.
-							get_component_object_by_component_name("列表功能操作组件").component_id];
+							get_component_object("列表功能操作组件").component_id];
 					operate_ep.list_id	=p[my_id].list_id;
 					operate_ep.title	=p[my_id].title;
 					render.system_call_processor.set_menu_show("列表功能操作组件");

@@ -231,7 +231,7 @@ function construct_render_routine(my_webgpu,my_url,
 				this.part_array[i]=null;
 			}
 		this.part_array=null;
-		
+
 		this.link_name			=null;
 		this.title				=null;
 		this.parameter			=null;
@@ -298,6 +298,29 @@ function construct_render_routine(my_webgpu,my_url,
 		this.modifier_current_time	=null;
 		
 		this.append_routine_function=null;
+		
+//################################################################################################
+		
+		if(this.component_array_sorted_by_id!=null){
+			for(var i=0,ni=this.component_array_sorted_by_id.length;i<ni;i++){
+				var p=this.component_array_sorted_by_id[i];
+				for(var key in p)
+					p[key]=null;
+				this.component_array_sorted_by_id[i]=null;
+			}
+			this.component_array_sorted_by_id=null;
+		}
+		if(this.component_object!=null){
+			for(var component_key in this.component_object){
+				var p=this.component_object[component_key];
+				for(var item_key in p)
+					p[item_key]=null;
+				this.component_object[component_key]=null;
+			}
+			this.component_object=null;
+		}
+		this.system_bindgroup_id				=null;
+		this.part_component_id_and_driver_id	=null;
 	};
 	
 	this.append_routine_function=function(my_routine_function)

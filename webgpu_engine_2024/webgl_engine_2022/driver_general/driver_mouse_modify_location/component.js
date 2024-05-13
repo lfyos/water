@@ -423,16 +423,13 @@ function mousedown(event,component_id,render)
 			then(
 				function(response_data)
 				{
-					if(response_data!=null)
-						if(response_data.movement.length>0){
-							var p=ep.part_init_data.movement_abstract_menu_component_name;
-							p=render.operate_component.get_component_object_by_component_name(p);
-							if(p!=null){
-								var my_component_id=p.component_id;
-								p=render.component_event_processor[my_component_id];
-								p.active_list(response_data,my_component_id,render);
-							}
-						}
+					if(response_data==null)
+						return;
+					if(response_data.movement.length<=0)
+						return;
+					var p=ep.part_init_data.movement_abstract_menu_component_name;
+					if((p=render.operate_component.get_component_event_processor(p))!=null)
+						p.active_list(response_data,render.operate_component.last_operate_component_id,render);
 				});
 		}else{
 			var value;

@@ -9,19 +9,20 @@ public class test_1 extends travel_through_directory
 	public void operate_file(String file_name)
 	{
 		String str;
-		if((str=file_reader.get_text(file_name,"GBK"))!=null)
-			if(str.indexOf("sub_directory")>=0)
+		if((str=file_reader.get_text(file_name,"GBK"))!=null) {
+			if(str.indexOf("get_component_object_by_component_name")>=0)
 				debug_information.println(file_name);
+			if(str.indexOf("get_component_object_by_component_id")>=0)
+				debug_information.println(file_name);
+		}
 	}
 	
 	public test_1()
 	{
 		super(new String[]
 		{
-			"F:\\water_all\\data\\project",
 			"F:\\water_all\\.git",
-			"F:\\water_all\\webgl_engine_2022\\.metadata",
-			"F:\\water_all\\webgl_engine_2022\\webgl_engine_2022\\build"
+//			"F:\\water_all\\webgpu_engine_2024"
 		});
 	}
 	public static void main(String args[])

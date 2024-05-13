@@ -1,10 +1,10 @@
-function init_ids_of_part_and_component(
-	sorted_component_name_id,part_component_id_and_driver_id,render)
+function init_ids_of_part_and_component(render,
+	sorted_component_name_id,part_component_id_and_driver_id)
 {
 	var component_number=sorted_component_name_id.length;
-	
-	render.component_array_sorted_by_name	=new Array(component_number);
+
 	render.component_array_sorted_by_id		=new Array(component_number);
+	render.component_object					=new Object();
 	
 	for(var i=0;i<component_number;i++){
 		var my_component_name		=sorted_component_name_id[i][0];
@@ -19,8 +19,12 @@ function init_ids_of_part_and_component(
 				component_ids		:	new Array(),
 				system_bindgroup_id	:	-1
 		};
-		render.component_array_sorted_by_name[i]=p;
 		render.component_array_sorted_by_id[my_component_id]=p;
+		
+		if(typeof(render.component_object[my_component_name])!="undefined")
+			console.log("several components have same component name:	"+my_component_name);
+			
+		render.component_object[my_component_name]=p;
 	};
 
 	for(var i=0;i<component_number;i++){
@@ -37,7 +41,7 @@ function init_ids_of_part_and_component(
 			p.component_children[j].component_parent=p;
 	};
 	
-	var system_bindgroup_id			=new Array();
+	var system_bindgroup_id=new Array();
 	
 	var render_number=part_component_id_and_driver_id.length;
 	for(var render_id=0;render_id<render_number;render_id++){

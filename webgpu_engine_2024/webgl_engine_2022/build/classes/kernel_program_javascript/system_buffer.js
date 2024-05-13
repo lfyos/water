@@ -43,7 +43,8 @@ function construct_system_buffer(render,my_max_target_number)
 	
 	my_system_buffer_size+=Int32Array.	BYTES_PER_ELEMENT*28;
 	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4;
-	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*32;
+	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*2*
+				(render.component_location_data.identify_matrix.length);
 	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4*
 				(render.camera.camera_object_parameter.length);
 	
@@ -56,7 +57,8 @@ function construct_system_buffer(render,my_max_target_number)
 //	init target buffer:	binding point 1
 
 	var my_target_buffer_size=0;
-	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*16*10;
+	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*10*
+				(render.component_location_data.identify_matrix.length);
 	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4*33;
 	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*8;
 	my_target_buffer_size+=Int32Array.	BYTES_PER_ELEMENT*8;

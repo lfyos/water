@@ -169,7 +169,7 @@ function construct_component_driver(
 		
 		switch(typeof(p=render.event_component.mouse.component_name)){
 		case "string":
-			p=render.operate_component.get_component_object_by_component_name(p);
+			p=render.operate_component.get_component_object(p);
 			render.event_component.mouse.component_name=((p==null)?-1:(p.component_id));
 		case "number":
 			if(render.event_component.mouse.component_name!=this.event_component_id){
