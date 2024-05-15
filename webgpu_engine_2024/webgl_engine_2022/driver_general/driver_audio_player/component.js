@@ -25,10 +25,14 @@ function construct_component_driver(
 	{
 		this.should_response_flag=true;
 		this.audio.src=render.caller.create_component_request_string(
-				component_id,driver_id,[["operation","audio"],["fresh",Math.random()]]);
+				component_id,driver_id,[["operation","audio"],["random",Math.random()]]);
 	};
 	this.destroy=function()
 	{
-		this.audio=null;
+		if(this.audio!=null){
+			this.audio.src="";
+			this.audio.muted=true;
+			this.audio=null;
+		}
 	}
 };

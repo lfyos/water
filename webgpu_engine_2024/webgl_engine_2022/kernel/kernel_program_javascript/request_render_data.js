@@ -240,6 +240,8 @@ async function request_render_data(render)
 	};
 	
 	for(var start_time=0;!(render.terminate_flag);){
+		if(render.terminate_flag)
+			break;
 		var current_time=(new Date()).getTime();
 		var my_delay_time_length=render.modifier_time_parameter.delay_time_length;
 		if((my_delay_time_length-=(current_time-start_time))>0){
@@ -247,22 +249,17 @@ async function request_render_data(render)
 			{
 				setTimeout(resolve,my_delay_time_length);
 			});
-			if(render.terminate_flag)
-				break;
-			else
-				continue;
+			continue;
 		}
-		if(render.terminate_flag)
-			break;
 		start_time=current_time;
 		if(await fetch_web_server_response_data(create_request_url(render),render)||(render.terminate_flag))
+			break;
+		if(render.terminate_flag)
 			break;
 		await new Promise(resolve=>
 		{
 			window.requestAnimationFrame(resolve);
 			setTimeout(resolve,render.parameter.engine_touch_time_length/1000000);
 		});
-		if(render.terminate_flag)
-			break;
 	}
 }

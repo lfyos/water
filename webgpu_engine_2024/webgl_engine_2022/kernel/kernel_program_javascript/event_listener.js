@@ -58,18 +58,27 @@ function construct_event_listener(my_canvas_id,my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(my_render.system_event_processor.systemmousemove(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemmousemove(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickupmousemove(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickupmousemove(event,my_render.pickup.component_id,this.render))
+					return;
+				if(my_render.terminate_flag)
 					return;
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickupmousemove)=="function")
-						if(ep.pickupmousemove(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickupmousemove)=="function"){
+						if(ep.pickupmousemove(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.mousemove(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.mousemove(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.mouse.component_name))==null)
@@ -102,18 +111,27 @@ function construct_event_listener(my_canvas_id,my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(my_render.system_event_processor.systemmousedown(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemmousedown(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickupmousedown(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickupmousedown(event,my_render.pickup.component_id,this.render))
+					return;
+				if(my_render.terminate_flag)
 					return;
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickupmousedown)=="function")
-						if(ep.pickupmousedown(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickupmousedown)=="function"){
+						if(ep.pickupmousedown(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.mousedown(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.mousedown(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.mouse.component_name))==null)
@@ -145,18 +163,27 @@ function construct_event_listener(my_canvas_id,my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(my_render.system_event_processor.systemmouseup(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemmouseup(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickupmouseup(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickupmouseup(event,my_render.pickup.component_id,this.render))
 					return;
+				if(my_render.terminate_flag)
+					return;	
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickupmouseup)=="function")
-						if(ep.pickupmouseup(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickupmouseup)=="function"){
+						if(ep.pickupmouseup(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.mouseup(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.mouseup(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.mouse.component_name))==null)
@@ -185,18 +212,27 @@ function construct_event_listener(my_canvas_id,my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(my_render.system_event_processor.systemdblclick(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemdblclick(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickupdblclick(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickupdblclick(event,my_render.pickup.component_id,this.render))
+					return;
+				if(my_render.terminate_flag)
 					return;
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickupdblclick)=="function")
-						if(ep.pickupdblclick(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickupdblclick)=="function"){
+						if(ep.pickupdblclick(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.dblclick(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.dblclick(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.mouse.component_name))==null)
@@ -223,18 +259,27 @@ function construct_event_listener(my_canvas_id,my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(my_render.system_event_processor.systemmousewheel(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemmousewheel(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickupmousewheel(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickupmousewheel(event,my_render.pickup.component_id,this.render))
+					return;
+				if(my_render.terminate_flag)
 					return;
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickupmousewheel)=="function")
-						if(ep.pickupmousewheel(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickupmousewheel)=="function"){
+						if(ep.pickupmousewheel(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.mousewheel(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.mousewheel(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.mouse.component_name))==null)
@@ -259,18 +304,27 @@ function construct_event_listener(my_canvas_id,my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(my_render.system_event_processor.systemmouseover(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemmouseover(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickupmouseover(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickupmouseover(event,my_render.pickup.component_id,this.render))
+					return;
+				if(my_render.terminate_flag)
 					return;
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickupmouseover)=="function")
-						if(ep.pickupmouseover(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickupmouseover)=="function"){
+						if(ep.pickupmouseover(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.mouseover(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.mouseover(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.mouse.component_name))==null)
@@ -295,18 +349,27 @@ function construct_event_listener(my_canvas_id,my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(my_render.system_event_processor.systemmouseout(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemmouseout(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickupmouseout(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickupmouseout(event,my_render.pickup.component_id,this.render))
+					return;
+				if(my_render.terminate_flag)
 					return;
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickupmouseout)=="function")
-						if(ep.pickupmouseout(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickupmouseout)=="function"){
+						if(ep.pickupmouseout(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.mouseout(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.mouseout(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.mouse.component_name))==null)
@@ -333,18 +396,27 @@ function construct_event_listener(my_canvas_id,my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(my_render.system_event_processor.systemmouseenter(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemmouseenter(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickupmouseenter(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickupmouseenter(event,my_render.pickup.component_id,this.render))
+					return;
+				if(my_render.terminate_flag)
 					return;
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickupmouseenter)=="function")
-						if(ep.pickupmouseenter(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickupmouseenter)=="function"){
+						if(ep.pickupmouseenter(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.mouseenter(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.mouseenter(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.mouse.component_name))==null)
@@ -369,18 +441,27 @@ function construct_event_listener(my_canvas_id,my_render)
 		event.preventDefault();
 		this.set_render_view(event);
 		
-		if(my_render.system_event_processor.systemmouseleave(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemmouseleave(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickupmouseleave(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickupmouseleave(event,my_render.pickup.component_id,this.render))
+					return;
+				if(my_render.terminate_flag)
 					return;
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickupmouseleave)=="function")
-						if(ep.pickupmouseleave(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickupmouseleave)=="function"){
+						if(ep.pickupmouseleave(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.mouseleave(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.mouseleave(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.mouse.component_name))==null)
@@ -406,18 +487,27 @@ function construct_event_listener(my_canvas_id,my_render)
 		event.preventDefault();
 		my_render.webgpu.current_canvas_id=this.canvas_id;
 		
-		if(my_render.system_event_processor.systemcontextmenu(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemcontextmenu(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickupcontextmenu(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickupcontextmenu(event,my_render.pickup.component_id,this.render))
+					return;
+				if(my_render.terminate_flag)
 					return;
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickupcontextmenu)=="function")
-						if(ep.pickupcontextmenu(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickupcontextmenu)=="function"){
+						if(ep.pickupcontextmenu(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.contextmenu(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.contextmenu(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.mouse.component_name))==null)
@@ -443,18 +533,27 @@ function construct_event_listener(my_canvas_id,my_render)
 		event.preventDefault();
 		this.set_mobile_render_view(event);
 		
-		if(my_render.system_event_processor.systemtouchstart(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemtouchstart(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickuptouchstart(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickuptouchstart(event,my_render.pickup.component_id,this.render))
+					return;
+				if(my_render.terminate_flag)
 					return;
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickuptouchstart)=="function")
-						if(ep.pickuptouchstart(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickuptouchstart)=="function"){
+						if(ep.pickuptouchstart(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.touchstart(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.touchstart(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.touch.component_name))==null)
@@ -479,18 +578,27 @@ function construct_event_listener(my_canvas_id,my_render)
 		event.preventDefault();
 		this.set_mobile_render_view(event);
 		
-		if(my_render.system_event_processor.systemtouchend(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemtouchend(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickuptouchend(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickuptouchend(event,my_render.pickup.component_id,this.render))
+					return;
+				if(my_render.terminate_flag)
 					return;
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickuptouchend)=="function")
-						if(ep.pickuptouchend(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickuptouchend)=="function"){
+						if(ep.pickuptouchend(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.touchend(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.touchend(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.touch.component_name))==null)
@@ -515,18 +623,27 @@ function construct_event_listener(my_canvas_id,my_render)
 		event.preventDefault();
 		this.set_mobile_render_view(event);
 		
-		if(my_render.system_event_processor.systemtouchmove(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemtouchmove(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickuptouchmove(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickuptouchmove(event,my_render.pickup.component_id,this.render))
+					return;
+				if(my_render.terminate_flag)
 					return;
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickuptouchmove)=="function")
-						if(ep.pickuptouchmove(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickuptouchmove)=="function"){
+						if(ep.pickuptouchmove(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.touchmove(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.touchmove(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.touch.component_name))==null)
@@ -551,18 +668,27 @@ function construct_event_listener(my_canvas_id,my_render)
 		event.preventDefault();
 		my_render.webgpu.current_canvas_id=this.canvas_id;
 		
-		if(my_render.system_event_processor.systemkeydown(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemkeydown(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickupkeydown(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickupkeydown(event,my_render.pickup.component_id,this.render))
+					return;
+				if(my_render.terminate_flag)
 					return;
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickupkeydown)=="function")
-						if(ep.pickupkeydown(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickupkeydown)=="function"){
+						if(ep.pickupkeydown(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.keydown(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.keydown(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.keyboard.component_name))==null)
@@ -587,18 +713,27 @@ function construct_event_listener(my_canvas_id,my_render)
 		event.preventDefault();
 		my_render.webgpu.current_canvas_id=this.canvas_id;
 
-		if(my_render.system_event_processor.systemkeypress(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemkeypress(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickupkeypress(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickupkeypress(event,my_render.pickup.component_id,this.render))
+					return;
+				if(my_render.terminate_flag)
 					return;
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickupkeypress)=="function")
-						if(ep.pickupkeypress(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickupkeypress)=="function"){
+						if(ep.pickupkeypress(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.keypress(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.keypress(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.keyboard.component_name))==null)
@@ -637,18 +772,27 @@ function construct_event_listener(my_canvas_id,my_render)
 			my_render.pickup_array[event.keyCode-48]=my_render.pickup.fork();
 			break;
 		}
-		if(my_render.system_event_processor.systemkeyup(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.systemkeyup(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if(my_render.pickup.component_id>=0)
 			if(my_render.pickup.component_id<(my_render.component_event_processor.length)){
-				if(my_render.system_event_processor.pickupkeyup(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+				if(my_render.system_event_processor.pickupkeyup(event,my_render.pickup.component_id,this.render))
+					return;
+				if(my_render.terminate_flag)
 					return;
 				if(typeof(ep=my_render.component_event_processor[my_render.pickup.component_id])=="object")
-					if(typeof(ep.pickupkeyup)=="function")
-						if(ep.pickupkeyup(event,my_render.pickup.component_id,this.render)||my_render.terminate_flag)
+					if(typeof(ep.pickupkeyup)=="function"){
+						if(ep.pickupkeyup(event,my_render.pickup.component_id,this.render))
 							return;
+						if(my_render.terminate_flag)
+							return;
+					}
 			}
-		if(my_render.system_event_processor.keyup(event,this.render)||my_render.terminate_flag)
+		if(my_render.system_event_processor.keyup(event,this.render))
+			return;
+		if(my_render.terminate_flag)
 			return;
 		if((ep=my_render.operate_component.get_component_event_processor(
 			my_render.event_component.keyboard.component_name))==null)

@@ -136,65 +136,46 @@ function construct_render_routine(my_webgpu,my_url,
 	
 	this.destroy=function()
 	{
-		function execute_destroy_function(p,name)
-		{
-			if(Array.isArray(p)){
-				for(var i=0,ni=p.length;i<ni;i++)
-					execute_destroy_function(p[i],name+"["+i+"]");
-			}else if((typeof(p)=="object")&&(p!=null)){
-				switch(typeof(p.has_completed_execute_destroy_function_flag)){
-				case "boolean":
-					if(p.has_completed_execute_destroy_function_flag)
-						return;
-					p.has_completed_execute_destroy_function_flag=true;
-					break;
-				case "object":
-					break;
-				default:
-					p.has_completed_execute_destroy_function_flag=true;
-					break;
-				}
-				if(typeof(p.destroy)=="function"){
-					try{
-						p.destroy();
-					}catch(e){
-						alert("destroy:"+name+"/"+key+"error:"+e.toString());
-					}
-					p.destroy=null;
-				}
-				for(var key in p)
-					execute_destroy_function(p[key],name+"/"+key);
-			}
-		}
 		function execute_delete_function(p,name)
 		{
 			if(Array.isArray(p)){
-				for(var i=0,ni=p.length;i<ni;i++){
-					execute_delete_function(p[i],name+"["+i+"]");
-					p[i]=true;
+				while(p.length>0)
+					execute_delete_function(p.pop(),name+"["+p.length+"]");
+				return;
+			}
+			if(typeof(p)!="object")
+				return;
+			if(p==null)
+				return;
+			switch(typeof(p.has_completed_execute_delete_function_flag)){
+			case "boolean":
+				if(p.has_completed_execute_delete_function_flag)
+					return;
+				p.has_completed_execute_delete_function_flag=true;
+				break;
+			case "object":
+				break;
+			default:
+				p.has_completed_execute_delete_function_flag=true;
+				break;
+			}
+			if(typeof(p.destroy)=="function"){
+				try{
+					p.destroy();
+				}catch(e){
+					alert("destroy:"+name+"/"+key+"error:"+e.toString());
 				}
-				p.length=0;
-			}else if((typeof(p)=="object")&&(p!=null)){
-				switch(typeof(p.has_completed_execute_delete_function_flag)){
-				case "boolean":
-					if(p.has_completed_execute_delete_function_flag)
-						return;
-					p.has_completed_execute_delete_function_flag=true;
-					break;
-				case "object":
-					break;
-				default:
-					p.has_completed_execute_delete_function_flag=true;
-					break;
+				p.destroy=null;
+			}
+			for(var key in p){
+				var pp=p[key];
+				try{
+					if(typeof(p[key])!="boolean")
+						delete p[key];
+				}catch(e){
+					alert("delete:"+name+"/"+key+"error:"+e.toString());
 				}
-				for(var key in p){
-					execute_delete_function(p[key],name+"/"+key);
-					try{
-						p[key]=true;
-					}catch(e){
-						alert("delete:"+name+"/"+key+"error:"+e.toString());
-					}
-				}
+				execute_delete_function(pp,name+"/"+key);
 			}
 		}
 		if(this.terminate_flag)
@@ -203,8 +184,7 @@ function construct_render_routine(my_webgpu,my_url,
 
 		fetch(this.url_with_channel+"&command=termination");
 
-		execute_destroy_function(this,"");
-		execute_delete_function(this,"");
+		execute_delete_function (this,"");
 	};
 	this.append_routine_function=function(my_routine_function)
 	{
