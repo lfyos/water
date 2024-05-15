@@ -166,16 +166,14 @@ async function draw_scene_main(part_init_data,component_init_data,render)
 				my_command_buffer.push(render.webgpu.command_encoder.finish());
 				render.webgpu.command_encoder=null;
 			}
-
-		if(render.terminate_flag)
-			return;
 		render.webgpu.device.queue.submit(my_command_buffer);
 		await render.webgpu.device.queue.onSubmittedWorkDone();
 		
+		if(render.terminate_flag)
+			return;
 		for(var i=0,ni=render.render_buffer_array.length;i<ni;i++){
 			if(render.terminate_flag)
 				return;
-			
 			var render_data=render.render_buffer_array[i];
 			if(!(render_data.do_render_flag))
 				continue;
@@ -195,8 +193,6 @@ async function draw_scene_main(part_init_data,component_init_data,render)
 			if(typeof(target_component_driver.complete_render_target)!="function")
 				continue;
 
-			if(render.terminate_flag)
-				return;
 			await target_component_driver.complete_render_target(render_data,
 						target_part_object,target_part_driver,target_render_driver,render);
 		}
