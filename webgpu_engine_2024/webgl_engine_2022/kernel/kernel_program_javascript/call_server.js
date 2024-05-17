@@ -3,6 +3,58 @@ function construct_server_caller(my_render)
 {
 	this.render=my_render;
 	
+	this.create_parameter_string=function(my_parameter)
+	{
+		var ret_val="";
+		if(Array.isArray(my_parameter))
+			for(var i=0,ni=my_parameter.length;i<ni;i++)
+				if(Array.isArray(my_parameter[i])){
+					var key		=my_parameter[i][0];
+					var value	=my_parameter[i][1];
+					switch(typeof(value)){
+					case "string":
+						ret_val+="&"+key.toString()+"="+value.trim();
+						break;
+					case "number":
+					case "bigint":
+					case "boolean":
+					case "symbol":
+						ret_val+="&"+key.toString()+"="+value.toString();
+						break;
+					case "object":
+						ret_val+="&"+key.toString()+"="+JSON.stringify(value);
+						break;
+					case "undefined":
+					case "function":
+					default:
+						break;
+					}
+				}
+		else if(typeof(my_parameter)=="object"){
+			for(var key in my_parameter){
+				var value=my_parameter[key];
+				switch(typeof(value)){
+				case "string":
+					ret_val+="&"+key+"="+value;
+					break;
+				case "number":
+				case "bigint":
+				case "boolean":
+				case "symbol":
+					ret_val+="&"+key+"="+value.toString();
+					break;
+				case "object":
+					ret_val+="&"+key+"="+JSON.stringify(value);
+					break;
+				case "undefined":
+				case "function":
+				default:
+					break;
+				}
+			}
+		}
+		return ret_val;
+	}
 	this.call_server=async function(request_url,response_type_string,server_request_parameter)
 	{
 		var my_render;
@@ -52,9 +104,8 @@ function construct_server_caller(my_render)
 			ret_val+="&event_render_name="+encodeURIComponent(encodeURIComponent(render_id_or_render_name));
 		else
 			ret_val+="&event_render_id="+render_id_or_render_name.toString();
-		for(var i=0,ni=render_parameter.length;i<ni;i++)
-			ret_val+="&"+render_parameter[i][0].toString()+"="+render_parameter[i][1].toString();		
-		return ret_val;
+			
+		return ret_val+this.create_parameter_string(render_parameter);
 	};
 	this.create_render_request_by_part_string=function(render_id_or_part_name,part_id_or_driver_id,render_parameter)
 	{
@@ -64,9 +115,8 @@ function construct_server_caller(my_render)
 			ret_val+="&event_driver_id="+part_id_or_driver_id;
 		}else
 			ret_val+="&event_render_id="+render_id_or_part_name.toString()+"&event_part_id="+part_id_or_driver_id.toString();
-		for(var i=0,ni=render_parameter.length;i<ni;i++)
-			ret_val+="&"+render_parameter[i][0].toString()+"="+render_parameter[i][1].toString();		
-		return ret_val;
+		
+		return ret_val+this.create_parameter_string(render_parameter);
 	};
 	this.create_render_request_by_component_string=function(
 			component_id_or_component_name,component_driver_id,render_parameter)
@@ -78,9 +128,8 @@ function construct_server_caller(my_render)
 			ret_val+="&event_component_id="+component_id_or_component_name.toString();
 		if(typeof(component_driver_id)!="undefined")
 			ret_val+="&event_driver_id="+component_driver_id.toString();
-		for(var i=0,ni=render_parameter.length;i<ni;i++)
-			ret_val+="&"+render_parameter[i][0].toString()+"="+render_parameter[i][1].toString();
-		return ret_val;
+		
+		return ret_val+this.create_parameter_string(render_parameter);
 	};
 	this.create_part_request_string=function(render_id_or_part_name,part_id_or_driver_id,part_parameter)
 	{
@@ -90,9 +139,8 @@ function construct_server_caller(my_render)
 			ret_val+="&event_driver_id="+part_id_or_driver_id;
 		}else
 			ret_val+="&event_render_id="+render_id_or_part_name.toString()+"&event_part_id="+part_id_or_driver_id.toString();
-		for(var i=0,ni=part_parameter.length;i<ni;i++)
-			ret_val+="&"+part_parameter[i][0].toString()+"="+part_parameter[i][1].toString();		
-		return ret_val;
+		
+		return ret_val+this.create_parameter_string(part_parameter);
 	};
 	this.create_part_request_by_component_string=function(
 			component_id_or_component_name,component_driver_id,part_parameter)
@@ -104,9 +152,8 @@ function construct_server_caller(my_render)
 			ret_val+="&event_component_id="+component_id_or_component_name.toString();
 		if(typeof(component_driver_id)!="undefined")
 			ret_val+="&event_driver_id="+component_driver_id.toString();
-		for(var i=0,ni=part_parameter.length;i<ni;i++)
-			ret_val+="&"+part_parameter[i][0].toString()+"="+part_parameter[i][1].toString();
-		return ret_val;
+		
+		return ret_val+this.create_parameter_string(part_parameter);
 	};
 	this.create_component_request_string=function(component_name_or_id,driver_id,component_parameter)
 	{
@@ -117,18 +164,15 @@ function construct_server_caller(my_render)
 			ret_val+="&event_component_id="+component_name_or_id.toString();
 		if(typeof(driver_id)!="undefined")
 			ret_val+="&event_driver_id="+driver_id.toString();
-		for(var i=0,ni=component_parameter.length;i<ni;i++)
-			ret_val+="&"+component_parameter[i][0].toString()+"="+component_parameter[i][1].toString();
-		return ret_val;
+		
+		return ret_val+this.create_parameter_string(component_parameter);
 	};
 	this.call_server_engine=async function(
 			engine_parameter,response_type_string,server_request_parameter)
 	{
 		if(this.render.terminate_flag)
 			return null;
-		var request_url=this.render.url_with_channel;
-		for(var i=0,ni=engine_parameter.length;i<ni;i++)
-			request_url+="&"+engine_parameter[i][0].toString()+"="+engine_parameter[i][1].toString();
+		var request_url=this.render.url_with_channel+this.create_parameter_string(engine_parameter);
 		
 		return await this.call_server(request_url,response_type_string,server_request_parameter);
 	};
