@@ -53,6 +53,5 @@ async function create_webgpu(my_canvas)
 		this.canvas_2d				=null;
 		this.context_2d				=null;
 	}
-	
 	return webgpu;
 }

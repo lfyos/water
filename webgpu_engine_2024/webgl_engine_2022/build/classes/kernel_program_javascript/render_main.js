@@ -25,8 +25,25 @@ async function render_main(
 	
 	var my_create_parameter_string="";
 	for (var my_item_name in my_create_parameter){
-		var my_item_value=my_create_parameter[my_item_name].toString().trim();
-		my_create_parameter_string+="&"+my_item_name+"="+my_item_value;
+		var my_item_value=my_create_parameter[my_item_name];
+		switch(typeof(my_item_value)){
+		case "string":
+			my_create_parameter_string+="&"+my_item_name+"="+my_item_value.trim();
+			break;
+		case "number":
+		case "bigint":
+		case "boolean":
+		case "symbol":
+			my_create_parameter_string+="&"+my_item_name+"="+my_item_value.toString().trim();
+			break;
+		case "object":
+			my_create_parameter_string+="&"+my_item_name+"="+JSON.stringify(my_item_value).trim();
+			break;
+		case "undefined":
+		case "function":
+		default:
+			break;
+		}
 	}
 	var process_bar_object=new construct_process_bar(webgpu,user_process_bar_function,
 			my_url+"?channel=process_bar"+my_create_parameter_string);

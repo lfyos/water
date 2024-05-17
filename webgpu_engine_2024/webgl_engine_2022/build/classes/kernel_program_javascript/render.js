@@ -2,13 +2,13 @@ function construct_render_routine(my_webgpu,my_url,
 	my_user_name,my_pass_word,my_language_name,
 	my_container_id,my_channel_id,render_data,default_fetch_parameter)
 {
-	var component_number				=render_data[0];
-	var render_number					=render_data[1];
-	var modifier_container_number		=render_data[2];
-	var camera_number					=render_data[3];
+	var component_number			=render_data[0];
+	var render_number				=render_data[1];
+	var modifier_container_number	=render_data[2];
+	var camera_number				=render_data[3];
 	
-    this.link_name						=render_data[4];
-    this.parameter						=render_data[5];
+    this.link_name					=render_data[4];
+    this.parameter					=render_data[5];
 
 	this.fetch_parameter			=default_fetch_parameter;
 	this.webgpu						=my_webgpu;
@@ -138,15 +138,11 @@ function construct_render_routine(my_webgpu,my_url,
 	{
 		function execute_delete_function(p,name)
 		{
-			if(Array.isArray(p)){
-				while(p.length>0)
-					execute_delete_function(p.pop(),name+"["+p.length+"]");
-				return;
-			}
 			if(typeof(p)!="object")
 				return;
 			if(p==null)
 				return;
+				
 			switch(typeof(p.has_completed_execute_delete_function_flag)){
 			case "boolean":
 				if(p.has_completed_execute_delete_function_flag)
@@ -159,6 +155,7 @@ function construct_render_routine(my_webgpu,my_url,
 				p.has_completed_execute_delete_function_flag=true;
 				break;
 			}
+			
 			if(typeof(p.destroy)=="function"){
 				try{
 					p.destroy();
@@ -167,14 +164,19 @@ function construct_render_routine(my_webgpu,my_url,
 				}
 				p.destroy=null;
 			}
+			
+			if(Array.isArray(p))
+				while(p.length>0)
+					execute_delete_function(p.pop(),name+"["+p.length+"]");
+
 			for(var key in p){
-				var pp=p[key];
-				try{
-					if(typeof(p[key])!="boolean")
+				var pp;
+				if(typeof(pp=p[key])!="boolean")
+					try{
 						delete p[key];
-				}catch(e){
-					alert("delete:"+name+"/"+key+"error:"+e.toString());
-				}
+					}catch(e){
+						console.log("delete:"+name+"/"+key+"error:"+e.toString());
+					}
 				execute_delete_function(pp,name+"/"+key);
 			}
 		}
@@ -188,7 +190,6 @@ function construct_render_routine(my_webgpu,my_url,
 	};
 	this.append_routine_function=function(my_routine_function)
 	{
-		this.routine_array.push(my_routine_function);
-		return this.routine_array.length-1;
+		return this.routine_array.push(my_routine_function)-1;
 	};
 };
