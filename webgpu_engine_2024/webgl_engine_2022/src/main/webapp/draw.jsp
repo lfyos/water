@@ -36,10 +36,9 @@ var lfy_render;
 
 async function body_onload()
 {
-	var servlet_url	="./interface.servlet";
-	var jsp_url		="./interface.jsp";
+	var url	="./water";
 	
-	lfy_render=await (await import(servlet_url)).main(
+	lfy_render=await (await import(url)).main(
 		["my_canvas"],
 		{
 			user_name				:	my_user_name,				//用户名	

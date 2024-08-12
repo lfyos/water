@@ -7,10 +7,9 @@ var lfy_render;
 
 async function body_onload()
 {
-	var servlet_url	="./interface.servlet";
-	var jsp_url		="./interface.jsp";
+	var url	="./water";
 	
-	lfy_render=await (await import(jsp_url)).main(
+	lfy_render=await (await import(url)).main(
 		["my_canvas"],		//Object类型的绘图画布。如果是String类型,则系统使用document.getElementById("my_canvas")将其转换为Object类型数据。
 		
 		{	

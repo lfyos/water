@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.annotation.WebServlet;
 
 @WebServlet(
-		name="servlet_server",
+		name="water_servlet",
 		urlPatterns = { 
-			"/interface.servlet" 
+			"/water"
 		},
 		asyncSupported = true
 )

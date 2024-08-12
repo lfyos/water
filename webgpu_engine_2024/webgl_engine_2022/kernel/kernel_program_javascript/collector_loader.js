@@ -38,17 +38,18 @@ function construct_collector_loader_object(my_render)
 					alert("request load_collector error,status is "+load_collector_promise.status);
 					alert(load_collector_url);
 				}
+
 				return {
 					done_flag		:	false,
 					collector_data	:	epcd.collector_stack_data
 				};
 			}
-			var load_collector_response_data=null,success_flag=my_render.terminate_flag?false:true;
+			var success_flag,load_collector_response_data=null;
 			try{
-				load_collector_response_data = await load_collector_promise.json();
+				load_collector_response_data=await load_collector_promise.json();
+				success_flag=my_render.terminate_flag?false:true;
 			}catch(e){
 				success_flag=false;
-				
 				alert("parse load_collector error,status is "+e.toString());
 				alert(load_collector_url);
 			}

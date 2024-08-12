@@ -23,10 +23,9 @@ async function render_main(
 	my_create_parameter.scene_name	=(typeof(my_create_parameter.scene_name)!="string")	?""				:(my_create_parameter.scene_name.trim());
 	my_create_parameter.link_name	=(typeof(my_create_parameter.link_name)	!="string")	?""				:(my_create_parameter.link_name.trim());	
 	
-	var my_create_parameter_string="";
-	for (var my_item_name in my_create_parameter){
-		var my_item_value=my_create_parameter[my_item_name];
-		switch(typeof(my_item_value)){
+	var my_item_value,my_create_parameter_string="";
+	for(var my_item_name in my_create_parameter)
+		switch(typeof(my_item_value=my_create_parameter[my_item_name])){
 		case "string":
 			my_create_parameter_string+="&"+my_item_name+"="+my_item_value.trim();
 			break;
@@ -44,7 +43,6 @@ async function render_main(
 		default:
 			break;
 		}
-	}
 	var process_bar_object=new construct_process_bar(webgpu,user_process_bar_function,
 			my_url+"?channel=process_bar"+my_create_parameter_string);
 	var process_bar_data=await process_bar_object.start(default_fetch_parameter);
