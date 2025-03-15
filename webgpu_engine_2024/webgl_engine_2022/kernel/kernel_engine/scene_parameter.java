@@ -138,11 +138,11 @@ public class scene_parameter
 		for(String parameter_name,parameter_value;!(parameter_fr.eof());) {
 			if((parameter_name=parameter_fr.get_string())==null)
 				continue;
-			if((parameter_name=cut_string.do_cut(parameter_name)).length()<=0)
+			if((parameter_name=cut_string.do_cut(parameter_name.trim())).length()<=0)
 				continue;
 			if((parameter_value=request_response.get_parameter(parameter_name))==null)
 				continue;
-			if((parameter_value=cut_string.do_cut(parameter_value)).length()<=0)
+			if((parameter_value=parameter_value.trim()).length()<=0)
 				continue;
 			my_client_parameter_name.add(new String[]{parameter_name,parameter_value});
 		}
@@ -207,6 +207,7 @@ public class scene_parameter
 		
 		scene_temporary_directory_name+=my_temporary_directory_name;
 	}
+	
 	public scene_parameter(
 			String my_scene_name,client_request_response request_response,
 			system_parameter system_par,engine_kernel_create_parameter ekcp)

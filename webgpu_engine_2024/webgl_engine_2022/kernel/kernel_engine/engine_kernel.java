@@ -468,4 +468,8 @@ public class engine_kernel
 			component_cont.root_component.reset_component(component_cont);
 		}
 	}
+	public String get_client_parameter(String client_parameter_name)
+	{
+		return scene_par.client_parameter_name.search_change_name(client_parameter_name,null);
+	}
 }

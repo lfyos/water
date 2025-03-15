@@ -81,15 +81,7 @@ public class javascript_program
 					"javascript_program response_not_modify()",system_par.system_cors_string);
 				return null;
 			}
-		
-		String str[]=new String[]
-		{
-			"export var main=async function(my_canvas,my_create_parameter,user_process_bar_function)",
-			"{"
-		};
-		for(int i=0,ni=str.length;i<ni;i++)
-			request_response.println(str[i]);
-		
+
 		request_response.println("	var default_fetch_parameter=");
 		file_reader fr=new file_reader(default_fetch_parameter_filename,system_par.local_data_charset);
 		fr.get_text(request_response,"	");
@@ -119,21 +111,31 @@ public class javascript_program
 			cr.get_text("\t",request_response);
 			cr.close();
 		}
-		str=new String[]{
-				"	return await render_main(my_canvas,my_create_parameter,",
-				"				(typeof(user_process_bar_function)==\"function\")",
-				"					?user_process_bar_function",
-				"					:default_user_process_bar_function,",
-				"				\""	+request_response.implementor.get_url()+"\",",
-				"				default_fetch_parameter,"+
-									system_par.create_engine_sleep_time_length_scale+","+
-									system_par.create_engine_sleep_time_length		+","+
-									system_par.create_engine_max_sleep_time_length	+");",
-				"};"
+		String str[]=new String[]
+		{
+			"export var create_scene=async function(my_canvas,my_create_parameter,user_process_bar_function)",
+			"{",
+				
+			"	return await render_main(my_canvas,my_create_parameter,",
+			"				(typeof(user_process_bar_function)==\"function\")",
+			"					?user_process_bar_function",
+			"					:default_user_process_bar_function,",
+			"				\""	+request_response.implementor.get_url()+"\",",
+			"				default_fetch_parameter,"+
+							system_par.create_engine_sleep_time_length_scale+","+
+							system_par.create_engine_sleep_time_length		+","+
+							system_par.create_engine_max_sleep_time_length	+");",
+			"};",
+								
+			"export var create_target=async function(my_canvas,my_create_parameter)",
+			"{",
+			
+			"};"
 		};
+		
 		for(int i=0,ni=str.length;i<ni;i++)
 			request_response.println(str[i]);
-
+		
 		return new engine_call_result(system_par.system_cors_string,
 							last_modified_time,"application/javascript");
 	}

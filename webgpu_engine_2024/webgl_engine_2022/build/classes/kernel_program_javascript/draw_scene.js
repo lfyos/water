@@ -126,6 +126,7 @@ function draw_scene_routine(render_data,render)
 				render_data,target_part_object,target_part_driver,target_render_driver,render);
 	}
 }
+
 async function draw_scene_main(part_init_data,component_init_data,render)
 {
 	while(!(render.terminate_flag)){

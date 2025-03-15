@@ -52,7 +52,8 @@ public class engine_kernel_create_parameter
 				
 				if(extra_parameter_file_name==null)
 					break;
-				if(extra_parameter_file_name.compareTo("")==0)
+				extra_parameter_file_name=extra_parameter_file_name.trim();
+				if(extra_parameter_file_name.length()<=0)
 					break;
 				if(my_scene_name!=null)
 					if(my_scene_name.compareTo(my_scene_search_name)!=0)

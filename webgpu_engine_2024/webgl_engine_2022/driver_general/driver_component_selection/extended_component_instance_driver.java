@@ -100,7 +100,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				center.x+diff.x*my_x0,center.y+diff.y*my_y0,view_volume_box.p[0].z,
 				center.x+diff.x*my_x1,center.y+diff.y*my_y1,view_volume_box.p[1].z);
 		
-		render_target cam_target=new render_target(true,comp.component_id,driver_id,0,
+		render_target cam_target=new render_target(true,null,comp.component_id,driver_id,0,
 				new component[]{ek.component_cont.root_component},null,	t.camera_id,t.parameter_channel_id,
 				null,view_volume_box,ci.clip_plane,null,false,false);
 	

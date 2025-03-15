@@ -11,7 +11,9 @@ public class temporary_file_parameter
 	public String temporary_root_directory_name;
 	public String compress_temporary_root_directory_name;
 	
-	public temporary_file_parameter(String temporary_file_configure_file_name,String temporary_file_configure_file_charset)
+	public temporary_file_parameter(
+			String temporary_file_configure_file_name,
+			String temporary_file_configure_file_charset)
 	{
 		if(file_reader.is_not_exist(temporary_file_configure_file_name)){
 			file_writer fw=new file_writer(temporary_file_configure_file_name,temporary_file_configure_file_charset);

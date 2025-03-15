@@ -13,6 +13,9 @@
 		/* 2name		*/         pickup_component
 		/* 2type		*/         pickup_part
 		/* 2location	*/         1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
+		
+					/*	pickup_target_name	*/	pickup_target
+		
 		/* 2children number */		0
 	
 		/*	2	*/

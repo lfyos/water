@@ -44,6 +44,22 @@ public class render_target_container
 	}
 	static private int compart_target(render_target s,render_target t)
 	{
+		int compare_result;
+		String my_s_target_name=s.target_name.trim();
+		String my_t_target_name=t.target_name.trim();
+		
+		if(my_s_target_name==null)
+			my_s_target_name="no_target_name";
+		else if(my_s_target_name.compareTo("")==0)
+			my_s_target_name="no_target_name";
+		
+		if(my_t_target_name==null)
+			my_t_target_name="no_target_name";
+		else if(my_t_target_name.compareTo("")==0)
+			my_t_target_name="no_target_name";
+		if((compare_result=my_s_target_name.compareTo(my_t_target_name))!=0)
+			return compare_result;
+			
 		if(s.target_comonent_id<t.target_comonent_id)
 			return -3;
 		if(s.target_comonent_id>t.target_comonent_id)

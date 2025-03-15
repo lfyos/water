@@ -1,21 +1,31 @@
+/*	render_target_name		*/	render_target_0
 /*	camera_id				*/	0
 /*	parameter_channel_id	*/	2
 /*	canvas_id				*/	0
 /*	clear_target_flag		*/	true
 /*	x0,y0,width,height		*/	0		0.5		0.5		0.5
 
+
+
+/*	render_target_name		*/	render_target_1
 /*	camera_id				*/	1
 /*	parameter_channel_id	*/	2
 /*	canvas_id				*/	0
 /*	clear_target_flag		*/	false
 /*	x0,y0,width,height		*/	0.5		0.0		0.5		0.5
 
+
+
+/*	render_target_name		*/	render_target_2
 /*	camera_id				*/	2
 /*	parameter_channel_id	*/	2
 /*	canvas_id				*/	0
 /*	clear_target_flag		*/	false
 /*	x0,y0,width,height		*/	0.0		0.0		0.45	0.45
 
+
+
+/*	render_target_name		*/	render_target_3
 /*	camera_id				*/	3
 /*	parameter_channel_id	*/	2
 /*	canvas_id				*/	0

@@ -1,6 +1,9 @@
 	/* 1name		*/			camera_light_root
 	/* 1type		*/			undefined_part
 	/* 1location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+	
+		clear_display_flag		/*	parameter_channel_id:all	*/	-1
+	
 	/* 1children number */		2
 
 		/* 2name		*/         camera_root
