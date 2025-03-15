@@ -145,7 +145,8 @@ async function request_render_data(render)
 					};
 					break;
 				case 1:
-					p.target_texture_id=my_data[j++];
+					p.target_texture_id	=my_data[j++];
+					p.target_name		=my_data[j++];	
 					break;
 				case 2:
 					p.camera_id=my_data[j++];
@@ -239,7 +240,7 @@ async function request_render_data(render)
 		return false;
 	};
 	
-	for(var start_time=0;!(render.terminate_flag);){
+	for(var start_time=0;;){
 		if(render.terminate_flag)
 			break;
 		var current_time=(new Date()).getTime();
@@ -252,7 +253,7 @@ async function request_render_data(render)
 			continue;
 		}
 		start_time=current_time;
-		if(await fetch_web_server_response_data(create_request_url(render),render)||(render.terminate_flag))
+		if(await fetch_web_server_response_data(create_request_url(render),render))
 			break;
 		if(render.terminate_flag)
 			break;

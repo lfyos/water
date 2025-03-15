@@ -10,7 +10,7 @@ public class test_1 extends travel_through_directory
 	{
 		String str;
 		if((str=file_reader.get_text(file_name,"GBK"))!=null) {
-			if(str.indexOf("destroy")>=0)
+			if(str.indexOf("client_sub_directory")>=0)
 				debug_information.println(file_name);
 		}
 	}

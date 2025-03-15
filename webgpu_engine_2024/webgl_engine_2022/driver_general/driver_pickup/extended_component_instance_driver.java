@@ -11,13 +11,16 @@ import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
+	private String pickup_target_name;
 	public void destroy()
 	{
 		super.destroy();
+		pickup_target_name=null;
 	}
-	public extended_component_instance_driver(component my_comp,int my_driver_id)
+	public extended_component_instance_driver(component my_comp,int my_driver_id,String my_pickup_target_name)
 	{
 		super(my_comp,my_driver_id);
+		pickup_target_name=my_pickup_target_name;
 	}
 	public void response_init_component_data(engine_kernel ek,client_information ci)
 	{
@@ -31,7 +34,7 @@ public class extended_component_instance_driver extends component_instance_drive
 
 		double local_xy[]=cr.target.target_view.caculate_view_local_xy(ci.parameter.x,ci.parameter.y);
 		
-		render_target rt=new render_target(true,
+		render_target rt=new render_target(true,pickup_target_name,
 				comp.component_id,	driver_id,	0,								//target IDS
 				new component[] {ek.component_cont.root_component},				//components
 				null,															//driver_id

@@ -11,6 +11,7 @@ public class render_target
 	public int target_id;
 	
 	public int target_comonent_id,target_driver_id,target_texture_id;
+	public String target_name;
 
 	public component comp[];
 	public int driver_id[];
@@ -32,6 +33,7 @@ public class render_target
 			for(int i=0,ni=comp.length;i<ni;i++)
 				if(comp[i]!=null)
 					comp[i]=null;
+		target_name=null;
 		comp=null;
 		driver_id=null;
 		target_view=null;
@@ -44,6 +46,7 @@ public class render_target
 		do_render_flag				=false;
 		target_id					=0;
 		
+		target_name					=null;
 		target_comonent_id			=0;
 		target_driver_id			=0;
 		target_texture_id			=0;
@@ -65,7 +68,7 @@ public class render_target
 		do_selection_lod_flag		=false;
 	}
 	public render_target(
-			boolean my_do_render_flag,
+			boolean my_do_render_flag,				String my_target_name,
 			int my_target_comonent_id,				int my_target_driver_id,		int my_target_texture_id,
 			component my_comp[],					int my_driver_id[],
 			int my_camera_id,						int my_parameter_channel_id,
@@ -76,6 +79,7 @@ public class render_target
 		do_render_flag				=my_do_render_flag;
 		target_id					=0;
 		
+		target_name					=my_target_name;
 		target_comonent_id			=my_target_comonent_id;
 		target_driver_id			=my_target_driver_id;
 		target_texture_id			=my_target_texture_id;

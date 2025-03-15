@@ -6,6 +6,7 @@ import kernel_file_manager.file_reader;
 
 public class render_target_parameter 
 {
+	public String render_target_name;
 	public int camera_id,parameter_channel_id,canvas_id;
 	public boolean load_operation_flag;
 	public double target_x0,target_y0,target_width,target_height;
@@ -16,6 +17,13 @@ public class render_target_parameter
 	private static render_target_parameter load_parameter(file_reader fr)
 	{
 		render_target_parameter rtp=new render_target_parameter();
+		
+		rtp.render_target_name	=fr.get_string();
+		if(fr.eof()||rtp.render_target_name==null)
+			return null;
+		rtp.render_target_name=rtp.render_target_name.trim();
+		if(rtp.render_target_name.compareTo("")==0)
+			return null;
 		
 		rtp.camera_id			=fr.get_int();
 		if(fr.eof())

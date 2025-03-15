@@ -10,13 +10,17 @@ import kernel_network.client_request_response;
 
 public class extended_component_driver  extends component_driver
 {
+	private String pickup_target_name;
+	
 	public void destroy()
 	{
 		super.destroy();
+		pickup_target_name=null;
 	}
-	public extended_component_driver(part my_component_part)
+	public extended_component_driver(part my_component_part,String my_pickup_target_name)
 	{
 		super(my_component_part);
+		pickup_target_name=my_pickup_target_name;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
@@ -30,6 +34,6 @@ public class extended_component_driver  extends component_driver
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			engine_kernel ek,client_request_response request_response)
 	{
-		return new extended_component_instance_driver(comp,driver_id);
+		return new extended_component_instance_driver(comp,driver_id,pickup_target_name);
 	}
 }

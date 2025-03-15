@@ -38,7 +38,7 @@ async function body_onload()
 {
 	var url	="./water";
 	
-	lfy_render=await (await import(url)).main(
+	lfy_render=await (await import(url)).create_scene(
 		["my_canvas"],
 		{
 			user_name				:	my_user_name,				//用户名	
@@ -51,7 +51,7 @@ async function body_onload()
 			change_component		:	my_change_component,		//component换名
 			
 			part_type				:	my_part_type,				//part类型
-			fast_load				:	my_fast_load,				//快速装在scene信息
+			fast_load				:	my_fast_load,				//快速装载scene信息
 			
 			type_sub_directory		:	my_type_sub_directory,		//显示内容type
 			scene_sub_directory		:	my_scene_sub_directory,		//显示内容scene

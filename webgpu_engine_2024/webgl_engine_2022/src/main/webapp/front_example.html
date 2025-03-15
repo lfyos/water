@@ -9,7 +9,7 @@ async function body_onload()
 {
 	var url	="./water";
 	
-	lfy_render=await (await import(url)).main(
+	lfy_render=await (await import(url)).create_scene(
 		["my_canvas"],		//Object类型的绘图画布。如果是String类型,则系统使用document.getElementById("my_canvas")将其转换为Object类型数据。
 		
 		{	
@@ -24,7 +24,7 @@ async function body_onload()
 			part_type			:	"",						//part类型
 			fast_load			:	"false",				//快速装在scene信息
 			type_sub_directory	:	"",						//显示内容type
-			scene_sub_directory	:	"renzhichu/test_1",						//"sigma/A159-SR-302A",	//显示内容scene
+			scene_sub_directory	:	"renzhichu/test_1",		//"sigma/A159-SR-302A",	//显示内容scene
 			scene_tmp_directory	:	"",						//显示内容scene tmp directory
 			client_sub_directory:	"",						//显示内容client
 			

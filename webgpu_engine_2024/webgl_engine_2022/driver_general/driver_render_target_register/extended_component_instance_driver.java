@@ -61,7 +61,8 @@ public class extended_component_instance_driver extends component_instance_drive
 			double aspect_value	=(double)(rtv.view_width)/(double)(rtv.view_height);
 			box view_volume_box=new box(-aspect_value,-1,-1,aspect_value,1,1);
 
-			render_target rt=new render_target(true,comp.component_id,	driver_id,	i,
+			render_target rt=new render_target(true,
+				target_parameter[i].render_target_name,comp.component_id,driver_id,i,
 				new component[] {ek.component_cont.root_component},null,
 				target_parameter[i].camera_id,target_parameter[i].parameter_channel_id,rtv,
 				view_volume_box,ci.clip_plane,null,do_discard_lod_flag,do_selection_lod_flag);
