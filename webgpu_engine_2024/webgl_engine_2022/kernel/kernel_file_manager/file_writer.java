@@ -280,7 +280,11 @@ public class file_writer extends common_writer
 		{
 			public void operate_directory_terminate(String directory_name)
 			{
-				operate_file(directory_name);
+				try{
+					new File(directory_name).delete();
+				}catch(Exception e) {
+					;
+				}	
 			}
 			public void operate_file(String file_name)
 			{
