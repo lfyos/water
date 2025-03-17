@@ -17,9 +17,6 @@ public class travel_through_directory
 	{
 		
 	}
-	public void operate_directory_and_file(String directory_name,String file_name,String path_name)
-	{
-	}
 	public void do_travel(String file_name,boolean sort_file_name_flag)
 	{
 		if(exclude_file_name!=null)
@@ -44,23 +41,29 @@ public class travel_through_directory
 		};
 		
 		File f;
-		if((f=new File(file_name)).exists()){
-			String path_name=f.getAbsolutePath();
-			if(f.isDirectory()){
-				operate_directory_start(path_name);
-				String file_list[]=f.list();
-				if(file_list!=null){
-					if(sort_file_name_flag)
-						file_list=(new file_name_sorter(file_list)).data_array;
-					for(int i=0,ni=file_list.length;i<ni;i++)
-						do_travel(path_name+File.separator+file_list[i],sort_file_name_flag);
-				}
-				operate_directory_terminate(path_name);
-			}else{
-				operate_directory_and_file(f.getParent(),f.getName(),path_name);
-				operate_file(path_name);
-			}
+		if(!((f=new File(file_name)).exists()))
+			return;
+		String path_name=f.getAbsolutePath();
+		if(!(f.isDirectory())){
+			operate_file(path_name);
+			return;
 		}
+		
+		String file_list[]=f.list();
+		if(file_list==null){
+			operate_directory_start(path_name);
+			operate_directory_terminate(path_name);
+		}else {
+			if(sort_file_name_flag)
+				file_list=(new file_name_sorter(file_list)).data_array;
+			
+			operate_directory_start(path_name);
+			for(int i=0,ni=file_list.length;i<ni;i++)
+				do_travel(path_name+File.separator+file_list[i],sort_file_name_flag);
+			operate_directory_terminate(path_name);
+		}
+		
+		return;
 	}
 	public travel_through_directory(String my_exclude_file_name[])
 	{

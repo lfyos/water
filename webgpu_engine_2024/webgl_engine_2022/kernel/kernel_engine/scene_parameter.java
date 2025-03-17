@@ -258,7 +258,8 @@ public class scene_parameter
 		
 		scene_last_modified_time=parameter_last_modified_time;
 
-		String gdnafa[]=get_directory_name_and_file_name(parameter_fr);
+		String gdnafa[];
+		gdnafa=get_directory_name_and_file_name(parameter_fr);
 		type_shader_directory_name	=gdnafa[0];
 		type_shader_file_name		=gdnafa[1];
 

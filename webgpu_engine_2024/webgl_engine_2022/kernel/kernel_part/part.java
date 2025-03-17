@@ -291,16 +291,6 @@ public class part
 	public String load_mesh_and_create_buffer_object(part copy_from_part,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		class part_temporary_file_directory_deleter extends travel_through_directory
-		{
-			public void operate_directory_and_file(
-					String directory_name,String file_name,String path_name)
-			{
-				if(file_name.compareTo("part.lock")!=0)
-					new File(path_name).delete();
-			}
-		};
-		
 		String str;
 		
 		str =  "\tuser part name:\t\t\t"		+user_name;
@@ -314,11 +304,24 @@ public class part
 
 		String part_temporary_file_directory=file_directory.part_file_directory(this,system_par,scene_par);
 		
-		if(new File(part_temporary_file_directory).exists())
-			new part_temporary_file_directory_deleter().do_travel(part_temporary_file_directory,false);
-		else
+		if(!(new File(part_temporary_file_directory).exists()))
 			file_writer.make_directory(part_temporary_file_directory);
-
+		else {
+			class part_temporary_file_directory_deleter extends travel_through_directory
+			{
+				public void operate_directory_terminate(String directory_name)
+				{
+					new File(directory_name).delete();
+				}
+				public void operate_file(String file_name)
+				{	
+					File f=new File(file_name);
+					if(f.getName().compareTo("part.lock")!=0)
+						f.delete();
+				}
+			};
+			new part_temporary_file_directory_deleter().do_travel(part_temporary_file_directory,false);
+		}
 		load_part_mesh();
 		
 		str+=create_mesh_and_material_routine(part_temporary_file_directory,system_par,scene_par);

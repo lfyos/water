@@ -37,24 +37,22 @@ public class component_core_4 extends component_core_3
 		else
 			return children.length;
 	}
-	public void append_child(component my_children[])
+	public void append_child(ArrayList<component> my_append_children_list)
 	{
-		if(my_children==null)
+		if(my_append_children_list==null)
 			return;
-		if(my_children.length<=0)
+		int my_append_child_number;
+		if((my_append_child_number=my_append_children_list.size())<=0)
 			return;
-		if(children==null) {
-			children=new component[my_children.length];
-			for(int i=0,ni=my_children.length;i<ni;i++)
-				children[i]=my_children[i];
-		}else{
+		if(children==null)
+			children=my_append_children_list.toArray(new component[my_append_child_number]);
+		else{
 			component bak[]=children;
-			children=new component[bak.length+my_children.length];
-				
+			children=new component[bak.length+my_append_child_number];
 			for(int i=0,ni=bak.length;i<ni;i++)
 				children[i]=bak[i];
-			for(int i=0,j=bak.length,ni=my_children.length;i<ni;i++,j++)
-				children[j]=my_children[i];
+			for(int i=0,j=bak.length;i<my_append_child_number;i++,j++)
+				children[j]=my_append_children_list.get(i);
 		}
 	}
 	private String[][]file_mount(file_reader fr,engine_kernel ek,boolean absulate_path_flag)
@@ -288,11 +286,11 @@ public class component_core_4 extends component_core_3
 					create_child_number=0;
 				}
 				if(create_child_number>0){
-					component my_children[]=new component[create_child_number];
+					ArrayList<component> my_children_list=new ArrayList<component>();
 					for(int i=0;i<create_child_number;i++)
-						my_children[i]=new component(token_string,fr,
-							uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp);
-					append_child(my_children);
+						my_children_list.add(new component(token_string,fr,
+							uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp));
+					append_child(my_children_list);
 				}
 				return;
 			case "push_file_part_type_string":
@@ -608,55 +606,44 @@ public class component_core_4 extends component_core_3
 				
 				class assemble_file_collector extends travel_through_directory
 				{
-					public String file_name_array[];
-					public int file_number;
+					public ArrayList<String> file_name_list;
 					public void operate_file(String file_name)
 					{
-						if(file_name_array.length<=file_number) {
-							String bak[]=file_name_array;
-							file_name_array=new String[ccp.ek.scene_par.max_child_number+bak.length];
-							for(int i=0,ni=bak.length;i<ni;i++)
-								file_name_array[i]=bak[i];
-						}
-						file_name_array[file_number++]=file_reader.separator(file_name);
+						file_name_list.add(file_name);
 					}
 					public assemble_file_collector()
 					{
-						file_name_array=new String[ccp.ek.scene_par.max_child_number];
-						file_number=0;
+						file_name_list=new ArrayList<String>();
 						do_travel(file_reader.separator(assemble_file_name),true);
 					}
 				};
 				
-				assemble_file_collector afc=new assemble_file_collector();
+				ArrayList<String> 		file_name_list=(new assemble_file_collector()).file_name_list;
+				ArrayList<component>	child_component_list=new ArrayList<component>();
 				
-				for(int j=0,nj=afc.file_number;j<nj;j++) {
-					file_reader mount_fr=new file_reader(afc.file_name_array[j],assemble_file_charset);
-					if(mount_fr.eof()){
+				for(int j=0,nj=file_name_list.size();j<nj;j++) {
+					String my_file_name=file_name_list.get(j);
+					file_reader mount_fr=new file_reader(my_file_name,assemble_file_charset);
+					if(mount_fr.eof())
 						debug_information.println(
-								"switch assemble file does not exist:	",	afc.file_name_array[j]);
-						debug_information.println("			",				fr.directory_name+fr.file_name);
-						mount_fr.close();
-						continue;
-					}
-					debug_information.println("assemble_file_name:	",		afc.file_name_array[j]);
-					debug_information.println("assemble_file_charset:	",	assemble_file_charset);
-					
-					component this_child_comp=null;
-					try{
-						this_child_comp=new component(token_string,mount_fr,
-							uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp);
-					}catch(Exception e) {
-						e.printStackTrace();
+								"switch assemble file does not exist:	",	my_file_name);
+					else {
+						debug_information.println("assemble_file_name:	",		my_file_name);
+						debug_information.println("assemble_file_charset:	",	assemble_file_charset);
 						
-						this_child_comp=null;
-						debug_information.println("Create scene from ",afc.file_name_array[j]+" fail");
-						debug_information.println("			",fr.directory_name+fr.file_name);
+						try{
+							component this_child_comp=new component(token_string,mount_fr,
+								uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp);
+							child_component_list.add(this_child_comp);
+						}catch(Exception e) {
+							e.printStackTrace();
+							debug_information.println("Create scene from ",my_file_name+" fail");
+							debug_information.println("			",my_file_name);
+						}
 					}
-					if(this_child_comp!=null)
-						append_child(new component[] {this_child_comp});
 					mount_fr.close();
 				}
+				append_child(child_component_list);
 			}
 		}
 	}
