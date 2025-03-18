@@ -4,11 +4,11 @@ import kernel_part.part;
 import kernel_transformation.box;
 import kernel_component.component;
 import kernel_camera.camera_result;
-import kernel_engine.engine_kernel;
 import kernel_render.render_target;
 import kernel_common_class.const_value;
 import kernel_render.render_target_view;
-import kernel_engine.client_information;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
@@ -43,7 +43,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		do_discard_lod_flag		=true;
 		do_selection_lod_flag	=true;
 	}
-	private void register_target(engine_kernel ek,client_information ci)
+	private void register_target(scene_kernel sk,client_information ci)
 	{
 		main_target_id=-1;
 		for(int i=0,target_number=target_parameter.length;i<target_number;i++){
@@ -63,7 +63,7 @@ public class extended_component_instance_driver extends component_instance_drive
 
 			render_target rt=new render_target(true,
 				target_parameter[i].render_target_name,comp.component_id,driver_id,i,
-				new component[] {ek.component_cont.root_component},null,
+				new component[] {sk.component_cont.root_component},null,
 				target_parameter[i].camera_id,target_parameter[i].parameter_channel_id,rtv,
 				view_volume_box,ci.clip_plane,null,do_discard_lod_flag,do_selection_lod_flag);
 			
@@ -82,25 +82,25 @@ public class extended_component_instance_driver extends component_instance_drive
 			ci.target_container.register_target(rt);
 		}
 	}
-	public void response_init_component_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print("[");
 		for(int i=0,ni=target_parameter.length;i<ni;i++)
 			ci.request_response.print((i<=0)?"":",",target_parameter[i].canvas_id).
 								print(target_parameter[i].load_operation_flag?",1":",0");
 		ci.request_response.print("]");
-		register_target(ek,ci);
+		register_target(sk,ci);
 	}
-	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
-		register_target(ek,ci);
+		register_target(sk,ci);
 		return false;
 	}
-	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print("0");
 	}
-	public void create_component_parameter(engine_kernel ek,client_information ci)
+	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print("[");
 		for(int i=0,ni=target_parameter.length;i<ni;i++)
@@ -112,7 +112,7 @@ public class extended_component_instance_driver extends component_instance_drive
 							print("]");
 		ci.request_response.print("]");
 	}
-	public String[] response_component_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
 		String str=ci.request_response.get_parameter("operation");
 		switch((str==null)?"":str) {
@@ -124,7 +124,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;
 			int new_camera_id;
 			if((new_camera_id=Integer.parseInt(str))>=0)
-				if(new_camera_id<ek.camera_cont.size())
+				if(new_camera_id<sk.camera_cont.size())
 					target_parameter[main_target_id].camera_id=new_camera_id;
 			break;
 		}

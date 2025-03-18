@@ -2,7 +2,7 @@ package kernel_information;
 
 import kernel_camera.camera;
 import kernel_camera.camera_parameter;
-import kernel_engine.client_information;
+import kernel_scene.client_information;
 
 public class camera_information extends jason_creator
 {

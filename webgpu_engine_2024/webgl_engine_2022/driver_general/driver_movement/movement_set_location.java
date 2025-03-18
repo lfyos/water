@@ -1,7 +1,7 @@
 package driver_movement;
 
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_transformation.location;
 import kernel_transformation.point;
 
@@ -33,9 +33,9 @@ public class movement_set_location  extends movement_design_base
 		loca=loca.multiply(location.standard_negative);
 		return move_rotate(mx,my,mz,rx,ry,rz,comp_absolute_loca,comp_move_loca,loca);
 	}
-	public movement_set_location(engine_kernel ek,client_information ci,movement_manager manager)
+	public movement_set_location(scene_kernel sk,client_information ci,movement_manager manager)
 	{
-		super(ek,ci,manager);
+		super(sk,ci,manager);
 		if(comp==null)
 			return;
 		String coordinate_str=ci.request_response.get_parameter("coordinate");
@@ -47,7 +47,7 @@ public class movement_set_location  extends movement_design_base
 					get_double(ci,"rx",0),get_double(ci,"ry",0),get_double(ci,"rz",0),
 					comp.absolute_location,comp.move_location,
 					ci.display_camera_result.cam.eye_component.absolute_location),
-				ek.component_cont);
+				sk.component_cont);
 			break;
 		case "camera":
 			comp.set_component_move_location(
@@ -56,14 +56,14 @@ public class movement_set_location  extends movement_design_base
 					get_double(ci,"rx",0),get_double(ci,"ry",0),get_double(ci,"rz",0),
 					comp.absolute_location,comp.move_location,
 					ci.display_camera_result.cam.eye_component.absolute_location.multiply(new point(0,0,0))),
-				ek.component_cont);
+				sk.component_cont);
 			break;
 		default:
 			comp.set_component_move_location(
 				location.move_rotate(
 					get_double(ci,"mx",0),get_double(ci,"my",0),get_double(ci,"mz",0),
 					get_double(ci,"rx",0),get_double(ci,"ry",0),get_double(ci,"rz",0)),
-				ek.component_cont);
+				sk.component_cont);
 			break;
 		}
 	}

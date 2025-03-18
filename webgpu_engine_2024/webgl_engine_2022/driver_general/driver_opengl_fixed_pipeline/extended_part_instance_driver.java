@@ -3,9 +3,9 @@ package driver_opengl_fixed_pipeline;
 import java.io.File;
 
 import kernel_part.part;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_file_manager.file_reader;
-import kernel_engine.client_information;
 import kernel_driver.part_instance_driver;
 import kernel_common_class.debug_information;
 
@@ -19,10 +19,10 @@ public class extended_part_instance_driver extends part_instance_driver
 	{
 		super.destroy();
 	}
-	public void response_init_part_data(part p,engine_kernel ek,client_information ci)
+	public void response_init_part_data(part p,scene_kernel sk,client_information ci)
 	{
 	}
-	public String[] response_part_event(part p,engine_kernel ek,client_information ci)
+	public String[] response_part_event(part p,scene_kernel sk,client_information ci)
 	{			
 		String file_name,path_name_1,path_name_2,path_name_3;
 		if((file_name=ci.request_response.get_parameter("file"))==null)
@@ -41,11 +41,11 @@ public class extended_part_instance_driver extends part_instance_driver
 		if(new File(path_name_1).exists())
 			return new String[]{path_name_1,p.file_charset};
 		
-		path_name_2=ek.system_par.temporary_file_par.temporary_root_directory_name+file_name;
+		path_name_2=sk.system_par.temporary_file_par.temporary_root_directory_name+file_name;
 		if(new File(path_name_2).exists())
 			return new String[]{path_name_2,p.file_charset};
 		
-		path_name_3=ek.system_par.temporary_file_par.root_directory_name+file_name;
+		path_name_3=sk.system_par.temporary_file_par.root_directory_name+file_name;
 		if(new File(path_name_3).exists())
 			return new String[]{path_name_3,p.file_charset};
 		

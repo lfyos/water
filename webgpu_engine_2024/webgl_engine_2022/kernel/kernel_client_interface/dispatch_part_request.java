@@ -2,9 +2,9 @@ package kernel_client_interface;
 
 import java.util.ArrayList;
 
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
 import kernel_part.part;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_common_class.debug_information;
 import kernel_component.component;
 import kernel_driver.component_driver;
@@ -12,7 +12,7 @@ import kernel_driver.part_instance_driver;
 
 public class dispatch_part_request 
 {
-	static private String[] response_part_event(part p,engine_kernel ek,client_information ci)
+	static private String[] response_part_event(part p,scene_kernel sk,client_information ci)
 	{
 		part_instance_driver  my_part_instance_driver;
 		
@@ -24,7 +24,7 @@ public class dispatch_part_request
 			debug_information.println("Part instance_driver is null when execute call part driver");
 		else {
 			try{
-				return my_part_instance_driver.response_part_event(p, ek, ci);
+				return my_part_instance_driver.response_part_event(p, sk, ci);
 			}catch(Exception e){
 				e.printStackTrace();
 				
@@ -39,7 +39,7 @@ public class dispatch_part_request
 		
 		return null;
 	}
-	static public String[] do_dispatch(engine_kernel ek,client_information ci)
+	static public String[] do_dispatch(scene_kernel sk,client_information ci)
 	{
 		String str,request_charset=ci.request_response.implementor.get_request_charset();
 		if((str=ci.request_response.get_parameter("method"))==null){
@@ -57,13 +57,13 @@ public class dispatch_part_request
 			if((str=ci.request_response.get_parameter("event_render_id"))!=null) {
 				int render_id,part_id;
 				if((render_id=Integer.decode(str))>=0)
-					if(render_id<(ek.render_cont.renders.size()))
-						if(ek.render_cont.renders.get(render_id).parts!=null)
+					if(render_id<(sk.render_cont.renders.size()))
+						if(sk.render_cont.renders.get(render_id).parts!=null)
 							if((str=ci.request_response.get_parameter("event_part_id"))!=null)
 								if((part_id=Integer.decode(str))>=0)
-									if(part_id<(ek.render_cont.renders.get(render_id).parts.size()))
+									if(part_id<(sk.render_cont.renders.get(render_id).parts.size()))
 										return response_part_event(
-											ek.render_cont.renders.get(render_id).parts.get(part_id),ek,ci);
+											sk.render_cont.renders.get(render_id).parts.get(part_id),sk,ci);
 			}
 			if((str=ci.request_response.get_parameter("event_part_name"))!=null){
 				try {
@@ -75,39 +75,39 @@ public class dispatch_part_request
 				}
 				part p;
 				ArrayList<part> parts;
-				if((parts=ek.part_cont.search_part(str))!=null)
+				if((parts=sk.part_cont.search_part(str))!=null)
 					if((str=ci.request_response.get_parameter("event_driver_id"))==null){
 						for(int i=0,ni=parts.size();i<ni;i++)
 							if((p=parts.get(i))!=null)
 								if(p.driver!=null)
-									return response_part_event(p,ek,ci);
+									return response_part_event(p,sk,ci);
 					}else{
 						int driver_id=Integer.decode(str);
 						if((driver_id>=0)&&(driver_id<parts.size()))
 							if((p=parts.get(driver_id))!=null)
 								if(p.driver!=null)
-									return response_part_event(p,ek,ci);
+									return response_part_event(p,sk,ci);
 					}
 			}
 			
 			if((str=ci.request_response.get_parameter("event_component_id"))!=null) {
 				int component_id;
 				if((component_id=Integer.decode(str))>=0)
-					if(component_id<=(ek.component_cont.root_component.component_id)) {
+					if(component_id<=(sk.component_cont.root_component.component_id)) {
 						component comp;
-						if((comp=ek.component_cont.get_component(component_id))!=null){
+						if((comp=sk.component_cont.get_component(component_id))!=null){
 							component_driver c_d;
 							int driver_number=comp.driver_number();
 							if((str=ci.request_response.get_parameter("event_driver_id"))==null){
 								for(int i=0;i<driver_number;i++)
 									if((c_d=comp.driver_array.get(i))!=null)
 										return response_part_event(
-												c_d.component_part,ek,ci);
+												c_d.component_part,sk,ci);
 							}else{
 								int driver_id=Integer.decode(str);
 								if((driver_id>=0)&&(driver_id<driver_number))
 									if((c_d=comp.driver_array.get(driver_id))!=null)
-										return response_part_event(	c_d.component_part,ek,ci);
+										return response_part_event(	c_d.component_part,sk,ci);
 							}
 						}
 					}
@@ -122,20 +122,20 @@ public class dispatch_part_request
 				}
 				
 				component comp;
-				if((comp=ek.component_cont.search_component(str))!=null){
+				if((comp=sk.component_cont.search_component(str))!=null){
 					component_driver c_d;
 					int driver_number=comp.driver_number();
 					if((str=ci.request_response.get_parameter("event_driver_id"))==null){
 						for(int i=0;i<driver_number;i++)
 							if((c_d=comp.driver_array.get(i))!=null)
 								return response_part_event(
-										c_d.component_part,ek,ci);
+										c_d.component_part,sk,ci);
 					}else{
 						int driver_id=Integer.decode(str);
 						if((driver_id>=0)&&(driver_id<driver_number))
 							if((c_d=comp.driver_array.get(driver_id))!=null)
 								return response_part_event(
-										c_d.component_part,ek,ci);
+										c_d.component_part,sk,ci);
 					}
 				}
 			}

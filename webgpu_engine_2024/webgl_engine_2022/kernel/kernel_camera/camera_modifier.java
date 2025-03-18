@@ -1,8 +1,8 @@
 package kernel_camera;
 
 import kernel_driver.location_modifier;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_transformation.location;
 
 public class camera_modifier extends location_modifier
@@ -29,19 +29,19 @@ public class camera_modifier extends location_modifier
 		start_parameter=new camera_parameter(my_cam.parameter);
 		terminate_parameter=new camera_parameter(my_terminate_parameter);
 	}
-	public void modify(long my_current_time,engine_kernel ek,client_information ci)
+	public void modify(long my_current_time,scene_kernel sk,client_information ci)
 	{
-		super.modify(my_current_time,ek,ci);
+		super.modify(my_current_time,sk,ci);
 		cam.parameter=start_parameter.mix(terminate_parameter,p);
 	}
-	public void last_modify(long my_current_time,engine_kernel ek,client_information ci,boolean terminated_flag)
+	public void last_modify(long my_current_time,scene_kernel sk,client_information ci,boolean terminated_flag)
 	{
-		super.last_modify(my_current_time,ek,ci,terminated_flag);
+		super.last_modify(my_current_time,sk,ci,terminated_flag);
 		if(terminated_flag)
 			cam.parameter=terminate_parameter;
 	}
-	public boolean can_start(long my_current_time,engine_kernel ek,client_information ci)
+	public boolean can_start(long my_current_time,scene_kernel sk,client_information ci)
 	{
-		return super.can_start(my_current_time,ek,ci);
+		return super.can_start(my_current_time,sk,ci);
 	}
 }

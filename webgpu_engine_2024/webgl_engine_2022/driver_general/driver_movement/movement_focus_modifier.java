@@ -1,8 +1,8 @@
 package driver_movement;
 
 import kernel_driver.modifier_driver;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_transformation.location;
 
 public class movement_focus_modifier extends modifier_driver
@@ -67,13 +67,13 @@ public class movement_focus_modifier extends modifier_driver
 		description		=my_description;
 		sound_file_name	=my_sound_file_name;
 	}
-	public void modify(long my_current_time,engine_kernel ek,client_information ci)
+	public void modify(long my_current_time,scene_kernel sk,client_information ci)
 	{
-		super.modify(my_current_time,ek,ci);
+		super.modify(my_current_time,sk,ci);
 	}
-	public void last_modify(long my_current_time,engine_kernel ek,client_information ci,boolean terminated_flag)
+	public void last_modify(long my_current_time,scene_kernel sk,client_information ci,boolean terminated_flag)
 	{
-		super.last_modify(my_current_time,ek,ci,terminated_flag);
+		super.last_modify(my_current_time,sk,ci,terminated_flag);
 		
 		if(!terminated_flag)
 			return;
@@ -86,12 +86,12 @@ public class movement_focus_modifier extends modifier_driver
 						terminate_location.multiply(follow_component_location[i]),
 						node_name,description,null);
 			}
-		suspend.register_match_and_component(match,component_id,follow_component_id,ek.component_cont);
+		suspend.register_match_and_component(match,component_id,follow_component_id,sk.component_cont);
 		swcm.register_move_component(component_id,component_id,scale_value,direction,
 				start_location,terminate_location,node_name,description,sound_file_name);
 	}
-	public boolean can_start(long my_current_time,engine_kernel ek,client_information ci)
+	public boolean can_start(long my_current_time,scene_kernel sk,client_information ci)
 	{
-		return super.can_start(my_current_time,ek,ci);
+		return super.can_start(my_current_time,sk,ci);
 	}
 }

@@ -4,10 +4,10 @@ import java.util.Date;
 
 import kernel_component.component;
 import kernel_camera.camera_result;
-import kernel_engine.engine_kernel;
 import kernel_transformation.point;
-import kernel_engine.client_information;
 import kernel_driver.component_instance_driver;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
@@ -28,10 +28,10 @@ public class extended_component_instance_driver extends component_instance_drive
 		show_component_id	=-1;
 		last_touch_time		=0;
 	}
-	public void response_init_component_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 	}
-	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		if(show_type_flag){
 			int old_component_id=show_component_id;
@@ -50,19 +50,19 @@ public class extended_component_instance_driver extends component_instance_drive
 			return false;
 		return true;
 	}
-	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}
-	public void create_component_parameter(engine_kernel ek,client_information ci)
+	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
-		component my_comp=ek.component_cont.get_component(show_component_id);
+		component my_comp=sk.component_cont.get_component(show_component_id);
 		point p[]=my_comp.model_box.p;
 		ci.request_response.	print("[[",	p[0].x).	print(",",p[0].y).	print(",",p[0].z).print(",1").
 								print(",",	p[1].x).	print(",",p[1].y).	print(",",p[1].z).print(",1]").
 								print(",",my_comp.component_id).			print("]");
 	}
-	public String[] response_component_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
 		String str,request_charset=ci.request_response.implementor.get_request_charset();
 
@@ -77,7 +77,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;
 			}
 			component my_comp;
-			if((my_comp=ek.component_cont.search_component(str))==null)
+			if((my_comp=sk.component_cont.search_component(str))==null)
 				break;
 			if(my_comp.model_box==null)
 				break;
@@ -99,7 +99,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;
 			}
 			component my_comp;
-			if((my_comp=ek.component_cont.get_component(my_component_id))==null)
+			if((my_comp=sk.component_cont.get_component(my_component_id))==null)
 				break;
 			if(my_comp.model_box==null)
 				break;

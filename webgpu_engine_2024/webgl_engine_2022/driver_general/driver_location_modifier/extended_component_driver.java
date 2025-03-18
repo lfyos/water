@@ -1,8 +1,8 @@
 package driver_location_modifier;
 
 import kernel_part.part;
+import kernel_scene.scene_kernel;
 import kernel_component.component;
-import kernel_engine.engine_kernel;
 import kernel_driver.component_driver;
 import kernel_transformation.location;
 import kernel_network.client_request_response;
@@ -29,16 +29,16 @@ public class extended_component_driver  extends component_driver
 		first=null;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 //		String component_directory_name=comp.component_directory_name;
 //		String scene_directory_name=ek.scene_directory_name;
-//		String parameter_directory_name=ek.scene_par.directory_name;
+//		String parameter_directory_name=sk.scene_par.directory_name;
 		
 		return;
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 		return new extended_component_instance_driver(comp,driver_id,modifier_container_id);
 	}
@@ -48,9 +48,9 @@ public class extended_component_driver  extends component_driver
 		first=new location_modification_data(get_component_parameter_version());
 		update_component_parameter_version();
 	}
-	public void delete_timeout_location_modifier(engine_kernel ek)
+	public void delete_timeout_location_modifier(scene_kernel sk)
 	{
-		long current_time=ek.modifier_cont[modifier_container_id].get_timer().get_current_time();
+		long current_time=sk.modifier_cont[modifier_container_id].get_timer().get_current_time();
 		location_modification_data p,pp,last;
 		
 		for(p=first,first=null,last=null;p!=null;){
@@ -66,11 +66,11 @@ public class extended_component_driver  extends component_driver
 			}
 		}
 	}
-	public void register_location_modifier(engine_kernel ek,	int my_component_id,long time_length,
+	public void register_location_modifier(scene_kernel sk,	int my_component_id,long time_length,
 			location my_start_location,		location my_terminate_location,
 			int my_follow_component_id[],	location my_follow_component_location[])
 	{
-		long current_time=ek.modifier_cont[modifier_container_id].get_timer().get_current_time();
+		long current_time=sk.modifier_cont[modifier_container_id].get_timer().get_current_time();
 		first=new location_modification_data(
 				first,get_component_parameter_version(),
 				my_component_id,current_time,current_time+time_length,

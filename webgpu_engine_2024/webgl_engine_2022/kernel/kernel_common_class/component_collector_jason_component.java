@@ -2,9 +2,9 @@ package kernel_common_class;
 
 import kernel_component.component;
 import kernel_component.component_collector;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_component.component_array;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
 
 public class component_collector_jason_component
 {
@@ -37,12 +37,12 @@ public class component_collector_jason_component
 	}
 	
 	public component_collector_jason_component(boolean flag,
-		component_collector collector,client_information ci,engine_kernel ek)
+		component_collector collector,client_information ci,scene_kernel sk)
 	{
 		component_array comp_array=new component_array();
 		comp_array.add_collector(collector);
 		if(flag)
-			comp_array.make_to_ancestor(ek.component_cont);
+			comp_array.make_to_ancestor(sk.component_cont);
 		else
 			comp_array.make_to_children();
 		output(ci.request_response,comp_array);

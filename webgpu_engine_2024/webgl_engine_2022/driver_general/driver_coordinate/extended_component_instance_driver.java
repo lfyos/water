@@ -2,10 +2,10 @@ package driver_coordinate;
 
 import kernel_component.component;
 import kernel_camera.camera_result;
-import kernel_engine.engine_kernel;
 import kernel_common_class.const_value;
-import kernel_engine.client_information;
 import kernel_driver.component_instance_driver;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
@@ -42,34 +42,34 @@ public class extended_component_instance_driver extends component_instance_drive
 			print_number=response_selection_coordinate(print_number,my_comp.children[i],ci);
 		return print_number;
 	}
-	public void response_init_component_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 		
 	}
-	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		return false;
 	}
-	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}
-	public void create_component_parameter(engine_kernel ek,client_information ci)
+	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
 		int print_number=0;
 		ci.request_response.print("[");
 		
 		if(display_selection_coordinate_flag)
-			for(int i=0,ni=ek.component_cont.root_component.children_number();i<ni;i++)
+			for(int i=0,ni=sk.component_cont.root_component.children_number();i<ni;i++)
 				print_number=response_selection_coordinate(
-						print_number,ek.component_cont.root_component.children[i],ci);
+						print_number,sk.component_cont.root_component.children[i],ci);
 		
 		if(display_main_coordinate_flag)
 			ci.request_response.print(((print_number++)<=0)?"[-1,-1]":",[-1,-1]");
 
 		ci.request_response.print("]");
 	}
-	public String[] response_component_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
 		String str=ci.request_response.get_parameter("operation");
 		switch((str==null)?"":str) {

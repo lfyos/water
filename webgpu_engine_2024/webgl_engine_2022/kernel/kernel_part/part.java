@@ -6,14 +6,14 @@ import kernel_driver.part_driver;
 import kernel_transformation.box;
 import kernel_component.component;
 import kernel_transformation.point;
-import kernel_engine.scene_parameter;
-import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_common_class.jason_string;
 import kernel_file_manager.file_directory;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 import kernel_file_manager.travel_through_directory;
 
 public class part

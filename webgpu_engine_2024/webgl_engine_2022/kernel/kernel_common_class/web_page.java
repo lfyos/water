@@ -1,7 +1,7 @@
 package kernel_common_class;
 
 import kernel_network.client_request_response;
-import kernel_engine.client_information;
+import kernel_scene.client_information;
 
 public class web_page
 {

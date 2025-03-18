@@ -1,15 +1,15 @@
 package driver_manipulator;
 
 import kernel_common_class.const_value;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
 import kernel_component.component;
 import kernel_component.component_array;
 import kernel_driver.component_instance_driver;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class operate_lod_scale 
 {
-	public static void lod_scale_request(engine_kernel ek,client_information ci)
+	public static void lod_scale_request(scene_kernel sk,client_information ci)
 	{
 		String str;
 		double new_lod_scale=1.0;
@@ -18,15 +18,15 @@ public class operate_lod_scale
 			return;
 		if((new_lod_scale=Double.parseDouble(str))<=const_value.min_value)
 			return;
-		if(ek.component_cont==null)
+		if(sk.component_cont==null)
 			return;
-		if(ek.component_cont.root_component==null)
+		if(sk.component_cont.root_component==null)
 			return;
 		
 		component_array comp_array=new component_array();
-		comp_array.add_selected_component(ek.component_cont.root_component,false);
+		comp_array.add_selected_component(sk.component_cont.root_component,false);
 		if(comp_array.comp_list.size()<=0) {
-			comp_array.add_component(ek.component_cont.root_component);
+			comp_array.add_component(sk.component_cont.root_component);
 			if(comp_array.comp_list.size()<=0)
 				return;
 		}
@@ -39,7 +39,7 @@ public class operate_lod_scale
 			for(int child_id=0,child_number=comp.children_number();child_id<child_number;child_id++)
 				comp_array.add_component(comp.children[child_id]);
 		}
-		ci.component_instance_driver_cont.reset_precision_scale(ek.component_cont.root_component);
+		ci.component_instance_driver_cont.reset_precision_scale(sk.component_cont.root_component);
 
 		return;
 	}

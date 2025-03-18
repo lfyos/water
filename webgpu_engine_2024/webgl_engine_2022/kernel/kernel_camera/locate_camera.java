@@ -1,11 +1,11 @@
 package kernel_camera;
 
 import kernel_part.part;
+import kernel_scene.client_parameter;
 import kernel_transformation.box;
 import kernel_component.component;
 import kernel_transformation.plane;
 import kernel_transformation.point;
-import kernel_engine.client_parameter;
 import kernel_transformation.location;
 import kernel_common_class.const_value;
 import kernel_driver.modifier_container;

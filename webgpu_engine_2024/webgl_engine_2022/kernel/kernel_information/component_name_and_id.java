@@ -1,6 +1,6 @@
 package kernel_information;
 
-import kernel_engine.client_information;
+import kernel_scene.client_information;
 
 public class component_name_and_id  extends jason_creator
 {

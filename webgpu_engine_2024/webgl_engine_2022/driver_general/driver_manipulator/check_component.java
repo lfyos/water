@@ -2,17 +2,17 @@ package driver_manipulator;
 
 import kernel_component.component;
 import kernel_part.part;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class check_component 
 {
-	public static void check(engine_kernel ek,client_information ci)
+	public static void check(scene_kernel sk,client_information ci)
 	{
 		component comp,parent;
 		part p;
 		
-		if((comp=ek.component_cont.search_component())==null)
+		if((comp=sk.component_cont.search_component())==null)
 			return;
 		ci.request_response.println("component_id:			",	comp.component_id);
 		ci.request_response.println("component_name:		",	comp.component_name);
@@ -23,7 +23,7 @@ public class check_component
 		ci.request_response.println();
 		ci.request_response.println();
 
-		if((parent=ek.component_cont.get_component(comp.parent_component_id))==null)
+		if((parent=sk.component_cont.get_component(comp.parent_component_id))==null)
 			ci.request_response.println("No parent");
 		else {
 			ci.request_response.println("parent component_id:			",	parent.component_id);

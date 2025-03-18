@@ -1,9 +1,9 @@
 package driver_movement;
 
 
-import kernel_engine.engine_kernel;
 import kernel_component.component;
 import kernel_driver.component_driver;
+import kernel_scene.scene_kernel;
 import kernel_common_class.debug_information;
 
 public class movement_configuration_parameter
@@ -22,9 +22,9 @@ public class movement_configuration_parameter
 		temporary_file_directory=null;
 		sound_pre_string=null;
 	}
-	public driver_audio_player.extended_component_driver get_audio_component_driver(engine_kernel ek)
+	public driver_audio_player.extended_component_driver get_audio_component_driver(scene_kernel sk)
 	{
-		component my_comp=ek.component_cont.get_component(audio_component_id);
+		component my_comp=sk.component_cont.get_component(audio_component_id);
 		if(my_comp!=null)
 			if(my_comp.driver_number()>0) {
 				component_driver c_d=my_comp.driver_array.get(0);
@@ -33,7 +33,7 @@ public class movement_configuration_parameter
 			}
 		return null;
 	}
-	public movement_configuration_parameter(engine_kernel ek,component my_comp,int my_driver_id,
+	public movement_configuration_parameter(scene_kernel sk,component my_comp,int my_driver_id,
 			String my_movement_file_charset,String my_movement_file_name,
 			String my_design_file_name,String my_temporary_file_directory,String my_sound_pre_string,
 			String location_component_name,String audio_component_name,
@@ -51,13 +51,13 @@ public class movement_configuration_parameter
 		component_id=my_comp.component_id;
 		
 		location_component_id=-1;
-		if((my_comp=ek.component_cont.search_component(location_component_name))!=null)
+		if((my_comp=sk.component_cont.search_component(location_component_name))!=null)
 			location_component_id=my_comp.component_id;
 		else
 			debug_information.println("location component not exist: ",location_component_name);
 
 		audio_component_id=-1;
-		if((my_comp=ek.component_cont.search_component(audio_component_name))!=null)
+		if((my_comp=sk.component_cont.search_component(audio_component_name))!=null)
 			if(my_comp.driver_number()>0)
 				if(my_comp.driver_array.get(0) instanceof driver_audio_player.extended_component_driver)
 					audio_component_id=my_comp.component_id;
@@ -65,13 +65,13 @@ public class movement_configuration_parameter
 			debug_information.println("audio component not exist: ",audio_component_name);
 		
 		mouse_modify_location_component_id=-1;
-		if((my_comp=ek.component_cont.search_component(mouse_modify_location_component_name))!=null)
+		if((my_comp=sk.component_cont.search_component(mouse_modify_location_component_name))!=null)
 			mouse_modify_location_component_id=my_comp.component_id;
 		else
 			debug_information.println("mouse modify location component not exist: ",mouse_modify_location_component_name);
 		
 		virtual_mount_root_component_id=-1;
-		if((my_comp=ek.component_cont.search_component(virtual_mount_root_component_name))!=null)
+		if((my_comp=sk.component_cont.search_component(virtual_mount_root_component_name))!=null)
 			virtual_mount_root_component_id=my_comp.component_id;
 		else
 			debug_information.println("virtual mount_root component not exist: ",virtual_mount_root_component_name);

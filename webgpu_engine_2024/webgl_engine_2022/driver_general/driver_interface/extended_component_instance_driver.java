@@ -2,12 +2,12 @@ package driver_interface;
 
 import kernel_component.component;
 import kernel_camera.camera_result;
-import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
 import kernel_render.render_target_view;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_common_class.const_value;
 import kernel_common_class.jason_string;
-import kernel_engine.client_information;
 import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
@@ -43,7 +43,7 @@ public class extended_component_instance_driver extends component_instance_drive
 
 		hide_show_flag=true;
 	}
-	public void response_init_component_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.println("{");
 
@@ -61,19 +61,19 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		ci.request_response.println("}");
 	}
-	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		return always_show_flag?false:hide_show_flag;
 	}
-	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}
-	public void create_component_parameter(engine_kernel ek,client_information ci)
+	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print("[",x0).print(",",y0).print(",",dx).print(",",dy).print("]");
 	}
-	private void get_parameter(engine_kernel ek,client_information ci)
+	private void get_parameter(scene_kernel sk,client_information ci)
 	{
 		String str;
 		
@@ -115,7 +115,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				y0=-1+const_value.min_value;
 		}
 	}
-	public String[] response_component_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
 		String str=ci.request_response.get_parameter("operation");
 		switch((str==null)?"":(str.toLowerCase())){
@@ -125,12 +125,12 @@ public class extended_component_instance_driver extends component_instance_drive
 			hide_show_flag=true;
 			return null;
 		case "show":
-			get_parameter(ek,ci);
+			get_parameter(sk,ci);
 			hide_show_flag=false;
 			comp.driver_array.get(driver_id).update_component_parameter_version();
 			return null;
 		case "parameter":
-			get_parameter(ek,ci);
+			get_parameter(sk,ci);
 			return null;
 		default:
 			return null;

@@ -2,12 +2,12 @@ package driver_location_modifier;
 
 import kernel_component.component;
 import kernel_camera.camera_result;
-import kernel_engine.engine_kernel;
 import kernel_transformation.location;
 import kernel_common_class.const_value;
-import kernel_engine.client_information;
 import kernel_driver.component_instance_driver;
 import kernel_network.client_request_response;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
@@ -24,19 +24,19 @@ public class extended_component_instance_driver extends component_instance_drive
 		modifier_container_id=my_modifier_container_id;
 		last_parameter_version=0;
 	}
-	public void response_init_component_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 		
 	}
-	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		if(cr.target.main_display_target_flag){
-			((extended_component_driver)(comp.driver_array.get(driver_id))).delete_timeout_location_modifier(ek);
+			((extended_component_driver)(comp.driver_array.get(driver_id))).delete_timeout_location_modifier(sk);
 			return false;
 		}
 		return true;
 	}
-	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(modifier_container_id);
 	}
@@ -53,7 +53,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		request_response.print((number<=0)?"[]":(","+code+"]"));
 	}
-	public void create_component_parameter(engine_kernel ek,client_information ci)
+	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
 		int print_number=0;
 		ci.request_response.print("[");
@@ -86,7 +86,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		
 		last_parameter_version=ecd.get_component_parameter_version();
 	}
-	public String[] response_component_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
 		return null;
 	}

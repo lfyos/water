@@ -1,14 +1,14 @@
 package kernel_information;
 
 import kernel_render.render;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_component.component_collector;
 
 public class component_collector_with_component_information extends jason_creator
 {
 	private component_collector collector;
-	private engine_kernel ek;
+	private scene_kernel sk;
 	private client_information ci;
 	public void print()
 	{
@@ -18,7 +18,7 @@ public class component_collector_with_component_information extends jason_creato
 		
 		if(collector.component_collector!=null)
 			for(int i=0,ni=collector.component_collector.length;i<ni;i++)
-				if(((r=ek.render_cont.renders.get(i))!=null)&&(collector.component_collector[i]!=null))
+				if(((r=sk.render_cont.renders.get(i))!=null)&&(collector.component_collector[i]!=null))
 					for(int j=0,nj=collector.component_collector[i].length;j<nj;j++)
 						if(collector.component_collector[i][j]!=null)
 							jc[number++]=new link_component_list_information(r.parts.get(j),
@@ -29,12 +29,12 @@ public class component_collector_with_component_information extends jason_creato
 	}
 	
 	public component_collector_with_component_information(
-			component_collector my_collector,engine_kernel my_ek,client_information my_ci)
+			component_collector my_collector,scene_kernel my_sk,client_information my_ci)
 	{
 		super(my_ci.request_response);
 		
 		collector=my_collector;
-		ek=my_ek;
+		sk=my_sk;
 		ci=my_ci;
 	}
 }

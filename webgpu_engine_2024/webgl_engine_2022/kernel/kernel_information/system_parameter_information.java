@@ -1,7 +1,7 @@
 package kernel_information;
 
-import kernel_engine.system_parameter;
-import kernel_engine.client_information;
+import kernel_scene.client_information;
+import kernel_scene.system_parameter;
 
 public class system_parameter_information extends jason_creator
 {
@@ -32,13 +32,13 @@ public class system_parameter_information extends jason_creator
 
 		print("response_block_size",					sp.response_block_size);
 		
-		print("engine_expire_time_length",				sp.engine_expire_time_length);
-		print("engine_touch_time_length",				sp.engine_touch_time_length);
+		print("scene_expire_time_length",				sp.scene_expire_time_length);
+		print("scene_touch_time_length",				sp.scene_touch_time_length);
 		
-		print("create_engine_concurrent_number",		sp.create_engine_concurrent_number);
-		print("create_engine_sleep_time_length_scale",	sp.create_engine_sleep_time_length_scale);
-		print("create_engine_sleep_time_length",		sp.create_engine_sleep_time_length);
-		print("create_engine_max_sleep_time_length",	sp.create_engine_max_sleep_time_length);
+		print("create_scene_concurrent_number",			sp.create_scene_concurrent_number);
+		print("create_scene_sleep_time_length_scale",	sp.create_scene_sleep_time_length_scale);
+		print("create_scene_sleep_time_length",			sp.create_scene_sleep_time_length);
+		print("create_scene_max_sleep_time_length",		sp.create_scene_max_sleep_time_length);
 		
 		print("show_process_bar_interval",				sp.show_process_bar_interval);
 		print("file_buffer_expire_time_length",			sp.file_buffer_expire_time_length);
@@ -46,8 +46,8 @@ public class system_parameter_information extends jason_creator
 		print("max_client_container_number",			sp.max_client_container_number);
 		print("max_client_interface_number",			sp.max_client_interface_number);
 		
-		print("max_engine_kernel_number",				sp.max_engine_kernel_number);
-		print("max_engine_component_number",			sp.max_engine_component_number);
+		print("max_scene_kernel_number",				sp.max_scene_kernel_number);
+		print("max_scene_component_number",				sp.max_scene_component_number);
 		
 		print("max_buffer_object_head_package_length",	sp.max_buffer_object_head_package_length);
 		print("max_file_response_length",				sp.max_file_response_length);

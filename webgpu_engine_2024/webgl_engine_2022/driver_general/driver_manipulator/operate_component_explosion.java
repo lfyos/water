@@ -6,8 +6,8 @@ import kernel_component.component_array;
 import kernel_component.component_collector;
 import kernel_driver.location_modifier;
 import kernel_driver.modifier_container_timer;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_transformation.box;
 import kernel_transformation.location;
 import kernel_transformation.plane;
@@ -40,7 +40,7 @@ public class operate_component_explosion
 				location.move_rotate(direction.x,direction.y,direction.z,0,0,0));
 	}
 	public static void do_explosion(int modifier_container_id,
-			long touch_time_length,engine_kernel ek,client_information ci)
+			long touch_time_length,scene_kernel sk,client_information ci)
 	{
 		String str;
 		component_array comp_array=new component_array();
@@ -55,7 +55,7 @@ public class operate_component_explosion
 					}catch(Exception e) {
 						;
 					}
-					if((my_comp=ek.component_cont.search_component(str))!=null) {
+					if((my_comp=sk.component_cont.search_component(str))!=null) {
 						comp_array.add_component(my_comp);
 						if(comp_array.comp_list.size()>0)
 							break;
@@ -65,7 +65,7 @@ public class operate_component_explosion
 			}
 			if((str=ci.request_response.get_parameter("component_id"))!=null) {
 				if(str.length()>0)
-					if((my_comp=ek.component_cont.get_component(Integer.decode(str)))!=null) {
+					if((my_comp=sk.component_cont.get_component(Integer.decode(str)))!=null) {
 						comp_array.add_component(my_comp);
 						if(comp_array.comp_list.size()>0)
 							break;
@@ -74,7 +74,7 @@ public class operate_component_explosion
 			}
 			if((str=ci.request_response.get_parameter("list"))!=null) {
 				component_collector cc[];
-				if((cc=ek.collector_stack.get_all_collector())!=null)
+				if((cc=sk.collector_stack.get_all_collector())!=null)
 					try{
 						int list_id=cc.length-Integer.decode(str);
 						if((list_id>=0)&&(list_id<cc.length)){
@@ -87,9 +87,9 @@ public class operate_component_explosion
 					}
 				return;
 			}
-			comp_array.add_selected_component(ek.component_cont.root_component,false);
+			comp_array.add_selected_component(sk.component_cont.root_component,false);
 			if(comp_array.comp_list.size()<=0)
-				comp_array.add_component(ek.component_cont.root_component);	
+				comp_array.add_component(sk.component_cont.root_component);	
 			if(comp_array.comp_list.size()<=0)
 				return;
 			break;
@@ -112,7 +112,7 @@ public class operate_component_explosion
 			if(str.toLowerCase().compareTo("reset")==0)
 				reset_flag=true;
 		
-		ek.component_cont.root_component.reset_component(ek.component_cont);
+		sk.component_cont.root_component.reset_component(sk.component_cont);
 		
 		double t=0,direction_x=0,direction_y=0,direction_z=0;
 		try{
@@ -129,7 +129,7 @@ public class operate_component_explosion
 		}
 		
 		for(int i=0,ni=comp_array.comp_list.size();i<ni;i++) {
-			modifier_container_timer timer=ek.modifier_cont[modifier_container_id].get_timer();
+			modifier_container_timer timer=sk.modifier_cont[modifier_container_id].get_timer();
 			long start_time=timer.get_current_time();
 			long terminate_time=ci.display_camera_result.cam.parameter.switch_time_length+start_time;
 			
@@ -144,7 +144,7 @@ public class operate_component_explosion
 			location_modifier lm=new location_modifier(my_comp,start_time,
 					my_comp.move_location,terminate_time,new_move_location,true,true);
 			lm.touch_time_length=touch_time_length;
-			ek.modifier_cont[modifier_container_id].add_modifier(lm);
+			sk.modifier_cont[modifier_container_id].add_modifier(lm);
 		}
 	}
 }

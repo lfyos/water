@@ -4,9 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
-import kernel_engine.scene_parameter;
-import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 import kernel_file_manager.file_directory;
 import kernel_common_class.debug_information;
 import kernel_common_class.exclusive_file_mutex;

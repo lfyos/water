@@ -3,10 +3,10 @@ package kernel_component;
 import java.util.ArrayList;
 
 import kernel_part.part;
+import kernel_scene.part_type_string_sorter;
 import kernel_driver.component_driver;
 import kernel_common_class.change_name;
 import kernel_file_manager.file_reader;
-import kernel_engine.part_type_string_sorter;
 import kernel_common_class.debug_information;
 
 public class component_core_3 extends component_core_2
@@ -82,7 +82,7 @@ public class component_core_3 extends component_core_2
 			component_driver comp_driver=null;
 			try{
 				comp_driver=p.driver.create_component_driver(
-						fr,rollback_flag,p,ccp.clsc,ccp.ek,ccp.request_response);
+						fr,rollback_flag,p,ccp.clsc,ccp.sk,ccp.request_response);
 			}catch(Exception e){
 				e.printStackTrace();
 				

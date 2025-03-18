@@ -1,7 +1,7 @@
 package kernel_information;
 
-import kernel_engine.scene_parameter;
-import kernel_engine.client_information;
+import kernel_scene.client_information;
+import kernel_scene.scene_parameter;
 
 public class scene_parameter_information extends jason_creator
 {

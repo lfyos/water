@@ -3,10 +3,10 @@ package driver_distance_tag;
 import kernel_common_class.const_value;
 import kernel_common_class.format_change;
 import kernel_common_class.jason_string;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_transformation.point;
 import kernel_transformation.plane;
 import kernel_transformation.location;
@@ -73,7 +73,7 @@ public class distance_tag_item
 		
 		extra_distance_tag=null;
 	}
-	public static distance_tag_item load(file_reader fr,engine_kernel ek)
+	public static distance_tag_item load(file_reader fr,scene_kernel sk)
 	{
 		String component_name_p0 =fr.get_string();
 		String component_name_px =fr.get_string(); 
@@ -91,11 +91,11 @@ public class distance_tag_item
 				tag_title=null;
 		
 		component comp_p0,comp_px,comp_tag;
-		if((comp_p0=ek.component_cont.search_component(component_name_p0))==null)
+		if((comp_p0=sk.component_cont.search_component(component_name_p0))==null)
 			return null;
-		if((comp_px=ek.component_cont.search_component(component_name_px))==null)
+		if((comp_px=sk.component_cont.search_component(component_name_px))==null)
 			return null;
-		if((comp_tag=ek.component_cont.search_component(component_name_tag))==null)
+		if((comp_tag=sk.component_cont.search_component(component_name_tag))==null)
 			return null;
 		return new distance_tag_item(
 			comp_p0.component_id,comp_px.component_id,comp_tag.component_id,
@@ -119,16 +119,16 @@ public class distance_tag_item
 		
 		extra_distance_tag=null;
 	}
-	public boolean write_out(file_writer fw,engine_kernel ek)
+	public boolean write_out(file_writer fw,scene_kernel sk)
 	{
 		if(state!=2)
 			return false;
 		component comp_p0,comp_px,comp_tag;
-		if((comp_p0=ek.component_cont.get_component(p0_component_id))==null)
+		if((comp_p0=sk.component_cont.get_component(p0_component_id))==null)
 			return false;
-		if((comp_px=ek.component_cont.get_component(px_component_id))==null)
+		if((comp_px=sk.component_cont.get_component(px_component_id))==null)
 			return false;
-		if((comp_tag=ek.component_cont.get_component(tag_component_id))==null)
+		if((comp_tag=sk.component_cont.get_component(tag_component_id))==null)
 			return false;
 		
 		fw.println("/*	p0_component	*/	",comp_p0. component_name);
@@ -143,16 +143,16 @@ public class distance_tag_item
 		
 		return true;
 	}
-	public boolean response_jason(int tag_id,engine_kernel ek,client_information ci,String follow_str)
+	public boolean response_jason(int tag_id,scene_kernel sk,client_information ci,String follow_str)
 	{
 		component comp_p0,comp_px,comp_tag;
 		if(state!=2)
 			return false;
-		if((comp_p0=ek.component_cont.get_component(p0_component_id))==null)
+		if((comp_p0=sk.component_cont.get_component(p0_component_id))==null)
 			return false;
-		if((comp_px=ek.component_cont.get_component(px_component_id))==null)
+		if((comp_px=sk.component_cont.get_component(px_component_id))==null)
 			return false;
-		if((comp_tag=ek.component_cont.get_component(tag_component_id))==null)
+		if((comp_tag=sk.component_cont.get_component(tag_component_id))==null)
 			return false;
 		
 		ci.request_response.println(follow_str);
@@ -191,7 +191,7 @@ public class distance_tag_item
 	//33:view   YZ angle		34:view   ZX angle			35:view   XY angle
 	
 	public void set_distance_tag_type(int new_type_id,
-			distance_tag_item my_ex_distance_tag,engine_kernel ek,client_information ci)
+			distance_tag_item my_ex_distance_tag,scene_kernel sk,client_information ci)
 	{
 		type_id=(new_type_id<-3)?-1:(new_type_id>35)?-1:new_type_id;
 		
@@ -203,12 +203,12 @@ public class distance_tag_item
 				extra_distance_tag=new distance_tag_item(my_ex_distance_tag);
 		}
 		int old_tag_component_id=tag_component_id;
-		tag_component_id=ek.component_cont.root_component.component_id;
+		tag_component_id=sk.component_cont.root_component.component_id;
 
 		switch((type_id%9)/3){
 		case 1:
 			component comp;
-			if((comp=ek.component_cont.search_component())!=null)
+			if((comp=sk.component_cont.search_component())!=null)
 				tag_component_id=comp.component_id;
 			break;
 		case 2:
@@ -221,12 +221,12 @@ public class distance_tag_item
 			location_version_tag=0;
 		return;
 	}
-	public String get_tag_str(int display_precision,engine_kernel ek,client_information ci)
+	public String get_tag_str(int display_precision,scene_kernel sk,client_information ci)
 	{
 		component comp;
-		comp=ek.component_cont.get_component(p0_component_id);
+		comp=sk.component_cont.get_component(p0_component_id);
 		point global_p0=comp.absolute_location.multiply(p0),extra_global_p0;
-		comp=ek.component_cont.get_component(px_component_id);
+		comp=sk.component_cont.get_component(px_component_id);
 		point global_px=comp.absolute_location.multiply(px),extra_global_px;
 		
 		point dir_0,dir_1;
@@ -236,9 +236,9 @@ public class distance_tag_item
 			extra_global_p0=new point(0,0,0);
 			extra_global_px=new point(0,0,1);
 		}else {
-			comp=ek.component_cont.get_component(extra_distance_tag.p0_component_id);
+			comp=sk.component_cont.get_component(extra_distance_tag.p0_component_id);
 			extra_global_p0=comp.absolute_location.multiply(extra_distance_tag.p0);
-			comp=ek.component_cont.get_component(extra_distance_tag.px_component_id);
+			comp=sk.component_cont.get_component(extra_distance_tag.px_component_id);
 			extra_global_px=comp.absolute_location.multiply(extra_distance_tag.px);
 		}
 		if(type_id<0)
@@ -262,7 +262,7 @@ public class distance_tag_item
 			default:
 				return jason_string.change_string("error:type_id="+type_id);
 			}
-		if((comp=ek.component_cont.get_component(tag_component_id))==null)
+		if((comp=sk.component_cont.get_component(tag_component_id))==null)
 			return jason_string.change_string("tag_component error:"+tag_component_id);
 
 		String title[]=new String[]

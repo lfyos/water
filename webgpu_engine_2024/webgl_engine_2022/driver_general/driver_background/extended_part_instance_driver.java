@@ -1,9 +1,9 @@
 package driver_background;
 
 import kernel_driver.part_instance_driver;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
 import kernel_part.part;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class extended_part_instance_driver extends part_instance_driver
 {
@@ -15,11 +15,11 @@ public class extended_part_instance_driver extends part_instance_driver
 	{
 		super.destroy();
 	}
-	public void response_init_part_data(part p,engine_kernel ek,client_information ci)
+	public void response_init_part_data(part p,scene_kernel sk,client_information ci)
 	{
 	}
-	public String[] response_part_event(part p,engine_kernel ek,client_information ci)
+	public String[] response_part_event(part p,scene_kernel sk,client_information ci)
 	{			
-		return super.response_part_event(p,ek,ci);
+		return super.response_part_event(p,sk,ci);
 	}
 }

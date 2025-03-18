@@ -1,7 +1,7 @@
 package kernel_information;
 
-import kernel_engine.client_parameter;
-import kernel_engine.client_information;
+import kernel_scene.client_information;
+import kernel_scene.client_parameter;
 
 public class client_parameter_information extends jason_creator
 {

@@ -1,8 +1,8 @@
 package driver_movement;
 
 import kernel_part.part;
+import kernel_scene.scene_kernel;
 import kernel_component.component;
-import kernel_engine.engine_kernel;
 import kernel_camera.camera_parameter;
 import kernel_driver.component_driver;
 import kernel_file_manager.file_reader;
@@ -33,13 +33,13 @@ public class extended_component_driver  extends component_driver
 		m=null;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 //		String component_directory_name=comp.component_directory_name;
 //		String scene_directory_name=ek.scene_directory_name;
-//		String parameter_directory_name=ek.scene_par.directory_name;
+//		String parameter_directory_name=sk.scene_par.directory_name;
 		
-		component scene_comp=ek.component_cont.scene_component;
+		component scene_comp=sk.component_cont.scene_component;
 		String movement_directory_name=((scene_comp==null)?comp:scene_comp).component_directory_name;
 		
 		part p=comp.driver_array.get(driver_id).component_part;
@@ -59,10 +59,10 @@ public class extended_component_driver  extends component_driver
 		fr.close();
 		
 		debug_information.println("Begin loading movement information\t",movement_directory_name+movement_file_name);
-		camera_parameter cam_par=ek.camera_cont.get(0).parameter;
-		m=new movement_manager(ek,cam_par.movement_flag?cam_par.switch_time_length:0,
+		camera_parameter cam_par=sk.camera_cont.get(0).parameter;
+		m=new movement_manager(sk,cam_par.movement_flag?cam_par.switch_time_length:0,
 				new movement_configuration_parameter(
-						ek,comp,driver_id,comp.component_charset,
+						sk,comp,driver_id,comp.component_charset,
 						movement_directory_name+movement_file_name,
 						movement_directory_name+design_file_name,
 						movement_directory_name+temporary_file_directory,
@@ -76,7 +76,7 @@ public class extended_component_driver  extends component_driver
 		return;
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 		return new extended_component_instance_driver(comp,driver_id);
 	}

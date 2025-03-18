@@ -2,13 +2,13 @@ package driver_component_marker;
 
 import kernel_part.part;
 import kernel_render.render;
+import kernel_scene.scene_kernel;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 import kernel_driver.part_driver;
 import kernel_part.part_parameter;
 import kernel_driver.render_driver;
 import kernel_driver.render_instance_driver;
-import kernel_engine.engine_kernel;
-import kernel_engine.scene_parameter;
-import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
 import kernel_network.client_request_response;
 import kernel_component.component_load_source_container;
@@ -28,7 +28,7 @@ public class extended_render_driver extends render_driver
 	{
 		return new extended_render_driver();
 	}
-	public void initialize_render_driver(int render_id,engine_kernel ek,client_request_response request_response)
+	public void initialize_render_driver(int render_id,scene_kernel sk,client_request_response request_response)
 	{
 	}
 	public String[] get_render_list(
@@ -58,7 +58,7 @@ public class extended_render_driver extends render_driver
 		return new extended_part_driver();
 	}
 	public render_instance_driver create_render_instance_driver(render r,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 		return new extended_render_instance_driver();
 	}

@@ -3,9 +3,9 @@ package driver_background;
 import kernel_component.component;
 import kernel_camera.camera_result;
 import kernel_common_class.jason_string;
-import kernel_engine.engine_kernel;
-import kernel_engine.client_information;
 import kernel_driver.component_instance_driver;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
@@ -25,22 +25,22 @@ public class extended_component_instance_driver extends component_instance_drive
 		user_parameter_channel_id=my_user_parameter_channel_id;
 		directory_name=my_directory_name;
 	}
-	public void response_init_component_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 	}
-	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		return (cr.target.parameter_channel_id!=user_parameter_channel_id);
 	}
-	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}
-	public void create_component_parameter(engine_kernel ek,client_information ci)
+	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{	
 		ci.request_response.print("[",mode).print(",",jason_string.change_string(directory_name)).print("]");
 	}
-	public String[] response_component_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
 		String str=ci.request_response.get_parameter("operation");
 		

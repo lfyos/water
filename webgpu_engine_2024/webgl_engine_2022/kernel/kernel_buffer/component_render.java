@@ -3,13 +3,12 @@ package kernel_buffer;
 import kernel_part.part;
 import kernel_component.component;
 import kernel_camera.camera_result;
-import kernel_engine.engine_kernel;
-import kernel_engine.client_information;
 import kernel_component.component_container;
 import kernel_component.component_link_list;
 import kernel_common_class.debug_information;
 import kernel_render.render_component_counter;
-
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_driver.component_instance_driver;
 
 
@@ -204,15 +203,15 @@ public class component_render
 	public void create_delete_render_parameter(	response_flag create_flag,
 			int render_id,int part_id,int render_buffer_id,
 			component_link_list cll,long render_current_time,
-			engine_kernel ek,client_information ci,render_component_counter rcc)
+			scene_kernel sk,client_information ci,render_component_counter rcc)
 	{
 		for(;cll!=null;cll=cll.next_list_item) {
 			int data_buffer_id=cll.comp.driver_array.get(cll.driver_id).same_part_component_driver_id;
 			switch(flag[data_buffer_id]&(1+2+4+8)){
 			case 1://last display(refresh),			this not display,DELETE
 			case 2://last display(not refresh),		this not display,DELETE
-				if(rcc.component_delete_number>=ek.scene_par.most_component_delete_number)
-					if((render_current_time-cll.comp.uniparameter.touch_time)>ek.scene_par.touch_time_length){
+				if(rcc.component_delete_number>=sk.scene_par.most_component_delete_number)
+					if((render_current_time-cll.comp.uniparameter.touch_time)>sk.scene_par.touch_time_length){
 						flag[data_buffer_id]|=16;//become KEEP
 						break;
 					}
@@ -272,7 +271,7 @@ public class component_render
 	
 	public void create_append_render_parameter(response_flag create_flag,
 			component_link_list cll,long render_current_time,
-			engine_kernel ek,client_information ci,
+			scene_kernel sk,client_information ci,
 			camera_result cam_result,int render_buffer_id,render_component_counter rcc)
 	{
 		delete_in_cll=revere_component_link_list(delete_in_cll);
@@ -301,8 +300,8 @@ public class component_render
 					flag[data_buffer_id]|=64;
 					continue;
 				}
-				if((rcc.component_append_number+rcc.component_refresh_number)>=ek.scene_par.most_component_append_number)
-					if((render_current_time-p.comp.uniparameter.touch_time)>ek.scene_par.touch_time_length){
+				if((rcc.component_append_number+rcc.component_refresh_number)>=sk.scene_par.most_component_append_number)
+					if((render_current_time-p.comp.uniparameter.touch_time)>sk.scene_par.touch_time_length){
 						if(ci.parameter.comp==null){
 							flag[data_buffer_id]|=64;
 							continue;
@@ -364,7 +363,7 @@ public class component_render
 						print(data_buffer_id).print(",").
 						print(my_instance_id).print(",");
 				try{
-					in_dr.create_render_parameter(render_buffer_id,ek,ci,cam_result);
+					in_dr.create_render_parameter(render_buffer_id,sk,ci,cam_result);
 				}catch(Exception e){
 					e.printStackTrace();
 					
@@ -387,7 +386,7 @@ public class component_render
 		delete_in_cll=revere_component_link_list(delete_in_cll);
 		delete_out_cll=revere_component_link_list(delete_out_cll);
 	}
-	public void register_location(engine_kernel ek,client_information ci)
+	public void register_location(scene_kernel sk,client_information ci)
 	{
 		for(int i=0;i<component_number;i++){
 			int data_buffer_id=comp[i].driver_array.get(driver_id[i]).same_part_component_driver_id;
@@ -396,7 +395,7 @@ public class component_render
 			case 8:		//last not display,				this display(not refresh),	need position
 			case 1+4:	//last display(refresh),		this display(refresh),		need position 	
 			case 2+8:	//last display(not refresh),	this display(not refresh),	need position 	
-				ci.render_buffer.location_buffer.put_in_list(comp[i],ek);
+				ci.render_buffer.location_buffer.put_in_list(comp[i],sk);
 				break;
 			default:
 				break;

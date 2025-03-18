@@ -2,9 +2,9 @@ package driver_component_marker;
 
 import kernel_component.component;
 import kernel_component.component_container;
-import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
+import kernel_scene.scene_kernel;
 
 public class component_marker_container 
 {
@@ -26,14 +26,14 @@ public class component_marker_container
 		}
 	}
 	
-	private void write(engine_kernel ek)
+	private void write(scene_kernel sk)
 	{
 		if((file_name==null)||(file_charset==null)||(!global_private_flag))
 			return;
 		file_writer fw=new file_writer(file_name,file_charset);
 		
 		for(int i=0,ni=component_marker_array.length;i<ni;i++) {
-			component operate_comp=ek.component_cont.get_component(
+			component operate_comp=sk.component_cont.get_component(
 					component_marker_array[i].marker_component_id);
 			if(operate_comp==null)
 				continue;
@@ -52,7 +52,7 @@ public class component_marker_container
 		fw.close();
 	}
 	
-	public void delete_component_marker(int marker_id,engine_kernel ek)
+	public void delete_component_marker(int marker_id,scene_kernel sk)
 	{
 		if((marker_id<0)||(marker_id>=component_marker_array.length))
 			return;
@@ -61,10 +61,10 @@ public class component_marker_container
 		for(int i=0,j=0,ni=bak.length;i<ni;i++)
 			if(i!=marker_id)
 				component_marker_array[j++]=bak[i];
-		write(ek);
+		write(sk);
 		return;
 	}
-	public void clear_component_marker(long marker_id,engine_kernel ek)
+	public void clear_component_marker(long marker_id,scene_kernel sk)
 	{
 		int number=0;
 		for(int i=0,ni=component_marker_array.length;i<ni;i++)
@@ -76,16 +76,16 @@ public class component_marker_container
 			for(int i=0;i<number;i++)
 				component_marker_array[i]=bak[i];
 		}
-		write(ek);
+		write(sk);
 		return;
 	}
-	public void clear_all_component_marker(engine_kernel ek)
+	public void clear_all_component_marker(scene_kernel sk)
 	{
 		component_marker_array=new component_marker[] {};
-		write(ek);
+		write(sk);
 		return;
 	}
-	public long  append_component_marker(engine_kernel ek,
+	public long  append_component_marker(scene_kernel sk,
 			component my_mark_comp,String my_marker_text,
 			double my_marker_x,double my_marker_y,double my_marker_z)
 	{
@@ -99,7 +99,7 @@ public class component_marker_container
 			component_marker_array[i]=bak[i];
 		component_marker_array[bak.length]=new component_marker(
 				my_mark_comp,my_marker_text,my_marker_x,my_marker_y,my_marker_z);
-		write(ek);
+		write(sk);
 		return component_marker_array[bak.length].marker_id;
 	}
 	public component_marker_container(boolean my_pickup_flag)

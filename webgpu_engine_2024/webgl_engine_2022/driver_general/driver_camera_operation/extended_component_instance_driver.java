@@ -2,17 +2,17 @@ package driver_camera_operation;
 
 import kernel_part.face;
 import kernel_part.part_rude;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_transformation.box;
 import kernel_transformation.point;
 import kernel_component.component;
 import kernel_camera.camera_result;
-import kernel_engine.engine_kernel;
 import kernel_camera.locate_camera;
 import kernel_driver.component_driver;
 import kernel_transformation.location;
 import kernel_common_class.const_value;
 import kernel_component.component_array;
-import kernel_engine.client_information;
 import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
@@ -32,18 +32,18 @@ public class extended_component_instance_driver extends component_instance_drive
 		display_parameter.body_title="Ìו";
 		display_parameter.face_title="Ãז";
 	}
-	public void response_init_component_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 	}
-	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		return show_flag?false:true;
 	}
-	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}
-	public void create_component_parameter(engine_kernel ek,client_information ci)
+	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print(0);
 	}
@@ -63,7 +63,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			return false;
 		}
 	}
-	private location get_component_location(engine_kernel ek,client_information ci)
+	private location get_component_location(scene_kernel sk,client_information ci)
 	{
 		String str;
 		component comp;
@@ -73,7 +73,7 @@ public class extended_component_instance_driver extends component_instance_drive
 					if((comp=ci.display_camera_result.cam.eye_component)!=null)
 						return comp.absolute_location;
 			}else if(str.compareTo("selection")==0){
-				if((comp=ek.component_cont.search_component())!=null)
+				if((comp=sk.component_cont.search_component())!=null)
 					if(comp.uniparameter.selected_flag)
 						return comp.absolute_location;
 			}
@@ -81,7 +81,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		return null;
 	}
 	private void body_face_direct_rotate(
-			boolean direct_rotate_flag,engine_kernel ek,client_information ci)
+			boolean direct_rotate_flag,scene_kernel sk,client_information ci)
 	{
 		if(ci.parameter.comp==null)
 			return;
@@ -117,7 +117,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		if(ci.display_camera_result.to_me_direct.dot(p)<0)
 			p=p.reverse();
 		
-		location loca=get_component_location(ek,ci);
+		location loca=get_component_location(sk,ci);
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
 		if(direct_rotate_flag)
 			loca=lc.direction_locate(p,loca,get_client_type_flag(ci));
@@ -130,10 +130,10 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		ci.display_camera_result.cam.mark_restore_stack();
 		ci.display_camera_result.cam.push_restore_stack(
-			ek.modifier_cont[modifier_container_id],true,
+			sk.modifier_cont[modifier_container_id],true,
 			loca,ci.display_camera_result.cam.parameter);
 	}
-	private void camera_direct(engine_kernel ek,client_information ci)
+	private void camera_direct(scene_kernel sk,client_information ci)
 	{
 		String str;
 		if((str=ci.request_response.get_parameter("x"))==null)
@@ -149,14 +149,14 @@ public class extended_component_instance_driver extends component_instance_drive
 		double z=Double.parseDouble(str);
 		
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
-		location loca=get_component_location(ek,ci);
+		location loca=get_component_location(sk,ci);
 		loca=lc.direction_locate(new point(x,y,z),loca,get_client_type_flag(ci));
 		ci.display_camera_result.cam.mark_restore_stack();
 		ci.display_camera_result.cam.push_restore_stack(
-			ek.modifier_cont[modifier_container_id],true,
+			sk.modifier_cont[modifier_container_id],true,
 			loca,ci.display_camera_result.cam.parameter);
 	}
-	private void camera_rotate(engine_kernel ek,client_information ci)
+	private void camera_rotate(scene_kernel sk,client_information ci)
 	{
 		String str;
 		
@@ -185,15 +185,15 @@ public class extended_component_instance_driver extends component_instance_drive
 		double z1=Double.parseDouble(str);
 		
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
-		location loca=get_component_location(ek,ci);
+		location loca=get_component_location(sk,ci);
 		loca=lc.rotation_locate(new point(x0,y0,z0),new point(x1,y1,z1),loca);
 		
 		ci.display_camera_result.cam.mark_restore_stack();
 		ci.display_camera_result.cam.push_restore_stack(
-			ek.modifier_cont[modifier_container_id],true,
+			sk.modifier_cont[modifier_container_id],true,
 			loca,ci.display_camera_result.cam.parameter);
 	}
-	private void locate(engine_kernel ek,client_information ci)
+	private void locate(scene_kernel sk,client_information ci)
 	{
 		String str;
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
@@ -211,10 +211,10 @@ public class extended_component_instance_driver extends component_instance_drive
 				str=null;
 			}
 			if(str!=null)
-				locate_comp=ek.component_cont.search_component(str);
+				locate_comp=sk.component_cont.search_component(str);
 		}
 		if((str=ci.request_response.get_parameter("component_id"))!=null)
-			locate_comp=ek.component_cont.get_component(Integer.decode(str));
+			locate_comp=sk.component_cont.get_component(Integer.decode(str));
 		
 		if(locate_comp!=null){
 			boolean mandatory_movement_flag=true,mandatory_scale_flag=true;
@@ -282,7 +282,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				}
 				break;
 			}
-			lc.locate_on_components(ek.modifier_cont[modifier_container_id],
+			lc.locate_on_components(sk.modifier_cont[modifier_container_id],
 				my_box,null,scale_value,true,mandatory_movement_flag,mandatory_scale_flag);
 			return;
 		}
@@ -303,11 +303,11 @@ public class extended_component_instance_driver extends component_instance_drive
 			p0=loca.multiply(new point(local_xy[0],local_xy[1],ci.parameter.depth));
 			p1=loca.multiply(new point(local_xy[0],local_xy[1],ci.parameter.depth+1.0));
 		}
-		lc.locate_on_components(ek.modifier_cont[modifier_container_id],
-				ek.component_cont,ci.display_camera_result,ci.parameter,null,scale_value,
-				ek.modifier_cont[modifier_container_id].get_timer().get_current_time(),true,true,true,p0,p1);
+		lc.locate_on_components(sk.modifier_cont[modifier_container_id],
+				sk.component_cont,ci.display_camera_result,ci.parameter,null,scale_value,
+				sk.modifier_cont[modifier_container_id].get_timer().get_current_time(),true,true,true,p0,p1);
 	}
-	public String[] response_component_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
 		String str;
 		double scale_value;
@@ -316,39 +316,39 @@ public class extended_component_instance_driver extends component_instance_drive
 			return null;
 		switch(str){
 		case "body_face_direct":	
-			body_face_direct_rotate(true,ek,ci);
+			body_face_direct_rotate(true,sk,ci);
 			return null;
 		case "body_face_rotate":	
-			body_face_direct_rotate(false,ek,ci);
+			body_face_direct_rotate(false,sk,ci);
 			return null;
 		case "direct":	
-			camera_direct(ek,ci);
+			camera_direct(sk,ci);
 			return null;
 		case "rotate":
-			camera_rotate(ek,ci);
+			camera_rotate(sk,ci);
 			return null;
 		case "locate":
-			locate(ek,ci);
+			locate(sk,ci);
 			return null;
 		case "retreat":
-			ci.display_camera_result.cam.pop_restore_stack(ek.modifier_cont[modifier_container_id]);
+			ci.display_camera_result.cam.pop_restore_stack(sk.modifier_cont[modifier_container_id]);
 			return null;
 		case "project":
 			if((str=ci.request_response.get_parameter("project"))!=null)
 				ci.display_camera_result.cam.parameter.projection_type_flag=(str.compareTo("frustum")==0)?true:false;
 			return null;
 		case "view_move":
-			ek.modifier_cont[modifier_container_id].process(ek, ci,true);
+			sk.modifier_cont[modifier_container_id].process(sk, ci,true);
 			if((str=ci.request_response.get_parameter("value"))!=null)
 				ci.display_camera_result.cam.parameter.movement_flag=(str.compareTo("true")==0)?true:false;
 			return null;
 		case "view_direct":
-			ek.modifier_cont[modifier_container_id].process(ek, ci,true);
+			sk.modifier_cont[modifier_container_id].process(sk, ci,true);
 			if((str=ci.request_response.get_parameter("value"))!=null)
 				ci.display_camera_result.cam.parameter.direction_flag=(str.compareTo("true")==0)?true:false;
 			return null;
 		case "view_scale":
-			ek.modifier_cont[modifier_container_id].process(ek, ci,true);
+			sk.modifier_cont[modifier_container_id].process(sk, ci,true);
 			if((str=ci.request_response.get_parameter("value"))!=null){
 				scale_value=Math.abs(ci.display_camera_result.cam.parameter.scale_value);
 				scale_value=(str.compareTo("true")==0)?scale_value:(-scale_value);
@@ -357,9 +357,9 @@ public class extended_component_instance_driver extends component_instance_drive
 			return null;
 		case "change_type":
 		{
-			if(ek.component_cont.root_component==null)
+			if(sk.component_cont.root_component==null)
 				return null;
-			ek.modifier_cont[modifier_container_id].process(ek, ci,true);
+			sk.modifier_cont[modifier_container_id].process(sk, ci,true);
 			if((str=ci.request_response.get_parameter("value"))==null)
 				return null;
 			boolean new_change_type_flag=(str.compareTo("true")==0)?true:false;
@@ -379,18 +379,18 @@ public class extended_component_instance_driver extends component_instance_drive
 				return null;
 			}
 			
-			box engine_box;
+			box my_box;
 			component_array effective_comp_container=new component_array();
-			effective_comp_container.add_part_list_component(ek.component_cont.root_component);
-			if((engine_box=effective_comp_container.get_box())==null){
+			effective_comp_container.add_part_list_component(sk.component_cont.root_component);
+			if((my_box=effective_comp_container.get_box())==null){
 				effective_comp_container.clear_compoment();
-				effective_comp_container.add_component(ek.component_cont.root_component);
-				if((engine_box=effective_comp_container.get_box())==null)
-					if((engine_box=ek.component_cont.root_component.get_component_box(false))==null)
-						engine_box=ek.component_cont.root_component.get_component_box(true);
+				effective_comp_container.add_component(sk.component_cont.root_component);
+				if((my_box=effective_comp_container.get_box())==null)
+					if((my_box=sk.component_cont.root_component.get_component_box(false))==null)
+						my_box=sk.component_cont.root_component.get_component_box(true);
 			}
-			if(engine_box!=null){
-				ci.display_camera_result.cam.parameter.distance=engine_box.distance();
+			if(my_box!=null){
+				ci.display_camera_result.cam.parameter.distance=my_box.distance();
 				ci.display_camera_result.cam.parameter.half_fovy_tanl
 					=screen_distance/ci.display_camera_result.cam.parameter.distance;
 				ci.display_camera_result.cam.parameter.change_type_flag=false;

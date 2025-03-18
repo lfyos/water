@@ -1,8 +1,8 @@
 package kernel_part;
 
 import kernel_common_class.debug_information;
-import kernel_engine.scene_parameter;
-import kernel_engine.system_parameter;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 
 public class part_loader extends Thread
 {

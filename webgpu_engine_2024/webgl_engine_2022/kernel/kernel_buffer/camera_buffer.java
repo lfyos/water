@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import kernel_camera.camera;
 import kernel_common_class.const_value;
-import kernel_engine.client_information;
+import kernel_scene.client_information;
 
 public class camera_buffer
 {

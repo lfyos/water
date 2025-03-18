@@ -4,14 +4,15 @@ import java.io.File;
 
 import kernel_common_class.debug_information;
 import kernel_common_class.http_modify_string;
-import kernel_engine.caculate_charset_compress_file_name;
-import kernel_engine.engine_call_result;
-import kernel_engine.system_parameter;
 import kernel_network.client_request_response;
+
+import kernel_scene.system_parameter;
+import kernel_scene.scene_call_result;
+import kernel_scene.caculate_charset_compress_file_name;
 
 public class file_download_manager 
 {
-	public static engine_call_result download(client_request_response request_response,system_parameter system_par)
+	public static scene_call_result download(client_request_response request_response,system_parameter system_par)
 	{
 		String file_name,file_date,real_file_date,request_url=request_response.implementor.get_url();
 		
@@ -76,6 +77,6 @@ public class file_download_manager
 			}
 		caculate_charset_compress_file_name cccfn=new caculate_charset_compress_file_name(f,system_par);
 
-		return new engine_call_result(cccfn,system_par.network_data_charset,system_par.system_cors_string);
+		return new scene_call_result(cccfn,system_par.network_data_charset,system_par.system_cors_string);
 	}
 }

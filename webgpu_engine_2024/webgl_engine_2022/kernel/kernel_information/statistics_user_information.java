@@ -1,31 +1,31 @@
 package kernel_information;
 
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class statistics_user_information  extends jason_creator
 {
-	private engine_kernel ek;
+	private scene_kernel sk;
 	private client_information ci;
 	
 	public void print()
 	{
-		print("user_engine_kernel_number",			ci.statistics_user.user_engine_kernel_number);
-		print("user_engine_component_number",		ci.statistics_user.user_engine_component_number);
+		print("user_scene_kernel_number",			ci.statistics_user.user_scene_kernel_number);
+		print("user_scene_component_number",		ci.statistics_user.user_scene_component_number);
 		
-		print("user_max_engine_kernel_number",		ci.statistics_user.user_max_engine_kernel_number);
-		print("user_max_engine_component_number",	ci.statistics_user.user_max_engine_component_number);
+		print("user_max_scene_kernel_number",		ci.statistics_user.user_max_scene_kernel_number);
+		print("user_max_scene_component_number",	ci.statistics_user.user_max_scene_component_number);
 		
-		print("engine_kernel_number",				ci.engine_counter.engine_kernel_number);
-		print("engine_component_number",			ci.engine_counter.engine_component_number);
+		print("scene_kernel_number",				ci.scene_counter.scene_kernel_number);
+		print("scene_component_number",				ci.scene_counter.scene_component_number);
 		
-		print("max_engine_kernel_number",			ek.system_par.max_engine_kernel_number);
-		print("max_engine_component_number",		ek.system_par.max_engine_component_number);
+		print("max_scene_kernel_number",			sk.system_par.max_scene_kernel_number);
+		print("max_scene_component_number",			sk.system_par.max_scene_component_number);
 	}
-	public statistics_user_information(engine_kernel my_ek,client_information my_ci)
+	public statistics_user_information(scene_kernel my_sk,client_information my_ci)
 	{
 		super(my_ci.request_response);
-		ek=my_ek;
+		sk=my_sk;
 		ci=my_ci;
 	}
 }

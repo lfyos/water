@@ -4,12 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 
 import kernel_part.part;
-import kernel_engine.engine_kernel;
+import kernel_scene.scene_kernel;
+import kernel_scene.part_type_string_sorter;
 import kernel_driver.component_driver;
 import kernel_common_class.cut_string;
 import kernel_common_class.change_name;
 import kernel_file_manager.file_reader;
-import kernel_engine.part_type_string_sorter;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 import kernel_file_manager.travel_through_directory;
@@ -55,7 +55,7 @@ public class component_core_4 extends component_core_3
 				children[j]=my_append_children_list.get(i);
 		}
 	}
-	private String[][]file_mount(file_reader fr,engine_kernel ek,boolean absulate_path_flag)
+	private String[][]file_mount(file_reader fr,scene_kernel sk,boolean absulate_path_flag)
 	{
 		String my_file_name;
 		if((my_file_name=fr.get_string())==null) {
@@ -77,31 +77,31 @@ public class component_core_4 extends component_core_3
 			my_directory_name_array		=new String[]{""};
 			my_charset_name_array		=new String[]{fr.get_charset()};
 		}else{
-			my_directory_name_array		=new String[ek.scene_par.type_sub_directory.length+6];
-			my_charset_name_array		=new String[ek.scene_par.type_sub_directory.length+6];
+			my_directory_name_array		=new String[sk.scene_par.type_sub_directory.length+6];
+			my_charset_name_array		=new String[sk.scene_par.type_sub_directory.length+6];
 
 			my_directory_name_array	[0]	=fr.directory_name;
-			my_directory_name_array	[1]	=ek.create_parameter.scene_directory_name	+"assemble_default"+File.separatorChar;
-			my_directory_name_array	[2]	=ek.scene_par.directory_name				+"assemble_default"+File.separatorChar;
-			my_directory_name_array	[3]	=ek.scene_par.extra_directory_name			+"assemble_default"+File.separatorChar;
-			my_directory_name_array	[4]	=ek.scene_par.scene_shader_directory_name	+"assemble_default"+File.separatorChar;
+			my_directory_name_array	[1]	=sk.create_parameter.scene_directory_name	+"assemble_default"+File.separatorChar;
+			my_directory_name_array	[2]	=sk.scene_par.directory_name				+"assemble_default"+File.separatorChar;
+			my_directory_name_array	[3]	=sk.scene_par.extra_directory_name			+"assemble_default"+File.separatorChar;
+			my_directory_name_array	[4]	=sk.scene_par.scene_shader_directory_name	+"assemble_default"+File.separatorChar;
 			
 			my_charset_name_array	[0]	=fr.get_charset();
-			my_charset_name_array	[1]	=ek.create_parameter.scene_charset;
-			my_charset_name_array	[2]	=ek.scene_par.parameter_charset;
-			my_charset_name_array	[3]	=ek.scene_par.extra_parameter_charset;
-			my_charset_name_array	[4]	=ek.scene_par.parameter_charset;
+			my_charset_name_array	[1]	=sk.create_parameter.scene_charset;
+			my_charset_name_array	[2]	=sk.scene_par.parameter_charset;
+			my_charset_name_array	[3]	=sk.scene_par.extra_parameter_charset;
+			my_charset_name_array	[4]	=sk.scene_par.parameter_charset;
 		
-			for(int i=0,ni=ek.scene_par.type_sub_directory.length;i<ni;i++){
-				my_directory_name_array	[i+5] =ek.scene_par.type_shader_directory_name;
-				my_directory_name_array	[i+5]+=ek.scene_par.type_sub_directory[i];
+			for(int i=0,ni=sk.scene_par.type_sub_directory.length;i<ni;i++){
+				my_directory_name_array	[i+5] =sk.scene_par.type_shader_directory_name;
+				my_directory_name_array	[i+5]+=sk.scene_par.type_sub_directory[i];
 				my_directory_name_array	[i+5]+="assemble_default"+File.separatorChar;
-				my_charset_name_array	[i+5] =ek.scene_par.parameter_charset;
+				my_charset_name_array	[i+5] =sk.scene_par.parameter_charset;
 			}
 
 			my_directory_name_array[my_directory_name_array.length-1]
-					=ek.system_par.default_parameter_directory+"assemble_default"+File.separatorChar;
-			my_charset_name_array[my_charset_name_array.length-1]=ek.system_par.local_data_charset;
+					=sk.system_par.default_parameter_directory+"assemble_default"+File.separatorChar;
+			my_charset_name_array[my_charset_name_array.length-1]=sk.system_par.local_data_charset;
 		}
 		
 		for(int i=0,ni=my_directory_name_array.length;i<ni;i++)
@@ -113,7 +113,7 @@ public class component_core_4 extends component_core_3
 
 		return null;
 	}
-	private String[][]charset_file_mount(file_reader fr,engine_kernel ek,boolean absulate_path_flag)
+	private String[][]charset_file_mount(file_reader fr,scene_kernel sk,boolean absulate_path_flag)
 	{
 		String my_file_name=fr.get_string(),my_file_charset=fr.get_string();
 		if((my_file_name==null)||(my_file_charset==null)) {
@@ -133,22 +133,22 @@ public class component_core_4 extends component_core_3
 		if(absulate_path_flag)
 			my_directory_name_array		=new String[]{""};
 		else {
-			my_directory_name_array		=new String[ek.scene_par.type_sub_directory.length+6];
+			my_directory_name_array		=new String[sk.scene_par.type_sub_directory.length+6];
 	
 			my_directory_name_array[0]	=fr.directory_name;
-			my_directory_name_array[1]	=ek.create_parameter.scene_directory_name	+"assemble_default"+File.separatorChar;
-			my_directory_name_array[2]	=ek.scene_par.directory_name				+"assemble_default"+File.separatorChar;
-			my_directory_name_array[3]	=ek.scene_par.extra_directory_name			+"assemble_default"+File.separatorChar;
-			my_directory_name_array[4]	=ek.scene_par.scene_shader_directory_name	+"assemble_default"+File.separatorChar;
+			my_directory_name_array[1]	=sk.create_parameter.scene_directory_name	+"assemble_default"+File.separatorChar;
+			my_directory_name_array[2]	=sk.scene_par.directory_name				+"assemble_default"+File.separatorChar;
+			my_directory_name_array[3]	=sk.scene_par.extra_directory_name			+"assemble_default"+File.separatorChar;
+			my_directory_name_array[4]	=sk.scene_par.scene_shader_directory_name	+"assemble_default"+File.separatorChar;
 
-			for(int i=0,ni=ek.scene_par.type_sub_directory.length;i<ni;i++){
-				my_directory_name_array	[i+5] =ek.scene_par.type_shader_directory_name;
-				my_directory_name_array	[i+5]+=ek.scene_par.type_sub_directory[i];
+			for(int i=0,ni=sk.scene_par.type_sub_directory.length;i<ni;i++){
+				my_directory_name_array	[i+5] =sk.scene_par.type_shader_directory_name;
+				my_directory_name_array	[i+5]+=sk.scene_par.type_sub_directory[i];
 				my_directory_name_array	[i+5]+="assemble_default"+File.separatorChar;
 			}
 		
 			my_directory_name_array[my_directory_name_array.length-1]
-					=ek.system_par.default_parameter_directory+"assemble_default"+File.separatorChar;
+					=sk.system_par.default_parameter_directory+"assemble_default"+File.separatorChar;
 		}
 		for(int i=0,ni=my_directory_name_array.length;i<ni;i++)
 			if(new File(my_directory_name_array[i]+my_file_name).exists()) 
@@ -158,7 +158,7 @@ public class component_core_4 extends component_core_3
 				"my_file_name:	"+my_file_name+"component_name:	"+component_name);
 		return null;
 	}
-	private String [][]part_driver_mount(file_reader fr,engine_kernel ek,client_request_response request_response)
+	private String [][]part_driver_mount(file_reader fr,scene_kernel sk,client_request_response request_response)
 	{
 		String ret_val[][];
 		if(driver_number()<=0)  {
@@ -181,7 +181,7 @@ public class component_core_4 extends component_core_3
 			return null;
 		}
 		if((ret_val=c_d.component_part.driver.assemble_file_name_and_file_charset(
-			fr,c_d.component_part,ek,request_response))==null)
+			fr,c_d.component_part,sk,request_response))==null)
 		{
 			debug_information.println(
 				"Part_driver driver assemble_file_name_and_file_charset error(ret_val==null):	",
@@ -238,7 +238,7 @@ public class component_core_4 extends component_core_3
 			return null;
 		}
 		try {
-			ret_val=p.driver.assemble_file_name_and_file_charset(fr,p,ccp.ek,ccp.request_response);
+			ret_val=p.driver.assemble_file_name_and_file_charset(fr,p,ccp.sk,ccp.request_response);
 		}catch(Exception e) {
 			e.printStackTrace();
 			
@@ -297,15 +297,15 @@ public class component_core_4 extends component_core_3
 				ccp.push_part_type_string_sorter(
 					new part_type_string_sorter(
 						new String[] {fr.directory_name+file_reader.separator(fr.get_string())},
-						ccp.ek.scene_par.part_type_string,fr.get_charset()));
+						ccp.sk.scene_par.part_type_string,fr.get_charset()));
 				continue;
 			case "push_string_part_type_string":
 				if((str=fr.get_string())==null)
-					str=ccp.ek.scene_par.part_type_string;
+					str=ccp.sk.scene_par.part_type_string;
 				else if((str=str.trim()).length()<=0)
-					str=ccp.ek.scene_par.part_type_string;
+					str=ccp.sk.scene_par.part_type_string;
 				else
-					str=ccp.ek.scene_par.part_type_string+";"+str;
+					str=ccp.sk.scene_par.part_type_string+";"+str;
 				ccp.push_part_type_string_sorter(
 					new part_type_string_sorter(new String[] {},str,fr.get_charset()));
 				continue;
@@ -317,15 +317,15 @@ public class component_core_4 extends component_core_3
 				ccp.push_change_part_name(
 					new change_name(
 						new String[] {fr.directory_name+file_reader.separator(fr.get_string())},
-						ccp.ek.scene_par.change_part_string,fr.get_charset()));
+						ccp.sk.scene_par.change_part_string,fr.get_charset()));
 				continue;
 			case "push_string_part_change_name":
 				if((str=fr.get_string())==null)
-					str=ccp.ek.scene_par.change_part_string;
+					str=ccp.sk.scene_par.change_part_string;
 				else if((str=str.trim()).length()<=0)
-					str=ccp.ek.scene_par.change_part_string;
+					str=ccp.sk.scene_par.change_part_string;
 				else
-					str=ccp.ek.scene_par.change_part_string+";"+str;
+					str=ccp.sk.scene_par.change_part_string+";"+str;
 				
 				ccp.push_change_part_name(
 					new change_name(new String[] {},str,fr.get_charset()));
@@ -441,14 +441,14 @@ public class component_core_4 extends component_core_3
 			}
 
 			case "part_driver_mount":
-				assemble_file_name_array=part_driver_mount(fr,ccp.ek,ccp.request_response);
+				assemble_file_name_array=part_driver_mount(fr,ccp.sk,ccp.request_response);
 				break;
 			case "external_part_driver_mount":
 				assemble_file_name_array=external_part_driver_mount(fr,ccp);
 				break;
 
 			case "mount":
-				assemble_file_name_array=file_mount(fr,ccp.ek,false);
+				assemble_file_name_array=file_mount(fr,ccp.sk,false);
 				break;
 			case "client_parameter_mount":
 			{
@@ -457,13 +457,13 @@ public class component_core_4 extends component_core_3
 					debug_information.println("client_parameter_mount error((my_directory==null)||(my_file_name==null))");
 				else if(((my_directory=my_directory.trim()).length()<=0)||((my_file_name=my_file_name.trim()).length()<=0))
 					debug_information.println("client_parameter_mount error((my_directory.length()<=0)||(my_file_name.length()<=0))");
-				else if((my_directory=ccp.ek.get_client_parameter(my_directory.trim()))==null)
+				else if((my_directory=ccp.sk.get_client_parameter(my_directory.trim()))==null)
 					debug_information.println("client_parameter_mount error(my_directory==null)");
 				else if((my_directory=my_directory.trim()).length()<0)
 					debug_information.println("client_parameter_mount error(my_directory.length()<0)");
 				else{
 					fr.push_string_array(new String[] {str+File.separatorChar+my_file_name});
-					assemble_file_name_array=file_mount(fr,ccp.ek,false);
+					assemble_file_name_array=file_mount(fr,ccp.sk,false);
 					break;
 				}
 				continue;
@@ -475,7 +475,7 @@ public class component_core_4 extends component_core_3
 				String assemble_file_name	=file_reader.separator(cut_string.do_cut(fr.get_string()));
 				if((select_token.length()<=0)||(select_file_name.length()<=0)||(assemble_file_name.length()<=0))
 					continue;
-				if((select_token=ccp.ek.get_client_parameter(select_token))==null)
+				if((select_token=ccp.sk.get_client_parameter(select_token))==null)
 					continue;
 				select_file_name=fr.directory_name+File.separatorChar+select_file_name;
 				file_reader f_select=new file_reader(select_file_name,fr.get_charset());
@@ -487,7 +487,7 @@ public class component_core_4 extends component_core_3
 							my_select_directory_name=fr.directory_name+my_select_directory_name;
 							fr.push_string_array(new String[]
 								{my_select_directory_name+File.separatorChar+assemble_file_name});
-							assemble_file_name_array=file_mount(fr,ccp.ek,true);
+							assemble_file_name_array=file_mount(fr,ccp.sk,true);
 							break;
 						}
 				}
@@ -500,9 +500,9 @@ public class component_core_4 extends component_core_3
 						if((str=file_reader.separator(str.trim())).length()>0) {
 							if(str.charAt(str.length()-1)!=File.separatorChar)
 								str+=File.separatorChar;
-							str+=ccp.ek.scene_par.scene_sub_directory+fr.get_string();
+							str+=ccp.sk.scene_par.scene_sub_directory+fr.get_string();
 							fr.push_string_array(new String[] {str});
-							assemble_file_name_array=file_mount(fr,ccp.ek,true);
+							assemble_file_name_array=file_mount(fr,ccp.sk,true);
 							break;
 						}else
 							debug_information.println("environment_scene_sub_directory_mount error",
@@ -516,13 +516,13 @@ public class component_core_4 extends component_core_3
 				fr.get_string();
 				continue;
 			case "charset_mount":
-				assemble_file_name_array=charset_file_mount(fr,ccp.ek,false);
+				assemble_file_name_array=charset_file_mount(fr,ccp.sk,false);
 				break;
 			case "client_parameter_charset_mount":
 				if((str=fr.get_string())==null) 
 					debug_information.println(
 							"client_parameter_charset_mount error","((str=fr.get_string())!=null)");
-				else if((str=ccp.ek.get_client_parameter(str))==null)
+				else if((str=ccp.sk.get_client_parameter(str))==null)
 					debug_information.println("client_parameter_charset_mount error","str!=null)");
 				else{
 					String my_str;
@@ -531,7 +531,7 @@ public class component_core_4 extends component_core_3
 						continue;
 					}else{
 						fr.push_string_array(new String[]{str+File.separatorChar+my_str});
-						assemble_file_name_array=charset_file_mount(fr,ccp.ek,false);
+						assemble_file_name_array=charset_file_mount(fr,ccp.sk,false);
 						break;
 					}	
 				}
@@ -544,7 +544,7 @@ public class component_core_4 extends component_core_3
 				String select_file_name		=cut_string.do_cut(fr.get_string());
 				String assemble_file_name	=cut_string.do_cut(fr.get_string());
 				if((select_token.length()>0)&&(select_file_name.length()>0)&&(assemble_file_name.length()<=0))
-					if((select_token=ccp.ek.get_client_parameter(select_token))!=null){
+					if((select_token=ccp.sk.get_client_parameter(select_token))!=null){
 						select_file_name=fr.directory_name+File.separatorChar+select_file_name;
 						boolean done_flag=false;
 						file_reader f_select=new file_reader(select_file_name,fr.get_charset());
@@ -556,7 +556,7 @@ public class component_core_4 extends component_core_3
 									my_select_directory_name=fr.directory_name+my_select_directory_name;
 									fr.push_string_array(new String[]
 										{my_select_directory_name+File.separatorChar+assemble_file_name});
-									assemble_file_name_array=charset_file_mount(fr,ccp.ek,true);
+									assemble_file_name_array=charset_file_mount(fr,ccp.sk,true);
 									done_flag=true;
 									break;
 								}
@@ -574,9 +574,9 @@ public class component_core_4 extends component_core_3
 						if((str=file_reader.separator(str.trim())).length()>0){
 							if(str.charAt(str.length()-1)!=File.separatorChar)
 								str+=File.separatorChar;
-							str+=ccp.ek.scene_par.scene_sub_directory+fr.get_string();
+							str+=ccp.sk.scene_par.scene_sub_directory+fr.get_string();
 							fr.push_string_array(new String[]{str});
-							assemble_file_name_array=charset_file_mount(fr,ccp.ek,true);
+							assemble_file_name_array=charset_file_mount(fr,ccp.sk,true);
 							break;
 						}else
 							debug_information.println("environment_scene_sub_directory_charset_mount error",

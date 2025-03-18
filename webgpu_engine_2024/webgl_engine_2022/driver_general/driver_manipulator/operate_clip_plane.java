@@ -1,11 +1,10 @@
 package driver_manipulator;
 
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
-
 import kernel_transformation.plane;
 import kernel_common_class.const_value;
 import kernel_driver.modifier_driver;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_transformation.box;
 
 class clip_plane_modifier extends modifier_driver
@@ -15,7 +14,7 @@ class clip_plane_modifier extends modifier_driver
 	public void destroy()
 	{
 	}
-	public void modify(long my_current_time,engine_kernel ek,client_information ci)
+	public void modify(long my_current_time,scene_kernel sk,client_information ci)
 	{
 		double p=((double)(my_current_time-start_time))/((double)(terminate_time-start_time));
 		p=(p<0.0)?0.0:(p>1.0)?1.0:p;
@@ -32,14 +31,14 @@ class clip_plane_modifier extends modifier_driver
 		else
 			(ci.clip_plane=target).close_clip_plane_flag=true;
 	}
-	public void last_modify(long my_current_time,engine_kernel ek,client_information ci,boolean terminated_flag)
+	public void last_modify(long my_current_time,scene_kernel sk,client_information ci,boolean terminated_flag)
 	{
 		if(destroy_flag)
 			ci.clip_plane=null;
 		else
 			(ci.clip_plane=target).close_clip_plane_flag=true;
 	}
-	public boolean can_start(long my_current_time,engine_kernel ek,client_information ci)
+	public boolean can_start(long my_current_time,scene_kernel sk,client_information ci)
 	{
 		return true;
 	}
@@ -55,12 +54,12 @@ class clip_plane_modifier extends modifier_driver
 }
 public class operate_clip_plane
 {
-	public static void clip_plane_request(int modifier_container_id,engine_kernel ek,client_information ci)
+	public static void clip_plane_request(int modifier_container_id,scene_kernel sk,client_information ci)
 	{
 		String str;
 		if((str=ci.request_response.get_parameter("event_operation"))==null)
 			return;
-		long my_start_time=ek.modifier_cont[modifier_container_id].get_timer().get_current_time();
+		long my_start_time=sk.modifier_cont[modifier_container_id].get_timer().get_current_time();
 		long my_terminate_time=ci.display_camera_result.cam.parameter.switch_time_length+my_start_time;
 		
 		box my_box;
@@ -87,7 +86,7 @@ public class operate_clip_plane
 								target_pl.D-=diff;
 						}
 			}
-			ek.modifier_cont[modifier_container_id].add_modifier(
+			sk.modifier_cont[modifier_container_id].add_modifier(
 				new clip_plane_modifier(true,source_pl,target_pl,my_start_time,my_terminate_time));
 			break;
 		case "on":
@@ -111,7 +110,7 @@ public class operate_clip_plane
 							}
 				}
 			}
-			ek.modifier_cont[modifier_container_id].add_modifier(
+			sk.modifier_cont[modifier_container_id].add_modifier(
 				new clip_plane_modifier(false,source_pl,target_pl,my_start_time,my_terminate_time));
 			break;
 		}

@@ -1,13 +1,13 @@
 package driver_movement;
 
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class movement_delete_point extends movement_design_base
 {
-	public movement_delete_point(engine_kernel ek,client_information ci,movement_manager manager)
+	public movement_delete_point(scene_kernel sk,client_information ci,movement_manager manager)
 	{
-		super(ek,ci,manager);
+		super(sk,ci,manager);
 		
 		if(comp==null)
 			return;

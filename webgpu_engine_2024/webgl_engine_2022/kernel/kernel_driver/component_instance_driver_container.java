@@ -4,8 +4,8 @@ package kernel_driver;
 import kernel_common_class.const_value;
 import kernel_common_class.debug_information;
 import kernel_component.component;
-import kernel_engine.engine_kernel;
 import kernel_network.client_request_response;
+import kernel_scene.scene_kernel;
 
 public class component_instance_driver_container
 {
@@ -59,13 +59,13 @@ public class component_instance_driver_container
 		if(instance_lod_precision_scale[comp.component_id]<const_value.min_value)
 			instance_lod_precision_scale[comp.component_id]=1.0;
 	}
-	private void reset_drivers(component comp,engine_kernel ek,
+	private void reset_drivers(component comp,scene_kernel sk,
 			client_request_response request_response)
 	{
 		int driver_number=comp.driver_number(),child_number=comp.children_number();
 		
 		for(int i=0;i<child_number;i++)
-			reset_drivers(comp.children[i],ek,request_response);
+			reset_drivers(comp.children[i],sk,request_response);
 		
 		if(driver_number<=0)
 			component_driver_array			[comp.component_id]=null;
@@ -75,7 +75,7 @@ public class component_instance_driver_container
 				component_instance_driver i_d;
 				component_driver c_d=comp.driver_array.get(i);
 				try{
-					i_d=c_d.create_component_instance_driver(comp,i,ek,request_response);
+					i_d=c_d.create_component_instance_driver(comp,i,sk,request_response);
 				}catch(Exception e){
 					e.printStackTrace();
 					
@@ -104,13 +104,13 @@ public class component_instance_driver_container
 			return null;
 		return component_driver_array[comp.component_id][driver_id];
 	}
-	public component_instance_driver_container(engine_kernel ek,client_request_response request_response)
+	public component_instance_driver_container(scene_kernel sk,client_request_response request_response)
 	{
-		component root_component		=ek.component_cont.root_component;
+		component root_component		=sk.component_cont.root_component;
 		int max_component_number		=root_component.component_id+1;
 		component_driver_array			=new component_instance_driver[max_component_number][];
 		instance_lod_precision_scale	=new double[max_component_number];
-		reset_drivers(root_component,ek,request_response);
+		reset_drivers(root_component,sk,request_response);
 		reset_precision_scale(root_component);
 	}
 }

@@ -2,9 +2,9 @@ package driver_movement;
 
 import kernel_component.component;
 import kernel_driver.component_instance_driver;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
 import kernel_network.network_parameter;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_transformation.location;
 
 public class movement_move_modifier  extends driver_location_modifier.location_modification_modifier
@@ -59,76 +59,76 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 		}
 		modify_id=0;
 	}
-	private void do_component_driver(component comp,engine_kernel ek,client_information ci)
+	private void do_component_driver(component comp,scene_kernel sk,client_information ci)
 	{
 		for(int i=0,n=comp.driver_number();i<n;i++)
-			component_instance_driver.execute_component_function(comp.component_id,i,network_par,ek,ci);
+			component_instance_driver.execute_component_function(comp.component_id,i,network_par,sk,ci);
 		for(int i=0,n=comp.children_number();i<n;i++)
-			do_component_driver(comp.children[i],ek,ci);
+			do_component_driver(comp.children[i],sk,ci);
 	}
-	private void call_component_driver(engine_kernel ek,client_information ci,long my_current_time,int operation_id)
+	private void call_component_driver(scene_kernel sk,client_information ci,long my_current_time,int operation_id)
 	{
 		component comp;
 		if(network_par!=null){
 			network_par[0]=new network_parameter("operation_id",	Integer.toString(operation_id));
 			network_par[1]=new network_parameter("current_time",	Long.toString(my_current_time));
-			if((comp=ek.component_cont.get_component(component_id))!=null)
-				do_component_driver(comp,ek,ci);
+			if((comp=sk.component_cont.get_component(component_id))!=null)
+				do_component_driver(comp,sk,ci);
 			if(follow_component_id!=null)
 				for(int i=0,ni=follow_component_id.length;i<ni;i++)
-					if((comp=ek.component_cont.get_component(follow_component_id[i]))!=null)
-						do_component_driver(comp,ek,ci);
+					if((comp=sk.component_cont.get_component(follow_component_id[i]))!=null)
+						do_component_driver(comp,sk,ci);
 		}
 	}
-	public boolean can_start(long my_current_time,engine_kernel ek,client_information ci)
+	public boolean can_start(long my_current_time,scene_kernel sk,client_information ci)
 	{
-		if(super.can_start(my_current_time,ek,ci))
+		if(super.can_start(my_current_time,sk,ci))
 			if(suspend.get_suspend_component_number()<=0)
 				if(suspend.get_suspend_match_number()<=0)
 					return true;
 		return false;
 	}
-	public void modify(long my_current_time,engine_kernel ek,client_information ci)
+	public void modify(long my_current_time,scene_kernel sk,client_information ci)
 	{
 		component comp;
-		super.modify(my_current_time, ek, ci);
-		if((comp=ek.component_cont.get_component(component_id))!=null){
-			comp.modify_display_flag(clear_parameter_channel_id,true,ek.component_cont);
-			comp.modify_display_flag(set_parameter_channel_id,true,ek.component_cont);
+		super.modify(my_current_time, sk, ci);
+		if((comp=sk.component_cont.get_component(component_id))!=null){
+			comp.modify_display_flag(clear_parameter_channel_id,true,sk.component_cont);
+			comp.modify_display_flag(set_parameter_channel_id,true,sk.component_cont);
 			if(follow_component_id!=null)
 				for(int i=0,ni=follow_component_id.length;i<ni;i++)
-					if((comp=ek.component_cont.get_component(follow_component_id[i]))!=null) {
-						comp.modify_display_flag(clear_parameter_channel_id,true,ek.component_cont);
-						comp.modify_display_flag(set_parameter_channel_id,true,ek.component_cont);
+					if((comp=sk.component_cont.get_component(follow_component_id[i]))!=null) {
+						comp.modify_display_flag(clear_parameter_channel_id,true,sk.component_cont);
+						comp.modify_display_flag(set_parameter_channel_id,true,sk.component_cont);
 						comp.uniparameter.cacaulate_location_flag=true;
 					}
 		}
-		call_component_driver(ek,ci,my_current_time,modify_id++);
+		call_component_driver(sk,ci,my_current_time,modify_id++);
 	}
-	public void last_modify(long my_current_time,engine_kernel ek,client_information ci,boolean terminated_flag)
+	public void last_modify(long my_current_time,scene_kernel sk,client_information ci,boolean terminated_flag)
 	{
 		component comp;
 		if(!terminated_flag)
 			return;
-		super.last_modify(my_current_time,ek,ci,true);
-		if((comp=ek.component_cont.get_component(component_id))==null)
+		super.last_modify(my_current_time,sk,ci,true);
+		if((comp=sk.component_cont.get_component(component_id))==null)
 			return;
-		call_component_driver(ek,ci,my_current_time,-1);
+		call_component_driver(sk,ci,my_current_time,-1);
 		
-		comp.modify_display_flag(clear_parameter_channel_id,!start_state_flag,ek.component_cont);
-		comp.modify_display_flag(set_parameter_channel_id,!terminate_state_flag,ek.component_cont);
+		comp.modify_display_flag(clear_parameter_channel_id,!start_state_flag,sk.component_cont);
+		comp.modify_display_flag(set_parameter_channel_id,!terminate_state_flag,sk.component_cont);
 		
 		if(terminate_state_flag)
-			comp.set_component_move_location(new location(), ek.component_cont);
+			comp.set_component_move_location(new location(), sk.component_cont);
 		
 		if(follow_component_id!=null)
 			for(int i=0,ni=follow_component_id.length;i<ni;i++)
-				if((comp=ek.component_cont.get_component(follow_component_id[i]))!=null) {
-					comp.modify_display_flag(clear_parameter_channel_id,!start_state_flag,ek.component_cont);
-					comp.modify_display_flag(set_parameter_channel_id,!terminate_state_flag,ek.component_cont);
+				if((comp=sk.component_cont.get_component(follow_component_id[i]))!=null) {
+					comp.modify_display_flag(clear_parameter_channel_id,!start_state_flag,sk.component_cont);
+					comp.modify_display_flag(set_parameter_channel_id,!terminate_state_flag,sk.component_cont);
 					
 					if(terminate_state_flag)
-						comp.set_component_move_location(new location(),ek.component_cont);
+						comp.set_component_move_location(new location(),sk.component_cont);
 				}
 	}
 }

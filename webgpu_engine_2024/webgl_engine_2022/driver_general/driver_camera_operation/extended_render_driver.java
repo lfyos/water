@@ -2,12 +2,12 @@ package driver_camera_operation;
 
 import kernel_part.part;
 import kernel_render.render;
+import kernel_scene.scene_kernel;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 import kernel_driver.part_driver;
 import kernel_part.part_parameter;
 import kernel_driver.render_driver;
-import kernel_engine.engine_kernel;
-import kernel_engine.scene_parameter;
-import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
 import kernel_driver.render_instance_driver;
 import kernel_network.client_request_response;
@@ -35,7 +35,7 @@ public class extended_render_driver extends render_driver
 		ret_val.depth_end	=this.depth_end;
 		return ret_val;
 	}
-	public void initialize_render_driver(int render_id,engine_kernel ek,client_request_response request_response)
+	public void initialize_render_driver(int render_id,scene_kernel sk,client_request_response request_response)
 	{
 	}
 	public String[] get_render_list(
@@ -68,7 +68,7 @@ public class extended_render_driver extends render_driver
 				part_fr.get_double(),part_fr.get_double(),part_fr.get_int());
 	}
 	public render_instance_driver create_render_instance_driver(render r,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 		return new extended_render_instance_driver(depth_start,depth_end);
 	}

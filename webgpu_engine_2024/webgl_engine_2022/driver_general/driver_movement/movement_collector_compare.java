@@ -1,12 +1,12 @@
 package driver_movement;
 
 import kernel_component.component;
-import kernel_engine.engine_kernel;
 import kernel_transformation.point;
-import kernel_engine.client_information;
 import kernel_component.component_array;
 import kernel_component.component_collector;
 import kernel_component.component_link_list;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_common_class.component_collector_jason_part;
 
 public class movement_collector_compare
@@ -96,13 +96,13 @@ public class movement_collector_compare
 			}
 		}
 	}
-	public movement_collector_compare(client_information ci,engine_kernel ek,
+	public movement_collector_compare(client_information ci,scene_kernel sk,
 			component_collector source,component_collector target,String pre_str,String follow_str)
 	{
-		source_matched_component=new component_collector(ek.render_cont.renders);
-		target_matched_component=new component_collector(ek.render_cont.renders);
-		unmatched_component		=new component_collector(ek.render_cont.renders);
-		unnecessary_component	=new component_collector(ek.render_cont.renders);
+		source_matched_component=new component_collector(sk.render_cont.renders);
+		target_matched_component=new component_collector(sk.render_cont.renders);
+		unmatched_component		=new component_collector(sk.render_cont.renders);
+		unnecessary_component	=new component_collector(sk.render_cont.renders);
 		
 		create_collector(source,target);
 		
@@ -110,15 +110,15 @@ public class movement_collector_compare
 		
 		ci.request_response.println(pre_str,"	\"matched_collector\":");
 		new component_collector_jason_part(pre_str+"		",false,false,false,true,
-				source_matched_component,target_matched_component,ci,ek);
+				source_matched_component,target_matched_component,ci,sk);
 		
 		ci.request_response.println(pre_str,"	\"unmatched_collector\":");
 		new component_collector_jason_part(pre_str+"		",false,false,false,false,
-				unmatched_component,null,ci,ek);
+				unmatched_component,null,ci,sk);
 		
 		ci.request_response.println(pre_str,"	\"unnecessary_collector\":");
 		new component_collector_jason_part(pre_str+"		",false,true,false,false,
-				unnecessary_component,null,ci,ek);
+				unnecessary_component,null,ci,sk);
 
 		ci.request_response.println(pre_str,"}"+follow_str);
 	}
