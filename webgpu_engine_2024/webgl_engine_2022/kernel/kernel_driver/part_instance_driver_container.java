@@ -1,25 +1,25 @@
 package kernel_driver;
 
-import kernel_engine.engine_kernel;
 import kernel_network.client_request_response;
 import kernel_part.part;
 import kernel_render.render;
+import kernel_scene.scene_kernel;
 
 public class part_instance_driver_container
 {
 	private part_instance_driver part_instance_driver_array[][];
 	
-	public part_instance_driver_container(engine_kernel ek,client_request_response request_response)
+	public part_instance_driver_container(scene_kernel sk,client_request_response request_response)
 	{
-		part_instance_driver_array=new part_instance_driver[ek.render_cont.renders.size()][];
+		part_instance_driver_array=new part_instance_driver[sk.render_cont.renders.size()][];
 		for(int i=0,ni=part_instance_driver_array.length;i<ni;i++) {
-			render r=ek.render_cont.renders.get(i);
+			render r=sk.render_cont.renders.get(i);
 			part_instance_driver_array[i]=new part_instance_driver[r.parts.size()];
 			for(int j=0,nj=part_instance_driver_array[i].length;j<nj;j++) {
 				part_instance_driver_array[i][j]=null;
 				part p=r.parts.get(j);
 				if(p.driver!=null)
-					part_instance_driver_array[i][j]=p.driver.create_part_instance_driver(p,ek,request_response);
+					part_instance_driver_array[i][j]=p.driver.create_part_instance_driver(p,sk,request_response);
 			}
 		}	
 	}

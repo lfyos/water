@@ -1,7 +1,7 @@
 package kernel_program_reader;
 
-import kernel_engine.system_parameter;
 import kernel_common_class.common_reader;
+import kernel_scene.system_parameter;
 import kernel_common_class.class_file_reader;
 
 public class program_file_reader

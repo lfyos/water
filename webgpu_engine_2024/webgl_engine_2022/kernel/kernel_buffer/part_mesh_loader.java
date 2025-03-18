@@ -2,7 +2,7 @@ package kernel_buffer;
 
 import kernel_part.part;
 import kernel_render.render_container;
-import kernel_engine.part_process_sequence;
+import kernel_scene.part_process_sequence;
 
 public class part_mesh_loader
 {

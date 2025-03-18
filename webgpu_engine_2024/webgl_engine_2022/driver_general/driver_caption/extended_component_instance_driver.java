@@ -1,14 +1,14 @@
 package driver_caption;
 
 import kernel_part.part;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_component.component;
 
 import java.util.Date;
 
 import kernel_camera.camera_result;
-import kernel_engine.engine_kernel;
 import kernel_common_class.jason_string;
-import kernel_engine.client_information;
 import kernel_common_class.format_change;
 import kernel_driver.component_instance_driver;
 
@@ -29,7 +29,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		max_time_length=my_max_time_length;
 		display_information="";
 	}
-	public void response_init_component_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 		
 	}
@@ -94,15 +94,15 @@ public class extended_component_instance_driver extends component_instance_drive
 		}	
 		return ret_val;
 	}
-	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		boolean no_time_length_flag=true;
 		
 		String new_display_information;
-		if((new_display_information=pickup_string(ci,ek.scene_par.display_precision)).isEmpty())
+		if((new_display_information=pickup_string(ci,sk.scene_par.display_precision)).isEmpty())
 			if((new_display_information=ci.message_display.get_display_message()).isEmpty())
-				if(ek.collector_stack.get_top_collector()!=null)
-					if((new_display_information=ek.collector_stack.get_top_collector().description)==null)
+				if(sk.collector_stack.get_top_collector()!=null)
+					if((new_display_information=sk.collector_stack.get_top_collector().description)==null)
 						new_display_information="";
 					else
 						no_time_length_flag=false;
@@ -120,15 +120,15 @@ public class extended_component_instance_driver extends component_instance_drive
 				return true;
 		return false;
 	}
-	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}
-	public void create_component_parameter(engine_kernel ek,client_information ci)
+	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print(jason_string.change_string(display_information));
 	}
-	public String[] response_component_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
 		return null;
 	}

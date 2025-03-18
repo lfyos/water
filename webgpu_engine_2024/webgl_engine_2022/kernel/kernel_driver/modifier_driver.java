@@ -1,7 +1,7 @@
 package kernel_driver;
 
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class modifier_driver
 {
@@ -9,13 +9,13 @@ public class modifier_driver
 	public void destroy()
 	{
 	}
-	public void modify(long my_current_time,engine_kernel ek,client_information ci)
+	public void modify(long my_current_time,scene_kernel sk,client_information ci)
 	{
 	}
-	public void last_modify(long my_current_time,engine_kernel ek,client_information ci,boolean terminated_flag)
+	public void last_modify(long my_current_time,scene_kernel sk,client_information ci,boolean terminated_flag)
 	{
 	}
-	public boolean can_start(long my_current_time,engine_kernel ek,client_information ci)
+	public boolean can_start(long my_current_time,scene_kernel sk,client_information ci)
 	{
 		return true;
 	}

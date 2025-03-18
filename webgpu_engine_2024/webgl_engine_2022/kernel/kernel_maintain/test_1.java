@@ -19,8 +19,7 @@ public class test_1 extends travel_through_directory
 	{
 		super(new String[]
 		{
-//			"F:\\water_all\\.git",
-//			"F:\\water_all\\webgpu_engine_2024"
+//			"F:\\water_all\\.git"
 		});
 	}
 	public static void main(String args[])

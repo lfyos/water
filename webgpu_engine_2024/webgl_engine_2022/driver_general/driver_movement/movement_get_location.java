@@ -1,16 +1,16 @@
 package driver_movement;
 
 import kernel_common_class.jason_string;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_transformation.point;
 import kernel_transformation.location;
 
 public class movement_get_location extends movement_design_base
 {
-	public movement_get_location(engine_kernel ek,client_information ci,movement_manager manager)
+	public movement_get_location(scene_kernel sk,client_information ci,movement_manager manager)
 	{
-		super(ek,ci,manager);
+		super(sk,ci,manager);
 		
 		movement_location_to_move_rotate p;
 		String coordinate_str=(comp==null)?"":ci.request_response.get_parameter("coordinate");

@@ -3,22 +3,22 @@ package kernel_client_interface;
 
 import kernel_part.part;
 import kernel_render.render;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_common_class.debug_information;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
 import kernel_file_manager.file_directory;
 
 
 public class dispatch_buffer_request
 {
-	private static String download_data(engine_kernel ek,client_information ci)
+	private static String download_data(scene_kernel sk,client_information ci)
 	{
 		String str;
 		int render_id,part_id;
 
-		if(ek.render_cont.renders==null){
+		if(sk.render_cont.renders==null){
 			debug_information.println(
-				"(ek.render_cont.renders==null) in do_buffer_dispatch of dispatch_system_request");
+				"(sk.render_cont.renders==null) in do_buffer_dispatch of dispatch_system_request");
 			return null;
 		}
 		if((str=ci.request_response.get_parameter("render"))==null){
@@ -32,7 +32,7 @@ public class dispatch_buffer_request
 				"render_id less than zero in do_buffer_dispatch of dispatch_system_request");
 			return null;
 		}
-		int render_number=ek.render_cont.renders.size();
+		int render_number=sk.render_cont.renders.size();
 		if(render_id>=render_number){
 			debug_information.println(
 				"render_id more than max value in do_buffer_dispatch of dispatch_system_request\t:\t",
@@ -40,14 +40,14 @@ public class dispatch_buffer_request
 			return null;
 		}
 		render  r;
-		if((r=ek.render_cont.renders.get(render_id))==null){
+		if((r=sk.render_cont.renders.get(render_id))==null){
 			debug_information.println(
-				"(ek.render_cont.renders[render_id]==null) in do_buffer_dispatch of dispatch_system_request");
+				"(sk.render_cont.renders[render_id]==null) in do_buffer_dispatch of dispatch_system_request");
 			return null;
 		}
 		if(r.parts==null){
 			debug_information.println(
-				"(ek.render_cont.renders[render_id].parts==null) in do_buffer_dispatch of dispatch_system_request");
+				"(sk.render_cont.renders[render_id].parts==null) in do_buffer_dispatch of dispatch_system_request");
 			return null;
 		}
 		if((str=ci.request_response.get_parameter("part"))==null){
@@ -79,11 +79,11 @@ public class dispatch_buffer_request
 				"No data_file in do_buffer_dispatch of dispatch_system_request");
 			return null;
 		}
-		str=file_directory.part_file_directory(p,ek.system_par,ek.scene_par)+"mesh."+str+".gzip_text";
+		str=file_directory.part_file_directory(p,sk.system_par,sk.scene_par)+"mesh."+str+".gzip_text";
 		
 		return str;
 	}
-	static public String do_dispatch(engine_kernel ek,client_information ci)
+	static public String do_dispatch(scene_kernel sk,client_information ci)
 	{
 		String str=ci.request_response.get_parameter("operation");
 		str=(str==null)?"":(str.toLowerCase());
@@ -107,13 +107,13 @@ public class dispatch_buffer_request
 					return null;
 				switch(index_id=Integer.decode(str.substring(0,index_id))){
 				case 0:
-					str=ek.render_cont.system_part_package.package_file_name[package_id];
+					str=sk.render_cont.system_part_package.package_file_name[package_id];
 					break;
 				case 1:
-					str=ek.render_cont.scene_part_package.package_file_name[package_id];
+					str=sk.render_cont.scene_part_package.package_file_name[package_id];
 					break;
 				default:
-					str=ek.render_cont.type_part_package[index_id-2].package_file_name[package_id];
+					str=sk.render_cont.type_part_package[index_id-2].package_file_name[package_id];
 					break;
 				}
 				return str;
@@ -127,7 +127,7 @@ public class dispatch_buffer_request
 				return null;
 			}
 		case "buffer_data":
-			return download_data(ek,ci);
+			return download_data(sk,ci);
 		}
 	}
 }

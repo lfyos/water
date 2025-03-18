@@ -1,12 +1,12 @@
 package kernel_driver;
 
 import kernel_part.part;
+import kernel_scene.scene_kernel;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 import kernel_transformation.box;
 import kernel_component.component;
 import kernel_transformation.point;
-import kernel_engine.engine_kernel;
-import kernel_engine.scene_parameter;
-import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_part.caculate_part_items;
@@ -19,7 +19,7 @@ public class part_driver
 	public void destroy()
 	{
 	}
-	public void initialize_part_driver(part p,engine_kernel ek,client_request_response request_response)
+	public void initialize_part_driver(part p,scene_kernel sk,client_request_response request_response)
 	{	
 	}
 	public part_driver()
@@ -58,19 +58,19 @@ public class part_driver
 		return (my_point==null)?null:new box(my_point);
 	}
 	public String [][]assemble_file_name_and_file_charset(file_reader fr,part p,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 		return null;
 	}
 	public component_driver create_component_driver(
 			file_reader fr,boolean rollback_flag,part my_component_part,
 			component_load_source_container component_load_source_cont,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 		return new component_driver(my_component_part);
 	}
 	public part_instance_driver create_part_instance_driver(part p,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 		return new part_instance_driver();
 	}

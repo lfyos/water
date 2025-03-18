@@ -1,7 +1,7 @@
 package kernel_component;
 
 import kernel_common_class.nanosecond_timer;
-import kernel_engine.engine_kernel;
+import kernel_scene.scene_kernel;
 
 public class component_selection
 {
@@ -147,9 +147,9 @@ public class component_selection
 		for(int i=0,ni=comp_cont.comp_list.size();i<ni;i++)
 			set_selected_flag(comp_cont.comp_list.get(i),component_cont);
 	}
-	public component_selection(engine_kernel ek)
+	public component_selection(scene_kernel sk)
 	{
-		current_time=ek.current_time;
-		ek.mark_reset_flag();
+		current_time=sk.current_time;
+		sk.mark_reset_flag();
 	}
 }

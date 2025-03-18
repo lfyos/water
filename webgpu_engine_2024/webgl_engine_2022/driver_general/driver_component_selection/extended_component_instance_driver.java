@@ -3,14 +3,14 @@ package driver_component_selection;
 import kernel_transformation.box;
 import kernel_component.component;
 import kernel_camera.camera_result;
-import kernel_engine.engine_kernel;
 import kernel_render.render_target;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_transformation.point;
 import kernel_camera.locate_camera;
 import kernel_driver.component_driver;
 import kernel_common_class.const_value;
 import kernel_component.component_array;
-import kernel_engine.client_information;
 import kernel_component.component_collector;
 import kernel_component.component_link_list;
 import kernel_component.component_selection;
@@ -36,11 +36,11 @@ public class extended_component_instance_driver extends component_instance_drive
 		modifier_container_id=my_modifier_container_id;
 		change_type_flag=true;
 	}
-	public void response_init_component_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print(screen_rectangle_component_id);
 	}
-	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		if((cr.target.main_display_target_flag)&&(ci.display_camera_result!=null)){
 			if(ci.display_camera_result.cam.parameter.change_type_flag^change_type_flag){
@@ -51,16 +51,16 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		return true;
 	}
-	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}
-	public void create_component_parameter(engine_kernel ek,client_information ci)
+	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print(change_type_flag?"1":"0");
 	}
 	private void select_many_component(component comp,int driver_id,
-			int control_code,engine_kernel ek,client_information ci)
+			int control_code,scene_kernel sk,client_information ci)
 	{
 		String str;
 		
@@ -101,15 +101,15 @@ public class extended_component_instance_driver extends component_instance_drive
 				center.x+diff.x*my_x1,center.y+diff.y*my_y1,view_volume_box.p[1].z);
 		
 		render_target cam_target=new render_target(true,null,comp.component_id,driver_id,0,
-				new component[]{ek.component_cont.root_component},null,	t.camera_id,t.parameter_channel_id,
+				new component[]{sk.component_cont.root_component},null,	t.camera_id,t.parameter_channel_id,
 				null,view_volume_box,ci.clip_plane,null,false,false);
 	
 		if(cam_target.view_volume_box.distance2()<const_value.min_value2)
 			return ;
 		
-		camera_result cam_result=new camera_result(ci.display_camera_result.cam,cam_target,ek.component_cont);
+		camera_result cam_result=new camera_result(ci.display_camera_result.cam,cam_target,sk.component_cont);
 		component_collector collector=(new list_component_on_collector(
-			true,false,false,((function_id%2)==0)?true:false,false,ek,ci,cam_result)).collector;
+			true,false,false,((function_id%2)==0)?true:false,false,sk,ci,cam_result)).collector;
 		
 		if(collector.component_number<=0)
 			return;
@@ -119,12 +119,12 @@ public class extended_component_instance_driver extends component_instance_drive
 			return;
 		case 0:
 		case 1:
-			component_selection cs=new component_selection(ek); 
+			component_selection cs=new component_selection(sk); 
 			for(int i=0,ni=collector.component_collector.length;i<ni;i++)
 				if(collector.component_collector[i]!=null)
 					for(int j=0,nj=collector.component_collector[i].length;j<nj;j++)
 						for(component_link_list p=collector.component_collector[i][j];p!=null;p=p.next_list_item)
-							cs.set_selected_flag(p.comp,ek.component_cont);
+							cs.set_selected_flag(p.comp,sk.component_cont);
 			break;
 		case 2:
 		case 3:
@@ -133,22 +133,22 @@ public class extended_component_instance_driver extends component_instance_drive
 			if((comp_cont=collector.get_component_array())!=null)
 				if((my_box=comp_cont.get_box())!=null)
 					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
-							ek.modifier_cont[modifier_container_id],my_box,null,
+							sk.modifier_cont[modifier_container_id],my_box,null,
 							ci.display_camera_result.cam.parameter.scale_value,true,true,true);
 			break;
 		}
 		if(control_code==0) 
 			return;
 		
-		ek.collector_stack.push_collector(true,
-			ek.system_par,ek.scene_par,collector,ek.component_cont,ek.render_cont.renders);
+		sk.collector_stack.push_collector(true,
+			sk.system_par,sk.scene_par,collector,sk.component_cont,sk.render_cont.renders);
 		collector.title=Long.toString(collector.list_id);
 		
 		return;
 	}
 	
 	private void select_single_component(
-			component comp,int control_code,engine_kernel ek,client_information ci)
+			component comp,int control_code,scene_kernel sk,client_information ci)
 	{
 		String str;
 
@@ -156,7 +156,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			return;
 		
 		driver_audio_player.extended_component_driver acd=null;
-		component_driver cd=ek.component_cont.get_component(audio_component_id).driver_array.get(0);
+		component_driver cd=sk.component_cont.get_component(audio_component_id).driver_array.get(0);
 		if(cd!=null)
 			acd=(driver_audio_player.extended_component_driver)cd;
 		
@@ -167,19 +167,19 @@ public class extended_component_instance_driver extends component_instance_drive
 		case 1:
 			if(acd!=null)
 				acd.set_audio(null);
-			component_selection cs=new component_selection(ek);
+			component_selection cs=new component_selection(sk);
 			
 			if(ci.parameter.comp==null)
-				cs.clear_selected_flag(ek.component_cont);
+				cs.clear_selected_flag(sk.component_cont);
 			else
-				cs.switch_selected_flag(ci.parameter.comp,ek.component_cont);
+				cs.switch_selected_flag(ci.parameter.comp,sk.component_cont);
 			break;
 		case 2:
 		case 3:
 			(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
-					ek.modifier_cont[modifier_container_id],ek.component_cont,ci.display_camera_result,
+					sk.modifier_cont[modifier_container_id],sk.component_cont,ci.display_camera_result,
 					ci.parameter,null,ci.display_camera_result.cam.parameter.scale_value,
-					ek.modifier_cont[modifier_container_id].get_timer().get_current_time(),
+					sk.modifier_cont[modifier_container_id].get_timer().get_current_time(),
 					true,true,true,null,null);
 			break;
 		}
@@ -191,7 +191,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			return;
 
 		component_array comp_array=new component_array();
-		component_collector collector=ek.collector_stack.get_top_collector();
+		component_collector collector=sk.collector_stack.get_top_collector();
 		
 		if(collector!=null)
 			if(collector.component_number==1){
@@ -204,14 +204,14 @@ public class extended_component_instance_driver extends component_instance_drive
 			}
 		comp_array.clear_compoment();
 		comp_array.add_component(ci.parameter.comp);
-		ek.collector_stack.push_component_array(true,ek.system_par,
-			ek.scene_par,comp_array,ek.component_cont,ek.render_cont.renders);
-		if((collector=ek.collector_stack.get_top_collector())!=null)							
+		sk.collector_stack.push_component_array(true,sk.system_par,
+			sk.scene_par,comp_array,sk.component_cont,sk.render_cont.renders);
+		if((collector=sk.collector_stack.get_top_collector())!=null)							
 			if(acd!=null)
 				acd.set_audio(collector.audio_file_name);
 		return;
 	}
-	private void view_scale(component comp,int control_code,engine_kernel ek,client_information ci)
+	private void view_scale(component comp,int control_code,scene_kernel sk,client_information ci)
 	{
 		String str;
 		
@@ -222,10 +222,10 @@ public class extended_component_instance_driver extends component_instance_drive
 		if((str=ci.request_response.get_parameter("half_fovy_tanl"))!=null)
 			ci.display_camera_result.cam.parameter.half_fovy_tanl=Double.parseDouble(str);
 		ci.render_buffer.cam_buffer.synchronize_camera_buffer(
-				ek.camera_cont,ci.display_camera_result.target.camera_id);
+				sk.camera_cont,ci.display_camera_result.target.camera_id);
 		return;
 	}
-	public String[] response_component_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
 		String str;
 		int control_code=0;
@@ -238,13 +238,13 @@ public class extended_component_instance_driver extends component_instance_drive
 		default:
 			break;
 		case "single":
-			select_single_component(comp,control_code,ek,ci);
+			select_single_component(comp,control_code,sk,ci);
 			break;
 		case "many":
-			select_many_component(comp,driver_id,control_code,ek,ci);
+			select_many_component(comp,driver_id,control_code,sk,ci);
 			break;
 		case "scale":
-			view_scale(comp,control_code,ek,ci);
+			view_scale(comp,control_code,sk,ci);
 			break;
 		}
 		return null;

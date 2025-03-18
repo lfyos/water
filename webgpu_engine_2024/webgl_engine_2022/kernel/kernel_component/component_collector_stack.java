@@ -8,8 +8,8 @@ import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_part.part;
 import kernel_render.render;
-import kernel_engine.system_parameter;
-import kernel_engine.scene_parameter;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 
 public class component_collector_stack
 {

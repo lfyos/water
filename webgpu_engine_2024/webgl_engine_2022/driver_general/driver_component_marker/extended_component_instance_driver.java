@@ -3,14 +3,14 @@ package driver_component_marker;
 import kernel_transformation.box;
 import kernel_component.component;
 import kernel_camera.camera_result;
-import kernel_engine.engine_kernel;
 import kernel_camera.locate_camera;
 import kernel_transformation.point;
 import kernel_driver.component_driver;
-import kernel_engine.client_information;
 import kernel_common_class.jason_string;
 import kernel_component.component_selection;
 import kernel_driver.component_instance_driver;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
@@ -34,13 +34,13 @@ public class extended_component_instance_driver extends component_instance_drive
 		modifier_container_id=my_modifier_container_id;
 		display_flag=new boolean[] {};
 	}
-	public void response_init_component_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 		for(int i=0,ni=cmc.component_marker_array.length;i<ni;i++)
 			ci.render_buffer.location_buffer.put_in_list(
-				ek.component_cont.get_component(cmc.component_marker_array[i].marker_component_id),ek);
+				sk.component_cont.get_component(cmc.component_marker_array[i].marker_component_id),sk);
 	}
-	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		if(cmc.pickup_flag){
 			if(!(cr.target.main_display_target_flag)) 
@@ -72,7 +72,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				update_component_parameter_version(0);
 			}
 			for(int i=0,ni=cmc.component_marker_array.length;i<ni;i++){
-				component my_comp=ek.component_cont.get_component(
+				component my_comp=sk.component_cont.get_component(
 						cmc.component_marker_array[i].marker_component_id);
 				if(my_comp==null) {
 					if(display_flag[i])
@@ -89,11 +89,11 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		return false;
 	}
-	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}
-	public void create_component_parameter(engine_kernel ek,client_information ci)
+	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print("[");
 		String pre_str="";
@@ -102,7 +102,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		for(int i=0,ni=(n1<n2)?n1:n2;i<ni;i++)
 			if(display_flag[i]){
 				component_marker p=cmc.component_marker_array[i];
-				component my_comp=ek.component_cont.get_component(p.marker_component_id);
+				component my_comp=sk.component_cont.get_component(p.marker_component_id);
 				ci.request_response.print(pre_str).
 					print("[",my_comp.component_id).
 					print(",",p.marker_x).
@@ -114,7 +114,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			}
 		ci.request_response.print("]");
 	}
-	public String[] response_component_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
 		component operate_comp;
 		component_marker operate_cm;
@@ -127,7 +127,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			ci.request_response.println("[");
 			for(int i=0,ni=cmc.component_marker_array.length;i<ni;i++) {
 				component_marker p=cmc.component_marker_array[i];
-				operate_comp=ek.component_cont.get_component(p.marker_component_id);
+				operate_comp=sk.component_cont.get_component(p.marker_component_id);
 				String marker_component_name=(operate_comp==null)?"":(operate_comp.component_name);
 				ci.request_response.println("	{");
 				ci.request_response.print  ("		\"marker_id\":		",		p.marker_id).println(",");
@@ -144,7 +144,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			ci.request_response.println("]");
 			break;
 		case "clear_all":
-			cmc.clear_all_component_marker(ek);
+			cmc.clear_all_component_marker(sk);
 			if(cmc.global_private_flag)
 				comp.driver_array.get(driver_id).update_component_parameter_version();
 			else
@@ -153,7 +153,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		case "clear":
 			if((str=ci.request_response.get_parameter("marker_id"))==null)
 				break;
-			cmc.clear_component_marker(Long.parseLong(str),ek);
+			cmc.clear_component_marker(Long.parseLong(str),sk);
 			if(cmc.global_private_flag)
 				comp.driver_array.get(driver_id).update_component_parameter_version();
 			else
@@ -169,22 +169,22 @@ public class extended_component_instance_driver extends component_instance_drive
 			if((ci.parameter.body_id<0)||(ci.parameter.body_id>=cmc.component_marker_array.length))
 				break;
 			operate_cm=cmc.component_marker_array[ci.parameter.body_id];
-			if((operate_comp=ek.component_cont.get_component(operate_cm.marker_component_id))==null)
+			if((operate_comp=sk.component_cont.get_component(operate_cm.marker_component_id))==null)
 				break;	
 			switch(str){
 			case "delete":
-				cmc.delete_component_marker(ci.parameter.body_id,ek);
+				cmc.delete_component_marker(ci.parameter.body_id,sk);
 				if(cmc.global_private_flag)
 					comp.driver_array.get(driver_id).update_component_parameter_version();
 				else
 					update_component_parameter_version(0);
 				break;
 			case "swap_select":
-				new component_selection(ek).switch_selected_flag(operate_comp,ek.component_cont);
+				new component_selection(sk).switch_selected_flag(operate_comp,sk.component_cont);
 				break;
 			case "locate":
-				new locate_camera(ek.camera_cont.get(ci.display_camera_result.target.camera_id)).
-						locate_on_components(ek.modifier_cont[modifier_container_id],
+				new locate_camera(sk.camera_cont.get(ci.display_camera_result.target.camera_id)).
+						locate_on_components(sk.modifier_cont[modifier_container_id],
 							new box(operate_comp.absolute_location.multiply(
 									operate_cm.marker_x,operate_cm.marker_y,operate_cm.marker_z)),
 							null,-1.0,true,false,false);
@@ -220,7 +220,7 @@ public class extended_component_instance_driver extends component_instance_drive
 					((str=ci.request_response.get_parameter("y"))==null)?0:Double.parseDouble(str),
 					((str=ci.request_response.get_parameter("z"))==null)?0:Double.parseDouble(str));
 				if((str=ci.request_response.get_parameter("component_id"))!=null)
-					if((operate_comp=ek.component_cont.get_component(Integer.decode(str)))!=null)
+					if((operate_comp=sk.component_cont.get_component(Integer.decode(str)))!=null)
 						break;
 				if((str=ci.request_response.get_parameter("component_name"))!=null){
 					try {
@@ -229,7 +229,7 @@ public class extended_component_instance_driver extends component_instance_drive
 					}catch(Exception e) {
 						break;
 					}
-					operate_comp=ek.component_cont.search_component(str);
+					operate_comp=sk.component_cont.search_component(str);
 				}
 				break;
 			}
@@ -246,7 +246,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;
 			}
 			ci.request_response.println(
-				cmc.append_component_marker(ek,operate_comp,
+				cmc.append_component_marker(sk,operate_comp,
 					marker_text,operated_point.x,operated_point.y,operated_point.z));
 			if(cmc.global_private_flag)
 				comp.driver_array.get(driver_id).update_component_parameter_version();

@@ -7,9 +7,9 @@ import java.io.FileInputStream;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 
-import kernel_engine.system_parameter;
 import kernel_file_manager.file_writer;
-import kernel_engine.engine_call_result;
+import kernel_scene.scene_call_result;
+import kernel_scene.system_parameter;
 import kernel_common_class.common_reader;
 import kernel_common_class.common_writer;
 import kernel_common_class.debug_information;
@@ -188,7 +188,7 @@ public class client_request_response extends common_writer
 		String str=get_parameter(name);
 		return (str==null)?0:Double.parseDouble(str);
 	}
-	public void response_network_data(engine_call_result ecr,system_parameter system_par)
+	public void response_network_data(scene_call_result ecr,system_parameter system_par)
 	{
 		try{
 			output_stream.close();
@@ -282,7 +282,7 @@ public class client_request_response extends common_writer
 		return new long[] {begin_pointer,end_pointer};
 	}
 	
-	public void response_file_data(	engine_call_result ecr,system_parameter system_par)
+	public void response_file_data(	scene_call_result ecr,system_parameter system_par)
 	{
 		try{
 			output_stream.close();

@@ -17,10 +17,10 @@ public class component_core_5 extends component_core_4
 			children=null;
 			return;
 		}
-		int max_child_number=ccp.ek.scene_par.max_child_number;
+		int max_child_number=ccp.sk.scene_par.max_child_number;
 		if(children.length<=max_child_number)
 			return;
-		if(ccp.ek.scene_par.max_child_number<=2)
+		if(ccp.sk.scene_par.max_child_number<=2)
 			return;
 		
 		for(int child_number;(child_number=children.length)>max_child_number;){
@@ -41,11 +41,11 @@ public class component_core_5 extends component_core_4
 				return;
 			}
 			for(int collect_number=0,i=0,ni=children.length;i<ni;i++) {
-				String id_str="_"+(ccp.ek.scene_par.inserted_component_and_part_id++);
+				String id_str="_"+(ccp.sk.scene_par.inserted_component_and_part_id++);
 				fr.push_string_array(new String[]
 				{
-					ccp.ek.scene_par.inserted_component_name+id_str,
-					ccp.ek.scene_par.inserted_part_name+id_str,
+					ccp.sk.scene_par.inserted_component_name+id_str,
+					ccp.sk.scene_par.inserted_part_name+id_str,
 					"1","0","0","0",
 					"0","1","0","0",
 					"0","0","1","0",

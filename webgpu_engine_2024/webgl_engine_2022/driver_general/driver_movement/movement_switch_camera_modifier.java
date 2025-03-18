@@ -10,9 +10,9 @@ import kernel_component.component_container;
 import kernel_component.component_array;
 import kernel_driver.modifier_driver;
 import kernel_driver.component_driver;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_transformation.box;
 import kernel_transformation.location;
 import kernel_common_class.debug_information;
@@ -117,19 +117,19 @@ public class movement_switch_camera_modifier extends modifier_driver
 		information_string	=my_information_string;
 		sound_file_name		=(my_sound_file_name==null)?sound_file_name:file_reader.separator(my_sound_file_name);
 	}
-	public boolean can_start(long my_current_time,engine_kernel ek,client_information ci)
+	public boolean can_start(long my_current_time,scene_kernel sk,client_information ci)
 	{
-		if(super.can_start(my_current_time,ek,ci))
-			if(can_start_routine(my_current_time,ek,ci)){
+		if(super.can_start(my_current_time,sk,ci))
+			if(can_start_routine(my_current_time,sk,ci)){
 				if(container.size()>0){
 					if(single_step_flag)
 						if(switch_camera_number>0){
-							ek.modifier_cont[movement_modifier_container_id].set_clear_modifier_flag();
-							ek.modifier_cont[camera_modifier_container_id].set_clear_modifier_flag();
+							sk.modifier_cont[movement_modifier_container_id].set_clear_modifier_flag();
+							sk.modifier_cont[camera_modifier_container_id].set_clear_modifier_flag();
 							reset();
 							return false;
 						}
-					process_routine(my_current_time,ek,ci);
+					process_routine(my_current_time,sk,ci);
 					reset();
 					switch_camera_number++;
 				}
@@ -137,9 +137,9 @@ public class movement_switch_camera_modifier extends modifier_driver
 			}
 		return false;
 	}
-	private driver_audio_player.extended_component_driver get_acd(engine_kernel ek)
+	private driver_audio_player.extended_component_driver get_acd(scene_kernel sk)
 	{
-		component audio_comp=ek.component_cont.get_component(audio_component_id);
+		component audio_comp=sk.component_cont.get_component(audio_component_id);
 		if(audio_comp==null){
 			debug_information.println(
 				"movement_switch_camera_modifier finds audio component NOT EXIST",
@@ -157,13 +157,13 @@ public class movement_switch_camera_modifier extends modifier_driver
 		}
 		return (driver_audio_player.extended_component_driver)c_d;
 	}
-	private boolean can_start_routine(long my_current_time,engine_kernel ek,client_information ci)
+	private boolean can_start_routine(long my_current_time,scene_kernel sk,client_information ci)
 	{
 		if((sound_file_name==null)||(audio_component_id<0))
 			return true;
 		
 		driver_audio_player.extended_component_driver acd;
-		if((acd=get_acd(ek))==null)
+		if((acd=get_acd(sk))==null)
 			return true;
 		if(!(acd.get_state()))
 			return true;
@@ -188,20 +188,20 @@ public class movement_switch_camera_modifier extends modifier_driver
 			for(int i=0;i<child_number;i++)
 				register_visible_component(comp.children[i],comp_array,depth+1);
 	}
-	private void process_routine(long my_current_time,engine_kernel ek,client_information ci)
+	private void process_routine(long my_current_time,scene_kernel sk,client_information ci)
 	{
 		box b;
 		location direction[]=new location[container.size()];
 		for(int i=0,ni=direction.length;i<ni;i++)
 			direction[i]=container.get(i).direction;
 		
-		if((b=caculate_box(ek.component_cont))!=null){
+		if((b=caculate_box(sk.component_cont))!=null){
 			location dir=location.combine_location(direction);
-			for(int i=0,n=ek.camera_cont.size();i<n;i++) {
-				camera cam=ek.camera_cont.get(i);
+			for(int i=0,n=sk.camera_cont.size();i<n;i++) {
+				camera cam=sk.camera_cont.get(i);
 				if(cam.parameter.movement_flag)
 					(new locate_camera(cam)).locate_on_components(
-						ek.modifier_cont[camera_modifier_container_id],b,
+						sk.modifier_cont[camera_modifier_container_id],b,
 						cam.parameter.direction_flag?dir:null,
 						(cam.parameter.scale_value<=0)?-1.0:scale_value,
 						true,false,false);
@@ -210,30 +210,30 @@ public class movement_switch_camera_modifier extends modifier_driver
 		component comp;
 		component_array comp_array=new component_array();
 		for(int i=0,ni=container.size();i<ni;i++)
-			if((comp=ek.component_cont.get_component(container.get(i).component_id))!=null)
+			if((comp=sk.component_cont.get_component(container.get(i).component_id))!=null)
 				register_visible_component(comp,comp_array,0);
 
-		ek.collector_stack.push_component_array(true,
-				ek.system_par,ek.scene_par,comp_array,ek.component_cont,ek.render_cont.renders);
+		sk.collector_stack.push_component_array(true,
+				sk.system_par,sk.scene_par,comp_array,sk.component_cont,sk.render_cont.renders);
 
-		component_collector cc=ek.collector_stack.get_top_collector();
+		component_collector cc=sk.collector_stack.get_top_collector();
 		
 		cc.title=title_string;
 		cc.description=information_string;	
 		cc.audio_file_name=sound_file_name;
 		
 		driver_audio_player.extended_component_driver acd;
-		if((acd=get_acd(ek))!=null)
+		if((acd=get_acd(sk))!=null)
 			if(sound_file_name!=null)
 				acd.set_audio(sound_file_name);
 	}
-	public void modify(long my_current_time,engine_kernel ek,client_information ci)
+	public void modify(long my_current_time,scene_kernel sk,client_information ci)
 	{
-		super.modify(my_current_time,ek,ci);
+		super.modify(my_current_time,sk,ci);
 	}
-	public void last_modify(long my_current_time,engine_kernel ek,client_information ci,boolean terminated_flag)
+	public void last_modify(long my_current_time,scene_kernel sk,client_information ci,boolean terminated_flag)
 	{
-		super.last_modify(my_current_time,ek,ci,terminated_flag);
+		super.last_modify(my_current_time,sk,ci,terminated_flag);
 	}
 	public movement_switch_camera_modifier(boolean my_single_step_flag,long current_time,
 			int my_audio_component_id,int my_parameter_channel_id,

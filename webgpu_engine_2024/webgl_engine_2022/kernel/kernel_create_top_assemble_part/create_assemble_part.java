@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import kernel_common_class.debug_information;
 import kernel_component.component;
-import kernel_engine.scene_parameter;
-import kernel_engine.system_parameter;
 import kernel_file_manager.file_directory;
 import kernel_network.client_request_response;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
@@ -16,6 +14,8 @@ import kernel_part.part_parameter;
 import kernel_part.permanent_part_id_encoder;
 import kernel_part.part_loader_container;
 import kernel_render.render_container;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 
 public class create_assemble_part 
 {		

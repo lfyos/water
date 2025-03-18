@@ -5,10 +5,10 @@ import kernel_common_class.const_value;
 import kernel_common_class.debug_information;
 import kernel_component.component;
 import kernel_component.component_collector;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
 import kernel_part.part;
 import kernel_part.part_parameter;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_transformation.box;
 import kernel_driver.component_instance_driver;
 
@@ -16,7 +16,7 @@ public class list_component_on_collector
 {
 	public	component_collector collector;
 	
-	private engine_kernel ek;
+	private scene_kernel sk;
 	private client_information ci;
 	private camera_result cam_result;
 	private boolean part_list_only_flag,do_discard_lod_flag,do_selection_lod_flag,discard_cross_clip_plane_flag;
@@ -46,7 +46,7 @@ public class list_component_on_collector
 		
 		boolean abandon_display_flag=true;
 		try{
-			abandon_display_flag=in_dr.check(render_buffer_id,ek,ci,cam_result);
+			abandon_display_flag=in_dr.check(render_buffer_id,sk,ci,cam_result);
 		}catch(Exception e){
 			e.printStackTrace();
 			
@@ -62,7 +62,7 @@ public class list_component_on_collector
 			return false;
 		
 		if(discard_unload_component_flag)
-			if(ci.render_buffer.mesh_loader.load_test(ek.process_part_sequence,my_part))
+			if(ci.render_buffer.mesh_loader.load_test(sk.process_part_sequence,my_part))
 				return false;
 		
 		collector.register_component(comp,driver_id);
@@ -135,7 +135,7 @@ public class list_component_on_collector
 			return;
 	
 		comp.clip.has_done_clip_flag=false;
-		if(cam_result.clipper_test(comp,ek.component_cont,cam_result.target.parameter_channel_id))
+		if(cam_result.clipper_test(comp,sk.component_cont,cam_result.target.parameter_channel_id))
 			return;
 		
 		if(do_lod(comp,render_buffer_id))
@@ -156,7 +156,7 @@ public class list_component_on_collector
 			collect(comp.children[i],render_buffer_id,clipper_test_depth+1);
 		comp.caculate_box(false);
 		
-		if(ek.scene_par.not_do_ancestor_render_flag)
+		if(sk.scene_par.not_do_ancestor_render_flag)
 			return;
 		if((driver_number<=0)||(children_number<=0)||(no_driver_component_number<=old_no_driver_component_number))
 			return;
@@ -173,10 +173,10 @@ public class list_component_on_collector
 	public list_component_on_collector(				boolean my_part_list_only_flag,
 		boolean my_do_discard_lod_flag,				boolean my_do_selection_lod_flag,
 		boolean my_discard_cross_clip_plane_flag,	boolean my_discard_unload_component_flag,
-		engine_kernel my_ek,						client_information my_ci,
+		scene_kernel my_sk,						client_information my_ci,
 		camera_result my_cam_result)
 	{
-		ek											=my_ek;
+		sk											=my_sk;
 		ci											=my_ci;
 		cam_result									=my_cam_result;		
 		
@@ -186,13 +186,13 @@ public class list_component_on_collector
 		discard_cross_clip_plane_flag				=my_discard_cross_clip_plane_flag;
 		discard_unload_component_flag				=my_discard_unload_component_flag;
 		
-		collector									=new component_collector(ek.render_cont.renders);
+		collector									=new component_collector(sk.render_cont.renders);
 		
 		no_driver_component_number=0;
 		
 		int render_buffer_id=cam_result.get_render_buffer_id(ci);			
 		component my_comp,pickup_comp=ci.parameter.comp;
-		for(component p=pickup_comp;p!=null;p=ek.component_cont.get_component(p.parent_component_id))
+		for(component p=pickup_comp;p!=null;p=sk.component_cont.get_component(p.parent_component_id))
 			p.selected_component_family_flag=true;
 		for(int my_driver_id,i=0,ni=cam_result.target.comp.length;i<ni;i++)
 			if((my_comp=cam_result.target.comp[i])!=null){
@@ -204,7 +204,7 @@ public class list_component_on_collector
 						}
 				collect(my_comp,render_buffer_id,0);
 			}
-		for(component p=pickup_comp;p!=null;p=ek.component_cont.get_component(p.parent_component_id))
+		for(component p=pickup_comp;p!=null;p=sk.component_cont.get_component(p.parent_component_id))
 			p.selected_component_family_flag=false;
 	}
 }	

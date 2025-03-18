@@ -1,8 +1,8 @@
 package kernel_driver;
 
 import kernel_component.component;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_transformation.location;
 
 
@@ -41,18 +41,18 @@ public class location_modifier extends modifier_driver
 		location_lock_result			=false;
 		modify_counter					=0;
 	}
-	public void modify(long my_current_time,engine_kernel ek,client_information ci)
+	public void modify(long my_current_time,scene_kernel sk,client_information ci)
 	{
 		component comp;
-		super.modify(my_current_time,ek,ci);
-		if((comp=ek.component_cont.get_component(component_id))==null)
+		super.modify(my_current_time,sk,ci);
+		if((comp=sk.component_cont.get_component(component_id))==null)
 			return;
 		location_lock_result|=comp.lock_location_modification();
 		if(!location_lock_result)
 			return;
 		if((modify_counter++)>0)
 			if(touch_time_length>0)
-				if((ek.current_time.nanoseconds()-comp.render_touch_time)>touch_time_length)
+				if((sk.current_time.nanoseconds()-comp.render_touch_time)>touch_time_length)
 					return;
 		if(terminate_time==start_time)
 			p=1.0;
@@ -61,8 +61,8 @@ public class location_modifier extends modifier_driver
 			p=(p<0.0)?0.0:(p>1.0)?1.0:p;
 		}
 		location loca=location.mix_location(start_location,terminate_location,p);
-		comp.set_component_move_location(loca,ek.component_cont);
-		comp.uniparameter.touch_time=ek.current_time.nanoseconds();
+		comp.set_component_move_location(loca,sk.component_cont);
+		comp.uniparameter.touch_time=sk.current_time.nanoseconds();
 		comp.uniparameter.do_response_location_flag=do_response_location_flag;
 	}
 	public void destroy()
@@ -71,24 +71,24 @@ public class location_modifier extends modifier_driver
 		start_location=null;
 		terminate_location=null;
 	}
-	public void last_modify(long my_current_time,engine_kernel ek,client_information ci,boolean terminated_flag)
+	public void last_modify(long my_current_time,scene_kernel sk,client_information ci,boolean terminated_flag)
 	{
-		super.last_modify(my_current_time,ek,ci,terminated_flag);
+		super.last_modify(my_current_time,sk,ci,terminated_flag);
 		
 		component comp;
-		if((comp=ek.component_cont.get_component(component_id))==null)
+		if((comp=sk.component_cont.get_component(component_id))==null)
 			return;
 		if(location_lock_result){
 			comp.unlock_location_modification();
 			location_lock_result=false;
 		}
 		comp.uniparameter.do_response_location_flag=last_do_response_location_flag;
-		comp.uniparameter.touch_time=ek.current_time.nanoseconds();
+		comp.uniparameter.touch_time=sk.current_time.nanoseconds();
 		if(terminated_flag)
-			comp.set_component_move_location(terminate_location,ek.component_cont);
+			comp.set_component_move_location(terminate_location,sk.component_cont);
 	}
-	public boolean can_start(long my_current_time,engine_kernel ek,client_information ci)
+	public boolean can_start(long my_current_time,scene_kernel sk,client_information ci)
 	{
-		return super.can_start(my_current_time,ek,ci);
+		return super.can_start(my_current_time,sk,ci);
 	}
 }

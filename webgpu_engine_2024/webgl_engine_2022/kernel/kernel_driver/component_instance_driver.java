@@ -3,11 +3,11 @@ package kernel_driver;
 import kernel_camera.camera_result;
 import kernel_common_class.debug_information;
 import kernel_component.component;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
 import kernel_network.network_parameter;
 import kernel_network.network_result;
 import kernel_part.part;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class component_instance_driver
 {
@@ -90,19 +90,19 @@ public class component_instance_driver
 	}
 	public static network_result execute_component_function(
 			int component_id,int driver_id,network_parameter parameter[],
-			engine_kernel ek,client_information ci)
+			scene_kernel sk,client_information ci)
 	{	
 		component comp;
 		component_instance_driver in_dr;
 		network_result my_result=null;
 		
-		if((comp=ek.component_cont.get_component(component_id))!=null)
+		if((comp=sk.component_cont.get_component(component_id))!=null)
 			if((driver_id>=0)&&(driver_id<comp.driver_number()))
 				if((in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp, driver_id))!=null){
 					ci.request_response.install_parameter(parameter);
 					String ret_val[];
 					try{
-						ret_val=in_dr.response_component_event(ek,ci);
+						ret_val=in_dr.response_component_event(sk,ci);
 					}catch(Exception e){
 						e.printStackTrace();
 						
@@ -135,22 +135,22 @@ public class component_instance_driver
 		
 		display_parameter			=new instance_display_parameter();
 	}
-	public void response_init_component_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 	}
-	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		return true;
 	}
-	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print("0");
 	}
-	public void create_component_parameter(engine_kernel ek,client_information ci)
+	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print(comp.component_id);
 	}
-	public String[] response_component_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{	
 		return null;
 	}

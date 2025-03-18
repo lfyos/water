@@ -4,9 +4,9 @@ import java.io.File;
 
 import kernel_component.component_container;
 import kernel_driver.modifier_container;
-import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
+import kernel_scene.scene_kernel;
 import kernel_common_class.string_link_list;
 
 public class movement_manager
@@ -239,7 +239,7 @@ public class movement_manager
 		return false;
 	}
 	public movement_manager(
-			engine_kernel ek,long camera_switch_time_length,
+			scene_kernel sk,long camera_switch_time_length,
 			movement_configuration_parameter my_config_parameter,
 			movement_channel_id my_move_channel_id)
 	{
@@ -255,11 +255,11 @@ public class movement_manager
 
 		root_movement=null;
 		buffer_movement=null;
-		suspend=new movement_suspend(ek,my_config_parameter.virtual_mount_root_component_id);
+		suspend=new movement_suspend(sk,my_config_parameter.virtual_mount_root_component_id);
 		
 		config_parameter=my_config_parameter;
-		init(ek.modifier_cont[config_parameter.camera_modifier_container_id],
-				ek.component_cont,config_parameter.movement_file_name,
+		init(sk.modifier_cont[config_parameter.camera_modifier_container_id],
+				sk.component_cont,config_parameter.movement_file_name,
 				camera_switch_time_length,config_parameter.movement_file_charset,true);
 	}
 }

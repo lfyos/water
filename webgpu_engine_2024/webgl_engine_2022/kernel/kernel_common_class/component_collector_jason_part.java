@@ -2,9 +2,9 @@ package kernel_common_class;
 
 import kernel_part.part;
 import kernel_render.render;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_component.component_collector;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
 import kernel_component.component_link_list;
 import kernel_transformation.box;
 import kernel_transformation.point;
@@ -60,7 +60,7 @@ public class component_collector_jason_part
 	};
 	public component_collector_jason_part(String my_system_pre_str,
 			boolean only_title_flag,boolean last_list_flag,boolean location_flag,boolean difference_flag,
-			component_collector collector,component_collector match_collector,client_information ci,engine_kernel ek)
+			component_collector collector,component_collector match_collector,client_information ci,scene_kernel sk)
 	{
 		system_pre_str=my_system_pre_str;
 		
@@ -102,7 +102,7 @@ public class component_collector_jason_part
 			print(pre_str,ci,"\"render_component_number\":	",	collector.render_component_number[i],	",");
 			print(pre_str,ci,"\"part_list\":[");
 			
-			render r=ek.render_cont.renders.get(i);
+			render r=sk.render_cont.renders.get(i);
 			if(collector.component_collector[i]!=null)
 				for(int j=0,nj=collector.component_collector[i].length;j<nj;j++){
 					if(collector.part_component_number[i][j]<=0)

@@ -1,12 +1,12 @@
 package kernel_component;
 
 import kernel_transformation.box;
-import kernel_engine.engine_kernel;
-import kernel_engine.scene_parameter;
 import kernel_file_manager.file_reader;
 import kernel_interface.client_process_bar;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
+import kernel_scene.scene_kernel;
+import kernel_scene.scene_parameter;
 
 public class component_container 
 {
@@ -157,7 +157,7 @@ public class component_container
 		}
 	}
 	
-	public component_container(file_reader scene_f,engine_kernel ek,
+	public component_container(file_reader scene_f,scene_kernel sk,
 			component_load_source_container component_load_source_cont,
 			long default_display_bitmap,client_request_response request_response)
 	{
@@ -165,7 +165,7 @@ public class component_container
 			root_component=null;
 			scene_component=null;
 			
-			scene_par							=ek.scene_par;
+			scene_par							=sk.scene_par;
 			
 			original_part_number				=0;
 			
@@ -194,7 +194,7 @@ public class component_container
 			debug_information.println("Begin loading scene");
 
 			component_construction_parameter ccp=new component_construction_parameter(
-					ek,request_response,ek.part_cont,component_load_source_cont,default_display_bitmap);
+					sk,request_response,sk.part_cont,component_load_source_cont,default_display_bitmap);
 			
 			try{
 				root_component=new component("",scene_f,false,false,ccp);
@@ -207,7 +207,7 @@ public class component_container
 			}
 			
 			if(root_component!=null)
-				for(int i=0,ni=ek.system_par.max_process_component_load_number;i<ni;i++){
+				for(int i=0,ni=sk.system_par.max_process_component_load_number;i<ni;i++){
 					if(ccp.clsc.get_source_item_number()<=0)
 						break;
 					root_component.append_component(ccp);

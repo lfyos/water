@@ -2,14 +2,14 @@ package kernel_program_javascript;
 
 import java.io.File;
 
-import kernel_engine.engine_call_result;
-import kernel_engine.system_parameter;
 import kernel_file_manager.file_reader;
 import kernel_common_class.http_modify_string;
 import kernel_common_class.class_file_reader;
 import kernel_common_class.common_reader;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
+import kernel_scene.scene_call_result;
+import kernel_scene.system_parameter;
 
 public class javascript_program
 {
@@ -22,7 +22,7 @@ public class javascript_program
 		"component_render.js",		"computer.js",				"download_vertex_data.js",		"draw_scene.js",
 		"event_listener.js",		"init_ids.js",				"modifier_time.js",				"operate_component.js",	
 		"pickup.js",				"process_bar.js",			"render_main.js",				"render.js",
-		"request_create_engine.js",	"request_render_data.js",	"system_buffer.js",				"webgpu.js"
+		"request_create_scene.js",	"request_render_data.js",	"system_buffer.js",				"webgpu.js"
 	};
 	
 	public void destroy()
@@ -59,7 +59,7 @@ public class javascript_program
 		}
 	}
 	
-	public engine_call_result create(
+	public scene_call_result create(
 			client_request_response request_response,system_parameter system_par)
 	{
 		String function_date;
@@ -122,9 +122,9 @@ public class javascript_program
 			"					:default_user_process_bar_function,",
 			"				\""	+request_response.implementor.get_url()+"\",",
 			"				default_fetch_parameter,"+
-							system_par.create_engine_sleep_time_length_scale+","+
-							system_par.create_engine_sleep_time_length		+","+
-							system_par.create_engine_max_sleep_time_length	+");",
+							system_par.create_scene_sleep_time_length_scale+","+
+							system_par.create_scene_sleep_time_length		+","+
+							system_par.create_scene_max_sleep_time_length	+");",
 			"};",
 								
 			"export var create_target=async function(my_canvas,my_create_parameter)",
@@ -136,7 +136,7 @@ public class javascript_program
 		for(int i=0,ni=str.length;i<ni;i++)
 			request_response.println(str[i]);
 		
-		return new engine_call_result(system_par.system_cors_string,
+		return new scene_call_result(system_par.system_cors_string,
 							last_modified_time,"application/javascript");
 	}
 }

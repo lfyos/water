@@ -1,8 +1,8 @@
 package kernel_driver;
 
 import kernel_part.part;
+import kernel_scene.scene_kernel;
 import kernel_component.component;
-import kernel_engine.engine_kernel;
 import kernel_network.client_request_response;
 import kernel_common_class.debug_information;
 
@@ -59,11 +59,11 @@ public class component_driver
 		same_part_component_driver_id	=0;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 		return new component_instance_driver(comp,driver_id);
 	}

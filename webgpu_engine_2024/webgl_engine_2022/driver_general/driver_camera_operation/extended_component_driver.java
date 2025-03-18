@@ -1,11 +1,11 @@
 package driver_camera_operation;
 
 import kernel_part.part;
+import kernel_scene.scene_kernel;
 import kernel_camera.camera;
 import kernel_transformation.box;
 import kernel_component.component;
 import kernel_camera.locate_camera;
-import kernel_engine.engine_kernel;
 import kernel_transformation.point;
 import kernel_transformation.location;
 import kernel_driver.component_driver;
@@ -28,22 +28,22 @@ public class extended_component_driver  extends component_driver
 		modifier_container_id=my_modifier_container_id;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 //		String component_directory_name=comp.component_directory_name;
 //		String scene_directory_name=ek.scene_directory_name;
-//		String parameter_directory_name=ek.scene_par.directory_name;
+//		String parameter_directory_name=sk.scene_par.directory_name;
 		
 		box my_box;
 		int box_parameter_channel_id;
 		
 		comp.uniparameter.cacaulate_location_flag=true;
 		
-		if(ek.camera_cont==null) {
-			debug_information.println("(ek.camera_cont==null)");
+		if(sk.camera_cont==null) {
+			debug_information.println("(sk.camera_cont==null)");
 			return;
 		}
-		if(ek.camera_cont.size()<=0){
+		if(sk.camera_cont.size()<=0){
 			debug_information.println("(cam_array.length<=0)");
 			return;
 		}
@@ -59,15 +59,15 @@ public class extended_component_driver  extends component_driver
 			debug_information.println("Find box_parameter_channel_id less than zero	",box_parameter_channel_id);
 			return;
 		}
-		if(ek.scene_par.multiparameter_number<=box_parameter_channel_id){
+		if(sk.scene_par.multiparameter_number<=box_parameter_channel_id){
 			fr.close();
-			debug_information.println("(ek.scene_par.multiparameter_number<=box_parameter_channel_id)	",
-					ek.scene_par.multiparameter_number+"/"+box_parameter_channel_id);
+			debug_information.println("(sk.scene_par.multiparameter_number<=box_parameter_channel_id)	",
+					sk.scene_par.multiparameter_number+"/"+box_parameter_channel_id);
 			return;
 		}
-		if((my_box=ek.component_cont.get_effective_box(box_parameter_channel_id))==null) {
+		if((my_box=sk.component_cont.get_effective_box(box_parameter_channel_id))==null) {
 			fr.close();
-			debug_information.println("((my_box=ek.component_cont.get_effective_box(box_parameter_channel_id))==null)");
+			debug_information.println("((my_box=sk.component_cont.get_effective_box(box_parameter_channel_id))==null)");
 			return;
 		}
 		if(my_box.distance2()<const_value.min_value2) {
@@ -83,7 +83,7 @@ public class extended_component_driver  extends component_driver
 		
 			if(cam_id<0)
 				continue;
-			if(cam_id>=ek.camera_cont.size())
+			if(cam_id>=sk.camera_cont.size())
 				continue;
 			if(dx.distance2()<const_value.min_value2)
 				continue;
@@ -93,9 +93,9 @@ public class extended_component_driver  extends component_driver
 			dz=dz.expand(1.0);
 
 			location loca=new location(new point(),dx,dy,dz).multiply(location.standard_negative);
-			camera cam=ek.camera_cont.get(cam_id);
+			camera cam=sk.camera_cont.get(cam_id);
 			locate_camera loca_cam=new locate_camera(cam);
-			cam.eye_component.set_component_move_location(loca_cam.locate(my_box,loca),ek.component_cont);
+			cam.eye_component.set_component_move_location(loca_cam.locate(my_box,loca),sk.component_cont);
 			loca_cam.scale(Math.abs(cam.parameter.scale_value));
 			cam.parameter.distance=loca_cam.distance;
 		}while(true);
@@ -105,7 +105,7 @@ public class extended_component_driver  extends component_driver
 		return;
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 		return new extended_component_instance_driver(comp,driver_id,modifier_container_id);
 	}

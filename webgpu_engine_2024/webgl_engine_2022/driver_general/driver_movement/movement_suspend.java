@@ -2,8 +2,8 @@ package driver_movement;
 
 import kernel_part.part;
 import kernel_render.render;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_component.component_collector;
 import kernel_component.component_container;
@@ -39,41 +39,41 @@ public class movement_suspend
 		match_number=0;
 	}
 	private void init_virtual_mount_component_routine(
-			engine_kernel ek,component comp,int parameter_channel_id[])
+			scene_kernel sk,component comp,int parameter_channel_id[])
 	{
 		int children_number;
 
 		if((children_number=comp.children_number())<=0){
-			comp.modify_display_flag(parameter_channel_id,false,ek.component_cont);
+			comp.modify_display_flag(parameter_channel_id,false,sk.component_cont);
 			if(comp.driver_number()>0)
 				virtual_mount_collector.register_component(comp,0);
 		}else{
 			for(int i=0;i<children_number;i++)
-				init_virtual_mount_component_routine(ek,comp.children[i],parameter_channel_id);
-			comp.modify_display_flag(parameter_channel_id,true,ek.component_cont);
+				init_virtual_mount_component_routine(sk,comp.children[i],parameter_channel_id);
+			comp.modify_display_flag(parameter_channel_id,true,sk.component_cont);
 		}
 	}
-	public void reset_virtual_mount_component(engine_kernel ek)
+	public void reset_virtual_mount_component(scene_kernel sk)
 	{
 		component virtual_mount_root_comp;
 		follow_mouse_component_id=-1;
 		if(virtual_mount_collector!=null)
 			virtual_mount_collector.destroy();
-		virtual_mount_collector=new component_collector(ek.render_cont.renders);
-		if((virtual_mount_root_comp=ek.component_cont.get_component(virtual_mount_root_component_id))!=null){
+		virtual_mount_collector=new component_collector(sk.render_cont.renders);
+		if((virtual_mount_root_comp=sk.component_cont.get_component(virtual_mount_root_component_id))!=null){
 			int parameter_channel_id[]=new int[virtual_mount_root_comp.multiparameter.length];
 			for(int i=0,ni=parameter_channel_id.length;i<ni;i++)
 				parameter_channel_id[i]=i;
-			init_virtual_mount_component_routine(ek,virtual_mount_root_comp,parameter_channel_id);
+			init_virtual_mount_component_routine(sk,virtual_mount_root_comp,parameter_channel_id);
 		}
 	}
-	public movement_suspend(engine_kernel ek,int my_virtual_mount_root_component_id)
+	public movement_suspend(scene_kernel sk,int my_virtual_mount_root_component_id)
 	{
 		virtual_mount_root_component_id=my_virtual_mount_root_component_id;
-		suspend_collector=new component_collector(ek.render_cont.renders);
+		suspend_collector=new component_collector(sk.render_cont.renders);
 		match_array=new movement_match[10];
 		match_number=0;
-		reset_virtual_mount_component(ek);
+		reset_virtual_mount_component(sk);
 	}
 	public int get_suspend_match_number()
 	{
@@ -113,9 +113,9 @@ public class movement_suspend
 				}
 		}
 	}
-	private void response_suspend_jason_data(client_information ci,engine_kernel ek)
+	private void response_suspend_jason_data(client_information ci,scene_kernel sk)
 	{
-		component_collector target_collector=new component_collector(ek.render_cont.renders);
+		component_collector target_collector=new component_collector(sk.render_cont.renders);
 		for(int i=0,ni=virtual_mount_collector.component_collector.length;i<ni;i++)
 			if(virtual_mount_collector.component_collector[i]!=null)
 				for(int j=0,nj=virtual_mount_collector.component_collector[i].length;j<nj;j++) {
@@ -127,8 +127,8 @@ public class movement_suspend
 		ci.request_response.println("{");
 		ci.request_response.println("	\"collector\"	:");
 		
-		suspend_collector.sort_component_list(ek.scene_par.component_sort_type,ek.scene_par.component_sort_min_distance);
-		new movement_collector_compare(ci,ek,suspend_collector,target_collector,"		",",");
+		suspend_collector.sort_component_list(sk.scene_par.component_sort_type,sk.scene_par.component_sort_min_distance);
+		new movement_collector_compare(ci,sk,suspend_collector,target_collector,"		",",");
 
 		ci.request_response.println().println().print("	\"match\"	:	[");
 		String pre_str="";
@@ -136,10 +136,10 @@ public class movement_suspend
 			movement_match m=match_array[i];
 			if((m.source_body_id<0)||(m.source_face_id<0)||(m.destatination_body_id<0)||(m.destatination_face_id<0))
 				continue;
-			component s_comp=ek.component_cont.search_component(m.source_component_name);
+			component s_comp=sk.component_cont.search_component(m.source_component_name);
 			if(s_comp==null)
 				continue;
-			component d_comp=ek.component_cont.search_component(m.destatination_component_name);
+			component d_comp=sk.component_cont.search_component(m.destatination_component_name);
 			if(d_comp==null)
 				continue;
 			
@@ -159,7 +159,7 @@ public class movement_suspend
 		ci.request_response.println("}");
 	}
 	
-	public void reset_suspend_collector(engine_kernel ek)
+	public void reset_suspend_collector(scene_kernel sk)
 	{
 		suspend_collector.reset();
 	}
@@ -174,7 +174,7 @@ public class movement_suspend
 			match_array[i]=null;
 		match_number=0;
 	}
-	private void start_follow(engine_kernel ek,client_information ci)
+	private void start_follow(scene_kernel sk,client_information ci)
 	{
 		String str;
 		
@@ -194,7 +194,7 @@ public class movement_suspend
 			if(virtual_mount_collector.component_collector[i]==null)
 				continue;
 			render my_render;
-			if((my_render=ek.render_cont.renders.get(i))==null)
+			if((my_render=sk.render_cont.renders.get(i))==null)
 				continue;
 			for(int j=0,nj=virtual_mount_collector.component_collector[i].length;j<nj;j++) {
 				component_link_list cll=virtual_mount_collector.component_collector[i][j];
@@ -213,7 +213,7 @@ public class movement_suspend
 					int parameter_channel_id_array[]=new int[cll.comp.multiparameter.length];
 					for(int k=0,nk=parameter_channel_id_array.length;k<nk;k++)
 						parameter_channel_id_array[k]=k;
-					cll.comp.modify_display_flag(parameter_channel_id_array,true,ek.component_cont);
+					cll.comp.modify_display_flag(parameter_channel_id_array,true,sk.component_cont);
 
 					debug_information.println("success in response_suspend_event of start_follow\t:\t",str);
 					debug_information.println("component\t:\t",cll.comp.component_name);
@@ -227,12 +227,12 @@ public class movement_suspend
 		debug_information.println("Can't find part name in response_suspend_event of virtual_mount_driver\t:\t",str);
 		return;
 	}
-	public void response_suspend_event(engine_kernel ek,client_information ci)
+	public void response_suspend_event(scene_kernel sk,client_information ci)
 	{
 		String str;
 		switch(((str=ci.request_response.get_parameter("virtual_mount"))==null)?"":str) {
 		case "start_follow":
-			start_follow(ek,ci);
+			start_follow(sk,ci);
 			break;
 		case "terminate_follow":
 			follow_mouse_component_id=-1;
@@ -257,12 +257,12 @@ public class movement_suspend
 				switch(str.toLowerCase().trim()) {
 				case "true":
 				case "yes":
-					reset_virtual_mount_component(ek);
+					reset_virtual_mount_component(sk);
 					break;
 				}
 			break;
 		case "suspend_jason":
-			response_suspend_jason_data(ci,ek);
+			response_suspend_jason_data(ci,sk);
 			break;
 		}
 	}

@@ -1,7 +1,7 @@
 package kernel_information;
 
 import kernel_component.component_container;
-import kernel_engine.client_information;
+import kernel_scene.client_information;
 
 public class component_container_information extends jason_creator
 {

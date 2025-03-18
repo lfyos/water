@@ -1,30 +1,30 @@
 package kernel_information;
 
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class array_part_information extends jason_creator
 {
 	private client_information ci;
-	private engine_kernel ek;
+	private scene_kernel sk;
 	
 	public void print()
 	{
 		int n=0;
-		if(ek.render_cont.renders!=null)
-			n=ek.render_cont.renders.size();
+		if(sk.render_cont.renders!=null)
+			n=sk.render_cont.renders.size();
 		jason_creator jc[]=new jason_creator[n];
 		for(int i=0,ni=jc.length;i<ni;i++)
 			jc[i]=new one_array_part_information(i,
-					ek.render_cont.renders.get(i).parts,ek,ci);
+					sk.render_cont.renders.get(i).parts,sk,ci);
 		
-		print("render_number",ek.render_cont.renders.size());
+		print("render_number",sk.render_cont.renders.size());
 		print("render_array",jc);
 	}
-	public array_part_information(engine_kernel my_ek,client_information my_ci)
+	public array_part_information(scene_kernel my_sk,client_information my_ci)
 	{
 		super(my_ci.request_response);
-		ek=my_ek;
+		sk=my_sk;
 		ci=my_ci;
 	}
 }

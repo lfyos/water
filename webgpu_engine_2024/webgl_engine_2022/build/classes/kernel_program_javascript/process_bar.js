@@ -10,7 +10,7 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 	this.process_bar_current_last		=0;
 	this.process_bar_max				=1;
 	this.process_bar_time_length		=0;
-	this.process_bar_engine_time_length	=0;
+	this.process_bar_scene_time_length	=0;
 	this.time_unit						="";
 	this.set_time						=new Date().getTime();
 
@@ -26,7 +26,7 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 		this.process_bar_current_last		=0;
 		this.process_bar_max				=1;
 		this.process_bar_time_length		=0;
-		this.process_bar_engine_time_length	=0;
+		this.process_bar_scene_time_length	=0;
 		this.time_unit						=null;
 		this.set_time						=0;
 		
@@ -53,7 +53,7 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 					this.process_bar_function(i,
 						this.webgpu.canvas_2d,this.webgpu.context_2d,this.process_bar_caption,
 						(this.process_bar_current_last*(1.0-p)+this.process_bar_current*p)/this.process_bar_max,
-						this.process_bar_time_length,this.process_bar_engine_time_length,this.time_unit);
+						this.process_bar_time_length,this.process_bar_scene_time_length,this.time_unit);
 				}catch(e){
 					console.log("Process bar drawing function error:"+e.toString);
 					continue;
@@ -104,7 +104,7 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 			this.process_bar_current			=response_data.current;
 			this.process_bar_max				=response_data.max;
 			this.process_bar_time_length		=response_data.time_length;
-			this.process_bar_engine_time_length	=response_data.engine_time_length;
+			this.process_bar_scene_time_length	=response_data.scene_time_length;
 			this.time_unit						=response_data.time_unit;
 		
 			if(this.process_bar_current<0)

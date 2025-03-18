@@ -5,19 +5,19 @@ import kernel_common_class.debug_information;
 import kernel_component.component_collector;
 import kernel_component.component_link_list;
 import kernel_driver.component_instance_driver;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
 import kernel_part.part;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class response_component_buffer_parameter
 {
 	private long current_touch_time;
-	private engine_kernel ek;
+	private scene_kernel sk;
 	private client_information ci;
 	
 	private component_instance_driver test_should_response_parameter(
 			component_link_list cll,long current_touch_time,
-			engine_kernel ek,client_information ci,render_component_counter rcc,int should_increase)
+			scene_kernel sk,client_information ci,render_component_counter rcc,int should_increase)
 	{
 		component_instance_driver in_dr;
 		if((in_dr=ci.component_instance_driver_cont.get_component_instance_driver(cll.comp,cll.driver_id))==null)
@@ -28,9 +28,9 @@ public class response_component_buffer_parameter
 		if(old_parameter_version==new_parameter_version)
 			return null;
 		
-		if(rcc.update_component_parameter_number<ek.scene_par.most_update_parameter_number)
+		if(rcc.update_component_parameter_number<sk.scene_par.most_update_parameter_number)
 			return in_dr;
-		if((current_touch_time-cll.comp.uniparameter.touch_time)<=ek.scene_par.touch_time_length)
+		if((current_touch_time-cll.comp.uniparameter.touch_time)<=sk.scene_par.touch_time_length)
 			return in_dr;
 		if(ci.parameter.comp!=null)
 			if(ci.parameter.comp.component_id==cll.comp.component_id)
@@ -41,7 +41,7 @@ public class response_component_buffer_parameter
 			response_flag create_flag,render_component_counter rcc)
 	{
 		for(component_instance_driver in_dr;cll!=null;cll=cll.next_list_item) {
-			if((in_dr=test_should_response_parameter(cll,current_touch_time,ek,ci,rcc,0))==null)
+			if((in_dr=test_should_response_parameter(cll,current_touch_time,sk,ci,rcc,0))==null)
 				continue;
 			part my_part=cll.comp.driver_array.get(cll.driver_id).component_part;
 			
@@ -60,7 +60,7 @@ public class response_component_buffer_parameter
 			ci.request_response.print(data_buffer_id).print(",");
 			
 			try{
-				in_dr.create_component_parameter(ek,ci);
+				in_dr.create_component_parameter(sk,ci);
 			}catch(Exception e){
 				e.printStackTrace();
 				
@@ -80,18 +80,18 @@ public class response_component_buffer_parameter
 					cll.comp.driver_array.get(cll.driver_id).get_component_parameter_version());
 		}	
 	}
-	public response_component_buffer_parameter(	engine_kernel my_ek,client_information my_ci,render_component_counter rcc)
+	public response_component_buffer_parameter(	scene_kernel my_sk,client_information my_ci,render_component_counter rcc)
 	{
-		ek=my_ek;
+		sk=my_sk;
 		ci=my_ci;
-		current_touch_time=ek.current_time.nanoseconds();
+		current_touch_time=sk.current_time.nanoseconds();
 		component_collector collector;
 		response_flag create_flag=new response_flag();
 		
 		ci.request_response.print(",[");
-		for(int i=0,ni=ek.process_part_sequence.process_parts_sequence.length;i<ni;i++) {
-			int render_id=ek.process_part_sequence.process_parts_sequence[i][0];
-			int part_id=ek.process_part_sequence.process_parts_sequence[i][1];
+		for(int i=0,ni=sk.process_part_sequence.process_parts_sequence.length;i<ni;i++) {
+			int render_id=sk.process_part_sequence.process_parts_sequence[i][0];
+			int part_id=sk.process_part_sequence.process_parts_sequence[i][1];
 			if(ci.not_acknowledge_render_part_id[render_id][part_id])
 				continue;
 			for(int j=0,nj=ci.target_component_collector_list.size();j<nj;j++)	

@@ -3,6 +3,8 @@ package kernel_camera;
 import java.util.ArrayList;
 
 import kernel_render.render_target;
+import kernel_scene.client_information;
+import kernel_scene.client_parameter;
 import kernel_transformation.location;
 import kernel_transformation.plane;
 import kernel_transformation.point;
@@ -12,8 +14,6 @@ import kernel_transformation.screen_move_matrix;
 import kernel_transformation.tetrahedron;
 import kernel_component.component;
 import kernel_component.component_container;
-import kernel_engine.client_information;
-import kernel_engine.client_parameter;
 import kernel_part.part;
 
 public class camera_result

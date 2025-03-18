@@ -14,10 +14,10 @@ import kernel_common_class.change_name;
 import kernel_common_class.const_value;
 import kernel_component.component;
 import kernel_component.component_array;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_transformation.location;
 import kernel_component.component_collector;
 import kernel_driver.modifier_container;
@@ -26,7 +26,7 @@ import driver_location_modifier.extended_component_driver;
 
 public class movement_function_switch
 {
-	private engine_kernel ek;
+	private scene_kernel sk;
 	private client_information ci;
 	private movement_manager manager;
 	
@@ -60,11 +60,11 @@ public class movement_function_switch
 					add_component(t.children[i]);
 			if(t.move!=null) {
 				component moved_component;
-				if((moved_component=ek.component_cont.get_component(t.move.moved_component_id))!=null){
+				if((moved_component=sk.component_cont.get_component(t.move.moved_component_id))!=null){
 					all_components.add_component(moved_component);
 					if(t.move.follow_component_id!=null)
 						for(int i=0,ni=t.move.follow_component_id.length;i<ni;i++)
-							if((moved_component=ek.component_cont.get_component(t.move.follow_component_id[i]))!=null)
+							if((moved_component=sk.component_cont.get_component(t.move.follow_component_id[i]))!=null)
 								all_components.add_component(moved_component);
 				}
 			}
@@ -87,7 +87,7 @@ public class movement_function_switch
 		if(searcher.search_link_list==null)
 			return -1;
 		if(searcher.search_link_list.next!=null){
-			manager.movement_start(modifier_cont,current_movement_id,ek.component_cont,true,switch_time_length);
+			manager.movement_start(modifier_cont,current_movement_id,sk.component_cont,true,switch_time_length);
 			add_component(searcher.search_link_list.tree_node);
 			if((all_components.get_box()!=null)&&(ci.display_camera_result.cam.parameter.movement_flag))
 				(new locate_camera(ci.display_camera_result.cam)).locate_on_components(	modifier_cont,all_components.get_box(),
@@ -110,7 +110,7 @@ public class movement_function_switch
 		add_component(searcher.can_delete_list.tree_node);
 		for(int i=0,n=all_components.comp_list.size();i<n;i++)
 			all_components.comp_list.get(i).modify_display_flag(
-					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
+					manager.move_channel_id.all_parameter_channel_id,true,sk.component_cont);
 		
 		int index_id=searcher.can_delete_list.next.tree_node.children.length-1;
 		if(searcher.can_delete_list.index_id!=(index_id--))
@@ -122,7 +122,7 @@ public class movement_function_switch
 			if(searcher.can_delete_list.index_id!=i)
 				tmp[j++]=searcher.can_delete_list.next.tree_node.children[i];
 		searcher.can_delete_list.next.tree_node.children=tmp;
-		manager.movement_start(modifier_cont,current_movement_id,ek.component_cont,true,switch_time_length);
+		manager.movement_start(modifier_cont,current_movement_id,sk.component_cont,true,switch_time_length);
 		return current_movement_id;
 	}
 	private long reverse_move()
@@ -138,11 +138,11 @@ public class movement_function_switch
 		add_component(searcher.search_link_list.tree_node);
 		for(int i=0,n=all_components.comp_list.size();i<n;i++)
 			all_components.comp_list.get(i).modify_display_flag(
-					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
+					manager.move_channel_id.all_parameter_channel_id,true,sk.component_cont);
 
 		searcher.search_link_list.tree_node.reverse();
 		manager.movement_start(modifier_cont,
-				searcher.search_link_list.tree_node.movement_tree_id,ek.component_cont,true,switch_time_length);
+				searcher.search_link_list.tree_node.movement_tree_id,sk.component_cont,true,switch_time_length);
 		
 		return searcher.search_link_list.tree_node.movement_tree_id;
 	}
@@ -176,11 +176,11 @@ public class movement_function_switch
 		add_component(searcher.search_link_list.tree_node);
 		for(int i=0,ni=all_components.comp_list.size();i<ni;i++)
 			all_components.comp_list.get(i).modify_display_flag(
-					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
+					manager.move_channel_id.all_parameter_channel_id,true,sk.component_cont);
 		
 		manager.movement_start(modifier_cont,
 				searcher.search_link_list.tree_node.movement_tree_id,
-				ek.component_cont,true,switch_time_length);
+				sk.component_cont,true,switch_time_length);
 		
 		return searcher.search_link_list.next.tree_node.movement_tree_id;
 	}
@@ -197,7 +197,7 @@ public class movement_function_switch
 		searcher.search_link_list.tree_node.sequence_flag=new_sequence_flag;
 		
 		manager.movement_start(modifier_cont,
-				searcher.search_link_list.tree_node.movement_tree_id,ek.component_cont,true,switch_time_length);
+				searcher.search_link_list.tree_node.movement_tree_id,sk.component_cont,true,switch_time_length);
 		
 		return searcher.search_link_list.tree_node.movement_tree_id;
 	}
@@ -215,7 +215,7 @@ public class movement_function_switch
 		add_component(searcher.can_delete_list.tree_node);
 		for(int i=0,ni=all_components.comp_list.size();i<ni;i++)
 			all_components.comp_list.get(i).modify_display_flag(
-					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
+					manager.move_channel_id.all_parameter_channel_id,true,sk.component_cont);
 			
 		int index_id=searcher.can_delete_list.next.tree_node.children.length-1;
 		if(searcher.can_delete_list.index_id!=(index_id--))
@@ -238,7 +238,7 @@ public class movement_function_switch
 			buffer_tmp[manager.buffer_movement.length]=searcher.search_link_list.tree_node;
 			manager.buffer_movement=buffer_tmp;
 		}
-		manager.movement_start(modifier_cont,long_movement_tree_id,ek.component_cont,true,switch_time_length);
+		manager.movement_start(modifier_cont,long_movement_tree_id,sk.component_cont,true,switch_time_length);
 		return long_movement_tree_id;
 	}
 	private long frombuffer()
@@ -272,7 +272,7 @@ public class movement_function_switch
 				tmp[j++]=searcher.search_link_list.next.tree_node.children[i];
 			}
 			searcher.search_link_list.next.tree_node.children=tmp;
-			manager.reset(current_movement_tree_id,modifier_cont,ek.component_cont,switch_time_length);
+			manager.reset(current_movement_tree_id,modifier_cont,sk.component_cont,switch_time_length);
 		}
 		return current_movement_tree_id;
 	}
@@ -299,7 +299,7 @@ public class movement_function_switch
 		             tmp[j++]=searcher.search_link_list.tree_node.children[k];
 		searcher.search_link_list.next.tree_node.children=tmp;
 		manager.reset(searcher.search_link_list.next.tree_node.movement_tree_id,
-		              modifier_cont,ek.component_cont,switch_time_length);
+		              modifier_cont,sk.component_cont,switch_time_length);
 		return searcher.search_link_list.next.tree_node.movement_tree_id;
 	}
 	private void do_update_children(movement_tree t,
@@ -388,9 +388,9 @@ public class movement_function_switch
 	{
 		String str;
 		
-		if((manager.root_movement==null)||(ek.component_cont==null))
+		if((manager.root_movement==null)||(sk.component_cont==null))
 			return -1;
-		if(ek.component_cont.root_component==null)
+		if(sk.component_cont.root_component==null)
 			return manager.root_movement.movement_tree_id;
 		if((str=ci.request_response.get_parameter("id"))==null)
 			return manager.root_movement.movement_tree_id;;
@@ -400,15 +400,15 @@ public class movement_function_switch
 		add_component(searcher.search_link_list.tree_node);
 		for(int i=0,n=all_components.comp_list.size();i<n;i++)
 			all_components.comp_list.get(i).modify_display_flag(
-					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
+					manager.move_channel_id.all_parameter_channel_id,true,sk.component_cont);
 		
 		component main_comp;
-		if((main_comp=ek.component_cont.get_component(searcher.search_link_list.tree_node.move.moved_component_id))!=null){
+		if((main_comp=sk.component_cont.get_component(searcher.search_link_list.tree_node.move.moved_component_id))!=null){
 			component_array comp_array=new component_array();
-			comp_array.add_selected_component(ek.component_cont.root_component,false);
+			comp_array.add_selected_component(sk.component_cont.root_component,false);
 			for(int i=0;i<comp_array.comp_list.size();i++){
-				component comp=ek.component_cont.get_component(main_comp.parent_component_id);
-				for(;comp!=null;comp=ek.component_cont.get_component(comp.parent_component_id))
+				component comp=sk.component_cont.get_component(main_comp.parent_component_id);
+				for(;comp!=null;comp=sk.component_cont.get_component(comp.parent_component_id))
 					if(comp.component_id==comp_array.comp_list.get(i).component_id){
 						comp_array.expand(i--);
 						break;
@@ -416,7 +416,7 @@ public class movement_function_switch
 			}
 			for(int i=0;i<comp_array.comp_list.size();i++) {
 				component comp=comp_array.comp_list.get(i);
-				for(;comp!=null;comp=ek.component_cont.get_component(comp.parent_component_id))
+				for(;comp!=null;comp=sk.component_cont.get_component(comp.parent_component_id))
 					if(main_comp.component_id==comp.component_id){
 						comp_array.delete(i--);
 						break;
@@ -445,7 +445,7 @@ public class movement_function_switch
 		}
 		manager.movement_start(modifier_cont,
 				searcher.search_link_list.tree_node.movement_tree_id,
-				ek.component_cont,true,switch_time_length);
+				sk.component_cont,true,switch_time_length);
 		
 		return searcher.search_link_list.tree_node.movement_tree_id;
 	}
@@ -479,27 +479,27 @@ public class movement_function_switch
 			}
 		if(t.move==null)
 			return true;
-		if((move_comp=ek.component_cont.get_component(t.move.moved_component_id))==null)
+		if((move_comp=sk.component_cont.get_component(t.move.moved_component_id))==null)
 			return true;
 		int name_length=comp.component_name.length();
 		if(move_comp.component_name.length()<name_length)
 			return true;
 		if(move_comp.component_name.substring(0,name_length).compareTo(comp.component_name)!=0)
 			return true;
-		for(;move_comp!=null;move_comp=ek.component_cont.get_component(move_comp.parent_component_id))
+		for(;move_comp!=null;move_comp=sk.component_cont.get_component(move_comp.parent_component_id))
 			if(move_comp.component_id==comp.component_id)
 				break;
 		if(move_comp==null)
 			return true;
 		if(t.move.follow_component_id!=null)
 			for(int i=0,ni=t.move.follow_component_id.length;i<ni;i++){
-				if((move_comp=ek.component_cont.get_component(t.move.follow_component_id[i]))==null)
+				if((move_comp=sk.component_cont.get_component(t.move.follow_component_id[i]))==null)
 					return true;
 				if(move_comp.component_name.length()<name_length)
 					return true;
 				if(move_comp.component_name.substring(0,name_length).compareTo(comp.component_name)!=0)
 					return true;
-				for(;move_comp!=null;move_comp=ek.component_cont.get_component(move_comp.parent_component_id))
+				for(;move_comp!=null;move_comp=sk.component_cont.get_component(move_comp.parent_component_id))
 					if(move_comp.component_id==comp.component_id)
 						break;
 				if(move_comp==null)
@@ -514,13 +514,13 @@ public class movement_function_switch
 		component comp;
 		movement_tree t;
 		
-		if(ek.component_cont.root_component==null)
+		if(sk.component_cont.root_component==null)
 			return "no_root_component";
-		if((comp=ek.component_cont.search_component())==null)
+		if((comp=sk.component_cont.search_component())==null)
 			return "no_selected_component";
 		if(!(comp.uniparameter.selected_flag))
 			return "selected_component_not_selected";
-		if(ek.component_cont.get_component(comp.parent_component_id)==null)
+		if(sk.component_cont.get_component(comp.parent_component_id)==null)
 			return "selected_component_has_no_parent";
 		if(test_can_not_todesignbuffer(comp))
 			return "selected_component_error";
@@ -570,7 +570,7 @@ public class movement_function_switch
 		ci.request_response.print  ("		\"component_id\"	:	",
 				(comp==null)?-1:(comp.component_id)).println(",");
 		ci.request_response.println("		\"movement\"		:	[");
-		for(boolean comma_flag=false;comp!=null;comp=ek.component_cont.get_component(comp.parent_component_id)){
+		for(boolean comma_flag=false;comp!=null;comp=sk.component_cont.get_component(comp.parent_component_id)){
 			file_reader f=new file_reader(
 				manager.config_parameter.design_file_name,manager.config_parameter.movement_file_charset);
 			for(int i=0;;i++){
@@ -653,7 +653,7 @@ public class movement_function_switch
 		
 		if((str=ci.request_response.get_parameter("component"))==null)
 			return;
-		if((comp=ek.component_cont.get_component(Integer.decode(str)))==null)
+		if((comp=sk.component_cont.get_component(Integer.decode(str)))==null)
 			return;
 		
 		boolean place_flag;
@@ -687,7 +687,7 @@ public class movement_function_switch
 				continue;
 			if(comp.part_name.compareTo(part_name)!=0)
 				break;
-			if(t.modify_component_name(ek.component_cont,component_name,comp.component_name)){
+			if(t.modify_component_name(sk.component_cont,component_name,comp.component_name)){
 				if(manager.root_movement==null)
 					manager.root_movement=new movement_tree(manager.id_creator);
 				if(manager.root_movement.children==null){
@@ -706,7 +706,7 @@ public class movement_function_switch
 					manager.root_movement.children=tmp;
 				}
 				clear_follow(t);
-				manager.movement_start(modifier_cont,t.movement_tree_id,ek.component_cont,true,switch_time_length);
+				manager.movement_start(modifier_cont,t.movement_tree_id,sk.component_cont,true,switch_time_length);
 			}
 			break;
 		}
@@ -783,10 +783,10 @@ public class movement_function_switch
 			return -1;
 		
 		driver_audio_player.extended_component_driver acd;
-		if((acd=manager.config_parameter.get_audio_component_driver(ek))!=null)
+		if((acd=manager.config_parameter.get_audio_component_driver(sk))!=null)
 			acd.set_audio(null);
-		component_collector collector=ek.collector_stack.push_component_array(true,
-				ek.system_par,ek.scene_par,all_components,ek.component_cont,ek.render_cont.renders);
+		component_collector collector=sk.collector_stack.push_component_array(true,
+				sk.system_par,sk.scene_par,all_components,sk.component_cont,sk.render_cont.renders);
 		if(collector==null)
 			return -1;
 		if(collector.component_number<=0)
@@ -811,10 +811,10 @@ public class movement_function_switch
 		if(t.move==null)
 			return;
 		component moved_component;
-		if((moved_component=ek.component_cont.get_component(t.move.moved_component_id))!=null){
-			moved_component.set_component_move_location(new location(),ek.component_cont);
+		if((moved_component=sk.component_cont.get_component(t.move.moved_component_id))!=null){
+			moved_component.set_component_move_location(new location(),sk.component_cont);
 			moved_component.modify_display_flag(
-					manager.move_channel_id.all_parameter_channel_id,true,ek.component_cont);
+					manager.move_channel_id.all_parameter_channel_id,true,sk.component_cont);
 		}
 		return;
 	}
@@ -825,14 +825,14 @@ public class movement_function_switch
 			debug_information.println("Start loading movement from "+(manager.config_parameter.movement_file_name));
 			if(manager.root_movement!=null)
 				reset_movement_component(manager.root_movement);	
-			manager.init(modifier_cont,ek.component_cont,manager.config_parameter.movement_file_name,
+			manager.init(modifier_cont,sk.component_cont,manager.config_parameter.movement_file_name,
 					switch_time_length,manager.config_parameter.movement_file_charset,true);
 			debug_information.println("Terminate loading movement from "+(manager.config_parameter.movement_file_name));
 		}
 	}
 	private String[] push()
 	{
-		return manager.push_movement(ek.component_cont,
+		return manager.push_movement(sk.component_cont,
 				switch_time_length,manager.config_parameter.movement_file_charset,modifier_cont);
 	}
 	private long component_part_selection()
@@ -921,7 +921,7 @@ public class movement_function_switch
 			if((str=ci.request_response.get_parameter("source_component_id"))==null)
 				break;
 			component comp;
-			if((comp=ek.component_cont.get_component(Integer.parseInt(str)))==null)
+			if((comp=sk.component_cont.get_component(Integer.parseInt(str)))==null)
 				break;
 			String source_component_name=comp.component_name;
 			if((str=ci.request_response.get_parameter("source_body_id"))==null)
@@ -936,7 +936,7 @@ public class movement_function_switch
 				break;
 			if((str=ci.request_response.get_parameter("destatination_component_id"))==null)
 				break;
-			if((comp=ek.component_cont.get_component(Integer.parseInt(str)))==null)
+			if((comp=sk.component_cont.get_component(Integer.parseInt(str)))==null)
 				break;
 			String destatination_component_name=comp.component_name;
 			if((str=ci.request_response.get_parameter("destatination_body_id"))==null)
@@ -983,7 +983,7 @@ public class movement_function_switch
 			return;
 		common_reader reader=new common_reader(
 				ci.request_response.implementor.get_content_stream(),
-				ek.system_par.network_data_charset);
+				sk.system_par.network_data_charset);
 		reader.get_string();
 		String version_str=reader.get_string();
 		if(reader.eof()) {
@@ -1013,8 +1013,8 @@ public class movement_function_switch
 			manager.root_movement=new movement_tree(manager.id_creator);
 			manager.root_movement.children=new movement_tree[] {old,t};
 		}
-		manager.root_movement.mount_component(ek.component_cont,"");
-		manager.reset(-1,modifier_cont,ek.component_cont,switch_time_length);
+		manager.root_movement.mount_component(sk.component_cont,"");
+		manager.reset(-1,modifier_cont,sk.component_cont,switch_time_length);
 		return;
 	}
 	private void modify_time_length()
@@ -1049,14 +1049,14 @@ public class movement_function_switch
 		}
 		manager.movement_start(modifier_cont,
 			searcher.search_link_list.tree_node.movement_tree_id,
-			ek.component_cont,true,switch_time_length);
+			sk.component_cont,true,switch_time_length);
 		return;
 	}
 	private String[] design_request_dispatch(int movement_component_id,int movement_driver_id)
 	{
 		String str;
 		
-		if(ek.component_cont.root_component==null)
+		if(sk.component_cont.root_component==null)
 			return null;
 		if((str=ci.request_response.get_parameter("move_method"))==null)
 			return null;
@@ -1106,7 +1106,7 @@ public class movement_function_switch
 			try{
 				InputStream is=ci.request_response.implementor.get_content_stream();
 				FileOutputStream os	=new FileOutputStream(new File(file_name)); 
-				byte buffer[]=new byte[ek.system_par.response_block_size];
+				byte buffer[]=new byte[sk.system_par.response_block_size];
 				for(int len;(len=is.read(buffer))>=0;) { 
 					write_length+=len;
 					os.write(buffer,0,len);
@@ -1165,7 +1165,7 @@ public class movement_function_switch
 			my_upload_url+="&event_driver_id="		+movement_driver_id;
 
 			new upload_web_page(ci,new change_name(null,"",null),"text/plain",
-					ek.system_par.network_data_charset,my_upload_url).create_web_page();
+					sk.system_par.network_data_charset,my_upload_url).create_web_page();
 			return null;
 		}
 		case "component_part_selection":
@@ -1188,27 +1188,27 @@ public class movement_function_switch
 				manager.root_movement,ci.request_response,switch_time_length);
 			return null;
 		case "get_location":
-			new movement_get_location(ek,ci,manager);
+			new movement_get_location(sk,ci,manager);
 			return null;
 		case "set_location":
-			new movement_set_location(ek,ci,manager);
-			new movement_get_location(ek,ci,manager);
+			new movement_set_location(sk,ci,manager);
+			new movement_get_location(sk,ci,manager);
 			return null;
 		case "add_point":
-			new movement_add_point(ek,ci,manager);
-			new movement_get_location(ek,ci,manager);
+			new movement_add_point(sk,ci,manager);
+			new movement_get_location(sk,ci,manager);
 			return null;
 		case "delete_point":
-			new movement_delete_point(ek,ci,manager);
-			new movement_get_location(ek,ci,manager);
+			new movement_delete_point(sk,ci,manager);
+			new movement_get_location(sk,ci,manager);
 			return null;
 		case "add_movement":
-			new movement_add_movement(switch_time_length,ek,ci,manager);
-			new movement_get_location(ek,ci,manager);
+			new movement_add_movement(switch_time_length,sk,ci,manager);
+			new movement_get_location(sk,ci,manager);
 			return null;
 		case "change_component":
 			new movement_edit_jason(
-					movement_change_component.change_component(ek,ci,manager,switch_time_length),
+					movement_change_component.change_component(sk,ci,manager,switch_time_length),
 					switch_time_length,ci,manager);
 			return null;
 		case "delete":
@@ -1287,7 +1287,7 @@ public class movement_function_switch
 			file_writer f=new file_writer(
 				manager.config_parameter.movement_file_name,
 				manager.config_parameter.movement_file_charset);
-			manager.flush(ek.component_cont,f,switch_time_length,modifier_cont);
+			manager.flush(sk.component_cont,f,switch_time_length,modifier_cont);
 			f.close();
 			return null;
 		case "reload":
@@ -1296,7 +1296,7 @@ public class movement_function_switch
 			return null;
 		case "retreat":
 			ci.request_response.print(
-				manager.pop_movement(	modifier_cont,ek.component_cont,switch_time_length,
+				manager.pop_movement(	modifier_cont,sk.component_cont,switch_time_length,
 						manager.config_parameter.movement_file_charset)?"true":"false");
 			return null;
 		default:
@@ -1336,11 +1336,11 @@ public class movement_function_switch
 						break;
 		manager.parameter.current_movement_id=t.movement_tree_id;
 		
-		modifier_cont.process(ek,ci,true);
-		update_component_location(ek.component_cont.root_component);
+		modifier_cont.process(sk,ci,true);
+		update_component_location(sk.component_cont.root_component);
 
 		component location_comp;
-		if((location_comp=ek.component_cont.get_component(manager.config_parameter.location_component_id))!=null)
+		if((location_comp=sk.component_cont.get_component(manager.config_parameter.location_component_id))!=null)
 			for(int i=0,ni=location_comp.driver_number();i<ni;i++) {
 				component_driver c_d=location_comp.driver_array.get(i);
 				if(c_d instanceof extended_component_driver)
@@ -1348,22 +1348,22 @@ public class movement_function_switch
 			}
 		
 		driver_audio_player.extended_component_driver acd;
-		if((acd=manager.config_parameter.get_audio_component_driver(ek))!=null)
+		if((acd=manager.config_parameter.get_audio_component_driver(sk))!=null)
 			acd.set_audio(null);
 		
 		manager.movement_start(modifier_cont,
 				manager.parameter.current_movement_id,
-				ek.component_cont,direction_flag,switch_time_length);
+				sk.component_cont,direction_flag,switch_time_length);
 
-		manager.suspend.reset_suspend_collector(ek);
-		manager.suspend.reset_virtual_mount_component(ek);
+		manager.suspend.reset_suspend_collector(sk);
+		manager.suspend.reset_virtual_mount_component(sk);
 		manager.suspend.reset_suspend_match();
 
 		if(create_render_modifier_flag)
 			manager.create_render_modifier(t,single_step_flag,
 				manager.config_parameter.audio_component_id,
 				manager.config_parameter.location_component_id,
-				modifier_cont,ek.component_cont,switch_time_length,
+				modifier_cont,sk.component_cont,switch_time_length,
 				manager.config_parameter.sound_pre_string);
 	}
 	private String[]  movement_request_dispatch()
@@ -1374,7 +1374,7 @@ public class movement_function_switch
 			return null;
 		if(manager.root_movement==null)
 			return null;
-		if(ek.camera_cont==null)
+		if(sk.camera_cont==null)
 			return null;
 		if((str=ci.request_response.get_parameter("move_method"))==null)
 			return null;
@@ -1387,14 +1387,14 @@ public class movement_function_switch
 			break;
 		case "search_jason":
 			new movement_search_jason(manager.config_parameter.component_id,
-					ek.component_cont.search_component(),ek.component_cont,manager.root_movement,ci);
+					sk.component_cont.search_component(),sk.component_cont,manager.root_movement,ci);
 			break;
 		default:
 			break;
 		}
 		return null;
 	}
-	public String[] get_engine_result(int movement_component_id,int movement_driver_id)
+	public String[] get_result(int movement_component_id,int movement_driver_id)
 	{
 		String str;
 				
@@ -1407,7 +1407,7 @@ public class movement_function_switch
 		case "design":
 			return design_request_dispatch(movement_component_id,movement_driver_id);
 		case "virtual_mount":
-			manager.suspend.response_suspend_event(ek,ci);
+			manager.suspend.response_suspend_event(sk,ci);
 			return null;
 		case "parameter":
 			if((str=ci.request_response.get_parameter("parameter"))==null)
@@ -1425,15 +1425,15 @@ public class movement_function_switch
 			return null;
 		}
 	}
-	public movement_function_switch(engine_kernel my_ek,client_information my_ci,movement_manager my_manager)
+	public movement_function_switch(scene_kernel my_sk,client_information my_ci,movement_manager my_manager)
 	{
-		ek=my_ek;
+		sk=my_sk;
 		ci=my_ci;
 
 		manager=my_manager;
 		target_direction=null;
 		all_components=new  component_array();
-		modifier_cont=ek.modifier_cont[manager.config_parameter.movement_modifier_container_id];
+		modifier_cont=sk.modifier_cont[manager.config_parameter.movement_modifier_container_id];
 
 		camera_parameter cam_par=ci.display_camera_result.cam.parameter;
 		switch_time_length=cam_par.movement_flag?cam_par.switch_time_length:0;

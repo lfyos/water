@@ -1,13 +1,13 @@
 package driver_distance_tag;
 
 import kernel_part.part;
+import kernel_scene.scene_kernel;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 import kernel_driver.part_driver;
 import kernel_transformation.box;
 import kernel_component.component;
-import kernel_engine.engine_kernel;
 import kernel_transformation.point;
-import kernel_engine.scene_parameter;
-import kernel_engine.system_parameter;
 import kernel_driver.component_driver;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
@@ -25,7 +25,7 @@ public class extended_part_driver extends part_driver
 	{	
 		super.destroy();
 	}
-	public void initialize_part_driver(part p,engine_kernel ek,client_request_response request_response)
+	public void initialize_part_driver(part p,scene_kernel sk,client_request_response request_response)
 	{
 	}
 	public part_driver clone(part parent,part p,
@@ -52,19 +52,19 @@ public class extended_part_driver extends part_driver
 		return null;//super.caculate_part_box(p,comp,driver_id,body_id,face_id,primitive_id,vertex_id,loop_id,edge_id,p0,p1);
 	}
 	public String [][]assemble_file_name_and_file_charset(file_reader fr,part p,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 		return null;
 	}
 	public component_driver create_component_driver(
 			file_reader fr,boolean rollback_flag,part my_component_part,
 			component_load_source_container component_load_source_cont,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 		return new extended_component_driver(my_component_part,fr);
 	}
 	public part_instance_driver create_part_instance_driver(part p,
-			engine_kernel ek,client_request_response request_response)
+			scene_kernel sk,client_request_response request_response)
 	{
 		return new extended_part_instance_driver();
 	}

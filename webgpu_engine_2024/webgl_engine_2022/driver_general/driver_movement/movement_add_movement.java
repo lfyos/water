@@ -1,14 +1,14 @@
 package driver_movement;
 
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class movement_add_movement extends movement_design_base
 {
 	public movement_add_movement(long switch_time_length,
-			engine_kernel ek,client_information ci,movement_manager manager)
+			scene_kernel sk,client_information ci,movement_manager manager)
 	{
-		super(ek,ci,manager);
+		super(sk,ci,manager);
 
 		if(comp==null)
 			return;
@@ -30,8 +30,8 @@ public class movement_add_movement extends movement_design_base
 		if((tree_bak=manager.root_movement.children)==null)
 			manager.root_movement.children=new movement_tree[] {manager.designed_move};
 		else{
-			manager.movement_start(ek.modifier_cont[manager.config_parameter.movement_modifier_container_id],
-					manager.root_movement.movement_tree_id,ek.component_cont,true,switch_time_length);
+			manager.movement_start(sk.modifier_cont[manager.config_parameter.movement_modifier_container_id],
+					manager.root_movement.movement_tree_id,sk.component_cont,true,switch_time_length);
 			manager.root_movement.children=new movement_tree[tree_bak.length+1];
 			
 			if(manager.mount_direction_flag^get_boolean(ci,"place",true)){
@@ -45,7 +45,7 @@ public class movement_add_movement extends movement_design_base
 			}
 		}
 		manager.reset(manager.designed_move.movement_tree_id,
-				ek.modifier_cont[manager.config_parameter.movement_modifier_container_id],
-				ek.component_cont,switch_time_length);
+				sk.modifier_cont[manager.config_parameter.movement_modifier_container_id],
+				sk.component_cont,switch_time_length);
 	}
 }

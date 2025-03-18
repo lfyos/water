@@ -2,14 +2,14 @@ package driver_mouse_modify_location;
 
 import kernel_component.component;
 import kernel_camera.camera_result;
-import kernel_engine.engine_kernel;
 import kernel_transformation.point;
 import kernel_camera.locate_camera;
 import kernel_transformation.location;
 import kernel_driver.location_modifier;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_common_class.const_value;
 import kernel_component.component_array;
-import kernel_engine.client_information;
 import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
@@ -37,10 +37,10 @@ public class extended_component_instance_driver extends component_instance_drive
 		change_type_flag		=my_change_type_flag;
 		modifier_container_id=my_modifier_container_id;
 	}
-	public void response_init_component_data(engine_kernel ek,client_information ci)
+	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 	}
-	public boolean check(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		if(ci.display_camera_result==null)
 			return true;
@@ -54,11 +54,11 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		return false;
 	}
-	public void create_render_parameter(int render_buffer_id,engine_kernel ek,client_information ci,camera_result cr)
+	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}
-	public void create_component_parameter(engine_kernel ek,client_information ci)
+	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print("[",comp.component_id			);
 		ci.request_response.print(",",low_precision_scale		);
@@ -69,7 +69,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		ci.request_response.print("]"							);
 	}
 	private void get_data(boolean update_flag,
-			component operate_component,engine_kernel ek,client_information ci)
+			component operate_component,scene_kernel sk,client_information ci)
 	{
 		String str;
 		boolean display_flag=false;
@@ -92,7 +92,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			}
 		}
 		if(operate_component!=null)
-			if(operate_component.component_id!=ek.component_cont.root_component.component_id)
+			if(operate_component.component_id!=sk.component_cont.root_component.component_id)
 				if((str=ci.request_response.get_parameter("data"))!=null){
 					str+=",";
 					double data[]=new double[16];
@@ -105,8 +105,8 @@ public class extended_component_instance_driver extends component_instance_drive
 						}
 						data[i]=Double.parseDouble(str.substring(j,k++));
 					}
-					operate_component.set_component_move_location((new location(data)).normalize(),ek.component_cont);
-					ci.render_buffer.location_buffer.synchronize_location_version(operate_component,ek,update_flag);
+					operate_component.set_component_move_location((new location(data)).normalize(),sk.component_cont);
+					ci.render_buffer.location_buffer.synchronize_location_version(operate_component,sk,update_flag);
 					
 					display_flag=true;
 				}
@@ -118,15 +118,15 @@ public class extended_component_instance_driver extends component_instance_drive
 			if(ci.display_camera_result!=null)
 				if(ci.display_camera_result.target!=null)
 					ci.render_buffer.cam_buffer.synchronize_camera_buffer(
-						ek.camera_cont,ci.display_camera_result.target.camera_id);
+						sk.camera_cont,ci.display_camera_result.target.camera_id);
 	}
-	private void reset_component_location(component comp,long start_time,engine_kernel ek,client_information ci)
+	private void reset_component_location(component comp,long start_time,scene_kernel sk,client_information ci)
 	{
 		for(int i=0,ni=comp.children_number();i<ni;i++)
-			reset_component_location(comp.children[i],start_time,ek,ci);
+			reset_component_location(comp.children[i],start_time,sk,ci);
 		
 		if(comp.move_location.is_not_identity_matrix())
-			ek.modifier_cont[modifier_container_id].add_modifier(
+			sk.modifier_cont[modifier_container_id].add_modifier(
 				new location_modifier(comp,start_time,comp.move_location,
 					ci.display_camera_result.cam.parameter.switch_time_length+start_time,new location(),true,true));
 	}
@@ -141,14 +141,14 @@ public class extended_component_instance_driver extends component_instance_drive
 				add_in_list_component(comp.children[i],comp_array);
 		}
 	}
-	public String[] response_component_event(engine_kernel ek,client_information ci)
+	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
 		String str;
 		if(ci.display_camera_result==null)
 			return null;
 		if((str=ci.request_response.get_parameter("operate_component_id"))==null)
 			return null;		
-		component operate_component=ek.component_cont.get_component(Integer.decode(str));
+		component operate_component=sk.component_cont.get_component(Integer.decode(str));
 		if((str=ci.request_response.get_parameter("event_operation"))==null)
 			return null;
 		int camera_component_id=ci.display_camera_result.cam.eye_component.component_id;
@@ -162,26 +162,26 @@ public class extended_component_instance_driver extends component_instance_drive
 			if(ci.parameter.comp!=null)
 				select_component_id=ci.parameter.comp.component_id;
 			if(select_component_id<0)
-				if((operate_component=ek.component_cont.search_component())!=null)
-					if(operate_component.component_id!=ek.component_cont.root_component.component_id)
+				if((operate_component=sk.component_cont.search_component())!=null)
+					if(operate_component.component_id!=sk.component_cont.root_component.component_id)
 						if(operate_component.component_id!=camera_component_id) 
 							select_component_id=operate_component.component_id;
 			ci.request_response.print(select_component_id);
 			return null;
 		case "mouseup":
-			get_data(true,operate_component,ek,ci);
+			get_data(true,operate_component,sk,ci);
 			if(operate_component!=null){
 				operate_component.uniparameter.do_response_location_flag=true;
-				operate_component.set_component_move_location(operate_component.move_location,ek.component_cont);
+				operate_component.set_component_move_location(operate_component.move_location,sk.component_cont);
 				if(operate_component.component_id==camera_component_id)
 					ci.display_camera_result.cam.push_restore_stack(
-						ek.modifier_cont[modifier_container_id],false,
+						sk.modifier_cont[modifier_container_id],false,
 						ci.display_camera_result.cam.eye_component.move_location,
 						ci.display_camera_result.cam.parameter);
 			}
 			return null;
 		case "mousemove":
-			get_data(false,operate_component,ek,ci);
+			get_data(false,operate_component,sk,ci);
 			return null;
 		case "touchend":
 		case "dblclick_view_no_pickup":
@@ -205,16 +205,16 @@ public class extended_component_instance_driver extends component_instance_drive
 				p1=loca.multiply(new point(local_xy[0],local_xy[1],ci.parameter.depth+1.0));
 			}
 			(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
-					ek.modifier_cont[modifier_container_id],ek.component_cont,ci.display_camera_result,
+					sk.modifier_cont[modifier_container_id],sk.component_cont,ci.display_camera_result,
 					ci.parameter,null,ci.display_camera_result.cam.parameter.scale_value,
-					ek.modifier_cont[modifier_container_id].get_timer().get_current_time(),
+					sk.modifier_cont[modifier_container_id].get_timer().get_current_time(),
 					true,true,true,p0,p1);
 			return null;
 		case "dblclick_origin_no_pickup":
 			ci.parameter.comp=null;
 		case "dblclick_origin":
 			(new locate_camera(ci.display_camera_result.cam)).locate_on_origin(
-					ek.modifier_cont[modifier_container_id],ek.component_cont,
+					sk.modifier_cont[modifier_container_id],sk.component_cont,
 					ci.parameter,true,true,true);
 			return null;
 		case "dblclick_component":
@@ -227,18 +227,18 @@ public class extended_component_instance_driver extends component_instance_drive
 					c_a.add_component(ci.parameter.comp);
 			if(c_a.comp_list.size()<=0) 
 				if(operate_component!=null)
-					if(operate_component.component_id!=ek.component_cont.root_component.component_id)
+					if(operate_component.component_id!=sk.component_cont.root_component.component_id)
 						if(operate_component.component_id!=camera_component_id) 
 							c_a.add_component(operate_component);
 			if(c_a.comp_list.size()<=0)
-				c_a.add_selected_component(ek.component_cont.root_component,false);
+				c_a.add_selected_component(sk.component_cont.root_component,false);
 			if(c_a.comp_list.size()<=0)
-				add_in_list_component(ek.component_cont.root_component,c_a);
+				add_in_list_component(sk.component_cont.root_component,c_a);
 			
-			c_a.make_to_ancestor(ek.component_cont);
-			long start_time=ek.modifier_cont[modifier_container_id].get_timer().get_current_time();
+			c_a.make_to_ancestor(sk.component_cont);
+			long start_time=sk.modifier_cont[modifier_container_id].get_timer().get_current_time();
 			for(int i=0,ni=c_a.comp_list.size();i<ni;i++)
-				reset_component_location(c_a.comp_list.get(i),start_time,ek,ci);
+				reset_component_location(c_a.comp_list.get(i),start_time,sk,ci);
 			return null;
 		default:
 			return null;

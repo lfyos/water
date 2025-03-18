@@ -2,8 +2,8 @@ package driver_manipulator;
 
 import kernel_component.component;
 import kernel_component.component_array;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class operate_component_transparent
 {
@@ -14,7 +14,7 @@ public class operate_component_transparent
 			set_transparency(comp.children[i],transparency_value);
 	}
 	
-	public static void do_transparency(engine_kernel ek,client_information ci)
+	public static void do_transparency(scene_kernel sk,client_information ci)
 	{
 		String str;
 		double transparency_value;
@@ -32,23 +32,23 @@ public class operate_component_transparent
 						String request_charset=ci.request_response.implementor.get_request_charset();
 						str=java.net.URLDecoder.decode(str,request_charset);
 						str=java.net.URLDecoder.decode(str,request_charset);
-						if((my_comp=ek.component_cont.search_component(str))!=null)
+						if((my_comp=sk.component_cont.search_component(str))!=null)
 							comp_array.add_component(my_comp);
 					}
 					break;
 				}
 				if((str=ci.request_response.get_parameter("component_id"))!=null) {
-					if((my_comp=ek.component_cont.get_component(Integer.decode(str)))!=null)
+					if((my_comp=sk.component_cont.get_component(Integer.decode(str)))!=null)
 						comp_array.add_component(my_comp);
 					break;
 				}
-				comp_array.add_selected_component(ek.component_cont.root_component,false);
+				comp_array.add_selected_component(sk.component_cont.root_component,false);
 				if(comp_array.comp_list.size()<=0) {
 					str=ci.request_response.get_parameter("flag");
 					switch((str==null)?"":str) {
 					default:
 					case "noselection_all":
-						comp_array.add_component(ek.component_cont.root_component);
+						comp_array.add_component(sk.component_cont.root_component);
 						break;
 					case "noselection_none":
 						break;

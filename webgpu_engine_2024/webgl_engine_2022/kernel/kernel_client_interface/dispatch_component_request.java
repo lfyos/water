@@ -2,15 +2,15 @@ package kernel_client_interface;
 
 import kernel_part.part;
 import kernel_component.component;
-import kernel_engine.engine_kernel;
 import kernel_driver.component_instance_driver;
-import kernel_engine.client_information;
 import kernel_common_class.debug_information;
 import kernel_render.response_render_component_request;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class dispatch_component_request
 {
-	static public String[] do_dispatch(long delay_time_length,engine_kernel ek,client_information ci)
+	static public String[] do_dispatch(long delay_time_length,scene_kernel sk,client_information ci)
 	{
 		String str;
 		component comp;
@@ -26,19 +26,19 @@ public class dispatch_component_request
 				"unknown method is in component_request_dispatch of dispatch_component_request\t:\t",str);
 			return null;
 		case "update_render":
-			ci.parameter.get_call_parameter(ek,ci);
+			ci.parameter.get_call_parameter(sk,ci);
 			
-			for(int i=0,ni=ek.modifier_cont.length;i<ni;i++)
-				ek.modifier_cont[i].process(ek,ci,false);
+			for(int i=0,ni=sk.modifier_cont.length;i<ni;i++)
+				sk.modifier_cont[i].process(sk,ci,false);
 			
-			response_render_component_request.do_render(ek,ci,delay_time_length);
+			response_render_component_request.do_render(sk,ci,delay_time_length);
 			return null;
 		case "event":
-			for(int i=0,ni=ek.modifier_cont.length;i<ni;i++)
-				ek.modifier_cont[i].process(ek,ci,false);
+			for(int i=0,ni=sk.modifier_cont.length;i<ni;i++)
+				sk.modifier_cont[i].process(sk,ci,false);
 			
 			if((str=ci.request_response.get_parameter("event_component_id"))!=null){
-				if((comp=ek.component_cont.get_component(Integer.decode(str)))==null){
+				if((comp=sk.component_cont.get_component(Integer.decode(str)))==null){
 					debug_information.println(
 						"Can't Find component by ID in component_request_dispatch of dispatch_component_request\t:\t",str);
 					return null;
@@ -74,7 +74,7 @@ public class dispatch_component_request
 					component_instance_driver in_dr;
 					if((in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp,driver_id))!=null) {
 						try{
-							ret_val=in_dr.response_component_event(ek,ci);
+							ret_val=in_dr.response_component_event(sk,ci);
 						}catch(Exception e){
 							e.printStackTrace();
 							
@@ -104,7 +104,7 @@ public class dispatch_component_request
 							"Can't decode component name in component_request_dispatch of dispatch_component_request\t:\t",str);
 					return null;
 				}
-				if((comp=ek.component_cont.search_component(str))==null){
+				if((comp=sk.component_cont.search_component(str))==null){
 					debug_information.println(
 						"Can't Find component by name in component_request_dispatch of dispatch_component_request\t:\t",str);
 					return null;
@@ -140,7 +140,7 @@ public class dispatch_component_request
 					component_instance_driver in_dr;
 					if((in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp,driver_id))!=null) {
 						try{
-							ret_val=in_dr.response_component_event(ek,ci);
+							ret_val=in_dr.response_component_event(sk,ci);
 						}catch(Exception e){
 							e.printStackTrace();
 							

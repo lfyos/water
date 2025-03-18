@@ -4,8 +4,8 @@ import java.io.File;
 
 import kernel_common_class.debug_information;
 import kernel_part.part;
-import kernel_engine.system_parameter;
-import kernel_engine.scene_parameter;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 
 public class file_directory 
 {
@@ -16,7 +16,7 @@ public class file_directory
 		
 		switch(p.part_type_id){
 		case 0:
-			part_directory+="engine_part_directory"+File.separatorChar;
+			part_directory+="system_part_directory"+File.separatorChar;
 			break;
 		case 1:
 			part_directory =scene_par.scene_temporary_directory_name;
@@ -56,7 +56,7 @@ public class file_directory
 		switch(part_type_id){
 		case 0:
 			package_directory=system_par.temporary_file_par.temporary_root_directory_name;
-			package_directory+="engine_package_directory"+File.separatorChar;
+			package_directory+="system_package_directory"+File.separatorChar;
 			break;
 		case 1:
 			package_directory =scene_par.scene_temporary_directory_name;

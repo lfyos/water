@@ -29,7 +29,7 @@ public class component_core_0
 		clip=new component_clip();
 		uniparameter=new component_uniparameter(
 				fr.lastModified_time,normalize_location_flag,part_list_flag);
-		multiparameter=new component_multiparameter[ccp.ek.scene_par.multiparameter_number];
+		multiparameter=new component_multiparameter[ccp.sk.scene_par.multiparameter_number];
 		for(int i=0,ni=multiparameter.length;i<ni;i++)
 			multiparameter[i]=new component_multiparameter(ccp.default_display_bitmap);
 		initialization=new component_initialization();

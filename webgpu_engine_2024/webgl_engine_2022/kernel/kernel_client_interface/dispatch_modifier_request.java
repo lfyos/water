@@ -1,13 +1,13 @@
 package kernel_client_interface;
 
 import kernel_common_class.debug_information;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 
 public class dispatch_modifier_request
 {
-	public static String[] do_dispatch(engine_kernel ek,client_information ci)
+	public static String[] do_dispatch(scene_kernel sk,client_information ci)
 	{
 		String str,modifier_str;
 		
@@ -26,13 +26,13 @@ public class dispatch_modifier_request
 			debug_information.println("modifier is wrong in do_dispatch() of dispatch_modifier_request:	",modifier_str);
 			return null;
 		}
-		if((modifier_id<0)||(modifier_id>=ek.modifier_cont.length)){
+		if((modifier_id<0)||(modifier_id>=sk.modifier_cont.length)){
 			debug_information.println("modifier id is wrong in do_dispatch() of dispatch_modifier_request:	",modifier_id);
 			return null;
 		}
 		switch(str){
 		case "clear":
-			ek.modifier_cont[modifier_id].process(ek,ci,true);
+			sk.modifier_cont[modifier_id].process(sk,ci,true);
 			return null;
 		case "set_time":
 			if((str=ci.request_response.get_parameter("time"))==null){
@@ -40,7 +40,7 @@ public class dispatch_modifier_request
 				return null;
 			}
 			long new_current_time=Long.decode(str);
-			ek.modifier_cont[modifier_id].get_timer().modify_current_time(new_current_time,ek.current_time);
+			sk.modifier_cont[modifier_id].get_timer().modify_current_time(new_current_time,sk.current_time);
 			return null;
 		}
 		return null;

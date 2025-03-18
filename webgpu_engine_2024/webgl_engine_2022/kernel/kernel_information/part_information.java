@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import kernel_part.buffer_object_file_modify_time_and_length_item;
 import kernel_part.part;
-import kernel_engine.client_information;
+import kernel_scene.client_information;
 
 public class part_information extends jason_creator
 {

@@ -1,8 +1,8 @@
 package driver_movement;
 
 import kernel_component.component;
-import kernel_engine.client_information;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class movement_design_base 
 {
@@ -30,7 +30,7 @@ public class movement_design_base
 	
 	public component comp;
 	
-	public movement_design_base(engine_kernel ek,client_information ci,movement_manager manager)
+	public movement_design_base(scene_kernel sk,client_information ci,movement_manager manager)
 	{
 		String str;
 		comp=null;
@@ -46,7 +46,7 @@ public class movement_design_base
 			}catch(Exception e) {
 				break;
 			}
-			comp=ek.component_cont.search_component(str);
+			comp=sk.component_cont.search_component(str);
 		}while(false);
 		
 		if(comp==null)
@@ -56,16 +56,16 @@ public class movement_design_base
 				if(str.length()<=0)
 					break;
 				try {
-					comp=ek.component_cont.get_component(Integer.decode(str));
+					comp=sk.component_cont.get_component(Integer.decode(str));
 				}catch(Exception e) {
 					break;
 				}
 			}while(false);
 		
 		if(comp==null)
-			comp=ek.component_cont.search_component();
+			comp=sk.component_cont.search_component();
 		
-		if(ek.component_cont.root_component.component_id==comp.component_id) {
+		if(sk.component_cont.root_component.component_id==comp.component_id) {
 			comp=null;
 			return;
 		}

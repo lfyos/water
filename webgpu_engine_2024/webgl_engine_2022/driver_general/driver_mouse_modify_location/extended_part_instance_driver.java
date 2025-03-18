@@ -1,9 +1,9 @@
 package driver_mouse_modify_location;
 
 import kernel_part.part;
-import kernel_engine.engine_kernel;
+import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 import kernel_common_class.jason_string;
-import kernel_engine.client_information;
 import kernel_driver.part_instance_driver;
 
 public class extended_part_instance_driver extends part_instance_driver
@@ -26,7 +26,7 @@ public class extended_part_instance_driver extends part_instance_driver
 		movement_component_name=null;
 		movement_abstract_menu_component_name=null;
 	}
-	public void response_init_part_data(part p,engine_kernel ek,client_information ci)
+	public void response_init_part_data(part p,scene_kernel sk,client_information ci)
 	{
 		ci.request_response.println("{");
 		ci.request_response.print("\"mark_component_name\":		",
@@ -37,8 +37,8 @@ public class extended_part_instance_driver extends part_instance_driver
 				jason_string.change_string(movement_abstract_menu_component_name));
 		ci.request_response.println("}");
 	}
-	public String[] response_part_event(part p,engine_kernel ek,client_information ci)
+	public String[] response_part_event(part p,scene_kernel sk,client_information ci)
 	{			
-		return super.response_part_event(p,ek,ci);
+		return super.response_part_event(p,sk,ci);
 	}
 }
