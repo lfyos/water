@@ -25,9 +25,11 @@ public class scene_information extends jason_creator
 		print("statistics_user",		new statistics_user_information(sk,ci));
 		print("proxy",					new proxy_information(ci));
 	}
+	
 	public scene_information(scene_kernel my_sk,client_information my_ci)
 	{
 		super(my_ci.request_response);
+		
 		sk=my_sk;
 		ci=my_ci;
 	}

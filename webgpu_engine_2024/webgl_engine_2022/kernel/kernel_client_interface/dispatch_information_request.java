@@ -1,19 +1,18 @@
 package kernel_client_interface;
 
+import kernel_scene.scene_kernel;
+import kernel_scene.client_information;
 import kernel_component.component_collector;
-
 import kernel_information.scene_information;
+import kernel_information.sort_part_information;
+import kernel_information.array_part_information;
 import kernel_information.scene_camera_information;
 import kernel_information.sequence_part_information;
-import kernel_information.sort_part_information;
-import kernel_scene.client_information;
-import kernel_scene.scene_kernel;
-import kernel_information.array_part_information;
 import kernel_information.component_tree_information;
 import kernel_information.component_array_information;
-import kernel_information.component_collector_with_component_information;
 import kernel_information.component_selected_information;
 import kernel_information.component_collector_of_target_information;
+import kernel_information.component_collector_with_component_information;
 
 public class dispatch_information_request
 {
@@ -31,7 +30,7 @@ public class dispatch_information_request
 		case "part":
 			if((str=ci.request_response.get_parameter("operation"))==null)
 				str="sequence";
-			switch(str) {
+			switch(str){
 			case "sequence":
 				(new sequence_part_information(sk,ci)).output();
 				break;

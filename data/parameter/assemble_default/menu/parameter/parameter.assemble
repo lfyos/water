@@ -73,7 +73,7 @@
 			/* 2type		*/	interface_part
 			/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 				
-				false	8		0.2		1.8		system_info.png
+				false	8		0.2		1.7		system_info.png
 
 				token_program	查询系统信息功能选择组件
 				
@@ -83,55 +83,54 @@
 						pickupmouseselect	:	function(event,component_id,scene)
 						{
 							var ep=scene.component_event_processor[component_id];
-							var function_id=Math.floor(ep.y*19.0);
-							ep.hightlight=[0,function_id/19.0,1.0,function_id/19.0+1.0/19.0];
+							var function_id=Math.floor(ep.y*18.0);
+							
+							ep.hightlight=[0,function_id/18.0,1.0,function_id/18.0+1.0/18.0];
 
 							switch(function_id){
 							case 0://系统信息
 								return;
-							case 1://复位系统信息
-							case 2://提取系统信息
-								var url=scene.url_with_channel+"&command=information&method=scene&operation=";
-								window.open(url+((function_id==1)?"reset":"get"),"_blank");
+							case 1://提取系统信息
+								window.open(scene.url_with_channel+"&command=information&method=scene","_blank");
 								break;
-							case 3://杆件信息
+							case 2://杆件信息
 								return;
-							case 4://顺序排列杆件
-							case 5://排序排列杆件
-							case 6://阵列排列杆件
+							case 3://顺序排列杆件
+							case 4://排序排列杆件
+							case 5://阵列排列杆件
 								var url=scene.url_with_channel+"&command=information&method=part&operation=";
-								window.open(url+((function_id==4)?"sequence":(function_id==5)?"sort":"array"),"_blank");
+								window.open(url+((function_id==3)?"sequence":(function_id==4)?"sort":"array"),"_blank");
 								break;
-							case 7://组件信息
+							case 6://组件信息
 								return;
-							case 8://组件树
-							case 9://选中组件(1)
-							case 10://选中组件(2)
-							case 11://排序组件
+							case 7://组件树
+							case 8://选中组件(1)
+							case 9://选中组件(2)
+							case 10://排序组件
 								var url=scene.url_with_channel+"&command=information&method=component&operation=";
-								window.open(url+((function_id== 8)?"tree":
-												 (function_id== 9)?"selected&child_flag=true":
-												 (function_id==10)?"selected&child_flag=false":
+								window.open(url+((function_id==7)?"tree":
+												 (function_id==8)?"selected&child_flag=true":
+												 (function_id==9)?"selected&child_flag=false":
 												 "sorted"),"_blank");
 
 								break;
-							case 12://收集器信息
+							case 11://收集器信息
 								return;
-							case 13://列表收集器
-							case 14://显示收集器
-							case 15://选择收集器
-							case 16://渲染目标收集器	
+							case 12://列表收集器
+							case 13://显示收集器
+							case 14://选择收集器
+							case 15://渲染目标收集器	
 								var type_array=["list","display","selection","target"];
 								var url=scene.url_with_channel+"&command=information&method=collector&operation=";
-								window.open(url+((function_id==13)?"list":
-												 (function_id==14)?"display":
-												 (function_id==15)?"selection":
+								window.open(url+((function_id==12)?"list":
+												 (function_id==13)?"display":
+												 (function_id==14)?"selection":
 												 "target"),"_blank");
 								break;
-							case 17://相机信息
+							case 16://相机信息
 								window.open(scene.url_with_channel+"&command=information&method=camera","_blank");
 								break;
-							case 18:
+							case 17:
 								scene.system_call_processor.set_menu_show("设置系统信息功能选择组件");
 								scene.system_call_processor.set_menu_hide(component_id);
 								break;
