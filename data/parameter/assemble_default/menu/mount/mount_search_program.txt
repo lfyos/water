@@ -1,34 +1,34 @@
-function(component_name,component_id,render)
+function(component_name,component_id,scene)
 {
-	render.component_event_processor[component_id]={
+	scene.component_event_processor[component_id]={
 		update_flag			:	false,
 		search_data			:	new Array(),
 		
-		active_list			:	function(response_data,component_id,render)
+		active_list			:	function(response_data,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];
+			var ep=scene.component_event_processor[component_id];
 			if(response_data.length<=0)
 				return;
 			ep.update_flag	=false;
 			ep.search_data	=response_data;
 			
-			render.system_call_processor.set_menu_show(component_id,
+			scene.system_call_processor.set_menu_show(component_id,
 				[["operation","show"],["center","center"],["dy",ep.search_data.length*0.075]]);
 		},
-		pickupmouseselect	:	function(event,component_id,render)
+		pickupmouseselect	:	function(event,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];
+			var ep=scene.component_event_processor[component_id];
 			var function_id=Math.floor(ep.y*(ep.search_data.length));
 			
 			if((function_id>=0)&&(function_id<ep.search_data.length))
-				render.caller.call_server_component("movement_manager","all",[
+				scene.caller.call_server_component("movement_manager","all",[
 					["operation","design"],["move_method","locate_camera"],
 					["id",ep.search_data[function_id].movement_tree_id]]);
-			render.system_call_processor.set_menu_hide(component_id);
+			scene.system_call_processor.set_menu_hide(component_id);
 		},
-		update_canvas_texture	:	function(canvas_2d,context_2d,text_format,component_id,render)
+		update_canvas_texture	:	function(canvas_2d,context_2d,text_format,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];
+			var ep=scene.component_event_processor[component_id];
 			
 			if(ep.update_flag)
 				return false;

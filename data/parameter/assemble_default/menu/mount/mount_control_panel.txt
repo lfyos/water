@@ -1,9 +1,9 @@
-function(component_name,component_id,render)
+function(component_name,component_id,scene)
 {
-	render.component_event_processor[component_id]={
-		pickupmouseselect	:	function(event,component_id,render)
+	scene.component_event_processor[component_id]={
+		pickupmouseselect	:	function(event,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];
+			var ep=scene.component_event_processor[component_id];
 			var function_id=Math.floor(ep.y*11.0),par;
 			ep.hightlight=[0,function_id/11.0,	1.0,function_id/11.0+1.0/11.0];
 
@@ -12,25 +12,25 @@ function(component_name,component_id,render)
 				par=[["operation","movement"],["move_method","continue"],["direct","forward"]];
 				if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
 					par.push(["single_step","true"]);
-				render.caller.call_server_component("movement_manager","all",par);
+				scene.caller.call_server_component("movement_manager","all",par);
 				break;
 			case 1:
 				par=[["operation","movement"],["move_method","continue"],["direct","backward"]];
 				if(confirm("单步拼装(OK)/连续拼装(Cancel)"))
 					par.push(["single_step","true"]);
-				render.caller.call_server_component("movement_manager","all",par);
+				scene.caller.call_server_component("movement_manager","all",par);
 				break;
 			case 2:
-				render.caller.call_server_component("movement_manager",
+				scene.caller.call_server_component("movement_manager",
 						"all",[["operation","movement"],["move_method","stop"]]);
 				break;
 			case 3:
-				render.caller.call_server_component("movement_manager","all",
+				scene.caller.call_server_component("movement_manager","all",
 						[["operation","movement"],["move_method","stop"]]).
 				then(
 					function(response_data)
 					{
-						return render.caller.call_server_component("movement_manager","all",
+						return scene.caller.call_server_component("movement_manager","all",
 							[["operation","movement"],["move_method","search_jason"]],"json");
 					}).
 				then(
@@ -38,62 +38,62 @@ function(component_name,component_id,render)
 					{
 						if(response_data.length<=0)
 							return;
-						var my_component_id=render.operate_component.
+						var my_component_id=scene.operate_component.
 								get_component_object("组件拼装拼装查询组件").component_id;
-						var my_ep=render.component_event_processor[my_component_id];
-						my_ep.active_list(response_data,my_component_id,render);
+						var my_ep=scene.component_event_processor[my_component_id];
+						my_ep.active_list(response_data,my_component_id,scene);
 				});
 				break;
 			case 4:
-				window.open(render.caller.create_component_request_string("movement_manager","all",
+				window.open(scene.caller.create_component_request_string("movement_manager","all",
 					[["operation","virtual_mount"],["virtual_mount","suspend_jason"]]),"_blank");
 				break;
 			case 5:
-				render.caller.call_server_component("movement_manager","all",
+				scene.caller.call_server_component("movement_manager","all",
 					[["operation","virtual_mount"],["virtual_mount","reset"],
 					 ["component_part_selection","true"],["component_virtual_mount","true"]]);
 				break;
 			case 6:
-				render.caller.call_server_component("movement_manager","all",
+				scene.caller.call_server_component("movement_manager","all",
 					[["operation","virtual_mount"],["virtual_mount","reset"],["component_face_match","true"]]);
 				break;
 			case 7:
-				render.caller.call_server_component(
+				scene.caller.call_server_component(
 						"movement_manager","all",[["operation","movement"],["move_method","stop"]]).
 				then(
 					function(response_data)
 					{
-						var my_component_id=render.operate_component.
+						var my_component_id=scene.operate_component.
 								get_component_object("组件拼装拼装编辑组件").component_id;
-						render.component_event_processor[my_component_id].active_list(false);
+						scene.component_event_processor[my_component_id].active_list(false);
 					});
 				break;
 			case 8:
-				render.caller.call_server_component(
+				scene.caller.call_server_component(
 						"movement_manager","all",[["operation","movement"],["move_method","stop"]]).
 				then(
 					function(response_data)
 					{
 						var speed;
 						if((speed=prompt("请输入拼装速度"))!=null)
-							render.caller.call_server(render.url_with_channel+"&command=modifier&method=set_speed&speed="+speed);
+							scene.caller.call_server(scene.url_with_channel+"&command=modifier&method=set_speed&speed="+speed);
 					});
 				break;
 			case 9:
-				render.caller.call_server_component(
+				scene.caller.call_server_component(
 						"movement_manager","all",[["operation","movement"],["move_method","stop"]]).
 				then(
 					function(response_data)
 					{
 						var precision;
 						if((precision=prompt("请输入拼装精度"))!=null)
-							render.caller.call_server_component("movement_manager","all",
+							scene.caller.call_server_component("movement_manager","all",
 								[["operation","parameter"],["parameter","set_precision"],["value",precision]]);
 					});
 				break;
 			default:
-				render.system_call_processor.set_menu_show("交互界面主菜单");
-				render.system_call_processor.set_menu_hide(component_id);
+				scene.system_call_processor.set_menu_show("交互界面主菜单");
+				scene.system_call_processor.set_menu_hide(component_id);
 				break;
 			}
 		}

@@ -66,7 +66,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 	};
 	
 	this.process_buffer_object_data=function(render_id,part_id,request_str,
-		response_data,object_pointer,max_buffer_object_data_length,request_file_id,render)		
+		response_data,object_pointer,max_buffer_object_data_length,request_file_id,scene)		
 	{
 		var p=object_pointer.server_region_data[request_file_id];
 		var my_material_id	=p.material_id;
@@ -86,7 +86,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			object_pointer.data_collector[my_material_id]=p;
 		}else{
 			p.region_data	 = p.region_data.concat(response_data);
-			p.region_box	 = render.computer.combine_box(p.region_box,my_region_box);
+			p.region_box	 = scene.computer.combine_box(p.region_box,my_region_box);
 			p.item_number	+= my_item_number;
 		}
 		p.item_size=Math.round(p.region_data.length/p.item_number);
@@ -104,8 +104,8 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			end_material_id=my_material_id;
 		};
 		
-		var part_object=render.part_array[render_id][part_id];
-		var part_driver=render.part_driver[render_id][part_id];
+		var part_object=scene.part_array[render_id][part_id];
+		var part_driver=scene.part_driver[render_id][part_id];
 
 		for(var i=begin_material_id;i<=end_material_id;i++){
 			var processed_buffer_object_data=object_pointer.data_collector[i];
@@ -126,16 +126,16 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 	
 	this.fetch_buffer_object_data=async function(
 			render_id,part_id,request_str,data_url,data_length,
-			object_pointer,max_buffer_object_data_length,request_file_id,render)
+			object_pointer,max_buffer_object_data_length,request_file_id,scene)
 	{
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return;
 		
 		this.current_loading_mesh_number++;
-		var buffer_data_promise=await fetch(data_url,render.fetch_parameter.load_part_data);
+		var buffer_data_promise=await fetch(data_url,scene.fetch_parameter.load_part_data);
 		this.current_loading_mesh_number--;
 		
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return;
 		if(!(buffer_data_promise.ok)){
 			alert("request request_buffer_object data fail: "+data_url);
@@ -145,13 +145,13 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		try{
 			response_data = await buffer_data_promise.json();
 		}catch(e){
-			if(render.terminate_flag)
+			if(scene.terminate_flag)
 				return;
 			alert("parse request_buffer_object data fail: "+e.toString());
 			alert(data_url);
 			return;
 		}
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return;
 		
 		this.loaded_buffer_object_file_number++;
@@ -159,13 +159,13 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		
 		object_pointer.loaded_number--;
 		this.process_buffer_object_data(render_id,part_id,request_str,response_data,
-			object_pointer,max_buffer_object_data_length,request_file_id,render);
+			object_pointer,max_buffer_object_data_length,request_file_id,scene);
 		return;
 	};
 	
-	this.request_buffer_object_data=function(render)
+	this.request_buffer_object_data=function(scene)
 	{
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return this.max_loading_number;
 		if(this.test_busy()<=0)
 			return this.max_loading_number;
@@ -179,7 +179,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		var part_file_proxy_url				=p[3];
 		var part_affiliated_data			=p[4];
 		
-		p=render.part_array[render_id][part_id].buffer_object;
+		p=scene.part_array[render_id][part_id].buffer_object;
 		
 		var request_str,object_pointer;
 		
@@ -213,7 +213,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 				object_pointer.loaded_number--;
 				this.process_buffer_object_data(render_id,part_id,request_str,my_data,
 						object_pointer,max_buffer_object_data_length,
-						object_pointer.file_number,render);
+						object_pointer.file_number,scene);
 				return 0;
 			}
 			alert("Loading Buffer Object Data part_file_proxy_url error");
@@ -229,19 +229,19 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		this.fetch_buffer_object_data(
 			render_id,part_id,request_str,data_url,data_length,
 			object_pointer,max_buffer_object_data_length,
-			object_pointer.file_number,render);
+			object_pointer.file_number,scene);
 		return 1;
 	};
 	
 	this.create_part_array_and_vertex_data_request=function(
 			render_id,part_id,part_file_proxy_url,part_head_data,part_affiliated_data,
-			part_init_data,component_init_data,render)
+			part_init_data,component_init_data,scene)
 	{
 		if(this.acknowledge_render_part_id==null)
 			this.acknowledge_render_part_id="";
 		this.acknowledge_render_part_id+=render_id+"_"+part_id+"_";
 		
-		render.part_array[render_id][part_id]={
+		scene.part_array[render_id][part_id]={
 			find_error_flag					:	false,
 			
 			render_id						:	render_id,
@@ -251,7 +251,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			material						:	part_head_data.material,
 			property						:	part_head_data.property,
 			
-			part_component_id_and_driver_id	:	render.part_component_id_and_driver_id[render_id][part_id],
+			part_component_id_and_driver_id	:	scene.part_component_id_and_driver_id[render_id][part_id],
 
 			component_render_parameter		:	new Array(),
 			component_driver_array			:	new Array(),
@@ -301,11 +301,11 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			}
 		}
 
-		var render_driver=render.render_driver[render_id];
-		var part_object=render.part_array[render_id][part_id];
+		var render_driver=scene.render_driver[render_id];
+		var part_object=scene.part_array[render_id][part_id];
 		var part_driver=new render_driver.new_part_driver(
-				part_init_data[render_id][part_id],part_object,render_driver,render);
-		render.part_driver[render_id][part_id]=part_driver;
+				part_init_data[render_id][part_id],part_object,render_driver,scene);
+		scene.part_driver[render_id][part_id]=part_driver;
 
 		for(var i=0,ni=part_object.part_component_id_and_driver_id.length;i<ni;i++){
 			var my_component_id	=part_object.part_component_id_and_driver_id[i][0];
@@ -314,7 +314,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			part_object.component_driver_array[i]=new part_driver.new_component_driver(
 				my_component_id,my_driver_id,render_id,part_id,i,
 				component_init_data[my_component_id][my_driver_id],
-				part_object,part_driver,render_driver,render);
+				part_object,part_driver,render_driver,scene);
 		}
 		
 		this.request_render_part_id.push([render_id,part_id,
@@ -324,15 +324,15 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 	};
 
 	this.request_part_package=async function(package_proxy_url,package_length,
-			package_data_head,part_init_data,component_init_data,render)
+			package_data_head,part_init_data,component_init_data,scene)
 	{
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return;
 		this.current_loading_mesh_number++;
 		var head_promise=await fetch(package_proxy_url,
-					render.fetch_parameter.load_part_package);
+					scene.fetch_parameter.load_part_package);
 		this.current_loading_mesh_number--;
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return;
 		
 		if(!(head_promise.ok)){
@@ -343,19 +343,19 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		try{
 			package_data_array = await head_promise.json();
 		}catch(e){
-			if(render.terminate_flag)
+			if(scene.terminate_flag)
 				return;
 			alert("parse request_buffer_head_package data fail: "+e.toString());
 			alert(package_proxy_url);
 			return;
 		}
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return;
 
 		this.loaded_buffer_object_file_number++;
 		this.loaded_buffer_object_data_length+=package_length;
 		
-		for(var i=0,ni=package_data_head.length;(i<ni)&&(!(render.terminate_flag));i++){
+		for(var i=0,ni=package_data_head.length;(i<ni)&&(!(scene.terminate_flag));i++){
 			var render_id					=package_data_head[i][0];
 			var part_id						=package_data_head[i][1];
 			var part_package_sequence_id	=package_data_head[i][2];
@@ -374,19 +374,19 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		
 				this.create_part_array_and_vertex_data_request(render_id,part_id,
 					part_file_proxy_url,part_head_data,part_affiliated_data,
-					part_init_data,component_init_data,render);
+					part_init_data,component_init_data,scene);
 			}
 		}
 	};
 	
-	this.process_buffer_head_request_queue=function(part_init_data,component_init_data,render)
+	this.process_buffer_head_request_queue=function(part_init_data,component_init_data,scene)
 	{
 		do{
-			if(render.terminate_flag)
+			if(scene.terminate_flag)
 				break;
 				
 			for(var i=this.current_loading_mesh_number,ni=this.max_loading_number;i<ni;)
-				i+=this.request_buffer_object_data(render);
+				i+=this.request_buffer_object_data(scene);
 			
 			if(this.test_busy()<=0)
 				break;
@@ -398,7 +398,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			var package_data_head	=p[2];
 
 			this.request_part_package(package_proxy_url,package_length,
-					package_data_head,part_init_data,component_init_data,render);
+					package_data_head,part_init_data,component_init_data,scene);
 		}while(true);
 	};
 	

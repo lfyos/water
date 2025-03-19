@@ -23,14 +23,14 @@
 				
 				token_program	交互界面主菜单
 
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.system_call_processor.set_menu_hide(component_name);
+					scene.system_call_processor.set_menu_hide(component_name);
 				
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*9.0);
 
 							var show_component_name=[
@@ -46,8 +46,8 @@
 							];
 							
 							if((function_id>=0)&&(function_id<show_component_name.length)){
-								render.system_call_processor.set_menu_show(show_component_name[function_id]);
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show(show_component_name[function_id]);
+								scene.system_call_processor.set_menu_hide(component_id);
 							}
 						}
 					}
@@ -66,15 +66,15 @@
 				
 				token_program	交互界面菜单图标左
 				
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.system_call_processor.set_menu_show("交互界面菜单图标左",
+					scene.system_call_processor.set_menu_show("交互界面菜单图标左",
 						[["x0",-1.0],["y0",1.0],["all_in_view","all_in_view"]]);
 
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							render.system_call_processor.set_menu_show("交互界面主菜单");
+							scene.system_call_processor.set_menu_show("交互界面主菜单");
 						}
 					}
 				}
@@ -91,15 +91,15 @@
 				
 				token_program	交互界面菜单图标右
 				
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.system_call_processor.set_menu_show("交互界面菜单图标右",
+					scene.system_call_processor.set_menu_show("交互界面菜单图标右",
 						[["x0",1.0],["y0",1.0],["all_in_view","all_in_view"]]);
 
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							render.system_call_processor.set_menu_show("交互界面主菜单");
+							scene.system_call_processor.set_menu_show("交互界面主菜单");
 						}
 					}
 				}

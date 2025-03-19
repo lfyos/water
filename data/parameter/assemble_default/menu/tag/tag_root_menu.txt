@@ -1,70 +1,70 @@
-function(component_name,component_id,render)
+function(component_name,component_id,scene)
 {
-	render.component_event_processor[component_id]={
+	scene.component_event_processor[component_id]={
 		
-		pickupmouseselect	:	function(event,component_id,render)
+		pickupmouseselect	:	function(event,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];
-			var tag_ep=render.operate_component.get_component_event_processor("distance_tag_component");
+			var ep=scene.component_event_processor[component_id];
+			var tag_ep=scene.operate_component.get_component_event_processor("distance_tag_component");
 			var function_id=Math.floor(ep.y*14.0);
 	
 			switch(function_id){
 			case 0:
-				render.caller.call_server_component(tag_ep.component_id,"all",
+				scene.caller.call_server_component(tag_ep.component_id,"all",
 					[["operation","clear"],["id",tag_ep.pickup_tag_id]]);
 				break;
 			case 1:
 				return;
 			case 2:						
-				render.caller.call_server_component(tag_ep.component_id,"all",
+				scene.caller.call_server_component(tag_ep.component_id,"all",
 					[["operation","modify"],["id",tag_ep.pickup_tag_id],
 					 ["modify",(ep.x<(1.0/3.0))?"p0":(ep.x>(2.0/3.0))?"px":"position"]]);
-				render.event_component.mouse.	component_name	="distance_tag_component";
-				render.event_component.keyboard.component_name	="distance_tag_component";
-				render.event_component.mouse.	function_id		=0;
-				render.event_component.keyboard.function_id		=0;
+				scene.event_component.mouse.	component_name	="distance_tag_component";
+				scene.event_component.keyboard.component_name	="distance_tag_component";
+				scene.event_component.mouse.	function_id		=0;
+				scene.event_component.keyboard.function_id		=0;
 				break;
 			case 3:
 				var tag_title;
 				if((tag_title=prompt("Input tag title"))!=null)
-					render.caller.call_server_component(tag_ep.component_id,"all",
+					scene.caller.call_server_component(tag_ep.component_id,"all",
 						[["operation","title"],["id",tag_ep.pickup_tag_id],
 						 ["title",encodeURIComponent(encodeURIComponent(tag_title))]]);
 				break;
 			case 4:
-				render.caller.call_server_component(tag_ep.component_id,"all",
+				scene.caller.call_server_component(tag_ep.component_id,"all",
 					[["operation","extra"],["id",tag_ep.pickup_tag_id]]);
 				break;
 			case 5:
 				return;
 			case 6:
-				render.caller.call_server_component(tag_ep.component_id,"all",
+				scene.caller.call_server_component(tag_ep.component_id,"all",
 					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","-1"]]);
 				break;
 			case 7:
-				render.caller.call_server_component(tag_ep.component_id,"all",
+				scene.caller.call_server_component(tag_ep.component_id,"all",
 					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","-2"]]);
 				break;
 			case 8:
-				render.system_call_processor.set_menu_show("tag_direction_distance_component");
+				scene.system_call_processor.set_menu_show("tag_direction_distance_component");
 				break;
 			case 9:
-				render.system_call_processor.set_menu_show("tag_plane_distance_component");
+				scene.system_call_processor.set_menu_show("tag_plane_distance_component");
 				break;
 			case 10:
 				return;
 			case 11:
-				render.caller.call_server_component(tag_ep.component_id,"all",
+				scene.caller.call_server_component(tag_ep.component_id,"all",
 					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","-3"]]);
 				break;
 			case 12:
-				render.system_call_processor.set_menu_show("tag_direction_angle_component");
+				scene.system_call_processor.set_menu_show("tag_direction_angle_component");
 				break;
 			case 13:
-				render.system_call_processor.set_menu_show("tag_plane_angle_component");
+				scene.system_call_processor.set_menu_show("tag_plane_angle_component");
 				break;	
 			}			
-			render.system_call_processor.set_menu_hide(component_id);					
+			scene.system_call_processor.set_menu_hide(component_id);					
 		}
 	}
 }

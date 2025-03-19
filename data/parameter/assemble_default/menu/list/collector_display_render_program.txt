@@ -1,6 +1,6 @@
-function(component_name,component_id,render)
+function(component_name,component_id,scene)
 {
-	render.component_event_processor[component_id]=
+	scene.component_event_processor[component_id]=
 	{
 		list_type				:	"simple",
 		collector_stack_version	:	0,
@@ -10,13 +10,13 @@ function(component_name,component_id,render)
 		update_flag				:	false,
 
 		update_canvas_texture	:	function(
-				canvas_2d,context_2d,text_format,component_id,render)
+				canvas_2d,context_2d,text_format,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];
+			var ep=scene.component_event_processor[component_id];
 			
 			var old_collector_stack_version=ep.collector_stack_version;
-			if(render.collector_stack_version!=ep.collector_stack_version){
-				ep.collector_stack_version=render.collector_stack_version;
+			if(scene.collector_stack_version!=ep.collector_stack_version){
+				ep.collector_stack_version=scene.collector_stack_version;
 				ep.hightlight=[-1,-1,-1,-1];
 				
 				var simple_list_flag,single_collector_flag;
@@ -33,7 +33,7 @@ function(component_name,component_id,render)
 					break;
 				};
 				
-				render.collector_loader.load_collector(
+				scene.collector_loader.load_collector(
 					simple_list_flag,single_collector_flag,false).
 				then(
 					function(response_data)
@@ -120,9 +120,9 @@ function(component_name,component_id,render)
 			}
 			return true;
 		},
-		pickupmouseselect		:	function(event,component_id,render)
+		pickupmouseselect		:	function(event,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];
+			var ep=scene.component_event_processor[component_id];
 			var function_id=Math.floor(ep.y*ep.item_number);
 			ep.hightlight=[0,function_id/ep.item_number,1.0,function_id/ep.item_number+1.0/ep.item_number];
 			
@@ -132,11 +132,11 @@ function(component_name,component_id,render)
 			case "collector":
 				var my_id=Math.round(ep.id_base+function_id);
 				if((my_id>=0)&&(my_id<p.length)){
-					var operate_ep=render.component_event_processor[render.operate_component.
+					var operate_ep=scene.component_event_processor[scene.operate_component.
 							get_component_object("列表功能操作组件").component_id];
 					operate_ep.list_id	=p[my_id].list_id;
 					operate_ep.title	=p[my_id].title;
-					render.system_call_processor.set_menu_show("列表功能操作组件");
+					scene.system_call_processor.set_menu_show("列表功能操作组件");
 				}
 				break;
 			case "complex":
@@ -149,17 +149,17 @@ function(component_name,component_id,render)
 				var component_id=ep.request_array[function_id][2];
 				
 				if(event.ctrlKey)
-					render.caller.call_server_component("manipulator_component","all",
+					scene.caller.call_server_component("manipulator_component","all",
 						[["event_method","part_list"],	["operation",	"selection"],
 						 ["selection",	"select"],		["render_id",	render_id],
 						 ["part_id",	part_id],		["component_id",component_id]]);
 				else if(event.shiftKey)
-					render.caller.call_server_component("manipulator_component","all",
+					scene.caller.call_server_component("manipulator_component","all",
 						[["event_method","part_list"],	["operation",	"selection"],
 						 ["selection",	"unselect"],	["render_id",	render_id],
 						 ["part_id",	part_id],		["component_id",component_id]]);
 				else
-					render.caller.call_server_component("manipulator_component","all",
+					scene.caller.call_server_component("manipulator_component","all",
 						[["event_method","part_list"],	["operation",	"selection"],
 						 ["selection",	"swap"],		["render_id",	render_id],
 						 ["part_id",	part_id],		["component_id",component_id]]);

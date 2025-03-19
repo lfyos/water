@@ -1,6 +1,6 @@
-function(component_name,component_id,render)
+function(component_name,component_id,scene)
 { 				
-	render.event_component=
+	scene.event_component=
 	{
 		mouse	:
 		{

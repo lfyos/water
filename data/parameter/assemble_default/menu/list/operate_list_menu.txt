@@ -1,11 +1,11 @@
-function(component_name,component_id,render)
+function(component_name,component_id,scene)
 {
-	render.component_event_processor[component_id]=
+	scene.component_event_processor[component_id]=
 	{
 		first_show_list_flag	:	true,
-		pickupmouseselect		:	function(event,component_id,render)
+		pickupmouseselect		:	function(event,component_id,scene)
 		{
-			var display_ep,ep=render.component_event_processor[component_id];
+			var display_ep,ep=scene.component_event_processor[component_id];
 			var function_id=Math.floor(ep.y*19.0);
 			ep.hightlight=[0,function_id/19.0,		1.0,function_id/19.0+1.0/19.0];
 			
@@ -13,116 +13,116 @@ function(component_name,component_id,render)
 			case 0:
 				break;			
 			case 1:
-				render.caller.call_server_component("manipulator_component","all",
+				scene.caller.call_server_component("manipulator_component","all",
 					[["event_method","part_list"],["operation","create"],["part_list","true"]]);
 				break;
 			case 2:
-				render.caller.call_server_component("manipulator_component","all",
+				scene.caller.call_server_component("manipulator_component","all",
 					[["event_method","part_list"],["operation","create"],["part_list","false"]]);
 				break;
 			case 3:
-				render.caller.call_server_component("manipulator_component","all",
+				scene.caller.call_server_component("manipulator_component","all",
 					[["event_method","part_list"],["operation","target"], ["target","display"]]);
 				break;
 			case 4:
-				render.caller.call_server_component("manipulator_component","all",
+				scene.caller.call_server_component("manipulator_component","all",
 					[["event_method","part_list"],["operation","target"], ["target","all"]]);
 				break;
 			case 5:
 				break;;							
 			case 6:
-				display_ep=render.component_event_processor[render.operate_component.
+				display_ep=scene.component_event_processor[scene.operate_component.
 					get_component_object("列表功能显示组件").component_id];
 				display_ep.collector_stack_version=0;
 				display_ep.list_type="simple";
 				
-				render.system_call_processor.set_menu_show("列表功能显示组件",
+				scene.system_call_processor.set_menu_show("列表功能显示组件",
 					ep.first_show_list_flag?[["x0",0.75],["y0",-1.0]]:[]);
-				render.system_call_processor.set_menu_hide("列表功能操作组件");
+				scene.system_call_processor.set_menu_hide("列表功能操作组件");
 				ep.first_show_list_flag=false;
 				break;
 			case 7:
-				display_ep=render.component_event_processor[render.operate_component.
+				display_ep=scene.component_event_processor[scene.operate_component.
 					get_component_object("列表功能显示组件").component_id];
 				display_ep.collector_stack_version=0;
 				display_ep.list_type="complex";
 		
-				render.system_call_processor.set_menu_show("列表功能显示组件",
+				scene.system_call_processor.set_menu_show("列表功能显示组件",
 					ep.first_show_list_flag?[["x0",0.75],["y0",-1.0]]:[]);
-				render.system_call_processor.set_menu_hide("列表功能操作组件");
+				scene.system_call_processor.set_menu_hide("列表功能操作组件");
 				ep.first_show_list_flag=false;
 				break;
 			case 8:
-				display_ep=render.component_event_processor[render.operate_component.
+				display_ep=scene.component_event_processor[scene.operate_component.
 					get_component_object("列表功能显示组件").component_id];
 				display_ep.collector_stack_version=0;
 				display_ep.list_type="collector";
 				
-				render.system_call_processor.set_menu_show("列表功能显示组件",
+				scene.system_call_processor.set_menu_show("列表功能显示组件",
 					ep.first_show_list_flag?[["x0",0.75],["y0",-1.0]]:[]);
-				render.system_call_processor.set_menu_hide("列表功能操作组件");
+				scene.system_call_processor.set_menu_hide("列表功能操作组件");
 				ep.first_show_list_flag=false;
 				break;
 			case 9:
-				var operate_ep=render.component_event_processor[render.operate_component.
+				var operate_ep=scene.component_event_processor[scene.operate_component.
 					get_component_object("列表功能操作组件").component_id];
 				
 				if((operate_ep.title=prompt("请输入操作列表的标题"))!=null)
 					if((operate_ep.title=operate_ep.title.trim())!=""){
 						operate_ep.list_id	=-1;
-						render.system_call_processor.set_menu_show("列表功能操作组件");
+						scene.system_call_processor.set_menu_show("列表功能操作组件");
 						return;
 					}
 				if((operate_ep.title=prompt("请输入操作列表的ID"))!=null)
 					if((operate_ep.title=operate_ep.title.trim())!=""){
 						operate_ep.list_id=parseInt(operate_ep.title);
-						render.system_call_processor.set_menu_show("列表功能操作组件");
+						scene.system_call_processor.set_menu_show("列表功能操作组件");
 						return;
 					}
 				return;	
 			case 10:
 				return;	
 			case 11:
-				render.caller.call_server_component("manipulator_component","all",
+				scene.caller.call_server_component("manipulator_component","all",
 					[["event_method","part_list"],["operation","clear"]]);
 				break;
 			case 12:
-				render.caller.call_server_component("manipulator_component","all",
+				scene.caller.call_server_component("manipulator_component","all",
 					[["event_method","part_list"],["operation","save"],["top","false"]]);
 				break;				
 			case 13:
-				render.caller.call_server_component("manipulator_component","all",
+				scene.caller.call_server_component("manipulator_component","all",
 					[["event_method","part_list"],["operation","load"]]);
 				break;						
 			case 14:
 				window.open(
-					render.caller.create_component_request_string("manipulator_component","all",
+					scene.caller.create_component_request_string("manipulator_component","all",
 						[["event_method","part_list"],["operation","upload_webpage"],
 						 ["change_name",encodeURIComponent(encodeURIComponent("upload_file%2B"+"chinese:上传杆件列表"))]]),
 				"_blank");
 				break;				
 			case 15:
 				window.open(
-					render.caller.create_component_request_string("manipulator_component","all",
+					scene.caller.create_component_request_string("manipulator_component","all",
 						[["event_method","part_list"],["operation","download"],["top","true"]]),
 				"_blank");
 				break;							
 			case 16:
 				window.open(
-					render.collector_loader.collector_url(
+					scene.collector_loader.collector_url(
 						confirm("简单列表(YES/NO)"),confirm("单一列表(YES/NO)"),confirm("位置信息(YES/NO)")),
 					"_blank");
 				break;
 			case 17:			
 				window.open(
-					render.caller.create_component_request_string("manipulator_component","all",
+					scene.caller.create_component_request_string("manipulator_component","all",
 						[["event_method","part_list"],["flag",(ep.x<=0.5)?"true":"false"],
 						 ["operation","part_list_jason_component"]]),
 					"_blank");
 				break;
 			default:
-				render.system_call_processor.set_menu_show("交互界面主菜单");
-				render.system_call_processor.set_menu_hide(component_id);		
+				scene.system_call_processor.set_menu_show("交互界面主菜单");
+				scene.system_call_processor.set_menu_hide(component_id);		
 				break;
 			}
 		}

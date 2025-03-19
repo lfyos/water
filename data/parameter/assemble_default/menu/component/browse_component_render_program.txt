@@ -1,27 +1,27 @@
-function(component_name,component_id,render)
+function(component_name,component_id,scene)
 {
-	render.component_event_processor[component_id]={
+	scene.component_event_processor[component_id]={
 		browse_type_flag			:	true,
 		update_flag					:	false,
 		component_id				:	-1,
 		
 		active_list					:	function()
 		{
-			render.caller.call_server_component(
+			scene.caller.call_server_component(
 				"manipulator_component","all",[["event_method","last_component"]],"json").
 			then(
 				function(response_data)
 				{
-					var ep=render.component_event_processor[component_id];
+					var ep=scene.component_event_processor[component_id];
 					ep.browse_type_flag=true;
 					ep.update_flag=false;					
 					if((ep.component_id=response_data)>=0)
-						render.system_call_processor.set_menu_show(component_id);
+						scene.system_call_processor.set_menu_show(component_id);
 				});
 		},	
-		pickupmouseselect			:	function(event,component_id,render)
+		pickupmouseselect			:	function(event,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];
+			var ep=scene.component_event_processor[component_id];
 			var number=ep.interface_data.canvas.canvas_height/ep.interface_data.canvas.canvas_step;
 			var p,function_id=Math.floor(ep.y*number);
 
@@ -29,18 +29,18 @@ function(component_name,component_id,render)
 				return;
 			if(ep.component_id<0)
 				return;
-			if(ep.component_id>=render.component_array_sorted_by_id.length)
+			if(ep.component_id>=scene.component_array_sorted_by_id.length)
 				return;
 					
 			switch(function_id){
 			case 0:
-				if((p=render.component_array_sorted_by_id[ep.component_id].component_parent)==null)
+				if((p=scene.component_array_sorted_by_id[ep.component_id].component_parent)==null)
 					return;
 				ep.browse_type_flag	=true;
 				ep.update_flag		=false;
 				ep.component_id		=p.component_id;
 				
-				render.caller.call_server_component("manipulator_component","all",
+				scene.caller.call_server_component("manipulator_component","all",
 					[["component_id",ep.component_id],["event_method","selection"],
 					 ["event_operation","select_component"]]);
 				break;
@@ -48,18 +48,18 @@ function(component_name,component_id,render)
 				ep.browse_type_flag^=true; 
 				ep.update_flag		=false;
 				
-				render.caller.call_server_component("manipulator_component","all",[
+				scene.caller.call_server_component("manipulator_component","all",[
 						["component_id",ep.component_id],["event_method","selection"],
 						["event_operation","swap_component"]]).
 				then(
 					function(response_data)
 					{
-						render.system_call_processor.update_coordinate_display();
+						scene.system_call_processor.update_coordinate_display();
 					});
 				break;
 			default:
 				if(ep.browse_type_flag){
-					if((p=render.component_array_sorted_by_id[ep.component_id].component_children)==null)
+					if((p=scene.component_array_sorted_by_id[ep.component_id].component_children)==null)
 						return;
 					if((function_id-2)>=p.length)
 						return;
@@ -67,14 +67,14 @@ function(component_name,component_id,render)
 					ep.update_flag=false;
 					ep.component_id=child_component_id;
 					
-					render.caller.call_server_component("manipulator_component","all",
+					scene.caller.call_server_component("manipulator_component","all",
 						[["component_id",my_component_id],
 						["event_method","selection"],
 						["event_operation","clear_component"]]).
 					then(
 						function(response_data)
 						{
-							render.caller.call_server_component("manipulator_component","all",
+							scene.caller.call_server_component("manipulator_component","all",
 								[["component_id",child_component_id],
 								["event_method","selection"],
 								["event_operation","select_component"]]);
@@ -83,14 +83,14 @@ function(component_name,component_id,render)
 				}
 				return;
 			}
-			render.caller.call_server_component("camera_operation_component","all",
+			scene.caller.call_server_component("camera_operation_component","all",
 					[["operation","locate"],["component_id",ep.component_id],["scale",1.0],
 					 ["mandatory_movement","false"],["mandatory_scale","false"]]);
 			return;
 		},	
-		update_canvas_texture	:	function(canvas_2d,context_2d,text_format,component_id,render)
+		update_canvas_texture	:	function(canvas_2d,context_2d,text_format,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];
+			var ep=scene.component_event_processor[component_id];
 			
 			if(ep.update_flag)
 				return false;
@@ -107,9 +107,9 @@ function(component_name,component_id,render)
 			context_2d.textBaseline	=text_format.textBaseline;
 			context_2d.textAlign	=text_format.textAlign;
 			
-			if((ep.component_id<0)||(ep.component_id>=render.component_array_sorted_by_id.length))
+			if((ep.component_id<0)||(ep.component_id>=scene.component_array_sorted_by_id.length))
 				return true;
-			var str,pos,p=render.component_array_sorted_by_id[ep.component_id];
+			var str,pos,p=scene.component_array_sorted_by_id[ep.component_id];
 			if(p.component_parent!=null){
 				str=p.component_parent.component_name;
 				pos=text_format.canvas_width-context_2d.measureText(str).width;
@@ -130,13 +130,13 @@ function(component_name,component_id,render)
 					context_2d.fillText(p.component_children[i].component_name,0,pos);
 				}
 			}else{
-				p=render.component_array_sorted_by_id[ep.component_id].component_ids;
+				p=scene.component_array_sorted_by_id[ep.component_id].component_ids;
 				for(var driver_id=0,driver_number=p.length;driver_id<driver_number;driver_id++){
 					if(pos>=text_format.canvas_height)
 						break;
 					var render_id=p[driver_id][0],part_id=p[driver_id][1];
-					var part_information	=render.part_array[render_id][part_id].information;
-					var part_property		=render.part_array[render_id][part_id].property;
+					var part_information	=scene.part_array[render_id][part_id].information;
+					var part_property		=scene.part_array[render_id][part_id].property;
 										
 					str=(driver_id+1)+".";
 					if(part_property.normal_part_flag)

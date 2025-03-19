@@ -1,14 +1,14 @@
-function construct_render_routine(my_webgpu,my_url,
-	my_user_name,my_pass_word,my_language_name,
-	my_container_id,my_channel_id,render_data,default_fetch_parameter)
+function construct_scene(my_webgpu,
+	my_url,my_user_name,my_pass_word,my_language_name,
+	my_container_id,my_channel_id,scene_data,default_fetch_parameter)
 {
-	var component_number			=render_data[0];
-	var render_number				=render_data[1];
-	var modifier_container_number	=render_data[2];
-	var camera_number				=render_data[3];
+	var component_number			=scene_data[0];
+	var render_number				=scene_data[1];
+	var modifier_container_number	=scene_data[2];
+	var camera_number				=scene_data[3];
 	
-    this.link_name					=render_data[4];
-    this.parameter					=render_data[5];
+    this.link_name					=scene_data[4];
+    this.parameter					=scene_data[5];
 
 	this.fetch_parameter			=default_fetch_parameter;
 	this.webgpu						=my_webgpu;
@@ -109,7 +109,7 @@ function construct_render_routine(my_webgpu,my_url,
 	}
 	
 	this.component_location_data	=new construct_component_location_object(component_number,this.computer,this.webgpu);
-	this.component_render_data		=new construct_component_render_parameter(render_number);
+	this.component_render_data		=new construct_component_render_parameter();
 	this.modifier_time_parameter	=new construct_modifier_time_parameter(modifier_container_number);
 	this.vertex_data_downloader		=new construct_download_vertex_data(this.webgpu,this.parameter.max_loading_number);
 	this.camera						=new construct_camera_object(camera_number,this.component_location_data,this.computer);

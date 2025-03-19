@@ -19,14 +19,15 @@ public class javascript_program
 	private static final String javascript_file_name[]=new String[] 
 	{
 		"call_server.js",			"camera.js",				"collector_loader.js",			"component_location.js",
-		"component_render.js",		"computer.js",				"download_vertex_data.js",		"draw_scene.js",
-		"event_listener.js",		"init_ids.js",				"modifier_time.js",				"operate_component.js",	
-		"pickup.js",				"process_bar.js",			"render_main.js",				"render.js",
+		"component_render.js",		"computer.js",				"construct_scene.js",			"download_vertex_data.js",
+		"draw_scene.js",			"event_listener.js",		"init_ids.js",					"modifier_time.js",
+		"operate_component.js",		"pickup.js",				"process_bar.js",				"render_main.js",				
 		"request_create_scene.js",	"request_render_data.js",	"system_buffer.js",				"webgpu.js"
 	};
 	
 	public void destroy()
 	{
+		
 	}	
 	public javascript_program(system_parameter system_par)
 	{
@@ -126,11 +127,6 @@ public class javascript_program
 							system_par.create_scene_sleep_time_length		+","+
 							system_par.create_scene_max_sleep_time_length	+");",
 			"};",
-								
-			"export var create_target=async function(my_canvas,my_create_parameter)",
-			"{",
-			
-			"};"
 		};
 		
 		for(int i=0,ni=str.length;i<ni;i++)

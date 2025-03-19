@@ -1,7 +1,7 @@
 
-function construct_server_caller(my_render)
+function construct_server_caller(my_scene)
 {
-	this.render=my_render;
+	this.scene=my_scene;
 	
 	this.create_parameter_string=function(my_parameter)
 	{
@@ -57,15 +57,15 @@ function construct_server_caller(my_render)
 	}
 	this.call_server=async function(request_url,response_type_string,server_request_parameter)
 	{
-		var my_render;
-		if((my_render=this.render).terminate_flag)
+		var my_scene;
+		if((my_scene=this.scene).terminate_flag)
 			return null;
 		
 		var server_promise=await fetch(request_url,
-				(typeof(server_request_parameter)!="object")?(my_render.fetch_parameter.call_server):
-				(server_request_parameter==null)			?(my_render.fetch_parameter.call_server):
-				(Object.assign(server_request_parameter,my_render.fetch_parameter.call_server)));
-		if(my_render.terminate_flag)
+				(typeof(server_request_parameter)!="object")?(my_scene.fetch_parameter.call_server):
+				(server_request_parameter==null)			?(my_scene.fetch_parameter.call_server):
+				(Object.assign(server_request_parameter,my_scene.fetch_parameter.call_server)));
+		if(my_scene.terminate_flag)
 			return null;
 		if(!(server_promise.ok)){
 			alert("execute call_server error,status is "+server_promise.status);
@@ -90,7 +90,7 @@ function construct_server_caller(my_render)
 				return null;
 			}
 		}catch(e){
-			if(!(my_render.terminate_flag)){
+			if(!(my_scene.terminate_flag)){
 				alert("parse call_server response data fail:	"+request_url);
 				alert(e.toString());
 			}
@@ -99,7 +99,7 @@ function construct_server_caller(my_render)
 	};
 	this.create_render_request_string=function(render_id_or_render_name,render_parameter)
 	{
-		var ret_val=this.render.url_with_channel+"&command=render&method=event";
+		var ret_val=this.scene.url_with_channel+"&command=render&method=event";
 		if(typeof(render_id_or_render_name)=="string")
 			ret_val+="&event_render_name="+encodeURIComponent(encodeURIComponent(render_id_or_render_name));
 		else
@@ -109,7 +109,7 @@ function construct_server_caller(my_render)
 	};
 	this.create_render_request_by_part_string=function(render_id_or_part_name,part_id_or_driver_id,render_parameter)
 	{
-		var ret_val=this.render.url_with_channel+"&command=render&method=event";
+		var ret_val=this.scene.url_with_channel+"&command=render&method=event";
 		if(typeof(render_id_or_part_name)=="string"){
 			ret_val+="&event_part_name="+encodeURIComponent(encodeURIComponent(render_id_or_part_name));
 			ret_val+="&event_driver_id="+part_id_or_driver_id;
@@ -121,7 +121,7 @@ function construct_server_caller(my_render)
 	this.create_render_request_by_component_string=function(
 			component_id_or_component_name,component_driver_id,render_parameter)
 	{
-		var ret_val=this.render.url_with_channel+"&command=render&method=event";
+		var ret_val=this.scene.url_with_channel+"&command=render&method=event";
 		if(typeof(component_id_or_component_name)=="string")
 			ret_val+="&event_component_name="+encodeURIComponent(encodeURIComponent(component_id_or_component_name));
 		else
@@ -133,7 +133,7 @@ function construct_server_caller(my_render)
 	};
 	this.create_part_request_string=function(render_id_or_part_name,part_id_or_driver_id,part_parameter)
 	{
-		var ret_val=this.render.url_with_channel+"&command=part&method=event";
+		var ret_val=this.scene.url_with_channel+"&command=part&method=event";
 		if(typeof(render_id_or_part_name)=="string"){
 			ret_val+="&event_part_name="+encodeURIComponent(encodeURIComponent(render_id_or_part_name));
 			ret_val+="&event_driver_id="+part_id_or_driver_id;
@@ -145,7 +145,7 @@ function construct_server_caller(my_render)
 	this.create_part_request_by_component_string=function(
 			component_id_or_component_name,component_driver_id,part_parameter)
 	{
-		var ret_val=this.render.url_with_channel+"&command=part&method=event";
+		var ret_val=this.scene.url_with_channel+"&command=part&method=event";
 		if(typeof(component_id_or_component_name)=="string")
 			ret_val+="&event_component_name="+encodeURIComponent(encodeURIComponent(component_id_or_component_name));
 		else
@@ -157,7 +157,7 @@ function construct_server_caller(my_render)
 	};
 	this.create_component_request_string=function(component_name_or_id,driver_id,component_parameter)
 	{
-		var ret_val=this.render.url_with_channel+"&command=component&method=event";
+		var ret_val=this.scene.url_with_channel+"&command=component&method=event";
 		if(typeof(component_name_or_id)=="string")
 			ret_val+="&event_component_name="+encodeURIComponent(encodeURIComponent(component_name_or_id));
 		else
@@ -170,10 +170,9 @@ function construct_server_caller(my_render)
 	this.call_server_engine=async function(
 			engine_parameter,response_type_string,server_request_parameter)
 	{
-		if(this.render.terminate_flag)
+		if(this.scene.terminate_flag)
 			return null;
-		var request_url=this.render.url_with_channel+this.create_parameter_string(engine_parameter);
-		
+		var request_url=this.scene.url_with_channel+this.create_parameter_string(engine_parameter);
 		return await this.call_server(request_url,response_type_string,server_request_parameter);
 	};
 	this.call_server_render=async function(

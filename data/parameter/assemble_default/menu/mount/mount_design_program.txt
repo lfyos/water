@@ -1,27 +1,27 @@
-function(component_name,component_id,render)
+function(component_name,component_id,scene)
 {
-	render.component_event_processor[component_id]={
+	scene.component_event_processor[component_id]={
 		update_flag		:	false,
 		
 		active_list		:	function(coordinate_type)
 		{
 			if(typeof(coordinate_type)!="string")
 				coordinate_type="component";
-			render.caller.call_server_component("movement_manager","all",
+			scene.caller.call_server_component("movement_manager","all",
 				[["operation","design"],["move_method","get_location"],
 				 ["coordinate",coordinate_type]],"json").
 			then(
 				function(response_data)
 				{
-					var ep=render.component_event_processor[component_id];
+					var ep=scene.component_event_processor[component_id];
 					ep.update_flag	=false;
 					ep.response_data=response_data;
-					render.system_call_processor.set_menu_show(component_id,[]);
+					scene.system_call_processor.set_menu_show(component_id,[]);
 				});
 		},
-		pickupmouseselect	:	function(event,component_id,render)
+		pickupmouseselect	:	function(event,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];
+			var ep=scene.component_event_processor[component_id];
 			var p=ep.response_data;
 			
 			var move_all			=[0.10,	1.0-0.86,	0.20,	1.0-0.80];
@@ -151,7 +151,7 @@ function(component_name,component_id,render)
 					break;
 				case 14://add_movement
 				case 15://add_movement
-					render.system_call_processor.set_menu_hide(component_id);
+					scene.system_call_processor.set_menu_hide(component_id);
 					par=[["move_method","add_movement"],
 						 ["place",		(i==15)					?"true":"false"],
 						 ["start",		p.start_state_flag		?"true":"false"],
@@ -160,7 +160,7 @@ function(component_name,component_id,render)
 				}
 				par=par.concat([["operation","design"],
 							["coordinate",p.coordinate],["component_id",p.component_id]]);
-				render.caller.call_server_component("movement_manager","all",par,"json").
+				scene.caller.call_server_component("movement_manager","all",par,"json").
 					then(
 						function(response_data)
 						{
@@ -215,9 +215,9 @@ function(component_name,component_id,render)
 			ep.draw_item(canvas_2d,context_2d,	0.675,	0.175,	"前面添加运动");
 		},
 		
-		update_canvas_texture	:	function(canvas_2d,context_2d,text_format,component_id,render)
+		update_canvas_texture	:	function(canvas_2d,context_2d,text_format,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];	
+			var ep=scene.component_event_processor[component_id];	
 			
 			if(ep.update_flag)
 				return false;

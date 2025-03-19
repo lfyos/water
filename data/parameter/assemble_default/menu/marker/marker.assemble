@@ -11,13 +11,13 @@
 
 		token_program	文字标注选择组件
 					
-		function(component_name,component_id,render)
+		function(component_name,component_id,scene)
 		{
-			render.component_event_processor[component_id]=
+			scene.component_event_processor[component_id]=
 			{
-				pickupmouseselect		:	function(event,component_id,render)
+				pickupmouseselect		:	function(event,component_id,scene)
 				{
-					var ep=render.component_event_processor[component_id];
+					var ep=scene.component_event_processor[component_id];
 					var function_id=Math.floor(ep.y*12.0);
 					ep.hightlight=[0,function_id/12.0,1.0,function_id/12.0+1.0/12.0];
 					
@@ -32,19 +32,19 @@
 								break;
 						else 
 								par=[["operation","clear"],["id",par]];
-						render.caller.call_server_component("distance_tag_component","all",par);
+						scene.caller.call_server_component("distance_tag_component","all",par);
 						break;
 					case 2:
-						render.caller.call_server_component("distance_tag_component","all",[["operation","clear_all"]]);
+						scene.caller.call_server_component("distance_tag_component","all",[["operation","clear_all"]]);
 						break;
 					case 3:
-						render.caller.call_server_component("distance_tag_component","all",[["operation","save"]]);
+						scene.caller.call_server_component("distance_tag_component","all",[["operation","save"]]);
 						break;
 					case 4:
-						render.caller.call_server_component("distance_tag_component","all",[["operation","load"]]);
+						scene.caller.call_server_component("distance_tag_component","all",[["operation","load"]]);
 						break;
 					case 5:
-						window.open(render.caller.create_component_request_string(
+						window.open(scene.caller.create_component_request_string(
 							"distance_tag_component","all",[["operation","jason"]]),"_blank");
 						break;
 					case 6:
@@ -61,7 +61,7 @@
 							break;
 						if((marker_z=prompt("输入Z坐标值"))==null)
 							break;
-						render.caller.call_server_component("component_marker_component","all",
+						scene.caller.call_server_component("component_marker_component","all",
 							[["operation","add"],["x",marker_x],["y",marker_y],["z",marker_z],
 							 ["component_name",	encodeURIComponent(encodeURIComponent(marker_component_name))],
 							 ["value",			encodeURIComponent(encodeURIComponent(marker_text))]]);
@@ -70,20 +70,20 @@
 						var marker_id;
 						if((marker_id=prompt("输入标注序号"))==null)
 							break;
-						render.caller.call_server_component("component_marker_component","all",
+						scene.caller.call_server_component("component_marker_component","all",
 										[["operation","clear"],["marker_id",marker_id]]);
 						break;
 					case 9:
-						render.caller.call_server_component(
+						scene.caller.call_server_component(
 							"component_marker_component","all",[["operation","clear_all"]]);
 						break;
 					case 10:
-						window.open(render.caller.create_component_request_string(
+						window.open(scene.caller.create_component_request_string(
 							"component_marker_component","all",[["operation","jason"]]),"_blank");
 						break;
 					default:
-						render.system_call_processor.set_menu_show("交互界面主菜单");
-						render.system_call_processor.set_menu_hide(component_id);
+						scene.system_call_processor.set_menu_show("交互界面主菜单");
+						scene.system_call_processor.set_menu_hide(component_id);
 						break;
 					}
 				}

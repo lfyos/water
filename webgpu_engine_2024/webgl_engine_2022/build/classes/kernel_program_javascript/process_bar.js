@@ -86,7 +86,7 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 			var data_promise=await fetch(process_bar,default_fetch_parameter.load_process_bar_data);
 			if(!(data_promise.ok)){
 				this.destroy();
-				alert("render_show_process_bar fail:"+data_promise.status);
+				alert("show_process_bar fail:"+data_promise.status);
 				return;
 			}
 			var response_data;
@@ -94,7 +94,7 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 				response_data = await data_promise.json();
 			}catch(e){
 				this.destroy();
-				alert("parse render_show_process_bar fail:"+e.toString());
+				alert("parse show_process_bar fail:"+e.toString());
 				return;
 			}
 
@@ -127,7 +127,7 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 				this.process_bar_url+"&command=request",
 				default_fetch_parameter.request_process_bar);
 		if(!(process_bar_promise.ok)){
-			alert("render_main create process bar error,status is "+process_bar_promise.status);
+			alert("create process bar error,status is "+process_bar_promise.status);
 			alert(this.process_bar_url+"&command=request");
 			return null;
 		}

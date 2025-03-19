@@ -11,12 +11,12 @@
 
 				token_program	内容显示功能选择组件
 				
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*6.0);
 							ep.hightlight=[0,function_id/6.0,1.0,function_id/6.0+1.0/6.0];
 							
@@ -28,11 +28,11 @@
 									"内容显示坐标轴方向按钮组件"
 							];
 							if((function_id<0)||(function_id>4))
-								render.system_call_processor.set_menu_show("交互界面主菜单");
+								scene.system_call_processor.set_menu_show("交互界面主菜单");
 							else
-								render.system_call_processor.set_menu_show(show_component_name[function_id]);
+								scene.system_call_processor.set_menu_show(show_component_name[function_id]);
 								
-							render.system_call_processor.set_menu_hide(component_id);
+							scene.system_call_processor.set_menu_hide(component_id);
 						}
 					};
 				}
@@ -48,16 +48,16 @@
 				false	8	0.25	1.5		display.png
 				
 				token_program	内容显示显示方式组件
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							function set_display_mode(render,
+							function set_display_mode(scene,
 									hide_face_flag,hide_depth_flag,hide_frame_flag,hide_edge_flag,hide_point_flag,
 									show_face_flag,show_depth_flag,show_frame_flag,show_edge_flag,show_point_flag)
 							{
-								render.caller.call_server_component("manipulator_component","all",
+								scene.caller.call_server_component("manipulator_component","all",
 									[	["event_method","show_hide_parameter"],
 										["hide_code",	 (hide_face_flag?64:0)	+(hide_depth_flag? 4:0)	+(hide_frame_flag?16:0)
 														+(hide_edge_flag? 8:0)	+(hide_point_flag?32:0)],
@@ -65,7 +65,7 @@
 														+(show_edge_flag? 8:0)	+(show_point_flag?32:0)]
 									]);
 							};
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*15.0);
 							ep.hightlight=[0,function_id/15.0,1.0,function_id/15.0+1.0/15.0];
 						
@@ -73,44 +73,44 @@
 							case 0:
 								return;
 							case 1:		//仅仅显示表面
-								set_display_mode(render,true,true,true,true,true,true,false,false,false,false);
+								set_display_mode(scene,true,true,true,true,true,true,false,false,false,false);
 								break;
 							case 2:		//显示表面及线框
-								set_display_mode(render,true,true,true,true,true,true,false,true,false,false);
+								set_display_mode(scene,true,true,true,true,true,true,false,true,false,false);
 								break;
 							case 3:		//显示表面及边线
-								set_display_mode(render,true,true,true,true,true,true,false,false,true,false);
+								set_display_mode(scene,true,true,true,true,true,true,false,false,true,false);
 								break;
 							case 4:
 								return;
 							case 5:		//仅仅显示线框
-								set_display_mode(render,true,true,true,true,true,false,false,true,false,false);
+								set_display_mode(scene,true,true,true,true,true,false,false,true,false,false);
 								break;
 							case 6:		//仅仅显示边线
-								set_display_mode(render,true,true,true,true,true,false,false,false,true,false);
+								set_display_mode(scene,true,true,true,true,true,false,false,false,true,false);
 								break;
 							case 7:
 								return;
 							case 8:		//显示线框(消隐)
-								set_display_mode(render,true,true,true,true,true,false,true,true,false,false);
+								set_display_mode(scene,true,true,true,true,true,false,true,true,false,false);
 								break;
 							case 9:		//"显示边线(消隐)"
-								set_display_mode(render,true,true,true,true,true,false,true,false,true,false);
+								set_display_mode(scene,true,true,true,true,true,false,true,false,true,false);
 								break;
 							case 10:
 								return;
 							case 11:	//显示点
-								set_display_mode(render,false,false,false,false,true,false,false,false,false,true);
+								set_display_mode(scene,false,false,false,false,true,false,false,false,false,true);
 								break;
 							case 12:	//隐藏点
-								set_display_mode(render,false,false,false,false,true,false,false,false,false,false);
+								set_display_mode(scene,false,false,false,false,true,false,false,false,false,false);
 								break;
 							case 13:	//全屏幕显示
 								alert("不支持");
 								break;
 							case 14:
-								render.system_call_processor.set_menu_show("内容显示功能选择组件");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("内容显示功能选择组件");
+								scene.system_call_processor.set_menu_hide(component_id);
 								break;
 							default:
 								return;
@@ -132,18 +132,18 @@
 				
 				token_program	内容显示显示内容组件
 				
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*9.0);
 							if((function_id<0)||(function_id>7)){
-								render.system_call_processor.set_menu_show("内容显示功能选择组件");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("内容显示功能选择组件");
+								scene.system_call_processor.set_menu_hide(component_id);
 							}else
-								render.caller.call_server_component("render_target_register_component","all",
+								scene.caller.call_server_component("render_target_register_component","all",
 									[["operation","parameter_channel"],["target",-1],["parameter_channel",function_id]]);
 							ep.hightlight=[0,function_id/9.0,		1.0,function_id/9.0+1.0/9.0];
 						}
@@ -163,19 +163,19 @@
 				
 				token_program	内容显示显示结果组件
 				
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*13.0);
 
 							if((function_id<0)||(function_id>11)){
-								render.system_call_processor.set_menu_show("内容显示功能选择组件");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("内容显示功能选择组件");
+								scene.system_call_processor.set_menu_hide(component_id);
 							}else{
-								render.caller.call_server_component("manipulator_component","all",
+								scene.caller.call_server_component("manipulator_component","all",
 									[["event_method","display_value"],["display_value",function_id]]);
 							}
 							ep.hightlight=[0,function_id/13.0,1.0,function_id/13.0+1.0/13.0];
@@ -196,19 +196,19 @@
 				
 				token_program	内容显示显示背景组件
 				
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*6.0);
 							ep.hightlight=[0,function_id/6.0,1.0,function_id/6.0+1.0/6.0];
 
 							switch(function_id){
 							case 0:
 								for(var i=0;i<8;i++)
-									render.caller.call_server_component(
+									scene.caller.call_server_component(
 										"background_component_"+i.toString(),"all",
 										[["operation","mode"],["mode",-1]]);									
 								var new_red=0.0,new_green=0.0,new_blue=0.0;
@@ -218,7 +218,7 @@
 									break;
 								if((new_blue=prompt("请输入蓝色值") )==null)
 									break;
-								render.caller.call_server_component("render_target_register_component","all",
+								scene.caller.call_server_component("render_target_register_component","all",
 									[["operation","set_clear_color"],["target",-1],
 									 ["red",new_red],["green",new_green],["blue",new_blue],["alf","1.0"]]);	
 								break;
@@ -228,17 +228,17 @@
 							case 2:
 							case 3:
 								for(var i=0;i<8;i++)
-									render.caller.call_server_component(
+									scene.caller.call_server_component(
 										"background_component_"+i.toString(),"all",
 										[["operation","mode"],["mode",function_id-2]]);
 								break;
 							case 4:
-								render.system_call_processor.set_menu_show("内容显示显示背景图片组件");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("内容显示显示背景图片组件");
+								scene.system_call_processor.set_menu_hide(component_id);
 								break;
 							default:
-								render.system_call_processor.set_menu_show("内容显示功能选择组件");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("内容显示功能选择组件");
+								scene.system_call_processor.set_menu_hide(component_id);
 								break;
 							}
 						}
@@ -257,21 +257,21 @@
 				
 				token_program	内容显示显示背景图片组件
 				
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*11.0);
 							ep.hightlight=[0,function_id/11.0,1.0,function_id/11.0+1.0/11.0];
 							if((function_id<0)||(function_id>9)){
-								render.system_call_processor.set_menu_show("内容显示显示背景组件");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("内容显示显示背景组件");
+								scene.system_call_processor.set_menu_hide(component_id);
 							}else{
 								var picture_id="picture_"+function_id.toString()+"/";
 								for(var i=0;i<8;i++)
-									render.caller.call_server_component(
+									scene.caller.call_server_component(
 										"background_component_"+i.toString(),"all",
 										[["operation","directory"],["directory",picture_id]]);
 							}							
@@ -292,13 +292,13 @@
 				
 				token_program	内容显示坐标轴方向按钮组件
 				
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.component_event_processor[component_id]={
+					scene.component_event_processor[component_id]={
 		
-						pickupmouseselect	:	function(event,component_id,render)
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*9.0);
 							ep.hightlight=[0,function_id/9.0,1.0,function_id/9.0+1.0/9.0];
 							
@@ -307,24 +307,24 @@
 								return;
 							case 1:
 							case 3:
-								render.caller.call_server_component("coordinate","all",
+								scene.caller.call_server_component("coordinate","all",
 									[["operation","onoff"],["main",(function_id==1)?"true":"false"]]);
 								break;
 							case 2:
 							case 4:
-								render.caller.call_server_component("coordinate","all",
+								scene.caller.call_server_component("coordinate","all",
 									[["operation","onoff"],["selection",(function_id==2)?"true":"false"]]);
 								break;
 							case 5:
 								return;
 							case 6:
 							case 7:
-								render.caller.call_server_component("camera_operation_component","all",
+								scene.caller.call_server_component("camera_operation_component","all",
 									[["operation","show_hide"],["show_hide",(function_id==6)?"true":"false"]]);
 								break;
 							default:
-								render.system_call_processor.set_menu_show("内容显示功能选择组件");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("内容显示功能选择组件");
+								scene.system_call_processor.set_menu_hide(component_id);
 								break;
 							}
 						}

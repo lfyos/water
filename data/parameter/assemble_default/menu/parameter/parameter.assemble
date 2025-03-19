@@ -11,12 +11,12 @@
 
 				token_program	设置系统信息功能选择组件
 				
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{		
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var str,function_id=Math.floor(ep.y*10.0);
 							ep.hightlight=[0,function_id/10.0,		1.0,function_id/10.0+1.0/10.0];
 							
@@ -25,21 +25,21 @@
 								return;
 							case 1:	//打开配音
 							case 2:	//关闭配音
-								render.caller.call_server_component("audio_player_component","all",
+								scene.caller.call_server_component("audio_player_component","all",
 									[["operation",(function_id==1)?"turn_on":"turn_off"]]);
 								break;
 							case 3:
 								return;
 							case 4:
-								render.caller.call_server_component("render_target_register_component","all",
+								scene.caller.call_server_component("render_target_register_component","all",
 									[["operation","turnon_off_lod"],["discard","true"],["selection","true"]]);	
 								break;	
 							case 5:
-								render.caller.call_server_component("render_target_register_component","all",
+								scene.caller.call_server_component("render_target_register_component","all",
 									[["operation","turnon_off_lod"],["discard","true"],["selection","false"]]);	
 								break;
 							case 6:	
-								render.caller.call_server_component("render_target_register_component","all",
+								scene.caller.call_server_component("render_target_register_component","all",
 									[["operation","turnon_off_lod"],["discard","false"],["selection","false"]]);	
 								break;						
 							case 7:
@@ -48,17 +48,17 @@
 									break;
 								if((low_precision_scale=prompt("鼠标按下时的层次细节参数"))==null)
 									break;
-								render.caller.call_server_component("render_target_register_component","all",
+								scene.caller.call_server_component("render_target_register_component","all",
 									[["operation","display_precision"],
 									 ["high_value",high_precision_scale],["low_value",low_precision_scale]]);
 								break;
 							case 8:
-								render.system_call_processor.set_menu_show("查询系统信息功能选择组件");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("查询系统信息功能选择组件");
+								scene.system_call_processor.set_menu_hide(component_id);
 								break;
 							default:
-								render.system_call_processor.set_menu_show("交互界面主菜单");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("交互界面主菜单");
+								scene.system_call_processor.set_menu_hide(component_id);
 								break;
 							}
 						}
@@ -77,12 +77,12 @@
 
 				token_program	查询系统信息功能选择组件
 				
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*19.0);
 							ep.hightlight=[0,function_id/19.0,1.0,function_id/19.0+1.0/19.0];
 
@@ -91,7 +91,7 @@
 								return;
 							case 1://复位系统信息
 							case 2://提取系统信息
-								var url=render.url_with_channel+"&command=information&method=engine&operation=";
+								var url=scene.url_with_channel+"&command=information&method=scene&operation=";
 								window.open(url+((function_id==1)?"reset":"get"),"_blank");
 								break;
 							case 3://杆件信息
@@ -99,7 +99,7 @@
 							case 4://顺序排列杆件
 							case 5://排序排列杆件
 							case 6://阵列排列杆件
-								var url=render.url_with_channel+"&command=information&method=part&operation=";
+								var url=scene.url_with_channel+"&command=information&method=part&operation=";
 								window.open(url+((function_id==4)?"sequence":(function_id==5)?"sort":"array"),"_blank");
 								break;
 							case 7://组件信息
@@ -108,7 +108,7 @@
 							case 9://选中组件(1)
 							case 10://选中组件(2)
 							case 11://排序组件
-								var url=render.url_with_channel+"&command=information&method=component&operation=";
+								var url=scene.url_with_channel+"&command=information&method=component&operation=";
 								window.open(url+((function_id== 8)?"tree":
 												 (function_id== 9)?"selected&child_flag=true":
 												 (function_id==10)?"selected&child_flag=false":
@@ -122,18 +122,18 @@
 							case 15://选择收集器
 							case 16://渲染目标收集器	
 								var type_array=["list","display","selection","target"];
-								var url=render.url_with_channel+"&command=information&method=collector&operation=";
+								var url=scene.url_with_channel+"&command=information&method=collector&operation=";
 								window.open(url+((function_id==13)?"list":
 												 (function_id==14)?"display":
 												 (function_id==15)?"selection":
 												 "target"),"_blank");
 								break;
 							case 17://相机信息
-								window.open(render.url_with_channel+"&command=information&method=camera","_blank");
+								window.open(scene.url_with_channel+"&command=information&method=camera","_blank");
 								break;
 							case 18:
-								render.system_call_processor.set_menu_show("设置系统信息功能选择组件");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("设置系统信息功能选择组件");
+								scene.system_call_processor.set_menu_hide(component_id);
 								break;
 							}
 						}

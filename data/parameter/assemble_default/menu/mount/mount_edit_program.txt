@@ -1,6 +1,6 @@
-function(component_name,component_id,render)
+function(component_name,component_id,scene)
 {
-	render.component_event_processor[component_id]={
+	scene.component_event_processor[component_id]={
 		update_flag					:	false,
 		type_flag					:	true,
 		movement_data				:	null,
@@ -8,30 +8,30 @@ function(component_name,component_id,render)
 		
 		active_list					:	function(my_type_flag)
 		{
-			render.caller.call_server_component("movement_manager","all",
+			scene.caller.call_server_component("movement_manager","all",
 				[["operation","movement"],["move_method","stop"]]).
 			then(
 				function(response_data)
 				{
-					return render.caller.call_server_component("movement_manager","all",
+					return scene.caller.call_server_component("movement_manager","all",
 						[["operation","design"],["move_method","edit_jason"]],"json");
 				}).
 			then(
 				function(response_data)
 				{
-					var ep=render.component_event_processor[component_id];
+					var ep=scene.component_event_processor[component_id];
 						
 					ep.id_base					=0;
 					ep.type_flag				=my_type_flag;
 					ep.update_flag				=false;
 					ep.movement_data			=response_data;
 
-					render.system_call_processor.set_menu_show(component_id);
+					scene.system_call_processor.set_menu_show(component_id);
 				});
 		},
-		pickupmouseselect_routine		:	function(event,component_id,render)
+		pickupmouseselect_routine		:	function(event,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];
+			var ep=scene.component_event_processor[component_id];
 			if((ep.movement_data==null)||(ep.text_format==null))
 				return;
 
@@ -42,7 +42,7 @@ function(component_name,component_id,render)
 			switch(function_id){
 			case 0:
 				if(typeof(ep.movement_data.parent)=="object")
-					render.caller.call_server_component("movement_manager","all",
+					scene.caller.call_server_component("movement_manager","all",
 						[	["operation","design"],["move_method","edit_jason"],
 							["id",ep.movement_data.parent.movement_tree_id]],"json").
 					then(
@@ -55,12 +55,12 @@ function(component_name,component_id,render)
 				return;
 			case 1:
 				if(ep.type_flag){
-					var p=render.operate_component.get_component_object("组件拼装拼装操作组件");
-					render.component_event_processor[p.component_id].active_list();
+					var p=scene.operate_component.get_component_object("组件拼装拼装操作组件");
+					scene.component_event_processor[p.component_id].active_list();
 				}else{
-					render.system_call_processor.set_menu_hide(component_id);
+					scene.system_call_processor.set_menu_hide(component_id);
 					
-					render.caller.call_server_component("movement_manager","all",
+					scene.caller.call_server_component("movement_manager","all",
 						[["operation","design"],["move_method","locate_camera"],
 						 ["id",ep.movement_data.movement_tree_id]
 						],"json").
@@ -76,7 +76,7 @@ function(component_name,component_id,render)
 				var index_id=ep.id_base+function_id-2;
 				if((index_id>=0)&&(index_id<ep.movement_data.children.length))
 					
-					render.caller.call_server_component("movement_manager","all",
+					scene.caller.call_server_component("movement_manager","all",
 						[	["operation","design"],["move_method","edit_jason"],
 							["id",ep.movement_data.children[index_id].movement_tree_id]
 						],"json").
@@ -90,21 +90,21 @@ function(component_name,component_id,render)
 				return;
 			}
 		},
-		pickupmouseselect		:	function(event,component_id,render)
+		pickupmouseselect		:	function(event,component_id,scene)
 		{
-			render.caller.call_server_component("movement_manager","all",
+			scene.caller.call_server_component("movement_manager","all",
 				[["operation","movement"],["move_method","stop"]]).
 			then(
 				function(response_data)
 				{
-					var ep=render.component_event_processor[component_id];
-					ep.pickupmouseselect_routine(event,component_id,render);
+					var ep=scene.component_event_processor[component_id];
+					ep.pickupmouseselect_routine(event,component_id,scene);
 				});
 		},
 		
-		update_canvas_texture	:	function(canvas_2d,context_2d,text_format,component_id,render)
+		update_canvas_texture	:	function(canvas_2d,context_2d,text_format,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];
+			var ep=scene.component_event_processor[component_id];
 			
 			if(ep.update_flag)
 				return false;

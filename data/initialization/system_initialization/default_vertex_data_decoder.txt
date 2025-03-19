@@ -1,6 +1,6 @@
-function(component_name,component_id,render)
+function(component_name,component_id,scene)
 {
-	render.system_call_processor.default_vertex_data_decoder=
+	scene.system_call_processor.default_vertex_data_decoder=
 	{
 		discard_data:
 			function(keep_array,request_type_string,buffer_object_data,part_object)
