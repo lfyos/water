@@ -12,7 +12,7 @@
 
 <script type="text/javascript">
 
-var lfy_render;
+var scene_container;
 <%
 {
 	String str;
@@ -36,10 +36,12 @@ var lfy_render;
 
 async function body_onload()
 {
-	var url	="./water";
+	var url="./water";
 	
-	lfy_render=await (await import(url)).create_scene(
-		["my_canvas"],
+	scene_container=await (await import(url)).scene_container_create(["my_canvas"]);
+
+	await scene_container.this_scene_create(
+//	await scene_container.url_scene_create(url,
 		{
 			user_name				:	my_user_name,				//用户名	
 			pass_word				:	my_pass_word,				//用户密码
@@ -60,7 +62,7 @@ async function body_onload()
 			
 			coordinate				:	my_coordinate,				//坐标系选择
 			
-			max_loading_number		:	5					,		//同时下载数量
+			max_loading_number		:	5,							//同时下载数量
 			multisample				:	4							//多重采样数
 		});
 }
@@ -72,10 +74,10 @@ function body_onresize()
 }
 function body_onunload()
 {
-	if(typeof(lfy_render)=="object")
-		if(lfy_render!=null)
-			if(typeof(lfy_render.destroy)=="function")
-				lfy_render.destroy();
+	if(typeof(scene_container)=="object")
+		if(scene_container!=null)
+			if(typeof(scene_container.destroy)=="function")
+				scene_container.destroy();
 }
 
 </script>

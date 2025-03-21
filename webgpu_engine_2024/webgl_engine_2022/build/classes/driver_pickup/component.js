@@ -75,9 +75,13 @@ function construct_component_driver(
 
 //////////////////////////////////////////////////////////////////////////
 
-	this.begin_render_target=function(target_sequence_id,
-			render_data,target_part_object,target_part_driver,target_render_driver,render)
+	this.begin_scene_target=function(
+			scene_target,target_sequence_id,render_data,
+			target_part_object,target_part_driver,target_render_driver,render)
 	{
+		if(scene_target!=null)
+			return scene_target;
+			
 		var my_pass_descriptor;
 		
 		switch(target_sequence_id){
@@ -170,8 +174,9 @@ function construct_component_driver(
 			return null;
 		}
 	}
-	this.end_render_target=function(target_sequence_id,
-				render_data,target_part_object,target_part_driver,target_render_driver,render)
+	this.end_scene_target=function(
+			scene_target,target_sequence_id,render_data,
+			target_part_object,target_part_driver,target_render_driver,render)
 	{
 		switch(target_sequence_id){
 		case 0:

@@ -12,7 +12,7 @@ public class render_target_parameter
 	public double target_x0,target_y0,target_width,target_height;
 	
 	private render_target_parameter()
-	{	
+	{
 	}
 	private static render_target_parameter load_parameter(file_reader fr)
 	{

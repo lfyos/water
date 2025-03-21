@@ -18,16 +18,17 @@ public class javascript_program
 	
 	private static final String javascript_file_name[]=new String[] 
 	{
-		"call_server.js",			"camera.js",				"collector_loader.js",			"component_location.js",
-		"component_render.js",		"computer.js",				"construct_scene.js",			"download_vertex_data.js",
-		"draw_scene.js",			"event_listener.js",		"init_ids.js",					"modifier_time.js",
-		"operate_component.js",		"pickup.js",				"process_bar.js",				"render_main.js",				
-		"request_create_scene.js",	"request_render_data.js",	"system_buffer.js",				"webgpu.js"
+		"call_server.js",				"camera.js",						"collector_loader.js",
+		"component_location.js",		"component_render.js",				"computer.js",
+		"construct_scene.js",			"create_scene.js",					"create_scene_container.js",
+		"download_vertex_data.js",		"draw_scene_sequence_target.js",	"event_listener.js",
+		"init_ids.js",					"modifier_time.js",					"operate_component.js",
+		"pickup.js",					"process_bar.js",					"process_scene.js",
+		"request_create_scene.js",		"request_render_data.js",			"system_buffer.js",
+		"webgpu.js"
 	};
-	
 	public void destroy()
 	{
-		
 	}	
 	public javascript_program(system_parameter system_par)
 	{
@@ -112,12 +113,12 @@ public class javascript_program
 			cr.get_text("\t",request_response);
 			cr.close();
 		}
+		
 		String str[]=new String[]
 		{
-			"export var create_scene=async function(my_canvas,my_create_parameter,user_process_bar_function)",
+			"export var create_scene=async function(my_webgpu,my_create_parameter,user_process_bar_function)",
 			"{",
-				
-			"	return await render_main(my_canvas,my_create_parameter,",
+			"	return await create_scene_routine(my_webgpu,my_create_parameter,",
 			"				(typeof(user_process_bar_function)==\"function\")",
 			"					?user_process_bar_function",
 			"					:default_user_process_bar_function,",
@@ -126,6 +127,15 @@ public class javascript_program
 							system_par.create_scene_sleep_time_length_scale+","+
 							system_par.create_scene_sleep_time_length		+","+
 							system_par.create_scene_max_sleep_time_length	+");",
+			"};",
+			"export var scene_container_create=async function(my_canvas_array)",
+			"{",
+			"	var my_webgpu;",
+			"	if((my_webgpu=await create_webgpu(my_canvas_array)).error_flag)",
+			"		return null;",
+			"	var my_scene_container=new create_scene_container_routine(my_webgpu);",
+			"	my_scene_container.draw_scene_array();",
+			"	return my_scene_container;"	,
 			"};",
 		};
 		

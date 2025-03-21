@@ -146,7 +146,7 @@ async function request_render_data(scene)
 					break;
 				case 1:
 					p.target_texture_id	=my_data[j++];
-					p.target_name		=my_data[j++];	
+					p.target_name		=my_data[j++];
 					break;
 				case 2:
 					p.camera_id=my_data[j++];

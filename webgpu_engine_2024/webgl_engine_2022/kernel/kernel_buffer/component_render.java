@@ -134,7 +134,8 @@ public class component_render
 		}
 // set component flag in buffer
 		for(int i=0;i<component_number;i++){
-			component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp[i],driver_id[i]);
+			component_instance_driver in_dr=ci.component_instance_driver_cont.
+					get_component_instance_driver(comp[i],driver_id[i]);
 			long old_component_render_version=in_dr.get_component_render_version(render_buffer_id);
 			long new_component_render_version=comp[i].driver_array.get(driver_id[i]).get_component_render_version();
 			int data_buffer_id=comp[i].driver_array.get(driver_id[i]).same_part_component_driver_id;
@@ -146,7 +147,8 @@ public class component_render
 			int data_buffer_id=p.comp.driver_array.get(p.driver_id).same_part_component_driver_id;
 			switch(flag[data_buffer_id]){
 			case 0://component not in buffer,but in link list 
-				component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(p.comp,p.driver_id);
+				component_instance_driver in_dr=ci.component_instance_driver_cont.
+						get_component_instance_driver(p.comp,p.driver_id);
 				long old_component_render_version=in_dr.get_component_render_version(render_buffer_id);
 				long new_component_render_version=p.comp.driver_array.get(p.driver_id).get_component_render_version();
 				flag[data_buffer_id]|=(old_component_render_version!=new_component_render_version)?4:8;

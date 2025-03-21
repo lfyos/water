@@ -115,6 +115,7 @@ function construct_scene(my_webgpu,
 	this.camera						=new construct_camera_object(camera_number,this.component_location_data,this.computer);
 	this.operate_component			=new construct_operate_component(this);
 	this.collector_loader			=new construct_collector_loader_object(this);
+	this.scene_interface			=new construct_scene_interface(this);
 	this.system_buffer				=null;
 	
 	this.pickup						=new construct_pickup_object();

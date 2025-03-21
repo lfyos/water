@@ -46,9 +46,13 @@ function construct_component_driver(
 	{
 		this.clear_color=buffer_data_item;
 	}
-	this.begin_render_target=function(target_sequence_id,
-			render_data,target_part_object,target_part_driver,target_render_driver,render)
+	this.begin_scene_target=function(
+			scene_target,target_sequence_id,render_data,
+			target_part_object,target_part_driver,target_render_driver,render)
 	{
+		if(scene_target!=null)
+			return scene_target;
+			
 		if(target_sequence_id!=0)
 			return null;
 		if(render_data.target_texture_id<0)

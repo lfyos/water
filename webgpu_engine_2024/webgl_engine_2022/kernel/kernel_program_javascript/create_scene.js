@@ -1,11 +1,7 @@
-async function render_main(
-	my_canvas,my_create_parameter,user_process_bar_function,my_url,default_fetch_parameter,
-	create_engine_sleep_time_length_scale,create_engine_sleep_time_length,create_engine_max_sleep_time_length)
+async function create_scene_routine(
+	my_webgpu,my_create_parameter,user_process_bar_function,my_url,default_fetch_parameter,
+	create_scene_sleep_time_length_scale,create_scene_sleep_time_length,create_scene_max_sleep_time_length)
 {
-	var webgpu=await create_webgpu(my_canvas);
-	if(webgpu.error_flag)
-		return null;
-		
 	if(typeof(my_create_parameter)!="object")
 		my_create_parameter={};
 	else if(my_create_parameter==null)
@@ -43,7 +39,7 @@ async function render_main(
 		default:
 			break;
 		}
-	var process_bar_object=new construct_process_bar(webgpu,user_process_bar_function,
+	var process_bar_object=new construct_process_bar(my_webgpu,user_process_bar_function,
 			my_url+"?channel=process_bar"+my_create_parameter_string);
 	var process_bar_data=await process_bar_object.start(default_fetch_parameter);
 	if(process_bar_data==null)
@@ -54,11 +50,11 @@ async function render_main(
 	request_url+="&process_bar="+process_bar_data.process_bar_id;
 	request_url+=my_create_parameter_string;
 	
-	var ret_val=await request_create_engine(
-			create_engine_sleep_time_length_scale,
-			create_engine_sleep_time_length,
-			create_engine_max_sleep_time_length,
-			webgpu,request_url,my_url,
+	var scene=await request_create_scene(
+			create_scene_sleep_time_length_scale,
+			create_scene_sleep_time_length,
+			create_scene_max_sleep_time_length,
+			my_webgpu,request_url,my_url,
 			my_create_parameter.user_name,
 			my_create_parameter.pass_word,
 			my_create_parameter.language,
@@ -66,5 +62,5 @@ async function render_main(
 	
 	process_bar_object.destroy();
 	
-	return ret_val;
+	return scene;
 };

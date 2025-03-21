@@ -1,4 +1,4 @@
-async function request_create_engine(create_scene_sleep_time_length_scale,
+async function request_create_scene(create_scene_sleep_time_length_scale,
 		create_scene_sleep_time_length,create_scene_max_sleep_time_length,
 		my_webgpu,request_url,my_url,my_user_name,my_pass_word,my_language_name,
 		default_fetch_parameter)
@@ -7,9 +7,9 @@ async function request_create_engine(create_scene_sleep_time_length_scale,
 	
 	for(var continue_flag=true;continue_flag;){
 		var engine_promise=await fetch(request_url,
-					default_fetch_parameter.request_create_engine);
+					default_fetch_parameter.request_create_scene);
 		if(!(engine_promise.ok)){
-			alert("request_create_engine fail:"+engine_promise.status);
+			alert("request_create_scene fail:"+engine_promise.status);
 			return null;
 		}
 		try{
@@ -52,32 +52,34 @@ async function request_create_engine(create_scene_sleep_time_length_scale,
 	var scene=new construct_scene(my_webgpu,
 			my_url,my_user_name,my_pass_word,my_language_name,
 			my_container_id,my_channel_id,my_scene_data,default_fetch_parameter);
+	
+	scene.init_data=new Object();
 
-	var render_init_data=new Array();
+	scene.init_data.render_init_data=new Array();
 	for(var i=0,ni=my_render_init_data.length-1;i<ni;){
 		var my_data		=my_render_init_data[i++];
 		var render_id	=my_render_init_data[i++];
-		render_init_data[render_id]=my_data;
+		scene.init_data.render_init_data[render_id]=my_data;
 	};
 
-	var part_init_data=new Array(scene.part_driver.length);
-	for(var i=0,ni=part_init_data.length;i<ni;i++)
-		part_init_data[i]=new Array();
+	scene.init_data.part_init_data=new Array(scene.part_driver.length);
+	for(var i=0,ni=scene.init_data.part_init_data.length;i<ni;i++)
+		scene.init_data.part_init_data[i]=new Array();
 	for(var i=0,ni=my_part_init_data.length-1;i<ni;){
 		var my_data		=my_part_init_data[i++];
 		var render_id	=my_part_init_data[i++];
 		var part_id		=my_part_init_data[i++];
-		part_init_data[render_id][part_id]=my_data;
+		scene.init_data.part_init_data[render_id][part_id]=my_data;
 	};
-			
-	var component_init_data=new Array(scene.component_location_data.component_number);
-	for(var i=0,ni=component_init_data.length;i<ni;i++)
-		component_init_data[i]=new Array();
+
+	scene.init_data.component_init_data=new Array(scene.component_location_data.component_number);
+	for(var i=0,ni=scene.init_data.component_init_data.length;i<ni;i++)
+		scene.init_data.component_init_data[i]=new Array();
 	for(var i=0,ni=my_component_init_data.length-1;i<ni;){
 		var my_data				=my_component_init_data[i++];
 		var my_component_id		=my_component_init_data[i++];
 		var my_driver_id		=my_component_init_data[i++];
-		component_init_data[my_component_id][my_driver_id]=my_data;
+		scene.init_data.component_init_data[my_component_id][my_driver_id]=my_data;
 	}
 
 	var	init_data=(await my_init_promise).initialization_data;
@@ -131,7 +133,7 @@ async function request_create_engine(create_scene_sleep_time_length_scale,
 			combined_shader_program+=my_shader_program[i];
 					
 		scene.render_driver[render_id]=my_render_driver_function(
-			render_id,my_render_name,render_init_data[render_id],
+			render_id,my_render_name,scene.init_data.render_init_data[render_id],
 			combined_shader_program,my_text_array,scene);
 
 		if(Array.isArray(scene.render_driver[render_id].method_render_flag)){
@@ -141,10 +143,8 @@ async function request_create_engine(create_scene_sleep_time_length_scale,
 		}else
 			scene.render_driver[render_id].method_render_flag=new Array();
 	}
-
-	request_render_data(scene);
 	
-	draw_scene_main(part_init_data,component_init_data,scene);
+	request_render_data(scene);
 	
 	return scene;
 }
