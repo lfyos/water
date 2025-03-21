@@ -1,5 +1,5 @@
 async function create_scene_routine(
-	my_webgpu,my_create_parameter,user_process_bar_function,my_url,default_fetch_parameter,
+	my_webgpu,my_draw_canvas_id,my_create_parameter,user_process_bar_function,my_url,default_fetch_parameter,
 	create_scene_sleep_time_length_scale,create_scene_sleep_time_length,create_scene_max_sleep_time_length)
 {
 	if(typeof(my_create_parameter)!="object")
@@ -39,7 +39,8 @@ async function create_scene_routine(
 		default:
 			break;
 		}
-	var process_bar_object=new construct_process_bar(my_webgpu,user_process_bar_function,
+	var process_bar_object=new construct_process_bar(
+			my_webgpu,my_draw_canvas_id,user_process_bar_function,
 			my_url+"?channel=process_bar"+my_create_parameter_string);
 	var process_bar_data=await process_bar_object.start(default_fetch_parameter);
 	if(process_bar_data==null)

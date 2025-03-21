@@ -116,13 +116,20 @@ public class javascript_program
 		
 		String str[]=new String[]
 		{
-			"export var create_scene=async function(my_webgpu,my_create_parameter,user_process_bar_function)",
+			"export var create_scene=async function(",
+			"	my_webgpu,my_draw_canvas_id,my_create_parameter,user_process_bar_function)",
 			"{",
-			"	return await create_scene_routine(my_webgpu,my_create_parameter,",
-			"				(typeof(user_process_bar_function)==\"function\")",
-			"					?user_process_bar_function",
-			"					:default_user_process_bar_function,",
-			"				\""	+request_response.implementor.get_url()+"\",",
+			"	if(typeof(my_draw_canvas_id)!=\"number\")",
+			"		my_draw_canvas_id=my_webgpu.canvas.length-1;",
+			"	my_draw_canvas_id%=my_webgpu.canvas.length;",
+			"	my_draw_canvas_id+=my_webgpu.canvas.length;",
+			"	my_draw_canvas_id%=my_webgpu.canvas.length;",
+			
+			"	if(typeof(user_process_bar_function)!=\"function\")",
+			"		user_process_bar_function=default_user_process_bar_function;",
+		
+			"	return await create_scene_routine(my_webgpu,my_draw_canvas_id,my_create_parameter,",
+			"				user_process_bar_function,\""+request_response.implementor.get_url()+"\",",
 			"				default_fetch_parameter,"+
 							system_par.create_scene_sleep_time_length_scale+","+
 							system_par.create_scene_sleep_time_length		+","+

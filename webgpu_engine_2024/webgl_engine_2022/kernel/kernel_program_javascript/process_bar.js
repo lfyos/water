@@ -1,6 +1,8 @@
-function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process_bar_url)
+function construct_process_bar(my_webgpu,my_draw_canvas_id,my_user_process_bar_function,my_process_bar_url)
 {
 	this.webgpu							=my_webgpu;
+	
+	this.draw_canvas_id					=my_draw_canvas_id;
 	this.process_bar_function			=my_user_process_bar_function;
 	this.process_bar_url 				=my_process_bar_url;
 	this.process_bar_data 				=null;
@@ -36,7 +38,8 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 	};	
 	this.draw_process_bar=async function()
 	{
-		while(this.process_bar_data!=null){
+		for(;this.process_bar_data!=null;){
+			
 			var p=(new Date().getTime()-this.set_time)/this.process_bar_data.show_process_bar_interval;
 			if(p<0.0)
 				p=0.0;
@@ -45,32 +48,30 @@ function construct_process_bar(my_webgpu,my_user_process_bar_function,my_process
 				p=1.0;
 			}
 			
-			for(var i=0,ni=this.webgpu.canvas.length;i<ni;i++){
-				this.webgpu.canvas_2d.width		=this.webgpu.canvas[i].width;
-				this.webgpu.canvas_2d.height	=this.webgpu.canvas[i].height;
+			this.webgpu.canvas_2d.width		=this.webgpu.canvas[this.draw_canvas_id].width;
+			this.webgpu.canvas_2d.height	=this.webgpu.canvas[this.draw_canvas_id].height;
 			
-				try{
-					this.process_bar_function(i,
+			try{
+					this.process_bar_function(this.draw_canvas_id,
 						this.webgpu.canvas_2d,this.webgpu.context_2d,this.process_bar_caption,
 						(this.process_bar_current_last*(1.0-p)+this.process_bar_current*p)/this.process_bar_max,
 						this.process_bar_time_length,this.process_bar_scene_time_length,this.time_unit);
-				}catch(e){
+			}catch(e){
 					console.log("Process bar drawing function error:"+e.toString);
 					continue;
-				}
-				this.webgpu.device.queue.copyExternalImageToTexture(
+			}
+			this.webgpu.device.queue.copyExternalImageToTexture(
 					{
 						source	:this.webgpu.canvas_2d
 					},
 					{
-						texture	:this.webgpu.context[i].getCurrentTexture()
+						texture	:this.webgpu.context[this.draw_canvas_id].getCurrentTexture()
 					},
 					{
-						width	:	this.webgpu.canvas[i].width,
-						height	:	this.webgpu.canvas[i].height
+						width	:	this.webgpu.canvas[this.draw_canvas_id].width,
+						height	:	this.webgpu.canvas[this.draw_canvas_id].height
 					}
 				);
-			}
 			await new Promise(resolve=>window.requestAnimationFrame(resolve));
 		}
 	};

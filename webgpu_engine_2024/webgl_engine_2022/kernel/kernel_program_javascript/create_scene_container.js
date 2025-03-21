@@ -104,22 +104,22 @@ function create_scene_container_routine(my_webgpu)
 			});
 		}
 	}	
-	this.url_scene_create=async function(url,create_parameter,user_process_bar_function)
+	this.url_scene_create=async function(url,create_parameter,my_draw_canvas_id,user_process_bar_function)
 	{
 		var my_program	=await import(url);
-		var my_scene	=await my_program.create_scene(this.webgpu,create_parameter,user_process_bar_function);
+		var my_scene	=await my_program.create_scene(
+				this.webgpu,my_draw_canvas_id,create_parameter,user_process_bar_function);
 		this.scene_array[this.scene_array.length]=my_scene;
 		
 		return my_scene;
 	}
-	this.this_scene_create=async function(create_parameter,user_process_bar_function)
+	this.this_scene_create=async function(create_parameter,my_draw_canvas_id,user_process_bar_function)
 	{
-		var my_scene=await create_scene(this.webgpu,create_parameter,user_process_bar_function);
+		var my_scene=await create_scene(this.webgpu,my_draw_canvas_id,create_parameter,user_process_bar_function);
 		this.scene_array[this.scene_array.length]=my_scene;
 		
 		return my_scene;
 	}
-	
 	this.destroy=function()
 	{
 		for(var i=0;i<this.scene_array.length;i++)
