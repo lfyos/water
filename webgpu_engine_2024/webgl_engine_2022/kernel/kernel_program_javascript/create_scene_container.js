@@ -1,11 +1,22 @@
 function create_scene_container_routine(my_webgpu)
 {
-	this.webgpu		=my_webgpu;
-	this.scene_array=new Array();
+	this.webgpu				=my_webgpu;
+	this.scene_array		=new Array();
+	this.current_scene_id	=0;
+	this.terminate_flag		=false;
 	
+	this.scene_container_event_listener_array=new Array();
+	for(var i=0,ni=this.webgpu.canvas.length;i<ni;i++){
+		var p=new construct_scene_container_event_listener(i,this.webgpu.canvas,this);
+		this.scene_container_event_listener_array[i]=p;
+	}
+	this.set_current_scene_id=function(new_current_scene_id)
+	{
+		this.current_scene_id=new_current_scene_id;
+	}
 	this.draw_scene_array=async function()
 	{
-		while(true){
+		while(!(this.terminate_flag)){
 			var engine_touch_time_length=0;
 			var draw_render_collector	=new Array();
 			var my_scene_array			=this.scene_array;
@@ -90,12 +101,20 @@ function create_scene_container_routine(my_webgpu)
 			
 			await this.webgpu.device.queue.onSubmittedWorkDone();
 			
+			if(this.terminate_flag)
+				break;
+			
 			for(var i=0;i<this.scene_array.length;i++)
 				for(var j=0,nj=this.scene_array[i].scene_interface.get_render_buffer_number();j<nj;j++)
 					if(!(this.scene_array[i].terminate_flag))
-						if(this.scene_array[i].scene_interface.get_do_render_flag(j))
+						if(this.scene_array[i].scene_interface.get_do_render_flag(j)){
 							await this.scene_array[i].scene_interface.complete_render_target(j);
-							
+							if(this.terminate_flag)
+								break;
+						}
+			
+			if(this.terminate_flag)
+				break;
 			await new Promise((resolve)=>
 			{
 				window.requestAnimationFrame(resolve);
@@ -122,6 +141,11 @@ function create_scene_container_routine(my_webgpu)
 	}
 	this.destroy=function()
 	{
+		this.terminate_flag=true;
+		
+		this.webgpu.destroy();
+		this.webgpu=null;
+		
 		for(var i=0;i<this.scene_array.length;i++)
 			if(this.scene_array[i]!=null){
 				if(!(this.scene_array[i].terminate_flag))
@@ -129,11 +153,15 @@ function create_scene_container_routine(my_webgpu)
 						this.scene_array[i].destroy();
 				this.scene_array[i]=null;
 			}
-		this.canvas_array	=null;
-		this.scene_array	=null;
-		this.scene_draw		=null;
-		this.scene_create	=null;
-		this.destroy		=null;
-
+		this.draw_scene_array.length=0;	
+		
+		for(var i=0,ni=this.scene_container_event_listener_array.length;i<ni;i++)
+			this.scene_container_event_listener_array[i].destroy();
+		this.scene_container_event_listener_array.length=0;
+		
+		this.url_scene_create		=null;
+		this.this_scene_create		=null;
+		this.set_current_scene_id	=null;
+		this.destroy				=null;
 	}
 }

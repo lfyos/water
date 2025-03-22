@@ -40,8 +40,8 @@ async function body_onload()
 	
 	scene_container=await (await import(url)).scene_container_create(["my_canvas"]);
 
-	await scene_container.this_scene_create(
-//	await scene_container.url_scene_create(url,
+//	await scene_container.this_scene_create(
+	await scene_container.url_scene_create(url,
 		{
 			user_name				:	my_user_name,				//用户名	
 			pass_word				:	my_pass_word,				//用户密码

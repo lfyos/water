@@ -23,7 +23,6 @@ function construct_event_listener(my_canvas_id,my_scene)
 			this.scene.view.y=-1.0;
 		else if(this.scene.view.y>1.0)
 			this.scene.view.y=1.0;
-		this.canvas.focus();
 	};
 	this.set_mobile_view=function(event)
 	{
@@ -40,7 +39,6 @@ function construct_event_listener(my_canvas_id,my_scene)
 			else if(this.scene.view.y>1.0)
 				this.scene.view.y=1.0;
 		}
-		this.canvas.focus();
 	};
 	
 	this.scene.system_event_processor.systemmousemove	=function(event,scene)						{return false;};
@@ -91,7 +89,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 	};
 	this.scene.system_event_processor.systemmousedown	=function(event,scene)						{return false;};
 	this.scene.system_event_processor.pickupmousedown	=function(event,pickup_component_id,scene)	{return false;};
-	this.scene.system_event_processor.mousedown		=function(event,scene)						{return false;};
+	this.scene.system_event_processor.mousedown			=function(event,scene)						{return false;};
 	
 	this.mousedown_event_listener=function (event)
 	{
@@ -144,7 +142,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 	};
 	this.scene.system_event_processor.systemmouseup	=function(event,scene)						{return false;};
 	this.scene.system_event_processor.pickupmouseup	=function(event,pickup_component_id,scene)	{return false;};
-	this.scene.system_event_processor.mouseup			=function(event,scene)						{return false;};
+	this.scene.system_event_processor.mouseup		=function(event,scene)						{return false;};
 	this.mouseup_event_listener=function (event)
 	{
 		var my_scene;
@@ -292,7 +290,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 	};
 	this.scene.system_event_processor.systemmouseover	=function(event,scene)						{return false;};
 	this.scene.system_event_processor.pickupmouseover	=function(event,pickup_component_id,scene)	{return false;};
-	this.scene.system_event_processor.mouseover		=function(event,scene)						{return false;};
+	this.scene.system_event_processor.mouseover			=function(event,scene)						{return false;};
 	this.mouseover_event_listener=function (event)
 	{
 		var my_scene;
@@ -472,8 +470,8 @@ function construct_event_listener(my_canvas_id,my_scene)
 			if(ep.mouseleave(event,component_id,this.scene))
 				return;
 	};
-	this.scene.system_event_processor.systemcontextmenu=function(event,scene)						{return false;};
-	this.scene.system_event_processor.pickupcontextmenu=function(event,pickup_component_id,scene)	{return false;};
+	this.scene.system_event_processor.systemcontextmenu	=function(event,scene)						{return false;};
+	this.scene.system_event_processor.pickupcontextmenu	=function(event,pickup_component_id,scene)	{return false;};
 	this.scene.system_event_processor.contextmenu		=function(event,scene)						{return false;};
 	this.contextmenu_event_listener=function (event)
 	{
@@ -656,7 +654,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 	};
 	this.scene.system_event_processor.systemkeydown	=function(event,scene){return false;};
 	this.scene.system_event_processor.pickupkeydown	=function(event,pickup_component_id,scene){return false;};
-	this.scene.system_event_processor.keydown			=function(event,scene){return false;};
+	this.scene.system_event_processor.keydown		=function(event,scene){return false;};
 	this.keydown_event_listener=function (event)
 	{
 		var my_scene;
@@ -803,216 +801,10 @@ function construct_event_listener(my_canvas_id,my_scene)
 			if(ep.keyup(event,component_id,this.scene))
 				return;
 	};
-	
-
-	var cur=this;
-	
-	function mousemove_fun(event)	
-	{	
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.mousemove_event_listener(event);
-				}
-	};
-	function mousedown_fun(event)
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.mousedown_event_listener(event);
-				}
-	};
-	function mouseup_fun(event)
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.mouseup_event_listener(event);
-				}
-	};
-	function dblclick_fun(event)
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.dblclick_event_listener(event);	
-				}
-	};
-	function mousewheel_fun(event)
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.mousewheel_event_listener(event);
-				}
-	};
-	function mouseleave_fun(event)
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.mouseleave_event_listener(event);
-				}
-	};
-	function mouseenter_fun(event)
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.mouseenter_event_listener(event);
-				}
-	};
-	function mouseout_fun(event)
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.mouseout_event_listener(event);
-				}
-	};
-	function mouseover_fun(event)
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.mouseover_event_listener(event);
-				}
-	};
-	function contextmenu_fun(event)
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.contextmenu_event_listener(event);
-				}
-	};
-	function touchstart_fun(event)
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.touchstart_event_listener(event);
-				}
-	};
-	function touchend_fun(event)
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.touchend_event_listener(event);
-				}
-	};
-	function touchmove_fun(event)
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.touchmove_event_listener(event);
-				}
-	};
-	function keydown_fun(event)
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.keydown_event_listener(event);
-				}
-	};
-	function keypress_fun(event)
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.keypress_event_listener(event);	
-				}
-	};
-	function keyup_fun(event)
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag)){
-					cur.scene.last_event_time=(new Date()).getTime();
-					cur.keyup_event_listener(event);
-				}
-	};
-	function beforeunload_fun()
-	{
-		if(cur!=null)
-			if(cur.scene!=null)
-				if(!(cur.scene.terminate_flag))
-					if(typeof(cur.scene.destroy)=="function")
-						cur.scene.destroy();
-	};
-
-	this.canvas.addEventListener("mousemove",		mousemove_fun,		false);
-	this.canvas.addEventListener("mousedown",		mousedown_fun,		false);
-	this.canvas.addEventListener("mouseup",			mouseup_fun,		false);
-	this.canvas.addEventListener("dblclick",		dblclick_fun,		false);
-	this.canvas.addEventListener("mousewheel",		mousewheel_fun,		false);
-	this.canvas.addEventListener("DOMMouseScroll",	mousewheel_fun,		false);
-	this.canvas.addEventListener("mouseleave",		mouseleave_fun,		false);
-	this.canvas.addEventListener("mouseenter",		mouseenter_fun,		false);
-	this.canvas.addEventListener("mouseout",		mouseout_fun,		false);
-	this.canvas.addEventListener("mouseover",		mouseover_fun,		false);
-	
-	this.canvas.addEventListener("touchstart",		touchstart_fun,		false);
-	this.canvas.addEventListener("touchend",		touchend_fun,		false);
-	this.canvas.addEventListener("touchmove",		touchmove_fun,		false);
-	
-	this.canvas.addEventListener("keydown",			keydown_fun,		false);
-	this.canvas.addEventListener("keypress",		keypress_fun,		false);
-	this.canvas.addEventListener("keyup",			keyup_fun,			false);
-	
-	this.canvas.addEventListener("contextmenu", 	contextmenu_fun,	false);
-
-	window.addEventListener(	 "beforeunload",	beforeunload_fun,	false);
-	
-	this.canvas.focus();
-	
 	this.destroy=function()
 	{
-		if(this.canvas!=null){
-			window.removeEventListener("beforeunload",beforeunload_fun);
-			
-			this.canvas.removeEventListener("mousemove",		mousemove_fun);
-			this.canvas.removeEventListener("mousedown",		mousedown_fun);
-			this.canvas.removeEventListener("mouseup",			mouseup_fun);
-			this.canvas.removeEventListener("dblclick",			dblclick_fun);
-			this.canvas.removeEventListener("mousewheel",		mousewheel_fun);
-			this.canvas.removeEventListener("DOMMouseScroll",	mousewheel_fun);
-			this.canvas.removeEventListener("mouseleave",		mouseleave_fun);
-			this.canvas.removeEventListener("mouseenter",		mouseenter_fun);
-			this.canvas.removeEventListener("mouseout",			mouseout_fun);
-			this.canvas.removeEventListener("mouseover",		mouseover_fun);
-				
-			this.canvas.removeEventListener("contextmenu", 		contextmenu_fun);
-					
-			this.canvas.removeEventListener("touchstart",		touchstart_fun);
-			this.canvas.removeEventListener("touchend",			touchend_fun);
-			this.canvas.removeEventListener("touchmove",		touchmove_fun);
-					
-			this.canvas.removeEventListener("keydown",			keydown_fun);
-			this.canvas.removeEventListener("keypress",			keypress_fun);
-			this.canvas.removeEventListener("keyup",			keyup_fun);
-			
+		if(this.canvas!=null)
 			this.canvas=null;
-		}
 		if(this.scene!=null)
 			this.scene=null;
 	}
