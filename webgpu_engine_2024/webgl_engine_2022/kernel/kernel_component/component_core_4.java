@@ -307,7 +307,7 @@ public class component_core_4 extends component_core_3
 				else
 					str=ccp.sk.scene_par.part_type_string+";"+str;
 				ccp.push_part_type_string_sorter(
-					new part_type_string_sorter(new String[] {},str,fr.get_charset()));
+					new part_type_string_sorter(new String[]{},str,fr.get_charset()));
 				continue;
 			case "pop_part_type_string":	
 				ccp.pop_part_type_string_sorter();
@@ -457,12 +457,12 @@ public class component_core_4 extends component_core_3
 					debug_information.println("client_parameter_mount error((my_directory==null)||(my_file_name==null))");
 				else if(((my_directory=my_directory.trim()).length()<=0)||((my_file_name=my_file_name.trim()).length()<=0))
 					debug_information.println("client_parameter_mount error((my_directory.length()<=0)||(my_file_name.length()<=0))");
-				else if((my_directory=ccp.sk.get_client_parameter(my_directory.trim()))==null)
+				else if((my_directory=ccp.sk.get_client_parameter(my_directory))==null)
 					debug_information.println("client_parameter_mount error(my_directory==null)");
 				else if((my_directory=my_directory.trim()).length()<0)
 					debug_information.println("client_parameter_mount error(my_directory.length()<0)");
 				else{
-					fr.push_string_array(new String[] {str+File.separatorChar+my_file_name});
+					fr.push_string_array(new String[] {my_directory+File.separatorChar+my_file_name});
 					assemble_file_name_array=file_mount(fr,ccp.sk,false);
 					break;
 				}

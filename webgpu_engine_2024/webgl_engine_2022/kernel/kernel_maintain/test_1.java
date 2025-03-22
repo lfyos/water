@@ -10,7 +10,7 @@ public class test_1 extends travel_through_directory
 	{
 		String str;
 		if((str=file_reader.get_text(file_name,"GBK"))!=null) {
-			if(str.indexOf("client_sub_directory")>=0)
+			if(str.indexOf("client_parameter_mount")>=0)
 				debug_information.println(file_name);
 		}
 	}
@@ -26,7 +26,10 @@ public class test_1 extends travel_through_directory
 	{
 		debug_information.println("Begin:");
 		
-		new test_1().do_travel("F:\\water_all\\data", false);
+		new test_1().do_travel(
+				"E:\\project_data",
+//				"F:\\water_all\\data", 
+				false);
 
 		debug_information.println("End");
 	}
