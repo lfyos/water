@@ -71,12 +71,11 @@ public class file_download_manager
 		if((request_modified_str=request_response.implementor.get_header("If-Modified-Since"))!=null)
 			if(http_modify_string.parse(request_modified_str)>=f.lastModified()){
 				request_response.implementor.response_not_modify(
-					"response_not_modify in execute_file_call of client_interface\n file name is "+file_name,
-					system_par.system_cors_string);
+					"response_not_modify in execute_file_call of client_interface\n file name is "+file_name);
 				return null;
 			}
 		caculate_charset_compress_file_name cccfn=new caculate_charset_compress_file_name(f,system_par);
 
-		return new scene_call_result(cccfn,system_par.network_data_charset,system_par.system_cors_string);
+		return new scene_call_result(cccfn,system_par.network_data_charset);
 	}
 }

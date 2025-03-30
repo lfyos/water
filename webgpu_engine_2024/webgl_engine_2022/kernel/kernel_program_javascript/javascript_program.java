@@ -18,13 +18,15 @@ public class javascript_program
 	
 	private static final String javascript_file_name[]=new String[] 
 	{
-		"call_server.js",			"camera.js",				"collector_loader.js",			"component_location.js",
-		"component_render.js",		"computer.js",				"download_vertex_data.js",		"draw_scene.js",
-		"event_listener.js",		"init_ids.js",				"modifier_time.js",				"operate_component.js",	
-		"pickup.js",				"process_bar.js",			"render_main.js",				"render.js",
-		"request_create_scene.js",	"request_render_data.js",	"system_buffer.js",				"webgpu.js"
+		"call_server.js",				"camera.js",						"collector_loader.js",
+		"component_location.js",		"component_render.js",				"computer.js",
+		"construct_scene.js",			"create_scene.js",					"create_scene_container.js",
+		"download_vertex_data.js",		"draw_scene_sequence_target.js",	"event_listener.js",
+		"event_container_listener.js",	"init_ids.js",						"modifier_time.js",
+		"operate_component.js",			"pickup.js",						"process_bar.js",
+		"process_scene.js",				"request_create_scene.js",			"request_render_data.js",
+		"system_buffer.js",				"webgpu.js"
 	};
-	
 	public void destroy()
 	{
 	}	
@@ -70,15 +72,14 @@ public class javascript_program
 		if(function_date==null){
 			String url=request_response.implementor.get_url();
 			url+="?channel=javascript&function_date="+last_modified_time;
-			request_response.implementor.redirect_url(url,system_par.system_cors_string);
+			request_response.implementor.redirect_url(url);
 			return null;
 		}
 
 		String request_modified_str;
 		if((request_modified_str=request_response.implementor.get_header("If-Modified-Since"))!=null)
 			if(http_modify_string.parse(request_modified_str)>=last_modified_time){
-				request_response.implementor.response_not_modify(
-					"javascript_program response_not_modify()",system_par.system_cors_string);
+				request_response.implementor.response_not_modify("javascript_program response_not_modify()");
 				return null;
 			}
 
@@ -111,32 +112,42 @@ public class javascript_program
 			cr.get_text("\t",request_response);
 			cr.close();
 		}
+		
 		String str[]=new String[]
 		{
-			"export var create_scene=async function(my_canvas,my_create_parameter,user_process_bar_function)",
+			"export var create_scene=async function(",
+			"	my_webgpu,my_draw_canvas_id,my_create_parameter,user_process_bar_function)",
 			"{",
-				
-			"	return await render_main(my_canvas,my_create_parameter,",
-			"				(typeof(user_process_bar_function)==\"function\")",
-			"					?user_process_bar_function",
-			"					:default_user_process_bar_function,",
-			"				\""	+request_response.implementor.get_url()+"\",",
+			"	if(typeof(my_draw_canvas_id)!=\"number\")",
+			"		my_draw_canvas_id=my_webgpu.canvas.length-1;",
+			"	my_draw_canvas_id%=my_webgpu.canvas.length;",
+			"	my_draw_canvas_id+=my_webgpu.canvas.length;",
+			"	my_draw_canvas_id%=my_webgpu.canvas.length;",
+			
+			"	if(typeof(user_process_bar_function)!=\"function\")",
+			"		user_process_bar_function=default_user_process_bar_function;",
+		
+			"	return await create_scene_routine(my_webgpu,my_draw_canvas_id,my_create_parameter,",
+			"				user_process_bar_function,\""+request_response.implementor.get_url()+"\",",
 			"				default_fetch_parameter,"+
 							system_par.create_scene_sleep_time_length_scale+","+
 							system_par.create_scene_sleep_time_length		+","+
 							system_par.create_scene_max_sleep_time_length	+");",
 			"};",
-								
-			"export var create_target=async function(my_canvas,my_create_parameter)",
+			"export var scene_container_create=async function(my_canvas_array)",
 			"{",
-			
-			"};"
+			"	var my_webgpu;",
+			"	if((my_webgpu=await create_webgpu(my_canvas_array)).error_flag)",
+			"		return null;",
+			"	var my_scene_container=new create_scene_container_routine(my_webgpu);",
+			"	my_scene_container.draw_scene_array();",
+			"	return my_scene_container;"	,
+			"};",
 		};
 		
 		for(int i=0,ni=str.length;i<ni;i++)
 			request_response.println(str[i]);
 		
-		return new scene_call_result(system_par.system_cors_string,
-							last_modified_time,"application/javascript");
+		return new scene_call_result(last_modified_time,"application/javascript");
 	}
 }

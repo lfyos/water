@@ -67,7 +67,7 @@ function construct_component_driver(
 			render.system_buffer.set_system_bindgroup(
 				render_data.render_buffer_id,
 				this.marker_array[i].marker_component_id,-1,render);
-			
+
 			rpe.setBindGroup(1,this.marker_array[i].bindgroup);
 
 			switch(method_data.method_id){

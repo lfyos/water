@@ -10,12 +10,12 @@
 				false	9	0.32		0.7		camera.png
 
 				token_program	相机功能选择
-					function(component_name,component_id,render)
+					function(component_name,component_id,scene)
 					{
-						render.component_event_processor[component_id]={
-							pickupmouseselect	:	function(event,component_id,render)
+						scene.component_event_processor[component_id]={
+							pickupmouseselect	:	function(event,component_id,scene)
 							{
-								var ep=render.component_event_processor[component_id];
+								var ep=scene.component_event_processor[component_id];
 								var function_id=Math.floor(ep.y*7.0);
 								ep.hightlight=[0,function_id/7.0,1.0,function_id/7.0+1.0/7.0];
 								switch(function_id){
@@ -38,8 +38,8 @@
 										
 										"交互界面主菜单"
 									];
-									render.system_call_processor.set_menu_show(show_component_name[function_id]);
-									render.system_call_processor.set_menu_hide(component_id);
+									scene.system_call_processor.set_menu_show(show_component_name[function_id]);
+									scene.system_call_processor.set_menu_hide(component_id);
 									break;
 								};
 								return;
@@ -58,19 +58,19 @@
 				false	8	0.2		0.9		selection.png
 
 				token_program	选择相机组件
-					function(component_name,component_id,render)
+					function(component_name,component_id,scene)
 					{
-						render.component_event_processor[component_id]={
-							pickupmouseselect	:	function(event,component_id,render)
+						scene.component_event_processor[component_id]={
+							pickupmouseselect	:	function(event,component_id,scene)
 							{
-								var ep=render.component_event_processor[component_id];
+								var ep=scene.component_event_processor[component_id];
 								var new_camera_id=Math.floor(ep.y*9.0);
 								ep.hightlight=[0,new_camera_id/9.0,1.0,new_camera_id/9.0+1.0/9.0];
 								if((new_camera_id<0)||(new_camera_id>=8)){
-									render.system_call_processor.set_menu_show("相机功能选择组件");
-									render.system_call_processor.set_menu_hide(component_id);
+									scene.system_call_processor.set_menu_show("相机功能选择组件");
+									scene.system_call_processor.set_menu_hide(component_id);
 								}else
-									render.caller.call_server_component(
+									scene.caller.call_server_component(
 										"render_target_register_component","all",
 										[["operation","camera"],["camera",new_camera_id]]);
 							}
@@ -88,12 +88,12 @@
 				false	8	0.2		1.5		direction.png
 
 				token_program	设置标准方向组件
-					function(component_name,component_id,render)
+					function(component_name,component_id,scene)
 					{
-						render.component_event_processor[component_id]={
-							pickupmouseselect	:	function(event,component_id,render)
+						scene.component_event_processor[component_id]={
+							pickupmouseselect	:	function(event,component_id,scene)
 							{
-								var ep=render.component_event_processor[component_id];
+								var ep=scene.component_event_processor[component_id];
 								var direction_id=Math.floor(ep.y*15.0);
 								ep.hightlight=[0,direction_id/15.0,1.0,direction_id/15.0+1.0/15.0];
 								
@@ -116,11 +116,11 @@
 								];
 								
 								if((direction_id<0)||(direction_id>=direction_data.length)){
-									render.system_call_processor.set_menu_hide(component_id);
-									render.system_call_processor.set_menu_show("相机功能选择组件");	
+									scene.system_call_processor.set_menu_hide(component_id);
+									scene.system_call_processor.set_menu_show("相机功能选择组件");	
 									direction_id=direction_data.length;
 								}else{
-									render.caller.call_server_component("camera_operation_component","all",
+									scene.caller.call_server_component("camera_operation_component","all",
 										[	["operation","direct"],["type","false"],["coordinate","selection"],
 											["x",direction_data[direction_id][0]],
 											["y",direction_data[direction_id][1]],
@@ -143,12 +143,12 @@
 				false	8	0.2		1.5		direction.png
 
 				token_program	设置最近方向组件
-					function(component_name,component_id,render)
+					function(component_name,component_id,scene)
 					{
-						render.component_event_processor[component_id]={
-							pickupmouseselect	:	function(event,component_id,render)
+						scene.component_event_processor[component_id]={
+							pickupmouseselect	:	function(event,component_id,scene)
 							{
-								var ep=render.component_event_processor[component_id];
+								var ep=scene.component_event_processor[component_id];
 								var direction_id=Math.floor(ep.y*15.0);
 								ep.hightlight=[0,direction_id/15.0,	1.0,direction_id/15.0+1.0/15.0];
 								
@@ -171,11 +171,11 @@
 								];
 								
 								if((direction_id<0)||(direction_id>=direction_data.length)){
-									render.system_call_processor.set_menu_hide(component_id);
-									render.system_call_processor.set_menu_show("相机功能选择组件");
+									scene.system_call_processor.set_menu_hide(component_id);
+									scene.system_call_processor.set_menu_show("相机功能选择组件");
 									direction_id=direction_data.length;
 								}else{
-									render.caller.call_server_component("camera_operation_component","all",
+									scene.caller.call_server_component("camera_operation_component","all",
 										[	["operation","direct"],["type","true"],["coordinate","selection"],
 											["x",direction_data[direction_id][0]],
 											["y",direction_data[direction_id][1]],
@@ -197,15 +197,15 @@
 				false	8	0.2		0.8		rotate.png
 
 				token_program	旋转相机组件
-					function(component_name,component_id,render)
+					function(component_name,component_id,scene)
 					{
-						render.component_event_processor[component_id]={
+						scene.component_event_processor[component_id]={
 							
 							rotate_angle		:	90,
 							
-							pickupmouseselect	:	function(event,component_id,render)
+							pickupmouseselect	:	function(event,component_id,scene)
 							{
-								var ep=render.component_event_processor[component_id];
+								var ep=scene.component_event_processor[component_id];
 								var function_id=Math.floor(ep.y*8.0);
 								ep.hightlight=[0,function_id/8.0,1.0,function_id/8.0+1.0/8.0];
 								
@@ -221,8 +221,8 @@
 								}
 
 								if((function_id<0)||(function_id>6)){
-									render.system_call_processor.set_menu_hide(component_id);
-									render.system_call_processor.set_menu_show("相机功能选择组件");
+									scene.system_call_processor.set_menu_hide(component_id);
+									scene.system_call_processor.set_menu_show("相机功能选择组件");
 								}else{
 									var angle=ep.rotate_angle*Math.PI/180.0;
 									var rotate_array=[
@@ -236,7 +236,7 @@
 											 [Math.cos(angle),	Math.sin(angle),	0			   ]]
 										];
 									rotate_array=rotate_array[function_id%3];
-									render.caller.call_server_component("camera_operation_component","all",
+									scene.caller.call_server_component("camera_operation_component","all",
 										[
 										 ["operation","rotate"],	  ["coordinate",(function_id<3)?"global":"camera"],
 										 ["x0",rotate_array[0][0]],["y0",rotate_array[0][1]],["z0",rotate_array[0][2]],
@@ -257,14 +257,14 @@
 				false	8	0.32		0.6		control.png
 
 				token_program	操作相机组件
-					function(component_name,component_id,render)
+					function(component_name,component_id,scene)
 					{
-						render.component_event_processor[component_id]={
+						scene.component_event_processor[component_id]={
 							last_time	:	0,
 							
-							pickupmouseselect	:	function(event,component_id,render)
+							pickupmouseselect	:	function(event,component_id,scene)
 							{
-								var ep=render.component_event_processor[component_id];
+								var ep=scene.component_event_processor[component_id];
 								var current_time=(new Date()).getTime();
 								var function_id=Math.floor(ep.y*7.0);
 								ep.hightlight=[0,function_id/7.0,1.0,function_id/7.0+1.0/7.0];
@@ -275,27 +275,27 @@
 
 								switch(function_id){
 								default:
-									render.system_call_processor.set_menu_show("相机功能选择组件");
-									render.system_call_processor.set_menu_hide(component_id);
+									scene.system_call_processor.set_menu_show("相机功能选择组件");
+									scene.system_call_processor.set_menu_hide(component_id);
 									break;
 								case 0:
-									render.caller.call_server_component("camera_operation_component","all",
+									scene.caller.call_server_component("camera_operation_component","all",
 										[["operation","retreat"]]);
 									break;
 								case 1:
-									render.caller.call_server_component("camera_operation_component","all",
+									scene.caller.call_server_component("camera_operation_component","all",
 										[["operation","locate"],["scale",1.0],["clear_pickup","true"]]);
 									break;
 								case 2:
-									render.caller.call_server_component("camera_operation_component","all",
+									scene.caller.call_server_component("camera_operation_component","all",
 										[["operation","locate"],["clear_pickup","true"]]);
 									break;
 								case 3:
-									render.caller.call_server_component("camera_operation_component","all",[
+									scene.caller.call_server_component("camera_operation_component","all",[
 										["operation",	"locate"],	["scale",	1.0],
-										["component_id",render.highlight.component_id],
-										["body_id",		render.highlight.body_id],
-										["face_id",		render.highlight.face_id]]);
+										["component_id",scene.highlight.component_id],
+										["body_id",		scene.highlight.body_id],
+										["face_id",		scene.highlight.face_id]]);
 									break;
 								case 4:
 									alert("不支持");
@@ -319,12 +319,12 @@
 				false	8	0.2		1.6		parameter.png
 
 				token_program	设置相机参数组件
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*16.0);
 							ep.hightlight=[0,function_id/16.0,1.0,function_id/16.0+1.0/16.0];
 							
@@ -333,40 +333,40 @@
 								return;
 							case 1:
 							case 2:
-								render.caller.call_server_component("camera_operation_component","all",
+								scene.caller.call_server_component("camera_operation_component","all",
 									[["operation","project"],["project",(function_id==1)?"frustum":"orthogonal"]]);
 								break;
 							case 3:
 								return;
 							case 4:
 							case 5:
-								render.caller.call_server_component("camera_operation_component","all",
+								scene.caller.call_server_component("camera_operation_component","all",
 									[["operation","change_type"],["value",(function_id==4)?"true":"false"]]);
 								break;
 							case 6:
 								return;
 							case 7:
 							case 8:
-								render.caller.call_server_component("camera_operation_component","all",
+								scene.caller.call_server_component("camera_operation_component","all",
 									[["operation","view_move"],	["value",(function_id==7)?"true":"false"]]);
 								break;
 							case 9:
 								return;
 							case 10:
 							case 11:
-								render.caller.call_server_component("camera_operation_component","all",
+								scene.caller.call_server_component("camera_operation_component","all",
 									[["operation","view_direct"],["value",(function_id==10)?"true":"false"]]);
 								break;
 							case 12:
 								return;
 							case 13:
 							case 14:
-								render.caller.call_server_component("camera_operation_component","all",
+								scene.caller.call_server_component("camera_operation_component","all",
 									[["operation","view_scale"],["value",(function_id==13)?"true":"false"]]);
 								break;
 							default:
-								render.system_call_processor.set_menu_show("相机功能选择组件");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("相机功能选择组件");
+								scene.system_call_processor.set_menu_hide(component_id);
 								break;
 							}
 						}

@@ -3,45 +3,49 @@
 
 <script type="text/javascript">
 
-var lfy_render;
+var scene_container;
 
 async function body_onload()
 {
 	var url	="./water";
 	
-	lfy_render=await (await import(url)).create_scene(
-		["my_canvas"],		//Object类型的绘图画布。如果是String类型,则系统使用document.getElementById("my_canvas")将其转换为Object类型数据。
+	scene_container=await (await import(url)).scene_container_create(["my_canvas"]);
+		//每个元素是Object类型的绘图画布。
+		//如果是String类型,则系统使用document.getElementById("my_canvas")将其转换为Object类型数据。
 		
+	await scene_container.this_scene_create(
+//	await scene_container.url_scene_create(url,
 		{	
-			user_name			:	"",						//用户名	
-			pass_word			:	"",						//用户密码
-			language			:	"",						//语言
-			scene_name			:	"",						//场景名称
-			link_name			:	"",						//连接名称,用于多人协同操作一个场景
+			user_name				:	"",						//用户名	
+			pass_word				:	"",						//用户密码
+			language				:	"",						//语言
+			scene_name				:	"",						//场景名称
+			link_name				:	"",						//连接名称,用于多人协同操作一个场景
 			
-			change_part			:	"",						//part换名
-			change_component	:	"",						//component换名
-			part_type			:	"",						//part类型
-			fast_load			:	"false",				//快速装在scene信息
-			type_sub_directory	:	"",						//显示内容type
-			scene_sub_directory	:	"renzhichu/test_1",		//"sigma/A159-SR-302A",	//显示内容scene
-			scene_tmp_directory	:	"",						//显示内容scene tmp directory
-			client_sub_directory:	"",						//显示内容client
+			change_part				:	"",						//part换名
+			change_component		:	"",						//component换名
+			part_type				:	"",						//part类型
+			fast_load				:	"false",				//快速装在scene信息
+			type_sub_directory		:	"",						//显示内容type
+			scene_sub_directory		:	"renzhichu/test_1",		//"sigma/A159-SR-302A",	//显示内容scene
+			scene_tmp_directory		:	"",						//显示内容scene tmp directory
+			client_sub_directory	:	"",						//显示内容client
 			
-			coordinate			:	"location.xyz.txt",		//坐标系选择
+			coordinate				:	"location.xyz.txt",		//坐标系选择
 			
-			max_loading_number	:	5,						//同时下载数量
+			max_loading_number		:	5,						//同时下载数量
 			
-			multisample			:	4						//多重采样数
+			multisample				:	4,						//多重采样数
+
 		});
 }
 
 function body_onunload()
 {
-	if(typeof(lfy_render)=="object")
-		if(lfy_render!=null)
-			if(typeof(lfy_render.destroy)=="function")
-				lfy_render.destroy();
+	if(typeof(scene_container)=="object")
+		if(scene_container!=null)
+			if(typeof(scene_container.destroy)=="function")
+				scene_container.destroy();
 }
 
 </script>

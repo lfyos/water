@@ -31,65 +31,65 @@
 		
 		token_program	列表功能操作组件
 					
-		function(component_name,component_id,render)
+		function(component_name,component_id,scene)
 		{
-			render.component_event_processor[component_id]=
+			scene.component_event_processor[component_id]=
 			{
 				list_id					:	-1,
 				title					:	"",
 				
-				pickupmouseselect		:	function(event,component_id,render)
+				pickupmouseselect		:	function(event,component_id,scene)
 				{			
-					var ep=render.component_event_processor[component_id];
+					var ep=scene.component_event_processor[component_id];
 					var function_id=Math.floor(ep.y*6.0);
 					ep.hightlight=[0,function_id/6,		1.0,function_id/6+1.0/6];
 					
 					switch(function_id){
 					case 0:					
-						render.caller.call_server_component("manipulator_component","all",
+						scene.caller.call_server_component("manipulator_component","all",
 							[["event_method","part_list"],["operation","selection"],["selection","select"],		 
 							 (ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]).
 						 then(
 							function(response_data)
 							{
-								render.system_call_processor.update_coordinate_display();
+								scene.system_call_processor.update_coordinate_display();
 							});
 						break;
 					case 1:
-						render.caller.call_server_component("manipulator_component","all",
+						scene.caller.call_server_component("manipulator_component","all",
 							[["event_method","part_list"],["operation","selection"],["selection","unselect"],		 
 							 (ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]).
 						 then(
 							function(response_data)
 							{
-								render.system_call_processor.update_coordinate_display();
+								scene.system_call_processor.update_coordinate_display();
 							});
 						break;
 					case 2:
-						render.caller.call_server_component("manipulator_component","all",
+						scene.caller.call_server_component("manipulator_component","all",
 							[["event_method","part_list"],["operation","selection"],["selection","swap"],		 
 							 (ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]).
 						 then(
 							function(response_data)
 							{
-								render.system_call_processor.update_coordinate_display();
+								scene.system_call_processor.update_coordinate_display();
 							});
 						break;
 					case 3:
-						render.caller.call_server_component("manipulator_component","all",
+						scene.caller.call_server_component("manipulator_component","all",
 							[["event_method","part_list"],["operation","top"],
 							(ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]);
 						break;
 					case 4:
 						if(confirm("删除列表?")){
-							render.caller.call_server_component("manipulator_component","all",
+							scene.caller.call_server_component("manipulator_component","all",
 								[["event_method","part_list"],["operation","delete"],
 								(ep.list_id>=0)?["list_id",ep.list_id]:["list_title",ep.title]]);
-							render.system_call_processor.set_menu_hide(component_id);
+							scene.system_call_processor.set_menu_hide(component_id);
 						}
 						break;
 					case 5:
-						var display_ep=render.component_event_processor[render.operate_component.
+						var display_ep=scene.component_event_processor[scene.operate_component.
 								get_component_object("列表功能显示组件").component_id];
 						for(var i=0,ni=display_ep.collector_list_object.length;i<ni;i++){
 							if(ep.list_id>0){
@@ -109,7 +109,7 @@
 							}
 							if((str=prompt("请输入列表描述",display_ep.collector_list_object[i].description))!=null)
 								par.push(["description",encodeURIComponent(encodeURIComponent(str))]);
-							render.caller.call_server_component("manipulator_component","all",par);
+							scene.caller.call_server_component("manipulator_component","all",par);
 							return;
 						}
 						break;						

@@ -25,6 +25,7 @@ public class statistics_user_information  extends jason_creator
 	public statistics_user_information(scene_kernel my_sk,client_information my_ci)
 	{
 		super(my_ci.request_response);
+		
 		sk=my_sk;
 		ci=my_ci;
 	}

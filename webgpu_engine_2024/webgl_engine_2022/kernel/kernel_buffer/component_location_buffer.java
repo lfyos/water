@@ -141,7 +141,6 @@ public class component_location_buffer
 					ci.request_response.print(",");
 					has_not_response_relative_location_flag[p.comp.component_id]=false;
 					response_location_data(p.comp.relative_location,ci.request_response);
-					ci.request_response.print(",",p.comp.parent_component_id);
 					rcc.update_location_number++;
 				}
 				ci.request_response.print("]");

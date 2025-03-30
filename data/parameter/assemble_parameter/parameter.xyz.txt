@@ -4,8 +4,6 @@
 /*	inserted_part_name							*/		inserted_part_name
 /*	max_child_number							*/		16
 
-/*	scene_cors_string							*/		*
-
 /*	multiparameter_number						*/		8
 /*	default_display_bitmap		1+2+8+64		*/		75
 

@@ -5,10 +5,10 @@ import java.io.File;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import kernel_common_class.debug_information;
-import kernel_file_manager.file_reader;
-import kernel_network.network;
 import kernel_scene.system_scene;
+import kernel_file_manager.file_reader;
+import kernel_network.network_implementation;
+import kernel_common_class.debug_information;
 
 public class webgpu_scene 
 {
@@ -103,6 +103,6 @@ public class webgpu_scene
 	{
     	if(scene==null)
     		create(request);
-    	scene.process_system_call(new network(request,response));
+    	scene.process_system_call(new network_implementation(request,response));
 	}
 }

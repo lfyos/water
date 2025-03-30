@@ -64,8 +64,7 @@ public class system_scene
 					debug_information.println("client 		",		request_response.client_id);
 					debug_information.println("switch from	",		request_response.implementor.get_url());
 					debug_information.println("to		",			switch_url);
-					request_response.implementor.redirect_url(
-							switch_url+"?channel=javascript",system_par.system_cors_string);
+					request_response.implementor.redirect_url(switch_url+"?channel=javascript");
 					break;
 				}
 		}
@@ -85,16 +84,16 @@ public class system_scene
 			client=client_interface_search_tree_array[request_response.container_id].
 						get_client_interface(request_response,system_par,scene_search_tree,scene_counter);
 			if(client==null){
-				ecr=new scene_call_result(system_par.system_cors_string,request_response.response_content_type);
+				ecr=new scene_call_result(request_response.response_content_type);
 				request_response.reset().println("1");
 				break;
 			}
 			if(test_creation_scene_lock_number(1)>=system_par.create_scene_concurrent_number){
-				ecr=new scene_call_result(system_par.system_cors_string,request_response.response_content_type);
+				ecr=new scene_call_result(request_response.response_content_type);
 				request_response.reset().println("null");
 				client.set_process_bar(request_response,true,"wait_for_other_exit","",1,2);
 			}else if((ecr=client.execute_create_call(request_response,scene_search_tree,scene_counter))==null) {
-				ecr=new scene_call_result(system_par.system_cors_string,request_response.response_content_type);
+				ecr=new scene_call_result(request_response.response_content_type);
 				request_response.reset().println("2");
 			}
 			test_creation_scene_lock_number(-1);
@@ -131,8 +130,7 @@ public class system_scene
 			String temporary_file_configure_file_name)
 	{
 		system_par			=new system_parameter(
-				data_file_configure_file_name,
-				temporary_file_configure_file_name);
+				data_file_configure_file_name,temporary_file_configure_file_name);
 		program_javascript	=new javascript_program(system_par);
 		
 		int number=system_par.max_client_container_number;

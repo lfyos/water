@@ -1,16 +1,16 @@
-function(component_name,component_id,render)
+function(component_name,component_id,scene)
 {
-	render.system_call_processor.set_menu_show=function(menu_name,par)
+	scene.system_call_processor.set_menu_show=function(menu_name,par)
 	{
 		var my_par=(typeof(par)!="undefined")?par:[["center","center"],["all_in_view","all_in_view"]];
-		render.caller.call_server_component(menu_name,"all",my_par.concat([["operation","show"]]));
+		scene.caller.call_server_component(menu_name,"all",my_par.concat([["operation","show"]]));
 	};
-	render.system_call_processor.set_menu_hide=function(menu_name)
+	scene.system_call_processor.set_menu_hide=function(menu_name)
 	{
-		render.caller.call_server_component(menu_name,"all",[["operation","hide"]]);
+		scene.caller.call_server_component(menu_name,"all",[["operation","hide"]]);
 	};
-	render.system_call_processor.update_coordinate_display=function()
+	scene.system_call_processor.update_coordinate_display=function()
 	{
-		render.caller.call_server_component("coordinate","all",[["operation","onoff"]]);
+		scene.caller.call_server_component("coordinate","all",[["operation","onoff"]]);
 	};
 }

@@ -1,10 +1,10 @@
-function init_ids_of_part_and_component(render,
-	sorted_component_name_id,part_component_id_and_driver_id)
+function init_ids_of_part_and_component(
+	scene,sorted_component_name_id,part_component_id_and_driver_id)
 {
 	var component_number=sorted_component_name_id.length;
 
-	render.component_array_sorted_by_id		=new Array(component_number);
-	render.component_object					=new Object();
+	scene.component_array_sorted_by_id		=new Array(component_number);
+	scene.component_object					=new Object();
 	
 	for(var i=0;i<component_number;i++){
 		var my_component_name		=sorted_component_name_id[i][0];
@@ -19,24 +19,24 @@ function init_ids_of_part_and_component(render,
 				component_ids		:	new Array(),
 				system_bindgroup_id	:	-1
 		};
-		render.component_array_sorted_by_id[my_component_id]=p;
+		scene.component_array_sorted_by_id[my_component_id]=p;
 		
-		if(typeof(render.component_object[my_component_name])!="undefined")
+		if(typeof(scene.component_object[my_component_name])!="undefined")
 			console.log("several components have same component name:	"+my_component_name);
 			
-		render.component_object[my_component_name]=p;
+		scene.component_object[my_component_name]=p;
 	};
 
 	for(var i=0;i<component_number;i++){
-		var p=render.component_array_sorted_by_id[i];
+		var p=scene.component_array_sorted_by_id[i];
 		var my_component_children=new Array(p.component_children.length);
 		for(var j=0,nj=my_component_children.length;j<nj;j++)
-			my_component_children[j]=render.component_array_sorted_by_id[p.component_children[j]];
+			my_component_children[j]=scene.component_array_sorted_by_id[p.component_children[j]];
 		p.component_children=my_component_children;
 	};
 	
 	for(var i=0;i<component_number;i++){
-		var p=render.component_array_sorted_by_id[i];
+		var p=scene.component_array_sorted_by_id[i];
 		for(var j=0,nj=p.component_children.length;j<nj;j++)
 			p.component_children[j].component_parent=p;
 	};
@@ -50,29 +50,33 @@ function init_ids_of_part_and_component(render,
 			var id_array=part_component_id_and_driver_id[render_id][part_id];
 			var data_buffer_number=id_array.length;
 			for(var data_buffer_id=0;data_buffer_id<data_buffer_number;data_buffer_id++){				
-				var component_id	=id_array[data_buffer_id][0];
-				var driver_id		=id_array[data_buffer_id][1];
-				
+				var my_component_id			=id_array[data_buffer_id][0];
+				var my_driver_id			=id_array[data_buffer_id][1];				
 				var my_system_bindgroup_id	=system_bindgroup_id.length;
-				id_array[data_buffer_id][2]	=my_system_bindgroup_id;
 				
-				var p=render.component_array_sorted_by_id[component_id].component_ids;
-				p[driver_id]=[render_id,part_id,data_buffer_id,my_system_bindgroup_id];
+				id_array[data_buffer_id]={
+					component_id		:	my_component_id,
+					driver_id			:	my_driver_id,
+					system_bindgroup_id	:	my_system_bindgroup_id
+				}
+				var p=scene.component_array_sorted_by_id[my_component_id].component_ids;
+				p[my_driver_id]=[render_id,part_id,data_buffer_id,my_system_bindgroup_id];
 				
-				system_bindgroup_id.push([
-					render_id,		part_id,	data_buffer_id,
-					component_id,	driver_id,
-					my_system_bindgroup_id,
-					
-					-1,-1
-				]);
+				system_bindgroup_id[my_system_bindgroup_id]=
+					[
+						render_id,			part_id,	data_buffer_id,
+						my_component_id,	my_driver_id,
+						my_system_bindgroup_id,
+						
+						-1,-1
+					];
 			}
 		};
 	};
 
 	for(var i=0;i<component_number;i++){
 		var my_system_bindgroup_id=system_bindgroup_id.length;
-		render.component_array_sorted_by_id[i].system_bindgroup_id=my_system_bindgroup_id;
+		scene.component_array_sorted_by_id[i].system_bindgroup_id=my_system_bindgroup_id;
 		system_bindgroup_id.push([
 			-1,	//render_id,
 			-1,	//part_id,
@@ -80,13 +84,13 @@ function init_ids_of_part_and_component(render,
 			 i,	//component_id,
 			-1,	//driver_id,
 			my_system_bindgroup_id,
-			
+
 			-1,-1
 		]);
 	};
 	
-	render.system_bindgroup_id				=system_bindgroup_id;
-	render.part_component_id_and_driver_id	=part_component_id_and_driver_id;
-
+	scene.system_bindgroup_id				=system_bindgroup_id;
+	scene.part_component_id_and_driver_id	=part_component_id_and_driver_id;
+	
 	return;
 }

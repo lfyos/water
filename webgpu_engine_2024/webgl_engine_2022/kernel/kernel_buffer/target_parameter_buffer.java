@@ -43,31 +43,18 @@ public class target_parameter_buffer
 		}while(false);
 
 		do{
-			String old_target_name,new_target_name;
-			if(old_rt==null)
-				new_target_name="no_target_name";
-			else if(old_rt.target_texture_id!=rt.target_texture_id) 
-				new_target_name="no_target_name";
-			else{
-				if((old_target_name=old_rt.target_name)==null)
-					old_target_name="no_target_name";
-				else if(old_target_name.compareTo("")==0)
-					old_target_name="no_target_name";
-				else
-					old_target_name=old_target_name.trim();
-				
-				if((new_target_name=rt.target_name)==null)
-					new_target_name="no_target_name";
-				else if(new_target_name.compareTo("")==0)
-					new_target_name="no_target_name";
-				else
-					new_target_name=new_target_name.trim();
-				
-				if(old_target_name.compareTo(new_target_name)==0)
-					break;
-			}
+			if(rt.target_name==null)
+				rt.target_name="no_target_name";
+			else if(rt.target_name.length()<=0)
+				rt.target_name="no_target_name";
+	
+			if(old_rt!=null)
+				if(old_rt.target_texture_id==rt.target_texture_id)
+					if(old_rt.target_name!=null)
+						if(old_rt.target_name.compareTo(rt.target_name)==0)
+							break;
 			client_interface.	print(((print_number++)<=0)?"1,":",1,",rt.target_texture_id).
-								print(",",jason_string.change_string(new_target_name));
+								print(",",jason_string.change_string(rt.target_name.trim()));
 		}while(false);
 
 		do{

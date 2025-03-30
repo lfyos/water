@@ -23,9 +23,9 @@
 		file_program	tag_type_menu.txt
 		
 		token_program	tag_direction_distance_component
-		function(component_name,component_id,render)
+		function(component_name,component_id,scene)
 		{
-			render.operate_component.get_component_event_processor(component_id).type_base_id=0;
+			scene.operate_component.get_component_event_processor(component_id).type_base_id=0;
 		}
 		tag_direction_distance_component
 		
@@ -41,9 +41,9 @@
 		file_program	tag_type_menu.txt
 		
 		token_program	tag_plane_distance_component
-		function(component_name,component_id,render)
+		function(component_name,component_id,scene)
 		{
-			render.operate_component.get_component_event_processor(component_id).type_base_id=9;
+			scene.operate_component.get_component_event_processor(component_id).type_base_id=9;
 		}
 		tag_plane_distance_component
 
@@ -59,9 +59,9 @@
 		file_program	tag_type_menu.txt
 		
 		token_program	tag_direction_angle_component
-		function(component_name,component_id,render)
+		function(component_name,component_id,scene)
 		{
-			render.operate_component.get_component_event_processor(component_id).type_base_id=18;
+			scene.operate_component.get_component_event_processor(component_id).type_base_id=18;
 		}
 		tag_direction_angle_component
 		
@@ -76,9 +76,9 @@
 		file_program	tag_type_menu.txt
 		
 		token_program	tag_plane_angle_component
-		function(component_name,component_id,render)
+		function(component_name,component_id,scene)
 		{
-			render.operate_component.get_component_event_processor(component_id).type_base_id=27;
+			scene.operate_component.get_component_event_processor(component_id).type_base_id=27;
 		}
 		tag_plane_angle_component
 		

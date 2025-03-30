@@ -39,8 +39,6 @@ public class system_parameter
 	public long max_buffer_object_head_package_length;
 	public long max_file_response_length,min_compress_response_length;
 	
-	public String system_cors_string;
-	
 	public int max_process_component_load_number,max_process_modifier_number;
 	
 	public change_name language_change_name,content_type_change_name;
@@ -90,8 +88,6 @@ public class system_parameter
 		max_file_response_length		=sp.max_file_response_length;
 		min_compress_response_length	=sp.min_compress_response_length;
 		max_buffer_object_head_package_length=sp.max_buffer_object_head_package_length;
-		
-		system_cors_string				=new String(sp.system_cors_string);
 		
 		max_process_component_load_number=sp.max_process_component_load_number;
 		max_process_modifier_number		=sp.max_process_modifier_number;
@@ -221,29 +217,6 @@ public class system_parameter
 		max_file_response_length				=f.get_long();
 		min_compress_response_length			=f.get_long();
 		max_buffer_object_head_package_length	=f.get_long();
-
-		if((system_cors_string=f.get_string())==null)
-			system_cors_string="*";
-		else if((system_cors_string=system_cors_string.trim()).length()<=0)
-			system_cors_string="*";
-		else{
-			String cores_file_name=f.directory_name+file_reader.separator(system_cors_string);
-			if(new File(cores_file_name).exists()){
-				String file_system_cors_string="";
-				for(file_reader cors_fr=new file_reader(cores_file_name,f.get_charset());;) {
-					if(cors_fr.eof()){
-						cors_fr.close();
-						break;
-					}
-					String str;
-					if((str=cors_fr.get_string())!=null)
-						if((str=str.trim()).length()>0)
-							file_system_cors_string+=str;
-				}
-				if(file_system_cors_string.length()>0)
-					system_cors_string=file_system_cors_string;
-			}
-		}
 		
 		max_process_component_load_number		=f.get_int();
 		max_process_modifier_number				=f.get_int();

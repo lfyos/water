@@ -41,8 +41,9 @@ public class list_component_on_collector
 			if(comp.clip.clip_plane.size()>0)
 				return (comp.children_number()<=0)?true:false;
 	
-		if((in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp, driver_id))==null)
-			return false;
+		if((in_dr=ci.component_instance_driver_cont.
+			get_component_instance_driver(comp, driver_id))==null)
+				return false;
 		
 		boolean abandon_display_flag=true;
 		try{
@@ -84,10 +85,12 @@ public class list_component_on_collector
 		my_box.p[1].z=my_box.p[0].z;
 		double lod_precision2=my_box.distance2();
 		
-		double lod_precision_scale=1.0,my_lod_precision_scale;
-		if((my_lod_precision_scale=comp.uniparameter.component_driver_lod_precision_scale)>const_value.min_value)
+		double lod_precision_scale=1.0;
+		double my_lod_precision_scale=comp.uniparameter.component_driver_lod_precision_scale;
+		if(my_lod_precision_scale>const_value.min_value)
 			lod_precision_scale*=my_lod_precision_scale;
-		if((my_lod_precision_scale=ci.component_instance_driver_cont.get_lod_precision_scale(comp))>const_value.min_value)
+		my_lod_precision_scale=ci.component_instance_driver_cont.get_lod_precision_scale(comp);
+		if(my_lod_precision_scale>const_value.min_value)
 			lod_precision_scale*=my_lod_precision_scale;
 		if((my_lod_precision_scale=ci.parameter.high_or_low_precision_flag
 				?cam_result.cam.parameter.high_precision_scale

@@ -33,8 +33,6 @@ public class scene_parameter_information extends jason_creator
 		print("inserted_component_and_part_id",				sp.inserted_component_and_part_id);
 		print("max_child_number",							sp.max_child_number);
 		
-		print("scene_cors_string",							sp.scene_cors_string);
-		
 		print("multiparameter_number",						sp.multiparameter_number);
 		print("default_display_bitmap",						sp.default_display_bitmap);
 		

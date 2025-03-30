@@ -4,9 +4,9 @@
 	
 		token_program	鼠标交互界面
 		
-		function(component_name,component_id,render)
+		function(component_name,component_id,scene)
 		{
-			render.component_event_processor[component_id]={
+			scene.component_event_processor[component_id]={
 				mouse_usage		:	[0,0,0,0,0,0,0]
 			}
 		}
@@ -23,96 +23,96 @@
 
 				token_program	鼠标功能选择
 				
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var mouse_usage=render.operate_component.
+							var mouse_usage=scene.operate_component.
 									get_component_event_processor("鼠标交互界面组件").mouse_usage;
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*8.0);
 							ep.hightlight=[0,function_id/8.0,1.0,function_id/8.0+1.0/8.0];
 							
 							switch(function_id){
 							case 0:
 								if(ep.x>0.5){
-									render.system_call_processor.set_menu_show("视口旋转组件");
-									render.system_call_processor.set_menu_hide(component_id);
+									scene.system_call_processor.set_menu_show("视口旋转组件");
+									scene.system_call_processor.set_menu_hide(component_id);
 									break;
 								}
-								render.event_component.mouse.	component_name	="mouse_modify_location_component";
-								render.event_component.keyboard.component_name	="mouse_modify_location_component";
-								render.event_component.touch.	component_name	="mouse_modify_location_component";
-								render.event_component.mouse.	function_id		=mouse_usage[0];
-								render.event_component.keyboard.function_id		=mouse_usage[0];
-								render.event_component.touch.	function_id		=mouse_usage[0];
+								scene.event_component.mouse.	component_name	="mouse_modify_location_component";
+								scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+								scene.event_component.touch.	component_name	="mouse_modify_location_component";
+								scene.event_component.mouse.	function_id		=mouse_usage[0];
+								scene.event_component.keyboard.function_id		=mouse_usage[0];
+								scene.event_component.touch.	function_id		=mouse_usage[0];
 								break;
 							case 1:
 								if(ep.x>0.5){
-									render.system_call_processor.set_menu_show("视口平移组件");
-									render.system_call_processor.set_menu_hide(component_id);
+									scene.system_call_processor.set_menu_show("视口平移组件");
+									scene.system_call_processor.set_menu_hide(component_id);
 									break;
 								}
-								render.event_component.mouse.	component_name	="mouse_modify_location_component";
-								render.event_component.keyboard.component_name	="mouse_modify_location_component";
-								render.event_component.touch.	component_name	="mouse_modify_location_component";
-								render.event_component.mouse.	function_id		=mouse_usage[1]+100;
-								render.event_component.keyboard.function_id		=mouse_usage[1]+100;
-								render.event_component.touch.	function_id		=mouse_usage[1]+100;
+								scene.event_component.mouse.	component_name	="mouse_modify_location_component";
+								scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+								scene.event_component.touch.	component_name	="mouse_modify_location_component";
+								scene.event_component.mouse.	function_id		=mouse_usage[1]+100;
+								scene.event_component.keyboard.function_id		=mouse_usage[1]+100;
+								scene.event_component.touch.	function_id		=mouse_usage[1]+100;
 								break;
 							case 2:
 								if(ep.x>0.5){
-									render.system_call_processor.set_menu_show("组件旋转组件");
-									render.system_call_processor.set_menu_hide(component_id);
+									scene.system_call_processor.set_menu_show("组件旋转组件");
+									scene.system_call_processor.set_menu_hide(component_id);
 									break;
 								}
-								render.event_component.mouse.	component_name	="mouse_modify_location_component";
-								render.event_component.keyboard.component_name	="mouse_modify_location_component";
-								render.event_component.touch.	component_name	="mouse_modify_location_component";
-								render.event_component.mouse.	function_id		=mouse_usage[2]+200;
-								render.event_component.keyboard.function_id		=mouse_usage[2]+200;
-								render.event_component.touch.	function_id		=mouse_usage[2]+200;
+								scene.event_component.mouse.	component_name	="mouse_modify_location_component";
+								scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+								scene.event_component.touch.	component_name	="mouse_modify_location_component";
+								scene.event_component.mouse.	function_id		=mouse_usage[2]+200;
+								scene.event_component.keyboard.function_id		=mouse_usage[2]+200;
+								scene.event_component.touch.	function_id		=mouse_usage[2]+200;
 								break;
 							case 3:
 								if(ep.x>0.5){
-									render.system_call_processor.set_menu_show("组件平移组件");
-									render.system_call_processor.set_menu_hide(component_id);
+									scene.system_call_processor.set_menu_show("组件平移组件");
+									scene.system_call_processor.set_menu_hide(component_id);
 									break;
 								}
-								render.event_component.mouse.	component_name	="mouse_modify_location_component";
-								render.event_component.keyboard.component_name	="mouse_modify_location_component";
-								render.event_component.touch.	component_name	="mouse_modify_location_component";
-								render.event_component.mouse.	function_id		=mouse_usage[3]+300;
-								render.event_component.keyboard.function_id		=mouse_usage[3]+300;
-								render.event_component.touch.	function_id		=mouse_usage[3]+300;
+								scene.event_component.mouse.	component_name	="mouse_modify_location_component";
+								scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+								scene.event_component.touch.	component_name	="mouse_modify_location_component";
+								scene.event_component.mouse.	function_id		=mouse_usage[3]+300;
+								scene.event_component.keyboard.function_id		=mouse_usage[3]+300;
+								scene.event_component.touch.	function_id		=mouse_usage[3]+300;
 								break;
 							case 4:
 								if(ep.x>0.5){
-									render.system_call_processor.set_menu_show("内容选择组件");
-									render.system_call_processor.set_menu_hide(component_id);
+									scene.system_call_processor.set_menu_show("内容选择组件");
+									scene.system_call_processor.set_menu_hide(component_id);
 									break;
 								}
-								render.event_component.mouse.	component_name	="component_selection_component";
-								render.event_component.keyboard.component_name	="component_selection_component";
-								render.event_component.mouse.	function_id		=mouse_usage[4];
-								render.event_component.keyboard.function_id		=mouse_usage[4];
+								scene.event_component.mouse.	component_name	="component_selection_component";
+								scene.event_component.keyboard.component_name	="component_selection_component";
+								scene.event_component.mouse.	function_id		=mouse_usage[4];
+								scene.event_component.keyboard.function_id		=mouse_usage[4];
 								break;
 							case 5:
-								render.event_component.mouse.	component_name	="distance_tag_component";
-								render.event_component.keyboard.component_name	="distance_tag_component";
-								render.event_component.mouse.	function_id		=0;
-								render.event_component.keyboard.function_id		=0;
+								scene.event_component.mouse.	component_name	="distance_tag_component";
+								scene.event_component.keyboard.component_name	="distance_tag_component";
+								scene.event_component.mouse.	function_id		=0;
+								scene.event_component.keyboard.function_id		=0;
 								break;
 							case 6:
-								render.event_component.mouse.	component_name	="component_marker_component";
-								render.event_component.keyboard.component_name	="component_marker_component";
-								render.event_component.mouse.	function_id		=0;
-								render.event_component.keyboard.function_id		=0;
+								scene.event_component.mouse.	component_name	="component_marker_component";
+								scene.event_component.keyboard.component_name	="component_marker_component";
+								scene.event_component.mouse.	function_id		=0;
+								scene.event_component.keyboard.function_id		=0;
 								break;
 							default:
-								render.system_call_processor.set_menu_show("交互界面主菜单");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("交互界面主菜单");
+								scene.system_call_processor.set_menu_hide(component_id);
 								break;
 							}
 						}
@@ -130,14 +130,14 @@
 				false	8	0.25	1.2		view_rotate.png
 				
 				token_program	设置视口旋转方式
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var mouse_usage=render.operate_component.
+							var mouse_usage=scene.operate_component.
 									get_component_event_processor("鼠标交互界面组件").mouse_usage;
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*12.0);
 							if((function_id<0)||(function_id>11))
 								return;
@@ -145,17 +145,17 @@
 							ep.hightlight=[0,function_id/12.0,1.0,function_id/12.0+1.0/12.0];
 							
 							if(function_id==11){
-								render.system_call_processor.set_menu_show("鼠标功能选择组件");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("鼠标功能选择组件");
+								scene.system_call_processor.set_menu_hide(component_id);
 								return;
 							}
 							mouse_usage[0]=function_id;
-							render.event_component.mouse.	component_name	="mouse_modify_location_component";
-							render.event_component.keyboard.component_name	="mouse_modify_location_component";
-							render.event_component.touch.	component_name	="mouse_modify_location_component";
-							render.event_component.mouse.	function_id		=mouse_usage[0];
-							render.event_component.keyboard.function_id		=mouse_usage[0];
-							render.event_component.touch.	function_id		=mouse_usage[0];
+							scene.event_component.mouse.	component_name	="mouse_modify_location_component";
+							scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+							scene.event_component.touch.	component_name	="mouse_modify_location_component";
+							scene.event_component.mouse.	function_id		=mouse_usage[0];
+							scene.event_component.keyboard.function_id		=mouse_usage[0];
+							scene.event_component.touch.	function_id		=mouse_usage[0];
 							return;							
 						}
 					};
@@ -172,31 +172,31 @@
 				false	8	0.25	1.8		view_move.png
 				
 				token_program	设置视口平移方式
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var mouse_usage=render.operate_component.
+							var mouse_usage=scene.operate_component.
 									get_component_event_processor("鼠标交互界面组件").mouse_usage;
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*18.0);
 							if((function_id<0)||(function_id>17))
 								return;
 							ep.hightlight=[0,function_id/18.0,1.0,function_id/18.0+1.0/18.0];
 							if(function_id==17){
-								render.system_call_processor.set_menu_show("鼠标功能选择组件");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("鼠标功能选择组件");
+								scene.system_call_processor.set_menu_hide(component_id);
 								return;
 							}
 							mouse_usage[1]=function_id;
 							
-							render.event_component.mouse.	component_name	="mouse_modify_location_component";
-							render.event_component.keyboard.component_name	="mouse_modify_location_component";
-							render.event_component.touch.	component_name	="mouse_modify_location_component";
-							render.event_component.mouse.	function_id		=mouse_usage[1]+100;
-							render.event_component.keyboard.function_id		=mouse_usage[1]+100;
-							render.event_component.touch.	function_id		=mouse_usage[1]+100;
+							scene.event_component.mouse.	component_name	="mouse_modify_location_component";
+							scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+							scene.event_component.touch.	component_name	="mouse_modify_location_component";
+							scene.event_component.mouse.	function_id		=mouse_usage[1]+100;
+							scene.event_component.keyboard.function_id		=mouse_usage[1]+100;
+							scene.event_component.touch.	function_id		=mouse_usage[1]+100;
 							return;
 						}
 					};
@@ -212,31 +212,31 @@
 				false	8	0.25	1.2		component_rotate.png
 				
 				token_program	设置组件旋转方式
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var mouse_usage=render.operate_component.
+							var mouse_usage=scene.operate_component.
 									get_component_event_processor("鼠标交互界面组件").mouse_usage;
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*12.0);
 							if((function_id<0)||(function_id>11))
 								return;
 							ep.hightlight=[0,function_id/12.0,1.0,function_id/12.0+1.0/12.0];
 							if(function_id==11){
-								render.system_call_processor.set_menu_show("鼠标功能选择组件");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("鼠标功能选择组件");
+								scene.system_call_processor.set_menu_hide(component_id);
 								return;
 							}
 							mouse_usage[2]=function_id;
 
-							render.event_component.mouse.	component_name	="mouse_modify_location_component";
-							render.event_component.keyboard.component_name	="mouse_modify_location_component";
-							render.event_component.touch.	component_name	="mouse_modify_location_component";
-							render.event_component.mouse.	function_id		=mouse_usage[2]+200;
-							render.event_component.keyboard.function_id		=mouse_usage[2]+200;
-							render.event_component.touch.	function_id		=mouse_usage[2]+200;
+							scene.event_component.mouse.	component_name	="mouse_modify_location_component";
+							scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+							scene.event_component.touch.	component_name	="mouse_modify_location_component";
+							scene.event_component.mouse.	function_id		=mouse_usage[2]+200;
+							scene.event_component.keyboard.function_id		=mouse_usage[2]+200;
+							scene.event_component.touch.	function_id		=mouse_usage[2]+200;
 							
 							return;
 						}
@@ -254,31 +254,31 @@
 			false	8	0.25	1.8		component_move.png
 				
 				token_program	设置组件平移方式
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var mouse_usage=render.operate_component.
+							var mouse_usage=scene.operate_component.
 									get_component_event_processor("鼠标交互界面组件").mouse_usage;
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*18.0);
 							if((function_id<0)||(function_id>17))
 								return;
 							ep.hightlight=[0,function_id/18.0,1.0,function_id/18.0+1.0/18.0];
 							if(function_id==17){
-								render.system_call_processor.set_menu_show("鼠标功能选择组件");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("鼠标功能选择组件");
+								scene.system_call_processor.set_menu_hide(component_id);
 								return;
 							}
 							mouse_usage[3]=function_id;
 		
-							render.event_component.mouse.	component_name	="mouse_modify_location_component";
-							render.event_component.keyboard.component_name	="mouse_modify_location_component";
-							render.event_component.touch.	component_name	="mouse_modify_location_component";
-							render.event_component.mouse.	function_id		=mouse_usage[3]+300;
-							render.event_component.keyboard.function_id		=mouse_usage[3]+300;
-							render.event_component.touch.	function_id		=mouse_usage[3]+300;
+							scene.event_component.mouse.	component_name	="mouse_modify_location_component";
+							scene.event_component.keyboard.component_name	="mouse_modify_location_component";
+							scene.event_component.touch.	component_name	="mouse_modify_location_component";
+							scene.event_component.mouse.	function_id		=mouse_usage[3]+300;
+							scene.event_component.keyboard.function_id		=mouse_usage[3]+300;
+							scene.event_component.touch.	function_id		=mouse_usage[3]+300;
 							
 							return;
 						}
@@ -296,29 +296,29 @@
 				false	8	0.25	0.5		selection.png
 				
 				token_program	设置内容选择方式
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.component_event_processor[component_id]={
-						pickupmouseselect	:	function(event,component_id,render)
+					scene.component_event_processor[component_id]={
+						pickupmouseselect	:	function(event,component_id,scene)
 						{
-							var mouse_usage=render.operate_component.
+							var mouse_usage=scene.operate_component.
 									get_component_event_processor("鼠标交互界面组件").mouse_usage;
-							var ep=render.component_event_processor[component_id];
+							var ep=scene.component_event_processor[component_id];
 							var function_id=Math.floor(ep.y*5.0);
 							if((function_id<0)||(function_id>4))
 								return;
 							ep.hightlight=[0,function_id/5.0,1.0,function_id/5.0+1.0/5.0];
 							
 							if(function_id==4){
-								render.system_call_processor.set_menu_show("鼠标功能选择组件");
-								render.system_call_processor.set_menu_hide(component_id);
+								scene.system_call_processor.set_menu_show("鼠标功能选择组件");
+								scene.system_call_processor.set_menu_hide(component_id);
 								return;
 							}
 							mouse_usage[4]=function_id;
-							render.event_component.mouse.	component_name	="component_selection_component";
-							render.event_component.keyboard.component_name	="component_selection_component";
-							render.event_component.mouse.	function_id		=mouse_usage[4];
-							render.event_component.keyboard.function_id		=mouse_usage[4];
+							scene.event_component.mouse.	component_name	="component_selection_component";
+							scene.event_component.keyboard.component_name	="component_selection_component";
+							scene.event_component.mouse.	function_id		=mouse_usage[4];
+							scene.event_component.keyboard.function_id		=mouse_usage[4];
 
 							return;
 						}

@@ -5,8 +5,9 @@ import java.util.ArrayList;
 
 import kernel_common_class.cut_string;
 import kernel_common_class.change_name;
-import kernel_common_class.debug_information;
 import kernel_file_manager.file_reader;
+import kernel_file_manager.file_directory;
+import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 
 public class scene_parameter 
@@ -30,8 +31,6 @@ public class scene_parameter
 	
 	public String inserted_component_name,inserted_part_name;
 	public int inserted_component_and_part_id,max_child_number;
-	
-	public String scene_cors_string;
 	
 	public int multiparameter_number;
 	public long default_display_bitmap;
@@ -66,10 +65,12 @@ public class scene_parameter
 	
 	private String[] get_directory_name_and_file_name(file_reader fr)
 	{
-		String path_file_name=((path_file_name=fr.get_string())==null)?"":path_file_name.trim();
-		String path_directory_name=((path_directory_name=fr.get_string())==null)?"relative_directory":path_directory_name.trim();
+		String path_file_name=((path_file_name=fr.get_string())==null)
+				?"":file_directory.delete_separator(path_file_name);
+		String path_directory_name=((path_directory_name=fr.get_string())==null)
+				?"relative_directory":path_directory_name.trim();
 		
-		switch(path_directory_name.toLowerCase()){
+		switch(path_directory_name){
 		default:
 		case "relative_directory":
 			path_directory_name=directory_name;
@@ -83,21 +84,15 @@ public class scene_parameter
 		case "environment_directory":
 			if((path_directory_name=fr.get_string())!=null)
 				if((path_directory_name=System.getenv(path_directory_name))!=null)
-					if((path_directory_name=file_reader.separator(path_directory_name.trim())).length()>0) {
-						if(path_directory_name.charAt(path_directory_name.length()-1)!=File.separatorChar)
-							path_directory_name+=File.separatorChar;
+					if((path_directory_name=file_directory.delete_separator(path_directory_name)).length()>0) {
+						path_directory_name+=File.separatorChar;
 						break;
 					}
 			path_directory_name=directory_name;
 			break;
 		}
-		return new String[] 
-		{
-			path_directory_name,
-			file_reader.separator(path_file_name)
-		};
+		return new String[]{path_directory_name,path_file_name};
 	}
-	
 	private void get_type_sub_directory(client_request_response request_response)
 	{
 		String my_str,str;
@@ -106,7 +101,7 @@ public class scene_parameter
 			return;
 		}
 		ArrayList<String> list=new ArrayList<String>();
-		for(int index_id;((str=str.trim()).length()>0);){
+		for(int index_id;str.length()>0;){
 			if((index_id=str.indexOf(';'))==0){
 				str=str.substring(1);
 				continue;
@@ -118,7 +113,8 @@ public class scene_parameter
 				my_str=str.substring(0,index_id);
 				str=str.substring(index_id+1);
 			}
-			if((my_str=cut_string.do_cut(my_str)).length()<=0)
+			my_str=file_directory.delete_separator(cut_string.do_cut(my_str));
+			if(my_str.length()<=0)
 				continue;
 			my_str+=File.separator;
 			for(int j=0,nj=list.size();j<nj;j++)
@@ -138,7 +134,7 @@ public class scene_parameter
 		for(String parameter_name,parameter_value;!(parameter_fr.eof());) {
 			if((parameter_name=parameter_fr.get_string())==null)
 				continue;
-			if((parameter_name=cut_string.do_cut(parameter_name.trim())).length()<=0)
+			if((parameter_name=parameter_name.trim()).length()<=0)
 				continue;
 			if((parameter_value=request_response.get_parameter(parameter_name))==null)
 				continue;
@@ -161,47 +157,37 @@ public class scene_parameter
 		scene_temporary_directory_name+="scene_directory"+File.separator;
 		
 		if((str=request_response.get_parameter("scene_tmp_directory"))!=null)
-			if((str=cut_string.do_cut(str)).length()>0){
-				scene_temporary_directory_name+=file_reader.separator(str)+File.separator;
+			if((str=file_directory.delete_separator(cut_string.do_cut(str))).length()>0){
+				scene_temporary_directory_name+=str+File.separator;
 				return;
 			}
-		scene_temporary_directory_name+=file_reader.separator(scene_name)+File.separator;
+		if((str=file_directory.delete_separator(scene_name)).length()>0)
+			scene_temporary_directory_name+=str+File.separator;
 		
 		String my_temporary_directory_name="";
 		
 		for(int i=0,ni=type_sub_directory.length;i<ni;i++)
-			for(str=type_sub_directory[i];str.length()>0;str=str.substring(1))
-				if(str.charAt(0)!=File.separatorChar){
-					my_temporary_directory_name+=str;
-					break;
-				}
-		if(scene_sub_directory.length()>0){
-			if(scene_sub_directory.charAt(0)==File.separatorChar)
-				my_temporary_directory_name+=scene_sub_directory.substring(1);
-			else
-				my_temporary_directory_name+=scene_sub_directory;
-		}
+			if((str=file_directory.delete_separator(type_sub_directory[i])).length()>0)
+				my_temporary_directory_name+=str+File.separatorChar;
+		
+		if((str=file_directory.delete_separator(scene_sub_directory)).length()>0)
+			my_temporary_directory_name+=str+File.separatorChar;
 		
 		String str_array[]={change_part_string,change_component_string,part_type_string};
-		for(int str_len,i=0,ni=str_array.length;i<ni;i++) {
-			if(str_array[i]==null)
-				continue;
-			str_array[i]=new String(str_array[i]).replace(':','/').replace(';','/').
-					replace('/',File.separatorChar).replace('\\',File.separatorChar).
-					replace(" ", "").replace("\t","").replace("\r","").replace("\n","");
-			str_array[i]=file_reader.separator(str_array[i]);
-			if((str_len=str_array[i].length())<=0)
-				continue;
-			if(str_array[i].charAt(str_len-1)!=File.separatorChar)
-				str_array[i]+=File.separatorChar;
-			my_temporary_directory_name+=str_array[i];
-		}
-		for(int i=0,ni=client_parameter_name.get_number();i<ni;i++) {
-			str =client_parameter_name.data_array[i][0]+File.separatorChar;
-			str+=client_parameter_name.data_array[i][1]+File.separatorChar;
-			my_temporary_directory_name+=file_reader.separator(str);
-		}
-		
+		for(int i=0,ni=str_array.length;i<ni;i++)
+			if(str_array[i]!=null){
+				str_array[i]=new String(str_array[i]).replace(':','/').replace(';','/').
+						replace('/',File.separatorChar).replace('\\',File.separatorChar).
+						replace(" ", "").replace("\t","").replace("\r","").replace("\n","");
+				if((str_array[i]=file_directory.delete_separator(str_array[i])).length()>0)
+					my_temporary_directory_name+=str_array[i]+File.separatorChar;
+			}
+		for(int i=0,ni=client_parameter_name.get_number();i<ni;i++)
+			for(int j=0;j<2;j++) {
+				str=file_directory.delete_separator(client_parameter_name.data_array[i][j]);
+				if(str.length()>0)
+					my_temporary_directory_name+=str+File.separatorChar;
+			}
 		if(my_temporary_directory_name.length()<=0)
 			my_temporary_directory_name="no_parameter_directory"+File.separatorChar;;
 		
@@ -212,12 +198,8 @@ public class scene_parameter
 			String my_scene_name,client_request_response request_response,
 			system_parameter system_par,scene_kernel_create_parameter ekcp)
 	{
-		String str;
-
-		if((change_part_string=request_response.get_parameter("change_part"))==null)
-			change_part_string="";
-		else
-			change_part_string=change_part_string.trim();
+		change_part_string=request_response.get_parameter("change_part");
+		change_part_string=(change_part_string==null)?"":change_part_string.trim();
 		
 		String change_component_string=request_response.get_parameter("change_component");
 		change_component_string=(change_component_string==null)?"":change_component_string.trim();
@@ -231,9 +213,10 @@ public class scene_parameter
 
 		if((scene_sub_directory=request_response.get_parameter("scene_sub_directory"))==null)
 			scene_sub_directory="";
-		else if((scene_sub_directory=file_reader.separator(scene_sub_directory.trim())).length()>0)
-				if(scene_sub_directory.charAt(scene_sub_directory.length()-1)!=File.separatorChar)
-					scene_sub_directory+=File.separator;
+		else if((scene_sub_directory=file_directory.delete_separator(scene_sub_directory)).length()<=0)
+			scene_sub_directory="";
+		else
+			scene_sub_directory+=File.separator;
 
 		file_reader parameter_fr=new file_reader(ekcp.parameter_file_name,ekcp.parameter_charset);
 		
@@ -275,13 +258,12 @@ public class scene_parameter
 		if((camera_file_name=parameter_fr.get_string())==null)
 			camera_file_name="";
 		else
-			camera_file_name=file_reader.separator(camera_file_name);
+			camera_file_name=file_directory.delete_separator(camera_file_name);
 		
 		get_client_parameter_name(parameter_fr,request_response);
 		
 		caculate_scene_temporary_directory_name(my_scene_name,
 				request_response,change_component_string,system_par);
-		
 		parameter_fr.close();
 
 		part_lru_in_list_number=extra_parameter_fr.get_int();
@@ -293,23 +275,6 @@ public class scene_parameter
 		inserted_component_and_part_id=0;
 		max_child_number=extra_parameter_fr.get_int();
 		
-		if((scene_cors_string=extra_parameter_fr.get_string())==null)
-			scene_cors_string="*";
-		else if(new File(str=extra_parameter_fr.directory_name+file_reader.separator(scene_cors_string)).exists()?false:true)
-			scene_cors_string=scene_cors_string.trim();
-		else{
-			scene_cors_string="";
-			for(file_reader cors_fr=new file_reader(str,extra_parameter_fr.get_charset());;) {
-				if(cors_fr.eof()){
-					cors_fr.close();
-					break;
-				}
-				if((str=cors_fr.get_line())!=null)
-					if((str=str.trim()).length()>0)
-						scene_cors_string+=str;
-			}
-		}
-
 		if((multiparameter_number=extra_parameter_fr.get_int())<1)
 			multiparameter_number=1;
 		
@@ -321,7 +286,8 @@ public class scene_parameter
 		if((component_collector_stack_file_name=extra_parameter_fr.get_string())==null)
 			component_collector_stack_file_name="";
 		else
-			component_collector_stack_file_name=file_reader.separator(component_collector_stack_file_name);
+			component_collector_stack_file_name=file_directory.delete_separator(
+								component_collector_stack_file_name);
 		
 		component_collector_parameter_channel_id=new int[extra_parameter_fr.get_int()];
 		for(int i=0,ni=component_collector_parameter_channel_id.length;i<ni;i++)
@@ -355,6 +321,7 @@ public class scene_parameter
 
 		display_assemble_depth				=extra_parameter_fr.get_int();
 
+		String str;
 		if((str=extra_parameter_fr.get_string())==null)
 			component_sort_type=0;
 		else if((str=str.toLowerCase().trim()).compareTo("xyz")==0)
@@ -379,7 +346,7 @@ public class scene_parameter
 		fast_load_flag=request_response.get_boolean("fast_load",true);
 
 		extra_parameter_fr.close();
-
+		
 		return;
 	}
 }

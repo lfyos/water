@@ -61,15 +61,14 @@ public class dispatch_request_main
 		String file_name[]=get_scene_result_routine(delay_time_length,sk,ci);
 		sk.process_reset();
 
-		String scene_cors_string	=sk.scene_par.scene_cors_string;
 		String response_content_type=ci.request_response.response_content_type;
 		
 		if(file_name==null)
-			return new scene_call_result(scene_cors_string,response_content_type);
+			return new scene_call_result(response_content_type);
 		if(file_name.length<=0)
-			return new scene_call_result(scene_cors_string,response_content_type);
+			return new scene_call_result(response_content_type);
 		if(file_name[0]==null)
-			return new scene_call_result(scene_cors_string,response_content_type);
+			return new scene_call_result(response_content_type);
 
 		ci.request_response.reset();
 		
@@ -96,7 +95,7 @@ public class dispatch_request_main
 		
 		String url;
 		if((url=ci.get_file_proxy_url(file_name[0],sk.system_par))!=null) {
-			ci.request_response.implementor.redirect_url(url,sk.scene_par.scene_cors_string);
+			ci.request_response.implementor.redirect_url(url);
 			return null;
 		}
 
@@ -105,8 +104,8 @@ public class dispatch_request_main
 		
 		if(file_name.length>1)
 			if(file_name[1]!=null)
-				return new scene_call_result(cccf,	file_name[1],scene_cors_string);
+				return new scene_call_result(cccf,	file_name[1]);
 		
-		return new scene_call_result(cccf,Charset.defaultCharset().name(),scene_cors_string);
+		return new scene_call_result(cccf,Charset.defaultCharset().name());
 	}
 }

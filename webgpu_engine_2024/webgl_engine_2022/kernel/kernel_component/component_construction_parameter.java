@@ -69,7 +69,6 @@ public class component_construction_parameter
 		change_part_name_list.add(
 			new change_name(new String[]{},sk.scene_par.change_part_string,null));
 		type_string_sorter_list	=new ArrayList<part_type_string_sorter>();
-		
 		clsc					=my_clsc;
 		default_display_bitmap	=my_default_display_bitmap;
 	}

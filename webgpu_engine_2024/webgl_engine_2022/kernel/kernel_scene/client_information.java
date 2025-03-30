@@ -17,41 +17,40 @@ import kernel_driver.render_instance_driver_container;
 import kernel_driver.part_instance_driver_container;
 import kernel_driver.component_instance_driver_container;
 
-
 public class client_information 
 {
-	public boolean							not_acknowledge_render_part_id[][];
-	public buffer_container					render_buffer;
+	public boolean								not_acknowledge_render_part_id[][];
+	public buffer_container						render_buffer;
 
-	public render_target_container			target_container;
+	public render_target_container				target_container;
 	
-	public component_collector 				display_component_collector;
-	public ArrayList<component_collector> 	target_component_collector_list;
+	public component_collector 					display_component_collector;
+	public ArrayList<component_collector> 		target_component_collector_list;
 	
-	public camera_result					display_camera_result;
-	public ArrayList<camera_result>			target_camera_result_list;
+	public camera_result						display_camera_result;
+	public ArrayList<camera_result>				target_camera_result_list;
 	
-	public plane							clip_plane;
+	public plane								clip_plane;
 	
-	public String							channel_id;
+	public String								channel_id;
 	
-	public client_parameter					parameter;
-	public create_scene_counter				scene_counter;
-	public user_statistics 					statistics_user;
-	public client_request_response 			request_response;
-	public client_process_bar				process_bar;
+	public client_parameter						parameter;
+	public create_scene_counter					scene_counter;
+	public user_statistics 						statistics_user;
+	public client_request_response 				request_response;
+	public client_process_bar					process_bar;
 	
 	
 	public render_instance_driver_container		render_instance_driver_cont;
 	public part_instance_driver_container		part_instance_driver_cont;
 	public component_instance_driver_container	component_instance_driver_cont;
 	
-	public display_message					message_display;
+	public display_message						message_display;
 	
-	public String 							request_url_header;
+	public String 								request_url_header;
 	
-	private String							file_proxy_url_array[];
-	private int 							file_proxy_pointer;
+	private String								file_proxy_url_array[];
+	private int 								file_proxy_pointer;
 	
 	public void destroy()
 	{

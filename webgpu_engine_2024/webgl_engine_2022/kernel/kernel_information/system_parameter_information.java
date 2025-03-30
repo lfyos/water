@@ -53,8 +53,6 @@ public class system_parameter_information extends jason_creator
 		print("max_file_response_length",				sp.max_file_response_length);
 		print("min_compress_response_length",			sp.min_compress_response_length);
 		
-		print("system_cors_string",						sp.system_cors_string);
-		
 		return;
 	}
 	public system_parameter_information(system_parameter my_sp,client_information my_ci)

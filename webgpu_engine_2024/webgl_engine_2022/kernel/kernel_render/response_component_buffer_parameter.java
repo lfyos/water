@@ -20,8 +20,9 @@ public class response_component_buffer_parameter
 			scene_kernel sk,client_information ci,render_component_counter rcc,int should_increase)
 	{
 		component_instance_driver in_dr;
-		if((in_dr=ci.component_instance_driver_cont.get_component_instance_driver(cll.comp,cll.driver_id))==null)
-			return null;
+		if((in_dr=ci.component_instance_driver_cont.
+			get_component_instance_driver(cll.comp,cll.driver_id))==null)
+				return null;
 
 		long old_parameter_version=in_dr.get_component_parameter_version();
 		long new_parameter_version=cll.comp.driver_array.get(cll.driver_id).get_component_parameter_version();

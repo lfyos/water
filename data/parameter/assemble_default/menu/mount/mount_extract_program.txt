@@ -1,6 +1,6 @@
-function(component_name,component_id,render)
+function(component_name,component_id,scene)
 {
-	render.component_event_processor[component_id]={
+	scene.component_event_processor[component_id]={
 		update_flag			:	false,
 		
 		extract_data		:
@@ -9,48 +9,48 @@ function(component_name,component_id,render)
 				movement		:	[]
 		},
 		
-		active_list			:	function(response_data,component_id,render)
+		active_list			:	function(response_data,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];
+			var ep=scene.component_event_processor[component_id];
 			if((ep.extract_data=response_data).movement.length>0){
 				ep.update_flag=false;
-				render.system_call_processor.set_menu_show(component_id,[["operation","show"],
+				scene.system_call_processor.set_menu_show(component_id,[["operation","show"],
 						["center","center"],["dy",ep.extract_data.movement.length*0.1]]);
 			}
 		},
-		pickupmouseselect	:	function(event,component_id,render)
+		pickupmouseselect	:	function(event,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];
+			var ep=scene.component_event_processor[component_id];
 			var function_id=Math.floor(ep.extract_data.movement.length*ep.y);
 			if((function_id<0)||(function_id>=ep.extract_data.movement.length))
 				return;	
-			render.caller.call_server_component("movement_manager","all",[["operation","design"],
+			scene.caller.call_server_component("movement_manager","all",[["operation","design"],
 					["move_method","fromdesignbuffer"],["place",(ep.x>=0.5)?"true":"false"],
 					["buffer",ep.extract_data.movement[function_id].buffer_id],
 					["component",ep.extract_data.component_id]]);
 					
-			render.system_call_processor.set_menu_hide(component_id);
+			scene.system_call_processor.set_menu_hide(component_id);
 		},
-		pickupkeydown:		function(event,component_id,render)
+		pickupkeydown:		function(event,component_id,scene)
 		{
 			switch(event.keyCode){
 			case 8:		//Backspace
 			case 46:	//Delete
-				var ep=render.component_event_processor[component_id];
+				var ep=scene.component_event_processor[component_id];
 				var function_id=Math.floor(ep.extract_data.movement.length*ep.y);
 				if((function_id<0)||(function_id>=ep.extract_data.movement.length))
 					return;
-				render.caller.call_server_component("movement_manager","all",
+				scene.caller.call_server_component("movement_manager","all",
 						[["operation","design"],["move_method","deletedesignbuffer"],
 						 ["buffer",ep.extract_data.movement[function_id].buffer_id]]);
-				render.system_call_processor.set_menu_hide(component_id);
+				scene.system_call_processor.set_menu_hide(component_id);
 				break;
 			}
 		},
 		
-		update_canvas_texture	:	function(canvas_2d,context_2d,text_format,component_id,render)
+		update_canvas_texture	:	function(canvas_2d,context_2d,text_format,component_id,scene)
 		{
-			var ep=render.component_event_processor[component_id];	
+			var ep=scene.component_event_processor[component_id];	
 			
 			if(ep.update_flag)
 				return false;

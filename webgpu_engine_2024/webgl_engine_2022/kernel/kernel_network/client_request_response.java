@@ -208,7 +208,7 @@ public class client_request_response extends common_writer
 			data_buf=compress_data_buf;
 		
 		implementor.set_response_http_header(
-			get_charset(),ecr.response_content_type,compress_response_header,ecr.cors_string,
+			get_charset(),ecr.response_content_type,compress_response_header,
 			ecr.last_modified_time,system_par.file_buffer_expire_time_length);
 		implementor.response_binary_data("response_network_data error",data_buf,data_buf.length);
 		implementor.terminate_response_binary_data("Error 3 in response_network_data");
@@ -357,7 +357,7 @@ public class client_request_response extends common_writer
 		
 		implementor.set_response_http_header(
 			network_data_charset,ecr.response_content_type,
-			compress_response_header,ecr.cors_string,ecr.last_modified_time,
+			compress_response_header,ecr.last_modified_time,
 			system_par.file_buffer_expire_time_length);
 
 		byte data_buf[]=new byte[system_par.response_block_size];

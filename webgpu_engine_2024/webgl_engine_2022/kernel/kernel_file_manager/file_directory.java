@@ -9,6 +9,22 @@ import kernel_scene.system_parameter;
 
 public class file_directory 
 {
+	public static String delete_separator(String directory)
+	{
+		if((directory=file_reader.separator(directory))==null)
+			return "";
+		for(int i=0,ni=(directory=directory.trim()).length();i<ni;i++)
+			if(directory.charAt(i)!=File.separatorChar) {
+				directory=directory.substring(i);
+				break;
+			}
+		for(int i=directory.length()-1;i>=0;i--)
+			if(directory.charAt(i)!=File.separatorChar) {
+				directory=directory.substring(0,i+1);
+				break;
+			}
+		return directory.trim();
+	}
 	public static String part_file_directory(part p,
 			system_parameter system_par,scene_parameter scene_par)
 	{

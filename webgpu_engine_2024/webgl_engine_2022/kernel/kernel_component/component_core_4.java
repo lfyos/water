@@ -9,6 +9,7 @@ import kernel_scene.part_type_string_sorter;
 import kernel_driver.component_driver;
 import kernel_common_class.cut_string;
 import kernel_common_class.change_name;
+import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
@@ -307,7 +308,7 @@ public class component_core_4 extends component_core_3
 				else
 					str=ccp.sk.scene_par.part_type_string+";"+str;
 				ccp.push_part_type_string_sorter(
-					new part_type_string_sorter(new String[] {},str,fr.get_charset()));
+					new part_type_string_sorter(new String[]{},str,fr.get_charset()));
 				continue;
 			case "pop_part_type_string":	
 				ccp.pop_part_type_string_sorter();
@@ -457,12 +458,12 @@ public class component_core_4 extends component_core_3
 					debug_information.println("client_parameter_mount error((my_directory==null)||(my_file_name==null))");
 				else if(((my_directory=my_directory.trim()).length()<=0)||((my_file_name=my_file_name.trim()).length()<=0))
 					debug_information.println("client_parameter_mount error((my_directory.length()<=0)||(my_file_name.length()<=0))");
-				else if((my_directory=ccp.sk.get_client_parameter(my_directory.trim()))==null)
+				else if((my_directory=ccp.sk.get_client_parameter(my_directory))==null)
 					debug_information.println("client_parameter_mount error(my_directory==null)");
 				else if((my_directory=my_directory.trim()).length()<0)
 					debug_information.println("client_parameter_mount error(my_directory.length()<0)");
 				else{
-					fr.push_string_array(new String[] {str+File.separatorChar+my_file_name});
+					fr.push_string_array(new String[] {my_directory+File.separatorChar+my_file_name});
 					assemble_file_name_array=file_mount(fr,ccp.sk,false);
 					break;
 				}
@@ -471,23 +472,40 @@ public class component_core_4 extends component_core_3
 			case "client_select_mount":
 			{
 				String select_token			=cut_string.do_cut(fr.get_string());
-				String select_file_name		=file_reader.separator(cut_string.do_cut(fr.get_string()));
-				String assemble_file_name	=file_reader.separator(cut_string.do_cut(fr.get_string()));
-				if((select_token.length()<=0)||(select_file_name.length()<=0)||(assemble_file_name.length()<=0))
+				String select_file_name		=file_directory.delete_separator(cut_string.do_cut(fr.get_string()));
+				String assemble_file_name	=file_directory.delete_separator(cut_string.do_cut(fr.get_string()));
+				if(select_token.length()<=0){
+					debug_information.println("client_select_mount,if(select_token.length()<=0)");
 					continue;
-				if((select_token=ccp.sk.get_client_parameter(select_token))==null)
+				}
+				if(select_file_name.length()<=0){
+					debug_information.println("client_select_mount,if(select_file_name.length()<=0)");
 					continue;
-				select_file_name=fr.directory_name+File.separatorChar+select_file_name;
-				file_reader f_select=new file_reader(select_file_name,fr.get_charset());
+				}
+				if(assemble_file_name.length()<=0){
+					debug_information.println("client_select_mount,if(assemble_file_name.length()<=0)");
+					continue;
+				}
+				debug_information.println("client_select_mount,select_token:	",select_token);
+				if((select_token=ccp.sk.get_client_parameter(select_token))==null) {
+					debug_information.println("client_select_mount,",
+							"(ccp.sk.get_client_parameter(select_token)==null)");
+					continue;
+				}
+				debug_information.println("client_select_mount,file_name	:	",
+						fr.directory_name+select_file_name);
+				
+				file_reader f_select=new file_reader(fr.directory_name+select_file_name,fr.get_charset());
 				for(assemble_file_name_array=null;!(f_select.eof());){
 					String my_select_token			=cut_string.do_cut(f_select.get_string());
 					String my_select_directory_name	=cut_string.do_cut(f_select.get_string());	
 					if((my_select_token.length()>0)&&(my_select_directory_name.length()>0))
 						if(select_token.compareTo(my_select_token)==0){
 							my_select_directory_name=fr.directory_name+my_select_directory_name;
-							fr.push_string_array(new String[]
-								{my_select_directory_name+File.separatorChar+assemble_file_name});
+							assemble_file_name=my_select_directory_name+File.separatorChar+assemble_file_name;
+							fr.push_string_array(new String[]{assemble_file_name});
 							assemble_file_name_array=file_mount(fr,ccp.sk,true);
+							debug_information.println("client_select_mount,success	:	",assemble_file_name);
 							break;
 						}
 				}

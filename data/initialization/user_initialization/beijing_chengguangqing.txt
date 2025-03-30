@@ -1,9 +1,9 @@
-				function(component_name,component_id,render)
+				function(component_name,component_id,scene)
 				{
-					render.user_call_processor.scene_mousedown=function(component_id,event)
+					scene.user_call_processor.scene_mousedown=function(component_id,event)
 					{
 					};			
-					render.user_call_processor.tree_mousedown=function(component_id,event)
+					scene.user_call_processor.tree_mousedown=function(component_id,event)
 					{
 						if(typeof(event)!="object")
 							event={
@@ -19,25 +19,25 @@
 							event.altKey=false;
 
 						if(event.ctrlKey)							
-							render.system_call_processor.select_component(
+							scene.system_call_processor.select_component(
 								event.shiftKey?"swap_component":"select_component",[["component_id",component_id]]);
 						else
-							render.system_call_processor.select_component("clear_all",[]).
+							scene.system_call_processor.select_component("clear_all",[]).
 							then(
 								function()
 								{
-									render.system_call_processor.select_component(
+									scene.system_call_processor.select_component(
 										event.shiftKey?"swap_component":"select_component",[["component_id",component_id]]);
 								});
 					};
-					render.user_call_processor.get_component_tree=function()
+					scene.user_call_processor.get_component_tree=function()
 					{
-						return render.get_component_object("system_root_component").component_children[0];
+						return scene.get_component_object("system_root_component").component_children[0];
 					};
-					render.user_call_processor.set_all_transparant_except_selection=function()
+					scene.user_call_processor.set_all_transparant_except_selection=function()
 					{
 						var component_name=encodeURIComponent(encodeURIComponent("system_root_component"));
-						render.call_server_component("manipulator_component","all",
+						scene.call_server_component("manipulator_component","all",
 								[	["event_method","transparency"],
 									["transparency",0.05],
 									["component_name",component_name]
@@ -45,45 +45,45 @@
 							then(
 								function(response_data)
 								{
-									render.call_server_component("manipulator_component","all",
+									scene.call_server_component("manipulator_component","all",
 										[["event_method","transparency"],["transparency",1.0],["flag","noselection_none"]]);
 								});
 					};
-					render.user_call_processor.set_all_untransparant=function()
+					scene.user_call_processor.set_all_untransparant=function()
 					{
 						var component_name=encodeURIComponent(encodeURIComponent("system_root_component"));
-						render.call_server_component("manipulator_component","all",
+						scene.call_server_component("manipulator_component","all",
 							[["event_method","transparency"],["transparency",1.0],["component_name",component_name]]);
 					};
-					render.user_call_processor.reset_view=function()
+					scene.user_call_processor.reset_view=function()
 					{
-						render.call_server_component("mouse_modify_location_component","all",
+						scene.call_server_component("mouse_modify_location_component","all",
 									[["event_operation","dblclick_view_no_pickup"],
-									 ["operate_component_id",render.current.camera_component_id]]);	
+									 ["operate_component_id",scene.current.camera_component_id]]);	
 					};				
-					render.user_call_processor.reset_all=function()
+					scene.user_call_processor.reset_all=function()
 					{
-						render.system_call_processor.clip_onoff_component(false);
+						scene.system_call_processor.clip_onoff_component(false);
 						
-						render.call_server_component("manipulator_component","all",
+						scene.call_server_component("manipulator_component","all",
 								[["event_method","selection"],["event_operation","clear_all"]]).
 						then(	
 							function(response_data)
 							{
-								return render.call_server_component("manipulator_component","all",
+								return scene.call_server_component("manipulator_component","all",
 									[["event_method","transparency"],["transparency",1.0],
 									 ["component",encodeURIComponent(encodeURIComponent("system_root_component"))]]);
 							}).
 						then(
 							function(response_data)
 							{
-								return render.call_server_component("manipulator_component","all",
+								return scene.call_server_component("manipulator_component","all",
 											[["event_method","show_hide_component"],["event_operation","show"]]);
 							}).
 						then(				
 							function(response_data)
 							{
-								return render.call_server_component("manipulator_component","all",
+								return scene.call_server_component("manipulator_component","all",
 											[["event_method","explosion"],["explosion","reset"],
 											 ["component_name",encodeURIComponent(encodeURIComponent("part_list_component"))]]);
 							}).
@@ -93,8 +93,8 @@
 								setTimeout(
 									function()
 									{
-										render.user_call_processor.reset_view();
-										render.call_server_component("manipulator_component","all",
+										scene.user_call_processor.reset_view();
+										scene.call_server_component("manipulator_component","all",
 												[["event_method","part_list"],["operation","create"]]);
 									},
 									response_data/1000000);

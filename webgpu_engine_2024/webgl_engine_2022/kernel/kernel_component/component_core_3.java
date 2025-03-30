@@ -101,7 +101,6 @@ public class component_core_3 extends component_core_2
 			driver_array=null;
 		return;
 	}
-	
 	public component_core_3(String token_string,file_reader fr,boolean part_list_flag,
 			boolean normalize_location_flag,component_construction_parameter ccp)
 	{
