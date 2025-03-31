@@ -1,4 +1,4 @@
-function new_render_driver(	render_id,render_name,init_data,shader_code,text_array,render)
+function new_render_driver(	render_id,render_name,init_data,shader_code,text_array,scene)
 {
 	var layout_entries=[
 		{	//texture
@@ -20,23 +20,23 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			}
 		}
 	];
-	this.bindgroup_layout=render.webgpu.device.createBindGroupLayout(
+	this.bindgroup_layout=scene.webgpu.device.createBindGroupLayout(
 		{
 			entries	:layout_entries
 		});
 
-	var my_module=render.webgpu.device.createShaderModule(
+	var my_module=scene.webgpu.device.createShaderModule(
 			{
 				code: shader_code
 			});
 			
 	var pipeline_descr=
 	{
-		layout: render.webgpu.device.createPipelineLayout(
+		layout: scene.webgpu.device.createPipelineLayout(
 		{
 			bindGroupLayouts:
 			[
-				render.system_buffer.system_bindgroup_layout,
+				scene.system_buffer.system_bindgroup_layout,
 				this.bindgroup_layout
 			]
 		}),
@@ -89,7 +89,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			targets		: 
 			[
 				{
-					format		:	render.webgpu.gpu.getPreferredCanvasFormat()
+					format		:	scene.webgpu.gpu.getPreferredCanvasFormat()
 				}
 			],
 		},
@@ -111,10 +111,10 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 		}
 	};
 	
-	if(render.parameter.multisample>1)
-		pipeline_descr.multisample={count:render.parameter.multisample};
+	if(scene.parameter.multisample>1)
+		pipeline_descr.multisample={count:scene.parameter.multisample};
 	
-	this.pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	this.new_part_driver=construct_part_driver;
 	
 	this.render_material=init_data;

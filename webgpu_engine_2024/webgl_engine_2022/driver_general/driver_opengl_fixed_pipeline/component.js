@@ -1,16 +1,16 @@
 function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	render)
+	init_data,		part_object,	part_driver,	render_driver,	scene)
 {
 	this.display_parameter=null;
 	
-	this.draw=function(vertex_number,instance_division,render,part_driver,my_region_data,my_pipeline)
+	this.draw=function(vertex_number,instance_division,scene,part_driver,my_region_data,my_pipeline)
 	{
 		var my_material=part_driver.material_bindgroup_array;
 		var my_material_number=my_material.length-1;
 		var selected_flag=this.display_parameter.effective_selected_flag;
 	
-		var rpe=render.webgpu.render_pass_encoder;	
+		var rpe=scene.webgpu.render_pass_encoder;	
 		rpe.setStencilReference(0);
 		rpe.setPipeline(my_pipeline);
 		
@@ -31,7 +31,7 @@ function construct_component_driver(
 	};
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,render)	
+			project_matrix,part_object,part_driver,render_driver,scene)	
 	{
 		if(part_driver.material_bindgroup_flag)
 			return;
@@ -48,26 +48,26 @@ function construct_component_driver(
 			if((display_bitmap&1)!=0){
 				var p=part_object.buffer_object.face.region_data;
 				if(this.display_parameter.close_clip_plane_number<=0){
-					this.draw(0,1,render,part_driver,p,my_pipeline.id_face_pipeline_no_clip);
+					this.draw(0,1,scene,part_driver,p,my_pipeline.id_face_pipeline_no_clip);
 				}else{
-					this.draw(0,1,render,part_driver,p,my_pipeline.id_face_pipeline_do_clip);
-					this.draw(0,1,render,part_driver,p,my_pipeline.id_face_pipeline_do_close);
+					this.draw(0,1,scene,part_driver,p,my_pipeline.id_face_pipeline_do_clip);
+					this.draw(0,1,scene,part_driver,p,my_pipeline.id_face_pipeline_do_close);
 				}
 				var p=part_object.buffer_object.point.region_data;
-				this.draw(6,1,render,part_driver,p,my_pipeline.id_point_pipeline);
+				this.draw(6,1,scene,part_driver,p,my_pipeline.id_point_pipeline);
 			}
 			break;
 		case 1:
 			if((display_bitmap&2)!=0){			
 				var p=part_object.buffer_object.face.region_data;
 				if(this.display_parameter.close_clip_plane_number<=0)
-					this.draw(0,1,render,part_driver,p,my_pipeline.value_face_pipeline_no_clip);
+					this.draw(0,1,scene,part_driver,p,my_pipeline.value_face_pipeline_no_clip);
 				else{
-					this.draw(0,1,render,part_driver,p,my_pipeline.value_face_pipeline_do_clip);
-					this.draw(0,1,render,part_driver,p,my_pipeline.value_face_pipeline_do_close);
+					this.draw(0,1,scene,part_driver,p,my_pipeline.value_face_pipeline_do_clip);
+					this.draw(0,1,scene,part_driver,p,my_pipeline.value_face_pipeline_do_close);
 				}
 				var p=part_object.buffer_object.point.region_data;
-				this.draw(6,1,render,part_driver,p,my_pipeline.value_point_pipeline);
+				this.draw(6,1,scene,part_driver,p,my_pipeline.value_point_pipeline);
 			}		
 			break;
 		case 2:
@@ -76,39 +76,39 @@ function construct_component_driver(
 			if((display_bitmap&4)!=0){
 				var p=part_object.buffer_object.face.region_data;
 				if(this.display_parameter.close_clip_plane_number<=0)
-					this.draw(0,1,render,part_driver,p,my_pipeline.depth_face_pipeline_no_clip);
+					this.draw(0,1,scene,part_driver,p,my_pipeline.depth_face_pipeline_no_clip);
 				else{
-					this.draw(0,1,render,part_driver,p,my_pipeline.depth_face_pipeline_do_clip);
-					this.draw(0,1,render,part_driver,p,my_pipeline.depth_face_pipeline_do_close);
+					this.draw(0,1,scene,part_driver,p,my_pipeline.depth_face_pipeline_do_clip);
+					this.draw(0,1,scene,part_driver,p,my_pipeline.depth_face_pipeline_do_close);
 				}
 			}		
 			break;
 		case 4:	
 			if((display_bitmap&8)!=0){
 				var p=part_object.buffer_object.edge.region_data;
-				this.draw(0,1,render,part_driver,p,my_pipeline.color_edge_pipeline);
+				this.draw(0,1,scene,part_driver,p,my_pipeline.color_edge_pipeline);
 			}
 			if((display_bitmap&16)!=0){
 				var p=part_object.buffer_object.face.region_data;
-				this.draw(4,3,render,part_driver,p,my_pipeline.color_frame_pipeline);
+				this.draw(4,3,scene,part_driver,p,my_pipeline.color_frame_pipeline);
 			}
 			if((display_bitmap&32)!=0){
 				var p=part_object.buffer_object.point.region_data;
-				this.draw(6,1,render,part_driver,p,my_pipeline.color_normal_point_pipeline);
+				this.draw(6,1,scene,part_driver,p,my_pipeline.color_normal_point_pipeline);
 			}
 			break;
 		case 5:
 			if((display_bitmap&64)!=0){
 				var p=part_object.buffer_object.face.region_data;
 				if(this.display_parameter.close_clip_plane_number<=0)
-					this.draw(0,1,render,part_driver,p,my_pipeline.color_face_pipeline_no_clip);
+					this.draw(0,1,scene,part_driver,p,my_pipeline.color_face_pipeline_no_clip);
 				else{
-					this.draw(0,1,render,part_driver,p,my_pipeline.color_face_pipeline_do_clip);
-					this.draw(0,1,render,part_driver,p,my_pipeline.color_face_pipeline_do_close);
+					this.draw(0,1,scene,part_driver,p,my_pipeline.color_face_pipeline_do_clip);
+					this.draw(0,1,scene,part_driver,p,my_pipeline.color_face_pipeline_do_close);
 				}
-				if((render.pickup.component_id==component_id)&&(render.pickup.driver_id==driver_id)){
+				if((scene.pickup.component_id==component_id)&&(scene.pickup.driver_id==driver_id)){
 					var p=part_object.buffer_object.point.region_data;
-					this.draw(6,1,render,part_driver,p,my_pipeline.color_pickup_point_pipeline);
+					this.draw(6,1,scene,part_driver,p,my_pipeline.color_pickup_point_pipeline);
 				}
 			}
 			break;
@@ -117,7 +117,7 @@ function construct_component_driver(
 	};
 	this.append_component_parameter=function(
 			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
+			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
 	{
 		this.display_parameter=
 		{
@@ -126,13 +126,13 @@ function construct_component_driver(
 			display_value_id		:	 buffer_data_item[2],
 			effective_selected_flag	:	(buffer_data_item[3]>0)?true:false
 		}
-		render.system_buffer.set_system_bindgroup_data(
+		scene.system_buffer.set_system_bindgroup_data(
 			[
 				this.display_parameter.transparency_value,
 				this.display_parameter.close_clip_plane_number,
 				this.display_parameter.display_value_id,
 				this.display_parameter.effective_selected_flag?1:0
 			],
-			component_id,driver_id,render);
+			component_id,driver_id,scene);
 	};
 };

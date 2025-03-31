@@ -1,4 +1,4 @@
-function construct_part_driver(init_data,part_object,render_driver,render)
+function construct_part_driver(init_data,part_object,render_driver,scene)
 {
 	this.render_material=render_driver.render_material;
 	this.material_bindgroup_flag=true;
@@ -6,9 +6,9 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 	
 	part_object.material[0].material.push(render_driver.render_material.selected_material);
 
-	this.create_bind_group=async function(part_object,render_driver,render)
+	this.create_bind_group=async function(part_object,render_driver,scene)
 	{
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return;
 			
 		for(var p,i=0,ni=part_object.material[0].material.length;i<ni;i++){
@@ -62,17 +62,17 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 					for(var k=0;k<16;k++)
 						p[16*j+k]=my_material.texture[j].matrix[k];
 					try{
-						if(render.terminate_flag)
+						if(scene.terminate_flag)
 							break;
-						var my_blob=await render.caller.call_server_part(
+						var my_blob=await scene.caller.call_server_part(
 										part_object.render_id,part_object.part_id,
 										[["file",my_material.texture[j].texture_file]],"blob");
-						if(render.terminate_flag)
+						if(scene.terminate_flag)
 							break;
 						var my_imageBitmap=await createImageBitmap(my_blob);
-						if(render.terminate_flag)
+						if(scene.terminate_flag)
 							break;
-						var my_texture=render.webgpu.device.createTexture(
+						var my_texture=scene.webgpu.device.createTexture(
 								{
 									size:
 									{
@@ -84,7 +84,7 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 													|GPUTextureUsage.COPY_DST
 													|GPUTextureUsage.RENDER_ATTACHMENT
 						    	});
-						render.webgpu.device.queue.copyExternalImageToTexture(
+						scene.webgpu.device.queue.copyExternalImageToTexture(
 							{
 								source	:	my_imageBitmap
 							},
@@ -103,7 +103,7 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 							+my_material.texture[j].texture_file);
 					}
 				}
-			if(render.terminate_flag){
+			if(scene.terminate_flag){
 				for(var j=0,nj=my_texture_array.length;j<nj;j++)
 					my_texture_array[j].destroy();
 				return;
@@ -116,14 +116,14 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 			var float_buffer_length	=float_buffer_data.length*Float32Array.BYTES_PER_ELEMENT;
 			var total_buffer_length	=int_buffer_length+float_buffer_length;
 				
-			var my_parameter_buffer=render.webgpu.device.createBuffer(
+			var my_parameter_buffer=scene.webgpu.device.createBuffer(
 			{
 				size	:	total_buffer_length,
 				usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.UNIFORM 
 			});
-			render.webgpu.device.queue.writeBuffer(my_parameter_buffer,
+			scene.webgpu.device.queue.writeBuffer(my_parameter_buffer,
 				0,				  new Int32Array(int_buffer_data));
-			render.webgpu.device.queue.writeBuffer(my_parameter_buffer,
+			scene.webgpu.device.queue.writeBuffer(my_parameter_buffer,
 				int_buffer_length,new Float32Array(float_buffer_data));
 			
 			var my_bindgroup_entries=[
@@ -162,7 +162,7 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 				{
 					//sampler_1
 					binding		:	5,
-					resource	:	render.webgpu.device.createSampler(
+					resource	:	scene.webgpu.device.createSampler(
 						(my_texture_array.length>0)
 						?my_material.texture[0].parameter
 						:{
@@ -176,7 +176,7 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 				{
 					//sampler_2
 					binding		:	6,
-					resource	:	render.webgpu.device.createSampler(
+					resource	:	scene.webgpu.device.createSampler(
 						(my_texture_array.length>1)
 						?my_material.texture[1].parameter
 						:{
@@ -190,7 +190,7 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 				{
 					//sampler_3
 					binding		:	7,
-					resource	:	render.webgpu.device.createSampler(
+					resource	:	scene.webgpu.device.createSampler(
 						(my_texture_array.length>2)
 						?my_material.texture[2].parameter
 						:{
@@ -204,7 +204,7 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 				{
 					//sampler_4
 					binding		:	8,
-					resource	:	render.webgpu.device.createSampler(
+					resource	:	scene.webgpu.device.createSampler(
 						(my_texture_array.length>3)
 						?my_material.texture[3].parameter
 						:{
@@ -216,7 +216,7 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 						})
 				}
 			];
-			var my_bindgroup=render.webgpu.device.createBindGroup(
+			var my_bindgroup=scene.webgpu.device.createBindGroup(
 				{
 					layout	:	render_driver.material_bindgroup_layout,
 					entries	:	my_bindgroup_entries
@@ -229,11 +229,11 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 		};
 		this.material_bindgroup_flag=false;
 	}
+	this.decoder=scene.system_call_processor.default_vertex_data_decoder;
 	this.decode_vertex_data=function(request_type_string,buffer_object_data,part_object)
 	{
-		var	p=render.system_call_processor.default_vertex_data_decoder;
-		var	new_buffer_object_data=p.voxel(request_type_string,buffer_object_data,part_object);
-		p.modify_item_size(new_buffer_object_data,this.render_material.array_stride);
+		var	new_buffer_object_data=this.decoder.voxel(request_type_string,buffer_object_data,part_object);
+		this.decoder.modify_item_size(new_buffer_object_data,this.render_material.array_stride);
 		return new_buffer_object_data;
 	}
 	
@@ -256,7 +256,7 @@ function construct_part_driver(init_data,part_object,render_driver,render)
 			}
 		}
 	}
-	this.create_bind_group(part_object,render_driver,render);
+	this.create_bind_group(part_object,render_driver,scene);
 	
 	return;
 }

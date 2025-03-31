@@ -1,4 +1,4 @@
-function create_component_object(my_init_data,render)
+function create_component_object(my_init_data,scene)
 {
 	this.interface_data=my_init_data;
 	
@@ -8,10 +8,10 @@ function create_component_object(my_init_data,render)
 	this.hightlight=[-1,-1,-1,-1];
 	
 	this.mousedown_flag	=false;
-	this.mouse_x 		=render.view.main_target_x;
-	this.mouse_y 		=render.view.main_target_y;
-	this.mousedown_x	=render.view.main_target_x;
-	this.mousedown_y	=render.view.main_target_y;
+	this.mouse_x 		=scene.view.main_target_x;
+	this.mouse_y 		=scene.view.main_target_y;
+	this.mousedown_x	=scene.view.main_target_x;
+	this.mousedown_y	=scene.view.main_target_y;
 
 	this.x=0;
 	this.y=0;
@@ -25,40 +25,40 @@ function create_component_object(my_init_data,render)
 		dy	:	this.interface_data.dy
 	}
 
-	this.pickupmousedown=function(event,component_id,render)
+	this.pickupmousedown=function(event,component_id,scene)
 	{
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return true;
 			
 		switch(event.button){
 		case 0:
 			this.mousedown_flag=true;
-			this.mousedown_x=render.view.main_target_x;
-			this.mousedown_y=render.view.main_target_y;			
-			this.mouse_x 	=render.view.main_target_x;
-			this.mouse_y 	=render.view.main_target_y;
+			this.mousedown_x=scene.view.main_target_x;
+			this.mousedown_y=scene.view.main_target_y;			
+			this.mouse_x 	=scene.view.main_target_x;
+			this.mouse_y 	=scene.view.main_target_y;
 			
 			break;
 		case 2:
-			render.caller.call_server_component(component_id,"all",[["operation","hide"]]);
+			scene.caller.call_server_component(component_id,"all",[["operation","hide"]]);
 			break;
 		default:
 			break;
 		}
 		return true;
 	};
-	this.pickupmousemove=function(event,component_id,render)
+	this.pickupmousemove=function(event,component_id,scene)
 	{
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return true;
 		switch(event.button){
 		case 0:
 			if(!(this.mousedown_flag))
 				break;
-			this.show_x+=render.view.main_target_x-this.mouse_x;
-			this.show_y+=render.view.main_target_y-this.mouse_y;
-			this.mouse_x=render.view.main_target_x;
-			this.mouse_y=render.view.main_target_y;
+			this.show_x+=scene.view.main_target_x-this.mouse_x;
+			this.show_y+=scene.view.main_target_y-this.mouse_y;
+			this.mouse_x=scene.view.main_target_x;
+			this.mouse_y=scene.view.main_target_y;
 			
 			break;
 		case 2:
@@ -68,9 +68,9 @@ function create_component_object(my_init_data,render)
 		}
 		return true;
 	}
-	this.pickupmouseup=function(event,component_id,render)
+	this.pickupmouseup=function(event,component_id,scene)
 	{
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return true;
 			
 		switch(event.button){
@@ -78,13 +78,13 @@ function create_component_object(my_init_data,render)
 			if(this.mousedown_flag){
 				this.mousedown_flag=false;
 				if(typeof(this.pickupmouseselect)=="function"){
-					var dx=this.mousedown_x-render.view.main_target_x;
-					var dy=this.mousedown_y-render.view.main_target_y;
+					var dx=this.mousedown_x-scene.view.main_target_x;
+					var dy=this.mousedown_y-scene.view.main_target_y;
 					if((dx*dx+dy*dy)<(2.0*0.01*0.01)){
-						this.x=render.pickup.body_id/(1000.0*1000.0);
-						this.y=render.pickup.face_id/(1000.0*1000.0);
+						this.x=scene.pickup.body_id/(1000.0*1000.0);
+						this.y=scene.pickup.face_id/(1000.0*1000.0);
 						
-						this.pickupmouseselect(event,component_id,render);
+						this.pickupmouseselect(event,component_id,scene);
 					}
 				}
 			}
@@ -96,9 +96,9 @@ function create_component_object(my_init_data,render)
 		}
 		return true;
 	};
-	this.pickupmousewheel=function(event,component_id,render)
+	this.pickupmousewheel=function(event,component_id,scene)
 	{
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return true;
 			
 		var mouse_wheel_number=0;
@@ -120,22 +120,22 @@ function create_component_object(my_init_data,render)
 	};
 }
 
-function create_bind_group(init_data,render_driver,render)
+function create_bind_group(init_data,render_driver,scene)
 {
 	this.is_busy_flag		=true;
 	this.should_delete_flag	=false;
 	
-	this.create=async function(init_data,render_driver,render)
+	this.create=async function(init_data,render_driver,scene)
 	{
 		this.texture=null;
 		this.buffer=null;
 		this.bindgroup=null;
 		
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return;
 			
 		if(init_data.type){
-			this.texture 		=	render.webgpu.device.createTexture(
+			this.texture 		=	scene.webgpu.device.createTexture(
 				{
 					size:
 					{
@@ -148,17 +148,17 @@ function create_bind_group(init_data,render_driver,render)
 									|GPUTextureUsage.RENDER_ATTACHMENT
 		    	});
 		}else{
-			var my_response 	=	await fetch(init_data.url,render.fetch_parameter.call_server);
-			if(render.terminate_flag){
+			var my_response 	=	await fetch(init_data.url,scene.fetch_parameter.call_server);
+			if(scene.terminate_flag){
 				this.is_busy_flag=false;
 				return;
 			}
 		   	var my_imageBitmap	=	await createImageBitmap(await my_response.blob());
-		   	if(render.terminate_flag){
+		   	if(scene.terminate_flag){
 				this.is_busy_flag=false;
 				return;
 			}
-			this.texture 		=	render.webgpu.device.createTexture(
+			this.texture 		=	scene.webgpu.device.createTexture(
 				{
 					size:
 					{
@@ -170,7 +170,7 @@ function create_bind_group(init_data,render_driver,render)
 									|GPUTextureUsage.COPY_DST
 									|GPUTextureUsage.RENDER_ATTACHMENT
 		    	});
-			render.webgpu.device.queue.copyExternalImageToTexture(
+			scene.webgpu.device.queue.copyExternalImageToTexture(
 				{
 					source	:	my_imageBitmap
 				},
@@ -183,7 +183,7 @@ function create_bind_group(init_data,render_driver,render)
 				});
 		}	
 		this.buffer_size=Float32Array.BYTES_PER_ELEMENT*64;
-		this.buffer=render.webgpu.device.createBuffer(
+		this.buffer=scene.webgpu.device.createBuffer(
 		{
 			size	:	this.buffer_size,
 			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
@@ -205,7 +205,7 @@ function create_bind_group(init_data,render_driver,render)
 			{
 				//sampler
 				binding		:	2,
-				resource	:	render.webgpu.device.createSampler(
+				resource	:	scene.webgpu.device.createSampler(
 					{
 						addressModeU	:	"mirror-repeat",
 						addressModeV	:	"mirror-repeat",
@@ -215,7 +215,7 @@ function create_bind_group(init_data,render_driver,render)
 					})
 			}
 		];
-		this.bindgroup=render.webgpu.device.createBindGroup(
+		this.bindgroup=scene.webgpu.device.createBindGroup(
 			{
 				layout		:	render_driver.bindgroup_layout,
 				entries		:	resource_entries
@@ -240,39 +240,39 @@ function create_bind_group(init_data,render_driver,render)
 			this.texture=null;
 		}
 	};
-	this.create(init_data,render_driver,render);
+	this.create(init_data,render_driver,scene);
 };
 
 function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	render)
+	init_data,		part_object,	part_driver,	render_driver,	scene)
 {
-	var new_ep=new create_component_object(init_data,render);
-	var old_ep=render.component_event_processor[component_id];
+	var new_ep=new create_component_object(init_data,scene);
+	var old_ep=scene.component_event_processor[component_id];
 	if((typeof(old_ep)=="object")&&(old_ep!=null))
 		new_ep=Object.assign(old_ep,new_ep);
-	render.component_event_processor[component_id]=new_ep;
+	scene.component_event_processor[component_id]=new_ep;
 	
 	this.interface_component_id		=component_id;
-	this.image_bind_group			=new create_bind_group(init_data,render_driver,render);
+	this.image_bind_group			=new create_bind_group(init_data,render_driver,scene);
 	this.save_parameter_number		=0;
 	
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,render)	
+			project_matrix,part_object,part_driver,render_driver,scene)	
 	{
-		var ep=render.component_event_processor[component_id];
+		var ep=scene.component_event_processor[component_id];
 		if(this.image_bind_group.is_busy_flag)
 			return;
 		
 		if(ep.interface_data.type)
 			if(typeof(ep.update_canvas_texture)=="function")
 				if(ep.update_canvas_texture(
-						render.webgpu.canvas_2d,render.webgpu.context_2d,
-						ep.interface_data.canvas,component_id,render))
-					render.webgpu.device.queue.copyExternalImageToTexture(
+						scene.webgpu.canvas_2d,scene.webgpu.context_2d,
+						ep.interface_data.canvas,component_id,scene))
+					scene.webgpu.device.queue.copyExternalImageToTexture(
 						{
-							source	:	render.webgpu.canvas_2d
+							source	:	scene.webgpu.canvas_2d
 						},
 						{
 							texture	:	this.image_bind_group.texture
@@ -287,7 +287,7 @@ function construct_component_driver(
 				||(ep.parameter_bak.dx!=ep.interface_data.dx)
 				||(ep.parameter_bak.dy!=ep.interface_data.dy))
 			{
-				render.caller.call_server_component(component_id,"all",[["operation","parameter"],
+				scene.caller.call_server_component(component_id,"all",[["operation","parameter"],
 					["x0",ep.parameter_bak.x =ep.show_x],
 					["y0",ep.parameter_bak.y =ep.show_y],
 					["dx",ep.parameter_bak.dx=ep.interface_data.dx],
@@ -295,7 +295,7 @@ function construct_component_driver(
 			}
 			var x0=ep.hightlight[0],y0=ep.hightlight[1];
 			var x1=ep.hightlight[2],y1=ep.hightlight[3];
-			render.webgpu.device.queue.writeBuffer(
+			scene.webgpu.device.queue.writeBuffer(
 				this.image_bind_group.buffer,0,
 				new Float32Array([
 						ep.show_x,
@@ -311,7 +311,7 @@ function construct_component_driver(
 			this.save_parameter_number++;
 		}
 		
-		var rpe=render.webgpu.render_pass_encoder;
+		var rpe=scene.webgpu.render_pass_encoder;
 		rpe.setPipeline((method_data.method_id==0)
 				?(render_driver.id_pipeline):(render_driver.color_pipeline));		
 		rpe.setBindGroup(1,this.image_bind_group.bindgroup);
@@ -324,9 +324,9 @@ function construct_component_driver(
 	
 	this.append_component_parameter=function(
 			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
+			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
 	{
-		var ep=render.component_event_processor[component_id];
+		var ep=scene.component_event_processor[component_id];
 		ep.show_x			=buffer_data_item[0];
 		ep.show_y			=buffer_data_item[1];
 		ep.interface_data.dx=buffer_data_item[2];

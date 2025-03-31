@@ -1,16 +1,16 @@
-function new_render_driver(	render_id,render_name,init_data,shader_code,text_array,render)
+function new_render_driver(	render_id,render_name,init_data,shader_code,text_array,scene)
 {
-	var my_module=render.webgpu.device.createShaderModule(
+	var my_module=scene.webgpu.device.createShaderModule(
 			{
 				code: shader_code
 			});
 	var pipeline_descr=
 	{
-		layout: render.webgpu.device.createPipelineLayout(
+		layout: scene.webgpu.device.createPipelineLayout(
 		{
 			bindGroupLayouts:
 			[
-				render.system_buffer.system_bindgroup_layout
+				scene.system_buffer.system_bindgroup_layout
 			]
 		}),
 
@@ -89,26 +89,26 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 		}
 	};
 	
-	this.id_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.id_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.fragment.targets.length			=1;
-	pipeline_descr.fragment.targets[0].format		=render.webgpu.gpu.getPreferredCanvasFormat();
-	if(render.parameter.multisample>1)
-		pipeline_descr.multisample={count:render.parameter.multisample};
+	pipeline_descr.fragment.targets[0].format		=scene.webgpu.gpu.getPreferredCanvasFormat();
+	if(scene.parameter.multisample>1)
+		pipeline_descr.multisample={count:scene.parameter.multisample};
 
 	pipeline_descr.fragment.entryPoint				="fragment_face_fun";
 	pipeline_descr.vertex.constants.primitive_type	=1;
-	this.face_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.face_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.fragment.entryPoint				="fragment_edge_fun";
 	pipeline_descr.vertex.constants.primitive_type	=2;
 	pipeline_descr.primitive.topology				="line-list";
-	this.edge_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.edge_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 
 	pipeline_descr.fragment.entryPoint				="fragment_point_fun";
 	pipeline_descr.vertex.constants.primitive_type	=3;
 	pipeline_descr.primitive.topology				="point-list";
-	this.point_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.point_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	this.new_part_driver=construct_part_driver;
 	

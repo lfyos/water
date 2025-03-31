@@ -1,18 +1,18 @@
 function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	render)
+	init_data,		part_object,	part_driver,	render_driver,	scene)
 {
 	this.location_data=new Array();
 	
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,render)	
+			project_matrix,part_object,part_driver,render_driver,scene)	
 	{
-		var computer				=render.computer;
-		var component_location		=render.component_location_data;
+		var computer				=scene.computer;
+		var component_location		=scene.component_location_data;
 		
 		var modifier_container_id	=component_render_parameter;
-		var modifier_current_time	=render.modifier_current_time[modifier_container_id];
+		var modifier_current_time	=scene.modifier_current_time[modifier_container_id];
 		
 		var old_location_data=this.location_data;
 		this.location_data=new Array();
@@ -84,7 +84,7 @@ function construct_component_driver(
 	
 	this.append_component_parameter=function(
 			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
+			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
 	{
 		while(buffer_data_item.length>0)
 			this.location_data.push(buffer_data_item.shift());

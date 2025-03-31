@@ -1,21 +1,21 @@
 function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	render)
+	init_data,		part_object,	part_driver,	render_driver,	scene)
 {
 	this.box_component_id=-1;
-	this.buffer=render.webgpu.device.createBuffer(
+	this.buffer=scene.webgpu.device.createBuffer(
 		{
 			size	:	Float32Array.BYTES_PER_ELEMENT*8,
 			usage	:	GPUBufferUsage.VERTEX|GPUBufferUsage.COPY_DST
 		});
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,render)	
+			project_matrix,part_object,part_driver,render_driver,scene)	
 	{
-		render.system_buffer.set_system_bindgroup(
-			render_data.render_buffer_id,this.box_component_id,-1,render);
+		scene.system_buffer.set_system_bindgroup(
+			render_data.render_buffer_id,this.box_component_id,-1,scene);
 
-		var rpe	=render.webgpu.render_pass_encoder;
+		var rpe	=scene.webgpu.render_pass_encoder;
 		rpe.setPipeline(render_driver.pipeline);
 		rpe.setVertexBuffer(1,this.buffer);
 		var p=part_object.buffer_object.edge.region_data;
@@ -27,9 +27,9 @@ function construct_component_driver(
 	
 	this.append_component_parameter=function(
 			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
+			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
 	{
-		render.webgpu.device.queue.writeBuffer(this.buffer,0,new Float32Array(buffer_data_item[0]));
+		scene.webgpu.device.queue.writeBuffer(this.buffer,0,new Float32Array(buffer_data_item[0]));
 		this.box_component_id=buffer_data_item[1];
 	};
 	this.destroy=function()

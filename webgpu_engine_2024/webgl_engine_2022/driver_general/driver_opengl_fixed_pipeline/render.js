@@ -1,13 +1,13 @@
 function create_one_render_driver(array_stride,material_offset,
-			material_bindgroup_layout,module,render_material,render)
+			material_bindgroup_layout,module,render_material,scene)
 {
 	var pipeline_descr=
 	{
-		layout: render.webgpu.device.createPipelineLayout(
+		layout: scene.webgpu.device.createPipelineLayout(
 		{
 			bindGroupLayouts:
 			[
-				render.system_buffer.system_bindgroup_layout,
+				scene.system_buffer.system_bindgroup_layout,
 				material_bindgroup_layout
 			]
 		}),
@@ -107,13 +107,13 @@ function create_one_render_driver(array_stride,material_offset,
 	];
 	var depth_color_targets=[
 		{
-			format		:	render.webgpu.gpu.getPreferredCanvasFormat(),
+			format		:	scene.webgpu.gpu.getPreferredCanvasFormat(),
 			writeMask	:	0
 		}
 	];
 	var normal_color_targets=[
 		{
-			format		:	render.webgpu.gpu.getPreferredCanvasFormat(),
+			format		:	scene.webgpu.gpu.getPreferredCanvasFormat(),
 			writeMask	:	GPUColorWrite.ALL,
 			blend		:
 			{
@@ -162,19 +162,19 @@ function create_one_render_driver(array_stride,material_offset,
 	pipeline_descr.fragment.constants.clip_type		=0;
 	pipeline_descr.depthStencil.stencilFront		=no_clip_stencil;
 	pipeline_descr.depthStencil.stencilBack			=no_clip_stencil;
-	this.id_face_pipeline_no_clip=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.id_face_pipeline_no_clip=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.vertex.constants.clip_type		=1;
 	pipeline_descr.fragment.constants.clip_type		=1;
 	pipeline_descr.depthStencil.stencilFront		=do_clip_stencil;
 	pipeline_descr.depthStencil.stencilBack			=do_clip_stencil;
-	this.id_face_pipeline_do_clip=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.id_face_pipeline_do_clip=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.vertex.constants.clip_type		=2;
 	pipeline_descr.fragment.constants.clip_type		=2;
 	pipeline_descr.depthStencil.stencilFront		=do_close_stencil;
 	pipeline_descr.depthStencil.stencilBack			=do_close_stencil;
-	this.id_face_pipeline_do_close=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.id_face_pipeline_do_close=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.primitive.topology="triangle-list";
 	pipeline_descr.fragment.entryPoint="fragment_id_function";
@@ -185,7 +185,7 @@ function create_one_render_driver(array_stride,material_offset,
 	pipeline_descr.depthStencil.stencilFront		=no_clip_stencil;
 	pipeline_descr.depthStencil.stencilBack			=no_clip_stencil;
 	pipeline_descr.vertex.buffers[0].stepMode		="instance";
-	this.id_point_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.id_point_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	pipeline_descr.vertex.buffers[0].stepMode		="vertex";
 	
 	pipeline_descr.fragment.targets=value_target;
@@ -198,19 +198,19 @@ function create_one_render_driver(array_stride,material_offset,
 	pipeline_descr.fragment.constants.clip_type		=0;
 	pipeline_descr.depthStencil.stencilFront		=no_clip_stencil;
 	pipeline_descr.depthStencil.stencilBack			=no_clip_stencil;
-	this.value_face_pipeline_no_clip=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.value_face_pipeline_no_clip=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.vertex.constants.clip_type		=1;
 	pipeline_descr.fragment.constants.clip_type		=1;
 	pipeline_descr.depthStencil.stencilFront		=do_clip_stencil;
 	pipeline_descr.depthStencil.stencilBack			=do_clip_stencil;
-	this.value_face_pipeline_do_clip=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.value_face_pipeline_do_clip=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.vertex.constants.clip_type		=2;
 	pipeline_descr.fragment.constants.clip_type		=2;
 	pipeline_descr.depthStencil.stencilFront		=do_close_stencil;
 	pipeline_descr.depthStencil.stencilBack			=do_close_stencil;
-	this.value_face_pipeline_do_close=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.value_face_pipeline_do_close=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.primitive.topology="triangle-list";
 	pipeline_descr.fragment.entryPoint="fragment_value_function";
@@ -221,11 +221,11 @@ function create_one_render_driver(array_stride,material_offset,
 	pipeline_descr.depthStencil.stencilFront		=no_clip_stencil;
 	pipeline_descr.depthStencil.stencilBack			=no_clip_stencil;
 	pipeline_descr.vertex.buffers[0].stepMode		="instance";
-	this.value_point_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.value_point_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	pipeline_descr.vertex.buffers[0].stepMode		="vertex";
 	
-	if(render.parameter.multisample>1)
-		pipeline_descr.multisample={count:render.parameter.multisample};
+	if(scene.parameter.multisample>1)
+		pipeline_descr.multisample={count:scene.parameter.multisample};
 		
 	pipeline_descr.fragment.entryPoint="fragment_color_function";
 	pipeline_descr.vertex.constants.primitive_type	=4;
@@ -237,19 +237,19 @@ function create_one_render_driver(array_stride,material_offset,
 	pipeline_descr.fragment.constants.clip_type		=0;
 	pipeline_descr.depthStencil.stencilFront		=no_clip_stencil;
 	pipeline_descr.depthStencil.stencilBack			=no_clip_stencil;
-	this.depth_face_pipeline_no_clip=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.depth_face_pipeline_no_clip=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.vertex.constants.clip_type		=1;
 	pipeline_descr.fragment.constants.clip_type		=1;
 	pipeline_descr.depthStencil.stencilFront		=do_clip_stencil;
 	pipeline_descr.depthStencil.stencilBack			=do_clip_stencil;
-	this.depth_face_pipeline_do_clip=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.depth_face_pipeline_do_clip=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.vertex.constants.clip_type		=2;
 	pipeline_descr.fragment.constants.clip_type		=2;
 	pipeline_descr.depthStencil.stencilFront		=do_close_stencil;
 	pipeline_descr.depthStencil.stencilBack			=do_close_stencil;
-	this.depth_face_pipeline_do_close=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.depth_face_pipeline_do_close=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.fragment.targets=normal_color_targets;
 	
@@ -257,19 +257,19 @@ function create_one_render_driver(array_stride,material_offset,
 	pipeline_descr.fragment.constants.clip_type		=0;
 	pipeline_descr.depthStencil.stencilFront		=no_clip_stencil;
 	pipeline_descr.depthStencil.stencilBack			=no_clip_stencil;
-	this.color_face_pipeline_no_clip=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.color_face_pipeline_no_clip=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.vertex.constants.clip_type		=1;
 	pipeline_descr.fragment.constants.clip_type		=1;
 	pipeline_descr.depthStencil.stencilFront		=do_clip_stencil;
 	pipeline_descr.depthStencil.stencilBack			=do_clip_stencil;
-	this.color_face_pipeline_do_clip=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.color_face_pipeline_do_clip=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.vertex.constants.clip_type		=2;
 	pipeline_descr.fragment.constants.clip_type		=2;
 	pipeline_descr.depthStencil.stencilFront		=do_close_stencil;
 	pipeline_descr.depthStencil.stencilBack			=do_close_stencil;
-	this.color_face_pipeline_do_close=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.color_face_pipeline_do_close=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 		
 	pipeline_descr.primitive.topology="line-list";
 	pipeline_descr.fragment.entryPoint="fragment_color_function";
@@ -279,7 +279,7 @@ function create_one_render_driver(array_stride,material_offset,
 	pipeline_descr.fragment.constants.clip_type		=1;
 	pipeline_descr.depthStencil.stencilFront		=no_clip_stencil;
 	pipeline_descr.depthStencil.stencilBack			=no_clip_stencil;
-	this.color_edge_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.color_edge_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 
 	pipeline_descr.primitive.topology="triangle-list";
 	pipeline_descr.fragment.entryPoint="fragment_color_function";
@@ -290,7 +290,7 @@ function create_one_render_driver(array_stride,material_offset,
 	pipeline_descr.depthStencil.stencilFront		=no_clip_stencil;
 	pipeline_descr.depthStencil.stencilBack			=no_clip_stencil;
 	pipeline_descr.vertex.buffers[0].stepMode		="instance";
-	this.color_pickup_point_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.color_pickup_point_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.primitive.topology="triangle-list";
 	pipeline_descr.fragment.entryPoint="fragment_color_function";
@@ -301,7 +301,7 @@ function create_one_render_driver(array_stride,material_offset,
 	pipeline_descr.depthStencil.stencilFront		=no_clip_stencil;
 	pipeline_descr.depthStencil.stencilBack			=no_clip_stencil;
 	pipeline_descr.vertex.buffers[0].stepMode		="instance";
-	this.color_normal_point_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.color_normal_point_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.primitive.topology="line-strip";
 	pipeline_descr.vertex.entryPoint="vertex_main_frame";
@@ -393,14 +393,14 @@ function create_one_render_driver(array_stride,material_offset,
 			shaderLocation	:	14
 		}
 	];
-	this.color_frame_pipeline=render.webgpu.device.createRenderPipeline(pipeline_descr);
+	this.color_frame_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 }
 
-function new_render_driver(	render_id,render_name,init_data,shader_code,text_array,render)
+function new_render_driver(	render_id,render_name,init_data,shader_code,text_array,scene)
 {
 	this.render_material=init_data;
 	
-	this.tmp_texture=render.webgpu.device.createTexture(
+	this.tmp_texture=scene.webgpu.device.createTexture(
 			{
 				size:
 				{
@@ -496,7 +496,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			}
 		}
 	];
-	this.material_bindgroup_layout=render.webgpu.device.createBindGroupLayout(
+	this.material_bindgroup_layout=scene.webgpu.device.createBindGroupLayout(
 			{
 				entries	:	my_bindgroup_layout_entries
 			});
@@ -504,7 +504,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 	this.new_part_driver=construct_part_driver;
 	this.method_render_flag=[true,true,true,true,true,true];		
 			
-	var my_module=render.webgpu.device.createShaderModule(
+	var my_module=scene.webgpu.device.createShaderModule(
 			{
 				code: shader_code
 			});
@@ -516,7 +516,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 				this.render_material.array_stride,
 				this.render_material.material_offset[i],
 				this.material_bindgroup_layout,my_module,
-				this.render_material,render);
+				this.render_material,scene);
 	};
 	
 	this.destroy=function()

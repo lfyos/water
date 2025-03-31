@@ -1,11 +1,11 @@
 function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	render)
+	init_data,		part_object,	part_driver,	render_driver,	scene)
 {
 	this.component_id	=component_id;
 	this.driver_id		=driver_id;
 
-	this.id_depth_texture=render.webgpu.device.createTexture(
+	this.id_depth_texture=scene.webgpu.device.createTexture(
 		{
 			size	:
 			{
@@ -15,7 +15,7 @@ function construct_component_driver(
 			format	:	"depth24plus-stencil8",
 			usage	:	GPUTextureUsage.RENDER_ATTACHMENT
 		});
-	this.id_texture_0=render.webgpu.device.createTexture(
+	this.id_texture_0=scene.webgpu.device.createTexture(
 		{
 			size	:
 			{
@@ -25,7 +25,7 @@ function construct_component_driver(
 			format	:	"rgba32sint",
 			usage	:	GPUTextureUsage.COPY_SRC|GPUTextureUsage.COPY_DST|GPUTextureUsage.RENDER_ATTACHMENT
 		});	
-	this.id_texture_1=render.webgpu.device.createTexture(
+	this.id_texture_1=scene.webgpu.device.createTexture(
 		{
 			size	:
 			{
@@ -35,19 +35,19 @@ function construct_component_driver(
 			format	:	"rgba32sint",
 			usage	:	GPUTextureUsage.COPY_SRC|GPUTextureUsage.COPY_DST|GPUTextureUsage.RENDER_ATTACHMENT
 		});	
-	this.id_buffer_0	=render.webgpu.device.createBuffer(
+	this.id_buffer_0	=scene.webgpu.device.createBuffer(
 		{
 			size	:	Int32Array.BYTES_PER_ELEMENT*4,
 			usage	:	GPUBufferUsage.MAP_READ|GPUBufferUsage.COPY_DST
 		});	
-	this.id_buffer_1	=render.webgpu.device.createBuffer(
+	this.id_buffer_1	=scene.webgpu.device.createBuffer(
 		{
 			size	:	Int32Array.BYTES_PER_ELEMENT*4,
 			usage	:	GPUBufferUsage.MAP_READ|GPUBufferUsage.COPY_DST
 		});	
 /////////////////////////////////////////////////////////////////////////////////
 
-	this.value_depth_texture=render.webgpu.device.createTexture(
+	this.value_depth_texture=scene.webgpu.device.createTexture(
 		{
 			size	:
 			{
@@ -57,7 +57,7 @@ function construct_component_driver(
 			format	:	"depth24plus-stencil8",
 			usage	:	GPUTextureUsage.RENDER_ATTACHMENT
 		});
-	this.value_texture=render.webgpu.device.createTexture(
+	this.value_texture=scene.webgpu.device.createTexture(
 		{
 			size	:
 			{
@@ -67,7 +67,7 @@ function construct_component_driver(
 			format	:	"rgba32float",
 			usage	:	GPUTextureUsage.COPY_SRC|GPUTextureUsage.COPY_DST|GPUTextureUsage.RENDER_ATTACHMENT
 		});	
-	this.value_buffer=render.webgpu.device.createBuffer(
+	this.value_buffer=scene.webgpu.device.createBuffer(
 		{
 			size	:	Float32Array.BYTES_PER_ELEMENT*4,
 			usage	:	GPUBufferUsage.MAP_READ|GPUBufferUsage.COPY_DST
@@ -77,7 +77,7 @@ function construct_component_driver(
 
 	this.begin_scene_target=function(
 			scene_target,target_sequence_id,render_data,
-			target_part_object,target_part_driver,target_render_driver,render)
+			target_part_object,target_part_driver,target_render_driver,scene)
 	{
 		if(scene_target!=null)
 			return scene_target;
@@ -176,11 +176,11 @@ function construct_component_driver(
 	}
 	this.end_scene_target=function(
 			scene_target,target_sequence_id,render_data,
-			target_part_object,target_part_driver,target_render_driver,render)
+			target_part_object,target_part_driver,target_render_driver,scene)
 	{
 		switch(target_sequence_id){
 		case 0:
-			render.webgpu.command_encoder.copyTextureToBuffer(
+			scene.webgpu.command_encoder.copyTextureToBuffer(
 				{	//source
 					texture	:	this.id_texture_0,
 					origin	:
@@ -199,7 +199,7 @@ function construct_component_driver(
 					width	:	1,
 					height	:	1
 				});
-			render.webgpu.command_encoder.copyTextureToBuffer(
+			scene.webgpu.command_encoder.copyTextureToBuffer(
 				{	//source
 					texture	:	this.id_texture_1,
 					origin	:
@@ -220,7 +220,7 @@ function construct_component_driver(
 				});
 			break;
 		case 1:
-			render.webgpu.command_encoder.copyTextureToBuffer(
+			scene.webgpu.command_encoder.copyTextureToBuffer(
 				{	//source
 					texture	:	this.value_texture,
 					origin	:
@@ -244,9 +244,9 @@ function construct_component_driver(
 	}
 	
 	this.complete_render_target=async function(render_data,
-		target_part_object,target_part_driver,target_render_driver,render)
+		target_part_object,target_part_driver,target_render_driver,scene)
 	{
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return;
 
 		var my_buffer=this.id_buffer_0;
@@ -259,7 +259,7 @@ function construct_component_driver(
 		var p_id_0=new Int32Array(my_buffer.getMappedRange(0,my_length).slice());
 		my_buffer.unmap();
 		
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return;
 		
 		var my_buffer=this.id_buffer_1;
@@ -272,7 +272,7 @@ function construct_component_driver(
 		var p_id_1=new Int32Array(my_buffer.getMappedRange(0,my_length).slice());
 		my_buffer.unmap();
 		
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return;
 		
 		var my_buffer=this.value_buffer;
@@ -285,7 +285,7 @@ function construct_component_driver(
 		var p_value=new Float32Array(my_buffer.getMappedRange(0,my_length).slice());
 		my_buffer.unmap();
 		
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			return;
 	
 		var system_bindgroup_id	=p_id_0[0];
@@ -293,66 +293,66 @@ function construct_component_driver(
 		var part_face_id		=p_id_0[2];
 		var primitive_type_id	=p_id_0[3];
 	
-		render.pickup.render_id			=-1;
-		render.pickup.part_id			=-1;
-		render.pickup.data_buffer_id	=-1;
-		render.pickup.component_id		=-1;
-		render.pickup.driver_id			=-1;
+		scene.pickup.render_id			=-1;
+		scene.pickup.part_id			=-1;
+		scene.pickup.data_buffer_id	=-1;
+		scene.pickup.component_id		=-1;
+		scene.pickup.driver_id			=-1;
 		
-		render.pickup.primitive_type_id	=primitive_type_id;
-		render.pickup.body_id			=-1;
-		render.pickup.face_id			=-1;
+		scene.pickup.primitive_type_id	=primitive_type_id;
+		scene.pickup.body_id			=-1;
+		scene.pickup.face_id			=-1;
 		
-		render.pickup.loop_id			=-1;
-		render.pickup.edge_id			=-1;
-		render.pickup.primitive_id		=-1;
-		render.pickup.vertex_id			=-1;
+		scene.pickup.loop_id			=-1;
+		scene.pickup.edge_id			=-1;
+		scene.pickup.primitive_id		=-1;
+		scene.pickup.vertex_id			=-1;
 		
-		render.pickup.value				=[0,0,0];
-		render.pickup.depth				=1.0;
+		scene.pickup.value				=[0,0,0];
+		scene.pickup.depth				=1.0;
 
-		if((system_bindgroup_id>=0)&&(system_bindgroup_id<render.system_bindgroup_id.length)){
-			var p=render.system_bindgroup_id[system_bindgroup_id];
-			render.pickup.render_id		=p[0];
-			render.pickup.part_id		=p[1];
-			render.pickup.data_buffer_id=p[2];
-			render.pickup.component_id	=p[3];
-			render.pickup.driver_id		=p[4];
+		if((system_bindgroup_id>=0)&&(system_bindgroup_id<scene.system_bindgroup_id.length)){
+			var p=scene.system_bindgroup_id[system_bindgroup_id];
+			scene.pickup.render_id		=p[0];
+			scene.pickup.part_id		=p[1];
+			scene.pickup.data_buffer_id=p[2];
+			scene.pickup.component_id	=p[3];
+			scene.pickup.driver_id		=p[4];
 			
-			if((render.pickup.render_id>=0)&&(render.pickup.part_id>=0))
-				if(render.pickup.render_id<render.part_array.length)
-					if(render.pickup.part_id<render.part_array[render.pickup.render_id].length){
-						render.pickup.body_id=part_body_id;
-						render.pickup.face_id=part_face_id;
+			if((scene.pickup.render_id>=0)&&(scene.pickup.part_id>=0))
+				if(scene.pickup.render_id<scene.part_array.length)
+					if(scene.pickup.part_id<scene.part_array[scene.pickup.render_id].length){
+						scene.pickup.body_id=part_body_id;
+						scene.pickup.face_id=part_face_id;
 					}
 		}
 		
-		if(render.pickup.component_id<0)
+		if(scene.pickup.component_id<0)
 			return;
-		if(render.pickup.driver_id<0)
+		if(scene.pickup.driver_id<0)
 			return;
-		if(render.pickup.body_id<0)
+		if(scene.pickup.body_id<0)
 			return;
-		if(render.pickup.face_id<0)
+		if(scene.pickup.face_id<0)
 			return;
 	
-		render.pickup.loop_id		=p_id_1[0];
-		render.pickup.edge_id		=p_id_1[1];
-		render.pickup.primitive_id	=p_id_1[2];
-		render.pickup.vertex_id		=p_id_1[3];
+		scene.pickup.loop_id		=p_id_1[0];
+		scene.pickup.edge_id		=p_id_1[1];
+		scene.pickup.primitive_id	=p_id_1[2];
+		scene.pickup.vertex_id		=p_id_1[3];
 	
-		render.pickup.value=[p_value[0],p_value[1],p_value[2]];
-		render.pickup.depth=p_value[3];
+		scene.pickup.value=[p_value[0],p_value[1],p_value[2]];
+		scene.pickup.depth=p_value[3];
 	}
 	
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,render)	
+			project_matrix,part_object,part_driver,render_driver,scene)	
 	{
 	}
 	this.append_component_parameter=function(
 			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
+			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
 	{
 	}
 	this.destroy=function()

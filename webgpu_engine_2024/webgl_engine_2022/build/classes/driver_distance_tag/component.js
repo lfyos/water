@@ -1,6 +1,6 @@
-function init_component_event_processor(component_id,init_data,render)
+function init_component_event_processor(component_id,init_data,scene)
 {
-	render.component_event_processor[component_id]=
+	scene.component_event_processor[component_id]=
 	{
 		component_id				:	component_id,
 		pickup_tag_id				:	-1,
@@ -8,27 +8,27 @@ function init_component_event_processor(component_id,init_data,render)
 		tag_menu_component_name		:	init_data,
 		mousemove_flag				:	true,
 
-		pickupdblclick		:	function(event,component_id,render)
+		pickupdblclick		:	function(event,component_id,scene)
 		{
 			return true;
 		},
-		pickupcontextmenu	:	function(event,component_id,render)
+		pickupcontextmenu	:	function(event,component_id,scene)
 		{
 			return true;
 		},
-		pickupmouseup		:	function(event,component_id,render)
+		pickupmouseup		:	function(event,component_id,scene)
 		{
 			return true;
 		},
-		pickupmousemove		:	function(event,component_id,render)
+		pickupmousemove		:	function(event,component_id,scene)
 		{
-			render.component_event_processor[component_id].pickup_tag_id=render.pickup.body_id;
+			scene.component_event_processor[component_id].pickup_tag_id=scene.pickup.body_id;
 			return true;
 		},
-		pickupmousedown		:	function(event,component_id,render)
+		pickupmousedown		:	function(event,component_id,scene)
 		{
-			var pickup_tag_id,ep=render.component_event_processor[component_id];
-			if((pickup_tag_id=render.pickup.body_id)<0)
+			var pickup_tag_id,ep=scene.component_event_processor[component_id];
+			if((pickup_tag_id=scene.pickup.body_id)<0)
 				return true;
 			switch(event.button){
 			case 0:				
@@ -36,17 +36,17 @@ function init_component_event_processor(component_id,init_data,render)
 				case 0:	
 					switch(ep.tag_point_id){
 					case 0:				
-						render.caller.call_server_component(component_id,"all",[["operation","locate_component"],
+						scene.caller.call_server_component(component_id,"all",[["operation","locate_component"],
 							["id",pickup_tag_id],["type","point"],["p0","true"]]);
 						ep.tag_point_id++;
 						break;
 					case 1:
-						render.caller.call_server_component(component_id,"all",[["operation","locate_component"],
+						scene.caller.call_server_component(component_id,"all",[["operation","locate_component"],
 							["id",pickup_tag_id],["type","point"],["px","true"]]);
 						ep.tag_point_id++;
 						break;
 					default:
-						render.caller.call_server_component(component_id,"all",[["operation","locate_component"],
+						scene.caller.call_server_component(component_id,"all",[["operation","locate_component"],
 							["id",pickup_tag_id],["type","point"],["p0","true"],["px","true"]]);
 						ep.tag_point_id=0;
 						break;
@@ -55,38 +55,38 @@ function init_component_event_processor(component_id,init_data,render)
 				case 1:
 					switch(ep.tag_point_id){
 					case 0:				
-						render.caller.call_server_component(component_id,"all",[["operation","locate_component"],
+						scene.caller.call_server_component(component_id,"all",[["operation","locate_component"],
 							["id",pickup_tag_id],["type","component"],["p0","true"]]);
 						ep.tag_point_id++;
 						break;
 					case 1:
-						render.caller.call_server_component(component_id,"all",[["operation","locate_component"],
+						scene.caller.call_server_component(component_id,"all",[["operation","locate_component"],
 							["id",pickup_tag_id],["type","component"],["px","true"]]);
 						ep.tag_point_id++;
 						break;
 					default:
-						render.caller.call_server_component(component_id,"all",[["operation","locate_component"],
+						scene.caller.call_server_component(component_id,"all",[["operation","locate_component"],
 							["id",pickup_tag_id],["type","component"],["p0","true"],["px","true"]]);
 						ep.tag_point_id=0;
 						break;
 					}
 					break;
 				case 2:
-					render.caller.call_server_component(component_id,"all",
+					scene.caller.call_server_component(component_id,"all",
 						[["operation","swap_component"],["id",pickup_tag_id],["p0","true"]]).
 					then(
 						function(response_data)
 						{
-							render.system_call_processor.update_coordinate_display();
+							scene.system_call_processor.update_coordinate_display();
 						});
 					break;
 				case 3:
-					render.caller.call_server_component(component_id,"all",
+					scene.caller.call_server_component(component_id,"all",
 						[["operation","swap_component"],["id",pickup_tag_id],["px","true"]]).
 					then(
 						function(response_data)
 						{
-							render.system_call_processor.update_coordinate_display();
+							scene.system_call_processor.update_coordinate_display();
 						});
 					break;
 				}
@@ -94,31 +94,31 @@ function init_component_event_processor(component_id,init_data,render)
 			case 1:
 				break;
 			case 2:
-				render.system_call_processor.set_menu_show(ep.tag_menu_component_name);
+				scene.system_call_processor.set_menu_show(ep.tag_menu_component_name);
 				break;
 			}
 			return true;
 		},
-		pickupkeydown		:	function(event,component_id,render)
+		pickupkeydown		:	function(event,component_id,scene)
 		{
-			var pickup_tag_id,ep=render.component_event_processor[component_id];
-			if((pickup_tag_id=render.pickup.body_id)<0)
+			var pickup_tag_id,ep=scene.component_event_processor[component_id];
+			if((pickup_tag_id=scene.pickup.body_id)<0)
 				return true;
 			switch(event.keyCode){
 			case 46://del
 			case  8://backspace
-				render.caller.call_server_component(
+				scene.caller.call_server_component(
 					component_id,"all",[["operation","clear"],["id",pickup_tag_id]]);
 				break;
 			}
 			return true;
 		},
-		mousemove			:	function(event,component_id,render)
+		mousemove			:	function(event,component_id,scene)
 		{	
-			var ep=render.component_event_processor[component_id];
+			var ep=scene.component_event_processor[component_id];
 			if(ep.mousemove_flag){
 				ep.mousemove_flag=false;
-				render.caller.call_server_component(component_id,"all",[["operation","touch"]]).
+				scene.caller.call_server_component(component_id,"all",[["operation","touch"]]).
 				then(
 					function(response_data)
 					{
@@ -127,11 +127,11 @@ function init_component_event_processor(component_id,init_data,render)
 			}
 			return true;
 		},
-		mousedown			:	function(event,component_id,render)
+		mousedown			:	function(event,component_id,scene)
 		{
 			switch(event.button){
 			case 0:
-				render.caller.call_server_component(component_id,"all",[["operation","mark"]]);
+				scene.caller.call_server_component(component_id,"all",[["operation","mark"]]);
 				break;
 			case 1:
 			case 2:
@@ -143,32 +143,32 @@ function init_component_event_processor(component_id,init_data,render)
 }
 function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	render)
+	init_data,		part_object,	part_driver,	render_driver,	scene)
 {
 	this.component_id=component_id;
 	this.event_component_id=-1;
 	this.tag_array=new Array();
-	init_component_event_processor(component_id,init_data,render);
+	init_component_event_processor(component_id,init_data,scene);
 
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,render)	
+			project_matrix,part_object,part_driver,render_driver,scene)	
 	{
 		var p;
 		
-		switch(typeof(p=render.event_component.mouse.component_name)){
+		switch(typeof(p=scene.event_component.mouse.component_name)){
 		case "string":
-			p=render.operate_component.get_component_object(p);
-			render.event_component.mouse.component_name=((p==null)?-1:(p.component_id));
+			p=scene.operate_component.get_component_object(p);
+			scene.event_component.mouse.component_name=((p==null)?-1:(p.component_id));
 		case "number":
-			if(render.event_component.mouse.component_name!=this.event_component_id){
-				this.event_component_id=render.event_component.mouse.component_name;
-				render.caller.call_server_component(component_id,driver_id,[["operation","front_show"],
+			if(scene.event_component.mouse.component_name!=this.event_component_id){
+				this.event_component_id=scene.event_component.mouse.component_name;
+				scene.caller.call_server_component(component_id,driver_id,[["operation","front_show"],
 						["front_show",(this.event_component_id==component_id)?"true":"false"]]);
 			}
 			break;
 		}
-		var rpe=render.webgpu.render_pass_encoder;
+		var rpe=scene.webgpu.render_pass_encoder;
 		for(var i=0,ni=this.tag_array.length;i<ni;i++){
 			rpe.setBindGroup(1,this.tag_array[i].bindgroup);
 			switch(method_data.method_id){
@@ -210,7 +210,7 @@ function construct_component_driver(
 	
 	this.append_component_parameter=function(
 			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
+			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
 	{
 		for(var i=0,ni=this.tag_array.length;i<ni;i++){
 			this.tag_array[i].buffer.destroy();
@@ -238,20 +238,20 @@ function construct_component_driver(
 			var my_texture_height					=part_object.material[0].canvas_height;
 			var my_height_adjust					=part_object.material[0].height_adjust;
 			
-			render.webgpu.canvas_2d.width			=my_texture_width;
-			render.webgpu.canvas_2d.height			=my_texture_height;
+			scene.webgpu.canvas_2d.width			=my_texture_width;
+			scene.webgpu.canvas_2d.height			=my_texture_height;
 
-			render.webgpu.context_2d.font			=part_object.material[0].font;
-			render.webgpu.context_2d.textBaseline	="middle";
-			render.webgpu.context_2d.textAlign		="left";
-			var real_texture_width					=render.webgpu.context_2d.measureText(my_tag_text).width;
+			scene.webgpu.context_2d.font			=part_object.material[0].font;
+			scene.webgpu.context_2d.textBaseline	="middle";
+			scene.webgpu.context_2d.textAlign		="left";
+			var real_texture_width					=scene.webgpu.context_2d.measureText(my_tag_text).width;
 
-			render.webgpu.context_2d.fillStyle		="rgb(0,0,0)";
-			render.webgpu.context_2d.fillRect(0,0,real_texture_width,my_texture_height);
-			render.webgpu.context_2d.fillStyle		="rgb(255,255,255)";
-			render.webgpu.context_2d.fillText(my_tag_text,0,my_texture_height/2);
+			scene.webgpu.context_2d.fillStyle		="rgb(0,0,0)";
+			scene.webgpu.context_2d.fillRect(0,0,real_texture_width,my_texture_height);
+			scene.webgpu.context_2d.fillStyle		="rgb(255,255,255)";
+			scene.webgpu.context_2d.fillText(my_tag_text,0,my_texture_height/2);
 			
-			var my_texture=render.webgpu.device.createTexture(
+			var my_texture=scene.webgpu.device.createTexture(
 					{
 						size:
 						{
@@ -263,9 +263,9 @@ function construct_component_driver(
 										|GPUTextureUsage.COPY_DST
 										|GPUTextureUsage.RENDER_ATTACHMENT
 			    	});
-	    	render.webgpu.device.queue.copyExternalImageToTexture(
+	    	scene.webgpu.device.queue.copyExternalImageToTexture(
 					{
-						source	:	render.webgpu.canvas_2d
+						source	:	scene.webgpu.canvas_2d
 					},
 					{
 						texture	:	my_texture
@@ -274,7 +274,7 @@ function construct_component_driver(
 						width	:	real_texture_width,
 						height	:	my_texture_height
 					});
-			var system_id=render.component_array_sorted_by_id[component_id].component_ids[driver_id][3];
+			var system_id=scene.component_array_sorted_by_id[component_id].component_ids[driver_id][3];
 			var integer_buffer_data=[component_id,driver_id,i,system_id];
 			var p0=part_object.material[0].face_normal_color;
 			var p1=part_object.material[0].face_pickup_color;
@@ -309,12 +309,12 @@ function construct_component_driver(
 			var my_buffer_integer_size	=Int32Array.  BYTES_PER_ELEMENT*integer_buffer_data.length;	
 			var my_buffer_float_size	=Float32Array.BYTES_PER_ELEMENT*float_buffer_data.length;
 			var my_buffer_size			=my_buffer_float_size+my_buffer_integer_size;
-			var my_buffer=render.webgpu.device.createBuffer({
+			var my_buffer=scene.webgpu.device.createBuffer({
 						size	:	my_buffer_size,
 						usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
 					});
-			render.webgpu.device.queue.writeBuffer(my_buffer,0,						new Int32Array(integer_buffer_data));
-			render.webgpu.device.queue.writeBuffer(my_buffer,my_buffer_integer_size,new Float32Array(float_buffer_data));
+			scene.webgpu.device.queue.writeBuffer(my_buffer,0,						new Int32Array(integer_buffer_data));
+			scene.webgpu.device.queue.writeBuffer(my_buffer,my_buffer_integer_size,new Float32Array(float_buffer_data));
 			
 			var resource_entries=[
 					{	//buffer
@@ -332,7 +332,7 @@ function construct_component_driver(
 					{
 						//sampler
 						binding		:	2,
-						resource	:	render.webgpu.device.createSampler(
+						resource	:	scene.webgpu.device.createSampler(
 							{
 								addressModeU	:	"mirror-repeat",
 								addressModeV	:	"mirror-repeat",
@@ -342,7 +342,7 @@ function construct_component_driver(
 							})
 					}
 			];
-			var my_bindgroup=render.webgpu.device.createBindGroup(
+			var my_bindgroup=scene.webgpu.device.createBindGroup(
 			{
 				layout	:	render_driver.bindgroup_layout,
 				entries	:	resource_entries

@@ -2,48 +2,48 @@ function init_component_event_processor()
 {
 	this.title="marker";
 	
-	this.mouseup=function(event,component_id,render)
+	this.mouseup=function(event,component_id,scene)
 	{
 		var value;
-		if(render.pickup.component_id<0)
+		if(scene.pickup.component_id<0)
 			return true;
 		if((value=prompt("输入标注文字"))==null)
 			return true;
 		if((value=value.trim()).length<=0)
 			return true;
-		render.caller.call_server_component(component_id,"all",[["operation","append"],
+		scene.caller.call_server_component(component_id,"all",[["operation","append"],
 				["value",encodeURIComponent(encodeURIComponent(value))]]);
 		return true;
 	};
-	this.pickupkeydown=function(event,component_id,render)
+	this.pickupkeydown=function(event,component_id,scene)
 	{
 		switch(event.keyCode){
 		case 46://del
 		case  8://backspace
-			render.caller.call_server_component(component_id,"all",[["operation","delete"]]);
+			scene.caller.call_server_component(component_id,"all",[["operation","delete"]]);
 			break;
 		}
 		return true;
 	};
-	this.pickupdblclick=function(event,component_id,render)
+	this.pickupdblclick=function(event,component_id,scene)
 	{
 		return true;
 	};
-	this.pickupmouseup=function(event,component_id,render)
+	this.pickupmouseup=function(event,component_id,scene)
 	{
 		return true;
 	};
-	this.pickupmousedown=function(event,component_id,render)
+	this.pickupmousedown=function(event,component_id,scene)
 	{
 		switch(event.button){
 		case 0:
-			render.caller.call_server_component(component_id,"all",
+			scene.caller.call_server_component(component_id,"all",
 				[["operation",(event.ctrlKey||event.shiftKey||event.altKey)?"locate":"swap_select"]]);
 			break;
 		case 1:
 			break;
 		case 2:
-			render.caller.call_server_component(component_id,"all",[["operation","delete"]]);
+			scene.caller.call_server_component(component_id,"all",[["operation","delete"]]);
 			break;
 		}
 		return true;
@@ -51,22 +51,22 @@ function init_component_event_processor()
 }
 function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	render)
+	init_data,		part_object,	part_driver,	render_driver,	scene)
 {
 	this.component_id	=component_id;
 	this.marker_array	=new Array();
-	render.component_event_processor[component_id]=new init_component_event_processor();
+	scene.component_event_processor[component_id]=new init_component_event_processor();
 	
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,render)	
+			project_matrix,part_object,part_driver,render_driver,scene)	
 	{
-		var p,rpe=render.webgpu.render_pass_encoder;
+		var p,rpe=scene.webgpu.render_pass_encoder;
 		
 		for(var i=0,ni=this.marker_array.length;i<ni;i++){
-			render.system_buffer.set_system_bindgroup(
+			scene.system_buffer.set_system_bindgroup(
 				render_data.render_buffer_id,
-				this.marker_array[i].marker_component_id,-1,render);
+				this.marker_array[i].marker_component_id,-1,scene);
 
 			rpe.setBindGroup(1,this.marker_array[i].bindgroup);
 
@@ -115,7 +115,7 @@ function construct_component_driver(
 	}
 	this.append_component_parameter=function(
 			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
+			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
 	{
 		for(var i=0,ni=this.marker_array.length;i<ni;i++){
 			this.marker_array[i].buffer.destroy();
@@ -137,20 +137,20 @@ function construct_component_driver(
 			var my_texture_width					=part_object.material[0].canvas_width;
 			var my_texture_height					=part_object.material[0].canvas_height;
 			
-			render.webgpu.canvas_2d.width			=my_texture_width;
-			render.webgpu.canvas_2d.height			=my_texture_height;
+			scene.webgpu.canvas_2d.width			=my_texture_width;
+			scene.webgpu.canvas_2d.height			=my_texture_height;
 
-			render.webgpu.context_2d.font			=part_object.material[0].font;
-			render.webgpu.context_2d.textBaseline	="middle";
-			render.webgpu.context_2d.textAlign		="left";
-			var real_texture_width					=render.webgpu.context_2d.measureText(my_marker_text).width;
+			scene.webgpu.context_2d.font			=part_object.material[0].font;
+			scene.webgpu.context_2d.textBaseline	="middle";
+			scene.webgpu.context_2d.textAlign		="left";
+			var real_texture_width					=scene.webgpu.context_2d.measureText(my_marker_text).width;
 
-			render.webgpu.context_2d.fillStyle		="rgb(0,0,0)";
-			render.webgpu.context_2d.fillRect(0,0,real_texture_width,my_texture_height);
-			render.webgpu.context_2d.fillStyle		="rgb(255,255,255)";
-			render.webgpu.context_2d.fillText(my_marker_text,0,my_texture_height/2);
+			scene.webgpu.context_2d.fillStyle		="rgb(0,0,0)";
+			scene.webgpu.context_2d.fillRect(0,0,real_texture_width,my_texture_height);
+			scene.webgpu.context_2d.fillStyle		="rgb(255,255,255)";
+			scene.webgpu.context_2d.fillText(my_marker_text,0,my_texture_height/2);
 			
-			var my_texture=render.webgpu.device.createTexture(
+			var my_texture=scene.webgpu.device.createTexture(
 					{
 						size:
 						{
@@ -162,9 +162,9 @@ function construct_component_driver(
 										|GPUTextureUsage.COPY_DST
 										|GPUTextureUsage.RENDER_ATTACHMENT
 			    	});
-	    	render.webgpu.device.queue.copyExternalImageToTexture(
+	    	scene.webgpu.device.queue.copyExternalImageToTexture(
 					{
-						source	:	render.webgpu.canvas_2d,
+						source	:	scene.webgpu.canvas_2d,
 						flipY 	:	true
 					},
 					{
@@ -179,7 +179,7 @@ function construct_component_driver(
 					component_id,
 					driver_id,
 					i,
-					render.component_array_sorted_by_id[component_id].component_ids[driver_id][3],
+					scene.component_array_sorted_by_id[component_id].component_ids[driver_id][3],
 					
 					my_pickup_flag?1:0,			0,			0,			0
 			];
@@ -211,12 +211,12 @@ function construct_component_driver(
 			var my_buffer_integer_size	=Int32Array.  BYTES_PER_ELEMENT*integer_buffer_data.length;	
 			var my_buffer_float_size	=Float32Array.BYTES_PER_ELEMENT*float_buffer_data.length;
 			var my_buffer_size			=my_buffer_float_size+my_buffer_integer_size;
-			var my_buffer=render.webgpu.device.createBuffer({
+			var my_buffer=scene.webgpu.device.createBuffer({
 						size	:	my_buffer_size,
 						usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
 					});
-			render.webgpu.device.queue.writeBuffer(my_buffer,0,						new Int32Array(integer_buffer_data));
-			render.webgpu.device.queue.writeBuffer(my_buffer,my_buffer_integer_size,new Float32Array(float_buffer_data));
+			scene.webgpu.device.queue.writeBuffer(my_buffer,0,						new Int32Array(integer_buffer_data));
+			scene.webgpu.device.queue.writeBuffer(my_buffer,my_buffer_integer_size,new Float32Array(float_buffer_data));
 			
 			var resource_entries=[
 					{	//buffer
@@ -234,7 +234,7 @@ function construct_component_driver(
 					{
 						//sampler
 						binding		:	2,
-						resource	:	render.webgpu.device.createSampler(
+						resource	:	scene.webgpu.device.createSampler(
 							{
 								addressModeU	:	"mirror-repeat",
 								addressModeV	:	"mirror-repeat",
@@ -244,7 +244,7 @@ function construct_component_driver(
 							})
 					}
 			];
-			var my_bindgroup=render.webgpu.device.createBindGroup(
+			var my_bindgroup=scene.webgpu.device.createBindGroup(
 			{
 				layout	:	render_driver.bindgroup_layout,
 				entries	:	resource_entries

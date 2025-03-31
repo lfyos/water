@@ -1,25 +1,25 @@
-async function download_external_texture(render_id,part_id,file_name,render)
+async function download_external_texture(render_id,part_id,file_name,scene)
 {
-	if(render.terminate_flag)
+	if(scene.terminate_flag)
 		return null;
 	var my_imageBitmap;
 	try{
-		my_imageBitmap=await render.caller.call_server_part(
+		my_imageBitmap=await scene.caller.call_server_part(
 					render_id,part_id,[["file",file_name]],"blob");
 	}catch(e){
 		return null;
 	}
-	if(render.terminate_flag)
+	if(scene.terminate_flag)
 		return null;
 	try{
    		my_imageBitmap=await createImageBitmap(my_imageBitmap);
 	}catch(e){
 		return null;
 	}
-	if(render.terminate_flag)
+	if(scene.terminate_flag)
 		return null;
 		
-	var my_texture=render.webgpu.device.createTexture(
+	var my_texture=scene.webgpu.device.createTexture(
 			{
 				size:
 				{
@@ -31,7 +31,7 @@ async function download_external_texture(render_id,part_id,file_name,render)
 								|GPUTextureUsage.COPY_DST
 								|GPUTextureUsage.RENDER_ATTACHMENT
 	    	});
-	render.webgpu.device.queue.copyExternalImageToTexture(
+	scene.webgpu.device.queue.copyExternalImageToTexture(
 		{
 			source	:	my_imageBitmap
 		},
@@ -100,28 +100,28 @@ function create_texture_bind_group()
 			this.texture_bindgroup=null;
 	};
 	this.create=async function (
-		my_directory_name,part_object,render_driver,render)
+		my_directory_name,part_object,render_driver,scene)
 	{
 		var render_id	=part_object.render_id;
 		var part_id		=part_object.part_id;
 		this.is_busy_flag=true;
 				
-		render.vertex_data_downloader.current_loading_mesh_number+=7;
+		scene.vertex_data_downloader.current_loading_mesh_number+=7;
 		
 		this.left_texture	=download_external_texture(
-				render_id,part_id,my_directory_name+"/left.jpg",render);
+				render_id,part_id,my_directory_name+"/left.jpg",scene);
 		this.right_texture	=download_external_texture(
-				render_id,part_id,my_directory_name+"/right.jpg",render);
+				render_id,part_id,my_directory_name+"/right.jpg",scene);
 		this.top_texture	=download_external_texture(
-				render_id,part_id,my_directory_name+"/top.jpg",render);
+				render_id,part_id,my_directory_name+"/top.jpg",scene);
 		this.down_texture	=download_external_texture(
-				render_id,part_id,my_directory_name+"/down.jpg",render);
+				render_id,part_id,my_directory_name+"/down.jpg",scene);
 		this.front_texture	=download_external_texture(
-				render_id,part_id,my_directory_name+"/front.jpg",render);
+				render_id,part_id,my_directory_name+"/front.jpg",scene);
 		this.back_texture	=download_external_texture(
-				render_id,part_id,my_directory_name+"/back.jpg",render);
+				render_id,part_id,my_directory_name+"/back.jpg",scene);
 		this.no_box_texture	=download_external_texture(
-				render_id,part_id,my_directory_name+"/no_box.jpg",render);
+				render_id,part_id,my_directory_name+"/no_box.jpg",scene);
 	
 		this.left_texture	=await (this.left_texture);
 		this.right_texture	=await (this.right_texture);
@@ -131,7 +131,7 @@ function create_texture_bind_group()
 		this.back_texture	=await (this.back_texture);
 		this.no_box_texture	=await (this.no_box_texture);
 				
-		if(render.terminate_flag)
+		if(scene.terminate_flag)
 			this.texture_bindgroup=null;
 
 		else{
@@ -167,7 +167,7 @@ function create_texture_bind_group()
 				{
 					//sampler
 					binding		:	7,
-					resource	:	render.webgpu.device.createSampler(
+					resource	:	scene.webgpu.device.createSampler(
 						{
 							addressModeU	:	"mirror-repeat",
 							addressModeV	:	"mirror-repeat",
@@ -178,13 +178,13 @@ function create_texture_bind_group()
 				}
 			];
 			
-			this.texture_bindgroup=render.webgpu.device.createBindGroup(
+			this.texture_bindgroup=scene.webgpu.device.createBindGroup(
 				{
 					layout		:	render_driver.texture_bindgroup_layout,
 					entries		:	resource_entries
 				});
 		}
-		render.vertex_data_downloader.current_loading_mesh_number-=7;
+		scene.vertex_data_downloader.current_loading_mesh_number-=7;
 		
 		this.is_busy_flag=false;
 		
@@ -196,19 +196,19 @@ function create_texture_bind_group()
 
 function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	render)
+	init_data,		part_object,	part_driver,	render_driver,	scene)
 {
 	this.texture_bind_group=new create_texture_bind_group();
 	this.mode=0;
 	
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,render)	
+			project_matrix,part_object,part_driver,render_driver,scene)	
 	{
 		if(this.texture_bind_group.is_busy_flag)
 			return;
 			
-		var rpe=render.webgpu.render_pass_encoder;
+		var rpe=scene.webgpu.render_pass_encoder;
 		
 		if(this.mode>0)	
 			rpe.setPipeline(render_driver.box_pipeline);
@@ -217,7 +217,7 @@ function construct_component_driver(
 		else
 			return;
 
-		render.webgpu.render_pass_encoder.setBindGroup(1,this.texture_bind_group.texture_bindgroup);
+		scene.webgpu.render_pass_encoder.setBindGroup(1,this.texture_bind_group.texture_bindgroup);
 
 		var p=part_object.buffer_object.face.region_data;
 		for(var i=0,ni=p.length;i<ni;i++){
@@ -228,11 +228,11 @@ function construct_component_driver(
 
 	this.append_component_parameter=function(
 			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
+			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
 	{
 		this.mode=buffer_data_item[0];
 		this.texture_bind_group.destroy();
 		this.texture_bind_group=new create_texture_bind_group();
-		this.texture_bind_group.create(buffer_data_item[1],part_object,render_driver,render);
+		this.texture_bind_group.create(buffer_data_item[1],part_object,render_driver,scene);
 	}
 };

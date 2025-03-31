@@ -2,36 +2,36 @@ function construct_event_listener()
 {
 	this.alf="0090";
 
-	this.pickupcontextmenu=function(event,component_id,render)
+	this.pickupcontextmenu=function(event,component_id,scene)
 	{
 		return true;
 	};
-	this.pickupdblclick=function(event,component_id,render)
+	this.pickupdblclick=function(event,component_id,scene)
 	{
 		return true;
 	};
-	this.pickupmousedown=function(event,component_id,render)
+	this.pickupmousedown=function(event,component_id,scene)
 	{
 		return true;
 	};
-	this.pickupkeydown=function(event,component_id,render)
+	this.pickupkeydown=function(event,component_id,scene)
 	{
 		return true;
 	};
-	this.pickupkeypress=function(event,component_id,render)
+	this.pickupkeypress=function(event,component_id,scene)
 	{
 		return true;
 	};
-	this.pickupmouseup=function(event,component_id,render)
+	this.pickupmouseup=function(event,component_id,scene)
 	{
-		var my_ep=render.component_event_processor[component_id];
+		var my_ep=scene.component_event_processor[component_id];
 		var alf=parseFloat(my_ep.alf);
 			
 		switch(event.button){
 		default:
 			break;
 		case 0:
-			render.caller.call_server_component(component_id,"all",
+			scene.caller.call_server_component(component_id,"all",
 				[["operation","body_face_direct"],["coordinate","global"],
 				 ["type",event.shiftKey?"true":"false"]]);
 			break;
@@ -46,16 +46,16 @@ function construct_event_listener()
 					alf/=10.0;
 				else
 					alf/=1.0;
-			render.caller.call_server_component(component_id,"all",
+			scene.caller.call_server_component(component_id,"all",
 				[["operation","body_face_rotate"],["coordinate","global"],
 				 ["type",event.shiftKey?"true":"false"],["alf",alf.toString()]]);
 			break;
 		}
 		return true;
 	};
-	this.pickupkeyup=function(event,component_id,render)
+	this.pickupkeyup=function(event,component_id,scene)
 	{
-		var my_ep=render.component_event_processor[component_id];
+		var my_ep=scene.component_event_processor[component_id];
 			
 		var alf=parseFloat(my_ep.alf);
 		alf=(event.shiftKey||event.ctrlKey)?(-alf):alf;
@@ -79,10 +79,10 @@ function construct_event_listener()
 			break;
 		case 8:		//backspace
 		case 37:	//left arrow
-			render.caller.call_server_component(component_id,"all",[["operation","retreat"]]);
+			scene.caller.call_server_component(component_id,"all",[["operation","retreat"]]);
 			break;
 		case 82://R
-			render.caller.call_server_component(component_id,"all",
+			scene.caller.call_server_component(component_id,"all",
 				[		["operation",	"rotate"],
 						["coordinate",	"camera"],
 				    	["x0","1"],						["y0","0"],["z0","0"],
@@ -90,7 +90,7 @@ function construct_event_listener()
 				]);
 			break;
 		case 76://L
-			render.caller.call_server_component(component_id,"all",
+			scene.caller.call_server_component(component_id,"all",
 				[		["operation",	"rotate"],
 						["coordinate",	"camera"],
 				    	["x0","1"],						 ["y0","0"],["z0","0"],
@@ -98,7 +98,7 @@ function construct_event_listener()
 				]);
 			break;
 		case 85://U
-			render.caller.call_server_component(component_id,"all",
+			scene.caller.call_server_component(component_id,"all",
 				[		["operation",	"rotate"],
 						["coordinate",	"camera"],
 				    	["x0","0"],["y0","0"],						["z0","1"],
@@ -106,7 +106,7 @@ function construct_event_listener()
 				]);
 			break;
 		case 68://D
-			render.caller.call_server_component(component_id,"all",
+			scene.caller.call_server_component(component_id,"all",
 				[		["operation",	"rotate"],
 						["coordinate",	"camera"],
 				    	["x0","0"],["y0","0"],						["z0","1"],
@@ -114,7 +114,7 @@ function construct_event_listener()
 				]);
 			break;
 		case 83://S
-			render.caller.call_server_component(component_id,"all",
+			scene.caller.call_server_component(component_id,"all",
 				[		["operation",	"rotate"],
 						["coordinate",	"camera"],
 				    	["x0","1"],						["y0","0"],						["z0","0"],
@@ -122,7 +122,7 @@ function construct_event_listener()
 				]);
 			break;
 		case 84://T
-			render.caller.call_server_component(component_id,"all",
+			scene.caller.call_server_component(component_id,"all",
 				[		["operation",	"rotate"],
 						["coordinate",	"camera"],
 				    	["x0","1"],						 ["y0","0"],						["z0","0"],
@@ -130,7 +130,7 @@ function construct_event_listener()
 				]);
 			break;
 		case 88://X
-			render.caller.call_server_component(component_id,"all",
+			scene.caller.call_server_component(component_id,"all",
 				[		["operation",	"rotate"],
 						["coordinate",	"global"],
 				    	["x0","0"],["y0","1"],						["z0","0"],
@@ -138,7 +138,7 @@ function construct_event_listener()
 				]);
 			break;
 		case 89://Y
-			render.caller.call_server_component(component_id,"all",
+			scene.caller.call_server_component(component_id,"all",
 				[		["operation",	"rotate"],
 						["coordinate",	"global"],
 				    	["x0","0"],						 ["y0","0"],["z0","1"],
@@ -146,7 +146,7 @@ function construct_event_listener()
 				]);
 			break;
 		case 90://Z
-			render.caller.call_server_component(component_id,"all",
+			scene.caller.call_server_component(component_id,"all",
 				[		["operation",	"rotate"],
 						["coordinate",	"global"],
 				    	["x0","1"],						 ["y0","0"],					  ["z0","0"],
@@ -162,43 +162,43 @@ function construct_event_listener()
 
 function construct_component_driver(
 	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	render)
+	init_data,		part_object,	part_driver,	render_driver,	scene)
 {
 	var old_ep,ep=new construct_event_listener();
-	if(typeof(old_ep=render.component_event_processor[component_id])=="object")
+	if(typeof(old_ep=scene.component_event_processor[component_id])=="object")
 		ep=Object.assign(old_ep,ep);
-	render.component_event_processor[component_id]=ep;
+	scene.component_event_processor[component_id]=ep;
 	
 	this.component_id=component_id;
 	this.main_render_buffer_id=0;
-	this.parameter_buffer=render.webgpu.device.createBuffer(
+	this.parameter_buffer=scene.webgpu.device.createBuffer(
 		{
-			size	:	Float32Array.BYTES_PER_ELEMENT*4*render.system_buffer.target_buffer_number,
+			size	:	Float32Array.BYTES_PER_ELEMENT*4*scene.system_buffer.target_buffer_number,
 			usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.VERTEX
 		});
 
-	this.save_buffer_data=function(render_data,project_matrix,part_object,render)
+	this.save_buffer_data=function(render_data,project_matrix,part_object,scene)
 	{
 		var x0				=part_object.material[0];
 		var y0				=part_object.material[1];
 		var scale			=part_object.material[2];
 		var box_distance	=part_object.material[3];
 		
-		var view_distance	=render.computer.sub_operation(
+		var view_distance	=scene.computer.sub_operation(
 									project_matrix.right_up_center_point,
 									project_matrix.left_down_center_point);
-			view_distance	=render.computer.distance(view_distance)*scale;
+			view_distance	=scene.computer.distance(view_distance)*scale;
 		
 		var buffer_place	=4*render_data.render_buffer_id*Float32Array.BYTES_PER_ELEMENT;
 
-		render.webgpu.device.queue.writeBuffer(this.parameter_buffer,buffer_place,
+		scene.webgpu.device.queue.writeBuffer(this.parameter_buffer,buffer_place,
 			new Float32Array([x0,y0,view_distance,view_distance/box_distance]));
 	}
 	this.draw_component=function(method_data,render_data,
 			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,render)	
+			project_matrix,part_object,part_driver,render_driver,scene)	
 	{
-		var p,rpe=render.webgpu.render_pass_encoder;
+		var p,rpe=scene.webgpu.render_pass_encoder;
 		
 		if(render_data.main_display_target_flag)
 			this.main_render_buffer_id=render_data.render_buffer_id;
@@ -217,7 +217,7 @@ function construct_component_driver(
 			}
 			break;
 		case 2:
-			this.save_buffer_data(render_data,project_matrix,part_object,render);
+			this.save_buffer_data(render_data,project_matrix,part_object,scene);
 			rpe.setVertexBuffer(1,this.parameter_buffer,
 					Float32Array.BYTES_PER_ELEMENT*4*render_data.render_buffer_id,
 					Float32Array.BYTES_PER_ELEMENT*4);
@@ -251,7 +251,7 @@ function construct_component_driver(
 	};
 	this.append_component_parameter=function(
 			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	render)
+			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
 	{
 	}
 	this.destroy=function()
