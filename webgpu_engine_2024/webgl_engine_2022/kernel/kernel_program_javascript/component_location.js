@@ -7,6 +7,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 
 	this.component_move_buffer=null;
 	this.component_relative_buffer=null;
+	this.component_absolute_buffer=null;
 	this.component_parent_id_buffer=null;
 
 	this.version_id			=3;
@@ -151,31 +152,28 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		}
 		this.caculate_depth(parent_component_id,0,component_array_sorted_by_id);
 	
-		var identify_matrix_data	=new Float32Array(this.identify_matrix);
-		var identify_matrix_length	=Float32Array.BYTES_PER_ELEMENT*this.identify_matrix.length;
-	
+		var buffer_length=Float32Array.BYTES_PER_ELEMENT*this.identify_matrix.length*this.component_number;
 		this.component_move_buffer=this.webgpu.device.createBuffer(
 			{
-				size	:	this.component_number*identify_matrix_length,
+				size	:	buffer_length,
 				usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.STORAGE
 			});
 		this.component_relative_buffer=this.webgpu.device.createBuffer(
 			{
-				size	:	this.component_number*identify_matrix_length,
+				size	:	buffer_length,
 				usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.STORAGE
 			});
+		this.component_absolute_buffer=this.webgpu.device.createBuffer(
+			{
+				size	:	buffer_length,
+				usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.STORAGE
+			});	
 		this.component_parent_id_buffer=this.webgpu.device.createBuffer(
 			{
 				size	:	this.component_number*Int32Array.BYTES_PER_ELEMENT,
 				usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.STORAGE
 			});
-			
-		for(var p,i=0,ni=this.component_number;i<ni;i++){
-			this.webgpu.device.queue.writeBuffer(this.component_move_buffer,
-				 identify_matrix_length*i,identify_matrix_data);
-			this.webgpu.device.queue.writeBuffer(this.component_relative_buffer,
-				identify_matrix_length*i,identify_matrix_data);
-		}
+
 		var my_parent_id_array=new Array(this.component_number);
 		for(var i=0,ni=this.component_number;i<ni;i++)
 			my_parent_id_array[i]=this.component[i].parent_id;
@@ -190,12 +188,12 @@ function construct_component_location_object(my_component_number,my_computer,my_
 					type		:	"storage"
 				}
 			},
-			{	//move_matrix
+			{	//absolute_matrix
 				binding		:	1,
 				visibility	:	GPUShaderStage.COMPUTE,
 				buffer		:
 				{
-					type		:	"read-only-storage"
+					type		:	"storage"
 				}
 			},
 			{	//relative_matrix
@@ -206,8 +204,16 @@ function construct_component_location_object(my_component_number,my_computer,my_
 					type		:	"read-only-storage"
 				}
 			},
-			{	//parent_id
+			{	//move_matrix
 				binding		:	3,
+				visibility	:	GPUShaderStage.COMPUTE,
+				buffer		:
+				{
+					type		:	"read-only-storage"
+				}
+			},
+			{	//parent_id
+				binding		:	4,
 				visibility	:	GPUShaderStage.COMPUTE,
 				buffer		:
 				{
@@ -227,8 +233,15 @@ function construct_component_location_object(my_component_number,my_computer,my_
 							buffer	:	id_buffer
 						}
 				},
-				{	//move_matrix
+				{	//absolute_matrix
 					binding		:	1,
+					resource	:
+						{
+							buffer	:	this.component_absolute_buffer
+						}
+				},
+				{	//move_matrix
+					binding		:	2,
 					resource	:
 						{
 							buffer	:	this.component_move_buffer
@@ -236,14 +249,14 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				},
 				{
 					//relative_matrix
-					binding		:	2,
+					binding		:	3,
 					resource	:
 						{
 							buffer	:	this.component_relative_buffer
 						}
 				},
 				{	//parent_id
-					binding		:	3,
+					binding		:	4,
 					resource	:
 						{
 							buffer	:	this.component_parent_id_buffer
@@ -278,25 +291,31 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				"			tmp_int_1			:	i32													\n"+
 				"}																						\n"+
 				"@group(0) @binding(0)	var<storage,read_write> id_info			: array<id_information>;\n"+
-				"@group(0) @binding(1)	var<storage,read> 		move_matrix		: array<mat4x4<f32>>;	\n"+
-				"@group(0) @binding(2)	var<storage,read> 		relative_matrix	: array<mat4x4<f32>>; 	\n"+
-				"@group(0) @binding(3)	var<storage,read> 		parent_id		: array<i32>;			\n"+
+				"@group(0) @binding(1)	var<storage,read_write> absolute_matrix	: array<mat4x4<f32>>;	\n"+
+				"@group(0) @binding(2)	var<storage,read> 		move_matrix		: array<mat4x4<f32>>;	\n"+
+				"@group(0) @binding(3)	var<storage,read> 		relative_matrix	: array<mat4x4<f32>>; 	\n"+
+				"@group(0) @binding(4)	var<storage,read> 		parent_id		: array<i32>;			\n"+
 				
 				"@compute @workgroup_size(1)															\n"+
-				"		fn location_main(@builtin(global_invocation_id)global_id: vec3<u32>)			\n"+
+				"	fn compute_location_main(@builtin(global_invocation_id)global_id: vec3<u32>)		\n"+
 				"{																						\n"+
+				"	var component_id=i32(global_id.x);													\n"+
 				"	var component_matrix=mat4x4<f32>(													\n"+
 				"			vec4<f32>(1.0,0.0,0.0,0.0),vec4<f32>(0.0,1.0,0.0,0.0),						\n"+
 				"			vec4<f32>(0.0,0.0,1.0,0.0),vec4<f32>(0.0,0.0,0.0,1.0));						\n"+
-				"	var component_id=id_info[global_id.x].component_id;									\n"+				
-				"	for(;component_id>=0;component_id=parent_id[component_id]){							\n"+
-				"		component_matrix=move_matrix[component_id]		*component_matrix;				\n"+
-				"		component_matrix=relative_matrix[component_id]	*component_matrix;				\n"+
-				"	}																					\n"+
-				"	id_info[global_id.x].matrix=component_matrix;										\n"+
+				"	for(var i=component_id;i>=0;i=parent_id[i])											\n"+
+				"		{component_matrix=relative_matrix[i]*move_matrix[i]*component_matrix;}			\n"+
+				"	absolute_matrix[component_id]=component_matrix;										\n"+
+				"}																						\n"+
+				"@compute @workgroup_size(1)															\n"+
+				"	fn set_location_main(@builtin(global_invocation_id)global_id: vec3<u32>)			\n"+
+				"{																						\n"+
+				"	var id_index_id		=i32(global_id.x);												\n"+
+				"	var component_id	=id_info[id_index_id].component_id;								\n"+
+				"	id_info[id_index_id].matrix=absolute_matrix[component_id];							\n"+
 				"}																						\n"
 			});
-			this.component_pipeline=this.webgpu.device.createComputePipeline(
+			this.compute_location_pipeline=this.webgpu.device.createComputePipeline(
 				{
 					layout	:	this.webgpu.device.createPipelineLayout(
 							{
@@ -304,7 +323,19 @@ function construct_component_location_object(my_component_number,my_computer,my_
 							}),
 					compute	:	{
 						module		:	my_component_module,
-						entryPoint	:	"location_main"
+						entryPoint	:	"compute_location_main"
+					}
+				}
+			);
+			this.set_location_pipeline=this.webgpu.device.createComputePipeline(
+				{
+					layout	:	this.webgpu.device.createPipelineLayout(
+							{
+								bindGroupLayouts:[my_component_bindgroup_layout]
+							}),
+					compute	:	{
+						module		:	my_component_module,
+						entryPoint	:	"set_location_main"
 					}
 				}
 			);
@@ -319,6 +350,10 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			this.component_relative_buffer.destroy();
 			this.component_relative_buffer=null;
 		}
+		if(this.component_absolute_buffer!=null){
+			this.component_absolute_buffer.destroy();
+			this.component_absolute_buffer=null;
+		}
 		if(this.component_parent_id_buffer!=null){
 			this.component_parent_id_buffer.destroy();
 			this.component_parent_id_buffer=null;
@@ -328,7 +363,11 @@ function construct_component_location_object(my_component_number,my_computer,my_
 
 function compute_scene_component_location_routine(scene)
 {
-	scene.webgpu.compute_pass_encoder.setPipeline(scene.component_location_data.component_pipeline);
 	scene.webgpu.compute_pass_encoder.setBindGroup(0,scene.component_location_data.component_bindgroup);
-	scene.webgpu.compute_pass_encoder.dispatchWorkgroups(scene.system_bindgroup_id.length);		
+	
+	scene.webgpu.compute_pass_encoder.setPipeline(scene.component_location_data.compute_location_pipeline);
+	scene.webgpu.compute_pass_encoder.dispatchWorkgroups(scene.component_location_data.component_number);	
+	
+	scene.webgpu.compute_pass_encoder.setPipeline(scene.component_location_data.set_location_pipeline);
+	scene.webgpu.compute_pass_encoder.dispatchWorkgroups(scene.system_bindgroup_id.length);
 }

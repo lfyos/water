@@ -64,8 +64,8 @@ function init_ids_of_part_and_component(
 				
 				system_bindgroup_id[my_system_bindgroup_id]=
 					[
-						render_id,			part_id,	data_buffer_id,
-						my_component_id,	my_driver_id,
+						render_id,					part_id,		data_buffer_id,
+						my_component_id,			my_driver_id,
 						my_system_bindgroup_id,
 						
 						-1,-1
@@ -74,21 +74,21 @@ function init_ids_of_part_and_component(
 		};
 	};
 
-	for(var i=0;i<component_number;i++){
-		var my_system_bindgroup_id=system_bindgroup_id.length;
-		scene.component_array_sorted_by_id[i].system_bindgroup_id=my_system_bindgroup_id;
-		system_bindgroup_id.push([
-			-1,	//render_id,
-			-1,	//part_id,
-			-1,	//data_buffer_id,
-			 i,	//component_id,
-			-1,	//driver_id,
-			my_system_bindgroup_id,
-
-			-1,-1
-		]);
-	};
-	
+	for(var p,i=0;i<component_number;i++)
+		if((p=scene.component_array_sorted_by_id[i]).component_ids.length>0)
+			p.system_bindgroup_id=p.component_ids[p.component_ids.length-1][3];
+		else{
+			p.system_bindgroup_id=system_bindgroup_id.length;
+			system_bindgroup_id[p.system_bindgroup_id]=[
+				-1,	//render_id,
+				-1,	//part_id,
+				-1,	//data_buffer_id,
+				 i,	//component_id,
+				-1,	//driver_id,
+				p.system_bindgroup_id,
+				-1,-1
+			];
+		};
 	scene.system_bindgroup_id				=system_bindgroup_id;
 	scene.part_component_id_and_driver_id	=part_component_id_and_driver_id;
 	

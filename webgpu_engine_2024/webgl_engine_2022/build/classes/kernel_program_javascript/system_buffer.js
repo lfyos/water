@@ -332,15 +332,13 @@ function construct_system_buffer(scene,my_max_target_number)
 	};
 	this.set_system_bindgroup=function(target_id,component_id,driver_id,scene)
 	{
-		var system_bindgroup_id;
-		var p=scene.component_array_sorted_by_id[component_id];
+		var p=scene.component_array_sorted_by_id[component_id],system_bindgroup_id;
 		
 		driver_id=(typeof(driver_id)!="number")?-1:driver_id;
 		if((driver_id<0)||(driver_id>=p.component_ids.length))
 			system_bindgroup_id=p.system_bindgroup_id;
 		else
 			system_bindgroup_id=p.component_ids[driver_id][3];
-			
 		scene.webgpu.render_pass_encoder.setBindGroup(0,this.system_bindgroup,
 			[
 				this.target_buffer_stride	*target_id,
