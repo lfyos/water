@@ -232,15 +232,14 @@ public class common_reader
 	}
 	public String get_text()
 	{
+		String str;
 		StringBuffer buf=new StringBuffer();
-		for(int i=0;!(eof());) {
-			String str=get_line();
-			if(str==null)
-				continue;
-			if((i++)>0)
-				buf.append('\n');
-			buf.append(str);
-		}
+		for(int i=0;!(eof());) 
+			if((str=get_line())!=null){
+				if((i++)>0)
+					buf.append('\n');
+				buf.append(str);
+			}
 		return buf.toString();
 	}
 	public int get_text(common_writer cw)

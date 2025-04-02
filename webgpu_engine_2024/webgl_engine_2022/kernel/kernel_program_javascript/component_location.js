@@ -141,7 +141,8 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			this.caculate_depth(p.component_children[i].component_id,
 					current_depth+1,component_array_sorted_by_id);
 	}
-	this.do_initialize=function(component_array_sorted_by_id,id_buffer)
+	this.do_initialize=function(component_array_sorted_by_id,
+			id_buffer,common_shader_data_structure,location_shader_program)
 	{
 		var parent_component_id=this.component_number-1,pp,p=component_array_sorted_by_id;
 		for(var component_id=0;component_id<this.component_number;component_id++){
@@ -270,52 +271,9 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			});	
 		var my_component_module=this.webgpu.device.createShaderModule(
 			{
-				code:
-				"struct id_information																	\n"+
-				"{																						\n"+
-				"			matrix				:	mat4x4<f32>,										\n"+
-					
-				"			data				:	array<vec4<f32>,10>,								\n"+
-					
-				"			render_id			:	i32,												\n"+
-				"			part_id				:	i32,												\n"+
-					
-				"			data_buffer_id		:	i32,												\n"+
-					
-				"			component_id		:	i32,												\n"+
-				"			driver_id			:	i32,												\n"+
-				
-				"			component_system_id	:	i32,												\n"+
-					
-				"			tmp_int_0			:	i32,												\n"+
-				"			tmp_int_1			:	i32													\n"+
-				"}																						\n"+
-				"@group(0) @binding(0)	var<storage,read_write> id_info			: array<id_information>;\n"+
-				"@group(0) @binding(1)	var<storage,read_write> absolute_matrix	: array<mat4x4<f32>>;	\n"+
-				"@group(0) @binding(2)	var<storage,read> 		move_matrix		: array<mat4x4<f32>>;	\n"+
-				"@group(0) @binding(3)	var<storage,read> 		relative_matrix	: array<mat4x4<f32>>; 	\n"+
-				"@group(0) @binding(4)	var<storage,read> 		parent_id		: array<i32>;			\n"+
-				
-				"@compute @workgroup_size(1)															\n"+
-				"	fn compute_location_main(@builtin(global_invocation_id)global_id: vec3<u32>)		\n"+
-				"{																						\n"+
-				"	var component_id=i32(global_id.x);													\n"+
-				"	var component_matrix=mat4x4<f32>(													\n"+
-				"			vec4<f32>(1.0,0.0,0.0,0.0),vec4<f32>(0.0,1.0,0.0,0.0),						\n"+
-				"			vec4<f32>(0.0,0.0,1.0,0.0),vec4<f32>(0.0,0.0,0.0,1.0));						\n"+
-				"	for(var i=component_id;i>=0;i=parent_id[i])											\n"+
-				"		{component_matrix=relative_matrix[i]*move_matrix[i]*component_matrix;}			\n"+
-				"	absolute_matrix[component_id]=component_matrix;										\n"+
-				"}																						\n"+
-				"@compute @workgroup_size(1)															\n"+
-				"	fn set_location_main(@builtin(global_invocation_id)global_id: vec3<u32>)			\n"+
-				"{																						\n"+
-				"	var id_index_id		=i32(global_id.x);												\n"+
-				"	var component_id	=id_info[id_index_id].component_id;								\n"+
-				"	id_info[id_index_id].matrix=absolute_matrix[component_id];							\n"+
-				"}																						\n"
+				code:common_shader_data_structure+location_shader_program
 			});
-			this.compute_location_pipeline=this.webgpu.device.createComputePipeline(
+		this.compute_location_pipeline=this.webgpu.device.createComputePipeline(
 				{
 					layout	:	this.webgpu.device.createPipelineLayout(
 							{
@@ -327,7 +285,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 					}
 				}
 			);
-			this.set_location_pipeline=this.webgpu.device.createComputePipeline(
+		this.set_location_pipeline=this.webgpu.device.createComputePipeline(
 				{
 					layout	:	this.webgpu.device.createPipelineLayout(
 							{

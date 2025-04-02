@@ -84,12 +84,14 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 
 	var	init_data=(await my_init_promise).initialization_data;
 
-	var	sorted_component_name_id		=init_data[0];
-	var	part_component_id_and_driver_id	=init_data[1];
-	var	component_init_fun_array		=init_data[2];
-	var	program_data					=init_data[3];
-	var	common_shader_code				=init_data[4];
-				
+	var	sorted_component_name_id			=init_data[0];
+	var	part_component_id_and_driver_id		=init_data[1];
+	var	component_init_fun_array			=init_data[2];
+	var	program_data						=init_data[3];
+	var common_shader_data_structure		=init_data[4][0];
+	var common_shader_variable_declaration	=init_data[4][1];
+	var location_shader_program				=init_data[4][2];	
+			
 	init_ids_of_part_and_component(scene,
 		sorted_component_name_id,part_component_id_and_driver_id);
 		
@@ -98,7 +100,8 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 	scene.system_buffer=new construct_system_buffer(scene,my_max_target_number);
 	
 	scene.component_location_data.do_initialize(
-		scene.component_array_sorted_by_id,scene.system_buffer.id_buffer);
+			scene.component_array_sorted_by_id,scene.system_buffer.id_buffer,
+			common_shader_data_structure,location_shader_program);
 				
 	for(var i=0,ni=component_init_fun_array.length;i<ni;i++){
 		if(typeof(component_init_fun_array[i])!="object")
@@ -125,6 +128,7 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 		}
 	}
 	
+	var common_shader_code=common_shader_data_structure+common_shader_variable_declaration;
 	for(var render_id=0,render_number=program_data.length;render_id<render_number;render_id++){
 		var my_render_name				=program_data[render_id].shift();
 		var my_render_driver_function	=program_data[render_id].shift();

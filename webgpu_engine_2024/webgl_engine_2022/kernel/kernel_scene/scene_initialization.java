@@ -415,17 +415,17 @@ public class scene_initialization
 		
 		fw.println("],");
 		{
-			String common_shader_str=null;
-			common_reader reader=program_file_reader.get_system_program_reader(sk.system_par);
-			if(reader!=null) 
-				if(!(reader.error_flag())){
-					common_shader_str=reader.get_text();
-				reader.close();
-			}			
-			fw.	println("	",
-						 ( common_shader_str==null)?"\"\""
-						:((common_shader_str=common_shader_str.trim()).length()<=0)?"\"\""
-						:jason_string.change_string(common_shader_str+"\n"));
+			fw.println("	[");
+			
+			String str;
+			str=program_file_reader.get_common_shader_data_structure(sk.system_par);
+			fw.print  ("		",jason_string.change_string(str)).println(",");
+			str=program_file_reader.get_common_shader_variable_declaration(sk.system_par);
+			fw.print  ("		",jason_string.change_string(str)).println(",");
+			str=program_file_reader.get_location_shader_program(sk.system_par);
+			fw.print  ("		",jason_string.change_string(str)).println();
+			
+			fw.println("	]");
 		}
 		fw.println().println("];").println();
 		
