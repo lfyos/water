@@ -16,8 +16,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			texture		:
 			{
 				sampleType		:	"float",
-    			viewDimension	:	"2d",
-   				multisampled	:	false
+    			viewDimension	:	"2d"
 			}
 		},
 		{	//sampler
@@ -119,8 +118,8 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 	
 	pipeline_descr.fragment.targets.length		=1;
 	pipeline_descr.fragment.targets[0].format	=scene.webgpu.gpu.getPreferredCanvasFormat();
-	if(scene.parameter.multisample>1)
-		pipeline_descr.multisample={count:scene.parameter.multisample};
+	
+	pipeline_descr.multisample={count:scene.parameter.multisample};
 
 	pipeline_descr.vertex.constants				={primitive_type:1};
 	pipeline_descr.primitive.topology			="triangle-list";

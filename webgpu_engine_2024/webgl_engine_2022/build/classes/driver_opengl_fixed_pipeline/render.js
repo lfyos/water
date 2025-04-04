@@ -224,8 +224,7 @@ function create_one_render_driver(array_stride,material_offset,
 	this.value_point_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	pipeline_descr.vertex.buffers[0].stepMode		="vertex";
 	
-	if(scene.parameter.multisample>1)
-		pipeline_descr.multisample={count:scene.parameter.multisample};
+	pipeline_descr.multisample={count:scene.parameter.multisample};
 		
 	pipeline_descr.fragment.entryPoint="fragment_color_function";
 	pipeline_descr.vertex.constants.primitive_type	=4;
@@ -429,8 +428,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			texture		:
 			{
 				sampleType		:	"float",
-    			viewDimension	:	"2d",
-   				multisampled	:	false
+    			viewDimension	:	"2d"
 			}
 		},
 		{	//texture_2
@@ -439,8 +437,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			texture		:
 			{
 				sampleType		:	"float",
-    			viewDimension	:	"2d",
-   				multisampled	:	false
+    			viewDimension	:	"2d"
 			}
 		},
 		{	//texture_3
@@ -449,8 +446,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			texture		:
 			{
 				sampleType		:	"float",
-    			viewDimension	:	"2d",
-   				multisampled	:	false
+    			viewDimension	:	"2d"
 			}
 		},
 		{	//texture_4
@@ -459,8 +455,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			texture		:
 			{
 				sampleType		:	"float",
-    			viewDimension	:	"2d",
-   				multisampled	:	false
+    			viewDimension	:	"2d"
 			}
 		},
 		{	//sampler

@@ -2,42 +2,50 @@
 	request_process_bar	:
 	{
    		method	:	"GET",
-   		cache	:	"no-cache"
+   		cache	:	"no-cache",
+   		mode	:	"cors" 
    	},
 	load_process_bar_data	:
 	{
    		method	:	"GET",
-   		cache	:	"no-cache"
+   		cache	:	"no-cache",
+   		mode	:	"cors" 
    	},
 	request_create_engine	:
 	{
    		method	:	"GET",
-   		cache	:	"no-cache"
+   		cache	:	"no-cache",
+   		mode	:	"cors" 
    	},
 	request_render_data	:
 	{
    		method	:	"GET",
-   		cache	:	"no-cache"
+   		cache	:	"no-cache",
+   		mode	:	"cors" 
    	},
    	load_collector	:
 	{
    		method	:	"GET",
-   		cache	:	"no-cache"
+   		cache	:	"no-cache",
+   		mode	:	"cors" 
    	},
 	call_server	:
 	{
    		method	:	"GET",
-   		cache	:	"no-cache"
+   		cache	:	"no-cache",
+   		mode	:	"cors" 
    	},
 	load_part_package	:
 	{
    		method	:	"GET",
-   		cache	:	"force-cache"
+   		cache	:	"force-cache",
+   		mode	:	"cors" 
    	},
 	load_part_data	:
 	{
    		method	:	"GET",
-   		cache	:	"force-cache"
+   		cache	:	"force-cache",
+   		mode	:	"cors" 
    	}
 };
 

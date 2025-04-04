@@ -33,16 +33,18 @@ public class program_file_reader
 	}
 	public static long get_system_program_last_time(system_parameter system_par)
 	{
-		long t1=class_file_reader.get_last_time("common_shader_data_structure.txt",
+		String file_name[]= {
+				"common_shader_data_structure.txt",
+				"common_shader_variable_declaration.txt",
+				"location_shader_program.txt"
+		};
+		long ret_val=0,current_file_time;
+		for(int i=0,ni=file_name.length;i<ni;i++) {
+			current_file_time=class_file_reader.get_last_time(file_name[i],
 					program_file_reader.class,system_par.text_jar_file_charset);
-		long t2=class_file_reader.get_last_time("common_shader_variable_declaration.txt",
-				program_file_reader.class,system_par.text_jar_file_charset);
-		long t3=class_file_reader.get_last_time("location_shader_program.txt",
-				program_file_reader.class,system_par.text_jar_file_charset);
-		
-		long t12=(t1>=t2)?t1:t2;
-		long t123=(t12>=t3)?t12:t3;
-		
-		return t123;
+			if(current_file_time>ret_val)
+				ret_val=current_file_time;
+		}
+		return ret_val;
 	}
 }

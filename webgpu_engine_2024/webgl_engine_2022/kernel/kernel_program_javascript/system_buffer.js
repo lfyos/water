@@ -1,11 +1,13 @@
-function construct_system_buffer(scene,my_max_target_number)
+function construct_system_buffer(my_max_target_number,scene)
 {
+	this.max_target_number			=my_max_target_number;
+	
 	this.main_target_project_matrix	=null;
 	this.main_target_view_parameter	=null;
 	
-	this.system_bindgroup	=null;
-	this.location_version	=null;
-	
+	this.system_bindgroup			=null;
+	this.location_version			=null;
+
 	var my_system_bindgroup_layout_entries=[
 		{	// system buffer
 			binding		:	0,
@@ -61,18 +63,17 @@ function construct_system_buffer(scene,my_max_target_number)
 				(scene.component_location_data.identify_matrix.length);
 	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4*33;
 	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*8;
-	my_target_buffer_size+=Int32Array.	BYTES_PER_ELEMENT*8;
+	my_target_buffer_size+=Int32Array.	BYTES_PER_ELEMENT*12;
 	
 	for(this.target_buffer_stride=0;this.target_buffer_stride<my_target_buffer_size;)
 		this.target_buffer_stride+=scene.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
 	
-	this.target_buffer_number=my_max_target_number;
 	this.target_buffer	=scene.webgpu.device.createBuffer(
 		{
-			size	:	this.target_buffer_stride*this.target_buffer_number,
+			size	:	this.target_buffer_stride*this.max_target_number,
 			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
 		});
-
+		
 	//	init id_buffer	:	binding point 2
 	
 	this.id_buffer_data_length=40;
@@ -98,6 +99,7 @@ function construct_system_buffer(scene,my_max_target_number)
 	}
 	
 	// init system_bindgroup
+	
 	this.system_bindgroup=scene.webgpu.device.createBindGroup(
 	{
 		layout	:	this.system_bindgroup_layout,
@@ -216,8 +218,6 @@ function construct_system_buffer(scene,my_max_target_number)
 	
 	this.set_target_buffer=function(render_data,project_matrix,scene)
 	{
-		var target_id=render_data.render_buffer_id;
-		
 		if(render_data.main_display_target_flag){
 			this.main_target_project_matrix	=project_matrix;
 			this.main_target_view_parameter	=render_data.target_view_parameter;
@@ -231,7 +231,11 @@ function construct_system_buffer(scene,my_max_target_number)
 			render_data.target_view_parameter.whole_view_height,
 			
 			project_matrix.projection_type_flag?1:0,
-			1
+			
+			scene.scene_id,
+			render_data.render_buffer_id,
+			
+			0,0,0
 		];
 		var matrix_array=[
 			project_matrix.matrix,
@@ -323,14 +327,13 @@ function construct_system_buffer(scene,my_max_target_number)
 
 			0,0
 		);
-		scene.webgpu.device.queue.writeBuffer(this.target_buffer,	
-			this.target_buffer_stride*target_id,
-			new Float32Array(float_data));
+		
+		var offset=this.target_buffer_stride*render_data.render_buffer_id;
+		scene.webgpu.device.queue.writeBuffer(this.target_buffer,offset,new Float32Array(float_data));
 		scene.webgpu.device.queue.writeBuffer(this.target_buffer,
-			this.target_buffer_stride*target_id+float_data.length*Float32Array.BYTES_PER_ELEMENT,
-			new Int32Array(int_data));
+			offset+float_data.length*Float32Array.BYTES_PER_ELEMENT,new Int32Array(int_data));
 	};
-	this.set_system_bindgroup=function(target_id,component_id,driver_id,scene)
+	this.set_system_bindgroup=function(	render_buffer_id,component_id,driver_id,scene)
 	{
 		var p=scene.component_array_sorted_by_id[component_id],system_bindgroup_id;
 		
@@ -339,11 +342,11 @@ function construct_system_buffer(scene,my_max_target_number)
 			system_bindgroup_id=p.system_bindgroup_id;
 		else
 			system_bindgroup_id=p.component_ids[driver_id][3];
-		scene.webgpu.render_pass_encoder.setBindGroup(0,this.system_bindgroup,
-			[
-				this.target_buffer_stride	*target_id,
-				this.id_stride				*system_bindgroup_id
-			]);
+
+		scene.webgpu.render_pass_encoder.setBindGroup(0,this.system_bindgroup,[
+			this.target_buffer_stride*render_buffer_id,
+			this.id_stride*system_bindgroup_id
+		]);
 	}
 	this.set_system_bindgroup_data=function(id_data,component_id,driver_id,scene)
 	{
@@ -375,13 +378,13 @@ function construct_system_buffer(scene,my_max_target_number)
 			this.system_buffer.destroy();
 			this.system_buffer=null;
 		}
-		if(this.id_buffer!=null){
-			this.id_buffer.destroy();
-			this.id_buffer=null;
-		}
 		if(this.target_buffer!=null){
 			this.target_buffer.destroy();
 			this.target_buffer=null;
+		}
+		if(this.id_buffer!=null){
+			this.id_buffer.destroy();
+			this.id_buffer=null;
 		}
 	};
 }

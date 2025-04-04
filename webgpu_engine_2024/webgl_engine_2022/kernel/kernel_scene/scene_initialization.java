@@ -413,10 +413,8 @@ public class scene_initialization
 			process_bar.set_process_bar(false,"file_initialization_4","",render_number,render_number);
 		}
 		
-		fw.println("],");
-		{
-			fw.println("	[");
-			
+		fw.println("],").println("[");
+		{	
 			String str;
 			str=program_file_reader.get_common_shader_data_structure(sk.system_par);
 			fw.print  ("		",jason_string.change_string(str)).println(",");
@@ -424,9 +422,15 @@ public class scene_initialization
 			fw.print  ("		",jason_string.change_string(str)).println(",");
 			str=program_file_reader.get_location_shader_program(sk.system_par);
 			fw.print  ("		",jason_string.change_string(str)).println();
-			
-			fw.println("	]");
-		}
+		}	
+		fw.println("],").println().println().println().println();
+		
+		fw.println("{");
+		
+		fw.print  ("	max_target_number	:	",sk.scene_par.max_target_number).println(",");
+		
+		fw.println("}");
+		
 		fw.println().println("];").println();
 		
 		fw.close();

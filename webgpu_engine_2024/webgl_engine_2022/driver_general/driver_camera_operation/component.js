@@ -173,7 +173,7 @@ function construct_component_driver(
 	this.main_render_buffer_id=0;
 	this.parameter_buffer=scene.webgpu.device.createBuffer(
 		{
-			size	:	Float32Array.BYTES_PER_ELEMENT*4*scene.system_buffer.target_buffer_number,
+			size	:	Float32Array.BYTES_PER_ELEMENT*4*scene.system_buffer.max_target_number,
 			usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.VERTEX
 		});
 

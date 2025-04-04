@@ -16,8 +16,7 @@ function construct_component_driver(
 			scene.system_buffer.set_system_bindgroup(render_data.render_buffer_id,
 				(this.coordinate_component_id[i]<0)
 					?(project_matrix.camera_component_id)
-					:(this.coordinate_component_id[i]),
-				-1,scene);
+					:(this.coordinate_component_id[i]),-1,scene);
 			rpe.setVertexBuffer(1,this.coodinate_buffer,
 					Float32Array.BYTES_PER_ELEMENT*4*i,Float32Array.BYTES_PER_ELEMENT*4);
 			

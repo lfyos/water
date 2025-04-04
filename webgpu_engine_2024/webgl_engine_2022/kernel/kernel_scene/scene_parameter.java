@@ -43,7 +43,7 @@ public class scene_parameter
 
 	public int max_camera_return_stack_number,max_modifier_container_number;
 	
-	public int max_target_number;
+	public int max_target_number,multisample_number;
 	
 	public double create_top_part_assembly_precision2;
 	public double create_top_part_discard_precision2;
@@ -300,8 +300,10 @@ public class scene_parameter
 		if((max_modifier_container_number=extra_parameter_fr.get_int())<=0)
 			max_modifier_container_number=1;
 		
-		if((max_target_number=extra_parameter_fr.get_int())<=0)
-			max_target_number=1;
+		if((max_target_number=extra_parameter_fr.get_int())<4)
+			max_target_number=4;
+		if((multisample_number=extra_parameter_fr.get_int())<4)
+			multisample_number=4;
 		
 		create_top_part_assembly_precision2		=extra_parameter_fr.get_double();
 		create_top_part_assembly_precision2		*=create_top_part_assembly_precision2;

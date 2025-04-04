@@ -123,7 +123,13 @@ struct target_information
 	target_whole_view_height				:	i32,
 	
 	projection_type_flag					:	i32,
-	tmp_int_0								:	i32
+	
+	scene_id								:	i32,
+	render_buffer_id						:	i32,
+	
+	tmp_int_0								:	i32,
+	tmp_int_1								:	i32,
+	tmp_int_2								:	i32
 };
 struct id_information 
 {
@@ -144,7 +150,3 @@ struct id_information
 	tmp_int_0			:	i32,
 	tmp_int_1			:	i32
 };
-				
-				
-				
-				

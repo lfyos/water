@@ -21,6 +21,7 @@ public class file_download_manager
 			debug_information.println();
 			return null;
 		}
+		
 		if((file_name=file_name.trim()).length()<=0){
 			debug_information.println("Request file name is empty in downloader,url is ",request_url);
 			debug_information.println();
@@ -67,6 +68,7 @@ public class file_download_manager
 			debug_information.println(real_file_date);
 			return null;
 		}
+		
 		String request_modified_str;
 		if((request_modified_str=request_response.implementor.get_header("If-Modified-Since"))!=null)
 			if(http_modify_string.parse(request_modified_str)>=f.lastModified()){

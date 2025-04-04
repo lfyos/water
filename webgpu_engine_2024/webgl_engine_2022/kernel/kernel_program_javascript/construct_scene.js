@@ -1,25 +1,20 @@
-function construct_scene(my_webgpu,
-	my_url,my_user_name,my_pass_word,my_language_name,
-	my_container_id,my_channel_id,scene_data,default_fetch_parameter)
+function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
+		my_language_name,my_scene_parameter,my_default_fetch_parameter)
 {
-	var component_number			=scene_data[0];
-	var render_number				=scene_data[1];
-	var modifier_container_number	=scene_data[2];
-	var camera_number				=scene_data[3];
-	
-    this.link_name					=scene_data[4];
-    this.parameter					=scene_data[5];
-
-	this.fetch_parameter			=default_fetch_parameter;
 	this.webgpu						=my_webgpu;
 	this.url						=my_url;
+	this.parameter					=my_scene_parameter;
+	this.fetch_parameter			=my_default_fetch_parameter;
+	
+	this.scene_id					=0;
+ 
 	this.url_without_channel		=this.url
 					+"?user_name="	+my_user_name
 					+"&pass_word="	+my_pass_word
 					+"&language="	+my_language_name
-					+"&container="	+my_container_id;
+					+"&container="	+this.parameter.container_id;
 	this.url_with_channel			=this.url_without_channel
-					+"&channel="	+my_channel_id.toString();
+					+"&channel="	+this.parameter.channel_id.toString();
 	
 	this.user_event_processor		=new Object();
 	this.user_call_processor		=new Object();
@@ -27,8 +22,8 @@ function construct_scene(my_webgpu,
 	this.system_event_processor		=new Object();
 	this.system_call_processor		=new Object();
 
-	this.component_event_processor	=new Array(component_number);
-	this.component_call_processor	=new Array(component_number);
+	this.component_event_processor	=new Array(this.parameter.component_number);
+	this.component_call_processor	=new Array(this.parameter.component_number);
 	
 	this.event_component			=
 	{
@@ -98,21 +93,23 @@ function construct_scene(my_webgpu,
 
     this.computer					=new construct_computation_object();
    	
-	this.render_driver				=new Array(render_number);
-	this.part_driver				=new Array(render_number);
-	this.part_array					=new Array(render_number);
+	this.render_driver				=new Array(this.parameter.render_number);
+	this.part_driver				=new Array(this.parameter.render_number);
+	this.part_array					=new Array(this.parameter.render_number);
 	
-	for(var i=0;i<render_number;i++){
+	for(var i=0;i<this.parameter.render_number;i++){
 		this.render_driver[i]		=null;
 		this.part_driver[i]			=new Array();
 		this.part_array[i]			=new Array();
 	}
 	
-	this.component_location_data	=new construct_component_location_object(component_number,this.computer,this.webgpu);
+	this.component_location_data	=new construct_component_location_object(
+						this.parameter.component_number,this.computer,this.webgpu);
 	this.component_render_data		=new construct_component_render_parameter();
-	this.modifier_time_parameter	=new construct_modifier_time_parameter(modifier_container_number);
+	this.modifier_time_parameter	=new construct_modifier_time_parameter(this.parameter.modifier_container_number);
 	this.vertex_data_downloader		=new construct_download_vertex_data(this.webgpu,this.parameter.max_loading_number);
-	this.camera						=new construct_camera_object(camera_number,this.component_location_data,this.computer);
+	this.camera						=new construct_camera_object(
+						this.parameter.camera_number,this.component_location_data,this.computer);
 	this.operate_component			=new construct_operate_component(this);
 	this.collector_loader			=new construct_collector_loader_object(this);
 	this.scene_interface			=new construct_scene_interface(this);
@@ -126,8 +123,8 @@ function construct_scene(my_webgpu,
 	this.highlight					=this.pickup.fork();
 	
 	this.current_time				=0;
-	this.modifier_current_time		=new Array(modifier_container_number);
-	for(var i=0;i<modifier_container_number;i++)
+	this.modifier_current_time		=new Array(this.parameter.modifier_container_number);
+	for(var i=0;i<this.parameter.modifier_container_number;i++)
 		this.modifier_current_time[i]=0;
 	this.browser_current_time		=0;
 	

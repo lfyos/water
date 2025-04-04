@@ -75,17 +75,14 @@ function construct_component_driver(
 
 //////////////////////////////////////////////////////////////////////////
 
-	this.begin_scene_target=function(
-			scene_target,target_sequence_id,render_data,
+	this.begin_scene_target=function(scene_target_array,render_data,
 			target_part_object,target_part_driver,target_render_driver,scene)
 	{
-		if(scene_target!=null)
-			return scene_target;
-			
 		var my_pass_descriptor;
+		if(scene_target_array.length>1)
+			return;
 		
-		switch(target_sequence_id){
-		case 0:
+		if((typeof(scene_target_array[0])!="object")|(scene_target_array[0]==null)){
 			my_pass_descriptor=
 			{
 				colorAttachments		: 
@@ -111,13 +108,14 @@ function construct_component_driver(
 					depthStoreOp		:	"store",
 					
 					stencilClearValue	:	0,
-	   				stencilLoadOp		:	"clear",
-	   				stencilStoreOp		:	"store"
+		   			stencilLoadOp		:	"clear",
+		   			stencilStoreOp		:	"store"
 				}
 			};
-			return 	{
+			
+			scene_target_array[0]={
 				pass_descriptor	:	my_pass_descriptor,
-				
+					
 				target_view		:	
 				{
 					width		:	1,
@@ -128,9 +126,13 @@ function construct_component_driver(
 					{
 						method_id:	0
 					}
+				],
+				texture			:	[
+					this.id_texture_0,this.id_texture_1
 				]
 			};
-		case 1:
+		}
+		if((typeof(scene_target_array[1])!="object")|(scene_target_array[1]==null)){
 			my_pass_descriptor=
 			{
 				colorAttachments		: 
@@ -150,99 +152,92 @@ function construct_component_driver(
 					depthStoreOp		:	"store",
 					
 					stencilClearValue	:	0,
-	   				stencilLoadOp		:	"clear",
-	   				stencilStoreOp		:	"store"
+		   			stencilLoadOp		:	"clear",
+		   			stencilStoreOp		:	"store"
 				}
 			};
-			return 	{
+			scene_target_array[1]={
 				pass_descriptor	:	my_pass_descriptor,
-				
+					
 				target_view		:	
 				{
 					width		:	1,
 					height		:	1
 				},
-				
 				method_array	:
 				[
 					{
 						method_id:	1
 					}
+				],
+				texture	:	[
+					this.value_texture,
 				]
 			};
-		default:
-			return null;
-		}
+		};
 	}
-	this.end_scene_target=function(
-			scene_target,target_sequence_id,render_data,
+	this.end_scene_target=function(	scene_target_array,render_data,
 			target_part_object,target_part_driver,target_render_driver,scene)
 	{
-		switch(target_sequence_id){
-		case 0:
-			scene.webgpu.command_encoder.copyTextureToBuffer(
-				{	//source
-					texture	:	this.id_texture_0,
-					origin	:
-					{
-						x	:	0,
-						y	:	0
-					}
-				},
-				{	//destination
-					buffer			:	this.id_buffer_0,
-					offset			:	0,
-	    			bytesPerRow		:	Int32Array.BYTES_PER_ELEMENT*16*4,
-	    			rowsPerImage	:	1
-				},
-				{	//copysize
-					width	:	1,
-					height	:	1
-				});
-			scene.webgpu.command_encoder.copyTextureToBuffer(
-				{	//source
-					texture	:	this.id_texture_1,
-					origin	:
-					{
-						x	:	0,
-						y	:	0
-					}
-				},
-				{	//destination
-					buffer			:	this.id_buffer_1,
-					offset			:	0,
-	    			bytesPerRow		:	Int32Array.BYTES_PER_ELEMENT*16*4,
-	    			rowsPerImage	:	1
-				},
-				{	//copysize
-					width	:	1,
-					height	:	1
-				});
-			break;
-		case 1:
-			scene.webgpu.command_encoder.copyTextureToBuffer(
-				{	//source
-					texture	:	this.value_texture,
-					origin	:
-					{
-						x	:	0,
-						y	:	0
-					}
-				},
-				{	//destination
-					buffer			:	this.value_buffer,
-					offset			:	0,
-	    			bytesPerRow		:	Float32Array.BYTES_PER_ELEMENT*16*4,
-	    			rowsPerImage	:	1
-				},
-				{	//copysize
-					width	:	1,
-					height	:	1
-				});
-			break;
-		}
+		scene.webgpu.command_encoder.copyTextureToBuffer(
+			{	//source
+				texture	:	scene_target_array[0].texture[0],
+				origin	:
+				{
+					x	:	0,
+					y	:	0
+				}
+			},
+			{	//destination
+				buffer			:	this.id_buffer_0,
+				offset			:	0,
+	    		bytesPerRow		:	Int32Array.BYTES_PER_ELEMENT*16*4,
+	    		rowsPerImage	:	1
+			},
+			{	//copysize
+				width	:	1,
+				height	:	1
+			});
+		scene.webgpu.command_encoder.copyTextureToBuffer(
+			{	//source
+				texture	:	scene_target_array[0].texture[1],
+				origin	:
+				{
+					x	:	0,
+					y	:	0
+				}
+			},
+			{	//destination
+				buffer			:	this.id_buffer_1,
+				offset			:	0,
+	    		bytesPerRow		:	Int32Array.BYTES_PER_ELEMENT*16*4,
+	    		rowsPerImage	:	1
+			},
+			{	//copysize
+				width	:	1,
+				height	:	1
+			});
+		scene.webgpu.command_encoder.copyTextureToBuffer(
+			{	//source
+				texture	:	scene_target_array[1].texture[0],
+				origin	:
+				{
+					x	:	0,
+					y	:	0
+				}
+			},
+			{	//destination
+				buffer			:	this.value_buffer,
+				offset			:	0,
+	    		bytesPerRow		:	Float32Array.BYTES_PER_ELEMENT*16*4,
+	    		rowsPerImage	:	1
+			},
+			{	//copysize
+				width	:	1,
+				height	:	1
+			});
 	}
-	
+
 	this.complete_render_target=async function(render_data,
 		target_part_object,target_part_driver,target_render_driver,scene)
 	{
@@ -291,7 +286,8 @@ function construct_component_driver(
 		var system_bindgroup_id	=p_id_0[0];
 		var part_body_id		=p_id_0[1];
 		var part_face_id		=p_id_0[2];
-		var primitive_type_id	=p_id_0[3];
+		var scene_id			=p_id_0[3]>>4;
+		var primitive_type_id	=p_id_0[3]%16;
 	
 		scene.pickup.render_id			=-1;
 		scene.pickup.part_id			=-1;
@@ -310,12 +306,15 @@ function construct_component_driver(
 		
 		scene.pickup.value				=[0,0,0];
 		scene.pickup.depth				=1.0;
-
+		
+		if(scene.scene_id!=scene_id)
+			return;
+			
 		if((system_bindgroup_id>=0)&&(system_bindgroup_id<scene.system_bindgroup_id.length)){
 			var p=scene.system_bindgroup_id[system_bindgroup_id];
 			scene.pickup.render_id		=p[0];
 			scene.pickup.part_id		=p[1];
-			scene.pickup.data_buffer_id=p[2];
+			scene.pickup.data_buffer_id	=p[2];
 			scene.pickup.component_id	=p[3];
 			scene.pickup.driver_id		=p[4];
 			
@@ -354,6 +353,7 @@ function construct_component_driver(
 			component_id,		driver_id,		render_id,		part_id,
 			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
 	{
+		
 	}
 	this.destroy=function()
 	{

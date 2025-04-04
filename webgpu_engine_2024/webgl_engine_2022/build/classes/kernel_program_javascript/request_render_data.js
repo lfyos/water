@@ -210,11 +210,13 @@ async function request_render_data(scene)
 			alert("request fetch_web_server_response_data fail: "+request_url);
 			return true;
 		}
-		
+
 		var response_data;
 		try{
 			response_data=await render_promise.json();
 		}catch(e){
+			if(scene.terminate_flag)
+				return true;
 			alert("parse fetch_web_server_response_data fail: "+e.toString());
 			alert(request_url);
 			return true;

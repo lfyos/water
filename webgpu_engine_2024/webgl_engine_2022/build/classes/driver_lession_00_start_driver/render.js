@@ -114,8 +114,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 		}
 	];
 
-	if(scene.parameter.multisample>1)
-		pipeline_descr.multisample={count:scene.parameter.multisample};
+	pipeline_descr.multisample={count:scene.parameter.multisample};
 		
 	this.render_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 

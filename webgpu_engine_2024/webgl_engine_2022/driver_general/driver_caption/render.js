@@ -7,8 +7,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			texture		:
 			{
 				sampleType		:	"float",
-    			viewDimension	:	"2d",
-   				multisampled	:	false
+    			viewDimension	:	"2d"
 			}
 		},
 		{	//sampler
@@ -111,8 +110,8 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			stencilWriteMask	:	0xFFFFFFFF,
 		}
 	};
-	if(scene.parameter.multisample>1)
-		pipeline_descr.multisample={count:scene.parameter.multisample};
+	
+	pipeline_descr.multisample={count:scene.parameter.multisample};
 		
 	this.pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	

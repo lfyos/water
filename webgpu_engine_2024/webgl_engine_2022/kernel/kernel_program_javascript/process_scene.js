@@ -6,7 +6,6 @@ function construct_scene_interface(my_scene)
 	{
 		this.scene.system_buffer.set_system_buffer(this.scene);
 	}
-	
 	this.get_render_buffer_number=function()
 	{
 		return this.scene.render_buffer_array.length;
@@ -23,23 +22,21 @@ function construct_scene_interface(my_scene)
 	{
 		compute_scene_component_location_routine(this.scene);
 	}
-	this.create_scene_sequence_target=function(
-			target_sequence_id,render_buffer_id,scene_target_array)
+	this.create_scene_target=function(render_buffer_id,scene_target_array)
 	{
-		create_scene_sequence_target_routine(
-					target_sequence_id,render_buffer_id,scene_target_array,this.scene);
+		create_scene_target_routine(render_buffer_id,scene_target_array,this.scene);
 	}
-	this.destroy_scene_sequence_target=function(
-			target_sequence_id,render_buffer_id,scene_target_array)
+	this.destroy_scene_target=function(render_buffer_id,scene_target_array)
 	{
-		destroy_scene_sequence_target_routine(
-					target_sequence_id,render_buffer_id,scene_target_array,this.scene);
+		destroy_scene_target_routine(render_buffer_id,scene_target_array,this.scene);
 	}
-	this.draw_scene_sequence_target=function(
-			target_sequence_id,render_buffer_id,scene_target_array)
+	this.set_scene_target=function(scene_id,render_buffer_id)
 	{
-		draw_scene_sequence_target_routine(
-					target_sequence_id,render_buffer_id,scene_target_array,this.scene);
+		return set_scene_target_routine(scene_id,render_buffer_id,this.scene);
+	}
+	this.draw_scene_target=function(project_matrix,scene_target_array,pass_id,render_buffer_id)
+	{
+		draw_scene_target_routine(project_matrix,scene_target_array,pass_id,render_buffer_id,this.scene);
 	}
 	this.complete_render_target=async function(render_buffer_id)
 	{

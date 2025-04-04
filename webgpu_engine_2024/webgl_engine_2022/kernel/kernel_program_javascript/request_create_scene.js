@@ -1,13 +1,13 @@
 async function request_create_scene(create_scene_sleep_time_length_scale,
 		create_scene_sleep_time_length,create_scene_max_sleep_time_length,
 		my_webgpu,request_url,my_url,my_user_name,my_pass_word,my_language_name,
-		default_fetch_parameter)
+		my_default_fetch_parameter)
 {
 	var create_data;
 	
 	for(var continue_flag=true;continue_flag;){
 		var engine_promise=await fetch(request_url,
-					default_fetch_parameter.request_create_scene);
+					my_default_fetch_parameter.request_create_scene);
 		if(!(engine_promise.ok)){
 			alert("request_create_scene fail:"+engine_promise.status);
 			return null;
@@ -40,18 +40,17 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 		}
 	}
 	
-	var my_container_id			=create_data[0][0];
-	var my_channel_id			=create_data[0][1];
-	var my_max_target_number	=create_data[0][2];
-	var	my_render_init_data		=create_data[1];
-	var	my_part_init_data		=create_data[2];
-	var	my_component_init_data	=create_data[3];
-	var	my_scene_data			=create_data[4];
-	var	my_init_promise			=import(create_data.pop());
+	var	my_render_init_data		=create_data[0];
+	var	my_part_init_data		=create_data[1];
+	var	my_component_init_data	=create_data[2];
+	var	my_init_url				=create_data[3];
+	var	my_scene_parameter		=create_data[4];
+	
+	var	my_init_promise			=import(my_init_url);
 
-	var scene=new construct_scene(my_webgpu,
-			my_url,my_user_name,my_pass_word,my_language_name,
-			my_container_id,my_channel_id,my_scene_data,default_fetch_parameter);
+	var scene=new construct_scene(my_webgpu,my_url,
+			my_user_name,my_pass_word,my_language_name,
+			my_scene_parameter,my_default_fetch_parameter);
 	
 	scene.init_data=new Object();
 
@@ -90,14 +89,15 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 	var	program_data						=init_data[3];
 	var common_shader_data_structure		=init_data[4][0];
 	var common_shader_variable_declaration	=init_data[4][1];
-	var location_shader_program				=init_data[4][2];	
+	var location_shader_program				=init_data[4][2];
+	var init_parameter						=init_data[5]
 			
 	init_ids_of_part_and_component(scene,
 		sorted_component_name_id,part_component_id_and_driver_id);
 		
 	if(scene.system_buffer!=null)
 		scene.system_buffer.destroy();
-	scene.system_buffer=new construct_system_buffer(scene,my_max_target_number);
+	scene.system_buffer=new construct_system_buffer(init_parameter.max_target_number,scene);
 	
 	scene.component_location_data.do_initialize(
 			scene.component_array_sorted_by_id,scene.system_buffer.id_buffer,

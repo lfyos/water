@@ -59,7 +59,8 @@ fn vertex_main(
 fn fragment_id_fun(vf:vertex_to_fragment_struct) -> id_target_struct
 {
 	var ret_val	:	id_target_struct;
-	ret_val.id_0=vec4(id_info.component_system_id,i32(vf.vertex_id.x),i32(vf.vertex_id.y),0);
+	ret_val.id_0=vec4(id_info.component_system_id,
+		i32(vf.vertex_id.x),i32(vf.vertex_id.y),(target_info.scene_id<<4)+0);
 	ret_val.id_1=vec4(-1,-1,i32(vf.vertex_id.z),i32(vf.vertex_id.w));
 	
 	return ret_val;

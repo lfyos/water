@@ -63,7 +63,6 @@ async function body_onload()
 			coordinate				:	my_coordinate,				//坐标系选择
 			
 			max_loading_number		:	5,							//同时下载数量
-			multisample				:	4,							//多重采样数
 		});
 }
 function body_onresize()

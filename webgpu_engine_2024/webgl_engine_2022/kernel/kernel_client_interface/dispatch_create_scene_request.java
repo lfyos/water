@@ -136,52 +136,38 @@ public class dispatch_create_scene_request
 	
 	static public void do_dispatch(scene_kernel sk,client_information ci)
 	{
-		String str;
+		ci.request_response.print("[");
 		
-		ci.request_response.print("[[",ci.request_response.container_id);//parameter0
-		ci.request_response.print(",",ci.channel_id);
-		ci.request_response.print(",",sk.scene_par.max_target_number);
-		ci.request_response.print("],");
-		
-		do_response_init_render_data(sk,ci);							//parameter	1
+		do_response_init_render_data(sk,ci);									//parameter	0
 		ci.request_response.print(",");
 		
-		do_response_init_part_data(sk,ci);								//parameter	2
+		do_response_init_part_data(sk,ci);										//parameter	1
 		ci.request_response.print(",");
 		
-		do_response_init_component_data(sk,ci);//parameter3
-
-		ci.request_response.print(",[",sk.component_cont.get_sort_component_array().length);
-																		//parameter	4	0
-		ci.request_response.print(",",sk.render_cont.renders.size());	//parameter	4	1
-		ci.request_response.print(",",sk.modifier_cont.length);			//parameter	4	2
-		ci.request_response.print(",",
-				(sk.camera_cont==null)?0:sk.camera_cont.size());		//parameter	4	3
-
-		ci.request_response.print(",\"",sk.link_name).print("\"");		//parameter	4	4
-	
-		ci.request_response.print(",{");								//parameter	4	5
-
-		ci.request_response.print( "\"max_loading_number\":",		ci.parameter.max_client_loading_number);
-		ci.request_response.print(",\"scene_touch_time_length\":",	sk.system_par.scene_touch_time_length);
+		do_response_init_component_data(sk,ci);									//parameter	2
+		ci.request_response.print(",");
 		
-		int multisample=1;
-		if((str=ci.request_response.get_parameter("multisample"))!=null)
-			if(((str=str.trim()).length()>0))
-				try{
-					multisample=Integer.parseInt(str);
-				}catch(Exception e) {
-					multisample=1;
-				}
-		ci.request_response.print(",\"multisample\":",(multisample<=1)?1:multisample);
-
-		ci.request_response.print("}");
-		ci.request_response.print("],\"");
-
 		String initialization_url=sk.scene_par.scene_temporary_directory_name+"initialization.gzip_js";
 		if((initialization_url=ci.get_file_proxy_url(initialization_url,sk.system_par))==null)
 			initialization_url=ci.request_url_header+"&command=initialization&random="+Math.random();
-		ci.request_response.print(initialization_url,"\"");			//parameter	5   last
+		ci.request_response.print("\"").print(initialization_url).print("\"");	//parameter	3
+		ci.request_response.print(",");
+
+		int component_number=sk.component_cont.get_sort_component_array().length;
+		int camera_number	=(sk.camera_cont==null)?0:sk.camera_cont.size();
+		ci.request_response.
+			print("{").															//parameter	4
+				print("\"component_number\":",			component_number).
+				print(",\"render_number\":",			sk.render_cont.renders.size()).
+				print(",\"modifier_container_number\":",sk.modifier_cont.length).
+				print(",\"camera_number\":",			camera_number).
+				print(",\"link_name\":\"",				sk.link_name).print("\"").
+				print(",\"container_id\":",				ci.request_response.container_id).
+				print(",\"channel_id\":",				ci.channel_id).
+				print(",\"max_loading_number\":",		ci.parameter.max_client_loading_number).
+				print(",\"scene_touch_time_length\":",	sk.system_par.scene_touch_time_length).
+				print(",\"multisample\":",				sk.scene_par.multisample_number).
+			print("}");
 		
 		ci.request_response.print("]");
 

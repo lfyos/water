@@ -10,10 +10,6 @@ function create_scene_container_routine(my_webgpu)
 		var p=new construct_scene_container_event_listener(i,this.webgpu.canvas,this);
 		this.scene_container_event_listener_array[i]=p;
 	}
-	this.set_current_scene_id=function(new_current_scene_id)
-	{
-		this.current_scene_id=new_current_scene_id;
-	}
 	this.draw_scene_array=async function()
 	{
 		while(!(this.terminate_flag)){
@@ -25,36 +21,41 @@ function create_scene_container_routine(my_webgpu)
 			this.webgpu.command_encoder=this.webgpu.device.createCommandEncoder();
 			this.webgpu.compute_pass_encoder=this.webgpu.command_encoder.beginComputePass();
 			
-			for(var i=0,ni=my_scene_array.length;i<ni;i++){
-				var my_scene;
-				if((my_scene=my_scene_array[i])==null)
+			for(var my_scene,i=0,ni=my_scene_array.length;i<ni;i++){
+				if(typeof(my_scene=my_scene_array[i])!="object")
+					continue;
+				if(my_scene==null)
 					continue;
 				if(my_scene.terminate_flag)
 					continue;
-				this.scene_array.push(my_scene);
-				var my_engine_touch_time_length=my_scene.scene_interface.process_scene();
+				var my_scene_index_id=this.scene_array.length;
+				this.scene_array[my_scene_index_id]=my_scene;
+
+				var si=my_scene.scene_interface;
+				var my_engine_touch_time_length=si.process_scene();
+				
 				if(engine_touch_time_length=0)
 					engine_touch_time_length=my_engine_touch_time_length;
 				else if(my_engine_touch_time_length<engine_touch_time_length)
 					engine_touch_time_length=my_engine_touch_time_length;
 				
 				var set_system_buffer_flag=false;
-				for(var j=0,nj=my_scene.scene_interface.get_render_buffer_number();j<nj;j++){
-					if(my_scene.scene_interface.get_do_render_flag(j)){
-						var target_name=my_scene.scene_interface.get_target_name(j);
+				for(var j=0,nj=si.get_render_buffer_number();j<nj;j++)
+					if(si.get_do_render_flag(j)){
+						var target_name=si.get_target_name(j);
 						if(!(Array.isArray(draw_render_collector[target_name])))
 							draw_render_collector[target_name]=new Array();
 						draw_render_collector[target_name].push(
-							{
-								scene_id			:	this.scene_array.length-1,
-								render_buffer_id	:	j
-							});
+						{
+							scene_id		:my_scene_index_id,
+							render_buffer_id:j,
+							project_matrix	:si.set_scene_target(my_scene_index_id,j)
+						});
 						set_system_buffer_flag=true;
 					}
-				}
 				if(set_system_buffer_flag){
-					my_scene.scene_interface.set_system_buffer();
-					my_scene.scene_interface.compute_scene_component_location();
+					si.set_system_buffer();
+					si.compute_scene_component_location();
 				}
 			}
 			this.webgpu.compute_pass_encoder.end();
@@ -62,39 +63,32 @@ function create_scene_container_routine(my_webgpu)
 			
 			var target_name_array=Object.keys(draw_render_collector).sort();
 			for(var i=0,ni=target_name_array.length;i<ni;i++){
-				var scene_target_array=new Array();
+				var scene_pass_array=new Array();
 				var p=draw_render_collector[target_name_array[i]];
-				for(var target_sequence_id=0;;target_sequence_id++){
-					for(var j=0,nj=p.length;j<nj;j++)
-						this.scene_array[p[j].scene_id].
-							scene_interface.create_scene_sequence_target(
-							target_sequence_id,p[j].render_buffer_id,scene_target_array);
-					var scene_target;
-					if(typeof(scene_target=scene_target_array[target_sequence_id])!="object")
-						break;
-					if(scene_target==null)
-						break;
-
-					this.webgpu.render_pass_encoder=this.webgpu.command_encoder.
-							beginRenderPass(scene_target.pass_descriptor);
-					if(typeof(this.webgpu.render_pass_encoder)!="object")
-						break;
-					if(this.webgpu.render_pass_encoder==null)
-						break;
+				
+				for(var j=0,nj=p.length;j<nj;j++)
+					this.scene_array[p[j].scene_id].scene_interface.
+						create_scene_target(p[j].render_buffer_id,scene_pass_array);
 						
+				for(var pass_id=0,pass_number=scene_pass_array.length;pass_id<pass_number;pass_id++){
+					if((typeof(scene_pass_array[pass_id])!="object")||(scene_pass_array[pass_id]==null))
+						continue;
+					this.webgpu.render_pass_encoder=this.webgpu.command_encoder.
+							beginRenderPass(scene_pass_array[pass_id].pass_descriptor);
+					if(typeof(this.webgpu.render_pass_encoder)!="object")
+						continue;
+					if(this.webgpu.render_pass_encoder==null)
+						continue;
 					for(var j=0,nj=p.length;j<nj;j++)
-						this.scene_array[p[j].scene_id].scene_interface.
-								draw_scene_sequence_target(target_sequence_id,
-									p[j].render_buffer_id,scene_target_array);
-					
+						this.scene_array[p[j].scene_id].scene_interface.draw_scene_target(
+							p[j].project_matrix,scene_pass_array,pass_id,p[j].render_buffer_id);
+
 					this.webgpu.render_pass_encoder.end();
 					this.webgpu.render_pass_encoder=null;
-					
-					for(var j=0,nj=p.length;j<nj;j++)
-						this.scene_array[p[j].scene_id].
-							scene_interface.destroy_scene_sequence_target(
-							target_sequence_id,p[j].render_buffer_id,scene_target_array);
 				}
+				for(var j=0,nj=p.length;j<nj;j++)
+					this.scene_array[p[j].scene_id].scene_interface.
+						destroy_scene_target(p[j].render_buffer_id,scene_pass_array);
 			}
 			
 			this.webgpu.device.queue.submit([this.webgpu.command_encoder.finish()]);
@@ -113,7 +107,6 @@ function create_scene_container_routine(my_webgpu)
 							if(this.terminate_flag)
 								break;
 						}
-			
 			if(this.terminate_flag)
 				break;
 			await new Promise((resolve)=>
@@ -162,7 +155,6 @@ function create_scene_container_routine(my_webgpu)
 		
 		this.url_scene_create		=null;
 		this.this_scene_create		=null;
-		this.set_current_scene_id	=null;
 		this.destroy				=null;
 	}
 }

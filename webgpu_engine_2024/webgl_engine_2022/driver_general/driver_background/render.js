@@ -7,8 +7,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			texture		:
 			{
 				sampleType		:	"float",
-    			viewDimension	:	"2d",
-   				multisampled	:	false
+    			viewDimension	:	"2d"
 			}
 		},
 		{	//right
@@ -17,8 +16,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			texture		:
 			{
 				sampleType		:	"float",
-    			viewDimension	:	"2d",
-   				multisampled	:	false
+    			viewDimension	:	"2d"
 			}
 		},
 		{	//top
@@ -27,8 +25,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			texture		:
 			{
 				sampleType		:	"float",
-    			viewDimension	:	"2d",
-   				multisampled	:	false
+    			viewDimension	:	"2d"
 			}
 		},
 		{	//down
@@ -37,8 +34,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			texture		:
 			{
 				sampleType		:	"float",
-    			viewDimension	:	"2d",
-   				multisampled	:	false
+    			viewDimension	:	"2d"
 			}
 		},
 		{	//front
@@ -47,8 +43,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			texture		:
 			{
 				sampleType		:	"float",
-    			viewDimension	:	"2d",
-   				multisampled	:	false
+    			viewDimension	:	"2d"
 			}
 		},
 		{	//back
@@ -57,8 +52,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			texture		:
 			{
 				sampleType		:	"float",
-    			viewDimension	:	"2d",
-   				multisampled	:	false
+    			viewDimension	:	"2d"
 			}
 		},
 		{	//no box
@@ -67,8 +61,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			texture		:
 			{
 				sampleType		:	"float",
-    			viewDimension	:	"2d",
-   				multisampled	:	false
+    			viewDimension	:	"2d"
 			}
 		},
 		{	//sampler
@@ -149,8 +142,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 		}
 	};
 	
-	if(scene.parameter.multisample>1)
-		pipeline_descr.multisample={count:scene.parameter.multisample};
+	pipeline_descr.multisample={count:scene.parameter.multisample};
 
 	pipeline_descr.fragment.constants={no_box_mode:true};
 	this.no_box_pipeline = scene.webgpu.device.createRenderPipeline(pipeline_descr);

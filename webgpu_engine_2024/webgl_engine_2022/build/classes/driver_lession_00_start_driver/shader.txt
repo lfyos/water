@@ -36,7 +36,7 @@ fn fragment_id_fun(vf:vertex_to_fragment_struct) -> fragment_id_target_struct
 {
 	var ret_val	:	fragment_id_target_struct;
 	
-	ret_val.id_0=vec4(i32(vf.vertex_id_0.x),i32(vf.vertex_id_0.y),i32(vf.vertex_id_0.z),i32(vf.vertex_id_0.w));
+	ret_val.id_0=vec4(i32(vf.vertex_id_0.x),i32(vf.vertex_id_0.y),i32(vf.vertex_id_0.z),(target_info.scene_id<<4)+0);
 	ret_val.id_1=vec4(i32(vf.vertex_id_1.x),i32(vf.vertex_id_1.y),i32(vf.vertex_id_1.z),i32(vf.vertex_id_1.w));
 	
 	return ret_val;

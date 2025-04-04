@@ -46,19 +46,17 @@ function construct_component_driver(
 	{
 		this.clear_color=buffer_data_item;
 	}
-	this.begin_scene_target=function(
-			scene_target,target_sequence_id,render_data,
+	
+	this.begin_scene_target=function(scene_target_array,render_data,
 			target_part_object,target_part_driver,target_render_driver,scene)
 	{
-		if(scene_target!=null)
-			return scene_target;
-			
-		if(target_sequence_id!=0)
-			return null;
+		if(scene_target_array[0]!=null)
+			if(typeof(scene_target_array[0])=="object")
+				return;
 		if(render_data.target_texture_id<0)
-			return null;
+			return;
 		if(render_data.target_texture_id>=this.target_parameter.length)
-			return null;
+			return;
 		
 		var clear_color		=this.clear_color[render_data.target_texture_id];
 		var canvas_id		=this.target_parameter[render_data.target_texture_id].canvas_id;
@@ -77,36 +75,30 @@ function construct_component_driver(
 					my_multisample_texture.destroy();
 					my_depth_texture.destroy();
 				}
-			var texture_create_parameter=
+			my_multisample_texture=scene.webgpu.device.createTexture(
 				{
 					size	:
 					{
 						width	:	my_gpu_texture.width,
 						height	:	my_gpu_texture.height
 					},
-					format	:	scene.webgpu.gpu.getPreferredCanvasFormat(),
-					usage	:	GPUTextureUsage.RENDER_ATTACHMENT
-				};
-			if(scene.parameter.multisample>1)
-				texture_create_parameter.sampleCount=scene.parameter.multisample;
-				
-			my_multisample_texture=scene.webgpu.device.createTexture(texture_create_parameter);
+					sampleCount	:	scene.parameter.multisample,
+					format		:	scene.webgpu.gpu.getPreferredCanvasFormat(),
+					usage		:	GPUTextureUsage.RENDER_ATTACHMENT
+				});
 			this.multisample_texture[canvas_id]=my_multisample_texture;	
 			
-			var texture_create_parameter=
+			my_depth_texture=scene.webgpu.device.createTexture(
 				{
 					size	:
 					{
 						width	:	my_gpu_texture.width,
 						height	:	my_gpu_texture.height
 					},
-					format	:	"depth24plus-stencil8",
-					usage	:	GPUTextureUsage.RENDER_ATTACHMENT
-				}
-			if(scene.parameter.multisample>1)
-				texture_create_parameter.sampleCount=scene.parameter.multisample;
-					
-			my_depth_texture=scene.webgpu.device.createTexture(texture_create_parameter);
+					sampleCount	:	scene.parameter.multisample,
+					format		:	"depth24plus-stencil8",
+					usage		:	GPUTextureUsage.RENDER_ATTACHMENT
+				});
 			this.depth_texture[canvas_id]=my_depth_texture;
 
 			this.should_update_server_flag=true;
@@ -116,16 +108,9 @@ function construct_component_driver(
 		{
 			colorAttachments		: 
 			[
-				(scene.parameter.multisample>1)
-				?{
+				{
 					view			:	my_multisample_texture.createView(),
 					resolveTarget	:	my_gpu_texture.createView(),
-					clearValue		:	{ r: clear_color[0], g: clear_color[1], b: clear_color[2], a: clear_color[3] },
-					loadOp			:	load_operation,
-					storeOp			:	"store"
-				}
-				:{
-					view			:	my_gpu_texture.createView(),
 					clearValue		:	{ r: clear_color[0], g: clear_color[1], b: clear_color[2], a: clear_color[3] },
 					loadOp			:	load_operation,
 					storeOp			:	"store"
@@ -145,31 +130,35 @@ function construct_component_driver(
 			}
 		};
 		
-		return 	{
-				pass_descriptor		:	my_pass_descriptor,
+		scene_target_array[0]={
+			pass_descriptor		:	my_pass_descriptor,
 				
-				target_view			:	
+			target_view			:	
+			{
+				width			:	my_gpu_texture.width,
+				height			:	my_gpu_texture.height
+			},
+			method_array		:
+			[
 				{
-					width			:	my_gpu_texture.width,
-					height			:	my_gpu_texture.height
+					method_id	:	2		//render before depth rendering
 				},
-				method_array		:
-				[
-					{
-						method_id	:	2		//render before depth rendering
-					},
-					{
-						method_id	:	3		//render depth only
-					},
-					{
-						method_id	:	4		//render after depth rendering
-					},
-					{
-						method_id	:	5		//render for transparent rendering
-					}
-				]
-			};
+				{
+					method_id	:	3		//render depth only
+				},
+				{
+					method_id	:	4		//render after depth rendering
+				},
+				{
+					method_id	:	5		//render for transparent rendering
+				}
+			],
+			texture				:	[
+				my_gpu_texture
+			]
+		};
 	};
+	
 	this.destroy=function()
 	{
 		for(var i=0,ni=this.multisample_texture.length;i<ni;i++)
