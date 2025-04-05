@@ -37,11 +37,11 @@ var scene_container;
 async function body_onload()
 {
 	var url="./water";
+	var scene_container=await (await import(url)).scene_container_create(["my_canvas"]);
 	
-	scene_container=await (await import(url)).scene_container_create(["my_canvas"]);
-
 //	await scene_container.this_scene_create(
 	await scene_container.url_scene_create(url,
+			"my_client_scene_name",
 		{
 			user_name				:	my_user_name,				//用户名	
 			pass_word				:	my_pass_word,				//用户密码

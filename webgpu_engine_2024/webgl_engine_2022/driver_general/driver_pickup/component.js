@@ -1,9 +1,6 @@
-function construct_component_driver(
-	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	scene)
+function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
 {
-	this.component_id	=component_id;
-	this.driver_id		=driver_id;
+	this.component_ids	=component_ids;
 
 	this.id_depth_texture=scene.webgpu.device.createTexture(
 		{
@@ -312,11 +309,11 @@ function construct_component_driver(
 			
 		if((system_bindgroup_id>=0)&&(system_bindgroup_id<scene.system_bindgroup_id.length)){
 			var p=scene.system_bindgroup_id[system_bindgroup_id];
-			scene.pickup.render_id		=p[0];
-			scene.pickup.part_id		=p[1];
-			scene.pickup.data_buffer_id	=p[2];
-			scene.pickup.component_id	=p[3];
-			scene.pickup.driver_id		=p[4];
+			scene.pickup.render_id		=p.render_id;
+			scene.pickup.part_id		=p.part_id;
+			scene.pickup.data_buffer_id	=p.data_buffer_id;
+			scene.pickup.component_id	=p.component_id;
+			scene.pickup.driver_id		=p.driver_id;
 			
 			if((scene.pickup.render_id>=0)&&(scene.pickup.part_id>=0))
 				if(scene.pickup.render_id<scene.part_array.length)
@@ -349,9 +346,7 @@ function construct_component_driver(
 			project_matrix,part_object,part_driver,render_driver,scene)	
 	{
 	}
-	this.append_component_parameter=function(
-			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
+	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
 		
 	}

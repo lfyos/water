@@ -1,9 +1,6 @@
-function construct_component_driver(
-	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	scene)
+function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
 {
-	this.component_id				=component_id;
-	this.driver_id					=driver_id;
+	this.component_ids				=component_ids;
 	this.should_update_server_flag	=true;
 	
 	this.clear_color		=new Array();
@@ -21,9 +18,8 @@ function construct_component_driver(
 		this.multisample_texture[i]=null;
 		this.depth_texture[i]=null;
 	}
-	this.draw_component=function(method_data,render_data,
-			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,scene)	
+	this.draw_component=function(method_data,render_parameter,
+			project_matrix,target_data,part_object,part_driver,render_driver,scene)
 	{
 		if(this.should_update_server_flag){
 			this.should_update_server_flag=false;	
@@ -37,12 +33,10 @@ function construct_component_driver(
 						["operation",		"width_height"],
 						["width_height",	width_height_str]
 					];
-			scene.caller.call_server_component(this.component_id,this.driver_id,par);
+			scene.caller.call_server_component(this.component_ids.component_id,this.component_ids.driver_id,par);
 		}
 	}
-	this.append_component_parameter=function(
-			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
+	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
 		this.clear_color=buffer_data_item;
 	}

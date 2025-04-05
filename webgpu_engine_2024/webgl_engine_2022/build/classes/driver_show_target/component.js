@@ -1,11 +1,11 @@
-function construct_component_driver(
-	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	scene)
+function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
 {
-	var ep=scene.component_event_processor[component_id];
+	this.component_ids	=component_ids;
+	
+	var ep=scene.component_event_processor[this.component_ids.component_id];
 	if(typeof(ep)!="object"){
-		scene.component_event_processor[component_id]=new Object();
-		ep=scene.component_event_processor[component_id];
+		scene.component_event_processor[this.component_ids.component_id]=new Object();
+		ep=scene.component_event_processor[this.component_ids.component_id];
 	}	
 	ep.texture=null;
 	ep.set_target=function(my_texture)
@@ -14,18 +14,16 @@ function construct_component_driver(
 	}
 	
 	this.bindgroup=null;
-	this.component_id=component_id;
 	this.buffer=scene.webgpu.device.createBuffer(
 		{
 			size	:	Float32Array.BYTES_PER_ELEMENT*8,
 			usage	:	GPUBufferUsage.VERTEX|GPUBufferUsage.COPY_DST
 		});
 	
-	this.draw_component=function(method_data,render_data,
-			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,scene)	
+	this.draw_component=function(method_data,render_parameter,
+			project_matrix,target_data,part_object,part_driver,render_driver,scene)		
 	{
-		var ep=scene.component_event_processor[this.component_id];
+		var ep=scene.component_event_processor[this.component_ids.component_id];
 		if(ep.texture!=null){
 			var resource_entries=[
 				{	//texture
@@ -66,9 +64,7 @@ function construct_component_driver(
 		};
 	};
 	
-	this.append_component_parameter=function(
-			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
+	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
 		scene.webgpu.device.queue.writeBuffer(this.buffer,0,new Float32Array(buffer_data_item));
 	};

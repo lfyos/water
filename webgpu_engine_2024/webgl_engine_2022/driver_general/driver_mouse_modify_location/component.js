@@ -630,10 +630,10 @@ function mobile_phone(event,component_id,scene)
 	}
 	return false;		
 }
-function construct_component_driver(
-	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	scene)
+function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
 {
+	this.component_ids=component_ids;
+	
 	var ep=new Object();
 	
 	ep.part_init_data	=part_driver.part_init_data;
@@ -662,17 +662,16 @@ function construct_component_driver(
 	ep.start_time=(new Date()).getTime();
 	
 	var old_ep;
-	if(typeof(old_ep=scene.component_event_processor[component_id])=="object")
+	if(typeof(old_ep=scene.component_event_processor[this.component_ids.component_id])=="object")
 		ep=Object.assign(old_ep,ep);
 		
-	scene.component_event_processor[component_id]=ep;
+	scene.component_event_processor[this.component_ids.component_id]=ep;
 
-	this.component_id=component_id;
+	this.component_id=this.component_ids.component_id;
 	this.buffer_data=null;
 	
-	this.draw_component=function(method_data,render_data,
-			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,scene)	
+	this.draw_component=function(method_data,render_parameter,
+			project_matrix,target_data,part_object,part_driver,render_driver,scene)	
 	{
 		var component_id		=this.buffer_data[0];
 		var low_precision_scale	=this.buffer_data[1];
@@ -683,7 +682,7 @@ function construct_component_driver(
 			
 		var ep=scene.component_event_processor[component_id];
 		
-		ep.render_data			=render_data;
+		ep.render_data			=target_data;
 		
 		ep.component_id			=component_id;
 		ep.low_precision_scale	=low_precision_scale;
@@ -692,9 +691,7 @@ function construct_component_driver(
 		ep.change_type_flag		=change_type_flag;
 		ep.exchange_point_flag	=exchange_point_flag;
 	}
-	this.append_component_parameter=function(
-			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
+	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
 		this.buffer_data=buffer_data_item;
 	}

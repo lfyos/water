@@ -1,14 +1,13 @@
-function construct_component_driver(
-	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	scene)
+function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
 {
-	this.ep=scene.component_event_processor[component_id];
+	this.component_ids	=component_ids;
+	
+	this.ep=scene.component_event_processor[component_ids.component_id];
 	if((typeof(this.ep)!="object")||(this.ep==null)){
 		this.ep=new Object();
-		scene.component_event_processor[component_id]=this.ep;
+		scene.component_event_processor[component_ids.component_id]=this.ep;
 	}
 	
-	this.component_id	=component_id;
 	this.ep.data		=[0,0,0,0];
 	this.ep.data_bak	=[-10000000,-10000000,10000000,10000000];
 	
@@ -17,9 +16,8 @@ function construct_component_driver(
 			size	:	Float32Array.BYTES_PER_ELEMENT*4,
 			usage	:	GPUBufferUsage.VERTEX|GPUBufferUsage.COPY_DST
 		});
-	this.draw_component=function(method_data,render_data,
-			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,scene)	
+	this.draw_component=function(method_data,render_parameter,
+			project_matrix,target_data,part_object,part_driver,render_driver,scene)
 	{
 		var diff=scene.computer.min_value;
 		diff-=Math.abs(this.ep.data[2]-this.ep.data[0]);
@@ -42,9 +40,7 @@ function construct_component_driver(
 			rpe.draw(p[i].item_number);
 		}
 	}
-	this.append_component_parameter=function(
-			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
+	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
 	}
 	this.destroy=function()

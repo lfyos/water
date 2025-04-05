@@ -141,20 +141,19 @@ function init_component_event_processor(component_id,init_data,scene)
 		}
 	};
 }
-function construct_component_driver(
-	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	scene)
+function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
 {
-	this.component_id=component_id;
+	this.component_ids=component_ids;
 	this.event_component_id=-1;
 	this.tag_array=new Array();
-	init_component_event_processor(component_id,init_data,scene);
+	init_component_event_processor(this.component_ids.component_id,init_data,scene);
 
-	this.draw_component=function(method_data,render_data,
-			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,scene)	
+	this.draw_component=function(method_data,render_parameter,
+			project_matrix,target_data,part_object,part_driver,render_driver,scene)	
 	{
 		var p;
+		var component_id	=this.component_ids.component_id;
+		var driver_id		=this.component_ids.driver_id;
 		
 		switch(typeof(p=scene.event_component.mouse.component_name)){
 		case "string":
@@ -207,10 +206,7 @@ function construct_component_driver(
 			}
 		}
 	}
-	
-	this.append_component_parameter=function(
-			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
+	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  	
 	{
 		for(var i=0,ni=this.tag_array.length;i<ni;i++){
 			this.tag_array[i].buffer.destroy();
@@ -274,8 +270,12 @@ function construct_component_driver(
 						width	:	real_texture_width,
 						height	:	my_texture_height
 					});
-			var system_id=scene.component_array_sorted_by_id[component_id].component_ids[driver_id][3];
-			var integer_buffer_data=[component_id,driver_id,i,system_id];
+			var integer_buffer_data=[
+					this.component_ids.component_id,
+					this.component_ids.driver_id,
+					i,
+					this.component_ids.system_bindgroup_id
+				];
 			var p0=part_object.material[0].face_normal_color;
 			var p1=part_object.material[0].face_pickup_color;
 			var p2=part_object.material[0].edge_normal_color;

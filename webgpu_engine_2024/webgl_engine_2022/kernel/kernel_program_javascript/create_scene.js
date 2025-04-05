@@ -1,5 +1,5 @@
-async function create_scene_routine(
-	my_webgpu,my_draw_canvas_id,my_create_parameter,user_process_bar_function,my_url,my_default_fetch_parameter,
+async function create_scene_routine(my_webgpu,
+	my_draw_canvas_id,my_create_parameter,user_process_bar_function,my_url,my_default_fetch_parameter,
 	create_scene_sleep_time_length_scale,create_scene_sleep_time_length,create_scene_max_sleep_time_length)
 {
 	if(typeof(my_create_parameter)!="object")

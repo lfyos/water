@@ -1,6 +1,6 @@
 function init_component_event_processor(screen_rectangle_component_id,scene)
 {
-	this.screen_rectangle_component_id=screen_rectangle_component_id;
+	this.screen_rectangle_component_id	=screen_rectangle_component_id;
 	
 	this.p0=[0.0,0.0,0.0,1.0];
 	this.dp=[0.0,0.0,0.0,0.0];
@@ -102,32 +102,28 @@ function init_component_event_processor(screen_rectangle_component_id,scene)
 	};
 };
 
-function construct_component_driver(
-	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	scene)
+function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
 {
 	var screen_rectangle_component_id=init_data;
 	var old_ep,ep=new init_component_event_processor(screen_rectangle_component_id,scene);
-	if(typeof(old_ep=scene.component_event_processor[component_id])=="object")
+	if(typeof(old_ep=scene.component_event_processor[component_ids.component_id])=="object")
 		if(old_ep!=null)
 			ep=Object.assign(old_ep,ep);
-	scene.component_event_processor[component_id]=ep;
+	scene.component_event_processor[component_ids.component_id]=ep;
 	
 	ep.camera_id		=0;
 	ep.change_type_flag	=true;
-	this.component_id	=component_id;
+	this.component_ids	=component_ids;
 
-	this.draw_component=function(method_data,render_data,
-			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,scene)	
+	this.draw_component=function(method_data,render_parameter,
+			project_matrix,target_data,part_object,part_driver,render_driver,scene)
 	{
-		if(render_data.main_display_target_flag)
-			scene.component_event_processor[component_id].camera_id=render_data.camera_id;
+		if(target_data.main_display_target_flag)
+			scene.component_event_processor[this.component_ids.component_id].camera_id=target_data.camera_id;
 	}
-	this.append_component_parameter=function(
-			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
+	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
-		scene.component_event_processor[component_id].change_type_flag=(buffer_data_item>0)?true:false;
+		var p=scene.component_event_processor[this.component_ids.component_id];
+		p.change_type_flag=(buffer_data_item>0)?true:false;
 	}
 };

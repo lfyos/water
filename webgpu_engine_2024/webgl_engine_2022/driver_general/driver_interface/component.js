@@ -243,25 +243,25 @@ function create_bind_group(init_data,render_driver,scene)
 	this.create(init_data,render_driver,scene);
 };
 
-function construct_component_driver(
-	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	scene)
+function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
 {
+	this.component_ids				=component_ids;
+	
 	var new_ep=new create_component_object(init_data,scene);
-	var old_ep=scene.component_event_processor[component_id];
+	var old_ep=scene.component_event_processor[this.component_ids.component_id];
 	if((typeof(old_ep)=="object")&&(old_ep!=null))
 		new_ep=Object.assign(old_ep,new_ep);
-	scene.component_event_processor[component_id]=new_ep;
+	scene.component_event_processor[this.component_ids.component_id]=new_ep;
 	
-	this.interface_component_id		=component_id;
+	
+	this.interface_component_id		=this.component_ids.component_id;
 	this.image_bind_group			=new create_bind_group(init_data,render_driver,scene);
 	this.save_parameter_number		=0;
 	
-	this.draw_component=function(method_data,render_data,
-			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,scene)	
+	this.draw_component=function(method_data,render_parameter,
+			project_matrix,target_data,part_object,part_driver,render_driver,scene)
 	{
-		var ep=scene.component_event_processor[component_id];
+		var ep=scene.component_event_processor[this.component_ids.component_id];
 		if(this.image_bind_group.is_busy_flag)
 			return;
 		
@@ -269,7 +269,7 @@ function construct_component_driver(
 			if(typeof(ep.update_canvas_texture)=="function")
 				if(ep.update_canvas_texture(
 						scene.webgpu.canvas_2d,scene.webgpu.context_2d,
-						ep.interface_data.canvas,component_id,scene))
+						ep.interface_data.canvas,this.component_ids.component_id,scene))
 					scene.webgpu.device.queue.copyExternalImageToTexture(
 						{
 							source	:	scene.webgpu.canvas_2d
@@ -281,13 +281,13 @@ function construct_component_driver(
 							width	:	ep.interface_data.canvas.canvas_width,
 							height	:	ep.interface_data.canvas.canvas_height
 						});
-		if((render_data.main_display_target_flag)||(this.save_parameter_number<=0)){
+		if((target_data.main_display_target_flag)||(this.save_parameter_number<=0)){
 			if(	  (ep.parameter_bak.x !=ep.show_x)
 				||(ep.parameter_bak.y !=ep.show_y)
 				||(ep.parameter_bak.dx!=ep.interface_data.dx)
 				||(ep.parameter_bak.dy!=ep.interface_data.dy))
 			{
-				scene.caller.call_server_component(component_id,"all",[["operation","parameter"],
+				scene.caller.call_server_component(this.component_ids.component_id,"all",[["operation","parameter"],
 					["x0",ep.parameter_bak.x =ep.show_x],
 					["y0",ep.parameter_bak.y =ep.show_y],
 					["dx",ep.parameter_bak.dx=ep.interface_data.dx],
@@ -321,12 +321,9 @@ function construct_component_driver(
 			rpe.draw(p[i].item_number);
 		}
 	};
-	
-	this.append_component_parameter=function(
-			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
+	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
-		var ep=scene.component_event_processor[component_id];
+		var ep=scene.component_event_processor[this.component_ids.component_id];
 		ep.show_x			=buffer_data_item[0];
 		ep.show_y			=buffer_data_item[1];
 		ep.interface_data.dx=buffer_data_item[2];

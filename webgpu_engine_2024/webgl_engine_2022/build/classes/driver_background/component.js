@@ -194,16 +194,14 @@ function create_texture_bind_group()
 	};
 };
 
-function construct_component_driver(
-	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	scene)
+function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
 {
-	this.texture_bind_group=new create_texture_bind_group();
-	this.mode=0;
+	this.component_ids		=component_ids;
+	this.texture_bind_group	=new create_texture_bind_group();
+	this.mode				=0;
 	
-	this.draw_component=function(method_data,render_data,
-			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,scene)	
+	this.draw_component=function(method_data,render_parameter,
+			project_matrix,target_data,part_object,part_driver,render_driver,scene)
 	{
 		if(this.texture_bind_group.is_busy_flag)
 			return;
@@ -226,9 +224,7 @@ function construct_component_driver(
 		}
 	};
 
-	this.append_component_parameter=function(
-			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
+	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
 		this.mode=buffer_data_item[0];
 		this.texture_bind_group.destroy();

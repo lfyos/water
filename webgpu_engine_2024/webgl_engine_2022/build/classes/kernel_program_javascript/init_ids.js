@@ -54,40 +54,38 @@ function init_ids_of_part_and_component(
 				var my_driver_id			=id_array[data_buffer_id][1];				
 				var my_system_bindgroup_id	=system_bindgroup_id.length;
 				
-				id_array[data_buffer_id]={
+				system_bindgroup_id[my_system_bindgroup_id]={
+					render_id			:	render_id,
+					part_id				:	part_id,
+					data_buffer_id		:	data_buffer_id,
+						
 					component_id		:	my_component_id,
 					driver_id			:	my_driver_id,
+						
 					system_bindgroup_id	:	my_system_bindgroup_id
 				}
-				var p=scene.component_array_sorted_by_id[my_component_id].component_ids;
-				p[my_driver_id]=[render_id,part_id,data_buffer_id,my_system_bindgroup_id];
-				
-				system_bindgroup_id[my_system_bindgroup_id]=
-					[
-						render_id,					part_id,		data_buffer_id,
-						my_component_id,			my_driver_id,
-						my_system_bindgroup_id,
-						
-						-1,-1
-					];
+				id_array[data_buffer_id]=system_bindgroup_id[my_system_bindgroup_id];
+				scene.component_array_sorted_by_id[my_component_id].
+					component_ids[my_driver_id]=id_array[data_buffer_id];
 			}
 		};
 	};
 
 	for(var p,i=0;i<component_number;i++)
 		if((p=scene.component_array_sorted_by_id[i]).component_ids.length>0)
-			p.system_bindgroup_id=p.component_ids[p.component_ids.length-1][3];
+			p.component_system_bindgroup_id=p.component_ids[p.component_ids.length-1].system_bindgroup_id;
 		else{
-			p.system_bindgroup_id=system_bindgroup_id.length;
-			system_bindgroup_id[p.system_bindgroup_id]=[
-				-1,	//render_id,
-				-1,	//part_id,
-				-1,	//data_buffer_id,
-				 i,	//component_id,
-				-1,	//driver_id,
-				p.system_bindgroup_id,
-				-1,-1
-			];
+			p.component_system_bindgroup_id=system_bindgroup_id.length;
+			system_bindgroup_id[p.component_system_bindgroup_id]={
+				render_id			:	-1,
+				part_id				:	-1,
+				data_buffer_id		:	-1,
+						
+				component_id		:	i,
+				driver_id			:	-1,
+						
+				system_bindgroup_id	:	p.component_system_bindgroup_id
+			};
 		};
 	scene.system_bindgroup_id				=system_bindgroup_id;
 	scene.part_component_id_and_driver_id	=part_component_id_and_driver_id;

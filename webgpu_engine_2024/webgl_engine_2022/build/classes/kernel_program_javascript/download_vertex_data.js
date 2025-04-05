@@ -309,8 +309,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 
 		for(var i=0,ni=part_object.part_component_id_and_driver_id.length;i<ni;i++){
 			var my_component_ids=part_object.part_component_id_and_driver_id[i];
-			part_object.component_driver_array[i]=new part_driver.new_component_driver(
-				my_component_ids.component_id,my_component_ids.driver_id,render_id,part_id,i,
+			part_object.component_driver_array[i]=new part_driver.new_component_driver(my_component_ids,
 				scene.init_data.component_init_data[my_component_ids.component_id][my_component_ids.driver_id],
 				part_object,part_driver,render_driver,scene);
 		}

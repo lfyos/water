@@ -30,9 +30,13 @@ function construct_scene_interface(my_scene)
 	{
 		destroy_scene_target_routine(render_buffer_id,scene_target_array,this.scene);
 	}
-	this.set_scene_target=function(scene_id,render_buffer_id)
+	this.set_scene_id=function(scene_id)
 	{
-		return set_scene_target_routine(scene_id,render_buffer_id,this.scene);
+		this.scene.scene_id=scene_id;
+	}
+	this.set_scene_target=function(render_buffer_id)
+	{
+		return set_scene_target_routine(render_buffer_id,this.scene);
 	}
 	this.draw_scene_target=function(project_matrix,scene_target_array,pass_id,render_buffer_id)
 	{

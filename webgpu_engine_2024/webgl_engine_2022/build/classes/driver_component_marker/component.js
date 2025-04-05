@@ -49,23 +49,20 @@ function init_component_event_processor()
 		return true;
 	};
 }
-function construct_component_driver(
-	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	scene)
+function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
 {
-	this.component_id	=component_id;
+	this.component_ids	=component_ids;
 	this.marker_array	=new Array();
-	scene.component_event_processor[component_id]=new init_component_event_processor();
+	scene.component_event_processor[this.component_ids.component_id]=new init_component_event_processor();
 	
-	this.draw_component=function(method_data,render_data,
-			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,scene)	
+	this.draw_component=function(method_data,render_parameter,
+			project_matrix,target_data,part_object,part_driver,render_driver,scene)
 	{
 		var p,rpe=scene.webgpu.render_pass_encoder;
 		
 		for(var i=0,ni=this.marker_array.length;i<ni;i++){
 			scene.system_buffer.set_system_bindgroup(
-				render_data.render_buffer_id,
+				target_data.render_buffer_id,
 				this.marker_array[i].marker_component_id,-1,scene);
 
 			rpe.setBindGroup(1,this.marker_array[i].bindgroup);
@@ -113,9 +110,8 @@ function construct_component_driver(
 			}
 		}
 	}
-	this.append_component_parameter=function(
-			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
+	
+	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
 		for(var i=0,ni=this.marker_array.length;i<ni;i++){
 			this.marker_array[i].buffer.destroy();
@@ -176,10 +172,10 @@ function construct_component_driver(
 					});
 
 			var integer_buffer_data=[
-					component_id,
-					driver_id,
+					this.component_ids.component_id,
+					this.component_ids.driver_id,
 					i,
-					scene.component_array_sorted_by_id[component_id].component_ids[driver_id][3],
+					this.component_ids.system_bindgroup_id,
 					
 					my_pickup_flag?1:0,			0,			0,			0
 			];

@@ -1,8 +1,7 @@
-function construct_component_driver(
-	component_id,	driver_id,		render_id,		part_id,		data_buffer_id,
-	init_data,		part_object,	part_driver,	render_driver,	scene)
+function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
 {
-	this.display_parameter=null;
+	this.component_ids		=component_ids;
+	this.display_parameter	=null;
 	
 	this.draw=function(vertex_number,instance_division,scene,part_driver,my_region_data,my_pipeline)
 	{
@@ -29,9 +28,8 @@ function construct_component_driver(
 				}
 			}
 	};
-	this.draw_component=function(method_data,render_data,
-			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,scene)	
+	this.draw_component=function(method_data,render_parameter,
+			project_matrix,target_data,part_object,part_driver,render_driver,scene)
 	{
 		if(part_driver.material_bindgroup_flag)
 			return;
@@ -39,7 +37,7 @@ function construct_component_driver(
 		display_value_id=(display_value_id<=0)?0:Math.floor(1+(display_value_id-1)/4);
 		display_value_id=(display_value_id>=render_driver.pipeline_array.length)?0:display_value_id;
 		var my_pipeline	=render_driver.pipeline_array[display_value_id];
-		var display_bitmap	=component_render_parameter;
+		var display_bitmap	=render_parameter;
 		
 		switch(method_data.method_id){
 		default:
@@ -106,18 +104,17 @@ function construct_component_driver(
 					this.draw(0,1,scene,part_driver,p,my_pipeline.color_face_pipeline_do_clip);
 					this.draw(0,1,scene,part_driver,p,my_pipeline.color_face_pipeline_do_close);
 				}
-				if((scene.pickup.component_id==component_id)&&(scene.pickup.driver_id==driver_id)){
-					var p=part_object.buffer_object.point.region_data;
-					this.draw(6,1,scene,part_driver,p,my_pipeline.color_pickup_point_pipeline);
-				}
+				if(scene.pickup.component_id==this.component_ids.component_id)
+					if(scene.pickup.driver_id==this.component_ids.driver_id){
+						var p=part_object.buffer_object.point.region_data;
+						this.draw(6,1,scene,part_driver,p,my_pipeline.color_pickup_point_pipeline);
+					}
 			}
 			break;
 		}
 		return;
 	};
-	this.append_component_parameter=function(
-			component_id,		driver_id,		render_id,		part_id,
-			buffer_data_item,	part_object,	part_driver,	render_driver,	scene)
+	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
 		this.display_parameter=
 		{
@@ -133,6 +130,6 @@ function construct_component_driver(
 				this.display_parameter.display_value_id,
 				this.display_parameter.effective_selected_flag?1:0
 			],
-			component_id,driver_id,scene);
+			this.component_ids.component_id,this.component_ids.driver_id,scene);
 	};
 };

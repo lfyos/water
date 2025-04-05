@@ -73,16 +73,12 @@ function construct_component_render_parameter()
 			var part_object		=scene.part_array	[render_id][part_id];
 			var part_driver		=scene.part_driver	[render_id][part_id];
 			var render_driver	=scene.render_driver[render_id];
-			var component_ids	=part_object.part_component_id_and_driver_id[data_buffer_id];
-			
 			var component_driver=part_object.component_driver_array[data_buffer_id];
 			
 			if((typeof(component_driver)=="object")&&(component_driver!=null))
 				if(typeof(component_driver.append_component_parameter)=="function")
-					component_driver.append_component_parameter(
-						component_ids.component_id,	component_ids.driver_id,
-						render_id,	part_id,		buffer_data_item,
-						part_object,part_driver,	render_driver,		scene);
+					component_driver.append_component_parameter(buffer_data_item,
+									part_object,part_driver,render_driver,scene);
 		}
 	}
 }

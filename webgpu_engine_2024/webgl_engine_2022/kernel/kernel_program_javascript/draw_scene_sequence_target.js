@@ -42,10 +42,8 @@ function destroy_scene_target_routine(render_buffer_id,scene_target_array,scene)
 		target_part_object,target_part_driver,target_render_driver,scene);
 	return;
 }
-function set_scene_target_routine(scene_id,render_buffer_id,scene)
+function set_scene_target_routine(render_buffer_id,scene)
 {
-	scene.scene_id=scene_id;
-	
 	var render_data		=scene.render_buffer_array[render_buffer_id];
 	var project_matrix	=scene.camera.compute_camera_data(render_data);
 	scene.system_buffer.set_target_buffer(render_data,project_matrix,scene);
@@ -132,10 +130,9 @@ function draw_scene_target_routine(
 					var component_ids	=part_object.part_component_id_and_driver_id[data_buffer_id];
 
 					scene.system_buffer.set_system_bindgroup(render_data.render_buffer_id,
-						component_ids.component_id,component_ids.driver_id,scene);
-					component_driver.draw_component(method_array[i],render_data,render_id,part_id,
-						component_ids.component_id,component_ids.driver_id,render_parameter,
-						project_matrix,part_object,part_driver,render_driver,scene);
+							component_ids.component_id,component_ids.driver_id,scene);
+					component_driver.draw_component(method_array[i],render_parameter,
+							project_matrix,render_data,part_object,part_driver,render_driver,scene);
 				}
 			}
 		}

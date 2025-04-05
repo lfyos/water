@@ -1,8 +1,8 @@
 function create_scene_container_routine(my_webgpu)
 {
 	this.webgpu				=my_webgpu;
-	this.scene_array		=new Array();
-	this.current_scene_id	=0;
+	this.scene_object		=new Object();
+	this.event_scene_name	=null;
 	this.terminate_flag		=false;
 	
 	this.scene_container_event_listener_array=new Array();
@@ -10,30 +10,32 @@ function create_scene_container_routine(my_webgpu)
 		var p=new construct_scene_container_event_listener(i,this.webgpu.canvas,this);
 		this.scene_container_event_listener_array[i]=p;
 	}
-	this.draw_scene_array=async function()
+	
+	this.draw_scene=async function()
 	{
 		while(!(this.terminate_flag)){
 			var engine_touch_time_length=0;
 			var draw_render_collector	=new Object();
-			var my_scene_array			=this.scene_array;
-			this.scene_array			=new Array();
+			var my_scene_object			=this.scene_object;
+			this.scene_object			=new Object();
 
 			this.webgpu.command_encoder=this.webgpu.device.createCommandEncoder();
 			this.webgpu.compute_pass_encoder=this.webgpu.command_encoder.beginComputePass();
 			
-			for(var my_scene,i=0,ni=my_scene_array.length;i<ni;i++){
-				if(typeof(my_scene=my_scene_array[i])!="object")
+			var scene_name_array=Object.keys(my_scene_object);
+			for(var my_scene,i=0;i<scene_name_array.length;i++){
+				if(typeof(my_scene=my_scene_object[scene_name_array[i]])!="object")
 					continue;
 				if(my_scene==null)
 					continue;
 				if(my_scene.terminate_flag)
 					continue;
-				var my_scene_index_id=this.scene_array.length;
-				this.scene_array[my_scene_index_id]=my_scene;
+				this.scene_object[scene_name_array[i]]=my_scene;
 
 				var si=my_scene.scene_interface;
-				var my_engine_touch_time_length=si.process_scene();
+				si.set_scene_id(i);
 				
+				var my_engine_touch_time_length=si.process_scene();
 				if(engine_touch_time_length=0)
 					engine_touch_time_length=my_engine_touch_time_length;
 				else if(my_engine_touch_time_length<engine_touch_time_length)
@@ -47,9 +49,9 @@ function create_scene_container_routine(my_webgpu)
 							draw_render_collector[target_name]=new Array();
 						draw_render_collector[target_name].push(
 						{
-							scene_id		:my_scene_index_id,
-							render_buffer_id:j,
-							project_matrix	:si.set_scene_target(my_scene_index_id,j)
+							scene_name			:	scene_name_array[i],
+							render_buffer_id	:	j,
+							project_matrix		:	si.set_scene_target(j)
 						});
 						set_system_buffer_flag=true;
 					}
@@ -67,7 +69,7 @@ function create_scene_container_routine(my_webgpu)
 				var p=draw_render_collector[target_name_array[i]];
 				
 				for(var j=0,nj=p.length;j<nj;j++)
-					this.scene_array[p[j].scene_id].scene_interface.
+					this.scene_object[p[j].scene_name].scene_interface.
 						create_scene_target(p[j].render_buffer_id,scene_pass_array);
 						
 				for(var pass_id=0,pass_number=scene_pass_array.length;pass_id<pass_number;pass_id++){
@@ -80,14 +82,14 @@ function create_scene_container_routine(my_webgpu)
 					if(this.webgpu.render_pass_encoder==null)
 						continue;
 					for(var j=0,nj=p.length;j<nj;j++)
-						this.scene_array[p[j].scene_id].scene_interface.draw_scene_target(
+						this.scene_object[p[j].scene_name].scene_interface.draw_scene_target(
 							p[j].project_matrix,scene_pass_array,pass_id,p[j].render_buffer_id);
 
 					this.webgpu.render_pass_encoder.end();
 					this.webgpu.render_pass_encoder=null;
 				}
 				for(var j=0,nj=p.length;j<nj;j++)
-					this.scene_array[p[j].scene_id].scene_interface.
+					this.scene_object[p[j].scene_name].scene_interface.
 						destroy_scene_target(p[j].render_buffer_id,scene_pass_array);
 			}
 			
@@ -99,14 +101,16 @@ function create_scene_container_routine(my_webgpu)
 			if(this.terminate_flag)
 				break;
 			
-			for(var i=0;i<this.scene_array.length;i++)
-				for(var j=0,nj=this.scene_array[i].scene_interface.get_render_buffer_number();j<nj;j++)
-					if(!(this.scene_array[i].terminate_flag))
-						if(this.scene_array[i].scene_interface.get_do_render_flag(j)){
-							await this.scene_array[i].scene_interface.complete_render_target(j);
-							if(this.terminate_flag)
-								break;
-						}
+			var scene_name_array=Object.keys(this.scene_object);
+			for(var i=0;(i<scene_name_array.length)&&(!(this.terminate_flag));i++){
+				var my_scene=this.scene_object[scene_name_array[i]];
+				for(var j=0,nj=my_scene.scene_interface.get_render_buffer_number();j<nj;j++){
+					if(my_scene.terminate_flag&&this.terminate_flag)
+						break;
+					if(my_scene.scene_interface.get_do_render_flag(j))
+						await my_scene.scene_interface.complete_render_target(j);
+				}
+			}
 			if(this.terminate_flag)
 				break;
 			await new Promise((resolve)=>
@@ -117,37 +121,66 @@ function create_scene_container_routine(my_webgpu)
 			});
 		}
 	}	
-	this.url_scene_create=async function(url,create_parameter,my_draw_canvas_id,user_process_bar_function)
+	this.url_scene_create=async function(url,
+		client_scene_name,create_parameter,my_draw_canvas_id,user_process_bar_function)
 	{
-		var my_program	=await import(url);
-		var my_scene	=await my_program.create_scene(
-				this.webgpu,my_draw_canvas_id,create_parameter,user_process_bar_function);
-		this.scene_array[this.scene_array.length]=my_scene;
+		var my_program=await import(url);
+		var old_scene=this.scene_object[client_scene_name];
+		if((typeof(old_scene)!="object")||(old_scene==null)){
+			var new_scene=await my_program.create_scene(this.webgpu,
+					my_draw_canvas_id,create_parameter,user_process_bar_function);
+			old_scene=this.scene_object[client_scene_name];
+			if((typeof(old_scene)!="object")||(old_scene==null))
+				this.scene_object[client_scene_name]=new_scene;
+			else
+				new_scene.destroy();
+		}
+		if(this.event_scene_name!=null)
+			if(typeof(this.scene_object[this.event_scene_name])=="object")
+				if(this.scene_object[this.event_scene_name]!=null)
+					return this.scene_object[client_scene_name];
 		
-		return my_scene;
+		this.event_scene_name=client_scene_name;	
+		return this.scene_object[client_scene_name];
 	}
-	this.this_scene_create=async function(create_parameter,my_draw_canvas_id,user_process_bar_function)
+	this.this_scene_create=async function(
+		client_scene_name,create_parameter,my_draw_canvas_id,user_process_bar_function)
 	{
-		var my_scene=await create_scene(this.webgpu,my_draw_canvas_id,create_parameter,user_process_bar_function);
-		this.scene_array[this.scene_array.length]=my_scene;
-		
-		return my_scene;
+		var old_scene=this.scene_object[client_scene_name];
+		if((typeof(old_scene)!="object")||(old_scene==null)){
+			var new_scene=await create_scene(this.webgpu,
+					my_draw_canvas_id,create_parameter,user_process_bar_function);
+			old_scene=this.scene_object[client_scene_name];
+			if((typeof(old_scene)!="object")||(old_scene==null))
+				this.scene_object[client_scene_name]=new_scene;
+			else
+				new_scene.destroy();
+		}
+		if(this.event_scene_name!=null)
+			if(typeof(this.scene_object[this.event_scene_name])=="object")
+				if(this.scene_object[this.event_scene_name]!=null)
+					return this.scene_object[client_scene_name];
+		this.event_scene_name=client_scene_name;
+		return this.scene_object[client_scene_name];
 	}
 	this.destroy=function()
 	{
 		this.terminate_flag=true;
 		
-		this.webgpu.destroy();
-		this.webgpu=null;
-		
-		for(var i=0;i<this.scene_array.length;i++)
-			if(this.scene_array[i]!=null){
-				if(!(this.scene_array[i].terminate_flag))
-					if(typeof(this.scene_array[i].destroy)=="function")
-						this.scene_array[i].destroy();
-				this.scene_array[i]=null;
-			}
-		this.draw_scene_array.length=0;	
+		if(this.webgpu!=null){
+			this.webgpu.destroy();
+			this.webgpu=null;
+		}
+		var scene_name_array=Object.keys(this.scene_object);
+		for(var i=0;i<scene_name_array.length;i++){
+			var my_scene=this.scene_object[scene_name_array[i]];
+			this.scene_object[scene_name_array[i]]=null;
+			if((typeof(my_scene)=="object")&&(my_scene!=null))
+				if(!(my_scene.terminate_flag))
+					if(typeof(my_scene.destroy)=="function")
+						my_scene.destroy();
+		}
+		this.scene_object=new Object();	
 		
 		for(var i=0,ni=this.scene_container_event_listener_array.length;i<ni;i++)
 			this.scene_container_event_listener_array[i].destroy();

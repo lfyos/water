@@ -8,13 +8,12 @@ function construct_scene_container_event_listener(my_canvas_id,my_canvas_array,m
 	{
 		if(scene_container.terminate_flag)
 			return null;
-		if(scene_container.current_scene_id<0)
+		if(scene_container.event_scene_name==null)
 			return null;
-		if(scene_container.current_scene_id>=scene_container.scene_array.length)
+		if(scene_container.event_scene_name.length<=0)
 			return null;
-		
-		var my_scene;	
-		if(typeof(my_scene=scene_container.scene_array[scene_container.current_scene_id])!="object")
+		var my_scene=scene_container.scene_object[scene_container.event_scene_name];	
+		if(typeof(my_scene)!="object")
 			return null;
 		if(my_scene==null)
 			return null;

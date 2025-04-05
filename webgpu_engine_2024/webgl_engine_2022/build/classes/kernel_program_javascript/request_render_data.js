@@ -134,15 +134,8 @@ async function request_render_data(scene)
 				case 0:
 					var my_target_component_id	=my_data[j++];
 					var my_target_driver_id		=my_data[j++];
-					var my_ids=scene.component_array_sorted_by_id;
-					my_ids=my_ids[my_target_component_id].component_ids;
-					p.target_ids={
-						component_id		:	my_target_component_id,
-						driver_id			:	my_target_driver_id,
-						render_id			:	my_ids[my_target_driver_id][0],
-						part_id				:	my_ids[my_target_driver_id][1],
-						data_buffer_id		:	my_ids[my_target_driver_id][2]
-					};
+					p.target_ids=scene.component_array_sorted_by_id[my_target_component_id];
+					p.target_ids=p.target_ids.component_ids[my_target_driver_id];
 					break;
 				case 1:
 					p.target_texture_id	=my_data[j++];

@@ -115,8 +115,8 @@ public class javascript_program
 		
 		String str[]=new String[]
 		{
-			"export var create_scene=async function(",
-			"	my_webgpu,my_draw_canvas_id,my_create_parameter,user_process_bar_function)",
+			"export var create_scene=async function(my_webgpu,",
+			"	my_draw_canvas_id,my_create_parameter,user_process_bar_function)",
 			"{",
 			"	if(typeof(my_draw_canvas_id)!=\"number\")",
 			"		my_draw_canvas_id=my_webgpu.canvas.length-1;",
@@ -140,7 +140,7 @@ public class javascript_program
 			"	if((my_webgpu=await create_webgpu(my_canvas_array)).error_flag)",
 			"		return null;",
 			"	var my_scene_container=new create_scene_container_routine(my_webgpu);",
-			"	my_scene_container.draw_scene_array();",
+			"	my_scene_container.draw_scene();",
 			"	return my_scene_container;"	,
 			"};",
 		};
