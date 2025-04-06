@@ -135,12 +135,6 @@ function create_scene_container_routine(my_webgpu)
 			else
 				new_scene.destroy();
 		}
-		if(this.event_scene_name!=null)
-			if(typeof(this.scene_object[this.event_scene_name])=="object")
-				if(this.scene_object[this.event_scene_name]!=null)
-					return this.scene_object[client_scene_name];
-		
-		this.event_scene_name=client_scene_name;	
 		return this.scene_object[client_scene_name];
 	}
 	this.this_scene_create=async function(
@@ -156,11 +150,6 @@ function create_scene_container_routine(my_webgpu)
 			else
 				new_scene.destroy();
 		}
-		if(this.event_scene_name!=null)
-			if(typeof(this.scene_object[this.event_scene_name])=="object")
-				if(this.scene_object[this.event_scene_name]!=null)
-					return this.scene_object[client_scene_name];
-		this.event_scene_name=client_scene_name;
 		return this.scene_object[client_scene_name];
 	}
 	this.destroy=function()
