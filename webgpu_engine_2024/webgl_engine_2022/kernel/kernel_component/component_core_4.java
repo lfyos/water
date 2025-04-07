@@ -161,41 +161,48 @@ public class component_core_4 extends component_core_3
 	}
 	private String [][]part_driver_mount(file_reader fr,scene_kernel sk,client_request_response request_response)
 	{
-		String ret_val[][];
-		if(driver_number()<=0)  {
+		int my_driver_number;
+		if((my_driver_number=driver_number())<=0)  {
 			debug_information.println(
-				"Part_driver driver assemble_file_name_and_file_charset error(driver_number()<=0):	",
+				"Part_driver driver assemble_file_name_and_file_charset error((my_driver_number=driver_number())<=0):	",
 				"component_name:	"+component_name);
 			return null;
 		}
-		component_driver c_d=driver_array.get(0);
-		if(c_d.component_part==null) {
-			debug_information.println(
-				"Part_driver driver assemble_file_name_and_file_charset error(driver_array[0].component_part==null):	",
-				"component_name:	"+component_name);
-			return null;
+		for(int my_driver_id=0;my_driver_id<my_driver_number;my_driver_id++) {
+			component_driver c_d=driver_array.get(my_driver_id);
+			if(c_d.component_part==null) {
+				debug_information.println(
+					"Part_driver driver assemble_file_name_and_file_charset error(driver_array[i].component_part==null):	",
+					"component_name:	"+component_name+"		driver_id:"+my_driver_id);
+				continue;
+			}
+			if(c_d.component_part.driver==null) {
+				debug_information.println(
+					"Part_driver driver assemble_file_name_and_file_charset error(driver_array[i].component_part.driver==null):	",
+					"component_name:	"+component_name+"		driver_id:"+my_driver_id);
+				continue;
+			}
+			String ret_val[][];
+			if((ret_val=c_d.component_part.driver.assemble_file_name_and_file_charset(
+				fr,c_d.component_part,sk,request_response))==null)
+			{
+				debug_information.println(
+					"Part_driver driver assemble_file_name_and_file_charset error(ret_val==null):	",
+					"component_name:	"+component_name+"		driver_id:"+my_driver_id);
+				continue;
+			}
+			if(ret_val.length<=0) {
+				debug_information.println(
+					"Part_driver driver assemble_file_name_and_file_charset error(ret_val.length<=0):	",
+					"component_name:	"+component_name+"		driver_id:"+my_driver_id);
+				continue;
+			}
+			return ret_val;
 		}
-		if(c_d.component_part.driver==null) {
-			debug_information.println(
-				"Part_driver driver assemble_file_name_and_file_charset error(driver_array[0].component_part.driver==null):	",
-				"component_name:	"+component_name);
-			return null;
-		}
-		if((ret_val=c_d.component_part.driver.assemble_file_name_and_file_charset(
-			fr,c_d.component_part,sk,request_response))==null)
-		{
-			debug_information.println(
-				"Part_driver driver assemble_file_name_and_file_charset error(ret_val==null):	",
-				"component_name:	"+component_name);
-			return null;
-		}
-		if(ret_val.length<=0) {
-			debug_information.println(
-				"Part_driver driver assemble_file_name_and_file_charset error(ret_val.length<=0):	",
-				"component_name:	"+component_name);
-			return null;
-		}
-		return ret_val;
+		debug_information.println(
+			"Part_driver driver assemble_file_name_and_file_charset error(NO assemble_file_name exist):	",
+			"component_name:	"+component_name+"		driver_number:"+my_driver_number);
+		return null;
 	}
 	private String [][]external_part_driver_mount(file_reader fr,component_construction_parameter ccp)
 	{

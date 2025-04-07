@@ -14,7 +14,7 @@ function create_scene_container_routine(my_webgpu)
 	this.draw_scene=async function()
 	{
 		while(!(this.terminate_flag)){
-			var engine_touch_time_length=0;
+			var engine_touch_time_length=Number.MAX_SAFE_INTEGER;
 			var draw_render_collector	=new Object();
 			var my_scene_object			=this.scene_object;
 			this.scene_object			=new Object();
@@ -22,8 +22,8 @@ function create_scene_container_routine(my_webgpu)
 			this.webgpu.command_encoder=this.webgpu.device.createCommandEncoder();
 			this.webgpu.compute_pass_encoder=this.webgpu.command_encoder.beginComputePass();
 			
-			var scene_name_array=Object.keys(my_scene_object);
-			for(var my_scene,i=0;i<scene_name_array.length;i++){
+			var my_scene,scene_name_array=Object.keys(my_scene_object).sort();
+			for(var i=0,ni=scene_name_array.length;i<ni;i++){
 				if(typeof(my_scene=my_scene_object[scene_name_array[i]])!="object")
 					continue;
 				if(my_scene==null)
@@ -32,29 +32,25 @@ function create_scene_container_routine(my_webgpu)
 					continue;
 				this.scene_object[scene_name_array[i]]=my_scene;
 
-				var si=my_scene.scene_interface;
-				si.set_scene_id(i);
-				
-				var my_engine_touch_time_length=si.process_scene();
-				if(engine_touch_time_length=0)
-					engine_touch_time_length=my_engine_touch_time_length;
-				else if(my_engine_touch_time_length<engine_touch_time_length)
+				var si=my_scene.scene_interface,my_engine_touch_time_length=si.process_scene(i);
+				if(my_engine_touch_time_length<engine_touch_time_length)
 					engine_touch_time_length=my_engine_touch_time_length;
 				
 				var set_system_buffer_flag=false;
-				for(var j=0,nj=si.get_render_buffer_number();j<nj;j++)
-					if(si.get_do_render_flag(j)){
-						var target_name=si.get_target_name(j);
-						if(!(Array.isArray(draw_render_collector[target_name])))
-							draw_render_collector[target_name]=new Array();
-						draw_render_collector[target_name].push(
-						{
-							scene_name			:	scene_name_array[i],
-							render_buffer_id	:	j,
-							project_matrix		:	si.set_scene_target(j)
-						});
-						set_system_buffer_flag=true;
-					}
+				for(var j=0,nj=si.get_render_buffer_number();j<nj;j++){
+					if(!(si.get_do_render_flag(j)))
+						continue;
+					set_system_buffer_flag=true;
+					var target_name=si.get_target_name(j);
+					if(!(Array.isArray(draw_render_collector[target_name])))
+						draw_render_collector[target_name]=new Array();
+					draw_render_collector[target_name].push(
+					{
+						scene_name			:	scene_name_array[i],
+						render_buffer_id	:	j,
+						project_matrix		:	si.set_scene_target(j)
+					});
+				}
 				if(set_system_buffer_flag){
 					si.set_system_buffer();
 					si.compute_scene_component_location();
@@ -105,7 +101,7 @@ function create_scene_container_routine(my_webgpu)
 			for(var i=0;(i<scene_name_array.length)&&(!(this.terminate_flag));i++){
 				var my_scene=this.scene_object[scene_name_array[i]];
 				for(var j=0,nj=my_scene.scene_interface.get_render_buffer_number();j<nj;j++){
-					if(my_scene.terminate_flag&&this.terminate_flag)
+					if(my_scene.terminate_flag||this.terminate_flag)
 						break;
 					if(my_scene.scene_interface.get_do_render_flag(j))
 						await my_scene.scene_interface.complete_render_target(j);
@@ -156,12 +152,8 @@ function create_scene_container_routine(my_webgpu)
 	{
 		this.terminate_flag=true;
 		
-		if(this.webgpu!=null){
-			this.webgpu.destroy();
-			this.webgpu=null;
-		}
 		var scene_name_array=Object.keys(this.scene_object);
-		for(var i=0;i<scene_name_array.length;i++){
+		for(var i=0,ni=scene_name_array.length;i<ni;i++){
 			var my_scene=this.scene_object[scene_name_array[i]];
 			this.scene_object[scene_name_array[i]]=null;
 			if((typeof(my_scene)=="object")&&(my_scene!=null))
@@ -173,10 +165,17 @@ function create_scene_container_routine(my_webgpu)
 		
 		for(var i=0,ni=this.scene_container_event_listener_array.length;i<ni;i++)
 			this.scene_container_event_listener_array[i].destroy();
-		this.scene_container_event_listener_array.length=0;
+		this.scene_container_event_listener_array=new Array();
 		
-		this.url_scene_create		=null;
-		this.this_scene_create		=null;
-		this.destroy				=null;
+		if(this.webgpu!=null){
+			this.webgpu.destroy();
+			this.webgpu=null;
+		}
+		
+		this.event_scene_name	=null;
+		this.draw_scene			=null;
+		this.url_scene_create	=null;
+		this.this_scene_create	=null;
+		this.destroy			=null;
 	}
 }

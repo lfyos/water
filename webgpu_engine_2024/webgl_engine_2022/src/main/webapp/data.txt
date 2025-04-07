@@ -17,7 +17,4 @@ Access-Control-Allow-Origin				*
     	SSLEnabled="true" clientAuth="false" maxThreads="150" scheme="https" secure="true" sslProtocol="TLS"
 />
 
-
-
-
-
+}

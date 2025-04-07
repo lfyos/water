@@ -37,9 +37,10 @@ var scene_container;
 async function body_onload()
 {
 	var url="./water",client_scene_name="my_client_scene_name";
-	var scene_container=await (await import(url)).scene_container_create(["my_canvas"]);
 	
+	scene_container=await (await import(url)).scene_container_create(["my_canvas"]);
 	scene_container.event_scene_name=client_scene_name;
+	
 //	await scene_container.this_scene_create(
 	await scene_container.url_scene_create(url,
 		client_scene_name,

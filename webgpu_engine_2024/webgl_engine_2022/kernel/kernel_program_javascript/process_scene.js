@@ -30,10 +30,7 @@ function construct_scene_interface(my_scene)
 	{
 		destroy_scene_target_routine(render_buffer_id,scene_target_array,this.scene);
 	}
-	this.set_scene_id=function(scene_id)
-	{
-		this.scene.scene_id=scene_id;
-	}
+	
 	this.set_scene_target=function(render_buffer_id)
 	{
 		return set_scene_target_routine(render_buffer_id,this.scene);
@@ -65,11 +62,13 @@ function construct_scene_interface(my_scene)
 				target_part_object,target_part_driver,target_render_driver,this.scene);
 	}
 	
-	this.process_scene=function()
+	this.process_scene=function(scene_id)
 	{
 		if(this.scene.terminate_flag)
 			return 0;
-			
+
+		this.scene.scene_id=scene_id;
+
 		this.scene.vertex_data_downloader.process_buffer_head_request_queue(this.scene);
 			
 		var start_time=(new Date()).getTime();
