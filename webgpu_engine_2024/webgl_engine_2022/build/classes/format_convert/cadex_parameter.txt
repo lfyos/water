@@ -1,7 +1,0 @@
-/*	class_charset		*/		UTF-8
-/*	target_charset		*/		null
-/*	min_memory_size		*/		256
-/*	max_memory_size		*/		1024
-/*	chordal_deflection	*/		0
-/*	angular_deflection	*/		0
-/*	max_step_number		*/		100

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="webgpu_engine">
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/kernel"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/format_converter"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/driver_general"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/driver_lession"/>
+        <property name="context-root" value="webgpu_engine"/>
+        <property name="java-output-path" value="/webgpu_engine/build/classes"/>
+    </wb-module>
+</project-modules>
