@@ -7,34 +7,36 @@ var scene_container;
 
 async function body_onload()
 {
-	var url="./water",client_scene_name="my_client_scene_name";
+	var url="./webgpu_engine",client_scene_name="my_client_scene_name";
 	
 	scene_container=await (await import(url)).scene_container_create(["my_canvas"]);
 	scene_container.event_scene_name=client_scene_name;
-		//Ã¿¸öÔªËØÊÇObjectÀàĞÍµÄ»æÍ¼»­²¼¡£
-		//Èç¹ûÊÇStringÀàĞÍ,ÔòÏµÍ³Ê¹ÓÃdocument.getElementById("my_canvas")½«Æä×ª»»ÎªObjectÀàĞÍÊı¾İ¡£
+		//æ¯ä¸ªå…ƒç´ æ˜¯Objectç±»å‹çš„ç»˜å›¾ç”»å¸ƒã€‚
+		//å¦‚æœæ˜¯Stringç±»å‹,åˆ™ç³»ç»Ÿä½¿ç”¨document.getElementById("my_canvas")å°†å…¶è½¬æ¢ä¸ºObjectç±»å‹æ•°æ®ã€‚
+
 	await scene_container.this_scene_create(
 //	await scene_container.url_scene_create(url,
 		"my_client_scene_name",
 		{	
-			user_name				:	"",						//ÓÃ»§Ãû	
-			pass_word				:	"",						//ÓÃ»§ÃÜÂë
-			language				:	"",						//ÓïÑÔ
-			scene_name				:	"",						//³¡¾°Ãû³Æ
-			link_name				:	"",						//Á¬½ÓÃû³Æ,ÓÃÓÚ¶àÈËĞ­Í¬²Ù×÷Ò»¸ö³¡¾°
+			user_name				:	"",						//ç”¨æˆ·å	
+			pass_word				:	"",						//ç”¨æˆ·å¯†ç 
+			language				:	"",						//è¯­è¨€
+			scene_name				:	"",						//åœºæ™¯åç§°
+			link_name				:	"",						//è¿æ¥åç§°,ç”¨äºå¤šäººååŒæ“ä½œä¸€ä¸ªåœºæ™¯
 			
-			change_part				:	"",						//part»»Ãû
-			change_component		:	"",						//component»»Ãû
-			part_type				:	"",						//partÀàĞÍ
-			fast_load				:	"false",				//¿ìËÙ×°ÔÚsceneĞÅÏ¢
-			type_sub_directory		:	"",						//ÏÔÊ¾ÄÚÈİtype
-			scene_sub_directory		:	"renzhichu/test_1",		//"sigma/A159-SR-302A",	//ÏÔÊ¾ÄÚÈİscene
-			scene_tmp_directory		:	"",						//ÏÔÊ¾ÄÚÈİscene tmp directory
-			client_sub_directory	:	"",						//ÏÔÊ¾ÄÚÈİclient
+			change_part				:	"",						//partæ¢å
+			change_component		:	"",						//componentæ¢å
+			part_type				:	"",						//partç±»å‹
+			fast_load				:	"false",				//å¿«é€Ÿè£…åœ¨sceneä¿¡æ¯
+			type_sub_directory		:	"",						//æ˜¾ç¤ºå†…å®¹type
+			scene_sub_directory		:	"renzhichu/test_1",		//"sigma/A159-SR-302A",	//æ˜¾ç¤ºå†…å®¹scene
+			scene_tmp_directory		:	"",						//æ˜¾ç¤ºå†…å®¹scene tmp directory
+			client_sub_directory	:	"",						//æ˜¾ç¤ºå†…å®¹client
 			
-			coordinate				:	"location.xyz.txt",		//×ø±êÏµÑ¡Ôñ
+			coordinate				:	"location.xyz.txt",		//åæ ‡ç³»é€‰æ‹©
 			
-			max_loading_number		:	5,						//Í¬Ê±ÏÂÔØÊıÁ¿
+			max_loading_number		:	5,						//åŒæ—¶ä¸‹è½½æ•°é‡
+
 
 		});
 }

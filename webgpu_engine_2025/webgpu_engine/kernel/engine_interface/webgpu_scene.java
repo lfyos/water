@@ -4,10 +4,9 @@ import java.io.File;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import kernel_scene.system_scene;
 import kernel_file_manager.file_reader;
 import kernel_network.network_implementation;
+import kernel_scene.system_scene;
 import kernel_common_class.debug_information;
 
 public class webgpu_scene 
@@ -25,7 +24,8 @@ public class webgpu_scene
 		
 		String configure_file_name=request.getSession().getServletContext().getRealPath("configure.txt");
 		if(!(new File(configure_file_name).exists())) {
-			debug_information.println("webserver_configure_file is NOT exist,its file_name is ",configure_file_name);
+			debug_information.println(
+					"webserver_configure_file is NOT exist,its file_name is ",configure_file_name);
 			System.exit(0);
 			return;
 		}

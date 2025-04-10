@@ -8,22 +8,22 @@ var render;
 function body_onload()
 {
 	construct_render_object(
-		"my_canvas",			//»æÍ¼»­²¼
-		"NoName",				//ÓÃ»§Ãû
-		"NoPassword",			//ÓÃ»§ÃÜÂë
-		"chinese",				//ÓïÑÔ
-		"bridge_old_32",		//³¡¾°Ãû³Æ	bridge_old_32		 64_old_one_16		64_old_two_24
-		"",						//Á¬½ÓÃû³Æ,ÓÃÓÚ¶àÈËĞ­Í¬²Ù×÷Ò»¸ö³¡¾°
-		[						//³õÊ¼»¯²ÎÊı
+		"my_canvas",			//ç»˜å›¾ç”»å¸ƒ
+		"NoName",				//ç”¨æˆ·å
+		"NoPassword",			//ç”¨æˆ·å¯†ç 
+		"chinese",				//è¯­è¨€
+		"bridge_old_32",		//åœºæ™¯åç§°	bridge_old_32		 64_old_one_16		64_old_two_24
+		"",						//è¿æ¥åç§°,ç”¨äºå¤šäººååŒæ“ä½œä¸€ä¸ªåœºæ™¯
+		[						//åˆå§‹åŒ–å‚æ•°
 		],
-		function(my_render)		//´´½¨³¡¾°³É¹¦ºóÖ´ĞĞµÄº¯Êı
+		function(my_render)		//åˆ›å»ºåœºæ™¯æˆåŠŸåæ‰§è¡Œçš„å‡½æ•°
 		{
-			render=my_render;				//°Ñ³¡¾°±äÁ¿±£´æµ½±äÁ¿renderÖĞ
-			document.title=render.title;	//ÉèÖÃÍøÒ³±êÌâ
+			render=my_render;				//æŠŠåœºæ™¯å˜é‡ä¿å­˜åˆ°å˜é‡renderä¸­
+			document.title=render.title;	//è®¾ç½®ç½‘é¡µæ ‡é¢˜
 			
 			render.zhengzhou_lipengfei.turn_on_off_display_point_on_pickup(false);
 			
-			render.zhengzhou_lipengfei.register_collector_stack_monitor(	//×¢²áÁĞ±í¼àÊÓÆ÷
+			render.zhengzhou_lipengfei.register_collector_stack_monitor(	//æ³¨å†Œåˆ—è¡¨ç›‘è§†å™¨
 				function(jason_data,text_data)
 				{
 					console.clear();
@@ -47,54 +47,54 @@ function body_onunload()
 <canvas id="my_canvas"	tabindex="0" width=1250	 height=750></canvas>
 <br/>
 
-<button type="button" onclick="render.zhengzhou_lipengfei.turnonoff_sound(true);"		>´ò¿ªÅäÒô</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.turnonoff_sound(false);"		>¹Ø±ÕÅäÒô</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.turnonoff_lod(true,true);"	>´ò¿ª²ã´ÎÏ¸½Ú</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.turnonoff_lod(false,false);"	>¹Ø±Õ²ã´ÎÏ¸½Ú</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.turnonoff_sound(true);"		>æ‰“å¼€é…éŸ³</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.turnonoff_sound(false);"		>å…³é—­é…éŸ³</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.turnonoff_lod(true,true);"	>æ‰“å¼€å±‚æ¬¡ç»†èŠ‚</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.turnonoff_lod(false,false);"	>å…³é—­å±‚æ¬¡ç»†èŠ‚</button>
 <br/>
 
-<button type="button" onclick="render.zhengzhou_lipengfei.set_display_mounting_component();"	>ÕıÔÚÆ´×°×é¼ş</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.set_display_mounted_component();" 	>ÒÑ¾­Æ´×°×é¼ş</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.set_display_unmounted_component();"	>ÉĞÎ´Æ´×°×é¼ş</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.set_display_all_component();" 		>ËùÓĞÆ´×°×é¼ş</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.set_display_mounting_component();"	>æ­£åœ¨æ‹¼è£…ç»„ä»¶</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.set_display_mounted_component();" 	>å·²ç»æ‹¼è£…ç»„ä»¶</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.set_display_unmounted_component();"	>å°šæœªæ‹¼è£…ç»„ä»¶</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.set_display_all_component();" 		>æ‰€æœ‰æ‹¼è£…ç»„ä»¶</button>
 <br/>
 
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_forward(true);"			>µ¥²½ÏòÇ°Æ´×°</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_forward(false);"		>Á¬ĞøÏòÇ°Æ´×°</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_backward(true);"		>µ¥²½Ïòºó²ğĞ¶</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_backward(false);"		>Á¬ĞøÏòºó²ğĞ¶</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_stop();"				>Í£Ö¹Æ´×°</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_jump(24,true);"			>Ìø×ª²¢Æ´×°</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_jump(24,false);"		>Ìø×ª²»Æ´×°</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_forward(true);"			>å•æ­¥å‘å‰æ‹¼è£…</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_forward(false);"		>è¿ç»­å‘å‰æ‹¼è£…</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_backward(true);"		>å•æ­¥å‘åæ‹†å¸</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_backward(false);"		>è¿ç»­å‘åæ‹†å¸</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_stop();"				>åœæ­¢æ‹¼è£…</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_jump(24,true);"			>è·³è½¬å¹¶æ‹¼è£…</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_jump(24,false);"		>è·³è½¬ä¸æ‹¼è£…</button>
 <br/> 
 
-<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_all_url(),'_blank');" 		>Æ´×°jason</button>
-<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_search_url(),'_blank');" 	>²éÑ¯jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_all_url(),'_blank');" 		>æ‹¼è£…jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_search_url(),'_blank');" 	>æŸ¥è¯¢jason</button>
 <br/>
 
-<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(true,true,false),'_blank');" >1.ÁĞ±íjason</button>
-<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(false,true,false),'_blank');">2.ÁĞ±íjason</button>
-<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(true,false,false),'_blank');">3.ÁĞ±íjason</button>
-<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(false,false,false),'_blank');">4.ÁĞ±íjason</button>
-<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(true,true,true),'_blank');" >5.ÁĞ±íjason</button>
-<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(false,true,true),'_blank');">6.ÁĞ±íjason</button>
-<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(true,false,true),'_blank');">7.ÁĞ±íjason</button>
-<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(false,false,true),'_blank');">8.ÁĞ±íjason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(true,true,false),'_blank');" >1.åˆ—è¡¨jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(false,true,false),'_blank');">2.åˆ—è¡¨jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(true,false,false),'_blank');">3.åˆ—è¡¨jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(false,false,false),'_blank');">4.åˆ—è¡¨jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(true,true,true),'_blank');" >5.åˆ—è¡¨jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(false,true,true),'_blank');">6.åˆ—è¡¨jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(true,false,true),'_blank');">7.åˆ—è¡¨jason</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.mount_collector_url(false,false,true),'_blank');">8.åˆ—è¡¨jason</button>
 <br/>
 
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_jump_hangup(909,function(jason_data,render,text_data){console.log(text_data);});">Ö´ĞĞ¸Ë¼ş¹ÒÆğ</button>
-<button type="button" onclick="window.open(render.zhengzhou_lipengfei.virtual_mount_collector_jason_url(),'_blank');">ĞéÄâÆ´×°jason</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.mount_reset_hangup(909,function(jason_data,render,text_data){});">¸´Î»¸Ë¼ş¹ÒÆğ</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_jump_hangup(909,function(jason_data,render,text_data){console.log(text_data);});">æ‰§è¡Œæ†ä»¶æŒ‚èµ·</button>
+<button type="button" onclick="window.open(render.zhengzhou_lipengfei.virtual_mount_collector_jason_url(),'_blank');">è™šæ‹Ÿæ‹¼è£…jason</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.mount_reset_hangup(909,function(jason_data,render,text_data){});">å¤ä½æ†ä»¶æŒ‚èµ·</button>
 <br/>
 
-<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\»ìÉ«¸Ë¼ş\\Ë¨¶¤_33.SLDPRT',true);">Ìí¼ÓË¨¶¤_33(Ê×´ÎÌí¼Ó)</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\»ìÉ«¸Ë¼ş\\Ë¨¶¤_33.SLDPRT',false);">Ìí¼ÓË¨¶¤_33(ºóĞøÌí¼Ó)</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\æ··è‰²æ†ä»¶\\æ “é’‰_33.SLDPRT',true);">æ·»åŠ æ “é’‰_33(é¦–æ¬¡æ·»åŠ )</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\æ··è‰²æ†ä»¶\\æ “é’‰_33.SLDPRT',false);">æ·»åŠ æ “é’‰_33(åç»­æ·»åŠ )</button>
 
-<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\»ìÉ«¸Ë¼ş\\ÂİË¨_29ÒÒ.SLDPRT',true);">Ìí¼ÓÂİË¨_29ÒÒ(Ê×´ÎÌí¼Ó)</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\»ìÉ«¸Ë¼ş\\ÂİË¨_29ÒÒ.SLDPRT',false);">Ìí¼ÓÂİË¨_29ÒÒ(ºóĞø²åÈë)</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\æ··è‰²æ†ä»¶\\èºæ “_29ä¹™.SLDPRT',true);">æ·»åŠ èºæ “_29ä¹™(é¦–æ¬¡æ·»åŠ )</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\æ··è‰²æ†ä»¶\\èºæ “_29ä¹™.SLDPRT',false);">æ·»åŠ èºæ “_29ä¹™(åç»­æ’å…¥)</button>
 
-<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\»ìÉ«¸Ë¼ş\\²Û¸Ö_±àºÅ_262.SLDPRT',true);">Ìí¼Ó262ºÅ²Û¸Ö(Ê×´ÎÌí¼Ó)</button>
-<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\»ìÉ«¸Ë¼ş\\²Û¸Ö_±àºÅ_262.SLDPRT',false);">Ìí¼Ó262ºÅ²Û¸Ö(ºóĞø²åÈë)</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\æ··è‰²æ†ä»¶\\æ§½é’¢_ç¼–å·_262.SLDPRT',true);">æ·»åŠ 262å·æ§½é’¢(é¦–æ¬¡æ·»åŠ )</button>
+<button type="button" onclick="render.zhengzhou_lipengfei.virtual_mount_insert_component('bridge\\æ··è‰²æ†ä»¶\\æ§½é’¢_ç¼–å·_262.SLDPRT',false);">æ·»åŠ 262å·æ§½é’¢(åç»­æ’å…¥)</button>
 <br/>
 
 </body>

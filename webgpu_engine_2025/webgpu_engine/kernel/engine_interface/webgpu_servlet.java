@@ -7,15 +7,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import jakarta.servlet.annotation.WebServlet;
-
-@WebServlet(
-		name="water_servlet",
-		urlPatterns = { 
-			"/water"
-		},
-		asyncSupported = true
-)
 public class webgpu_servlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
