@@ -5,37 +5,27 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 {
 	var create_data;
 	
-	for(var continue_flag=true;continue_flag;){
+	while(true){
 		var engine_promise=await fetch(request_url,
 					my_default_fetch_parameter.request_create_scene);
 		if(!(engine_promise.ok)){
-			alert("request_create_scene fail:"+engine_promise.status);
+			alert("Web server error when create scene,fetch fail:"+engine_promise.status);
 			return null;
 		}
 		try{
-			create_data = await engine_promise.json();
+			create_data=await engine_promise.json();
 		}catch(e){
-			alert("Web server error, or Create Too many scenes:  "+e.toString());
+			alert("Web server error when create scene, NOT jason scene date:  "+e.toString());
 			return null;
 		}
-		switch(typeof(create_data)){
-		case "object":
-			if(create_data!=null){
-				continue_flag=false;
-				break;
-			}
-			create_scene_sleep_time_length*=create_scene_sleep_time_length_scale;
-			if(create_scene_sleep_time_length>create_scene_max_sleep_time_length){
-				alert("Web server error,try too many times to create scene!");
-				return null;
-			}
-			await new Promise((resolve)=>{setTimeout(resolve,create_scene_sleep_time_length);});
+		if(Array.isArray(create_data))
 			break;
-		case "number":
-			alert("Web server create scene fail:	"+create_data.toString());
+		if(typeof(create_data)!="number"){
+			alert("Web server error when create scene, response_data type error:"+typeof(create_data));
 			return null;
-		default:
-			alert("Web server error, response_data type error!");
+		}
+		if(create_data!=0){
+			alert("Web server create scene fail:	"+create_data.toString());
 			return null;
 		}
 	}

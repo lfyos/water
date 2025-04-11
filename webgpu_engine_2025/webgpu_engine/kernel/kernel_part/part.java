@@ -141,11 +141,11 @@ public class part
 			break;
 		}
 		
-		gbocc.create_head_data(fw,file_collector,front_str,file_name+"."+front_str);
+		int file_number=gbocc.create_head_data(fw,file_collector,front_str,file_name+"."+front_str);
 		
 		fw.println("\t\t}",follow_str);
 		return   "item number:\t"	+Long.toString(gbocc.total_item_number)
-				+"\tfile number:\t"	+Integer.toString(gbocc.file_number);
+				+"\tfile number:\t"	+Integer.toString(file_number);
 	}
 	public primitive_interface create_primitive_interface(
 			system_parameter system_par,boolean jump_access_flag)

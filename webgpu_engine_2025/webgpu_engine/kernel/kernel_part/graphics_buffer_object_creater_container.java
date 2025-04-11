@@ -52,42 +52,40 @@ public class graphics_buffer_object_creater_container
 			p_list.add(p_list.size(),null);
 	}
 	
-	public int file_number;
 	public long total_item_number;
 	
-	public void create_head_data(file_writer head_fw,
+	public int create_head_data(file_writer head_fw,
 			mesh_file_collector file_collector,String file_type,String file_name)
 	{
 		ArrayList<graphics_buffer_object_creater> p_list;
 		graphics_buffer_object_creater p_creater;
 		
-		file_number=0;
-		for(int i=0,ni=creaters.size(),index_id;i<ni;i++) {
-			p_list=creaters.get(i);
-			index_id=p_list.size()-1;
-			p_creater=p_list.get(index_id);
-			file_number+=index_id+1;
-			if(p_creater==null)
-				file_number--; 
-			else
+		for(int i=0,ni=creaters.size();i<ni;i++) 
+			if((p_creater=(p_list=creaters.get(i)).get(p_list.size()-1))!=null)
 				p_creater.test_end(0,true);
-		}
+		
 		head_fw.println("\t\t\t\t\"region_data\"\t:\t[");
 		
 		String creater_file_name;
-		
+		int file_number=0;
+		long item_number;
 		for(int i=0,ni=creaters.size(),file_id=0;i<ni;i++)
 			for(int j=0,nj=(p_list=creaters.get(i)).size();j<nj;j++) {
 				if((p_creater=p_list.get(j))==null)
 					continue;
-				if((creater_file_name=p_creater.create_head_data(
-						head_fw,Integer.toString(i),(file_id<(file_number-1))?",":""))==null)
+				if((item_number=p_creater.get_item_number())<=0)
 					continue;
+				if(file_id>0)
+					head_fw.println(",");
+				creater_file_name=p_creater.create_head_data(head_fw,i);
 				String target_file_name=file_name+Integer.toString(file_id);
 				file_writer.file_rename(creater_file_name,target_file_name+".txt");
-				total_item_number+=p_creater.get_item_number();
+				total_item_number+=item_number;
 				file_collector.register(file_type,file_id++,target_file_name);
+				file_number++;
 			}
-		head_fw.println("\t\t\t\t]");
+		head_fw.println().println("\t\t\t\t]");
+		
+		return file_number;
 	}
 }

@@ -7,17 +7,17 @@ async function create_scene_routine(my_webgpu,
 	else if(my_create_parameter==null)
 		my_create_parameter={};
 		
-	my_create_parameter.user_name	=(typeof(my_create_parameter.user_name)	!="string")	?"NoName"		:(my_create_parameter.user_name.trim());
-	my_create_parameter.user_name	=(my_create_parameter.user_name.length<=0)			?"NoName"		:(my_create_parameter.user_name);
+	my_create_parameter.user_name	=(typeof(my_create_parameter.user_name)	!="string")	?"NoName"	:(my_create_parameter.user_name.trim());
+	my_create_parameter.user_name	=(my_create_parameter.user_name.length<=0)			?"NoName"	:(my_create_parameter.user_name);
 	
-	my_create_parameter.pass_word	=(typeof(my_create_parameter.pass_word)	!="string")	?"NoPassword"	:(my_create_parameter.pass_word.trim());
-	my_create_parameter.pass_word	=(my_create_parameter.pass_word.length<=0)			?"NoPassword"	:(my_create_parameter.pass_word);
+	my_create_parameter.pass_word	=(typeof(my_create_parameter.pass_word)	!="string")	?"NoPassword":(my_create_parameter.pass_word.trim());
+	my_create_parameter.pass_word	=(my_create_parameter.pass_word.length<=0)			?"NoPassword":(my_create_parameter.pass_word);
 	
-	my_create_parameter.language	=(typeof(my_create_parameter.language)	!="string")	?"chinese"		:(my_create_parameter.language.trim());
-	my_create_parameter.language	=(my_create_parameter.language.length<=0)			?"chinese"		:(my_create_parameter.language);
+	my_create_parameter.language	=(typeof(my_create_parameter.language)	!="string")	?"chinese"	:(my_create_parameter.language.trim());
+	my_create_parameter.language	=(my_create_parameter.language.length<=0)			?"chinese"	:(my_create_parameter.language);
 	
-	my_create_parameter.scene_name	=(typeof(my_create_parameter.scene_name)!="string")	?""				:(my_create_parameter.scene_name.trim());
-	my_create_parameter.link_name	=(typeof(my_create_parameter.link_name)	!="string")	?""				:(my_create_parameter.link_name.trim());	
+	my_create_parameter.scene_name	=(typeof(my_create_parameter.scene_name)!="string")	?""			:(my_create_parameter.scene_name.trim());
+	my_create_parameter.link_name	=(typeof(my_create_parameter.link_name)	!="string")	?""			:(my_create_parameter.link_name.trim());	
 	
 	var my_item_value,my_create_parameter_string="";
 	for(var my_item_name in my_create_parameter)

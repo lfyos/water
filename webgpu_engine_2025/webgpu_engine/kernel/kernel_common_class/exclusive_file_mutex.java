@@ -38,7 +38,6 @@ public class exclusive_file_mutex
 	{
 		for(long sleep_time_length=50,max_time_length=2000;;){
 			File f=new File(file_name);
-			
 			try{
 				if(f_out==null)
 					f_out=new RandomAccessFile(f,"rw");

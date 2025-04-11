@@ -132,7 +132,7 @@ public class response_render_component_request
 	private static int response_buffer_object_request(part p,scene_kernel sk,client_information ci)
 	{
 		String directory_name=file_directory.part_file_directory(p,sk.system_par,sk.scene_par)+"mesh.";
-		String url_directory=ci.request_url_header+"&command=buffer&operation=buffer_data"
+		String url_directory=ci.request_url_header+"&command=buffer&method=buffer_data"
 								+"&render="+(p.render_id)+"&part="+(p.part_id)+"&data_file=";
 		
 		int ret_val=0;
@@ -199,7 +199,7 @@ public class response_render_component_request
 			String package_url;
 			if((package_url=ci.get_file_proxy_url(package_file_name,sk.system_par))==null) {
 				package_url =ci.request_url_header;
-				package_url+="&command=buffer&operation=buffer_package&package=";
+				package_url+="&command=buffer&method=buffer_package&package=";
 				package_url+=part_type_id+"_"+part_package_id;
 				package_url+="&random="+Math.random();
 			}

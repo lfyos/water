@@ -14,18 +14,18 @@ public class scene_kernel_and_client_information_container
 {
 	public scene_kernel_container	scene_kernel_cont;
 	public client_information 		client_information;
-	private volatile int 			access_lock_number;
+	private volatile int 			kernel_and_client_information_lock_number;
 	
 	public scene_kernel_and_client_information_container(scene_kernel_container my_scene_kernel_cont)
 	{
 		scene_kernel_cont	=my_scene_kernel_cont;
 		client_information	=null;
-		access_lock_number	=0;
+		kernel_and_client_information_lock_number	=0;
 	}
-	synchronized public int lock_number(int modify_number) 
+	synchronized public int modify_kernel_and_client_information_lock_number(int modify_number) 
 	{
-		access_lock_number+=modify_number;
-		return access_lock_number;
+		kernel_and_client_information_lock_number+=modify_number;
+		return kernel_and_client_information_lock_number;
 	}
 	private scene_call_result get_scene_result_routine(
 			component_load_source_container component_load_source_cont,client_process_bar process_bar,
@@ -80,7 +80,6 @@ public class scene_kernel_and_client_information_container
 		return dispatch_request_main.get_scene_result(
 					delay_time_length,scene_kernel_cont.sk,client_information);
 	}
-	
 	public scene_call_result get_scene_result(client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container,
 			component_load_source_container component_load_source_cont,

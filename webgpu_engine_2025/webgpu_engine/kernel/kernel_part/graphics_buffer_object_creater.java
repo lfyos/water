@@ -75,18 +75,17 @@ public class graphics_buffer_object_creater
 		}
 		text_fw.print("]");
 		text_fw.close();
+		
+		if(item_number<=0)
+			(new File(text_fw.directory_name+text_fw.file_name)).delete();
+
 		return true;
 	}
-	public String create_head_data(file_writer head_fw,String material_id,String follow_str)
+	public String create_head_data(file_writer head_fw,int material_id)
 	{
-		if(text_fw.output_data_length<=0){
-			(new File(text_fw.directory_name+text_fw.file_name)).delete();
-			return null;
-		}
-
 		head_fw.println("\t\t\t\t\t\t{");
-		head_fw.println("\t\t\t\t\t\t\t\"material_id\"	:	",material_id+",");
-		
+		head_fw.print  ("\t\t\t\t\t\t\t\"material_id\"	:	",material_id).println(",");
+
 		head_fw.print  ("\t\t\t\t\t\t\t");
 		if(region_box==null)
 			head_fw.println("\"region_box\"	:	[[0,0,0,1],[0,0,0,1]],");
@@ -102,7 +101,7 @@ public class graphics_buffer_object_creater
 
 		head_fw.println("\t\t\t\t\t\t\t\"item_number\"	:	",item_number);
 		
-		head_fw.println("\t\t\t\t\t\t}",follow_str);
+		head_fw.print("\t\t\t\t\t\t}");
 		
 		return text_fw.directory_name+text_fw.file_name;
 	}

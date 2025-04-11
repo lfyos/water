@@ -9,18 +9,18 @@ import kernel_render.render_container;
 
 public class scene_kernel_container
 {
-	private volatile int link_number;
+	private volatile int scene_kernel_link_number;
 	
 	public scene_kernel sk;
 	public boolean initilization_flag;
 	
-	public volatile ReentrantLock scene_kernel_container_lock;
+	public ReentrantLock scene_kernel_container_lock;
 	
-	public int get_link_number()
+	public int get_scene_kernel_link_number()
 	{
-		return link_number;
+		return scene_kernel_link_number;
 	}
-	public int update_link_number(int modify_number)
+	public int update_scene_kernel_link_number(int modify_number)
 	{
 		int ret_val;
 		
@@ -28,8 +28,8 @@ public class scene_kernel_container
 		if((my_lock=scene_kernel_container_lock)==null)
 			return 0;
 		my_lock.lock();
-		link_number+=modify_number;
-		ret_val=link_number;
+		scene_kernel_link_number+=modify_number;
+		ret_val=scene_kernel_link_number;
 		my_lock.unlock();
 		return ret_val;
 	}
@@ -45,7 +45,7 @@ public class scene_kernel_container
 			if(scene_kernel_container_lock!=null)
 				scene_kernel_container_lock=null;
 			
-			link_number=0;
+			scene_kernel_link_number=0;
 			
 			my_lock.unlock();
 		}
@@ -68,7 +68,7 @@ public class scene_kernel_container
 		else	
 			debug_information.println("Cann't Create scene:	",my_scene_name+"	"+my_link_name);
 
-		link_number=0;
+		scene_kernel_link_number=0;
 		initilization_flag=true;
 		scene_kernel_container_lock=new ReentrantLock();
 	}

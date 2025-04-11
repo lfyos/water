@@ -85,7 +85,7 @@ public class dispatch_buffer_request
 	}
 	static public String do_dispatch(scene_kernel sk,client_information ci)
 	{
-		String str=ci.request_response.get_parameter("operation");
+		String str=ci.request_response.get_parameter("method");
 		str=(str==null)?"":(str.toLowerCase());
 		
 		switch(str){

@@ -25,6 +25,55 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	private TreeMap<KEY_TYPE,tree_node> tree;
 	private tree_node first,last;
 	
+	private void dismount_from_list(tree_node p)
+	{
+		tree_node my_front=p.front,my_back=p.back;
+		if(my_front==null){
+			if(my_back==null) {
+				first=null;
+				last=null;
+			}else{
+				first=first.back;
+				first.front=null;
+			}
+		}else if(my_back==null) {
+			last=last.front;
+			last.back=null;
+		}else{
+			my_front.back=my_back;
+			my_back.front=my_front;
+		}
+		p.front=null;
+		p.back=null;
+	}
+	private void mount_to_first(tree_node p)
+	{
+		if(first==null) {
+			p.front=null;
+			p.back=null;
+			first=p;
+			last=p;
+		}else{
+			p.front=null;
+			p.back=first;
+			first.front=p;
+			first=p;
+		}
+	}
+	private void mount_to_last(tree_node p)
+	{
+		if(last==null){
+			p.front=null;
+			p.back=null;
+			first=p;
+			last=p;
+		}else {
+			p.front=last;
+			p.back=null;
+			last.back=p;
+			last=p;
+		}
+	}
 	public tree_search_container(Comparator<KEY_TYPE> my_comparator)
 	{
 		tree=new TreeMap<KEY_TYPE,tree_node>(my_comparator);
@@ -61,21 +110,8 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	{
 		tree_node p=new tree_node(my_key,my_value);
 		tree.put(my_key,p);
-		
-		if(last==null){
-			p.front=null;
-			p.back=null;
-			first=p;
-			last=p;
-		}else {
-			p.front=last;
-			p.back=null;
-			last.back=p;
-			last=p;
-		}
-		
+		mount_to_last(p);
 		p.touch_time=nanosecond_timer.absolute_nanoseconds();
-		
 		return p.value;
 	}
 	public VALUE_TYPE move_to_first(KEY_TYPE my_key)
@@ -85,35 +121,9 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		if((p=tree.get(my_key))==null)
 			return null;
 		
-		tree_node my_front=p.front,my_back=p.back;
+		dismount_from_list(p);
+		mount_to_first(p);
 		
-		if(my_front==null){
-			if(my_back==null) {
-				first=null;
-				last=null;
-			}else{
-				first=first.back;
-				first.front=null;
-			}
-		}else if(my_back==null) {
-			last=last.front;
-			last.back=null;
-		}else{
-			my_front.back=my_back;
-			my_back.front=my_front;
-		}
-
-		if(first==null) {
-			p.front=null;
-			p.back=null;
-			first=p;
-			last=p;
-		}else{
-			p.front=null;
-			p.back=first;
-			first.front=p;
-			first=p;
-		}
 		p.touch_time=0;
 		
 		return p.value;
@@ -124,37 +134,8 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	
 		if((p=tree.get(my_key))==null)
 			return null;
-		
-		tree_node my_front=p.front,my_back=p.back;
-		
-		if(my_front==null){
-			if(my_back==null) {
-				first=null;
-				last=null;
-			}else{
-				first=first.back;
-				first.front=null;
-			}
-		}else if(my_back==null) {
-			last=last.front;
-			last.back=null;
-		}else{
-			my_front.back=my_back;
-			my_back.front=my_front;
-		}
-		
-		if(last==null) {
-			p.front=null;
-			p.back=null;
-			first=p;
-			last=p;
-		}else {
-			p.front=last;
-			p.back=null;
-			last.back=p;
-			last=p;
-		}
-		
+		dismount_from_list(p);
+		mount_to_last(p);
 		p.touch_time=nanosecond_timer.absolute_nanoseconds();
 		
 		return p.value;
@@ -162,31 +143,9 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	public VALUE_TYPE remove(KEY_TYPE my_key)
 	{
 		tree_node p;
-		
 		if((p=tree.remove(my_key))==null)
 			return null;
-		
-		tree_node my_front=p.front,my_back=p.back;
-		
-		if(my_front==null){
-			if(my_back==null) {
-				first=null;
-				last=null;
-			}else{
-				first=first.back;
-				first.front=null;
-			}
-		}else if(my_back==null) {
-			last=last.front;
-			last.back=null;
-		}else{
-			my_front.back=my_back;
-			my_back.front=my_front;
-		}
-		
-		p.front=null;
-		p.back=null;
-		
+		dismount_from_list(p);
 		return p.value;
 	}
 }

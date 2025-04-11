@@ -157,7 +157,7 @@ public class dispatch_create_scene_request
 		int camera_number	=(sk.camera_cont==null)?0:sk.camera_cont.size();
 		ci.request_response.
 			print("{").															//parameter	4
-				print("\"component_number\":",			component_number).
+				print( "\"component_number\":",			component_number).
 				print(",\"render_number\":",			sk.render_cont.renders.size()).
 				print(",\"modifier_container_number\":",sk.modifier_cont.length).
 				print(",\"camera_number\":",			camera_number).

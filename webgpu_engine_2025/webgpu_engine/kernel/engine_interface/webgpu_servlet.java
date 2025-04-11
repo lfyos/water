@@ -7,6 +7,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+@jakarta.servlet.annotation.WebServlet(
+	asyncSupported = true,
+	urlPatterns = { 
+		"/webgpu_engine" 
+	}
+)
 public class webgpu_servlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;

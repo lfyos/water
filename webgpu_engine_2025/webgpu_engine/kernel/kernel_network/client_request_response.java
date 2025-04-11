@@ -62,9 +62,9 @@ public class client_request_response extends common_writer
 			output_stream=null;
 		}
 	}
-	public client_request_response(String charset_name,network_implementation my_implementor)
+	public client_request_response(network_implementation my_implementor,system_parameter system_par)
 	{
-		super(charset_name,"[",",","]");
+		super(system_par.network_data_charset,"[",",","]");
 				
 		implementor			=my_implementor;
 		
@@ -85,14 +85,19 @@ public class client_request_response extends common_writer
 		language_str	=((language_str=get_parameter("language"))==null)	?"chinese"		:language_str.trim();
 		
 		String my_container_str;
-		if((my_container_str=get_parameter("container"))!=null)
+		if((my_container_str=get_parameter("container"))==null)
+			container_id=-1;
+		else
 			try{
 				container_id=Integer.decode(my_container_str);
-				return;
 			}catch(Exception e){
+				container_id=-1;
 				debug_information.println("Error container_id:	",my_container_str);
 			}
-		container_id=-1;
+		if(container_id<0)
+			container_id=(int)Math.round(system_par.max_client_container_number*Math.random());
+		container_id%=system_par.max_client_container_number;
+		return;
 	}
 	private void inset_result(String result[])
 	{

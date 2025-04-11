@@ -24,7 +24,7 @@ public class scene_kernel_container_search_tree
 	public buffer_object_file_modify_time_and_length_container system_boftal_container;
 	private part_loader_container part_loader_cont;
 	
-	private volatile ReentrantLock scene_interface_container_lock;
+	private volatile ReentrantLock scene_kernel_container_search_tree_lock;
 	
 	private void load_render_container(
 		client_request_response request_response,system_parameter system_par)
@@ -87,7 +87,7 @@ public class scene_kernel_container_search_tree
 		
 		scene_kernel_container p;
 		if((p=tree.search(new String[]{scene_name,link_name}))!=null) {
-			p.update_link_number(1);
+			p.update_scene_kernel_link_number(1);
 			return p;
 		}
 		if(   (scene_counter.scene_kernel_number   >=system_par.max_scene_kernel_number)
@@ -99,9 +99,9 @@ public class scene_kernel_container_search_tree
 		}
 		
 		scene_kernel_container scene_kernel_cont=new scene_kernel_container(
-			scene_name,link_name,request_response,system_par,
-			client_scene_file_name,client_scene_file_charset,
-			original_render,part_loader_cont);
+				scene_name,link_name,request_response,system_par,
+				client_scene_file_name,client_scene_file_charset,
+				original_render,part_loader_cont);
 		
 		if(scene_kernel_cont.sk==null){
 			debug_information.println("Create scene fail:	",scene_name+"	"+link_name);
@@ -110,7 +110,7 @@ public class scene_kernel_container_search_tree
 			return null;
 		}
 		debug_information.println("Create scene success:	",scene_name+"	"+link_name);
-		scene_kernel_cont.update_link_number(1);
+		scene_kernel_cont.update_scene_kernel_link_number(1);
 		
 		tree.add(new String[]{scene_name,link_name},scene_kernel_cont);
 	
@@ -121,7 +121,7 @@ public class scene_kernel_container_search_tree
 	{
 		scene_kernel_container p;
 		for(String key[]={my_scene_name,my_link_name};(p=tree.search(key))!=null;) {
-			if(p.update_link_number(-1)>0)
+			if(p.update_scene_kernel_link_number(-1)>0)
 				return;
 			tree.remove(key);
 
@@ -150,7 +150,7 @@ public class scene_kernel_container_search_tree
 			create_scene_counter scene_counter,system_parameter system_par)
 	{
 		ReentrantLock my_lock;
-		if((my_lock=scene_interface_container_lock)==null)
+		if((my_lock=scene_kernel_container_search_tree_lock)==null)
 			return null;
 		my_lock.lock();
 		
@@ -169,6 +169,7 @@ public class scene_kernel_container_search_tree
 			ret_val=null;
 		}
 		my_lock.unlock();
+		
 		return ret_val;
 	}
 	public void destroy_scene_kernel_container(
@@ -176,17 +177,16 @@ public class scene_kernel_container_search_tree
 			create_scene_counter scene_counter)
 	{
 		ReentrantLock my_lock;
-		if((my_lock=scene_interface_container_lock)==null)
+		if((my_lock=scene_kernel_container_search_tree_lock)==null)
 			return;
 		my_lock.lock();
-		destroy_scene_kernel_container_routine(
-				my_scene_name,my_link_name,scene_counter);
+		destroy_scene_kernel_container_routine(my_scene_name,my_link_name,scene_counter);
 		my_lock.unlock();
 	}
 	public void destroy()
 	{
 		ReentrantLock my_lock;
-		if((my_lock=scene_interface_container_lock)==null)
+		if((my_lock=scene_kernel_container_search_tree_lock)==null)
 			return;
 		my_lock.lock();
 		
@@ -209,7 +209,7 @@ public class scene_kernel_container_search_tree
 			part_loader_cont=null;
 		}
 		
-		scene_interface_container_lock=null;
+		scene_kernel_container_search_tree_lock=null;
 		
 		my_lock.unlock();
 	}
@@ -217,11 +217,11 @@ public class scene_kernel_container_search_tree
 	{
 		tree=new tree_string_search_container<scene_kernel_container>();
 		
-		component_load_source_cont		=new component_load_source_container();
+		component_load_source_cont				=new component_load_source_container();
 		
-		original_render					=null;
-		system_boftal_container			=null;
-		part_loader_cont				=new part_loader_container();
-		scene_interface_container_lock	=new ReentrantLock();
+		original_render							=null;
+		system_boftal_container					=null;
+		part_loader_cont						=new part_loader_container();
+		scene_kernel_container_search_tree_lock	=new ReentrantLock();
 	}
 }

@@ -214,6 +214,7 @@ public class part_loader_container
 			buffer_object_file_modify_time_and_length_container boftal_container[])
 	{
 		String part_temporary_file_directory=file_directory.part_file_directory(my_part,system_par,scene_par);
+		
 		if(fast_load_routine(
 				last_modified_time,part_temporary_file_directory,
 				my_part,my_copy_from_part,system_par,boftal_container))

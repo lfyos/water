@@ -12,7 +12,7 @@ import kernel_scene.system_parameter;
 
 public class client_interface_search_tree 
 {
-	private volatile ReentrantLock client_interface_search_tree_lock;
+	private ReentrantLock client_interface_search_tree_lock;
 	private tree_string_search_container<client_interface> tree;
 	
 	private void process_timeout_client_interface(
@@ -38,15 +38,13 @@ public class client_interface_search_tree
 			debug_information.print  ("Still active client_interface number is  ",size-1);
 			debug_information.println("/",my_system_par.max_client_interface_number);
 			
-			my_value.destroy(scene_search_tree,scene_counter);
 			tree.remove(my_key);
+			my_value.destroy(scene_search_tree,scene_counter);
 		}
 	}
-	public client_interface get_client_interface(
-			client_request_response request_response,
-			system_parameter my_system_par,
+	public client_interface get_client_interface(client_request_response request_response,
 			scene_kernel_container_search_tree scene_search_tree,
-			create_scene_counter scene_counter)
+			create_scene_counter scene_counter,system_parameter my_system_par)
 	{
 		client_interface ret_val;
 		
@@ -79,7 +77,6 @@ public class client_interface_search_tree
 		
 		return ret_val;
 	}
-	
 	public void destroy(system_parameter my_system_par,
 			scene_kernel_container_search_tree scene_search_tree,
 			create_scene_counter scene_counter)
