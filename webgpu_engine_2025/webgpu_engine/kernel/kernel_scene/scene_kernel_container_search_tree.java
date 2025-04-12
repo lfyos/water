@@ -87,7 +87,7 @@ public class scene_kernel_container_search_tree
 		
 		scene_kernel_container p;
 		if((p=tree.search(new String[]{scene_name,link_name}))!=null) {
-			p.update_scene_kernel_link_number(1);
+			p.modify_scene_kernel_link_number(1);
 			return p;
 		}
 		if(   (scene_counter.scene_kernel_number   >=system_par.max_scene_kernel_number)
@@ -110,7 +110,7 @@ public class scene_kernel_container_search_tree
 			return null;
 		}
 		debug_information.println("Create scene success:	",scene_name+"	"+link_name);
-		scene_kernel_cont.update_scene_kernel_link_number(1);
+		scene_kernel_cont.modify_scene_kernel_link_number(1);
 		
 		tree.add(new String[]{scene_name,link_name},scene_kernel_cont);
 	
@@ -121,7 +121,7 @@ public class scene_kernel_container_search_tree
 	{
 		scene_kernel_container p;
 		for(String key[]={my_scene_name,my_link_name};(p=tree.search(key))!=null;) {
-			if(p.update_scene_kernel_link_number(-1)>0)
+			if(p.modify_scene_kernel_link_number(-1)>0)
 				return;
 			tree.remove(key);
 
@@ -153,24 +153,24 @@ public class scene_kernel_container_search_tree
 		if((my_lock=scene_kernel_container_search_tree_lock)==null)
 			return null;
 		my_lock.lock();
-		
-		scene_kernel_container ret_val=null;
+
 		if(original_render==null)
 			load_render_container(request_response,system_par);
 		
+		scene_kernel_container my_scene_kernel_container=null;
 		try {
-			ret_val=create_scene_kernel_container_routine(request_response,
+			my_scene_kernel_container=create_scene_kernel_container_routine(request_response,
 				client_scene_file_name,client_scene_file_charset,scene_counter,system_par);
 		}catch(Exception e) {
 			e.printStackTrace();
 			
 			debug_information.println("get_kernel_container of scene_interface fail");
 			debug_information.println(e.toString());
-			ret_val=null;
+			my_scene_kernel_container=null;
 		}
 		my_lock.unlock();
 		
-		return ret_val;
+		return my_scene_kernel_container;
 	}
 	public void destroy_scene_kernel_container(
 			String my_scene_name,String my_link_name,

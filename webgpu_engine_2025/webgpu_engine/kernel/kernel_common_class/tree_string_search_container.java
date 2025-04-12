@@ -13,7 +13,6 @@ class tree_string_search_container_comparator implements Comparator<String[]>
 		return len_1-len_2;
 	}
 }
-
 public class tree_string_search_container <VALUE_TYPE> extends tree_search_container<String[],VALUE_TYPE>
 {
 	public tree_string_search_container()

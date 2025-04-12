@@ -61,7 +61,8 @@ public class sorter <DATA_TYPE,KEY_TYPE>
 
 		for(int i=1;i<part_number;i++)
 			for(int j=i,parent,result;j>0;j=parent){
-				if((result=compare_data(data_array[parent=(j-1)/2],data_array[j]))==0)
+				parent=(j-1)/2;
+				if((result=compare_data(data_array[parent],data_array[j]))==0)
 					result=id_array[parent]-id_array[j];
 				if(result>=0)
 					break;
@@ -87,7 +88,7 @@ public class sorter <DATA_TYPE,KEY_TYPE>
 				if((other_child=select_child+1)<i){
 					if((result=compare_data(data_array[select_child],data_array[other_child]))==0)
 						result=id_array[select_child]-id_array[other_child];
-					if(result<0)
+					if(result<=0)
 						select_child=other_child;
 				}
 				if((result=compare_data(data_array[j],data_array[select_child]))==0)

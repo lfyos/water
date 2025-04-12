@@ -21,8 +21,8 @@ public class client_interface_search_tree
 			create_scene_counter scene_counter)
 	{
 		for(long my_touch_time;(my_touch_time=tree.first_touch_time())>0;){
-			String 				my_key[]=tree.get_first_key();
-			client_interface 	my_value=tree.get_first_value();
+			String 				my_client_id_and_user_name[]=tree.get_first_key();
+			client_interface 	my_client_interface			=tree.get_first_value();
 			
 			int size=tree.size();
 			long time_length=nanosecond_timer.absolute_nanoseconds()-my_touch_time;
@@ -31,22 +31,22 @@ public class client_interface_search_tree
 				if(size<my_system_par.max_client_interface_number)
 					if(time_length<my_system_par.scene_expire_time_length)
 						break;
-			debug_information.println("Delete client_interface, client id is ",my_key[0]);
-			debug_information.println("Delete client_interface, user name is ",my_key[1]);
+			debug_information.println("Delete client_interface, client id is ",my_client_id_and_user_name[0]);
+			debug_information.println("Delete client_interface, user name is ",my_client_id_and_user_name[1]);
 			debug_information.print  ("Time interval ",time_length);
 			debug_information.println(", max time interval  ",my_system_par.scene_expire_time_length);
 			debug_information.print  ("Still active client_interface number is  ",size-1);
 			debug_information.println("/",my_system_par.max_client_interface_number);
 			
-			tree.remove(my_key);
-			my_value.destroy(scene_search_tree,scene_counter);
+			tree.remove(my_client_id_and_user_name);
+			my_client_interface.destroy(scene_search_tree,scene_counter);
 		}
 	}
 	public client_interface get_client_interface(client_request_response request_response,
 			scene_kernel_container_search_tree scene_search_tree,
 			create_scene_counter scene_counter,system_parameter my_system_par)
 	{
-		client_interface ret_val;
+		client_interface my_client_interface;
 		
 		ReentrantLock my_lock;
 		if((my_lock=client_interface_search_tree_lock)==null)
@@ -55,14 +55,14 @@ public class client_interface_search_tree
 		
 		process_timeout_client_interface(true,my_system_par,scene_search_tree,scene_counter);
 
-		if((ret_val=tree.search(new String[] {request_response.client_id,request_response.user_name}))==null){
-			ret_val=client_interface.create(request_response,my_system_par,scene_search_tree,scene_counter);
+		if((my_client_interface=tree.search(new String[] {request_response.client_id,request_response.user_name}))==null){
+			my_client_interface=client_interface.create(request_response,my_system_par,scene_search_tree,scene_counter);
 			
-			if(ret_val==null) 
+			if(my_client_interface==null) 
 				debug_information.println("Create client_interface fail");
 			else{
 				debug_information.println("Create client_interface success");
-				tree.add(new String[] {request_response.client_id,request_response.user_name},ret_val);
+				tree.add(new String[] {request_response.client_id,request_response.user_name},my_client_interface);
 			}
 			
 			debug_information.print  ("Creation request from ",request_response.client_id);
@@ -75,7 +75,7 @@ public class client_interface_search_tree
 		
 		my_lock.unlock();
 		
-		return ret_val;
+		return my_client_interface;
 	}
 	public void destroy(system_parameter my_system_par,
 			scene_kernel_container_search_tree scene_search_tree,

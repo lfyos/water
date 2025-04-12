@@ -2,13 +2,13 @@ package kernel_scene;
 
 import java.util.ArrayList;
 
+import kernel_part.part;
 import kernel_render.render;
 import kernel_component.component;
-import kernel_component.component_collector;
-import kernel_part.buffer_object_file_modify_time_and_length_item;
-import kernel_part.part;
-import kernel_part.part_container_for_process_sequence;
 import kernel_render.render_container;
+import kernel_component.component_collector;
+import kernel_part.part_container_for_process_sequence;
+import kernel_part.buffer_object_file_modify_time_and_length_item;
 
 public class part_process_sequence 
 {
@@ -40,7 +40,8 @@ public class part_process_sequence
 		scene_package_priority		=null;
 		type_package_priority		=null;
 	}
-	private void init_process_sequence(render_container render_cont,component root_component)
+	private void init_process_sequence(render_container render_cont,component root_component,
+			double my_box_distance_difference_scale,double my_buffer_data_length_difference_scale)
 	{
 		component_collector collector=new component_collector(render_cont.renders);
 		collector.register_all(root_component);
@@ -74,7 +75,8 @@ public class part_process_sequence
 			for(int i=0;i<effective_part_number;i++)
 				sort_parts[i]=bak_sort_parts[i];
 		}
-		sort_parts=(new part_container_for_process_sequence(sort_parts)).data_array;
+		sort_parts=new part_container_for_process_sequence(sort_parts,
+			my_box_distance_difference_scale,my_buffer_data_length_difference_scale).data_array;
 		process_parts_sequence=new int[sort_parts.length][];
 		for(int i=0,ni=sort_parts.length;i<ni;i++)
 			process_parts_sequence[i]=new int[]{sort_parts[i].render_id,sort_parts[i].part_id};
@@ -239,9 +241,11 @@ public class part_process_sequence
 			}
 		}
 	}
-	public part_process_sequence(render_container render_cont,component root_component)
+	public part_process_sequence(render_container render_cont,component root_component,
+			double my_box_distance_difference_scale,double my_buffer_data_length_difference_scale)
 	{
-		init_process_sequence(render_cont,root_component);
+		init_process_sequence(render_cont,root_component,
+			my_box_distance_difference_scale,my_buffer_data_length_difference_scale);
 		init_package_sequence(render_cont);
 		init_package_priority();
 	}

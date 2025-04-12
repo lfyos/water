@@ -77,7 +77,6 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	public tree_search_container(Comparator<KEY_TYPE> my_comparator)
 	{
 		tree=new TreeMap<KEY_TYPE,tree_node>(my_comparator);
-		
 		first=null;
 		last=null;
 	}
@@ -117,27 +116,21 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	public VALUE_TYPE move_to_first(KEY_TYPE my_key)
 	{
 		tree_node p;
-	
 		if((p=tree.get(my_key))==null)
 			return null;
-		
 		dismount_from_list(p);
 		mount_to_first(p);
-		
 		p.touch_time=0;
-		
 		return p.value;
 	}
 	public VALUE_TYPE search(KEY_TYPE my_key)
 	{
 		tree_node p;
-	
 		if((p=tree.get(my_key))==null)
 			return null;
 		dismount_from_list(p);
 		mount_to_last(p);
 		p.touch_time=nanosecond_timer.absolute_nanoseconds();
-		
 		return p.value;
 	}
 	public VALUE_TYPE remove(KEY_TYPE my_key)

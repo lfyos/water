@@ -6,6 +6,7 @@ import kernel_transformation.box;
 
 public class part_container_for_process_sequence extends sorter<part,part>
 {
+	private double box_distance_difference_scale,buffer_data_length_difference_scale;
 	public int compare_part(part pi,part pj)
 	{
 		if(pi.part_par.process_sequence_id!=pj.part_par.process_sequence_id)
@@ -27,9 +28,9 @@ public class part_container_for_process_sequence extends sorter<part,part>
 			return 1;
 		if((distance2_i>const_value.min_value2)&&(distance2_j>const_value.min_value2)){	//part both with box,compare their distance
 			double distance2_max=Math.max(distance2_i,distance2_j);						//big part first be processed
-			if(distance2_max>const_value.min_value2)
-				if(Math.abs((distance2_i/distance2_max)-(distance2_j/distance2_max))>0.1)//compare only with great difference
-					return (distance2_i>distance2_j)?-1:1;
+			double p=Math.abs((distance2_i/distance2_max)-(distance2_j/distance2_max));
+			if(p>box_distance_difference_scale)											//compare only with great difference
+				return (distance2_i>distance2_j)?-1:1;
 		}
 		boolean i_flag,j_flag;
 		i_flag=pi.is_normal_part();
@@ -42,7 +43,7 @@ public class part_container_for_process_sequence extends sorter<part,part>
 			if(i_flag^j_flag)	// top box part first,bottom box part last
 				return i_flag?1:-1;
 		}
-	
+
 		long data_length_i=pi.boftal.buffer_object_total_file_length;
 		long data_length_j=pj.boftal.buffer_object_total_file_length;
 		long data_length_max=Math.max(data_length_i,data_length_j);
@@ -50,7 +51,8 @@ public class part_container_for_process_sequence extends sorter<part,part>
 		if(data_length_max>0){
 			double data_length_pi=((double)data_length_i)/((double)data_length_max);
 			double data_length_pj=((double)data_length_j)/((double)data_length_max);
-			if(Math.abs(data_length_pi-data_length_pj)>0.1)		//simple part process first
+			double p=Math.abs(data_length_pi-data_length_pj);
+			if(p>buffer_data_length_difference_scale)		//simple part process first
 				return (data_length_i<data_length_j)?-1:1;
 		}
 		if(Math.abs(distance2_i-distance2_j)>=const_value.min_value2)
@@ -67,15 +69,16 @@ public class part_container_for_process_sequence extends sorter<part,part>
 	{
 		return compare_part(s,t);
 	}
-	private static part[] clone_array(part my_parts[])
+	public part_container_for_process_sequence(part my_parts[],
+			double my_box_distance_difference_scale,double my_buffer_data_length_difference_scale)
 	{
-		part ret_val[]=new part[my_parts.length];
-		for(int i=0,ni=ret_val.length;i<ni;i++)
-			ret_val[i]=my_parts[i];
-		return ret_val;
-	}
-	public part_container_for_process_sequence(part my_parts[])
-	{
-		super(clone_array(my_parts));
+		data_array=new part[my_parts.length];
+		for(int i=0,ni=data_array.length;i<ni;i++)
+			data_array[i]=my_parts[i];
+		
+		box_distance_difference_scale		=my_box_distance_difference_scale;
+		buffer_data_length_difference_scale	=my_buffer_data_length_difference_scale;
+		
+		do_sort();
 	}
 }

@@ -39,3 +39,5 @@
 /*	max_process_component_load_number										*/		5
 /*	max_process_modifier_number												*/		5
 
+/*	box_distance_difference_scale											*/		0.1
+/*	buffer_data_length_difference_scale										*/		0.1

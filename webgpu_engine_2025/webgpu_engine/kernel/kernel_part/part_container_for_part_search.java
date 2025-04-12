@@ -42,7 +42,6 @@ public class part_container_for_part_search extends sorter<part,String>
 				data_array[new_pointer++]=pcps.data_array[append_part_pointer++];
 		}
 	}
-	
 	public void destroy()
 	{
 		super.destroy();
@@ -106,7 +105,6 @@ public class part_container_for_part_search extends sorter<part,String>
 		}
 		append_part_array=new ArrayList<part>();
 	}
-	
 	public ArrayList<part> search_part(String my_part_system_name)
 	{
 		if(append_part_array.size()>0)
@@ -118,18 +116,18 @@ public class part_container_for_part_search extends sorter<part,String>
 		
 		ArrayList<part> ret_part=new ArrayList<part>();
 		boolean top_flag=false,bottom_flag=false;
-		for(int i=0,ni=search_id[1]-search_id[0]+1,j=search_id[0],k=0;i<ni;i++,j++) {
-			if(data_array[j].is_bottom_box_part()){
+		for(int i=search_id[0],ni=search_id[1];i<=ni;i++){
+			if(data_array[i].is_bottom_box_part()){
 				if(bottom_flag)
 					continue;
 				bottom_flag=true;
 			}
-			if(data_array[j].is_top_box_part()){
+			if(data_array[i].is_top_box_part()){
 				if(top_flag)
 					continue;
 				top_flag=true;
 			}
-			ret_part.add(k++,data_array[j]);
+			ret_part.add(data_array[i]);
 		}
 		return (ret_part.size()<=0)?null:ret_part;
 	}

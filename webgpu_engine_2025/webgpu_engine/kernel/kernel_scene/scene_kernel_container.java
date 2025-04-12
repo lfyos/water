@@ -20,7 +20,7 @@ public class scene_kernel_container
 	{
 		return scene_kernel_link_number;
 	}
-	public int update_scene_kernel_link_number(int modify_number)
+	public int modify_scene_kernel_link_number(int modify_number)
 	{
 		int ret_val;
 		

@@ -46,10 +46,8 @@ public class part_package
 			package_last_time[i]=pp.package_last_time[i];
 	}
 	public part_package(client_process_bar process_bar,
-			String package_process_bar_title,
-			String boftal_process_bar_title,String ex_process_title,
-			render_container rc,int part_type_id,
-			system_parameter system_par,scene_parameter scene_par)
+		String package_process_bar_title,String boftal_process_bar_title,String ex_process_title,
+		render_container rc,int part_type_id,system_parameter system_par,scene_parameter scene_par)
 	{
 		class part_arraylist
 		{
@@ -90,7 +88,9 @@ public class part_package
 			}
 			public part_package_collector(ArrayList<part> my_part_list,system_parameter system_par)
 			{
-				super(my_part_list.toArray(new part[my_part_list.size()]));
+				super(my_part_list.toArray(new part[my_part_list.size()]),
+						system_par.box_distance_difference_scale,
+						system_par.buffer_data_length_difference_scale);
 				
 				int package_number=0;
 				long my_package_length=0;

@@ -1,46 +1,27 @@
 package kernel_part;
 
-import java.util.ArrayList;
+import kernel_common_class.tree_string_search_container;
 
 public class permanent_part_id_encoder
 {
 	class encoder_part_id
 	{
-		public String part_type_string;
 		public int permanent_part_id;
-		public encoder_part_id(String my_part_type_string)
+		public encoder_part_id()
 		{
-			part_type_string	=my_part_type_string;
-			permanent_part_id	=0;
+			permanent_part_id=0;
 		}
 	}
-	
-	private ArrayList<encoder_part_id> list;
-
+	private tree_string_search_container<encoder_part_id> encoder_tree;
 	public permanent_part_id_encoder()
 	{
-		list=new ArrayList<encoder_part_id>();
+		encoder_tree=new tree_string_search_container<encoder_part_id>();
 	}
 	public int encoder(String part_type_string)
 	{
-		for(int begin_pointer=0,end_pointer=list.size()-1,result;begin_pointer<=end_pointer;) {
-			int middle_pointer=(begin_pointer+end_pointer)/2;
-			encoder_part_id list_item=list.get(middle_pointer);
-			if((result=list_item.part_type_string.compareTo(part_type_string))<0)
-				begin_pointer=middle_pointer+1;
-			else if(result>0)
-				end_pointer=middle_pointer-1;
-			else
-				return ++(list_item.permanent_part_id);
-		}
-		list.add(new encoder_part_id(part_type_string));
-		for(int i=list.size()-1,j=i-1;i>0;i--,j--) {
-			encoder_part_id this_item=list.get(i),pre_item=list.get(j);
-			if(pre_item.part_type_string.compareTo(this_item.part_type_string)<0)
-				break;
-			list.set(i, pre_item);
-			list.set(j, this_item);
-		}
-		return 0;
+		encoder_part_id encoder;
+		for(String my_key[]=new String[]{part_type_string};(encoder=encoder_tree.search(my_key))==null;)
+			encoder_tree.add(my_key,new encoder_part_id());
+		return encoder.permanent_part_id++;
 	}
 }

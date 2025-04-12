@@ -42,6 +42,8 @@ public class system_parameter
 	
 	public int max_process_component_load_number,max_process_modifier_number;
 	
+	public double box_distance_difference_scale,buffer_data_length_difference_scale; 
+	
 	public change_name language_change_name,content_type_change_name;
 	public temporary_file_parameter temporary_file_par;
 	public switch_scene_server	switch_server;
@@ -81,25 +83,28 @@ public class system_parameter
 		show_process_bar_interval				=sp.show_process_bar_interval;
 		file_buffer_expire_time_length			=sp.file_buffer_expire_time_length;
 
-		max_client_container_number		=sp.max_client_container_number;
-		max_client_interface_number		=sp.max_client_interface_number;
+		max_client_container_number				=sp.max_client_container_number;
+		max_client_interface_number				=sp.max_client_interface_number;
 		
-		max_scene_kernel_number			=sp.max_scene_kernel_number;
-		max_scene_component_number		=sp.max_scene_component_number;
+		max_scene_kernel_number					=sp.max_scene_kernel_number;
+		max_scene_component_number				=sp.max_scene_component_number;
 		
-		max_file_response_length		=sp.max_file_response_length;
-		min_compress_response_length	=sp.min_compress_response_length;
-		max_buffer_object_head_package_length=sp.max_buffer_object_head_package_length;
+		max_file_response_length				=sp.max_file_response_length;
+		min_compress_response_length			=sp.min_compress_response_length;
+		max_buffer_object_head_package_length	=sp.max_buffer_object_head_package_length;
 		
-		max_process_component_load_number=sp.max_process_component_load_number;
-		max_process_modifier_number		=sp.max_process_modifier_number;
+		max_process_component_load_number		=sp.max_process_component_load_number;
+		max_process_modifier_number				=sp.max_process_modifier_number;
 		
-		content_type_change_name		=new change_name(sp.content_type_change_name,false);
-		language_change_name			=new change_name(sp.language_change_name,false);
+		box_distance_difference_scale			=sp.box_distance_difference_scale;
+		buffer_data_length_difference_scale		=sp.buffer_data_length_difference_scale;
 		
-		temporary_file_par				=sp.temporary_file_par;
-		switch_server					=sp.switch_server;
-		string_locker_container			=sp.string_locker_container;
+		content_type_change_name				=new change_name(sp.content_type_change_name,false);
+		language_change_name					=new change_name(sp.language_change_name,false);
+		
+		temporary_file_par						=sp.temporary_file_par;
+		switch_server							=sp.switch_server;
+		string_locker_container					=sp.string_locker_container;
 	}
 	public system_parameter(
 			String data_file_configure_file_name,
@@ -223,6 +228,9 @@ public class system_parameter
 		
 		max_process_component_load_number		=f.get_int();
 		max_process_modifier_number				=f.get_int();
+		
+		box_distance_difference_scale			=f.get_double();
+		buffer_data_length_difference_scale		=f.get_double();
 		
 		f.close();
 		

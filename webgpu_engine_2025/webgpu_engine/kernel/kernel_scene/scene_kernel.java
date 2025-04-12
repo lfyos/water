@@ -237,8 +237,7 @@ public class scene_kernel
 								new part_container_for_part_search(top_box_part),request_response);
 				}			
 	}
-	private buffer_object_file_modify_time_and_length_container[] get_boftal_container(
-			client_process_bar process_bar,
+	private buffer_object_file_modify_time_and_length_container[] get_boftal_container(client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container)
 	{
 		File f;
@@ -299,8 +298,7 @@ public class scene_kernel
 				scene_par.scene_shader_directory_name	=scene_f.directory_name;
 		}
 		
-		debug_information.println("type_shader_directory_name:",scene_par.type_shader_directory_name);
-		
+		debug_information.println("type_shader_directory_name	:	",	scene_par.type_shader_directory_name);
 		debug_information.println("type_shader_file_name 		:	",	scene_par.type_shader_file_name);
 		debug_information.println("scene_shader_directory_name	:	",	scene_par.scene_shader_directory_name);	
 		debug_information.println("scene_shader_file_name		:	",	scene_par.scene_shader_file_name);	
@@ -409,7 +407,8 @@ public class scene_kernel
 		component_cont.do_component_caculator(true,process_bar,"second_do_component_caculator");
 		component_cont.scene_component=component_cont.search_component(scene_par.scene_component_name);
 		
-		process_part_sequence=new part_process_sequence(render_cont,component_cont.root_component);
+		process_part_sequence=new part_process_sequence(render_cont,component_cont.root_component,
+				system_par.box_distance_difference_scale,system_par.buffer_data_length_difference_scale);
 
 		collector_stack=new component_collector_stack(component_cont,system_par,scene_par,render_cont.renders);
 		load_camera();
@@ -428,6 +427,7 @@ public class scene_kernel
 
 		return;
 	}
+	
 	public void load(component_load_source_container component_load_source_cont,
 			client_request_response request_response,client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container)
