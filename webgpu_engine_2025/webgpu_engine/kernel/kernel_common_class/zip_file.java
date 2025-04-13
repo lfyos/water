@@ -108,8 +108,6 @@ public class zip_file
 		String zip_file_name=directory_name+".zip";
 		File f=new File(zip_file_name);
 		if(f.exists()){
-			exclusive_file_mutex efm=exclusive_file_mutex.lock(directory_name+".lock",msg);
-			
 			try{
 				if(f.exists()){
 					directory_name+=File.separator;
@@ -125,7 +123,6 @@ public class zip_file
 				debug_information.println("unzip_directory execption:	",e.toString());
 				
 			}
-			efm.unlock();
 		}
 
 		return directory_name;

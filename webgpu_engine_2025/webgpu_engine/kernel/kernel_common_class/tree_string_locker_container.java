@@ -1,35 +1,52 @@
 package kernel_common_class;
 
+import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class tree_string_locker_container extends tree_string_search_container<ReentrantLock>
+class locker_container
 {
-	synchronized private void lock_routine(String name[],String operation_flag)
+	public int number;
+	public ReentrantLock locker;
+	
+	public locker_container()
 	{
-		ReentrantLock my_lock;
-		if((my_lock=search(name))==null) {
-			my_lock=new ReentrantLock();
-			add(name,my_lock);
-		}
-		try {
-			switch(operation_flag) {
-			case "lock":
-				my_lock.lock();
-				break;
-			case "unlock":
-				my_lock.unlock();
-				break;
+		number=0;
+		locker=new ReentrantLock();
+	}
+}
+public class tree_string_locker_container extends tree_string_search_container<locker_container>
+{
+	synchronized private ReentrantLock get_locker(String locker_name[],boolean do_lock_flag)
+	{
+		ArrayList<locker_container> list;
+		locker_container p;
+		if(do_lock_flag) {
+			for(list=add(locker_name,null);list.size()>1;)
+				list.remove(1);
+			if((p=list.get(0))==null)
+				list.set(0,p=new locker_container());
+			p.number++;
+		}else {
+			if((list=search(locker_name))==null)
+				return null;
+			if(list.size()<=0) {
+				remove(locker_name);
+				return null;
 			}
-		}catch(Exception e) {
-			;
+			p=list.get(0);
+			if((p.number--)<=1)
+				remove(locker_name);
 		}
+		return p.locker;
 	}
-	public void lock(String name[])
+	public void lock(String locker_name[])
 	{
-		lock_routine(name,"lock");
+		get_locker(locker_name,true).lock();
 	}
-	public void unlock(String name[])
+	public void unlock(String locker_name[])
 	{
-		lock_routine(name,"unlock");
+		ReentrantLock p;
+		if((p=get_locker(locker_name,false))!=null)
+			p.unlock();
 	}
 }

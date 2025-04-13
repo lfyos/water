@@ -1,5 +1,6 @@
 package kernel_interface;
 
+import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
 import kernel_common_class.debug_information;
@@ -21,8 +22,8 @@ public class client_interface_search_tree
 			create_scene_counter scene_counter)
 	{
 		for(long my_touch_time;(my_touch_time=tree.first_touch_time())>0;){
-			String 				my_client_id_and_user_name[]=tree.get_first_key();
-			client_interface 	my_client_interface			=tree.get_first_value();
+			String 							my_client_id_and_user_name[]=tree.get_first_key();
+			ArrayList<client_interface> 	my_client_interface_list	=tree.get_first_value();
 			
 			int size=tree.size();
 			long time_length=nanosecond_timer.absolute_nanoseconds()-my_touch_time;
@@ -38,26 +39,50 @@ public class client_interface_search_tree
 			debug_information.print  ("Still active client_interface number is  ",size-1);
 			debug_information.println("/",my_system_par.max_client_interface_number);
 			
+			for(int i=my_client_interface_list.size()-1;i>=0;i--) {
+				client_interface p=my_client_interface_list.get(i);
+				if(test_timeout_flag)
+					if(p.get_client_interface_in_processing_number()>0) {
+						tree.search(my_client_id_and_user_name);
+						return;
+					}
+				my_client_interface_list.remove(i);
+				p.destroy(scene_search_tree,scene_counter);
+			}
 			tree.remove(my_client_id_and_user_name);
-			my_client_interface.destroy(scene_search_tree,scene_counter);
 		}
 	}
 	public client_interface get_client_interface(client_request_response request_response,
 			scene_kernel_container_search_tree scene_search_tree,
 			create_scene_counter scene_counter,system_parameter my_system_par)
 	{
-		client_interface my_client_interface;
-		
 		ReentrantLock my_lock;
 		if((my_lock=client_interface_search_tree_lock)==null)
 			return null;
 		my_lock.lock();
 		
 		process_timeout_client_interface(true,my_system_par,scene_search_tree,scene_counter);
+		
+		client_interface my_client_interface;
+		ArrayList<client_interface> my_client_interface_list=tree.search(
+				new String[] {request_response.client_id,request_response.user_name});
 
-		if((my_client_interface=tree.search(new String[] {request_response.client_id,request_response.user_name}))==null){
-			my_client_interface=client_interface.create(request_response,my_system_par,scene_search_tree,scene_counter);
-			
+		if(my_client_interface_list!=null){
+			if(my_client_interface_list.size()>0)
+				my_client_interface=my_client_interface_list.get(0);
+			else{
+				my_client_interface=client_interface.create(
+						request_response,my_system_par,scene_search_tree,scene_counter);
+				if(my_client_interface==null) 
+					debug_information.println("Create client_interface fail");
+				else{
+					debug_information.println("Create client_interface success");
+					my_client_interface_list.add(my_client_interface);
+				}
+			}
+		}else {
+			my_client_interface=client_interface.create(
+					request_response,my_system_par,scene_search_tree,scene_counter);
 			if(my_client_interface==null) 
 				debug_information.println("Create client_interface fail");
 			else{

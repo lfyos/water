@@ -3,6 +3,7 @@ package kernel_interface;
 import java.io.File;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
 import kernel_component.component;
@@ -25,6 +26,12 @@ import kernel_network.client_request_response;
 
 public class client_interface
 {
+	private volatile int client_interface_in_processing_number;
+	synchronized public int get_client_interface_in_processing_number()
+	{
+		return client_interface_in_processing_number;
+	}
+	
 	private tree_string_search_container<scene_kernel_and_client_information_container> tree;
 
 	private system_parameter system_par;
@@ -111,16 +118,23 @@ public class client_interface
 		
 		my_lock.lock();
 		created_sk_and_ci.modify_kernel_and_client_information_lock_number(-1);
+		do {
+			String my_tree_key[];
+			if(created_scene_kernel_only.sk!=null)
+				if(created_scene_kernel_only.sk.component_cont!=null)
+					if(created_scene_kernel_only.sk.component_cont.root_component!=null) {
+						component root_component=created_scene_kernel_only.sk.component_cont.root_component;
+						statistics_user.user_scene_kernel_number++;
+						statistics_user.user_scene_component_number+=root_component.component_id+1;
+						my_tree_key=new String[]{created_sk_and_ci.client_information.channel_id};
+						tree.add(my_tree_key,created_sk_and_ci);
+						break;
+					}
+			my_tree_key=new String[]{"fail_scene"};
+			tree.add(my_tree_key,created_sk_and_ci);
+			tree.move_to_first(my_tree_key);
+		}while(false);
 		
-		tree.add(new String[]{created_sk_and_ci.client_information.channel_id},created_sk_and_ci);
-		
-		if(created_scene_kernel_only.sk!=null)
-			if(created_scene_kernel_only.sk.component_cont!=null)
-				if(created_scene_kernel_only.sk.component_cont.root_component!=null) {
-					component root_component=created_scene_kernel_only.sk.component_cont.root_component;
-					statistics_user.user_scene_kernel_number++;
-					statistics_user.user_scene_component_number+=root_component.component_id+1;
-				}
 		debug_information.print  ("Current user_scene_kernel_number is ",statistics_user.user_scene_kernel_number);
 		debug_information.println("/",statistics_user.user_max_scene_kernel_number);
 		debug_information.print  ("Current user_scene_component_number is ",statistics_user.user_scene_component_number);
@@ -192,13 +206,19 @@ public class client_interface
 		}
 		
 		String my_key[]=new String[] {request_response.channel_string};
-		scene_kernel_and_client_information_container p;
-		
-		if((p=tree.search(my_key))==null) {
-			debug_information.print  ("Search client_interface fail,Client ID is ",request_response.client_id);
+		ArrayList<scene_kernel_and_client_information_container>list;
+	
+		if((list=tree.search(my_key))==null) {
+			debug_information.print  ("Search client_interface fail,list is null,Client ID is ",request_response.client_id);
 			debug_information.println(",channel_id is ",request_response.channel_string);
 			return null;
 		};
+		if(list.size()<=0) {
+			debug_information.print  ("Search client_interface fail,size less than 1,Client ID is ",request_response.client_id);
+			debug_information.println(",channel_id is ",request_response.channel_string);
+			return null;
+		};
+		scene_kernel_and_client_information_container p=list.get(0);
 		if(p.client_information==null){
 			tree.move_to_first(my_key);
 			debug_information.println("my_value.client_information==null,Client ID is ",request_response.client_id);
@@ -211,7 +231,6 @@ public class client_interface
 			debug_information.println(",channel_id is ",request_response.channel_string);
 			return null;
 		}
-
 		scene_call_result ecr=null;
 		client_process_bar cpb=get_process_bar_routine(request_response);
 		p.modify_kernel_and_client_information_lock_number(1);
@@ -241,7 +260,9 @@ public class client_interface
 		
 		if((my_lock=client_interface_lock)==null)
 			return null;
+
 		my_lock.lock();
+		client_interface_in_processing_number++;
 		
 		scene_call_result ret_val=null;
 		
@@ -266,7 +287,10 @@ public class client_interface
 			break;
 		}
 		process_timeout(request_response,scene_kernel_search_tree,scene_counter);
+		
+		client_interface_in_processing_number--;
 		my_lock.unlock();
+
 		return ret_val;
 	}
 	public scene_call_result execute_create_call(
@@ -277,7 +301,9 @@ public class client_interface
 		ReentrantLock my_lock;
 		if((my_lock=client_interface_lock)==null)
 			return null;
+		
 		my_lock.lock();
+		client_interface_in_processing_number++;
 		
 		scene_call_result ret_val=null;
 		
@@ -295,8 +321,10 @@ public class client_interface
 			debug_information.println(e.toString());
 		}
 		process_timeout(request_response,scene_kernel_search_tree,scene_counter);
+		
+		client_interface_in_processing_number--;
 		my_lock.unlock();
-	
+
 		return ret_val;
 	}
 	private scene_call_result process_process_bar_system_call_routine(
@@ -361,7 +389,9 @@ public class client_interface
 		ReentrantLock my_lock;
 		if((my_lock=client_interface_lock)==null)
 			return;
+
 		my_lock.lock();
+		client_interface_in_processing_number++;
 		
 		client_process_bar p;
 		if((p=get_process_bar_routine(request_response))!=null)
@@ -369,6 +399,7 @@ public class client_interface
 				my_process_title,my_ex_process_title,
 				my_current_process,my_max_process);
 
+		client_interface_in_processing_number--;
 		my_lock.unlock();
 	}
 	public scene_call_result process_process_bar_system_call(client_request_response request_response)
@@ -376,9 +407,13 @@ public class client_interface
 		ReentrantLock my_lock;
 		if((my_lock=client_interface_lock)==null)
 			return null;
+		
 		my_lock.lock();
+		client_interface_in_processing_number++;
 		scene_call_result ret_val=process_process_bar_system_call_routine(request_response);
+		client_interface_in_processing_number--;
 		my_lock.unlock();
+
 		return ret_val;
 	}
 	private void process_timeout(client_request_response request_response,
@@ -386,86 +421,103 @@ public class client_interface
 			create_scene_counter scene_counter)
 	{
 		for(long touch_time;(touch_time=tree.first_touch_time())>=0;){
-			String 											my_key[]=tree.get_first_key();
-			scene_kernel_and_client_information_container	p=tree.get_first_value();
-			if(p.modify_kernel_and_client_information_lock_number(0)>0)
+			String 													my_key[]=tree.get_first_key();
+			ArrayList<scene_kernel_and_client_information_container>my_list	=tree.get_first_value();
+			if(my_list==null)
 				break;
-			if((p.client_information==null)||(p.scene_kernel_cont==null)){
-				debug_information.println();
-				debug_information.println(
-						"((my_value.client_information==null)||(my_value.scene_kernel_cont==null))");
-				debug_information.print  ("client_interface delete time out client_information found, client id is ");
-				debug_information.print  (request_response.client_id);
-				debug_information.println(",container ID is ",request_response.container_id);
-			}else{
-				long time_length=nanosecond_timer.absolute_nanoseconds()-touch_time;
-				if(time_length<system_par.scene_expire_time_length)
-					break;
-				debug_information.println();
-				debug_information.print  ("client_interface delete time out client_information found, client id is ");
-				debug_information.println(request_response.client_id);
-				debug_information.print  ("container ID is ",request_response.container_id);
-				debug_information.print  (",Channel is ",	p.client_information.channel_id);
-				debug_information.print  (",time interval ",time_length);
-				debug_information.println(",max time interval  ",system_par.scene_expire_time_length);
-			}
-			
-			if(p.scene_kernel_cont!=null) {
-				scene_kernel sk;
-				if((sk=p.scene_kernel_cont.sk)!=null)
-					if(sk.component_cont!=null)
-						if(sk.component_cont.root_component!=null){
-							statistics_user.user_scene_kernel_number--;
-							statistics_user.user_scene_component_number-=sk.component_cont.root_component.component_id+1;
-						}
-			}
-			debug_information.println("Execute destroy_ek_ci_node");
-			debug_information.print  ("user_scene_kernel_number:",statistics_user.user_scene_kernel_number);
-			debug_information.println("/",statistics_user.user_max_scene_kernel_number);
-			debug_information.print  ("user_sene_component_number:",statistics_user.user_scene_component_number);
-			debug_information.println("/",statistics_user.user_max_scene_component_number);
-			
-			if(p.client_information!=null) {
-				try{
-					p.client_information.destroy();
-				}catch(Exception e){
-					e.printStackTrace();
-					
-					debug_information.println("Destroy client_information exception:	",e.toString());
+			for(scene_kernel_and_client_information_container p;my_list.size()>0;) {
+				p=my_list.get(0);
+				
+				if(		  (p.update_sk_and_ci_processing_number(0)>0)
+						||(p.modify_kernel_and_client_information_lock_number(0)>0))
+				{
+					tree.search(my_key);
+					return;
 				}
-				p.client_information=null;
-			}
-			if(p.scene_kernel_cont!=null) {
-				if(p.scene_kernel_cont.sk!=null)
-					scene_kernel_search_tree.destroy_scene_kernel_container(
-							p.scene_kernel_cont.sk.scene_name,
-							p.scene_kernel_cont.sk.link_name,scene_counter);
-				p.scene_kernel_cont=null;
+				if((p.client_information==null)||(p.scene_kernel_cont==null)){
+					debug_information.println();
+					debug_information.println(
+							"((my_value.client_information==null)||(my_value.scene_kernel_cont==null))");
+					debug_information.print  ("client_interface delete time out client_information found, client id is ");
+					debug_information.print  (request_response.client_id);
+					debug_information.println(",container ID is ",request_response.container_id);
+				}else{
+					long time_length=nanosecond_timer.absolute_nanoseconds()-touch_time;
+					if(time_length<system_par.scene_expire_time_length)
+						return;
+					debug_information.println();
+					debug_information.print  ("client_interface delete time out client_information found, client id is ");
+					debug_information.println(request_response.client_id);
+					debug_information.print  ("container ID is ",request_response.container_id);
+					debug_information.print  (",Channel is ",	p.client_information.channel_id);
+					debug_information.print  (",time interval ",time_length);
+					debug_information.println(",max time interval  ",system_par.scene_expire_time_length);
+				}
+				my_list.remove(0);
+				
+				if(p.scene_kernel_cont!=null) {
+					scene_kernel sk;
+					if((sk=p.scene_kernel_cont.sk)!=null)
+						if(sk.component_cont!=null)
+							if(sk.component_cont.root_component!=null){
+								statistics_user.user_scene_kernel_number--;
+								statistics_user.user_scene_component_number-=sk.component_cont.root_component.component_id+1;
+							}
+				}
+				debug_information.println("Execute destroy_ek_ci_node");
+				debug_information.print  ("user_scene_kernel_number:",statistics_user.user_scene_kernel_number);
+				debug_information.println("/",statistics_user.user_max_scene_kernel_number);
+				debug_information.print  ("user_sene_component_number:",statistics_user.user_scene_component_number);
+				debug_information.println("/",statistics_user.user_max_scene_component_number);
+				
+				if(p.client_information!=null) {
+					try{
+						p.client_information.destroy();
+					}catch(Exception e){
+						e.printStackTrace();
+						
+						debug_information.println("Destroy client_information exception:	",e.toString());
+					}
+					p.client_information=null;
+				}
+				if(p.scene_kernel_cont!=null) {
+					if(p.scene_kernel_cont.sk!=null)
+						scene_kernel_search_tree.destroy_scene_kernel_container(
+								p.scene_kernel_cont.sk.scene_name,
+								p.scene_kernel_cont.sk.link_name,scene_counter);
+					p.scene_kernel_cont=null;
+				}
 			}
 			tree.remove(my_key);
 		}
 	}
+	
 	private void destroy_routine(
 			scene_kernel_container_search_tree scene_kernel_search_tree,
 			create_scene_counter scene_counter)
-	{
+	{	
+		scene_kernel_and_client_information_container p;
+		ArrayList<scene_kernel_and_client_information_container> list;
+		
 		if(tree!=null) {
 			while(tree.first_touch_time()>0){
-				scene_kernel_and_client_information_container p;
-				p=tree.remove(tree.get_first_key());
-				if(p.client_information!=null) {
-					p.client_information.destroy();
-					p.client_information=null;
-				}
-				if(p.scene_kernel_cont!=null) {
-					if(p.scene_kernel_cont.sk!=null) {
-						scene_kernel_search_tree.destroy_scene_kernel_container(
-								p.scene_kernel_cont.sk.scene_name,
-								p.scene_kernel_cont.sk.link_name,
-								scene_counter);
-					};
-					p.scene_kernel_cont=null;
-				}
+				if((list=tree.remove(tree.get_first_key()))!=null)
+					while(list.size()>0) {
+						p=list.remove(0);
+						if(p.client_information!=null) {
+							p.client_information.destroy();
+							p.client_information=null;
+						}
+						if(p.scene_kernel_cont!=null) {
+							if(p.scene_kernel_cont.sk!=null) {
+								scene_kernel_search_tree.destroy_scene_kernel_container(
+										p.scene_kernel_cont.sk.scene_name,
+										p.scene_kernel_cont.sk.link_name,
+										scene_counter);
+							};
+							p.scene_kernel_cont=null;
+						}
+					}
 			}
 			tree=null;
 		}
@@ -486,7 +538,7 @@ public class client_interface
 			client_scene_file_charset=null;
 
 		if(statistics_user!=null)
-			statistics_user=null;
+			statistics_user=null;			
 	}
 	public void destroy(
 			scene_kernel_container_search_tree scene_kernel_search_tree,
@@ -497,16 +549,24 @@ public class client_interface
 			return;
 		
 		my_lock.lock();
+		
+		client_interface_in_processing_number++;
+		
 		try{
 			destroy_routine(scene_kernel_search_tree,scene_counter);
 		}catch(Exception e){
 			e.printStackTrace();
 			debug_information.println("destroy of client_interface_base fail:\t",e.toString());
 		}
+		client_interface_in_processing_number--;
+		
 		my_lock.unlock();
 	}
+	
 	private client_interface(client_request_response request_response,system_parameter my_system_par)
 	{
+		client_interface_in_processing_number=0;
+		
 		tree=new tree_string_search_container<scene_kernel_and_client_information_container>();
 		
 		system_par	 	=new system_parameter(my_system_par);

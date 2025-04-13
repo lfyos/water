@@ -1,5 +1,7 @@
 package kernel_part;
 
+import java.util.ArrayList;
+
 import kernel_common_class.const_value;
 import kernel_common_class.sorter;
 import kernel_transformation.box;
@@ -69,12 +71,14 @@ public class part_container_for_process_sequence extends sorter<part,part>
 	{
 		return compare_part(s,t);
 	}
-	public part_container_for_process_sequence(part my_parts[],
-			double my_box_distance_difference_scale,double my_buffer_data_length_difference_scale)
+	public part_container_for_process_sequence(ArrayList<part> my_parts,
+			double my_box_distance_difference_scale,
+			double my_buffer_data_length_difference_scale)
 	{
-		data_array=new part[my_parts.length];
-		for(int i=0,ni=data_array.length;i<ni;i++)
-			data_array[i]=my_parts[i];
+		data_list=new ArrayList<part>();
+		if(my_parts!=null)
+			for(int i=0,ni=my_parts.size();i<ni;i++)
+				data_list.add(my_parts.get(i));
 		
 		box_distance_difference_scale		=my_box_distance_difference_scale;
 		buffer_data_length_difference_scale	=my_buffer_data_length_difference_scale;

@@ -12,12 +12,20 @@ import kernel_part.buffer_object_file_modify_time_and_length_container;
 
 public class scene_kernel_and_client_information_container
 {
+	private volatile int sk_and_ci_processing_number;
+	synchronized public int update_sk_and_ci_processing_number(int update_number)
+	{
+		sk_and_ci_processing_number+=update_number;
+		return sk_and_ci_processing_number;
+	}
+	
 	public scene_kernel_container	scene_kernel_cont;
 	public client_information 		client_information;
 	private volatile int 			kernel_and_client_information_lock_number;
 	
 	public scene_kernel_and_client_information_container(scene_kernel_container my_scene_kernel_cont)
 	{
+		sk_and_ci_processing_number	=0;
 		scene_kernel_cont	=my_scene_kernel_cont;
 		client_information	=null;
 		kernel_and_client_information_lock_number	=0;
@@ -91,7 +99,7 @@ public class scene_kernel_and_client_information_container
 		
 		if((my_lock=scene_kernel_cont.scene_kernel_container_lock)!=null){
 			my_lock.lock();
-			
+			update_sk_and_ci_processing_number(1);
 			try{
 				ret_val=get_scene_result_routine(
 						component_load_source_cont,process_bar,system_boftal_container,
@@ -103,6 +111,7 @@ public class scene_kernel_and_client_information_container
 				debug_information.println(e.toString());
 				ret_val=null;
 			};
+			update_sk_and_ci_processing_number(-1);
 			my_lock.unlock();
 		}
 		return ret_val;

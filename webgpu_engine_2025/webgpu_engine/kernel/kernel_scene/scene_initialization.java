@@ -168,11 +168,10 @@ public class scene_initialization
 		}
 		process_bar.set_process_bar(false,"component_driver_initialization","",number,number);
 	}
-	private void file_initialize(component sort_component_array[],
+	private void file_initialize(String destination_file_name,component sort_component_array[],
 			scene_kernel sk,client_request_response request_response,client_process_bar process_bar)
 	{
 		long my_last_time,last_time=program_file_reader.get_system_program_last_time(sk.system_par);
-		String destination_file_name=sk.scene_par.scene_temporary_directory_name+"initialization.gzip_js";
 				
 		for(int render_id=0,render_number=sk.render_cont.renders.size();render_id<render_number;render_id++) {
 			render r=sk.render_cont.renders.get(render_id);
@@ -444,6 +443,7 @@ public class scene_initialization
 
 		return;
 	}
+
 	public scene_initialization(scene_kernel sk,
 			client_request_response request_response,client_process_bar process_bar)
 	{
@@ -468,7 +468,12 @@ public class scene_initialization
 		
 		debug_information.println();
 		debug_information.println("Begin create initialization file");
-		file_initialize(sort_component_array,sk,request_response,process_bar);
+		
+		String destination_file_name=sk.scene_par.scene_temporary_directory_name+"initialization.gzip_js";
+		String lock_key[]=new String[] {destination_file_name};
+		sk.system_par.string_locker_container.lock(lock_key);
+		file_initialize(destination_file_name,sort_component_array,sk,request_response,process_bar);
+		sk.system_par.string_locker_container.unlock(lock_key);
 		
 		for(int i=0,ni=sort_component_array.length;i<ni;i++)
 			if(sort_component_array[i].initialization!=null) {

@@ -14,7 +14,6 @@ import kernel_common_class.common_reader;
 import kernel_common_class.common_writer;
 import kernel_common_class.debug_information;
 import kernel_common_class.compress_file_data;
-import kernel_common_class.exclusive_file_mutex;
 import kernel_common_class.compress_network_data;
 
 
@@ -314,8 +313,9 @@ public class client_request_response extends common_writer
 		else{
 			if((ecr.charset_file_name!=null)&&(ecr.file_charset!=null))
 				if(system_par.network_data_charset.compareTo(ecr.file_charset)!=0){
-					exclusive_file_mutex efm=exclusive_file_mutex.lock(
-						ecr.charset_file_name+".lock","wait for create charset file name:"+ecr.charset_file_name);
+					String my_lock_key[]=new String[] {ecr.charset_file_name+".lock"};
+					system_par.string_locker_container.lock(my_lock_key);
+
 					try {
 						if(new File(ecr.charset_file_name).lastModified()<=new File(file_name).lastModified())
 							file_writer.charset_copy(file_name,ecr.file_charset,
@@ -324,7 +324,9 @@ public class client_request_response extends common_writer
 						e.printStackTrace();
 						debug_information.println("response_file_data exception 1\t",e.toString());
 					}
-					efm.unlock();
+					
+					system_par.string_locker_container.unlock(my_lock_key);
+					
 					file_name=ecr.charset_file_name;
 					network_data_charset=system_par.network_data_charset;
 				}
@@ -336,8 +338,9 @@ public class client_request_response extends common_writer
 				compress_response_header=null;
 			else {
 				String compress_file_name=ecr.compress_file_name+"."+compress_response_header;
-				exclusive_file_mutex efm=exclusive_file_mutex.lock(
-						compress_file_name+".lock","wait for create compress file name:"+compress_file_name);
+				String my_lock_key[]=new String[] {compress_file_name+".lock"};
+				system_par.string_locker_container.lock(my_lock_key);
+
 				try{
 					File gf=new File(compress_file_name);
 					if(f.lastModified()<gf.lastModified())
@@ -351,7 +354,7 @@ public class client_request_response extends common_writer
 					e.printStackTrace();
 					debug_information.println("response_file_data exception 2\t",e.toString());
 				}
-				efm.unlock();
+				system_par.string_locker_container.unlock(my_lock_key);
 			}
 		}
 		

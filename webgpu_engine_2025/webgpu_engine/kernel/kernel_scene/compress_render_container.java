@@ -48,10 +48,7 @@ public class compress_render_container
 			}
 			public create_sorted_part()
 			{
-				data_array=ret_val.toArray(new part[ret_val.size()]);
-				do_sort();
-				for(int i=0,ni=data_array.length;i<ni;i++)
-					ret_val.set(i,data_array[i]);
+				super(ret_val);
 			}
 		};
 		new create_sorted_part();
@@ -148,16 +145,8 @@ public class compress_render_container
 			}
 			public create_sorted_render()
 			{
-				int render_number=render_cont.renders.size();
-				data_array=new render[render_number];
-				for(int i=0;i<render_number;i++)
-					data_array[i]=render_cont.renders.get(i);
-				
-				do_sort();
-				
-				render_cont.sorted_renders=new ArrayList<render>();
-				for(int i=0;i<render_number;i++)
-					render_cont.sorted_renders.add(i,data_array[i]);
+				super(render_cont.renders);
+				render_cont.sorted_renders=data_list;
 			}
 		};
 		new create_sorted_render();

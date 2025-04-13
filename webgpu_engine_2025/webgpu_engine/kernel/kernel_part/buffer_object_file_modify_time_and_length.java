@@ -48,7 +48,6 @@ public class buffer_object_file_modify_time_and_length
 			}
 		}
 		simple_part_mesh=new part_rude(fr);
-
 		return;
 	}
 	public buffer_object_file_modify_time_and_length(
@@ -89,7 +88,7 @@ public class buffer_object_file_modify_time_and_length
 			}
 		}
 		
-		file_writer fw=new file_writer(root_file_name+".boftal",file_charset);
+		file_writer fw=new file_writer(root_file_name+".boftal.tmp",file_charset);
 		
 		fw.println("/*\tpart mesh file length information\t\t*/");
 		fw.println();
@@ -137,7 +136,7 @@ public class buffer_object_file_modify_time_and_length
 			fw.println("/*	total_point_primitive_number		*/	0");
 			fw.println();
 		}
-		
 		fw.close();
+		file_writer.file_rename(root_file_name+".boftal.tmp",root_file_name+".boftal");
 	}
 }

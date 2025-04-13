@@ -165,7 +165,9 @@ public class render
 				if(material_f.lastModified()<f.lastModified_time)
 					material_f.setLastModified(f.lastModified_time);
 			
-			part my_part=new part(part_type_id,false,part_par,f.directory_name,f.get_charset(),
+			part my_part=new part(part_type_id,
+					false,part_par,f.directory_name,f.get_charset(),
+					
 					(user_name==null)				?"":user_name,
 					(system_name==null)				?"":system_name,
 					(mesh_file_name==null)			?"":mesh_file_name,
@@ -189,7 +191,7 @@ public class render
 				debug_information.println("Mesh file name:	",		my_part.mesh_file_name);
 			}
 			if(my_part.driver!=null)
-				pcps.append_one_part(my_part);
+				pcps.append(my_part);
 			else{
 				delete_last_part();
 				my_part.destroy();

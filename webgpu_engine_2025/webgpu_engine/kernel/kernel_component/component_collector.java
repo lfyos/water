@@ -187,18 +187,14 @@ public class component_collector
 			{
 				component_sort_type=my_component_sort_type;
 				component_sort_min_distance=my_component_sort_min_distance;
-				
-				int number=0;
+				data_list=new ArrayList<component_link_list>();
 				for(component_link_list p=cll;p!=null;p=p.next_list_item)
-					number++;
-				data_array=new component_link_list[number];
-				number=0;
-				for(component_link_list p=cll;p!=null;p=p.next_list_item)
-					data_array[number++]=p;
+					data_list.add(p);
 				do_sort();
-				for(int i=0,ni=number-1;i<ni;i++)
-					data_array[i].next_list_item=data_array[i+1];
-				data_array[number-1].next_list_item=null;
+				
+				for(int i=0,ni=data_list.size()-1;i<ni;i++)
+					data_list.get(i).next_list_item=data_list.get(i+1);
+				data_list.get(data_list.size()-1).next_list_item=null;
 			}
 		};
 		for(int i=0,ni=component_collector.length;i<ni;i++)
@@ -206,8 +202,9 @@ public class component_collector
 				for(int j=0,nj=component_collector[i].length;j<nj;j++)
 					if(component_collector[i][j]!=null)
 						if(component_collector[i][j].next_list_item!=null)
-							component_collector[i][j]=new component_link_list_sorter(component_collector[i][j],
-								component_sort_type,component_sort_min_distance).data_array[0];
+							component_collector[i][j]=new component_link_list_sorter(
+								component_collector[i][j],component_sort_type,
+								component_sort_min_distance).data_list.get(0);
 	}
 	public box caculate_box(boolean mandatory_flag)
 	{

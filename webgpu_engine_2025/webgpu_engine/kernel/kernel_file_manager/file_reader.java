@@ -39,7 +39,8 @@ public class file_reader extends common_reader
 	public file_reader(String my_user_file_name,String my_file_system_charset)
 	{
 		super(create_input_stream_reader(my_user_file_name),
-			(my_file_system_charset!=null)?my_file_system_charset:Charset.defaultCharset().name());
+			(my_file_system_charset!=null)
+				?my_file_system_charset:Charset.defaultCharset().name());
 
 		directory_name="";
 		file_name=separator(my_user_file_name);

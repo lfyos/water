@@ -87,17 +87,22 @@ public class render_container
 		part p;
 		render r;
 		ArrayList<part> ret_val=new ArrayList<part>();
-		if(renders!=null)
-			for(int i=0,ni=renders.size();i<ni;i++)
-				if((r=renders.get(i))!=null)
-					if(r.parts!=null)
-						for(int j=0,nj=r.parts.size();j<nj;j++)
-							if((p=r.parts.get(j))!=null) {
-								if(part_type_id>=0)
-									if(p.part_type_id!=part_type_id)
-										continue;
-								ret_val.add(p);
-							}
+		if(renders==null)
+			return ret_val;
+		for(int i=0,ni=renders.size();i<ni;i++) {
+			if((r=renders.get(i))==null)
+				continue;
+			if(r.parts==null)
+				continue;
+			for(int j=0,nj=r.parts.size();j<nj;j++){
+				if((p=r.parts.get(j))==null)
+					continue;
+				if(part_type_id>=0)
+					if(p.part_type_id!=part_type_id)
+						continue;
+				ret_val.add(p);
+			}
+		}
 		return ret_val;
 	}
 	public part get_copy_from_part(part p)
@@ -110,7 +115,7 @@ public class render_container
 			long part_type,int part_normal_bottom_box_top_box_flag,
 			part_loader_container part_loader_cont,
 			system_parameter system_par,scene_parameter scene_par,
-			buffer_object_file_modify_time_and_length_container boftal_container[],
+			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,
 			ArrayList<part> part_list_for_delete_file,
 			client_process_bar process_bar,String process_bar_title,String ex_process_bar_title)
 	{
@@ -135,11 +140,9 @@ public class render_container
 					continue;
 				if(((((long)1)<<p.part_type_id)&part_type)==0)
 					continue;
-				int my_part_flag=0;
-				my_part_flag+=p.is_normal_part()	?1:0;
-				my_part_flag+=p.is_bottom_box_part()?2:0;
-				my_part_flag+=p.is_top_box_part()	?4:0;
-							
+				int my_part_flag=	(p.is_normal_part()		?1:0)+
+									(p.is_bottom_box_part()	?2:0)+
+									(p.is_top_box_part()	?4:0);
 				if((my_part_flag&part_normal_bottom_box_top_box_flag)==0)
 					continue;
 				all_number++;
@@ -160,24 +163,22 @@ public class render_container
 					continue;
 				if(((((long)1)<<p.part_type_id)&part_type)==0)
 					continue;
-				int my_part_flag=0;
-				my_part_flag+=p.is_normal_part()	?1:0;
-				my_part_flag+=p.is_bottom_box_part()?2:0;
-				my_part_flag+=p.is_top_box_part()	?4:0;
-							
+				int my_part_flag=	(p.is_normal_part()		?1:0)+
+									(p.is_bottom_box_part()	?2:0)+
+									(p.is_top_box_part()	?4:0);
 				if((my_part_flag&part_normal_bottom_box_top_box_flag)==0)
 					continue;
 				part_loader_cont.load(p,get_copy_from_part(p),0,system_par,scene_par,
 						part_list_for_delete_file,already_loaded_part,boftal_container);
-							
 				if(process_bar!=null)
 					process_bar.set_process_bar(false,
 							process_bar_title,ex_process_bar_title,
 							load_number++,(all_number<1)?1:all_number);
 			}
 		}
-		
+
 		part_loader_container.wait_for_completion(already_loaded_part,system_par,scene_par);
+		
 		if(process_bar!=null)
 			process_bar.set_process_bar(false,
 					process_bar_title,ex_process_bar_title,
@@ -195,20 +196,21 @@ public class render_container
 			system_parameter system_par,scene_parameter scene_par)
 	{
 		for(int i=0,j=0,part_number=pcps.get_number();i<part_number;i=j){
+			part i_part=pcps.data_list.get(i);
 			for(j=i;j<part_number;j++)
-				if(pcps.data_array[i].system_name.compareTo(pcps.data_array[j].system_name)!=0)
+				if(i_part.system_name.compareTo(pcps.data_list.get(j).system_name)!=0)
 					break;
 			part p=null;
 			box b=null;
 			for(;i<j;i++)
-				if(pcps.data_array[i].is_normal_part()){
+				if((i_part=pcps.data_list.get(i)).is_normal_part()){
 					if(p==null)
-						if(pcps.data_array[i].part_mesh!=null)
-							if(pcps.data_array[i].part_par.do_create_bottom_box_flag)
-								if(pcps.data_array[i].driver!=null)
-									if((b=pcps.data_array[i].secure_caculate_part_box(
+						if(i_part.part_mesh!=null)
+							if(i_part.part_par.do_create_bottom_box_flag)
+								if(i_part.driver!=null)
+									if((b=i_part.secure_caculate_part_box(
 											null,-1,-1,-1,-1,-1,-1,-1,null,null))!=null)
-												p=pcps.data_array[i];
+												p=i_part;
 				}else {
 					p=null;
 					b=null;
@@ -243,7 +245,7 @@ public class render_container
 				r.delete_last_part();
 				continue;
 			}
-			pcps.append_one_part(add_part);
+			pcps.append(add_part);
 		}
 	}
 	private void load_one_shader(
@@ -270,7 +272,7 @@ public class render_container
 				debug_information.println("part parameter file:	",part_parameter_file_name+"	not exist");
 				continue;
 			}
-			
+
 			part_parameter part_par=new part_parameter(part_type_string,
 				assemble_part_name,part_parameter_file_name,f_render_list.get_charset());
 
@@ -438,8 +440,8 @@ public class render_container
 		renders=new ArrayList<render>();
 		if(ren_con.renders!=null)
 			for(int i=0,ni=ren_con.renders.size();i<ni;i++)
-				renders.add(i,
-					new render(ren_con.renders.get(i),request_response,system_par,scene_par));
+				renders.add(i,new render(ren_con.renders.get(i),
+						request_response,system_par,scene_par));
 		system_part_package	=new part_package(ren_con.system_part_package);
 		type_part_package	=new part_package[ren_con.type_part_package.length];
 		for(int i=0,ni=ren_con.type_part_package.length;i<ni;i++)

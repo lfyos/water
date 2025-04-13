@@ -278,5 +278,5 @@ public class client_information
 		return;
 	}
 	
-	private static long system_channel_id=0;
+	private volatile static long system_channel_id=0;
 }

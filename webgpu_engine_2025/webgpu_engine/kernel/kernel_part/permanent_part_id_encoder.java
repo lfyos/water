@@ -1,5 +1,7 @@
 package kernel_part;
 
+import java.util.ArrayList;
+
 import kernel_common_class.tree_string_search_container;
 
 public class permanent_part_id_encoder
@@ -19,9 +21,11 @@ public class permanent_part_id_encoder
 	}
 	public int encoder(String part_type_string)
 	{
-		encoder_part_id encoder;
-		for(String my_key[]=new String[]{part_type_string};(encoder=encoder_tree.search(my_key))==null;)
+		ArrayList<encoder_part_id>list;
+
+		for(String my_key[]=new String[]{part_type_string};(list=encoder_tree.search(my_key))==null;)
 			encoder_tree.add(my_key,new encoder_part_id());
-		return encoder.permanent_part_id++;
+		
+		return list.get(0).permanent_part_id++;
 	}
 }

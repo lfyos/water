@@ -143,8 +143,7 @@ public class scene_parameter
 			my_client_parameter_name.add(new String[]{parameter_name,parameter_value});
 		}
 		client_parameter_name=new change_name();
-		client_parameter_name.data_array=my_client_parameter_name.toArray(
-				new String[my_client_parameter_name.size()][]);
+		client_parameter_name.data_list=my_client_parameter_name;
 		client_parameter_name.do_sort();
 	}
 	private void caculate_scene_temporary_directory_name(
@@ -184,7 +183,8 @@ public class scene_parameter
 			}
 		for(int i=0,ni=client_parameter_name.get_number();i<ni;i++)
 			for(int j=0;j<2;j++) {
-				str=file_directory.delete_separator(client_parameter_name.data_array[i][j]);
+				str=file_directory.delete_separator(
+						client_parameter_name.data_list.get(i)[j]);
 				if(str.length()>0)
 					my_temporary_directory_name+=str+File.separatorChar;
 			}

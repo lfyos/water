@@ -10,9 +10,9 @@ public class sort_part_information extends jason_creator
 	
 	public void print()
 	{
-		jason_creator jc[]=new jason_creator[sk.part_cont.data_array.length];
+		jason_creator jc[]=new jason_creator[sk.part_cont.data_list.size()];
 		for(int i=0,ni=jc.length;i<ni;i++)
-			jc[i]=new part_with_component_information(sk.part_cont.data_array[i],sk,ci);
+			jc[i]=new part_with_component_information(sk.part_cont.data_list.get(i),sk,ci);
 		
 		print("part_number",jc.length);
 		print("part",jc);

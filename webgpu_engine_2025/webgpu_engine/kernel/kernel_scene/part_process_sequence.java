@@ -47,8 +47,7 @@ public class part_process_sequence
 		collector.register_all(root_component);
 		
 		render r;
-		part sort_parts[]=new part[collector.part_number];
-		int effective_part_number=0;
+		ArrayList<part> sort_parts=new ArrayList<part>();
 		
 		if((render_cont.renders!=null)&&(collector.render_component_number!=null)){
 			for(int render_id=0,render_number=render_cont.renders.size();render_id<render_number;render_id++){
@@ -65,28 +64,27 @@ public class part_process_sequence
 						continue;
 					if(collector.part_component_number[render_id][part_id]<=0)
 						continue;
-					sort_parts[effective_part_number++]=p;
+					sort_parts.add(p);
 				}
 			}
 		}
-		if(sort_parts.length!=effective_part_number){
-			part bak_sort_parts[]=sort_parts;
-			sort_parts=new part[effective_part_number];
-			for(int i=0;i<effective_part_number;i++)
-				sort_parts[i]=bak_sort_parts[i];
+		
+		sort_parts=new part_container_for_process_sequence(
+				sort_parts,my_box_distance_difference_scale,
+				my_buffer_data_length_difference_scale).data_list;
+		
+		process_parts_sequence=new int[sort_parts.size()][];
+		for(int i=0,ni=sort_parts.size();i<ni;i++) {
+			part p=sort_parts.get(i);
+			process_parts_sequence[i]=new int[]{p.render_id,p.part_id};
 		}
-		sort_parts=new part_container_for_process_sequence(sort_parts,
-			my_box_distance_difference_scale,my_buffer_data_length_difference_scale).data_array;
-		process_parts_sequence=new int[sort_parts.length][];
-		for(int i=0,ni=sort_parts.length;i<ni;i++)
-			process_parts_sequence[i]=new int[]{sort_parts[i].render_id,sort_parts[i].part_id};
-
 		total_buffer_object_file_number=0;
 		total_buffer_object_text_data_length=0;
-		for(int i=0,ni=sort_parts.length;i<ni;i++)
-			for(int j=0,nj=sort_parts[i].boftal.list.size();j<nj;j++) {
+		for(int i=0,ni=sort_parts.size();i<ni;i++) {
+			part p=sort_parts.get(i);
+			for(int j=0,nj=p.boftal.list.size();j<nj;j++) {
 				ArrayList<buffer_object_file_modify_time_and_length_item> item_list;
-				item_list=sort_parts[i].boftal.list.get(j);
+				item_list=p.boftal.list.get(j);
 				for(int k=0,nk=item_list.size();k<nk;k++) {
 					buffer_object_file_modify_time_and_length_item item=item_list.get(k);
 					if(item.buffer_object_file_in_head_flag)
@@ -95,6 +93,7 @@ public class part_process_sequence
 					total_buffer_object_text_data_length+=item.buffer_object_text_file_length;
 				}
 			}
+		}
 	}
 	private void init_package_sequence(render_container render_cont)
 	{

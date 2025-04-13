@@ -1,5 +1,7 @@
 package kernel_component;
 
+import java.util.ArrayList;
+
 import kernel_transformation.point;
 import kernel_transformation.box;
 import kernel_common_class.sorter;
@@ -80,24 +82,16 @@ public class component_space_sorter extends sorter<component_info,component_info
 	{
 		sort_type		=my_sort_type;
 		min_distance	=my_min_distance;
+		data_list		=new ArrayList<component_info>();
 		
-		int component_number=0;
-		for(component_link_list p=list;p!=null;p=p.next_list_item)
-			component_number++;
-		if(component_number<=0){
-			data_array=null;
-			return;
-		}
-		data_array=new component_info[component_number];
-		component_number=0;
-		for(component_link_list p=list;p!=null;p=p.next_list_item){
-			box b=p.comp.get_component_box(true);
+		for(component_link_list p=list;p!=null;p=p.next_list_item) {
 			point po;
+			box b=p.comp.get_component_box(true);
 			if(b==null)
 				po=p.comp.absolute_location.multiply(new point(0,0,0));
 			else
 				po=b.center();
-			data_array[component_number++]=new component_info(p.comp,p.driver_id,po);
+			data_list.add(new component_info(p.comp,p.driver_id,po));
 		}
 		do_sort();
 	}
@@ -107,9 +101,10 @@ public class component_space_sorter extends sorter<component_info,component_info
 		component_link_list ret_val=null;
 		if(list!=null){
 			component_space_sorter cws=new component_space_sorter(list,sort_type,min_distance);
-			for(int i=cws.data_array.length-1;i>=0;i--)
-				ret_val=new component_link_list(
-					cws.data_array[i].comp,cws.data_array[i].driver_id,ret_val);
+			for(int i=cws.data_list.size()-1;i>=0;i--) {
+				component_info p=cws.data_list.get(i);
+				ret_val=new component_link_list(p.comp,p.driver_id,ret_val);
+			}
 		}
 		return ret_val;
 	}

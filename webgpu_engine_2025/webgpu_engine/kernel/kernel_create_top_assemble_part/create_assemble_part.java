@@ -197,7 +197,7 @@ public class create_assemble_part
 			double create_top_part_discard_precision2,double discard_top_part_component_precision2,
 			render_container render_cont,part_loader_container part_loader_cont,
 			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
-			buffer_object_file_modify_time_and_length_container boftal_container[],long last_modified_time)
+			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,long last_modified_time)
 	{
 		int max_component_number			=root_component.component_id+1;
 		
@@ -311,7 +311,7 @@ public class create_assemble_part
 			top_box_part.add(add_part_number++,add_part);
 			create_part_number+=my_create_part_number;	
 			
-			pcps.append_one_part(add_part);
+			pcps.append(add_part);
 			
 			debug_information.println();
 			debug_information.println(add_part_number+".add top part		name:"+add_part.system_name);

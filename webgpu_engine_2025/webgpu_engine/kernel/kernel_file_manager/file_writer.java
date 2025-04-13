@@ -354,13 +354,16 @@ public class file_writer extends common_writer
 		}
 		return this;
 	};
-	public static void file_touch(String file_name,long touch_t,boolean create_flag)
+	public static boolean file_touch(String file_name,long touch_t,boolean create_flag)
 	{
 		File f=new File(file_reader.separator(file_name));
 		if(f.exists()) {
 			if(f.lastModified()<touch_t)
 				f.setLastModified(touch_t);
-		}else if(create_flag){
+			return true;
+		}
+		if(create_flag){
+			make_directory(file_name);
 			try{
 				f.createNewFile();
 			}catch(Exception e) {
@@ -368,10 +371,15 @@ public class file_writer extends common_writer
 			}
 			f.setLastModified(touch_t);
 		}
+		return false;
 	}
-	public static void file_touch(String file_name,boolean create_flag)
+	public static boolean file_touch(String file_name,boolean create_flag)
 	{
-		file_touch(file_name,(new Date()).getTime(),create_flag);
+		return file_touch(file_name,(new Date()).getTime(),create_flag);
+	}
+	public static boolean file_touch(String file_name)
+	{
+		return file_touch(file_name,(new Date()).getTime(),true);
 	}
 	public static void delete_comment(String directory_or_file_name,String file_charset)
 	{

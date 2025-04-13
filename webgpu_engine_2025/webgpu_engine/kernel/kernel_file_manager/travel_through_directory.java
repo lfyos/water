@@ -1,6 +1,9 @@
 package kernel_file_manager;
 
+
 import java.io.File;
+import java.util.ArrayList;
+
 import kernel_common_class.sorter;
 
 public class travel_through_directory 
@@ -26,10 +29,6 @@ public class travel_through_directory
 
 		class file_name_sorter extends sorter<String,String>
 		{
-			public file_name_sorter(String file_name_array[])
-			{
-				super(file_name_array);
-			}
 			public int compare_data(String s,String t)
 			{
 				return s.compareTo(t);
@@ -37,6 +36,15 @@ public class travel_through_directory
 			public int compare_key(String s,String t)
 			{
 				return s.compareTo(t);
+			}
+			public file_name_sorter(String file_name_array[])
+			{
+				data_list=new ArrayList<String>();
+				if(file_name_array!=null){
+					for(int i=0,ni=file_name_array.length;i<ni;i++)
+						data_list.add(file_name_array[i]);
+					do_sort();
+				}
 			}
 		};
 		
@@ -55,7 +63,8 @@ public class travel_through_directory
 			operate_directory_terminate(path_name);
 		}else {
 			if(sort_file_name_flag)
-				file_list=(new file_name_sorter(file_list)).data_array;
+				file_list=(new file_name_sorter(file_list)).
+						data_list.toArray(new String[file_list.length]);
 			
 			operate_directory_start(path_name);
 			for(int i=0,ni=file_list.length;i<ni;i++)

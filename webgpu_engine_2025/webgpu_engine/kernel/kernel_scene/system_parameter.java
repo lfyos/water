@@ -25,7 +25,7 @@ public class system_parameter
 	
 	public int response_block_size;
 	
-	public long scene_expire_time_length,scene_touch_time_length;
+	public long scene_expire_time_length,scene_touch_time_length,part_load_sleep_time_length;
 	
 	public int create_scene_concurrent_number;
 	public double create_scene_sleep_time_length_scale;
@@ -74,6 +74,7 @@ public class system_parameter
 		
 		scene_expire_time_length		=sp.scene_expire_time_length;
 		scene_touch_time_length			=sp.scene_touch_time_length;
+		part_load_sleep_time_length		=sp.part_load_sleep_time_length;
 		
 		create_scene_concurrent_number			=sp.create_scene_concurrent_number;
 		create_scene_sleep_time_length_scale	=sp.create_scene_sleep_time_length_scale;
@@ -207,6 +208,7 @@ public class system_parameter
 		
 		scene_expire_time_length				=f.get_long();
 		scene_touch_time_length					=f.get_long();
+		part_load_sleep_time_length				=f.get_long();
 		
 		create_scene_concurrent_number			=f.get_int();
 		create_scene_sleep_time_length_scale	=f.get_double();
