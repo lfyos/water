@@ -17,6 +17,7 @@ import kernel_file_manager.file_reader;
 import kernel_part.part_loader_container;
 import kernel_interface.client_process_bar;
 import kernel_common_class.debug_information;
+import kernel_common_class.tree_string_locker_container;
 import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
 import kernel_component.component_load_source_container;
@@ -111,21 +112,15 @@ public class render_container
 			p=renders.get(p.render_id).parts.get(p.part_from_id);
 		return p;
 	}
-	public void load_part(
-			long part_type,int part_normal_bottom_box_top_box_flag,
-			part_loader_container part_loader_cont,
-			system_parameter system_par,scene_parameter scene_par,
-			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,
-			ArrayList<part> part_list_for_delete_file,
-			client_process_bar process_bar,String process_bar_title,String ex_process_bar_title)
+	public void load_part(long part_type,int part_normal_bottom_box_top_box_flag,
+		part_loader_container part_loader_cont,system_parameter system_par,scene_parameter scene_par,
+		ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,
+		ArrayList<part> part_list_for_delete_file,tree_string_locker_container string_locker_container,
+		client_process_bar process_bar,String process_bar_title,String ex_process_bar_title)
 	{
 		if(renders==null)
 			return;
 
-		debug_information.println();
-		debug_information.println("Begin loading part meshes");
-		debug_information.println();
-		
 		part p;
 		render r;
 		int load_number=0,all_number=0;
@@ -148,9 +143,15 @@ public class render_container
 				all_number++;
 			}
 		}
+		if(all_number<1)
+			all_number=1;
+		
+		debug_information.println();
+		debug_information.println("Begin loading part meshes:\t",all_number);
+		
 		if(process_bar!=null)
 			process_bar.set_process_bar(true,
-				process_bar_title,ex_process_bar_title,0,(all_number<1)?1:all_number);
+				process_bar_title,ex_process_bar_title,0,all_number);
 		
 		ArrayList<part_loader> already_loaded_part=new ArrayList<part_loader>();
 		for(int i=0,ni=renders.size();i<ni;i++) {
@@ -168,12 +169,13 @@ public class render_container
 									(p.is_top_box_part()	?4:0);
 				if((my_part_flag&part_normal_bottom_box_top_box_flag)==0)
 					continue;
-				part_loader_cont.load(p,get_copy_from_part(p),0,system_par,scene_par,
+				part_loader_cont.load(p,get_copy_from_part(p),
+						0,system_par,scene_par,string_locker_container,
 						part_list_for_delete_file,already_loaded_part,boftal_container);
+				load_number++;
 				if(process_bar!=null)
 					process_bar.set_process_bar(false,
-							process_bar_title,ex_process_bar_title,
-							load_number++,(all_number<1)?1:all_number);
+						process_bar_title,ex_process_bar_title,load_number,all_number);
 			}
 		}
 
@@ -182,10 +184,10 @@ public class render_container
 		if(process_bar!=null)
 			process_bar.set_process_bar(false,
 					process_bar_title,ex_process_bar_title,
-					(all_number<1)?1:all_number,(all_number<1)?1:all_number);
-		
+					(all_number<1)?1:all_number,all_number);
+
 		debug_information.println();
-		debug_information.println("End loading part meshes\t",load_number);
+		debug_information.println("End loading part meshes:\t",all_number);
 		debug_information.println();
 		
 		return;
@@ -332,9 +334,9 @@ public class render_container
 					part_par,system_par,get_part_list_result[i],part_file_system_charset,
 					"part_mesh_"+Integer.toString(render_id)+"_",encoder,request_response);
 	
-				debug_information.println();
 				debug_information.println("End load part list file:	",	part_file_system_charset);
 				debug_information.println("part parameter file:		",	part_parameter_file_name);
+				debug_information.println();
 			}
 		}
 
@@ -421,8 +423,9 @@ public class render_container
 					part_type_id,system_par,scene_par,ren,encoder,request_response);
 			}
 		}
-		debug_information.println();
+		
 		debug_information.println("End shader and part initialization");
+		debug_information.println();
 			
 		f_shader.close();
 	}

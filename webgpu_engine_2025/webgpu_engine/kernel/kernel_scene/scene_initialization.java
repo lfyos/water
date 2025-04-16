@@ -11,6 +11,7 @@ import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_file_manager.file_directory;
 import kernel_common_class.jason_string;
+import kernel_common_class.tree_string_locker_container;
 import kernel_common_class.class_file_reader;
 import kernel_common_class.common_reader;
 import kernel_common_class.debug_information;
@@ -444,7 +445,8 @@ public class scene_initialization
 		return;
 	}
 
-	public scene_initialization(scene_kernel sk,
+	public scene_initialization(
+			scene_kernel sk,tree_string_locker_container string_locker_container,
 			client_request_response request_response,client_process_bar process_bar)
 	{
 		component sort_component_array[];
@@ -471,9 +473,9 @@ public class scene_initialization
 		
 		String destination_file_name=sk.scene_par.scene_temporary_directory_name+"initialization.gzip_js";
 		String lock_key[]=new String[] {destination_file_name};
-		sk.system_par.string_locker_container.lock(lock_key);
+		string_locker_container.lock(lock_key);
 		file_initialize(destination_file_name,sort_component_array,sk,request_response,process_bar);
-		sk.system_par.string_locker_container.unlock(lock_key);
+		string_locker_container.unlock(lock_key);
 		
 		for(int i=0,ni=sort_component_array.length;i<ni;i++)
 			if(sort_component_array[i].initialization!=null) {

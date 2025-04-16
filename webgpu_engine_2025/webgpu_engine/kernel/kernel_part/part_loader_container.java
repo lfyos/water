@@ -2,11 +2,11 @@ package kernel_part;
 
 import java.util.ArrayList;
 
-import kernel_file_manager.file_reader;
 import kernel_scene.scene_parameter;
 import kernel_scene.system_parameter;
 import kernel_file_manager.file_directory;
 import kernel_common_class.debug_information;
+import kernel_common_class.tree_string_locker_container;
 
 public class part_loader_container
 {
@@ -29,15 +29,9 @@ public class part_loader_container
 	}
 	
 	private static void wait_for_part_loader_termination(part_loader pl,
-			boolean display_flag,system_parameter system_par,scene_parameter scene_par)
+			system_parameter system_par,scene_parameter scene_par)
 	{
-		if(display_flag) {
-			debug_information.println("Begin:\twait_for_completion:\t",pl.loaded_part.system_name);
-			debug_information.println("		",pl.loaded_part.directory_name+pl.loaded_part.mesh_file_name);
-			debug_information.println("		",pl.loaded_part.directory_name+pl.loaded_part.material_file_name);
-			debug_information.println("		",file_directory.part_file_directory(pl.loaded_part, system_par, scene_par));
-		}
-		try{			
+		try{
 			pl.join(system_par.part_load_sleep_time_length);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -48,13 +42,6 @@ public class part_loader_container
 			debug_information.println("		",pl.loaded_part.directory_name+pl.loaded_part.material_file_name);
 			debug_information.println("		",file_directory.part_file_directory(pl.loaded_part,system_par, scene_par));
 		}
-		if(display_flag)
-			if(!(pl.test_loading_flag())) {
-				debug_information.println("End:\twait_for_completion:\t"+pl.loaded_part.system_name);
-				debug_information.println("		",pl.loaded_part.directory_name+pl.loaded_part.mesh_file_name);
-				debug_information.println("		",pl.loaded_part.directory_name+pl.loaded_part.material_file_name);
-				debug_information.println("		",file_directory.part_file_directory(pl.loaded_part,system_par, scene_par));
-			}
 	}
 
 	
@@ -62,31 +49,19 @@ public class part_loader_container
 			ArrayList<part_loader>already_loaded_part,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		part_loader pl;
-		
-		debug_information.println();
-		debug_information.println("Begin wait_for_completion");
-		debug_information.println();
-		
-		while(already_loaded_part.size()>0)
+		for(part_loader pl;already_loaded_part.size()>0;)
 			for(int i=already_loaded_part.size()-1;i>=0;i--){
-				if((pl=already_loaded_part.get(i)).test_loading_flag()) {
-					debug_information.println(pl.loaded_part.system_name+" is Waiting for completion");
-					wait_for_part_loader_termination(pl,true,system_par,scene_par);
-				}else {
-					debug_information.println(pl.loaded_part.system_name+" has done Waiting for completion");
+				if((pl=already_loaded_part.get(i)).test_loading_flag())
+					wait_for_part_loader_termination(pl,system_par,scene_par);
+				else 
 					already_loaded_part.remove(i);
-				}
 			}
-		
-		debug_information.println();
-		debug_information.println("End wait_for_completion");
-		debug_information.println();
 	}
 	
 	synchronized private void load_routine(
 		part my_part,part my_copy_from_part,long last_modified_time,
 		system_parameter system_par,scene_parameter scene_par,
+		tree_string_locker_container string_locker_container,
 		ArrayList<part_loader> already_loaded_part)
 	{
 		int max_part_load_thread_number;
@@ -99,35 +74,26 @@ public class part_loader_container
 			for(int i=part_loader_list.size()-1;i>=0;i--) 
 				if((pl=part_loader_list.get(i)).test_loading_flag()?false:true){
 					part_loader_list.remove(i);
-					wait_for_part_loader_termination(pl,false,system_par,scene_par);
+					wait_for_part_loader_termination(pl,system_par,scene_par);
 				}
 			if(part_loader_list.size()<max_part_load_thread_number)
 				break;
-			wait_for_part_loader_termination(part_loader_list.get(0),false,system_par,scene_par);
+			wait_for_part_loader_termination(part_loader_list.get(0),system_par,scene_par);
 		}while(true);
 		
 		for(int i=already_loaded_part.size()-1;i>=0;i--)
 			if(!((pl=already_loaded_part.get(i)).test_loading_flag())){
 				already_loaded_part.remove(i);
-				wait_for_part_loader_termination(pl,false,system_par,scene_par);	
+				wait_for_part_loader_termination(pl,system_par,scene_par);	
 			}
-		pl=new part_loader(my_part,my_copy_from_part,last_modified_time,system_par,scene_par);
+		pl=new part_loader(my_part,my_copy_from_part,last_modified_time,
+					system_par,scene_par,string_locker_container);
 		part_loader_list.add(pl);
 		already_loaded_part.add(pl);
 	}
-	public void load_part_mesh_head_only(part my_part,
-			system_parameter my_system_par,scene_parameter my_scene_par)
-	{
-		if(my_part.is_normal_part()){
-			String part_temporary_file_directory=file_directory.part_file_directory(my_part,my_system_par,my_scene_par);
-			String my_lock_key[]=new String[] {file_reader.separator(part_temporary_file_directory+"part.lock")};
-			my_system_par.string_locker_container.lock(my_lock_key);
-			my_part.load_part_mesh();
-			my_system_par.string_locker_container.unlock(my_lock_key);
-		}
-	}
 	public void load(part my_part,part my_copy_from_part,long last_modified_time,
 			system_parameter system_par,scene_parameter scene_par,
+			tree_string_locker_container string_locker_container,
 			ArrayList<part> part_list_for_delete_file,ArrayList<part_loader> already_loaded_part,
 			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container)
 	{
@@ -151,8 +117,8 @@ public class part_loader_container
 		}
 		
 		try{
-			load_routine(my_part,my_copy_from_part,
-				last_modified_time,system_par,scene_par,already_loaded_part);
+			load_routine(my_part,my_copy_from_part,last_modified_time,
+				system_par,scene_par,string_locker_container,already_loaded_part);
 		}catch(Exception e){
 			e.printStackTrace();
 			debug_information.println("load of part_loader_container fail");

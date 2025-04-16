@@ -10,22 +10,22 @@ public class part_lru_manager
 {
 	class part_bidirection_link_list
 	{
-		public part p;
 		public boolean in_list_flag;
+		public int render_id,part_id;
 		public part_bidirection_link_list front,back;
 		
 		public void destroy()
 		{
-			p=null;
-			front=null;
-			back=null;
+			front		=null;
+			back		=null;
 		}
-		public part_bidirection_link_list(part my_p)
+		public part_bidirection_link_list(part my_part)
 		{
-			p=my_p;
 			in_list_flag=false;
-			front=null;
-			back=null;
+			render_id	=my_part.render_id;
+			part_id		=my_part.part_id;
+			front		=null;
+			back		=null;
 		}
 	};
 	
@@ -37,11 +37,10 @@ public class part_lru_manager
 	{
 		return in_list_number;
 	}
-
-	public boolean touch(int render_id,int part_id)
+	public boolean touch(part touch_part,ArrayList<render> ren)
 	{
 		boolean ret_val;
-		part_bidirection_link_list pbll=part_array[render_id][part_id];
+		part_bidirection_link_list pbll=part_array[touch_part.render_id][touch_part.part_id];
 		
 		if(pbll.in_list_flag) {
 			if(first==pbll) 
@@ -53,12 +52,11 @@ public class part_lru_manager
 				pbll.front.back=pbll.back;
 				pbll.back.front=pbll.front;
 			}
-			in_list_number--;
 			ret_val=false;
-		}else
+		}else {
+			in_list_number++;
 			ret_val=true;
-		
-		in_list_number++;
+		}
 		pbll.in_list_flag=true;
 		pbll.front=null;
 		pbll.back=null;
@@ -86,11 +84,13 @@ public class part_lru_manager
 		pbll.front=null;
 		pbll.back=null;
 		
-		if(pbll.p.part_mesh!=null){
-			pbll.p.part_mesh.free_memory();
-			debug_information.println("Unload part:	user name:"+pbll.p.user_name,
-					"	system name:"	+pbll.p.system_name+
-					"	mesh file:"		+pbll.p.directory_name+pbll.p.mesh_file_name);
+		part free_part=ren.get(pbll.render_id).parts.get(pbll.part_id);
+		if(free_part.part_mesh!=null){
+			free_part.part_mesh.free_memory();
+			debug_information.println("Unload part:",
+					"	user name:"	+free_part.user_name+
+					"	system name:"	+free_part.system_name+
+					"	mesh file:"		+free_part.directory_name+free_part.mesh_file_name);
 		}
 		return ret_val;
 	}

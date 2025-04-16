@@ -161,8 +161,6 @@ public class part
 	}
 	public void load_part_mesh()
 	{
-		debug_information.println("Load part:	user name:"+user_name,
-				"	system name:"+system_name+"	mesh file:"		+directory_name+mesh_file_name);
 		if(is_normal_part()){
 			if(part_mesh!=null)
 				part_mesh.destroy();
@@ -180,7 +178,6 @@ public class part
 		String ret_val="";
 
 		ret_val+="\n\tbuffer object directory:\t"+part_temporary_file_directory;
-		ret_val+="\n\tbuffer object file name:\tmesh";	
 
 		file_writer head_fw=new file_writer(
 				part_temporary_file_directory+"mesh.head.txt",system_par.network_data_charset);
@@ -276,7 +273,8 @@ public class part
 		head_fw.close();
 		
 		boftal=new buffer_object_file_modify_time_and_length(part_mesh,
-				part_temporary_file_directory+"mesh",head_fw.get_charset());
+				part_temporary_file_directory+"mesh",head_fw.get_charset(),
+				part_par.delete_mesh_boftal_comment_flag);
 		
 		create_network_buffer_object_file.create(system_par.response_block_size,
 				head_fw.get_charset(),part_temporary_file_directory+"mesh");
@@ -292,7 +290,7 @@ public class part
 	{
 		String str;
 		
-		str =  "\tuser part name:\t\t\t"		+user_name;
+		str ="\n\tuser part name:\t\t\t"		+user_name;
 		str+="\n\tsystem part name:\t\t"		+system_name;
 		str+="\n\tpart permanent ID:\t\t"		+Integer.toString(permanent_part_id);
 		str+="\n\tdirectory:\t\t\t"				+directory_name;
@@ -314,9 +312,7 @@ public class part
 				}
 				public void operate_file(String file_name)
 				{	
-					File f=new File(file_name);
-					if(f.getName().compareTo("part.lock")!=0)
-						f.delete();
+					new File(file_name).delete();
 				}
 			};
 			new part_temporary_file_directory_deleter().do_travel(part_temporary_file_directory,false);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
 import kernel_common_class.debug_information;
+import kernel_common_class.tree_string_locker_container;
 import kernel_common_class.tree_string_search_container;
 import kernel_component.component_load_source_container;
 import kernel_file_manager.file_directory;
@@ -26,8 +27,8 @@ public class scene_kernel_container_search_tree
 	
 	private volatile ReentrantLock scene_kernel_container_search_tree_lock;
 	
-	private void load_render_container(
-		client_request_response request_response,system_parameter system_par)
+	private void load_render_container(client_request_response request_response,
+			system_parameter system_par,tree_string_locker_container string_locker_container)
 	{
 		int part_type_id=0;
 		ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container;
@@ -42,17 +43,19 @@ public class scene_kernel_container_search_tree
 			system_par.data_root_directory_name+system_par.shader_file_name,
 			system_par.local_data_charset,part_type_id,system_par,null,encoder,request_response);
 		pcps.execute_append();
-		original_render.load_part(((long)1)<<part_type_id,1,part_loader_cont,
-				system_par,null,boftal_container,part_list_for_delete_file,null,null,null);
+		original_render.load_part(((long)1)<<part_type_id,1,part_loader_cont,system_par,null,
+			boftal_container,part_list_for_delete_file,string_locker_container,null,null,null);
 		
 		original_render.create_bottom_box_part(pcps,request_response,encoder,system_par,null);
 		pcps.execute_append();
-		original_render.load_part(((long)1)<<part_type_id,2,part_loader_cont,
-				system_par,null,boftal_container,part_list_for_delete_file,null,null,null);
+		original_render.load_part(((long)1)<<part_type_id,2,part_loader_cont,system_par,null,
+			boftal_container,part_list_for_delete_file,string_locker_container,null,null,null);
 		
+		debug_information.println();
 		debug_information.println("Begin create system_part_package");
-		original_render.system_part_package=new part_package(
-				null,null,null,null,original_render,part_type_id,system_par,null);
+		
+		original_render.system_part_package=new part_package(null,string_locker_container,
+				null,null,null,original_render,part_type_id,system_par,null);
 		
 		system_boftal_container=new buffer_object_file_modify_time_and_length_container();
 		try {
@@ -63,9 +66,11 @@ public class scene_kernel_container_search_tree
 			system_boftal_container=new buffer_object_file_modify_time_and_length_container();
 		}
 		
-		debug_information.println("End create system_part_package");
-		
 		delete_part_files.do_delete(part_list_for_delete_file,null,system_par,null);
+		
+		debug_information.println();
+		debug_information.println("End create system_part_package");
+		debug_information.println();
 	}
 	private scene_kernel_container create_scene_kernel_container_routine(
 			client_request_response request_response,
@@ -117,7 +122,7 @@ public class scene_kernel_container_search_tree
 			scene_kernel_cont.destroy();
 			return null;
 		}
-		debug_information.println("Create scene success:	",scene_name+"	"+link_name);
+		debug_information.println("Create scene success		:	",scene_name+"	"+link_name);
 		scene_kernel_cont.modify_scene_kernel_link_number(1);
 		
 		tree.add(new String[]{scene_name,link_name},scene_kernel_cont);
@@ -157,6 +162,7 @@ public class scene_kernel_container_search_tree
 	}
 	public scene_kernel_container create_scene_kernel_container(
 			client_request_response request_response,
+			tree_string_locker_container string_locker_container,
 			String client_scene_file_name,String client_scene_file_charset,
 			create_scene_counter scene_counter,system_parameter system_par)
 	{
@@ -166,7 +172,7 @@ public class scene_kernel_container_search_tree
 		my_lock.lock();
 
 		if(original_render==null)
-			load_render_container(request_response,system_par);
+			load_render_container(request_response,system_par,string_locker_container);
 		
 		scene_kernel_container my_scene_kernel_container=null;
 		try {

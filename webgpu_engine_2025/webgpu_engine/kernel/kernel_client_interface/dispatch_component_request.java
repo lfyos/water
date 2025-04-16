@@ -4,13 +4,16 @@ import kernel_part.part;
 import kernel_component.component;
 import kernel_driver.component_instance_driver;
 import kernel_common_class.debug_information;
+import kernel_common_class.tree_string_locker_container;
 import kernel_render.response_render_component_request;
 import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
 
 public class dispatch_component_request
 {
-	static public String[] do_dispatch(long delay_time_length,scene_kernel sk,client_information ci)
+	static public String[] do_dispatch(
+			long delay_time_length,scene_kernel sk,client_information ci,
+			tree_string_locker_container string_locker_container)
 	{
 		String str;
 		component comp;

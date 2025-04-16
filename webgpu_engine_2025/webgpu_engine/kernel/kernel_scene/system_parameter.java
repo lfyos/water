@@ -7,7 +7,6 @@ import kernel_file_manager.file_reader;
 import kernel_common_class.change_name;
 import kernel_interface.switch_scene_server;
 import kernel_common_class.debug_information;
-import kernel_common_class.tree_string_locker_container;
 import kernel_content_type.get_content_type_change_name;
 import kernel_network.network_implementation_default_parameter;
 
@@ -47,7 +46,6 @@ public class system_parameter
 	public change_name language_change_name,content_type_change_name;
 	public temporary_file_parameter temporary_file_par;
 	public switch_scene_server	switch_server;
-	public tree_string_locker_container string_locker_container;
 
 	public system_parameter(system_parameter sp)
 	{
@@ -105,7 +103,6 @@ public class system_parameter
 		
 		temporary_file_par						=sp.temporary_file_par;
 		switch_server							=sp.switch_server;
-		string_locker_container					=sp.string_locker_container;
 	}
 	public system_parameter(
 			String data_file_configure_file_name,
@@ -241,7 +238,6 @@ public class system_parameter
 				new String[]{data_root_directory_name+language_change_file_name},null,local_data_charset);
 		content_type_change_name=get_content_type_change_name.get_change_name(text_class_charset,text_jar_file_charset);
 		switch_server=new switch_scene_server(data_root_directory_name+switch_server_url_file_name,local_data_charset);
-		string_locker_container=new tree_string_locker_container();
 		return;
 	}
 }

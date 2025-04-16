@@ -8,6 +8,7 @@ import kernel_file_manager.file_reader;
 import java.io.File;
 
 import kernel_common_class.debug_information;
+import kernel_common_class.tree_string_locker_container;
 
 public class part_loader extends Thread
 {
@@ -17,6 +18,7 @@ public class part_loader extends Thread
 	
 	private system_parameter system_par;
 	private scene_parameter scene_par;
+	private tree_string_locker_container string_locker_container;
 
 	private volatile boolean is_loading_flag;
 	
@@ -32,16 +34,18 @@ public class part_loader extends Thread
 		system_par=null;
 		scene_par=null;
 	}
-	public part_loader(part my_loaded_part,part my_copy_from_part,
-			long my_last_modified_time,system_parameter my_system_par,scene_parameter my_scene_par)
+	public part_loader(
+			part my_loaded_part,part my_copy_from_part,long my_last_modified_time,
+			system_parameter my_system_par,scene_parameter my_scene_par,
+			tree_string_locker_container my_string_locker_container)
 	{
-		is_loading_flag	=true;
-		loaded_part		=my_loaded_part;
-		copy_from_part	=my_copy_from_part;
-		last_modified_time=my_last_modified_time;
-		system_par		=my_system_par;
-		scene_par		=my_scene_par;
-		
+		is_loading_flag			=true;
+		loaded_part				=my_loaded_part;
+		copy_from_part			=my_copy_from_part;
+		last_modified_time		=my_last_modified_time;
+		system_par				=my_system_par;
+		scene_par				=my_scene_par;
+		string_locker_container	=my_string_locker_container;
 		start();
 	}
 	private boolean test_create_boftal_file(String part_temporary_file_directory)
@@ -72,35 +76,30 @@ public class part_loader extends Thread
 	}
 	public void run()
 	{
-		String part_temporary_file_directory=file_directory.
-				part_file_directory(loaded_part,system_par,scene_par);
-		String my_lock_key[]=new String[] {part_temporary_file_directory+"part.lock"};
-		system_par.string_locker_container.lock(my_lock_key);
+		String part_temporary_file_directory=file_directory.part_file_directory(loaded_part,system_par,scene_par);
+		String my_lock_key[]=new String[]{part_temporary_file_directory+"part.lock"};
+		string_locker_container.lock(my_lock_key);
 		
 		if(test_create_boftal_file(part_temporary_file_directory)){
 			file_reader fr=new file_reader(
 				part_temporary_file_directory+"mesh.boftal",system_par.local_data_charset);
 			loaded_part.boftal=new buffer_object_file_modify_time_and_length(fr);
 			fr.close();
-			
+
 			if(loaded_part.part_mesh==null)
 				loaded_part.part_mesh=loaded_part.boftal.simple_part_mesh;
 			if(loaded_part.part_mesh!=null)
 				loaded_part.part_mesh.free_memory();
 			
 			is_loading_flag=false;
-			system_par.string_locker_container.unlock(my_lock_key);
+			string_locker_container.unlock(my_lock_key);
 			
 			debug_information.println("Load part mesh.boftal:	user name:"+
 					loaded_part.user_name+"	system name:"+loaded_part.system_name,
 					"	mesh file:"	 +loaded_part.directory_name+loaded_part.mesh_file_name);
 			return;
 		}
-		
-		debug_information.println(
-			"Begin load_mesh_and_create_buffer_object_and_material_file:\t",loaded_part.system_name);
-        debug_information.println();
-		
+	
         try{
 			debug_information.println(
 				loaded_part.load_mesh_and_create_buffer_object(copy_from_part,system_par,scene_par));
@@ -110,12 +109,8 @@ public class part_loader extends Thread
 			debug_information.println(e.toString());
 			e.printStackTrace();
 		}
-        
-        is_loading_flag=false;
-    	debug_information.println(
-    		"End load_mesh_and_create_buffer_object_and_material_file:\t",loaded_part.system_name);
-        debug_information.println();
 
-        system_par.string_locker_container.unlock(my_lock_key);
+        is_loading_flag=false;
+        string_locker_container.unlock(my_lock_key);
 	}
 }

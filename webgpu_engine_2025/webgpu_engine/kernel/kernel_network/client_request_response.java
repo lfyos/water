@@ -13,6 +13,7 @@ import kernel_scene.system_parameter;
 import kernel_common_class.common_reader;
 import kernel_common_class.common_writer;
 import kernel_common_class.debug_information;
+import kernel_common_class.tree_string_locker_container;
 import kernel_common_class.compress_file_data;
 import kernel_common_class.compress_network_data;
 
@@ -286,7 +287,8 @@ public class client_request_response extends common_writer
 		return new long[] {begin_pointer,end_pointer};
 	}
 	
-	public void response_file_data(	scene_call_result ecr,system_parameter system_par)
+	public void response_file_data(scene_call_result ecr,
+			system_parameter system_par,tree_string_locker_container string_locker_container)
 	{
 		try{
 			output_stream.close();
@@ -314,7 +316,7 @@ public class client_request_response extends common_writer
 			if((ecr.charset_file_name!=null)&&(ecr.file_charset!=null))
 				if(system_par.network_data_charset.compareTo(ecr.file_charset)!=0){
 					String my_lock_key[]=new String[] {ecr.charset_file_name+".lock"};
-					system_par.string_locker_container.lock(my_lock_key);
+					string_locker_container.lock(my_lock_key);
 
 					try {
 						if(new File(ecr.charset_file_name).lastModified()<=new File(file_name).lastModified())
@@ -325,7 +327,7 @@ public class client_request_response extends common_writer
 						debug_information.println("response_file_data exception 1\t",e.toString());
 					}
 					
-					system_par.string_locker_container.unlock(my_lock_key);
+					string_locker_container.unlock(my_lock_key);
 					
 					file_name=ecr.charset_file_name;
 					network_data_charset=system_par.network_data_charset;
@@ -339,7 +341,7 @@ public class client_request_response extends common_writer
 			else {
 				String compress_file_name=ecr.compress_file_name+"."+compress_response_header;
 				String my_lock_key[]=new String[] {compress_file_name+".lock"};
-				system_par.string_locker_container.lock(my_lock_key);
+				string_locker_container.lock(my_lock_key);
 
 				try{
 					File gf=new File(compress_file_name);
@@ -354,7 +356,7 @@ public class client_request_response extends common_writer
 					e.printStackTrace();
 					debug_information.println("response_file_data exception 2\t",e.toString());
 				}
-				system_par.string_locker_container.unlock(my_lock_key);
+				string_locker_container.unlock(my_lock_key);
 			}
 		}
 		

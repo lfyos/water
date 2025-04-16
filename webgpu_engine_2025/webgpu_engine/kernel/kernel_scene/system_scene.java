@@ -3,6 +3,7 @@ package kernel_scene;
 import kernel_interface.client_interface;
 import kernel_network.network_implementation;
 import kernel_common_class.debug_information;
+import kernel_common_class.tree_string_locker_container;
 import kernel_interface.file_download_manager;
 import kernel_network.client_request_response;
 import kernel_program_javascript.javascript_program;
@@ -12,6 +13,7 @@ public class system_scene
 {
 	private client_interface_search_tree client_interface_search_tree_array[];
 	private scene_kernel_container_search_tree scene_kernel_search_tree;
+	private tree_string_locker_container string_locker_container;
 	private javascript_program program_javascript;
 	private create_scene_counter scene_counter;
 	private system_parameter system_par;
@@ -31,6 +33,11 @@ public class system_scene
 			scene_kernel_search_tree.destroy();
 			scene_kernel_search_tree=null;
 		}
+		if(string_locker_container!=null) {
+			string_locker_container.destroy();
+			string_locker_container=null;
+		}
+		
 		if(program_javascript!=null) {
 			program_javascript.destroy();
 			program_javascript=null;
@@ -88,7 +95,9 @@ public class system_scene
 				client.set_process_bar(request_response,true,"wait_for_other_exit","",1,2);
 				ecr=new scene_call_result(request_response.response_content_type);
 				request_response.reset().println("0");
-			}else if((ecr=client.execute_create_call(request_response,scene_kernel_search_tree,scene_counter))==null){
+			}else if((ecr=client.execute_create_call(request_response,
+					scene_kernel_search_tree,scene_counter,string_locker_container))==null)
+			{
 				ecr=new scene_call_result(request_response.response_content_type);
 				request_response.reset().println("2");
 			}
@@ -97,7 +106,8 @@ public class system_scene
 		default:
 			if((client=client_interface_search_tree_array[request_response.container_id].
 				get_client_interface(request_response,scene_kernel_search_tree,scene_counter,system_par))!=null)
-					ecr=client.execute_system_call(request_response,scene_kernel_search_tree,scene_counter);
+					ecr=client.execute_system_call(request_response,
+							scene_kernel_search_tree,scene_counter,string_locker_container);
 			break;
 		}
 		return ecr;
@@ -110,7 +120,7 @@ public class system_scene
 		request_response=new client_request_response(network_implementor,system_par);
 		if((ecr=system_call_switch(request_response))!=null)
 			if(ecr.file_name!=null) 
-				request_response.response_file_data(ecr,system_par);
+				request_response.response_file_data(ecr,system_par,string_locker_container);
 			else
 				request_response.response_network_data(ecr,system_par);
 		request_response.destroy();
@@ -123,9 +133,11 @@ public class system_scene
 		client_interface_search_tree_array=new client_interface_search_tree[number];
 		for(int i=0;i<number;i++)
 			client_interface_search_tree_array[i]=new client_interface_search_tree();
-		scene_kernel_search_tree=new scene_kernel_container_search_tree();
-		program_javascript		=new javascript_program(system_par);
-		scene_counter			=new create_scene_counter();
-		creation_scene_lock_number=0;
+		
+		scene_kernel_search_tree	=new scene_kernel_container_search_tree();
+		string_locker_container		=new tree_string_locker_container();
+		program_javascript			=new javascript_program(system_par);
+		scene_counter				=new create_scene_counter();
+		creation_scene_lock_number	=0;
 	}
 }

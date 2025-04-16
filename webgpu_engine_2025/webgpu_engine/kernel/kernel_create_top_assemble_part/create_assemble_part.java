@@ -3,6 +3,7 @@ package kernel_create_top_assemble_part;
 import java.util.ArrayList;
 
 import kernel_common_class.debug_information;
+import kernel_common_class.tree_string_locker_container;
 import kernel_component.component;
 import kernel_file_manager.file_directory;
 import kernel_network.client_request_response;
@@ -179,7 +180,7 @@ public class create_assemble_part
 				
 				p.part_par.max_part_load_thread_number,
 				
-				p.part_par.do_create_part_ids_flag,
+				p.part_par.delete_mesh_boftal_comment_flag,
 				false,
 				
 				p.part_par.clear_buffer_head_file_flag,
@@ -197,7 +198,8 @@ public class create_assemble_part
 			double create_top_part_discard_precision2,double discard_top_part_component_precision2,
 			render_container render_cont,part_loader_container part_loader_cont,
 			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
-			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,long last_modified_time)
+			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,long last_modified_time,
+			tree_string_locker_container string_locker_container)
 	{
 		int max_component_number			=root_component.component_id+1;
 		
@@ -306,8 +308,8 @@ public class create_assemble_part
 				continue;
 			}
 			part_loader_cont.load(add_part,render_cont.get_copy_from_part(add_part),
-				last_modified_time,system_par,scene_par,part_list_for_delete_file,
-				already_loaded_part,boftal_container);
+				last_modified_time,system_par,scene_par,string_locker_container,
+				part_list_for_delete_file,already_loaded_part,boftal_container);
 			top_box_part.add(add_part_number++,add_part);
 			create_part_number+=my_create_part_number;	
 			

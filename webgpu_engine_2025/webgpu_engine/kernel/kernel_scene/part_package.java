@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import kernel_common_class.debug_information;
+import kernel_common_class.tree_string_locker_container;
 import kernel_common_class.compress_file_data;
 import kernel_file_manager.file_directory;
 import kernel_file_manager.file_reader;
@@ -44,7 +45,8 @@ public class part_package
 		for(int i=0,ni=package_last_time.length;i<ni;i++)
 			package_last_time[i]=pp.package_last_time[i];
 	}
-	public part_package(client_process_bar process_bar,
+	public part_package(
+		client_process_bar process_bar,tree_string_locker_container string_locker_container,
 		String package_process_bar_title,String boftal_process_bar_title,String ex_process_title,
 		render_container rc,int part_type_id,system_parameter system_par,scene_parameter scene_par)
 	{
@@ -126,13 +128,11 @@ public class part_package
 			}
 		};
 
-		debug_information.println("Begin create part package");
-		
 		String package_directory_name	=file_directory.package_file_directory(part_type_id,system_par,scene_par);
 		String package_data_file_name	=package_directory_name+"package_data.txt";
 		String boftal_data_file_name 	=package_directory_name+"boftal_data.txt";
 		String my_lock_key[]			=new String[] {package_directory_name+"package.lock"};
-		system_par.string_locker_container.lock(my_lock_key);
+		string_locker_container.lock(my_lock_key);
 		
 		part_package_collector ppc=new part_package_collector(rc.part_array_list(part_type_id),system_par);
 		
@@ -170,7 +170,7 @@ public class part_package
 			}
 			fr.close();
 			if(not_create_flag) {
-				system_par.string_locker_container.unlock(my_lock_key);
+				string_locker_container.unlock(my_lock_key);
 				return;
 			}
 		}
@@ -191,7 +191,8 @@ public class part_package
 			if(f.exists())
 				if(package_last_time[i]>ppc.part_package[i].last_time)
 					continue;
-				
+			
+			debug_information.println();
 			debug_information.println("Create part package:	",my_package_file_name);
 	
 			file_writer fw=new file_writer(my_package_file_name+".tmp",system_par.network_data_charset);
@@ -199,7 +200,7 @@ public class part_package
 	
 			for(int j=0,nj=ppc.part_package[i].list.size();j<nj;j++) {
 				part p=ppc.part_package[i].list.get(j);
-				debug_information.print  ("part user_name:	",	p.user_name);
+				debug_information.print  ("	part user_name:	",	p.user_name);
 				debug_information.print  ("		part type:	",	p.part_par.part_type_string);
 				if(p.is_normal_part())
 					debug_information.println("		part mesh_file_name:	",p.directory_name+p.mesh_file_name);
@@ -257,10 +258,8 @@ public class part_package
 			fw.close();
 		}
 
-		system_par.string_locker_container.unlock(my_lock_key);
-		
-		debug_information.println("End create part package");
-		
+		string_locker_container.unlock(my_lock_key);
+	
 		return;
 	}
 }

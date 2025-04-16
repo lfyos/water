@@ -9,6 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import kernel_component.component;
 import kernel_common_class.jason_string;
 import kernel_common_class.nanosecond_timer;
+import kernel_common_class.tree_string_locker_container;
 import kernel_common_class.debug_information;
 import kernel_common_class.tree_string_search_container;
 
@@ -45,7 +46,8 @@ public class client_interface
 	
 	private scene_call_result create_scene_routine(long delay_time_length,
 			scene_kernel_container_search_tree scene_kernel_search_tree,ReentrantLock my_lock,
-			client_request_response request_response,create_scene_counter scene_counter)
+			client_request_response request_response,create_scene_counter scene_counter,
+			tree_string_locker_container string_locker_container)
 	{
 		if(statistics_user.user_scene_kernel_number>=statistics_user.user_max_scene_kernel_number) {
 			debug_information.print  ("client id:",request_response.client_id);
@@ -73,7 +75,8 @@ public class client_interface
 		
 		try{
 			created_scene_kernel_only=scene_kernel_search_tree.create_scene_kernel_container(
-				request_response,client_scene_file_name,client_scene_file_charset,scene_counter,system_par);
+				request_response,string_locker_container,
+				client_scene_file_name,client_scene_file_charset,scene_counter,system_par);
 		}catch(Exception e) {
 			e.printStackTrace();
 
@@ -108,8 +111,8 @@ public class client_interface
 		try{
 			ecr=created_sk_and_ci.get_scene_result(
 					cpb,scene_kernel_search_tree.system_boftal_container,
-					scene_kernel_search_tree.component_load_source_cont,
-					request_response,delay_time_length,statistics_user,scene_counter);
+					scene_kernel_search_tree.component_load_source_cont,request_response,
+					delay_time_length,statistics_user,scene_counter,string_locker_container);
 		}catch(Exception e){
 			e.printStackTrace();
 			ecr=null;
@@ -144,7 +147,8 @@ public class client_interface
 	}
 	private scene_call_result create_scene(long delay_time_length,
 			scene_kernel_container_search_tree scene_kernel_search_tree,ReentrantLock my_lock,
-			client_request_response request_response,create_scene_counter scene_counter)
+			client_request_response request_response,create_scene_counter scene_counter,
+			tree_string_locker_container string_locker_container)
 	{
 		debug_information.println();
 		debug_information.println("\n#####################################################################################################");
@@ -172,8 +176,9 @@ public class client_interface
 		debug_information.println("default_parameter_directory	:	",		system_par.default_parameter_directory);
 		debug_information.println("temporary_root_directory_name	:	",	system_par.temporary_file_par.temporary_root_directory_name);
 		
-		scene_call_result ret_val=create_scene_routine(delay_time_length,
-				scene_kernel_search_tree,my_lock,request_response,scene_counter);
+		scene_call_result ret_val=create_scene_routine(
+				delay_time_length,scene_kernel_search_tree,my_lock,
+				request_response,scene_counter,string_locker_container);
 		
 		now = Calendar.getInstance();  
 		long end_time=new Date().getTime();
@@ -196,6 +201,7 @@ public class client_interface
 	
 	private scene_call_result execute_system_call_routine(
 			client_request_response request_response,
+			tree_string_locker_container string_locker_container,
 			scene_kernel_container_search_tree scene_kernel_search_tree,
 			create_scene_counter scene_counter,ReentrantLock my_lock)
 	{
@@ -239,7 +245,8 @@ public class client_interface
 			ecr=p.get_scene_result(cpb,
 					scene_kernel_search_tree.system_boftal_container,
 					scene_kernel_search_tree.component_load_source_cont,
-					request_response,delay_time_length,statistics_user,scene_counter);
+					request_response,delay_time_length,statistics_user,
+					scene_counter,string_locker_container);
 		}catch(Exception e){
 			e.printStackTrace();
 			ecr=null;
@@ -254,7 +261,8 @@ public class client_interface
 	public scene_call_result execute_system_call(
 			client_request_response request_response,
 			scene_kernel_container_search_tree scene_kernel_search_tree,
-			create_scene_counter scene_counter)
+			create_scene_counter scene_counter,
+			tree_string_locker_container string_locker_container)
 	{
 		ReentrantLock my_lock;
 		
@@ -276,8 +284,8 @@ public class client_interface
 			break;
 		default:
 			try{
-				ret_val=execute_system_call_routine(
-					request_response,scene_kernel_search_tree,scene_counter,my_lock);
+				ret_val=execute_system_call_routine(request_response,
+					string_locker_container,scene_kernel_search_tree,scene_counter,my_lock);
 			}catch(Exception e) {
 				e.printStackTrace();
 				ret_val=null;
@@ -296,7 +304,8 @@ public class client_interface
 	public scene_call_result execute_create_call(
 			client_request_response request_response,
 			scene_kernel_container_search_tree scene_kernel_search_tree,
-			create_scene_counter scene_counter)
+			create_scene_counter scene_counter,
+			tree_string_locker_container string_locker_container)
 	{
 		ReentrantLock my_lock;
 		if((my_lock=client_interface_lock)==null)
@@ -312,8 +321,8 @@ public class client_interface
 			if((delay_time_length=manager_delay.process_delay_time_length())<0)
 				debug_information.println("TIME OUT FOUND,Client ID is ",request_response.client_id);
 			else
-				ret_val=create_scene(delay_time_length,
-						scene_kernel_search_tree,my_lock,request_response,scene_counter);
+				ret_val=create_scene(delay_time_length,scene_kernel_search_tree,
+						my_lock,request_response,scene_counter,string_locker_container);
 		}catch(Exception e){
 			e.printStackTrace();
 			ret_val=null;

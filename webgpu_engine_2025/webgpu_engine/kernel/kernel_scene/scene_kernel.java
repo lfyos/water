@@ -17,6 +17,7 @@ import kernel_file_manager.file_directory;
 import kernel_interface.client_process_bar;
 import kernel_component.component_container;
 import kernel_common_class.nanosecond_timer;
+import kernel_common_class.tree_string_locker_container;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 import kernel_camera.camera_container_creator;
@@ -213,7 +214,8 @@ public class scene_kernel
 	private void load_create_assemble_part(component_load_source_container component_load_source_cont,
 			client_request_response request_response,ArrayList<part> part_list_for_delete_file,
 			part_container_for_part_search all_part_part_cont,permanent_part_id_encoder encoder[],
-			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container)
+			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,
+			tree_string_locker_container string_locker_container)
 	{		
 		if(create_parameter.create_top_part_expand_ratio>=1.0)
 			if(create_parameter.create_top_part_left_ratio>=1.0)
@@ -228,16 +230,16 @@ public class scene_kernel
 							scene_par.discard_top_part_component_precision2,
 							render_cont,part_loader_cont,
 							system_par,scene_par,all_part_part_cont,boftal_container,
-							get_file_last_modified_time())).top_box_part;
+							get_file_last_modified_time(),string_locker_container)).top_box_part;
 					if(top_box_part!=null)
 						if(top_box_part.size()>0)
 							mount_top_box_part(component_cont.root_component,component_load_source_cont,
 								new part_container_for_part_search(top_box_part),request_response);
 				}			
 	}
-	private ArrayList<buffer_object_file_modify_time_and_length_container>
-				get_boftal_container(client_process_bar process_bar,
-						buffer_object_file_modify_time_and_length_container system_boftal_container)
+	private ArrayList<buffer_object_file_modify_time_and_length_container>get_boftal_container(
+			client_process_bar process_bar,tree_string_locker_container string_locker_container,
+			buffer_object_file_modify_time_and_length_container system_boftal_container)
 	{
 		File f;
 		buffer_object_file_modify_time_and_length_container bofmtalc;
@@ -253,7 +255,7 @@ public class scene_kernel
 		boftal_data_file_name 	=package_directory_name+"boftal_data.txt";
 		my_lock_key				=new String[] {package_directory_name+"package.lock"};
 		
-		system_par.string_locker_container.lock(my_lock_key);
+		string_locker_container.read_lock(my_lock_key);
 		if((f=new File(boftal_data_file_name)).exists())
 			if(f.length()>0) {
 				bofmtalc=new buffer_object_file_modify_time_and_length_container();
@@ -261,14 +263,14 @@ public class scene_kernel
 				if(bofmtalc.size()>0)
 					ret_val.add(bofmtalc);
 			}
-		system_par.string_locker_container.unlock(my_lock_key);
+		string_locker_container.read_unlock(my_lock_key);
 		
 		for(int i=0,ni=scene_par.type_sub_directory.length;i<ni;i++) {
 			package_directory_name	=file_directory.package_file_directory(i+2,system_par,scene_par);
 			boftal_data_file_name 	=package_directory_name+"boftal_data.txt";
 			my_lock_key				=new String[] {package_directory_name+"package.lock"};
 			
-			system_par.string_locker_container.lock(my_lock_key);
+			string_locker_container.read_lock(my_lock_key);
 			if((f=new File(boftal_data_file_name)).exists())
 				if(f.length()>0){
 					bofmtalc=new buffer_object_file_modify_time_and_length_container();
@@ -276,20 +278,22 @@ public class scene_kernel
 					if(bofmtalc.size()>0)
 						ret_val.add(bofmtalc);
 				}
-			system_par.string_locker_container.unlock(my_lock_key);
+			string_locker_container.read_unlock(my_lock_key);
 		}
 		return ret_val;
 	}
 	
-	private void load_routine(component_load_source_container component_load_source_cont,
-			client_request_response request_response,client_process_bar process_bar,
-			buffer_object_file_modify_time_and_length_container system_boftal_container)
+	private void load_routine(
+		component_load_source_container component_load_source_cont,
+		client_request_response request_response,client_process_bar process_bar,
+		buffer_object_file_modify_time_and_length_container system_boftal_container,
+		tree_string_locker_container string_locker_container)
 	{
 		long start_time=new Date().getTime(),current_time;
 	
 		ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container;
 		if(scene_par.fast_load_flag)
-			boftal_container=get_boftal_container(process_bar,system_boftal_container);
+			boftal_container=get_boftal_container(process_bar,string_locker_container,system_boftal_container);
 		else
 			boftal_container=new ArrayList<buffer_object_file_modify_time_and_length_container>();
 		
@@ -343,7 +347,7 @@ public class scene_kernel
 		
 		start_time=current_time;
 		render_cont.load_part(part_type_code,1,part_loader_cont,system_par,scene_par,
-				boftal_container,part_list_for_delete_file,process_bar,
+				boftal_container,part_list_for_delete_file,string_locker_container,process_bar,
 				"load_first_class_part","normal_part");
 		debug_information.println("Load first class part time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
@@ -353,8 +357,8 @@ public class scene_kernel
 		part_cont.execute_append();
 		
 		render_cont.load_part(part_type_code,2,part_loader_cont,system_par,scene_par,
-				boftal_container,part_list_for_delete_file,process_bar,"load_second_class_part",
-				"bottom_box_part");
+				boftal_container,part_list_for_delete_file,string_locker_container,
+				process_bar,"load_second_class_part","bottom_box_part");
 		debug_information.println("Load second class part time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
@@ -363,10 +367,13 @@ public class scene_kernel
 		
 		render_cont.type_part_package=new part_package[scene_par.type_sub_directory.length];
 		for(int i=0,ni=render_cont.type_part_package.length;i<ni;i++)
-			render_cont.type_part_package[i]=new part_package(process_bar,
+			render_cont.type_part_package[i]=new part_package(
+				process_bar,string_locker_container,
 				"create_first_class_package","create_first_boftal_file",
 				"(type:"+(i+1)+"/"+ni+")",
 				render_cont,i+2,system_par,scene_par);
+		
+		debug_information.println();
 		debug_information.println("Create first part package time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
@@ -386,24 +393,26 @@ public class scene_kernel
 		
 		start_time=new Date().getTime();
 		load_create_assemble_part(component_load_source_cont,request_response,
-				part_list_for_delete_file,part_cont,encoder,boftal_container);	
+				part_list_for_delete_file,part_cont,encoder,boftal_container,string_locker_container);	
 		part_cont.execute_append();
 		render_cont.load_part(
 				part_type_code,4,part_loader_cont,system_par,scene_par,
-				boftal_container,part_list_for_delete_file,process_bar,
-				"load_third_class_part","top_box_part");
+				boftal_container,part_list_for_delete_file,string_locker_container,
+				process_bar,"load_third_class_part","top_box_part");
 		debug_information.println("Create top assemble time length:	",
 				(current_time=new Date().getTime())-start_time);
-		debug_information.println();
+
 		start_time=current_time;
 		
-		render_cont.scene_part_package=new part_package(process_bar,
+		render_cont.scene_part_package=new part_package(process_bar,string_locker_container,
 				"create_second_class_package","create_second_boftal_file","scene",
 				render_cont,1,system_par,scene_par);
 		
+		debug_information.println();
 		debug_information.println("Create second part package time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
+		
 		start_time=current_time;
 		
 		component_cont.original_part_number	=new compress_render_container(
@@ -423,7 +432,7 @@ public class scene_kernel
 
 		start_time=new Date().getTime();
 		process_bar.set_process_bar(true,"create_shader","",1,2);
-		new scene_initialization(this,request_response,process_bar);
+		new scene_initialization(this,string_locker_container,request_response,process_bar);
 		debug_information.println("Create scene temp data time length:	",		new Date().getTime()-start_time);
 		debug_information.println();
 		
@@ -437,24 +446,21 @@ public class scene_kernel
 	}
 	public void load(component_load_source_container component_load_source_cont,
 			client_request_response request_response,client_process_bar process_bar,
-			buffer_object_file_modify_time_and_length_container system_boftal_container)
+			buffer_object_file_modify_time_and_length_container system_boftal_container,
+			tree_string_locker_container string_locker_container)
 	{
 		debug_information.println();
 		debug_information.println("scene_par.directory_name	:	",			scene_par.directory_name);
 		debug_information.println("scene_temporary_directory_name	:	",	scene_par.scene_temporary_directory_name);
-			
 		debug_information.println("camera_file_name		:	",				scene_par.camera_file_name);
-		
 		debug_information.println("change_part_string		:	",			scene_par.change_part_string);
 		debug_information.println("part_type_string		:	",				scene_par.part_type_string);
-		
 		try {
-			load_routine(component_load_source_cont,request_response,process_bar,system_boftal_container);
-		}catch(Exception e) {
+			load_routine(component_load_source_cont,request_response,
+				process_bar,system_boftal_container,string_locker_container);
+		}catch(Exception e){
 			e.printStackTrace();
-			
 			debug_information.println("Scene load exception:	",e.toString());
-			
 		}
 	}
 	private boolean reset_flag;

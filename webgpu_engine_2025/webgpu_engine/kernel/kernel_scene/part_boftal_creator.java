@@ -36,8 +36,8 @@ public class part_boftal_creator extends sorter <part,String>
 		data_list=my_data_array;
 		int part_number=data_list.size();
 		
-		debug_information.println("Create boftal file: start.....	",process_bar_title);
-		debug_information.println("Total part number:",part_number);
+		debug_information.println();
+		debug_information.println("Create boftal file,Total part number:",part_number+",	"+file_name);
 
 		do_sort();
 
@@ -62,6 +62,7 @@ public class part_boftal_creator extends sorter <part,String>
 				if((str=fr.get_string())!=null)
 					fw.println(str);
 			fr.close();
+			
 			fw.println();
 		}		
 		fw.close();
@@ -69,8 +70,5 @@ public class part_boftal_creator extends sorter <part,String>
 		
 		if((process_bar!=null)&&(process_bar_title!=null))
 			process_bar.set_process_bar(false, process_bar_title,ex_process_title,part_number,part_number);
-
-		debug_information.println(
-			"Create boftal file: finished!	",(process_bar_title==null)?"":process_bar_title);
 	}
 }

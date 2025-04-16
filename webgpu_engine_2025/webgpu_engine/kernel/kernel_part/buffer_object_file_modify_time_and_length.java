@@ -51,7 +51,8 @@ public class buffer_object_file_modify_time_and_length
 		return;
 	}
 	public buffer_object_file_modify_time_and_length(
-		part_rude pr,String root_file_name,String file_charset)
+		part_rude pr,String root_file_name,String file_charset,
+		boolean delete_mesh_boftal_comment_flag)
 	{
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss:SSS");
 		
@@ -137,6 +138,8 @@ public class buffer_object_file_modify_time_and_length
 			fw.println();
 		}
 		fw.close();
+		if(delete_mesh_boftal_comment_flag)
+			file_writer.delete_comment(root_file_name+".boftal.tmp",file_charset);
 		file_writer.file_rename(root_file_name+".boftal.tmp",root_file_name+".boftal");
 	}
 }
