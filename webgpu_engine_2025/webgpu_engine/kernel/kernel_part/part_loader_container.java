@@ -94,7 +94,7 @@ public class part_loader_container
 	public void load(part my_part,part my_copy_from_part,long last_modified_time,
 			system_parameter system_par,scene_parameter scene_par,
 			tree_string_locker_container string_locker_container,
-			ArrayList<part> part_list_for_delete_file,ArrayList<part_loader> already_loaded_part,
+			ArrayList<part_loader> already_loaded_part,
 			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container)
 	{
 		int boftal_number;
@@ -124,6 +124,5 @@ public class part_loader_container
 			debug_information.println("load of part_loader_container fail");
 			debug_information.println(e.toString());
 		}
-		part_list_for_delete_file.add(my_part);
 	}
 }

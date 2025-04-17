@@ -80,8 +80,5 @@ file_initialization_3+chinese					24.文件初始化_3
 file_initialization_4+english					25.file_initialization_4 
 file_initialization_4+chinese					25.文件初始化_4
 
-delete_part_file+english						26.delete_part_file
-delete_part_file+chinese						26.删除零件数据文件
-
-load_termination+english						27.load_termination 
-load_termination+chinese						27.场景数据装入完毕
+load_termination+english						26.load_termination 
+load_termination+chinese						26.场景数据装入完毕

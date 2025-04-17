@@ -115,7 +115,7 @@ public class render_container
 	public void load_part(long part_type,int part_normal_bottom_box_top_box_flag,
 		part_loader_container part_loader_cont,system_parameter system_par,scene_parameter scene_par,
 		ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,
-		ArrayList<part> part_list_for_delete_file,tree_string_locker_container string_locker_container,
+		tree_string_locker_container string_locker_container,
 		client_process_bar process_bar,String process_bar_title,String ex_process_bar_title)
 	{
 		if(renders==null)
@@ -169,9 +169,8 @@ public class render_container
 									(p.is_top_box_part()	?4:0);
 				if((my_part_flag&part_normal_bottom_box_top_box_flag)==0)
 					continue;
-				part_loader_cont.load(p,get_copy_from_part(p),
-						0,system_par,scene_par,string_locker_container,
-						part_list_for_delete_file,already_loaded_part,boftal_container);
+				part_loader_cont.load(p,get_copy_from_part(p),0,system_par,scene_par,
+						string_locker_container,already_loaded_part,boftal_container);
 				load_number++;
 				if(process_bar!=null)
 					process_bar.set_process_bar(false,

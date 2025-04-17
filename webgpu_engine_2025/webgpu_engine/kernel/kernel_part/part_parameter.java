@@ -13,8 +13,7 @@ public class part_parameter
 	public long		create_face_buffer_object_bitmap,create_edge_buffer_object_bitmap,create_point_buffer_object_bitmap;
 	public int 		max_part_load_thread_number;
 	
-	public boolean	delete_mesh_boftal_comment_flag,do_create_bottom_box_flag;
-	public boolean	clear_buffer_head_file_flag,clear_buffer_boftal_file_flag,clear_model_file_flag[];
+	public boolean	do_create_bottom_box_flag;
 	
 	public double	location_match_direction[];
 	public boolean	symmetry_flag[]; 
@@ -44,13 +43,9 @@ public class part_parameter
 			long	my_create_point_buffer_object_bitmap,
 			
 			int		my_max_part_load_thread_number,
-			
-			boolean my_delete_mesh_boftal_comment_flag,
+
 			boolean	my_do_create_bottom_box_flag,
 			
-			boolean my_clear_buffer_head_file_flag,
-			boolean my_clear_buffer_boftal_file_flag,
-			boolean my_clear_model_file_flag[],
 			double	my_location_match_direction[],
 			boolean	my_symmetry_flag[])
 	{
@@ -78,14 +73,8 @@ public class part_parameter
 		
 		max_part_load_thread_number		=(my_max_part_load_thread_number<=0)	?1:my_max_part_load_thread_number;
 		
-		delete_mesh_boftal_comment_flag	=my_delete_mesh_boftal_comment_flag;
 		do_create_bottom_box_flag		=my_do_create_bottom_box_flag;
 		
-		clear_buffer_head_file_flag		=my_clear_buffer_head_file_flag;
-		clear_buffer_boftal_file_flag	=my_clear_buffer_boftal_file_flag;
-		clear_model_file_flag			=new boolean[my_clear_model_file_flag.length];
-		for(int i=0,ni=clear_model_file_flag.length;i<ni;i++)
-			clear_model_file_flag[i]=my_clear_model_file_flag[i];
 		location_match_direction=new double[my_location_match_direction.length];
 		for(int i=0,ni=location_match_direction.length;i<ni;i++)
 			location_match_direction[i]=my_location_match_direction[i];
@@ -122,12 +111,8 @@ public class part_parameter
 				
 				max_part_load_thread_number,
 
-				delete_mesh_boftal_comment_flag,
 				do_create_bottom_box_flag,
 				
-				clear_buffer_head_file_flag,
-				clear_buffer_boftal_file_flag,
-				clear_model_file_flag,
 				location_match_direction,
 				symmetry_flag);
 	}
@@ -160,12 +145,8 @@ public class part_parameter
 				
 				max_part_load_thread_number,
 
-				delete_mesh_boftal_comment_flag,
 				false,
 				
-				clear_buffer_head_file_flag,
-				clear_buffer_boftal_file_flag,
-				clear_model_file_flag,
 				location_match_direction,
 				symmetry_flag);
 	}
@@ -202,22 +183,8 @@ public class part_parameter
 		
 		max_part_load_thread_number			=((max_part_load_thread_number=f.get_int())<=0)?1:max_part_load_thread_number;
 
-		delete_mesh_boftal_comment_flag		=f.get_boolean();
 		do_create_bottom_box_flag			=f.get_boolean();
 		
-		clear_buffer_head_file_flag			=f.get_boolean();
-		clear_buffer_boftal_file_flag		=f.get_boolean();
-		clear_model_file_flag				=new boolean[]
-		{
-			f.get_boolean(),
-			f.get_boolean(),
-			f.get_boolean(),
-			f.get_boolean(),
-			f.get_boolean(),
-			f.get_boolean(),
-			f.get_boolean(),
-			f.get_boolean()
-		};
 		symmetry_flag=new boolean[f.get_int()];
 		location_match_direction=new double[symmetry_flag.length*3];
 		

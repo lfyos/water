@@ -211,8 +211,9 @@ public class scene_kernel
 		for(int i=0;i<child_number;i++)
 			mount_top_box_part(comp.children[i],component_load_source_cont,part_search,request_response);
 	}
-	private void load_create_assemble_part(component_load_source_container component_load_source_cont,
-			client_request_response request_response,ArrayList<part> part_list_for_delete_file,
+	private void load_create_assemble_part(
+			component_load_source_container component_load_source_cont,
+			client_request_response request_response,
 			part_container_for_part_search all_part_part_cont,permanent_part_id_encoder encoder[],
 			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,
 			tree_string_locker_container string_locker_container)
@@ -220,8 +221,7 @@ public class scene_kernel
 		if(create_parameter.create_top_part_expand_ratio>=1.0)
 			if(create_parameter.create_top_part_left_ratio>=1.0)
 				if(component_cont.root_component!=null){
-					ArrayList<part> top_box_part=(new create_assemble_part(
-							encoder,part_list_for_delete_file,
+					ArrayList<part> top_box_part=(new create_assemble_part(encoder,
 							request_response,component_cont.root_component,
 							create_parameter.create_top_part_expand_ratio,
 							create_parameter.create_top_part_left_ratio,
@@ -338,17 +338,15 @@ public class scene_kernel
 		
 		debug_information.println("Load shaders time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
-		
-		ArrayList<part> part_list_for_delete_file=new ArrayList<part>();
-		
+				
 		long part_type_code=0;
 		for(int i=0,ni=scene_par.type_sub_directory.length;i<=ni;i++)
 			part_type_code|=((long)1)<<(1+i);
 		
 		start_time=current_time;
-		render_cont.load_part(part_type_code,1,part_loader_cont,system_par,scene_par,
-				boftal_container,part_list_for_delete_file,string_locker_container,process_bar,
-				"load_first_class_part","normal_part");
+		render_cont.load_part(part_type_code,1,part_loader_cont,
+				system_par,scene_par,boftal_container,string_locker_container,
+				process_bar,"load_first_class_part","normal_part");
 		debug_information.println("Load first class part time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 
@@ -356,8 +354,8 @@ public class scene_kernel
 		render_cont.create_bottom_box_part(part_cont,request_response,encoder,system_par,scene_par);
 		part_cont.execute_append();
 		
-		render_cont.load_part(part_type_code,2,part_loader_cont,system_par,scene_par,
-				boftal_container,part_list_for_delete_file,string_locker_container,
+		render_cont.load_part(part_type_code,2,part_loader_cont,
+				system_par,scene_par,boftal_container,string_locker_container,
 				process_bar,"load_second_class_part","bottom_box_part");
 		debug_information.println("Load second class part time length:	",
 				(current_time=new Date().getTime())-start_time);
@@ -393,11 +391,11 @@ public class scene_kernel
 		
 		start_time=new Date().getTime();
 		load_create_assemble_part(component_load_source_cont,request_response,
-				part_list_for_delete_file,part_cont,encoder,boftal_container,string_locker_container);	
+				part_cont,encoder,boftal_container,string_locker_container);	
 		part_cont.execute_append();
 		render_cont.load_part(
 				part_type_code,4,part_loader_cont,system_par,scene_par,
-				boftal_container,part_list_for_delete_file,string_locker_container,
+				boftal_container,string_locker_container,
 				process_bar,"load_third_class_part","top_box_part");
 		debug_information.println("Create top assemble time length:	",
 				(current_time=new Date().getTime())-start_time);
@@ -437,8 +435,6 @@ public class scene_kernel
 		debug_information.println();
 		
 		part_lru=new part_lru_manager(render_cont.renders,scene_par.part_lru_in_list_number);
-		
-		delete_part_files.do_delete(part_list_for_delete_file,process_bar,system_par, scene_par);
 		
 		process_bar.set_process_bar(true,"load_termination","",1,1);
 

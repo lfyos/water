@@ -273,8 +273,7 @@ public class part
 		head_fw.close();
 		
 		boftal=new buffer_object_file_modify_time_and_length(part_mesh,
-				part_temporary_file_directory+"mesh",head_fw.get_charset(),
-				part_par.delete_mesh_boftal_comment_flag);
+				part_temporary_file_directory+"mesh",head_fw.get_charset());
 		
 		create_network_buffer_object_file.create(system_par.response_block_size,
 				head_fw.get_charset(),part_temporary_file_directory+"mesh");

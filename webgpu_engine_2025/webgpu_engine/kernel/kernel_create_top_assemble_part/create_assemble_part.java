@@ -180,19 +180,15 @@ public class create_assemble_part
 				
 				p.part_par.max_part_load_thread_number,
 				
-				p.part_par.delete_mesh_boftal_comment_flag,
 				false,
 				
-				p.part_par.clear_buffer_head_file_flag,
-				p.part_par.clear_buffer_boftal_file_flag,
-				p.part_par.clear_model_file_flag,
 				p.part_par.location_match_direction,
 				p.part_par.symmetry_flag);
 	}
 	
 	public ArrayList<part> top_box_part;
 	
-	public create_assemble_part(permanent_part_id_encoder encoder[],ArrayList<part>part_list_for_delete_file,
+	public create_assemble_part(permanent_part_id_encoder encoder[],
 			client_request_response request_response,component root_component,
 			double expand_ratio,double left_ratio,double create_top_part_assembly_precision2,
 			double create_top_part_discard_precision2,double discard_top_part_component_precision2,
@@ -309,7 +305,7 @@ public class create_assemble_part
 			}
 			part_loader_cont.load(add_part,render_cont.get_copy_from_part(add_part),
 				last_modified_time,system_par,scene_par,string_locker_container,
-				part_list_for_delete_file,already_loaded_part,boftal_container);
+				already_loaded_part,boftal_container);
 			top_box_part.add(add_part_number++,add_part);
 			create_part_number+=my_create_part_number;	
 			

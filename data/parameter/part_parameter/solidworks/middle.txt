@@ -14,12 +14,7 @@
 
 /*	max_part_load_thread_number			*/		32
 
-/*	delete_mesh_boftal_comment_flag		*/		false
 /*	do_create_bottom_box_flag			*/		true
-
-/*	clear_buffer_head_file_flag			*/		false
-/*	clear_buffer_boftal_file_flag		*/		false
-/*	clear_model_file_flag				*/		false	false	false	false	false	false	false	false
 
 /*	symmetry_flag						*/
 /*	location_match_direction			*/		3	false 1 0 0		false 0 1 0		false 0 0 1
