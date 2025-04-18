@@ -28,9 +28,11 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		super(my_comp,my_driver_id);
 		modifier_container_id=my_modifier_container_id;
+	
+		display_parameter.body_title="ä½“";
+		display_parameter.face_title="é¢";
+		
 		show_flag=true;
-		display_parameter.body_title="Ìå";
-		display_parameter.face_title="Ãæ";
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{

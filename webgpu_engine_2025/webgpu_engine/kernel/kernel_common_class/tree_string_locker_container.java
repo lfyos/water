@@ -16,16 +16,20 @@ class locker_container
 }
 public class tree_string_locker_container extends tree_string_search_container<locker_container>
 {
-	synchronized private ReentrantReadWriteLock get_locker(String locker_name[],boolean do_lock_flag)
+	synchronized private ReentrantReadWriteLock get_locker(
+			String locker_name[],boolean do_lock_flag,int modify_number)
 	{
 		ArrayList<locker_container> list;
 		locker_container p;
+		
 		if(do_lock_flag){
 			for(list=add(locker_name,null);list.size()>1;)
 				list.remove(1);
-			if((p=list.get(0))==null)
-				list.set(0,p=new locker_container());
-			p.number++;
+			if((p=list.get(0))==null) {
+				p=new locker_container();
+				list.set(0,p);
+			}
+			p.number+=modify_number;
 		}else{
 			if((list=search(locker_name))==null)
 				return null;
@@ -34,7 +38,8 @@ public class tree_string_locker_container extends tree_string_search_container<l
 				return null;
 			}
 			p=list.get(0);
-			if((p.number--)<=1)
+			p.number+=modify_number;
+			if(p.number<=0)
 				remove(locker_name);
 		}
 		return p.locker;
@@ -54,28 +59,36 @@ public class tree_string_locker_container extends tree_string_search_container<l
 			remove(get_first_key());
 		}
 	}
-	public void lock(String locker_name[])
+	public void write_lock(String locker_name[])
 	{
 		ReentrantReadWriteLock p;
-		if((p=get_locker(locker_name,true))!=null)
+		if((p=get_locker(locker_name,true,1))!=null)
 			p.writeLock().lock();
 	}
-	public void unlock(String locker_name[])
+	public void write_unlock(String locker_name[])
 	{
 		ReentrantReadWriteLock p;
-		if((p=get_locker(locker_name,false))!=null)
+		if((p=get_locker(locker_name,false,-1))!=null)
 			p.writeLock().unlock();
 	}
 	public void read_lock(String locker_name[])
 	{
 		ReentrantReadWriteLock p;
-		if((p=get_locker(locker_name,true))!=null)
+		if((p=get_locker(locker_name,true,1))!=null)
 			p.readLock().lock();
 	}
 	public void read_unlock(String locker_name[])
 	{
 		ReentrantReadWriteLock p;
-		if((p=get_locker(locker_name,false))!=null)
+		if((p=get_locker(locker_name,false,-1))!=null)
 			p.readLock().unlock();
+	}
+	public void switch_read_lock_to_write_lock(String locker_name[])
+	{
+		ReentrantReadWriteLock p;
+		if((p=get_locker(locker_name,true,0))!=null){
+			p.readLock().unlock();
+			p.writeLock().lock();
+		}
 	}
 }

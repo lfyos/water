@@ -56,7 +56,7 @@ public class part_driver
 		point my_point=cpi.caculate_focus_point(p0,p1);
 		return (my_point==null)?null:new box(my_point);
 	}
-	public String [][]assemble_file_name_and_file_charset(file_reader fr,part p,
+	public String []assemble_file_name_and_file_charset(file_reader fr,part p,
 			scene_kernel sk,client_request_response request_response)
 	{
 		return null;

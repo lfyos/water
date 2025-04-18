@@ -6,7 +6,7 @@ import kernel_file_manager.file_reader;
 
 public class component_initialization 
 {
-	public ArrayList<String[]>  program_and_charset;
+	public ArrayList<String[]> program_and_charset;
 	
 	public component_initialization()
 	{

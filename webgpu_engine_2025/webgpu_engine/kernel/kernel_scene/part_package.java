@@ -132,7 +132,7 @@ public class part_package
 		String package_data_file_name	=package_directory_name+"package_data.txt";
 		String boftal_data_file_name 	=package_directory_name+"boftal_data.txt";
 		String my_lock_key[]			=new String[] {package_directory_name+"package.lock"};
-		string_locker_container.lock(my_lock_key);
+		string_locker_container.write_lock(my_lock_key);
 		
 		part_package_collector ppc=new part_package_collector(rc.part_array_list(part_type_id),system_par);
 		
@@ -170,7 +170,7 @@ public class part_package
 			}
 			fr.close();
 			if(not_create_flag) {
-				string_locker_container.unlock(my_lock_key);
+				string_locker_container.write_unlock(my_lock_key);
 				return;
 			}
 		}
@@ -258,7 +258,7 @@ public class part_package
 			fw.close();
 		}
 
-		string_locker_container.unlock(my_lock_key);
+		string_locker_container.write_unlock(my_lock_key);
 	
 		return;
 	}

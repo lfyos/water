@@ -8,9 +8,11 @@ public class part_parameter
 	public long 	last_modified_time;
 	
 	public int		process_sequence_id;
+	
 	public long		max_file_head_length,max_file_data_length,max_buffer_object_data_length;
 	public double	lod_precision_scale,assembly_precision2,discard_precision2,bottom_box_discard_precision2;
 	public long		create_face_buffer_object_bitmap,create_edge_buffer_object_bitmap,create_point_buffer_object_bitmap;
+	
 	public int 		max_part_load_thread_number;
 	
 	public boolean	do_create_bottom_box_flag;

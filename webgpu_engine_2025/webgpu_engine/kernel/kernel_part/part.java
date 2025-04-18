@@ -6,15 +6,15 @@ import kernel_driver.part_driver;
 import kernel_transformation.box;
 import kernel_component.component;
 import kernel_transformation.point;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_common_class.jason_string;
 import kernel_file_manager.file_directory;
+import kernel_common_class.compress_file_data;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
-import kernel_scene.scene_parameter;
-import kernel_scene.system_parameter;
-import kernel_file_manager.travel_through_directory;
 
 public class part
 {
@@ -271,19 +271,37 @@ public class part
 		head_fw.println("]");
 		
 		head_fw.close();
-		
-		boftal=new buffer_object_file_modify_time_and_length(part_mesh,
-				part_temporary_file_directory+"mesh",head_fw.get_charset());
-		
-		create_network_buffer_object_file.create(system_par.response_block_size,
-				head_fw.get_charset(),part_temporary_file_directory+"mesh");
-
-		if(audio_file_name!=null)
-			if(file_reader.is_exist(directory_name+audio_file_name))
-				file_writer.file_copy(directory_name+audio_file_name,part_temporary_file_directory+"audio.mp3");
-
+	
 		return ret_val;
 	}
+	private void create_part_network_compress_file(int response_block_size,String my_charset,String root_file_name)
+	{
+		String my_head_file_name		=root_file_name+".head.txt";
+		String my_head_gzip_file_name	=root_file_name+".head.gzip_text";
+
+		compress_file_data.do_compress(new File(my_head_file_name),
+				new File(my_head_gzip_file_name),response_block_size,"gzip");
+		file_writer.file_delete(my_head_file_name);
+		String file_type[]=new String[]{".face",".edge",".point"};
+		for(int i=0,ni=file_type.length;i<ni;i++){
+			for(int j=0;;j++){
+				String id_str=Integer.toString(j);
+				String my_text_file_name=root_file_name+file_type[i]+id_str+".txt";
+				String my_gzip_file_name=root_file_name+file_type[i]+id_str+".gzip_text";
+				String my_flag_file_name=root_file_name+file_type[i]+id_str+".in_head_flag";
+				if(!(new File(my_text_file_name).exists()))
+					break;
+				if(new File(my_flag_file_name).exists())
+					file_writer.file_delete(my_flag_file_name);
+				else{
+					compress_file_data.do_compress(new File(my_text_file_name),
+						new File(my_gzip_file_name),response_block_size,"gzip");
+				}
+				file_writer.file_delete(my_text_file_name);
+			}
+		}
+	}
+	
 	public String load_mesh_and_create_buffer_object(part copy_from_part,
 			system_parameter system_par,scene_parameter scene_par)
 	{
@@ -300,26 +318,24 @@ public class part
 
 		String part_temporary_file_directory=file_directory.part_file_directory(this,system_par,scene_par);
 		
-		if(!(new File(part_temporary_file_directory).exists()))
-			file_writer.make_directory(part_temporary_file_directory);
-		else {
-			class part_temporary_file_directory_deleter extends travel_through_directory
-			{
-				public void operate_directory_terminate(String directory_name)
-				{
-					new File(directory_name).delete();
-				}
-				public void operate_file(String file_name)
-				{	
-					new File(file_name).delete();
-				}
-			};
-			new part_temporary_file_directory_deleter().do_travel(part_temporary_file_directory,false);
-		}
+		if(new File(part_temporary_file_directory).exists())
+			file_writer.file_delete(part_temporary_file_directory);
+		file_writer.make_directory(part_temporary_file_directory);
+		
 		load_part_mesh();
 		
 		str+=create_mesh_and_material_routine(part_temporary_file_directory,system_par,scene_par);
 	
+		boftal=new buffer_object_file_modify_time_and_length(part_mesh,
+				part_temporary_file_directory+"mesh",system_par.local_data_charset);
+		
+		create_part_network_compress_file(system_par.response_block_size,
+				system_par.network_data_charset,part_temporary_file_directory+"mesh");
+
+		if(audio_file_name!=null)
+			if(file_reader.is_exist(directory_name+audio_file_name))
+				file_writer.file_copy(directory_name+audio_file_name,part_temporary_file_directory+"audio.mp3");
+
 		if(part_mesh!=null)
 			part_mesh.free_memory();
 		

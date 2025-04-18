@@ -316,7 +316,7 @@ public class client_request_response extends common_writer
 			if((ecr.charset_file_name!=null)&&(ecr.file_charset!=null))
 				if(system_par.network_data_charset.compareTo(ecr.file_charset)!=0){
 					String my_lock_key[]=new String[] {ecr.charset_file_name+".lock"};
-					string_locker_container.lock(my_lock_key);
+					string_locker_container.write_lock(my_lock_key);
 
 					try {
 						if(new File(ecr.charset_file_name).lastModified()<=new File(file_name).lastModified())
@@ -327,7 +327,7 @@ public class client_request_response extends common_writer
 						debug_information.println("response_file_data exception 1\t",e.toString());
 					}
 					
-					string_locker_container.unlock(my_lock_key);
+					string_locker_container.write_unlock(my_lock_key);
 					
 					file_name=ecr.charset_file_name;
 					network_data_charset=system_par.network_data_charset;
@@ -341,7 +341,7 @@ public class client_request_response extends common_writer
 			else {
 				String compress_file_name=ecr.compress_file_name+"."+compress_response_header;
 				String my_lock_key[]=new String[] {compress_file_name+".lock"};
-				string_locker_container.lock(my_lock_key);
+				string_locker_container.write_lock(my_lock_key);
 
 				try{
 					File gf=new File(compress_file_name);
@@ -356,7 +356,7 @@ public class client_request_response extends common_writer
 					e.printStackTrace();
 					debug_information.println("response_file_data exception 2\t",e.toString());
 				}
-				string_locker_container.unlock(my_lock_key);
+				string_locker_container.write_unlock(my_lock_key);
 			}
 		}
 		

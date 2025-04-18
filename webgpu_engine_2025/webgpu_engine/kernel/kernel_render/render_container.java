@@ -121,70 +121,52 @@ public class render_container
 		if(renders==null)
 			return;
 
-		part p;
-		render r;
-		int load_number=0,all_number=0;
-
-		for(int i=0,ni=renders.size();i<ni;i++) {
-			if((r=renders.get(i))==null)
-				continue;
-			if(r.parts==null)
-				continue;
-			for(int j=0,part_number=r.parts.size();j<part_number;j++) {
-				if((p=r.parts.get(j))==null)
-					continue;
-				if(((((long)1)<<p.part_type_id)&part_type)==0)
-					continue;
-				int my_part_flag=	(p.is_normal_part()		?1:0)+
-									(p.is_bottom_box_part()	?2:0)+
-									(p.is_top_box_part()	?4:0);
-				if((my_part_flag&part_normal_bottom_box_top_box_flag)==0)
-					continue;
-				all_number++;
-			}
-		}
-		if(all_number<1)
-			all_number=1;
-		
 		debug_information.println();
-		debug_information.println("Begin loading part meshes:\t",all_number);
-		
-		if(process_bar!=null)
-			process_bar.set_process_bar(true,
-				process_bar_title,ex_process_bar_title,0,all_number);
-		
-		ArrayList<part_loader> already_loaded_part=new ArrayList<part_loader>();
-		for(int i=0,ni=renders.size();i<ni;i++) {
-			if((r=renders.get(i))==null)
-				continue;
-			if(r.parts==null)
-				continue;
-			for(int j=0,part_number=r.parts.size();j<part_number;j++) {
-				if((p=r.parts.get(j))==null)
-					continue;
-				if(((((long)1)<<p.part_type_id)&part_type)==0)
-					continue;
-				int my_part_flag=	(p.is_normal_part()		?1:0)+
-									(p.is_bottom_box_part()	?2:0)+
-									(p.is_top_box_part()	?4:0);
-				if((my_part_flag&part_normal_bottom_box_top_box_flag)==0)
-					continue;
-				part_loader_cont.load(p,get_copy_from_part(p),0,system_par,scene_par,
-						string_locker_container,already_loaded_part,boftal_container);
-				load_number++;
-				if(process_bar!=null)
-					process_bar.set_process_bar(false,
-						process_bar_title,ex_process_bar_title,load_number,all_number);
-			}
-		}
+		debug_information.println("Begin loading part meshes");
 
+		ArrayList<part_loader> already_loaded_part=new ArrayList<part_loader>();
+		
+		int load_number=0,all_number=0;
+		for(int pass_id=0;pass_id<2;pass_id++) {
+			for(int i=0,ni=renders.size();i<ni;i++) {
+				render r;
+				if((r=renders.get(i))==null)
+					continue;
+				if(r.parts==null)
+					continue;
+				for(int j=0,part_number=r.parts.size();j<part_number;j++) {
+					part p;
+					if((p=r.parts.get(j))==null)
+						continue;
+					if(((((long)1)<<p.part_type_id)&part_type)==0)
+						continue;
+					int my_part_flag=	(p.is_normal_part()		?1:0)+
+										(p.is_bottom_box_part()	?2:0)+
+										(p.is_top_box_part()	?4:0);
+					if((my_part_flag&part_normal_bottom_box_top_box_flag)==0)
+						continue;
+					if(pass_id==0)
+						all_number++;
+					else{
+						part_loader_cont.load(p,get_copy_from_part(p),0,system_par,scene_par,
+								string_locker_container,already_loaded_part,boftal_container);
+						load_number++;
+						if(process_bar!=null)
+							process_bar.set_process_bar(false,
+								process_bar_title,ex_process_bar_title,load_number,all_number);
+					}
+				}
+			}
+			if(all_number<1)
+				all_number=1;
+		}
+		
 		part_loader_container.wait_for_completion(already_loaded_part,system_par,scene_par);
 		
 		if(process_bar!=null)
 			process_bar.set_process_bar(false,
-					process_bar_title,ex_process_bar_title,
-					(all_number<1)?1:all_number,all_number);
-
+					process_bar_title,ex_process_bar_title,all_number,all_number);
+		
 		debug_information.println();
 		debug_information.println("End loading part meshes:\t",all_number);
 		debug_information.println();

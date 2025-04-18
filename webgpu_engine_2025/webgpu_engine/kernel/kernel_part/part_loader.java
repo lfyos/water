@@ -78,11 +78,11 @@ public class part_loader extends Thread
 	{
 		String part_temporary_file_directory=file_directory.part_file_directory(loaded_part,system_par,scene_par);
 		String my_lock_key[]=new String[]{part_temporary_file_directory+"part.lock"};
-		string_locker_container.lock(my_lock_key);
+		string_locker_container.read_lock(my_lock_key);
 		
 		if(test_create_boftal_file(part_temporary_file_directory)){
-			file_reader fr=new file_reader(
-				part_temporary_file_directory+"mesh.boftal",system_par.local_data_charset);
+			String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
+			file_reader fr=new file_reader(boftal_file_name,system_par.local_data_charset);
 			loaded_part.boftal=new buffer_object_file_modify_time_and_length(fr);
 			fr.close();
 
@@ -92,7 +92,7 @@ public class part_loader extends Thread
 				loaded_part.part_mesh.free_memory();
 			
 			is_loading_flag=false;
-			string_locker_container.unlock(my_lock_key);
+			string_locker_container.read_unlock(my_lock_key);
 			
 			debug_information.println("Load part mesh.boftal:	user name:"+
 					loaded_part.user_name+"	system name:"+loaded_part.system_name,
@@ -100,17 +100,19 @@ public class part_loader extends Thread
 			return;
 		}
 	
+		string_locker_container.switch_read_lock_to_write_lock(my_lock_key);
+	
         try{
-			debug_information.println(
-				loaded_part.load_mesh_and_create_buffer_object(copy_from_part,system_par,scene_par));
+        	String str=loaded_part.load_mesh_and_create_buffer_object(copy_from_part,system_par,scene_par);
+			debug_information.println(str);
 		}catch(Exception e){
-			debug_information.println(
-	            "Error in load_mesh_and_create_buffer_object_and_material_file:\t",loaded_part.system_name);
+			String str="Error in load_mesh_and_create_buffer_object_and_material_file:\t";
+			debug_information.println(str,loaded_part.system_name);
 			debug_information.println(e.toString());
 			e.printStackTrace();
 		}
 
         is_loading_flag=false;
-        string_locker_container.unlock(my_lock_key);
+        string_locker_container.write_unlock(my_lock_key);
 	}
 }

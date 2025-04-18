@@ -429,7 +429,6 @@ public class scene_kernel
 		load_camera();
 
 		start_time=new Date().getTime();
-		process_bar.set_process_bar(true,"create_shader","",1,2);
 		new scene_initialization(this,string_locker_container,request_response,process_bar);
 		debug_information.println("Create scene temp data time length:	",		new Date().getTime()-start_time);
 		debug_information.println();

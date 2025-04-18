@@ -39,9 +39,9 @@ public class scene_initialization
 				fw.println(",");
 			fw.println("\t{");
 			
-			fw.println("\t\t\"component_id\"			:	",	comp.component_id+",");
-			fw.println("\t\t\"component_name\"			:	",	jason_string.change_string(comp.component_name)+",");
-			fw.println("\t\t\"initialization_function\"	:	",	program_text);
+			fw.println("\t\tcomponent_id			:	",	comp.component_id+",");
+			fw.println("\t\tcomponent_name			:	",	jason_string.change_string(comp.component_name)+",");
+			fw.println("\t\tinitialization_function	:	",	program_text);
 			
 			fw.print  ("\t}");
 		}
@@ -175,8 +175,8 @@ public class scene_initialization
 		long my_last_time,last_time=program_file_reader.get_system_program_last_time(sk.system_par);
 				
 		for(int render_id=0,render_number=sk.render_cont.renders.size();render_id<render_number;render_id++) {
-			render r=sk.render_cont.renders.get(render_id);
-			if(r==null)
+			render r;
+			if((r=sk.render_cont.renders.get(render_id))==null)
 				continue;
 			if(last_time<r.program_last_time)
 				last_time=r.program_last_time;
@@ -412,9 +412,9 @@ public class scene_initialization
 			}
 			process_bar.set_process_bar(false,"file_initialization_4","",render_number,render_number);
 		}
-		
+
 		fw.println("],").println("[");
-		{	
+		{
 			String str;
 			str=program_file_reader.get_common_shader_data_structure(sk.system_par);
 			fw.print  ("		",jason_string.change_string(str)).println(",");
@@ -473,9 +473,9 @@ public class scene_initialization
 		
 		String destination_file_name=sk.scene_par.scene_temporary_directory_name+"initialization.gzip_js";
 		String lock_key[]=new String[] {destination_file_name};
-		string_locker_container.lock(lock_key);
+		string_locker_container.write_lock(lock_key);
 		file_initialize(destination_file_name,sort_component_array,sk,request_response,process_bar);
-		string_locker_container.unlock(lock_key);
+		string_locker_container.write_unlock(lock_key);
 		
 		for(int i=0,ni=sort_component_array.length;i<ni;i++)
 			if(sort_component_array[i].initialization!=null) {
