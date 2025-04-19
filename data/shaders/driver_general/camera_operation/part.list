@@ -8,9 +8,9 @@
 	/*	x	y	size	modifier_container_id	*/	0.875		0.825		0.1		0
 		
 ·½Ïò°´Å¥
-	camera_operation_map_part
+	camera_operation_part_2
 	part\part.SLDPRT.mesh
-	part\part.map.material
+	part\part_2.material
 	part\part.description
 	part\part.mp3
 	

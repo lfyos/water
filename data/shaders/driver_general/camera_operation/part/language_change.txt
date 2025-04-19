@@ -1,0 +1,4 @@
+camera_body_title+english		body:
+camera_body_title+chinese		Ìו:
+camera_face_title+english		face:
+camera_face_title+chinese		Ãז:

@@ -3,8 +3,10 @@ package kernel_part;
 import java.io.File;
 import java.util.ArrayList;
 
+import kernel_common_class.sorter;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
+
 
 public class mesh_file_collector 
 {
@@ -26,7 +28,7 @@ public class mesh_file_collector
 		}
 	}
 	
-	private ArrayList<mesh_file_collector_item> list;
+	private ArrayList<mesh_file_collector_item>list;
 	
 	public mesh_file_collector()
 	{
@@ -34,6 +36,26 @@ public class mesh_file_collector
 	}
 	public void create_head_data(file_writer head_fw,long system_max_file_data_length)
 	{
+		class mesh_file_collector_item_sorter extends sorter<mesh_file_collector_item,mesh_file_collector_item>
+		{
+			public int compare_data(mesh_file_collector_item s,mesh_file_collector_item t)
+			{
+				return (s.file_length<t.file_length)?-1:(s.file_length>t.file_length)?1:0;
+			}
+			public int compare_key(mesh_file_collector_item s,mesh_file_collector_item t)
+			{
+				return (s.file_length<t.file_length)?-1:(s.file_length>t.file_length)?1:0;
+			}
+			public mesh_file_collector_item_sorter()
+			{
+				data_list=list;
+				do_sort();
+				list=data_list;
+			}
+		}
+		
+		new mesh_file_collector_item_sorter();
+		
 		long my_max_file_data_length=system_max_file_data_length-head_fw.output_data_length;
 		
 		for(int i=0,ni=list.size();i<ni;i++){
@@ -51,8 +73,7 @@ public class mesh_file_collector
 			head_fw.print  ("\t\"file_data\"\t:\t");
 			
 			file_reader fr=new file_reader(p.file_name+".txt",head_fw.get_charset());
-			while(!(fr.eof())) {
-				String str;
+			for(String str;!(fr.eof());) {
 				if((str=fr.get_string())==null)
 					continue;
 				if((str=str.trim()).length()<=0)
@@ -70,13 +91,7 @@ public class mesh_file_collector
 	}
 	public void register(String my_file_type,int my_file_id,String my_file_name)
 	{
-		mesh_file_collector_item p=new mesh_file_collector_item(
-			my_file_type,my_file_id,my_file_name,(new File(my_file_name+".txt")).length());
-		for(int i=list.size()-1;i>=0;i--) 
-			if(list.get(i).file_length<=p.file_length){
-				list.add(i+1,p);
-				return;
-			}
-		list.add(0,p);
+		list.add(new mesh_file_collector_item(my_file_type,my_file_id,
+						my_file_name,(new File(my_file_name+".txt")).length()));
 	}
 }

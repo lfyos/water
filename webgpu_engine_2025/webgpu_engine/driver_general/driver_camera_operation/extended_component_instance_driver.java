@@ -2,7 +2,6 @@ package driver_camera_operation;
 
 import kernel_part.face;
 import kernel_part.part_rude;
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
 import kernel_transformation.box;
 import kernel_transformation.point;
@@ -11,6 +10,8 @@ import kernel_camera.camera_result;
 import kernel_camera.locate_camera;
 import kernel_driver.component_driver;
 import kernel_transformation.location;
+import kernel_common_class.change_name;
+import kernel_scene.client_information;
 import kernel_common_class.const_value;
 import kernel_component.component_array;
 import kernel_driver.component_instance_driver;
@@ -24,15 +25,15 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		super.destroy();
 	}
-	public extended_component_instance_driver(component my_comp,int my_driver_id,int my_modifier_container_id)
+	public extended_component_instance_driver(component my_comp,int my_driver_id,
+			int my_modifier_container_id,change_name title_change_name,String language_str)
 	{
 		super(my_comp,my_driver_id);
 		modifier_container_id=my_modifier_container_id;
-	
-		display_parameter.body_title="体";
-		display_parameter.face_title="面";
-		
 		show_flag=true;
+		
+		display_parameter.body_title=" "+title_change_name.search_change_name("camera_body_title+"+language_str,"body");
+		display_parameter.face_title=" "+title_change_name.search_change_name("camera_face_title+"+language_str,"face");
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{

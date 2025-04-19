@@ -38,7 +38,6 @@ public class buffer_object_file_modify_time_and_length
 		list=new ArrayList<ArrayList<buffer_object_file_modify_time_and_length_item>>();
 		for(int i=0,ni=fr.get_int();i<ni;i++){
 			pp=new ArrayList<buffer_object_file_modify_time_and_length_item>();
-			list.add(i,pp);
 			for(int j=0,nj=fr.get_int();j<nj;j++){
 				p=new buffer_object_file_modify_time_and_length_item(
 						fr.get_long(),fr.get_long(),fr.get_boolean());
@@ -46,6 +45,7 @@ public class buffer_object_file_modify_time_and_length
 				if(!(p.buffer_object_file_in_head_flag))
 					buffer_object_total_file_length+=p.buffer_object_text_file_length;
 			}
+			list.add(i,pp);
 		}
 		simple_part_mesh=new part_rude(fr);
 		return;
@@ -72,8 +72,8 @@ public class buffer_object_file_modify_time_and_length
 		String file_type[]=new String[]{".face",".edge",".point"};
 		for(int i=0,ni=file_type.length;i<ni;i++){
 			pp=list.get(i);
-			for(long j=0;;j++){
-				String my_file_name=root_file_name+file_type[i]+Long.toString(j)+".txt";
+			for(int j=0;;j++){
+				String my_file_name=root_file_name+file_type[i]+j+".txt";
 				if(!((f=new File(my_file_name)).exists()))
 					break;
 				if(!(f.isFile()))
@@ -81,7 +81,7 @@ public class buffer_object_file_modify_time_and_length
 				if(f.length()<=0)
 					break;
 				p=new buffer_object_file_modify_time_and_length_item(f.lastModified(),f.length(),
-						new File(root_file_name+file_type[i]+Long.toString(j)+".in_head_flag").exists());
+						new File(root_file_name+file_type[i]+j+".in_head_flag").exists());
 				pp.add(pp.size(),p);
 				if(!(p.buffer_object_file_in_head_flag))
 					buffer_object_total_file_length+=p.buffer_object_text_file_length;

@@ -9,18 +9,18 @@ import kernel_component.component;
 import kernel_driver.component_driver;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
-import kernel_file_manager.file_directory;
 import kernel_common_class.jason_string;
-import kernel_common_class.tree_string_locker_container;
-import kernel_common_class.class_file_reader;
 import kernel_common_class.common_reader;
+import kernel_file_manager.file_directory;
+import kernel_interface.client_process_bar;
+import kernel_common_class.class_file_reader;
 import kernel_common_class.debug_information;
 import kernel_common_class.compress_file_data;
-import kernel_component.component_initialization;
-import kernel_interface.client_process_bar;
 import kernel_network.client_request_response;
 import kernel_program_reader.program_file_reader;
+import kernel_component.component_initialization;
 import kernel_file_manager.travel_through_directory;
+import kernel_common_class.tree_string_locker_container;
 
 public class scene_initialization
 {
@@ -41,7 +41,7 @@ public class scene_initialization
 			
 			fw.println("\t\tcomponent_id			:	",	comp.component_id+",");
 			fw.println("\t\tcomponent_name			:	",	jason_string.change_string(comp.component_name)+",");
-			fw.println("\t\tinitialization_function	:	",	program_text);
+			fw.println("\t\tinitialization_function	:	").	println(program_text);
 			
 			fw.print  ("\t}");
 		}
@@ -353,7 +353,7 @@ public class scene_initialization
 			for(int render_id=0;render_id<render_number;render_id++) {
 				render r=sk.render_cont.renders.get(render_id);
 				process_bar.set_process_bar(false,"file_initialization_4",r.render_name,render_id,render_number);
-				fw.	println("	[").print("		",jason_string.change_string(r.render_name));
+				fw.	println("	[").print(jason_string.change_string(r.render_name));
 
 				String shader_file_name[][]=r.driver.shader_file_name_array();
 				if(shader_file_name==null)

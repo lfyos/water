@@ -238,6 +238,7 @@ public class part
 		head_fw.println(",");
 				
 		mesh_file_collector file_collector=new mesh_file_collector();
+		
 		if(part_mesh==null) {
 			String str[]=new String[]{
 				"\"face\"			:","{",	"	\"region_data\"	:	[]"	,"},",
@@ -285,10 +286,10 @@ public class part
 		String file_type[]=new String[]{".face",".edge",".point"};
 		for(int i=0,ni=file_type.length;i<ni;i++){
 			for(int j=0;;j++){
-				String id_str=Integer.toString(j);
-				String my_text_file_name=root_file_name+file_type[i]+id_str+".txt";
-				String my_gzip_file_name=root_file_name+file_type[i]+id_str+".gzip_text";
-				String my_flag_file_name=root_file_name+file_type[i]+id_str+".in_head_flag";
+				String my_file_name=root_file_name+file_type[i]+j;
+				String my_text_file_name=my_file_name+".txt";
+				String my_gzip_file_name=my_file_name+".gzip_text";
+				String my_flag_file_name=my_file_name+".in_head_flag";
 				if(!(new File(my_text_file_name).exists()))
 					break;
 				if(new File(my_flag_file_name).exists())
@@ -301,7 +302,6 @@ public class part
 			}
 		}
 	}
-	
 	public String load_mesh_and_create_buffer_object(part copy_from_part,
 			system_parameter system_par,scene_parameter scene_par)
 	{
