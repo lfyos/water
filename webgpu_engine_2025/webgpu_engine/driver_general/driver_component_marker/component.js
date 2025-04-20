@@ -62,7 +62,7 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		
 		for(var i=0,ni=this.marker_array.length;i<ni;i++){
 			scene.system_buffer.set_system_bindgroup(
-				target_data.render_buffer_id,
+				target_data.render_buffer_id,method_data.method_id,
 				this.marker_array[i].marker_component_id,-1,scene);
 
 			rpe.setBindGroup(1,this.marker_array[i].bindgroup);

@@ -87,7 +87,8 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 		
 	if(scene.system_buffer!=null)
 		scene.system_buffer.destroy();
-	scene.system_buffer=new construct_system_buffer(init_parameter.max_target_number,scene);
+	scene.system_buffer=new construct_system_buffer(
+		init_parameter.max_target_number,init_parameter.max_method_number,scene);
 	
 	scene.component_location_data.do_initialize(
 			scene.component_array_sorted_by_id,scene.system_buffer.id_buffer,

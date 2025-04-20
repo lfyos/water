@@ -20,7 +20,7 @@ public class system_parameter
 	
 	public String user_file_name,shader_file_name,default_parameter_directory;
 	
-	public int normal_loading_number,max_loading_number,max_material_id;
+	public int normal_loading_number,max_loading_number,max_material_id,max_method_number;
 	
 	public int response_block_size;
 	
@@ -66,6 +66,8 @@ public class system_parameter
 		
 		normal_loading_number			=sp.normal_loading_number;
 		max_loading_number				=sp.max_loading_number;
+		max_method_number				=sp.max_method_number;
+		
 		max_material_id					=sp.max_material_id;
 		
 		response_block_size				=sp.response_block_size;
@@ -199,6 +201,8 @@ public class system_parameter
 		
 		normal_loading_number					=f.get_int();
 		max_loading_number						=f.get_int();
+		max_method_number						=f.get_int();
+		
 		max_material_id							=f.get_int();
 		
 		response_block_size						=f.get_int();

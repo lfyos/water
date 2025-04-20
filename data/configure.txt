@@ -11,6 +11,8 @@
 
 /*	normal_loading_number													*/		5
 /*	max_loading_number														*/		10
+/*	max_method_number														*/		20
+
 /*	max_material_id															*/		100
 
 /*	response_block_size														*/		65536

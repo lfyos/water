@@ -129,7 +129,8 @@ function draw_scene_target_routine(
 					var component_driver=part_object.component_driver_array[data_buffer_id];
 					var component_ids	=part_object.part_component_id_and_driver_id[data_buffer_id];
 
-					scene.system_buffer.set_system_bindgroup(render_data.render_buffer_id,
+					scene.system_buffer.set_system_bindgroup(
+							render_data.render_buffer_id,method_array[i].method_id,
 							component_ids.component_id,component_ids.driver_id,scene);
 					component_driver.draw_component(method_array[i],render_parameter,
 							project_matrix,render_data,part_object,part_driver,render_driver,scene);

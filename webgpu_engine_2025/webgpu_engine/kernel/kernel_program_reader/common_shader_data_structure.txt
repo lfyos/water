@@ -45,6 +45,7 @@ struct system_information
 	
 	light_position							:	array<vec4<f32>,8>
 };
+
 struct target_information 
 {
 	projection_matrix						:	mat4x4<f32>,
@@ -131,6 +132,12 @@ struct target_information
 	tmp_int_1								:	i32,
 	tmp_int_2								:	i32
 };
+
+struct method_information
+{
+	method_id			:	i32
+};
+
 struct id_information 
 {
 	matrix				:	mat4x4<f32>,
@@ -150,3 +157,4 @@ struct id_information
 	tmp_int_0			:	i32,
 	tmp_int_1			:	i32
 };
+

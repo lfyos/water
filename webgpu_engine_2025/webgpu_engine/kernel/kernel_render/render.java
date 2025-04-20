@@ -115,7 +115,7 @@ public class render
 		if(p==null)
 			return;
 		int part_number=parts.size();
-		parts.add(part_number, p);
+		parts.add(part_number,p);
 	
 		p.render_id				=render_id;
 		p.part_id				=part_number;
