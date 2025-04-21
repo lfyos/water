@@ -12,7 +12,9 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	
 	private void dismount_from_list(tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> p)
 	{
-		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> my_front=p.front,my_back=p.back;
+		var my_front=p.front;
+		var my_back	=p.back;
+		
 		if(my_front==null){
 			if(my_back==null) {
 				first=null;
@@ -93,32 +95,21 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	}
 	public ArrayList<VALUE_TYPE> add(KEY_TYPE my_key,VALUE_TYPE my_value)
 	{
-		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> p;
-		if((p=tree.get(my_key))!=null)
-			dismount_from_list(p);
-		else{
-			p=new tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE>(my_key);
-			tree.put(my_key,p);
+		var p=new tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>(my_key);
+		var old_p=tree.put(my_key,p);
+		if(old_p!=null){
+			dismount_from_list(old_p);
+			p.list=old_p.list;
 		}
 		mount_to_last(p);
 		p.list.add(my_value);
 		p.touch_time=nanosecond_timer.absolute_nanoseconds();
 		return p.list;
 	}
-	public ArrayList<VALUE_TYPE> move_to_first(KEY_TYPE my_key)
-	{
-		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> p;
-		if((p=tree.get(my_key))==null)
-			return null;
-		dismount_from_list(p);
-		mount_to_first(p);
-		p.touch_time=0;
-		return p.list;
-	}
 	public ArrayList<VALUE_TYPE> search(KEY_TYPE my_key)
 	{
-		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> p;
-		if((p=tree.get(my_key))==null)
+		var p=tree.get(my_key);
+		if(p==null)
 			return null;
 		dismount_from_list(p);
 		mount_to_last(p);
@@ -127,35 +118,40 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 	}
 	public ArrayList<VALUE_TYPE> remove(KEY_TYPE my_key)
 	{
-		tree_search_container_tree_node <KEY_TYPE,VALUE_TYPE> p;
-		if((p=tree.remove(my_key))==null)
+		var p=tree.remove(my_key);
+		if(p==null)
 			return null;
 		dismount_from_list(p);
 		return p.list;
 	}
-
+	public ArrayList<VALUE_TYPE> move_to_first(KEY_TYPE my_key)
+	{
+		var p=tree.get(my_key);
+		if(p==null)
+			return null;
+		dismount_from_list(p);
+		mount_to_first(p);
+		p.touch_time=0;
+		return p.list;
+	}
 	public ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>> get_tree_node_list(boolean do_sort_flag)
 	{
-		class tree_node_sorter extends sorter <
-			tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>,KEY_TYPE>
+		class tree_node_sorter extends sorter <tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>,KEY_TYPE>
 		{
 			public int compare_data(
 					tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE> s,
 					tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE> t)
 			{
-				return comparator.compare(s.key, t.key);
+				return comparator.compare(s.key,t.key);
 			}
 			public int compare_key(
-					tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE> s,
-					KEY_TYPE t)
+					tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE> s,KEY_TYPE t)
 			{
-				return comparator.compare(s.key, t);
+				return comparator.compare(s.key,t);
 			}
 			public tree_node_sorter(boolean do_sort_flag)
 			{
-				int number=tree.size();
-				tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE> p=first;
-				for(int i=0;i<number;i++,p=p.back)
+				for(var p=first;p!=null;p=p.back)
 					data_list.add(p);
 				if(do_sort_flag)
 					do_sort();
