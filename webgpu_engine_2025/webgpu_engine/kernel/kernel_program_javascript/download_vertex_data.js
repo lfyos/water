@@ -1,21 +1,21 @@
 function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 {
-	this.webgpu							=my_webgpu;
-	this.max_loading_number				=my_max_loading_number;
+	this.webgpu								=my_webgpu;
+	this.max_loading_number					=my_max_loading_number;
 	
-	this.request_render_part_id			=new Array();
-	this.buffer_head_request_queue		=new Array();
+	this.request_render_part_id				=new Array();
+	this.buffer_head_request_queue			=new Array();
 	
-	this.current_loading_mesh_number	=0;
+	this.current_loading_mesh_number		=0;
 	
-	this.loading_render_id				=-1;
-	this.loading_part_id				=-1;
-	this.loaded_buffer_object_file_number=0;
-	this.loaded_buffer_object_data_length=0;
+	this.loading_render_id					=-1;
+	this.loading_part_id					=-1;
+	this.loaded_buffer_object_file_number	=0;
+	this.loaded_buffer_object_data_length	=0;
 	
-	this.response_loaded_length			=0;
+	this.response_loaded_length				=0;
 	
-	this.acknowledge_render_part_id		=null; 
+	this.acknowledge_render_part_id			=null; 
 	
 	this.save_data_into_buffer_object=function(my_material_id,object_pointer,buffer_object_data)
 	{
@@ -64,7 +64,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			object_pointer.region_data[i+1]=p0;
 		};
 	};
-	
+
 	this.process_buffer_object_data=function(render_id,part_id,request_str,
 		response_data,object_pointer,max_buffer_object_data_length,request_file_id,scene)		
 	{
@@ -211,7 +211,8 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 				part_affiliated_data.pop();
 				
 				object_pointer.loaded_number--;
-				this.process_buffer_object_data(render_id,part_id,request_str,my_data,
+				this.process_buffer_object_data(
+						render_id,part_id,request_str,my_data,
 						object_pointer,max_buffer_object_data_length,
 						object_pointer.file_number,scene);
 				return 0;
@@ -384,9 +385,7 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 			for(var i=this.current_loading_mesh_number,ni=this.max_loading_number;i<ni;)
 				i+=this.request_buffer_object_data(scene);
 			
-			if(this.test_busy()<=0)
-				break;
-			if(this.buffer_head_request_queue.length<=0)
+			if((this.test_busy()<=0)||(this.buffer_head_request_queue.length<=0))
 				break;
 			var p=this.buffer_head_request_queue.shift();
 			var package_proxy_url	=p[0];
