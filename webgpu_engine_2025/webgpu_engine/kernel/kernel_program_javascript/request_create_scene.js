@@ -90,10 +90,10 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 	scene.system_buffer=new construct_system_buffer(
 		init_parameter.max_target_number,init_parameter.max_method_number,scene);
 	
-	scene.component_location_data.do_initialize(
-			scene.component_array_sorted_by_id,scene.system_buffer.id_buffer,
+	scene.component_location_data.do_initialize(scene.component_array_sorted_by_id,
+			scene.system_buffer.id_buffer,scene.system_bindgroup_id.length,
 			common_shader_data_structure,location_shader_program);
-				
+
 	for(var i=0,ni=component_init_fun_array.length;i<ni;i++){
 		if(typeof(component_init_fun_array[i])!="object")
 			continue;

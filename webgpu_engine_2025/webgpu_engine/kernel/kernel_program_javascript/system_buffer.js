@@ -406,6 +406,32 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 
 		return;
 	};
+	
+	this.set_method_data=function(method_data,method_id,scene)
+	{
+		if((method_id<0)||(method_id>=this.max_method_number))
+			return;
+		if(!(Array.isArray(method_data)))
+			return;
+		if(method_data.length<=0)
+			return;
+
+		var my_method_data;
+		if((method_data.length*Float32Array.BYTES_PER_ELEMENT)<=this.method_buffer_stride)
+			method_data=my_method_data;
+		else{
+			var number=this.method_buffer_stride/Float32Array.BYTES_PER_ELEMENT;
+			my_method_data=new Array(number);
+			for(var i=0;i<number;i++)
+					my_method_data[i]=method_data[i];
+		}
+				
+		var pos=this.method_buffer_stride*method_id+Int32Array.BYTES_PER_ELEMENT*4;
+		
+		scene.webgpu.device.queue.writeBuffer(this.method_buffer,pos,new Float32Array(my_method_data));
+		
+		return;
+	};
 	this.destroy=function()
 	{
 		if(this.system_buffer!=null){

@@ -61,7 +61,9 @@
          AJP  Connector: /docs/config/ajp.html
          Define a non-SSL/TLS HTTP/1.1 Connector on port 8080
     -->
+    
     <Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1" redirectPort="8443"/>
+    
     <!-- A "Connector" using the shared thread pool-->
     <!--
     <Connector executor="tomcatThreadPool"
@@ -76,16 +78,16 @@
          Either JSSE or OpenSSL style configuration may be used regardless of
          the SSLImplementation selected. JSSE style configuration is used below.
     -->
-    <!--
+   
     <Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
                maxThreads="150" SSLEnabled="true">
         <UpgradeProtocol className="org.apache.coyote.http2.Http2Protocol" />
         <SSLHostConfig>
-            <Certificate certificateKeystoreFile="conf/localhost-rsa.jks"
-                         certificateKeystorePassword="changeit" type="RSA" />
+            <Certificate certificateKeystoreFile="F:/water_all/tomcat.keystore"
+                         certificateKeystorePassword="123456" type="RSA" />
         </SSLHostConfig>
     </Connector>
-    -->
+   
 
     <!-- Define an AJP 1.3 Connector on port 8009 -->
     <!--

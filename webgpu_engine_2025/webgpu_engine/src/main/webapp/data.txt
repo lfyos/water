@@ -10,11 +10,13 @@ Access-Control-Allow-Methods			GET,POST,PUT,DELETE,HEAD,OPTIONS
 Access-Control-Allow-Origin				*
 
 
-<Connector connectionTimeout="20000" port="8080" protocol="HTTP/1.1" redirectPort="8443"/>
-<Connector connectionTimeout="20000" port="80"   protocol="HTTP/1.1" redirectPort="8443"/>
-<Connector 							 port="443"  protocol="HTTP/1.1"
-    	keystoreFile="E:/water_all/tomcat.keystore" keystorePass="123456"
-    	SSLEnabled="true" clientAuth="false" maxThreads="150" scheme="https" secure="true" sslProtocol="TLS"
-/>
+<Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+               maxThreads="150" SSLEnabled="true">
+        <UpgradeProtocol className="org.apache.coyote.http2.Http2Protocol" />
+        <SSLHostConfig>
+            <Certificate certificateKeystoreFile="F:/water_all/tomcat.keystore"
+                         certificateKeystorePassword="123456" type="RSA" />
+        </SSLHostConfig>
+    </Connector>
 
 }

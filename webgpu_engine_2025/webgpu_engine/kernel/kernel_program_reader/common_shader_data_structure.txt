@@ -135,26 +135,32 @@ struct target_information
 
 struct method_information
 {
-	method_id			:	i32
+	method_id								:	i32,
+	
+	tmp_int_0								:	i32,
+	tmp_int_1								:	i32,
+	tmp_int_2								:	i32,
+	
+	data									:	array<vec4<f32>,15>
 };
 
 struct id_information 
 {
-	matrix				:	mat4x4<f32>,
+	matrix									:	mat4x4<f32>,
 	
-	data				:	array<vec4<f32>,10>,
+	data									:	array<vec4<f32>,10>,
 	
-	render_id			:	i32,
-	part_id				:	i32,
+	render_id								:	i32,
+	part_id									:	i32,
 	
-	data_buffer_id		:	i32,
+	data_buffer_id							:	i32,
 	
-	component_id		:	i32,
-	driver_id			:	i32,
+	component_id							:	i32,
+	driver_id								:	i32,
 
-	component_system_id	:	i32,
+	component_system_id						:	i32,
 	
-	tmp_int_0			:	i32,
-	tmp_int_1			:	i32
+	tmp_int_0								:	i32,
+	tmp_int_1								:	i32
 };
 
