@@ -8,7 +8,6 @@ function construct_component_location_object(my_component_number,my_computer,my_
 	this.component_relative_buffer	=null;
 	this.component_absolute_buffer	=null;
 	this.component_parent_id_buffer	=null;
-	this.loation_parameter_buffer	=null;
 
 	this.version_id			=3;
 	this.identify_matrix	=[	1,	0,	0,	0,		0,	1,	0,	0,		0,	0,	1,	0,		0,	0,	0,	1];
@@ -138,7 +137,6 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			var p=component_array_sorted_by_id[i].component_parent;
 			this.component[i].parent_id=(p==null)?-1:(p.component_id);
 		}
-	
 		var buffer_length=Float32Array.BYTES_PER_ELEMENT*this.identify_matrix.length*this.component_number;
 		this.component_move_buffer=this.webgpu.device.createBuffer(
 			{
@@ -166,24 +164,7 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			my_parent_id_array[i]=this.component[i].parent_id;
 		this.webgpu.device.queue.writeBuffer(
 				this.component_parent_id_buffer,0,new Int32Array(my_parent_id_array));
-				
-		this.loation_parameter_buffer=this.webgpu.device.createBuffer(
-			{
-				size	:	Int32Array.BYTES_PER_ELEMENT*4,
-				usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.UNIFORM
-			});
 
-		this.component_workgroup_size=Math.ceil(Math.exp(Math.log(this.component_number)/3.0));
-		if((this.component_workgroup_size*this.component_workgroup_size*this.component_workgroup_size)<this.component_number)
-			this.component_workgroup_size++;
-		this.system_id_workgroup_size=Math.ceil(Math.exp(Math.log(system_id_number)/3.0));
-		if((this.system_id_workgroup_size*this.system_id_workgroup_size*this.system_id_workgroup_size)<system_id_number)
-			this.system_id_workgroup_size++;
-
-		this.webgpu.device.queue.writeBuffer(this.loation_parameter_buffer,0,new Int32Array([
-						this.component_number,system_id_number,
-						this.component_workgroup_size,this.system_id_workgroup_size]));	
-	
 		var my_component_bindgroup_layout_entries=[
 			{	//id_info
 				binding		:	0,
@@ -223,14 +204,6 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				buffer		:
 				{
 					type		:	"read-only-storage"
-				}
-			},
-			{	//parameter
-				binding		:	5,
-				visibility	:	GPUShaderStage.COMPUTE,
-				buffer		:
-				{
-					type		:	"uniform"
 				}
 			}
 		];
@@ -274,13 +247,6 @@ function construct_component_location_object(my_component_number,my_computer,my_
 						{
 							buffer	:	this.component_parent_id_buffer
 						}
-				},
-				{	//parent_id
-					binding		:	5,
-					resource	:
-					{
-						buffer	:	this.loation_parameter_buffer
-					}
 				}
 			];
 		this.component_bindgroup=this.webgpu.device.createBindGroup(
@@ -288,34 +254,68 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				layout	:	my_component_bindgroup_layout,
 				entries	:	my_component_resource_entries
 			});	
+		var my_pipeline_layout=this.webgpu.device.createPipelineLayout(
+			{
+				bindGroupLayouts:[my_component_bindgroup_layout]
+			});
 		var my_component_module=this.webgpu.device.createShaderModule(
 			{
 				code:common_shader_data_structure+location_shader_program
 			});
+			
+		this.component_workgroup_size=Math.ceil(Math.exp(Math.log(this.component_number)/3.0));
+		while((this.component_workgroup_size*this.component_workgroup_size*this.component_workgroup_size)<this.component_number)
+			this.component_workgroup_size++;
+		this.system_id_workgroup_size=Math.ceil(Math.exp(Math.log(system_id_number)/3.0));
+		while((this.system_id_workgroup_size*this.system_id_workgroup_size*this.system_id_workgroup_size)<system_id_number)
+			this.system_id_workgroup_size++;
+
 		this.compute_location_pipeline=this.webgpu.device.createComputePipeline(
+		{
+			layout	:	my_pipeline_layout,
+			compute	:	
+			{
+				module		:	my_component_module,
+				entryPoint	:	"compute_location_main",
+				constants	:
 				{
-					layout	:	this.webgpu.device.createPipelineLayout(
-							{
-								bindGroupLayouts:[my_component_bindgroup_layout]
-							}),
-					compute	:	{
-						module		:	my_component_module,
-						entryPoint	:	"compute_location_main"
-					}
+					component_number			:	this.component_number,
+					component_workgroup_size	:	this.component_workgroup_size
 				}
-			);
+			}
+		});
 		this.set_location_pipeline=this.webgpu.device.createComputePipeline(
+		{
+			layout	:	my_pipeline_layout,
+			compute	:	
+			{
+				module		:	my_component_module,
+				entryPoint	:	"set_location_main",
+				constants	:
 				{
-					layout	:	this.webgpu.device.createPipelineLayout(
-							{
-								bindGroupLayouts:[my_component_bindgroup_layout]
-							}),
-					compute	:	{
-						module		:	my_component_module,
-						entryPoint	:	"set_location_main"
-					}
+					system_id_number			:	system_id_number,
+					system_id_workgroup_size	:	this.system_id_workgroup_size
 				}
-			);
+			}
+		});
+	}
+	this.compute_component_location=function()
+	{
+		var encoder=this.webgpu.compute_pass_encoder;
+		
+		encoder.setBindGroup(0,this.component_bindgroup);
+		
+		encoder.setPipeline(this.compute_location_pipeline);
+		encoder.dispatchWorkgroups(
+			this.component_workgroup_size,
+			this.component_workgroup_size,
+			this.component_workgroup_size);	
+		
+		encoder.setPipeline(this.set_location_pipeline);
+		encoder.dispatchWorkgroups(
+			this.system_id_workgroup_size,
+			this.system_id_workgroup_size,
+			this.system_id_workgroup_size);
 	}
 	this.destroy=function()
 	{
@@ -335,23 +335,5 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			this.component_parent_id_buffer.destroy();
 			this.component_parent_id_buffer=null;
 		}
-		if(this.loation_parameter_buffer!=null){
-			this.loation_parameter_buffer.destroy();
-			this.loation_parameter_buffer=null;
-		}
 	};
 };
-
-function compute_scene_component_location_routine(scene)
-{
-	var p=scene.component_location_data;
-	var encoder=scene.webgpu.compute_pass_encoder;
-	
-	encoder.setBindGroup(0,p.component_bindgroup);
-	
-	encoder.setPipeline(p.compute_location_pipeline);
-	encoder.dispatchWorkgroups(p.component_workgroup_size,p.component_workgroup_size,p.component_workgroup_size);	
-	
-	encoder.setPipeline(p.set_location_pipeline);
-	encoder.dispatchWorkgroups(p.system_id_workgroup_size,p.system_id_workgroup_size,p.system_id_workgroup_size);
-}

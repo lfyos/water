@@ -20,7 +20,7 @@ function construct_scene_interface(my_scene)
 	}
 	this.compute_scene_component_location=function()
 	{
-		compute_scene_component_location_routine(this.scene);
+		this.scene.component_location_data.compute_component_location();
 	}
 	this.create_scene_target=function(render_buffer_id,scene_target_array)
 	{
