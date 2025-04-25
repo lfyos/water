@@ -422,8 +422,8 @@ public class scene_kernel
 		component_cont.do_component_caculator(true,process_bar,"second_do_component_caculator");
 		component_cont.scene_component=component_cont.search_component(scene_par.scene_component_name);
 		
-		process_part_sequence=new part_process_sequence(render_cont,component_cont.root_component,
-				system_par.box_distance_difference_scale,system_par.buffer_data_length_difference_scale);
+		process_part_sequence=new part_process_sequence(render_cont,
+			system_par.box_distance_difference_scale,system_par.buffer_data_length_difference_scale);
 
 		collector_stack=new component_collector_stack(component_cont,system_par,scene_par,render_cont.renders);
 		load_camera();
