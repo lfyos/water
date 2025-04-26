@@ -224,14 +224,7 @@ public class client_information
 			for(int j=0,nj=not_acknowledge_render_part_id[i].length;j<nj;j++)
 				not_acknowledge_render_part_id[i][j]=true;
 		}
-		
-		String str;
-		int new_max_loading_number,max_client_loading_number=sk.system_par.normal_loading_number;
-		if((str=my_request_response.get_parameter("max_loading_number"))!=null)	
-			if((new_max_loading_number=Integer.decode(str))>0)
-				if(new_max_loading_number<=sk.system_par.max_loading_number)
-					max_client_loading_number=new_max_loading_number;
-		
+
 		render_buffer					=new buffer_container(sk);
 		target_container				=new render_target_container();
 		
@@ -250,7 +243,7 @@ public class client_information
 		
 		channel_id						=Long.toString(system_channel_id++);
 		
-		parameter						=new client_parameter(max_client_loading_number);
+		parameter						=new client_parameter();
 		
 		scene_counter					=my_scene_counter;
 		statistics_user					=my_statistics_user;

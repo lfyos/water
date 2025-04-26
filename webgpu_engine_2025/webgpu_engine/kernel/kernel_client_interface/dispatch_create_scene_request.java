@@ -153,18 +153,33 @@ public class dispatch_create_scene_request
 		ci.request_response.print("\"").print(initialization_url).print("\"");	//parameter	3
 		ci.request_response.print(",");
 
-		int component_number=sk.component_cont.get_sort_component_array().length;
-		int camera_number	=(sk.camera_cont==null)?0:sk.camera_cont.size();
+		int component_number	=sk.component_cont.get_sort_component_array().length;
+		int camera_number		=(sk.camera_cont==null)?0:sk.camera_cont.size();
+		int max_loading_number	=sk.system_par.default_max_loading_number;
+		String str;
+		if((str=ci.request_response.get_parameter("max_loading_number"))!=null) {
+			int new_max_loading_number;
+			try {
+				new_max_loading_number=Integer.decode(str);
+			}catch(Exception e) {
+				new_max_loading_number=1;
+			}
+			if(new_max_loading_number>0)
+				if(new_max_loading_number<=sk.system_par.max_loading_number)
+					max_loading_number=new_max_loading_number;
+		}
+		
 		ci.request_response.
 			print("{").															//parameter	4
 				print( "\"component_number\":",			component_number).
+				print(",\"camera_number\":",			camera_number).
+				print(",\"max_loading_number\":",		max_loading_number).
+				
 				print(",\"render_number\":",			sk.render_cont.renders.size()).
 				print(",\"modifier_container_number\":",sk.modifier_cont.length).
-				print(",\"camera_number\":",			camera_number).
 				print(",\"link_name\":\"",				sk.link_name).print("\"").
 				print(",\"container_id\":",				ci.request_response.container_id).
 				print(",\"channel_id\":",				ci.channel_id).
-				print(",\"max_loading_number\":",		ci.parameter.max_client_loading_number).
 				print(",\"scene_touch_time_length\":",	sk.system_par.scene_touch_time_length).
 				print(",\"multisample\":",				sk.scene_par.multisample_number).
 			print("}");

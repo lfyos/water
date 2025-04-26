@@ -9,7 +9,7 @@ public class client_parameter
 	public double x,y,main_target_x,main_target_y,depth,value[];
 	public boolean high_or_low_precision_flag;
 	
-	public int request_length,max_client_loading_number;
+	public int request_length;
 	
 	public component comp;
 	
@@ -17,7 +17,7 @@ public class client_parameter
 	{
 		comp=null;
 	}
-	public client_parameter(int my_max_client_loading_number)
+	public client_parameter()
 	{
 		current_canvas_id	=0;
 		
@@ -42,7 +42,6 @@ public class client_parameter
 		high_or_low_precision_flag=true;
 
 		request_length=0;
-		max_client_loading_number	=my_max_client_loading_number;
 
 		comp=null;
 	}

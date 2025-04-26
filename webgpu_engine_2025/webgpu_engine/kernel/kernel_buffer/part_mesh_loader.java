@@ -1,5 +1,7 @@
 package kernel_buffer;
 
+import java.util.ArrayList;
+
 import kernel_part.part;
 import kernel_render.render_container;
 import kernel_scene.part_process_sequence;
@@ -7,8 +9,8 @@ import kernel_scene.part_process_sequence;
 public class part_mesh_loader
 {
 	private boolean package_loaded_flag[][];
-	private int request_package_id[][];
-	private int package_pointer,request_number;
+	private ArrayList<int[]>request_package_id;
+	private int package_pointer,max_loading_number;
 	
 	public void destroy()
 	{
@@ -17,55 +19,40 @@ public class part_mesh_loader
 	}
 	public part_mesh_loader(render_container rc)
 	{
-		package_loaded_flag=new boolean[rc.type_part_package.length+2][];
-		package_loaded_flag[0]=new boolean[rc.system_part_package.package_file_name.length];
-		package_loaded_flag[1]=new boolean[rc.scene_part_package. package_file_name.length];
+		package_loaded_flag		=new boolean[rc.type_part_package.length+2][];
+		package_loaded_flag[0]	=new boolean[rc.system_part_package.package_file_name.length];
+		package_loaded_flag[1]	=new boolean[rc.scene_part_package. package_file_name.length];
 		for(int i=0,ni=rc.type_part_package.length;i<ni;i++)
 			package_loaded_flag[i+2]=new boolean[rc.type_part_package[i].package_file_name.length];
+		
 		for(int i=0,ni=package_loaded_flag.length;i<ni;i++)
 			for(int j=0,nj=package_loaded_flag[i].length;j<nj;j++)
 				package_loaded_flag[i][j]=false;
 		
-		request_package_id=new int[5][];
+		request_package_id=new ArrayList<int[]>();
 
-		request_number=0;
 		package_pointer=0;
+		max_loading_number=1;
 	}
-	public void test_request_package(int max_length)
+	public int[]get_request_package(part_process_sequence pps)
 	{
-		if(request_package_id.length!=max_length){
-			int bak[][]=request_package_id;
-			request_package_id=new int[max_length][];
-			request_number=(request_number>max_length)?max_length:request_number;
-			for(int i=0;i<request_number;i++)
-				request_package_id[i]=bak[i];
+		while(request_package_id.size()>0){
+			int p[]=request_package_id.remove(0);
+			int part_type_id=p[0],package_id=p[1];
+			if(!(package_loaded_flag[part_type_id][package_id])){
+				package_loaded_flag[part_type_id][package_id]=true;
+				return new int[] {part_type_id,package_id};
+			}
 		}
-	}
-	public int[]get_request_package(part_process_sequence pps,boolean only_request_flag)
-	{
-		while(request_number>0){
-			int part_type_id=request_package_id[0][0];
-			int package_id	=request_package_id[0][1];
-			for(int i=0,j=1;j<request_number;i++,j++)
-				request_package_id[i]=request_package_id[j];
-			request_package_id[--request_number]=null;
-			
-			if(package_loaded_flag[part_type_id][package_id])
-				continue;
-			package_loaded_flag[part_type_id][package_id]=true;
-			return new int[] {part_type_id,package_id};
+		for(int last_pointer=pps.process_package_sequence.size();package_pointer<last_pointer;){
+			int p[]=pps.process_package_sequence.get(package_pointer++);
+			int part_type_id=p[0],package_id=p[1];
+			if(!(package_loaded_flag[part_type_id][package_id])){
+				package_loaded_flag[part_type_id][package_id]=true;
+				return new int[] {part_type_id,package_id};
+			}
 		}
-		if(only_request_flag)
-			return null;
-		if(package_pointer>=pps.process_package_sequence.size())
-			return null;
-		int p[]=pps.process_package_sequence.get(package_pointer++);
-		int part_type_id=p[0],package_id=p[1];
-		if(package_loaded_flag[part_type_id][package_id])
-			return null;
-		package_loaded_flag[part_type_id][package_id]=true;
-		
-		return new int[] {part_type_id,package_id};
+		return null;
 	}
 	public boolean load_test(part_process_sequence pps,part p)
 	{
@@ -78,80 +65,53 @@ public class part_mesh_loader
 		if(package_loaded_flag[p.part_type_id][p.part_package_id])
 			return false;
 		
-		for(int i=0;i<request_number;i++)
-			if(request_package_id[i][0]==p.part_type_id)
-				if(request_package_id[i][1]==p.part_package_id)
-					return true;
+		for(int i=0,ni=request_package_id.size();i<ni;i++){
+			int rpi[]=request_package_id.get(i);
+			if((rpi[0]==p.part_type_id)&&(rpi[1]==p.part_package_id))
+				return true;
+		}
 		
-		if(request_number<request_package_id.length)
-			request_package_id[request_number++]=new int[] {p.part_type_id,p.part_package_id};
-		else{
-			int last_part_type_id	=request_package_id[request_package_id.length-1][0];
-			int last_package_id		=request_package_id[request_package_id.length-1][1];
-			int last_priority,my_priority;
-			switch(last_part_type_id) {
+		request_package_id.add(new int[]{p.part_type_id,p.part_package_id});
+		for(int i=request_package_id.size()-1,j=i-1;i>0;i--,j--){
+			int rpi_i[]=request_package_id.get(i);
+			int part_type_id_i=rpi_i[0],package_id_i=rpi_i[1],priority_i;
+			switch(part_type_id_i){
 			case 0:
-				last_priority=pps.system_package_priority[last_package_id];
+				priority_i=pps.system_package_priority[package_id_i];
 				break;
 			case 1:
-				last_priority=pps.scene_package_priority[last_package_id];
+				priority_i=pps.scene_package_priority[package_id_i];
 				break;
 			default:
-				last_priority=pps.type_package_priority[last_part_type_id-2][last_package_id];
+				priority_i=pps.type_package_priority[part_type_id_i-2][package_id_i];
 				break;
 			}
-			switch(p.part_type_id) {
+			int rpi_j[]=request_package_id.get(j);
+			int part_type_id_j=rpi_j[0],package_id_j=rpi_j[1],priority_j;
+			switch(part_type_id_j){
 			case 0:
-				my_priority=pps.system_package_priority[p.part_package_id];
+				priority_j=pps.system_package_priority[package_id_j];
 				break;
 			case 1:
-				my_priority=pps.scene_package_priority[p.part_package_id];
+				priority_j=pps.scene_package_priority[package_id_j];
 				break;
 			default:
-				my_priority=pps.type_package_priority[p.part_type_id-2][p.part_package_id];
+				priority_j=pps.type_package_priority[part_type_id_j-2][package_id_j];
 				break;
 			}
-			if(last_priority<=my_priority)
-				return true;
-			request_package_id[request_package_id.length-1]=new int[]{p.part_type_id,p.part_package_id};
+			if(priority_j<=priority_i)
+				break;
+			request_package_id.set(i,rpi_j);
+			request_package_id.set(j,rpi_i);
 		}
-		for(int i=request_number-1;i>0;i--){
-			int part_type_id_1	=request_package_id[i-1][0];
-			int package_id_1	=request_package_id[i-1][1];
-			int priority_1;
-			switch(part_type_id_1){
-			case 0:
-				priority_1=pps.system_package_priority[package_id_1];
-				break;
-			case 1:
-				priority_1=pps.scene_package_priority[package_id_1];
-				break;
-			default:
-				priority_1=pps.type_package_priority[part_type_id_1-2][package_id_1];
-				break;
-			}
+		for(int i=request_package_id.size()-1;i>=max_loading_number;i--)
+			request_package_id.remove(i);
 
-			int part_type_id_0	=request_package_id[i-0][0];
-			int package_id_0	=request_package_id[i-0][1];
-			int priority_0;
-			switch(part_type_id_0){
-			case 0:
-				priority_0=pps.system_package_priority[package_id_0];
-				break;
-			case 1:
-				priority_0=pps.scene_package_priority[package_id_0];
-				break;
-			default:
-				priority_0=pps.type_package_priority[part_type_id_0-2][package_id_0];
-				break;
-			}
-			if(priority_1<=priority_0)
-				return true;
-			
-			int bak[]=request_package_id[i-1];
-			request_package_id[i-1]=request_package_id[i-0];
-			request_package_id[i-0]=bak;
-		}
 		return true;
+	}
+	public void clear_request_package_id(int my_max_loading_number)
+	{
+		request_package_id=new ArrayList<int[]>();
+		max_loading_number=my_max_loading_number;
 	}
 }

@@ -3,11 +3,10 @@ package kernel_render;
 import java.util.ArrayList;
 
 import kernel_part.part;
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
 import kernel_camera.camera_result;
 import kernel_buffer.component_render;
-import kernel_buffer.part_mesh_loader;
+import kernel_scene.client_information;
 import kernel_file_manager.file_directory;
 import kernel_component.component_collector;
 import kernel_component.component_link_list;
@@ -157,27 +156,20 @@ public class response_render_component_request
 		}
 		return ret_val;
 	}
-	private static void response_buffer_object_request(scene_kernel sk,
-		client_information ci,int requesting_number,int max_request_number)
+	private static void response_buffer_object_request(
+		scene_kernel sk,client_information ci,int current_loading_number,int max_loading_number)
 	{
-		boolean only_request_flag=false;
-		
 		ci.request_response.print(",[");
-		for(int i=requesting_number;i<max_request_number;i++){
-			part_mesh_loader pml=ci.render_buffer.mesh_loader;
-			int request_package[]=pml.get_request_package(
-					sk.process_part_sequence,only_request_flag);
-			if(request_package==null)
+		for(int request_package[],i=current_loading_number;i<max_loading_number;i++){
+			if((request_package=ci.render_buffer.mesh_loader.get_request_package(sk.process_part_sequence))==null)
 				break;
-			only_request_flag=true;
 
-			int part_type_id	=request_package[0];
-			int part_package_id	=request_package[1];
-			
 			long package_length;
 			String package_file_name;
 			ArrayList<int[]> package_render_part_id;
 
+			int part_type_id	=request_package[0];
+			int part_package_id	=request_package[1];
 			switch(part_type_id){
 			case 0:
 				package_file_name		=sk.render_cont.system_part_package.package_file_name[part_package_id];
@@ -203,7 +195,7 @@ public class response_render_component_request
 				package_url+=part_type_id+"_"+part_package_id;
 				package_url+="&random="+Math.random();
 			}
-			ci.request_response.print((i<=requesting_number)?"[\"":",[\"").
+			ci.request_response.print((i<=current_loading_number)?"[\"":",[\"").
 				print(package_url).print("\",",package_length).print(",[");
 
 			for(int j=0,nj=package_render_part_id.size();j<nj;j++){
@@ -270,18 +262,27 @@ public class response_render_component_request
 	}
 	public static void do_render(scene_kernel sk,client_information ci,long delay_time_length)
 	{
-		int my_loading_request_number=0,max_loading_request_number=sk.system_par.max_loading_number,index_id;
 		String str;
+		int index_id,current_loading_number=0;
+		int max_loading_number=sk.system_par.default_max_loading_number;
+		
 		if((str=ci.request_response.get_parameter("requesting_number"))!=null)
-			if((index_id=str.indexOf("_"))>0){
-				if((my_loading_request_number=Integer.decode(str.substring(0,index_id)))<0)
-					my_loading_request_number=0;
-				if((max_loading_request_number=Integer.decode(str.substring(index_id+1)))<1)
-					max_loading_request_number=1;
-				if(max_loading_request_number>sk.system_par.max_loading_number)
-					max_loading_request_number=sk.system_par.max_loading_number;
-				ci.render_buffer.mesh_loader.test_request_package(max_loading_request_number);
+			if((index_id=str.indexOf("_"))>0) {
+				try{
+					max_loading_number=Integer.decode(str.substring(index_id+1));
+					current_loading_number=Integer.decode(str.substring(0,index_id));
+				}catch(Exception e){
+					;
+				}
+				if(current_loading_number<0)
+					current_loading_number=0;
+				if(max_loading_number<1)
+					max_loading_number=1;
+				if(max_loading_number>sk.system_par.max_loading_number)
+					max_loading_number=sk.system_par.max_loading_number;
 			}
+		
+		ci.render_buffer.mesh_loader.clear_request_package_id(max_loading_number);
 
 		display_data_load_message(sk,ci);
 
@@ -294,7 +295,7 @@ public class response_render_component_request
 		new response_component_buffer_parameter(sk,ci,rcc);
 		ci.render_buffer.cam_buffer.response_camera_buffer_data(ci,sk.camera_cont);
 		ci.render_buffer.location_buffer.response_location(sk,ci,rcc);
-		response_buffer_object_request(sk,ci,my_loading_request_number,max_loading_request_number);
+		response_buffer_object_request(sk,ci,current_loading_number,max_loading_number);
 		
 		ci.request_response.print("]");
 

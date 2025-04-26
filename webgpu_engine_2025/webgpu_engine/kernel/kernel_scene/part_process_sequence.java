@@ -26,17 +26,17 @@ public class part_process_sequence
 	
 	public void destroy()
 	{
-		process_parts_sequence		=null;
+		process_parts_sequence			=null;
 
-		process_package_sequence	=null;
+		process_package_sequence		=null;
 		
-		system_package_render_part_id=null;
-		scene_package_render_part_id=null;
-		type_package_render_part_id	=null;
+		system_package_render_part_id	=null;
+		scene_package_render_part_id	=null;
+		type_package_render_part_id		=null;
 
-		system_package_priority		=null;
-		scene_package_priority		=null;
-		type_package_priority		=null;
+		system_package_priority			=null;
+		scene_package_priority			=null;
+		type_package_priority			=null;
 	}
 	private void init_process_sequence(render_container render_cont,
 			double my_box_distance_difference_scale,double my_buffer_data_length_difference_scale)
@@ -48,9 +48,9 @@ public class part_process_sequence
 		var sort_parts=new part_container_for_process_sequence(render_cont.part_array_list(-1),
 				my_box_distance_difference_scale,my_buffer_data_length_difference_scale).data_list;
 		
-		total_buffer_object_file_number=0;
+		total_buffer_object_file_number		=0;
 		total_buffer_object_text_data_length=0;
-		process_parts_sequence=new int[sort_parts.size()][];
+		process_parts_sequence				=new int[sort_parts.size()][];
 		
 		for(int i=0,ni=sort_parts.size();i<ni;i++) {
 			for(int j=0,nj=(p=sort_parts.get(i)).boftal.list.size();j<nj;j++)

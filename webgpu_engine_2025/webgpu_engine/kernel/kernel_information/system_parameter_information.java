@@ -24,9 +24,8 @@ public class system_parameter_information extends jason_creator
 		print("user_file_name",							sp.user_file_name);
 		print("shader_file_name",						sp.shader_file_name);
 		print("default_parameter_directory",			sp.default_parameter_directory);
-		
-		
-		print("normal_loading_number",					sp.normal_loading_number);
+
+		print("default_max_loading_number",				sp.default_max_loading_number);
 		print("max_loading_number",						sp.max_loading_number);
 		print("max_material_id",						sp.max_material_id);
 

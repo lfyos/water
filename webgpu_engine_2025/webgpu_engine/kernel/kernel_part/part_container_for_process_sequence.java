@@ -39,6 +39,7 @@ public class part_container_for_process_sequence extends sorter<part,part>
 		j_flag=pj.is_normal_part();
 		if(i_flag^j_flag)		// normal part last
 			return i_flag?1:-1;
+
 		if(!i_flag) {			// both is NOT normal part
 			i_flag=pi.is_bottom_box_part();
 			j_flag=pj.is_bottom_box_part();
@@ -49,8 +50,8 @@ public class part_container_for_process_sequence extends sorter<part,part>
 		long data_length_i=pi.boftal.buffer_object_total_file_length;
 		long data_length_j=pj.boftal.buffer_object_total_file_length;
 		long data_length_max=Math.max(data_length_i,data_length_j);
-		
-		if(data_length_max>0){
+
+		if(data_length_max>const_value.min_value){
 			double data_length_pi=((double)data_length_i)/((double)data_length_max);
 			double data_length_pj=((double)data_length_j)/((double)data_length_max);
 			double p=Math.abs(data_length_pi-data_length_pj);
@@ -58,9 +59,9 @@ public class part_container_for_process_sequence extends sorter<part,part>
 				return (data_length_i<data_length_j)?-1:1;
 		}
 		if(Math.abs(distance2_i-distance2_j)>=const_value.min_value2)
-			return (distance2_i>distance2_j)?-1:1;	//big part process first
+			return (distance2_i>distance2_j)?-1:1;		//big part process first
 		else
-			return (data_length_i<data_length_j)?-1:1;//simple part process first
+			return (data_length_i<data_length_j)?-1:1;	//simple part process first
 	}
 	
 	public int compare_data(part s,part t)
@@ -71,7 +72,8 @@ public class part_container_for_process_sequence extends sorter<part,part>
 	{
 		return compare_part(s,t);
 	}
-	public part_container_for_process_sequence(ArrayList<part> my_parts,
+	public part_container_for_process_sequence(
+			ArrayList<part> my_parts,
 			double my_box_distance_difference_scale,
 			double my_buffer_data_length_difference_scale)
 	{

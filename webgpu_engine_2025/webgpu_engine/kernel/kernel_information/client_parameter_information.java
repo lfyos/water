@@ -26,7 +26,6 @@ public class client_parameter_information extends jason_creator
 		print("high_or_low_precision_flag",	cp.high_or_low_precision_flag);
 		
 		print("request_length",				cp.request_length);
-		print("max_client_loading_number",	cp.max_client_loading_number);
 		
 		print("selected_component",			new component_information(ci.parameter.comp,ci));
 	}

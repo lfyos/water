@@ -85,18 +85,19 @@ public class render_container
 	
 	public ArrayList<part> part_array_list(int part_type_id)
 	{
-		part p;
-		render r;
 		ArrayList<part> ret_val=new ArrayList<part>();
+		
 		if(renders==null)
 			return ret_val;
 		for(int i=0,ni=renders.size();i<ni;i++) {
-			if((r=renders.get(i))==null)
+			render r=renders.get(i);
+			if(r==null)
 				continue;
 			if(r.parts==null)
 				continue;
 			for(int j=0,nj=r.parts.size();j<nj;j++){
-				if((p=r.parts.get(j))==null)
+				part p=r.parts.get(j);
+				if(p==null)
 					continue;
 				if(part_type_id>=0)
 					if(p.part_type_id!=part_type_id)
