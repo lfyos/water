@@ -3,12 +3,11 @@ package kernel_client_interface;
 import java.io.File;
 import java.nio.charset.Charset;
 
+import kernel_scene.scene_kernel;
+import kernel_scene.scene_call_result;
+import kernel_scene.client_information;
 import kernel_common_class.debug_information;
 import kernel_common_class.tree_string_locker_container;
-import kernel_scene.caculate_charset_compress_file_name;
-import kernel_scene.client_information;
-import kernel_scene.scene_call_result;
-import kernel_scene.scene_kernel;
 
 public class dispatch_request_main
 {
@@ -69,11 +68,11 @@ public class dispatch_request_main
 		String response_content_type=ci.request_response.response_content_type;
 		
 		if(file_name==null)
-			return new scene_call_result(response_content_type);
+			return new scene_call_result(response_content_type,sk.system_par);
 		if(file_name.length<=0)
-			return new scene_call_result(response_content_type);
+			return new scene_call_result(response_content_type,sk.system_par);
 		if(file_name[0]==null)
-			return new scene_call_result(response_content_type);
+			return new scene_call_result(response_content_type,sk.system_par);
 
 		ci.request_response.reset();
 		
@@ -104,13 +103,10 @@ public class dispatch_request_main
 			return null;
 		}
 
-		caculate_charset_compress_file_name cccf;
-		cccf=new caculate_charset_compress_file_name(f,sk.system_par);
-		
 		if(file_name.length>1)
 			if(file_name[1]!=null)
-				return new scene_call_result(cccf,	file_name[1]);
+				return new scene_call_result(f,file_name[1],sk.system_par);
 		
-		return new scene_call_result(cccf,Charset.defaultCharset().name());
+		return new scene_call_result(f,Charset.defaultCharset().name(),sk.system_par);
 	}
 }

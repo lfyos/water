@@ -376,7 +376,7 @@ public class client_interface
 				
 				break;	
 			}
-		return new scene_call_result(request_response.response_content_type);
+		return new scene_call_result(request_response.response_content_type,system_par);
 	}
 	private client_process_bar get_process_bar_routine(client_request_response request_response)
 	{

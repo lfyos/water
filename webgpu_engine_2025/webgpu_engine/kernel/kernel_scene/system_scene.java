@@ -87,18 +87,18 @@ public class system_scene
 			if((client=client_interface_search_tree_array[request_response.container_id].
 				get_client_interface(request_response,scene_kernel_search_tree,scene_counter,system_par))==null)
 			{
-				ecr=new scene_call_result(request_response.response_content_type);
+				ecr=new scene_call_result(request_response.response_content_type,system_par);
 				request_response.reset().println("1");
 				break;
 			}
 			if(test_creation_scene_lock_number(1)>=system_par.create_scene_concurrent_number){
 				client.set_process_bar(request_response,true,"wait_for_other_exit","",1,2);
-				ecr=new scene_call_result(request_response.response_content_type);
+				ecr=new scene_call_result(request_response.response_content_type,system_par);
 				request_response.reset().println("0");
 			}else if((ecr=client.execute_create_call(request_response,
 					scene_kernel_search_tree,scene_counter,string_locker_container))==null)
 			{
-				ecr=new scene_call_result(request_response.response_content_type);
+				ecr=new scene_call_result(request_response.response_content_type,system_par);
 				request_response.reset().println("2");
 			}
 			test_creation_scene_lock_number(-1);

@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.zip.GZIPOutputStream;
+
+import kernel_file_manager.file_writer;
+
 import java.util.zip.DeflaterInputStream;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPInputStream;
@@ -218,6 +221,9 @@ public class compress_file_data
 	public static boolean do_compress(File f,File gf,
 			int response_block_size,String compress_response_header)
 	{
+		if(gf.exists()?false:true)
+			file_writer.make_directory(gf.getAbsolutePath());
+		
 		byte data_buf[]=new byte[response_block_size];
 		gf.delete();
 		switch(compress_response_header) {
@@ -234,6 +240,9 @@ public class compress_file_data
 	public static boolean do_uncompress(File f,File gf,
 		int response_block_size,String compress_response_header)
 	{
+		if(gf.exists()?false:true)
+			file_writer.make_directory(gf.getAbsolutePath());
+		
 		byte data_buf[]=new byte[response_block_size];
 		f.delete();
 		switch(compress_response_header) {
