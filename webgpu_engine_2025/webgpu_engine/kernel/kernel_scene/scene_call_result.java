@@ -1,7 +1,6 @@
 package kernel_scene;
 
 import java.io.File;
-import java.util.Date;
 
 import kernel_common_class.debug_information;
 
@@ -78,7 +77,7 @@ public class scene_call_result
 	{
 		file_name			=null;
 		compress_file_name	=null;
-		last_modified_time	=(new Date()).getTime();
+		last_modified_time	=-1;
 		already_compress_file_flag=false;
 		
 		file_charset		=system_par.network_data_charset;

@@ -7,15 +7,15 @@ import java.io.FileInputStream;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 
-import kernel_scene.scene_call_result;
 import kernel_scene.system_parameter;
+import kernel_scene.scene_call_result;
+import kernel_file_manager.file_writer;
 import kernel_common_class.common_reader;
 import kernel_common_class.common_writer;
 import kernel_common_class.debug_information;
-import kernel_common_class.tree_string_locker_container;
 import kernel_common_class.compress_file_data;
 import kernel_common_class.compress_network_data;
-
+import kernel_common_class.tree_string_locker_container;
 
 public class client_request_response extends common_writer
 {
@@ -302,7 +302,7 @@ public class client_request_response extends common_writer
 		error_msg+="\ncompress_file_name is "+ecr.compress_file_name;
 		error_msg+="\ncharset_name is "+system_par.network_data_charset;
 		
-		File f;
+		File f,gf;
 		if((f=new File(ecr.file_name)).length()<=0){
 			debug_information.println("response_file_data find file length is ZERO:	",ecr.file_name);
 			return;
@@ -315,26 +315,27 @@ public class client_request_response extends common_writer
 			compress_response_header=null;
 		else {
 			String compress_file_name=ecr.compress_file_name+".gzip";
-			String my_lock_key[]=new String[] {ecr.compress_file_name+".lock"};
-			string_locker_container.write_lock(my_lock_key);
-
-			try{
-				File gf=new File(compress_file_name);
-				if(f.lastModified()<gf.lastModified()) {
-					f=gf;
-					compress_response_header="gzip";
-				}else if(compress_file_data.do_compress(f,gf,system_par.response_block_size,"gzip"))
+			gf=new File(compress_file_name);
+			if(f.lastModified()<gf.lastModified()){
+				f=gf;
+				compress_response_header="gzip";
+			}else{
+				String my_lock_key[]=new String[] {ecr.compress_file_name+".lock"};
+				string_locker_container.write_lock(my_lock_key);
+				
+				String tmp_file_name=ecr.compress_file_name+".tmp";
+				if(compress_file_data.do_compress(f,new File(tmp_file_name),
+						system_par.response_block_size,"gzip"))
+				{
 					compress_response_header=null;
-				else{
+				}else{
+					file_writer.file_rename(tmp_file_name,compress_file_name);
 					f=new File(compress_file_name);
 					compress_response_header="gzip";
 				}
-			}catch(Exception e){
-				e.printStackTrace();
-				debug_information.println("response_file_data exception 2\t",e.toString());
-				compress_response_header=null;
+				
+				string_locker_container.write_unlock(my_lock_key);
 			}
-			string_locker_container.write_unlock(my_lock_key);
 		}
 		
 		long file_range[];
@@ -344,8 +345,8 @@ public class client_request_response extends common_writer
 		
 		implementor.set_response_http_header(
 			(ecr.file_charset==null)?get_charset():ecr.file_charset,
-			ecr.response_content_type,compress_response_header,ecr.last_modified_time,
-			system_par.file_buffer_expire_time_length);
+			ecr.response_content_type,compress_response_header,
+			ecr.last_modified_time,system_par.file_buffer_expire_time_length);
 
 		byte data_buf[]=new byte[system_par.response_block_size];
 		FileInputStream 	s_stream=null;
