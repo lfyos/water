@@ -151,7 +151,7 @@ public class client_information
 		url_header+="&event_part_id="+Integer.toString(part_id);
 		return url_header;
 	}
-	public String get_file_proxy_url(String file_name,system_parameter system_par)
+	public String get_file_proxy_url(String file_name,String file_charset,system_parameter system_par)
 	{
 		File f=new File(file_name);
 		
@@ -181,7 +181,12 @@ public class client_information
 		}catch(Exception e) {
 			;
 		}
-		return proxy_url+proxy_file_name+"&date="+last_modified_time;
+		if(file_charset==null)
+			file_charset=system_par.network_data_charset;
+		else if((file_charset=file_charset.trim()).length()<=0)
+			file_charset=system_par.network_data_charset;
+		
+		return proxy_url+proxy_file_name+"&file_charset="+file_charset+"&date="+last_modified_time;
 	}
 	public void add_file_proxy_url(String my_file_proxy_url)
 	{
@@ -236,7 +241,8 @@ public class client_information
 				new component[]{sk.component_cont.root_component},null,
 				0,0,null,null,null,null,true,true);
 	
-		display_camera_result			=new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont);
+		display_camera_result			=new camera_result(
+				sk.camera_cont.get(rt.camera_id),rt,sk.component_cont);
 		target_camera_result_list		=new ArrayList<camera_result>();
 		
 		clip_plane						=null;

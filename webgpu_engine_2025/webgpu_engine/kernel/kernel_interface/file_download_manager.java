@@ -75,6 +75,12 @@ public class file_download_manager
 					"response_not_modify in execute_file_call of client_interface\n file name is "+file_name);
 				return null;
 			}
-		return new scene_call_result(f,system_par.network_data_charset,system_par);
+		String file_charset;
+		if((file_charset=request_response.get_parameter("file_charset"))==null)
+			file_charset=system_par.network_data_charset;
+		else if((file_charset=file_charset.trim()).length()<=0)
+			file_charset=system_par.network_data_charset;
+			
+		return new scene_call_result(f,file_charset,system_par);
 	}
 }

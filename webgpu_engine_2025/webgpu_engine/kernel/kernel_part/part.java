@@ -172,8 +172,7 @@ public class part
 		}
 	}
 	private String create_mesh_and_material_routine(
-			String part_temporary_file_directory,
-			system_parameter system_par,scene_parameter scene_par)
+			String part_temporary_file_directory,system_parameter system_par,scene_parameter scene_par)
 	{
 		String ret_val="";
 
@@ -275,7 +274,7 @@ public class part
 	
 		return ret_val;
 	}
-	private void create_part_network_compress_file(int response_block_size,String my_charset,String root_file_name)
+	private void create_part_network_compress_file(int response_block_size,String root_file_name)
 	{
 		String my_head_file_name		=root_file_name+".head.txt";
 		String my_head_gzip_file_name	=root_file_name+".head.gzip_text";
@@ -329,8 +328,7 @@ public class part
 		boftal=new buffer_object_file_modify_time_and_length(part_mesh,
 				part_temporary_file_directory+"mesh",system_par.local_data_charset);
 		
-		create_part_network_compress_file(system_par.response_block_size,
-				system_par.network_data_charset,part_temporary_file_directory+"mesh");
+		create_part_network_compress_file(system_par.response_block_size,part_temporary_file_directory+"mesh");
 
 		if(audio_file_name!=null)
 			if(file_reader.is_exist(directory_name+audio_file_name))

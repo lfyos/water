@@ -20,7 +20,7 @@ public class component_load_source_container
 	}
 	public component_load_source_container(component_load_source_container clsc)
 	{
-		var list=clsc.tree.get_tree_node_list(false);
+		var list=clsc.tree.get_tree_node_list(false,false);
 		tree=new tree_string_search_container<component_load_source_item>();
 		
 		for(int i=0,ni=list.size();i<ni;i++){

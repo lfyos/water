@@ -59,24 +59,22 @@ public class response_render_component_request
 	}
 	private static void process_target(scene_kernel sk,client_information ci,render_component_counter rcc)
 	{
+		var target_list=ci.target_container.get_render_target();
+		int target_number=target_list.size();
 		render_target rt;
 		camera_result cr;
-		int target_number=ci.target_container.get_render_target_number();
+		
 		for(int pos;(pos=ci.target_component_collector_list.size())<target_number;){
 			ci.target_component_collector_list.add(pos,null);
 			ci.target_camera_result_list.add(pos,null);
 		}
-
-		render_target target_list[]=ci.target_container.get_render_target();
-		
-		for(int i=0,ni=target_list.length;i<ni;i++)
-			if((rt=target_list[i]).camera_id>=0)
+		for(int i=0;i<target_number;i++)
+			if((rt=target_list.get(i)).camera_id>=0)
 				if(rt.camera_id<sk.camera_cont.size())
 					ci.target_camera_result_list.set(rt.target_id,
 						new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont));
-		
-		for(int i=0,ni=target_list.length;i<ni;i++)
-			if((rt=target_list[i]).main_display_target_flag)
+		for(int i=0;i<target_number;i++)
+			if((rt=target_list.get(i)).main_display_target_flag)
 				if((cr=ci.target_camera_result_list.get(rt.target_id))!=null){
 					ci.display_camera_result=cr;
 					break;
@@ -85,8 +83,8 @@ public class response_render_component_request
 		ArrayList<response_render_data> render_data_list=new ArrayList<response_render_data> (); 
 		
 		ci.request_response.print(",[");
-		for(int response_number=0,i=0,ni=target_list.length;i<ni;i++)
-			if((rt=target_list[i])!=null)
+		for(int response_number=0,i=0;i<target_number;i++)
+			if((rt=target_list.get(i))!=null)
 				if(rt.do_render_flag){
 					cr=ci.target_camera_result_list.get(rt.target_id);
 					int render_buffer_id=cr.get_render_buffer_id(ci);
@@ -105,7 +103,6 @@ public class response_render_component_request
 		
 		response_component_render_parameter.response(render_data_list,sk,ci,rcc);
 	}
-
 	private static void response_parameter(scene_kernel sk,client_information ci,long delay_time_length)
 	{
 		long my_current_time_difference;
@@ -144,8 +141,10 @@ public class response_render_component_request
 				buffer_object_file_modify_time_and_length_item item=item_list.get(j);
 				ci.request_response.print((j<=0)?"[":",[");
 				if(!(item.buffer_object_file_in_head_flag)){
-					String my_url,file_name=directory_name+type_str[i]+Integer.toString(j)+".gzip_text";
-					if((my_url=ci.get_file_proxy_url(file_name,sk.system_par))==null)
+					String file_name=directory_name+type_str[i]+Integer.toString(j)+".gzip_text";
+					String my_url=ci.get_file_proxy_url(file_name,
+							sk.system_par.network_data_charset,sk.system_par);
+					if(my_url==null)
 						my_url=url_directory+type_str[i]+j+"&random="+Math.random();
 					ci.request_response.print(item.buffer_object_text_file_length).print(",\"",my_url).print("\"");
 					ret_val++;
@@ -188,8 +187,9 @@ public class response_render_component_request
 				break;
 			}
 
-			String package_url;
-			if((package_url=ci.get_file_proxy_url(package_file_name,sk.system_par))==null) {
+			String package_url=ci.get_file_proxy_url(
+					package_file_name,sk.system_par.network_data_charset,sk.system_par);
+			if(package_url==null) {
 				package_url =ci.request_url_header;
 				package_url+="&command=buffer&method=buffer_package&package=";
 				package_url+=part_type_id+"_"+part_package_id;

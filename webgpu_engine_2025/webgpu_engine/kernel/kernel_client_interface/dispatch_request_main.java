@@ -1,7 +1,6 @@
 package kernel_client_interface;
 
 import java.io.File;
-import java.nio.charset.Charset;
 
 import kernel_scene.scene_kernel;
 import kernel_scene.scene_call_result;
@@ -97,16 +96,16 @@ public class dispatch_request_main
 			return null;
 		}
 		
-		String url;
-		if((url=ci.get_file_proxy_url(file_name[0],sk.system_par))!=null) {
-			ci.request_response.implementor.redirect_url(url);
-			return null;
-		}
-
+		String url,file_charset=null;
 		if(file_name.length>1)
 			if(file_name[1]!=null)
-				return new scene_call_result(f,file_name[1],sk.system_par);
+				if((file_name[1]=file_name[1].trim()).length()>0)
+					file_charset=file_name[1];
 		
-		return new scene_call_result(f,Charset.defaultCharset().name(),sk.system_par);
+		if((url=ci.get_file_proxy_url(file_name[0],file_charset,sk.system_par))==null) 
+			return new scene_call_result(f,file_charset,sk.system_par);
+		
+		ci.request_response.implementor.redirect_url(url);
+		return null;
 	}
 }

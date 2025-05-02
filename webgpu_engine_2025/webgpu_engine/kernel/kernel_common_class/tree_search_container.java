@@ -134,7 +134,8 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 		p.touch_time=0;
 		return p.list;
 	}
-	public ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>> get_tree_node_list(boolean do_sort_flag)
+	public ArrayList<tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>>
+				get_tree_node_list(boolean do_sort_flag,boolean clear_all_flag)
 	{
 		class tree_node_sorter extends sorter <tree_search_container_tree_node<KEY_TYPE,VALUE_TYPE>,KEY_TYPE>
 		{
@@ -149,14 +150,28 @@ public class tree_search_container<KEY_TYPE,VALUE_TYPE>
 			{
 				return comparator.compare(s.key,t);
 			}
-			public tree_node_sorter(boolean do_sort_flag)
+			public tree_node_sorter(boolean do_sort_flag,boolean clear_all_flag)
 			{
 				for(var p=first;p!=null;p=p.back)
 					data_list.add(p);
+				if(clear_all_flag) {
+					for(var p=first;p!=null;) {
+						var q=p;
+						p=p.back;
+						q.front=null;
+						q.back=null;
+					}
+					tree.clear();
+					
+					comparator	=null;
+					tree		=null;
+					first		=null;
+					last		=null;
+				}
 				if(do_sort_flag)
 					do_sort();
 			}
 		};
-		return new tree_node_sorter(do_sort_flag).data_list;
+		return new tree_node_sorter(do_sort_flag,clear_all_flag).data_list;
 	}
 }
