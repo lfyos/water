@@ -2,19 +2,18 @@ package kernel_camera;
 
 import java.util.ArrayList;
 
+import kernel_part.part;
+import kernel_transformation.box;
+import kernel_component.component;
 import kernel_render.render_target;
-import kernel_scene.client_information;
-import kernel_scene.client_parameter;
-import kernel_transformation.location;
 import kernel_transformation.plane;
 import kernel_transformation.point;
-import kernel_transformation.box;
+import kernel_scene.client_parameter;
+import kernel_transformation.location;
+import kernel_transformation.tetrahedron;
+import kernel_component.component_container;
 import kernel_transformation.projection_matrix;
 import kernel_transformation.screen_move_matrix;
-import kernel_transformation.tetrahedron;
-import kernel_component.component;
-import kernel_component.component_container;
-import kernel_part.part;
 
 public class camera_result
 {
@@ -265,9 +264,5 @@ public class camera_result
 		comp.clip.can_be_clipped_flag=true;
 		
 		return true;
-	}
-	public int get_render_buffer_id(client_information ci)
-	{
-		return target.get_render_buffer_id(ci.parameter.high_or_low_precision_flag);
 	}
 }

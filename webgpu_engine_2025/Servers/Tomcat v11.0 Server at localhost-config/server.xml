@@ -87,7 +87,6 @@
                          certificateKeystorePassword="123456" type="RSA" />
         </SSLHostConfig>
     </Connector>
-   
 
     <!-- Define an AJP 1.3 Connector on port 8009 -->
     <!--

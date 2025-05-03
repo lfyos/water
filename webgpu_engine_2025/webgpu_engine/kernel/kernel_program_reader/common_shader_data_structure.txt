@@ -125,12 +125,7 @@ struct target_information
 	
 	projection_type_flag					:	i32,
 	
-	scene_id								:	i32,
-	render_buffer_id						:	i32,
-	
-	tmp_int_0								:	i32,
-	tmp_int_1								:	i32,
-	tmp_int_2								:	i32
+	scene_id								:	i32
 };
 
 struct method_information

@@ -193,7 +193,8 @@ public class list_component_on_collector
 		
 		no_driver_component_number=0;
 		
-		int render_buffer_id=cam_result.get_render_buffer_id(ci);			
+		int render_buffer_id=cam_result.target.get_render_buffer_id(ci.parameter.high_or_low_precision_flag);
+		
 		component my_comp,pickup_comp=ci.parameter.comp;
 		for(component p=pickup_comp;p!=null;p=sk.component_cont.get_component(p.parent_component_id))
 			p.selected_component_family_flag=true;

@@ -115,17 +115,29 @@ async function request_render_data(scene)
 			scene.render_buffer_array[i].do_render_flag=false;
 
 		for(var i=0,ni=response_data.length;i<ni;){
-			var my_render_buffer_id	=response_data[i++];
-			var my_data				=response_data[i++];
+			var my_render_buffer_id					=response_data[i++];
+			var my_camera_target_render_buffer_id	=response_data[i++];
+			var my_data								=response_data[i++];
 
-			while(my_render_buffer_id>=scene.render_buffer_array.length)
-				scene.render_buffer_array.push({
-					do_render_flag	:	false
-				});
+			var my_max_render_buffer_id=(my_render_buffer_id>=my_camera_target_render_buffer_id)
+				?my_render_buffer_id:my_camera_target_render_buffer_id;
+				
+			while(my_max_render_buffer_id>=scene.render_buffer_array.length)
+				scene.render_buffer_array.push(
+					{
+						do_render_flag					:	false,
+						
+						append_render_instance_number	:	0,
+						replace_render_instance_number	:	0,
+						delete_render_instance_number	:	0,
+						
+						project_matrix					:	null
+					});
 
 			var p=scene.render_buffer_array[my_render_buffer_id];
-			p.do_render_flag	=true;
-			p.render_buffer_id	=my_render_buffer_id;
+			p.do_render_flag					=true;
+			p.render_buffer_id					=my_render_buffer_id;
+			p.camera_target_render_buffer_id	=my_camera_target_render_buffer_id;
 
 			for(var j=0,nj=my_data.length;j<nj;)
 				switch(my_data[j++]){

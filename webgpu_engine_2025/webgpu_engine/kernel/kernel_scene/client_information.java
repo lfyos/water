@@ -237,9 +237,8 @@ public class client_information
 		target_component_collector_list	=new ArrayList<component_collector>();
 
 		render_target rt=new render_target(
-				false,null,sk.component_cont.root_component.component_id,0,0,
-				new component[]{sk.component_cont.root_component},null,
-				0,0,null,null,null,null,true,true);
+				false,-1,null,sk.component_cont.root_component.component_id,0,0,
+				new component[]{sk.component_cont.root_component},null,0,0,null,null,null,null,true,true);
 	
 		display_camera_result			=new camera_result(
 				sk.camera_cont.get(rt.camera_id),rt,sk.component_cont);

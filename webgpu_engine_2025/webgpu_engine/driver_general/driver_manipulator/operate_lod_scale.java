@@ -39,7 +39,7 @@ public class operate_lod_scale
 			for(int child_id=0,child_number=comp.children_number();child_id<child_number;child_id++)
 				comp_array.add_component(comp.children[child_id]);
 		}
-		ci.component_instance_driver_cont.reset_precision_scale(sk.component_cont.root_component);
+		ci.component_instance_driver_cont.reset_instance_lod_precision_scale(sk.component_cont.root_component);
 
 		return;
 	}

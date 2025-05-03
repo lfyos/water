@@ -27,7 +27,7 @@ public class component_driver
 		}
 	}
 	private long component_parameter_version,component_render_version;
-	
+
 	public void update_component_parameter_version()
 	{
 		component_parameter_version++;
@@ -47,16 +47,20 @@ public class component_driver
 	public part component_part;
 	public int 	same_render_component_driver_id;
 	public int 	same_part_component_driver_id;
+	
+	public boolean component_driver_can_not_bundle_render_flag;
 
 	public component_driver(part my_component_part)
 	{
 		component_parameter_version		=2;
 		component_render_version		=2;
-		
+
 		component_part=my_component_part;
 		
 		same_render_component_driver_id	=0;
 		same_part_component_driver_id	=0;
+		
+		component_driver_can_not_bundle_render_flag=true;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)

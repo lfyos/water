@@ -105,7 +105,6 @@ public class component_core_3 extends component_core_2
 			boolean normalize_location_flag,component_construction_parameter ccp)
 	{
 		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
-		
 		create_driver(fr,ccp);
 	}
 }

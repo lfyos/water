@@ -30,14 +30,9 @@ function construct_scene_interface(my_scene)
 	{
 		destroy_scene_target_routine(render_buffer_id,scene_target_array,this.scene);
 	}
-	
-	this.set_scene_target=function(render_buffer_id)
+	this.draw_scene_target=function(scene_target_array,pass_id,render_buffer_id)
 	{
-		return set_scene_target_routine(render_buffer_id,this.scene);
-	}
-	this.draw_scene_target=function(project_matrix,scene_target_array,pass_id,render_buffer_id)
-	{
-		draw_scene_target_routine(project_matrix,scene_target_array,pass_id,render_buffer_id,this.scene);
+		draw_scene_target_routine(scene_target_array,pass_id,render_buffer_id,this.scene);
 	}
 	this.complete_render_target=async function(render_buffer_id)
 	{
@@ -95,7 +90,38 @@ function construct_scene_interface(my_scene)
 			if(typeof(fun_array[i])=="function")
 				if(fun_array[i](this.scene))
 					this.scene.routine_array.push(fun_array[i]);
-					
+
+		for(var i=0,ni=this.scene.render_buffer_array.length;i<ni;i++){
+			var render_data=this.scene.render_buffer_array[i];
+			if(render_data.do_render_flag)
+				if(render_data.camera_target_render_buffer_id<0){
+					render_data.project_matrix=this.scene.camera.compute_camera_data(render_data);
+					this.scene.system_buffer.set_target_buffer(
+							render_data,render_data.project_matrix,this.scene);
+				}
+		}
+		for(var i=0,ni=this.scene.render_buffer_array.length;i<ni;i++){
+			var render_data=this.scene.render_buffer_array[i];
+			if(render_data.do_render_flag)
+				if(render_data.camera_target_render_buffer_id>=0){
+					var flag=true;
+					for(var j=0,nj=ni,p=render_data;j<nj;j++){
+						p=this.scene.render_buffer_array[p.camera_target_render_buffer_id];
+						if(p.camera_target_render_buffer_id<0){
+							render_data.project_matrix=p.project_matrix;
+							flag=false;
+							break;
+						}
+						if(p.camera_target_render_buffer_id>=nj){
+							console.log("Too big camera_target_render_buffer_id in function process_scene:"
+								+i+"/"+j+"/"+p.camera_target_render_buffer_id+"/"+nj);
+							break;
+						}
+					}
+					if(flag)
+						console.log("Not find camera_target_render_buffer in function process_scene:"+i+"/"+nj);
+				}
+		}
 		return this.scene.parameter.engine_touch_time_length;
 	}
 }

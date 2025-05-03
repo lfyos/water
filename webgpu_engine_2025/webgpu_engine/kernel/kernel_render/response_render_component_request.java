@@ -59,26 +59,38 @@ public class response_render_component_request
 	}
 	private static void process_target(scene_kernel sk,client_information ci,render_component_counter rcc)
 	{
-		var target_list=ci.target_container.get_render_target();
-		int target_number=target_list.size();
 		render_target rt;
-		camera_result cr;
-		
+		ArrayList<render_target> target_list=ci.target_container.get_render_target();
+		int target_number=target_list.size();
+
 		for(int pos;(pos=ci.target_component_collector_list.size())<target_number;){
 			ci.target_component_collector_list.add(pos,null);
 			ci.target_camera_result_list.add(pos,null);
 		}
 		for(int i=0;i<target_number;i++)
-			if((rt=target_list.get(i)).camera_id>=0)
-				if(rt.camera_id<sk.camera_cont.size())
-					ci.target_camera_result_list.set(rt.target_id,
-						new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont));
+			if((rt=target_list.get(i))!=null)
+				if(rt.do_render_flag)
+					if((rt.camera_target_id<0)||(rt.camera_target_id>=target_number))
+						if((rt.camera_id>=0)&&(rt.camera_id<sk.camera_cont.size()))
+							ci.target_camera_result_list.set(rt.target_id,
+								new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont));
 		for(int i=0;i<target_number;i++)
-			if((rt=target_list.get(i)).main_display_target_flag)
-				if((cr=ci.target_camera_result_list.get(rt.target_id))!=null){
-					ci.display_camera_result=cr;
-					break;
-				}
+			if((rt=target_list.get(i))!=null)
+				if(rt.do_render_flag) 
+					if((rt.camera_target_id>=0)&&(rt.camera_target_id<target_number))
+						if(target_list.get(rt.camera_target_id).do_render_flag)
+							ci.target_camera_result_list.set(rt.target_id,
+								ci.target_camera_result_list.get(rt.camera_target_id));
+		for(int i=0;i<target_number;i++)
+			if((rt=target_list.get(i))!=null)
+				if(rt.do_render_flag)
+					if(rt.main_display_target_flag) {
+						camera_result cr=ci.target_camera_result_list.get(rt.target_id);
+						if(cr!=null){
+							ci.display_camera_result=cr;
+							break;
+						}
+					}
 		
 		ArrayList<response_render_data> render_data_list=new ArrayList<response_render_data> (); 
 		
@@ -86,17 +98,22 @@ public class response_render_component_request
 		for(int response_number=0,i=0;i<target_number;i++)
 			if((rt=target_list.get(i))!=null)
 				if(rt.do_render_flag){
-					cr=ci.target_camera_result_list.get(rt.target_id);
-					int render_buffer_id=cr.get_render_buffer_id(ci);
+					camera_result cr=ci.target_camera_result_list.get(rt.target_id);
+					int render_buffer_id=rt.get_render_buffer_id(ci.parameter.high_or_low_precision_flag);
+					int camera_target_render_buffer_id=(rt.camera_target_id<0)?-1:
+							(target_list.get(rt.camera_target_id).get_render_buffer_id(
+									ci.parameter.high_or_low_precision_flag));
 					
 					ci.render_buffer.location_buffer.put_in_list(cr.cam.eye_component,sk);
 					ci.request_response.print(((response_number++)<=0)?"":",",render_buffer_id);
+					ci.request_response.print(",",camera_target_render_buffer_id);
+					
 					component_collector collector=collect_render_parts(render_data_list,render_buffer_id,rt,sk,ci,cr);
 					ci.target_component_collector_list.set(rt.target_id,collector);
 					if(ci.display_camera_result!=null)
 						if(ci.display_camera_result.target.target_id==rt.target_id)
 							ci.display_component_collector=collector;
-					
+
 					ci.render_buffer.target_buffer.response_parameter(render_buffer_id,rt,ci.request_response);
 				}
 		ci.request_response.print("]");

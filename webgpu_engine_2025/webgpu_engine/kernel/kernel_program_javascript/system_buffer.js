@@ -72,7 +72,7 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 				(scene.component_location_data.identify_matrix.length);
 	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4*33;
 	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*8;
-	my_target_buffer_size+=Int32Array.	BYTES_PER_ELEMENT*12;
+	my_target_buffer_size+=Int32Array.	BYTES_PER_ELEMENT*8;
 	
 	for(this.target_buffer_stride=0;this.target_buffer_stride<my_target_buffer_size;)
 		this.target_buffer_stride+=scene.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
@@ -259,10 +259,7 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 			
 			project_matrix.projection_type_flag?1:0,
 			
-			scene.scene_id,
-			render_data.render_buffer_id,
-			
-			0,0,0
+			scene.scene_id
 		];
 		var matrix_array=[
 			project_matrix.matrix,
@@ -362,9 +359,33 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 	};
 	this.set_system_bindgroup=function(render_buffer_id,method_id,component_id,driver_id,scene)
 	{
-		var p=scene.component_array_sorted_by_id[component_id],my_id_buffer_index_id;
+		var number=scene.render_buffer_array.length,render_buffer_id_bak=render_buffer_id;
+		if((render_buffer_id<0)||(render_buffer_id>=number))
+			return;
+		var flag=true;
+		for(var i=0;i<number;i++){
+			var p=scene.render_buffer_array[render_buffer_id];
+			if(p.camera_target_render_buffer_id<0){
+				flag=false;
+				break;
+			}
+			render_buffer_id=p.camera_target_render_buffer_id;
+			if(render_buffer_id>=number){
+				console.log("Too big camera_target_render_buffer_id in function set_system_bindgroup:"
+						+i+"/"+render_buffer_id+"/"+number);
+				return;
+			}
+		};
+		if(flag){
+			var str="Not find camera_target_render_buffer_id in function set_system_bindgroup:";
+			console.log(str+render_buffer_id_bak);
+			return;
+		}
 		
+		var p=scene.component_array_sorted_by_id[component_id];
 		driver_id=(typeof(driver_id)!="number")?-1:driver_id;
+		
+		var my_id_buffer_index_id;
 		if((driver_id<0)||(driver_id>=p.component_ids.length))
 			my_id_buffer_index_id=p.component_system_bindgroup_id;
 		else
