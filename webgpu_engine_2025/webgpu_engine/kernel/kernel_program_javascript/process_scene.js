@@ -2,37 +2,39 @@ function construct_scene_interface(my_scene)
 {
 	this.scene=my_scene;
 	
-	this.set_system_buffer=function()
+	this.set_system_buffer_and_compute_component_location=function()
 	{
 		this.scene.system_buffer.set_system_buffer(this.scene);
+		this.scene.component_location_data.compute_component_location();
 	}
 	this.get_render_buffer_number=function()
 	{
 		return this.scene.render_buffer_array.length;
 	}
-	this.get_do_render_flag=function(render_buffer_id)
+	this.get_target_parameter=function(render_buffer_id)
 	{
-		return this.scene.render_buffer_array[render_buffer_id].do_render_flag;
+		var p=this.scene.render_buffer_array[render_buffer_id];
+		var ret_val=
+			{
+				render_buffer_id		:	render_buffer_id,
+				do_render_flag			:	p.do_render_flag,
+				target_or_bundle_flag	:	p.target_or_bundle_flag,
+				target_name				:	p.target_name,
+				target_ids				:	p.target_ids
+			};
+		return ret_val;
 	}
-	this.get_target_name=function(render_buffer_id)
+	this.create_scene_target=function(target_parameter,scene_target_array)
 	{
-		return this.scene.render_buffer_array[render_buffer_id].target_name;
+		create_scene_target_routine(target_parameter,scene_target_array,this.scene);
 	}
-	this.compute_scene_component_location=function()
+	this.destroy_scene_target=function(target_parameter,scene_target_array)
 	{
-		this.scene.component_location_data.compute_component_location();
+		destroy_scene_target_routine(target_parameter,scene_target_array,this.scene);
 	}
-	this.create_scene_target=function(render_buffer_id,scene_target_array)
+	this.draw_scene_target=function(target_parameter,scene_target_array,pass_id)
 	{
-		create_scene_target_routine(render_buffer_id,scene_target_array,this.scene);
-	}
-	this.destroy_scene_target=function(render_buffer_id,scene_target_array)
-	{
-		destroy_scene_target_routine(render_buffer_id,scene_target_array,this.scene);
-	}
-	this.draw_scene_target=function(scene_target_array,pass_id,render_buffer_id)
-	{
-		draw_scene_target_routine(scene_target_array,pass_id,render_buffer_id,this.scene);
+		draw_scene_target_routine(target_parameter,scene_target_array,pass_id,this.scene);
 	}
 	this.complete_render_target=async function(render_buffer_id)
 	{

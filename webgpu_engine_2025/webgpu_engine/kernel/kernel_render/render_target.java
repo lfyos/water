@@ -7,7 +7,7 @@ import kernel_transformation.location;
 
 public class render_target
 {
-	public boolean do_render_flag;
+	public boolean do_render_flag,target_or_bundle_flag;
 	public int target_id,camera_target_id;
 	
 	public int target_comonent_id,target_driver_id,target_texture_id;
@@ -41,35 +41,49 @@ public class render_target
 		clip_plane=null;
 		camera_transformation_matrix=null;
 	}
-	public render_target()
+	
+	public render_target(render_target rt)
 	{
-		do_render_flag				=false;
-		target_id					=0;
-		camera_target_id			=-1;
+		do_render_flag				=rt.do_render_flag;
+		target_or_bundle_flag		=rt.target_or_bundle_flag;
 		
-		target_name					=null;
-		target_comonent_id			=0;
-		target_driver_id			=0;
-		target_texture_id			=0;
+		target_id					=rt.target_id;
+		camera_target_id			=rt.camera_target_id;
 		
-		comp						=null;
-		driver_id					=null;
+		target_name					=new String(rt.target_name);
+		target_comonent_id			=rt.target_comonent_id;
+		target_driver_id			=rt.target_driver_id;
+		target_texture_id			=rt.target_texture_id;
 		
-		camera_id					=0;
-		parameter_channel_id		=0;
+		if((comp=rt.comp)!=null) {
+			comp=new component[rt.comp.length];
+			for(int i=0,ni=comp.length;i<ni;i++)
+				comp[i]=rt.comp[i];
+		};
+		if((driver_id=rt.driver_id)!=null) {
+			driver_id=new int[rt.driver_id.length];
+			for(int i=0,ni=driver_id.length;i<ni;i++)
+				driver_id[i]=rt.driver_id[i];
+		};
 		
-		target_view					=new render_target_view();
-		view_volume_box				=new box(-1,-1,-1,1,1,1);
+		camera_id					=rt.camera_id;
+		parameter_channel_id		=rt.parameter_channel_id;
+		
+		target_view					=(rt.target_view==null)
+				?null:(new render_target_view(rt.target_view));
+		view_volume_box				=(rt.view_volume_box==null)
+				?null:(new box(rt.view_volume_box));
 
-		clip_plane					=null;
-		camera_transformation_matrix=null;
+		clip_plane					=(rt.clip_plane==null)
+				?null:(new plane(rt.clip_plane));
+		camera_transformation_matrix=(rt.camera_transformation_matrix==null)
+				?null:(new location(rt.camera_transformation_matrix));
 
-		main_display_target_flag	=false;
-		do_discard_lod_flag			=false;
-		do_selection_lod_flag		=false;
+		main_display_target_flag	=rt.main_display_target_flag;
+		do_discard_lod_flag			=rt.do_discard_lod_flag;
+		do_selection_lod_flag		=rt.do_selection_lod_flag;
 	}
-	public render_target(
-			boolean my_do_render_flag,				int my_camera_target_id,		String my_target_name,
+	public render_target(String my_target_name,
 			int my_target_comonent_id,				int my_target_driver_id,		int my_target_texture_id,
 			component my_comp[],					int my_driver_id[],
 			int my_camera_id,						int my_parameter_channel_id,
@@ -77,11 +91,13 @@ public class render_target
 			plane my_clip_plane,					location my_camera_transformation_matrix,
 			boolean my_do_discard_lod_flag,			boolean my_do_selection_lod_flag)
 	{
-		do_render_flag				=my_do_render_flag;
-		target_id					=0;
-		camera_target_id			=my_camera_target_id;
+		do_render_flag				=true;
+		target_or_bundle_flag		=true;
 		
-		target_name					=my_target_name;
+		target_id					=0;
+		camera_target_id			=-1;
+		
+		target_name					=(my_target_name==null)?"No_target_name":my_target_name;
 		target_comonent_id			=my_target_comonent_id;
 		target_driver_id			=my_target_driver_id;
 		target_texture_id			=my_target_texture_id;

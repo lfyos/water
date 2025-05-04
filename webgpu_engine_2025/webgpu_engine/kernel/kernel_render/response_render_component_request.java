@@ -59,63 +59,60 @@ public class response_render_component_request
 	}
 	private static void process_target(scene_kernel sk,client_information ci,render_component_counter rcc)
 	{
+		camera_result cr;
 		render_target rt;
-		ArrayList<render_target> target_list=ci.target_container.get_render_target();
-		int target_number=target_list.size();
+		render_target target_list[]=ci.target_container.get_render_target();
+		int target_number=target_list.length;
 
 		for(int pos;(pos=ci.target_component_collector_list.size())<target_number;){
 			ci.target_component_collector_list.add(pos,null);
 			ci.target_camera_result_list.add(pos,null);
 		}
 		for(int i=0;i<target_number;i++)
-			if((rt=target_list.get(i))!=null)
-				if(rt.do_render_flag)
-					if((rt.camera_target_id<0)||(rt.camera_target_id>=target_number))
-						if((rt.camera_id>=0)&&(rt.camera_id<sk.camera_cont.size()))
-							ci.target_camera_result_list.set(rt.target_id,
-								new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont));
+			if((rt=target_list[i])!=null)
+				if((rt.camera_target_id<0)||(rt.camera_target_id>=target_number))
+					if((rt.camera_id>=0)&&(rt.camera_id<sk.camera_cont.size()))
+						ci.target_camera_result_list.set(rt.target_id,
+							new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont));
 		for(int i=0;i<target_number;i++)
-			if((rt=target_list.get(i))!=null)
-				if(rt.do_render_flag) 
-					if((rt.camera_target_id>=0)&&(rt.camera_target_id<target_number))
-						if(target_list.get(rt.camera_target_id).do_render_flag)
+			if((rt=target_list[i])!=null)
+				if((rt.camera_target_id>=0)&&(rt.camera_target_id<target_number))
+					if(target_list[rt.camera_target_id]!=null)
 							ci.target_camera_result_list.set(rt.target_id,
 								ci.target_camera_result_list.get(rt.camera_target_id));
 		for(int i=0;i<target_number;i++)
-			if((rt=target_list.get(i))!=null)
-				if(rt.do_render_flag)
-					if(rt.main_display_target_flag) {
-						camera_result cr=ci.target_camera_result_list.get(rt.target_id);
-						if(cr!=null){
-							ci.display_camera_result=cr;
-							break;
-						}
+			if((rt=target_list[i])!=null)
+				if(rt.main_display_target_flag)
+					if((cr=ci.target_camera_result_list.get(rt.target_id))!=null){
+						ci.display_camera_result=cr;
+						break;
 					}
 		
 		ArrayList<response_render_data> render_data_list=new ArrayList<response_render_data> (); 
 		
 		ci.request_response.print(",[");
 		for(int response_number=0,i=0;i<target_number;i++)
-			if((rt=target_list.get(i))!=null)
-				if(rt.do_render_flag){
-					camera_result cr=ci.target_camera_result_list.get(rt.target_id);
-					int render_buffer_id=rt.get_render_buffer_id(ci.parameter.high_or_low_precision_flag);
-					int camera_target_render_buffer_id=(rt.camera_target_id<0)?-1:
-							(target_list.get(rt.camera_target_id).get_render_buffer_id(
-									ci.parameter.high_or_low_precision_flag));
+			if((rt=target_list[i])!=null){
+				cr=ci.target_camera_result_list.get(rt.target_id);
+				int render_buffer_id=rt.get_render_buffer_id(ci.parameter.high_or_low_precision_flag);
+				ci.render_buffer.location_buffer.put_in_list(cr.cam.eye_component,sk);
+				ci.request_response.print(((response_number++)<=0)?"":",",render_buffer_id);
 					
-					ci.render_buffer.location_buffer.put_in_list(cr.cam.eye_component,sk);
-					ci.request_response.print(((response_number++)<=0)?"":",",render_buffer_id);
-					ci.request_response.print(",",camera_target_render_buffer_id);
-					
-					component_collector collector=collect_render_parts(render_data_list,render_buffer_id,rt,sk,ci,cr);
-					ci.target_component_collector_list.set(rt.target_id,collector);
-					if(ci.display_camera_result!=null)
-						if(ci.display_camera_result.target.target_id==rt.target_id)
-							ci.display_component_collector=collector;
+				component_collector collector=collect_render_parts(render_data_list,render_buffer_id,rt,sk,ci,cr);
+				ci.target_component_collector_list.set(rt.target_id,collector);
+				if(ci.display_camera_result!=null)
+					if(ci.display_camera_result.target.target_id==rt.target_id)
+						ci.display_component_collector=collector;
 
-					ci.render_buffer.target_buffer.response_parameter(render_buffer_id,rt,ci.request_response);
-				}
+				int camera_target_render_buffer_id=-1;
+				if((rt.camera_target_id>=0)&&(rt.camera_target_id<target_list.length))
+					if(target_list[rt.camera_target_id]!=null)
+						camera_target_render_buffer_id=target_list[rt.camera_target_id].
+							get_render_buffer_id(ci.parameter.high_or_low_precision_flag);
+				
+				ci.render_buffer.target_buffer.response_parameter(
+						render_buffer_id,camera_target_render_buffer_id,rt,ci.request_response);
+			}
 		ci.request_response.print("]");
 		
 		response_component_render_parameter.response(render_data_list,sk,ci,rcc);
@@ -231,6 +228,7 @@ public class response_render_component_request
 		}
 		ci.request_response.print("]");
 	}
+	
 	private static void display_data_load_message(scene_kernel sk,client_information ci)
 	{
 		String str;
@@ -240,42 +238,38 @@ public class response_render_component_request
 		int index_id;
 		if((index_id=str.indexOf("_"))<0)
 			return;
-		int loaded_buffer_object_file_number=Integer.decode(str.substring(0,index_id));
+		ci.loaded_file_number=Integer.decode(str.substring(0,index_id));
 		if((index_id=(str=str.substring(index_id+1)).indexOf("_"))<0)
 			return;
-		long loaded_buffer_object_data_length=Long.decode(str.substring(0,index_id));
+		ci.loaded_data_length=Long.decode(str.substring(0,index_id));
 
-		if((index_id=(str=str.substring(index_id+1)).indexOf("_"))<0)
-			return;
-		int loading_render_id=Integer.decode(str.substring(0,index_id  ));
-		int loading_part_id  =Integer.decode(str.substring(  index_id+1));
-		
-		str=sk.system_par.language_change_name.search_change_name(
+		String display_message=sk.system_par.language_change_name.search_change_name(
 				"load+"+ci.request_response.language_str,"Load");
-
-		long total_length=sk.process_part_sequence.total_buffer_object_text_data_length;
-		if(sk.process_part_sequence.total_buffer_object_text_data_length>0){
-			str+="["+Integer.toString(loaded_buffer_object_file_number);
-			str+=":"+Integer.toString(sk.process_part_sequence.total_buffer_object_file_number);
-			
-			str+="/"+Long.toString(loaded_buffer_object_data_length/1024);
-			str+="K:"+Long.toString(total_length/1024);
-			
-			double percentage=100;
-			percentage*=loaded_buffer_object_data_length;
-			percentage/=total_length;
-			str+="K/"+Integer.toString((int)percentage)+"%]";
+		
+		if(sk.process_part_sequence.total_data_length>0){
+			display_message+="["+ci.loaded_file_number+":"+sk.process_part_sequence.total_file_number;
+			display_message+="/"+(ci.loaded_data_length/1024)+"K:";
+			display_message+=(sk.process_part_sequence.total_data_length/1024)+"K/";
+			double value=ci.loaded_data_length*100.0/sk.process_part_sequence.total_data_length;
+			display_message+=((int)(Math.round(value)))+"%]";
 		}
-		if((loading_render_id>=0)&&(loading_render_id<sk.render_cont.renders.size())) {
-			render r=sk.render_cont.renders.get(loading_render_id);
-			if((loading_part_id>=0)&&(loading_part_id<r.parts.size())) {
-				part p=r.parts.get(loading_part_id);
-				if(p!=null)
-					str+=":"+p.user_name;
+		
+		int loading_render_id,loading_part_id;
+		if((index_id=(str=str.substring(index_id+1)).indexOf("_"))>0){
+			loading_render_id=Integer.decode(str.substring(0,index_id  ));
+			loading_part_id  =Integer.decode(str.substring(  index_id+1));
+			if((loading_render_id>=0)&&(loading_render_id<sk.render_cont.renders.size())) {
+				render r=sk.render_cont.renders.get(loading_render_id);
+				if((loading_part_id>=0)&&(loading_part_id<r.parts.size())) {
+					part p=r.parts.get(loading_part_id);
+					if(p!=null)
+						display_message+=":"+p.user_name;
+				}
 			}
 		}
-		ci.message_display.set_display_message(str,
-				(loaded_buffer_object_data_length>=total_length)?1000*1000*1000*10:-1);
+		
+		ci.message_display.set_display_message(display_message,
+			(ci.loaded_data_length>=sk.process_part_sequence.total_data_length)?1000*1000*1000*10:-1);
 	}
 	public static void do_render(scene_kernel sk,client_information ci,long delay_time_length)
 	{

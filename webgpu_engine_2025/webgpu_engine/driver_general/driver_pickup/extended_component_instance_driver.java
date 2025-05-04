@@ -34,7 +34,7 @@ public class extended_component_instance_driver extends component_instance_drive
 
 		double local_xy[]=cr.target.target_view.caculate_view_local_xy(ci.parameter.x,ci.parameter.y);
 		
-		render_target rt=new render_target(true,-1,pickup_target_name,
+		render_target rt=new render_target(pickup_target_name,
 				comp.component_id,	driver_id,	0,								//target IDS
 				new component[] {sk.component_cont.root_component},				//components
 				null,															//driver_id

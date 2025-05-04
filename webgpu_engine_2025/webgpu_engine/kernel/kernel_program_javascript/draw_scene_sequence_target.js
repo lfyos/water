@@ -1,5 +1,6 @@
-function create_scene_target_routine(render_buffer_id,scene_target_array,scene)
+function create_scene_target_routine(target_parameter,scene_target_array,scene)
 {
+	var render_buffer_id=target_parameter.render_buffer_id;
 	var render_data		=scene.render_buffer_array[render_buffer_id];
 	var render_id		=render_data.target_ids.render_id;
 	var part_id			=render_data.target_ids.part_id;
@@ -20,8 +21,9 @@ function create_scene_target_routine(render_buffer_id,scene_target_array,scene)
 	return;
 }
 
-function destroy_scene_target_routine(render_buffer_id,scene_target_array,scene)
+function destroy_scene_target_routine(target_parameter,scene_target_array,scene)
 {
+	var render_buffer_id=target_parameter.render_buffer_id;
 	var render_data		=scene.render_buffer_array[render_buffer_id];
 	var render_id		=render_data.target_ids.render_id;
 	var part_id			=render_data.target_ids.part_id;
@@ -42,8 +44,9 @@ function destroy_scene_target_routine(render_buffer_id,scene_target_array,scene)
 		target_part_object,target_part_driver,target_render_driver,scene);
 	return;
 }
-function draw_scene_target_routine(scene_target_array,pass_id,render_buffer_id,scene)
+function draw_scene_target_routine(target_parameter,scene_target_array,pass_id,scene)
 {
+	var render_buffer_id=target_parameter.render_buffer_id;
 	var render_data		=scene.render_buffer_array[render_buffer_id];
 	var render_id		=render_data.target_ids.render_id;
 	var part_id			=render_data.target_ids.part_id;

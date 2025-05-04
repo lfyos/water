@@ -44,9 +44,8 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 	this.begin_scene_target=function(scene_target_array,render_data,
 			target_part_object,target_part_driver,target_render_driver,scene)
 	{
-		if(scene_target_array[0]!=null)
-			if(typeof(scene_target_array[0])=="object")
-				return;
+		if((typeof(scene_target_array[0])=="object")&&(scene_target_array[0]!=null))
+			return;
 		if(render_data.target_texture_id<0)
 			return;
 		if(render_data.target_texture_id>=this.target_parameter.length)

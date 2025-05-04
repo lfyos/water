@@ -351,11 +351,10 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 
 			0,0
 		);
-		
 		var offset=this.target_buffer_stride*render_data.render_buffer_id;
 		scene.webgpu.device.queue.writeBuffer(this.target_buffer,offset,new Float32Array(float_data));
-		scene.webgpu.device.queue.writeBuffer(this.target_buffer,
-			offset+float_data.length*Float32Array.BYTES_PER_ELEMENT,new Int32Array(int_data));
+		offset+=float_data.length*Float32Array.BYTES_PER_ELEMENT;
+		scene.webgpu.device.queue.writeBuffer(this.target_buffer,offset,new Int32Array(int_data));
 	};
 	this.set_system_bindgroup=function(render_buffer_id,method_id,component_id,driver_id,scene)
 	{

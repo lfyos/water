@@ -23,11 +23,7 @@ class render_target_comparator implements Comparator<render_target>
 			return -2;
 		if(s.target_texture_id>t.target_texture_id)
 			return 2;
-		
-		String my_s_target_name=(s.target_name==null)?"no_target_name":s.target_name;
-		String my_t_target_name=(t.target_name==null)?"no_target_name":t.target_name;
-		
-		return my_s_target_name.compareTo(my_t_target_name);
+		return s.target_name.compareTo(t.target_name);
 	}
 }
 public class render_target_container extends tree_search_container<render_target,render_target>
@@ -66,9 +62,15 @@ public class render_target_container extends tree_search_container<render_target
 		super(new render_target_comparator());
 		target_array=new ArrayList<render_target>();
 	}
-	public ArrayList<render_target>get_render_target()
+	public render_target[]get_render_target()
 	{
-		return target_array;
+		render_target ret_val[]=new render_target[target_array.size()];
+		for(int i=0,ni=ret_val.length;i<ni;i++)
+			if((ret_val[i]=target_array.get(i)).do_render_flag)
+				ret_val[i].do_render_flag=false;
+			else
+				ret_val[i]=null;
+		return ret_val;
 	}
 	public void register_target(render_target new_rt)
 	{

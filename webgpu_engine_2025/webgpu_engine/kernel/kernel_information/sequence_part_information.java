@@ -16,10 +16,9 @@ public class sequence_part_information extends jason_creator
 			int part_id		=sk.process_part_sequence.process_parts_sequence[i][1];
 			jc[i]=new part_with_component_information(sk.render_cont.renders.get(render_id).parts.get(part_id),sk,ci);
 		}
-		print("part_number",					jc.length);
-		print("total_buffer_object_file_number",
-				sk.process_part_sequence.total_buffer_object_file_number);
-		print("total_buffer_object_text_data_length",	sk.process_part_sequence.total_buffer_object_text_data_length);
+		print("part_number",		jc.length);
+		print("total_file_number",	sk.process_part_sequence.total_file_number);
+		print("total_data_length",	sk.process_part_sequence.total_data_length);
 		print("part",jc);
 	}
 	public sequence_part_information(scene_kernel my_sk,client_information my_ci)

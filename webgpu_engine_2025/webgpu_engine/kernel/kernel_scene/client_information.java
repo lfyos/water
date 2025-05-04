@@ -20,6 +20,9 @@ import kernel_driver.component_instance_driver_container;
 public class client_information 
 {
 	public boolean								not_acknowledge_render_part_id[][];
+	public int 									loaded_file_number;
+	public long 								loaded_data_length;
+	
 	public buffer_container						render_buffer;
 
 	public render_target_container				target_container;
@@ -220,7 +223,8 @@ public class client_information
 		}
 		return;
 	}
-	public client_information(client_request_response my_request_response,client_process_bar my_process_bar,
+	public client_information(
+			client_request_response my_request_response,client_process_bar my_process_bar,
 			scene_kernel sk,user_statistics my_statistics_user,create_scene_counter my_scene_counter)
 	{
 		not_acknowledge_render_part_id=new boolean[sk.render_cont.renders.size()][];
@@ -229,6 +233,9 @@ public class client_information
 			for(int j=0,nj=not_acknowledge_render_part_id[i].length;j<nj;j++)
 				not_acknowledge_render_part_id[i][j]=true;
 		}
+		
+		loaded_file_number				=0;
+		loaded_data_length				=0;
 
 		render_buffer					=new buffer_container(sk);
 		target_container				=new render_target_container();
@@ -236,8 +243,7 @@ public class client_information
 		display_component_collector		=null;
 		target_component_collector_list	=new ArrayList<component_collector>();
 
-		render_target rt=new render_target(
-				false,-1,null,sk.component_cont.root_component.component_id,0,0,
+		render_target rt=new render_target(null,sk.component_cont.root_component.component_id,0,0,
 				new component[]{sk.component_cont.root_component},null,0,0,null,null,null,null,true,true);
 	
 		display_camera_result			=new camera_result(

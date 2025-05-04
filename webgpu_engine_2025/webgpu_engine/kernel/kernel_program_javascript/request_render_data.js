@@ -82,7 +82,7 @@ async function request_render_data(scene)
 			request_url+="&acknowledge="+scene.vertex_data_downloader.acknowledge_render_part_id;
 			scene.vertex_data_downloader.acknowledge_render_part_id=null;
 		};
-		if(scene.vertex_data_downloader.response_loaded_length!=(scene.vertex_data_downloader.loaded_buffer_object_data_length)){
+		if((scene.vertex_data_downloader.response_loaded_length)!=(scene.vertex_data_downloader.loaded_buffer_object_data_length)){
 			scene.vertex_data_downloader.response_loaded_length=scene.vertex_data_downloader.loaded_buffer_object_data_length;
 			request_url+="&loaded_length="+	scene.vertex_data_downloader.loaded_buffer_object_file_number.toString();
 			request_url+="_"+ 				scene.vertex_data_downloader.loaded_buffer_object_data_length.toString();
@@ -115,14 +115,10 @@ async function request_render_data(scene)
 			scene.render_buffer_array[i].do_render_flag=false;
 
 		for(var i=0,ni=response_data.length;i<ni;){
-			var my_render_buffer_id					=response_data[i++];
-			var my_camera_target_render_buffer_id	=response_data[i++];
-			var my_data								=response_data[i++];
+			var my_render_buffer_id	=response_data[i++];
+			var my_data				=response_data[i++];
 
-			var my_max_render_buffer_id=(my_render_buffer_id>=my_camera_target_render_buffer_id)
-				?my_render_buffer_id:my_camera_target_render_buffer_id;
-				
-			while(my_max_render_buffer_id>=scene.render_buffer_array.length)
+			while(my_render_buffer_id>=scene.render_buffer_array.length)
 				scene.render_buffer_array.push(
 					{
 						do_render_flag					:	false,
@@ -135,46 +131,52 @@ async function request_render_data(scene)
 					});
 
 			var p=scene.render_buffer_array[my_render_buffer_id];
-			p.do_render_flag					=true;
-			p.render_buffer_id					=my_render_buffer_id;
-			p.camera_target_render_buffer_id	=my_camera_target_render_buffer_id;
+			p.do_render_flag	=true;
+			p.render_buffer_id	=my_render_buffer_id;
 
 			for(var j=0,nj=my_data.length;j<nj;)
 				switch(my_data[j++]){
 				default:
 					break;
 				case 0:
+					p.camera_target_render_buffer_id=my_data[j++];
+					break;
+				case 1:
+					p.target_or_bundle_flag=true;
+					break;
+				case 2:
+					p.target_or_bundle_flag=false;
+					break;
+				case 3:
 					var my_target_component_id	=my_data[j++];
 					var my_target_driver_id		=my_data[j++];
+					p.target_texture_id			=my_data[j++];
+					p.target_name				=my_data[j++];
 					p.target_ids=scene.component_array_sorted_by_id[my_target_component_id];
 					p.target_ids=p.target_ids.component_ids[my_target_driver_id];
 					break;
-				case 1:
-					p.target_texture_id	=my_data[j++];
-					p.target_name		=my_data[j++];
-					break;
-				case 2:
+				case 4:
 					p.camera_id=my_data[j++];
 					break;
-				case 3:
+				case 5:
 					p.view_volume_box=[
 						[	my_data[j++],	my_data[j++],	my_data[j++],	1	],
 						[	my_data[j++],	my_data[j++],	my_data[j++],	1	]
 					];
 					break;
-				case 4:
+				case 6:
 					p.clip_plane=null;
 					p.clip_plane_matrix=scene.computer.create_move_rotate_matrix(0,0,0,0,0,0);
 					break;
-				case 5:
+				case 7:
 					p.clip_plane		=[my_data[j++],my_data[j++],my_data[j++],my_data[j++]];
 					p.clip_plane_matrix	=scene.computer.project_to_plane_location(
 						p.clip_plane[0],p.clip_plane[1],p.clip_plane[2],p.clip_plane[3],1.0);
 					break;
-				case 6:
+				case 8:
 					p.camera_transformation_matrix=scene.computer.identity_matrix;
 					break;
-				case 7:
+				case 9:
 					p.camera_transformation_matrix=[
 							my_data[j++],my_data[j++],my_data[j++],my_data[j++],
 							my_data[j++],my_data[j++],my_data[j++],my_data[j++],
@@ -182,20 +184,20 @@ async function request_render_data(scene)
 							my_data[j++],my_data[j++],my_data[j++],my_data[j++]
 						];
 					break;
-				case 8:
+				case 10:
 					p.main_display_target_flag=true;
 					break;
-				case 9:
+				case 11:
 					p.main_display_target_flag=false;
 					break;
-				case 10:
+				case 12:
 					p.target_view_parameter=new Object();
-					p.target_view_parameter.view_x0			=my_data[j++];
-					p.target_view_parameter.view_y0			=my_data[j++];
-					p.target_view_parameter.view_width		=my_data[j++];
-					p.target_view_parameter.view_height		=my_data[j++];
-					p.target_view_parameter.whole_view_width=my_data[j++];
-					p.target_view_parameter.whole_view_height=my_data[j++];
+					p.target_view_parameter.view_x0				=my_data[j++];
+					p.target_view_parameter.view_y0				=my_data[j++];
+					p.target_view_parameter.view_width			=my_data[j++];
+					p.target_view_parameter.view_height			=my_data[j++];
+					p.target_view_parameter.whole_view_width	=my_data[j++];
+					p.target_view_parameter.whole_view_height	=my_data[j++];
 					break;
 				}
 		}

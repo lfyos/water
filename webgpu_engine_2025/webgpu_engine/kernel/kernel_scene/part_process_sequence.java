@@ -10,8 +10,8 @@ import kernel_part.buffer_object_file_modify_time_and_length_item;
 public class part_process_sequence 
 {
 	public int  process_parts_sequence[][];
-	public int  total_buffer_object_file_number;
-	public long total_buffer_object_text_data_length;
+	public int  total_file_number;
+	public long total_data_length;
 	
 	public							ArrayList<int[]>  process_package_sequence;
 	
@@ -48,16 +48,16 @@ public class part_process_sequence
 		var sort_parts=new part_container_for_process_sequence(render_cont.part_array_list(-1),
 				my_box_distance_difference_scale,my_buffer_data_length_difference_scale).data_list;
 		
-		total_buffer_object_file_number		=0;
-		total_buffer_object_text_data_length=0;
-		process_parts_sequence				=new int[sort_parts.size()][];
+		total_file_number		=0;
+		total_data_length		=0;
+		process_parts_sequence	=new int[sort_parts.size()][];
 		
 		for(int i=0,ni=sort_parts.size();i<ni;i++) {
 			for(int j=0,nj=(p=sort_parts.get(i)).boftal.list.size();j<nj;j++)
 				for(int k=0,nk=(item_list=p.boftal.list.get(j)).size();k<nk;k++)
 					if(!((item=item_list.get(k)).buffer_object_file_in_head_flag)){
-						total_buffer_object_file_number++;
-						total_buffer_object_text_data_length+=item.buffer_object_text_file_length;
+						total_file_number++;
+						total_data_length+=item.buffer_object_text_file_length;
 					}
 			process_parts_sequence[i]=new int[]{p.render_id,p.part_id};
 		}
@@ -139,8 +139,8 @@ public class part_process_sequence
 			
 			process_package_sequence.add(new int[]{p.part_type_id,p.part_package_id});
 			
-			total_buffer_object_file_number++;
-			total_buffer_object_text_data_length+=p_p.package_length[p.part_package_id];
+			total_file_number++;
+			total_data_length+=p_p.package_length[p.part_package_id];
 			if(all_buffer_object_head_package_last_modify_time<p_p.package_last_time[p.part_package_id])
 				all_buffer_object_head_package_last_modify_time=p_p.package_last_time[p.part_package_id];
 		}
