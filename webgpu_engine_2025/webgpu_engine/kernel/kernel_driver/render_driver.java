@@ -26,8 +26,7 @@ public class render_driver
 	public void initialize_render_driver(int render_id,scene_kernel sk,client_request_response request_response)
 	{
 	}
-	public String[] get_render_list(
-			int part_type_id,file_reader shader_fr,
+	public String[] get_render_list(int part_type_id,file_reader shader_fr,
 			component_load_source_container component_load_source_cont,
 			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
 	{
