@@ -42,8 +42,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
-		if(ci.display_camera_result==null)
-			return true;
 		if(ci.display_camera_result.target.target_id!=cr.target.target_id)
 			return true;
 		if(!(cr.target.main_display_target_flag))
@@ -115,10 +113,8 @@ public class extended_component_instance_driver extends component_instance_drive
 				ci.clip_plane.D+=Double.parseDouble(str);
 		
 		if(display_flag)
-			if(ci.display_camera_result!=null)
-				if(ci.display_camera_result.target!=null)
-					ci.render_buffer.cam_buffer.synchronize_camera_buffer(
-						sk.camera_cont,ci.display_camera_result.target.camera_id);
+			ci.render_buffer.cam_buffer.synchronize_camera_buffer(
+				sk.camera_cont,ci.display_camera_result.target.camera_id);
 	}
 	private void reset_component_location(component comp,long start_time,scene_kernel sk,client_information ci)
 	{
@@ -128,7 +124,8 @@ public class extended_component_instance_driver extends component_instance_drive
 		if(comp.move_location.is_not_identity_matrix())
 			sk.modifier_cont[modifier_container_id].add_modifier(
 				new location_modifier(comp,start_time,comp.move_location,
-					ci.display_camera_result.cam.parameter.switch_time_length+start_time,new location(),true,true));
+					ci.display_camera_result.cam.parameter.switch_time_length+start_time,
+					new location(),true,true));
 	}
 	private static void add_in_list_component(component comp,component_array comp_array)
 	{
@@ -144,8 +141,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
 		String str;
-		if(ci.display_camera_result==null)
-			return null;
 		if((str=ci.request_response.get_parameter("operate_component_id"))==null)
 			return null;		
 		component operate_component=sk.component_cont.get_component(Integer.decode(str));

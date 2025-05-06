@@ -42,14 +42,12 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
-		if((cr.target.main_display_target_flag)&&(ci.display_camera_result!=null)){
+		if(cr.target.main_display_target_flag)
 			if(ci.display_camera_result.cam.parameter.change_type_flag^change_type_flag){
 				change_type_flag=change_type_flag?false:true;
 				update_component_parameter_version(0);
 			}
-			return false;
-		}
-		return true;
+		return cr.target.main_display_target_flag?false:true;
 	}
 	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
 	{
@@ -64,8 +62,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		String str;
 		
-		if(ci.display_camera_result.target==null)
-			return;
 		if((str=ci.request_response.get_parameter("function"))==null)
 			return ;
 		int function_id=Integer.decode(str);
@@ -214,9 +210,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	private void view_scale(component comp,int control_code,scene_kernel sk,client_information ci)
 	{
 		String str;
-		
-		if(ci.display_camera_result.target==null)
-			return;
+
 		if((str=ci.request_response.get_parameter("distance"))!=null)
 			ci.display_camera_result.cam.parameter.distance=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("half_fovy_tanl"))!=null)

@@ -29,8 +29,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		if(!(cr.target.main_display_target_flag))
 			return false;
-		if(ci.display_camera_result==null)
-			return false;
 
 		double local_xy[]=cr.target.target_view.caculate_view_local_xy(ci.parameter.x,ci.parameter.y);
 		

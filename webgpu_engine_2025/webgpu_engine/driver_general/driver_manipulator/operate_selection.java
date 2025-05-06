@@ -11,9 +11,7 @@ public class operate_selection
 	public static void selection_request(int parameter_channel_id,scene_kernel sk,client_information ci)
 	{
 		String str,component_str;
-
-		if(ci.display_camera_result.target==null)
-			return;
+		
 		if((str=ci.request_response.get_parameter("event_operation"))==null)
 			return;
 		component_selection cs=new component_selection(sk);

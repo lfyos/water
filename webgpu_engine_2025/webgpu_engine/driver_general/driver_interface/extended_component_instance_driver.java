@@ -77,8 +77,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		String str;
 		
-		if(ci.display_camera_result==null) 
-			return;
 		if((str=ci.request_response.get_parameter("dx"))!=null)
 			dx=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("dy"))!=null)

@@ -212,9 +212,7 @@ public class distance_tag_item
 				tag_component_id=comp.component_id;
 			break;
 		case 2:
-			if(ci.display_camera_result!=null)
-				if(ci.display_camera_result.cam.eye_component!=null)
-					tag_component_id=ci.display_camera_result.cam.eye_component.component_id;
+			tag_component_id=ci.display_camera_result.cam.eye_component.component_id;
 			break;
 		}
 		if(old_tag_component_id!=tag_component_id)

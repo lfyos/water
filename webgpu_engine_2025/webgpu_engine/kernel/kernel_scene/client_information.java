@@ -245,9 +245,10 @@ public class client_information
 
 		render_target rt=new render_target(null,sk.component_cont.root_component.component_id,0,0,
 				new component[]{sk.component_cont.root_component},null,0,0,null,null,null,null,true,true);
-	
-		display_camera_result			=new camera_result(
-				sk.camera_cont.get(rt.camera_id),rt,sk.component_cont);
+		camera_result cr=new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont);
+
+		display_camera_result			=cr;
+
 		target_camera_result_list		=new ArrayList<camera_result>();
 		
 		clip_plane						=null;

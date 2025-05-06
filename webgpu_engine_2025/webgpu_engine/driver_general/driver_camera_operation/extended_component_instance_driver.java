@@ -72,9 +72,8 @@ public class extended_component_instance_driver extends component_instance_drive
 		component comp;
 		if((str=ci.request_response.get_parameter("coordinate"))!=null){
 			if(str.compareTo("camera")==0){
-				if(ci.display_camera_result!=null)
-					if((comp=ci.display_camera_result.cam.eye_component)!=null)
-						return comp.absolute_location;
+				if((comp=ci.display_camera_result.cam.eye_component)!=null)
+					return comp.absolute_location;
 			}else if(str.compareTo("selection")==0){
 				if((comp=sk.component_cont.search_component())!=null)
 					if(comp.uniparameter.selected_flag)
