@@ -168,14 +168,14 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 	scene.component_event_processor[component_ids.component_id]=ep;
 	
 	this.component_ids=component_ids;
-	this.main_render_buffer_id=0;
+	this.main_target_id=0;
 	this.parameter_buffer=scene.webgpu.device.createBuffer(
 		{
 			size	:	Float32Array.BYTES_PER_ELEMENT*4*scene.system_buffer.max_target_number,
 			usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.VERTEX
 		});
 
-	this.save_buffer_data=function(render_buffer_id,project_matrix,part_object,scene)
+	this.save_buffer_data=function(target_id,project_matrix,part_object,scene)
 	{
 		var x0				=part_object.material[0];
 		var y0				=part_object.material[1];
@@ -187,24 +187,24 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 									project_matrix.left_down_center_point);
 			view_distance	=scene.computer.distance(view_distance)*scale;
 		
-		var buffer_place	=4*render_buffer_id*Float32Array.BYTES_PER_ELEMENT;
+		var buffer_place	=4*target_id*Float32Array.BYTES_PER_ELEMENT;
 
 		scene.webgpu.device.queue.writeBuffer(this.parameter_buffer,buffer_place,
 			new Float32Array([x0,y0,view_distance,view_distance/box_distance]));
 	}
 	
 	this.draw_component=function(method_data,render_parameter,
-			project_matrix,target_data,part_object,part_driver,render_driver,scene)	
+			target_data,part_object,part_driver,render_driver,scene)	
 	{
 		var p,rpe=scene.webgpu.render_pass_encoder;
 		
 		if(target_data.main_display_target_flag)
-			this.main_render_buffer_id=target_data.render_buffer_id;
+			this.main_target_id=target_data.target_id;
 			
 		switch(method_data.method_id){
 		case 0:	
 			rpe.setVertexBuffer(1,this.parameter_buffer,
-					Float32Array.BYTES_PER_ELEMENT*4*this.main_render_buffer_id,
+					Float32Array.BYTES_PER_ELEMENT*4*this.main_target_id,
 					Float32Array.BYTES_PER_ELEMENT*4);
 
 			p=part_object.buffer_object.face.region_data;
@@ -215,9 +215,9 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 			}
 			break;
 		case 2:
-			this.save_buffer_data(target_data.render_buffer_id,project_matrix,part_object,scene);
+			this.save_buffer_data(target_data.target_id,target_data.project_matrix,part_object,scene);
 			rpe.setVertexBuffer(1,this.parameter_buffer,
-					Float32Array.BYTES_PER_ELEMENT*4*target_data.render_buffer_id,
+					Float32Array.BYTES_PER_ELEMENT*4*target_data.target_id,
 					Float32Array.BYTES_PER_ELEMENT*4);
 		
 			p=part_object.buffer_object.face.region_data;

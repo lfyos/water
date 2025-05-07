@@ -259,7 +259,7 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 	this.save_parameter_number		=0;
 	
 	this.draw_component=function(method_data,render_parameter,
-			project_matrix,target_data,part_object,part_driver,render_driver,scene)
+			target_data,part_object,part_driver,render_driver,scene)
 	{
 		var ep=scene.component_event_processor[this.component_ids.component_id];
 		if(this.image_bind_group.is_busy_flag)

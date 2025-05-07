@@ -29,7 +29,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		ci.request_response.print(jason_string.change_string(tag_array.tag_root_menu_component_name));
 	}
-	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
+	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
 		if(tag_array.test_location_modify(sk,ci))
 			comp.driver_array.get(driver_id).update_component_parameter_version();
@@ -52,7 +52,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		return (display_number<=0);
 	}
-	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
+	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}

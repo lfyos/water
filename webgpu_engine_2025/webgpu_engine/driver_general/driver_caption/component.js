@@ -86,7 +86,7 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 	};
 	
 	this.draw_component=function(method_data,render_parameter,
-			project_matrix,target_data,part_object,part_driver,render_driver,scene)
+			target_data,part_object,part_driver,render_driver,scene)
 	{
 		var my_texture_width	=part_object.material[0].texture_width;
 		var my_canvas_width		=part_object.material[0].canvas_width;

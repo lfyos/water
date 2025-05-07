@@ -3,18 +3,19 @@ package kernel_scene;
 import java.io.File;
 import java.util.ArrayList;
 
+import kernel_component.component;
 import kernel_render.render_target;
-import kernel_render.render_target_container;
 import kernel_transformation.plane;
 import kernel_camera.camera_result;
-import kernel_component.component;
-import kernel_component.component_collector;
-import kernel_interface.user_statistics;
-import kernel_network.client_request_response;
 import kernel_buffer.buffer_container;
+import kernel_interface.user_statistics;
 import kernel_interface.client_process_bar;
-import kernel_driver.render_instance_driver_container;
+import kernel_component.component_collector;
+import kernel_render.render_target_container;
+import kernel_render.render_target_parameter;
+import kernel_network.client_request_response;
 import kernel_driver.part_instance_driver_container;
+import kernel_driver.render_instance_driver_container;
 import kernel_driver.component_instance_driver_container;
 
 public class client_information 
@@ -243,8 +244,10 @@ public class client_information
 		display_component_collector		=null;
 		target_component_collector_list	=new ArrayList<component_collector>();
 
-		render_target rt=new render_target(null,sk.component_cont.root_component.component_id,0,0,
-				new component[]{sk.component_cont.root_component},null,0,0,null,null,null,null,true,true);
+		render_target rt=new render_target(
+				render_target_parameter.create_client_information_parameter(),
+				null,sk.component_cont.root_component.component_id,0,0,
+				new component[]{sk.component_cont.root_component},0,0,null,null,null,null);
 		camera_result cr=new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont);
 
 		display_camera_result			=cr;

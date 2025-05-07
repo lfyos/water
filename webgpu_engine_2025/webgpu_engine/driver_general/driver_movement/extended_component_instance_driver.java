@@ -24,7 +24,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 	}
-	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
+	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
 		component follow_mouse_comp;
 		movement_suspend suspend=((extended_component_driver)(comp.driver_array.get(driver_id))).m.suspend;
@@ -58,7 +58,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		return cr.target.main_display_target_flag?false:true;
 	}
-	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
+	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}

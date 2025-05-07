@@ -7,6 +7,7 @@ public class client_parameter
 {
 	public int current_canvas_id,driver_id,primitive_type_id,body_id,face_id,loop_id,edge_id,primitive_id,vertex_id;
 	public double x,y,main_target_x,main_target_y,depth,value[];
+	
 	public boolean high_or_low_precision_flag;
 	
 	public int request_length;
@@ -134,6 +135,7 @@ public class client_parameter
 		
 		switch(((str=ci.request_response.get_parameter("precision"))==null)?"":(str.toLowerCase())) {
 		default:
+			break;
 		case "true":
 		case "yes":
 			high_or_low_precision_flag=true;
@@ -143,7 +145,7 @@ public class client_parameter
 			high_or_low_precision_flag=false;
 			break;
 		}
-		if(comp==null)
+		if((comp==null)||(driver_id<0))
 			return;
 		part my_part;
 		if((my_part=comp.driver_array.get(driver_id).component_part)!=null)

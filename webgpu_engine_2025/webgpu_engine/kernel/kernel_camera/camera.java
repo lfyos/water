@@ -4,7 +4,8 @@ import kernel_component.component;
 import kernel_driver.modifier_container;
 import kernel_transformation.location;
 
-public class camera {
+public class camera 
+{
 	public camera_parameter parameter;	
 	public component eye_component;
 	

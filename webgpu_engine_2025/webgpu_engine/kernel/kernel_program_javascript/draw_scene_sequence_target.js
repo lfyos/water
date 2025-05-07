@@ -1,7 +1,7 @@
 function create_scene_target_routine(target_parameter,scene_target_array,scene)
 {
-	var render_buffer_id=target_parameter.render_buffer_id;
-	var render_data		=scene.render_buffer_array[render_buffer_id];
+	var target_id		=target_parameter.target_id;
+	var render_data		=scene.render_buffer_array[target_id];
 	var render_id		=render_data.target_ids.render_id;
 	var part_id			=render_data.target_ids.part_id;
 	var data_buffer_id	=render_data.target_ids.data_buffer_id;
@@ -23,8 +23,8 @@ function create_scene_target_routine(target_parameter,scene_target_array,scene)
 
 function destroy_scene_target_routine(target_parameter,scene_target_array,scene)
 {
-	var render_buffer_id=target_parameter.render_buffer_id;
-	var render_data		=scene.render_buffer_array[render_buffer_id];
+	var target_id		=target_parameter.target_id;
+	var render_data		=scene.render_buffer_array[target_id];
 	var render_id		=render_data.target_ids.render_id;
 	var part_id			=render_data.target_ids.part_id;
 	var data_buffer_id	=render_data.target_ids.data_buffer_id;
@@ -46,8 +46,8 @@ function destroy_scene_target_routine(target_parameter,scene_target_array,scene)
 }
 function draw_scene_target_routine(target_parameter,scene_target_array,pass_id,scene)
 {
-	var render_buffer_id=target_parameter.render_buffer_id;
-	var render_data		=scene.render_buffer_array[render_buffer_id];
+	var target_id		=target_parameter.target_id;
+	var render_data		=scene.render_buffer_array[target_id];
 	var render_id		=render_data.target_ids.render_id;
 	var part_id			=render_data.target_ids.part_id;
 	var data_buffer_id	=render_data.target_ids.data_buffer_id;
@@ -96,23 +96,6 @@ function draw_scene_target_routine(target_parameter,scene_target_array,pass_id,s
 		my_viewport.width,		my_viewport.height,
 		my_viewport.min_depth,	my_viewport.max_depth);
 
-	var project_matrix=null;
-	for(var p=render_data,i=0,ni=scene.render_buffer_array.length;i<ni;i++){
-		if(p.camera_target_render_buffer_id<0){
-			project_matrix=p.project_matrix;
-			break;
-		}
-		if(p.camera_target_render_buffer_id>=ni){
-			console.log("Too big camera_target_render_buffer_id in function draw_scene_target_routine:"
-				+i+"/"+p.camera_target_render_buffer_id+"/"+ni);
-			return;	
-		}
-		p=scene.render_buffer_array[p.camera_target_render_buffer_id];
-	}
-	if(project_matrix==null){
-		console.log("project_matrix==null in function draw_scene_target_routine");
-		return;	
-	}
 	for(var i=0,ni=method_array.length;i<ni;i++){
 		if(method_array[i].method_id<0)
 			continue;
@@ -132,9 +115,9 @@ function draw_scene_target_routine(target_parameter,scene_target_array,pass_id,s
 				if((typeof(part_driver)!="object")||(part_driver==null))
 					continue;
 				var component_render_parameter	=part_object.component_render_parameter;
-				if(render_data.render_buffer_id>=component_render_parameter.length)
+				if(render_data.target_id>=component_render_parameter.length)
 					continue;
-			   	var render_parameter_array=component_render_parameter[render_data.render_buffer_id];
+			   	var render_parameter_array=component_render_parameter[render_data.target_id];
 				for(var j=0,nj=render_parameter_array.length;j<nj;j++){
 					var data_buffer_id	=render_parameter_array[j][0];
 					var render_parameter=render_parameter_array[j][1];
@@ -142,13 +125,12 @@ function draw_scene_target_routine(target_parameter,scene_target_array,pass_id,s
 					var component_ids	=part_object.part_component_id_and_driver_id[data_buffer_id];
 
 					scene.system_buffer.set_system_bindgroup(
-							render_data.render_buffer_id,method_array[i].method_id,
+							render_data.target_id,method_array[i].method_id,
 							component_ids.component_id,component_ids.driver_id,scene);
 					component_driver.draw_component(method_array[i],render_parameter,
-							project_matrix,render_data,part_object,part_driver,render_driver,scene);
+							render_data,part_object,part_driver,render_driver,scene);
 				}
 			}
 		}
 	}
-	return;
 }

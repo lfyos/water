@@ -1,19 +1,20 @@
 package driver_component_selection;
 
+import kernel_scene.scene_kernel;
 import kernel_transformation.box;
 import kernel_component.component;
 import kernel_camera.camera_result;
-import kernel_render.render_target;
-import kernel_scene.client_information;
-import kernel_scene.scene_kernel;
 import kernel_transformation.point;
 import kernel_camera.locate_camera;
+import kernel_render.render_target;
 import kernel_driver.component_driver;
 import kernel_common_class.const_value;
+import kernel_scene.client_information;
 import kernel_component.component_array;
 import kernel_component.component_collector;
 import kernel_component.component_link_list;
 import kernel_component.component_selection;
+import kernel_render.render_target_parameter;
 import kernel_driver.component_instance_driver;
 import kernel_render.list_component_on_collector;
 
@@ -40,7 +41,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		ci.request_response.print(screen_rectangle_component_id);
 	}
-	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
+	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
 		if(cr.target.main_display_target_flag)
 			if(ci.display_camera_result.cam.parameter.change_type_flag^change_type_flag){
@@ -49,7 +50,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			}
 		return cr.target.main_display_target_flag?false:true;
 	}
-	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
+	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}
@@ -95,17 +96,17 @@ public class extended_component_instance_driver extends component_instance_drive
 		view_volume_box=new box(
 				center.x+diff.x*my_x0,center.y+diff.y*my_y0,view_volume_box.p[0].z,
 				center.x+diff.x*my_x1,center.y+diff.y*my_y1,view_volume_box.p[1].z);
-		
-		render_target cam_target=new render_target(null,comp.component_id,driver_id,0,
-				new component[]{sk.component_cont.root_component},null,	t.camera_id,t.parameter_channel_id,
-				null,view_volume_box,ci.clip_plane,null,false,false);
+
+		render_target cam_target=new render_target(
+				render_target_parameter.create_selection_parameter(((function_id%2)==0)?true:false),
+				null,comp.component_id,driver_id,0,new component[]{sk.component_cont.root_component},
+				t.camera_id,t.parameter_channel_id,null,view_volume_box,ci.clip_plane,null);
 	
 		if(cam_target.view_volume_box.distance2()<const_value.min_value2)
 			return ;
 		
-		camera_result cam_result=new camera_result(ci.display_camera_result.cam,cam_target,sk.component_cont);
 		component_collector collector=(new list_component_on_collector(
-			true,false,false,((function_id%2)==0)?true:false,false,sk,ci,cam_result)).collector;
+			sk,ci,new camera_result(ci.display_camera_result.cam,cam_target,sk.component_cont))).collector;
 		
 		if(collector.component_number<=0)
 			return;

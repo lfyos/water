@@ -19,9 +19,7 @@ public class response_render_component_request
 {
 	private static component_collector collect_render_parts(
 			ArrayList<response_render_data> render_data_list,
-			int render_buffer_id,	render_target rt,
-			scene_kernel sk,		client_information ci,
-			camera_result cam_result)
+			scene_kernel sk,client_information ci,camera_result cam_result)
 	{	
 		component_render ren_buf;
 		
@@ -32,30 +30,28 @@ public class response_render_component_request
 		for(int i=0,ni=pps.length;i<ni;i++) {
 			int render_id=pps[i][0],part_id=pps[i][1];
 			if((ren_buf=buffer.get_render_buffer(render_id,part_id,
-				render_buffer_id,id_array[render_id][part_id].length))!=null)
+					cam_result.target.target_id,id_array[render_id][part_id].length))!=null)
 					ren_buf.clear_clip_flag(sk.component_cont);
 		}
-		
-		component_collector list_result=(new list_component_on_collector(false,
-			rt.do_discard_lod_flag,rt.do_selection_lod_flag,false,true,sk,ci,cam_result)).collector;
+		var list=new list_component_on_collector(sk,ci,cam_result);
 		
 		long current_time=sk.current_time.nanoseconds();
-		for(int i=0,ni=list_result.component_collector.length;i<ni;i++)
-			if(list_result.component_collector[i]!=null)
-				for(int j=0,nj=list_result.component_collector[i].length;j<nj;j++)
-					for(component_link_list cll=list_result.component_collector[i][j];cll!=null;cll=cll.next_list_item)
+		for(int i=0,ni=list.collector.component_collector.length;i<ni;i++)
+			if(list.collector.component_collector[i]!=null)
+				for(int j=0,nj=list.collector.component_collector[i].length;j<nj;j++) {
+					component_link_list cll=list.collector.component_collector[i][j];
+					for(;cll!=null;cll=cll.next_list_item)
 						cll.comp.render_touch_time=current_time;
-		
+				}
 		for(int i=0,ni=pps.length;i<ni;i++)
 			if((ren_buf=buffer.get_render_buffer(pps[i][0],pps[i][1],
-				render_buffer_id,id_array[pps[i][0]][pps[i][1]].length))!=null)
+					cam_result.target.target_id,id_array[pps[i][0]][pps[i][1]].length))!=null)
 					ren_buf.test_clip_flag_of_delete_component(cam_result,
 						sk.component_cont,cam_result.target.parameter_channel_id);
 		
-		render_data_list.add(render_data_list.size(),
-				new response_render_data(render_buffer_id,list_result,cam_result));
+		render_data_list.add(render_data_list.size(),new response_render_data(list.collector,cam_result));
 		
-		return list_result;
+		return list.collector;
 	}
 	private static void process_target(scene_kernel sk,client_information ci,render_component_counter rcc)
 	{
@@ -70,16 +66,9 @@ public class response_render_component_request
 		}
 		for(int i=0;i<target_number;i++)
 			if((rt=target_list[i])!=null)
-				if((rt.camera_target_id<0)||(rt.camera_target_id>=target_number))
-					if((rt.camera_id>=0)&&(rt.camera_id<sk.camera_cont.size()))
-						ci.target_camera_result_list.set(rt.target_id,
+				if((rt.camera_id>=0)&&(rt.camera_id<sk.camera_cont.size()))
+					ci.target_camera_result_list.set(rt.target_id,
 							new camera_result(sk.camera_cont.get(rt.camera_id),rt,sk.component_cont));
-		for(int i=0;i<target_number;i++)
-			if((rt=target_list[i])!=null)
-				if((rt.camera_target_id>=0)&&(rt.camera_target_id<target_number))
-					if(target_list[rt.camera_target_id]!=null)
-							ci.target_camera_result_list.set(rt.target_id,
-								ci.target_camera_result_list.get(rt.camera_target_id));
 		for(int i=0;i<target_number;i++)
 			if((rt=target_list[i])!=null)
 				if(rt.main_display_target_flag)
@@ -87,31 +76,25 @@ public class response_render_component_request
 						ci.display_camera_result=cr;
 						break;
 					}
-		
 		ArrayList<response_render_data> render_data_list=new ArrayList<response_render_data> (); 
 		
 		ci.request_response.print(",[");
 		for(int response_number=0,i=0;i<target_number;i++)
 			if((rt=target_list[i])!=null){
 				cr=ci.target_camera_result_list.get(rt.target_id);
-				int render_buffer_id=rt.get_render_buffer_id(ci.parameter.high_or_low_precision_flag);
 				ci.render_buffer.location_buffer.put_in_list(cr.cam.eye_component,sk);
-				ci.request_response.print(((response_number++)<=0)?"":",",render_buffer_id);
+				
 					
-				component_collector collector=collect_render_parts(render_data_list,render_buffer_id,rt,sk,ci,cr);
+				component_collector collector=collect_render_parts(render_data_list,sk,ci,cr);
 				ci.target_component_collector_list.set(rt.target_id,collector);
 				if(ci.display_camera_result!=null)
 					if(ci.display_camera_result.target.target_id==rt.target_id)
 						ci.display_component_collector=collector;
-
-				int camera_target_render_buffer_id=-1;
-				if((rt.camera_target_id>=0)&&(rt.camera_target_id<target_list.length))
-					if(target_list[rt.camera_target_id]!=null)
-						camera_target_render_buffer_id=target_list[rt.camera_target_id].
-							get_render_buffer_id(ci.parameter.high_or_low_precision_flag);
 				
-				ci.render_buffer.target_buffer.response_parameter(
-						render_buffer_id,camera_target_render_buffer_id,rt,ci.request_response);
+				
+				if((response_number++)>0)
+					ci.request_response.print(",");
+				ci.render_buffer.target_buffer.response_parameter(rt,ci.request_response);
 			}
 		ci.request_response.print("]");
 		

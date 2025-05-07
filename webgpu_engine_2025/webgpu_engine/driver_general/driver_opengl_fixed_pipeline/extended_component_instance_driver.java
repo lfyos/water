@@ -33,20 +33,20 @@ public class extended_component_instance_driver extends component_instance_drive
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 	}
-	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
+	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
-		if(render_buffer_id>=display_bitmap.length){
+		if(cr.target.target_id>=display_bitmap.length){
 			long bak[]=display_bitmap;
-			display_bitmap=new long[render_buffer_id+1];
+			display_bitmap=new long[cr.target.target_id+1];
 			for(int i=0,ni=bak.length;i<ni;i++)
 				display_bitmap[i]=bak[i];
 			for(int i=bak.length,ni=display_bitmap.length;i<ni;i++)
 				display_bitmap[i]=-1;
 		}
 		long new_display_bitmap=comp.multiparameter[cr.target.parameter_channel_id].display_bitmap;
-		if(display_bitmap[render_buffer_id]!=new_display_bitmap){
-			display_bitmap[render_buffer_id]=new_display_bitmap;
-			update_component_render_version(render_buffer_id,0);
+		if(display_bitmap[cr.target.target_id]!=new_display_bitmap){
+			display_bitmap[cr.target.target_id]=new_display_bitmap;
+			update_component_render_version(cr.target.target_id,0);
 		}
 		if(	  (transparency_value!=comp.uniparameter.transparency_value) 
 			||(comp.clip.close_clip_plane_number!=close_clip_plane_number)
@@ -60,9 +60,9 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		return false;
 	}
-	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
+	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
-		ci.request_response.print(display_bitmap[render_buffer_id]);
+		ci.request_response.print(display_bitmap[cr.target.target_id]);
 	}
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{

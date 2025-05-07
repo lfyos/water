@@ -31,7 +31,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 	}
-	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
+	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
 		if(show_type_flag){
 			int old_component_id=show_component_id;
@@ -50,17 +50,28 @@ public class extended_component_instance_driver extends component_instance_drive
 			return false;
 		return true;
 	}
-	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
+	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
+		point p[];
 		component my_comp=sk.component_cont.get_component(show_component_id);
-		point p[]=my_comp.model_box.p;
-		ci.request_response.	print("[[",	p[0].x).	print(",",p[0].y).	print(",",p[0].z).print(",1").
-								print(",",	p[1].x).	print(",",p[1].y).	print(",",p[1].z).print(",1]").
-								print(",",my_comp.component_id).			print("]");
+		if(my_comp!=null)
+			if(my_comp.model_box!=null)
+				if((p=my_comp.model_box.p)!=null) {
+					ci.request_response.
+						print("[[",	p[0].x).	print(",",p[0].y).	print(",",p[0].z).	print(",1").
+						print(",",	p[1].x).	print(",",p[1].y).	print(",",p[1].z).	print(",1]").
+						print(",",my_comp.component_id).	 		 print("]");
+					return;
+				}
+		ci.request_response.
+		print("[[",	0).	print(",",0).	print(",",0).	print(",1").
+		print(",",	0).	print(",",0).	print(",",0).	print(",1]").
+		print(",",-1).	print("]");
+		return;
 	}
 	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{

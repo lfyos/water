@@ -243,10 +243,10 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 		scene.webgpu.device.queue.writeBuffer(this.system_buffer,
 			int_data.length*Int32Array.BYTES_PER_ELEMENT,	new Float32Array(float_data));
 	};
-	this.set_target_buffer=function(render_data,project_matrix,scene)
+	this.set_target_buffer=function(render_data,scene)
 	{
 		if(render_data.main_display_target_flag){
-			this.main_target_project_matrix	=project_matrix;
+			this.main_target_project_matrix	=render_data.project_matrix;
 			this.main_target_view_parameter	=render_data.target_view_parameter;
 		}
 		var int_data=[
@@ -257,72 +257,72 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 			render_data.target_view_parameter.whole_view_width,
 			render_data.target_view_parameter.whole_view_height,
 			
-			project_matrix.projection_type_flag?1:0,
+			render_data.project_matrix.projection_type_flag?1:0,
 			
 			scene.scene_id
 		];
 		var matrix_array=[
-			project_matrix.matrix,
-			project_matrix.negative_matrix,
-			project_matrix.projection_type_flag
-				?(project_matrix.orthographic_matrix)
-				:(project_matrix.frustem_matrix),
-			project_matrix.projection_type_flag
-				?(project_matrix.negative_orthographic_matrix)
-				:(project_matrix.negative_frustem_matrix),
+			render_data.project_matrix.matrix,
+			render_data.project_matrix.negative_matrix,
+			render_data.project_matrix.projection_type_flag
+				?(render_data.project_matrix.orthographic_matrix)
+				:(render_data.project_matrix.frustem_matrix),
+			render_data.project_matrix.projection_type_flag
+				?(render_data.project_matrix.negative_orthographic_matrix)
+				:(render_data.project_matrix.negative_frustem_matrix),
 				
-			project_matrix.screen_move_matrix,
-			project_matrix.negative_screen_move_matrix,
+			render_data.project_matrix.screen_move_matrix,
+			render_data.project_matrix.negative_screen_move_matrix,
 			
-			project_matrix.lookat_matrix,
-			project_matrix.negative_lookat_matrix,
+			render_data.project_matrix.lookat_matrix,
+			render_data.project_matrix.negative_lookat_matrix,
 			
-			project_matrix.camera_location,
+			render_data.project_matrix.camera_location,
 			
-			project_matrix.clip_plane_matrix
+			render_data.project_matrix.clip_plane_matrix
 		];
 		var vector_array=[
-			project_matrix.left_plane,	
-			project_matrix.right_plane,
-			project_matrix.up_plane,
-			project_matrix.down_plane,
-			project_matrix.near_plane,
-			project_matrix.far_plane,
-			project_matrix.center_plane,
+			render_data.project_matrix.left_plane,	
+			render_data.project_matrix.right_plane,
+			render_data.project_matrix.up_plane,
+			render_data.project_matrix.down_plane,
+			render_data.project_matrix.near_plane,
+			render_data.project_matrix.far_plane,
+			render_data.project_matrix.center_plane,
 			
-			project_matrix.clip_plane,
+			render_data.project_matrix.clip_plane,
 			
-			project_matrix.original_far_center_point,
-			project_matrix.original_center_point,
-			project_matrix.original_near_center_point,
-			project_matrix.original_eye_point,
+			render_data.project_matrix.original_far_center_point,
+			render_data.project_matrix.original_center_point,
+			render_data.project_matrix.original_near_center_point,
+			render_data.project_matrix.original_eye_point,
 			
-			project_matrix.far_center_point,
-			project_matrix.center_point,
-			project_matrix.near_center_point,
-			project_matrix.eye_point,
+			render_data.project_matrix.far_center_point,
+			render_data.project_matrix.center_point,
+			render_data.project_matrix.near_center_point,
+			render_data.project_matrix.eye_point,
 			
-			project_matrix.left_down_near_point,
-			project_matrix.left_up_near_point,
-			project_matrix.right_down_near_point,
-			project_matrix.right_up_near_point,
+			render_data.project_matrix.left_down_near_point,
+			render_data.project_matrix.left_up_near_point,
+			render_data.project_matrix.right_down_near_point,
+			render_data.project_matrix.right_up_near_point,
 			
-			project_matrix.left_down_center_point,
-			project_matrix.left_up_center_point,
-			project_matrix.right_down_center_point,
-			project_matrix.right_up_center_point,
+			render_data.project_matrix.left_down_center_point,
+			render_data.project_matrix.left_up_center_point,
+			render_data.project_matrix.right_down_center_point,
+			render_data.project_matrix.right_up_center_point,
 			
-			project_matrix.left_down_far_point,
-			project_matrix.left_up_far_point,
-			project_matrix.right_down_far_point,
-			project_matrix.right_up_far_point,
+			render_data.project_matrix.left_down_far_point,
+			render_data.project_matrix.left_up_far_point,
+			render_data.project_matrix.right_down_far_point,
+			render_data.project_matrix.right_up_far_point,
 			
-			project_matrix.to_right_direction,
-			project_matrix.to_up_direction,
-			project_matrix.to_me_direction,
+			render_data.project_matrix.to_right_direction,
+			render_data.project_matrix.to_up_direction,
+			render_data.project_matrix.to_me_direction,
 			
-			project_matrix.view_volume_box[0],
-			project_matrix.view_volume_box[1]
+			render_data.project_matrix.view_volume_box[0],
+			render_data.project_matrix.view_volume_box[1]
 		];
 		
 		var float_data=new Array();
@@ -341,45 +341,27 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 				float_data.push(p[0],p[1],p[2],p[3]);
 				
 		float_data.push(
-			project_matrix.half_fovy_tanl,
-			project_matrix.near_value_ratio,
-			project_matrix.far_value_ratio,
+			render_data.project_matrix.half_fovy_tanl,
+			render_data.project_matrix.near_value_ratio,
+			render_data.project_matrix.far_value_ratio,
 			
-			project_matrix.distance,
-			project_matrix.near_value,
-			project_matrix.far_value,
+			render_data.project_matrix.distance,
+			render_data.project_matrix.near_value,
+			render_data.project_matrix.far_value,
 
 			0,0
 		);
-		var offset=this.target_buffer_stride*render_data.render_buffer_id;
+		var offset=this.target_buffer_stride*render_data.target_id;
 		scene.webgpu.device.queue.writeBuffer(this.target_buffer,offset,new Float32Array(float_data));
 		offset+=float_data.length*Float32Array.BYTES_PER_ELEMENT;
 		scene.webgpu.device.queue.writeBuffer(this.target_buffer,offset,new Int32Array(int_data));
 	};
-	this.set_system_bindgroup=function(render_buffer_id,method_id,component_id,driver_id,scene)
+	this.set_system_bindgroup=function(target_id,method_id,component_id,driver_id,scene)
 	{
-		var number=scene.render_buffer_array.length,render_buffer_id_bak=render_buffer_id;
-		if((render_buffer_id<0)||(render_buffer_id>=number))
+		if((target_id<0)||(target_id>=scene.render_buffer_array.length))
 			return;
-		var flag=true;
-		for(var i=0;i<number;i++){
-			var p=scene.render_buffer_array[render_buffer_id];
-			if(p.camera_target_render_buffer_id<0){
-				flag=false;
-				break;
-			}
-			render_buffer_id=p.camera_target_render_buffer_id;
-			if(render_buffer_id>=number){
-				console.log("Too big camera_target_render_buffer_id in function set_system_bindgroup:"
-						+i+"/"+render_buffer_id+"/"+number);
-				return;
-			}
-		};
-		if(flag){
-			var str="Not find camera_target_render_buffer_id in function set_system_bindgroup:";
-			console.log(str+render_buffer_id_bak);
+		if((component_id<0)||(component_id>=scene.component_array_sorted_by_id.length))
 			return;
-		}
 		
 		var p=scene.component_array_sorted_by_id[component_id];
 		driver_id=(typeof(driver_id)!="number")?-1:driver_id;
@@ -391,7 +373,7 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 			my_id_buffer_index_id=p.component_ids[driver_id].system_bindgroup_id;
 
 		scene.webgpu.render_pass_encoder.setBindGroup(0,this.system_bindgroup,[
-			this.target_buffer_stride	*render_buffer_id,
+			this.target_buffer_stride	*target_id,
 			this.method_buffer_stride	*method_id,
 			this.id_buffer_stride		*my_id_buffer_index_id
 		]);

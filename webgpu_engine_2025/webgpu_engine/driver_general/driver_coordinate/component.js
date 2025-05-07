@@ -6,16 +6,16 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 	this.coordinate_component_id=null;
 	
 	this.draw_component=function(method_data,render_parameter,
-			project_matrix,target_data,part_object,part_driver,render_driver,scene)
+			target_data,part_object,part_driver,render_driver,scene)
 	{
 		var rpe	=scene.webgpu.render_pass_encoder;
 		rpe.setPipeline(render_driver.pipeline);
 		
 		for(var i=0,ni=this.coordinate_component_id.length;i<ni;i++){
 			scene.system_buffer.set_system_bindgroup(
-				target_data.render_buffer_id,method_data.method_id,
+				target_data.target_id,method_data.method_id,
 				(this.coordinate_component_id[i]<0)
-					?(project_matrix.camera_component_id)
+					?(target_data.project_matrix.camera_component_id)
 					:(this.coordinate_component_id[i]),-1,scene);
 			rpe.setVertexBuffer(1,this.coodinate_buffer,
 					Float32Array.BYTES_PER_ELEMENT*4*i,Float32Array.BYTES_PER_ELEMENT*4);

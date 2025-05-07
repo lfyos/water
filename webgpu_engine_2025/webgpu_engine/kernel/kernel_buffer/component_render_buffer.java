@@ -50,7 +50,7 @@ public class component_render_buffer
 		}	
 	}
 	public component_render get_render_buffer(
-				int render_id,int part_id,int render_buffer_id,int max_part_component_number)
+				int render_id,int part_id,int target_id,int max_part_component_number)
 	{
 		if(render_id<0)
 			return null;
@@ -60,11 +60,11 @@ public class component_render_buffer
 			return null;
 		if(part_id>=render_buffer[render_id].length)
 			return null;
-		if(render_buffer_id<0)
+		if(target_id<0)
 			return null;
 		ArrayList<component_render>list=render_buffer[render_id][part_id].list;
-		for(int pos;(pos=list.size())<=render_buffer_id;)
+		for(int pos;(pos=list.size())<=target_id;)
 			list.add(pos,new component_render(max_part_component_number));
-		return list.get(render_buffer_id);
+		return list.get(target_id);
 	}
 }

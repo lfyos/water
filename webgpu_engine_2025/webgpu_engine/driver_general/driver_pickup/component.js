@@ -341,14 +341,12 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		scene.pickup.depth=p_value[3];
 	}
 	
-	this.draw_component=function(method_data,render_data,
-			render_id,part_id,component_id,driver_id,component_render_parameter,
-			project_matrix,part_object,part_driver,render_driver,scene)	
+	this.draw_component=function(method_data,render_parameter,
+			target_data,part_object,part_driver,render_driver,scene)
 	{
 	}
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
-		
 	}
 	this.destroy=function()
 	{

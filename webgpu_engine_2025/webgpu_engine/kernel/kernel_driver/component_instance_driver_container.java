@@ -103,12 +103,13 @@ public class component_instance_driver_container
 		if((driver_id<0)||(driver_id>=(component_driver_array[comp.component_id].length)))
 			return null;
 		return component_driver_array[comp.component_id][driver_id];
-	}	
+	}
 	public long get_bundle_render_reference_number(component comp)
 	{
 		long ret_val =0;
 		ret_val+=comp.get_component_bundle_render_reference_number();
 		ret_val+=instance_bundle_render_reference_number[comp.component_id];
+		
 		return ret_val;
 	}
 	public void increase_instance_bundle_render_reference_number(component comp,component_container component_cont)

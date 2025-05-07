@@ -82,7 +82,9 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 		vertex				:	-2,
 		
 		depth				:	-2,
-		value				:	[-2,-2,-2]
+		value				:	[-2,-2,-2],
+		
+		mouse_down_flag		:	false
 	};
 
 	this.caller						=new construct_server_caller(this);

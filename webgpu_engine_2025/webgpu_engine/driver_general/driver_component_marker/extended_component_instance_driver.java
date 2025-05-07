@@ -40,7 +40,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			ci.render_buffer.location_buffer.put_in_list(
 				sk.component_cont.get_component(cmc.component_marker_array[i].marker_component_id),sk);
 	}
-	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
+	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
 		if(cmc.pickup_flag){
 			if(!(cr.target.main_display_target_flag)) 
@@ -89,7 +89,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		return false;
 	}
-	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
+	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(0);
 	}

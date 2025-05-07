@@ -11,12 +11,12 @@ function construct_scene_interface(my_scene)
 	{
 		return this.scene.render_buffer_array.length;
 	}
-	this.get_target_parameter=function(render_buffer_id)
+	this.get_target_parameter=function(target_id)
 	{
-		var p=this.scene.render_buffer_array[render_buffer_id];
+		var p=this.scene.render_buffer_array[target_id];
 		var ret_val=
 			{
-				render_buffer_id		:	render_buffer_id,
+				target_id				:	target_id,
 				do_render_flag			:	p.do_render_flag,
 				target_or_bundle_flag	:	p.target_or_bundle_flag,
 				target_name				:	p.target_name,
@@ -36,9 +36,9 @@ function construct_scene_interface(my_scene)
 	{
 		draw_scene_target_routine(target_parameter,scene_target_array,pass_id,this.scene);
 	}
-	this.complete_render_target=async function(render_buffer_id)
+	this.complete_render_target=async function(target_id)
 	{
-		var render_data=this.scene.render_buffer_array[render_buffer_id];
+		var render_data=this.scene.render_buffer_array[target_id];
 		
 		var render_id		=render_data.target_ids.render_id;
 		var part_id			=render_data.target_ids.part_id;
@@ -93,37 +93,12 @@ function construct_scene_interface(my_scene)
 				if(fun_array[i](this.scene))
 					this.scene.routine_array.push(fun_array[i]);
 
-		for(var i=0,ni=this.scene.render_buffer_array.length;i<ni;i++){
-			var render_data=this.scene.render_buffer_array[i];
-			if(render_data.do_render_flag)
-				if(render_data.camera_target_render_buffer_id<0){
-					render_data.project_matrix=this.scene.camera.compute_camera_data(render_data);
-					this.scene.system_buffer.set_target_buffer(
-							render_data,render_data.project_matrix,this.scene);
-				}
-		}
-		for(var i=0,ni=this.scene.render_buffer_array.length;i<ni;i++){
-			var render_data=this.scene.render_buffer_array[i];
-			if(render_data.do_render_flag)
-				if(render_data.camera_target_render_buffer_id>=0){
-					var flag=true;
-					for(var j=0,nj=ni,p=render_data;j<nj;j++){
-						p=this.scene.render_buffer_array[p.camera_target_render_buffer_id];
-						if(p.camera_target_render_buffer_id<0){
-							render_data.project_matrix=p.project_matrix;
-							flag=false;
-							break;
-						}
-						if(p.camera_target_render_buffer_id>=nj){
-							console.log("Too big camera_target_render_buffer_id in function process_scene:"
-								+i+"/"+j+"/"+p.camera_target_render_buffer_id+"/"+nj);
-							break;
-						}
-					}
-					if(flag)
-						console.log("Not find camera_target_render_buffer in function process_scene:"+i+"/"+nj);
-				}
-		}
+		for(var render_data,i=0,ni=this.scene.render_buffer_array.length;i<ni;i++)
+			if((render_data=this.scene.render_buffer_array[i]).do_render_flag){
+				render_data.project_matrix=this.scene.camera.compute_camera_data(render_data);
+				this.scene.system_buffer.set_target_buffer(render_data,this.scene);
+			}
+
 		return this.scene.parameter.engine_touch_time_length;
 	}
 }

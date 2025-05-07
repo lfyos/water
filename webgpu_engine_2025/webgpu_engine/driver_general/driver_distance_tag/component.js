@@ -149,7 +149,7 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 	init_component_event_processor(this.component_ids.component_id,init_data,scene);
 
 	this.draw_component=function(method_data,render_parameter,
-			project_matrix,target_data,part_object,part_driver,render_driver,scene)	
+			target_data,part_object,part_driver,render_driver,scene)	
 	{
 		var p;
 		var component_id	=this.component_ids.component_id;

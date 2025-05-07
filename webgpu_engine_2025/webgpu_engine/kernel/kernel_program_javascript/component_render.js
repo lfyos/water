@@ -2,16 +2,16 @@ function construct_component_render_parameter()
 {
 	this.modify_component_render_parameter=function(component_append_data,component_delete_data,scene)
 	{
-		for(var p,render_id=-1,part_id=-1,render_buffer_id=-1,i=0,ni=component_append_data.length;i<ni;i++){
+		for(var p,render_id=-1,part_id=-1,target_id=-1,i=0,ni=component_append_data.length;i<ni;i++){
 			switch((p=component_append_data[i]).length){
 			default:
 				alert("error component_render_parameter length:"+p.length);
 				continue;
 			case 6:
-				render_id		=p.shift();
-				part_id			=p.shift();
+				render_id	=p.shift();
+				part_id		=p.shift();
 			case 4:
-				render_buffer_id=p.shift();
+				target_id	=p.shift();
 			case 3:
 				break;
 			}
@@ -21,19 +21,19 @@ function construct_component_render_parameter()
 			var part_object			=scene.part_array[render_id][part_id];
     	    var render_parameter	=part_object.component_render_parameter; 
     		
-    		while(render_parameter.length<=render_buffer_id)
+    		while(render_parameter.length<=target_id)
     			render_parameter.push(new Array());
-    		render_parameter=render_parameter[render_buffer_id];
+    		render_parameter=render_parameter[target_id];
 			
 			if(instance_id<render_parameter.length)
-				scene.render_buffer_array[render_buffer_id].replace_render_instance_number++;
+				scene.render_buffer_array[target_id].replace_render_instance_number++;
 			else
-				scene.render_buffer_array[render_buffer_id].append_render_instance_number++;
+				scene.render_buffer_array[target_id].append_render_instance_number++;
 			
 			render_parameter[instance_id]=[data_buffer_id,new_instance_data];
 		}
 		
-		var delete_index_id,render_id=-1,part_id=-1,render_buffer_id=-1;
+		var delete_index_id,render_id=-1,part_id=-1,target_id=-1;
 		for(var i=0,ni=component_delete_data.length;i<ni;i++){
 			if(typeof(delete_index_id=component_delete_data[i])!="number"){
 				switch(delete_index_id.length){
@@ -44,21 +44,21 @@ function construct_component_render_parameter()
 					render_id		=delete_index_id.shift();
 					part_id			=delete_index_id.shift();
 				case 2:
-					render_buffer_id=delete_index_id.shift();
+					target_id		=delete_index_id.shift();
 					delete_index_id	=delete_index_id.shift();
 					break;
 				}
 			}
     	    var render_parameter=scene.part_array[render_id][part_id].component_render_parameter; 
-    		while(render_parameter.length<=render_buffer_id)
+    		while(render_parameter.length<=target_id)
     			render_parameter.push(new Array());
-			render_parameter=render_parameter[render_buffer_id];
+			render_parameter=render_parameter[target_id];
 			
 	   		var last_instance_data=render_parameter.pop();
 	   		if(delete_index_id<render_parameter.length)
 	   			render_parameter[delete_index_id]=last_instance_data;
 
-			scene.render_buffer_array[render_buffer_id].delete_render_instance_number++;
+			scene.render_buffer_array[target_id].delete_render_instance_number++;
 		}
 	}
 	this.modify_component_buffer_parameter=function(component_buffer_data,scene)

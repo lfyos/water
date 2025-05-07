@@ -28,7 +28,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		
 	}
-	public boolean check(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
+	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
 		if(cr.target.main_display_target_flag){
 			((extended_component_driver)(comp.driver_array.get(driver_id))).delete_timeout_location_modifier(sk);
@@ -36,7 +36,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		return true;
 	}
-	public void create_render_parameter(int render_buffer_id,scene_kernel sk,client_information ci,camera_result cr)
+	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
 		ci.request_response.print(modifier_container_id);
 	}

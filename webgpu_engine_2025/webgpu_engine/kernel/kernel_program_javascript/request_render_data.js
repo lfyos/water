@@ -102,7 +102,10 @@ async function request_render_data(scene)
 		for(var i=0,ni=scene.event_listener.length;i<ni;i++)
 			mouse_down_flag|=scene.event_listener[i].mouse_down_flag;
 
-		request_url+="&precision="+(mouse_down_flag?"false":"true");
+		if(scene.view_bak.mouse_down_flag^mouse_down_flag){
+			scene.view_bak.mouse_down_flag=mouse_down_flag;
+			request_url+="&precision="+(mouse_down_flag?"false":"true");
+		}
 		request_url+="&length=";
 		request_url+=request_url.length.toString();
 
@@ -115,10 +118,10 @@ async function request_render_data(scene)
 			scene.render_buffer_array[i].do_render_flag=false;
 
 		for(var i=0,ni=response_data.length;i<ni;){
-			var my_render_buffer_id	=response_data[i++];
-			var my_data				=response_data[i++];
+			var my_target_id	=response_data[i++];
+			var my_data			=response_data[i++];
 
-			while(my_render_buffer_id>=scene.render_buffer_array.length)
+			while(my_target_id>=scene.render_buffer_array.length)
 				scene.render_buffer_array.push(
 					{
 						do_render_flag					:	false,
@@ -130,16 +133,13 @@ async function request_render_data(scene)
 						project_matrix					:	null
 					});
 
-			var p=scene.render_buffer_array[my_render_buffer_id];
-			p.do_render_flag	=true;
-			p.render_buffer_id	=my_render_buffer_id;
+			var p=scene.render_buffer_array[my_target_id];
+			p.do_render_flag=true;
+			p.target_id		=my_target_id;
 
 			for(var j=0,nj=my_data.length;j<nj;)
 				switch(my_data[j++]){
 				default:
-					break;
-				case 0:
-					p.camera_target_render_buffer_id=my_data[j++];
 					break;
 				case 1:
 					p.target_or_bundle_flag=true;

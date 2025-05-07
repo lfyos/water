@@ -19,13 +19,12 @@ public class list_component_on_collector
 	private scene_kernel sk;
 	private client_information ci;
 	private camera_result cam_result;
-	private boolean part_list_only_flag,do_discard_lod_flag,do_selection_lod_flag,discard_cross_clip_plane_flag;
-	private boolean discard_unload_component_flag;
+	
 	private int no_driver_component_number;
 	
-	private boolean register(component comp,int driver_id,int render_buffer_id)
+	private boolean register(component comp,int driver_id)
 	{
-		if(part_list_only_flag)
+		if(cam_result.target.parameter.part_list_only_flag)
 			if(!(comp.uniparameter.part_list_flag))
 				return (comp.children_number()<=0)?true:false;
 		
@@ -37,7 +36,7 @@ public class list_component_on_collector
 		if((my_part=comp.driver_array.get(driver_id).component_part)==null)
 			return false;
 		
-		if(discard_cross_clip_plane_flag)
+		if(cam_result.target.parameter.discard_cross_clip_plane_flag)
 			if(comp.clip.clip_plane.size()>0)
 				return (comp.children_number()<=0)?true:false;
 	
@@ -47,7 +46,7 @@ public class list_component_on_collector
 		
 		boolean abandon_display_flag=true;
 		try{
-			abandon_display_flag=in_dr.check(render_buffer_id,sk,ci,cam_result);
+			abandon_display_flag=in_dr.check(sk,ci,cam_result);
 		}catch(Exception e){
 			e.printStackTrace();
 			
@@ -62,7 +61,7 @@ public class list_component_on_collector
 		if(abandon_display_flag)
 			return false;
 		
-		if(discard_unload_component_flag)
+		if(cam_result.target.parameter.discard_unload_component_flag)
 			if(ci.render_buffer.mesh_loader.load_test(sk.process_part_sequence,my_part))
 				return false;
 		
@@ -71,10 +70,12 @@ public class list_component_on_collector
 		return true;
 	}
 	
-	private boolean do_lod(component comp,int render_buffer_id)
+	private boolean do_lod(component comp)
 	{
-		if(!(do_discard_lod_flag||do_selection_lod_flag))
-			return false;
+		if(!(cam_result.target.parameter.do_discard_lod_flag))
+			if(!(cam_result.target.parameter.do_selection_lod_flag))
+				return false;
+		
 		if(comp.selected_component_family_flag)
 			return false;
 		box my_box;
@@ -92,18 +93,17 @@ public class list_component_on_collector
 		my_lod_precision_scale=ci.component_instance_driver_cont.get_lod_precision_scale(comp);
 		if(my_lod_precision_scale>const_value.min_value)
 			lod_precision_scale*=my_lod_precision_scale;
-		if((my_lod_precision_scale=ci.parameter.high_or_low_precision_flag
-				?cam_result.cam.parameter.high_precision_scale
-				:cam_result.cam.parameter.low_precision_scale)>const_value.min_value)
+		my_lod_precision_scale=cam_result.target.parameter.lod_precision_scale;
+		if(my_lod_precision_scale>const_value.min_value)
 			lod_precision_scale*=my_lod_precision_scale;
-		
+
 		lod_precision2*=lod_precision_scale*lod_precision_scale;
 
-		if(do_discard_lod_flag)
+		if(cam_result.target.parameter.do_discard_lod_flag)
 			if(lod_precision2<=comp.uniparameter.discard_precision2)
 				return true;
 
-		if(do_selection_lod_flag){
+		if(cam_result.target.parameter.do_selection_lod_flag){
 			int driver_number;
 			if((driver_number=comp.driver_number())<=0)
 				return false;
@@ -116,7 +116,7 @@ public class list_component_on_collector
 					if(comp.children_number()>0)
 						if(part_par.assembly_precision2<=lod_precision2)
 							return false;
-					if(register(comp,i,render_buffer_id))
+					if(register(comp,i))
 						return true;
 				}
 			}
@@ -124,7 +124,7 @@ public class list_component_on_collector
 		}
 		return false;
 	}
-	private void collect(component comp,int render_buffer_id,int clipper_test_depth)
+	private void collect(component comp,int clipper_test_depth)
 	{
 		if(comp==null)
 			return;
@@ -141,14 +141,14 @@ public class list_component_on_collector
 		if(cam_result.clipper_test(comp,sk.component_cont,cam_result.target.parameter_channel_id))
 			return;
 		
-		if(do_lod(comp,render_buffer_id))
+		if(do_lod(comp))
 			return;
 		
 		int children_number	=comp.children_number();
 		int driver_number	=comp.driver_number();
 		if(children_number<=0){
 			for(int i=0;i<driver_number;i++)
-				if(register(comp,i,render_buffer_id))
+				if(register(comp,i))
 					return;
 			no_driver_component_number++;
 			return;
@@ -156,7 +156,7 @@ public class list_component_on_collector
 		
 		int old_no_driver_component_number=no_driver_component_number;
 		for(int i=0;i<children_number;i++)
-			collect(comp.children[i],render_buffer_id,clipper_test_depth+1);
+			collect(comp.children[i],clipper_test_depth+1);
 		comp.caculate_box(false);
 		
 		if(sk.scene_par.not_do_ancestor_render_flag)
@@ -166,48 +166,29 @@ public class list_component_on_collector
 		if(comp.get_can_display_assembly_flag(cam_result.target.parameter_channel_id))
 			for(int i=0;i<driver_number;i++)
 				if(comp.driver_array.get(i).component_part.is_normal_part())
-					if(register(comp,i,render_buffer_id)){
+					if(register(comp,i)){
 						no_driver_component_number=old_no_driver_component_number;
 						return;
 					}
 		return;
 	}
 	
-	public list_component_on_collector(				boolean my_part_list_only_flag,
-		boolean my_do_discard_lod_flag,				boolean my_do_selection_lod_flag,
-		boolean my_discard_cross_clip_plane_flag,	boolean my_discard_unload_component_flag,
-		scene_kernel my_sk,						client_information my_ci,
-		camera_result my_cam_result)
+	public list_component_on_collector(scene_kernel my_sk,client_information my_ci,camera_result my_cam_result)
 	{
-		sk											=my_sk;
-		ci											=my_ci;
-		cam_result									=my_cam_result;		
+		sk				=my_sk;
+		ci				=my_ci;
+		cam_result		=my_cam_result;	
 		
-		part_list_only_flag							=my_part_list_only_flag;
-		do_discard_lod_flag							=my_do_discard_lod_flag;
-		do_selection_lod_flag						=my_do_selection_lod_flag;
-		discard_cross_clip_plane_flag				=my_discard_cross_clip_plane_flag;
-		discard_unload_component_flag				=my_discard_unload_component_flag;
-		
-		collector									=new component_collector(sk.render_cont.renders);
+		collector		=new component_collector(sk.render_cont.renders);
 		
 		no_driver_component_number=0;
-		
-		int render_buffer_id=cam_result.target.get_render_buffer_id(ci.parameter.high_or_low_precision_flag);
-		
+	
 		component my_comp,pickup_comp=ci.parameter.comp;
 		for(component p=pickup_comp;p!=null;p=sk.component_cont.get_component(p.parent_component_id))
 			p.selected_component_family_flag=true;
-		for(int my_driver_id,i=0,ni=cam_result.target.comp.length;i<ni;i++)
-			if((my_comp=cam_result.target.comp[i])!=null){
-				if(cam_result.target.driver_id!=null)
-					if(i<cam_result.target.driver_id.length)
-						if((my_driver_id=cam_result.target.driver_id[i])>=0) {
-							register(my_comp,my_driver_id,render_buffer_id);
-							continue;
-						}
-				collect(my_comp,render_buffer_id,0);
-			}
+		for(int i=0,ni=cam_result.target.comp.length;i<ni;i++)
+			if((my_comp=cam_result.target.comp[i])!=null)
+				collect(my_comp,0);
 		for(component p=pickup_comp;p!=null;p=sk.component_cont.get_component(p.parent_component_id))
 			p.selected_component_family_flag=false;
 	}

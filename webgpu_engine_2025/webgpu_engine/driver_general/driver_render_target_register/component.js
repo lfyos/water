@@ -19,7 +19,7 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		this.depth_texture[i]=null;
 	}
 	this.draw_component=function(method_data,render_parameter,
-			project_matrix,target_data,part_object,part_driver,render_driver,scene)
+			target_data,part_object,part_driver,render_driver,scene)
 	{
 		if(this.should_update_server_flag){
 			this.should_update_server_flag=false;	
@@ -33,7 +33,8 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 						["operation",		"width_height"],
 						["width_height",	width_height_str]
 					];
-			scene.caller.call_server_component(this.component_ids.component_id,this.component_ids.driver_id,par);
+			scene.caller.call_server_component(
+				this.component_ids.component_id,this.component_ids.driver_id,par);
 		}
 	}
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
@@ -46,14 +47,13 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 	{
 		if((typeof(scene_target_array[0])=="object")&&(scene_target_array[0]!=null))
 			return;
-		if(render_data.target_texture_id<0)
-			return;
-		if(render_data.target_texture_id>=this.target_parameter.length)
-			return;
 		
-		var clear_color		=this.clear_color[render_data.target_texture_id];
-		var canvas_id		=this.target_parameter[render_data.target_texture_id].canvas_id;
-		var load_operation	=this.target_parameter[render_data.target_texture_id].load_operation;
+		var my_target_texture_id=Math.floor(render_data.target_texture_id/2.0);
+		if((my_target_texture_id<0)||(my_target_texture_id>=this.target_parameter.length))
+			return;
+		var clear_color		=this.clear_color		[my_target_texture_id];
+		var canvas_id		=this.target_parameter	[my_target_texture_id].canvas_id;
+		var load_operation	=this.target_parameter	[my_target_texture_id].load_operation;
 
 		var my_gpu_texture			=scene.webgpu.context		[canvas_id].getCurrentTexture();
 		var my_multisample_texture	=this.multisample_texture	[canvas_id];

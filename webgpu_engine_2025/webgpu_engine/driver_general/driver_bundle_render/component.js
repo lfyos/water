@@ -3,7 +3,7 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 	this.component_ids	=component_ids;
 	
 	this.draw_component=function(method_data,render_parameter,
-			project_matrix,target_data,part_object,part_driver,render_driver,scene)	
+			target_data,part_object,part_driver,render_driver,scene)	
 	{
 		var rpe	=scene.webgpu.render_pass_encoder;
 		switch(method_data.method_id){

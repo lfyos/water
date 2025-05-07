@@ -122,7 +122,7 @@ public class component_render
 		return ret_val;
 	}
 	public void mark(component_link_list cll,client_information ci,
-			camera_result cam_result,int render_buffer_id,render_component_counter rcc)
+			camera_result cam_result,render_component_counter rcc)
 	{
 		clear_component_link_list();
 		
@@ -136,7 +136,7 @@ public class component_render
 		for(int i=0;i<component_number;i++){
 			component_instance_driver in_dr=ci.component_instance_driver_cont.
 					get_component_instance_driver(comp[i],driver_id[i]);
-			long old_component_render_version=in_dr.get_component_render_version(render_buffer_id);
+			long old_component_render_version=in_dr.get_component_render_version(cam_result.target.target_id);
 			long new_component_render_version=comp[i].driver_array.get(driver_id[i]).get_component_render_version();
 			int data_buffer_id=comp[i].driver_array.get(driver_id[i]).same_part_component_driver_id;
 			flag[data_buffer_id]=(old_component_render_version!=new_component_render_version)?1:2;
@@ -149,7 +149,7 @@ public class component_render
 			case 0://component not in buffer,but in link list 
 				component_instance_driver in_dr=ci.component_instance_driver_cont.
 						get_component_instance_driver(p.comp,p.driver_id);
-				long old_component_render_version=in_dr.get_component_render_version(render_buffer_id);
+				long old_component_render_version=in_dr.get_component_render_version(cam_result.target.target_id);
 				long new_component_render_version=p.comp.driver_array.get(p.driver_id).get_component_render_version();
 				flag[data_buffer_id]|=(old_component_render_version!=new_component_render_version)?4:8;
 				
@@ -202,10 +202,9 @@ public class component_render
 		return;
 	}
 	
-	public void create_delete_render_parameter(	response_flag create_flag,
-			int render_id,int part_id,int render_buffer_id,
-			component_link_list cll,long render_current_time,
-			scene_kernel sk,client_information ci,render_component_counter rcc)
+	public void create_delete_render_parameter(response_flag create_flag,
+			int render_id,int part_id,component_link_list cll,long render_current_time,
+			scene_kernel sk,client_information ci,int my_target_id,render_component_counter rcc)
 	{
 		for(;cll!=null;cll=cll.next_list_item) {
 			int data_buffer_id=cll.comp.driver_array.get(cll.driver_id).same_part_component_driver_id;
@@ -228,16 +227,16 @@ public class component_render
 				if((create_flag.render_id!=my_part.render_id)||(create_flag.part_id!=my_part.part_id)) {
 					create_flag.render_id		=my_part.render_id;
 					create_flag.part_id			=my_part.part_id;
-					create_flag.render_buffer_id=render_buffer_id;
+					create_flag.target_id		=my_target_id;
 					
 					ci.request_response.print("[",	my_part.render_id).
 										print(",",	my_part.part_id).
-										print(",",	render_buffer_id).
+										print(",",	my_target_id).
 										print(",",	my_instance_id).
 										print("]");
-				}else if(create_flag.render_buffer_id!=render_buffer_id) { 
-					create_flag.render_buffer_id=render_buffer_id;
-					ci.request_response.print("[",render_buffer_id).
+				}else if(create_flag.target_id!=my_target_id) { 
+					create_flag.target_id=my_target_id;
+					ci.request_response.print("[",my_target_id).
 										print(",",my_instance_id).
 										print("]");
 				}else
@@ -271,10 +270,9 @@ public class component_render
 		return;
 	}
 	
-	public void create_append_render_parameter(response_flag create_flag,
-			component_link_list cll,long render_current_time,
-			scene_kernel sk,client_information ci,
-			camera_result cam_result,int render_buffer_id,render_component_counter rcc)
+	public void create_append_render_parameter(
+			response_flag create_flag,component_link_list cll,long render_current_time,
+			scene_kernel sk,client_information ci,camera_result cam_result,render_component_counter rcc)
 	{
 		delete_in_cll=revere_component_link_list(delete_in_cll);
 		delete_out_cll=revere_component_link_list(delete_out_cll);
@@ -352,20 +350,20 @@ public class component_render
 				if((create_flag.render_id!=my_part.render_id)||(create_flag.part_id!=my_part.part_id)) {
 					create_flag.render_id		=my_part.render_id;
 					create_flag.part_id			=my_part.part_id;
-					create_flag.render_buffer_id=render_buffer_id;
+					create_flag.target_id		=cam_result.target.target_id;
 					ci.request_response.print(		my_part.render_id).
 										print(",",	my_part.part_id).
-										print(",",	render_buffer_id).
+										print(",",	cam_result.target.target_id).
 										print(",");
-				}else if(create_flag.render_buffer_id!=render_buffer_id) { 
-					create_flag.render_buffer_id=render_buffer_id;
-					ci.request_response.print(render_buffer_id).print(",");
+				}else if(create_flag.target_id!=cam_result.target.target_id) { 
+					create_flag.target_id=cam_result.target.target_id;
+					ci.request_response.print(cam_result.target.target_id).print(",");
 				}
 				ci.request_response.
 						print(data_buffer_id).print(",").
 						print(my_instance_id).print(",");
 				try{
-					in_dr.create_render_parameter(render_buffer_id,sk,ci,cam_result);
+					in_dr.create_render_parameter(sk,ci,cam_result);
 				}catch(Exception e){
 					e.printStackTrace();
 					
@@ -379,7 +377,7 @@ public class component_render
 				}
 				ci.request_response.print("]");
 
-				in_dr.update_component_render_version(render_buffer_id,
+				in_dr.update_component_render_version(cam_result.target.target_id,
 						p.comp.driver_array.get(p.driver_id).get_component_render_version());
 
 				break;
