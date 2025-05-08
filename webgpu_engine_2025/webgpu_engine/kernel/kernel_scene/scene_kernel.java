@@ -416,8 +416,6 @@ public class scene_kernel
 		component_cont.original_part_number	=new compress_render_container(
 				render_cont,part_cont,component_cont.root_component).original_part_number;
 		
-		component_cont.root_component.caculate_component_bundle_render_reference_number();
-		
 		part_cont.destroy();
 		part_cont=new part_container_for_part_search(render_cont.part_array_list(-1));
 

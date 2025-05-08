@@ -2,7 +2,6 @@ package kernel_driver;
 
 import kernel_scene.scene_kernel;
 import kernel_component.component;
-import kernel_component.component_container;
 import kernel_common_class.const_value;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
@@ -11,7 +10,6 @@ public class component_instance_driver_container
 {
 	private component_instance_driver component_driver_array[][];
 	private double instance_lod_precision_scale[];
-	private long instance_bundle_render_reference_number[];
 
 	public void destroy()
 	{
@@ -104,40 +102,6 @@ public class component_instance_driver_container
 			return null;
 		return component_driver_array[comp.component_id][driver_id];
 	}
-	public long get_bundle_render_reference_number(component comp)
-	{
-		long ret_val =0;
-		ret_val+=comp.get_component_bundle_render_reference_number();
-		ret_val+=instance_bundle_render_reference_number[comp.component_id];
-		
-		return ret_val;
-	}
-	public void increase_instance_bundle_render_reference_number(component comp,component_container component_cont)
-	{
-		component parent_comp;
-		instance_bundle_render_reference_number[comp.component_id]++;
-		if((parent_comp=component_cont.get_component(comp.parent_component_id))!=null)
-			increase_instance_bundle_render_reference_number(parent_comp,component_cont);
-	}
-	public void decrease_instance_bundle_render_reference_number(component comp,component_container component_cont)
-	{
-		component parent_comp;
-		instance_bundle_render_reference_number[comp.component_id]--;
-		if((parent_comp=component_cont.get_component(comp.parent_component_id))!=null)
-			decrease_instance_bundle_render_reference_number(parent_comp,component_cont);
-	}
-	public long caculate_instance_bundle_render_reference_number(component comp,component_container component_cont)
-	{
-		instance_bundle_render_reference_number[comp.component_id]=0;
-		for(int i=0,ni=comp.children_number();i<ni;i++) {
-			long number=caculate_instance_bundle_render_reference_number(comp.children[i],component_cont);
-			instance_bundle_render_reference_number[comp.component_id]+=number;
-		}
-		for(int i=0,ni=comp.driver_number();i<ni;i++)
-			if(component_driver_array[comp.component_id][i].instance_driver_can_not_bundle_render_flag)
-				instance_bundle_render_reference_number[comp.component_id]++;
-		return instance_bundle_render_reference_number[comp.component_id];
-	}
 	public component_instance_driver_container(scene_kernel sk,client_request_response request_response)
 	{
 		component root_component		=sk.component_cont.root_component;
@@ -146,8 +110,5 @@ public class component_instance_driver_container
 		instance_lod_precision_scale	=new double[max_component_number];
 		reset_drivers(root_component,sk,request_response);
 		reset_instance_lod_precision_scale(root_component);
-		
-		instance_bundle_render_reference_number=new long[max_component_number];
-		caculate_instance_bundle_render_reference_number(root_component,sk.component_cont);
 	}
 }
