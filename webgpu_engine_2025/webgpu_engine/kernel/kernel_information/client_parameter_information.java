@@ -2,9 +2,11 @@ package kernel_information;
 
 import kernel_scene.client_information;
 import kernel_scene.client_parameter;
+import kernel_scene.scene_kernel;
 
 public class client_parameter_information extends jason_creator
 {
+	private scene_kernel sk;
 	private client_information ci;
 	
 	public void print()
@@ -27,11 +29,12 @@ public class client_parameter_information extends jason_creator
 		
 		print("request_length",				cp.request_length);
 		
-		print("selected_component",			new component_information(ci.parameter.comp,ci));
+		print("selected_component",			new component_information(ci.parameter.comp,sk,ci));
 	}
-	public client_parameter_information(client_information my_ci)
+	public client_parameter_information(scene_kernel my_sk,client_information my_ci)
 	{
 		super(my_ci.request_response);
+		sk=my_sk;
 		ci=my_ci;
 	}
 }

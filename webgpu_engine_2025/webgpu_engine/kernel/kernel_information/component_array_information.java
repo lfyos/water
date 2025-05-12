@@ -13,7 +13,7 @@ public class component_array_information extends jason_creator
 		component comp[]=sk.component_cont.get_sort_component_array();
 		jason_creator jc[]=new jason_creator[comp.length];
 		for(int i=0,ni=jc.length;i<ni;i++)
-			jc[i]=new component_information(comp[i],ci);
+			jc[i]=new component_information(comp[i],sk,ci);
 		print("component_number",jc.length);
 		print("component_array",jc);
 	}

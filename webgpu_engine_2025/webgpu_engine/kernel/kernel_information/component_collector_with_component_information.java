@@ -22,7 +22,8 @@ public class component_collector_with_component_information extends jason_creato
 					for(int j=0,nj=collector.component_collector[i].length;j<nj;j++)
 						if(collector.component_collector[i][j]!=null)
 							jc[number++]=new link_component_list_information(r.parts.get(j),
-								collector.part_component_number[i][j],collector.component_collector[i][j],ci);
+								collector.part_component_number[i][j],
+								collector.component_collector[i][j],sk,ci);
 			
 		print("collector",new component_collector_information(collector,ci));
 		print("component",jc);

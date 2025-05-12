@@ -109,7 +109,7 @@ public class part
 		file_writer fw,String front_str,String follow_str)
 	{	
 		fw.print  ("\t\t\"",front_str);
-		fw.println("\"\t\t\t:");
+		fw.println("\"\t:");
 		fw.println("\t\t{");
 		
 		String file_name=fw.directory_name+fw.file_name;
@@ -190,15 +190,15 @@ public class part
 		
 		head_fw.println("\t{");
 		
-		head_fw.println("\t\t\"user_name\"\t\t:\t",jason_string.change_string(user_name)+",");
-		head_fw.println("\t\t\"system_name\"\t:\t",jason_string.change_string(system_name)+",");
-		head_fw.println("\t\t\"mesh_file\"\t\t:\t",jason_string.change_string(directory_name+mesh_file_name)+",");
-		head_fw.println("\t\t\"material_file\"\t:\t",jason_string.change_string(directory_name+material_file_name)+",");
-		head_fw.println("\t\t\"this_file\"\t\t:\t",jason_string.change_string(head_fw.directory_name+head_fw.file_name));
+		head_fw.println("\t\t\"user_name\"\t\t:\t",		jason_string.change_string(user_name)+",");
+		head_fw.println("\t\t\"system_name\"\t\t:\t",	jason_string.change_string(system_name)+",");
+		head_fw.println("\t\t\"mesh_file\"\t\t:\t",		jason_string.change_string(directory_name+mesh_file_name)+",");
+		head_fw.println("\t\t\"material_file\"\t\t:\t",	jason_string.change_string(directory_name+material_file_name)+",");
+		head_fw.println("\t\t\"this_file\"\t\t:\t",		jason_string.change_string(head_fw.directory_name+head_fw.file_name));
 		
 		head_fw.println("\t},");
 		
-		head_fw.println("\t\"material\"\t\t:");
+		head_fw.println("\t\"material\"\t:");
 		head_fw.println("\t[");
 		
 		try{
@@ -214,13 +214,13 @@ public class part
 		}
 		head_fw.println("\t],");
 		
-		head_fw.println("\t\"property\"\t\t:");
+		head_fw.println("\t\"property\"\t:");
 		head_fw.println("\t{");
-		head_fw.println("\t\t\"normal_part_flag\"\t\t\t\t\t:\t",	is_normal_part()	?"true,":"false,");
-		head_fw.println("\t\t\"bottom_box_flag\"\t\t\t\t\t:\t",		is_bottom_box_part()?"true,":"false,");
-		head_fw.println("\t\t\"top_box_flag\"\t\t\t\t\t\t:\t",		is_top_box_part()	?"true,":"false,");
+		head_fw.println("\t\t\"normal_part_flag\"\t:\t",is_normal_part()	?"true,":"false,");
+		head_fw.println("\t\t\"bottom_box_flag\"\t:\t",	is_bottom_box_part()?"true,":"false,");
+		head_fw.println("\t\t\"top_box_flag\"\t\t:\t",	is_top_box_part()	?"true,":"false,");
 		
-		head_fw.print ("\t\t\"part_box\"\t\t\t\t\t\t\t:\t[");
+		head_fw.print ("\t\t\"part_box\"\t\t:\t[");
 		box part_box=secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null);
 		for(int i=0;(i<2)&&(part_box!=null);i++){
 			head_fw.print("[",part_box.p[i].x);
@@ -231,7 +231,7 @@ public class part
 		head_fw.println("]");
 		head_fw.println("\t},");
 
-		head_fw.println("\t\"data\"\t\t\t:\t");
+		head_fw.println("\t\"data\"\t\t:\t");
 		head_fw.println("\t{");
 		head_fw.print  ("\t\t\"max_buffer_object_data_length\"\t:\t",part_par.max_buffer_object_data_length);
 		head_fw.println(",");
@@ -240,9 +240,9 @@ public class part
 		
 		if(part_mesh==null) {
 			String str[]=new String[]{
-				"\"face\"			:","{",	"	\"region_data\"	:	[]"	,"},",
-				"\"edge\"			:","{",	"	\"region_data\"	:	[]"	,"},",
-				"\"point\"			:","{",	"	\"region_data\"	:	[]"	,"}"	
+				"\"face\"	:","{",	"	\"region_data\"	:	[]"	,"},",
+				"\"edge\"	:","{",	"	\"region_data\"	:	[]"	,"},",
+				"\"point\"	:","{",	"	\"region_data\"	:	[]"	,"}"	
 			};
 			for(int i=0,ni=str.length;i<ni;i++)
 				head_fw.println("		",str[i]);

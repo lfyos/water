@@ -48,7 +48,7 @@ public class dispatch_information_request
 			if(sk.component_cont.root_component!=null)
 				switch(str) {
 				case "tree":
-					(new component_tree_information(sk.component_cont.root_component,ci)).output();
+					(new component_tree_information(sk.component_cont.root_component,sk,ci)).output();
 					break;
 				case "selected":
 					(new component_selected_information(sk,ci)).output();

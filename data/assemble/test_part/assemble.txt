@@ -1,4 +1,4 @@
-test	assemble/assemble.txt	0	0	parameter.txt	parameter.xyz.txt
+test	assemble/assemble.txt	10	10	parameter.txt	parameter.xyz.txt
 
-boat	assemble/assemble.txt	0	0	parameter.txt	parameter.boat.txt
+boat	assemble/assemble.txt	10	10	parameter.txt	parameter.boat.txt
 

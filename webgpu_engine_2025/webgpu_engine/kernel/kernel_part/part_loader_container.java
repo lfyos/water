@@ -98,12 +98,11 @@ public class part_loader_container
 			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container)
 	{
 		int boftal_number;
-		String part_temporary_file_directory=file_directory.part_file_directory(my_part,system_par,scene_par);
 		if((boftal_number=boftal_container.size())>0) {
-			String boftal_token_str=part_temporary_file_directory.substring(
-					system_par.temporary_file_par.temporary_root_directory_name.length());
-			for(int i=0;i<boftal_number;i++){
-				ArrayList<buffer_object_file_modify_time_and_length> my_list;
+			String boftal_token_str=file_directory.part_file_directory(my_part,system_par,scene_par).
+						substring(system_par.temporary_file_par.temporary_root_directory_name.length());
+			ArrayList<buffer_object_file_modify_time_and_length> my_list;
+			for(int i=0;i<boftal_number;i++)
 				if((my_list=boftal_container.get(i).search(new String[]{boftal_token_str}))!=null)
 					if(my_list.size()>0){
 						my_part.boftal=my_list.get(0);
@@ -113,9 +112,7 @@ public class part_loader_container
 							my_part.part_mesh.free_memory();
 						return;
 					}
-			}
 		}
-		
 		try{
 			load_routine(my_part,my_copy_from_part,last_modified_time,
 				system_par,scene_par,string_locker_container,already_loaded_part);

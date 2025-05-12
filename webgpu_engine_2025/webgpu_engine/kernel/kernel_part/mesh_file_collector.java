@@ -67,8 +67,8 @@ public class mesh_file_collector
 				}
 			head_fw.println(",");
 			head_fw.println("{");
-			head_fw.print  ("\t\"file_type\"\t:\t\"",p.file_type);	head_fw.println("\",");
-			head_fw.print  ("\t\"file_id\"\t:\t",p.file_id);		head_fw.println(",");
+			head_fw.print  ("\t\"file_type\"\t:\t\"",	p.file_type).	println("\",");
+			head_fw.print  ("\t\"file_id\"\t:\t",		p.file_id).		println(",");
 			
 			head_fw.print  ("\t\"file_data\"\t:\t");
 			

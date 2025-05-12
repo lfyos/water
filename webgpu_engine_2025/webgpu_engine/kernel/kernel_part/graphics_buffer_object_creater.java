@@ -83,10 +83,10 @@ public class graphics_buffer_object_creater
 	}
 	public String create_head_data(file_writer head_fw,int material_id)
 	{
-		head_fw.println("\t\t\t\t\t\t{");
-		head_fw.print  ("\t\t\t\t\t\t\t\"material_id\"	:	",material_id).println(",");
+		head_fw.println("\t\t\t\t{");
+		head_fw.print  ("\t\t\t\t\t\"material_id\"	:	",material_id).println(",");
 
-		head_fw.print  ("\t\t\t\t\t\t\t");
+		head_fw.print  ("\t\t\t\t\t");
 		if(region_box==null)
 			head_fw.println("\"region_box\"	:	[[0,0,0,1],[0,0,0,1]],");
 		else{
@@ -99,9 +99,9 @@ public class graphics_buffer_object_creater
 			head_fw.println(",1.0]],");
 		}
 
-		head_fw.println("\t\t\t\t\t\t\t\"item_number\"	:	",item_number);
+		head_fw.println("\t\t\t\t\t\"item_number\"	:	",item_number);
 		
-		head_fw.print("\t\t\t\t\t\t}");
+		head_fw.print("\t\t\t\t}");
 		
 		return text_fw.directory_name+text_fw.file_name;
 	}

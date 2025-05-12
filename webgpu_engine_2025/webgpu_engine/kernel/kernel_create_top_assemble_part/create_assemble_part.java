@@ -194,8 +194,8 @@ public class create_assemble_part
 			double create_top_part_discard_precision2,double discard_top_part_component_precision2,
 			render_container render_cont,part_loader_container part_loader_cont,
 			system_parameter system_par,scene_parameter scene_par,part_container_for_part_search pcps,
-			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,long last_modified_time,
-			tree_string_locker_container string_locker_container)
+			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,
+			long last_modified_time,tree_string_locker_container string_locker_container)
 	{
 		int max_component_number			=root_component.component_id+1;
 		
@@ -280,7 +280,7 @@ public class create_assemble_part
 				assemble_part,comp_p.uniparameter.file_last_modified_time,
 				create_top_part_assembly_precision2,create_top_part_discard_precision2);
 			
-			part add_part=new part(2,true,part_par,assemble_part.directory_name,assemble_part.file_charset,
+			part add_part=new part(1,true,part_par,assemble_part.directory_name,assemble_part.file_charset,
 					comp_p.part_name,comp_p.part_name,null,assemble_part.material_file_name,null,null);
 			add_part.part_mesh=cpr.topbox_part_rude;
 				
@@ -289,16 +289,20 @@ public class create_assemble_part
 			add_part.permanent_part_from_id	=assemble_part.permanent_part_id;
 
 			try{
-				add_part.driver=assemble_part.driver.clone(assemble_part,add_part,request_response,system_par,scene_par);
+				add_part.driver=assemble_part.driver.clone(
+						assemble_part,add_part,request_response,system_par,scene_par);
 			}catch(Exception e) {
 				e.printStackTrace();
 				
 				debug_information.println("Execte part clone() fail",e.toString());
 				debug_information.println("Part user name:",	add_part.user_name);
 				debug_information.println("Part system name:",	add_part.system_name);
-				debug_information.println("Mesh_file_name:",	add_part.directory_name+add_part.mesh_file_name);
-				debug_information.println("Material_file_name:",add_part.directory_name+add_part.material_file_name);
-				debug_information.println("Temp directory:",	file_directory.part_file_directory(add_part,system_par,scene_par));
+				debug_information.println("Mesh_file_name:",	
+						add_part.directory_name+add_part.mesh_file_name);
+				debug_information.println("Material_file_name:",
+						add_part.directory_name+add_part.material_file_name);
+				debug_information.println("Temp directory:",	
+						file_directory.part_file_directory(add_part,system_par,scene_par));
 				
 				render_cont.renders.get(assemble_part.render_id).delete_last_part();
 				continue;

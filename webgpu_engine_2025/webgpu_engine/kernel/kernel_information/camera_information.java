@@ -3,17 +3,19 @@ package kernel_information;
 import kernel_camera.camera;
 import kernel_camera.camera_parameter;
 import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class camera_information extends jason_creator
 {
-	private client_information ci;
 	private camera cam;
+	private scene_kernel sk;
+	private client_information ci;
 	public void print()
 	{
 		if(cam==null)
 			return;
 		
-		print("eye_component",new component_information(cam.eye_component,ci));
+		print("eye_component",new component_information(cam.eye_component,sk,ci));
 		
 		camera_parameter par=cam.parameter;
 		
@@ -37,10 +39,11 @@ public class camera_information extends jason_creator
 		return;
 	}
 	
-	public camera_information(camera my_cam,client_information my_ci)
+	public camera_information(camera my_cam,scene_kernel my_sk,client_information my_ci)
 	{
 		super(my_ci.request_response);
 		cam=my_cam;
+		sk=my_sk;
 		ci=my_ci;
 	}
 }

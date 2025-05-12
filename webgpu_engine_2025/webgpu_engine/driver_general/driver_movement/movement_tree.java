@@ -71,13 +71,13 @@ public class movement_tree {
 		int my_scale_type;
 		double my_scale_value;
 		switch(scale_type){
-		case 1://起点相机比例
-		case 2://终点相机比例   
-		case 3://起点终点相机比例  
+		case 1://璧风偣鐩告満姣斾緥
+		case 2://缁堢偣鐩告満姣斾緥   
+		case 3://璧风偣缁堢偣鐩告満姣斾緥  
 			my_scale_type=scale_type;
 			my_scale_value=scale_value;
 			break;
-		case 0://上层相机比例
+		case 0://涓婂眰鐩告満姣斾緥
 		default:
 			my_scale_type=parent_scale_type;
 			my_scale_value=parent_scale_value;
@@ -126,20 +126,20 @@ public class movement_tree {
 		location my_terminate_location=move.movement[move.movement.length-1].terminate_location;
 		
 		switch(my_scale_type){
-		case 1://起点相机比例
+		case 1://璧风偣鐩告満姣斾緥
 			if(direction_flag)
 				my_terminate_location=null;
 			else
 				my_start_location=null;
 			break;
-		case 2://终点相机比例   
+		case 2://缁堢偣鐩告満姣斾緥   
 			if(direction_flag)
 				my_start_location=null;
 			else
 				my_terminate_location=null;
 			break;
-		case 3://起点终点相机比例  
-		case 0://上层相机比例
+		case 3://璧风偣缁堢偣鐩告満姣斾緥  
+		case 0://涓婂眰鐩告満姣斾緥
 		default:
 			break;
 		}
@@ -325,15 +325,15 @@ public class movement_tree {
 	public void reverse()
 	{
 		switch(scale_type){
-		case 1://起点相机比例
+		case 1://璧风偣鐩告満姣斾緥
 			scale_type=2;
 			break;
-		case 2://终点相机比例   
+		case 2://缁堢偣鐩告満姣斾緥   
 			scale_type=1;
 			break;
-		case 3://起点终点相机比例  
+		case 3://璧风偣缁堢偣鐩告満姣斾緥  
 			break;		
-		case 0://上层相机比例
+		case 0://涓婂眰鐩告満姣斾緥
 		default:
 			scale_type=0;
 			break;

@@ -12,14 +12,14 @@ public class scene_camera_information extends jason_creator
 	{
 		jason_creator creator_array[];
 
-		print("display_camera",new camera_information(ci.display_camera_result.cam,ci));
+		print("display_camera",new camera_information(ci.display_camera_result.cam,sk,ci));
 		
 		if(ci.target_camera_result_list==null)
 			creator_array=new jason_creator[0];
 		else
 			creator_array=new jason_creator[ci.target_camera_result_list.size()];
 		for(int i=0,ni=creator_array.length;i<ni;i++)
-			creator_array[i]=new camera_information(ci.target_camera_result_list.get(i).cam,ci);
+			creator_array[i]=new camera_information(ci.target_camera_result_list.get(i).cam,sk,ci);
 		print("target_camera",creator_array);
 		
 		if(sk.camera_cont==null)
@@ -27,7 +27,7 @@ public class scene_camera_information extends jason_creator
 		else
 			creator_array=new jason_creator[sk.camera_cont.size()];
 		for(int i=0,ni=creator_array.length;i<ni;i++)
-			creator_array[i]=new camera_information(sk.camera_cont.get(i),ci);
+			creator_array[i]=new camera_information(sk.camera_cont.get(i),sk,ci);
 		print("scene_camera",creator_array);
 	}
 	public scene_camera_information(scene_kernel my_sk,client_information my_ci)

@@ -2,13 +2,19 @@ package kernel_information;
 
 import java.util.ArrayList;
 
-import kernel_part.buffer_object_file_modify_time_and_length_item;
 import kernel_part.part;
+import kernel_scene.scene_kernel;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 import kernel_scene.client_information;
+import kernel_file_manager.file_directory;
+import kernel_part.buffer_object_file_modify_time_and_length_item;
 
 public class part_information extends jason_creator
 {
 	private part p;
+	private system_parameter part_system_par;
+	private scene_parameter part_scene_par;
 
 	public void print()
 	{
@@ -30,6 +36,8 @@ public class part_information extends jason_creator
 		print("user_name",					p.user_name);
 		print("description_file_name",		p.description_file_name);
 		print("audio_file_name",			p.audio_file_name);
+		print("temp_directory_name",		
+				file_directory.part_file_directory(p, part_system_par, part_scene_par));
 		
 		print("total_face_primitive_number",	p.part_mesh.total_face_primitive_number);
 		print("total_edge_primitive_number",	p.part_mesh.total_edge_primitive_number);
@@ -52,9 +60,11 @@ public class part_information extends jason_creator
 		print("total_buffer_object_text_data_length",	total_buffer_object_text_data_length);
 	}
 	
-	public part_information(part my_p,client_information my_ci)
+	public part_information(part my_p,scene_kernel my_sk,client_information my_ci)
 	{
 		super(my_ci.request_response);
 		p=my_p;
+		part_system_par=my_sk.system_par;
+		part_scene_par=my_sk.scene_par;
 	}
 }

@@ -232,11 +232,11 @@ public class movement_item_container
 			reader.get_string();
 			if((str=reader.get_string())==null)
 				str="";
-			start_state_flag		=(str.compareTo("ÏÔÊ¾")!=0)?true:false;
+			start_state_flag		=(str.compareTo("æ˜¾ç¤º")!=0)?true:false;
 			reader.get_string();
 			if((str=reader.get_string())==null)
 				str="";
-			terminate_state_flag	=(str.compareTo("ÏÔÊ¾")!=0)?true:false;
+			terminate_state_flag	=(str.compareTo("æ˜¾ç¤º")!=0)?true:false;
 			
 			reader.get_string();
 		}

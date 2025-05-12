@@ -18,7 +18,7 @@ public class component_selected_information extends jason_creator
 		
 		jason_creator jc[]=new jason_creator[a.comp_list.size()];
 		for(int i=0,ni=jc.length;i<ni;i++)
-			jc[i]=new component_information(a.comp_list.get(i),ci);
+			jc[i]=new component_information(a.comp_list.get(i),sk,ci);
 		print("component_number",jc.length);
 		print("component_array",jc);
 	}

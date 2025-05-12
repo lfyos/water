@@ -15,7 +15,7 @@ public class part_with_component_information extends jason_creator
 	public void print()
 	{
 		int ids[][]=sk.component_cont.part_component_id_and_driver_id[p.render_id][p.part_id];
-		print("part",new part_information(p,ci));
+		print("part",new part_information(p,sk,ci));
 		print("component_number",ids.length);
 		
 		jason_creator jc[]=new jason_creator[ids.length];

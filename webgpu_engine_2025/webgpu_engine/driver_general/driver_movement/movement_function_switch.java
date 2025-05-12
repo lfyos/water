@@ -751,16 +751,16 @@ public class movement_function_switch
 			return manager.root_movement.movement_tree_id;
 		
 		switch(searcher.search_link_list.tree_node.scale_type){
-		case 1://起点相机比例
+		case 1://璧风偣鐩告満姣斾緥
 			searcher.search_link_list.tree_node.scale_type=2;
 			break;
-		case 2://终点相机比例   
+		case 2://缁堢偣鐩告満姣斾緥   
 			searcher.search_link_list.tree_node.scale_type=3;
 			break;
-		case 3://起点终点相机比例  
+		case 3://璧风偣缁堢偣鐩告満姣斾緥  
 			searcher.search_link_list.tree_node.scale_type=0;
 			break;		
-		case 0://上层相机比例
+		case 0://涓婂眰鐩告満姣斾緥
 		default:
 			searcher.search_link_list.tree_node.scale_type=1;
 			break;

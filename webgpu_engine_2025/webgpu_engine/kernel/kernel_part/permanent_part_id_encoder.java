@@ -14,11 +14,14 @@ public class permanent_part_id_encoder
 			permanent_part_id=0;
 		}
 	}
+	
 	private tree_string_search_container<encoder_part_id> encoder_tree;
+	
 	public permanent_part_id_encoder()
 	{
 		encoder_tree=new tree_string_search_container<encoder_part_id>();
 	}
+	
 	public int encoder(String part_type_string)
 	{
 		ArrayList<encoder_part_id>list;

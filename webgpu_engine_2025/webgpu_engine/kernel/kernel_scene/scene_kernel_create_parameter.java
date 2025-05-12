@@ -45,8 +45,8 @@ public class scene_kernel_create_parameter
 			while(!(f_name.eof())){
 				String my_scene_search_name	=f_name.get_string();
 				scene_file_name				=f_name.get_string();
-				create_top_part_expand_ratio=f_name.get_long();
-				create_top_part_left_ratio	=f_name.get_long();
+				create_top_part_expand_ratio=f_name.get_double();
+				create_top_part_left_ratio	=f_name.get_double();
 				parameter_file_name			=f_name.get_string();
 				extra_parameter_file_name	=f_name.get_string();
 				

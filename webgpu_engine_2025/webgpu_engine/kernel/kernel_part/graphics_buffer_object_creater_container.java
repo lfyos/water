@@ -64,7 +64,7 @@ public class graphics_buffer_object_creater_container
 			if((p_creater=(p_list=creaters.get(i)).get(p_list.size()-1))!=null)
 				p_creater.test_end(0,true);
 		
-		head_fw.println("\t\t\t\t\"region_data\"\t:\t[");
+		head_fw.println("\t\t\t\"region_data\"\t:\t[");
 		
 		String creater_file_name;
 		int file_number=0;
@@ -84,7 +84,7 @@ public class graphics_buffer_object_creater_container
 				file_collector.register(file_type,file_id++,target_file_name);
 				file_number++;
 			}
-		head_fw.println().println("\t\t\t\t]");
+		head_fw.println().println("\t\t\t]");
 		
 		return file_number;
 	}

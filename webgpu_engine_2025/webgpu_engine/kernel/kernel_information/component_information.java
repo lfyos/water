@@ -2,11 +2,14 @@ package kernel_information;
 
 import kernel_component.component;
 import kernel_scene.client_information;
+import kernel_scene.scene_kernel;
 
 public class component_information extends jason_creator
 {
 	private component comp;
+	private scene_kernel sk;
 	private client_information ci;
+	
 	public void print()
 	{
 		part_information pi[]=new part_information[0];
@@ -20,7 +23,7 @@ public class component_information extends jason_creator
 			driver_number=comp.driver_number();
 			pi=new part_information[driver_number];
 			for(int i=0;i<driver_number;i++)
-				pi[i]=new part_information(comp.driver_array.get(i).component_part,ci);
+				pi[i]=new part_information(comp.driver_array.get(i).component_part,sk,ci);
 			
 		}
 		print("component_name",			component_name);
@@ -31,10 +34,11 @@ public class component_information extends jason_creator
 		print("driver_number",			driver_number);
 		print("part",					pi);
 	}
-	public component_information(component my_comp,client_information my_ci)
+	public component_information(component my_comp,scene_kernel my_sk,client_information my_ci)
 	{
 		super(my_ci.request_response);
 		comp=my_comp;
+		sk=my_sk;
 		ci=my_ci;
 	}
 }
