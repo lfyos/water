@@ -246,7 +246,7 @@ public class camera_result
 			}
 		}
 		
-		if((comp.clip.clip_plane.size()<=0)||(comp.children_number()>0)||(comp.model_box==null))
+		if((comp.clip.clip_plane.size()<=0)||(comp.children.size()>0)||(comp.model_box==null))
 			return false;
 		
 		tetrahedron undecided_box=new tetrahedron(comp.absolute_location,comp.model_box);

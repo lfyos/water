@@ -1,7 +1,7 @@
 package kernel_component;
 
-import kernel_file_manager.file_reader;
 import kernel_transformation.location;
+import kernel_file_manager.file_reader;
 
 public class component_core_8 extends component_core_7
 {
@@ -64,9 +64,10 @@ public class component_core_8 extends component_core_7
 			negative_absolute_location=null;
 			negative_parent_and_relative_location=null;
 			
-			for(int i=0,n=children_number();i<n;i++){
-				children[i].should_caculate_location_flag=true;
-				children[i].should_caculate_box_flag=true;
+			for(int i=0,n=children.size();i<n;i++){
+				component my_child=children.get(i);
+				my_child.should_caculate_location_flag=true;
+				my_child.should_caculate_box_flag=true;
 			}
 		}
 		return absolute_location;

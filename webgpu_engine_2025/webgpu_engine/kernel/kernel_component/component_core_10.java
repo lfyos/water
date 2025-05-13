@@ -1,8 +1,8 @@
 package kernel_component;
 
-import kernel_file_manager.file_reader;
 import kernel_part.part;
 import kernel_transformation.box;
+import kernel_file_manager.file_reader;
 
 public class component_core_10 	extends component_core_9
 {
@@ -37,7 +37,7 @@ public class component_core_10 	extends component_core_9
 				model_box=null;
 				return;
 			}
-			if((child_number=children_number())<=0){
+			if((child_number=children.size())<=0){
 				for(i=0,n=driver_number();i<n;i++){
 					part p=driver_array.get(i).component_part;
 					model_box=p.secure_caculate_part_box((component)this,i,-1,-1,-1,-1,-1,-1,null,null);
@@ -56,11 +56,12 @@ public class component_core_10 	extends component_core_9
 			}
 			if(caculate_model_box_flag){
 				for(i=0,model_box=null;i<child_number;i++)
-					if(children[i].model_box==null){
+					if(children.get(i).model_box==null){
 						model_box=null;
 						break;
 					}else{
-						box vbox=children[i].relative_location.multiply(children[i].model_box);
+						component my_child=children.get(i);
+						box vbox=my_child.relative_location.multiply(my_child.model_box);
 						if(model_box==null)
 							model_box=vbox;
 						else
@@ -83,12 +84,13 @@ public class component_core_10 	extends component_core_9
 			}
 			box all_box=null,only_box=null;
 			for(i=0,n=0;i<child_number;i++){
-				if(children[i].should_caculate_box_flag){
+				component my_child=children.get(i);
+				if(my_child.should_caculate_box_flag){
 					caculate_box_result_flag=false;
 					return;
 				}
-				box vbox=children[i].component_box;
-				if(children[i].caculate_box_result_flag){
+				box vbox=my_child.component_box;
+				if(my_child.caculate_box_result_flag){
 					if((n++)<=0)
 						only_box=vbox;
 					else
@@ -99,7 +101,7 @@ public class component_core_10 	extends component_core_9
 				else
 					all_box=vbox.add(all_box );
 			}
-			if((n>0)&&(children_number()==n)){
+			if((n>0)&&(children.size()==n)){
 				caculate_box_result_flag=true;
 				component_box=only_box;
 			}else{

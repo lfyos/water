@@ -43,13 +43,13 @@ public class movement_suspend
 	{
 		int children_number;
 
-		if((children_number=comp.children_number())<=0){
+		if((children_number=comp.children.size())<=0){
 			comp.modify_display_flag(parameter_channel_id,false,sk.component_cont);
 			if(comp.driver_number()>0)
 				virtual_mount_collector.register_component(comp,0);
 		}else{
 			for(int i=0;i<children_number;i++)
-				init_virtual_mount_component_routine(sk,comp.children[i],parameter_channel_id);
+				init_virtual_mount_component_routine(sk,comp.children.get(i),parameter_channel_id);
 			comp.modify_display_flag(parameter_channel_id,true,sk.component_cont);
 		}
 	}

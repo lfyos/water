@@ -118,8 +118,8 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	private void reset_component_location(component comp,long start_time,scene_kernel sk,client_information ci)
 	{
-		for(int i=0,ni=comp.children_number();i<ni;i++)
-			reset_component_location(comp.children[i],start_time,sk,ci);
+		for(int i=0,ni=comp.children.size();i<ni;i++)
+			reset_component_location(comp.children.get(i),start_time,sk,ci);
 		
 		if(comp.move_location.is_not_identity_matrix())
 			sk.modifier_cont[modifier_container_id].add_modifier(
@@ -130,12 +130,12 @@ public class extended_component_instance_driver extends component_instance_drive
 	private static void add_in_list_component(component comp,component_array comp_array)
 	{
 		int child_number;
-		if((child_number=comp.children_number())<=0) {
+		if((child_number=comp.children.size())<=0) {
 			if(comp.uniparameter.part_list_flag)
 				comp_array.add_component(comp);
 		}else {
 			for(int i=0;i<child_number;i++)
-				add_in_list_component(comp.children[i],comp_array);
+				add_in_list_component(comp.children.get(i),comp_array);
 		}
 	}
 	public String[] response_component_event(scene_kernel sk,client_information ci)

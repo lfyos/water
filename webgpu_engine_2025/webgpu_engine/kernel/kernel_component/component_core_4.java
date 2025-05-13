@@ -16,44 +16,25 @@ import kernel_file_manager.travel_through_directory;
 
 public class component_core_4 extends component_core_3
 {
-	public component children[];
+	public ArrayList<component> children;
 	
 	public void destroy()
 	{
 		super.destroy();
-		if(children!=null){
-			for(int i=0,ni=children_number();i<ni;i++){
-				if(children[i]!=null)
-					children[i].destroy();
-				children[i]=null;
-			}
-			children=null;
-		}		
-	}
-	public int children_number()
-	{
-		if(children==null)
-			return 0;
-		else
-			return children.length;
+		for(int i=0,ni=children.size();i<ni;i++){
+			component my_child=children.get(i);
+			if(my_child!=null)
+				my_child.destroy();
+			children.set(i,null);
+		}
+		children.clear();
 	}
 	public void append_child(ArrayList<component> my_append_children_list)
 	{
 		if(my_append_children_list==null)
 			return;
-		int my_append_child_number;
-		if((my_append_child_number=my_append_children_list.size())<=0)
-			return;
-		if(children==null)
-			children=my_append_children_list.toArray(new component[my_append_child_number]);
-		else{
-			component bak[]=children;
-			children=new component[bak.length+my_append_child_number];
-			for(int i=0,ni=bak.length;i<ni;i++)
-				children[i]=bak[i];
-			for(int i=0,j=bak.length;i<my_append_child_number;i++,j++)
-				children[j]=my_append_children_list.get(i);
-		}
+		for(int i=0,ni=my_append_children_list.size();i<ni;i++)
+			children.add(my_append_children_list.get(i));
 	}
 	private String[]file_mount(file_reader fr,scene_kernel sk,boolean absulate_path_flag)
 	{
@@ -277,9 +258,7 @@ public class component_core_4 extends component_core_3
 	private void process_component_operation(
 			String token_string,file_reader fr,component_construction_parameter ccp)
 	{
-		ArrayList<String[]>assemble_file_name_list=new ArrayList<String[]>();
-
-		for(children=null;!(fr.eof());){
+		for(ArrayList<String[]>assemble_file_name_list=new ArrayList<String[]>();!(fr.eof());){
 			String str;
 			if((str=fr.get_string())==null)
 				continue;
@@ -696,7 +675,6 @@ public class component_core_4 extends component_core_3
 				break;
 			}
 			}
-
 			ArrayList<component> child_component_list=new ArrayList<component>();
 			for(int i=0,ni=assemble_file_name_list.size();i<ni;i++) {
 				String my_assemble_file_name[]=assemble_file_name_list.get(i);
@@ -754,15 +732,15 @@ public class component_core_4 extends component_core_3
 		if(ccp.clsc.get_source_item_number()>0){
 			append_child(ccp.clsc.get_source_item(component_name,
 				uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp));
-			for(int i=0,ni=children_number();i<ni;i++)
-				children[i].append_component(ccp);
+			for(int i=0,ni=children.size();i<ni;i++)
+				children.get(i).append_component(ccp);
 		}
 	}
 	public component_core_4(String token_string,file_reader fr,boolean part_list_flag,
 			boolean normalize_location_flag,component_construction_parameter ccp)
 	{
 		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
-		
+		children=new ArrayList<component>();
 		process_component_operation(token_string,fr,ccp);
 		append_child(ccp.clsc.get_source_item(component_name,
 			uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp));

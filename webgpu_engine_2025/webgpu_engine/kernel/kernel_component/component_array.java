@@ -29,11 +29,11 @@ public class component_array
 	{
 		if(comp.uniparameter.part_list_flag){
 			int child_number;
-			if((child_number=comp.children_number())<=0)
+			if((child_number=comp.children.size())<=0)
 				add_component(comp);
 			else
 				for(int i=0;i<child_number;i++)
-					add_part_list_component(comp.children[i]);
+					add_part_list_component(comp.children.get(i));
 		}
 		return comp_list.size();
 	}
@@ -41,12 +41,12 @@ public class component_array
 	{
 		if(comp.get_effective_display_flag(parameter_channel_id)){
 			int child_number;
-			if((child_number=comp.children_number())<=0){
+			if((child_number=comp.children.size())<=0){
 				if(comp.uniparameter.part_list_flag|part_list_flag)
 					add_component(comp);
 			}else
 				for(int i=0;i<child_number;i++)
-					add_visible_component(comp.children[i],parameter_channel_id,part_list_flag);
+					add_visible_component(comp.children.get(i),parameter_channel_id,part_list_flag);
 		}
 		return comp_list.size();
 	}
@@ -75,14 +75,14 @@ public class component_array
 	{
 		if(new_comp==null)
 			return comp_list.size();
-		int child_number=new_comp.children_number();
+		int child_number=new_comp.children.size();
 		if(new_comp.uniparameter.effective_selected_flag)
 			if((child_number!=1)||do_one_child_flag) {
 				add_component(new_comp);
 				return comp_list.size();
 			}
 		for(int i=0;i<child_number;i++)
-			add_selected_component(new_comp.children[i],do_one_child_flag);
+			add_selected_component(new_comp.children.get(i),do_one_child_flag);
 		return comp_list.size();
 	}
 	public int add_collector(component_collector my_collector)
@@ -103,9 +103,9 @@ public class component_array
 	{
 		component comp;
 		for(int i=0;i<comp_list.size();i++) {
-			for(comp=comp_list.get(i);comp.children_number()>0;comp=comp.children[0])
-				for(int j=1,nj=comp.children_number();j<nj;j++)
-					add_component(comp.children[j]);
+			for(comp=comp_list.get(i);comp.children.size()>0;comp=comp.children.get(0))
+				for(int j=1,nj=comp.children.size();j<nj;j++)
+					add_component(comp.children.get(j));
 			comp_list.set(i,comp);
 		}
 		return comp_list.size();
@@ -151,7 +151,7 @@ public class component_array
 			for(int i=0;i<comp_list.size();i++){
 				comp=comp_list.get(i);
 				if((parent=component_cont.get_component(comp.parent_component_id))!=null)
-					if((mark_flag[parent.component_id])==(parent.children_number())){
+					if((mark_flag[parent.component_id])==(parent.children.size())){
 						exit_flag=true;
 						if((collect_flag[parent.component_id]++)==0)
 							comp_list.set(i,parent);
@@ -192,8 +192,8 @@ public class component_array
 				comp_list.set(i,comp_list.get(last_id));
 				comp_list.remove(last_id);
 				
-				for(int j=0,nj=comp.children_number();j<nj;j++)
-					add_component(comp.children[j]);
+				for(int j=0,nj=comp.children.size();j<nj;j++)
+					add_component(comp.children.get(j));
 				execute_number++;
 			}
 		}
@@ -207,8 +207,8 @@ public class component_array
 	{
 		component expand_comp;
 		if((expand_comp=delete(array_id))!=null)
-			for(int i=0,ni=expand_comp.children_number();i<ni;i++)
-				add_component(expand_comp.children[i]);
+			for(int i=0,ni=expand_comp.children.size();i<ni;i++)
+				add_component(expand_comp.children.get(i));
 		return expand_comp;
 	}
 	public component_array()

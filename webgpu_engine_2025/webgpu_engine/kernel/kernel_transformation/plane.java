@@ -113,7 +113,7 @@ public class plane
 			{0,1,1},{1,0,0}
 		};
 
-		if(comp.children_number()<=0){
+		if(comp.children.size()<=0){
 			if((b=comp.model_box)==null)
 				return 4;
 			if((return_value=clip_compare_center(b,comp.absolute_location.multiply(b.center())))!=4)

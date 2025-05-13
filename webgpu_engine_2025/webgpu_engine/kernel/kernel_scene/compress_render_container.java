@@ -108,8 +108,8 @@ public class compress_render_container
 		part p;
 		ArrayList<part>p_array;
 		
-		for(int i=0,ni=comp.children_number();i<ni;i++)
-			touch_component_access_part(comp.children[i],pcps);
+		for(int i=0,ni=comp.children.size();i<ni;i++)
+			touch_component_access_part(comp.children.get(i),pcps);
 		
 		for(int i=0,ni=comp.driver_number();i<ni;i++)
 			if((p=comp.driver_array.get(i).component_part)!=null){

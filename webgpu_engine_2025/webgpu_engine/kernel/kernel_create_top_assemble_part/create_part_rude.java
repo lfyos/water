@@ -24,9 +24,9 @@ public class create_part_rude
 		int children_number;
 		double my_distance2;
 		
-		if((children_number=comp.children_number())>0) {
+		if((children_number=comp.children.size())>0) {
 			for(int i=0;i<children_number;i++)
-				create_location_box_and_material(comp.children[i],nega,length2);
+				create_location_box_and_material(comp.children.get(i),nega,length2);
 			return;
 		}
 		for(int i=0,ni=comp.driver_number();i<ni;i++) {

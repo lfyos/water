@@ -300,8 +300,8 @@ public class component_collector
 			if(comp.driver_number()>0)
 				register_number+=register_component(comp,0);
 			else
-				for(int i=0,ni=comp.children_number();i<ni;i++)
-					register_number+=register_component(comp.children[i]);
+				for(int i=0,ni=comp.children.size();i<ni;i++)
+					register_number+=register_component(comp.children.get(i));
 		}
 		return register_number;
 	}
@@ -318,8 +318,8 @@ public class component_collector
 		if(comp!=null){
 			for(int i=0,ni=comp.driver_number();i<ni;i++)
 				register_number+=register_component(comp,i);
-			for(int i=0,ni=comp.children_number();i<ni;i++)
-				register_number+=register_all(comp.children[i]);
+			for(int i=0,ni=comp.children.size();i<ni;i++)
+				register_number+=register_all(comp.children.get(i));
 		}
 		return register_number;
 	}

@@ -1,7 +1,7 @@
 package kernel_component;
 
-import kernel_common_class.nanosecond_timer;
 import kernel_scene.scene_kernel;
+import kernel_common_class.nanosecond_timer;
 
 public class component_selection
 {
@@ -11,8 +11,8 @@ public class component_selection
 	{
 		if(my_comp==null)
 			return;
-		for(int i=0,children_number=my_comp.children_number();i<children_number;i++)
-			do_clear_selected_flag(my_comp.children[i]);
+		for(int i=0,children_number=my_comp.children.size();i<children_number;i++)
+			do_clear_selected_flag(my_comp.children.get(i));
 		my_comp.uniparameter.selected_flag=false;
 	}
 	private void clear_selected_flag_without_brother(component my_comp,component_container component_cont)
@@ -23,9 +23,11 @@ public class component_selection
 				if((p=new component_link_list(comp,0,p)).comp.uniparameter.selected_flag){
 					do_clear_selected_flag(my_comp=p.comp);
 					for(;p.next_list_item!=null;p=p.next_list_item)
-						for(int i=0;i<(p.comp.children.length);i++)
-							if(p.comp.children[i]!=(p.next_list_item.comp))
-								do_set_selected_flag(p.comp.children[i],component_cont);
+						for(int i=0,ni=p.comp.children.size();i<ni;i++) {
+							component my_child=p.comp.children.get(i);
+							if(p.next_list_item.comp!=my_child)
+								do_set_selected_flag(my_child,component_cont);
+						}
 					
 					component parent_comp=component_cont.get_component(comp.parent_component_id);
 					if(parent_comp==null)
@@ -50,12 +52,12 @@ public class component_selection
 		for(component p=component_cont.get_component(my_comp.parent_component_id);
 			p!=null;p=component_cont.get_component(p.parent_component_id))
 		{
-			int n=p.children.length;
+			int n=p.children.size();
 			for(int i=0;i<n;i++)
-				if(!(p.children[i].uniparameter.selected_flag))
+				if(!(p.children.get(i).uniparameter.selected_flag))
 					return;
 			for(int i=0;i<n;i++)
-				p.children[i].uniparameter.selected_flag=false;
+				p.children.get(i).uniparameter.selected_flag=false;
 			p.uniparameter.selected_flag=true;
 			p.uniparameter.selected_time=cur_time;
 		}
@@ -108,19 +110,16 @@ public class component_selection
 				switch_selected_flag(my_comp,component_cont);
 				break;
 			}
-		if(my_comp.children==null)
-			set_selected_flag(my_comp,component_cont);
-		else if(my_comp.children.length<=0)
+		if(my_comp.children.size()<=0)
 			set_selected_flag(my_comp,component_cont);
 		else{
-			int last_id=0;
-			long last_time=my_comp.children[0].uniparameter.selected_time;
-			for(int i=1,ni=my_comp.children.length;i<ni;i++)
-				if(my_comp.children[i].uniparameter.selected_time>last_time){
-					last_id=i;
-					last_time=my_comp.children[last_id].uniparameter.selected_time;
-				}
-			do_set_selected_flag(my_comp.children[last_id],component_cont);
+			component last_comp=my_comp.children.get(0);
+			for(int i=1,ni=my_comp.children.size();i<ni;i++) {
+				component my_child_comp=my_comp.children.get(i);
+				if(my_child_comp.uniparameter.selected_time>last_comp.uniparameter.selected_time)
+					last_comp=my_child_comp;
+			}
+			do_set_selected_flag(last_comp,component_cont);
 		}
 	}
 	public void set_moved_descendant_selected(component comp,component_container component_cont)
@@ -129,8 +128,8 @@ public class component_selection
 			if(comp.move_location.is_not_identity_matrix())
 				set_selected_flag(comp,component_cont);
 			else
-				for(int i=0,n=comp.children_number();i<n;i++)
-					set_moved_descendant_selected(comp.children[i],component_cont);
+				for(int i=0,n=comp.children.size();i<n;i++)
+					set_moved_descendant_selected(comp.children.get(i),component_cont);
 		}
 	}
 	public void set_collector_selected(component_collector collector,component_container component_cont)

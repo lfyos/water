@@ -36,14 +36,15 @@ public class check_component
 		ci.request_response.println();
 		ci.request_response.println();
 		
-		if(comp.children_number()>0) {
-			for(int i=0,ni=comp.children_number();i<ni;i++) {
+		if(comp.children.size()>0) {
+			for(int i=0,ni=comp.children.size();i<ni;i++) {
+				component my_child=comp.children.get(i);
 				String str="children	"+i+"	";
-				ci.request_response.println(str+"component_id:			",	comp.children[i].component_id);
-				ci.request_response.println(str+"component_name:		",	comp.children[i].component_name);
-				ci.request_response.println(str+"component_part_name:	",	comp.children[i].part_name);
-				ci.request_response.println(str+"component_directory:	",	comp.children[i].component_directory_name);
-				ci.request_response.println(str+"component_file:		",	comp.children[i].component_file_name);
+				ci.request_response.println(str+"component_id:			",	my_child.component_id);
+				ci.request_response.println(str+"component_name:		",	my_child.component_name);
+				ci.request_response.println(str+"component_part_name:	",	my_child.part_name);
+				ci.request_response.println(str+"component_directory:	",	my_child.component_directory_name);
+				ci.request_response.println(str+"component_file:		",	my_child.component_file_name);
 				ci.request_response.println();
 			}
 			

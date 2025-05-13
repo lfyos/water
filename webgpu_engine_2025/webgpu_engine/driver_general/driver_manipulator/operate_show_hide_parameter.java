@@ -11,9 +11,8 @@ public class operate_show_hide_parameter
 	private static void set_frame_and_edge_flag(component comp,
 			int parameter_channel_id,long hide_code,long show_code)
 	{
-		if(comp.children!=null)
-			for(int i=0;i<(comp.children.length);i++)
-				set_frame_and_edge_flag(comp.children[i],parameter_channel_id,hide_code,show_code);
+		for(int i=0,ni=comp.children.size();i<ni;i++)
+			set_frame_and_edge_flag(comp.children.get(i),parameter_channel_id,hide_code,show_code);
 		
 		long old_display_bitmap=comp.multiparameter[parameter_channel_id].display_bitmap;
 		comp.multiparameter[parameter_channel_id].display_bitmap&=(~hide_code);

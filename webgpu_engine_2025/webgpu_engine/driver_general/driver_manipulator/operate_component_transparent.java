@@ -10,8 +10,8 @@ public class operate_component_transparent
 	private static void set_transparency(component comp,double transparency_value)
 	{
 		comp.uniparameter.transparency_value=transparency_value;
-		for(int i=0,ni=comp.children_number();i<ni;i++)
-			set_transparency(comp.children[i],transparency_value);
+		for(int i=0,ni=comp.children.size();i<ni;i++)
+			set_transparency(comp.children.get(i),transparency_value);
 	}
 	
 	public static void do_transparency(scene_kernel sk,client_information ci)

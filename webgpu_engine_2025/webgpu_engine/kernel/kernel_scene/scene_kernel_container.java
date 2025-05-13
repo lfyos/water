@@ -61,15 +61,15 @@ public class scene_kernel_container
 			create_parameter=new scene_kernel_create_parameter(
 					null,client_scene_file_name,client_scene_file_charset,system_par);
 		
-		sk=null;
 		if(create_parameter.success_load_parameter_flag)
 			sk=new scene_kernel(my_scene_name,my_link_name,create_parameter,
 					request_response,system_par,original_render,my_part_loader_cont);
-		else	
+		else {	
+			sk=null;
 			debug_information.println("Cann't Create scene:	",my_scene_name+"	"+my_link_name);
-
-		scene_kernel_link_number=0;
-		initilization_flag=true;
-		scene_kernel_container_lock=new ReentrantLock();
+		}
+		scene_kernel_link_number	=0;
+		initilization_flag			=true;
+		scene_kernel_container_lock	=new ReentrantLock();
 	}
 }

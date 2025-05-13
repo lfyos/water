@@ -26,7 +26,7 @@ public class create_assemble_part
 
 	private int do_test(component p)
 	{
-		if(p.children_number()<=0){
+		if(p.children.size()<=0){
 			for(int i=0,ni=p.driver_number();i<ni;i++){
 				part comp_part=p.driver_array.get(i).component_part;
 				if(comp_part==null)
@@ -42,14 +42,15 @@ public class create_assemble_part
 			return -1;
 		}
 		
-		int do_test_result=do_test(p.children[0]);
-		can_create_assemble_part_name[p.component_id]=can_create_assemble_part_name[p.children[0].component_id];
+		int do_test_result=do_test(p.children.get(0));
+		can_create_assemble_part_name[p.component_id]=can_create_assemble_part_name[p.children.get(0).component_id];
 		
-		for(int child_do_test_result,i=1,n=p.children.length;i<n;i++) {
-			if((child_do_test_result=do_test(p.children[i]))>=0)
+		for(int child_do_test_result,i=1,n=p.children.size();i<n;i++) {
+			component my_child_comp=p.children.get(i);
+			if((child_do_test_result=do_test(my_child_comp))>=0)
 				if(do_test_result==child_do_test_result)
 					if(can_create_assemble_part_name[p.component_id].compareTo(
-						can_create_assemble_part_name[p.children[i].component_id])==0)
+						can_create_assemble_part_name[my_child_comp.component_id])==0)
 							continue;
 			do_test_result=-1;
 			can_create_assemble_part_name[p.component_id]=null;
@@ -59,7 +60,7 @@ public class create_assemble_part
 	private int caculate_part_number(component p)
 	{
 		int children_number;
-		if((children_number=p.children_number())<=0){
+		if((children_number=p.children.size())<=0){
 			if(p.driver_number()>0)
 				if(p.get_component_box(false)!=null){
 					part_number[p.component_id]=1;
@@ -72,7 +73,7 @@ public class create_assemble_part
 		}else {
 			part_number[p.component_id]=0;
 			for(int i=0;i<children_number;i++)
-				part_number[p.component_id]+=caculate_part_number(p.children[i]);
+				part_number[p.component_id]+=caculate_part_number(p.children.get(i));
 			return part_number[p.component_id];
 		}
 	}
@@ -121,8 +122,8 @@ public class create_assemble_part
 	private void register_component(component p)
 	{
 		int children_number;
-		while((children_number=p.children_number())==1)
-			p=p.children[0];
+		while((children_number=p.children.size())==1)
+			p=p.children.get(0);
 		if(children_number<=0)
 			return;
 		if(part_number[p.component_id]<=1)
@@ -132,7 +133,7 @@ public class create_assemble_part
 		
 		if(can_create_assemble_part_name[p.component_id]==null) {
 			for(int i=0;i<children_number;i++)
-				register_component(p.children[i]);
+				register_component(p.children.get(i));
 			return;
 		}
 		component_heap[component_number++]=p;
@@ -226,8 +227,8 @@ public class create_assemble_part
 			if(max_part_number<=min_expand_part_number)
 				break;
 			component expand_p=get_heap_component();
-			for(int i=0,child_number=expand_p.children_number();i<child_number;i++)
-				register_component(expand_p.children[i]);
+			for(int i=0,child_number=expand_p.children.size();i<child_number;i++)
+				register_component(expand_p.children.get(i));
 		}
 
 		debug_information.println();

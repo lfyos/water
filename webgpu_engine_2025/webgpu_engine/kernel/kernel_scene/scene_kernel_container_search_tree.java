@@ -119,7 +119,7 @@ public class scene_kernel_container_search_tree
 			scene_kernel_cont.destroy();
 			return null;
 		}
-		debug_information.println("Create scene success		:	",scene_name+"	"+link_name);
+		
 		scene_kernel_cont.modify_scene_kernel_link_number(1);
 		
 		tree.add(new String[]{scene_name,link_name},scene_kernel_cont);

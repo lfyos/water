@@ -182,7 +182,7 @@ public class scene_kernel
 	{
 		int child_number;
 		
-		if((comp.driver_number()>0)||((child_number=comp.children_number())<=0))
+		if((comp.driver_number()>0)||((child_number=comp.children.size())<=0))
 			return;
 		ArrayList<part> part_list=part_search.search_part(comp.part_name);
 		if(part_list!=null)
@@ -209,7 +209,7 @@ public class scene_kernel
 				}
 			}
 		for(int i=0;i<child_number;i++)
-			mount_top_box_part(comp.children[i],component_load_source_cont,part_search,request_response);
+			mount_top_box_part(comp.children.get(i),component_load_source_cont,part_search,request_response);
 	}
 	private void load_create_assemble_part(
 			component_load_source_container component_load_source_cont,
@@ -278,7 +278,7 @@ public class scene_kernel
 		return ret_val;
 	}
 	
-	private void load_routine(component_load_source_container component_load_source_cont,
+	private boolean load_routine(component_load_source_container component_load_source_cont,
 		client_request_response request_response,client_process_bar process_bar,
 		buffer_object_file_modify_time_and_length_container system_boftal_container,
 		tree_string_locker_container string_locker_container)
@@ -287,7 +287,10 @@ public class scene_kernel
 		
 		String path_name=create_parameter.scene_directory_name+create_parameter.scene_file_name;
 		file_reader scene_f=new file_reader(path_name,create_parameter.scene_charset);
-		if(!(scene_f.error_flag())){
+		if(scene_f.error_flag()){
+			debug_information.println("Open scene file fail	:	",	path_name);
+			return true;
+		}else {
 			create_parameter.scene_directory_name		=scene_f.directory_name;
 			create_parameter.scene_file_name			=scene_f.file_name;
 			if(scene_par.scene_last_modified_time<scene_f.lastModified_time)
@@ -296,11 +299,6 @@ public class scene_kernel
 				scene_par.scene_shader_directory_name	=scene_f.directory_name;
 		}
 
-		debug_information.println("type_shader_directory_name	:	",	scene_par.type_shader_directory_name);
-		debug_information.println("type_shader_file_name 		:	",	scene_par.type_shader_file_name);
-		debug_information.println("scene_shader_directory_name	:	",	scene_par.scene_shader_directory_name);	
-		debug_information.println("scene_shader_file_name		:	",	scene_par.scene_shader_file_name);	
-		
 		permanent_part_id_encoder encoder[]=new permanent_part_id_encoder[scene_par.type_sub_directory.length+2];
 		for(int i=0,ni=encoder.length;i<ni;i++)
 			encoder[i]=new permanent_part_id_encoder();
@@ -418,28 +416,36 @@ public class scene_kernel
 		
 		process_bar.set_process_bar(true,"load_termination","",1,1);
 
-		return;
+		return false;
 	}
 	
-	public void load(component_load_source_container component_load_source_cont,
+	public boolean load(component_load_source_container component_load_source_cont,
 			client_request_response request_response,client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container,
 			tree_string_locker_container string_locker_container)
 	{
 		debug_information.println();
-		debug_information.println("scene_par.directory_name	:	",			scene_par.directory_name);
-		debug_information.println("scene_temporary_directory_name	:	",	scene_par.scene_temporary_directory_name);
-		debug_information.println("camera_file_name		:	",				scene_par.camera_file_name);
-		debug_information.println("change_part_string		:	",			scene_par.change_part_string);
-		debug_information.println("part_type_string		:	",				scene_par.part_type_string);
+		debug_information.println("scene_par.directory_name                 :	",	scene_par.directory_name);
+		debug_information.println("scene_par.scene_temporary_directory_name :	",	scene_par.scene_temporary_directory_name);
+		debug_information.println("scene_par.camera_file_name               :	",	scene_par.camera_file_name);
+		debug_information.println("scene_par.change_part_string             :	",	scene_par.change_part_string);
+		debug_information.println("scene_par.part_type_string               :	",	scene_par.part_type_string);
 		
+		debug_information.println("scene_par.type_shader_directory_name     :	",	scene_par.type_shader_directory_name);
+		debug_information.println("scene_par.type_shader_file_name          :	",	scene_par.type_shader_file_name);
+		debug_information.println("scene_par.scene_shader_directory_name    :	",	scene_par.scene_shader_directory_name);	
+		debug_information.println("scene_par.scene_shader_file_name         :	",	scene_par.scene_shader_file_name);	
+		
+		boolean ret_val;
 		try{
-			load_routine(component_load_source_cont,request_response,
+			ret_val=load_routine(component_load_source_cont,request_response,
 				process_bar,system_boftal_container,string_locker_container);
 		}catch(Exception e){
 			e.printStackTrace();
 			debug_information.println("Scene load exception:	",e.toString());
+			ret_val=true;
 		}
+		return ret_val;
 	}
 	
 	private boolean reset_flag;
@@ -458,4 +464,5 @@ public class scene_kernel
 	{
 		return scene_par.client_parameter_name.search_change_name(client_parameter_name,null);
 	}
+
 }

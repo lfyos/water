@@ -26,9 +26,9 @@ public class scene_kernel_and_client_information_container
 	
 	public scene_kernel_and_client_information_container(scene_kernel_container my_scene_kernel_cont)
 	{
-		sk_and_ci_processing_number	=0;
-		scene_kernel_cont	=my_scene_kernel_cont;
-		client_information	=null;
+		sk_and_ci_processing_number					=0;
+		scene_kernel_cont							=my_scene_kernel_cont;
+		client_information							=null;
 		kernel_and_client_information_lock_number	=0;
 	}
 	synchronized public int modify_kernel_and_client_information_lock_number(int modify_number) 
@@ -51,10 +51,15 @@ public class scene_kernel_and_client_information_container
 			scene_kernel_cont.initilization_flag=false;
 			if(scene_kernel_cont.sk.component_cont==null){
 				component_load_source_cont=new component_load_source_container(component_load_source_cont);
-				scene_kernel_cont.sk.load(component_load_source_cont,my_request_response,
-						process_bar,system_boftal_container,string_locker_container);
+				boolean load_scene_fail_flag=scene_kernel_cont.sk.load(component_load_source_cont,
+						my_request_response,process_bar,system_boftal_container,string_locker_container);
 				component_load_source_cont.destroy();
 				
+				if(load_scene_fail_flag) {
+					scene_kernel_cont.sk.destroy();
+					scene_kernel_cont.sk=null;
+					return null;
+				}
 				if(scene_kernel_cont.sk.component_cont.root_component!=null) {
 					scene_counter.update_kernel_component_number(1,
 							scene_kernel_cont.sk.component_cont.root_component.component_id+1);

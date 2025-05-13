@@ -10,8 +10,8 @@ public class operate_show_hide_component
 	private static void show_hide(component comp,int parameter_channel_id,boolean visible_flag,scene_kernel sk)
 	{
 		comp.modify_display_flag(new int[]{parameter_channel_id},visible_flag,sk.component_cont);
-		for(int i=0,child_number=comp.children_number();i<child_number;i++)
-			show_hide(comp.children[i],parameter_channel_id,visible_flag,sk);
+		for(int i=0,child_number=comp.children.size();i<child_number;i++)
+			show_hide(comp.children.get(i),parameter_channel_id,visible_flag,sk);
 	}
 	
 	public static void show_hide_component_request(int parameter_channel_id,scene_kernel sk,client_information ci)

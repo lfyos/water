@@ -152,8 +152,10 @@ public class component_container
 			debug_information.print  ("component number:",				component_pointer.length);
 			debug_information.print  (",\tpart_component_number:",		part_component_number);
 			debug_information.print  (",\texist_part_component_number:",exist_part_component_number);
-			debug_information.println(",\ttotal_primitive_number:[",		
-				total_face_primitive_number+","+total_edge_primitive_number+","+total_point_primitive_number+"]");
+			debug_information.println(",\ttotal_primitive_number:",
+				"[face:"	+total_face_primitive_number	+
+				",edge:"	+total_edge_primitive_number	+
+				",point:"	+total_point_primitive_number	+"]");
 		}
 	}
 	

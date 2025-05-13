@@ -19,7 +19,7 @@ public class component_information extends jason_creator
 		if(comp!=null){
 			component_name=comp.component_name;
 			component_id=comp.component_id;
-			child_number=comp.children_number();
+			child_number=comp.children.size();
 			driver_number=comp.driver_number();
 			pi=new part_information[driver_number];
 			for(int i=0;i<driver_number;i++)

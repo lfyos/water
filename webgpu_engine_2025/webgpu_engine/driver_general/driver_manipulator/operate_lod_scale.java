@@ -36,8 +36,8 @@ public class operate_lod_scale
 				component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp,driver_id);
 				in_dr.instance_driver_lod_precision_scale=new_lod_scale;
 			}
-			for(int child_id=0,child_number=comp.children_number();child_id<child_number;child_id++)
-				comp_array.add_component(comp.children[child_id]);
+			for(int child_id=0,child_number=comp.children.size();child_id<child_number;child_id++)
+				comp_array.add_component(comp.children.get(child_id));
 		}
 		ci.component_instance_driver_cont.reset_instance_lod_precision_scale(sk.component_cont.root_component);
 

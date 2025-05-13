@@ -290,8 +290,8 @@ public class scene_initialization
 				fw.print(",",sort_component_array[i].component_id);
 				fw.print(",[");
 				
-				for(int j=0,nj=sort_component_array[i].children_number();j<nj;j++)
-					fw.print((j<=0)?"":",",sort_component_array[i].children[j].component_id);
+				for(int j=0,nj=sort_component_array[i].children.size();j<nj;j++)
+					fw.print((j<=0)?"":",",sort_component_array[i].children.get(j).component_id);
 				
 				fw.println((i!=(ni-1))?"]],":"]]");
 			}

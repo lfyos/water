@@ -13,9 +13,9 @@ public class component_tree_information extends jason_creator
 	public void print()
 	{
 		jason_creator jc=new component_information(comp,sk,ci);
-		jason_creator child[]=new jason_creator[comp.children_number()];
+		jason_creator child[]=new jason_creator[comp.children.size()];
 		for(int i=0,ni=child.length;i<ni;i++)
-			child[i]=new component_tree_information(comp.children[i],sk,ci);
+			child[i]=new component_tree_information(comp.children.get(i),sk,ci);
 		print("component",jc);
 		print("child",child);
 	}

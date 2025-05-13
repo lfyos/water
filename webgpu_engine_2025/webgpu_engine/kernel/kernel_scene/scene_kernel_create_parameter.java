@@ -90,11 +90,11 @@ public class scene_kernel_create_parameter
 						continue;
 					}
 				}
-				
-				debug_information.println("scene_name	              	:	",	my_scene_search_name);
-				debug_information.println("scene_file_name          	:	",	f_name.directory_name+scene_file_name);
-				debug_information.println("parameter_file_name		:	",		parameter_file_name);
-				debug_information.println("extra_parameter_file_name	:	",	extra_parameter_file_name);
+				debug_information.println();
+				debug_information.println("scene_name                     :	",	my_scene_search_name);
+				debug_information.println("scene_file_name                :	",	f_name.directory_name+scene_file_name);
+				debug_information.println("parameter_file_name            :	",	parameter_file_name);
+				debug_information.println("extra_parameter_file_name      :	",	extra_parameter_file_name);
 				
 				f_name.close();
 				f_type.close();

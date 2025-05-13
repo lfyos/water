@@ -26,7 +26,7 @@ public class list_component_on_collector
 	{
 		if(cam_result.target.parameter.part_list_only_flag)
 			if(!(comp.uniparameter.part_list_flag))
-				return (comp.children_number()<=0)?true:false;
+				return (comp.children.size()<=0)?true:false;
 		
 		part my_part;
 		component_instance_driver in_dr;
@@ -38,7 +38,7 @@ public class list_component_on_collector
 		
 		if(cam_result.target.parameter.discard_cross_clip_plane_flag)
 			if(comp.clip.clip_plane.size()>0)
-				return (comp.children_number()<=0)?true:false;
+				return (comp.children.size()<=0)?true:false;
 	
 		if((in_dr=ci.component_instance_driver_cont.
 			get_component_instance_driver(comp, driver_id))==null)
@@ -107,13 +107,13 @@ public class list_component_on_collector
 			int driver_number;
 			if((driver_number=comp.driver_number())<=0)
 				return false;
-			if(comp.children_number()>0)
+			if(comp.children.size()>0)
 				if(!(comp.get_can_display_assembly_flag(cam_result.target.parameter_channel_id)))
 					return false;
 			for(int i=0;i<driver_number;i++) {
 				part_parameter part_par=comp.driver_array.get(i).component_part.part_par;
 				if(part_par.discard_precision2<=lod_precision2){
-					if(comp.children_number()>0)
+					if(comp.children.size()>0)
 						if(part_par.assembly_precision2<=lod_precision2)
 							return false;
 					if(register(comp,i))
@@ -144,7 +144,7 @@ public class list_component_on_collector
 		if(do_lod(comp))
 			return;
 		
-		int children_number	=comp.children_number();
+		int children_number	=comp.children.size();
 		int driver_number	=comp.driver_number();
 		if(children_number<=0){
 			for(int i=0;i<driver_number;i++)
@@ -156,7 +156,7 @@ public class list_component_on_collector
 		
 		int old_no_driver_component_number=no_driver_component_number;
 		for(int i=0;i<children_number;i++)
-			collect(comp.children[i],clipper_test_depth+1);
+			collect(comp.children.get(i),clipper_test_depth+1);
 		comp.caculate_box(false);
 		
 		if(sk.scene_par.not_do_ancestor_render_flag)

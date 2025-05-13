@@ -182,7 +182,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		if(control_code==0)
 			return;
-		if(ci.parameter.comp.children_number()>0)
+		if(ci.parameter.comp.children.size()>0)
 			return;
 		if(ci.parameter.comp.driver_number()<=0)
 			return;

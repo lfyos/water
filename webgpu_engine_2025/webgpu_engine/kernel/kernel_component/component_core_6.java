@@ -13,17 +13,17 @@ public class component_core_6 extends component_core_5
 	public void caculate_children_location_modify_flag()
 	{
 		int n;
-		if((n=children_number())<=0){	
+		if((n=children.size())<=0){	
 			children_location_modify_flag=false;
 			return;
 		}
 		for(int i=0;i<n;i++)
-			if(children[i].children_location_modify_flag){
+			if(children.get(i).children_location_modify_flag){
 				children_location_modify_flag=true;
 				return;
 			}
 		for(int i=0;i<n;i++)
-			if(children[i].move_location.is_not_identity_matrix()){
+			if(children.get(i).move_location.is_not_identity_matrix()){
 				children_location_modify_flag=true;
 				return;
 			}

@@ -454,15 +454,15 @@ public class movement_function_switch
 		if(comp.children==null)
 			return false;
 		String str=comp.component_name;
-		for(int i=0,ni=comp.children.length,length=str.length();i<ni;i++){
-			String cstr=comp.children[i].component_name;
+		for(int i=0,ni=comp.children.size(),length=str.length();i<ni;i++){
+			String cstr=comp.children.get(i).component_name;
 			if(cstr.length()<length)
 				return true;
 			if(cstr.substring(0,length).compareTo(str)!=0)
 				return true;
 		}
-		for(int i=0,ni=comp.children.length;i<ni;i++)
-			if(test_can_not_todesignbuffer(comp.children[i]))
+		for(int i=0,ni=comp.children.size();i<ni;i++)
+			if(test_can_not_todesignbuffer(comp.children.get(i)))
 				return true;
 		return false;
 	}
@@ -1307,8 +1307,8 @@ public class movement_function_switch
 	{
 		comp.uniparameter.do_response_location_flag=true;
 		comp.update_location_version();
-		for(int i=0,ni=comp.children_number();i<ni;i++)
-			update_component_location(comp.children[i]);
+		for(int i=0,ni=comp.children.size();i<ni;i++)
+			update_component_location(comp.children.get(i));
 	}
 	private void movement_continue(boolean create_render_modifier_flag)
 	{

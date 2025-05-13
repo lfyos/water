@@ -21,15 +21,15 @@ public class component_caculator
 	private void caculate_component_driver_id(component comp)
 	{
 		int driver_number	=comp.driver_number();
-		int children_number	=comp.children_number();
+		int children_number	=comp.children.size();
 	
 		for(int i=0;i<children_number;i++)
-			caculate_component_driver_id(comp.children[i]);
+			caculate_component_driver_id(comp.children.get(i));
 		
 		comp.component_id		=component_id++;
 		comp.parent_component_id=-1;
 		for(int i=0;i<children_number;i++)
-			comp.children[i].parent_component_id=comp.component_id;
+			comp.children.get(i).parent_component_id=comp.component_id;
 		
 		for(int i=0;i<driver_number;i++){
 			component_driver c_d=comp.driver_array.get(i);
@@ -85,8 +85,8 @@ public class component_caculator
 	private void register_componennt_to_part(component comp)
 	{
 		component_driver c_d;
-		for(int i=0,ni=comp.children_number();i<ni;i++)
-			register_componennt_to_part(comp.children[i]);
+		for(int i=0,ni=comp.children.size();i<ni;i++)
+			register_componennt_to_part(comp.children.get(i));
 		
 		for(int i=0,ni=comp.driver_number();i<ni;i++)
 			if((c_d=comp.driver_array.get(i)).component_part!=null){
@@ -136,8 +136,8 @@ public class component_caculator
 		component_pointer[comp.component_id]		=comp;
 		sort_component_pointer[comp.component_id]	=comp;
 		
-		for(int i=0,n=comp.children_number();i<n;i++)
-			set_pointer(comp.children[i]);
+		for(int i=0,n=comp.children.size();i<n;i++)
+			set_pointer(comp.children.get(i));
 	}
 	
 	private void sort_component(int begin_id,int end_id,component tmp[])
@@ -190,7 +190,7 @@ public class component_caculator
 		
 		for(int i=0,ni=component_pointer.length;i<ni;i++){
 			component comp=component_pointer[i];
-			if((comp.driver_number()<=0)&&(comp.children_number()<=0)){
+			if((comp.driver_number()<=0)&&(comp.children.size()<=0)){
 				if(display_flag)
 					debug_information.print  ("Find no driver component:");
 				do{
@@ -255,7 +255,7 @@ public class component_caculator
 						break;
 					}	
 				}
-				if(comp.children==null){
+				if(comp.children.size()<=0){
 					part_component_number++;
 					if(comp.driver_number()>0){
 						exist_part_component_number++;

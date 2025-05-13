@@ -1,7 +1,7 @@
 package kernel_component;
 
-import kernel_file_manager.file_reader;
 import kernel_driver.component_driver;
+import kernel_file_manager.file_reader;
 
 public class component_core_12  extends component_core_11
 {
@@ -23,8 +23,8 @@ public class component_core_12  extends component_core_11
 		caculate_one_selection(component_cont);
 		caculate_location(component_cont);
 		
-		for(int i=0,n=children_number();i<n;i++)
-			children[i].reset_component(component_cont);
+		for(int i=0,n=children.size();i<n;i++)
+			children.get(i).reset_component(component_cont);
 
 		caculate_children_location_modify_flag();
 		
@@ -47,8 +47,8 @@ public class component_core_12  extends component_core_11
 					uniparameter.discard_precision2=c_d.component_part.part_par.discard_precision2;
 			}
 		}
-		for(int i=0,n=children_number();i<n;i++){
-			double child_discard_precision2=children[i].uniparameter.discard_precision2;
+		for(int i=0,n=children.size();i<n;i++){
+			double child_discard_precision2=children.get(i).uniparameter.discard_precision2;
 			if(child_discard_precision2>0.0){
 				if(uniparameter.discard_precision2<0.0)
 					uniparameter.discard_precision2=child_discard_precision2;

@@ -22,23 +22,25 @@ public class component_core_11 extends component_core_10
 		int my_children_number;
 		boolean old_value=can_display_assembly_flag[parameter_channel_id];
 		can_display_assembly_flag[parameter_channel_id]=true;
-		if((my_children_number=children_number())<=0)
+		if((my_children_number=children.size())<=0)
 			return !old_value;
 		
 		long my_display_bitmap=multiparameter[parameter_channel_id].display_bitmap;
 		for(int i=0;i<my_children_number;i++){
-			long child_display_bitmap=children[i].multiparameter[parameter_channel_id].display_bitmap;
-			if(	  (children[i].uniparameter.effective_selected_flag)
+			component my_child=children.get(i);
+			long child_display_bitmap=my_child.multiparameter[parameter_channel_id].display_bitmap;
+			if(	  (my_child.uniparameter.effective_selected_flag)
 				||(my_display_bitmap!=child_display_bitmap)
-				||(children[i].children_location_modify_flag))
+				||(my_child.children_location_modify_flag))
 			{
 				can_display_assembly_flag[parameter_channel_id]=false;
 				return old_value;
 			}
 		}
 		for(int i=0;i<my_children_number;i++){
-			boolean children_flag=children[i].get_effective_display_flag(parameter_channel_id);
-			children_flag&=children[i].get_can_display_assembly_flag(parameter_channel_id);
+			component my_child=children.get(i);
+			boolean children_flag=my_child.get_effective_display_flag(parameter_channel_id);
+			children_flag&=my_child.get_can_display_assembly_flag(parameter_channel_id);
 			can_display_assembly_flag[parameter_channel_id]&=children_flag;
 		}
 		return (can_display_assembly_flag[parameter_channel_id])^old_value;

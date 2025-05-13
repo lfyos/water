@@ -63,8 +63,8 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 	{
 		for(int i=0,n=comp.driver_number();i<n;i++)
 			component_instance_driver.execute_component_function(comp.component_id,i,network_par,sk,ci);
-		for(int i=0,n=comp.children_number();i<n;i++)
-			do_component_driver(comp.children[i],sk,ci);
+		for(int i=0,n=comp.children.size();i<n;i++)
+			do_component_driver(comp.children.get(i),sk,ci);
 	}
 	private void call_component_driver(scene_kernel sk,client_information ci,long my_current_time,int operation_id)
 	{

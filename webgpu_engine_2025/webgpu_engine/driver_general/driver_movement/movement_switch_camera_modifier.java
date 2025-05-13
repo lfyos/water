@@ -182,11 +182,11 @@ public class movement_switch_camera_modifier extends modifier_driver
 		if(depth>0)
 			if(!(comp.get_effective_display_flag(parameter_channel_id)))
 				return;
-		if((child_number=comp.children_number())<=0)
+		if((child_number=comp.children.size())<=0)
 			comp_array.add_component(comp);
 		else
 			for(int i=0;i<child_number;i++)
-				register_visible_component(comp.children[i],comp_array,depth+1);
+				register_visible_component(comp.children.get(i),comp_array,depth+1);
 	}
 	private void process_routine(long my_current_time,scene_kernel sk,client_information ci)
 	{

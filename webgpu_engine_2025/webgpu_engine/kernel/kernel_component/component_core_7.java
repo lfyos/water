@@ -14,7 +14,7 @@ public class component_core_7 extends component_core_6
 	}
 	public boolean caculate_effective_display_flag(int parameter_channel_id)
 	{
-		int child_number=children_number();
+		int child_number=children.size();
 		boolean old_effective_display_flag=multiparameter[parameter_channel_id].effective_display_flag;
 
 		if(child_number<=0)
@@ -24,7 +24,7 @@ public class component_core_7 extends component_core_6
 			if(multiparameter[parameter_channel_id].display_flag)
 				for(int i=0;i<child_number;i++)
 					multiparameter[parameter_channel_id].effective_display_flag
-						|=children[i].get_effective_display_flag(parameter_channel_id);
+						|=children.get(i).get_effective_display_flag(parameter_channel_id);
 		}
 		return multiparameter[parameter_channel_id].effective_display_flag^old_effective_display_flag;
 	}

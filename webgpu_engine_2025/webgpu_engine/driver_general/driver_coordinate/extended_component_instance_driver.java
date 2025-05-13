@@ -38,8 +38,8 @@ public class extended_component_instance_driver extends component_instance_drive
 					return print_number;
 				}
 		
-		for(int i=0,ni=my_comp.children_number();i<ni;i++)
-			print_number=response_selection_coordinate(print_number,my_comp.children[i],ci);
+		for(int i=0,ni=my_comp.children.size();i<ni;i++)
+			print_number=response_selection_coordinate(print_number,my_comp.children.get(i),ci);
 		return print_number;
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
@@ -60,9 +60,9 @@ public class extended_component_instance_driver extends component_instance_drive
 		ci.request_response.print("[");
 		
 		if(display_selection_coordinate_flag)
-			for(int i=0,ni=sk.component_cont.root_component.children_number();i<ni;i++)
+			for(int i=0,ni=sk.component_cont.root_component.children.size();i<ni;i++)
 				print_number=response_selection_coordinate(
-						print_number,sk.component_cont.root_component.children[i],ci);
+						print_number,sk.component_cont.root_component.children.get(i),ci);
 		
 		if(display_main_coordinate_flag)
 			ci.request_response.print(((print_number++)<=0)?"[-1,-1]":",[-1,-1]");

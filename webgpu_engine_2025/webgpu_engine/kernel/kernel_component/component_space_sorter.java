@@ -2,9 +2,9 @@ package kernel_component;
 
 import java.util.ArrayList;
 
-import kernel_transformation.point;
 import kernel_transformation.box;
 import kernel_common_class.sorter;
+import kernel_transformation.point;
 
 final class component_info
 {

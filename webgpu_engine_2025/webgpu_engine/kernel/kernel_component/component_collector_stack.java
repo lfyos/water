@@ -41,10 +41,10 @@ public class component_collector_stack
 	private void set_hide_flag(component comp,boolean hide_flag,component_container component_cont)
 	{
 		int child_number;
-		if((child_number=comp.children_number())>0) {
+		if((child_number=comp.children.size())>0) {
 			comp.modify_display_flag(parameter_channel_id,true,component_cont);
 			for(int i=0;i<child_number;i++)
-				set_hide_flag(comp.children[i],hide_flag,component_cont);
+				set_hide_flag(comp.children.get(i),hide_flag,component_cont);
 		}else{
 			if(hide_flag)
 				if(comp.uniparameter.part_list_flag)
