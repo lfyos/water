@@ -16,36 +16,24 @@ public class component_core_3 extends component_core_2
 	public void destroy()
 	{
 		super.destroy();
-		
-		if(driver_array==null)
-			return;
+
 		component_driver c_d;
-		for(int i=0,ni=driver_number();i<ni;i++)
-			if((c_d=driver_array.get(i))!=null){
+		for(int i=driver_array.size()-1;i>=0;i--)
+			if((c_d=driver_array.remove(i))!=null)
 				try {
 					c_d.destroy();
 				}catch(Exception e) {
 					e.printStackTrace();
-					
 					debug_information.println("Execute component driver destroy fail:	",e.toString());
-					
 				}
-				driver_array.set(i,null);
-			}
-		driver_array=null;
-	}
-	public int driver_number()
-	{
-		if(driver_array==null)
-			return 0;
-		else
-			return driver_array.size();	
+		driver_array.clear();
 	}
 	private void create_driver(file_reader fr,component_construction_parameter ccp)
 	{
-		part p;
 		ArrayList<part> search_parts;
 		change_name change_part_name;
+		
+		driver_array=new ArrayList<component_driver>();
 		
 		if((change_part_name=ccp.get_change_part_name())==null)
 			search_parts=ccp.pcfps.search_part(part_name);
@@ -56,34 +44,39 @@ public class component_core_3 extends component_core_2
 				search_parts=ccp.pcfps.search_part(search_part_name);
 			}
 		}
-		if(search_parts==null){
-			driver_array=null;
+		if(search_parts==null)
 			return;
-		}
-		
-		ArrayList<part> effective_parts=new ArrayList<part>();
+		if(search_parts.size()<=0)
+			return;
+
 		part_type_string_sorter ptss=ccp.get_part_type_string_sorter();
 		int type_string_number=(ptss==null)?0:ptss.get_number();
 		
-		for(int i=0,part_number=search_parts.size();i<part_number;i++)
-			if((p=search_parts.get(i))!=null){
-				if(type_string_number>0)
-					if(ptss.search(p.part_par.part_type_string)<0)
-						continue;
-				effective_parts.add(p);
-			}
+		part p;
+		ArrayList<part> effective_parts;
 		
-		driver_array=new ArrayList<component_driver>();
-		
+		if(type_string_number<=0)
+			effective_parts=search_parts;
+		else{
+			effective_parts=new ArrayList<part>();
+			for(int i=0,part_number=search_parts.size();i<part_number;i++)
+				if((p=search_parts.get(i))!=null)
+					if(ptss.search(p.part_par.part_type_string)>=0)
+						effective_parts.add(p);
+		}
+
 		for(int i=0,effective_part_number=effective_parts.size();i<effective_part_number;i++){
-			fr.mark_start();
-			p=effective_parts.get(i);
 			boolean rollback_flag=(i<(effective_part_number-1))?true:false;
-			component_driver comp_driver=null;
+			p=effective_parts.get(i);
+			
+			fr.mark_start();
+			component_driver comp_driver;
+
 			try{
 				comp_driver=p.driver.create_component_driver(
 						fr,rollback_flag,p,ccp.clsc,ccp.sk,ccp.request_response);
 			}catch(Exception e){
+				comp_driver=null;
 				e.printStackTrace();
 				
 				debug_information.println("create_component_driver fail:	",e.toString());
@@ -96,9 +89,6 @@ public class component_core_3 extends component_core_2
 				driver_array.add(comp_driver);
 			fr.mark_terminate(rollback_flag);
 		}
-		
-		if(driver_array.size()<=0)
-			driver_array=null;
 		return;
 	}
 	public component_core_3(String token_string,file_reader fr,boolean part_list_flag,

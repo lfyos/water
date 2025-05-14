@@ -46,7 +46,7 @@ public class extended_component_driver  extends component_driver
 		if((my_comp=sk.component_cont.search_component(screen_rectangle_component_name))!=null)
 			screen_rectangle_component_id=my_comp.component_id;
 		if((my_comp=sk.component_cont.search_component(audio_component))!=null)
-			if(my_comp.driver_number()>0)
+			if(my_comp.driver_array.size()>0)
 				if(my_comp.driver_array.get(0) instanceof driver_audio_player.extended_component_driver)
 					audio_component_id=my_comp.component_id;
 		

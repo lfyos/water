@@ -2,9 +2,9 @@ package driver_movement;
 
 import kernel_part.part;
 import kernel_render.render;
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
 import kernel_component.component;
+import kernel_scene.client_information;
 import kernel_component.component_collector;
 import kernel_component.component_container;
 import kernel_component.component_link_list;
@@ -45,7 +45,7 @@ public class movement_suspend
 
 		if((children_number=comp.children.size())<=0){
 			comp.modify_display_flag(parameter_channel_id,false,sk.component_cont);
-			if(comp.driver_number()>0)
+			if(comp.driver_array.size()>0)
 				virtual_mount_collector.register_component(comp,0);
 		}else{
 			for(int i=0;i<children_number;i++)

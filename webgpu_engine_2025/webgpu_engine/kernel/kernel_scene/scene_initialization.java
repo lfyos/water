@@ -151,7 +151,7 @@ public class scene_initialization
 		for(int i=0;i<number;i++) {
 			process_bar.set_process_bar(false,"component_driver_initialization",
 					sort_component_array[i].component_name,i, number);
-			for(int j=0,driver_number=sort_component_array[i].driver_number();j<driver_number;j++) {
+			for(int j=0,driver_number=sort_component_array[i].driver_array.size();j<driver_number;j++) {
 				component_driver cd=sort_component_array[i].driver_array.get(j);
 				try{
 					cd.initialize_component_driver(sort_component_array[i],j,sk,request_response);

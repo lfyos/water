@@ -147,7 +147,7 @@ public class component_core_4 extends component_core_3
 	private String []part_driver_mount(file_reader fr,scene_kernel sk,client_request_response request_response)
 	{
 		int my_driver_number;
-		if((my_driver_number=driver_number())<=0)  {
+		if((my_driver_number=driver_array.size())<=0)  {
 			debug_information.println(
 				"Part_driver driver assemble_file_name_and_file_charset error((my_driver_number=driver_number())<=0):	",
 				"component_name:	"+component_name);

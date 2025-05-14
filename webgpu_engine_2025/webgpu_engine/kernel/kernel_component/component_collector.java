@@ -272,7 +272,7 @@ public class component_collector
 			part_number++;
 			render_part_number[render_id]++;
 		}
-		if((driver_id>=0)&&(driver_id<comp.driver_number())) {
+		if((driver_id>=0)&&(driver_id<comp.driver_array.size())) {
 			component_driver c_d=comp.driver_array.get(driver_id);
 			if(c_d!=null)
 				if(c_d.component_part!=null){
@@ -297,7 +297,7 @@ public class component_collector
 	{
 		int register_number=0;
 		if(comp!=null){
-			if(comp.driver_number()>0)
+			if(comp.driver_array.size()>0)
 				register_number+=register_component(comp,0);
 			else
 				for(int i=0,ni=comp.children.size();i<ni;i++)
@@ -316,7 +316,7 @@ public class component_collector
 	{
 		int register_number=0;
 		if(comp!=null){
-			for(int i=0,ni=comp.driver_number();i<ni;i++)
+			for(int i=0,ni=comp.driver_array.size();i<ni;i++)
 				register_number+=register_component(comp,i);
 			for(int i=0,ni=comp.children.size();i<ni;i++)
 				register_number+=register_all(comp.children.get(i));

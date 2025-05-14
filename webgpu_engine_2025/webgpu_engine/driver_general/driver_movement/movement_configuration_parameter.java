@@ -26,7 +26,7 @@ public class movement_configuration_parameter
 	{
 		component my_comp=sk.component_cont.get_component(audio_component_id);
 		if(my_comp!=null)
-			if(my_comp.driver_number()>0) {
+			if(my_comp.driver_array.size()>0) {
 				component_driver c_d=my_comp.driver_array.get(0);
 				if(c_d instanceof driver_audio_player.extended_component_driver)
 					return (driver_audio_player.extended_component_driver)c_d;
@@ -58,7 +58,7 @@ public class movement_configuration_parameter
 
 		audio_component_id=-1;
 		if((my_comp=sk.component_cont.search_component(audio_component_name))!=null)
-			if(my_comp.driver_number()>0)
+			if(my_comp.driver_array.size()>0)
 				if(my_comp.driver_array.get(0) instanceof driver_audio_player.extended_component_driver)
 					audio_component_id=my_comp.component_id;
 		if(audio_component_id<0)

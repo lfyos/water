@@ -184,7 +184,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			return;
 		if(ci.parameter.comp.children.size()>0)
 			return;
-		if(ci.parameter.comp.driver_number()<=0)
+		if(ci.parameter.comp.driver_array.size()<=0)
 			return;
 
 		component_array comp_array=new component_array();

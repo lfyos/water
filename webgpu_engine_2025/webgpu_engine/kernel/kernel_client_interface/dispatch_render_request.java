@@ -103,13 +103,13 @@ public class dispatch_render_request
 					if(component_id<=(sk.component_cont.root_component.component_id))
 						if((comp=sk.component_cont.get_component(component_id))!=null)
 							if((str=ci.request_response.get_parameter("event_driver_id"))==null){
-								for(int i=0,driver_number=comp.driver_number();i<driver_number;i++)
+								for(int i=0,driver_number=comp.driver_array.size();i<driver_number;i++)
 									if((c_d=comp.driver_array.get(i))!=null)
 										if((p=c_d.component_part)!=null)
 											return response_render_event(sk.render_cont.renders.get(p.render_id),sk,ci);
 							}else {
 								if((driver_id=Integer.decode(str))>=0)
-									if(driver_id<comp.driver_number())
+									if(driver_id<comp.driver_array.size())
 										if((c_d=comp.driver_array.get(driver_id))!=null)
 											if((p=c_d.component_part)!=null)
 												return response_render_event(
@@ -126,14 +126,14 @@ public class dispatch_render_request
 				}
 				if((comp=sk.component_cont.search_component(str))!=null)
 					if((str=ci.request_response.get_parameter("event_driver_id"))==null){
-						for(int i=0,driver_number=comp.driver_number();i<driver_number;i++)
+						for(int i=0,driver_number=comp.driver_array.size();i<driver_number;i++)
 							if((c_d=comp.driver_array.get(i))!=null)
 								if((p=c_d.component_part)!=null)
 									return response_render_event(
 												sk.render_cont.renders.get(p.render_id),sk,ci);
 					}else {
 						if((driver_id=Integer.decode(str))>=0)
-							if(driver_id<comp.driver_number())
+							if(driver_id<comp.driver_array.size())
 								if((c_d=comp.driver_array.get(driver_id))!=null)
 									if((p=c_d.component_part)!=null)
 										return response_render_event(

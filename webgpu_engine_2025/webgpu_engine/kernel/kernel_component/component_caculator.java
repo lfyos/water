@@ -20,7 +20,7 @@ public class component_caculator
 	
 	private void caculate_component_driver_id(component comp)
 	{
-		int driver_number	=comp.driver_number();
+		int driver_number	=comp.driver_array.size();
 		int children_number	=comp.children.size();
 	
 		for(int i=0;i<children_number;i++)
@@ -88,7 +88,7 @@ public class component_caculator
 		for(int i=0,ni=comp.children.size();i<ni;i++)
 			register_componennt_to_part(comp.children.get(i));
 		
-		for(int i=0,ni=comp.driver_number();i<ni;i++)
+		for(int i=0,ni=comp.driver_array.size();i<ni;i++)
 			if((c_d=comp.driver_array.get(i)).component_part!=null){
 				int render_id	=c_d.component_part.render_id;
 				int part_id		=c_d.component_part.part_id;
@@ -190,7 +190,7 @@ public class component_caculator
 		
 		for(int i=0,ni=component_pointer.length;i<ni;i++){
 			component comp=component_pointer[i];
-			if((comp.driver_number()<=0)&&(comp.children.size()<=0)){
+			if((comp.driver_array.size()<=0)&&(comp.children.size()<=0)){
 				if(display_flag)
 					debug_information.print  ("Find no driver component:");
 				do{
@@ -248,7 +248,7 @@ public class component_caculator
 		
 			for(int i=0,ni=component_pointer.length;i<ni;i++){
 				component comp=component_pointer[i];
-				for(int j=0,nj=comp.driver_number();j<nj;j++){
+				for(int j=0,nj=comp.driver_array.size();j<nj;j++){
 					part my_part=comp.driver_array.get(j).component_part;
 					if(my_part.is_top_box_part()){
 						top_assemble_component_number++;
@@ -257,7 +257,7 @@ public class component_caculator
 				}
 				if(comp.children.size()<=0){
 					part_component_number++;
-					if(comp.driver_number()>0){
+					if(comp.driver_array.size()>0){
 						exist_part_component_number++;
 						part_rude part_mesh;
 						if((part_mesh=comp.driver_array.get(0).component_part.part_mesh)!=null) {

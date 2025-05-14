@@ -27,7 +27,7 @@ public class create_assemble_part
 	private int do_test(component p)
 	{
 		if(p.children.size()<=0){
-			for(int i=0,ni=p.driver_number();i<ni;i++){
+			for(int i=0,ni=p.driver_array.size();i<ni;i++){
 				part comp_part=p.driver_array.get(i).component_part;
 				if(comp_part==null)
 					continue;
@@ -61,7 +61,7 @@ public class create_assemble_part
 	{
 		int children_number;
 		if((children_number=p.children.size())<=0){
-			if(p.driver_number()>0)
+			if(p.driver_array.size()>0)
 				if(p.get_component_box(false)!=null){
 					part_number[p.component_id]=1;
 					all_part_number++;
@@ -128,7 +128,7 @@ public class create_assemble_part
 			return;
 		if(part_number[p.component_id]<=1)
 			return;
-		if(p.driver_number()>0)
+		if(p.driver_array.size()>0)
 			return;
 		
 		if(can_create_assemble_part_name[p.component_id]==null) {

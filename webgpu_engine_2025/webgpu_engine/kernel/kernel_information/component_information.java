@@ -20,7 +20,7 @@ public class component_information extends jason_creator
 			component_name=comp.component_name;
 			component_id=comp.component_id;
 			child_number=comp.children.size();
-			driver_number=comp.driver_number();
+			driver_number=comp.driver_array.size();
 			pi=new part_information[driver_number];
 			for(int i=0;i<driver_number;i++)
 				pi[i]=new part_information(comp.driver_array.get(i).component_part,sk,ci);

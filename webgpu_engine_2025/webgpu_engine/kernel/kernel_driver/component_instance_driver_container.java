@@ -49,7 +49,7 @@ public class component_instance_driver_container
 			if(instance_lod_precision_scale[comp.component_id]<scale)
 				instance_lod_precision_scale[comp.component_id]=scale;
 		}
-		for(int i=0,driver_number=comp.driver_number();i<driver_number;i++){
+		for(int i=0,driver_number=comp.driver_array.size();i<driver_number;i++){
 			double scale=component_driver_array[comp.component_id][i].instance_driver_lod_precision_scale;
 			scale*=comp.driver_array.get(i).component_part.part_par.lod_precision_scale;
 			if(instance_lod_precision_scale[comp.component_id]<scale)
@@ -60,7 +60,7 @@ public class component_instance_driver_container
 	}
 	private void reset_drivers(component comp,scene_kernel sk,client_request_response request_response)
 	{
-		int driver_number=comp.driver_number(),child_number=comp.children.size();
+		int driver_number=comp.driver_array.size(),child_number=comp.children.size();
 		
 		for(int i=0;i<child_number;i++)
 			reset_drivers(comp.children.get(i),sk,request_response);

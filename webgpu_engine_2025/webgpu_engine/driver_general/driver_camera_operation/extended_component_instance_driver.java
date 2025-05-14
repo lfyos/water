@@ -93,7 +93,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			return;
 		if(ci.parameter.comp.component_id!=comp.component_id)
 			return;
-		if(comp.driver_number()<=0)
+		if(comp.driver_array.size()<=0)
 			return;
 		component_driver c_d=comp.driver_array.get(driver_id);
 		if(c_d.component_part==null)
@@ -246,7 +246,7 @@ public class extended_component_instance_driver extends component_instance_drive
 					my_box=null;
 					break;
 				}
-				if(locate_comp.driver_number()<=0)
+				if(locate_comp.driver_array.size()<=0)
 					break;
 				component_driver c_d=locate_comp.driver_array.get(0);
 				if(c_d.component_part==null)

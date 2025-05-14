@@ -46,7 +46,7 @@ public class dispatch_component_request
 						"Can't Find component by ID in component_request_dispatch of dispatch_component_request\t:\t",str);
 					return null;
 				}
-				int begin_driver_id=0,end_driver_id=comp.driver_number()-1;
+				int begin_driver_id=0,end_driver_id=comp.driver_array.size()-1;
 				if(end_driver_id<0){
 					debug_information.println(
 						"No component driver in component_request_dispatch of dispatch_component_request\t:\t",
@@ -62,12 +62,12 @@ public class dispatch_component_request
 					end_driver_id=begin_driver_id;
 				}
 				if(	  (begin_driver_id<0)||(end_driver_id<0)||(begin_driver_id>end_driver_id)
-					||(begin_driver_id>=comp.driver_number())||(end_driver_id>=comp.driver_number()))
+					||(begin_driver_id>=comp.driver_array.size())||(end_driver_id>=comp.driver_array.size()))
 				{
 					debug_information.println(
 						"driver_id is wrong in component_request_dispatch of dispatch_component_request");
 					debug_information.println("component_name is\t:\t",comp.component_name);
-					debug_information.println("driver_number is\t:\t",comp.driver_number());
+					debug_information.println("driver_number is\t:\t",comp.driver_array.size());
 					debug_information.println("Request begin_driver_id is\t:\t",begin_driver_id);
 					debug_information.println("Request end_driver_id is\t:\t",end_driver_id);
 					return null;
@@ -114,7 +114,7 @@ public class dispatch_component_request
 						"Can't Find component by name in component_request_dispatch of dispatch_component_request\t:\t",str);
 					return null;
 				}
-				int begin_driver_id=0,end_driver_id=comp.driver_number()-1;
+				int begin_driver_id=0,end_driver_id=comp.driver_array.size()-1;
 				if(end_driver_id<0){
 					debug_information.println(
 						"No component driver in component_request_dispatch of dispatch_component_request\t:\t",
@@ -129,13 +129,14 @@ public class dispatch_component_request
 					begin_driver_id=Integer.decode(str);
 					end_driver_id=begin_driver_id;
 				}
+				int driver_number=comp.driver_array.size();
 				if(	  (begin_driver_id<0)||(end_driver_id<0)||(begin_driver_id>end_driver_id)
-					||(begin_driver_id>=comp.driver_number())||(end_driver_id>=comp.driver_number()))
+					||(begin_driver_id>=driver_number)||(end_driver_id>=driver_number))
 				{
 					debug_information.println(
 						"driver_id is wrong in component_request_dispatch of dispatch_component_request");
 					debug_information.println("component_name is\t:\t",comp.component_name);
-					debug_information.println("driver_number is\t:\t",comp.driver_number());
+					debug_information.println("driver_number is\t:\t",comp.driver_array.size());
 					debug_information.println("Request begin_driver_id is\t:\t",begin_driver_id);
 					debug_information.println("Request end_driver_id is\t:\t",end_driver_id);
 					return null;

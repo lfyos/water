@@ -96,7 +96,7 @@ public class location_modification_modifier extends modifier_driver
 			return;
 		if((do_modify_number++)!=0)
 			return;
-		for(int i=0,ni=location_comp.driver_number();i<ni;i++) {
+		for(int i=0,ni=location_comp.driver_array.size();i<ni;i++) {
 			component_driver c_d=location_comp.driver_array.get(i);
 			if(!(c_d instanceof extended_component_driver))
 				continue;

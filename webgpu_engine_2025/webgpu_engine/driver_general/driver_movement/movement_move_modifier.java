@@ -61,7 +61,7 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 	}
 	private void do_component_driver(component comp,scene_kernel sk,client_information ci)
 	{
-		for(int i=0,n=comp.driver_number();i<n;i++)
+		for(int i=0,n=comp.driver_array.size();i<n;i++)
 			component_instance_driver.execute_component_function(comp.component_id,i,network_par,sk,ci);
 		for(int i=0,n=comp.children.size();i<n;i++)
 			do_component_driver(comp.children.get(i),sk,ci);

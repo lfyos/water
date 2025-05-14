@@ -13,7 +13,7 @@ public class operate_display_value
 	{
 		for(int i=0,ni=comp.children.size();i<ni;i++)
 			set_display_value(sk,ci,comp.children.get(i),new_display_value_id);
-		for(int i=0,ni=comp.driver_number();i<ni;i++){
+		for(int i=0,ni=comp.driver_array.size();i<ni;i++){
 			component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp,i);
 			in_dr.display_parameter.display_value_id=new_display_value_id;
 			in_dr.update_component_parameter_version(0);

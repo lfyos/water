@@ -56,7 +56,7 @@ public class client_parameter
 				if((index_id=str.indexOf('_'))>0)
 					if((comp=sk.component_cont.get_component(Integer.decode(str.substring(0,index_id))))!=null)
 						if((driver_id=Integer.decode(str.substring(index_id+1)))>=0)
-							if(driver_id<comp.driver_number())
+							if(driver_id<comp.driver_array.size())
 								break;
 				comp=null;
 			}while(false);

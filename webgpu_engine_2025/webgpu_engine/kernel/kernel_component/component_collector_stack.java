@@ -2,14 +2,14 @@ package kernel_component;
 
 import java.util.ArrayList;
 
-import kernel_common_class.common_reader;
-import kernel_common_class.common_writer;
-import kernel_file_manager.file_directory;
-import kernel_file_manager.file_reader;
 import kernel_part.part;
 import kernel_render.render;
 import kernel_scene.scene_parameter;
 import kernel_scene.system_parameter;
+import kernel_file_manager.file_reader;
+import kernel_common_class.common_reader;
+import kernel_common_class.common_writer;
+import kernel_file_manager.file_directory;
 
 public class component_collector_stack
 {
@@ -48,7 +48,7 @@ public class component_collector_stack
 		}else{
 			if(hide_flag)
 				if(comp.uniparameter.part_list_flag)
-					if(comp.driver_number()>0)
+					if(comp.driver_array.size()>0)
 						if(comp.driver_array.get(0).component_part!=null) {
 							comp.modify_display_flag(parameter_channel_id,false,component_cont);
 							return;
@@ -79,7 +79,7 @@ public class component_collector_stack
 				if(push_collector.component_collector[render_id]!=null)
 					for(int part_id=0;(exit_flag>0)&&(part_id<push_collector.component_collector[render_id].length);part_id++)
 						for(component_link_list cll=push_collector.component_collector[render_id][part_id];(exit_flag>0)&&(cll!=null);cll=cll.next_list_item)
-							for(int i=0,ni=cll.comp.driver_number();(exit_flag>0)&&(i<ni);i++)
+							for(int i=0,ni=cll.comp.driver_array.size();(exit_flag>0)&&(i<ni);i++)
 								if((p=cll.comp.driver_array.get(i).component_part)!=null){
 									String root_directory=file_directory.part_file_directory(p,system_par,scene_par);
 									

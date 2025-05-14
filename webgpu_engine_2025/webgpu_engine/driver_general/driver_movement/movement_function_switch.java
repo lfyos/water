@@ -1341,7 +1341,7 @@ public class movement_function_switch
 
 		component location_comp;
 		if((location_comp=sk.component_cont.get_component(manager.config_parameter.location_component_id))!=null)
-			for(int i=0,ni=location_comp.driver_number();i<ni;i++) {
+			for(int i=0,ni=location_comp.driver_array.size();i<ni;i++) {
 				component_driver c_d=location_comp.driver_array.get(i);
 				if(c_d instanceof extended_component_driver)
 					((extended_component_driver)c_d).clear_location_modifier();

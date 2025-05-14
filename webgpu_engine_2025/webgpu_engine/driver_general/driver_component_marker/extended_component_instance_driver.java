@@ -47,7 +47,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				return true;
 			if(ci.parameter.comp==null)
 				return true;
-			if(ci.parameter.comp.driver_number()<=0)
+			if(ci.parameter.comp.driver_array.size()<=0)
 				return true;
 			component_driver c_d=ci.parameter.comp.driver_array.get(0);
 			if(c_d.component_part==null)

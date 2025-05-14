@@ -32,7 +32,7 @@ public class operate_lod_scale
 		}
 		for(int my_size;(my_size=comp_array.comp_list.size())>0;){
 			component comp=comp_array.comp_list.remove(my_size-1);
-			for(int driver_id=0,driver_number=comp.driver_number();driver_id<driver_number;driver_id++){
+			for(int driver_id=0,driver_number=comp.driver_array.size();driver_id<driver_number;driver_id++){
 				component_instance_driver in_dr=ci.component_instance_driver_cont.get_component_instance_driver(comp,driver_id);
 				in_dr.instance_driver_lod_precision_scale=new_lod_scale;
 			}

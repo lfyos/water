@@ -170,7 +170,7 @@ public class component_array
 		int execute_number=0;
 		for(int i=0;i<comp_list.size();){
 			component comp=comp_list.get(i);
-			int driver_number=comp.driver_number();
+			int driver_number=comp.driver_array.size();
 			boolean part_list_flag=true;
 			if(part_list_flag_effective_flag)
 				part_list_flag=comp.uniparameter.part_list_flag;

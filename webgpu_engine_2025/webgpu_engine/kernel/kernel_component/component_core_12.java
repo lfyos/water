@@ -38,7 +38,7 @@ public class component_core_12  extends component_core_11
 			caculate_effective_display_flag(i);
 		
 		uniparameter.discard_precision2=-1;
-		for(int i=0,ni=driver_number();i<ni;i++) {
+		for(int i=0,ni=driver_array.size();i<ni;i++) {
 			component_driver c_d=driver_array.get(i);
 			if(c_d.component_part.part_par.discard_precision2>0.0){
 				if(uniparameter.discard_precision2<0.0)

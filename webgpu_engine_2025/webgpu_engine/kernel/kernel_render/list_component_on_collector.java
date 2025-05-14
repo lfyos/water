@@ -30,7 +30,7 @@ public class list_component_on_collector
 		
 		part my_part;
 		component_instance_driver in_dr;
-		int driver_number=comp.driver_number();
+		int driver_number=comp.driver_array.size();
 		if((driver_id<0)||(driver_id>=driver_number))
 			return false;
 		if((my_part=comp.driver_array.get(driver_id).component_part)==null)
@@ -105,7 +105,7 @@ public class list_component_on_collector
 
 		if(cam_result.target.parameter.do_selection_lod_flag){
 			int driver_number;
-			if((driver_number=comp.driver_number())<=0)
+			if((driver_number=comp.driver_array.size())<=0)
 				return false;
 			if(comp.children.size()>0)
 				if(!(comp.get_can_display_assembly_flag(cam_result.target.parameter_channel_id)))
@@ -145,7 +145,7 @@ public class list_component_on_collector
 			return;
 		
 		int children_number	=comp.children.size();
-		int driver_number	=comp.driver_number();
+		int driver_number	=comp.driver_array.size();
 		if(children_number<=0){
 			for(int i=0;i<driver_number;i++)
 				if(register(comp,i))

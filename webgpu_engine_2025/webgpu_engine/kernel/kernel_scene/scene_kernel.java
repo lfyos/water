@@ -12,17 +12,17 @@ import kernel_render.render_container;
 import kernel_file_manager.file_reader;
 import kernel_driver.modifier_container;
 import kernel_part.part_loader_container;
-import kernel_part.permanent_part_id_encoder;
 import kernel_file_manager.file_directory;
 import kernel_interface.client_process_bar;
 import kernel_component.component_container;
 import kernel_common_class.nanosecond_timer;
-import kernel_common_class.tree_string_locker_container;
+import kernel_part.permanent_part_id_encoder;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 import kernel_camera.camera_container_creator;
 import kernel_component.component_collector_stack;
 import kernel_part.part_container_for_part_search;
+import kernel_common_class.tree_string_locker_container;
 import kernel_component.component_load_source_container;
 import kernel_create_top_assemble_part.create_assemble_part;
 import kernel_part.buffer_object_file_modify_time_and_length_container;
@@ -182,7 +182,7 @@ public class scene_kernel
 	{
 		int child_number;
 		
-		if((comp.driver_number()>0)||((child_number=comp.children.size())<=0))
+		if((comp.driver_array.size()>0)||((child_number=comp.children.size())<=0))
 			return;
 		ArrayList<part> part_list=part_search.search_part(comp.part_name);
 		if(part_list!=null)

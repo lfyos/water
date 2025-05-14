@@ -101,7 +101,7 @@ public class dispatch_create_scene_request
 		ci.request_response.print("[");
 		component_instance_driver_container	cidc=ci.component_instance_driver_cont;
 		for(int i=0,ni=comp_array.length;i<ni;i++)
-			for(int driver_id=0,driver_number=comp_array[i].driver_number();driver_id<driver_number;driver_id++) {
+			for(int driver_id=0,driver_number=comp_array[i].driver_array.size();driver_id<driver_number;driver_id++) {
 				component_instance_driver i_d=cidc.get_component_instance_driver(comp_array[i],driver_id);
 				if(i_d==null)
 					continue;

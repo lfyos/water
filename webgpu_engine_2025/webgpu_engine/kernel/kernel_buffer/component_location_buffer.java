@@ -55,9 +55,11 @@ public class component_location_buffer
 	}
 	private int []get_render_part_id(component comp,scene_kernel sk)
 	{
+		int driver_number;
 		component_driver c_d;
-		if(comp.driver_number()>0)
-			for(int i=0,ni=comp.driver_number();i<ni;i++)
+		
+		if((driver_number=comp.driver_array.size())>0)
+			for(int i=0;i<driver_number;i++)
 				if((c_d=comp.driver_array.get(i))!=null)
 					if(c_d.component_part!=null)
 						return new int[] 

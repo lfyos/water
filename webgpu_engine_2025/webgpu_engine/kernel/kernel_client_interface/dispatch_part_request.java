@@ -97,7 +97,7 @@ public class dispatch_part_request
 						component comp;
 						if((comp=sk.component_cont.get_component(component_id))!=null){
 							component_driver c_d;
-							int driver_number=comp.driver_number();
+							int driver_number=comp.driver_array.size();
 							if((str=ci.request_response.get_parameter("event_driver_id"))==null){
 								for(int i=0;i<driver_number;i++)
 									if((c_d=comp.driver_array.get(i))!=null)
@@ -124,7 +124,7 @@ public class dispatch_part_request
 				component comp;
 				if((comp=sk.component_cont.search_component(str))!=null){
 					component_driver c_d;
-					int driver_number=comp.driver_number();
+					int driver_number=comp.driver_array.size();
 					if((str=ci.request_response.get_parameter("event_driver_id"))==null){
 						for(int i=0;i<driver_number;i++)
 							if((c_d=comp.driver_array.get(i))!=null)

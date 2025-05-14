@@ -3,6 +3,7 @@ package kernel_component;
 import java.util.ArrayList;
 
 import kernel_file_manager.file_reader;
+import kernel_part.part;
 
 public class component_core_5 extends component_core_4
 {
@@ -32,10 +33,19 @@ public class component_core_5 extends component_core_4
 			
 		for(int collect_number=0,i=0;i<new_child_number;i++){
 			String id_str="_"+(ccp.sk.scene_par.inserted_component_and_part_id++);
+			String my_component_name=ccp.sk.scene_par.inserted_component_name+id_str;
+			String my_part_name=ccp.sk.scene_par.inserted_part_name+id_str;
+			ArrayList<part> my_part_list=ccp.pcfps.search_part(my_part_name);
+			if(my_part_list!=null)
+				if(my_part_list.size()>0) {
+					i--;
+					continue;
+				}
+			
 			fr.push_string_array(new String[]
 			{
-				ccp.sk.scene_par.inserted_component_name+id_str,
-				ccp.sk.scene_par.inserted_part_name+id_str,
+				my_component_name,
+				my_part_name,
 				"1","0","0","0",
 				"0","1","0","0",
 				"0","0","1","0",

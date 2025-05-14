@@ -111,7 +111,7 @@ public class compress_render_container
 		for(int i=0,ni=comp.children.size();i<ni;i++)
 			touch_component_access_part(comp.children.get(i),pcps);
 		
-		for(int i=0,ni=comp.driver_number();i<ni;i++)
+		for(int i=0,ni=comp.driver_array.size();i<ni;i++)
 			if((p=comp.driver_array.get(i).component_part)!=null){
 				if(p.part_par.assemble_part_name!=null)
 					if((p_array=pcps.search_part(p.part_par.assemble_part_name))!=null)

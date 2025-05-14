@@ -67,7 +67,7 @@ public class component_instance_driver
 		network_result my_result=null;
 		
 		if((comp=sk.component_cont.get_component(component_id))!=null)
-			if((driver_id>=0)&&(driver_id<comp.driver_number()))
+			if((driver_id>=0)&&(driver_id<comp.driver_array.size()))
 				if((in_dr=ci.component_instance_driver_cont.
 					get_component_instance_driver(comp, driver_id))!=null)
 				{

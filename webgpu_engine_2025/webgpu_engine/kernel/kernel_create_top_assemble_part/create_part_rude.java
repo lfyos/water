@@ -29,7 +29,7 @@ public class create_part_rude
 				create_location_box_and_material(comp.children.get(i),nega,length2);
 			return;
 		}
-		for(int i=0,ni=comp.driver_number();i<ni;i++) {
+		for(int i=0,ni=comp.driver_array.size();i<ni;i++) {
 			if((p=comp.driver_array.get(i).component_part)==null)
 				continue;
 			if((box_array[box_number]=p.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null))==null)
