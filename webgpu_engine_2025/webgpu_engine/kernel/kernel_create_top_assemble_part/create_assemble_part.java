@@ -281,6 +281,9 @@ public class create_assemble_part
 				assemble_part,comp_p.uniparameter.file_last_modified_time,
 				create_top_part_assembly_precision2,create_top_part_discard_precision2);
 			
+			if(part_par.last_modified_time<last_modified_time)
+				part_par.last_modified_time=last_modified_time;
+			
 			part add_part=new part(1,true,part_par,assemble_part.directory_name,assemble_part.file_charset,
 					comp_p.part_name,comp_p.part_name,null,assemble_part.material_file_name,null,null);
 			add_part.part_mesh=cpr.topbox_part_rude;
@@ -308,9 +311,8 @@ public class create_assemble_part
 				render_cont.renders.get(assemble_part.render_id).delete_last_part();
 				continue;
 			}
-			part_loader_cont.load(add_part,render_cont.get_copy_from_part(add_part),
-				last_modified_time,system_par,scene_par,string_locker_container,
-				already_loaded_part,boftal_container);
+			part_loader_cont.load(add_part,system_par,scene_par,
+				string_locker_container,already_loaded_part,boftal_container);
 			top_box_part.add(add_part_number++,add_part);
 			create_part_number+=my_create_part_number;	
 			

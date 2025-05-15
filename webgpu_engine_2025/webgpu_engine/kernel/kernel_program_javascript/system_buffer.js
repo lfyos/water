@@ -9,17 +9,8 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 	this.system_bindgroup			=null;
 
 	var my_system_bindgroup_layout_entries=[
-		{	// system buffer
-			binding		:	0,
-			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
-			buffer		:
-			{
-				type				:	"uniform",
-				hasDynamicOffset	:	false
-			}
-		},
 		{	//target buffer
-			binding		:	1,
+			binding		:	0,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
 			buffer		:
 			{
@@ -28,7 +19,7 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 			}
 		},
 		{	// method buffer
-			binding		:	2,
+			binding		:	1,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
 			buffer		:
 			{
@@ -37,35 +28,38 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 			}
 		},
 		{	// id buffer
-			binding		:	3,
+			binding		:	2,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
 			buffer		:
 			{
 				type				:	"uniform",
 				hasDynamicOffset	:	true
 			}
-		}
+		},
+		{	// system buffer
+			binding		:	3,
+			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
+			buffer		:
+			{
+				type				:	"uniform",
+				hasDynamicOffset	:	false
+			}
+		},
+		{	// camera_matrix buffer
+			binding		:	4,
+			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
+			buffer		:
+			{
+				type				:	"uniform",
+				hasDynamicOffset	:	false
+			}
+		},
 	];
 	this.system_bindgroup_layout=scene.webgpu.device.createBindGroupLayout({
 		entries	:	my_system_bindgroup_layout_entries
 	});	
-//	init system buffer:	binding point 0
-	var my_system_buffer_size=0;
-	
-	my_system_buffer_size+=Int32Array.	BYTES_PER_ELEMENT*28;
-	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4;
-	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*2*
-				(scene.component_location_data.identify_matrix.length);
-	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4*
-				(scene.camera.camera_object_parameter.length);
-	
-	this.system_buffer	=scene.webgpu.device.createBuffer(
-		{
-			size	:	my_system_buffer_size,
-			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
-		});
 
-//	init target buffer:	binding point 1
+//	init target buffer:	binding point 0
 
 	var my_target_buffer_size=0;
 	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*10*
@@ -83,7 +77,7 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
 		});
 		
-//	init method_buffer	:	binding point 2		
+//	init method_buffer	:	binding point 1		
 	var my_method_buffer_size=Int32Array.BYTES_PER_ELEMENT;
 	this.method_buffer_stride=scene.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
 	this.method_buffer	=scene.webgpu.device.createBuffer(
@@ -92,9 +86,10 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
 		});
 	for(var i=0,ni=this.max_method_number;i<ni;i++)
-		scene.webgpu.device.queue.writeBuffer(this.method_buffer,this.method_buffer_stride*i,new Int32Array([i]));
+		scene.webgpu.device.queue.writeBuffer(this.method_buffer,
+				this.method_buffer_stride*i,new Int32Array([i]));
 
-//	init id_buffer	:	binding point 3
+//	init id_buffer	:	binding point 2
 	
 	this.id_buffer_data_length=40;
 	var my_id_buffer_size=0,my_id_buffer_id_length=8;
@@ -125,22 +120,43 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 					
 				scene.system_bindgroup_id[i].system_bindgroup_id,
 			]));
+
+//	init system buffer:	binding point 3
+	var my_system_buffer_size=0;
+		
+	my_system_buffer_size+=Int32Array.	BYTES_PER_ELEMENT*28;
+	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4;
+	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*2*
+				(scene.component_location_data.identify_matrix.length);
+	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4*
+				(scene.camera.camera_object_parameter.length);
+		
+	this.system_buffer	=scene.webgpu.device.createBuffer(
+		{
+			size	:	my_system_buffer_size,
+			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
+		});
+
+//	init camera_matrix buffer:	binding point 4
 	
+	var my_camera_matrix_buffer_size=0;
+	my_camera_matrix_buffer_size+=Float32Array.BYTES_PER_ELEMENT*
+				(scene.component_location_data.identify_matrix.length)*
+				(scene.camera.camera_object_parameter.length);
+	
+	this.camera_matrix_buffer	=scene.webgpu.device.createBuffer(
+		{
+			size	:	my_camera_matrix_buffer_size,
+			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.STORAGE
+		});
+
 // init system_bindgroup
 	this.system_bindgroup=scene.webgpu.device.createBindGroup(
 	{
 		layout	:	this.system_bindgroup_layout,
 		entries	:	[
-			{	// system buffer
-				binding		:	0,
-				resource	:
-				{
-					buffer	:	this.system_buffer,
-					size	:	my_system_buffer_size
-				}
-			},
 			{	//target buffer
-				binding		:	1,
+				binding		:	0,
 				resource	:
 				{
 					buffer	:	this.target_buffer,
@@ -148,7 +164,7 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 				}
 			},
 			{	// method buffer
-				binding		:	2,
+				binding		:	1,
 				resource	:
 				{
 					buffer	:	this.method_buffer,
@@ -156,15 +172,32 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 				}
 			},
 			{	// id buffer
-				binding		:	3,
+				binding		:	2,
 				resource	:
 				{
 					buffer	:	this.id_buffer,
 					size	:	my_id_buffer_size
 				}
+			},
+			{	// system buffer
+				binding		:	3,
+				resource	:
+				{
+					buffer	:	this.system_buffer,
+					size	:	my_system_buffer_size
+				}
+			},
+			{	// system buffer
+				binding		:	4,
+				resource	:
+				{
+					buffer	:	this.camera_matrix_buffer,
+					size	:	my_camera_matrix_buffer_size
+				}
 			}
 		]
 	});
+	
 	this.set_system_buffer=function(scene)
 	{
 		var flag=((this.main_target_project_matrix==null)||(this.main_target_view_parameter==null));
@@ -372,7 +405,8 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 		else
 			my_id_buffer_index_id=p.component_ids[driver_id].system_bindgroup_id;
 
-		scene.webgpu.render_pass_encoder.setBindGroup(0,this.system_bindgroup,[
+		scene.webgpu.render_pass_encoder.setBindGroup(0,this.system_bindgroup,
+		[
 			this.target_buffer_stride	*target_id,
 			this.method_buffer_stride	*method_id,
 			this.id_buffer_stride		*my_id_buffer_index_id
@@ -436,10 +470,6 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 	};
 	this.destroy=function()
 	{
-		if(this.system_buffer!=null){
-			this.system_buffer.destroy();
-			this.system_buffer=null;
-		}
 		if(this.target_buffer!=null){
 			this.target_buffer.destroy();
 			this.target_buffer=null;
@@ -451,6 +481,14 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 		if(this.id_buffer!=null){
 			this.id_buffer.destroy();
 			this.id_buffer=null;
+		}
+		if(this.system_buffer!=null){
+			this.system_buffer.destroy();
+			this.system_buffer=null;
+		}
+		if(this.camera_matrix_buffer!=null){
+			this.camera_matrix_buffer.destroy();
+			this.camera_matrix_buffer=null;
 		}
 	};
 }

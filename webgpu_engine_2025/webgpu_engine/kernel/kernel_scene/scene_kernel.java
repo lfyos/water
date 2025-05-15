@@ -237,44 +237,50 @@ public class scene_kernel
 								new part_container_for_part_search(top_box_part),request_response);
 				}			
 	}
+	
 	private ArrayList<buffer_object_file_modify_time_and_length_container> get_boftal_container(
 			client_process_bar process_bar,tree_string_locker_container string_locker_container,
 			buffer_object_file_modify_time_and_length_container system_boftal_container)
 	{
 		var ret_val=new ArrayList<buffer_object_file_modify_time_and_length_container>();
-		if(scene_par.fast_load_flag){
-			File f;
-			var bofmtlc=new buffer_object_file_modify_time_and_length_container();
-			
-			String package_directory_name,boftal_data_file_name,my_lock_key[];
-			
-			package_directory_name	=file_directory.package_file_directory(1,system_par,scene_par);
+		if(!(scene_par.fast_load_flag))
+			return ret_val;
+		
+		var bofmtlc=new buffer_object_file_modify_time_and_length_container();
+		
+		String package_directory_name,boftal_data_file_name,my_lock_key[];
+		
+		package_directory_name	=file_directory.package_file_directory(1,system_par,scene_par);
+		boftal_data_file_name 	=package_directory_name+"boftal_data.txt";
+		my_lock_key				=new String[] {package_directory_name+"package.lock"};
+
+		string_locker_container.read_lock(my_lock_key);
+		
+		File f;
+		if((f=new File(boftal_data_file_name)).exists())
+			if(f.length()>0)
+				bofmtlc.load(process_bar,"load_scene_buffer_object_file_information",
+						boftal_data_file_name,system_par.local_data_charset);
+		string_locker_container.read_unlock(my_lock_key);
+		
+		for(int i=0,ni=scene_par.type_sub_directory.length;i<ni;i++) {
+			package_directory_name	=file_directory.package_file_directory(i+2,system_par,scene_par);
 			boftal_data_file_name 	=package_directory_name+"boftal_data.txt";
 			my_lock_key				=new String[] {package_directory_name+"package.lock"};
 			
 			string_locker_container.read_lock(my_lock_key);
 			if((f=new File(boftal_data_file_name)).exists())
 				if(f.length()>0)
-					bofmtlc.load(process_bar,boftal_data_file_name,system_par.local_data_charset);
+					bofmtlc.load(process_bar,"load_type_buffer_object_file_information",
+							boftal_data_file_name,system_par.local_data_charset);
 			string_locker_container.read_unlock(my_lock_key);
-			
-			for(int i=0,ni=scene_par.type_sub_directory.length;i<ni;i++) {
-				package_directory_name	=file_directory.package_file_directory(i+2,system_par,scene_par);
-				boftal_data_file_name 	=package_directory_name+"boftal_data.txt";
-				my_lock_key				=new String[] {package_directory_name+"package.lock"};
-				
-				string_locker_container.read_lock(my_lock_key);
-				if((f=new File(boftal_data_file_name)).exists())
-					if(f.length()>0)
-						bofmtlc.load(process_bar,boftal_data_file_name,system_par.local_data_charset);
-				string_locker_container.read_unlock(my_lock_key);
-			}
-			
-			if(system_boftal_container.size()>0)
-				ret_val.add(system_boftal_container);
-			if(bofmtlc.size()>0)
-				ret_val.add(bofmtlc);
 		}
+		
+		if(system_boftal_container.size()>0)
+			ret_val.add(system_boftal_container);
+		if(bofmtlc.size()>0)
+			ret_val.add(bofmtlc);
+		
 		return ret_val;
 	}
 	
@@ -290,14 +296,14 @@ public class scene_kernel
 		if(scene_f.error_flag()){
 			debug_information.println("Open scene file fail	:	",	path_name);
 			return true;
-		}else {
-			create_parameter.scene_directory_name		=scene_f.directory_name;
-			create_parameter.scene_file_name			=scene_f.file_name;
-			if(scene_par.scene_last_modified_time<scene_f.lastModified_time)
-				scene_par.scene_last_modified_time=scene_f.lastModified_time;
-			if(scene_par.scene_shader_directory_name==null)
-				scene_par.scene_shader_directory_name	=scene_f.directory_name;
 		}
+		
+		create_parameter.scene_directory_name		=scene_f.directory_name;
+		create_parameter.scene_file_name			=scene_f.file_name;
+		if(scene_par.scene_last_modified_time<scene_f.lastModified_time)
+			scene_par.scene_last_modified_time		=scene_f.lastModified_time;
+		if(scene_par.scene_shader_directory_name==null)
+			scene_par.scene_shader_directory_name	=scene_f.directory_name;
 
 		permanent_part_id_encoder encoder[]=new permanent_part_id_encoder[scene_par.type_sub_directory.length+2];
 		for(int i=0,ni=encoder.length;i<ni;i++)
@@ -306,7 +312,7 @@ public class scene_kernel
 		render_cont	=new render_container(render_cont,request_response,system_par,scene_par);
 		part_cont	=new part_container_for_part_search(render_cont.part_array_list(-1));
 
-		for(int i=0,ni=scene_par.type_sub_directory.length;i<ni;i++) {
+		for(int i=0,ni=scene_par.type_sub_directory.length;i<ni;i++){
 			path_name=scene_par.type_shader_directory_name
 				+scene_par.type_sub_directory[i]+scene_par.type_shader_file_name;
 			render_cont.load_shader(
@@ -341,7 +347,7 @@ public class scene_kernel
 		
 		render_cont.load_part(part_type_code,2,part_loader_cont,system_par,scene_par,
 			boftal_container,string_locker_container,process_bar,"load_second_class_part","bottom_box_part");
-		debug_information.println("Load second class part time length:	",		(current_time=new Date().getTime())-start_time);
+		debug_information.println("Load second class part time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 
 		start_time=current_time;

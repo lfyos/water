@@ -5,7 +5,10 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 {
 	var create_data;
 	
-	while(true){
+	if(create_scene_sleep_time_length_scale<1.0)
+		create_scene_sleep_time_length_scale=1.0;
+	
+	for(var start_time=new Date().getTime;;create_scene_sleep_time_length*=create_scene_sleep_time_length_scale){
 		var engine_promise=await fetch(request_url,
 					my_default_fetch_parameter.request_create_scene);
 		if(!(engine_promise.ok)){
@@ -28,6 +31,11 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 			alert("Web server create scene fail:	"+create_data.toString());
 			return null;
 		}
+		if((new Date().getTime-start_time)>create_scene_max_sleep_time_length){
+			alert("Web server create scene fail:	try creation timeout!");
+			return null;
+		}
+		await new Promise(resolve=>{setTimeout(resolve,create_scene_sleep_time_length);});
 	}
 	
 	var	my_render_init_data		=create_data[0];
@@ -84,14 +92,14 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 			
 	init_ids_of_part_and_component(scene,
 		sorted_component_name_id,part_component_id_and_driver_id);
-		
-	if(scene.system_buffer!=null)
-		scene.system_buffer.destroy();
+	
 	scene.system_buffer=new construct_system_buffer(
 		init_parameter.max_target_number,init_parameter.max_method_number,scene);
 	
-	scene.component_location_data.do_initialize(scene.component_array_sorted_by_id,
-			scene.system_buffer.id_buffer,scene.system_bindgroup_id.length,
+	scene.component_location_data.do_component_location_initialize(
+			scene.component_array_sorted_by_id,scene.system_buffer.id_buffer,
+			scene.system_buffer.camera_matrix_buffer,scene.camera.camera_component_id_buffer,
+			scene.system_bindgroup_id.length,scene.camera.camera_object_parameter.length,
 			common_shader_data_structure,location_shader_program);
 
 	for(var i=0,ni=component_init_fun_array.length;i<ni;i++){
@@ -128,7 +136,9 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 		for(var i=4,ni=program_data[render_id].length;i<ni;i++)
 			my_text_array=my_text_array.concat(program_data[render_id][i]);
 				
-		var combined_shader_program=common_shader_code;
+		var combined_shader_program="const scene_camera_number="+
+			(scene.camera.camera_object_parameter.length.toString())+";\n"+
+			common_shader_code+"\n";
 		for(var i=0,ni=my_shader_program.length;i<ni;i++)
 			combined_shader_program+=my_shader_program[i];
 					

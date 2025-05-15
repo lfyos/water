@@ -301,8 +301,7 @@ public class part
 			}
 		}
 	}
-	public String load_mesh_and_create_buffer_object(part copy_from_part,
-			system_parameter system_par,scene_parameter scene_par)
+	public String load_mesh_and_create_buffer_object(system_parameter system_par,scene_parameter scene_par)
 	{
 		String str;
 		
@@ -336,7 +335,7 @@ public class part
 
 		if(part_mesh!=null)
 			part_mesh.free_memory();
-		
+
 		return str;
 	}
 	public part(int my_part_type_id,boolean my_top_box_part_flag,

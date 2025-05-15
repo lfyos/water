@@ -7,10 +7,9 @@ import kernel_common_class.tree_string_search_container;
 public class buffer_object_file_modify_time_and_length_container 
 	extends tree_string_search_container<buffer_object_file_modify_time_and_length>
 {
-	public void load(client_process_bar process_bar,String my_boftal_file_name,String boftal_file_charset)
+	public void load(client_process_bar process_bar,String process_title,
+			String my_boftal_file_name,String boftal_file_charset)
 	{
-		String process_title="load_buffer_object_file_information";
-		
 		file_reader fr	=new file_reader(my_boftal_file_name,boftal_file_charset);
 		int number		=fr.get_int();
 

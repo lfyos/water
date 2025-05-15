@@ -178,25 +178,22 @@ public class scene_initialization
 			render r;
 			if((r=sk.render_cont.renders.get(render_id))==null)
 				continue;
-			if(last_time<r.program_last_time)
-				last_time=r.program_last_time;
 			String shader_file_name[][];
 			if((shader_file_name=r.driver.shader_file_name_array())==null)
 				continue;
 			for(int i=0,ni=shader_file_name.length;i<ni;i++)
 				for(int j=0,nj=shader_file_name[i].length;j<nj;j++){
-					int index_id=shader_file_name[i][j].lastIndexOf('.');
-					if(shader_file_name[i][j].substring(index_id,index_id+3).toLowerCase().compareTo(".js")==0)
-						my_last_time=class_file_reader.get_last_time(shader_file_name[i][j],
-									r.driver.getClass(),sk.system_par.js_jar_file_charset);
-					else if(shader_file_name[i][j].substring(index_id,index_id+4).toLowerCase().compareTo(".txt")==0)
-						my_last_time=class_file_reader.get_last_time(shader_file_name[i][j],
-									r.driver.getClass(),sk.system_par.text_jar_file_charset);
-					else
-						my_last_time=class_file_reader.get_last_time(shader_file_name[i][j],
-									r.driver.getClass(),sk.system_par.local_data_charset);
+					String my_file_name=file_reader.separator(shader_file_name[i][j]);
+					my_last_time=class_file_reader.get_last_time(my_file_name,
+							r.driver.getClass(),sk.system_par.js_jar_file_charset);
 					if(last_time<my_last_time)
 						last_time=my_last_time;
+					
+					File f;
+					for(int k=0,nk=r.render_directory.size();k<nk;k++)
+						if((f=new File(r.render_directory.get(k)[0]+my_file_name)).exists())
+							if(last_time<(my_last_time=f.lastModified()))
+								last_time=my_last_time;
 				}
 		}
 		
@@ -268,7 +265,7 @@ public class scene_initialization
 				}
 			}
 		}
-		
+	
 		process_bar.set_process_bar(false,"file_initialization_0","",collect_init_comp_number,collect_init_comp_number);
 		
 		if((new File(destination_file_name)).lastModified()>last_time)
@@ -298,6 +295,7 @@ public class scene_initialization
 			process_bar.set_process_bar(false,"file_initialization_1","",
 					sort_component_array.length, sort_component_array.length);
 		}
+		
 		fw.println("],").println("[");
 		{
 			int id[][][][]=sk.component_cont.part_component_id_and_driver_id;
@@ -322,6 +320,7 @@ public class scene_initialization
 			}
 			process_bar.set_process_bar(false,"file_initialization_2","",id.length, id.length);
 		}
+		
 		fw.println("],").println("[");
 		{
 			process_bar.set_process_bar(true,"file_initialization_3","",0,collect_init_comp_number);
@@ -346,10 +345,11 @@ public class scene_initialization
 			fw.println();
 			process_bar.set_process_bar(false,"file_initialization_3","",collect_init_comp_number,collect_init_comp_number);
 		}
+
 		fw.println("],").println("[");
 		{
 			int render_number=sk.render_cont.renders.size();
-			process_bar.set_process_bar(true,"file_initialization_4","",0,render_number);
+			process_bar.set_process_bar(true,"file_initialization_4","",0,render_number);			
 			for(int render_id=0;render_id<render_number;render_id++) {
 				render r=sk.render_cont.renders.get(render_id);
 				process_bar.set_process_bar(false,"file_initialization_4",r.render_name,render_id,render_number);
@@ -366,50 +366,58 @@ public class scene_initialization
 						fw.println("function(render_id,render_name,");
 						fw.println("	init_data,shader_code,text_array,render)");
 						fw.println("{");
-					}
+					}				
 					for(int j=0,nj=shader_file_name[i].length;j<nj;j++){
-						common_reader reader;
+						String class_charset	=sk.system_par.text_class_charset;
+						String jar_file_charset	=sk.system_par.text_jar_file_charset;
+					
+						String my_file_name=file_reader.separator(shader_file_name[i][j]);
 						int index_id=shader_file_name[i][j].lastIndexOf('.');
-						if(shader_file_name[i][j].substring(index_id,index_id+3).toLowerCase().compareTo(".js")==0)
-							reader=class_file_reader.get_reader(
-									shader_file_name[i][j],r.driver.getClass(),
-									sk.system_par.js_class_charset,
-									sk.system_par.js_jar_file_charset);
-						else if(shader_file_name[i][j].substring(index_id,index_id+4).toLowerCase().compareTo(".txt")==0)
-							reader=class_file_reader.get_reader(
-								shader_file_name[i][j],r.driver.getClass(),
-								sk.system_par.text_class_charset,
-								sk.system_par.text_jar_file_charset);
-						else
-							reader=class_file_reader.get_reader(
-									shader_file_name[i][j],r.driver.getClass(),
-									sk.system_par.local_data_charset,
-									sk.system_par.local_data_charset);
-						
-						String str="";
-						if(reader!=null) {
+						common_reader reader;
+						if(index_id>=0)
+							if(my_file_name.substring(index_id,index_id+3).toLowerCase().compareTo(".js")==0) {
+								class_charset	=sk.system_par.js_class_charset;
+								jar_file_charset=sk.system_par.js_jar_file_charset;
+							}						
+						String str="";					
+						if((reader=class_file_reader.get_reader(my_file_name,
+							r.driver.getClass(),class_charset,jar_file_charset))!=null)
+						{
 							if(!(reader.error_flag()))
 								str=reader.get_text();
 							reader.close();
-						}
+						}else 
+							for(int k=0,nk=r.render_directory.size();k<nk;k++) {
+								String my_directory_charset[]=r.render_directory.get(k);				
+								if(new File(my_directory_charset[0]+my_file_name).exists()) {
+									String my_file_data=file_reader.get_text(
+										my_directory_charset[0]+my_file_name,my_directory_charset[1]);
+									if(my_file_data!=null)
+										if((my_file_data=my_file_data.trim()).length()>0) {
+											str=my_file_data;
+											break;
+										}
+								}
+							}
+
 						if(i==0)
 							fw.println(str);
 						else{
 							str=jason_string.change_string(str);
 							fw.print("			",str).println((j==(nj-1))?"":",");
-						}
-					}
+						}					
+					}				
 					if(i!=0) 
 						fw.print  ("		]");
 					else{
 						fw.println("	return new new_render_driver(render_id,render_name,");
 						fw.println("					init_data,shader_code,text_array,render);");
 						fw.print  ("}");
-					}
+					}					
 				}
 				fw.println().println().println();
-				fw.println((render_id<(render_number-1))?"	],":"	]");
-			}
+				fw.println((render_id<(render_number-1))?"	],":"	]");				
+			}				
 			process_bar.set_process_bar(false,"file_initialization_4","",render_number,render_number);
 		}
 
@@ -442,7 +450,7 @@ public class scene_initialization
 			new File(tmp_file_name),new File(fw.directory_name+fw.file_name),
 			sk.system_par.response_block_size,"gzip");
 		file_writer.file_delete(tmp_file_name);
-
+		
 		return;
 	}
 

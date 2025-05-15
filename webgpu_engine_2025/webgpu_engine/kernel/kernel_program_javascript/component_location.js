@@ -4,10 +4,11 @@ function construct_component_location_object(my_component_number,my_computer,my_
 	this.computer			=my_computer;
 	this.webgpu				=my_webgpu;
 
-	this.component_move_buffer		=null;
-	this.component_relative_buffer	=null;
-	this.component_absolute_buffer	=null;
-	this.component_parent_id_buffer	=null;
+	this.component_move_buffer			=null;
+	this.component_relative_buffer		=null;
+	this.component_absolute_buffer		=null;
+	this.component_parent_id_buffer		=null;
+	this.component_location_flag_buffer	=null;
 
 	this.version_id			=3;
 	this.identify_matrix	=[	1,	0,	0,	0,		0,	1,	0,	0,		0,	0,	1,	0,		0,	0,	0,	1];
@@ -38,6 +39,19 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				new Float32Array(loca));
 		}
 	};
+	this.set_component_location_flag=function(component_id,new_caculate_location_flag)
+	{
+		if((component_id>=0)&&(component_id<this.component.length)){
+			this.component[component_id].move_version_id=this.version_id++;
+				
+			var old_caculate_location_flag=this.component[component_id].caculate_location_flag;
+			this.component[component_id].caculate_location_flag=new_caculate_location_flag;
+			if(old_caculate_location_flag^new_caculate_location_flag)
+				this.webgpu.device.queue.writeBuffer(this.component_location_flag_buffer,
+					Int32Array.BYTES_PER_ELEMENT*component_id,
+					new Int32Array(new_caculate_location_flag?1:0));
+		}
+	};
 	this.decode_location=function(data)
 	{
 		if(data.length<=0)
@@ -62,19 +76,26 @@ function construct_component_location_object(my_component_number,my_computer,my_
 	{
 		var identify_matrix_length=Float32Array.BYTES_PER_ELEMENT*this.identify_matrix.length;
 		for(var i=0,ni=component_loca_buffer.length,my_version_id=this.version_id++;i<ni;i++){
-			var component_id									= component_loca_buffer[i][0];
-			this.component[component_id].caculate_location_flag	=(component_loca_buffer[i][1]>0)?true:false;
+			var component_id									=component_loca_buffer[i][0];
+			var old_caculate_location_flag						=this.component[component_id].caculate_location_flag;
+			var new_caculate_location_flag						=(component_loca_buffer[i][1]>0)?true:false;
+			this.component[component_id].caculate_location_flag	=new_caculate_location_flag;
 			this.component[component_id].move_matrix			=this.decode_location(component_loca_buffer[i][2]);
 			if(component_loca_buffer[i].length>3)
 				this.component[component_id].relative_matrix=this.decode_location(component_loca_buffer[i][3]);
+			
 			this.component[component_id].move_version_id=my_version_id;
 			
 			var buffer_position=identify_matrix_length*component_id;
+			
 			this.webgpu.device.queue.writeBuffer(this.component_move_buffer,buffer_position,
 					new Float32Array(this.component[component_id].move_matrix));
 			if(component_loca_buffer[i].length>3)
 				this.webgpu.device.queue.writeBuffer(this.component_relative_buffer,buffer_position,
 					new Float32Array(this.component[component_id].relative_matrix));
+			if(old_caculate_location_flag^new_caculate_location_flag)
+				this.webgpu.device.queue.writeBuffer(this.component_location_flag_buffer,
+					Int32Array.BYTES_PER_ELEMENT*component_id,new Int32Array(new_caculate_location_flag?1:0));
 		}
 	};
 	this.get_component_move_location=function(component_id)
@@ -130,9 +151,12 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		
 		return loca;
 	};
-	this.do_initialize=function(component_array_sorted_by_id,
-			id_buffer,system_id_number,common_shader_data_structure,location_shader_program)
+	this.do_component_location_initialize=function(component_array_sorted_by_id,
+			id_buffer,camera_matrix_buffer,camera_component_id_buffer,
+			system_id_number,camera_number,common_shader_data_structure,location_shader_program)
 	{
+		this.camera_number=camera_number;
+		
 		for(var i=0,ni=this.component_number;i<ni;i++){
 			var p=component_array_sorted_by_id[i].component_parent;
 			this.component[i].parent_id=(p==null)?-1:(p.component_id);
@@ -158,12 +182,22 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				size	:	this.component_number*Int32Array.BYTES_PER_ELEMENT,
 				usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.STORAGE
 			});
+		this.component_location_flag_buffer=this.webgpu.device.createBuffer(
+			{
+				size	:	this.component_number*Int32Array.BYTES_PER_ELEMENT,
+				usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.STORAGE
+			});
 
 		var my_parent_id_array=new Array(this.component_number);
-		for(var i=0,ni=this.component_number;i<ni;i++)
-			my_parent_id_array[i]=this.component[i].parent_id;
+		var my_location_flag_array=new Array(this.component_number);
+		for(var i=0,ni=this.component_number;i<ni;i++){
+			my_parent_id_array[i]		=this.component[i].parent_id;
+			my_location_flag_array[i]	=0;
+		}
 		this.webgpu.device.queue.writeBuffer(
-				this.component_parent_id_buffer,0,new Int32Array(my_parent_id_array));
+				this.component_parent_id_buffer,	0,new Int32Array(my_parent_id_array));
+		this.webgpu.device.queue.writeBuffer(
+				this.component_location_flag_buffer,0,new Int32Array(my_location_flag_array));
 
 		var my_component_bindgroup_layout_entries=[
 			{	//id_info
@@ -182,15 +216,15 @@ function construct_component_location_object(my_component_number,my_computer,my_
 					type		:	"storage"
 				}
 			},
-			{	//relative_matrix
+			{	//camera_matrix
 				binding		:	2,
 				visibility	:	GPUShaderStage.COMPUTE,
 				buffer		:
 				{
-					type		:	"read-only-storage"
+					type		:	"storage"
 				}
 			},
-			{	//move_matrix
+			{	//relative_matrix
 				binding		:	3,
 				visibility	:	GPUShaderStage.COMPUTE,
 				buffer		:
@@ -198,8 +232,34 @@ function construct_component_location_object(my_component_number,my_computer,my_
 					type		:	"read-only-storage"
 				}
 			},
-			{	//parent_id
+			{	//move_matrix
 				binding		:	4,
+				visibility	:	GPUShaderStage.COMPUTE,
+				buffer		:
+				{
+					type		:	"read-only-storage"
+				}
+			},
+			{	//parent_id
+				binding		:	5,
+				visibility	:	GPUShaderStage.COMPUTE,
+				buffer		:
+				{
+					type		:	"read-only-storage"
+				}
+			},
+			{
+				//location_flag
+				binding		:	6,
+				visibility	:	GPUShaderStage.COMPUTE,
+				buffer		:
+				{
+					type		:	"read-only-storage"
+				}
+			},
+			{
+				//camera_component_id
+				binding		:	7,
 				visibility	:	GPUShaderStage.COMPUTE,
 				buffer		:
 				{
@@ -215,38 +275,61 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				{	//id_info
 					binding		:	0,
 					resource	:
-						{
-							buffer	:	id_buffer
-						}
+					{
+						buffer	:	id_buffer
+					}
 				},
 				{	//absolute_matrix
 					binding		:	1,
 					resource	:
-						{
-							buffer	:	this.component_absolute_buffer
-						}
+					{
+						buffer	:	this.component_absolute_buffer
+					}
 				},
-				{	//move_matrix
+				{	//camera_matrix
 					binding		:	2,
 					resource	:
-						{
-							buffer	:	this.component_move_buffer
-						}
+					{
+						buffer	:	camera_matrix_buffer
+					}
+				},
+				{	//move_matrix
+					binding		:	3,
+					resource	:
+					{
+						buffer	:	this.component_move_buffer
+					}
 				},
 				{
 					//relative_matrix
-					binding		:	3,
-					resource	:
-						{
-							buffer	:	this.component_relative_buffer
-						}
-				},
-				{	//parent_id
 					binding		:	4,
 					resource	:
-						{
-							buffer	:	this.component_parent_id_buffer
-						}
+					{
+						buffer	:	this.component_relative_buffer
+					}
+				},
+				{	//parent_id
+					binding		:	5,
+					resource	:
+					{
+						buffer	:	this.component_parent_id_buffer
+					}
+				},
+				{
+					//location_flag
+					binding		:	6,
+					resource	:
+					{
+						buffer	:	this.component_location_flag_buffer
+					}
+				},
+				{
+					//camera_component_id_buffer
+					binding		:	7,
+					resource	:
+					{
+						buffer	:	camera_component_id_buffer
+					}
 				}
 			];
 		this.component_bindgroup=this.webgpu.device.createBindGroup(
@@ -298,6 +381,20 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				}
 			}
 		});
+		this.set_camera_location_pipeline=this.webgpu.device.createComputePipeline(
+		{
+			layout	:	my_pipeline_layout,
+			compute	:	
+			{
+				module		:	my_component_module,
+				entryPoint	:	"set_camera_location_main",
+				constants	:
+				{
+					camera_number			:	this.camera_number
+				}
+			}
+		});
+		
 	}
 	this.compute_component_location=function()
 	{
@@ -316,6 +413,9 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			this.system_id_workgroup_size,
 			this.system_id_workgroup_size,
 			this.system_id_workgroup_size);
+		
+		encoder.setPipeline(this.set_camera_location_pipeline);
+		encoder.dispatchWorkgroups(this.camera_number,1,1);
 	}
 	this.destroy=function()
 	{
@@ -334,6 +434,10 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		if(this.component_parent_id_buffer!=null){
 			this.component_parent_id_buffer.destroy();
 			this.component_parent_id_buffer=null;
+		}
+		if(this.component_location_flag_buffer!=null){
+			this.component_location_flag_buffer.destroy();
+			this.component_location_flag_buffer=null;
 		}
 	};
 };

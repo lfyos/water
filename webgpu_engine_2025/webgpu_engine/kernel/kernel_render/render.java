@@ -6,12 +6,10 @@ import java.util.ArrayList;
 import kernel_part.part;
 import kernel_part.part_parameter;
 import kernel_driver.render_driver;
-import kernel_file_manager.file_reader;
-import kernel_common_class.common_reader;
-import kernel_common_class.class_file_reader;
-import kernel_part.permanent_part_id_encoder;
 import kernel_scene.scene_parameter;
 import kernel_scene.system_parameter;
+import kernel_file_manager.file_reader;
+import kernel_part.permanent_part_id_encoder;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 import kernel_part.part_container_for_part_search;
@@ -21,15 +19,16 @@ public class render
 {
 	public int render_id;
 	public String render_name;
+	public ArrayList<String[]> render_directory;
 	public render_driver driver;
-	public long program_last_time;
 	public ArrayList<part> parts;
 
 	public void destroy()
 	{
 		if(render_name!=null)
 			render_name=null;
-		
+		if(render_directory!=null)
+			render_directory=null;
 		if(parts!=null){
 			for(int i=0,ni=parts.size();i<ni;i++){
 				part p;
@@ -51,10 +50,10 @@ public class render
 	{	
 		part p;
 		
-		render_name			=r.render_name;
-		render_id			=r.render_id;
-		driver				=r.driver.clone(r,request_response,system_par,scene_par);
-		program_last_time	=r.program_last_time;
+		render_name		=r.render_name;
+		render_directory=r.render_directory;
+		render_id		=r.render_id;
+		driver			=r.driver.clone(r,request_response,system_par,scene_par);
 		
 		parts=new ArrayList<part>();
 		if(r.parts!=null)
@@ -67,11 +66,11 @@ public class render
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		render_id=my_render_id;
-		render_name=my_render_name;
-		driver=null;
-		parts=new ArrayList<part>();
-		program_last_time=0;
+		render_id	=my_render_id;
+		render_name	=my_render_name;
+		render_directory=new ArrayList<String[]>();
+		driver		=null;
+		parts		=new ArrayList<part>();
 		
 		Object render_driver_object;
 		try{
@@ -88,21 +87,6 @@ public class render
 			return;
 	    }
 		driver=(render_driver)render_driver_object;
-		String shader_file_name[][];
-		if((shader_file_name=driver.shader_file_name_array())!=null)
-			for(int i=0,ni=shader_file_name.length;i<ni;i++)
-				for(int j=0,nj=shader_file_name[i].length;j<nj;j++) {
-					common_reader reader=class_file_reader.get_reader(
-						shader_file_name[i][j],driver.getClass(),
-						system_par.text_class_charset,
-						system_par.text_jar_file_charset);
-					if(reader!=null) {
-						if(!(reader.error_flag()))
-							if(program_last_time<reader.lastModified_time)
-								program_last_time=reader.lastModified_time;
-						reader.close();
-					}
-				}
 	}
 	public void delete_last_part()
 	{
@@ -154,19 +138,29 @@ public class render
 			material_file_name		=file_reader.separator(material_file_name);
 			description_file_name	=file_reader.separator(description_file_name);
 			audio_file_name			=file_reader.separator(audio_file_name);
-				
-			File mesh_f=new File(f.directory_name+mesh_file_name);
-			if(mesh_f.exists())
-				if(mesh_f.lastModified()<f.lastModified_time)
-					mesh_f.setLastModified(f.lastModified_time);
-				
-			File material_f=new File(f.directory_name+material_file_name);
-			if(material_f.exists())
-				if(material_f.lastModified()<f.lastModified_time)
-					material_f.setLastModified(f.lastModified_time);
 			
-			part my_part=new part(part_type_id,
-					false,part_par,f.directory_name,f.get_charset(),
+			long my_last_time;
+			part_parameter my_part_par=part_par.clone();
+			
+			if(my_part_par.last_modified_time<f.lastModified_time)
+				my_part_par.last_modified_time=f.lastModified_time;
+
+			File mesh_f=new File(f.directory_name+mesh_file_name);
+			if(mesh_f.exists()) {
+				if((my_last_time=mesh_f.lastModified())<f.lastModified_time)
+					mesh_f.setLastModified(f.lastModified_time);
+				if(my_part_par.last_modified_time<my_last_time)
+					my_part_par.last_modified_time=my_last_time;
+			}
+			File material_f=new File(f.directory_name+material_file_name);
+			if(material_f.exists()) {
+				if((my_last_time=material_f.lastModified())<f.lastModified_time)
+					material_f.setLastModified(f.lastModified_time);
+				if(my_part_par.last_modified_time<my_last_time)
+					my_part_par.last_modified_time=my_last_time;
+			}
+
+			part my_part=new part(part_type_id,false,my_part_par,f.directory_name,f.get_charset(),
 					
 					(user_name==null)				?"":user_name,
 					(system_name==null)				?"":system_name,
@@ -174,7 +168,7 @@ public class render
 					(material_file_name==null)		?"":material_file_name,
 					(description_file_name==null)	?"":description_file_name,		
 					(audio_file_name==null)			?"":audio_file_name);
-
+			
 			add_part(my_part,encoder);
 				
 			try{

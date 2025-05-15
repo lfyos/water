@@ -21,10 +21,11 @@
 /*	engine_touch_time_length		unit:nanosecond							*/		10000000000
 /*	part_load_sleep_time_length		unit:millisecond						*/		100
 
-/*	create_engine_concurrent_number											*/		15
-/*	create_engine_sleep_time_length_scale									*/		1.25
-/*	create_engine_sleep_time_length,unit:millisecond						*/		10000
-/*	create_engine_max_sleep_time_length									 	*/		600000
+/*	create_scene_concurrent_number											*/		5
+
+/*	create_scene_sleep_time_length_scale									*/		1.125
+/*	create_scene_sleep_time_length,unit:millisecond							*/		10000
+/*	create_scene_max_sleep_time_length									 	*/		1200000
 
 /*	show_process_bar_interval,	unit:millisecond							*/		1000
 /*	file_buffer_expire_time_length,	unit:second								*/		360000

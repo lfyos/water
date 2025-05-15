@@ -73,7 +73,7 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 				}
 				follow_loca=computer.matrix_multiplication(loca,follow_loca)
 				component_location.set_component_move_location(follow_component_id,follow_loca);
-				component_location.component[follow_component_id].caculate_location_flag=true;
+				component_location.set_component_location_flag(follow_component_id,true);
 			}
 			if(not_terminated_flag)
 				this.location_data.push(location_item);

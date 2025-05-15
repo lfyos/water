@@ -58,7 +58,7 @@ public class scene_kernel_container_search_tree
 		
 		system_boftal_container=new buffer_object_file_modify_time_and_length_container();
 		try {
-			system_boftal_container.load(null,
+			system_boftal_container.load(null,"",
 					file_directory.package_file_directory(0,system_par,null)+"boftal_data.txt",
 					system_par.local_data_charset);
 		}catch(Exception e) {
