@@ -100,8 +100,11 @@ fn caculate_vertex_color(
 			var normal_value=normalize(p1.xyz-p0.xyz);
 			var to_eye_value=normalize(target_info.eye_point.xyz/target_info.eye_point.w-p0.xyz);
 			
-			for (var i: i32 = 0; i < 4; i++) {
-				var to_light_value	=normalize(system_info.light_position[i].xyz/system_info.light_position[i].w-p0.xyz);
+			for (var i: i32 = 0; i < scene_camera_number; i++) {
+				if((camera_info[i].light_camera_flag&0x01)==0)
+					{continue;}
+					
+				var to_light_value	=normalize(camera_info[i].position.xyz-p0.xyz);
 				var half_value		=normalize(to_eye_value+to_light_value);
 				
 				var light_color	=vec4(0.0,0.0,0.0,0.0);

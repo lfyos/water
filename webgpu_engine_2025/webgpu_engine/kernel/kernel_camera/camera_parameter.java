@@ -11,7 +11,8 @@ public class camera_parameter
 	public double distance,half_fovy_tanl,bak_half_fovy_tanl,near_ratio,far_ratio;
 	public boolean projection_type_flag;
 	public double low_precision_scale,high_precision_scale;
-	public boolean synchronize_location_flag,light_camera_flag;
+	public boolean synchronize_location_flag;
+	public int light_camera_flag,light_camera_flag_ex,light_camera_flag_ex_ex;
 	
 	static public boolean is_not_same_parameter(camera_parameter s,camera_parameter d)
 	{
@@ -35,7 +36,11 @@ public class camera_parameter
 			return true;
 		if(s.synchronize_location_flag^d.synchronize_location_flag)
 			return true;
-		if(s.light_camera_flag^d.light_camera_flag)
+		if(s.light_camera_flag!=d.light_camera_flag)
+			return true;
+		if(s.light_camera_flag_ex!=d.light_camera_flag_ex)
+			return true;
+		if(s.light_camera_flag_ex_ex!=d.light_camera_flag_ex_ex)
 			return true;
 		return false;
 	}
@@ -61,6 +66,8 @@ public class camera_parameter
 		
 		synchronize_location_flag	=s.synchronize_location_flag;
 		light_camera_flag			=s.light_camera_flag;
+		light_camera_flag_ex		=s.light_camera_flag_ex;
+		light_camera_flag_ex_ex		=s.light_camera_flag_ex_ex;
 		return this;
 	}
 	public camera_parameter(camera_parameter s)
@@ -74,7 +81,8 @@ public class camera_parameter
 			double my_near_ratio,double my_far_value_ratio,
 			boolean my_projection_type_flag,
 			double my_low_precision_scale,double my_high_precision_scale,
-			boolean my_synchronize_location_flag,boolean my_light_camera_flag)
+			boolean my_synchronize_location_flag,
+			int my_light_camera_flag,int my_light_camera_flag_ex,int my_light_camera_flag_ex_ex)
 	{
 		movement_flag				=my_movement_flag;
 		direction_flag				=my_direction_flag;
@@ -95,6 +103,8 @@ public class camera_parameter
 		
 		synchronize_location_flag	=my_synchronize_location_flag;
 		light_camera_flag			=my_light_camera_flag;
+		light_camera_flag_ex		=my_light_camera_flag_ex;
+		light_camera_flag_ex_ex		=my_light_camera_flag_ex_ex;
 	}
 	public camera_parameter mix(camera_parameter t,double p,double q)
 	{
@@ -111,7 +121,8 @@ public class camera_parameter
 					projection_type_flag,				
 					low_precision_scale			*p	+t.low_precision_scale	*q,
 					high_precision_scale		*p	+t.high_precision_scale	*q,
-					synchronize_location_flag,	light_camera_flag);
+					synchronize_location_flag,	
+					light_camera_flag,light_camera_flag_ex,light_camera_flag_ex_ex);
 		return result;
 	}
 	public camera_parameter mix(camera_parameter t,double p)

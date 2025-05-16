@@ -6,4 +6,4 @@ const point_texture_position=array<vec4<f32>,6>(
 @group(0) @binding(1) var<uniform> method_info		:	method_information;
 @group(0) @binding(2) var<uniform> id_info			:	id_information;
 @group(0) @binding(3) var<uniform> system_info		:	system_information;
-@group(0) @binding(4) var<uniform> camera_matrix	:	array<mat4x4<f32>,scene_camera_number>;
+@group(0) @binding(4) var<uniform> camera_info		:	array<camera_information,scene_camera_number>;

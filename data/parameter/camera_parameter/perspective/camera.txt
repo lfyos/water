@@ -12,7 +12,7 @@
 /*	change_type_flag			*/		yes
 /*	scale						*/		0.8
 /*	synchronize_location_flag	*/		no
-/*	light_camera_flag			*/		no
+/*	light_camera_flag			*/		0x00	0x00	0x00
 /*	name           				*/		camera_0
 
 
@@ -31,7 +31,7 @@
 /*	change_type_flag			*/		yes
 /*	scale						*/		1.0
 /*	synchronize_location_flag	*/		no
-/*	light_camera_flag			*/		no
+/*	light_camera_flag			*/		0x00	0x00	0x00
 /*	name						*/		camera_1
 
 
@@ -50,7 +50,7 @@
 /*	change_type_flag			*/		yes
 /*	scale						*/		1.0
 /*	synchronize_location_flag	*/		no
-/*	light_camera_flag			*/		no
+/*	light_camera_flag			*/		0x00	0x00	0x00
 /*	name            			*/		camera_2
 
 
@@ -68,7 +68,7 @@
 /*	change_type_flag			*/		yes
 /*	scale						*/		1.0
 /*	synchronize_location_flag	*/		no
-/*	light_camera_flag			*/		no
+/*	light_camera_flag			*/		0x00	0x00	0x00
 /*	name            			*/		camera_3
 		        
 
@@ -86,7 +86,7 @@
 /*	change_type_flag			*/		yes
 /*	scale						*/		-0.55
 /*	synchronize_location_flag	*/		yes
-/*	light_camera_flag			*/		yes
+/*	light_camera_flag			*/		0x01	0x00	0x00
 /*	name            			*/		light_0
 		        
 		
@@ -104,7 +104,7 @@
 /*	change_type_flag			*/		yes
 /*	scale						*/		-0.55
 /*	synchronize_location_flag	*/		yes
-/*	light_camera_flag			*/		yes
+/*	light_camera_flag			*/		0x01	0x00	0x00
 /*	name            			*/		light_1
 
 /*	switch_time					*/		1000000000
@@ -121,7 +121,7 @@
 /*	change_type_flag			*/		yes
 /*	scale						*/		-0.55
 /*	synchronize_location_flag	*/		yes
-/*	light_camera_flag			*/		yes
+/*	light_camera_flag			*/		0x01	0x00	0x00
 /*	name            			*/		light_2
 		        
 
@@ -139,5 +139,5 @@
 /*	change_type_flag			*/		yes
 /*	scale						*/		-0.55
 /*	synchronize_location_flag	*/		yes
-/*	light_camera_flag			*/		yes
+/*	light_camera_flag			*/		0x01	0x00	0x00
 /*	name           				*/		light_3

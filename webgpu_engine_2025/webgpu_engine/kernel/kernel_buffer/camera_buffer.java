@@ -11,7 +11,7 @@ public class camera_buffer
 	private int camera_component_id[];
 	
 	private double distance[],half_fovy_tanl[],near_ratio[],far_ratio[];
-	private int projection_type_flag[],light_camera_flag[];
+	private int projection_type_flag[],light_camera_flag[][];
 	
 	public void destroy()
 	{
@@ -30,7 +30,7 @@ public class camera_buffer
 		camera_component_id=new int[my_camera_array.length];
 		
 		projection_type_flag=new int[my_camera_array.length];
-		light_camera_flag=new int[my_camera_array.length];
+		light_camera_flag=new int[my_camera_array.length][];
 		distance=new double[my_camera_array.length];
 		half_fovy_tanl=new double[my_camera_array.length];
 		near_ratio=new double[my_camera_array.length];
@@ -40,7 +40,7 @@ public class camera_buffer
 			camera_component_id[i]	=-1;
 			
 			projection_type_flag[i]	=-1;
-			light_camera_flag[i]	=-1;
+			light_camera_flag[i]	=new int[] {0,0,0};
 			distance[i]				=-1;
 			half_fovy_tanl[i]		=-1;
 			near_ratio[i]			=-1;
@@ -124,15 +124,24 @@ public class camera_buffer
 				ci.request_response.print(",",current_camera_id);
 			ci.request_response.print(",5,",projection_type_flag[current_camera_id]=value);
 		}
-		value=cam.parameter.light_camera_flag?1:0;
-		if(light_camera_flag[current_camera_id]!=value){
+		
+		if(	  (light_camera_flag[current_camera_id][0]!=cam.parameter.light_camera_flag)
+			||(light_camera_flag[current_camera_id][1]!=cam.parameter.light_camera_flag_ex)
+			||(light_camera_flag[current_camera_id][2]!=cam.parameter.light_camera_flag_ex_ex)
+		){
+			light_camera_flag[current_camera_id][0]=cam.parameter.light_camera_flag;
+			light_camera_flag[current_camera_id][1]=cam.parameter.light_camera_flag_ex;
+			light_camera_flag[current_camera_id][2]=cam.parameter.light_camera_flag_ex_ex;
+					
 			if(create_flag.first_item_flag) {
 				ci.request_response.print(current_camera_id);
 				create_flag.first_item_flag=false;
 			}else
 				ci.request_response.print(",",current_camera_id);
 			
-			ci.request_response.print(",6,",light_camera_flag[current_camera_id]=value);
+			ci.request_response.print(",6,",cam.parameter.light_camera_flag).
+								print(",",	cam.parameter.light_camera_flag_ex).
+								print(",",	cam.parameter.light_camera_flag_ex_ex);
 		}
 	}
 	public void response_camera_buffer_data(

@@ -96,10 +96,10 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 	scene.system_buffer=new construct_system_buffer(
 		init_parameter.max_target_number,init_parameter.max_method_number,scene);
 	
-	scene.component_location_data.do_component_location_initialize(
-			scene.component_array_sorted_by_id,scene.system_buffer.id_buffer,
-			scene.system_buffer.camera_matrix_buffer,scene.camera.camera_component_id_buffer,
-			scene.system_bindgroup_id.length,scene.camera.camera_object_parameter.length,
+	scene.component_location_data.do_component_location_initialization(
+			scene.component_array_sorted_by_id,
+			scene.system_buffer.id_buffer,scene.system_buffer.camera_buffer,
+			scene.system_bindgroup_id.length,scene.camera.camera_number,
 			common_shader_data_structure,location_shader_program);
 
 	for(var i=0,ni=component_init_fun_array.length;i<ni;i++){
@@ -135,10 +135,11 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 		var my_text_array				=program_data[render_id][3];
 		for(var i=4,ni=program_data[render_id].length;i<ni;i++)
 			my_text_array=my_text_array.concat(program_data[render_id][i]);
-				
-		var combined_shader_program="const scene_camera_number="+
-			(scene.camera.camera_object_parameter.length.toString())+";\n"+
-			common_shader_code+"\n";
+		
+		var combined_shader_program="const scene_camera_number=";
+		combined_shader_program+=scene.camera.camera_number.toString();
+		combined_shader_program+=";\n"+common_shader_code+"\n";
+
 		for(var i=0,ni=my_shader_program.length;i<ni;i++)
 			combined_shader_program+=my_shader_program[i];
 					

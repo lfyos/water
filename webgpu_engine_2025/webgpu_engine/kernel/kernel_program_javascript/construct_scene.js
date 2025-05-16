@@ -110,8 +110,7 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 	this.component_render_data		=new construct_component_render_parameter();
 	this.modifier_time_parameter	=new construct_modifier_time_parameter(this.parameter.modifier_container_number);
 	this.vertex_data_downloader		=new construct_download_vertex_data(this.webgpu,this.parameter.max_loading_number);
-	this.camera						=new construct_camera_object(
-								this.parameter.camera_number,this.component_location_data,this.webgpu);
+	this.camera						=new construct_camera_object(this.parameter.camera_number,this.component_location_data);
 	this.operate_component			=new construct_operate_component(this);
 	this.collector_loader			=new construct_collector_loader_object(this);
 	this.scene_interface			=new construct_scene_interface(this);

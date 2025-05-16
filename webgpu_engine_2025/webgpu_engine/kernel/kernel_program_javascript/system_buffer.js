@@ -45,7 +45,7 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 				hasDynamicOffset	:	false
 			}
 		},
-		{	// camera_matrix buffer
+		{	// camera buffer
 			binding		:	4,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
 			buffer		:
@@ -66,7 +66,7 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 				(scene.component_location_data.identify_matrix.length);
 	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4*33;
 	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*8;
-	my_target_buffer_size+=Int32Array.	BYTES_PER_ELEMENT*8;
+	my_target_buffer_size+=Int32Array.	BYTES_PER_ELEMENT*12;
 	
 	for(this.target_buffer_stride=0;this.target_buffer_stride<my_target_buffer_size;)
 		this.target_buffer_stride+=scene.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
@@ -127,9 +127,7 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 	my_system_buffer_size+=Int32Array.	BYTES_PER_ELEMENT*28;
 	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4;
 	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*2*
-				(scene.component_location_data.identify_matrix.length);
-	my_system_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4*
-				(scene.camera.camera_object_parameter.length);
+				scene.component_location_data.identify_matrix.length;
 		
 	this.system_buffer	=scene.webgpu.device.createBuffer(
 		{
@@ -137,19 +135,30 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST
 		});
 
-//	init camera_matrix buffer:	binding point 4
+//	init camera buffer:	binding point 4
 	
-	var my_camera_matrix_buffer_size=0;
-	my_camera_matrix_buffer_size+=Float32Array.BYTES_PER_ELEMENT*
-				(scene.component_location_data.identify_matrix.length)*
-				(scene.camera.camera_object_parameter.length);
+	var my_camera_buffer_size=0;
 	
-	this.camera_matrix_buffer	=scene.webgpu.device.createBuffer(
+	my_camera_buffer_size+=Int32Array.BYTES_PER_ELEMENT*1;
+	my_camera_buffer_size+=Int32Array.BYTES_PER_ELEMENT*7;
+	
+	my_camera_buffer_size+=Float32Array.BYTES_PER_ELEMENT*8;
+	my_camera_buffer_size+=Float32Array.BYTES_PER_ELEMENT*
+				(scene.component_location_data.identify_matrix.length);
+	
+	this.camera_buffer_step=my_camera_buffer_size;
+	
+	my_camera_buffer_size*=scene.camera.camera_number;
+	
+	this.camera_buffer	=scene.webgpu.device.createBuffer(
 		{
-			size	:	my_camera_matrix_buffer_size,
-			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.STORAGE
+			size	:	my_camera_buffer_size,
+			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST|GPUBufferUsage.STORAGE
 		});
-
+	for(var i=0,ni=scene.camera.camera_number;i<ni;i++)
+		scene.webgpu.device.queue.writeBuffer(this.camera_buffer,
+					this.camera_buffer_step*i,new Int32Array([0]));
+					
 // init system_bindgroup
 	this.system_bindgroup=scene.webgpu.device.createBindGroup(
 	{
@@ -187,12 +196,12 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 					size	:	my_system_buffer_size
 				}
 			},
-			{	// system buffer
+			{	// camera buffer
 				binding		:	4,
 				resource	:
 				{
-					buffer	:	this.camera_matrix_buffer,
-					size	:	my_camera_matrix_buffer_size
+					buffer	:	this.camera_buffer,
+					size	:	my_camera_buffer_size
 				}
 			}
 		]
@@ -260,21 +269,9 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 			float_data=float_data.concat(this.main_target_project_matrix.screen_move_matrix);
 			float_data=float_data.concat(this.main_target_project_matrix.negative_screen_move_matrix);
 		}
-		
-		var component_location=scene.component_location_data;
-		var camera_object_parameter=scene.camera.camera_object_parameter;
-		
-		for(var i=0,ni=camera_object_parameter.length;i<ni;i++)
-			if(camera_object_parameter[i].light_camera_flag){
-				var light_component_id	=camera_object_parameter[i].component_id;
-				var light_distance		=camera_object_parameter[i].distance;
-				var light_matrix		=component_location.get_component_location(light_component_id);
-				var light_position		=scene.computer.caculate_coordinate(light_matrix,0,0,light_distance);
-				float_data.push(light_position[0],light_position[1],light_position[2],light_position[3]);
-			}
-		scene.webgpu.device.queue.writeBuffer(this.system_buffer,0,new Int32Array(int_data));
+		scene.webgpu.device.queue.writeBuffer(this.system_buffer,0,	new Int32Array(int_data));
 		scene.webgpu.device.queue.writeBuffer(this.system_buffer,
-			int_data.length*Int32Array.BYTES_PER_ELEMENT,	new Float32Array(float_data));
+					int_data.length*Int32Array.BYTES_PER_ELEMENT,	new Float32Array(float_data));
 	};
 	this.set_target_buffer=function(render_data,scene)
 	{
@@ -292,7 +289,11 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 			
 			render_data.project_matrix.projection_type_flag?1:0,
 			
-			scene.scene_id
+			scene.scene_id,
+			
+			render_data.camera_id,
+			
+			0,0,0
 		];
 		var matrix_array=[
 			render_data.project_matrix.matrix,
@@ -486,9 +487,9 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 			this.system_buffer.destroy();
 			this.system_buffer=null;
 		}
-		if(this.camera_matrix_buffer!=null){
-			this.camera_matrix_buffer.destroy();
-			this.camera_matrix_buffer=null;
+		if(this.camera_buffer!=null){
+			this.camera_buffer.destroy();
+			this.camera_buffer=null;
 		}
 	};
 }

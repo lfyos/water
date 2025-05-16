@@ -1,10 +1,10 @@
-function construct_camera_object(camera_number,my_component_location_data,my_webgpu)
+function construct_camera_object(my_camera_number,my_component_location_data)
 {
+	this.camera_number			=my_camera_number;
 	this.component_location_data=my_component_location_data;
-	this.webgpu					=my_webgpu;
 	this.camera_object_parameter=new Array();
 	
-	for(var i=0;i<camera_number;i++)
+	for(var i=0;i<this.camera_number;i++)
 		this.camera_object_parameter[i]={
 			component_id			:	0,
 			distance				:	1.0,
@@ -12,44 +12,53 @@ function construct_camera_object(camera_number,my_component_location_data,my_web
 			near_value_ratio		:	0.10,
 			far_value_ratio			:	10.0,
 			projection_type_flag	:	false,
-			light_camera_flag		:	false
+			
+			light_camera_flag		:	0,
+			light_camera_flag_ex	:	0,
+			light_camera_flag_ex_ex	:	0
 		}
-	this.camera_component_id_buffer=this.webgpu.device.createBuffer(
-		{
-			size	:	camera_number*Int32Array.BYTES_PER_ELEMENT,
-			usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.STORAGE
-		});
-	var my_camera_component_id_data=new Array();
-	for(var i=0;i<camera_number;i++)
-		my_camera_component_id_data[i]=0;
-	this.webgpu.device.queue.writeBuffer(this.camera_component_id_buffer,0,
-			new Int32Array(my_camera_component_id_data));
-		
-	this.modify_camera_data=function(camera_data)
+	
+	this.modify_camera_data=function(camera_data,my_webgpu,my_camera_buffer,my_camera_buffer_step)
 	{
 		for(var i=0,ni=camera_data.length;i<ni;){
 			var camera_id=camera_data[i++];
 			var type_id=camera_data[i++];
 			var p=this.camera_object_parameter[camera_id];
-			
+
 			switch(type_id){
 			case 0:
 				p.component_id			=camera_data[i++];
-				this.webgpu.device.queue.writeBuffer(this.camera_component_id_buffer,
-					camera_id*Int32Array.BYTES_PER_ELEMENT,new Int32Array([p.component_id]));
+				my_webgpu.device.queue.writeBuffer(my_camera_buffer,
+					my_camera_buffer_step*camera_id+Int32Array.BYTES_PER_ELEMENT*0,
+					new Int32Array([p.component_id]));
 				break;
 			case 1:
-				p.distance				=camera_data[i++];						break;
+				p.distance				=camera_data[i++];
+				my_webgpu.device.queue.writeBuffer(my_camera_buffer,
+					my_camera_buffer_step*camera_id+Int32Array.BYTES_PER_ELEMENT*8,
+					new Float32Array([p.distance]));
+				break;
 			case 2:
-				p.half_fovy_tanl		=camera_data[i++];						break;
+				p.half_fovy_tanl		=camera_data[i++];
+				break;
 			case 3:
-				p.near_value_ratio		=camera_data[i++];						break;
+				p.near_value_ratio		=camera_data[i++];
+				break;
 			case 4:
-				p.far_value_ratio		=camera_data[i++];						break;
+				p.far_value_ratio		=camera_data[i++];
+				break;
 			case 5:
-				p.projection_type_flag	=(camera_data[i++]>0.5)?true:false;		break;
+				p.projection_type_flag	=(camera_data[i++]>0.5)?true:false;
+				break;
 			case 6:
-				p.light_camera_flag		=(camera_data[i++]>0.5)?true:false;		break;
+				p.light_camera_flag		 =camera_data[i++];
+				p.light_camera_flag_ex	 =camera_data[i++];
+				p.light_camera_flag_ex_ex=camera_data[i++];
+				
+				my_webgpu.device.queue.writeBuffer(
+					my_camera_buffer,my_camera_buffer_step*camera_id+Int32Array.BYTES_PER_ELEMENT*1,
+					new Int32Array([p.light_camera_flag,p.light_camera_flag_ex,p.light_camera_flag_ex_ex]));
+				break;
 			}
 		}
 	}
@@ -352,13 +361,5 @@ function construct_camera_object(camera_number,my_component_location_data,my_web
 		project_matrix.view_volume_box		=camera_render_parameter.view_volume_box;
 
 		return project_matrix;
-	};
-	
-	this.destroy=function()
-	{
-		if(this.camera_component_id_buffer!=null){
-			this.camera_component_id_buffer.destroy();
-			this.camera_component_id_buffer=null;
-		}
 	};
 };
