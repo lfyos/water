@@ -76,7 +76,7 @@ public class component_core_10 	extends component_core_9
 							break;
 					}
 			}
-			if((!children_location_modify_flag)&&(model_box!=null)){
+			if((!(get_children_location_modify_flag()))&&(model_box!=null)){
 				caculate_box_result_flag=true;
 				should_caculate_box_flag=false;
 				component_box=absolute_location.multiply(model_box);
@@ -105,7 +105,7 @@ public class component_core_10 	extends component_core_9
 				caculate_box_result_flag=true;
 				component_box=only_box;
 			}else{
-				if(!children_location_modify_flag)
+				if(!(get_children_location_modify_flag()))
 					for(i=0,n=driver_array.size();i<n;i++){
 						part p=driver_array.get(i).component_part;
 						box my_model_box=p.secure_caculate_part_box(

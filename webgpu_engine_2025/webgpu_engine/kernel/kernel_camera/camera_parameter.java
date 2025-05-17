@@ -11,7 +11,6 @@ public class camera_parameter
 	public double distance,half_fovy_tanl,bak_half_fovy_tanl,near_ratio,far_ratio;
 	public boolean projection_type_flag;
 	public double low_precision_scale,high_precision_scale;
-	public boolean synchronize_location_flag;
 	public int light_camera_flag,light_camera_flag_ex,light_camera_flag_ex_ex;
 	
 	static public boolean is_not_same_parameter(camera_parameter s,camera_parameter d)
@@ -33,8 +32,6 @@ public class camera_parameter
 		if(Math.abs(s.low_precision_scale-d.low_precision_scale)>const_value.min_value)
 			return true;
 		if(Math.abs(s.high_precision_scale-d.high_precision_scale)>const_value.min_value)
-			return true;
-		if(s.synchronize_location_flag^d.synchronize_location_flag)
 			return true;
 		if(s.light_camera_flag!=d.light_camera_flag)
 			return true;
@@ -63,8 +60,7 @@ public class camera_parameter
 		
 		low_precision_scale			=s.low_precision_scale;
 		high_precision_scale		=s.high_precision_scale;
-		
-		synchronize_location_flag	=s.synchronize_location_flag;
+
 		light_camera_flag			=s.light_camera_flag;
 		light_camera_flag_ex		=s.light_camera_flag_ex;
 		light_camera_flag_ex_ex		=s.light_camera_flag_ex_ex;
@@ -81,7 +77,6 @@ public class camera_parameter
 			double my_near_ratio,double my_far_value_ratio,
 			boolean my_projection_type_flag,
 			double my_low_precision_scale,double my_high_precision_scale,
-			boolean my_synchronize_location_flag,
 			int my_light_camera_flag,int my_light_camera_flag_ex,int my_light_camera_flag_ex_ex)
 	{
 		movement_flag				=my_movement_flag;
@@ -101,7 +96,6 @@ public class camera_parameter
 		low_precision_scale			=my_low_precision_scale;
 		high_precision_scale		=my_high_precision_scale;
 		
-		synchronize_location_flag	=my_synchronize_location_flag;
 		light_camera_flag			=my_light_camera_flag;
 		light_camera_flag_ex		=my_light_camera_flag_ex;
 		light_camera_flag_ex_ex		=my_light_camera_flag_ex_ex;
@@ -121,7 +115,6 @@ public class camera_parameter
 					projection_type_flag,				
 					low_precision_scale			*p	+t.low_precision_scale	*q,
 					high_precision_scale		*p	+t.high_precision_scale	*q,
-					synchronize_location_flag,	
 					light_camera_flag,light_camera_flag_ex,light_camera_flag_ex_ex);
 		return result;
 	}

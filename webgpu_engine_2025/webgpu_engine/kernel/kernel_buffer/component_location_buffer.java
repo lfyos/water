@@ -105,18 +105,14 @@ public class component_location_buffer
 		}
 		request_response.print((number<=0)?"[]":(","+code+"]"));		
 	}
-
 	public void response_location(scene_kernel sk,client_information ci,render_component_counter rcc)
 	{
+		component eye_component;
 		if(sk.camera_cont!=null)
-			for(int i=0,ni=sk.camera_cont.size();i<ni;i++) {
-				component eye_component;
-				if((eye_component=sk.camera_cont.get(i).eye_component)==null)
-					continue;
-				if(	  (sk.camera_cont.get(i).parameter.synchronize_location_flag)
-					||(has_not_response_relative_location_flag[eye_component.component_id]))
-						put_in_list(eye_component,sk);
-			}
+			for(int i=0,ni=sk.camera_cont.size();i<ni;i++)
+				if((eye_component=sk.camera_cont.get(i).eye_component)!=null)
+					put_in_list(eye_component,sk);
+		
 		long my_current_time=sk.current_time.nanoseconds();
 	
 		ci.request_response.print(",[");

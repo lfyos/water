@@ -19,29 +19,21 @@ public class component_core_11 extends component_core_10
 	}
 	public boolean caculate_assembly_flag(int parameter_channel_id)
 	{
-		int my_children_number;
 		boolean old_value=can_display_assembly_flag[parameter_channel_id];
 		can_display_assembly_flag[parameter_channel_id]=true;
-		if((my_children_number=children.size())<=0)
-			return !old_value;
 		
 		long my_display_bitmap=multiparameter[parameter_channel_id].display_bitmap;
-		for(int i=0;i<my_children_number;i++){
+		for(int i=0,my_children_number=children.size();i<my_children_number;i++){
 			component my_child=children.get(i);
-			long child_display_bitmap=my_child.multiparameter[parameter_channel_id].display_bitmap;
-			if(	  (my_child.uniparameter.effective_selected_flag)
-				||(my_display_bitmap!=child_display_bitmap)
-				||(my_child.children_location_modify_flag))
-			{
+			if(	  (my_child.get_children_location_modify_flag())
+				||(my_child.uniparameter.effective_selected_flag)
+				||(my_child.multiparameter[parameter_channel_id].display_bitmap!=my_display_bitmap)
+				||(my_child.multiparameter[parameter_channel_id].effective_display_flag?false:true)
+				||(my_child.get_can_display_assembly_flag(parameter_channel_id)?false:true)
+			){
 				can_display_assembly_flag[parameter_channel_id]=false;
-				return old_value;
+				break;
 			}
-		}
-		for(int i=0;i<my_children_number;i++){
-			component my_child=children.get(i);
-			boolean children_flag=my_child.get_effective_display_flag(parameter_channel_id);
-			children_flag&=my_child.get_can_display_assembly_flag(parameter_channel_id);
-			can_display_assembly_flag[parameter_channel_id]&=children_flag;
 		}
 		return (can_display_assembly_flag[parameter_channel_id])^old_value;
 	}

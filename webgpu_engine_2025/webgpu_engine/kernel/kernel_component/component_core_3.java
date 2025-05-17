@@ -65,16 +65,15 @@ public class component_core_3 extends component_core_2
 						effective_parts.add(p);
 		}
 
-		for(int i=0,effective_part_number=effective_parts.size();i<effective_part_number;i++){
-			boolean rollback_flag=(i<(effective_part_number-1))?true:false;
+		for(int i=0,ni=effective_parts.size();i<ni;i++){
 			p=effective_parts.get(i);
 			
 			fr.mark_start();
 			component_driver comp_driver;
-
+			
 			try{
-				comp_driver=p.driver.create_component_driver(
-						fr,rollback_flag,p,ccp.clsc,ccp.sk,ccp.request_response);
+				comp_driver=p.driver.create_component_driver(fr,
+						(i<(ni-1))?true:false,p,ccp.clsc,ccp.sk,ccp.request_response);
 			}catch(Exception e){
 				comp_driver=null;
 				e.printStackTrace();
@@ -87,7 +86,7 @@ public class component_core_3 extends component_core_2
 			}
 			if(comp_driver!=null)
 				driver_array.add(comp_driver);
-			fr.mark_terminate(rollback_flag);
+			fr.mark_terminate((i<(ni-1))?true:false);
 		}
 		return;
 	}

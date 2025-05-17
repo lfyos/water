@@ -27,7 +27,6 @@ public class camera_container_creator
 			boolean direction_flag				=f.get_boolean();
 			boolean change_type_flag			=f.get_boolean();
 			double scale_value					=f.get_double();
-			boolean synchronize_location_flag	=f.get_boolean();
 			int light_camera_flag				=f.get_int();
 			int light_camera_flag_ex			=f.get_int();
 			int light_camera_flag_ex_ex			=f.get_int();
@@ -48,13 +47,12 @@ public class camera_container_creator
 						scale_value,switch_time_length,distance,
 						half_fovy_tanl,half_fovy_tanl,near_value_ratio,far_value_ratio,
 						projection_type_flag,low_precision_scale,high_precision_scale,
-						synchronize_location_flag,
 						light_camera_flag,light_camera_flag_ex,light_camera_flag_ex_ex);
 				ret_val.add(ret_val.size(), new camera(eye_component,cam_par,max_camera_stack_number));
 			}
 		}
 		f.close();
-		
+
 		return ret_val;
 	}
 }

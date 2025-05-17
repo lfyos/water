@@ -83,8 +83,7 @@ public class response_render_component_request
 			if((rt=target_list[i])!=null){
 				cr=ci.target_camera_result_list.get(rt.target_id);
 				ci.render_buffer.location_buffer.put_in_list(cr.cam.eye_component,sk);
-				
-					
+	
 				component_collector collector=collect_render_parts(render_data_list,sk,ci,cr);
 				ci.target_component_collector_list.set(rt.target_id,collector);
 				if(ci.display_camera_result!=null)

@@ -25,7 +25,7 @@ public class component_core_2 extends component_core_1
 	}
 	private location input_location(file_reader fr,client_request_response request_response)
 	{
-		String command=fr.get_string(),name=fr.get_string();
+		String command=fr.get_string(),name=fr.get_string(),charset;
 		
 		if((command==null)||(name==null))
 			return new location();
@@ -102,6 +102,20 @@ public class component_core_2 extends component_core_1
 				if((name=request_response.get_parameter(name))!=null)
 					if((name=name.trim()).length()>0)
 						return input_location_from_file(name,fr.get_charset());
+				return new location();
+			case "charset_relative_file_location":
+				if((charset=fr.get_string())!=null)
+					if((charset=charset.trim()).length()>0)
+						if((name=request_response.get_parameter(name))!=null)
+							if((name=name.trim()).length()>0)
+								return input_location_from_file(fr.directory_name+name,charset);
+				return new location();
+			case "charset_absolute_file_location":
+				if((charset=fr.get_string())!=null)
+					if((charset=charset.trim()).length()>0)
+						if((name=request_response.get_parameter(name))!=null)
+							if((name=name.trim()).length()>0)
+								return input_location_from_file(name,charset);
 				return new location();
 			}
 		}catch(Exception e){

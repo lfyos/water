@@ -72,12 +72,6 @@ public class list_component_on_collector
 	
 	private boolean do_lod(component comp)
 	{
-		if(!(cam_result.target.parameter.do_discard_lod_flag))
-			if(!(cam_result.target.parameter.do_selection_lod_flag))
-				return false;
-		
-		if(comp.selected_component_family_flag)
-			return false;
 		box my_box;
 		if((my_box=comp.get_component_box(false))==null)
 			return false;
@@ -102,26 +96,19 @@ public class list_component_on_collector
 		if(cam_result.target.parameter.do_discard_lod_flag)
 			if(lod_precision2<=comp.uniparameter.discard_precision2)
 				return true;
-
-		if(cam_result.target.parameter.do_selection_lod_flag){
-			int driver_number;
-			if((driver_number=comp.driver_array.size())<=0)
-				return false;
-			if(comp.children.size()>0)
-				if(!(comp.get_can_display_assembly_flag(cam_result.target.parameter_channel_id)))
-					return false;
-			for(int i=0;i<driver_number;i++) {
-				part_parameter part_par=comp.driver_array.get(i).component_part.part_par;
-				if(part_par.discard_precision2<=lod_precision2){
-					if(comp.children.size()>0)
-						if(part_par.assembly_precision2<=lod_precision2)
-							return false;
-					if(register(comp,i))
-						return true;
+		
+		if(cam_result.target.parameter.do_selection_lod_flag)
+			if(comp.get_can_display_assembly_flag(cam_result.target.parameter_channel_id))
+				for(int i=0,driver_number=comp.driver_array.size();i<driver_number;i++) {
+					part_parameter part_par=comp.driver_array.get(i).component_part.part_par;
+					if(part_par.discard_precision2<=lod_precision2){
+						if(comp.children.size()>0)
+							if(part_par.assembly_precision2<=lod_precision2)
+								return false;
+						if(register(comp,i))
+							return true;
+					}
 				}
-			}
-			return true;
-		}
 		return false;
 	}
 	private void collect(component comp,int clipper_test_depth)
@@ -141,8 +128,10 @@ public class list_component_on_collector
 		if(cam_result.clipper_test(comp,sk.component_cont,cam_result.target.parameter_channel_id))
 			return;
 		
-		if(do_lod(comp))
-			return;
+		if((cam_result.target.parameter.do_discard_lod_flag)||(cam_result.target.parameter.do_selection_lod_flag))
+			if(!(comp.selected_component_family_flag))			
+				if(do_lod(comp))
+					return;
 		
 		int children_number	=comp.children.size();
 		int driver_number	=comp.driver_array.size();

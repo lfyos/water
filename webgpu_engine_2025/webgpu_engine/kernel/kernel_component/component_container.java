@@ -209,11 +209,10 @@ public class component_container
 			}
 			
 			if(root_component!=null)
-				for(int i=0,ni=sk.system_par.max_process_component_load_number;i<ni;i++){
-					if(ccp.clsc.get_source_item_number()<=0)
+				for(int i=0,ni=sk.system_par.max_process_component_load_number;i<ni;i++)
+					if(root_component.append_component(ccp,true)<=0)
 						break;
-					root_component.append_component(ccp);
-				}				
+			
 			debug_information.println();
 			debug_information.println("End loading assemble");
 			debug_information.println();

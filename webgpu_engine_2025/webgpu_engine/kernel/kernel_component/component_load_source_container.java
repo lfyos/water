@@ -36,21 +36,21 @@ public class component_load_source_container
 			}
 		}
 	}
-	public ArrayList<component> get_source_item(
-			String component_name,boolean part_list_flag,
-			boolean normalize_location_flag,component_construction_parameter ccp)
+	public int add_component(String component_name,ArrayList<component>child_component_list,
+			boolean part_list_flag,boolean normalize_location_flag,component_construction_parameter ccp)
 	{
-		ArrayList<component> ret_val=new ArrayList<component>();
-		var list=tree.search(new String[]{component_name});
-		if(list!=null)
-			for(int i=0,ni=list.size();i<ni;i++) {
-				var p=list.get(i);
-				if(p!=null) {
+		int ret_val=0;
+		component_load_source_item p;
+		ArrayList<component_load_source_item> list;
+		if((list=tree.remove(new String[]{component_name}))!=null)
+			for(int i=0,ni=list.size();i<ni;i++)
+				if((p=list.get(i))!=null) {
 					file_reader fr=new file_reader(p.component_file_name,p.component_file_charset);
-					ret_val.add(new component(p.token_string,fr,part_list_flag,normalize_location_flag,ccp));
+					child_component_list.add(new component(p.token_string,
+							fr,part_list_flag,normalize_location_flag,ccp));
+					ret_val++;
 					fr.close();
 				}
-			}
 		return ret_val;
 	}
 	public void add_source_item(String component_name,String token_string,

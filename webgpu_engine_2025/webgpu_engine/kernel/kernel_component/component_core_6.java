@@ -4,25 +4,26 @@ import kernel_file_manager.file_reader;
 
 public class component_core_6 extends component_core_5
 {
-	public boolean children_location_modify_flag;
+	private boolean children_location_modify_flag;
 	
 	public void destroy()
 	{
 		super.destroy();
 	}
+	public boolean get_children_location_modify_flag()
+	{
+		return children_location_modify_flag;
+	}
 	public void caculate_children_location_modify_flag()
 	{
-		int n;
-		if((n=children.size())<=0){	
-			children_location_modify_flag=false;
-			return;
-		}
-		for(int i=0;i<n;i++)
-			if(children.get(i).children_location_modify_flag){
+		int i,child_number;
+		
+		for(i=0,child_number=children.size();i<child_number;i++)
+			if(children.get(i).get_children_location_modify_flag()){
 				children_location_modify_flag=true;
 				return;
 			}
-		for(int i=0;i<n;i++)
+		for(i=0;i<child_number;i++)
 			if(children.get(i).move_location.is_not_identity_matrix()){
 				children_location_modify_flag=true;
 				return;

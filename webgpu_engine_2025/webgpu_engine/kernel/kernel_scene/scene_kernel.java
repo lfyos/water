@@ -424,7 +424,6 @@ public class scene_kernel
 
 		return false;
 	}
-	
 	public boolean load(component_load_source_container component_load_source_cont,
 			client_request_response request_response,client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container,
