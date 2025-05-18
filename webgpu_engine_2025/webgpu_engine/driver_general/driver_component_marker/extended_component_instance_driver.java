@@ -79,9 +79,9 @@ public class extended_component_instance_driver extends component_instance_drive
 						update_component_parameter_version(0);
 					display_flag[i]=false;
 				}else{
-					boolean new_display_flag=my_comp.get_effective_display_flag(cr.target.parameter_channel_id);
-					if(display_flag[i]^new_display_flag) {
-						display_flag[i]=new_display_flag;
+					var my_par=my_comp.multiparameter[cr.target.parameter_channel_id];
+					if(display_flag[i]^my_par.effective_display_flag) {
+						display_flag[i]=my_par.effective_display_flag;
 						update_component_parameter_version(0);
 					}
 				}

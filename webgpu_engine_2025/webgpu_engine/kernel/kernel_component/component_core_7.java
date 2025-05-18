@@ -1,56 +1,53 @@
 package kernel_component;
 
+import kernel_driver.component_driver;
 import kernel_file_manager.file_reader;
 
-public class component_core_7 extends component_core_6
+public class component_core_7  extends component_core_6
 {
-	public void destroy()
+	public void reset_component(component_container component_cont,component parent)
 	{
-		super.destroy();
-	}
-	public boolean get_effective_display_flag(int parameter_channel_id)
-	{
-		return multiparameter[parameter_channel_id].effective_display_flag;
-	}
-	public boolean caculate_effective_display_flag(int parameter_channel_id)
-	{
-		int child_number=children.size();
-		boolean old_effective_display_flag=multiparameter[parameter_channel_id].effective_display_flag;
+		uniparameter.do_response_location_flag=true;
 
-		if(child_number<=0)
-			multiparameter[parameter_channel_id].effective_display_flag=multiparameter[parameter_channel_id].display_flag;
-		else{
-			multiparameter[parameter_channel_id].effective_display_flag=false;
-			if(multiparameter[parameter_channel_id].display_flag)
-				for(int i=0;i<child_number;i++)
-					multiparameter[parameter_channel_id].effective_display_flag
-						|=children.get(i).get_effective_display_flag(parameter_channel_id);
+		caculate_location(component_cont,true);
+
+		if(parent==null)
+			uniparameter.effective_selected_flag=uniparameter.selected_flag;
+		else
+			uniparameter.effective_selected_flag=parent.uniparameter.effective_selected_flag|uniparameter.selected_flag;
+		
+		for(int i=0,n=children.size();i<n;i++)
+			children.get(i).reset_component(component_cont,(component)this);
+
+		caculate_children_location_modify_flag();
+		
+		for(int i=0,ni=multiparameter.length;i<ni;i++) {
+			caculate_effective_display_flag(i);
+			caculate_assembly_flag(i);
 		}
-		return multiparameter[parameter_channel_id].effective_display_flag^old_effective_display_flag;
-	}
-	public void modify_display_flag(int parameter_channel_id[],boolean new_display_flag,component_container component_cont)
-	{
-		int buffer_channel_number=0,buffer_channel_id[]=new int[parameter_channel_id.length];
-
-		for(int i=0,ni=parameter_channel_id.length;i<ni;i++) {
-			if(multiparameter[parameter_channel_id[i]].display_flag!=new_display_flag){
-				multiparameter[parameter_channel_id[i]].display_flag=new_display_flag;
-				buffer_channel_id[buffer_channel_number++]=parameter_channel_id[i];
+		caculate_box();
+		
+		uniparameter.discard_precision2=-1;
+		for(int i=0,ni=driver_array.size();i<ni;i++) {
+			component_driver c_d=driver_array.get(i);
+			if(c_d.component_part.part_par.discard_precision2>0.0){
+				if(uniparameter.discard_precision2<0.0)
+					uniparameter.discard_precision2=c_d.component_part.part_par.discard_precision2;
+				else if(c_d.component_part.part_par.discard_precision2<uniparameter.discard_precision2)
+					uniparameter.discard_precision2=c_d.component_part.part_par.discard_precision2;
 			}
 		}
-		if(buffer_channel_number<=0)
-			return;
-		for(component p=(component)this;p!=null;p=component_cont.get_component(p.parent_component_id)) {
-			int modify_number=0;
-			for(int i=0;i<buffer_channel_number;i++){
-				if(p.caculate_effective_display_flag(buffer_channel_id[i]))
-					modify_number++;
-				if(p.caculate_assembly_flag(buffer_channel_id[i]))
-					modify_number++;
+		for(int i=0,n=children.size();i<n;i++){
+			double child_discard_precision2=children.get(i).uniparameter.discard_precision2;
+			if(child_discard_precision2>0.0){
+				if(uniparameter.discard_precision2<0.0)
+					uniparameter.discard_precision2=child_discard_precision2;
+				else if(uniparameter.discard_precision2>child_discard_precision2)
+					uniparameter.discard_precision2=child_discard_precision2;
 			}
-			if(modify_number<=0)
-				break;
 		}
+		if(uniparameter.discard_precision2<0)
+			uniparameter.discard_precision2=1;
 	}
 	public component_core_7(String token_string,file_reader fr,boolean part_list_flag,
 			boolean normalize_location_flag,component_construction_parameter ccp)

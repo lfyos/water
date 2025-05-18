@@ -1,15 +1,9 @@
 package kernel_component;
 
-import kernel_file_manager.file_reader;
-
-public class component_core_9 extends component_core_8
+public class component_location_modification_locker 
 {
 	private boolean lock_location_modification_flag;
-	
-	public void destroy()
-	{
-		super.destroy();
-	}
+
 	public boolean lock_location_modification()
 	{
 		boolean ret_val=lock_location_modification_flag?false:true;
@@ -26,11 +20,8 @@ public class component_core_9 extends component_core_8
 	{
 		return lock_location_modification_flag;
 	}
-	public component_core_9(String token_string,file_reader fr,boolean part_list_flag,
-			boolean normalize_location_flag,component_construction_parameter ccp)
+	public component_location_modification_locker()
 	{
-		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
-
 		lock_location_modification_flag=false;
 	}
 }

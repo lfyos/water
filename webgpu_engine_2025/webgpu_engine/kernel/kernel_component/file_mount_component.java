@@ -24,7 +24,7 @@ public class file_mount_component
 			{
 				file_name_list.add(file_name);
 			}
-			public assemble_file_collector()
+			public assemble_file_collector(String my_assemble_file_name)
 			{
 				file_name_list=new ArrayList<String>();
 				do_travel(file_reader.separator(my_assemble_file_name),true);
@@ -33,21 +33,20 @@ public class file_mount_component
 		if((my_assemble_file_name==null)||(my_assemble_file_charset==null))
 			return;
 		
-		ArrayList<String> file_name_list=(new assemble_file_collector()).file_name_list;
+		ArrayList<String> file_name_list=new assemble_file_collector(my_assemble_file_name).file_name_list;
 
 		for(int j=0,nj=file_name_list.size();j<nj;j++) {
 			String my_file_name=file_name_list.get(j);
 			file_reader mount_fr=new file_reader(my_file_name,my_assemble_file_charset);
-			if(mount_fr.eof()) 
+			if(mount_fr.error_flag()) 
 				debug_information.println(
-						"switch assemble file does not exist:	",	my_file_name);
+					"load_component_array_list assemble file does not exist:	",my_file_name);
 			else {
 				debug_information.println("assemble_file_name:	",		my_file_name);
 				debug_information.println("assemble_file_charset:	",	my_assemble_file_charset);
 				try{
-					child_component_list.add(new component(
-						token_string,mount_fr,part_list_flag,
-						normalize_location_flag,ccp));
+					child_component_list.add(new component(token_string,
+							mount_fr,part_list_flag,normalize_location_flag,ccp));
 				}catch(Exception e) {
 					e.printStackTrace();
 					debug_information.println("Create scene from ",my_file_name+" fail");
@@ -107,17 +106,14 @@ public class file_mount_component
 				=ccp.sk.system_par.default_parameter_directory+"assemble_default"+File.separatorChar;
 			my_charset_name_array[my_charset_name_array.length-1]=ccp.sk.system_par.local_data_charset;
 		}
-		
 		for(int i=0,ni=my_directory_name_array.length;i<ni;i++)
 			if(new File(my_directory_name_array[i]+my_file_name).exists()) {
-				load_component_array_list(
-					my_directory_name_array[i]+my_file_name,my_charset_name_array[i],
-					token_string,part_list_flag,normalize_location_flag,child_component_list,ccp);
+				load_component_array_list(my_directory_name_array[i]+my_file_name,my_charset_name_array[i],
+							token_string,part_list_flag,normalize_location_flag,child_component_list,ccp);
 				return;
 			}
 		debug_information.println("file mount file NOT exits:	",
 				"my_file_name:	"+my_file_name+"		component_name:	"+component_name);
-
 		return;
 	}
 	static public void charset_file_mount(
@@ -162,8 +158,7 @@ public class file_mount_component
 		}
 		for(int i=0,ni=my_directory_name_array.length;i<ni;i++)
 			if(new File(my_directory_name_array[i]+my_file_name).exists()) {
-				load_component_array_list(
-						my_directory_name_array[i]+my_file_name,my_file_charset,
+				load_component_array_list(my_directory_name_array[i]+my_file_name,my_file_charset,
 						token_string,part_list_flag,normalize_location_flag,child_component_list,ccp);
 				return;
 			}
@@ -171,7 +166,6 @@ public class file_mount_component
 				"my_file_name:	"+my_file_name+"component_name:	"+component_name);
 		return;
 	}
-	
 	static public void part_driver_mount(
 			String component_name,ArrayList<component_driver> driver_array,
 			file_reader fr,String token_string,boolean part_list_flag,boolean normalize_location_flag,

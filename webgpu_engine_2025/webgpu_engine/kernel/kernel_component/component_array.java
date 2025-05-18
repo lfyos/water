@@ -39,7 +39,7 @@ public class component_array
 	}
 	public int add_visible_component(component comp,int parameter_channel_id,boolean part_list_flag)
 	{
-		if(comp.get_effective_display_flag(parameter_channel_id)){
+		if(comp.multiparameter[parameter_channel_id].effective_display_flag){
 			int child_number;
 			if((child_number=comp.children.size())<=0){
 				if(comp.uniparameter.part_list_flag|part_list_flag)

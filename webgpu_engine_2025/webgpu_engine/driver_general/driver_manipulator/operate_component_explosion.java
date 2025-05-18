@@ -112,7 +112,7 @@ public class operate_component_explosion
 			if(str.toLowerCase().compareTo("reset")==0)
 				reset_flag=true;
 		
-		sk.component_cont.root_component.reset_component(sk.component_cont);
+		sk.component_cont.root_component.reset_component(sk.component_cont,null);
 		
 		double t=0,direction_x=0,direction_y=0,direction_z=0;
 		try{

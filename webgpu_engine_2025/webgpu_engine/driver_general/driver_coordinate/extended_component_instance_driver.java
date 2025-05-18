@@ -27,17 +27,19 @@ public class extended_component_instance_driver extends component_instance_drive
 	private int response_selection_coordinate(int print_number,component my_comp,client_information ci)
 	{
 		double coordinate_length;
-		
-		if(my_comp.uniparameter.selected_flag)
-			if(my_comp.component_box!=null)
-				if((coordinate_length=my_comp.component_box.distance())>const_value.min_value){
+		if(my_comp.uniparameter.selected_flag) {
+			var my_box=my_comp.get_component_box(false);
+			if(my_box==null)
+				my_box=my_comp.get_component_box(true);
+			if(my_box!=null)
+				if((coordinate_length=my_box.distance())>const_value.min_value){
 					ci.request_response.print(((print_number++)<=0)?"[":",[",
 							coordinate_length*coordinate_length_scale);
 					ci.request_response.print(",",my_comp.component_id);
 					ci.request_response.print("]");
 					return print_number;
 				}
-		
+		}
 		for(int i=0,ni=my_comp.children.size();i<ni;i++)
 			print_number=response_selection_coordinate(print_number,my_comp.children.get(i),ci);
 		return print_number;

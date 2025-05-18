@@ -1306,7 +1306,7 @@ public class movement_function_switch
 	private void update_component_location(component comp)
 	{
 		comp.uniparameter.do_response_location_flag=true;
-		comp.update_location_version();
+		comp.caculate_location(sk.component_cont,true);
 		for(int i=0,ni=comp.children.size();i<ni;i++)
 			update_component_location(comp.children.get(i));
 	}

@@ -40,21 +40,17 @@ public class component_collector_stack
 	}
 	private void set_hide_flag(component comp,boolean hide_flag,component_container component_cont)
 	{
+		comp.modify_display_flag(parameter_channel_id,true,component_cont);
+		
 		int child_number;
-		if((child_number=comp.children.size())>0) {
-			comp.modify_display_flag(parameter_channel_id,true,component_cont);
+		if((child_number=comp.children.size())>0)
 			for(int i=0;i<child_number;i++)
 				set_hide_flag(comp.children.get(i),hide_flag,component_cont);
-		}else{
-			if(hide_flag)
+		else if(hide_flag)
 				if(comp.uniparameter.part_list_flag)
 					if(comp.driver_array.size()>0)
-						if(comp.driver_array.get(0).component_part!=null) {
+						if(comp.driver_array.get(0).component_part!=null)
 							comp.modify_display_flag(parameter_channel_id,false,component_cont);
-							return;
-						}
-			comp.modify_display_flag(parameter_channel_id,true,component_cont);
-		}
 	}
 	private void set_hide_flag(component_collector my_collector,
 			boolean hide_flag,component_container component_cont)

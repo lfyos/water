@@ -58,7 +58,7 @@ public class scene_parameter
 	public int display_precision;
 	
 	public int display_assemble_depth;
-	public int component_sort_type;
+	public String component_sort_type;
 	public double component_sort_min_distance;
 	
 	public boolean not_do_ancestor_render_flag,fast_load_flag;
@@ -323,24 +323,9 @@ public class scene_parameter
 
 		display_assemble_depth				=extra_parameter_fr.get_int();
 
-		String str;
-		if((str=extra_parameter_fr.get_string())==null)
-			component_sort_type=0;
-		else if((str=str.toLowerCase().trim()).compareTo("xyz")==0)
-			component_sort_type=0;
-		else if(str.compareTo("xzy")==0)
-			component_sort_type=1;
-		else if(str.compareTo("yxz")==0)
-			component_sort_type=2;
-		else if(str.compareTo("yzx")==0)
-			component_sort_type=3;
-		else if(str.compareTo("zxy")==0)
-			component_sort_type=4;
-		else if(str.compareTo("zyx")==0)
-			component_sort_type=5;
-		else
-			component_sort_type=0;
-
+		component_sort_type=extra_parameter_fr.get_string();
+		component_sort_type=(component_sort_type==null)?"xyz":(component_sort_type.trim().toLowerCase());
+		
 		component_sort_min_distance				=extra_parameter_fr.get_double();
 		
 		not_do_ancestor_render_flag				=extra_parameter_fr.get_boolean();

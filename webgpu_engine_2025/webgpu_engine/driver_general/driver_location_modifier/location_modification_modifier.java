@@ -61,7 +61,7 @@ public class location_modification_modifier extends modifier_driver
 		comp.uniparameter.do_response_location_flag=my_do_response_location_flag;
 		
 		location parent_and_relative_location;
-		if(comp.uniparameter.cacaulate_location_flag)
+		if(comp.uniparameter.caculate_location_flag)
 			parent_and_relative_location=comp.move_location;
 		else
 			parent_and_relative_location=comp.parent_and_relative_location.multiply(comp.move_location);
@@ -73,7 +73,7 @@ public class location_modification_modifier extends modifier_driver
 					follow_comp.set_component_move_location(loca,sk.component_cont);
 					follow_comp.uniparameter.touch_time=sk.current_time.nanoseconds();
 					follow_comp.uniparameter.do_response_location_flag=my_do_response_location_flag;
-					follow_comp.uniparameter.cacaulate_location_flag=true;
+					follow_comp.uniparameter.caculate_location_flag=true;
 				}	
 		return true;
 	}

@@ -159,21 +159,12 @@ public class camera_result
 		if(target.clip_plane!=null)
 			add_clip_component(target.clip_plane);
 	}
-	private void caculate_component_location(component comp,component_container component_cont)
-	{
-		if(comp!=null){
-			component comp_parent;
-			if((comp_parent=component_cont.get_component(comp.parent_component_id))!=null)
-				caculate_component_location(comp_parent,component_cont);
-			comp.caculate_location(component_cont);
-		}
-	}
 	public camera_result(camera my_cam,render_target my_cam_target,component_container component_cont)
 	{
 		cam=my_cam;
 		target=my_cam_target;
 		
-		caculate_component_location(cam.eye_component,component_cont);
+		cam.eye_component.recurse_caculate_location(component_cont);
 		
 		basic_init();
 		caculate_view_points_and_box();
@@ -218,22 +209,17 @@ public class camera_result
 			comp_clip_plane=clip;
 		else{
 			if(clipper_test(parent,component_cont,parameter_channel_id)){
-				comp.caculate_location(component_cont);
-				comp.caculate_box(false);
 				comp.clip.can_be_clipped_flag=true;
 				return true;
 			}
 			comp_clip_plane=parent.clip.clip_plane;
 		}
 		
-		comp.caculate_location(component_cont);
-		comp.caculate_box(false);
-		
 		for(int i=0,ni=comp_clip_plane.size();i<ni;i++){
 			plane my_comp_clip_plane=comp_clip_plane.get(i);
 			if(my_comp_clip_plane.error_flag)
 				continue;
-			switch(my_comp_clip_plane.clip_component_test(comp,parameter_channel_id)){
+			switch(my_comp_clip_plane.clip_component_test(comp)){
 			case 0:
 				comp.clip.can_be_clipped_flag=true;
 				return true;					//total box is outside,all can be clipped,unnecessary to to clip test 
@@ -246,10 +232,14 @@ public class camera_result
 			}
 		}
 		
-		if((comp.clip.clip_plane.size()<=0)||(comp.children.size()>0)||(comp.model_box==null))
+		if((comp.clip.clip_plane.size()<=0)||(comp.children.size()>0))
 			return false;
 		
-		tetrahedron undecided_box=new tetrahedron(comp.absolute_location,comp.model_box);
+		box model_box;
+		if((model_box=comp.get_model_box())==null)
+			return false;
+		
+		tetrahedron undecided_box=new tetrahedron(comp.absolute_location,model_box);
 		
 		for(int i=0,ni=comp.clip.clip_plane.size();(i<ni)&&(undecided_box!=null);i++){
 			tetrahedron p=undecided_box;

@@ -160,14 +160,15 @@ public class component_collector_jason_part
 						if(difference_flag) {	
 							box ab=cll.comp.get_component_box(false);
 							print(pre_str,ci,"\"absolute_box\":		",(ab!=null)?ab:(cll.comp.get_component_box(true)),",");
-							print(pre_str,ci,"\"model_box\":		",cll.comp.model_box,",");
+							print(pre_str,ci,"\"model_box\":		",cll.comp.get_model_box(),",");
 							
 							if(match_cll==null) {
 								print(pre_str,ci,"\"location_difference\":	0,");
 								print(pre_str,ci,"\"direction_difference\":	[]");
 							}else{
-								point s_point=(cll.comp.model_box==null)?new point(0,0,0):(cll.comp.model_box.center());
-								point t_point=(match_cll.comp.model_box==null)?new point(0,0,0):(match_cll.comp.model_box.center());
+								box cll_mb	=cll.comp.get_model_box(),match_mb=match_cll.comp.get_model_box();
+								point s_point=(cll_mb==null)	?new point(0,0,0):(cll_mb.center());
+								point t_point=(match_mb==null)	?new point(0,0,0):(match_mb.center());
 								point absulate_s_point=cll.comp.absolute_location.multiply(s_point);
 								point absulate_t_point=match_cll.comp.absolute_location.multiply(t_point);
 								print(pre_str,ci,"\"location_difference\":	"+(absulate_s_point.sub(absulate_t_point).distance())+",");

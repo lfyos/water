@@ -9,7 +9,7 @@ public class component_uniparameter
 	
 	public double	discard_precision2,transparency_value,component_driver_lod_precision_scale;
 	
-	public boolean	do_response_location_flag,cacaulate_location_flag;
+	public boolean	do_response_location_flag,caculate_location_flag;
 	public boolean	display_part_name_or_component_name_flag;
 	
 	public component_uniparameter(long my_lastModified_time,
@@ -27,7 +27,7 @@ public class component_uniparameter
 		component_driver_lod_precision_scale=1.0;
 		
 		do_response_location_flag			=true;
-		cacaulate_location_flag				=false;
+		caculate_location_flag				=false;
 		display_part_name_or_component_name_flag=true;
 		
 		touch_time							=0;

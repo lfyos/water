@@ -100,7 +100,7 @@ public class plane
 			return 4;
 	}
 	
-	public int clip_component_test(component comp,int parameter_channel_id)
+	public int clip_component_test(component comp)
 	{
 		box b=null;
 		int return_value,positive_number,negative_number,i,n;
@@ -114,7 +114,7 @@ public class plane
 		};
 
 		if(comp.children.size()<=0){
-			if((b=comp.model_box)==null)
+			if((b=comp.get_model_box())==null)
 				return 4;
 			if((return_value=clip_compare_center(b,comp.absolute_location.multiply(b.center())))!=4)
 				return return_value;
@@ -150,12 +150,13 @@ public class plane
 			}
 			return (negative_number>0)?8:0;
 		}
-		if(!(comp.get_can_display_assembly_flag(parameter_channel_id)))
+		if(comp.get_children_location_modify_flag())
 			return 4;
-		if((b=comp.model_box)==null)
+		if((b=comp.get_model_box())==null)
 			return 4;	
 		if((return_value=clip_compare_center(b,comp.absolute_location.multiply(b.center())))!=4)
 			return return_value;
+		
 		for(i=0,n=test_map.length,positive_number=0,negative_number=0;i<n;i++){
 			distance_to_plane=test(comp.absolute_location.multiply(
 					new point(b.p[test_map[i][0]].x,b.p[test_map[i][1]].y,b.p[test_map[i][2]].z)));

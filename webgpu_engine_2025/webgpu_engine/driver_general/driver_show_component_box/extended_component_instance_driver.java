@@ -2,12 +2,13 @@ package driver_show_component_box;
 
 import java.util.Date;
 
+import kernel_scene.scene_kernel;
+import kernel_transformation.box;
 import kernel_component.component;
 import kernel_camera.camera_result;
 import kernel_transformation.point;
-import kernel_driver.component_instance_driver;
 import kernel_scene.client_information;
-import kernel_scene.scene_kernel;
+import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
@@ -37,7 +38,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			int old_component_id=show_component_id;
 			show_component_id=-1;
 			if(ci.parameter.comp!=null)
-				if(ci.parameter.comp.model_box!=null)
+				if(ci.parameter.comp.get_model_box()!=null)
 					show_component_id=ci.parameter.comp.component_id;
 			if(old_component_id!=show_component_id)
 				update_component_parameter_version(0);
@@ -56,17 +57,17 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
-		point p[];
+		box my_model_box;
 		component my_comp=sk.component_cont.get_component(show_component_id);
 		if(my_comp!=null)
-			if(my_comp.model_box!=null)
-				if((p=my_comp.model_box.p)!=null) {
-					ci.request_response.
-						print("[[",	p[0].x).	print(",",p[0].y).	print(",",p[0].z).	print(",1").
-						print(",",	p[1].x).	print(",",p[1].y).	print(",",p[1].z).	print(",1]").
-						print(",",my_comp.component_id).	 		 print("]");
-					return;
-				}
+			if((my_model_box=my_comp.get_model_box())!=null){
+				point p[]=my_model_box.p;
+				ci.request_response.
+					print("[[",	p[0].x).	print(",",p[0].y).	print(",",p[0].z).	print(",1").
+					print(",",	p[1].x).	print(",",p[1].y).	print(",",p[1].z).	print(",1]").
+					print(",",my_comp.component_id).	 		 print("]");
+				return;
+			}
 		ci.request_response.
 		print("[[",	0).	print(",",0).	print(",",0).	print(",1").
 		print(",",	0).	print(",",0).	print(",",0).	print(",1]").
@@ -90,7 +91,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			component my_comp;
 			if((my_comp=sk.component_cont.search_component(str))==null)
 				break;
-			if(my_comp.model_box==null)
+			if(my_comp.get_model_box()==null)
 				break;
 			show_component_id=my_comp.component_id;
 			update_component_parameter_version(0);
@@ -112,7 +113,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			component my_comp;
 			if((my_comp=sk.component_cont.get_component(my_component_id))==null)
 				break;
-			if(my_comp.model_box==null)
+			if(my_comp.get_model_box()==null)
 				break;
 			show_component_id=my_comp.component_id;
 			update_component_parameter_version(0);

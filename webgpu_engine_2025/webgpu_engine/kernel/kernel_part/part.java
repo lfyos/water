@@ -71,6 +71,10 @@ public class part
 		
 		return null;
 	}
+	public box secure_caculate_part_box(component comp,int driver_id)
+	{
+		return secure_caculate_part_box(comp,driver_id,-1,-1,-1,-1,-1,-1,null,null);
+	}
 	public void destroy()
 	{
 		directory_name			=null;

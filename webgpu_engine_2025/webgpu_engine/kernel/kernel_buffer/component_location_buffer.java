@@ -131,7 +131,7 @@ public class component_location_buffer
 				component_location_version[p.comp.component_id]=p.comp.get_location_version();
 				
 				ci.request_response.print(((response_number++)<=0)?"[":",[",p.comp.component_id);
-				ci.request_response.print(",",p.comp.uniparameter.cacaulate_location_flag?"1,":"-1,");
+				ci.request_response.print(",",p.comp.uniparameter.caculate_location_flag?"1,":"-1,");
 				response_location_data(p.comp.move_location,ci.request_response);
 				rcc.update_location_number++;
 

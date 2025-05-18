@@ -232,7 +232,7 @@ public class movement_tree {
 			if((follow_component=component_cont.get_component(move.follow_component_id[i]))!=null){
 				loca=main_loca.multiply(move.follow_component_location[i]);
 				loca=follow_component.caculate_negative_parent_and_relative_location().multiply(loca);
-				follow_component.uniparameter.cacaulate_location_flag=false;
+				follow_component.uniparameter.caculate_location_flag=false;
 				follow_component.set_component_move_location(loca,component_cont);
 				
 				follow_component.modify_display_flag(display_parameter_channel_id,display_flag,component_cont);

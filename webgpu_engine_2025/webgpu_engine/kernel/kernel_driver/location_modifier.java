@@ -47,7 +47,7 @@ public class location_modifier extends modifier_driver
 		super.modify(my_current_time,sk,ci);
 		if((comp=sk.component_cont.get_component(component_id))==null)
 			return;
-		location_lock_result|=comp.lock_location_modification();
+		location_lock_result|=comp.location_modification_locker.lock_location_modification();
 		if(!location_lock_result)
 			return;
 		if((modify_counter++)>0)
@@ -79,7 +79,7 @@ public class location_modifier extends modifier_driver
 		if((comp=sk.component_cont.get_component(component_id))==null)
 			return;
 		if(location_lock_result){
-			comp.unlock_location_modification();
+			comp.location_modification_locker.unlock_location_modification();
 			location_lock_result=false;
 		}
 		comp.uniparameter.do_response_location_flag=last_do_response_location_flag;

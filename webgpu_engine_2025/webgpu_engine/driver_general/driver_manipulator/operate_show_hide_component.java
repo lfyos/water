@@ -2,16 +2,19 @@ package driver_manipulator;
 
 import kernel_component.component;
 import kernel_component.component_array;
+import kernel_component.component_container;
 import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
 
 public class operate_show_hide_component
 {
-	private static void show_hide(component comp,int parameter_channel_id,boolean visible_flag,scene_kernel sk)
+	private static void show_hide(component comp,int parameter_channel_id,
+			boolean visible_flag,component_container component_cont)
 	{
-		comp.modify_display_flag(new int[]{parameter_channel_id},visible_flag,sk.component_cont);
+		comp.modify_display_flag(
+				new int []{parameter_channel_id},new boolean[] {visible_flag},component_cont);
 		for(int i=0,child_number=comp.children.size();i<child_number;i++)
-			show_hide(comp.children.get(i),parameter_channel_id,visible_flag,sk);
+			show_hide(comp.children.get(i),parameter_channel_id,visible_flag,component_cont);
 	}
 	
 	public static void show_hide_component_request(int parameter_channel_id,scene_kernel sk,client_information ci)
@@ -71,9 +74,11 @@ public class operate_show_hide_component
 		}
 		if(comp_cont.comp_list.size()>0)
 			for(int i=0,ni=comp_cont.comp_list.size();i<ni;i++)
-				show_hide(comp_cont.comp_list.get(i),parameter_channel_id,visible_flag,sk);
+				show_hide(comp_cont.comp_list.get(i),
+						parameter_channel_id,visible_flag,sk.component_cont);
 		else if(visible_flag&&selected_operation_flag)
-				show_hide(sk.component_cont.root_component,parameter_channel_id,visible_flag,sk);
+				show_hide(sk.component_cont.root_component,
+						parameter_channel_id,visible_flag,sk.component_cont);
 		return;
 	}
 }

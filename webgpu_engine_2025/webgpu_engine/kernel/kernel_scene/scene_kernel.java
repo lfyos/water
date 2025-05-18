@@ -372,7 +372,7 @@ public class scene_kernel
 		debug_information.println();
 
 		component_cont.do_component_caculator(false,process_bar,"first_do_component_caculator");
-		component_cont.root_component.reset_component(component_cont);
+		component_cont.root_component.reset_component(component_cont,null);
 		
 		start_time=new Date().getTime();
 		load_create_assemble_part(component_load_source_cont,request_response,
@@ -462,7 +462,7 @@ public class scene_kernel
 	{
 		if(reset_flag){
 			reset_flag=false;
-			component_cont.root_component.reset_component(component_cont);
+			component_cont.root_component.reset_component(component_cont,null);
 		}
 	}
 	public String get_client_parameter(String client_parameter_name)

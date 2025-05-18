@@ -52,7 +52,7 @@ public class extended_component_driver  extends component_driver
 		box my_box;
 		int box_parameter_channel_id;
 		
-		comp.uniparameter.cacaulate_location_flag=true;
+		comp.uniparameter.caculate_location_flag=true;
 		
 		if(sk.camera_cont==null) {
 			debug_information.println("(sk.camera_cont==null)");
@@ -91,16 +91,12 @@ public class extended_component_driver  extends component_driver
 					sk.scene_par.multiparameter_number+"/"+box_parameter_channel_id);
 			return;
 		}
-		if((my_box=sk.component_cont.get_effective_box(box_parameter_channel_id))==null) {
-			fr.close();
-			debug_information.println("((my_box=sk.component_cont.get_effective_box(box_parameter_channel_id))==null)");
-			return;
-		}
-		if(my_box.distance2()<const_value.min_value2) {
-			fr.close();
-			debug_information.println("(my_box.distance2()<const_value.min_value2)");
-			return;
-		}
+		
+		if((my_box=sk.component_cont.get_effective_box(box_parameter_channel_id))==null) 
+			my_box=new box(-0.5,-0.5,-0.5,0.5,0.5,0.5);
+		else if(my_box.distance2()<const_value.min_value2) 
+			my_box=new box(-0.5,-0.5,-0.5,0.5,0.5,0.5);
+		
 		do{
 			int cam_id=fr.get_int();
 			if(fr.eof())

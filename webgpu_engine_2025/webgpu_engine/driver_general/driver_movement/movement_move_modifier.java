@@ -100,7 +100,7 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 					if((comp=sk.component_cont.get_component(follow_component_id[i]))!=null) {
 						comp.modify_display_flag(clear_parameter_channel_id,true,sk.component_cont);
 						comp.modify_display_flag(set_parameter_channel_id,true,sk.component_cont);
-						comp.uniparameter.cacaulate_location_flag=true;
+						comp.uniparameter.caculate_location_flag=true;
 					}
 		}
 		call_component_driver(sk,ci,my_current_time,modify_id++);

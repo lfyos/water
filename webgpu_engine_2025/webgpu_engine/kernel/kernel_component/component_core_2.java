@@ -1,138 +1,99 @@
 package kernel_component;
 
-import kernel_transformation.point;
-import kernel_transformation.location;
+import java.util.ArrayList;
+
+import kernel_part.part;
+import kernel_driver.component_driver;
+import kernel_common_class.change_name;
 import kernel_file_manager.file_reader;
-import kernel_common_class.const_value;
+import kernel_scene.part_type_string_sorter;
 import kernel_common_class.debug_information;
-import kernel_network.client_request_response;
 
 public class component_core_2 extends component_core_1
 {
-	public location relative_location;
+	public ArrayList<component_driver>	driver_array;
 	
 	public void destroy()
 	{
 		super.destroy();
-		relative_location=null;
-	}
-	private location input_location_from_file(String file_name,String file_charset)
-	{
-		file_reader f=new file_reader(file_reader.separator(file_name),file_charset);
-		location ret_val=f.eof()?new location():new location(f);
-		f.close();
-		return ret_val;
-	}
-	private location input_location(file_reader fr,client_request_response request_response)
-	{
-		String command=fr.get_string(),name=fr.get_string(),charset;
-		
-		if((command==null)||(name==null))
-			return new location();
-		if((command=command.trim()).isEmpty())
-			return new location();
-		if((name=name.trim()).isEmpty())
-			return new location();
 
-		try {
-			switch(command.toLowerCase()){
-			default:
+		component_driver c_d;
+		for(int i=driver_array.size()-1;i>=0;i--)
+			if((c_d=driver_array.remove(i))!=null)
 				try {
-					return new location(
-							Double.parseDouble(command),Double.parseDouble(name),	fr.get_double(),		fr.get_double(),
-							fr.get_double(),			fr.get_double(),			fr.get_double(),		fr.get_double(),
-							fr.get_double(),			fr.get_double(),			fr.get_double(),		fr.get_double(),
-							fr.get_double(),			fr.get_double(),			fr.get_double(),		fr.get_double());
+					c_d.destroy();
 				}catch(Exception e) {
 					e.printStackTrace();
-					
-					debug_information.println("Component location error:	",command+"	"+name);
-					debug_information.println("Component location file:		",fr.directory_name+fr.file_name);
-					debug_information.println(e.toString());
-					
-					return new location();
+					debug_information.println("Execute component driver destroy fail:	",e.toString());
 				}
-			case "move":
-				return location.move_rotate(Double.parseDouble(name), fr.get_double(), fr.get_double(), 0, 0, 0);
-			case "rotate":
-				return location.move_rotate(0,0,0,Double.parseDouble(name), fr.get_double(), fr.get_double());	
-			case "move_rotate":
-				return location.move_rotate(
-						Double.parseDouble(name), 	fr.get_double(), fr.get_double(),
-						fr.get_double(), 			fr.get_double(), fr.get_double());
-			case "p0pxpy":
-			{
-				point p0=new point(Double.parseDouble(name),fr.get_double(),	fr.get_double());
-				point px=new point(fr.get_double(),			fr.get_double(),	fr.get_double());
-				point py=new point(fr.get_double(),			fr.get_double(),	fr.get_double());
-				point dx=px.sub(p0),dy=py.sub(p0),dz=dx.cross(dy);
-				if(dz.distance2()<const_value.min_value)
-					return location.move_rotate(p0.x,p0.y,p0.z,0,0,0);
-				if((dy=dz.cross(dx)).distance2()<const_value.min_value)
-					return location.move_rotate(p0.x,p0.y,p0.z,0,0,0);
-				return new location(
-								p0,
-								p0.add(dx.expand(1.0)),
-								p0.add(dy.expand(1.0)),
-								p0.add(dz.expand(1.0))
-						).multiply(location.standard_negative);
+		driver_array.clear();
+	}
+	private void create_driver(file_reader fr,component_construction_parameter ccp)
+	{
+		ArrayList<part> search_parts;
+		change_name change_part_name;
+		
+		driver_array=new ArrayList<component_driver>();
+		
+		if((change_part_name=ccp.get_change_part_name())==null)
+			search_parts=ccp.pcfps.search_part(part_name);
+		else{
+			String search_part_name=change_part_name.search_change_name(part_name,part_name);
+			if((search_parts=ccp.pcfps.search_part(search_part_name))==null){
+				search_part_name=change_part_name.search_change_name(search_part_name,search_part_name);
+				search_parts=ccp.pcfps.search_part(search_part_name);
 			}
-			case "client_location":
-				if((name=request_response.get_parameter(name))!=null)
-					if((name=name.trim()).length()>0)
-						return new location(name,fr.get_string());
-				return new location();
-			case "environment_location":
-				if((name=System.getenv(name))!=null)
-					if((name=name.trim()).length()>0)
-						return new location(name,fr.get_string());
-				return new location();
-			case "client_environment_location":
-				if((name=request_response.get_parameter(name))!=null)
-					if((name=System.getenv(name))!=null)
-						if((name=name.trim()).length()>0)
-							return new location(name,fr.get_string());
-				return new location();
-			case "relative_file_location":
-				if((name=request_response.get_parameter(name))!=null)
-					if((name=name.trim()).length()>0)
-						return input_location_from_file(fr.directory_name+name,fr.get_charset());
-				return new location();
-			case "absolute_file_location":
-				if((name=request_response.get_parameter(name))!=null)
-					if((name=name.trim()).length()>0)
-						return input_location_from_file(name,fr.get_charset());
-				return new location();
-			case "charset_relative_file_location":
-				if((charset=fr.get_string())!=null)
-					if((charset=charset.trim()).length()>0)
-						if((name=request_response.get_parameter(name))!=null)
-							if((name=name.trim()).length()>0)
-								return input_location_from_file(fr.directory_name+name,charset);
-				return new location();
-			case "charset_absolute_file_location":
-				if((charset=fr.get_string())!=null)
-					if((charset=charset.trim()).length()>0)
-						if((name=request_response.get_parameter(name))!=null)
-							if((name=name.trim()).length()>0)
-								return input_location_from_file(name,charset);
-				return new location();
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-			
-			debug_information.println("private location input_location fail:	",e.toString());
-
-			return new location();
 		}
+		if(search_parts==null)
+			return;
+		if(search_parts.size()<=0)
+			return;
+
+		part_type_string_sorter ptss=ccp.get_part_type_string_sorter();
+		int type_string_number=(ptss==null)?0:ptss.get_number();
+		
+		part p;
+		ArrayList<part> effective_parts;
+		
+		if(type_string_number<=0)
+			effective_parts=search_parts;
+		else{
+			effective_parts=new ArrayList<part>();
+			for(int i=0,part_number=search_parts.size();i<part_number;i++)
+				if((p=search_parts.get(i))!=null)
+					if(ptss.search(p.part_par.part_type_string)>=0)
+						effective_parts.add(p);
+		}
+
+		for(int i=0,ni=effective_parts.size();i<ni;i++){
+			p=effective_parts.get(i);
+			
+			fr.mark_start();
+			component_driver comp_driver;
+			
+			try{
+				comp_driver=p.driver.create_component_driver(fr,
+						(i<(ni-1))?true:false,p,ccp.clsc,ccp.sk,ccp.request_response);
+			}catch(Exception e){
+				comp_driver=null;
+				e.printStackTrace();
+				
+				debug_information.println("create_component_driver fail:	",e.toString());
+				debug_information.println("Part user name:",	p.user_name);
+				debug_information.println("Part system name:",	p.system_name);
+				debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);
+				debug_information.println("Material_file_name:",p.directory_name+p.material_file_name);
+			}
+			if(comp_driver!=null)
+				driver_array.add(comp_driver);
+			fr.mark_terminate((i<(ni-1))?true:false);
+		}
+		return;
 	}
 	public component_core_2(String token_string,file_reader fr,boolean part_list_flag,
-			boolean normalize_location_flag,component_construction_parameter ccp)
+				boolean normalize_location_flag,component_construction_parameter ccp)
 	{
 		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
-		
-		relative_location=input_location(fr,ccp.request_response);
-		if(uniparameter.normalize_location_flag)
-			relative_location=relative_location.normalize();
+		create_driver(fr,ccp);
 	}
 }

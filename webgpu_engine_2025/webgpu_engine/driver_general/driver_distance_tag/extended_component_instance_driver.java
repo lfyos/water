@@ -38,10 +38,12 @@ public class extended_component_instance_driver extends component_instance_drive
 		for(int i=0,ni=tag_array.distance_tag_array.length;i<ni;i++){
 			component distance_comp;
 			distance_tag_item p=tag_array.distance_tag_array[i];
-			if((distance_comp=sk.component_cont.get_component(p.p0_component_id))!=null)
-				if(distance_comp.get_effective_display_flag(cr.target.parameter_channel_id))
-					if((distance_comp=sk.component_cont.get_component(p.px_component_id))!=null)
-						if(distance_comp.get_effective_display_flag(cr.target.parameter_channel_id))
+			if((distance_comp=sk.component_cont.get_component(p.p0_component_id))!=null) {
+				var my_par=distance_comp.multiparameter[cr.target.parameter_channel_id];
+				if(my_par.effective_display_flag)
+					if((distance_comp=sk.component_cont.get_component(p.px_component_id))!=null) {
+						my_par=distance_comp.multiparameter[cr.target.parameter_channel_id];
+						if(my_par.effective_display_flag)
 							switch((p=tag_array.distance_tag_array[i]).state){
 							case 0:
 							case 1:
@@ -49,6 +51,8 @@ public class extended_component_instance_driver extends component_instance_drive
 								display_number++;
 								break;
 							}
+					}
+			}
 		}
 		return (display_number<=0);
 	}

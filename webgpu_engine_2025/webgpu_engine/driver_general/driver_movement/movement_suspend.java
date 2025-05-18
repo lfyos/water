@@ -121,7 +121,7 @@ public class movement_suspend
 				for(int j=0,nj=virtual_mount_collector.component_collector[i].length;j<nj;j++) {
 					component_link_list cll=virtual_mount_collector.component_collector[i][j];
 					for(;cll!=null;cll=cll.next_list_item)
-						if(cll.comp.get_effective_display_flag(ci.display_camera_result.target.parameter_channel_id))
+						if(cll.comp.multiparameter[ci.display_camera_result.target.parameter_channel_id].display_flag)
 							target_collector.register_component(cll.comp,0);
 				}
 		ci.request_response.println("{");
@@ -206,7 +206,7 @@ public class movement_suspend
 				if(my_p.system_name.compareTo(str)!=0)
 					continue;
 				for(;cll!=null;cll=cll.next_list_item) {
-					if(cll.comp.get_effective_display_flag(ci.display_camera_result.target.parameter_channel_id))
+					if(cll.comp.multiparameter[ci.display_camera_result.target.parameter_channel_id].display_flag)
 						continue;
 					follow_mouse_component_id=cll.comp.component_id;
 						

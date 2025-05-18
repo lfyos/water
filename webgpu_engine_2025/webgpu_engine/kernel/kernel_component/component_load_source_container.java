@@ -40,14 +40,15 @@ public class component_load_source_container
 			boolean part_list_flag,boolean normalize_location_flag,component_construction_parameter ccp)
 	{
 		int ret_val=0;
-		component_load_source_item p;
+		component_load_source_item clsi;
 		ArrayList<component_load_source_item> list;
 		if((list=tree.remove(new String[]{component_name}))!=null)
 			for(int i=0,ni=list.size();i<ni;i++)
-				if((p=list.get(i))!=null) {
-					file_reader fr=new file_reader(p.component_file_name,p.component_file_charset);
-					child_component_list.add(new component(p.token_string,
-							fr,part_list_flag,normalize_location_flag,ccp));
+				if((clsi=list.get(i))!=null){
+					file_reader fr=new file_reader(
+						clsi.component_file_name,clsi.component_file_charset);
+					child_component_list.add(new component(
+						clsi.token_string,fr,part_list_flag,normalize_location_flag,ccp));
 					ret_val++;
 					fr.close();
 				}

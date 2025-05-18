@@ -38,7 +38,6 @@ public class part_type_string_sorter extends sorter<String,String>
 					data_list.add(type_string);
 					break;
 				}
-		
 		do_sort();
 	}
 }

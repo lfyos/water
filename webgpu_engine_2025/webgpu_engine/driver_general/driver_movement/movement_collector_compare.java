@@ -1,12 +1,13 @@
 package driver_movement;
 
+import kernel_scene.scene_kernel;
+import kernel_transformation.box;
 import kernel_component.component;
 import kernel_transformation.point;
+import kernel_scene.client_information;
 import kernel_component.component_array;
 import kernel_component.component_collector;
 import kernel_component.component_link_list;
-import kernel_scene.client_information;
-import kernel_scene.scene_kernel;
 import kernel_common_class.component_collector_jason_part;
 
 public class movement_collector_compare
@@ -16,21 +17,22 @@ public class movement_collector_compare
 	
 	private double caculate_component_distances(component s,component t)
 	{
+		box my_box;
 		point s_point,t_point;
-		
-		if(s.model_box!=null)
-			s_point=s.absolute_location.multiply(s.model_box.center());
-		if(s.component_box!=null)
-			s_point=s.component_box.center();
-		else
-			s_point=s.absolute_location.multiply(0, 0, 0);
 
-		if(t.model_box!=null)
-			t_point=t.absolute_location.multiply(t.model_box.center());
-		if(t.component_box!=null)
-			t_point=t.component_box.center();
+		if((my_box=s.get_component_box(false))!=null)
+			s_point=my_box.center();
+		else if((my_box=s.get_component_box(true))!=null)
+			s_point=my_box.center();
 		else
-			t_point=t.absolute_location.multiply(0, 0, 0);
+			s_point=s.absolute_location.multiply(0,0,0);
+		
+		if((my_box=t.get_component_box(false))!=null)
+			t_point=my_box.center();
+		else if((my_box=t.get_component_box(true))!=null)
+			t_point=my_box.center();
+		else
+			t_point=t.absolute_location.multiply(0,0,0);
 		
 		return s_point.sub(t_point).distance2();
 	}

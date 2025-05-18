@@ -38,7 +38,6 @@ public class file_mount_file_name_and_charset
 		fr.push_string_array(new String[]{my_directory+File.separatorChar+my_file_name});
 		return true;
 	}
-	
 	public static boolean client_select_mount(file_reader fr,component_construction_parameter ccp)
 	{
 		String my_select_token		=fr.get_string();

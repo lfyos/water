@@ -2,12 +2,10 @@ package kernel_component;
 
 import java.util.ArrayList;
 
-import kernel_common_class.sorter;
 import kernel_part.part;
-import kernel_part.part_rude;
 import kernel_render.render;
+import kernel_part.part_rude;
 import kernel_transformation.box;
-import kernel_transformation.point;
 import kernel_driver.component_driver;
 
 public class component_collector 
@@ -39,172 +37,15 @@ public class component_collector
 		render_component_number=null;
 		part_component_number=null;
 	}
-	public void sort_component_list(int component_sort_type,double component_sort_min_distance)
+	public void sort_component_list(String sort_type,double sort_min_distance)
 	{
-		class component_link_list_sorter extends sorter <component_link_list,component_link_list>
-		{
-			private int component_sort_type;
-			private double component_sort_min_distance;
-			
-			public int compare_data(component_link_list s,component_link_list t)
-			{
-				point ps=s.comp.absolute_location.multiply(0, 0, 0);
-				point pt=t.comp.absolute_location.multiply(0, 0, 0);
-				switch(component_sort_type) {
-				default:
-				case 0://"xyz":
-					if(Math.abs(ps.x-pt.x)>component_sort_min_distance)
-						return (ps.x<pt.x)?-1:1;
-					if(Math.abs(ps.y-pt.y)>component_sort_min_distance)
-						return (ps.y<pt.y)?-1:1;
-					if(Math.abs(ps.z-pt.z)>component_sort_min_distance)
-						return (ps.z<pt.z)?-1:1;
-					if(Math.abs(ps.y-pt.y)>component_sort_min_distance)
-						return (ps.y<pt.y)?-1:1;
-					if(Math.abs(ps.z-pt.z)>component_sort_min_distance)
-						return (ps.z<pt.z)?-1:1;
-					if(ps.x<pt.x)
-						return -1;
-					if(ps.x>pt.x)
-						return 1;
-					if(ps.y<pt.y)
-						return -1;
-					if(ps.y>pt.y)
-						return 1;
-					if(ps.z<pt.z)
-						return -1;
-					if(ps.z>pt.z)
-						return 1;
-					return 0;
-				case 1://"xzy":
-					if(Math.abs(ps.x-pt.x)>component_sort_min_distance)
-						return (ps.x<pt.x)?-1:1;
-					if(Math.abs(ps.z-pt.z)>component_sort_min_distance)
-						return (ps.z<pt.z)?-1:1;
-					if(Math.abs(ps.y-pt.y)>component_sort_min_distance)
-						return (ps.y<pt.y)?-1:1;
-					if(ps.x<pt.x)
-						return -1;
-					if(ps.x>pt.x)
-						return 1;
-					if(ps.z<pt.z)
-						return -1;
-					if(ps.z>pt.z)
-						return 1;
-					if(ps.y<pt.y)
-						return -1;
-					if(ps.y>pt.y)
-						return 1;
-					return 0;
-				case 2://"yxz":
-					if(Math.abs(ps.y-pt.y)>component_sort_min_distance)
-						return (ps.y<pt.y)?-1:1;
-					if(Math.abs(ps.x-pt.x)>component_sort_min_distance)
-						return (ps.x<pt.x)?-1:1;
-					if(Math.abs(ps.z-pt.z)>component_sort_min_distance)
-						return (ps.z<pt.z)?-1:1;
-					if(ps.y<pt.y)
-						return -1;
-					if(ps.y>pt.y)
-						return 1;
-					if(ps.x<pt.x)
-						return -1;
-					if(ps.x>pt.x)
-						return 1;
-					if(ps.z<pt.z)
-						return -1;
-					if(ps.z>pt.z)
-						return 1;
-					return 0;
-				case 3://"yzx":
-					if(Math.abs(ps.y-pt.y)>component_sort_min_distance)
-						return (ps.y<pt.y)?-1:1;
-					if(Math.abs(ps.z-pt.z)>component_sort_min_distance)
-						return (ps.z<pt.z)?-1:1;
-					if(Math.abs(ps.x-pt.x)>component_sort_min_distance)
-						return (ps.x<pt.x)?-1:1;
-					if(ps.y<pt.y)
-						return -1;
-					if(ps.y>pt.y)
-						return 1;
-					if(ps.z<pt.z)
-						return -1;
-					if(ps.z>pt.z)
-						return 1;
-					if(ps.x<pt.x)
-						return -1;
-					if(ps.x>pt.x)
-						return 1;
-					return 0;
-				case 4://"zxy":
-					if(Math.abs(ps.z-pt.z)>component_sort_min_distance)
-						return (ps.z<pt.z)?-1:1;
-					if(Math.abs(ps.x-pt.x)>component_sort_min_distance)
-						return (ps.x<pt.x)?-1:1;
-					if(Math.abs(ps.y-pt.y)>component_sort_min_distance)
-						return (ps.y<pt.y)?-1:1;
-					if(ps.z<pt.z)
-						return -1;
-					if(ps.z>pt.z)
-						return 1;
-					if(ps.x<pt.x)
-						return -1;
-					if(ps.x>pt.x)
-						return 1;
-					if(ps.y<pt.y)
-						return -1;
-					if(ps.y>pt.y)
-						return 1;
-					return 0;
-				case 5://"zyx":
-					if(Math.abs(ps.z-pt.z)>component_sort_min_distance)
-						return (ps.z<pt.z)?-1:1;
-					if(Math.abs(ps.y-pt.y)>component_sort_min_distance)
-						return (ps.y<pt.y)?-1:1;
-					if(Math.abs(ps.x-pt.x)>component_sort_min_distance)
-						return (ps.x<pt.x)?-1:1;
-					if(ps.z<pt.z)
-						return -1;
-					if(ps.z>pt.z)
-						return 1;
-					if(ps.y<pt.y)
-						return -1;
-					if(ps.y>pt.y)
-						return 1;
-					if(ps.x<pt.x)
-						return -1;
-					if(ps.x>pt.x)
-						return 1;
-					return 0;
-				}
-			}
-			public int compare_key(component_link_list s,component_link_list t)
-			{
-				return compare_data(s,t);
-			}
-			public component_link_list_sorter(component_link_list cll,
-					int my_component_sort_type,double my_component_sort_min_distance)
-			{
-				component_sort_type=my_component_sort_type;
-				component_sort_min_distance=my_component_sort_min_distance;
-				data_list=new ArrayList<component_link_list>();
-				for(component_link_list p=cll;p!=null;p=p.next_list_item)
-					data_list.add(p);
-				do_sort();
-				
-				for(int i=0,ni=data_list.size()-1;i<ni;i++)
-					data_list.get(i).next_list_item=data_list.get(i+1);
-				data_list.get(data_list.size()-1).next_list_item=null;
-			}
-		};
 		for(int i=0,ni=component_collector.length;i<ni;i++)
 			if(component_collector[i]!=null)
 				for(int j=0,nj=component_collector[i].length;j<nj;j++)
 					if(component_collector[i][j]!=null)
 						if(component_collector[i][j].next_list_item!=null)
-							component_collector[i][j]=new component_link_list_sorter(
-								component_collector[i][j],component_sort_type,
-								component_sort_min_distance).data_list.get(0);
+							component_collector[i][j]=component_link_list_sorter.do_sort(
+								component_collector[i][j],sort_type,sort_min_distance);
 	}
 	public box caculate_box(boolean mandatory_flag)
 	{
@@ -228,16 +69,6 @@ public class component_collector
 		description		=collector.description;
 		audio_file_name	=collector.audio_file_name;
 	}
-	
-	public void component_space_sort(int sort_type,double min_distance)
-	{
-		for(int i=0,ni=component_collector.length;i<ni;i++)
-			if(component_collector[i]!=null)
-				for(int j=0,nj=component_collector[i].length;j<nj;j++)
-					component_collector[i][j]=component_space_sorter.sort_component(
-							component_collector[i][j],sort_type,min_distance);
-	}
-	
 	public component_array get_component_array()
 	{
 		if((component_number<=0)||(component_collector==null))

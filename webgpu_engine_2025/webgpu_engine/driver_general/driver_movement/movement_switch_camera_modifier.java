@@ -56,21 +56,13 @@ public class movement_switch_camera_modifier extends modifier_driver
 		information_string=null;
 		sound_file_name=null;
 	}
-	private void caculate_component_location(component comp,component_container component_cont)
-	{
-		if(comp!=null){
-			component comp_parent;
-			if((comp_parent=component_cont.get_component(comp.parent_component_id))!=null)
-				caculate_component_location(comp_parent,component_cont);
-			comp.caculate_location(component_cont);
-		}
-	}
 	private box caculate_move_box(component comp,location loca)
 	{
-		if((loca==null)||(comp.model_box==null))
+		var my_model_box=comp.get_model_box();
+		if((loca==null)||(my_model_box==null))
 			return comp.get_component_box(true);
 		else
-			return loca.multiply(comp.model_box);
+			return loca.multiply(my_model_box);
 	}
 	private box caculate_box(component_container component_cont)
 	{
@@ -80,10 +72,11 @@ public class movement_switch_camera_modifier extends modifier_driver
 			movement_switch_information p=container.get(i);
 			if((main_comp=component_cont.get_component(p.main_component_id))!=null)
 				if((comp=component_cont.get_component(p.component_id))!=null){
-					caculate_component_location(main_comp,component_cont);
-					main_comp.caculate_box(true);
-					caculate_component_location(comp,component_cont);
-					comp.caculate_box(true);
+					main_comp.recurse_caculate_location(component_cont);
+					main_comp.caculate_box();
+					
+					comp.recurse_caculate_location(component_cont);
+					comp.caculate_box();
 
 					if(p.start_location!=null)
 						if((b=caculate_move_box(comp,main_comp.parent_and_relative_location.multiply(p.start_location)))!=null)
@@ -180,7 +173,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 	{
 		int child_number;
 		if(depth>0)
-			if(!(comp.get_effective_display_flag(parameter_channel_id)))
+			if(!(comp.multiparameter[parameter_channel_id].display_flag))
 				return;
 		if((child_number=comp.children.size())<=0)
 			comp_array.add_component(comp);
