@@ -21,7 +21,7 @@ public class scene_kernel_container_search_tree
 	private tree_string_search_container<scene_kernel_container> tree;
 	
 	private render_container original_render;
-	public component_load_source_container component_load_source_cont;
+	public component_load_source_container system_component_load_source_cont;
 	public buffer_object_file_modify_time_and_length_container system_boftal_container;
 	private part_loader_container part_loader_cont;
 	
@@ -38,23 +38,28 @@ public class scene_kernel_container_search_tree
 		original_render=new render_container();
 		part_container_for_part_search pcps=new part_container_for_part_search(null);
 		original_render.load_shader(
-			component_load_source_cont,pcps,system_par.last_modified_time,
+				system_component_load_source_cont,pcps,system_par.last_modified_time,
 			system_par.data_root_directory_name+system_par.shader_file_name,
 			system_par.local_data_charset,part_type_id,system_par,null,encoder,request_response);
 		pcps.execute_append();
+		
+		String fast_load_type=render_container.get_fast_load_type(request_response);
+		boolean fast_load_flag=(fast_load_type.compareTo("fast")==0)?true:false;
+		
 		original_render.load_part(((long)1)<<part_type_id,1,part_loader_cont,system_par,null,
-			boftal_container,string_locker_container,null,null,null);
+			boftal_container,string_locker_container,null,null,null,fast_load_type);
 		
 		original_render.create_bottom_box_part(pcps,request_response,encoder,system_par,null);
 		pcps.execute_append();
 		original_render.load_part(((long)1)<<part_type_id,2,part_loader_cont,system_par,null,
-			boftal_container,string_locker_container,null,null,null);
+			boftal_container,string_locker_container,null,null,null,fast_load_type);
 		
 		debug_information.println();
 		debug_information.println("Begin create system_part_package");
 		
-		original_render.system_part_package=new part_package(null,string_locker_container,
-				null,null,null,original_render,part_type_id,system_par,null);
+		original_render.system_part_package=new part_package(
+			fast_load_flag,null,string_locker_container,
+			null,null,null,original_render,part_type_id,system_par,null);
 		
 		system_boftal_container=new buffer_object_file_modify_time_and_length_container();
 		try {
@@ -211,9 +216,9 @@ public class scene_kernel_container_search_tree
 			for(int i=0,ni=my_list.size();i<ni;i++)
 				my_list.get(i).destroy();
 		}
-		if(component_load_source_cont!=null) {
-			component_load_source_cont.destroy();
-			component_load_source_cont=null;
+		if(system_component_load_source_cont!=null) {
+			system_component_load_source_cont.destroy();
+			system_component_load_source_cont=null;
 		}
 		if(original_render!=null){
 			original_render.destroy();
@@ -232,7 +237,7 @@ public class scene_kernel_container_search_tree
 	{
 		tree=new tree_string_search_container<scene_kernel_container>();
 		
-		component_load_source_cont				=new component_load_source_container();
+		system_component_load_source_cont		=new component_load_source_container();
 		
 		original_render							=null;
 		system_boftal_container					=null;

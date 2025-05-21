@@ -3,6 +3,7 @@ package kernel_scene;
 import java.util.ArrayList;
 
 import kernel_common_class.debug_information;
+import kernel_file_manager.file_directory;
 import kernel_part.part;
 import kernel_render.render;
 
@@ -37,14 +38,14 @@ public class part_lru_manager
 	{
 		return in_list_number;
 	}
-	public boolean touch(part touch_part,ArrayList<render> ren)
+	public void touch(part touch_part,ArrayList<render> ren,
+		system_parameter system_par,scene_parameter scene_par)
 	{
-		boolean ret_val;
 		part_bidirection_link_list pbll=part_array[touch_part.render_id][touch_part.part_id];
 		
 		if(pbll.in_list_flag) {
 			if(first==pbll) 
-				return false;
+				return;
 			if(last==pbll){
 				last=last.front;
 				last.back=null;
@@ -52,10 +53,19 @@ public class part_lru_manager
 				pbll.front.back=pbll.back;
 				pbll.back.front=pbll.front;
 			}
-			ret_val=false;
-		}else {
+		}else{
 			in_list_number++;
-			ret_val=true;
+			if(touch_part.load_part_mesh()) {
+				debug_information.println("Load touch part:",
+					 "	in_list_number:	"	+in_list_number+"/"+max_in_list_number);
+				debug_information.println("	user name:		",	touch_part.user_name);
+				debug_information.println("	system name:	",	touch_part.system_name);
+				debug_information.println("	mesh file:		",
+					touch_part.directory_name+touch_part.mesh_file_name);
+				debug_information.println("	temp_directory:	",
+					file_directory.part_file_directory(touch_part,system_par,scene_par));
+				debug_information.println();
+			}
 		}
 		pbll.in_list_flag=true;
 		pbll.front=null;
@@ -69,8 +79,9 @@ public class part_lru_manager
 			first.front=pbll;
 			first=pbll;
 		}
+		
 		if(in_list_number<=max_in_list_number)
-			return ret_val;
+			return;
 		
 		if((pbll=last)==first) {
 			first=null;
@@ -85,14 +96,18 @@ public class part_lru_manager
 		pbll.back=null;
 		
 		part free_part=ren.get(pbll.render_id).parts.get(pbll.part_id);
-		if(free_part.part_mesh!=null){
-			free_part.part_mesh.free_memory();
-			debug_information.println("Unload part:",
-					"	user name:"	+free_part.user_name+
-					"	system name:"	+free_part.system_name+
-					"	mesh file:"		+free_part.directory_name+free_part.mesh_file_name);
+		if(free_part.unload_part_mesh()){
+			debug_information.println("Unload touch part:",
+				 "	in_list_number:	"	+in_list_number+"/"+max_in_list_number);
+			debug_information.println("	user name:		",	free_part.user_name);
+			debug_information.println("	system name:	",	free_part.system_name);
+			debug_information.println("	mesh file:		",
+				free_part.directory_name+free_part.mesh_file_name);
+			debug_information.println("	temp_directory:	",	
+				file_directory.part_file_directory(free_part,system_par,scene_par));
+			debug_information.println();
 		}
-		return ret_val;
+		return;
 	}
 	public void destroy()
 	{
@@ -115,15 +130,11 @@ public class part_lru_manager
 		first=null;
 		last=null;
 		
-		int render_number=0;
-		if(ren!=null)
-			render_number=ren.size();
+		int render_number=(ren==null)?0:ren.size();
 		part_array=new part_bidirection_link_list[render_number][];
 		for(int render_id=0;render_id<render_number;render_id++) {
-			int part_number=0;
 			render r=ren.get(render_id);
-			if(r.parts!=null)
-				part_number=r.parts.size();
+			int part_number=(r.parts==null)?0:(r.parts.size());
 			part_array[render_id]=new part_bidirection_link_list[part_number];
 			for(int part_id=0;part_id<part_number;part_id++)
 				part_array[render_id][part_id]=new part_bidirection_link_list(r.parts.get(part_id));

@@ -58,8 +58,10 @@ public class part_loader_container
 			}
 	}
 	
-	synchronized private void load_routine(part my_part,system_parameter system_par,scene_parameter scene_par,
-			tree_string_locker_container string_locker_container,ArrayList<part_loader> already_loaded_part)
+	synchronized private void load_routine(part my_part,String fast_load_type,
+			system_parameter system_par,scene_parameter scene_par,
+			tree_string_locker_container string_locker_container,
+			ArrayList<part_loader> already_loaded_part)
 	{
 		int max_part_load_thread_number;
 		if((max_part_load_thread_number=my_part.part_par.max_part_load_thread_number)<1)
@@ -83,35 +85,46 @@ public class part_loader_container
 				already_loaded_part.remove(i);
 				wait_for_part_loader_termination(pl,system_par,scene_par);	
 			}
-		pl=new part_loader(my_part,system_par,scene_par,string_locker_container);
+		pl=new part_loader(my_part,fast_load_type,system_par,scene_par,string_locker_container);
 		part_loader_list.add(pl);
 		already_loaded_part.add(pl);
 	}
-	public void load(part my_part,system_parameter system_par,scene_parameter scene_par,
+	public void load(part my_part,String fast_load_type,
+			system_parameter system_par,scene_parameter scene_par,
 			tree_string_locker_container string_locker_container,ArrayList<part_loader> already_loaded_part,
 			ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container)
 	{
-		int boftal_number;
-		if((boftal_number=boftal_container.size())>0) {
-			String boftal_token_str=file_directory.part_file_directory(my_part,system_par,scene_par).
-						substring(system_par.temporary_file_par.temporary_root_directory_name.length());
+		switch(fast_load_type){
+		case "fast":
+			int boftal_number;
+			if((boftal_number=boftal_container.size())<=0)
+				break;
+			String boftal_token_str=file_directory.part_file_directory(my_part,system_par,scene_par);
+			int pre_length=system_par.temporary_file_par.temporary_root_directory_name.length();
+			String search_key[]=new String[]{boftal_token_str.substring(pre_length)};
 			ArrayList<buffer_object_file_modify_time_and_length> my_list;
-			for(int i=0;i<boftal_number;i++)
-				if((my_list=boftal_container.get(i).search(new String[]{boftal_token_str}))!=null)
-					if(my_list.size()>0){
-						buffer_object_file_modify_time_and_length my_boftal=my_list.get(0);
-						if(my_part.part_par.last_modified_time<=my_boftal.buffer_object_head_last_modify_time){
-							my_part.boftal=my_boftal;
-							if(my_part.part_mesh==null)
-								my_part.part_mesh=my_part.boftal.simple_part_mesh;
-							if(my_part.part_mesh!=null)
-								my_part.part_mesh.free_memory();
-							return;
-						}
-					}
+			for(int i=0;i<boftal_number;i++) {
+				if((my_list=boftal_container.get(i).search(search_key))==null)
+					continue;
+				if(my_list.size()<=0)
+					continue;
+				buffer_object_file_modify_time_and_length my_boftal=my_list.get(0);
+				long last_time=my_boftal.buffer_object_head_last_modify_time;
+				if(my_part.part_par.last_modified_time>last_time)
+					continue;
+				my_part.boftal=my_boftal;
+				if(my_part.part_mesh==null)
+					my_part.part_mesh=my_part.boftal.simple_part_mesh;
+				if(my_part.part_mesh!=null)
+					my_part.part_mesh.free_memory();
+				return;
+			}
+			break;
 		}
+
 		try{
-			load_routine(my_part,system_par,scene_par,string_locker_container,already_loaded_part);
+			load_routine(my_part,fast_load_type,system_par,scene_par,
+						string_locker_container,already_loaded_part);
 		}catch(Exception e){
 			e.printStackTrace();
 			debug_information.println("load of part_loader_container fail");

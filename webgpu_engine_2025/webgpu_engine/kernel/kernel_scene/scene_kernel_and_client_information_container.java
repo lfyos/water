@@ -36,8 +36,8 @@ public class scene_kernel_and_client_information_container
 		kernel_and_client_information_lock_number+=modify_number;
 		return kernel_and_client_information_lock_number;
 	}
-	private scene_call_result get_scene_result_routine(
-			component_load_source_container component_load_source_cont,client_process_bar process_bar,
+	private scene_call_result get_scene_result_routine(client_process_bar process_bar,
+			component_load_source_container system_component_load_source_cont,
 			buffer_object_file_modify_time_and_length_container system_boftal_container,
 			client_request_response my_request_response,long delay_time_length,
 			user_statistics statistics_user,create_scene_counter scene_counter,
@@ -50,10 +50,13 @@ public class scene_kernel_and_client_information_container
 		if(scene_kernel_cont.initilization_flag){
 			scene_kernel_cont.initilization_flag=false;
 			if(scene_kernel_cont.sk.component_cont==null){
-				component_load_source_cont=new component_load_source_container(component_load_source_cont);
-				boolean load_scene_fail_flag=scene_kernel_cont.sk.load(component_load_source_cont,
-						my_request_response,process_bar,system_boftal_container,string_locker_container);
-				component_load_source_cont.destroy();
+				component_load_source_container scene_component_load_source_cont;
+				scene_component_load_source_cont=new component_load_source_container(
+							system_component_load_source_cont);
+				boolean load_scene_fail_flag=scene_kernel_cont.sk.load(
+						scene_component_load_source_cont,my_request_response,
+							process_bar,system_boftal_container,string_locker_container);
+				scene_component_load_source_cont.destroy();
 				
 				if(load_scene_fail_flag) {
 					scene_kernel_cont.sk.destroy();
@@ -62,7 +65,7 @@ public class scene_kernel_and_client_information_container
 				}
 				if(scene_kernel_cont.sk.component_cont.root_component!=null) {
 					scene_counter.update_kernel_component_number(1,
-							scene_kernel_cont.sk.component_cont.root_component.component_id+1);
+							scene_kernel_cont.sk.component_cont.component_number);
 
 					debug_information.print  ("scene_interface load scene,scene_name:",
 							scene_kernel_cont.sk.scene_name);
@@ -97,7 +100,7 @@ public class scene_kernel_and_client_information_container
 	}
 	public scene_call_result get_scene_result(client_process_bar process_bar,
 			buffer_object_file_modify_time_and_length_container system_boftal_container,
-			component_load_source_container component_load_source_cont,
+			component_load_source_container system_component_load_source_cont,
 			client_request_response my_request_response,long delay_time_length,
 			user_statistics statistics_user,create_scene_counter scene_counter,
 			tree_string_locker_container string_locker_container)
@@ -109,7 +112,8 @@ public class scene_kernel_and_client_information_container
 			my_lock.lock();
 			update_sk_and_ci_processing_number(1);
 			try{
-				ret_val=get_scene_result_routine(component_load_source_cont,process_bar,
+				ret_val=get_scene_result_routine(
+						process_bar,system_component_load_source_cont,
 						system_boftal_container,my_request_response,delay_time_length,
 						statistics_user,scene_counter,string_locker_container);
 			}catch(Exception e){

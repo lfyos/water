@@ -134,8 +134,9 @@ public class part_package
 		int part_number=data_list.size();
 		
 		debug_information.println();
-		debug_information.println("Create boftal file,Total part number:",part_number+",	"+boftal_data_file_name);
-
+		debug_information.println("Begin create_package_boftal,Total part number:",part_number+",	"+boftal_data_file_name);
+		debug_information.println();
+		
 		if((process_bar!=null)&&(process_bar_title!=null))
 			process_bar.set_process_bar(true, process_bar_title,ex_process_title,0,part_number);
 
@@ -144,11 +145,9 @@ public class part_package
 		fw.println(part_number);
 		
 		for(int i=0;i<part_number;i++) {
-			if((process_bar!=null)&&(process_bar_title!=null))
-				process_bar.set_process_bar(false, process_bar_title,ex_process_title,i,part_number);
-			
+			part boftal_part=data_list.get(i);
 			String part_temporary_file_directory=file_directory.
-					part_file_directory(data_list.get(i),system_par,scene_par);
+					part_file_directory(boftal_part,system_par,scene_par);
 			String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
 			fw.println(part_temporary_file_directory.substring(cut_directory_length));
 
@@ -159,14 +158,24 @@ public class part_package
 			fr.close();
 			
 			fw.println();
+			
+			if((process_bar!=null)&&(process_bar_title!=null))
+				process_bar.set_process_bar(false, process_bar_title,ex_process_title,i,part_number);
+			debug_information.println((i+1)+".create_package_boftal for\t:\t",
+				 boftal_part.system_name+"\t\t\tboftal_file:\t"+boftal_file_name);
 		}		
 		fw.close();
 		file_writer.file_rename(boftal_data_file_name+".tmp",boftal_data_file_name);
 		
 		if((process_bar!=null)&&(process_bar_title!=null))
 			process_bar.set_process_bar(false, process_bar_title,ex_process_title,part_number,part_number);
+		
+		debug_information.println();
+		debug_information.println("End create_package_boftal,Total part number:",part_number+",	"+boftal_data_file_name);
+		debug_information.println();
+
 	}
-	public part_package(
+	public part_package(boolean fast_load_flag,
 		client_process_bar process_bar,tree_string_locker_container string_locker_container,
 		String package_process_bar_title,String boftal_process_bar_title,String ex_process_title,
 		render_container rc,int part_type_id,system_parameter system_par,scene_parameter scene_par)
@@ -174,10 +183,7 @@ public class part_package
 		String package_directory_name	=file_directory.package_file_directory(part_type_id,system_par,scene_par);
 		String package_data_file_name	=package_directory_name+"package_data.txt";
 		String boftal_data_file_name 	=package_directory_name+"boftal_data.txt";
-		
-		String my_lock_key[]			=new String[] {package_directory_name+"package.lock"};
-		string_locker_container.write_lock(my_lock_key);
-		
+
 		part_package_collector ppc=new part_package_collector(rc.part_array_list(part_type_id),system_par);
 		
 		int package_number=ppc.part_package.length;
@@ -186,23 +192,38 @@ public class part_package
 		package_last_time=new long	 [package_number];
 		package_file_name=new String [package_number];
 
-		if((new File(package_data_file_name).exists())&&(new File(boftal_data_file_name).exists())){
-			boolean not_create_flag=true;
-			file_reader fr=new file_reader(package_data_file_name,system_par.local_data_charset);
-			for(int i=0;i<package_number;i++) {
-				package_length[i]	=fr.get_long();
-				package_last_time[i]=fr.get_long();
-				package_file_name[i]=package_directory_name+"package_"+i+".gzip_text";
-				
-				if(new File(package_file_name[i]).lastModified()<ppc.part_package[i].last_time){
-					not_create_flag=false;
-					break;
+		String my_lock_key[]=new String[] {package_directory_name+"package.lock"};
+		string_locker_container.write_lock(my_lock_key);
+		
+		if(new File(package_data_file_name).exists()) {
+			if(fast_load_flag) {
+				file_reader fr=new file_reader(package_data_file_name,system_par.local_data_charset);
+				for(int i=0;i<package_number;i++) {
+					package_length[i]	=fr.get_long();
+					package_last_time[i]=fr.get_long();
+					package_file_name[i]=package_directory_name+"package_"+i+".gzip_text";
 				}
-			}
-			fr.close();
-			if(not_create_flag) {
 				string_locker_container.write_unlock(my_lock_key);
 				return;
+			}
+			if(new File(boftal_data_file_name).exists()){
+				boolean not_create_flag=true;
+				file_reader fr=new file_reader(package_data_file_name,system_par.local_data_charset);
+				for(int i=0;i<package_number;i++) {
+					package_length[i]	=fr.get_long();
+					package_last_time[i]=fr.get_long();
+					package_file_name[i]=package_directory_name+"package_"+i+".gzip_text";
+					
+					if(new File(package_file_name[i]).lastModified()<ppc.part_package[i].last_time){
+						not_create_flag=false;
+						break;
+					}
+				}
+				fr.close();
+				if(not_create_flag) {
+					string_locker_container.write_unlock(my_lock_key);
+					return;
+				}
 			}
 		}
 

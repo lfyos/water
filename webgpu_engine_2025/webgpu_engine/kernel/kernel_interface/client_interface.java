@@ -6,24 +6,22 @@ import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
-import kernel_component.component;
-import kernel_common_class.jason_string;
-import kernel_common_class.nanosecond_timer;
-import kernel_common_class.tree_string_locker_container;
-import kernel_common_class.debug_information;
-import kernel_common_class.tree_string_search_container;
 
 import kernel_scene.scene_kernel;
+import kernel_security.delay_manager;
 import kernel_scene.system_parameter;
 import kernel_scene.scene_call_result;
+import kernel_file_manager.file_reader;
+import kernel_common_class.jason_string;
 import kernel_scene.create_scene_counter;
 import kernel_scene.scene_kernel_container;
-import kernel_scene.scene_kernel_container_search_tree;
-import kernel_scene.scene_kernel_and_client_information_container;
-
-import kernel_security.delay_manager;
-import kernel_file_manager.file_reader;
+import kernel_common_class.nanosecond_timer;
+import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
+import kernel_scene.scene_kernel_container_search_tree;
+import kernel_common_class.tree_string_search_container;
+import kernel_common_class.tree_string_locker_container;
+import kernel_scene.scene_kernel_and_client_information_container;
 
 public class client_interface
 {
@@ -110,9 +108,9 @@ public class client_interface
 		my_lock.unlock();
 		try{
 			ecr=created_sk_and_ci.get_scene_result(
-					cpb,scene_kernel_search_tree.system_boftal_container,
-					scene_kernel_search_tree.component_load_source_cont,request_response,
-					delay_time_length,statistics_user,scene_counter,string_locker_container);
+				cpb,scene_kernel_search_tree.system_boftal_container,
+				scene_kernel_search_tree.system_component_load_source_cont,request_response,
+				delay_time_length,statistics_user,scene_counter,string_locker_container);
 		}catch(Exception e){
 			e.printStackTrace();
 			ecr=null;
@@ -124,15 +122,14 @@ public class client_interface
 		do {
 			String my_tree_key[];
 			if(created_scene_kernel_only.sk!=null)
-				if(created_scene_kernel_only.sk.component_cont!=null)
-					if(created_scene_kernel_only.sk.component_cont.root_component!=null) {
-						component root_component=created_scene_kernel_only.sk.component_cont.root_component;
-						statistics_user.user_scene_kernel_number++;
-						statistics_user.user_scene_component_number+=root_component.component_id+1;
-						my_tree_key=new String[]{created_sk_and_ci.client_information.channel_id};
-						tree.add(my_tree_key,created_sk_and_ci);
-						break;
-					}
+				if(created_scene_kernel_only.sk.component_cont!=null){
+					statistics_user.user_scene_kernel_number++;
+					statistics_user.user_scene_component_number
+						+=created_scene_kernel_only.sk.component_cont.component_number;
+					my_tree_key=new String[]{created_sk_and_ci.client_information.channel_id};
+					tree.add(my_tree_key,created_sk_and_ci);
+					break;
+				}
 			my_tree_key=new String[]{"fail_scene"};
 			tree.add(my_tree_key,created_sk_and_ci);
 			tree.move_to_first(my_tree_key);
@@ -244,7 +241,7 @@ public class client_interface
 		try{
 			ecr=p.get_scene_result(cpb,
 					scene_kernel_search_tree.system_boftal_container,
-					scene_kernel_search_tree.component_load_source_cont,
+					scene_kernel_search_tree.system_component_load_source_cont,
 					request_response,delay_time_length,statistics_user,
 					scene_counter,string_locker_container);
 		}catch(Exception e){
@@ -470,7 +467,7 @@ public class client_interface
 						if(sk.component_cont!=null)
 							if(sk.component_cont.root_component!=null){
 								statistics_user.user_scene_kernel_number--;
-								statistics_user.user_scene_component_number-=sk.component_cont.root_component.component_id+1;
+								statistics_user.user_scene_component_number-=sk.component_cont.component_number;
 							}
 				}
 				debug_information.println("Execute destroy_ek_ci_node");

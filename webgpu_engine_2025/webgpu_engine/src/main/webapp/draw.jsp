@@ -16,21 +16,21 @@ var scene_container;
 <%
 {
 	String str;
-	out.print  ("var my_user_name=\""		+(((str=request.getParameter("user_name"		 ))==null)?""	:str)+"\",");
-	out.print  ("my_pass_word=\""			+(((str=request.getParameter("pass_word"		 ))==null)?""	:str)+"\",");
-	out.print  ("my_language=\""			+(((str=request.getParameter("language"			 ))==null)?""	:str)+"\",");
-	out.print  ("my_scene_name=\""			+(((str=request.getParameter("scene_name"		 ))==null)?""	:str)+"\",");
-	out.println("my_link_name=\""			+(((str=request.getParameter("link_name"		 ))==null)?""	:str)+"\";");
+	out.print  ("var my_user_name=\""		+(((str=request.getParameter("user_name"		 ))==null)?""		:str)+"\",");
+	out.print  ("my_pass_word=\""			+(((str=request.getParameter("pass_word"		 ))==null)?""		:str)+"\",");
+	out.print  ("my_language=\""			+(((str=request.getParameter("language"			 ))==null)?""		:str)+"\",");
+	out.print  ("my_scene_name=\""			+(((str=request.getParameter("scene_name"		 ))==null)?""		:str)+"\",");
+	out.println("my_link_name=\""			+(((str=request.getParameter("link_name"		 ))==null)?""		:str)+"\";");
 	
-	out.print  ("var my_change_part=\""		+(((str=request.getParameter("change_part"		 ))==null)?""	:str)+"\",");
-	out.print  ("my_change_component=\""	+(((str=request.getParameter("change_component"	 ))==null)?""	:str)+"\",");
-	out.print  ("my_part_type=\""			+(((str=request.getParameter("part_type"		 ))==null)?""	:str)+"\",");
-	out.print  ("my_fast_load=\""			+(((str=request.getParameter("fast_load"		 ))==null)?""	:str)+"\",");
-	out.print  ("my_type_sub_directory=\""	+(((str=request.getParameter("type_sub_directory"))==null)?""	:str)+"\",");
-	out.print  ("my_scene_sub_directory=\""	+(((str=request.getParameter("scene_sub_directory"))==null)?""	:str)+"\",");
-	out.print  ("my_scene_tmp_directory=\""	+(((str=request.getParameter("scene_tmp_directory"))==null)?""	:str)+"\",");
-	out.print  ("my_client_sub_directory=\""+(((str=request.getParameter("client_sub_directory"))==null)?""	:str)+"\",");
-	out.print  ("my_coordinate=\""			+(((str=request.getParameter("coordinate"		 ))==null)?""	:str)+"\";");
+	out.print  ("var my_change_part=\""		+(((str=request.getParameter("change_part"		 ))==null)?""		:str)+"\",");
+	out.print  ("my_change_component=\""	+(((str=request.getParameter("change_component"	 ))==null)?""		:str)+"\",");
+	out.print  ("my_part_type=\""			+(((str=request.getParameter("part_type"		 ))==null)?""		:str)+"\",");
+	out.print  ("my_fast_load=\""			+(((str=request.getParameter("fast_load"		 ))==null)?"fast"	:str)+"\",");
+	out.print  ("my_type_sub_directory=\""	+(((str=request.getParameter("type_sub_directory"))==null)?""		:str)+"\",");
+	out.print  ("my_scene_sub_directory=\""	+(((str=request.getParameter("scene_sub_directory"))==null)?""		:str)+"\",");
+	out.print  ("my_scene_tmp_directory=\""	+(((str=request.getParameter("scene_tmp_directory"))==null)?""		:str)+"\",");
+	out.print  ("my_client_sub_directory=\""+(((str=request.getParameter("client_sub_directory"))==null)?""		:str)+"\",");
+	out.print  ("my_coordinate=\""			+(((str=request.getParameter("coordinate"		 ))==null)?""		:str)+"\";");
 }
 %>
 

@@ -37,25 +37,26 @@ public class component_load_source_container
 		}
 	}
 	public int add_component(String component_name,ArrayList<component>child_component_list,
-			boolean part_list_flag,boolean normalize_location_flag,component_construction_parameter ccp)
+		boolean part_list_flag,boolean normalize_location_flag,component_construction_parameter ccp)
 	{
 		int ret_val=0;
-		component_load_source_item clsi;
-		ArrayList<component_load_source_item> list;
-		if((list=tree.remove(new String[]{component_name}))!=null)
-			for(int i=0,ni=list.size();i<ni;i++)
-				if((clsi=list.get(i))!=null){
-					file_reader fr=new file_reader(
-						clsi.component_file_name,clsi.component_file_charset);
-					child_component_list.add(new component(
-						clsi.token_string,fr,part_list_flag,normalize_location_flag,ccp));
-					ret_val++;
-					fr.close();
-				}
+		var list=tree.remove(new String[]{component_name});
+		if(list==null)
+			return ret_val;
+		for(int i=0,ni=list.size();i<ni;i++) {
+			var clsi=list.get(i);
+			if(clsi==null)
+				continue;
+			file_reader fr=new file_reader(clsi.component_file_name,clsi.component_file_charset);
+			var p=new component(clsi.token_string,fr,part_list_flag,normalize_location_flag,ccp);
+			child_component_list.add(p);
+			ret_val++;
+			fr.close();
+		}	
 		return ret_val;
 	}
-	public void add_source_item(String component_name,String token_string,
-					String component_file_name,String component_file_charset)
+	public void add_source_item(String component_name,
+		String token_string,String component_file_name,String component_file_charset)
 	{
 		if((component_name!=null)&&(new File(component_file_name).exists())) {
 			if(component_file_charset==null)

@@ -84,7 +84,7 @@ public class mesh_file_collector
 			
 			head_fw.println();
 
-			file_writer.file_touch(p.file_name+".in_head_flag",true);
+			file_writer.file_touch(p.file_name+".in_head_flag");
 
 			head_fw.print  ("}");
 		}

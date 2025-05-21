@@ -13,7 +13,9 @@ public class component_core_5 extends component_core_4
 	public void destroy()
 	{
 		super.destroy();
-		component_box=null;
+		
+		component_box	=null;
+		model_box		=null;
 	}
 	private void caculate_box_by_driver()
 	{

@@ -7,7 +7,11 @@ import kernel_file_manager.file_writer;
 
 public class part_rude 
 {
-	public void free_memory()
+	public boolean test_memory_not_free()
+	{
+		return (body_array!=null);
+	}
+	public boolean free_memory()
 	{
 		if(body_array!=null) {
 			for(int i=0,ni=body_number();i<ni;i++)
@@ -16,7 +20,9 @@ public class part_rude
 					body_array[i]=null;
 				}
 			body_array=null;
+			return true;
 		}
+		return false;
 	}
 	public void destroy()
 	{

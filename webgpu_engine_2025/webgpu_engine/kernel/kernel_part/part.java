@@ -75,6 +75,10 @@ public class part
 	{
 		return secure_caculate_part_box(comp,driver_id,-1,-1,-1,-1,-1,-1,null,null);
 	}
+	public box secure_caculate_part_box()
+	{
+		return secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null);
+	}
 	public void destroy()
 	{
 		directory_name			=null;
@@ -163,24 +167,35 @@ public class part
 			p_i=new primitive_from_box(part_mesh.body_array);
 		return p_i;
 	}
-	public void load_part_mesh()
+	public boolean load_part_mesh()
 	{
 		if(is_normal_part()){
-			if(part_mesh!=null)
+			if(part_mesh!=null){
+				if(part_mesh.test_memory_not_free())
+					return false;
 				part_mesh.destroy();
-			part_mesh=null;
+			}
 			String my_file_path=file_reader.separator(directory_name+mesh_file_name);
 			file_reader fr=new file_reader(my_file_path,file_charset);
 			part_mesh=new part_rude(fr);
 			fr.close();
+			return true;
 		}
+		return false;
+	}
+	public boolean unload_part_mesh()
+	{
+		if(is_normal_part())
+			if(part_mesh!=null)
+				return part_mesh.free_memory();
+		return false;
 	}
 	private String create_mesh_and_material_routine(
 			String part_temporary_file_directory,system_parameter system_par,scene_parameter scene_par)
 	{
 		String ret_val="";
 
-		ret_val+="\n\tbuffer object directory:\t"+part_temporary_file_directory;
+		ret_val+="\n\tbuffer object directory:"+part_temporary_file_directory;
 
 		file_writer head_fw=new file_writer(
 				part_temporary_file_directory+"mesh.head.txt",system_par.network_data_charset);
@@ -225,7 +240,7 @@ public class part
 		head_fw.println("\t\t\"top_box_flag\"\t\t:\t",	is_top_box_part()	?"true,":"false,");
 		
 		head_fw.print ("\t\t\"part_box\"\t\t:\t[");
-		box part_box=secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null);
+		box part_box=secure_caculate_part_box();
 		for(int i=0;(i<2)&&(part_box!=null);i++){
 			head_fw.print("[",part_box.p[i].x);
 			head_fw.print(",",part_box.p[i].y);
@@ -312,10 +327,10 @@ public class part
 		str ="\n\tuser part name:\t\t\t"		+user_name;
 		str+="\n\tsystem part name:\t\t"		+system_name;
 		str+="\n\tpart permanent ID:\t\t"		+Integer.toString(permanent_part_id);
-		str+="\n\tdirectory:\t\t\t"				+directory_name;
+		str+="\n\tdirectory:\t\t\t\t"			+directory_name;
 		str+="\n\tmesh file name :\t\t"			+((mesh_file_name==null)?"no mesh file name":mesh_file_name);
 		str+="\n\tmaterial file name:\t\t"		+material_file_name;
-		str+="\n\tdescription file name:\t\t"	+description_file_name;
+		str+="\n\tdescription file name:\t"		+description_file_name;
 		str+="\n\taudio_file_name:\t\t"			+audio_file_name;
 
 		String part_temporary_file_directory=file_directory.part_file_directory(this,system_par,scene_par);

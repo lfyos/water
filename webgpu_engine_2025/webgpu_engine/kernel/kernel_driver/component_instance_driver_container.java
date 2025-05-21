@@ -105,9 +105,8 @@ public class component_instance_driver_container
 	public component_instance_driver_container(scene_kernel sk,client_request_response request_response)
 	{
 		component root_component		=sk.component_cont.root_component;
-		int max_component_number		=root_component.component_id+1;
-		component_driver_array			=new component_instance_driver[max_component_number][];
-		instance_lod_precision_scale	=new double[max_component_number];
+		component_driver_array			=new component_instance_driver[sk.component_cont.component_number][];
+		instance_lod_precision_scale	=new double[sk.component_cont.component_number];
 		reset_drivers(root_component,sk,request_response);
 		reset_instance_lod_precision_scale(root_component);
 	}

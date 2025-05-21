@@ -13,6 +13,8 @@ public class component_container
 	public component root_component,scene_component;
 	public scene_parameter	scene_par;
 	
+	public int component_number;
+	
 	public int original_part_number,part_component_number,exist_part_component_number,top_assemble_component_number;
 	public int render_component_id_and_driver_id[][][],part_component_id_and_driver_id[][][][];
 	public long total_face_primitive_number,total_edge_primitive_number,total_point_primitive_number;
@@ -140,6 +142,7 @@ public class component_container
 		component_pointer					=c_c.component_pointer;
 		sort_component_pointer				=c_c.sort_component_pointer;
 		
+		component_number					=c_c.component_number;
 		top_assemble_component_number		=c_c.top_assemble_component_number;
 		part_component_number				=c_c.part_component_number;
 		exist_part_component_number			=c_c.exist_part_component_number;
@@ -160,7 +163,7 @@ public class component_container
 	}
 	
 	public component_container(file_reader scene_f,scene_kernel sk,
-			component_load_source_container component_load_source_cont,
+			component_load_source_container scene_component_load_source_cont,
 			long default_display_bitmap,client_request_response request_response)
 	{
 		{
@@ -196,7 +199,8 @@ public class component_container
 			debug_information.println("Begin loading scene");
 
 			component_construction_parameter ccp=new component_construction_parameter(
-					sk,request_response,sk.part_cont,component_load_source_cont,default_display_bitmap);
+					sk,request_response,sk.part_cont,
+					scene_component_load_source_cont,default_display_bitmap);
 			
 			try{
 				root_component=new component("",scene_f,false,false,ccp);

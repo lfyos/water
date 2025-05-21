@@ -110,8 +110,8 @@ public class render_container
 	public void load_part(long part_type,int part_normal_bottom_box_top_box_flag,
 		part_loader_container part_loader_cont,system_parameter system_par,scene_parameter scene_par,
 		ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,
-		tree_string_locker_container string_locker_container,
-		client_process_bar process_bar,String process_bar_title,String ex_process_bar_title)
+		tree_string_locker_container string_locker_container,client_process_bar process_bar,
+		String process_bar_title,String ex_process_bar_title,String fast_load_type)
 	{
 		if(renders==null)
 			return;
@@ -143,7 +143,7 @@ public class render_container
 					if(pass_id==0)
 						all_number++;
 					else{
-						part_loader_cont.load(p,system_par,scene_par,
+						part_loader_cont.load(p,fast_load_type,system_par,scene_par,
 								string_locker_container,already_loaded_part,boftal_container);
 						load_number++;
 						if(process_bar!=null)
@@ -424,5 +424,19 @@ public class render_container
 		for(int i=0,ni=ren_con.type_part_package.length;i<ni;i++)
 			type_part_package[i]=new part_package(ren_con.type_part_package[i]);
 		scene_part_package	=new part_package(ren_con.scene_part_package);
+	}
+	
+	public static String get_fast_load_type(client_request_response request_response)
+	{
+		String fast_load_type=request_response.get_parameter("fast_load");
+		fast_load_type=(fast_load_type==null)?"fast":fast_load_type.toLowerCase();
+		switch(fast_load_type){
+		case "fast":
+		case "medium":
+		case "slow":
+			return fast_load_type;
+		default:
+			return "fast";
+		}
 	}
 }

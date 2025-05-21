@@ -61,7 +61,7 @@ public class scene_parameter
 	public String component_sort_type;
 	public double component_sort_min_distance;
 	
-	public boolean not_do_ancestor_render_flag,fast_load_flag;
+	public boolean not_do_ancestor_render_flag;
 	
 	private String[] get_directory_name_and_file_name(file_reader fr)
 	{
@@ -330,8 +330,6 @@ public class scene_parameter
 		
 		not_do_ancestor_render_flag				=extra_parameter_fr.get_boolean();
 		
-		fast_load_flag=request_response.get_boolean("fast_load",true);
-
 		extra_parameter_fr.close();
 		
 		return;

@@ -114,7 +114,7 @@ public class component_array
 	{
 		component my_comp;
 		ArrayList<component>new_comp_list=new ArrayList<component>();
-		boolean exist_flag[]=new boolean[component_cont.root_component.component_id+1];
+		boolean exist_flag[]=new boolean[component_cont.component_number];
 		for(int i=0,ni=exist_flag.length;i<ni;i++)
 			exist_flag[i]=true;
 		for(int i=0,ni=comp_list.size();i<ni;i++)
@@ -130,8 +130,8 @@ public class component_array
 		make_to_children();
 		delete_same_component(component_cont);
 		
-		int mark_flag[]		=new int[component_cont.root_component.component_id+1];
-		int collect_flag[]	=new int[component_cont.root_component.component_id+1];
+		int mark_flag[]		=new int[component_cont.component_number];
+		int collect_flag[]	=new int[component_cont.component_number];
 
 		for(boolean exit_flag=true;exit_flag;){
 			component comp,parent;

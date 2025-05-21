@@ -139,12 +139,12 @@ public class sorter <DATA_TYPE,KEY_TYPE>
 		ArrayList<DATA_TYPE> old_data_list=data_list;
 		data_list=append_list;
 		do_sort();
-		append_list=data_list;
 		
-		if((old_part_number=old_data_list.size())<=0) {
+		if((old_part_number=old_data_list.size())<=0){
 			append_list=new ArrayList<DATA_TYPE>();
 			return;
 		}
+		append_list=data_list;
 		data_list=new ArrayList<DATA_TYPE>();
 		for(int old_part_pointer=0,append_part_pointer=0,new_pointer=0;;) {
 			if(old_part_pointer>=old_part_number) {
@@ -165,7 +165,7 @@ public class sorter <DATA_TYPE,KEY_TYPE>
 				}
 			}
 		}
-		append_list=new ArrayList<DATA_TYPE>();
+		append_list.clear();
 	}
 	public void append(DATA_TYPE new_data)
 	{

@@ -35,16 +35,13 @@ public class component_location_buffer
 	
 	public component_location_buffer(scene_kernel sk)
 	{
-		int length=1;
-		if(sk.component_cont.root_component!=null)
-			length=sk.component_cont.root_component.component_id+1;
-
-		component_location_version						=new long		[length];
-		touch_time										=new long		[length];
-		component_not_in_list_flag						=new boolean	[length];
-		has_not_response_relative_location_flag			=new boolean	[length];
+		int number=sk.component_cont.component_number;
+		component_location_version				=new long	[number];
+		touch_time								=new long	[number];
+		component_not_in_list_flag				=new boolean[number];
+		has_not_response_relative_location_flag	=new boolean[number];
 		
-		for(int i=0;i<length;i++){
+		for(int i=0;i<number;i++){
 			component_not_in_list_flag[i]				=true;
 			has_not_response_relative_location_flag[i]	=true;
 			component_location_version[i]				=-1;

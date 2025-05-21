@@ -102,17 +102,18 @@ public class buffer_object_file_modify_time_and_length
 		fw.println("/*\tbuffer_object_text_file_length.length\t*/\t",list.size());
 		for(int i=0,ni=list.size();i<ni;i++){
 			pp=list.get(i);
-			fw.println("/*\t\tbuffer_object_text_file_length["+i+"]\t*/\t",pp.size());
+			String file_type_str=i+":"+file_type[i].substring(1);
+			fw.println("/*\t\tbuffer_object_text_file_length["+file_type_str+"]\t*/\t",pp.size());
 			for(int j=0,nj=pp.size();j<nj;j++){
 				p=pp.get(j);
 				long t=p.buffer_object_file_last_modify_time;
-				fw.print  ("/*\t\t\tbuffer_object_file_last_modify_time\t["+i+","+j+"]\t\t*/\t",t);
+				fw.print  ("/*\t\t\tbuffer_object_file_last_modify_time\t["+file_type_str+","+j+"]\t*/\t",t);
 				fw.print  ("\t/*\t",sdf.format(new Date(t)));
 				fw.println("\t*/");
 
-				fw.println("/*\t\t\tbuffer_object_text_file_length\t\t["+i+","+j+"]\t\t*/\t",
+				fw.println("/*\t\t\tbuffer_object_text_file_length\t\t["+file_type_str+","+j+"]\t*/\t",
 					p.buffer_object_text_file_length);
-				fw.println("/*\t\t\tbuffer_object_file_in_head_flag\t\t["+i+","+j+"]\t\t*/\t",
+				fw.println("/*\t\t\tbuffer_object_file_in_head_flag\t\t["+file_type_str+","+j+"]\t*/\t",
 					p.buffer_object_file_in_head_flag?"true":"false");
 			}
 		}

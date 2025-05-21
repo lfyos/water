@@ -50,6 +50,7 @@ public class client_parameter
 	{		
 		String str;
 		int index_id;
+		part p;
 
 		if((str=ci.request_response.get_parameter("component"))!=null) {
 			do{
@@ -71,6 +72,9 @@ public class client_parameter
 			loop_id				=-1;
 			edge_id				=-1;
 		}else{
+			if((p=comp.driver_array.get(driver_id).component_part)!=null)
+				sk.part_lru.touch(p,sk.render_cont.renders,sk.system_par,sk.scene_par);
+			
 			if((str=ci.request_response.get_parameter("type"))!=null)
 				primitive_type_id=Integer.decode(str);
 			if((str=ci.request_response.get_parameter("body"))!=null)
@@ -145,12 +149,5 @@ public class client_parameter
 			high_or_low_precision_flag=false;
 			break;
 		}
-		if((comp==null)||(driver_id<0))
-			return;
-		part my_part;
-		if((my_part=comp.driver_array.get(driver_id).component_part)!=null)
-			if(sk.part_lru.touch(my_part,sk.render_cont.renders))
-				if(my_part.is_normal_part())
-					my_part.load_part_mesh();
 	}
 }

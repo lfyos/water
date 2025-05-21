@@ -8,11 +8,11 @@ import kernel_common_class.debug_information;
 
 public class component_caculator 
 {
-	private int component_id;
 	private int same_render_component_driver_id[];
 	private int same_part_component_driver_id[][];
 	private int not_exist_component_driver_id;
 	
+	public int component_number;
 	public int render_component_id_and_driver_id[][][],part_component_id_and_driver_id[][][][];
 	public component component_pointer[],sort_component_pointer[];
 	public int top_assemble_component_number,part_component_number,exist_part_component_number;
@@ -26,7 +26,7 @@ public class component_caculator
 		for(int i=0;i<children_number;i++)
 			caculate_component_driver_id(comp.children.get(i));
 		
-		comp.component_id		=component_id++;
+		comp.component_id		=component_number++;
 		comp.parent_component_id=-1;
 		for(int i=0;i<children_number;i++)
 			comp.children.get(i).parent_component_id=comp.component_id;
@@ -174,7 +174,7 @@ public class component_caculator
 	public component_caculator(component root_component,boolean display_flag,
 			client_process_bar process_bar,String process_bar_title)
 	{
-		component_id						=0;
+		component_number					=0;
 		render_component_id_and_driver_id	=null;
 		part_component_id_and_driver_id		=null;
 		same_render_component_driver_id		=null;
@@ -183,10 +183,10 @@ public class component_caculator
 		caculate_component_driver_id(root_component);
 		register_componennt_to_part(root_component);
 		
-		component_pointer		=new component[root_component.component_id+1];
-		sort_component_pointer	=new component[root_component.component_id+1];
+		component_pointer		=new component[component_number];
+		sort_component_pointer	=new component[component_number];
 		set_pointer(root_component);
-		sort_component(0,root_component.component_id,new component[root_component.component_id+1]);
+		sort_component(0,root_component.component_id,new component[component_number]);
 		
 		for(int i=0,ni=component_pointer.length;i<ni;i++){
 			component comp=component_pointer[i];
