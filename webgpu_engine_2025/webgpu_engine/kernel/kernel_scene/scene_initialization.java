@@ -33,37 +33,61 @@ public class scene_initialization
 			print_number=0;
 			fw=my_fw;
 		}
-		public void output(component comp,String program_text)
+		public void begin_output(component comp)
 		{
+			String str=jason_string.change_string(comp.component_name);
+			
 			if((print_number++)>0)
 				fw.println(",");
-			fw.println("\t{");
 			
-			fw.println("\t\tcomponent_id			:	",	comp.component_id+",");
-			fw.println("\t\tcomponent_name			:	",	jason_string.change_string(comp.component_name)+",");
-			fw.println("\t\tinitialization_function	:	").	println(program_text);
-			
-			fw.print  ("\t}");
+			fw.	println("\t{").
+				println("\t\tcomponent_id           :\t",comp.component_id+",").
+				println("\t\tcomponent_name         :\t",str+",").
+				println("\t\tinitialization_function:");
+		}
+		public void output_data(String program_text)
+		{
+			fw.println(program_text);
+		}
+		public void end_output()
+		{
+			fw.print("\t}");
 		}
 	}
 
 	class output_all_component_program  extends travel_through_directory
 	{
 		private component comp;
-		private String file_charset;
 		private output_component_program ocp;
+		private String file_charset;
+		private boolean not_multifile_flag;
 		
 		public void operate_file(String file_name)
 		{
-			ocp.output(comp,file_reader.get_text(file_name,file_charset));
+			if(!not_multifile_flag) 
+				ocp.output_data(file_reader.get_text(file_name,file_charset));
+			else{
+				ocp.begin_output(comp);
+				ocp.output_data(file_reader.get_text(file_name,file_charset));
+				ocp.end_output();
+			}
 		}
-		public output_all_component_program(component my_comp,
-				String my_file_name,String my_file_charset,output_component_program my_ocp)
+		public output_all_component_program(component my_comp,output_component_program my_ocp,
+				String my_file_name,String my_file_charset,String multifile_string)
 		{
 			comp=my_comp;
-			file_charset=my_file_charset;
 			ocp=my_ocp;
-			do_travel(my_file_name,true);
+			file_charset=my_file_charset;
+			
+			not_multifile_flag=(multifile_string.compareTo("true")!=0);
+			
+			if(not_multifile_flag)
+				do_travel(my_file_name,true);
+			else{
+				ocp.begin_output(comp);
+				do_travel(my_file_name,true);
+				ocp.end_output();
+			}
 		}
 	}
 
@@ -210,12 +234,11 @@ public class scene_initialization
 			pi.destroy();
 			sort_component_array[i].initialization=null;
 		}
-		int collect_init_comp_number=init_comp.size();
 		
-		process_bar.set_process_bar(true,"file_initialization_0","",0, collect_init_comp_number);
-		for(int i=0;i<collect_init_comp_number;i++){
+		process_bar.set_process_bar(true,"file_initialization_0","",0, init_comp.size());
+		for(int i=0,ni=init_comp.size();i<ni;i++){
 			component comp=init_comp.get(i);
-			process_bar.set_process_bar(false,"file_initialization_0",comp.component_name,i, collect_init_comp_number);
+			process_bar.set_process_bar(false,"file_initialization_0",comp.component_name,i,ni);
 			
 			for(int j=0,nj=comp.initialization.program_and_charset.size();j<nj;j++){
 				String my_program_and_charset[]=comp.initialization.program_and_charset.get(j);
@@ -225,48 +248,50 @@ public class scene_initialization
 					continue;
 				}
 				File f;
-				String real_file_name;
 				do{
-					if((f=new File(real_file_name=comp.component_directory_name+my_program_and_charset[0])).exists())
+					if((f=new File(comp.component_directory_name+my_program_and_charset[0])).exists())
 						break;
-					if((f=new File(real_file_name=sk.create_parameter.scene_directory_name+my_program_and_charset[0])).exists())
+					if((f=new File(sk.create_parameter.scene_directory_name+my_program_and_charset[0])).exists())
 						break;
-					if((f=new File(real_file_name=sk.scene_par.directory_name+my_program_and_charset[0])).exists())
+					if((f=new File(sk.scene_par.directory_name+my_program_and_charset[0])).exists())
 						break;
-					if((f=new File(real_file_name=sk.scene_par.extra_directory_name+my_program_and_charset[0])).exists())
+					if((f=new File(sk.scene_par.extra_directory_name+my_program_and_charset[0])).exists())
 						break;
-					if((f=new File(real_file_name=sk.scene_par.scene_shader_directory_name+my_program_and_charset[0])).exists())
+					if((f=new File(sk.scene_par.scene_shader_directory_name+my_program_and_charset[0])).exists())
 						break;
 					f=null;
 					for(int k=0,nk=sk.scene_par.type_sub_directory.length;k<nk;k++) {
-						real_file_name =sk.scene_par.type_shader_directory_name;
-						real_file_name+=sk.scene_par.type_sub_directory[k];
-						real_file_name+=my_program_and_charset[0];
-						if((f=new File(real_file_name)).exists())
+						String file_name;
+						file_name=sk.scene_par.type_shader_directory_name;
+						file_name+=sk.scene_par.type_sub_directory[k];
+						file_name+=my_program_and_charset[0];
+						if((f=new File(file_name)).exists())
 							break;
 						f=null;
 					}
 					if(f!=null)
 						break;
-					if((f=new File(real_file_name=sk.system_par.data_root_directory_name+my_program_and_charset[0])).exists())
+					if((f=new File(sk.system_par.data_root_directory_name+my_program_and_charset[0])).exists())
 						break;
-					real_file_name=null;
+					f=null;
 				}while(false);
 				
-				if(real_file_name==null) {
+				if(f==null) {
 					debug_information.print  ("Not exist component init function,component name:	",comp.component_name);
 					debug_information.println("	file_name:	",my_program_and_charset[0]);
 					comp.initialization.program_and_charset.set(j,null);
 				}else {
-					file_last_time flt=new file_last_time(f.getAbsolutePath());
+					String file_name=f.getAbsolutePath();
+					file_last_time flt=new file_last_time(file_name);
 					if(last_time<flt.last_time)
 						last_time=flt.last_time;
-					comp.initialization.program_and_charset.set(j,new String[] {real_file_name,my_program_and_charset[1]});
+					comp.initialization.program_and_charset.set(j,new String[]{
+							file_name,my_program_and_charset[1],my_program_and_charset[2]});
 				}
 			}
 		}
 	
-		process_bar.set_process_bar(false,"file_initialization_0","",collect_init_comp_number,collect_init_comp_number);
+		process_bar.set_process_bar(false,"file_initialization_0","",init_comp.size(),init_comp.size());
 		
 		if((new File(destination_file_name)).lastModified()>last_time)
 			return;
@@ -323,27 +348,28 @@ public class scene_initialization
 		
 		fw.println("],").println("[");
 		{
-			process_bar.set_process_bar(true,"file_initialization_3","",0,collect_init_comp_number);
+			process_bar.set_process_bar(true,"file_initialization_3","",0,init_comp.size());
 			output_component_program ocp=new output_component_program(fw);
-			for(int i=0,ni=collect_init_comp_number;i<ni;i++){
+			for(int i=0,ni=init_comp.size();i<ni;i++){
 				component comp=init_comp.get(i);
-				process_bar.set_process_bar(false,"file_initialization_3",
-						comp.component_name,i,collect_init_comp_number);
+				process_bar.set_process_bar(false,"file_initialization_3",comp.component_name,i,ni);
 				for(int j=0,nj=comp.initialization.program_and_charset.size();j<nj;j++) {
 					String my_program_and_charset[];
 					if((my_program_and_charset=comp.initialization.program_and_charset.get(j))==null)
 						continue;
 					if(my_program_and_charset[0]==null)
 						continue;
-					if(my_program_and_charset[1]==null) 
-						ocp.output(comp,my_program_and_charset[0]);
-					else
-						new output_all_component_program(
-								comp,my_program_and_charset[0],my_program_and_charset[1],ocp);
+					if(my_program_and_charset[1]==null){
+						ocp.begin_output(comp);
+						ocp.output_data(my_program_and_charset[0]);
+						ocp.end_output();
+					}else
+						new output_all_component_program(comp,ocp,my_program_and_charset[0],
+								my_program_and_charset[1],my_program_and_charset[2]);
 				}
 			}
 			fw.println();
-			process_bar.set_process_bar(false,"file_initialization_3","",collect_init_comp_number,collect_init_comp_number);
+			process_bar.set_process_bar(false,"file_initialization_3","",init_comp.size(),init_comp.size());
 		}
 
 		fw.println("],").println("[");
@@ -479,11 +505,12 @@ public class scene_initialization
 		
 		debug_information.println();
 		debug_information.println("Begin create initialization file");
-		
-		String destination_file_name=sk.scene_par.scene_temporary_directory_name+"initialization.gzip_js";
-		String lock_key[]=new String[] {destination_file_name};
+
+		String destination_directory_name	=sk.scene_par.scene_temporary_directory_name;
+		String lock_key[]=new String[] {destination_directory_name+"initialization.lock"};
 		string_locker_container.write_lock(lock_key);
-		file_initialize(destination_file_name,sort_component_array,sk,request_response,process_bar);
+		file_initialize(destination_directory_name+"initialization.gzip_js",
+					sort_component_array,sk,request_response,process_bar);
 		string_locker_container.write_unlock(lock_key);
 		
 		for(int i=0,ni=sort_component_array.length;i<ni;i++)

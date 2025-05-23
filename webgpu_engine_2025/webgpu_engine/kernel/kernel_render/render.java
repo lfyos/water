@@ -82,11 +82,10 @@ public class render
 			
 			return;
 		}
-		if(!(render_driver_object instanceof render_driver)){
+		if(render_driver_object instanceof render_driver)
+			driver=(render_driver)render_driver_object;
+		else
 			debug_information.println("render driver class name error:		",my_driver_name);
-			return;
-	    }
-		driver=(render_driver)render_driver_object;
 	}
 	public void delete_last_part()
 	{

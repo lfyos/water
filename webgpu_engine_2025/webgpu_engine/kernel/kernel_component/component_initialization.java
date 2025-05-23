@@ -21,14 +21,16 @@ public class component_initialization
 	}
 	public void create_initialization(file_reader fr,String initialization_type)
 	{
-		String my_initialization_program=null;
+		String my_initialization_program		=null;
 		String my_initialization_program_charset=null;
-		String line_str,terminated_token;
+		String line_str,terminated_token,not_multifile_flag="true";
 		
 		switch(initialization_type){
 		default:
 			return;
 		case "file_program":
+			not_multifile_flag="false";
+		case "multifile_program":
 			if((my_initialization_program=file_reader.separator(fr.get_string()))!=null)
 				if((my_initialization_program=my_initialization_program.trim()).length()>0)
 					if((my_initialization_program_charset=fr.get_charset())!=null)
@@ -36,6 +38,8 @@ public class component_initialization
 							break;
 			return;
 		case "charset_file_program":
+			not_multifile_flag="false";
+		case "charset_multifile_program":
 			if((my_initialization_program=file_reader.separator(fr.get_string()))!=null)
 				if((my_initialization_program=my_initialization_program.trim()).length()>0)
 					if((my_initialization_program_charset=fr.get_string())!=null)
@@ -61,7 +65,12 @@ public class component_initialization
 				}
 			return;
 		}
-		program_and_charset.add(program_and_charset.size(),
-			new String[] {my_initialization_program,my_initialization_program_charset});
+		program_and_charset.add(program_and_charset.size(),new String[] 
+			{
+				my_initialization_program,
+				my_initialization_program_charset,
+				not_multifile_flag
+			});
+		return;
 	}
 }

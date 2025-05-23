@@ -214,7 +214,7 @@ public class component_container
 			
 			if(root_component!=null)
 				for(int i=0,ni=sk.system_par.max_process_component_load_number;i<ni;i++)
-					if(root_component.append_component(ccp,true)<=0)
+					if(root_component.append_component(scene_f,ccp)<=0)
 						break;
 			
 			debug_information.println();

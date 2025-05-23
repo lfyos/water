@@ -52,7 +52,7 @@ public class component_load_source_container
 			child_component_list.add(p);
 			ret_val++;
 			fr.close();
-		}	
+		}
 		return ret_val;
 	}
 	public void add_source_item(String component_name,
