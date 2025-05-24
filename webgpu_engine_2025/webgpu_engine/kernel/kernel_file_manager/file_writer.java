@@ -283,7 +283,8 @@ public class file_writer extends common_writer
 				try{
 					new File(directory_name).delete();
 				}catch(Exception e) {
-					;
+					debug_information.println("Delete directory fail:", directory_name);
+					e.printStackTrace();
 				}	
 			}
 			public void operate_file(String file_name)
@@ -291,7 +292,8 @@ public class file_writer extends common_writer
 				try{
 					new File(file_name).delete();
 				}catch(Exception e) {
-					;
+					debug_information.println("Delete file fail:",file_name);
+					e.printStackTrace();
 				}
 			}
 		};

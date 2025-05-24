@@ -54,6 +54,7 @@ public class part_loader extends Thread
 		
 		switch(fast_load_type){
 		case "slow":
+		case "clear":
 			string_locker_container.write_lock(my_lock_key);
 			break;
 		default:

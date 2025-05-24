@@ -129,7 +129,7 @@ public class part_package
 	private void create_package_boftal(
 			String boftal_data_file_name,String file_charset,ArrayList<part> data_list,
 			system_parameter system_par,scene_parameter scene_par,
-			client_process_bar process_bar,String process_bar_title,String ex_process_title)
+			client_process_bar process_bar,String process_bar_title)
 	{
 		int part_number=data_list.size();
 		
@@ -138,7 +138,7 @@ public class part_package
 		debug_information.println();
 		
 		if((process_bar!=null)&&(process_bar_title!=null))
-			process_bar.set_process_bar(true, process_bar_title,ex_process_title,0,part_number);
+			process_bar.set_process_bar(true, process_bar_title,"",0,part_number);
 
 		int cut_directory_length=system_par.temporary_file_par.temporary_root_directory_name.length();
 		file_writer fw=new file_writer(boftal_data_file_name+".tmp",file_charset);
@@ -160,7 +160,8 @@ public class part_package
 			fw.println();
 			
 			if((process_bar!=null)&&(process_bar_title!=null))
-				process_bar.set_process_bar(false, process_bar_title,ex_process_title,i,part_number);
+				process_bar.set_process_bar(false,
+					process_bar_title,boftal_part.user_name,i,part_number);
 			debug_information.println((i+1)+".create_package_boftal for\t:\t",
 				 boftal_part.system_name+"\t\t\tboftal_file:\t"+boftal_file_name);
 		}		
@@ -168,17 +169,17 @@ public class part_package
 		file_writer.file_rename(boftal_data_file_name+".tmp",boftal_data_file_name);
 		
 		if((process_bar!=null)&&(process_bar_title!=null))
-			process_bar.set_process_bar(false, process_bar_title,ex_process_title,part_number,part_number);
+			process_bar.set_process_bar(false, process_bar_title,"",part_number,part_number);
 		
 		debug_information.println();
 		debug_information.println("End create_package_boftal,Total part number:",part_number+",	"+boftal_data_file_name);
 		debug_information.println();
 
 	}
-	public part_package(boolean fast_load_flag,
+	public part_package(String fast_load_type,
 		client_process_bar process_bar,tree_string_locker_container string_locker_container,
-		String package_process_bar_title,String boftal_process_bar_title,String ex_process_title,
-		render_container rc,int part_type_id,system_parameter system_par,scene_parameter scene_par)
+		String package_process_bar_title,String boftal_process_bar_title,render_container rc,
+		int part_type_id,system_parameter system_par,scene_parameter scene_par)
 	{
 		String package_directory_name	=file_directory.package_file_directory(part_type_id,system_par,scene_par);
 		String package_data_file_name	=package_directory_name+"package_data.txt";
@@ -196,7 +197,7 @@ public class part_package
 		string_locker_container.write_lock(my_lock_key);
 		
 		if(new File(package_data_file_name).exists()) {
-			if(fast_load_flag) {
+			if(fast_load_type.compareTo("fast")==0) {
 				file_reader fr=new file_reader(package_data_file_name,system_par.local_data_charset);
 				for(int i=0;i<package_number;i++) {
 					package_length[i]	=fr.get_long();
@@ -230,7 +231,7 @@ public class part_package
 		for(int i=0;i<package_number;i++){
 			if(process_bar!=null)
 				process_bar.set_process_bar((i<=0),
-					package_process_bar_title,ex_process_title,i,package_number);
+					package_process_bar_title,"package_"+i,i,package_number);
 			
 			String my_tmp_file_name		=package_directory_name+"package_"+i+".tmp";
 			String my_package_file_name	=package_directory_name+"package_"+i+".gzip_text";
@@ -279,7 +280,7 @@ public class part_package
 		fw.close();
 		
 		create_package_boftal(boftal_data_file_name,system_par.local_data_charset,
-			ppc.data_list,system_par,scene_par,process_bar,boftal_process_bar_title,ex_process_title);
+			ppc.data_list,system_par,scene_par,process_bar,boftal_process_bar_title);
 	
 		string_locker_container.write_unlock(my_lock_key);
 	

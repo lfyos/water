@@ -65,7 +65,7 @@ public class client_interface
 		}
 		client_process_bar cpb=get_process_bar_routine(request_response);
 		
-		cpb.set_process_bar(true,"start_create_kernel","",1,2);
+		cpb.set_process_bar(true,"start_create_kernel","",0,2);
 
 		scene_kernel_container created_scene_kernel_only=null;
 

@@ -212,12 +212,6 @@ public class scene_initialization
 							r.driver.getClass(),sk.system_par.js_jar_file_charset);
 					if(last_time<my_last_time)
 						last_time=my_last_time;
-					
-					File f;
-					for(int k=0,nk=r.render_directory.size();k<nk;k++)
-						if((f=new File(r.render_directory.get(k)[0]+my_file_name)).exists())
-							if(last_time<(my_last_time=f.lastModified()))
-								last_time=my_last_time;
 				}
 		}
 		
@@ -399,33 +393,19 @@ public class scene_initialization
 					
 						String my_file_name=file_reader.separator(shader_file_name[i][j]);
 						int index_id=shader_file_name[i][j].lastIndexOf('.');
-						common_reader reader;
 						if(index_id>=0)
 							if(my_file_name.substring(index_id,index_id+3).toLowerCase().compareTo(".js")==0) {
 								class_charset	=sk.system_par.js_class_charset;
 								jar_file_charset=sk.system_par.js_jar_file_charset;
 							}						
-						String str="";					
-						if((reader=class_file_reader.get_reader(my_file_name,
-							r.driver.getClass(),class_charset,jar_file_charset))!=null)
-						{
+						String str="";	
+						common_reader reader=class_file_reader.get_reader(my_file_name,
+							r.driver.getClass(),class_charset,jar_file_charset);
+						if(reader!=null){
 							if(!(reader.error_flag()))
 								str=reader.get_text();
 							reader.close();
-						}else 
-							for(int k=0,nk=r.render_directory.size();k<nk;k++) {
-								String my_directory_charset[]=r.render_directory.get(k);				
-								if(new File(my_directory_charset[0]+my_file_name).exists()) {
-									String my_file_data=file_reader.get_text(
-										my_directory_charset[0]+my_file_name,my_directory_charset[1]);
-									if(my_file_data!=null)
-										if((my_file_data=my_file_data.trim()).length()>0) {
-											str=my_file_data;
-											break;
-										}
-								}
-							}
-
+						}
 						if(i==0)
 							fw.println(str);
 						else{

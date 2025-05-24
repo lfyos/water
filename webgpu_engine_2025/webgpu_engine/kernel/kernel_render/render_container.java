@@ -110,8 +110,8 @@ public class render_container
 	public void load_part(long part_type,int part_normal_bottom_box_top_box_flag,
 		part_loader_container part_loader_cont,system_parameter system_par,scene_parameter scene_par,
 		ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,
-		tree_string_locker_container string_locker_container,client_process_bar process_bar,
-		String process_bar_title,String ex_process_bar_title,String fast_load_type)
+		tree_string_locker_container string_locker_container,
+		client_process_bar process_bar,String process_bar_title,String fast_load_type)
 	{
 		if(renders==null)
 			return;
@@ -148,7 +148,7 @@ public class render_container
 						load_number++;
 						if(process_bar!=null)
 							process_bar.set_process_bar(false,
-								process_bar_title,ex_process_bar_title,load_number,all_number);
+								process_bar_title,p.user_name,load_number,all_number);
 					}
 				}
 			}
@@ -159,8 +159,7 @@ public class render_container
 		part_loader_container.wait_for_completion(already_loaded_part,system_par,scene_par);
 		
 		if(process_bar!=null)
-			process_bar.set_process_bar(false,
-					process_bar_title,ex_process_bar_title,all_number,all_number);
+			process_bar.set_process_bar(false,process_bar_title,"",all_number,all_number);
 		
 		debug_information.println();
 		debug_information.println("End loading part meshes:\t",all_number);
@@ -352,8 +351,9 @@ public class render_container
 			debug_information.println("Driver name:	",	driver_name);
 			
 			int render_id=(renders==null)?0:(renders.size());
-			render ren=new render(render_id,f_shader,
-				render_name,driver_name,request_response,system_par,scene_par);
+			render ren=new render(render_id,render_name);
+			ren.install_driver(f_shader,driver_name,request_response,system_par,scene_par);
+			
 			if(ren.driver==null) {
 				debug_information.print  ("ren.driver==null		",driver_name);
 				continue;
@@ -386,8 +386,6 @@ public class render_container
 				load_one_shader(component_load_source_cont,pcps,driver_name,
 					f_render_list,f_shader.directory_name+f_shader.file_name,
 					part_type_id,system_par,scene_par,ren,encoder,request_response);
-				ren.render_directory.add(new String[] 
-						{f_render_list.directory_name,f_render_list.get_charset()});
 				f_render_list.close();
 			}
 			
@@ -434,6 +432,7 @@ public class render_container
 		case "fast":
 		case "medium":
 		case "slow":
+		case "clear":
 			return fast_load_type;
 		default:
 			return "fast";

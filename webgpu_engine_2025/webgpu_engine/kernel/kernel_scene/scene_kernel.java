@@ -283,7 +283,6 @@ public class scene_kernel
 		
 		return ret_val;
 	}
-	
 	private boolean load_routine(
 		component_load_source_container scene_component_load_source_cont,
 		client_request_response request_response,client_process_bar process_bar,
@@ -307,6 +306,10 @@ public class scene_kernel
 			scene_par.scene_last_modified_time		=scene_f.lastModified_time;
 		if(scene_par.scene_shader_directory_name==null)
 			scene_par.scene_shader_directory_name	=scene_f.directory_name;
+		
+		String fast_load_type=render_container.get_fast_load_type(request_response);
+		if(fast_load_type.compareTo("clear")==0)
+			process_bar_delete_file.do_delete(scene_par.scene_temporary_directory_name,process_bar);
 
 		var encoder=new permanent_part_id_encoder[scene_par.type_sub_directory.length+2];
 		for(int i=0,ni=encoder.length;i<ni;i++)
@@ -339,15 +342,13 @@ public class scene_kernel
 		for(int i=0,ni=scene_par.type_sub_directory.length;i<=ni;i++)
 			part_type_code|=((long)1)<<(1+i);
 
-		String fast_load_type=render_container.get_fast_load_type(request_response);
-		boolean fast_load_flag=(fast_load_type.compareTo("fast")==0)?true:false;
 		ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container;
 		boftal_container=get_boftal_container(process_bar,
 				string_locker_container,system_boftal_container,fast_load_type);
 		
 		start_time=current_time;
 		render_cont.load_part(part_type_code,1,part_loader_cont,system_par,scene_par,boftal_container,
-			string_locker_container,process_bar,"load_first_class_part","normal_part",fast_load_type);
+			string_locker_container,process_bar,"load_first_class_part",fast_load_type);
 		debug_information.println("Load first class part time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 
@@ -356,16 +357,15 @@ public class scene_kernel
 		part_cont.execute_append();
 		
 		render_cont.load_part(part_type_code,2,part_loader_cont,system_par,scene_par,boftal_container,
-			string_locker_container,process_bar,"load_second_class_part","bottom_box_part",fast_load_type);
+			string_locker_container,process_bar,"load_second_class_part",fast_load_type);
 		debug_information.println("Load second class part time length:	",(current_time=new Date().getTime())-start_time);
 		debug_information.println();
 
 		start_time=current_time;
 		render_cont.type_part_package=new part_package[scene_par.type_sub_directory.length];
 		for(int i=0,ni=render_cont.type_part_package.length;i<ni;i++)
-			render_cont.type_part_package[i]=new part_package(fast_load_flag,process_bar,string_locker_container,
-					"create_first_class_package","create_first_boftal_file","(type:"+(i+1)+"/"+ni+")",
-					render_cont,i+2,system_par,scene_par);
+			render_cont.type_part_package[i]=new part_package(fast_load_type,process_bar,string_locker_container,
+					"create_first_class_package","create_first_boftal_file",render_cont,i+2,system_par,scene_par);
 		
 		debug_information.println();
 		debug_information.println("Create first part package time length:	",(current_time=new Date().getTime())-start_time);
@@ -391,14 +391,14 @@ public class scene_kernel
 		part_cont.execute_append();
 	
 		render_cont.load_part(part_type_code,4,part_loader_cont,system_par,scene_par,boftal_container,
-				string_locker_container,process_bar,"load_third_class_part","top_box_part",fast_load_type);
+				string_locker_container,process_bar,"load_third_class_part",fast_load_type);
 
 		debug_information.println("Create top assemble time length:	",(current_time=new Date().getTime())-start_time);
 
 		start_time=current_time;
 		
-		render_cont.scene_part_package=new part_package(fast_load_flag,process_bar,string_locker_container,
-			"create_second_class_package","create_second_boftal_file","scene",render_cont,1,system_par,scene_par);
+		render_cont.scene_part_package=new part_package(fast_load_type,process_bar,string_locker_container,
+			"create_second_class_package","create_second_boftal_file",render_cont,1,system_par,scene_par);
 		
 		debug_information.println();
 		debug_information.println("Create second part package time length:	",

@@ -3,11 +3,11 @@ package driver_camera_operation;
 import kernel_part.part;
 import kernel_render.render;
 import kernel_scene.scene_kernel;
-import kernel_scene.scene_parameter;
-import kernel_scene.system_parameter;
 import kernel_driver.part_driver;
 import kernel_part.part_parameter;
 import kernel_driver.render_driver;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 import kernel_file_manager.file_reader;
 import kernel_driver.render_instance_driver;
 import kernel_network.client_request_response;
@@ -17,9 +17,11 @@ public class extended_render_driver extends render_driver
 {
 	private double depth_start,depth_end;
 	
-	public extended_render_driver()
+	public extended_render_driver(file_reader shader_fr,render parent_render,
+			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		super();
+		super(shader_fr,parent_render,request_response,system_par,scene_par);
+		
 		depth_start	=0.0;
 		depth_end	=0.1;
 	}
@@ -30,7 +32,8 @@ public class extended_render_driver extends render_driver
 	public render_driver clone(render parent_render,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		extended_render_driver ret_val=new extended_render_driver();
+		extended_render_driver ret_val=new extended_render_driver(
+				null,parent_render,request_response,system_par,scene_par);
 		ret_val.depth_start	=this.depth_start;
 		ret_val.depth_end	=this.depth_end;
 		return ret_val;

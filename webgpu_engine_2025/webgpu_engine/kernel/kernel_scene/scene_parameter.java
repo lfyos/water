@@ -152,7 +152,7 @@ public class scene_parameter
 	{
 		String str;
 		
-		scene_temporary_directory_name=system_par.temporary_file_par.temporary_root_directory_name;
+		scene_temporary_directory_name =system_par.temporary_file_par.temporary_root_directory_name;
 		scene_temporary_directory_name+="scene_directory"+File.separator;
 		
 		if((str=request_response.get_parameter("scene_tmp_directory"))!=null)

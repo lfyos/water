@@ -19,7 +19,6 @@ public class render
 {
 	public int render_id;
 	public String render_name;
-	public ArrayList<String[]> render_directory;
 	public render_driver driver;
 	public ArrayList<part> parts;
 
@@ -27,8 +26,6 @@ public class render
 	{
 		if(render_name!=null)
 			render_name=null;
-		if(render_directory!=null)
-			render_directory=null;
 		if(parts!=null){
 			for(int i=0,ni=parts.size();i<ni;i++){
 				part p;
@@ -51,7 +48,6 @@ public class render
 		part p;
 		
 		render_name		=r.render_name;
-		render_directory=r.render_directory;
 		render_id		=r.render_id;
 		driver			=r.driver.clone(r,request_response,system_par,scene_par);
 		
@@ -61,31 +57,59 @@ public class render
 				if((p=r.parts.get(i))!=null)
 					parts.add(i,new part(p,request_response,system_par,scene_par));
 	}
-	public render(int my_render_id,file_reader f_shader,
-			String my_render_name,String my_driver_name,
-			client_request_response request_response,
-			system_parameter system_par,scene_parameter scene_par)
+	public render(int my_render_id,String my_render_name)
 	{
 		render_id	=my_render_id;
 		render_name	=my_render_name;
-		render_directory=new ArrayList<String[]>();
 		driver		=null;
 		parts		=new ArrayList<part>();
+	}
+	
+	public void install_driver(file_reader f_shader,String my_driver_name,
+			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
+	{
+		String my_file_name=f_shader.directory_name+f_shader.file_name;
 		
-		Object render_driver_object;
+		Object my_render_driver;
 		try{
-			render_driver_object=Class.forName(my_driver_name).getConstructor().newInstance();
+			var my_class=Class.forName(my_driver_name);
+			var my_constructor=my_class.getConstructor(file_reader.class,render.class,
+					client_request_response.class,system_parameter.class,scene_parameter.class);
+			my_render_driver=my_constructor.newInstance(
+					f_shader,this,request_response,system_par,scene_par);
 		}catch(Exception e){
+			debug_information.println("Create render driver exception,class name:	",	my_driver_name);
+			debug_information.println("Create render driver exception,file_name:	",	my_file_name);
+			debug_information.println("Create render driver exception,Exception:	",	e.toString());
 			e.printStackTrace();
-			debug_information.println("Create render driver fail:		",e.toString());
-			debug_information.println("Driver name is ",my_driver_name);
-			
 			return;
 		}
-		if(render_driver_object instanceof render_driver)
-			driver=(render_driver)render_driver_object;
-		else
-			debug_information.println("render driver class name error:		",my_driver_name);
+		if(my_render_driver==null) {
+			debug_information.println("Create render driver (my_render_driver==null),class name:	",	my_driver_name);
+			debug_information.println("Create render driver (my_render_driver==null),file_name:	",		my_file_name);
+			return;
+		}
+		if(!(my_render_driver instanceof render_driver)){
+			debug_information.println("Create render driver (NOT instanceof),class name:	",	my_driver_name);
+			debug_information.println("Create render driver (NOT instanceof),file_name:	",		my_file_name);
+			return;
+		}
+		try {
+			render_driver old_driver=(render_driver)my_render_driver;
+			driver=old_driver.clone(this,request_response,system_par,scene_par);
+			old_driver.destroy();
+		}catch(Exception e){
+			driver=null;
+			debug_information.println("clone render driver exception,class name:	",	my_driver_name);
+			debug_information.println("clone render driver exception,file_name:	",		my_file_name);
+			debug_information.println("clone render driver exception,Exception:	",		e.toString());
+			e.printStackTrace();
+			return;
+		}
+		if(driver==null) {
+			debug_information.println("Create render driver (clone fail),class name:	",	my_driver_name);
+			debug_information.println("Create render driver (clone fail),file_name:	",		my_file_name);
+		};
 	}
 	public void delete_last_part()
 	{
