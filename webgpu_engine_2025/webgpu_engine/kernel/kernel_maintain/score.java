@@ -9,7 +9,7 @@ public class score
 	{
 		debug_information.println("Begin");
 		
-		file_reader f=new file_reader("E:\\tmp\\x.txt",null);
+		file_reader f=new file_reader("E:\\tmp\\x.txt","GBK");
 		while(true){
 			String number		=f.get_string();
 			String id			=f.get_string();
@@ -32,7 +32,7 @@ public class score
 				int_score_2=Integer.decode(score_str_2);
 			}catch(Exception e) {
 				for(int i=0;i<13;i++)
-					debug_information.print  ("\t²»¼Æ");
+					debug_information.print  ("\tä¸è®¡");
 				debug_information.println();
 				continue;
 			}

@@ -228,8 +228,8 @@ public class render_container
 	private void load_one_shader(
 			component_load_source_container component_load_source_cont,part_container_for_part_search pcps,
 			String driver_name,file_reader f_render_list,String shader_file_name,
-			int part_type_id,system_parameter system_par,scene_parameter scene_par,
-			render ren,permanent_part_id_encoder encoder[],client_request_response request_response)
+			system_parameter system_par,scene_parameter scene_par,render ren,
+			permanent_part_id_encoder encoder[],client_request_response request_response)
 	{
 		while(!(f_render_list.eof())){
 			String str;
@@ -254,8 +254,8 @@ public class render_container
 
 			String get_part_list_result[];
 			try{
-				get_part_list_result=ren.driver.get_part_list(part_type_id,f_render_list,part_par,
-					component_load_source_cont,system_par,scene_par,request_response);
+				get_part_list_result=ren.driver.get_part_list(ren,f_render_list,part_par,
+					component_load_source_cont,request_response,system_par,scene_par);
 			}catch(Exception e){
 				e.printStackTrace();
 				
@@ -304,10 +304,10 @@ public class render_container
 					part_file_system_charset=f_render_list.get_charset();
 
 				int render_id=(renders==null)?0:renders.size();
-				ren.add_part(component_load_source_cont,pcps,ren.driver,part_type_id,
-					part_par,system_par,get_part_list_result[i],part_file_system_charset,
+				ren.add_part(pcps,ren,component_load_source_cont,
+					part_par,system_par,scene_par,get_part_list_result[i],part_file_system_charset,
 					"part_mesh_"+Integer.toString(render_id)+"_",encoder,request_response);
-	
+
 				debug_information.println("End load part list file:	",	part_file_system_charset);
 				debug_information.println("part parameter file:		",	part_parameter_file_name);
 				debug_information.println();
@@ -351,15 +351,14 @@ public class render_container
 			debug_information.println("Driver name:	",	driver_name);
 			
 			int render_id=(renders==null)?0:(renders.size());
-			render ren=new render(render_id,render_name);
-			ren.install_driver(f_shader,driver_name,request_response,system_par,scene_par);
-			
+			render ren=new render(render_id,part_type_id,render_name,driver_name,
+							f_shader,request_response,system_par,scene_par);
 			if(ren.driver==null) {
 				debug_information.print  ("ren.driver==null		",driver_name);
 				continue;
 			}
-			String render_list_file_name[]=ren.driver.get_render_list(part_type_id,f_shader,
-					component_load_source_cont,system_par,scene_par,request_response);
+			String render_list_file_name[]=ren.driver.get_render_list(f_shader,ren,
+					component_load_source_cont,request_response,system_par,scene_par);
 			if(render_list_file_name==null){
 				debug_information.print  ("render list file is NULL	",	driver_name);
 				continue;
@@ -385,7 +384,7 @@ public class render_container
 				file_reader f_render_list=new file_reader(render_list_file_name[i],file_system_charset);
 				load_one_shader(component_load_source_cont,pcps,driver_name,
 					f_render_list,f_shader.directory_name+f_shader.file_name,
-					part_type_id,system_par,scene_par,ren,encoder,request_response);
+					system_par,scene_par,ren,encoder,request_response);
 				f_render_list.close();
 			}
 			

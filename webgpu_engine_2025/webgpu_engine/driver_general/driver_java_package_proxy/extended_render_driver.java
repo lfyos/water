@@ -16,10 +16,10 @@ public class extended_render_driver extends render_driver
 {
 	private render_driver real_render_driver;
 	
-	public extended_render_driver(file_reader shader_fr,render parent_render,
+	public extended_render_driver(file_reader shader_fr,render ren,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		super(shader_fr,parent_render,request_response,system_par,scene_par);
+		super(shader_fr,ren,request_response,system_par,scene_par);
 		
 		real_render_driver=null;
 		
@@ -49,8 +49,7 @@ public class extended_render_driver extends render_driver
 				getConstructor(
 					file_reader.class,render.class,client_request_response.class,
 					system_parameter.class,scene_parameter.class).
-				newInstance(
-					shader_fr,parent_render,request_response,system_par,scene_par);
+				newInstance(shader_fr,ren,request_response,system_par,scene_par);
 		}catch(Exception e){
 			render_driver_object=null;
 			e.printStackTrace();
@@ -80,12 +79,12 @@ public class extended_render_driver extends render_driver
 			real_render_driver=null;
 		}
 	}
-	public render_driver clone(render parent_render,
+	public render_driver clone(render ren,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
 		if(real_render_driver==null)
 			return null;
 		else
-			return real_render_driver.clone(parent_render, request_response, system_par, scene_par);
+			return real_render_driver.clone(ren,request_response,system_par,scene_par);
 	}
 }

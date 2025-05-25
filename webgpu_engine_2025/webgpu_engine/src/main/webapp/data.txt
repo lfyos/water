@@ -21,4 +21,9 @@ Access-Control-Allow-Origin				*
 
 }
 
+	public String[] get_render_list(file_reader shader_fr,render ren,
+			component_load_source_container component_load_source_cont,
+			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
+	{
 
+	

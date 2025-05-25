@@ -18,7 +18,8 @@ public class system_parameter
 	public String local_data_charset,network_data_charset;
 	public String text_class_charset,text_jar_file_charset,js_class_charset,js_jar_file_charset;
 	
-	public String user_file_name,shader_file_name,default_parameter_directory;
+	public String user_file_name,shader_file_name;
+	public String default_parameter_directory,default_system_mount_component_name;
 	
 	public int default_max_loading_number,max_loading_number,max_material_id,max_method_number;
 	
@@ -49,62 +50,63 @@ public class system_parameter
 
 	public system_parameter(system_parameter sp)
 	{
-		data_root_directory_name		=new String(sp.data_root_directory_name);
+		data_root_directory_name			=new String(sp.data_root_directory_name);
 		
-		last_modified_time				=sp.last_modified_time;
+		last_modified_time					=sp.last_modified_time;
 
-		local_data_charset				=new String(sp.local_data_charset);
-		network_data_charset			=new String(sp.network_data_charset);
-		text_class_charset				=new String(sp.text_class_charset);
-		text_jar_file_charset			=new String(sp.text_jar_file_charset);
-		js_class_charset				=new String(sp.js_class_charset);
-		js_jar_file_charset				=new String(sp.js_jar_file_charset);
+		local_data_charset					=new String(sp.local_data_charset);
+		network_data_charset				=new String(sp.network_data_charset);
+		text_class_charset					=new String(sp.text_class_charset);
+		text_jar_file_charset				=new String(sp.text_jar_file_charset);
+		js_class_charset					=new String(sp.js_class_charset);
+		js_jar_file_charset					=new String(sp.js_jar_file_charset);
 		
-		user_file_name					=new String(sp.user_file_name);
-		shader_file_name				=new String(sp.shader_file_name);
-		default_parameter_directory		=new String(sp.default_parameter_directory);
+		user_file_name						=new String(sp.user_file_name);
+		shader_file_name					=new String(sp.shader_file_name);
+		default_parameter_directory			=new String(sp.default_parameter_directory);
+		default_system_mount_component_name	=new String(sp.default_system_mount_component_name);
 		
-		default_max_loading_number		=sp.default_max_loading_number;
-		max_loading_number				=sp.max_loading_number;
-		max_method_number				=sp.max_method_number;
+		default_max_loading_number			=sp.default_max_loading_number;
+		max_loading_number					=sp.max_loading_number;
+		max_method_number					=sp.max_method_number;
 		
-		max_material_id					=sp.max_material_id;
+		max_material_id						=sp.max_material_id;
 		
-		response_block_size				=sp.response_block_size;
+		response_block_size					=sp.response_block_size;
 		
-		scene_expire_time_length		=sp.scene_expire_time_length;
-		scene_touch_time_length			=sp.scene_touch_time_length;
-		part_load_sleep_time_length		=sp.part_load_sleep_time_length;
+		scene_expire_time_length			=sp.scene_expire_time_length;
+		scene_touch_time_length				=sp.scene_touch_time_length;
+		part_load_sleep_time_length			=sp.part_load_sleep_time_length;
 		
-		create_scene_concurrent_number			=sp.create_scene_concurrent_number;
-		create_scene_sleep_time_length_scale	=sp.create_scene_sleep_time_length_scale;
-		create_scene_sleep_time_length			=sp.create_scene_sleep_time_length;
-		create_scene_max_sleep_time_length		=sp.create_scene_max_sleep_time_length;
+		create_scene_concurrent_number		=sp.create_scene_concurrent_number;
+		create_scene_sleep_time_length_scale=sp.create_scene_sleep_time_length_scale;
+		create_scene_sleep_time_length		=sp.create_scene_sleep_time_length;
+		create_scene_max_sleep_time_length	=sp.create_scene_max_sleep_time_length;
 		
-		show_process_bar_interval				=sp.show_process_bar_interval;
-		file_buffer_expire_time_length			=sp.file_buffer_expire_time_length;
+		show_process_bar_interval			=sp.show_process_bar_interval;
+		file_buffer_expire_time_length		=sp.file_buffer_expire_time_length;
 
-		max_client_container_number				=sp.max_client_container_number;
-		max_client_interface_number				=sp.max_client_interface_number;
+		max_client_container_number			=sp.max_client_container_number;
+		max_client_interface_number			=sp.max_client_interface_number;
 		
-		max_scene_kernel_number					=sp.max_scene_kernel_number;
-		max_scene_component_number				=sp.max_scene_component_number;
+		max_scene_kernel_number				=sp.max_scene_kernel_number;
+		max_scene_component_number			=sp.max_scene_component_number;
 		
-		max_file_response_length				=sp.max_file_response_length;
-		min_compress_response_length			=sp.min_compress_response_length;
-		max_buffer_object_head_package_length	=sp.max_buffer_object_head_package_length;
+		max_file_response_length			=sp.max_file_response_length;
+		min_compress_response_length		=sp.min_compress_response_length;
+		max_buffer_object_head_package_length=sp.max_buffer_object_head_package_length;
 		
-		max_process_component_load_number		=sp.max_process_component_load_number;
-		max_process_modifier_number				=sp.max_process_modifier_number;
+		max_process_component_load_number	=sp.max_process_component_load_number;
+		max_process_modifier_number			=sp.max_process_modifier_number;
 		
-		box_distance_difference_scale			=sp.box_distance_difference_scale;
-		buffer_data_length_difference_scale		=sp.buffer_data_length_difference_scale;
+		box_distance_difference_scale		=sp.box_distance_difference_scale;
+		buffer_data_length_difference_scale	=sp.buffer_data_length_difference_scale;
 		
-		content_type_change_name				=new change_name(sp.content_type_change_name,false);
-		language_change_name					=new change_name(sp.language_change_name,false);
+		content_type_change_name			=new change_name(sp.content_type_change_name,false);
+		language_change_name				=new change_name(sp.language_change_name,false);
 		
-		temporary_file_par						=sp.temporary_file_par;
-		switch_server							=sp.switch_server;
+		temporary_file_par					=sp.temporary_file_par;
+		switch_server						=sp.switch_server;
 	}
 	public system_parameter(
 			String data_file_configure_file_name,
@@ -186,7 +188,9 @@ public class system_parameter
 				default_parameter_directory+=File.separator;
 			default_parameter_directory=f.directory_name+default_parameter_directory;
 		}
-
+		if((default_system_mount_component_name=f.get_string())==null)
+			default_system_mount_component_name="default_system_mount_component";
+		
 		String language_change_file_name;
 		if((language_change_file_name=f.get_string())==null)
 			language_change_file_name="";

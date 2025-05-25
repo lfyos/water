@@ -19,10 +19,10 @@ public class extended_render_driver extends render_driver
 {
 	private String light_file_name,file_charset;
 	
-	public extended_render_driver(file_reader shader_fr,render parent_render,
+	public extended_render_driver(file_reader shader_fr,render ren,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		super(shader_fr,parent_render,request_response,system_par,scene_par);
+		super(shader_fr,ren,request_response,system_par,scene_par);
 		
 		light_file_name=null;
 		file_charset=null;
@@ -33,11 +33,10 @@ public class extended_render_driver extends render_driver
 		light_file_name=null;
 		file_charset=null;
 	}
-	public render_driver clone(render parent_render,
+	public render_driver clone(render ren,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		extended_render_driver ret_val=new extended_render_driver(
-				null,parent_render,request_response,system_par,scene_par);;
+		var ret_val=new extended_render_driver(null,ren,request_response,system_par,scene_par);
 		ret_val.light_file_name	=this.light_file_name;
 		ret_val.file_charset	=this.file_charset;
 		return ret_val;
@@ -45,9 +44,9 @@ public class extended_render_driver extends render_driver
 	public void initialize_render_driver(int render_id,scene_kernel sk,client_request_response request_response)
 	{	
 	}
-	public String[] get_render_list(int part_type_id,file_reader shader_fr,
+	public String[] get_render_list(file_reader shader_fr,render ren,
 			component_load_source_container component_load_source_cont,
-			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
+			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
 		String render_list_file_name=shader_fr.directory_name+file_reader.separator(shader_fr.get_string());
 		light_file_name				=shader_fr.directory_name+file_reader.separator(shader_fr.get_string());
@@ -55,9 +54,9 @@ public class extended_render_driver extends render_driver
 		return (new File(render_list_file_name).exists())?new String[] {render_list_file_name,file_charset}:null;
 	}
 	public String[] get_part_list(
-			int part_type_id,file_reader render_fr,part_parameter part_par,
+			render ren,file_reader render_fr,part_parameter part_par,
 			component_load_source_container component_load_source_cont,
-			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
+			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
 		String par_list_file_name=file_reader.separator(render_fr.get_string());
 		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
@@ -66,13 +65,13 @@ public class extended_render_driver extends render_driver
 	{
 		return super.shader_file_name_array();
 	}
-	public part_driver create_part_driver(file_reader part_fr,part p,
+	public part_driver create_part_driver(file_reader part_fr,part p,render ren,
 			component_load_source_container component_load_source_cont,
-			system_parameter system_par,client_request_response request_response)
+			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
 		return new extended_part_driver();
 	}
-	public render_instance_driver create_render_instance_driver(render r,
+	public render_instance_driver create_render_instance_driver(render ren,
 			scene_kernel sk,client_request_response request_response)
 	{
 		return new extended_render_instance_driver(	light_file_name,file_charset);

@@ -6,7 +6,9 @@ import kernel_file_manager.file_reader;
 public class component_core_5 extends component_core_4
 {
 	private long		location_version,absolute_location_version;
-	private boolean		children_location_modify_flag,should_caculate_absolute_location_flag;
+	private boolean		children_location_modify_flag;
+	private boolean		should_caculate_absolute_location_flag;
+	private boolean		move_location_is_not_identity_matrix_flag;
 	private location	negative_absolute_location,negative_parent_and_relative_location;
 	
 	public void destroy()
@@ -86,24 +88,17 @@ public class component_core_5 extends component_core_4
 	}
 	public boolean caculate_children_location_modify_flag()
 	{
-		boolean old_children_location_modify_flag=children_location_modify_flag;
-		int child_number=children.size();
 		var p=this;
-		
-		for(int i=0;i<child_number;i++) {
+		boolean old_children_location_modify_flag=children_location_modify_flag;
+		for(int i=0,ni=children.size();i<ni;i++) {
 			p=children.get(i);
-			if(p.children_location_modify_flag){
+			if(p.children_location_modify_flag||p.move_location_is_not_identity_matrix_flag){
 				children_location_modify_flag=true;
-				return old_children_location_modify_flag^children_location_modify_flag;
+				return !old_children_location_modify_flag;
 			}
 		}
-		for(int i=0;i<child_number;i++)
-			if(children.get(i).move_location.is_not_identity_matrix()){
-				children_location_modify_flag=true;
-				return old_children_location_modify_flag^children_location_modify_flag;
-			}
 		children_location_modify_flag=false;
-		return old_children_location_modify_flag^children_location_modify_flag;
+		return old_children_location_modify_flag;
 	}
 	public void set_component_move_location(
 		location new_move_location,component_container component_cont)
@@ -111,6 +106,8 @@ public class component_core_5 extends component_core_4
 		location_version++;
 		move_location=new location(new_move_location);
 		caculate_location(component_cont,true);
+		
+		move_location_is_not_identity_matrix_flag=move_location.is_not_identity_matrix();
 		
 		var p=this;
 		p=component_cont.get_component(p.parent_component_id);
@@ -123,16 +120,18 @@ public class component_core_5 extends component_core_4
 	{
 		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
 
-		location_version						=1;
-		absolute_location_version				=1;
-		children_location_modify_flag			=false;
-		should_caculate_absolute_location_flag	=true;
+		location_version							=1;
+		absolute_location_version					=1;
+		children_location_modify_flag				=false;
+		should_caculate_absolute_location_flag		=true;
+		move_location_is_not_identity_matrix_flag	=false;
 		
-		negative_absolute_location				=null;
-		negative_parent_and_relative_location	=null;
 		
-		move_location							=new location();
-		parent_and_relative_location			=new location();
-		absolute_location						=new location();
+		negative_absolute_location					=null;
+		negative_parent_and_relative_location		=null;
+		
+		move_location								=new location();
+		parent_and_relative_location				=new location();
+		absolute_location							=new location();
 	}
 }

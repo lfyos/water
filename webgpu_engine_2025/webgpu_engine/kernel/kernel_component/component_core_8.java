@@ -29,7 +29,7 @@ public class component_core_8  extends component_core_7
 			caculate_effective_display_flag(i);
 			caculate_assembly_flag(i);
 		}
-		caculate_box();
+		caculate_box(component_cont);
 		
 		uniparameter.discard_precision2=-1;
 		for(int i=0,ni=driver_array.size();i<ni;i++) {

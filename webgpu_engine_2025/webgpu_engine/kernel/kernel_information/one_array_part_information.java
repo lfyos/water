@@ -15,13 +15,17 @@ public class one_array_part_information extends jason_creator
 	
 	public void print()
 	{
+		var ren=sk.render_cont.renders.get(render_id);
+		
 		jason_creator jc[]=new jason_creator[(p==null)?0:(p.size())];
 		for(int i=0,ni=jc.length;i<ni;i++)
 			jc[i]=new part_with_component_information(p.get(i),sk,ci);
 		
-		print("render_id",	render_id);
-		print("part_number",jc.length);
-		print("part_array",jc);
+		print("render_id",		render_id);
+		print("render_name",	ren.render_name);
+		print("driver_class",	ren.driver.getClass().getName());
+		print("part_number",	jc.length);
+		print("part_array",		jc);
 	}
 	public one_array_part_information(int my_render_id,
 			ArrayList<part> my_p,scene_kernel my_sk,client_information my_ci)

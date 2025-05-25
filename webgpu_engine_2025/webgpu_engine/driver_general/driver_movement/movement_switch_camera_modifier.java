@@ -73,10 +73,10 @@ public class movement_switch_camera_modifier extends modifier_driver
 			if((main_comp=component_cont.get_component(p.main_component_id))!=null)
 				if((comp=component_cont.get_component(p.component_id))!=null){
 					main_comp.recurse_caculate_location(component_cont);
-					main_comp.caculate_box();
+					main_comp.caculate_box(component_cont);
 					
 					comp.recurse_caculate_location(component_cont);
-					comp.caculate_box();
+					comp.caculate_box(component_cont);
 
 					if(p.start_location!=null)
 						if((b=caculate_move_box(comp,main_comp.parent_and_relative_location.multiply(p.start_location)))!=null)

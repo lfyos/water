@@ -6,6 +6,7 @@
 /*	user_file_name															*/		users/users.txt
 /*	shader_file_name														*/		shaders/shaders.txt
 /*	default_parameter_directory												*/		parameter
+/*	default_system_mount_component_name										*/		default_system_mount_component
 /*	language_change_file_name												*/		language_change.txt
 /*	switch_server_url_file_name												*/		switch_server_url.txt
 

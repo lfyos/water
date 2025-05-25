@@ -17,10 +17,10 @@ public class extended_render_driver extends render_driver
 {
 	private double depth_start,depth_end;
 	
-	public extended_render_driver(file_reader shader_fr,render parent_render,
+	public extended_render_driver(file_reader shader_fr,render ren,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		super(shader_fr,parent_render,request_response,system_par,scene_par);
+		super(shader_fr,ren,request_response,system_par,scene_par);
 		
 		depth_start	=0.0;
 		depth_end	=0.1;
@@ -29,11 +29,11 @@ public class extended_render_driver extends render_driver
 	{
 		super.destroy();
 	}
-	public render_driver clone(render parent_render,
+	public render_driver clone(render ren,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
 		extended_render_driver ret_val=new extended_render_driver(
-				null,parent_render,request_response,system_par,scene_par);
+				null,ren,request_response,system_par,scene_par);
 		ret_val.depth_start	=this.depth_start;
 		ret_val.depth_end	=this.depth_end;
 		return ret_val;
@@ -41,9 +41,9 @@ public class extended_render_driver extends render_driver
 	public void initialize_render_driver(int render_id,scene_kernel sk,client_request_response request_response)
 	{
 	}
-	public String[] get_render_list(int part_type_id,file_reader shader_fr,
+	public String[] get_render_list(file_reader shader_fr,render ren,
 			component_load_source_container component_load_source_cont,
-			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
+			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
 		String render_list_file_name=file_reader.separator(shader_fr.get_string());
 		depth_start	=shader_fr.get_double();
@@ -51,9 +51,9 @@ public class extended_render_driver extends render_driver
 		return new String[] {shader_fr.directory_name+render_list_file_name,shader_fr.get_charset()};
 	}
 	public String[] get_part_list(
-			int part_type_id,file_reader render_fr,part_parameter part_par,
+			render ren,file_reader render_fr,part_parameter part_par,
 			component_load_source_container component_load_source_cont,
-			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
+			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
 		String par_list_file_name=file_reader.separator(render_fr.get_string());
 		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
@@ -62,14 +62,14 @@ public class extended_render_driver extends render_driver
 	{
 		return super.shader_file_name_array();
 	}
-	public part_driver create_part_driver(file_reader part_fr,part p,
+	public part_driver create_part_driver(file_reader part_fr,part p,render ren,
 			component_load_source_container component_load_source_cont,
-			system_parameter system_par,client_request_response request_response)
+			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
 		return new extended_part_driver(part_fr.get_double(),
 				part_fr.get_double(),part_fr.get_double(),part_fr.get_int());
 	}
-	public render_instance_driver create_render_instance_driver(render r,
+	public render_instance_driver create_render_instance_driver(render ren,
 			scene_kernel sk,client_request_response request_response)
 	{
 		return new extended_render_instance_driver(depth_start,depth_end);

@@ -45,40 +45,41 @@ public class component_core_6 extends component_core_5
 			return null;
 		return component_box;
 	}
-	public void caculate_box()
+	public void caculate_box(component_container component_cont)
 	{
-		long new_absolute_location_version=get_absolute_location_version();
-		if(box_absolute_location_version==(new_absolute_location_version))
-			return;
-		if(!(get_should_caculate_absolute_location_flag()))
+		if(get_should_caculate_absolute_location_flag())
+			box_absolute_location_version=0;
+		else{
+			long new_absolute_location_version=get_absolute_location_version();
+			if(box_absolute_location_version==new_absolute_location_version)
+				return;
 			box_absolute_location_version=new_absolute_location_version;
+		}
+		
+		var p=this;
+		if((p=component_cont.get_component(parent_component_id))!=null)
+			p.box_absolute_location_version=0;
+		
+		component_box	=null;
+		model_box		=null;
 		
 		int child_number;
-		if((child_number=children.size())<=0){
-			caculate_box_by_driver();
-			return;
-		}
-		box my_child_box;
-		component_box=null;
-		model_box=null;
-		
-		var my_child=this;
-		
-		for(int i=0;i<child_number;i++){
-			my_child=children.get(i);
-			if((my_child_box=my_child.component_box)==null){
-				component_box=null;
-				model_box=null;
-				break;
+		if((child_number=children.size())>0)
+			for(int i=0;i<child_number;i++){
+				p=children.get(i);
+				if(p.component_box==null){
+					component_box	=null;
+					model_box		=null;
+					break;
+				}
+				if(component_box==null) {
+					component_box=p.component_box;
+					model_box=p.relative_location.multiply(p.model_box);
+				}else {
+					component_box=p.component_box.add(component_box);
+					model_box=p.relative_location.multiply(p.model_box).add(model_box);
+				}
 			}
-			if(component_box==null) {
-				component_box=my_child_box;
-				model_box=my_child.relative_location.multiply(my_child.model_box);
-			}else {
-				component_box=my_child_box.add(component_box);
-				model_box=my_child.relative_location.multiply(my_child.model_box).add(model_box);
-			}
-		}
 		if(component_box==null)
 			caculate_box_by_driver();
 	}

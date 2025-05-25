@@ -3,21 +3,23 @@
 /*	1:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0
 /*	1:child_number	*/	2
 
-		/*	2:name			*/	not_part_list_component
+		/*	2:name			*/	default_system_mount_component
 		/*	2:type			*/	undefined_part
-		/*	2:location		*/	relative_file_location	coordinate
-		
-				not_part_list	mount	interface.assemble
+		/*	2:location		*/	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	0.0	0.0	0.0	0.0	1.0	
+
+				not_part_list
+				mount			common.assemble
+				mount			camera_light.assemble
 				
 		/*	2:child_number	*/	0
 
 		
-		/*	2:name			*/	part_list_component		
+		/*	2:name			*/	applicaion_component		
 		/*	2:type			*/	undefined_part
 		/*	2:location		*/	relative_file_location	coordinate
 		
-				part_list		mount	SLDASM.assemble
-				
+				part_list
+				mount													SLDASM.assemble
 				environment_scene_sub_directory_mount	lfy_user_dir	root.assemble
 		
 		/*	2:child_number	*/	0

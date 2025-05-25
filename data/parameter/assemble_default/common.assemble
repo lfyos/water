@@ -1,6 +1,10 @@
 /* 1name		*/			common_component_root
 /* 1type		*/			undefined_part
 /* 1location	*/			1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1  
+
+		not_part_list
+		file_program	initialization
+
 /* 1children number */		17
 
 		/*	0	*/
