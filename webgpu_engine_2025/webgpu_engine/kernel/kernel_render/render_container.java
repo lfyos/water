@@ -241,7 +241,7 @@ public class render_container
 			if(file_reader.is_exist(f_render_list.directory_name+part_parameter_file_name))
 				part_parameter_file_name=f_render_list.directory_name+part_parameter_file_name;
 			else
-				part_parameter_file_name=system_par.default_parameter_directory
+				part_parameter_file_name=system_par.parameter_directory
 						+"part_parameter"+File.separator+part_parameter_file_name;
 			
 			if(!(new File(part_parameter_file_name).exists())) {

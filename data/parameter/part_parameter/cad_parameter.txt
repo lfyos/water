@@ -1,5 +1,13 @@
 /*	process_sequence_id					*/		0
 
+/*	load_assemble_type
+		none
+		data_to_system					file_to_system				
+		data_to_component				file_to_component
+		data_to_system_with_token		file_to_system_with_token
+		data_to_component_with_token	file_to_component_with_token
+*/		none
+
 /*	max_file_head_length				*/		4000000
 /*	max_file_data_length				*/		4000000
 /*	max_buffer_object_data_length		*/		8000000

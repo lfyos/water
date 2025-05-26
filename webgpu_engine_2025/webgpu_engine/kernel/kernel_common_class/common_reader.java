@@ -1,11 +1,12 @@
 package kernel_common_class;
 
 import java.util.Scanner;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.io.BufferedReader;
 import java.nio.charset.Charset;
+import java.io.InputStreamReader;
+import java.io.BufferedInputStream;
 
 public class common_reader
 {
@@ -179,10 +180,19 @@ public class common_reader
 			}
 		}
 	}
-	public void push_string_array(String str_array[])
+	public void push_string(String str)
+	{
+		queue_string=new string_link_list(str,queue_string);
+	}
+	public void push_string(String str_array[])
 	{
 		for(int i=str_array.length-1;i>=0;i--)
 			queue_string=new string_link_list(str_array[i],queue_string);
+	}
+	public void push_string(ArrayList<String> str_list)
+	{
+		for(int i=str_list.size()-1;i>=0;i--)
+			queue_string=new string_link_list(str_list.get(i),queue_string);
 	}
 	public void mark_start()
 	{

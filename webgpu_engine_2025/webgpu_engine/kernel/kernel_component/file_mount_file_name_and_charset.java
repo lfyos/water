@@ -35,7 +35,7 @@ public class file_mount_file_name_and_charset
 					"((my_directory=cut_string.do_cut(file_reader.separator(my_directory.trim()))).length()<0)");
 			return false;
 		}
-		fr.push_string_array(new String[]{my_directory+File.separatorChar+my_file_name});
+		fr.push_string(new String[]{my_directory+File.separatorChar+my_file_name});
 		return true;
 	}
 	public static boolean client_select_mount(file_reader fr,component_construction_parameter ccp)
@@ -81,7 +81,7 @@ public class file_mount_file_name_and_charset
 			if(my_select_token.compareTo(f_select_token)!=0)
 				continue;
 			my_assemble_file_name=f_select_directory_name+File.separatorChar+my_assemble_file_name;
-			fr.push_string_array(new String[]{my_assemble_file_name});
+			fr.push_string(new String[]{my_assemble_file_name});
 			
 			return true;
 		}
@@ -112,7 +112,7 @@ public class file_mount_file_name_and_charset
 			return false;
 		}
 		my_file_name=my_directory_name+File.separatorChar+ccp.sk.scene_par.scene_sub_directory+my_file_name;
-		fr.push_string_array(new String[] {my_file_name});
+		fr.push_string(new String[] {my_file_name});
 
 		return true;
 	}
@@ -142,7 +142,7 @@ public class file_mount_file_name_and_charset
 					"((my_file_name=cut_string.do_cut(file_reader.separator(my_file_name))).length()<=0)");
 			return false;
 		}
-		fr.push_string_array(new String[]{my_directory_name+File.separatorChar+my_file_name,my_file_charset});
+		fr.push_string(new String[]{my_directory_name+File.separatorChar+my_file_name,my_file_charset});
 		
 		return true;
 	}
@@ -196,7 +196,7 @@ public class file_mount_file_name_and_charset
 			if(select_token.compareTo(my_select_token)!=0)
 				continue;
 			my_select_directory_name=fr.directory_name+my_select_directory_name;
-			fr.push_string_array(new String[]{
+			fr.push_string(new String[]{
 					my_select_directory_name+File.separatorChar+select_assemble_file_name,
 					select_file_charset});
 			return true;
@@ -234,7 +234,7 @@ public class file_mount_file_name_and_charset
 		}
 		
 		my_directory_name+=File.separatorChar+ccp.sk.scene_par.scene_sub_directory;
-		fr.push_string_array(new String[]{my_directory_name+my_file_name,my_file_charset});
+		fr.push_string(new String[]{my_directory_name+my_file_name,my_file_charset});
 		
 		return true;
 	}

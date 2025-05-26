@@ -19,7 +19,7 @@ public class system_parameter
 	public String text_class_charset,text_jar_file_charset,js_class_charset,js_jar_file_charset;
 	
 	public String user_file_name,shader_file_name;
-	public String default_parameter_directory,default_system_mount_component_name;
+	public String parameter_directory,default_system_mount_component_name;
 	
 	public int default_max_loading_number,max_loading_number,max_material_id,max_method_number;
 	
@@ -63,7 +63,7 @@ public class system_parameter
 		
 		user_file_name						=new String(sp.user_file_name);
 		shader_file_name					=new String(sp.shader_file_name);
-		default_parameter_directory			=new String(sp.default_parameter_directory);
+		parameter_directory					=new String(sp.parameter_directory);
 		default_system_mount_component_name	=new String(sp.default_system_mount_component_name);
 		
 		default_max_loading_number			=sp.default_max_loading_number;
@@ -179,14 +179,14 @@ public class system_parameter
 		else
 			shader_file_name=file_reader.separator(shader_file_name).trim();
 		
-		if((default_parameter_directory=f.get_string())==null)
-			default_parameter_directory="";
+		if((parameter_directory=f.get_string())==null)
+			parameter_directory="";
 		else {
-			default_parameter_directory=file_reader.separator(default_parameter_directory).trim();
-			int str_length=default_parameter_directory.length();
-			if(default_parameter_directory.charAt(str_length-1)!=File.separatorChar)
-				default_parameter_directory+=File.separator;
-			default_parameter_directory=f.directory_name+default_parameter_directory;
+			parameter_directory=file_reader.separator(parameter_directory.trim());
+			int str_length=parameter_directory.length();
+			if(parameter_directory.charAt(str_length-1)!=File.separatorChar)
+				parameter_directory+=File.separatorChar;
+			parameter_directory=f.directory_name+parameter_directory;
 		}
 		if((default_system_mount_component_name=f.get_string())==null)
 			default_system_mount_component_name="default_system_mount_component";

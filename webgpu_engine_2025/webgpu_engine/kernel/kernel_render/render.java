@@ -133,6 +133,45 @@ public class render
 		p.permanent_part_from_id=-1;
 	}
 	
+	private boolean register_data_component(file_reader part_fr,
+			component_load_source_container component_load_source_cont,
+			String mount_component_name,String token_string)
+	{
+		String terminated_token_string=part_fr.get_string();
+		ArrayList<String> component_parameter=new ArrayList<String>();
+		for(String str;!(part_fr.eof());) 
+			if((str=part_fr.get_string())!=null) {
+				if(terminated_token_string.compareTo(str)==0)
+					break;
+				component_parameter.add(str);
+			}
+		if(component_parameter.size()<=0)
+			return false;
+		component_load_source_cont.add_source_item(
+			mount_component_name,token_string,component_parameter,part_fr.lastModified_time);
+		return true;
+	}
+	private boolean register_file_component(file_reader part_fr,
+			component_load_source_container component_load_source_cont,
+			String mount_component_name,String token_string)
+	{
+		boolean ret_val=false;
+		for(String str,mount_component_file_name,terminated_token_string=part_fr.get_string();;) {
+			if(part_fr.eof())
+				break;
+			if((str=part_fr.get_string())==null) 
+				continue;
+			if(terminated_token_string.compareTo(str)==0)
+				break;
+			mount_component_file_name=part_fr.directory_name+file_reader.separator(str);
+			if(!(new File(mount_component_file_name).exists()))
+				continue;
+			component_load_source_cont.add_source_item(mount_component_name,
+					token_string,mount_component_file_name,part_fr.get_charset());
+			ret_val=true;
+		}
+		return ret_val;
+	}
 	public void add_part(part_container_for_part_search pcps,render ren,
 			component_load_source_container component_load_source_cont,
 			part_parameter part_par,system_parameter system_par,scene_parameter scene_par,
@@ -208,11 +247,44 @@ public class render
 				debug_information.println("Directory name:	",		my_part.directory_name);
 				debug_information.println("Mesh file name:	",		my_part.mesh_file_name);
 			}
-			if(my_part.driver!=null)
-				pcps.append(my_part);
-			else{
+			if(my_part.driver==null){
 				delete_last_part();
 				my_part.destroy();
+				continue;
+			}
+			pcps.append(my_part);
+			
+			switch(my_part.part_par.load_assemble_type) {
+			case "data_to_system":
+				register_data_component(f,component_load_source_cont,
+						system_par.default_system_mount_component_name,"");
+				break;
+			case "file_to_system":
+				register_file_component(f,component_load_source_cont,
+						system_par.default_system_mount_component_name,"");
+				break;
+			case "data_to_component":	
+				register_data_component(f,component_load_source_cont,f.get_string(),"");
+				break;
+			case "file_to_component":
+				register_file_component(f,component_load_source_cont,f.get_string(),"");
+				break;
+			case "data_to_system_with_token":
+				register_data_component(f,component_load_source_cont,
+						system_par.default_system_mount_component_name,f.get_string());
+				break;
+			case "file_to_system_with_token":
+				register_file_component(f,component_load_source_cont,
+						system_par.default_system_mount_component_name,f.get_string());
+				break;
+			case "data_to_component_with_token":	
+				register_data_component(f,component_load_source_cont,f.get_string(),f.get_string());
+				break;
+			case "file_to_component_with_token":
+				register_file_component(f,component_load_source_cont,f.get_string(),f.get_string());
+				break;
+			default:
+				break;
 			}
 		}
 		f.close();

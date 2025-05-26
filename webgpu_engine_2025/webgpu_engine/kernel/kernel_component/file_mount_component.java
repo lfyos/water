@@ -103,7 +103,7 @@ public class file_mount_component
 			}
 
 			my_directory_name_array[my_directory_name_array.length-1]
-				=ccp.sk.system_par.default_parameter_directory+"assemble_default"+File.separatorChar;
+				=ccp.sk.system_par.parameter_directory+"assemble_default"+File.separatorChar;
 			my_charset_name_array[my_charset_name_array.length-1]=ccp.sk.system_par.local_data_charset;
 		}
 		for(int i=0,ni=my_directory_name_array.length;i<ni;i++)
@@ -154,7 +154,7 @@ public class file_mount_component
 			}
 		
 			my_directory_name_array[my_directory_name_array.length-1]
-				=ccp.sk.system_par.default_parameter_directory+"assemble_default"+File.separatorChar;
+				=ccp.sk.system_par.parameter_directory+"assemble_default"+File.separatorChar;
 		}
 		for(int i=0,ni=my_directory_name_array.length;i<ni;i++)
 			if(new File(my_directory_name_array[i]+my_file_name).exists()) {

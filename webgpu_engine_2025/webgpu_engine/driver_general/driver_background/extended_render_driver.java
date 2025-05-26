@@ -3,13 +3,13 @@ package driver_background;
 import kernel_part.part;
 import kernel_render.render;
 import kernel_scene.scene_kernel;
-import kernel_scene.scene_parameter;
-import kernel_scene.system_parameter;
 import kernel_driver.part_driver;
 import kernel_part.part_parameter;
 import kernel_driver.render_driver;
-import kernel_driver.render_instance_driver;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 import kernel_file_manager.file_reader;
+import kernel_driver.render_instance_driver;
 import kernel_network.client_request_response;
 import kernel_component.component_load_source_container;
 
@@ -44,19 +44,9 @@ public class extended_render_driver extends render_driver
 			component_load_source_container component_load_source_cont,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		String par_list_file_name		=file_reader.separator(render_fr.get_string());
-		String mount_component_file_name=file_reader.separator(render_fr.get_string());
-		
-		par_list_file_name			=render_fr.directory_name+par_list_file_name;
-		mount_component_file_name	=render_fr.directory_name+mount_component_file_name;
-		
-		component_load_source_cont.add_source_item(
-			system_par.default_system_mount_component_name,"",
-			mount_component_file_name,render_fr.get_charset());
-		
-		return new String[] {par_list_file_name,render_fr.get_charset()};
+		String par_list_file_name=file_reader.separator(render_fr.get_string());
+		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
 	}
-	
 	public String[][] shader_file_name_array()
 	{
 		return super.shader_file_name_array();

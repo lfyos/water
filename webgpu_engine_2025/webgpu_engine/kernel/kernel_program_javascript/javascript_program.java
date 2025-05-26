@@ -32,13 +32,13 @@ public class javascript_program
 	}	
 	public javascript_program(system_parameter system_par)
 	{
-		default_fetch_parameter_filename =system_par.default_parameter_directory;
+		default_fetch_parameter_filename =system_par.parameter_directory;
 		default_fetch_parameter_filename+="network_parameter/fetch_parameter.txt";
 		default_fetch_parameter_filename =file_reader.separator(default_fetch_parameter_filename);
 		
 		long t1=last_modified_time=new File(default_fetch_parameter_filename).lastModified();
 		
-		default_draw_process_bar_filename =system_par.default_parameter_directory;
+		default_draw_process_bar_filename =system_par.parameter_directory;
 		default_draw_process_bar_filename+="javascript_program/draw_process_bar.txt";
 		default_draw_process_bar_filename =file_reader.separator(default_draw_process_bar_filename);
 		

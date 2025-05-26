@@ -71,7 +71,7 @@ public class scene_kernel_create_parameter
 				if(file_reader.is_exist(f_name.directory_name+parameter_file_name))
 					parameter_file_name=f_name.directory_name+parameter_file_name;
 				else{
-					parameter_file_name=system_par.default_parameter_directory
+					parameter_file_name=system_par.parameter_directory
 						+"assemble_parameter"+File.separator+parameter_file_name;
 					if(!(file_reader.is_exist(parameter_file_name))) {
 						debug_information.println("Find unexist scene parameter_file_name:",
@@ -82,7 +82,7 @@ public class scene_kernel_create_parameter
 				if(file_reader.is_exist(f_name.directory_name+extra_parameter_file_name))
 					extra_parameter_file_name=f_name.directory_name+extra_parameter_file_name;
 				else {
-					extra_parameter_file_name=system_par.default_parameter_directory
+					extra_parameter_file_name=system_par.parameter_directory
 						+"assemble_parameter"+File.separator+extra_parameter_file_name;
 					if(!(file_reader.is_exist(extra_parameter_file_name))) {
 						debug_information.println("Find unexist scene extra_parameter_file_name:",

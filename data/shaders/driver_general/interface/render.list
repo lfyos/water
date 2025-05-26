@@ -1,1 +1,1 @@
-common		any_assemble_part_name	high_priority.txt	part.list	component/root_menu.assemble
+common		any_assemble_part_name	high_priority.file.txt	part.list

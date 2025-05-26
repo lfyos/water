@@ -170,7 +170,7 @@ public class client_interface
 		debug_information.println("data_root_directory_name	:	",			system_par.data_root_directory_name);
 		debug_information.println("shader_file_name		:	",				system_par.shader_file_name);
 		debug_information.println("user_file_name			:	",			system_par.user_file_name);
-		debug_information.println("default_parameter_directory	:	",		system_par.default_parameter_directory);
+		debug_information.println("parameter_directory	:	",				system_par.parameter_directory);
 		debug_information.println("temporary_root_directory_name	:	",	system_par.temporary_file_par.temporary_root_directory_name);
 		
 		scene_call_result ret_val=create_scene_routine(
@@ -615,7 +615,7 @@ public class client_interface
 			if(new File(f.directory_name+parameter_file_name).exists())
 				parameter_file_name=f.directory_name+parameter_file_name;
 			else {
-				parameter_file_name=system_par.default_parameter_directory
+				parameter_file_name=system_par.parameter_directory
 						+"user_parameter"+File.separator+parameter_file_name;
 				if(!(new File(parameter_file_name).exists()))
 					continue;

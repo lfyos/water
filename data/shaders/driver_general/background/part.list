@@ -4,3 +4,8 @@
 	background\background.material
 	background\background.description
 	background\background.mp3
+
+			/*	terminated_token_string:begin		*/	terminated_token_string
+							background.assemble
+			/*	terminated_token_string:end			*/	terminated_token_string
+	

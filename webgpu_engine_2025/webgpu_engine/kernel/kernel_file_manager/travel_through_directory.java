@@ -9,6 +9,7 @@ import kernel_common_class.sorter;
 public class travel_through_directory 
 {
 	private String exclude_file_name[];
+	private boolean continue_flag;
 	
 	public void operate_directory_start(String directory_name)
 	{	
@@ -60,26 +61,38 @@ public class travel_through_directory
 		String file_list[]=f.list();
 		if(file_list==null){
 			operate_directory_start(path_name);
+			if(!continue_flag)
+				return;
 			operate_directory_terminate(path_name);
+			if(!continue_flag)
+				return;
 		}else {
 			if(sort_file_name_flag)
 				file_list=(new file_name_sorter(file_list)).
 						data_list.toArray(new String[file_list.length]);
-			
 			operate_directory_start(path_name);
-			for(int i=0,ni=file_list.length;i<ni;i++)
+			if(!continue_flag)
+				return;
+			for(int i=0,ni=file_list.length;(i<ni)&&continue_flag;i++)
 				do_travel(path_name+File.separator+file_list[i],sort_file_name_flag);
 			operate_directory_terminate(path_name);
+			if(!continue_flag)
+				return;
 		}
-		
 		return;
+	}
+	public void mark_terminate()
+	{
+		continue_flag=false;
 	}
 	public travel_through_directory(String my_exclude_file_name[])
 	{
 		exclude_file_name=my_exclude_file_name;
+		continue_flag=true;
 	}
 	public travel_through_directory()
 	{
 		exclude_file_name=null;
+		continue_flag=true;
 	}
 }

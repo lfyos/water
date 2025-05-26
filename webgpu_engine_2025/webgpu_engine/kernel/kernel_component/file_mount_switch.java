@@ -38,7 +38,8 @@ public class file_mount_switch
 			String add_file_name=file_reader.separator(System.getenv(fr.get_string()));
 			if(add_file_name.charAt(add_file_name.length()-1)!=File.separatorChar)
 				add_file_name+=File.separatorChar;
-			ccp.clsc.add_source_item(add_component_name,token_string,add_file_name,fr.get_charset());
+			ccp.clsc.add_source_item(
+					add_component_name,token_string,add_file_name,fr.get_charset());
 			return;
 		}
 		case "environment_charset_component_mount":	
@@ -47,7 +48,8 @@ public class file_mount_switch
 			String add_file_name=file_reader.separator(System.getenv(fr.get_string()));
 			if(add_file_name.charAt(add_file_name.length()-1)!=File.separatorChar)
 				add_file_name+=File.separatorChar;
-			ccp.clsc.add_source_item(add_component_name,token_string,add_file_name,fr.get_string());
+			ccp.clsc.add_source_item(
+					add_component_name,token_string,add_file_name,fr.get_string());
 			return;
 		}
 		case "part_driver_mount":

@@ -44,14 +44,11 @@ public class component_core_4 extends component_core_3
 						continue;
 			}while(false);
 			
-			fr.push_string_array(new String[]
+			fr.push_string(new String[]
 			{
 				my_component_name,
 				my_part_name,
-				"1","0","0","0",
-				"0","1","0","0",
-				"0","0","1","0",
-				"0","0","0","1",
+				"identity",
 				"0"
 			});
 			component my_comp=new component("",fr,
@@ -77,7 +74,7 @@ public class component_core_4 extends component_core_3
 	{
 		if(ccp.clsc.get_source_item_number()<=0)
 			return 0;
-		int ret_val=ccp.clsc.add_component(component_name,children,
+		int ret_val=ccp.clsc.add_component(fr,component_name,children,
 			uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp);
 		if(ret_val>0)
 			decrease_children_number(fr,ccp);
@@ -91,7 +88,7 @@ public class component_core_4 extends component_core_3
 		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
 		
 		if(ccp.clsc.get_source_item_number()>0)
-			ccp.clsc.add_component(component_name,children,
+			ccp.clsc.add_component(fr,component_name,children,
 				uniparameter.part_list_flag,uniparameter.normalize_location_flag,ccp);
 		decrease_children_number(fr,ccp);
 	}
