@@ -6,6 +6,15 @@
 	part\part.mp3
 	
 	/*	x	y	size	modifier_container_id	*/	0.875		0.825		0.1		0
+	
+			/*	terminated_token_string:begin		*/	terminated_token_string
+			
+					/*	component name				*/	camera_operation_component
+					/*	component type				*/	camera_operation_part
+					/*	component location			*/	identity
+					/*	component children number	*/	0
+			
+			/*	terminated_token_string:end			*/	terminated_token_string
 		
 ·½Ïò°´Å¥
 	camera_operation_part_2
@@ -16,4 +25,7 @@
 	
 	/*	x	y	size	modifier_container_id	*/	0.875		0.825		0.1		0
 		
+			/*	terminated_token_string:begin		*/	terminated_token_string
+						
+			/*	terminated_token_string:end			*/	terminated_token_string
 		

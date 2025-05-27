@@ -4,3 +4,16 @@ show_target_part
 	part\part.material
 	part\part.description
 	part\part.mp3
+
+			/*	terminated_token_string:begin		*/	terminated_token_string
+			
+					/*	component name				*/	show_target_component
+					/*	component type				*/	show_target_part
+					/*	component location			*/	identity
+					/*	p0							*/	-0.25	 0.5
+					/*	p1							*/	 0.25	 1.0
+					/*	component children number	*/	0
+			
+			/*	terminated_token_string:end			*/	terminated_token_string
+	
+	

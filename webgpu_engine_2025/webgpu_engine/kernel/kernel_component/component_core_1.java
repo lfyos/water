@@ -1,11 +1,12 @@
 package kernel_component;
 
-import kernel_common_class.const_value;
-import kernel_common_class.debug_information;
-import kernel_file_manager.file_reader;
-import kernel_network.client_request_response;
-import kernel_transformation.location;
 import kernel_transformation.point;
+import kernel_scene.system_parameter;
+import kernel_transformation.location;
+import kernel_common_class.const_value;
+import kernel_file_manager.file_reader;
+import kernel_common_class.debug_information;
+import kernel_network.client_request_response;
 
 public class component_core_1 extends component_core_0
 {	
@@ -23,7 +24,8 @@ public class component_core_1 extends component_core_0
 		f.close();
 		return ret_val;
 	}
-	private location input_location(file_reader fr,client_request_response request_response)
+	private location input_location(file_reader fr,
+			system_parameter system_par,client_request_response request_response)
 	{
 		String command,name,sepa,charset;
 		if((command=fr.get_string())==null) {
@@ -75,7 +77,7 @@ public class component_core_1 extends component_core_0
 				name	=fr.get_string();
 				sepa	=fr.get_string();
 				if((name!=null)&&(sepa!=null))
-					if((name=System.getenv(name.trim()))!=null)
+					if((name=system_par.scene_env.get_environment(name.trim()))!=null)
 						return new location(name.trim(),sepa.trim());
 				return new location();
 			case "client_environment_location":
@@ -84,7 +86,7 @@ public class component_core_1 extends component_core_0
 				if((name!=null)&&(sepa!=null))
 					if((name=request_response.get_parameter(name.trim()))!=null)
 						if((name=name.trim()).length()>0)
-							if((name=System.getenv(name))!=null)
+							if((name=system_par.scene_env.get_environment(name))!=null)
 								return new location(name.trim(),sepa.trim());
 				return new location();
 			case "relative_file_location":
@@ -130,7 +132,7 @@ public class component_core_1 extends component_core_0
 	{
 		super(token_string,fr,part_list_flag,normalize_location_flag,ccp);
 		
-		relative_location=input_location(fr,ccp.request_response);
+		relative_location=input_location(fr,ccp.sk.system_par,ccp.request_response);
 		if(uniparameter.normalize_location_flag)
 			relative_location=relative_location.normalize();
 	}

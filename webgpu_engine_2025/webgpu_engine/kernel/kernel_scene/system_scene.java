@@ -125,9 +125,9 @@ public class system_scene
 				request_response.response_network_data(ecr,system_par);
 		request_response.destroy();
 	}
-	public system_scene(String data_file_configure_file_name,String temporary_file_configure_file_name)
+	public system_scene(String environment_file_name)
 	{
-		system_par=new system_parameter(data_file_configure_file_name,temporary_file_configure_file_name);
+		system_par=new system_parameter(new scene_environment(environment_file_name));
 		
 		int number=system_par.max_client_container_number;
 		client_interface_search_tree_array=new client_interface_search_tree[number];

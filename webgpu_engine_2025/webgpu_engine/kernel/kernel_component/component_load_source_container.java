@@ -92,6 +92,68 @@ public class component_load_source_container
 			tree.add(new String[] {component_name},new component_load_source_item(
 					component_name,token_string,create_component_data,component_last_time));
 	}
+	
+	public boolean register_data_component(
+			file_reader part_fr,String mount_component_name,String token_string)
+	{
+		String terminated_token_string=part_fr.get_string();
+		ArrayList<String> component_parameter=new ArrayList<String>();
+		for(String str;!(part_fr.eof());) 
+			if((str=part_fr.get_string())!=null) {
+				if(terminated_token_string.compareTo(str)==0)
+					break;
+				component_parameter.add(str);
+			}
+		if(component_parameter.size()<=0)
+			return false;
+		add_source_item(mount_component_name,token_string,
+				component_parameter,part_fr.lastModified_time);
+		return true;
+	}
+	public boolean register_file_component(
+			file_reader part_fr,String mount_component_name,String token_string)
+	{
+		boolean ret_val=false;
+		for(String str,mount_component_file_name,terminated_token_string=part_fr.get_string();;) {
+			if(part_fr.eof())
+				break;
+			if((str=part_fr.get_string())==null) 
+				continue;
+			if(terminated_token_string.compareTo(str)==0)
+				break;
+			mount_component_file_name=part_fr.directory_name+file_reader.separator(str);
+			if(!(new File(mount_component_file_name).exists()))
+				continue;
+			add_source_item(mount_component_name,token_string,
+					mount_component_file_name,part_fr.get_charset());
+			ret_val=true;
+		}
+		return ret_val;
+	}
+	public boolean register_component(file_reader f,
+			String load_assemble_type,String default_system_mount_component_name)
+	{
+		switch(load_assemble_type) {
+		case "data_to_system":
+			return register_data_component(f,default_system_mount_component_name,"");
+		case "file_to_system":
+			return register_file_component(f,default_system_mount_component_name,"");
+		case "data_to_component":	
+			return register_data_component(f,f.get_string(),"");
+		case "file_to_component":
+			return register_file_component(f,f.get_string(),"");
+		case "data_to_system_with_token":
+			return register_data_component(f,default_system_mount_component_name,f.get_string());
+		case "file_to_system_with_token":
+			return register_file_component(f,default_system_mount_component_name,f.get_string());
+		case "data_to_component_with_token":	
+			return register_data_component(f,f.get_string(),f.get_string());
+		case "file_to_component_with_token":
+			return register_file_component(f,f.get_string(),f.get_string());
+		default:
+			return false;
+		}
+	}
 	public int get_source_item_number()
 	{
 		return tree.size();

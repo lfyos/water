@@ -1,0 +1,8 @@
+/*	environment	charset			*/		GBK
+/*	scene data directory		*/		F:\water_all\data
+/*	scene temparatory directory	*/		F:\temp
+
+
+/*	following are environment	*/
+
+lfy_user_dir		E:\project_data

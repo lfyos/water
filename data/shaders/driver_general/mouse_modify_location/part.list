@@ -8,3 +8,14 @@ mouse_modify_location_part
 	/*	mark_component_name						*/		component_marker_component
 	/*	movement_component_name					*/		movement_manager
 	/*	movement_abstract_menu_component_name	*/		组件拼装拼装提取组件
+
+	
+			/*	terminated_token_string:begin		*/	terminated_token_string
+			
+					/*	component name				*/	mouse_modify_location_component
+					/*	component type				*/	mouse_modify_location_part
+					/*	component location			*/	identity
+					/*	component children number	*/	0
+			
+			/*	terminated_token_string:end			*/	terminated_token_string
+		

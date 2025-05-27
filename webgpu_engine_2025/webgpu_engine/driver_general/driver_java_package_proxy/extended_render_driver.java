@@ -11,16 +11,14 @@ import kernel_scene.system_parameter;
 import kernel_file_manager.file_reader;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
-import kernel_file_manager.travel_through_directory;
 
 public class extended_render_driver extends render_driver
 {
 	private render_driver real_render_driver;
 	
-	private render_driver creat_render_driver_routine(
-			String jar_file_name,String jar_class_name,
-			file_reader shader_fr,render ren,client_request_response request_response,
-			system_parameter system_par,scene_parameter scene_par)
+	private render_driver creat_render_driver(String jar_file_name,String jar_class_name,
+				file_reader shader_fr,render ren,client_request_response request_response,
+				system_parameter system_par,scene_parameter scene_par)
 	{
 		File jar_f=new File(jar_file_name);
 
@@ -51,30 +49,6 @@ public class extended_render_driver extends render_driver
 				return (render_driver)render_driver_object;	
 		return null;
 	}
-	
-	private render_driver creat_render_driver(String jar_file_name,String jar_class_name,
-			file_reader shader_fr,render ren,client_request_response request_response,
-			system_parameter system_par,scene_parameter scene_par)
-	{
-		class jar_travel extends travel_through_directory
-		{
-			public render_driver jar_render_driver;
-			public void operate_file(String file_name)
-			{
-				if((jar_render_driver=creat_render_driver_routine(
-					jar_file_name,jar_class_name,shader_fr,ren,
-					request_response,system_par,scene_par))!=null)
-						mark_terminate();
-			}
-			public jar_travel()
-			{
-				jar_render_driver=null;
-				do_travel(jar_file_name, true);
-			}
-		};
-		return new jar_travel().jar_render_driver;
-	}
-	
 	public extended_render_driver(file_reader shader_fr,render ren,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{

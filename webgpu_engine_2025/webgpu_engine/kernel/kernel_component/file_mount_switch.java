@@ -35,7 +35,8 @@ public class file_mount_switch
 		case "environment_component_mount":	
 		{
 			String add_component_name=fr.get_string();
-			String add_file_name=file_reader.separator(System.getenv(fr.get_string()));
+			String add_file_name=file_reader.separator(
+					ccp.sk.system_par.scene_env.get_environment(fr.get_string()));
 			if(add_file_name.charAt(add_file_name.length()-1)!=File.separatorChar)
 				add_file_name+=File.separatorChar;
 			ccp.clsc.add_source_item(
@@ -45,7 +46,8 @@ public class file_mount_switch
 		case "environment_charset_component_mount":	
 		{
 			String add_component_name=fr.get_string();
-			String add_file_name=file_reader.separator(System.getenv(fr.get_string()));
+			String add_file_name=file_reader.separator(
+					ccp.sk.system_par.scene_env.get_environment(fr.get_string()));
 			if(add_file_name.charAt(add_file_name.length()-1)!=File.separatorChar)
 				add_file_name+=File.separatorChar;
 			ccp.clsc.add_source_item(

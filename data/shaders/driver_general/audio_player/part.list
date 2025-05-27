@@ -4,3 +4,13 @@ audio_player_part
 	part\part.material
 	part\part.description
 	part\part.mp3
+	
+			/*	terminated_token_string:begin		*/	terminated_token_string
+			
+					/*	component name				*/	audio_player_component
+					/*	component type				*/	audio_player_part
+					/*	component location			*/	identity
+					/*	component children number	*/	0
+			
+			/*	terminated_token_string:end			*/	terminated_token_string
+	

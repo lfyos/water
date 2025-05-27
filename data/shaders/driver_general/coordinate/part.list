@@ -6,3 +6,12 @@
 	part\coordinate.description
 	part\coordinate.mp3
 	
+			/*	terminated_token_string:begin		*/	terminated_token_string
+			
+					/*	component name				*/	coordinate
+					/*	component type				*/	coordinate_part
+					/*	component location			*/	identity
+						/*	coordinate_length_scale	*/	1.25
+					/*	component children number	*/	0
+			
+			/*	terminated_token_string:end			*/	terminated_token_string

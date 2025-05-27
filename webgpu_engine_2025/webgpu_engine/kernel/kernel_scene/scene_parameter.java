@@ -24,7 +24,7 @@ public class scene_parameter
 	
 	public String scene_shader_directory_name,scene_shader_file_name;
 	public String camera_file_name;
-	
+
 	public change_name change_component_name,client_parameter_name;
 	
 	public int part_lru_in_list_number;
@@ -63,7 +63,7 @@ public class scene_parameter
 	
 	public boolean not_do_ancestor_render_flag;
 	
-	private String[] get_directory_name_and_file_name(file_reader fr)
+	private String[] get_directory_name_and_file_name(file_reader fr,system_parameter system_par)
 	{
 		String path_file_name=((path_file_name=fr.get_string())==null)
 				?"":file_directory.delete_separator(path_file_name);
@@ -83,7 +83,7 @@ public class scene_parameter
 			break;
 		case "environment_directory":
 			if((path_directory_name=fr.get_string())!=null)
-				if((path_directory_name=System.getenv(path_directory_name))!=null)
+				if((path_directory_name=system_par.scene_env.get_environment(path_directory_name))!=null)
 					if((path_directory_name=file_directory.delete_separator(path_directory_name)).length()>0) {
 						path_directory_name+=File.separatorChar;
 						break;
@@ -242,15 +242,15 @@ public class scene_parameter
 		scene_last_modified_time=parameter_last_modified_time;
 
 		String gdnafa[];
-		gdnafa=get_directory_name_and_file_name(parameter_fr);
+		gdnafa=get_directory_name_and_file_name(parameter_fr,system_par);
 		type_shader_directory_name	=gdnafa[0];
 		type_shader_file_name		=gdnafa[1];
 
-		gdnafa=get_directory_name_and_file_name(parameter_fr);
+		gdnafa=get_directory_name_and_file_name(parameter_fr,system_par);
 		scene_shader_directory_name	=gdnafa[0];
 		scene_shader_file_name		=scene_sub_directory+gdnafa[1];
 		
-		gdnafa=get_directory_name_and_file_name(parameter_fr);
+		gdnafa=get_directory_name_and_file_name(parameter_fr,system_par);
 		change_component_name=new change_name(
 			new String[]{gdnafa[0]+scene_sub_directory+gdnafa[1]},
 			change_component_string,parameter_fr.get_charset());

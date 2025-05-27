@@ -4,3 +4,14 @@ location_modifier_part
 	part\part.material
 	part\part.description
 	part\part.mp3
+
+			/*	terminated_token_string:begin		*/	terminated_token_string
+			
+					/*	component name				*/	location_modifier_component
+					/*	component type				*/	location_modifier_part
+					/*	component location			*/	identity
+					/*	modifier_container_id		*/	1
+					/*	component children number	*/	0
+			
+			/*	terminated_token_string:end			*/	terminated_token_string
+			

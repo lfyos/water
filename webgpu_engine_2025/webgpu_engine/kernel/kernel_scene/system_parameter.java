@@ -44,6 +44,7 @@ public class system_parameter
 	
 	public double box_distance_difference_scale,buffer_data_length_difference_scale; 
 	
+	public scene_environment scene_env;
 	public change_name language_change_name,content_type_change_name;
 	public temporary_file_parameter temporary_file_par;
 	public switch_scene_server	switch_server;
@@ -102,18 +103,17 @@ public class system_parameter
 		box_distance_difference_scale		=sp.box_distance_difference_scale;
 		buffer_data_length_difference_scale	=sp.buffer_data_length_difference_scale;
 		
-		content_type_change_name			=new change_name(sp.content_type_change_name,false);
+		scene_env							=new scene_environment(sp.scene_env);
 		language_change_name				=new change_name(sp.language_change_name,false);
+		content_type_change_name			=new change_name(sp.content_type_change_name,false);
 		
 		temporary_file_par					=sp.temporary_file_par;
 		switch_server						=sp.switch_server;
 	}
-	public system_parameter(
-			String data_file_configure_file_name,
-			String temporary_file_configure_file_name)
+	public system_parameter(scene_environment my_scene_env)
 	{
-		data_file_configure_file_name		=file_reader.separator(data_file_configure_file_name);
-		temporary_file_configure_file_name	=file_reader.separator(temporary_file_configure_file_name);
+		String data_file_configure_file_name		=my_scene_env.get_data_path_name();
+		String temporary_file_configure_file_name	=my_scene_env.get_temparatory_path_name();
 
 		debug_information.println();
 		debug_information.println("data_file_configure_file_name:		",	data_file_configure_file_name);
@@ -190,6 +190,8 @@ public class system_parameter
 		}
 		if((default_system_mount_component_name=f.get_string())==null)
 			default_system_mount_component_name="default_system_mount_component";
+		
+		scene_env=new scene_environment(my_scene_env);
 		
 		String language_change_file_name;
 		if((language_change_file_name=f.get_string())==null)

@@ -5,3 +5,13 @@ caption_part
 	part\part.description
 	part\part.mp3
 	
+			/*	terminated_token_string:begin		*/	terminated_token_string
+			
+					/*	component name				*/	caption_component
+					/*	component type				*/	caption_part
+					/*	component location			*/	identity
+						/*		max_time_length		*/	60000
+					/*	component children number	*/	0
+			
+			/*	terminated_token_string:end			*/	terminated_token_string
+	

@@ -96,9 +96,9 @@ public class file_mount_file_name_and_charset
 					"((my_directory_name==null) ||(my_file_name==null))");
 			return false;
 		}
-		if((my_directory_name=System.getenv(my_directory_name.trim()))==null) {
+		if((my_directory_name=ccp.sk.system_par.scene_env.get_environment(my_directory_name.trim()))==null) {
 			debug_information.println("environment_scene_sub_directory_mount:",
-					"((my_directory_name=System.getenv(my_directory_name.trim()))==null)");
+					"((my_directory_name=get_environment(my_directory_name.trim()))==null)");
 			return false;
 		}
 		if((my_directory_name=cut_string.do_cut(file_reader.separator(my_directory_name.trim()))).length()<=0) {
@@ -222,9 +222,9 @@ public class file_mount_file_name_and_charset
 					"((my_file_name=cut_string.do_cut(file_reader.separator(my_file_name))).length()<=0)");
 			return false;
 		}
-		if((my_directory_name=System.getenv(my_directory_name.trim()))==null) {
+		if((my_directory_name=ccp.sk.system_par.scene_env.get_environment(my_directory_name.trim()))==null) {
 			debug_information.println("environment_scene_sub_directory_charset_mount:",
-					"((my_directory_name=System.getenv(my_directory_name.trim()))==null)");
+					"((my_directory_name=get_environment(my_directory_name.trim()))==null)");
 			return false;
 		}
 		if((my_directory_name=cut_string.do_cut(file_reader.separator(my_directory_name.trim()))).length()<=0){
