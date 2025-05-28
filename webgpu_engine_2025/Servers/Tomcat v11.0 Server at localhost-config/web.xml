@@ -119,7 +119,36 @@
   <!--                       Status code to use for directory redirects.    -->
   <!--                       Possible values: 301, 302, 307, 308            -->
   <!--                       [302]                                          -->
+ 
+ 
+  
+  
+  	<servlet>
+  	
+   		<servlet-name>	webgpu_servlet					</servlet-name>
+		<servlet-class>	engine_interface.webgpu_servlet	</servlet-class>
+    
+		<init-param>
+        	<param-name>	configure					</param-name>
+        	<param-value>	F:/water_all/configure.txt	</param-value>
+    	</init-param>
+    	
+	</servlet>
 
+	<servlet-mapping>
+	
+   		<servlet-name>	webgpu_servlet	</servlet-name>
+    	<url-pattern>	/water			</url-pattern>
+    	
+	</servlet-mapping>
+
+  
+  
+  
+  
+  
+  
+  
     <servlet>
         <servlet-name>default</servlet-name>
         <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>

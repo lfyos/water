@@ -1,36 +1,11 @@
 package engine_interface;
 
-import java.io.IOException;
-
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-@jakarta.servlet.annotation.WebServlet(
-	asyncSupported = true,
-	urlPatterns = { 
-		"/webgpu_engine" 
-	}
-)
-public class webgpu_servlet extends HttpServlet
+public class webgpu_servlet extends scene_servlet
 {
 	private static final long serialVersionUID = 1L;
 	
-    private webgpu_scene scene;
-    
     public webgpu_servlet() 
     {
-    	scene=new webgpu_scene();
+    	super("configure");
     }
-	protected void doGet(HttpServletRequest request,HttpServletResponse response)
-						throws ServletException,IOException 
-	{
-		scene.process_system_call(request, response);
-	}
-	protected void doPost(HttpServletRequest request,HttpServletResponse response)
-						throws ServletException,IOException 
-	{
-		scene.process_system_call(request,response);
-	}
 }

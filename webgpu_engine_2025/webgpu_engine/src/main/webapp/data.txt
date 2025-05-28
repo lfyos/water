@@ -21,9 +21,40 @@ Access-Control-Allow-Origin				*
 
 }
 
-	public String[] get_render_list(file_reader shader_fr,render ren,
-			component_load_source_container component_load_source_cont,
-			system_parameter system_par,scene_parameter scene_par,client_request_response request_response)
-	{
 
+  	<servlet>
+  	
+   		<servlet-name>	webgpu_servlet					</servlet-name>
+		<servlet-class>	engine_interface.webgpu_servlet	</servlet-class>
+    
+		<init-param>
+        	<param-name>	configure					</param-name>
+        	<param-value>	F:/water_all/configure.txt	</param-value>
+    	</init-param>
+    	
+	</servlet>
+
+	<servlet-mapping>
+	
+   		<servlet-name>	webgpu_servlet	</servlet-name>
+    	<url-pattern>	/water			</url-pattern>
+    	
+	</servlet-mapping>
+
+
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.annotation.WebInitParam;
+
+@WebServlet(
+	asyncSupported = true,
+	urlPatterns = { 
+		"/water" 
+	},
+	initParams= {
+			@WebInitParam(
+					name	=	"configure",
+					value	=	"F:/water_all/configure.txt"
+			)
+	}
+)
 	

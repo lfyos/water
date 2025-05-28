@@ -57,9 +57,6 @@ public class scene_environment
 			return;
 		}
 		scene_data_path_name=file_reader.separator(scene_data_path_name);
-		if(scene_data_path_name.charAt(scene_data_path_name.length()-1)!=File.separatorChar)
-			scene_data_path_name+=File.separatorChar;
-		scene_data_path_name+="configure.txt";
 		
 		if(!(new File(scene_data_path_name).exists())) {
 			debug_information.println(
@@ -83,9 +80,6 @@ public class scene_environment
 			return;
 		}
 		scene_temparatory_path_name=file_reader.separator(scene_temparatory_path_name);
-		if(scene_temparatory_path_name.charAt(scene_temparatory_path_name.length()-1)!=File.separatorChar)
-			scene_temparatory_path_name+=File.separatorChar;
-		scene_temparatory_path_name+="configure.txt";
 		
 		environment_variable=new change_name(new file_reader[] {f},null);
 		

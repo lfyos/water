@@ -9,7 +9,7 @@ import kernel_network.client_request_response;
 import kernel_program_javascript.javascript_program;
 import kernel_interface.client_interface_search_tree;
 
-public class system_scene 
+public class system_scene
 {
 	private client_interface_search_tree client_interface_search_tree_array[];
 	private scene_kernel_container_search_tree scene_kernel_search_tree;
