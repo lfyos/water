@@ -151,5 +151,23 @@ public class network_implementation
 			return null;
 		}
 	}
-
+	public void set_option_http_header(long access_control_max_age)
+	{
+		response.setHeader("Access-Control-Max-Age",
+				Long.toString(access_control_max_age));
+		response.setHeader("Access-Control-Allow-Methods",
+				request.getHeader("Access-Control-Request-Method"));
+		response.setHeader("Access-Control-Allow-Headers",	
+				request.getHeader("Access-Control-Request-Headers"));
+		response.setHeader("Access-Control-Allow-Origin",
+				request.getHeader("Origin"));
+	
+		
+		debug_information.println("Access-Control-Allow-Methods",
+				request.getHeader("Access-Control-Request-Method"));
+		debug_information.println("Access-Control-Allow-Headers",	
+				request.getHeader("Access-Control-Request-Headers"));
+		debug_information.println("Access-Control-Allow-Origin",
+				request.getHeader("Origin"));
+	}
 }

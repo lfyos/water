@@ -1,3 +1,4 @@
+
 set JAVA_OPTS=-server -Xms1920m -Xmx2148m -XX:MaxNewSize=512m -XX:MaxPermSize=256m
 
 -Xms2048m -Xmx2560m
@@ -42,6 +43,7 @@ Access-Control-Allow-Origin				*
 	</servlet-mapping>
 
 
+
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.annotation.WebInitParam;
 
@@ -52,9 +54,16 @@ import jakarta.servlet.annotation.WebInitParam;
 	},
 	initParams= {
 			@WebInitParam(
-					name	=	"configure",
-					value	=	"F:/water_all/configure.txt"
+					name	=	"lfy_data_configure_file",
+					value	=	"F:/water_all/data/configure.txt"
+			),
+			@WebInitParam(
+					name	=	"lfy_temparatory_configure_file",
+					value	=	"F:/temp/configure.txt"
+			),
+			@WebInitParam(
+					name	=	"lfy_environment_configure_file",
+					value	=	"F:/water_all/environment.txt"
 			)
 	}
 )
-	

@@ -83,11 +83,10 @@ public class javascript_program
 				return null;
 			}
 
-		request_response.println("	var default_fetch_parameter=");
 		file_reader fr=new file_reader(default_fetch_parameter_filename,system_par.local_data_charset);
 		fr.get_text(request_response,"	");
-		request_response.println();
 		fr.close();
+		request_response.println();
 		
 		request_response.println("	var default_user_process_bar_function=");
 		fr=new file_reader(default_draw_process_bar_filename,system_par.local_data_charset);

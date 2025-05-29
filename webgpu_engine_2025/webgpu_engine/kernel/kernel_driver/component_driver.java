@@ -3,8 +3,8 @@ package kernel_driver;
 import kernel_part.part;
 import kernel_scene.scene_kernel;
 import kernel_component.component;
-import kernel_network.client_request_response;
 import kernel_common_class.debug_information;
+import kernel_network.client_request_response;
 
 public class component_driver
 {

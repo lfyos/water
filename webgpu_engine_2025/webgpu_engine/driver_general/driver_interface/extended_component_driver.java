@@ -3,6 +3,7 @@ package driver_interface;
 import kernel_component.component;
 import kernel_driver.component_driver;
 import kernel_driver.component_instance_driver;
+import kernel_file_manager.file_writer;
 import kernel_network.client_request_response;
 import kernel_part.part;
 import kernel_scene.scene_kernel;
@@ -11,17 +12,20 @@ public class extended_component_driver  extends component_driver
 {
 	private boolean menu_type,always_show_flag;
 	private double dx,dy,depth;
-	private String file_name,file_charset;
+	private String temp_path_name,directory_name,file_name,file_charset;
 
 	public void destroy()
 	{
 		super.destroy();
+		
 		file_name=null;
 		file_charset=null;
+		temp_path_name=null;
 	}
 	public extended_component_driver(part my_component_part,
 			boolean my_menu_type,double my_depth,double my_dx,double my_dy,
-			String my_file_name,String my_file_charset,boolean my_always_show_flag)
+			String my_directory_name,String my_file_name,String my_file_charset,
+			boolean my_always_show_flag)
 	{
 		super(my_component_part);
 
@@ -29,7 +33,9 @@ public class extended_component_driver  extends component_driver
 		dx=my_dx;
 		dy=my_dy;
 		depth=my_depth;
+		directory_name=my_directory_name;
 		file_name=my_file_name;
+		temp_path_name=null;
 		file_charset=my_file_charset;
 		always_show_flag=my_always_show_flag;
 	}
@@ -42,12 +48,14 @@ public class extended_component_driver  extends component_driver
 		
 		comp.uniparameter.display_part_name_or_component_name_flag=false;
 		
+		temp_path_name=file_writer.get_temparatory_path_name(this,
+				directory_name,file_name,sk.system_par,sk.scene_par);
 		return;
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
 		return new extended_component_instance_driver(comp,driver_id,
-				menu_type,depth,dx,dy,file_name,file_charset,always_show_flag);
+						menu_type,depth,dx,dy,temp_path_name,file_charset,always_show_flag);
 	}
 }

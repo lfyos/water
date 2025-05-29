@@ -1,51 +1,101 @@
-{
+
+var default_fetch_parameter={
+
+
 	request_process_bar	:
 	{
    		method	:	"GET",
    		cache	:	"no-cache",
-   		mode	:	"cors" 
+   		mode	:	"cors",
+   		headers: 
+   		{
+   			"Access-Control-Allow-Origin"	:	"*",
+   			"Content-Type"					: "application/json"
+		},
+		credentials: "omit"
    	},
 	load_process_bar_data	:
 	{
    		method	:	"GET",
    		cache	:	"no-cache",
-   		mode	:	"cors" 
+   		mode	:	"cors",
+   		headers: 
+   		{
+   			"Access-Control-Allow-Origin"	:	"*",
+   			"Content-Type"					: "application/json"
+		},
+		credentials: "omit"
    	},
 	request_create_engine	:
 	{
    		method	:	"GET",
    		cache	:	"no-cache",
-   		mode	:	"cors" 
+   		mode	:	"cors",
+   		headers: 
+   		{
+   			"Access-Control-Allow-Origin"	:	"*",
+   			"Content-Type"					: "application/json"
+		},
+		credentials: "omit"
    	},
 	request_render_data	:
 	{
    		method	:	"GET",
    		cache	:	"no-cache",
-   		mode	:	"cors" 
+   		mode	:	"cors",
+   		headers: 
+   		{
+   			"Access-Control-Allow-Origin"	:	"*",
+   			"Content-Type"					: "application/json"
+		},
+		credentials: "omit"
    	},
    	load_collector	:
 	{
    		method	:	"GET",
    		cache	:	"no-cache",
-   		mode	:	"cors" 
+   		mode	:	"cors",
+   		headers: 
+   		{
+   			"Access-Control-Allow-Origin"	:	"*",
+   			"Content-Type"					: "application/json"
+		},
+		credentials: "omit"
    	},
 	call_server	:
 	{
    		method	:	"GET",
-   		cache	:	"no-cache",
-   		mode	:	"cors" 
+   		cache	:	"force-cache",
+   		mode	:	"cors",
+   		headers: 
+   		{
+   			"Access-Control-Allow-Origin"	:	"*"
+		},
+		credentials: "omit"
    	},
 	load_part_package	:
 	{
    		method	:	"GET",
    		cache	:	"force-cache",
-   		mode	:	"cors" 
+   		mode	:	"cors",
+   		headers: 
+   		{
+   			"Access-Control-Allow-Origin"	:	"*",
+   			"Content-Type"					: "application/json"
+		},
+		credentials: "omit"
    	},
 	load_part_data	:
 	{
    		method	:	"GET",
    		cache	:	"force-cache",
-   		mode	:	"cors" 
+   		mode	:	"cors",
+   		headers: 
+   		{
+   			"Access-Control-Allow-Origin"	:	"*",
+   			"Content-Type"					: "application/json"
+		},
+		credentials: "omit"	
    	}
 };
 
@@ -66,3 +116,4 @@
 			    										// example: uploaded_canvas.toDataURL()
 			  });
 */
+

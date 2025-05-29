@@ -36,7 +36,7 @@ public class file_mount_switch
 		{
 			String add_component_name=fr.get_string();
 			String add_file_name=file_reader.separator(
-					ccp.sk.system_par.scene_env.get_environment(fr.get_string()));
+					ccp.sk.system_par.scene_environment.search_change_name(fr.get_string(),null));
 			if(add_file_name.charAt(add_file_name.length()-1)!=File.separatorChar)
 				add_file_name+=File.separatorChar;
 			ccp.clsc.add_source_item(
@@ -47,7 +47,7 @@ public class file_mount_switch
 		{
 			String add_component_name=fr.get_string();
 			String add_file_name=file_reader.separator(
-					ccp.sk.system_par.scene_env.get_environment(fr.get_string()));
+					ccp.sk.system_par.scene_environment.search_change_name(fr.get_string(),null));
 			if(add_file_name.charAt(add_file_name.length()-1)!=File.separatorChar)
 				add_file_name+=File.separatorChar;
 			ccp.clsc.add_source_item(

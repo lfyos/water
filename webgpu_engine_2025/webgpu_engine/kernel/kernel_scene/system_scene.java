@@ -96,7 +96,7 @@ public class system_scene
 				ecr=new scene_call_result(request_response.response_content_type,system_par);
 				request_response.reset().println("0");
 			}else if((ecr=client.execute_create_call(request_response,
-					scene_kernel_search_tree,scene_counter,string_locker_container))==null)
+				scene_kernel_search_tree,scene_counter,string_locker_container))==null)
 			{
 				ecr=new scene_call_result(request_response.response_content_type,system_par);
 				request_response.reset().println("2");
@@ -118,16 +118,25 @@ public class system_scene
 		scene_call_result ecr;
 		client_request_response request_response;
 		request_response=new client_request_response(network_implementor,system_par);
-		if((ecr=system_call_switch(request_response))!=null)
-			if(ecr.file_name!=null) 
-				request_response.response_file_data(ecr,system_par,string_locker_container);
-			else
+		if((ecr=system_call_switch(request_response))!=null) {
+			if(ecr.file_name==null) 
 				request_response.response_network_data(ecr,system_par);
+			else {
+				request_response.response_file_data(ecr,system_par,string_locker_container);
+				debug_information.println(ecr.file_name);
+			}
+		}
 		request_response.destroy();
 	}
-	public system_scene(String environment_file_name)
+	public void process_option(network_implementation network_implementor)
 	{
-		system_par=new system_parameter(new scene_environment(environment_file_name));
+		network_implementor.set_option_http_header(system_par.access_control_max_age);
+	}
+	public system_scene(String scene_data_path_name,
+			String scene_temparatory_path_name,String scene_environment_path_name)
+	{
+		system_par=new system_parameter(scene_data_path_name,
+				scene_temparatory_path_name,scene_environment_path_name);
 		
 		int number=system_par.max_client_container_number;
 		client_interface_search_tree_array=new client_interface_search_tree[number];

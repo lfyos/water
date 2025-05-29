@@ -31,7 +31,7 @@ public class system_parameter
 	public double create_scene_sleep_time_length_scale;
 	public long create_scene_sleep_time_length,create_scene_max_sleep_time_length;
 	
-	public long show_process_bar_interval,file_buffer_expire_time_length;
+	public long show_process_bar_interval,file_buffer_expire_time_length,access_control_max_age;
 	
 	public int max_client_container_number,max_client_interface_number;
 	
@@ -44,10 +44,9 @@ public class system_parameter
 	
 	public double box_distance_difference_scale,buffer_data_length_difference_scale; 
 	
-	public scene_environment scene_env;
-	public change_name language_change_name,content_type_change_name;
+	public change_name scene_environment,language_change_name,content_type_change_name;
 	public temporary_file_parameter temporary_file_par;
-	public switch_scene_server	switch_server;
+	public switch_scene_server		switch_server;
 
 	public system_parameter(system_parameter sp)
 	{
@@ -86,6 +85,7 @@ public class system_parameter
 		
 		show_process_bar_interval			=sp.show_process_bar_interval;
 		file_buffer_expire_time_length		=sp.file_buffer_expire_time_length;
+		access_control_max_age				=sp.access_control_max_age;
 
 		max_client_container_number			=sp.max_client_container_number;
 		max_client_interface_number			=sp.max_client_interface_number;
@@ -103,26 +103,24 @@ public class system_parameter
 		box_distance_difference_scale		=sp.box_distance_difference_scale;
 		buffer_data_length_difference_scale	=sp.buffer_data_length_difference_scale;
 		
-		scene_env							=new scene_environment(sp.scene_env);
+		scene_environment					=new change_name(sp.scene_environment,false);
 		language_change_name				=new change_name(sp.language_change_name,false);
 		content_type_change_name			=new change_name(sp.content_type_change_name,false);
 		
 		temporary_file_par					=sp.temporary_file_par;
 		switch_server						=sp.switch_server;
 	}
-	public system_parameter(scene_environment my_scene_env)
+	public system_parameter(String scene_data_path_name,
+			String scene_temparatory_path_name,String scene_environment_path_name)
 	{
-		String data_file_configure_file_name		=my_scene_env.get_data_path_name();
-		String temporary_file_configure_file_name	=my_scene_env.get_temparatory_path_name();
-
 		debug_information.println();
-		debug_information.println("data_file_configure_file_name:		",	data_file_configure_file_name);
-		debug_information.println("temporary_file_configure_file_name:	",	temporary_file_configure_file_name);
+		debug_information.println("data_file_configure_file_name:		",	scene_data_path_name);
+		debug_information.println("temporary_file_configure_file_name:	",	scene_temparatory_path_name);
 
-		file_reader f=new file_reader(data_file_configure_file_name,Charset.defaultCharset().name());
+		file_reader f=new file_reader(scene_data_path_name,Charset.defaultCharset().name());
 		
 		if(f.error_flag()){
-			debug_information.println("Can't not open system_parameter file	",data_file_configure_file_name);
+			debug_information.println("Can't not open system_parameter file	",scene_data_path_name);
 			debug_information.println("do System.exit(0)");
 			System.exit(0);
 			return;
@@ -134,7 +132,7 @@ public class system_parameter
 			local_data_charset=Charset.defaultCharset().name();
 		f.close();
 
-		f=new file_reader(data_file_configure_file_name,local_data_charset);
+		f=new file_reader(scene_data_path_name,local_data_charset);
 		data_root_directory_name=f.directory_name;
 		last_modified_time=f.lastModified_time;
 		
@@ -191,7 +189,21 @@ public class system_parameter
 		if((default_system_mount_component_name=f.get_string())==null)
 			default_system_mount_component_name="default_system_mount_component";
 		
-		scene_env=new scene_environment(my_scene_env);
+
+		scene_environment_path_name=file_reader.separator(scene_environment_path_name);
+		if(!(new File(scene_environment_path_name).exists())) {
+			debug_information.println("scene_environment file NOT exist:	",scene_environment_path_name);
+			scene_environment=new change_name(null,null);
+		}else {
+			file_reader env_f=new file_reader(scene_environment_path_name,Charset.defaultCharset().name());
+			String file_charset=env_f.get_string();
+			env_f.close();
+				
+			env_f=new file_reader(scene_environment_path_name,file_charset);
+			env_f.get_string();
+			scene_environment=new change_name(new file_reader[] {env_f},null);
+			env_f.close();
+		}
 		
 		String language_change_file_name;
 		if((language_change_file_name=f.get_string())==null)
@@ -224,6 +236,7 @@ public class system_parameter
 		
 		show_process_bar_interval				=f.get_long();
 		file_buffer_expire_time_length			=f.get_long();
+		access_control_max_age					=f.get_long();
 		
 		max_client_container_number				=f.get_int();
 		max_client_interface_number				=f.get_int();
@@ -243,11 +256,12 @@ public class system_parameter
 		
 		f.close();
 		
-		temporary_file_par=new temporary_file_parameter(temporary_file_configure_file_name,local_data_charset);
+		temporary_file_par=new temporary_file_parameter(scene_temparatory_path_name,local_data_charset);
 		language_change_name=new change_name(
 				new String[]{data_root_directory_name+language_change_file_name},null,local_data_charset);
 		content_type_change_name=get_content_type_change_name.get_change_name(text_class_charset,text_jar_file_charset);
 		switch_server=new switch_scene_server(data_root_directory_name+switch_server_url_file_name,local_data_charset);
+	
 		return;
 	}
 }

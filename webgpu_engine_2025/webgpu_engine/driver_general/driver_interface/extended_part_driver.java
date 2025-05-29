@@ -68,7 +68,7 @@ public class extended_part_driver extends part_driver
 	{
 		return new extended_component_driver(my_component_part,	fr.get_boolean(),
 				fr.get_double()*depth_step,fr.get_double(),fr.get_double(),
-				fr.directory_name+file_reader.separator(fr.get_string()),
+				fr.directory_name,file_reader.separator(fr.get_string()),
 				fr.get_charset(),always_show_flag);
 	}
 	public part_instance_driver create_part_instance_driver(part p,

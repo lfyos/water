@@ -1,4 +1,11 @@
-		default_proxy_url
+//		default_proxy_url
+
+//		https://localhost:8443/webgpu_engine/water?channel=buffer&file=
+
+//		https://192.168.71.250/water?channel=buffer&file=
+
+		https://192.168.71.6:8443/webgpu_engine/water?channel=buffer&file=
+
 
 //		http://localhost:8080/interface.jsp?channel=buffer&file=		
 //		http://localhost:8080/webgl_engine_2020/graphics_engine_interface?channel=buffer&file=

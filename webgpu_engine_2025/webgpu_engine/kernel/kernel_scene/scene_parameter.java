@@ -83,7 +83,7 @@ public class scene_parameter
 			break;
 		case "environment_directory":
 			if((path_directory_name=fr.get_string())!=null)
-				if((path_directory_name=system_par.scene_env.get_environment(path_directory_name))!=null)
+				if((path_directory_name=system_par.scene_environment.search_change_name(path_directory_name,null))!=null)
 					if((path_directory_name=file_directory.delete_separator(path_directory_name)).length()>0) {
 						path_directory_name+=File.separatorChar;
 						break;

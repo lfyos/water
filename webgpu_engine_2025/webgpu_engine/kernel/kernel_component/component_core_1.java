@@ -77,7 +77,7 @@ public class component_core_1 extends component_core_0
 				name	=fr.get_string();
 				sepa	=fr.get_string();
 				if((name!=null)&&(sepa!=null))
-					if((name=system_par.scene_env.get_environment(name.trim()))!=null)
+					if((name=system_par.scene_environment.search_change_name(name.trim(),null))!=null)
 						return new location(name.trim(),sepa.trim());
 				return new location();
 			case "client_environment_location":
@@ -86,7 +86,7 @@ public class component_core_1 extends component_core_0
 				if((name!=null)&&(sepa!=null))
 					if((name=request_response.get_parameter(name.trim()))!=null)
 						if((name=name.trim()).length()>0)
-							if((name=system_par.scene_env.get_environment(name))!=null)
+							if((name=system_par.scene_environment.search_change_name(name,null))!=null)
 								return new location(name.trim(),sepa.trim());
 				return new location();
 			case "relative_file_location":
