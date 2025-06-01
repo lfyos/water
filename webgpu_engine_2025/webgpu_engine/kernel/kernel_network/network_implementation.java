@@ -161,13 +161,5 @@ public class network_implementation
 				request.getHeader("Access-Control-Request-Headers"));
 		response.setHeader("Access-Control-Allow-Origin",
 				request.getHeader("Origin"));
-	
-		
-		debug_information.println("Access-Control-Allow-Methods",
-				request.getHeader("Access-Control-Request-Method"));
-		debug_information.println("Access-Control-Allow-Headers",	
-				request.getHeader("Access-Control-Request-Headers"));
-		debug_information.println("Access-Control-Allow-Origin",
-				request.getHeader("Origin"));
 	}
 }

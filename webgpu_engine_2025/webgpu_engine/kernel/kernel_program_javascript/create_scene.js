@@ -61,7 +61,7 @@ async function create_scene_routine(my_webgpu,
 			my_create_parameter.language,
 			my_default_fetch_parameter);
 	
-	process_bar_object.destroy();
+	process_bar_object.mark_terminated_flag=true;
 	
 	return scene;
 };

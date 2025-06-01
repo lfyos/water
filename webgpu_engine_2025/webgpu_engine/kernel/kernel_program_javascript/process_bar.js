@@ -1,5 +1,7 @@
 function construct_process_bar(my_webgpu,my_draw_canvas_id,my_user_process_bar_function,my_process_bar_url)
 {
+	this.mark_terminated_flag			=false;
+	
 	this.webgpu							=my_webgpu;
 	
 	this.draw_canvas_id					=my_draw_canvas_id;
@@ -38,8 +40,7 @@ function construct_process_bar(my_webgpu,my_draw_canvas_id,my_user_process_bar_f
 	};	
 	this.draw_process_bar=async function()
 	{
-		for(;this.process_bar_data!=null;){
-			
+		while(this.process_bar_data!=null){
 			var p=(new Date().getTime()-this.set_time)/this.process_bar_data.show_process_bar_interval;
 			if(p<0.0)
 				p=0.0;
@@ -72,6 +73,10 @@ function construct_process_bar(my_webgpu,my_draw_canvas_id,my_user_process_bar_f
 						height	:	this.webgpu.canvas[this.draw_canvas_id].height
 					}
 				);
+			if(this.mark_terminated_flag){
+				this.destroy();
+				return;
+			}
 			await new Promise(resolve=>window.requestAnimationFrame(resolve));
 		}
 	};
@@ -82,7 +87,9 @@ function construct_process_bar(my_webgpu,my_draw_canvas_id,my_user_process_bar_f
 		process_bar+="&container="	+this.process_bar_data.container_id;
 		process_bar+="&process_bar="+this.process_bar_data.process_bar_id;
 			
-		while(this.process_bar_data!=null){
+		while(true){
+			if(this.process_bar_data==null)
+				break;
 			var start_time=new Date().getTime();
 			var data_promise=await fetch(process_bar,my_default_fetch_parameter.load_process_bar_data);
 			if(!(data_promise.ok)){
@@ -90,6 +97,8 @@ function construct_process_bar(my_webgpu,my_draw_canvas_id,my_user_process_bar_f
 				alert("show_process_bar fail:"+data_promise.status);
 				return;
 			}
+			if(this.process_bar_data==null)
+				break;
 			var response_data;
 			try{
 				response_data = await data_promise.json();
@@ -98,7 +107,8 @@ function construct_process_bar(my_webgpu,my_draw_canvas_id,my_user_process_bar_f
 				alert("parse show_process_bar fail:"+e.toString());
 				return;
 			}
-
+			if(this.process_bar_data==null)
+				break;
 			this.process_bar_current_last		=this.process_bar_current;
 		
 			this.process_bar_caption			=response_data.caption;

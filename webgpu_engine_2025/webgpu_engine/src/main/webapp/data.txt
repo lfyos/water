@@ -11,7 +11,7 @@ Access-Control-Allow-Methods			GET,POST,PUT,DELETE,HEAD,OPTIONS
 Access-Control-Allow-Origin				*
 
 
-<Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+	<Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
                maxThreads="150" SSLEnabled="true">
         <UpgradeProtocol className="org.apache.coyote.http2.Http2Protocol" />
         <SSLHostConfig>

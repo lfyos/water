@@ -36,7 +36,7 @@ var scene_container;
 
 async function body_onload()
 {
-//	var url="https://192.168.71.250/water";
+//	var url="https://192.168.71.2:8443/webgpu_engine//water";
 	var url="./water";
 	var client_scene_name="my_client_scene_name";
 	

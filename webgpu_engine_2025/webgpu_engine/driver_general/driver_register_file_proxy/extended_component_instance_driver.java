@@ -26,15 +26,17 @@ public class extended_component_instance_driver extends component_instance_drive
 				f.close();
 				return;
 			}
-			String my_url;
-			if((my_url=f.get_string())==null)
-				continue;
-			if((my_url=my_url.trim()).length()<=0)
-				continue;
-			if(my_url.toLowerCase().compareTo("default_proxy_url")==0)
-				my_url=ci.request_response.implementor.get_url()+"?channel=buffer&file=";
+			boolean my_file_proxy_date_flag	=f.get_boolean();
+			String my_file_proxy_url		=f.get_string();
 			
-			ci.add_file_proxy_url(my_url);
+			if(my_file_proxy_url==null)
+				continue;
+			if((my_file_proxy_url=my_file_proxy_url.trim()).length()<=0)
+				continue;
+			if(my_file_proxy_url.toLowerCase().compareTo("default_proxy_url")==0)
+				my_file_proxy_url=ci.request_response.implementor.get_url()+"?channel=buffer&file=";
+			
+			ci.add_file_proxy_url(my_file_proxy_url,my_file_proxy_date_flag);
 		}
 	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
