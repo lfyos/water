@@ -2,22 +2,20 @@ package kernel_interface;
 
 import java.io.File;
 
-import kernel_common_class.debug_information;
-import kernel_common_class.http_modify_string;
-import kernel_network.client_request_response;
-
 import kernel_scene.system_parameter;
 import kernel_scene.scene_call_result;
+import kernel_common_class.debug_information;
+import kernel_network.client_request_response;
 
 public class file_download_manager 
 {
-	public static scene_call_result download(client_request_response request_response,system_parameter system_par)
+	private static scene_call_result download_routine(
+			String request_url,String request_charset,
+			client_request_response request_response,system_parameter system_par)
 	{
-		String file_name		=request_response.get_parameter("file");
-		String request_url		=request_response.implementor.get_url();
-		String request_charset	=request_response.implementor.get_request_charset();
+		String file_name;
 		
-		if(file_name==null) {
+		if((file_name=request_response.get_parameter("file"))==null) {
 			debug_information.println("Request file is null in downloader,url is ",request_url);
 			debug_information.println();
 			return null;
@@ -28,9 +26,8 @@ public class file_download_manager
 			return null;
 		}
 		try{
-			file_name=java.net.URLDecoder.decode(file_name,	request_charset);
-			file_name=java.net.URLDecoder.decode(file_name,	request_charset);
-			
+			file_name=java.net.URLDecoder.decode(file_name,request_charset);
+			file_name=java.net.URLDecoder.decode(file_name,request_charset);
 		}catch(Exception e){
 			e.printStackTrace();
 			debug_information.println("Decode file name fail in downloader,url is ",request_url);
@@ -45,8 +42,8 @@ public class file_download_manager
 			debug_information.println(file_name);
 			return null;
 		}
-		long file_last_time=f.lastModified();
 		
+		long file_last_time=f.lastModified();
 		String request_file_date;
 		if((request_file_date=request_response.get_parameter("date"))!=null){
 			if((request_file_date=request_file_date.trim()).length()<=0){
@@ -54,20 +51,7 @@ public class file_download_manager
 				debug_information.println();
 				return null;
 			}
-			long request_file_date_long;
-			try{
-				request_file_date=java.net.URLDecoder.decode(request_file_date,	request_charset);
-				request_file_date=java.net.URLDecoder.decode(request_file_date,	request_charset);
-				request_file_date_long=Long.decode(request_file_date);
-			}catch(Exception e){
-				e.printStackTrace();
-				
-				debug_information.println("Decode file date fail in downloader,url is ",request_url);
-				debug_information.println(e.toString());
-				debug_information.println();
-				return null;
-			}
-			if(file_last_time!=request_file_date_long){
+			if(Long.decode(request_file_date)!=file_last_time){
 				debug_information.println("Request file date error in downloader,url is ",request_url);
 				debug_information.println(file_name);
 				debug_information.println("Request file date:	",request_file_date);
@@ -75,20 +59,44 @@ public class file_download_manager
 				return null;
 			}
 		}
-		
 		String request_modified_str;
 		if((request_modified_str=request_response.implementor.get_header("If-Modified-Since"))!=null)
-			if(http_modify_string.parse(request_modified_str)>=file_last_time){
+			if(system_par.http_date_str.parse(request_modified_str)>=file_last_time){
 				request_response.implementor.response_not_modify(
 					"response_not_modify in execute_file_call of client_interface\n file name is "+file_name);
-				return null;
+				return new scene_call_result(null,system_par);
 			}
 		String file_charset;
 		if((file_charset=request_response.get_parameter("file_charset"))==null)
 			file_charset=system_par.network_data_charset;
 		else if((file_charset=file_charset.trim()).length()<=0)
 			file_charset=system_par.network_data_charset;
-			
-		return new scene_call_result(f,file_charset,system_par);
+		return new scene_call_result(f,file_charset,true,system_par);
+	}
+	public static scene_call_result download(
+			client_request_response request_response,system_parameter system_par)
+	{
+		String request_url	=request_response.implementor.get_url();
+		String request_charset=request_response.implementor.get_request_charset();
+	
+		scene_call_result ret_val;
+		if((ret_val=download_routine(request_url,request_charset,request_response,system_par))!=null)
+			return (ret_val.file_name==null)?null:ret_val;
+		
+		String file_origin_url,decode_file_origin_url;
+		if((file_origin_url=request_response.get_parameter("file_origin"))==null)
+			return null;
+		try{
+			decode_file_origin_url=java.net.URLDecoder.decode(file_origin_url,		request_charset);
+			decode_file_origin_url=java.net.URLDecoder.decode(decode_file_origin_url,request_charset);
+		}catch(Exception e){
+			e.printStackTrace();
+			debug_information.println("Decode file_origin_url fail in downloader,file_origin_url is ",file_origin_url);
+			debug_information.println(e.toString());
+			debug_information.println();
+			return null;
+		}
+		request_response.implementor.redirect_url(decode_file_origin_url);
+		return null;
 	}
 }

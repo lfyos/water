@@ -103,7 +103,7 @@ public class dispatch_request_main
 					file_charset=file_name[1];
 		
 		if((url=ci.get_file_proxy_url(file_name[0],file_charset,sk.system_par))==null) 
-			return new scene_call_result(f,file_charset,sk.system_par);
+			return new scene_call_result(f,file_charset,false,sk.system_par);
 		
 		ci.request_response.implementor.redirect_url(url);
 		return null;

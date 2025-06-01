@@ -1,10 +1,9 @@
 
 var default_fetch_parameter={
 
-
 	request_process_bar	:
 	{
-   		method	:	"GET",
+   		method	:	"POST",
    		cache	:	"no-cache",
    		mode	:	"cors",
    		headers: 
@@ -16,7 +15,7 @@ var default_fetch_parameter={
    	},
 	load_process_bar_data	:
 	{
-   		method	:	"GET",
+   		method	:	"POST",
    		cache	:	"no-cache",
    		mode	:	"cors",
    		headers: 
@@ -28,7 +27,7 @@ var default_fetch_parameter={
    	},
 	request_create_engine	:
 	{
-   		method	:	"GET",
+   		method	:	"POST",
    		cache	:	"no-cache",
    		mode	:	"cors",
    		headers: 
@@ -40,7 +39,7 @@ var default_fetch_parameter={
    	},
 	request_render_data	:
 	{
-   		method	:	"GET",
+   		method	:	"POST",
    		cache	:	"no-cache",
    		mode	:	"cors",
    		headers: 
@@ -52,7 +51,7 @@ var default_fetch_parameter={
    	},
    	load_collector	:
 	{
-   		method	:	"GET",
+   		method	:	"POST",
    		cache	:	"no-cache",
    		mode	:	"cors",
    		headers: 

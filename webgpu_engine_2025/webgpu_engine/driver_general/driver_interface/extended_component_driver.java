@@ -1,12 +1,12 @@
 package driver_interface;
 
-import kernel_component.component;
-import kernel_driver.component_driver;
-import kernel_driver.component_instance_driver;
-import kernel_file_manager.file_writer;
-import kernel_network.client_request_response;
 import kernel_part.part;
 import kernel_scene.scene_kernel;
+import kernel_component.component;
+import kernel_driver.component_driver;
+import kernel_file_manager.file_writer;
+import kernel_network.client_request_response;
+import kernel_driver.component_instance_driver;
 
 public class extended_component_driver  extends component_driver
 {
@@ -47,9 +47,8 @@ public class extended_component_driver  extends component_driver
 //		String parameter_directory_name=sk.scene_par.directory_name;
 		
 		comp.uniparameter.display_part_name_or_component_name_flag=false;
-		
-		temp_path_name=file_writer.get_temparatory_path_name(this,
-				directory_name,file_name,sk.system_par,sk.scene_par);
+		temp_path_name=file_writer.component_temparatory_path_name(
+			comp.component_id,driver_id,directory_name,file_name,sk.scene_par);
 		return;
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,

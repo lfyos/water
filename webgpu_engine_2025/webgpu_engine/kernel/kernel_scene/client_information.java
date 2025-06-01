@@ -198,29 +198,36 @@ public class client_information
 			return null;
 		proxy_file_name=proxy_file_name.substring(proxy_directory_name_length);
 		
-		file_proxy_pointer=(file_proxy_pointer+1)%(file_proxy_cont.size());
-		file_proxy_container fpc=file_proxy_cont.get(file_proxy_pointer);
-		String proxy_url=fpc.file_proxy_url;
-
 		String code_str=request_response.implementor.get_request_charset();
-		try{
-			proxy_file_name	=java.net.URLEncoder.encode(
-					java.net.URLEncoder.encode(proxy_file_name,code_str),code_str);
+		try {
+			proxy_file_name	=java.net.URLEncoder.encode(proxy_file_name,code_str);
+			proxy_file_name	=java.net.URLEncoder.encode(proxy_file_name,code_str);
 		}catch(Exception e) {
 			;
 		}
-		proxy_url+=proxy_file_name;
 		
 		if(file_charset==null)
 			file_charset=system_par.network_data_charset;
 		else if((file_charset=file_charset.trim()).length()<=0)
 			file_charset=system_par.network_data_charset;
-		
+
+		file_proxy_pointer=(file_proxy_pointer+1)%(file_proxy_cont.size());
+		file_proxy_container fpc=file_proxy_cont.get(file_proxy_pointer);
+		String proxy_url=fpc.file_proxy_url+proxy_file_name;
 		proxy_url+="&file_charset="+file_charset;
-		
 		if(fpc.file_proxy_date_flag)
 			proxy_url+="&date="+f.lastModified();
 		
+		String this_proxy_url=request_response.implementor.get_url()+"?channel=buffer&file=";
+		this_proxy_url+=proxy_file_name+"&file_charset="+file_charset+"&date="+f.lastModified();
+		try{
+			this_proxy_url	=java.net.URLEncoder.encode(this_proxy_url,code_str);
+			this_proxy_url	=java.net.URLEncoder.encode(this_proxy_url,code_str);
+		}catch(Exception e) {
+			;
+		}
+		proxy_url+="&file_origin="+this_proxy_url;
+
 		return proxy_url;
 	}
 	public void add_file_proxy_url(String my_file_proxy_url,boolean my_file_proxy_date_flag)
@@ -290,13 +297,13 @@ public class client_information
 		
 		message_display		=new display_message();	
 		
-		request_url_header=request_response.implementor.get_url();
-		request_url_header+="?channel="		+channel_id;
-		request_url_header+="&container="	+request_response.container_id;
-		request_url_header+="&user_name="	+request_response.user_name;
-		request_url_header+="&pass_word="	+request_response.pass_word;
-		request_url_header+="&language="	+request_response.language_str;
-		
+		request_url_header	 =request_response.implementor.get_url();
+		request_url_header	+="?channel="		+channel_id;
+		request_url_header	+="&container="	+request_response.container_id;
+		request_url_header	+="&user_name="	+request_response.user_name;
+		request_url_header	+="&pass_word="	+request_response.pass_word;
+		request_url_header	+="&language="	+request_response.language_str;
+
 		return;
 	}
 	

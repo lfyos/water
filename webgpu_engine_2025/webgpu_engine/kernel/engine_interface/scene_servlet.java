@@ -53,6 +53,11 @@ public class scene_servlet extends HttpServlet
     	String my_scene_data_path_name,my_scene_temparatory_path_name,my_scene_environment_path_name;
 		
     	switch(scene_servlet_type) {
+    	default:
+    		my_scene_data_path_name			=scene_data_path_name;
+    		my_scene_temparatory_path_name	=scene_temparatory_path_name;
+    		my_scene_environment_path_name	=scene_environment_path_name;
+    		break;
     	case "servlet_initialization_parameter":
     		my_scene_data_path_name			=config.getInitParameter(scene_data_path_name);
     		my_scene_temparatory_path_name	=config.getInitParameter(scene_temparatory_path_name);
@@ -62,9 +67,7 @@ public class scene_servlet extends HttpServlet
         	debug_information.println("servlet:scene_data_path_name:	",		my_scene_data_path_name);
         	debug_information.println("servlet:scene_temparatory_path_name:	",	my_scene_temparatory_path_name);
         	debug_information.println("servlet:scene_environment_path_name:	",	my_scene_environment_path_name);
-        	
-    		scene=new system_scene(my_scene_data_path_name,
-    					my_scene_temparatory_path_name,my_scene_environment_path_name);
+
     		break;
     	case "system_environment_variable":
     		my_scene_data_path_name			=System.getenv(scene_data_path_name);
@@ -75,11 +78,11 @@ public class scene_servlet extends HttpServlet
         	debug_information.println("environment:scene_data_path_name:	",		my_scene_data_path_name);
         	debug_information.println("environment:scene_temparatory_path_name:	",	my_scene_temparatory_path_name);
         	debug_information.println("environment:scene_environment_path_name:	",	my_scene_environment_path_name);
-     		
-    		scene=new system_scene(my_scene_data_path_name,
-					my_scene_temparatory_path_name,my_scene_environment_path_name);
+  
     		break;
     	}
+    	scene=new system_scene(my_scene_data_path_name,
+				my_scene_temparatory_path_name,my_scene_environment_path_name);
 	}
 	protected void doGet(HttpServletRequest request,HttpServletResponse response)
 		throws ServletException,IOException 

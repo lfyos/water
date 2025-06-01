@@ -57,7 +57,8 @@ public class extended_component_instance_driver extends component_instance_drive
 			file_reader.get_text(ci.request_response,temp_path_name,file_charset);
 		}else{
 			String url=ci.get_component_request_url_header(comp.component_id,driver_id);
-			ci.request_response.println("	\"url\"	:	",jason_string.change_string(url+"&operation=file"));
+			ci.request_response.println("	\"url\"	:	",
+					jason_string.change_string(url+"&operation=file"));
 		}
 		ci.request_response.println("}");
 	}

@@ -8,8 +8,6 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 
 import kernel_scene.scene_parameter;
-import kernel_scene.system_parameter;
-import kernel_driver.component_driver;
 import kernel_common_class.common_writer;
 import kernel_common_class.debug_information;
 
@@ -408,13 +406,13 @@ public class file_writer extends common_writer
 		new delete_comment_travel_through_directory().do_travel(directory_or_file_name,false);
 	}
 	
-	public static String get_temparatory_path_name(component_driver comp_driver,
-			String directory_name,String file_name,system_parameter system_par,scene_parameter scene_par)
+	public static String component_temparatory_path_name(int component_id,int driver_id,
+			String directory_name,String file_name,scene_parameter scene_par)
 	{
 		String my_path_name=directory_name+file_name;
-		String my_temp_path_name=file_directory.component_driver_temparatory_directory(
-					comp_driver,system_par,scene_par)+file_name;
-		if(new File(my_temp_path_name).lastModified()<=new File(my_path_name).lastModified())
+		String my_temp_path_name=file_directory.
+				component_temparatory_directory(component_id,driver_id,scene_par)+file_name;
+		if(new File(my_temp_path_name).lastModified()<new File(my_path_name).lastModified())
 			file_copy(my_path_name,my_temp_path_name);
 
 		return my_temp_path_name;

@@ -2,14 +2,13 @@ package kernel_program_javascript;
 
 import java.io.File;
 
+import kernel_scene.system_parameter;
+import kernel_scene.scene_call_result;
 import kernel_file_manager.file_reader;
-import kernel_common_class.http_modify_string;
-import kernel_common_class.class_file_reader;
 import kernel_common_class.common_reader;
+import kernel_common_class.class_file_reader;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
-import kernel_scene.scene_call_result;
-import kernel_scene.system_parameter;
 
 public class javascript_program
 {
@@ -78,7 +77,7 @@ public class javascript_program
 
 		String request_modified_str;
 		if((request_modified_str=request_response.implementor.get_header("If-Modified-Since"))!=null)
-			if(http_modify_string.parse(request_modified_str)>=last_modified_time){
+			if(system_par.http_date_str.parse(request_modified_str)>=last_modified_time){
 				request_response.implementor.response_not_modify("javascript_program response_not_modify()");
 				return null;
 			}

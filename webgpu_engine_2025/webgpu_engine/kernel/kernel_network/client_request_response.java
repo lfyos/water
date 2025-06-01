@@ -213,7 +213,7 @@ public class client_request_response extends common_writer
 		
 		implementor.set_response_http_header(
 			get_charset(),ecr.response_content_type,compress_response_header,
-			ecr.last_modified_time,system_par.file_buffer_expire_time_length);
+			ecr.last_modified_time,system_par.file_buffer_expire_time_length,system_par.http_date_str);
 		implementor.response_binary_data("response_network_data error",data_buf,data_buf.length);
 		implementor.terminate_response_binary_data("Error 3 in response_network_data");
 		
@@ -345,8 +345,8 @@ public class client_request_response extends common_writer
 		
 		implementor.set_response_http_header(
 			(ecr.file_charset==null)?get_charset():ecr.file_charset,
-			ecr.response_content_type,compress_response_header,
-			ecr.last_modified_time,system_par.file_buffer_expire_time_length);
+			ecr.response_content_type,compress_response_header,ecr.last_modified_time,
+			system_par.file_buffer_expire_time_length,system_par.http_date_str);
 
 		byte data_buf[]=new byte[system_par.response_block_size];
 		FileInputStream 	s_stream=null;
@@ -355,6 +355,20 @@ public class client_request_response extends common_writer
 			s_stream=new FileInputStream(f);
 			s_buf	=new BufferedInputStream(s_stream);	
 			s_buf.skip(file_range[0]);
+			
+			
+			
+			
+			debug_information.println(
+					"Length:"+((file_range[1]-file_range[0])/1024)+"/"+(f.length()/1024)
+					+",Start:"+(file_range[0]/1024)+",End:"+(file_range[1]/1024)+"\t",
+					
+					f.getAbsolutePath());
+			
+			
+			
+			
+			
 			
 			for(long i=file_range[0],length;i<=file_range[1];i+=length){
 				length=file_range[1]-i+1;

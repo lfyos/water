@@ -5,14 +5,14 @@ import java.io.InputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import kernel_common_class.http_date_string;
 import kernel_common_class.debug_information;
-import kernel_common_class.http_modify_string;
 
 public class network_implementation
 {
 	//request
 	private HttpServletRequest	request;
-	private HttpServletResponse 	response;
+	private HttpServletResponse response;
 	
 	private String request_charset,client_id;
 	
@@ -95,24 +95,21 @@ public class network_implementation
 			print_error(true,"Error in response_not_modify\t",e,"Client_id:"+client_id,error_msg);
 		}
 	}
-	public void set_response_http_header(
-			String server_response_charset,String content_type,
-			String compress_response_header,
-			long last_time,long max_time_length)
+	public void set_response_http_header(String response_charset,String content_type,
+			String compress_header,long last_time,long max_time_length,http_date_string http_date_str)
 	{
-		response.setCharacterEncoding(server_response_charset);
+		response.setCharacterEncoding(response_charset);
 		response.setContentType(content_type);
 
 		response.setHeader("Access-Control-Allow-Origin","*");
-		if(compress_response_header!=null)
-			response.setHeader("Content-Encoding",compress_response_header);
+		if(compress_header!=null)
+			response.setHeader("Content-Encoding",compress_header);
 
 		if(last_time<=0)
 			response.setHeader("Cache-Control","no-store");
-		else {
-			response.setHeader("Cache-Control","public");
-			response.addHeader("Cache-Control","max-age="+max_time_length);
-			response.setHeader("Last-Modified",http_modify_string.string(last_time));
+		else{
+			response.setHeader("Cache-Control","public, max-age="+max_time_length);
+			response.setHeader("Last-Modified",http_date_str.date_string(last_time));
 		}
 	}
 	public boolean response_binary_data(String error_msg,byte data_buf[],int length)
@@ -153,13 +150,9 @@ public class network_implementation
 	}
 	public void set_option_http_header(long access_control_max_age)
 	{
-		response.setHeader("Access-Control-Max-Age",
-				Long.toString(access_control_max_age));
-		response.setHeader("Access-Control-Allow-Methods",
-				request.getHeader("Access-Control-Request-Method"));
-		response.setHeader("Access-Control-Allow-Headers",	
-				request.getHeader("Access-Control-Request-Headers"));
-		response.setHeader("Access-Control-Allow-Origin",
-				request.getHeader("Origin"));
+		response.setHeader("Access-Control-Allow-Origin",	request.getHeader("Origin"));
+		response.setHeader("Access-Control-Max-Age",		Long.toString(access_control_max_age));
+		response.setHeader("Access-Control-Allow-Methods",	request.getHeader("Access-Control-Request-Method"));
+		response.setHeader("Access-Control-Allow-Headers",	request.getHeader("Access-Control-Request-Headers"));
 	}
 }

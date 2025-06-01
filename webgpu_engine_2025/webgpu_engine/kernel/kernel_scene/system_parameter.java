@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import kernel_file_manager.file_reader;
 import kernel_common_class.change_name;
 import kernel_interface.switch_scene_server;
+import kernel_common_class.http_date_string;
 import kernel_common_class.debug_information;
 import kernel_content_type.get_content_type_change_name;
 import kernel_network.network_implementation_default_parameter;
@@ -47,6 +48,7 @@ public class system_parameter
 	public change_name scene_environment,language_change_name,content_type_change_name;
 	public temporary_file_parameter temporary_file_par;
 	public switch_scene_server		switch_server;
+	public http_date_string 		http_date_str;
 
 	public system_parameter(system_parameter sp)
 	{
@@ -109,6 +111,7 @@ public class system_parameter
 		
 		temporary_file_par					=sp.temporary_file_par;
 		switch_server						=sp.switch_server;
+		http_date_str						=sp.http_date_str;
 	}
 	public system_parameter(String scene_data_path_name,
 			String scene_temparatory_path_name,String scene_environment_path_name)
@@ -188,14 +191,15 @@ public class system_parameter
 		}
 		if((default_system_mount_component_name=f.get_string())==null)
 			default_system_mount_component_name="default_system_mount_component";
-		
 
 		scene_environment_path_name=file_reader.separator(scene_environment_path_name);
 		if(!(new File(scene_environment_path_name).exists())) {
-			debug_information.println("scene_environment file NOT exist:	",scene_environment_path_name);
+			debug_information.println(
+				"scene_environment file NOT exist:	",scene_environment_path_name);
 			scene_environment=new change_name(null,null);
 		}else {
-			file_reader env_f=new file_reader(scene_environment_path_name,Charset.defaultCharset().name());
+			file_reader env_f=new file_reader(
+				scene_environment_path_name,Charset.defaultCharset().name());
 			String file_charset=env_f.get_string();
 			env_f.close();
 				
@@ -261,7 +265,7 @@ public class system_parameter
 				new String[]{data_root_directory_name+language_change_file_name},null,local_data_charset);
 		content_type_change_name=get_content_type_change_name.get_change_name(text_class_charset,text_jar_file_charset);
 		switch_server=new switch_scene_server(data_root_directory_name+switch_server_url_file_name,local_data_charset);
-	
+		http_date_str=new http_date_string();		
 		return;
 	}
 }

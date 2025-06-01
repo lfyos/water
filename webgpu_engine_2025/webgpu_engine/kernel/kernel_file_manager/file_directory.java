@@ -5,7 +5,6 @@ import java.io.File;
 import kernel_part.part;
 import kernel_scene.scene_parameter;
 import kernel_scene.system_parameter;
-import kernel_driver.component_driver;
 import kernel_common_class.debug_information;
 
 public class file_directory 
@@ -94,12 +93,13 @@ public class file_directory
 		}
 		return package_directory;
 	}
-	public static String component_driver_temparatory_directory(
-			component_driver comp_driver,system_parameter system_par,scene_parameter scene_par)
+	public static String component_temparatory_directory(
+			int component_id,int driver_id,scene_parameter scene_par)
 	{
-		String temp_directory_name=file_directory.part_file_directory(
-				comp_driver.component_part,system_par,scene_par)+"component_";
-		String id_str=comp_driver.same_part_component_driver_id+File.separator;
-		return temp_directory_name+id_str;
+		String component_directory=scene_par.scene_temporary_directory_name;
+		component_directory+="scene_component_directory"+File.separatorChar;
+		component_directory+="component_"+component_id;
+		component_directory+=(driver_id>=0)?("_driver_"+driver_id):"_no_driver";
+		return component_directory+File.separatorChar;
 	}
 }

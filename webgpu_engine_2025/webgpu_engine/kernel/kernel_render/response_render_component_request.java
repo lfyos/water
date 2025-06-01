@@ -142,7 +142,8 @@ public class response_render_component_request
 							sk.system_par.network_data_charset,sk.system_par);
 					if(my_url==null)
 						my_url=url_directory+type_str[i]+j+"&random="+Math.random();
-					ci.request_response.print(item.buffer_object_text_file_length).print(",\"",my_url).print("\"");
+					ci.request_response.print(item.buffer_object_text_file_length).
+										print(",\"",my_url).print("\"");
 					ret_val++;
 				}
 				ci.request_response.print("]");

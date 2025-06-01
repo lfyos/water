@@ -4,13 +4,9 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 		my_default_fetch_parameter)
 {
 	var create_data;
-	
-	if(create_scene_sleep_time_length_scale<1.0)
-		create_scene_sleep_time_length_scale=1.0;
-	
-	for(var start_time=new Date().getTime;;create_scene_sleep_time_length*=create_scene_sleep_time_length_scale){
-		var engine_promise=await fetch(request_url,
-					my_default_fetch_parameter.request_create_scene);
+
+	for(var start_time=new Date().getTime;;){
+		var engine_promise=await fetch(request_url,my_default_fetch_parameter.request_create_scene);
 		if(!(engine_promise.ok)){
 			alert("Web server error when create scene,fetch fail:"+engine_promise.status);
 			return null;
@@ -21,22 +17,20 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 			alert("Web server error when create scene, NOT jason scene date:  "+e.toString());
 			return null;
 		}
-		if(Array.isArray(create_data))
+		if(!(Array.isArray(create_data))){
+			alert("Web server create scene fail(!(Array.isArray(create_data))):	"+create_data.toString());
+			return null;
+		}
+		if(create_data.length>0)
 			break;
-		if(typeof(create_data)!="number"){
-			alert("Web server error when create scene, response_data type error:"+typeof(create_data));
-			return null;
-		}
-		if(create_data!=0){
-			alert("Web server create scene fail:	"+create_data.toString());
-			return null;
-		}
 		if((new Date().getTime-start_time)>create_scene_max_sleep_time_length){
 			alert("Web server create scene fail:	try creation timeout!");
 			return null;
 		}
 		await new Promise(resolve=>{setTimeout(resolve,create_scene_sleep_time_length);});
-	}
+		if(create_scene_sleep_time_length_scale>1.0)			
+			create_scene_sleep_time_length*=create_scene_sleep_time_length_scale;
+	};
 	
 	var	my_render_init_data		=create_data[0];
 	var	my_part_init_data		=create_data[1];

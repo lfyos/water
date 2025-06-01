@@ -1,4 +1,7 @@
 		true		default_proxy_url
 
-//		false		https://192.168.71.250/water?channel=buffer&file=
+//		true		http://localhost:8080/webgpu_engine/water?channel=proxy&file=
 		
+//		true		http://192.168.71.2:8080/webgpu_engine/water?channel=buffer&file=
+		
+//		true		https://192.168.71.2:8443/webgpu_engine/water?channel=buffer&file=

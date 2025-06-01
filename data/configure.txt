@@ -29,7 +29,7 @@
 /*	create_scene_max_sleep_time_length									 	*/		1200000
 
 /*	show_process_bar_interval,	unit:millisecond							*/		1000
-/*	file_buffer_expire_time_length,	unit:second								*/		36000000
+/*	file_buffer_expire_time_length,	unit:second								*/		3600000
 /*	access_control_max_age,	unit:second										*/		3600
 
 /*	max_client_container_number												*/		20
