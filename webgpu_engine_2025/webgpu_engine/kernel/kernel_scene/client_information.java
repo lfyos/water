@@ -185,8 +185,21 @@ public class client_information
 			return null;
 		if(!(f.exists()))
 			return null;
-		if(f.length()<system_par.max_file_response_length)
-			return null;
+		if(f.length()<system_par.max_file_response_length){
+			int index_id;
+			String str=f.getAbsolutePath();
+			if((index_id=str.lastIndexOf('.'))<0)
+				return null;
+			str=str.substring(index_id+1);
+			str=system_par.content_type_change_name.search_change_name(str,null);
+			if(str==null)
+				return null;
+			if((index_id=str.indexOf(':'))<0)
+				return null;
+			str=str.substring(0,index_id).trim();
+			if(str.compareTo("link")!=0)
+				return null;
+		}
 		
 		String proxy_file_name=f.getAbsolutePath().replace(File.separatorChar,'/');
 		String proxy_directory_name=system_par.temporary_file_par.temporary_root_directory_name;

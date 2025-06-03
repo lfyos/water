@@ -34,15 +34,24 @@ var scene_container;
 }
 %>
 
+function body_onresize()
+{
+	var canvas_object=document.getElementById("my_canvas");
+	canvas_object.width	=window.innerWidth *0.95;
+	canvas_object.height=window.innerHeight*0.95;
+}
+
 async function body_onload()
 {
 //	var url="https://192.168.71.2:8443/webgpu_engine//water";
 	var url="./water";
 	var client_scene_name="my_client_scene_name";
-	
+
 	scene_container=await (await import(url)).scene_container_create(["my_canvas"]);
 	scene_container.event_scene_name=client_scene_name;
 	
+	body_onresize();
+
 //	await scene_container.this_scene_create(
 	await scene_container.url_scene_create(url,
 		client_scene_name,
@@ -69,12 +78,7 @@ async function body_onload()
 			max_loading_number		:	1,							//同时下载数量
 		});
 }
-function body_onresize()
-{
-	var canvas_object=document.getElementById("my_canvas");
-	canvas_object.width	=window.innerWidth *0.95;
-	canvas_object.height=window.innerHeight*0.95;
-}
+
 function body_onunload()
 {
 	if(typeof(scene_container)=="object")
@@ -82,12 +86,11 @@ function body_onunload()
 			if(typeof(scene_container.destroy)=="function")
 				scene_container.destroy();
 }
-
 </script>
 
 </head>
 
-<body onload="body_onresize();body_onload();" onresize="body_onresize();" onunload="body_onunload();" >
+<body onload="body_onload();" onresize="body_onresize();" onunload="body_onunload();" >
 
 <div align	="center">
 <canvas id	="my_canvas"	tabindex="0"	></canvas>

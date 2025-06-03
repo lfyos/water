@@ -1,16 +1,15 @@
 package driver_movement;
 
-
+import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_driver.component_driver;
-import kernel_scene.scene_kernel;
 import kernel_common_class.debug_information;
 
 public class movement_configuration_parameter
 {
 	public String movement_file_charset,movement_file_name,design_file_name;
 	public String temporary_file_directory,sound_pre_string;
-	public int component_id,location_component_id,audio_component_id;
+	public int component_id,driver_id,location_component_id,audio_component_id;
 	public int movement_modifier_container_id,camera_modifier_container_id;
 	public int virtual_mount_root_component_id,mouse_modify_location_component_id; 
 
@@ -49,6 +48,7 @@ public class movement_configuration_parameter
 		camera_modifier_container_id=my_camera_modifier_container_id;
 	
 		component_id=my_comp.component_id;
+		driver_id	=my_driver_id;
 		
 		location_component_id=-1;
 		if((my_comp=sk.component_cont.search_component(location_component_name))!=null)

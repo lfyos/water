@@ -21,7 +21,7 @@ public class movement_focus_modifier extends modifier_driver
 	private int follow_component_id[];
 	private location follow_component_location[];
 	
-	private String node_name,description,sound_file_name;
+	private String node_name,description,sound_buffer_file_name;
 
 	public void destroy()
 	{
@@ -37,6 +37,10 @@ public class movement_focus_modifier extends modifier_driver
 		terminate_location=null;
 		follow_component_id=null;
 		follow_component_location=null;
+		
+		node_name=null;
+		description=null;
+		sound_buffer_file_name=null;
 	}
 	
 	public movement_focus_modifier(movement_parameter my_parameter,long my_current_movement_id,
@@ -45,7 +49,7 @@ public class movement_focus_modifier extends modifier_driver
 			long start_time,movement_switch_camera_modifier my_swcm,
 			double my_scale_value,location my_direction,
 			location my_start_location, location my_terminate_location,
-			String my_node_name,String my_description,String my_sound_file_name)
+			String my_node_name,String my_description,String my_sound_buffer_file_name)
 	{
 		super(start_time,start_time);
 		
@@ -63,9 +67,9 @@ public class movement_focus_modifier extends modifier_driver
 		start_location=my_start_location;
 		terminate_location=my_terminate_location;
 		
-		node_name		=my_node_name;
-		description		=my_description;
-		sound_file_name	=my_sound_file_name;
+		node_name			=my_node_name;
+		description			=my_description;
+		sound_buffer_file_name=my_sound_buffer_file_name;
 	}
 	public void modify(long my_current_time,scene_kernel sk,client_information ci)
 	{
@@ -88,7 +92,7 @@ public class movement_focus_modifier extends modifier_driver
 			}
 		suspend.register_match_and_component(match,component_id,follow_component_id,sk.component_cont);
 		swcm.register_move_component(component_id,component_id,scale_value,direction,
-				start_location,terminate_location,node_name,description,sound_file_name);
+			start_location,terminate_location,node_name,description,sound_buffer_file_name);
 	}
 	public boolean can_start(long my_current_time,scene_kernel sk,client_information ci)
 	{

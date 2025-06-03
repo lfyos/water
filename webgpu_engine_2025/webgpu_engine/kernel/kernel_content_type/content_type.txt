@@ -1,3 +1,5 @@
+reference		link:text/plain
+
 gzip_binary		gzip:application/octet-stream
 gzip_text		gzip:text/plain
 gzip_js			gzip:application/javascript

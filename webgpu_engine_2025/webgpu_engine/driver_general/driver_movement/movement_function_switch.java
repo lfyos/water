@@ -1364,7 +1364,11 @@ public class movement_function_switch
 				manager.config_parameter.audio_component_id,
 				manager.config_parameter.location_component_id,
 				modifier_cont,sk.component_cont,switch_time_length,
-				manager.config_parameter.sound_pre_string);
+				manager.config_parameter.sound_pre_string,
+				new movement_buffer_file_manager(
+						manager.config_parameter.component_id,
+						manager.config_parameter.driver_id,
+						sk.system_par,sk.scene_par));
 	}
 	private String[]  movement_request_dispatch()
 	{

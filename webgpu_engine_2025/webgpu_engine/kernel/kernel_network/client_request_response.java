@@ -355,20 +355,13 @@ public class client_request_response extends common_writer
 			s_stream=new FileInputStream(f);
 			s_buf	=new BufferedInputStream(s_stream);	
 			s_buf.skip(file_range[0]);
-			
-			
-			
-			
+
+
 			debug_information.println(
 					"Length:"+((file_range[1]-file_range[0])/1024)+"/"+(f.length()/1024)
 					+",Start:"+(file_range[0]/1024)+",End:"+(file_range[1]/1024)+"\t",
 					
 					f.getAbsolutePath());
-			
-			
-			
-			
-			
 			
 			for(long i=file_range[0],length;i<=file_range[1];i+=length){
 				length=file_range[1]-i+1;

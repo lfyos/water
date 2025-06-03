@@ -66,7 +66,8 @@ public class movement_tree {
 			modifier_container modifier_cont,movement_switch_camera_modifier swcm,
 			String directory_name,String sound_pre_string,
 			long camera_switch_time,location parent_direction,
-			int  parent_scale_type,double parent_scale_value,boolean direction_flag)
+			int  parent_scale_type,double parent_scale_value,boolean direction_flag,
+			movement_buffer_file_manager mbfm)
 	{
 		int my_scale_type;
 		double my_scale_value;
@@ -91,7 +92,7 @@ public class movement_tree {
 						suspend,move_channel_id,location_component_id,
 						component_cont,parameter,modifier_cont,swcm,directory_name,
 						sound_pre_string,camera_switch_time,
-						my_direction,my_scale_type,my_scale_value,direction_flag);	
+						my_direction,my_scale_type,my_scale_value,direction_flag,mbfm);	
 				return;
 			}
 		if(move==null)
@@ -148,7 +149,9 @@ public class movement_tree {
 				moved_component.component_id,move.follow_component_id,move.follow_component_location,
 				start_time-camera_switch_time,swcm,my_scale_value,
 				my_direction,my_start_location,my_terminate_location,node_name,description,
-				file_reader.separator(directory_name+sound_pre_string+sound_file_name));
+				mbfm.buffer_file_manager(
+					file_reader.separator(directory_name+sound_pre_string),
+					file_reader.separator(sound_file_name)));
 		modifier_cont.add_modifier(fm);
 		return;
 	}

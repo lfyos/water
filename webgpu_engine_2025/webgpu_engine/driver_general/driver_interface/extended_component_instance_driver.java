@@ -1,35 +1,38 @@
 package driver_interface;
 
+import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_camera.camera_result;
 import kernel_file_manager.file_reader;
-import kernel_render.render_target_view;
 import kernel_scene.client_information;
-import kernel_scene.scene_kernel;
 import kernel_common_class.const_value;
+import kernel_render.render_target_view;
 import kernel_common_class.jason_string;
 import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
 	private boolean menu_type;
-	private String temp_path_name,file_charset;
+	private String original_path_name,temp_path_name,file_charset;
 	private double x0,y0,dx,dy,depth;
 	private boolean hide_show_flag,always_show_flag;
 	
 	public void destroy()
 	{
 		super.destroy();
+		original_path_name=null;
 		temp_path_name=null;
 		file_charset=null;
 	}
 	public extended_component_instance_driver(component my_comp,int my_driver_id,
 			boolean my_menu_type,double my_depth,double my_dx,double my_dy,
-			String my_temp_path_name,String my_file_charset,boolean my_always_show_flag)
+			String my_original_path_name,String my_temp_path_name,String my_file_charset,
+			boolean my_always_show_flag)
 	{
 		super(my_comp,my_driver_id);
 		
 		menu_type=my_menu_type;
+		original_path_name=my_original_path_name;
 		temp_path_name=my_temp_path_name;
 		file_charset=my_file_charset;
 		always_show_flag=my_always_show_flag;
@@ -54,7 +57,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		ci.request_response.println("	\"type\"	:	",menu_type?"true,":"false,");
 		if(menu_type) {
 			ci.request_response.println("	\"canvas\"	:	");
-			file_reader.get_text(ci.request_response,temp_path_name,file_charset);
+			file_reader.get_text(ci.request_response,original_path_name,file_charset);
 		}else{
 			String url=ci.get_component_request_url_header(comp.component_id,driver_id);
 			ci.request_response.println("	\"url\"	:	",
@@ -119,7 +122,9 @@ public class extended_component_instance_driver extends component_instance_drive
 		String str=ci.request_response.get_parameter("operation");
 		switch((str==null)?"":(str.toLowerCase())){
 		case "file":
-			return menu_type?null:new String[]{temp_path_name,file_charset};
+			if(menu_type)
+				return null;
+			return new String[]{temp_path_name,file_charset};
 		case "hide":
 			hide_show_flag=true;
 			return null;

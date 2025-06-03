@@ -2,11 +2,11 @@ package driver_movement;
 
 import java.io.File;
 
-import kernel_component.component_container;
-import kernel_driver.modifier_container;
+import kernel_scene.scene_kernel;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
-import kernel_scene.scene_kernel;
+import kernel_driver.modifier_container;
+import kernel_component.component_container;
 import kernel_common_class.string_link_list;
 
 public class movement_manager
@@ -64,7 +64,8 @@ public class movement_manager
 	public void create_render_modifier(
 			movement_tree t,boolean single_step_flag,int audio_component_id,
 			int location_component_id,modifier_container movement_modifier_cont,
-			component_container component_cont,long camera_switch_time_length,String sound_pre_string)
+			component_container component_cont,long camera_switch_time_length,String sound_pre_string,
+			movement_buffer_file_manager mbfm)
 	{
 		if(root_movement!=null){
 			movement_switch_camera_modifier swcm=new movement_switch_camera_modifier(
@@ -74,7 +75,7 @@ public class movement_manager
 					config_parameter.camera_modifier_container_id);
 			root_movement.register_modifier(suspend,move_channel_id,location_component_id,
 					component_cont,parameter,movement_modifier_cont,swcm,directory_name,
-					sound_pre_string,camera_switch_time_length,null,0,1.0,mount_direction_flag);
+					sound_pre_string,camera_switch_time_length,null,0,1.0,mount_direction_flag,mbfm);
 			movement_modifier_cont.add_modifier(swcm);
 		}
 	}

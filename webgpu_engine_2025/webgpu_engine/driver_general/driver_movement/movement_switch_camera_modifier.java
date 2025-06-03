@@ -3,18 +3,17 @@ package driver_movement;
 import java.util.ArrayList;
 
 import kernel_camera.camera;
-import kernel_camera.locate_camera;
-import kernel_component.component;
-import kernel_component.component_collector;
-import kernel_component.component_container;
-import kernel_component.component_array;
-import kernel_driver.modifier_driver;
-import kernel_driver.component_driver;
-import kernel_file_manager.file_reader;
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
 import kernel_transformation.box;
+import kernel_component.component;
+import kernel_camera.locate_camera;
+import kernel_driver.modifier_driver;
 import kernel_transformation.location;
+import kernel_driver.component_driver;
+import kernel_scene.client_information;
+import kernel_component.component_array;
+import kernel_component.component_collector;
+import kernel_component.component_container;
 import kernel_common_class.debug_information;
 
 public class movement_switch_camera_modifier extends modifier_driver
@@ -41,7 +40,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 	private double scale_value;
 	private int audio_component_id,parameter_channel_id;
 	private int movement_modifier_container_id,camera_modifier_container_id;
-	public String title_string,information_string,sound_file_name;
+	public String title_string,information_string,sound_reference_file_name;
 	
 	public void destroy()
 	{
@@ -54,7 +53,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 		
 		title_string=null;
 		information_string=null;
-		sound_file_name=null;
+		sound_reference_file_name=null;
 	}
 	private box caculate_move_box(component comp,location loca)
 	{
@@ -96,7 +95,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 	public void register_move_component(int my_main_component_id,int my_component_id,
 			double my_scale_value,location my_direction,
 			location my_start_location,location my_terminate_location,
-			String my_title_string,String my_information_string,String my_sound_file_name)
+			String my_title_string,String my_information_string,String my_sound_reference_file_name)
 	{
 		container.add(
 			new movement_switch_information(
@@ -106,9 +105,9 @@ public class movement_switch_camera_modifier extends modifier_driver
 		if(my_scale_value>scale_value)
 			scale_value=my_scale_value;
 		
-		title_string		=my_title_string;
-		information_string	=my_information_string;
-		sound_file_name		=(my_sound_file_name==null)?sound_file_name:file_reader.separator(my_sound_file_name);
+		title_string				=my_title_string;
+		information_string			=my_information_string;
+		sound_reference_file_name	=my_sound_reference_file_name;
 	}
 	public boolean can_start(long my_current_time,scene_kernel sk,client_information ci)
 	{
@@ -152,7 +151,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 	}
 	private boolean can_start_routine(long my_current_time,scene_kernel sk,client_information ci)
 	{
-		if((sound_file_name==null)||(audio_component_id<0))
+		if((sound_reference_file_name==null)||(audio_component_id<0))
 			return true;
 		
 		driver_audio_player.extended_component_driver acd;
@@ -164,9 +163,9 @@ public class movement_switch_camera_modifier extends modifier_driver
 		String play_audio_file_name;
 		if((play_audio_file_name=acd.get_audio_file_name())==null)
 			return true;
-		if(sound_file_name.compareTo(play_audio_file_name)==0)
-			return true;
 		
+		if(sound_reference_file_name.compareTo(play_audio_file_name)==0)
+			return true;
 		return acd.get_terminate_flag();
 	}
 	private void register_visible_component(component comp,component_array comp_array,int depth)
@@ -213,12 +212,14 @@ public class movement_switch_camera_modifier extends modifier_driver
 		
 		cc.title=title_string;
 		cc.description=information_string;	
-		cc.audio_file_name=sound_file_name;
+		cc.audio_file_name=sound_reference_file_name;
 		
 		driver_audio_player.extended_component_driver acd;
-		if((acd=get_acd(sk))!=null)
-			if(sound_file_name!=null)
-				acd.set_audio(sound_file_name);
+		if((acd=get_acd(sk))==null)
+			return;
+		if(sound_reference_file_name==null)
+			return;
+		acd.set_audio(sound_reference_file_name);
 	}
 	public void modify(long my_current_time,scene_kernel sk,client_information ci)
 	{
@@ -246,7 +247,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 		
 		title_string		="";
 		information_string	="";
-		sound_file_name		=null;
+		sound_reference_file_name=null;
 
 		reset();
 	}

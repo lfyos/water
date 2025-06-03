@@ -45,6 +45,7 @@ public class system_parameter
 	
 	public double box_distance_difference_scale,buffer_data_length_difference_scale; 
 	
+	public String link_file_extend_name;
 	public change_name scene_environment,language_change_name,content_type_change_name;
 	public temporary_file_parameter temporary_file_par;
 	public switch_scene_server		switch_server;
@@ -105,6 +106,7 @@ public class system_parameter
 		box_distance_difference_scale		=sp.box_distance_difference_scale;
 		buffer_data_length_difference_scale	=sp.buffer_data_length_difference_scale;
 		
+		link_file_extend_name				=sp.link_file_extend_name;
 		scene_environment					=new change_name(sp.scene_environment,false);
 		language_change_name				=new change_name(sp.language_change_name,false);
 		content_type_change_name			=new change_name(sp.content_type_change_name,false);
@@ -265,7 +267,15 @@ public class system_parameter
 				new String[]{data_root_directory_name+language_change_file_name},null,local_data_charset);
 		content_type_change_name=get_content_type_change_name.get_change_name(text_class_charset,text_jar_file_charset);
 		switch_server=new switch_scene_server(data_root_directory_name+switch_server_url_file_name,local_data_charset);
-		http_date_str=new http_date_string();		
+		http_date_str=new http_date_string();
+		
+		for(int i=0,ni=content_type_change_name.data_list.size();i<ni;i++) {
+			String p[]=content_type_change_name.data_list.get(i);
+			if(p[1].indexOf("link:")==0){
+				link_file_extend_name=p[0];
+				break;
+			}
+		}
 		return;
 	}
 }
