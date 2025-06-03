@@ -358,10 +358,11 @@ public class client_request_response extends common_writer
 
 
 			debug_information.println(
-					"Length:"+((file_range[1]-file_range[0])/1024)+"/"+(f.length()/1024)
-					+",Start:"+(file_range[0]/1024)+",End:"+(file_range[1]/1024)+"\t",
-					
-					f.getAbsolutePath());
+					"Response file Length:"+((file_range[1]-file_range[0])/1024)+"/"+(f.length()/1024)
+					+",Start:"+(file_range[0]/1024)+",End:"+(file_range[1]/1024));
+			debug_information.println("original file path:	",ecr.original_file_name);
+			debug_information.println("ecr real file path:	",ecr.file_name);
+			debug_information.println("response file path:	",f.getAbsolutePath());
 			
 			for(long i=file_range[0],length;i<=file_range[1];i+=length){
 				length=file_range[1]-i+1;

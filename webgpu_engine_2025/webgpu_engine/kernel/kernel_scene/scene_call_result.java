@@ -7,16 +7,14 @@ import kernel_common_class.debug_information;
 
 public class scene_call_result
 {
-	public String file_name,compress_file_name;
+	public String file_name,original_file_name,compress_file_name;
 	public long last_modified_time;
 	public boolean already_compress_file_flag;
 	
 	public String file_charset,response_content_type;
 	
-	private void file_init(File f,String my_file_charset,boolean cache_flag,system_parameter system_par)
+	public scene_call_result(File f,String my_file_charset,boolean cache_flag,system_parameter system_par)
 	{
-		String original_file_name;
-		
 		for(original_file_name=f.getAbsolutePath(),file_name=original_file_name;;) {
 			compress_file_name			=null;
 			last_modified_time			=cache_flag?f.lastModified():-1;
@@ -72,14 +70,11 @@ public class scene_call_result
 			}
 		}
 	}
-	public scene_call_result(File f,String my_file_charset,boolean cache_flag,system_parameter system_par)
-	{
-		file_init(f,my_file_charset,cache_flag,system_par);
-	}
 	public scene_call_result(long my_last_modified_time,
 			String my_response_content_type,system_parameter system_par)
 	{
 		file_name			=null;
+		original_file_name	=null;
 		compress_file_name	=null;
 		last_modified_time	=my_last_modified_time;
 		already_compress_file_flag	=false;
@@ -89,6 +84,7 @@ public class scene_call_result
 	public scene_call_result(String my_response_content_type,system_parameter system_par)
 	{
 		file_name			=null;
+		original_file_name	=null;
 		compress_file_name	=null;
 		last_modified_time	=-1;
 		already_compress_file_flag=false;

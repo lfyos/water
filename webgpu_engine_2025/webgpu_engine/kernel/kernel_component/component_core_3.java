@@ -41,7 +41,6 @@ public class component_core_3 extends component_core_2
 				}catch(Exception e){
 					e.printStackTrace();
 					
-					fr.close();
 					debug_information.println("Find error child_number:	",str);
 					debug_information.println("File name:	 ",fr.directory_name+fr.file_name);
 					debug_information.println("Error:	",e.toString());

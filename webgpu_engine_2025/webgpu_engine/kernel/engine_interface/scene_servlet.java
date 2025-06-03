@@ -1,13 +1,16 @@
 package engine_interface;
 
+import java.io.File;
 import java.io.IOException;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kernel_common_class.debug_information;
+
 import kernel_scene.system_scene;
+import kernel_file_manager.file_reader;
+import kernel_common_class.debug_information;
 import kernel_network.network_implementation;
 
 public class scene_servlet extends HttpServlet
@@ -80,9 +83,34 @@ public class scene_servlet extends HttpServlet
         	debug_information.println("environment:scene_environment_path_name:	",	my_scene_environment_path_name);
   
     		break;
+    	case "webserver_configure_file":
+    		String configure_file_name;
+    		if((configure_file_name=config.getServletContext().getRealPath(scene_data_path_name))==null){
+        		debug_information.println("webserver_configure_file name is null");
+        		System.exit(0);
+        		return;
+        	}
+    		if(!(new File(configure_file_name).exists())) {
+    			debug_information.println("webserver_configure_file is NOT exist,its file_name is ",
+    					configure_file_name);
+    			System.exit(0);
+    			return;
+    		}
+    		file_reader fr=new file_reader(configure_file_name,null);
+    		String my_configure_charset=fr.get_string();
+    		fr.close();
+    		fr=new file_reader(configure_file_name,my_configure_charset);
+    		fr.get_string();
+    		my_scene_data_path_name			=fr.get_string();
+    		my_scene_temparatory_path_name	=fr.get_string();
+    		my_scene_environment_path_name	=fr.get_string();
+    		fr.close();
+    		break;
     	}
-    	scene=new system_scene(my_scene_data_path_name,
-				my_scene_temparatory_path_name,my_scene_environment_path_name);
+    	
+    	scene=new system_scene(	file_reader.separator(my_scene_data_path_name),
+    							file_reader.separator(my_scene_temparatory_path_name),
+    							file_reader.separator(my_scene_environment_path_name));
 	}
 	protected void doGet(HttpServletRequest request,HttpServletResponse response)
 		throws ServletException,IOException 

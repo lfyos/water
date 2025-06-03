@@ -155,7 +155,7 @@ public class movement_manager
 				directory_name=file_reader.separator(my_move_file_name);
 				for(int i=directory_name.length()-1;i>=0;i--)
 					if(directory_name.charAt(i)==File.separatorChar) {
-						directory_name=directory_name.substring(0, i+1);
+						directory_name=directory_name.substring(0,i+1);
 						return;
 					}
 				directory_name="."+File.separatorChar;

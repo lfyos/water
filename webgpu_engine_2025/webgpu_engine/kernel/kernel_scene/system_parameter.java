@@ -194,7 +194,6 @@ public class system_parameter
 		if((default_system_mount_component_name=f.get_string())==null)
 			default_system_mount_component_name="default_system_mount_component";
 
-		scene_environment_path_name=file_reader.separator(scene_environment_path_name);
 		if(!(new File(scene_environment_path_name).exists())) {
 			debug_information.println(
 				"scene_environment file NOT exist:	",scene_environment_path_name);

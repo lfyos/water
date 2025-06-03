@@ -1,0 +1,5 @@
+/*	charset							*/		GBK
+/*	scene_data_path_name			*/		F:\water_all\data\configure.txt
+/*	scene_temparatory_path_name		*/		F:\temp\configure.txt
+/*	scene_environment_path_name		*/		F:\water_all\environment.txt
+		
