@@ -50,7 +50,7 @@ public class part_loader extends Thread
 				loaded_part,system_par,scene_par);
 		String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
 		
-		String my_lock_key[]=new String[]{part_temporary_file_directory+"part.lock"};
+		String my_lock_key=part_temporary_file_directory+"part.lock";
 		
 		switch(fast_load_type){
 		case "slow":

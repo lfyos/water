@@ -1,7 +1,8 @@
 package engine_interface;
 
 @jakarta.servlet.annotation.WebServlet(	
-/*	
+
+/*
 	initParams= {
 		@jakarta.servlet.annotation.WebInitParam(
 			name	=	"lfy_data_configure_file",
@@ -15,8 +16,9 @@ package engine_interface;
 			name	=	"lfy_environment_configure_file",
 			value	=	"F:/water_all/environment.txt"
 		)
-	},
-*/	
+	},	
+*/
+
 	asyncSupported = true,
 	urlPatterns = { 
 		"/water" 
@@ -27,23 +29,36 @@ public class annotation_webgpu_servlet extends scene_servlet
 	private static final long serialVersionUID = 1L;
 
 	public annotation_webgpu_servlet()
-	{		
+	{
+
+/*		
+		super(	"class_configure_file",
+				"configure.txt",
+				"UTF-8",
+				"UTF-8");
+*/
+
+
 		super(	"system_environment_variable",
 				"lfy_data_configure_file",
 				"lfy_temparatory_configure_file",
 				"lfy_environment_configure_file");
+		
 		
 /*		
 		super(	"servlet_initialization_parameter",
     			"lfy_data_configure_file",
     			"lfy_temparatory_configure_file",
     			"lfy_environment_configure_file");
+*/
 
-*/		
+
+		
 /*
 		super(	"webserver_configure_file",
-				"configure.txt",null,null);
+				"configure.txt","GBK",null);
 */		
+
 
 /*
 		super(	"file_initialization_parameter",

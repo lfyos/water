@@ -248,11 +248,11 @@ public class scene_kernel
 
 		var bofmtlc=new buffer_object_file_modify_time_and_length_container();
 		
-		String package_directory_name,boftal_data_file_name,my_lock_key[];
+		String package_directory_name,boftal_data_file_name,my_lock_key;
 		
 		package_directory_name	=file_directory.package_file_directory(1,system_par,scene_par);
 		boftal_data_file_name 	=package_directory_name+"boftal_data.txt";
-		my_lock_key				=new String[] {package_directory_name+"package.lock"};
+		my_lock_key				=package_directory_name+"package.lock";
 
 		string_locker_container.read_lock(my_lock_key);
 		
@@ -266,7 +266,7 @@ public class scene_kernel
 		for(int i=0,ni=scene_par.type_sub_directory.length;i<ni;i++) {
 			package_directory_name	=file_directory.package_file_directory(i+2,system_par,scene_par);
 			boftal_data_file_name 	=package_directory_name+"boftal_data.txt";
-			my_lock_key				=new String[] {package_directory_name+"package.lock"};
+			my_lock_key				=package_directory_name+"package.lock";
 			
 			string_locker_container.read_lock(my_lock_key);
 			if((f=new File(boftal_data_file_name)).exists())

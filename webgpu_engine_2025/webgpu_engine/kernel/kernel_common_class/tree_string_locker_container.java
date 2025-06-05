@@ -59,30 +59,52 @@ public class tree_string_locker_container extends tree_string_search_container<l
 			remove(get_first_key());
 		}
 	}
-	public void write_lock(String locker_name[])
+	
+	private void write_lock(String locker_name[])
 	{
 		ReentrantReadWriteLock p;
 		if((p=get_locker(locker_name,true,1))!=null)
 			p.writeLock().lock();
 	}
+	public void write_lock(String locker_name)
+	{
+		write_lock(new String[] {locker_name});
+	}
+	
 	public void write_unlock(String locker_name[])
 	{
 		ReentrantReadWriteLock p;
 		if((p=get_locker(locker_name,false,-1))!=null)
 			p.writeLock().unlock();
 	}
+	public void write_unlock(String locker_name)
+	{
+		write_unlock(new String[] {locker_name});
+	}
+	
 	public void read_lock(String locker_name[])
 	{
 		ReentrantReadWriteLock p;
 		if((p=get_locker(locker_name,true,1))!=null)
 			p.readLock().lock();
 	}
+	public void read_lock(String locker_name)
+	{
+		read_lock(new String[] {locker_name});
+	}
+	
+	
 	public void read_unlock(String locker_name[])
 	{
 		ReentrantReadWriteLock p;
 		if((p=get_locker(locker_name,false,-1))!=null)
 			p.readLock().unlock();
 	}
+	public void read_unlock(String locker_name)
+	{
+		read_unlock(new String[] {locker_name});
+	}
+	
 	public void switch_read_lock_to_write_lock(String locker_name[])
 	{
 		ReentrantReadWriteLock p;
@@ -90,5 +112,9 @@ public class tree_string_locker_container extends tree_string_search_container<l
 			p.readLock().unlock();
 			p.writeLock().lock();
 		}
+	}
+	public void switch_read_lock_to_write_lock(String locker_name)
+	{
+		switch_read_lock_to_write_lock(new String[] {locker_name});
 	}
 }

@@ -320,7 +320,7 @@ public class client_request_response extends common_writer
 				f=gf;
 				compress_response_header="gzip";
 			}else{
-				String my_lock_key[]=new String[] {ecr.compress_file_name+".lock"};
+				String my_lock_key=ecr.compress_file_name+".lock";
 				string_locker_container.write_lock(my_lock_key);
 				
 				String tmp_file_name=ecr.compress_file_name+".tmp";

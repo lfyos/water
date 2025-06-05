@@ -487,7 +487,7 @@ public class scene_initialization
 		debug_information.println("Begin create initialization file");
 
 		String destination_directory_name	=sk.scene_par.scene_temporary_directory_name;
-		String lock_key[]=new String[] {destination_directory_name+"initialization.lock"};
+		String lock_key=destination_directory_name+"initialization.lock";
 		string_locker_container.write_lock(lock_key);
 		file_initialize(destination_directory_name+"initialization.gzip_js",
 					sort_component_array,sk,request_response,process_bar);

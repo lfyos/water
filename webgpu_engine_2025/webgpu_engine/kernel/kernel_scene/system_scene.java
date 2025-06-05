@@ -37,7 +37,6 @@ public class system_scene
 			string_locker_container.destroy();
 			string_locker_container=null;
 		}
-		
 		if(program_javascript!=null) {
 			program_javascript.destroy();
 			program_javascript=null;

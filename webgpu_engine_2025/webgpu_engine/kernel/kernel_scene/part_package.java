@@ -193,7 +193,7 @@ public class part_package
 		package_last_time=new long	 [package_number];
 		package_file_name=new String [package_number];
 
-		String my_lock_key[]=new String[] {package_directory_name+"package.lock"};
+		String my_lock_key=package_directory_name+"package.lock";
 		string_locker_container.write_lock(my_lock_key);
 		
 		if(new File(package_data_file_name).exists()) {

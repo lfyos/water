@@ -2,6 +2,8 @@ package engine_interface;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -10,8 +12,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import kernel_scene.system_scene;
 import kernel_file_manager.file_reader;
+import kernel_common_class.common_reader;
 import kernel_common_class.debug_information;
 import kernel_network.network_implementation;
+import kernel_common_class.class_file_reader;
 
 public class scene_servlet extends HttpServlet
 {
@@ -56,11 +60,6 @@ public class scene_servlet extends HttpServlet
     	String my_scene_data_path_name,my_scene_temparatory_path_name,my_scene_environment_path_name;
 		
     	switch(scene_servlet_type) {
-    	default:
-    		my_scene_data_path_name			=scene_data_path_name;
-    		my_scene_temparatory_path_name	=scene_temparatory_path_name;
-    		my_scene_environment_path_name	=scene_environment_path_name;
-    		break;
     	case "servlet_initialization_parameter":
     		my_scene_data_path_name			=config.getInitParameter(scene_data_path_name);
     		my_scene_temparatory_path_name	=config.getInitParameter(scene_temparatory_path_name);
@@ -84,27 +83,43 @@ public class scene_servlet extends HttpServlet
   
     		break;
     	case "webserver_configure_file":
-    		String configure_file_name;
-    		if((configure_file_name=config.getServletContext().getRealPath(scene_data_path_name))==null){
-        		debug_information.println("webserver_configure_file name is null");
-        		System.exit(0);
-        		return;
-        	}
-    		if(!(new File(configure_file_name).exists())) {
-    			debug_information.println("webserver_configure_file is NOT exist,its file_name is ",
-    					configure_file_name);
-    			System.exit(0);
-    			return;
-    		}
-    		file_reader fr=new file_reader(configure_file_name,null);
-    		String my_configure_charset=fr.get_string();
-    		fr.close();
-    		fr=new file_reader(configure_file_name,my_configure_charset);
-    		fr.get_string();
-    		my_scene_data_path_name			=fr.get_string();
-    		my_scene_temparatory_path_name	=fr.get_string();
-    		my_scene_environment_path_name	=fr.get_string();
-    		fr.close();
+	    	{
+	    		String configure_file_name;
+	    		if((configure_file_name=config.getServletContext().getRealPath(scene_data_path_name))==null){
+	        		debug_information.println("webserver_configure_file name is null");
+	        		System.exit(0);
+	        		return;
+	        	}
+	    		if(!(new File(configure_file_name).exists())) {
+	    			debug_information.println("webserver_configure_file is NOT exist,its file_name is ",
+	    					configure_file_name);
+	    			System.exit(0);
+	    			return;
+	    		}
+	    		file_reader fr=new file_reader(configure_file_name,
+	    				(scene_temparatory_path_name!=null)
+	    				?scene_temparatory_path_name:Charset.defaultCharset().name());
+	    		my_scene_data_path_name			=fr.get_string();
+	    		my_scene_temparatory_path_name	=fr.get_string();
+	    		my_scene_environment_path_name	=fr.get_string();
+	    		fr.close();
+	    	}
+	    	break;
+    	case "class_configure_file":
+	    	{
+	    		common_reader reader=class_file_reader.get_reader(scene_data_path_name,getClass(),
+	    			(scene_temparatory_path_name!=null)?scene_temparatory_path_name:Charset.defaultCharset().name(),
+	    			(scene_environment_path_name!=null)?scene_environment_path_name:Charset.defaultCharset().name());
+	    		my_scene_data_path_name			=reader.get_string();
+	    		my_scene_temparatory_path_name	=reader.get_string();
+	    		my_scene_environment_path_name	=reader.get_string();
+	    		reader.close();
+	    	}
+	    	break;
+    	default:
+    		my_scene_data_path_name			=scene_data_path_name;
+    		my_scene_temparatory_path_name	=scene_temparatory_path_name;
+    		my_scene_environment_path_name	=scene_environment_path_name;
     		break;
     	}
     	
