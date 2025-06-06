@@ -72,7 +72,7 @@ public class mesh_file_collector
 			
 			head_fw.print  ("\t\"file_data\"\t:\t");
 			
-			file_reader fr=new file_reader(p.file_name+".txt",head_fw.get_charset());
+			file_reader fr=new file_reader(p.file_name+".txt",head_fw.get_charset_name());
 			for(String str;!(fr.eof());) {
 				if((str=fr.get_string())==null)
 					continue;

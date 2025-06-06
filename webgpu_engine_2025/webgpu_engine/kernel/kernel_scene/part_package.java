@@ -151,7 +151,7 @@ public class part_package
 			String boftal_file_name=part_temporary_file_directory+"mesh.boftal";
 			fw.println(part_temporary_file_directory.substring(cut_directory_length));
 
-			file_reader fr=new file_reader(boftal_file_name,fw.get_charset());
+			file_reader fr=new file_reader(boftal_file_name,fw.get_charset_name());
 			for(String str;!(fr.eof());)
 				if((str=fr.get_string())!=null)
 					fw.println(str);

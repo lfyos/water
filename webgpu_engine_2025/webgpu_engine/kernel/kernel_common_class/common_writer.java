@@ -35,10 +35,6 @@ public class common_writer
 	public String begin_str,separator_str,end_str,newline_str;
 	private String charset_name;
 
-	public String get_charset()
-	{
-		return charset_name;
-	}
 	public common_writer(String my_charset_name,
 			String my_begin_str,String my_separator_str,String my_end_str)
 	{
@@ -50,6 +46,14 @@ public class common_writer
 		separator_str=my_separator_str;
 		end_str=my_end_str;
 		newline_str="\n";
+	}
+	public String get_charset_name()
+	{
+		return charset_name;
+	}
+	public void set_charset_name(String my_charset_name)
+	{
+		charset_name=my_charset_name;
 	}
 	public common_writer set_pace(int new_space_number)
 	{

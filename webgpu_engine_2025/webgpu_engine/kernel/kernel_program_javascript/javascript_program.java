@@ -146,6 +146,7 @@ public class javascript_program
 		for(int i=0,ni=str.length;i<ni;i++)
 			request_response.println(str[i]);
 		
-		return new scene_call_result(last_modified_time,"application/javascript",system_par);
+		request_response.set_content_type("application/javascript");
+		return new scene_call_result(last_modified_time);
 	}
 }

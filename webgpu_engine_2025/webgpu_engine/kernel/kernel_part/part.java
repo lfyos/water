@@ -134,17 +134,17 @@ public class part
 		default:
 		case "face":
 			gbocc=(new graphics_buffer_object_for_face(p_i,
-				max_material_id,this,file_name+"."+front_str,fw.get_charset(),
+				max_material_id,this,file_name+"."+front_str,fw.get_charset_name(),
 				part_par.max_file_data_length,part_par.create_face_buffer_object_bitmap)).gbocc;
 			break;
 		case "edge":
 			gbocc=(new graphics_buffer_object_for_edge(p_i,
-				max_material_id,this,file_name+"."+front_str,fw.get_charset(),
+				max_material_id,this,file_name+"."+front_str,fw.get_charset_name(),
 				part_par.max_file_data_length,part_par.create_edge_buffer_object_bitmap)).gbocc;
 			break;
 		case "point":
 			gbocc=(new graphics_buffer_object_for_point(p_i,
-				max_material_id,this,file_name+"."+front_str,fw.get_charset(),
+				max_material_id,this,file_name+"."+front_str,fw.get_charset_name(),
 				part_par.max_file_data_length,part_par.create_point_buffer_object_bitmap)).gbocc;
 			break;
 		}

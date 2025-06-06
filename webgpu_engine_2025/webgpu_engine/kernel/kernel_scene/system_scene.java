@@ -75,10 +75,6 @@ public class system_scene
 			return program_javascript.create(request_response,system_par);
 		case "buffer":
 			return file_download_manager.download(request_response,system_par);
-		case "proxy":
-			if((ecr=file_download_manager.download(request_response,system_par))!=null)
-				ecr.last_modified_time=-1;
-			return ecr;
 		case "process_bar":
 			if((client=client_interface_search_tree_array[request_response.container_id].
 				get_client_interface(request_response,scene_kernel_search_tree,scene_counter,system_par))!=null) 
@@ -89,17 +85,17 @@ public class system_scene
 				get_client_interface(request_response,scene_kernel_search_tree,scene_counter,system_par))==null)
 			{
 				request_response.reset().println("\"get_client_interface fail\"");
-				return new scene_call_result(request_response.response_content_type,system_par);
+				return new scene_call_result();
 			}
 			if(test_creation_scene_lock_number(1)>=system_par.create_scene_concurrent_number){
 				request_response.reset().println("[]");
 				client.set_process_bar(request_response,true,"wait_for_other_exit","",1,2);
-				ecr=new scene_call_result(request_response.response_content_type,system_par);
+				ecr=new scene_call_result();
 			}else if((ecr=client.execute_create_call(request_response,
 				scene_kernel_search_tree,scene_counter,string_locker_container))==null)
 			{
 				request_response.reset().println("\"execute_create_call fail\"");
-				ecr=new scene_call_result(request_response.response_content_type,system_par);
+				ecr=new scene_call_result();
 			}
 			test_creation_scene_lock_number(-1);
 			return ecr;
@@ -107,7 +103,7 @@ public class system_scene
 			if((client=client_interface_search_tree_array[request_response.container_id].
 				get_client_interface(request_response,scene_kernel_search_tree,scene_counter,system_par))!=null)
 					return client.execute_system_call(request_response,
-							scene_kernel_search_tree,scene_counter,string_locker_container);
+								scene_kernel_search_tree,scene_counter,string_locker_container);
 			break;
 		}
 		return null;
@@ -116,15 +112,19 @@ public class system_scene
 	public void process_system_call(network_implementation network_implementor)
 	{
 		scene_call_result ecr;
-		client_request_response request_response;
-		request_response=new client_request_response(network_implementor,system_par);
+		String request_charset_name;
+		if((request_charset_name=network_implementor.get_request_charset())==null)
+			request_charset_name=system_par.network_data_charset;
+		client_request_response request_response=new client_request_response(
+			request_charset_name,network_implementor,system_par);
 		if((ecr=system_call_switch(request_response))!=null) {
-			if(ecr.file_name==null) 
+			if(ecr.result_file_name==null)
 				request_response.response_network_data(ecr,system_par);
 			else
 				request_response.response_file_data(ecr,system_par,string_locker_container);
 		}
 		request_response.destroy();
+		return;
 	}
 	public void process_option(network_implementation network_implementor)
 	{

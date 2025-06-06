@@ -177,7 +177,8 @@ public class client_information
 		url_header+="&event_part_id="+Integer.toString(part_id);
 		return url_header;
 	}
-	public String get_file_proxy_url(String file_name,String file_charset,system_parameter system_par)
+	public String get_file_proxy_url(
+			String file_name,String file_charset,system_parameter system_par)
 	{
 		File f=new File(file_name);
 		
@@ -185,21 +186,14 @@ public class client_information
 			return null;
 		if(!(f.exists()))
 			return null;
-		if(f.length()<system_par.max_file_response_length){
-			int index_id;
-			String str=f.getAbsolutePath();
-			if((index_id=str.lastIndexOf('.'))<0)
-				return null;
-			str=str.substring(index_id+1);
-			str=system_par.content_type_change_name.search_change_name(str,null);
-			if(str==null)
-				return null;
-			if((index_id=str.indexOf(':'))<0)
-				return null;
-			str=str.substring(0,index_id).trim();
-			if(str.compareTo("link")!=0)
-				return null;
-		}
+		
+		long file_length=f.length();
+		String content_str[];
+		if((content_str=system_par.search_file_content_type(file_name))!=null)
+			if(file_name.compareTo(content_str[2])!=0)
+				file_length=new File(content_str[2]).length();
+		if(file_length<system_par.max_file_response_length)
+			return null;
 		
 		String proxy_file_name=f.getAbsolutePath().replace(File.separatorChar,'/');
 		String proxy_directory_name=system_par.temporary_file_par.temporary_root_directory_name;
@@ -219,27 +213,20 @@ public class client_information
 			;
 		}
 		
+		file_proxy_pointer=(file_proxy_pointer+1)%(file_proxy_cont.size());
+		file_proxy_container fpc=file_proxy_cont.get(file_proxy_pointer);
+		String proxy_url=fpc.file_proxy_url+proxy_file_name;
+
 		if(file_charset==null)
 			file_charset=system_par.network_data_charset;
 		else if((file_charset=file_charset.trim()).length()<=0)
 			file_charset=system_par.network_data_charset;
-
-		file_proxy_pointer=(file_proxy_pointer+1)%(file_proxy_cont.size());
-		file_proxy_container fpc=file_proxy_cont.get(file_proxy_pointer);
-		String proxy_url=fpc.file_proxy_url+proxy_file_name;
+		
 		proxy_url+="&file_charset="+file_charset;
+		proxy_url+="&file_content="+((content_str==null)?"text/plain":content_str[1]);
+		
 		if(fpc.file_proxy_date_flag)
 			proxy_url+="&date="+f.lastModified();
-		
-		String this_proxy_url=request_response.implementor.get_url()+"?channel=buffer&file=";
-		this_proxy_url+=proxy_file_name+"&file_charset="+file_charset+"&date="+f.lastModified();
-		try{
-			this_proxy_url	=java.net.URLEncoder.encode(this_proxy_url,code_str);
-			this_proxy_url	=java.net.URLEncoder.encode(this_proxy_url,code_str);
-		}catch(Exception e) {
-			;
-		}
-		proxy_url+="&file_origin="+this_proxy_url;
 
 		return proxy_url;
 	}

@@ -328,7 +328,9 @@ public class operate_part_list
 			return;
 		case "upload":
 		{
-			common_reader cr=new common_reader(ci.request_response.implementor.get_content_stream(),ci.request_response.get_charset());
+			common_reader cr=new common_reader(
+					ci.request_response.implementor.get_content_stream(),
+					ci.request_response.get_charset_name());
 			sk.collector_stack.load(cr,sk.component_cont,sk.system_par,sk.scene_par,sk.render_cont.renders);
 			cr.close();			
 			acd.set_audio(null);
@@ -352,7 +354,7 @@ public class operate_part_list
 				}
 			}
 			new upload_web_page(ci,new change_name(null,str,null),"text/plain",
-					ci.request_response.get_charset(),my_upload_url).create_web_page();
+					ci.request_response.get_charset_name(),my_upload_url).create_web_page();
 			return;
 		default:
 			return;

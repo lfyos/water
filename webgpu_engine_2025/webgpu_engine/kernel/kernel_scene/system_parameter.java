@@ -46,10 +46,42 @@ public class system_parameter
 	public double box_distance_difference_scale,buffer_data_length_difference_scale; 
 	
 	public String link_file_extend_name;
-	public change_name scene_environment,language_change_name,content_type_change_name;
+	public change_name scene_environment,language_change_name;
 	public temporary_file_parameter temporary_file_par;
 	public switch_scene_server		switch_server;
 	public http_date_string 		http_date_str;
+	
+	private change_name content_type_change_name;
+	public String []search_file_content_type(String path_name)
+	{
+		for(String str,length_str;;){
+			int index_id;
+			if((index_id=path_name.lastIndexOf('.'))<0)
+				return null;
+			if((str=content_type_change_name.search_change_name(
+					path_name.substring(index_id+1),null))==null)
+				return null;
+			if((index_id=str.indexOf(':'))<0)
+				return null;
+			if((length_str=str.substring(0,index_id).trim()).compareTo("link")!=0)
+				return new String[] {length_str,str.substring(index_id+1).trim(),path_name};
+			
+			file_reader fr=new file_reader(path_name,local_data_charset);
+			if(fr.eof()){
+				fr.close();
+				return null;	
+			}
+			if((path_name=fr.get_string())==null){
+				fr.close();
+				return null;
+			}
+			if((path_name=path_name.trim()).length()<=0){
+				fr.close();
+				return null;
+			}
+			fr.close();
+		}
+	}
 
 	public system_parameter(system_parameter sp)
 	{

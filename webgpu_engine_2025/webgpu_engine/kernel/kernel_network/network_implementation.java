@@ -64,14 +64,13 @@ public class network_implementation
 			}
 		return null;
 	}
-	public String get_request_charset()
-	{
-		return request_charset;
-	}
-	
 	public String get_url()
 	{
 		return request.getRequestURL().toString();
+	}
+	public String get_request_charset()
+	{
+		return request_charset;
 	}
 	public String get_client_id()
 	{
@@ -100,8 +99,6 @@ public class network_implementation
 	{
 		response.setCharacterEncoding(response_charset);
 		response.setContentType(content_type);
-
-		response.setHeader("Access-Control-Allow-Origin","*");
 		if(compress_header!=null)
 			response.setHeader("Content-Encoding",compress_header);
 
@@ -111,6 +108,8 @@ public class network_implementation
 			response.setHeader("Cache-Control","public, max-age="+max_time_length);
 			response.setHeader("Last-Modified",http_date_str.date_string(last_time));
 		}
+		
+		response.setHeader("Access-Control-Allow-Origin","*");
 	}
 	public boolean response_binary_data(String error_msg,byte data_buf[],int length)
 	{

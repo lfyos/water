@@ -9,6 +9,7 @@ public class temporary_file_parameter
 {
 	public String root_directory_name;
 	public String temporary_root_directory_name;
+	public String temporary_proxy_directory_name;
 	public String temporary_compress_directory_name;
 	
 	public temporary_file_parameter(
@@ -19,6 +20,7 @@ public class temporary_file_parameter
 			file_writer fw=new file_writer(temporary_file_configure_file_name,temporary_file_configure_file_charset);
 			
 			fw.println("root_directory");
+			fw.println("proxy_directory");
 			fw.println("compress_directory");
 			fw.println();
 			fw.close();
@@ -27,6 +29,7 @@ public class temporary_file_parameter
 
 		root_directory_name					=f.directory_name;
 		temporary_root_directory_name		=f.directory_name+file_reader.separator(f.get_string());
+		temporary_proxy_directory_name		=f.directory_name+file_reader.separator(f.get_string());
 		temporary_compress_directory_name	=f.directory_name+file_reader.separator(f.get_string());
 		
 		if(root_directory_name.charAt(root_directory_name.length()-1)!=File.separatorChar)
@@ -37,6 +40,11 @@ public class temporary_file_parameter
 		if(!(new File(temporary_root_directory_name).exists()))
 			file_writer.make_directory(temporary_root_directory_name);
 		
+		if(temporary_proxy_directory_name.charAt(temporary_proxy_directory_name.length()-1)!=File.separatorChar)
+			temporary_proxy_directory_name+=File.separator;
+		if(!(new File(temporary_proxy_directory_name).exists()))
+			file_writer.make_directory(temporary_proxy_directory_name);
+
 		if(temporary_compress_directory_name.charAt(temporary_compress_directory_name.length()-1)!=File.separatorChar)
 			temporary_compress_directory_name+=File.separator;
 		if(!(new File(temporary_compress_directory_name).exists()))

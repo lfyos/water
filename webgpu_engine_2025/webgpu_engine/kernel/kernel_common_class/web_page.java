@@ -17,7 +17,7 @@ public class web_page
 		
 		language_str=my_ci.request_response.language_str;
 	
-		(out=my_ci.request_response).response_content_type="text/html";
+		(out=my_ci.request_response).set_content_type("text/html");
 
 		request_url_header=my_ci.request_url_header;
 		title=my_title;
