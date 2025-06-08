@@ -31,14 +31,12 @@ public class network_implementation
 		if((client_id=request.getRemoteAddr())==null)
 			client_id="NoRemoteAddr";
 	}
-	static private void print_error(boolean print_stack_trace_flag,
-			String front_msg,Exception e,String end_msg_1,String end_msg_2)
+	static private void print_error(String front_msg,Exception e,String end_msg_1,String end_msg_2)
 	{
-		if(print_stack_trace_flag)
-			e.printStackTrace();
 		debug_information.println();
 		debug_information.println(front_msg,e.toString());
 		debug_information.println(end_msg_1,end_msg_2);
+		e.printStackTrace();
 		return;
 	}
 	public void set_status_code(int new_code)
@@ -60,7 +58,7 @@ public class network_implementation
 			try{
 				return new String(str.getBytes(request_charset));
 			}catch(Exception e){
-				print_error(true,"Error in get_parameter\t",e,"Client_id:"+client_id,"parameter name is "+name);
+				print_error("Error in get_parameter\t",e,"Client_id:"+client_id,"parameter name is "+name);
 			}
 		return null;
 	}
@@ -82,7 +80,7 @@ public class network_implementation
 		try{
 			response.sendRedirect(url);
 		}catch(Exception e){
-			print_error(true,"Error in sendRedirect\t",e,"URL:\t",url);
+			print_error("Error in sendRedirect\t",e,"URL:\t",url);
 		}
 	}
 	public void response_not_modify(String error_msg)
@@ -91,7 +89,7 @@ public class network_implementation
 		try{	
 			response.sendError(HttpServletResponse.SC_NOT_MODIFIED);
 		}catch(Exception e){
-			print_error(true,"Error in response_not_modify\t",e,"Client_id:"+client_id,error_msg);
+			print_error("Error in response_not_modify\t",e,"Client_id:"+client_id,error_msg);
 		}
 	}
 	public void set_response_http_header(String response_charset,String content_type,
@@ -117,7 +115,7 @@ public class network_implementation
 			response.getOutputStream().write(data_buf,0,length);
 			return false;
 		}catch(Exception e){
-			print_error(false,"response_binary_data fail:\t",e,"Client_id:"+client_id,error_msg);
+			print_error("response_binary_data fail:\t",e,"Client_id:"+client_id,error_msg);
 			return true;
 		}
 	}
@@ -126,15 +124,13 @@ public class network_implementation
 		try{
 			response.getOutputStream().flush();
 		}catch(Exception e){
-			print_error(false,
-					"terminate_response_binary_data:output_stream.flush() fail:\t",
+			print_error("terminate_response_binary_data:output_stream.flush() fail:\t",
 						e,"Client_id:"+client_id,error_msg);
 		}
 		try{
 			response.flushBuffer();
 		}catch(Exception e){
-			print_error(false,
-					"terminate_response_binary_data: response.flushBuffer() fail:\t",
+			print_error("terminate_response_binary_data: response.flushBuffer() fail:\t",
 					e,"Client_id:"+client_id+"\n",error_msg);
 		}
 	}
@@ -143,7 +139,7 @@ public class network_implementation
 		try{
 			return request.getInputStream();
 		}catch(Exception e) {
-			print_error(true,"get_input_stream() fail:\t",e,"Client_id:"+client_id,"");
+			print_error("get_input_stream() fail:\t",e,"Client_id:"+client_id,"");
 			return null;
 		}
 	}

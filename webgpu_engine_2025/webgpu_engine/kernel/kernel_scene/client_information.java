@@ -189,7 +189,7 @@ public class client_information
 		
 		long file_length=f.length();
 		String content_str[];
-		if((content_str=system_par.search_file_content_type(file_name))!=null)
+		if((content_str=system_par.search_file_content_type(file_name,false))!=null)
 			if(file_name.compareTo(content_str[2])!=0)
 				file_length=new File(content_str[2]).length();
 		if(file_length<system_par.max_file_response_length)

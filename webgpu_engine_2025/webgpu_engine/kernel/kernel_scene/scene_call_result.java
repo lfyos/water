@@ -10,16 +10,16 @@ public class scene_call_result
 	public boolean already_compress_file_flag;
 	public long last_modified_time;
 	
-	public scene_call_result(File f,boolean cache_flag,system_parameter system_par)
+	public scene_call_result(File f,system_parameter system_par,boolean proxy_flag)
 	{
 		original_file_name			=f.getAbsolutePath();
 		result_file_name			=null;
 		compress_file_name			=null;
-		last_modified_time			=cache_flag?f.lastModified():-1;
+		last_modified_time			=f.lastModified();
 		already_compress_file_flag	=false;
 
 		String content_str[];
-		if((content_str=system_par.search_file_content_type(original_file_name))==null)
+		if((content_str=system_par.search_file_content_type(original_file_name,proxy_flag))==null)
 			return;
 		result_file_name=content_str[2];
 		switch(content_str[0]) {
@@ -42,8 +42,15 @@ public class scene_call_result
 				return;
 			if(original_file_name.indexOf(system_par.temporary_file_par.temporary_root_directory_name)==0){
 				int dir_length=system_par.temporary_file_par.temporary_root_directory_name.length();
-				String dir_name=system_par.temporary_file_par.temporary_compress_directory_name;
-				compress_file_name=dir_name+original_file_name.substring(dir_length);
+				String dir_name=system_par.temporary_file_par.temporary_compress_directory_name+"root_directory";
+				compress_file_name=dir_name+File.separatorChar+original_file_name.substring(dir_length);
+				return;
+			}
+			if(original_file_name.indexOf(system_par.temporary_file_par.temporary_proxy_directory_name)==0){
+				int dir_length=system_par.temporary_file_par.temporary_proxy_directory_name.length();
+				String dir_name=system_par.temporary_file_par.temporary_compress_directory_name+"proxy_directory";
+				compress_file_name=dir_name+File.separatorChar+original_file_name.substring(dir_length);
+				return;
 			}
 			return;
 		}

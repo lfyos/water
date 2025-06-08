@@ -28,11 +28,9 @@ public class download_file_from_webserver
 			out.close();
 			return true;
 		}catch(Exception e){
-			e.printStackTrace();
-			
-			debug_information.println(
-					"download_file_from_webserver:save_to_file() fail:",
+			debug_information.println("download_file_from_webserver:save_to_file() fail:",
 					e.toString()+"		url:"+my_url+"		file:"+file_name);
+			e.printStackTrace();
 		}
 		if(out!=null)
 			try{
@@ -102,6 +100,7 @@ public class download_file_from_webserver
 				debug_information.println(
 					"download_file_from_webserver:	connection.getResponseCode()!=HttpURLConnection.HTTP_OK");
 		}catch(Exception e){
+			stream=null;
 			debug_information.println("download_file_from_webserver:	Setup connection fail:",e.toString());
 		}
 		if(stream==null)
@@ -111,7 +110,7 @@ public class download_file_from_webserver
 			String uncompress_fail_flag_file_name=directory_name+file_name+".uncompress_fail_flag";
 			String uncompress_file_name=directory_name+file_name+".uncompress";
 			if(save_to_file(urlPath,stream,uncompress_fail_flag_file_name,buffer_length)){
-				if((code_str=connection.getContentEncoding())!=null)
+				if((code_str=connection.getContentEncoding())!=null) {
 					if((code_str=code_str.toLowerCase()).indexOf("gzip")>=0){
 						if(uncompress(uncompress_fail_flag_file_name,uncompress_file_name,buffer_length)){
 							new File(uncompress_fail_flag_file_name).delete();
@@ -124,6 +123,7 @@ public class download_file_from_webserver
 							new File(uncompress_file_name).renameTo(new File(uncompress_fail_flag_file_name));
 						}
 					}
+				}
 				new File(uncompress_fail_flag_file_name).renameTo(new File(directory_name+file_name));
 			}
 			try{

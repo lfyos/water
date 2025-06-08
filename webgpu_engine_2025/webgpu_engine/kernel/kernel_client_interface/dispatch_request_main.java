@@ -107,10 +107,10 @@ public class dispatch_request_main
 			return null;
 		}
 
-		scene_call_result ret_val=new scene_call_result(f,false,sk.system_par);
+		scene_call_result ret_val=new scene_call_result(f,sk.system_par,false);
 		
 		String content_str[];
-		if((content_str=sk.system_par.search_file_content_type(ret_val.result_file_name))!=null)
+		if((content_str=sk.system_par.search_file_content_type(ret_val.result_file_name,false))!=null)
 			if(content_str[1]!=null)
 				ci.request_response.set_content_type(content_str[1]);
 		ci.request_response.set_charset_name(file_charset);

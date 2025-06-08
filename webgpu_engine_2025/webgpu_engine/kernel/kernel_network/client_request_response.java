@@ -305,7 +305,7 @@ public class client_request_response extends common_writer
 
 		String error_msg;
 		error_msg ="\nresult_file_name is "+ecr.result_file_name;
-		error_msg ="\file_charset is "+get_charset_name();
+		error_msg ="\nfile_charset is "+get_charset_name();
 		error_msg+="\ncompress_file_name is "+ecr.compress_file_name;
 		error_msg+="\ncharset_name is "+system_par.network_data_charset;
 		
@@ -340,7 +340,6 @@ public class client_request_response extends common_writer
 					f=new File(compress_file_name);
 					compress_response_header="gzip";
 				}
-				
 				string_locker_container.write_unlock(my_lock_key);
 			}
 		}
@@ -348,7 +347,8 @@ public class client_request_response extends common_writer
 		long file_range[];
 		if((file_range=get_range(f.length(),system_par.response_block_size))==null)
 			return;
-		error_msg=range_string+"\n"+error_msg;
+		if(range_string.length()>0)
+			error_msg=range_string+"\n"+error_msg;
 		
 		implementor.set_response_http_header(get_charset_name(),
 			response_content_type,compress_response_header,ecr.last_modified_time,
@@ -361,15 +361,6 @@ public class client_request_response extends common_writer
 			s_stream=new FileInputStream(f);
 			s_buf	=new BufferedInputStream(s_stream);	
 			s_buf.skip(file_range[0]);
-
-
-			debug_information.println(
-					"Response file Length:"+((file_range[1]-file_range[0])/1024)+"/"+(f.length()/1024)
-					+",Start:"+(file_range[0]/1024)+",End:"+(file_range[1]/1024));
-			debug_information.println("original file path:	",ecr.original_file_name);
-			debug_information.println("ecr real file path:	",ecr.result_file_name);
-			debug_information.println("response file path:	",f.getAbsolutePath());
-			
 			for(long i=file_range[0],length;i<=file_range[1];i+=length){
 				length=file_range[1]-i+1;
 				if(data_buf.length>length)

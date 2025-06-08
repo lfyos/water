@@ -74,7 +74,7 @@ public class system_scene
 		case "javascript":
 			return program_javascript.create(request_response,system_par);
 		case "buffer":
-			return file_download_manager.download(request_response,system_par);
+			return file_download_manager.download(request_response,system_par,string_locker_container);
 		case "process_bar":
 			if((client=client_interface_search_tree_array[request_response.container_id].
 				get_client_interface(request_response,scene_kernel_search_tree,scene_counter,system_par))!=null) 
