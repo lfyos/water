@@ -1,4 +1,3 @@
-//		true		default_proxy_url
+//		default_proxy_url
 
-		true		http://localhost:8080/webgpu_engine/water?channel=buffer&proxy_server=lfy_proxy_directory&file=
-
+//		http://localhost:8080/webgpu_engine/water?channel=buffer&proxy_server=lfy_proxy_directory&file=

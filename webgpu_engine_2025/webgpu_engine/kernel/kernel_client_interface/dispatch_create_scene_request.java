@@ -148,7 +148,7 @@ public class dispatch_create_scene_request
 		ci.request_response.print(",");
 		
 		String initialization_url=sk.scene_par.scene_temporary_directory_name+"initialization.gzip_js";
-		initialization_url=ci.get_file_proxy_url(initialization_url,
+		initialization_url=ci.caculate_file_proxy_url(initialization_url,
 				sk.system_par.network_data_charset,sk.system_par);
 		if(initialization_url==null)
 			initialization_url=ci.request_url_header+"&command=initialization&random="+Math.random();

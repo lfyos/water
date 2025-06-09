@@ -138,7 +138,7 @@ public class response_render_component_request
 				ci.request_response.print((j<=0)?"[":",[");
 				if(!(item.buffer_object_file_in_head_flag)){
 					String file_name=directory_name+type_str[i]+Integer.toString(j)+".gzip_text";
-					String my_url=ci.get_file_proxy_url(file_name,
+					String my_url=ci.caculate_file_proxy_url(file_name,
 							sk.system_par.network_data_charset,sk.system_par);
 					if(my_url==null)
 						my_url=url_directory+type_str[i]+j+"&random="+Math.random();
@@ -184,7 +184,7 @@ public class response_render_component_request
 				break;
 			}
 
-			String package_url=ci.get_file_proxy_url(
+			String package_url=ci.caculate_file_proxy_url(
 					package_file_name,sk.system_par.network_data_charset,sk.system_par);
 			if(package_url==null) {
 				package_url =ci.request_url_header;

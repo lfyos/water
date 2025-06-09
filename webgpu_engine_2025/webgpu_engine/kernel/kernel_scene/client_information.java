@@ -18,18 +18,6 @@ import kernel_driver.part_instance_driver_container;
 import kernel_driver.render_instance_driver_container;
 import kernel_driver.component_instance_driver_container;
 
-class file_proxy_container
-{
-	public String 	file_proxy_url;
-	public boolean  file_proxy_date_flag;
-	
-	public file_proxy_container(String my_file_proxy_url,boolean  my_file_proxy_date_flag)
-	{
-		file_proxy_url		=my_file_proxy_url;
-		file_proxy_date_flag=my_file_proxy_date_flag;
-	}
-}
-
 public class client_information 
 {
 	public boolean								not_acknowledge_render_part_id[][];
@@ -65,7 +53,7 @@ public class client_information
 	
 	public String 								request_url_header;
 	
-	private ArrayList<file_proxy_container>		file_proxy_cont;
+	private ArrayList<String>					file_proxy_cont;
 	private int 								file_proxy_pointer;
 	
 	public void destroy()
@@ -145,15 +133,8 @@ public class client_information
 	{
 		String url_array[]=new String[file_proxy_cont.size()];
 		for(int i=0,ni=url_array.length;i<ni;i++)
-			url_array[i]=file_proxy_cont.get(i).file_proxy_url;
+			url_array[i]=file_proxy_cont.get(i);
 		return url_array;
-	}
-	public boolean[] get_all_file_proxy_date_flag()
-	{
-		boolean flag_array[]=new boolean[file_proxy_cont.size()];
-		for(int i=0,ni=flag_array.length;i<ni;i++)
-			flag_array[i]=file_proxy_cont.get(i).file_proxy_date_flag;
-		return flag_array;
 	}
 	public String get_component_request_url_header(int component_id,String driver_id)
 	{
@@ -177,34 +158,29 @@ public class client_information
 		url_header+="&event_part_id="+Integer.toString(part_id);
 		return url_header;
 	}
-	public String get_file_proxy_url(
+	public String caculate_file_proxy_url(
 			String file_name,String file_charset,system_parameter system_par)
 	{
-		File f=new File(file_name);
-		
+		File original_f,target_f;
 		if(file_proxy_cont.size()<=0)
 			return null;
-		if(!(f.exists()))
+		if(!((original_f=new File(file_name)).exists()))
 			return null;
 		
-		long file_length=f.length();
-		String content_str[];
-		if((content_str=system_par.search_file_content_type(file_name,false))!=null)
-			if(file_name.compareTo(content_str[2])!=0)
-				file_length=new File(content_str[2]).length();
-		if(file_length<system_par.max_file_response_length)
+		var content_type=system_par.search_file_content_type(file_name);
+		if(content_type==null)
+			return null;
+		target_f=new File(content_type.path_name);
+		if(target_f.length()<system_par.max_file_response_length)
 			return null;
 		
-		String proxy_file_name=f.getAbsolutePath().replace(File.separatorChar,'/');
-		String proxy_directory_name=system_par.temporary_file_par.temporary_root_directory_name;
-		proxy_directory_name=proxy_directory_name.replace(File.separatorChar,'/');
-		int proxy_directory_name_length=proxy_directory_name.length();
-		if(proxy_file_name.length()<=proxy_directory_name_length)
+		String proxy_file_name=original_f.getAbsolutePath().replace(File.separatorChar,'/');
+		String proxy_directory_name=system_par.temporary_file_par.
+					temporary_root_directory_name.replace(File.separatorChar,'/');
+		if(proxy_file_name.indexOf(proxy_directory_name)!=0)
 			return null;
-		if(proxy_file_name.substring(0,proxy_directory_name_length).compareTo(proxy_directory_name)!=0)
-			return null;
-		proxy_file_name=proxy_file_name.substring(proxy_directory_name_length);
-		
+		proxy_file_name=proxy_file_name.substring(proxy_directory_name.length());
+
 		String code_str=request_response.implementor.get_request_charset();
 		try {
 			proxy_file_name	=java.net.URLEncoder.encode(proxy_file_name,code_str);
@@ -214,35 +190,33 @@ public class client_information
 		}
 		
 		file_proxy_pointer=(file_proxy_pointer+1)%(file_proxy_cont.size());
-		file_proxy_container fpc=file_proxy_cont.get(file_proxy_pointer);
-		String proxy_url=fpc.file_proxy_url+proxy_file_name;
+		String proxy_url=file_proxy_cont.get(file_proxy_pointer)+proxy_file_name;
 
 		if(file_charset==null)
 			file_charset=system_par.network_data_charset;
 		else if((file_charset=file_charset.trim()).length()<=0)
 			file_charset=system_par.network_data_charset;
 		
-		proxy_url+="&file_charset="+file_charset;
-		proxy_url+="&file_content="+((content_str==null)?"text/plain":content_str[1]);
-		
-		if(fpc.file_proxy_date_flag)
-			proxy_url+="&date="+f.lastModified();
-
-		return proxy_url;
+		return proxy_url					+"&proxy_info="
+				+code_str					+";"
+				+file_charset				+";"
+				+content_type.content_str	+";"
+				+content_type.ext_str		+";"
+				+((content_type.link_token!=null)?"true;":"false;")
+				+Long.toString(target_f.lastModified());
 	}
-	public void add_file_proxy_url(String my_file_proxy_url,boolean my_file_proxy_date_flag)
+	public void add_file_proxy_url(String my_file_proxy_url)
 	{
 		if(my_file_proxy_url!=null)
 			if((my_file_proxy_url=my_file_proxy_url.trim()).length()>0)
-				file_proxy_cont.add(new file_proxy_container(
-						my_file_proxy_url,my_file_proxy_date_flag));
+				file_proxy_cont.add(my_file_proxy_url);
 	}
 	public void delete_file_proxy_url(String my_file_proxy_url)
 	{
 		if(my_file_proxy_url!=null)
 			if((my_file_proxy_url=my_file_proxy_url.trim()).length()>0)
 				for(int i=file_proxy_cont.size()-1;i>=0;i--) 
-					if(file_proxy_cont.get(i).file_proxy_url.compareTo(my_file_proxy_url)==0)
+					if(file_proxy_cont.get(i).compareTo(my_file_proxy_url)==0)
 						file_proxy_cont.remove(i);
 	}
 	public client_information(
@@ -288,7 +262,7 @@ public class client_information
 		
 		process_bar						=my_process_bar;
 
-		file_proxy_cont					=new ArrayList<file_proxy_container>();
+		file_proxy_cont					=new ArrayList<String>();
 		file_proxy_pointer				=0;
 		
 		render_instance_driver_cont		=new render_instance_driver_container(sk,request_response);

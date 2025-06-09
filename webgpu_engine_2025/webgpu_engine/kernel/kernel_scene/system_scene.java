@@ -120,7 +120,7 @@ public class system_scene
 		if((ecr=system_call_switch(request_response))!=null) {
 			if(ecr.result_file_name==null)
 				request_response.response_network_data(ecr,system_par);
-			else
+			else 
 				request_response.response_file_data(ecr,system_par,string_locker_container);
 		}
 		request_response.destroy();

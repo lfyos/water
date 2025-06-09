@@ -52,44 +52,40 @@ public class system_parameter
 	public http_date_string 		http_date_str;
 	
 	private change_name content_type_change_name;
-	public String []search_file_content_type(String path_name,boolean proxy_flag)
+	public search_file_content_type_result search_file_content_type(String path_name)
 	{
-		for(String bak_path_name=path_name,str,length_str;;){
+		String link_token=null;
+		do{
 			int index_id;
 			if((index_id=path_name.lastIndexOf('.'))<0)
-				return null;
-			if((str=content_type_change_name.search_change_name(
-					path_name.substring(index_id+1),null))==null)
-				return null;
-			String new_path_name=path_name.substring(0,index_id);
+				break;
+			
+			String ext_str=path_name.substring(index_id+1);
+			
+			String str=content_type_change_name.search_change_name(ext_str,null);
+			if(str==null) 
+				break;
 			if((index_id=str.indexOf(':'))<0)
-				return null;
-			if((length_str=str.substring(0,index_id).trim()).compareTo("link")!=0)
-				return new String[] 
-				{
-						length_str,
-						str.substring(index_id+1).trim(),
-						proxy_flag?bak_path_name:path_name
-				};
-			if(proxy_flag) 
-				path_name=new_path_name;
-			else{
-				file_reader fr=new file_reader(path_name,local_data_charset);
-				if(fr.eof()){
-					fr.close();
-					return null;	
-				}
-				if((path_name=fr.get_string())==null){
-					fr.close();
-					return null;
-				}
-				if((path_name=path_name.trim()).length()<=0){
-					fr.close();
-					return null;
-				}
-				fr.close();
+				break;
+			String length_str =str.substring(0,index_id).trim();
+			if(length_str.compareTo("link")!=0) {
+				String content_str=str.substring(index_id+1).trim();
+				return new search_file_content_type_result(
+					length_str,content_str,ext_str,link_token,path_name);
 			}
-		}
+			file_reader fr=new file_reader(path_name,local_data_charset);
+			if(!(fr.eof()))
+				if((path_name=fr.get_string())!=null)
+					if((path_name=path_name.trim()).length()>0) {
+						fr.close();
+						link_token=length_str;
+						continue;
+					}			
+			fr.close();
+			break;
+		}while(true);
+		
+		return null;
 	}
 
 	public system_parameter(system_parameter sp)
