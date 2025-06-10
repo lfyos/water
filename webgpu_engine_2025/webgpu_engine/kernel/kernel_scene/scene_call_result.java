@@ -2,11 +2,9 @@ package kernel_scene;
 
 import java.io.File;
 
-import kernel_common_class.debug_information;
-
 public class scene_call_result
 {
-	public String original_file_name,result_file_name,compress_file_name;
+	public String original_file_name,result_file_name;
 	public boolean already_compress_file_flag;
 	public long last_modified_time;
 	
@@ -15,59 +13,21 @@ public class scene_call_result
 	public scene_call_result(File f,system_parameter system_par)
 	{
 		original_file_name			=f.getAbsolutePath();
-		result_file_name			=null;
-		compress_file_name			=null;
+		result_file_name			=original_file_name;
 		last_modified_time			=f.lastModified();
 		already_compress_file_flag	=false;
 
-		content_type=system_par.search_file_content_type(original_file_name);
-		if(content_type==null) {
-			result_file_name=original_file_name;
-			return;
-		}
-		result_file_name=content_type.path_name;
-		switch(content_type.length_str){
-		case "gzip":
-			already_compress_file_flag=true;
-			return;
-		case "link":
-			result_file_name=null;
-			return;
-		default:
-			f=new File(result_file_name);
-			last_modified_time=f.lastModified();
-			
-			long compress_length;
-			try{
-				compress_length=Long.decode(content_type.length_str);
-			}catch(Exception e){
-				debug_information.println("Unknown compress_str:	",	content_type.length_str);
-				debug_information.println("			",					f.getAbsolutePath());
-				return;
-			}
-
-			if((compress_length<=0)||(f.length()<=compress_length))
-				return;
-			if(original_file_name.indexOf(system_par.temporary_file_par.temporary_root_directory_name)==0){
-				int dir_length=system_par.temporary_file_par.temporary_root_directory_name.length();
-				String dir_name=system_par.temporary_file_par.temporary_compress_directory_name+"root_directory";
-				compress_file_name=dir_name+File.separatorChar+original_file_name.substring(dir_length);
-				return;
-			}
-			if(original_file_name.indexOf(system_par.temporary_file_par.temporary_proxy_directory_name)==0){
-				int dir_length=system_par.temporary_file_par.temporary_proxy_directory_name.length();
-				String dir_name=system_par.temporary_file_par.temporary_compress_directory_name+"proxy_directory";
-				compress_file_name=dir_name+File.separatorChar+original_file_name.substring(dir_length);
-				return;
-			}
-			return;
+		if((content_type=system_par.search_file_content_type(original_file_name))!=null){
+			result_file_name=content_type.path_name;
+			last_modified_time=new File(result_file_name).lastModified();
+			if(content_type.zip_link_str.compareTo("gzip")==0)
+				already_compress_file_flag=true;
 		}
 	}
 	public scene_call_result(long my_last_modified_time)
 	{
 		original_file_name	=null;
 		result_file_name	=null;
-		compress_file_name	=null;
 		content_type		=null;
 		last_modified_time	=my_last_modified_time;
 		already_compress_file_flag	=false;
@@ -76,7 +36,6 @@ public class scene_call_result
 	{
 		original_file_name	=null;
 		result_file_name	=null;
-		compress_file_name	=null;
 		content_type		=null;
 		last_modified_time	=-1;
 		already_compress_file_flag=false;

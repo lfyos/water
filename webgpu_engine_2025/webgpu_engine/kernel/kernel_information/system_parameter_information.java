@@ -11,7 +11,6 @@ public class system_parameter_information extends jason_creator
 	{	
 		print("system_data_root_directory_name",		sp.data_root_directory_name);
 		print("temporary_root_directory_name",			sp.temporary_file_par.temporary_root_directory_name);
-		print("temporary_compress_directory_name",		sp.temporary_file_par.temporary_compress_directory_name);
 		
 		print("local_data_charset",						sp.local_data_charset);
 		print("network_data_charset",					sp.network_data_charset);

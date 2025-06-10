@@ -9,11 +9,9 @@ import java.io.ByteArrayOutputStream;
 
 import kernel_scene.system_parameter;
 import kernel_scene.scene_call_result;
-import kernel_file_manager.file_writer;
 import kernel_common_class.common_reader;
 import kernel_common_class.common_writer;
 import kernel_common_class.debug_information;
-import kernel_common_class.compress_file_data;
 import kernel_common_class.compress_network_data;
 import kernel_common_class.tree_string_locker_container;
 
@@ -208,15 +206,13 @@ public class client_request_response extends common_writer
 			debug_information.println("Error 1 in response_network_data\t",e.toString());
 		}
 		
-		String compress_response_header="gzip";
+		String compress_response_header=null;
 		byte data_buf[]=output_stream.toByteArray(),compress_data_buf[];
-		
-		if(data_buf.length<=system_par.min_compress_response_length)
-			compress_response_header=null;
-		else if((compress_data_buf=compress_network_data.do_compress(data_buf,compress_response_header))==null)
-			compress_response_header=null;
-		else 
-			data_buf=compress_data_buf;
+		if(data_buf.length>system_par.min_compress_response_length)
+			if((compress_data_buf=compress_network_data.do_compress(data_buf,"gzip"))!=null){
+				data_buf=compress_data_buf;
+				compress_response_header="gzip";
+			}
 		
 		implementor.set_response_http_header(
 			get_charset_name(),response_content_type,compress_response_header,
@@ -306,44 +302,15 @@ public class client_request_response extends common_writer
 		String error_msg;
 		error_msg ="\nresult_file_name is "+ecr.result_file_name;
 		error_msg ="\nfile_charset is "+get_charset_name();
-		error_msg+="\ncompress_file_name is "+ecr.compress_file_name;
 		error_msg+="\ncharset_name is "+system_par.network_data_charset;
 		
-		File f,gf;
+		File f;
 		if((f=new File(ecr.result_file_name)).length()<=0){
 			debug_information.println("response_file_data find file length is ZERO:	",ecr.result_file_name);
 			return;
 		}
 		
-		String compress_response_header;
-		if(ecr.already_compress_file_flag)
-			compress_response_header="gzip";
-		else if(ecr.compress_file_name==null)
-			compress_response_header=null;
-		else {
-			String compress_file_name=ecr.compress_file_name+".gzip";
-			gf=new File(compress_file_name);
-			if(f.lastModified()<gf.lastModified()){
-				f=gf;
-				compress_response_header="gzip";
-			}else{
-				String my_lock_key=ecr.compress_file_name+".lock";
-				string_locker_container.write_lock(my_lock_key);
-				
-				String tmp_file_name=ecr.compress_file_name+".tmp";
-				if(compress_file_data.do_compress(f,new File(tmp_file_name),
-						system_par.response_block_size,"gzip"))
-				{
-					compress_response_header=null;
-				}else{
-					file_writer.file_rename(tmp_file_name,compress_file_name);
-					f=new File(compress_file_name);
-					compress_response_header="gzip";
-				}
-				string_locker_container.write_unlock(my_lock_key);
-			}
-		}
-		
+		String compress_response_header=ecr.already_compress_file_flag?"gzip":null;
 		long file_range[];
 		if((file_range=get_range(f.length(),system_par.response_block_size))==null)
 			return;
@@ -374,7 +341,6 @@ public class client_request_response extends common_writer
 			e.printStackTrace();
 			
 			debug_information.println("Do response error:source\t",ecr.result_file_name);
-			debug_information.println("Do response error:target\t",ecr.compress_file_name);
 			debug_information.println("Do response error:error\t",e.toString());
 		}
 		if(s_buf!=null)
