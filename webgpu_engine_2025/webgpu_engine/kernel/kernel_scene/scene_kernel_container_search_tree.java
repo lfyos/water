@@ -43,7 +43,7 @@ public class scene_kernel_container_search_tree
 			system_par.local_data_charset,part_type_id,system_par,null,encoder,request_response);
 		pcps.execute_append();
 		
-		String fast_load_type=render_container.get_fast_load_type(request_response);
+		String fast_load_type=request_response.get_fast_load_type();
 		
 		original_render.load_part(((long)1)<<part_type_id,1,part_loader_cont,system_par,null,
 			boftal_container,string_locker_container,null,null,fast_load_type);

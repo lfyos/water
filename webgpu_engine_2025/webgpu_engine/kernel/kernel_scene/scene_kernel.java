@@ -307,7 +307,7 @@ public class scene_kernel
 		if(scene_par.scene_shader_directory_name==null)
 			scene_par.scene_shader_directory_name	=scene_f.directory_name;
 		
-		String fast_load_type=render_container.get_fast_load_type(request_response);
+		String fast_load_type=request_response.get_fast_load_type();
 		if(fast_load_type.compareTo("clear")==0)
 			process_bar_delete_file.do_delete(scene_par.scene_temporary_directory_name,process_bar);
 

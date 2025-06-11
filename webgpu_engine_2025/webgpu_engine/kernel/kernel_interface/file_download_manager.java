@@ -104,8 +104,15 @@ public class file_download_manager
 			File f=new File(system_par.temporary_file_par.temporary_root_directory_name+file_name);
 			return f.exists()?new scene_call_result(f,system_par):null;
 		}
+		String directory_name=system_par.temporary_file_par.temporary_proxy_directory_name;
+		directory_name+=file_reader.separator(proxy_server);
+		if(directory_name.charAt(directory_name.length()-1)!=File.separatorChar)
+			directory_name+=File.separatorChar;
 		
-		String proxy_url=system_par.proxy_server_change_name.search_change_name(proxy_server,null);
+		file_reader fr=new file_reader(directory_name+"proxy_url.txt",system_par.local_data_charset);
+		String proxy_url=fr.get_string();
+		fr.close();
+		
 		if(proxy_url!=null)
 			if((proxy_url=proxy_url.trim()).length()<=0)
 				proxy_url=null;
@@ -115,11 +122,7 @@ public class file_download_manager
 		}
 		proxy_url+=undecode_file_name+"&proxy_info="+info_str;
 		
-		String my_file_name=system_par.temporary_file_par.temporary_proxy_directory_name;
-		my_file_name+=file_reader.separator(proxy_server);
-		if(my_file_name.charAt(my_file_name.length()-1)!=File.separatorChar)
-			my_file_name+=File.separatorChar;
-		my_file_name+=file_reader.separator(file_name);
+		String my_file_name=directory_name+file_reader.separator(file_name);
 		if(link_token.compareTo("true")==0) {
 			int index_id;
 			if((index_id=my_file_name.lastIndexOf('.'))<0)
@@ -140,7 +143,9 @@ public class file_download_manager
 				return new scene_call_result(f,system_par);
 			}
 		}
-		if(download_file_from_url.do_download(proxy_url,my_file_name,system_par.response_block_size)){
+		if(download_file_from_url.do_download(
+			proxy_url,my_file_name,system_par.response_block_size))
+		{
 			string_locker_container.write_unlock(my_lock_key);
 			debug_information.println("Download fail:	",my_file_name);
 			return null;

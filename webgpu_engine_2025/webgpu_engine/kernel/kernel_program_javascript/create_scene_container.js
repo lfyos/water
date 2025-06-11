@@ -72,7 +72,7 @@ function create_scene_container_routine(my_webgpu)
 				this.scene_object[scene_name_array[i]]=my_scene;
 
 				var si=my_scene.scene_interface,scene_interface_flag=false,my_engine_touch_time_length;
-				if((my_engine_touch_time_length=si.process_scene(scene_id++))<engine_touch_time_length)
+				if((my_engine_touch_time_length=si.front_process_scene(scene_id++))<engine_touch_time_length)
 					engine_touch_time_length=my_engine_touch_time_length;
 
 				for(var target_par,j=0,nj=si.get_render_buffer_number();j<nj;j++){
@@ -122,9 +122,10 @@ function create_scene_container_routine(my_webgpu)
 			
 			if(this.terminate_flag)
 				break;
-			
 			var scene_name_array=Object.keys(this.scene_object);
-			for(var i=0;(i<scene_name_array.length)&&(!(this.terminate_flag));i++){
+			for(var i=0,ni=scene_name_array.length;i<ni;i++){
+				if(this.terminate_flag)
+					break;
 				var my_scene=this.scene_object[scene_name_array[i]];
 				for(var j=0,nj=my_scene.scene_interface.get_render_buffer_number();j<nj;j++){
 					if(my_scene.terminate_flag||this.terminate_flag)
@@ -135,6 +136,17 @@ function create_scene_container_routine(my_webgpu)
 			}
 			if(this.terminate_flag)
 				break;
+			var scene_name_array=Object.keys(this.scene_object);
+			for(var i=0,ni=scene_name_array.length;i<ni;i++){
+				if(this.terminate_flag)
+					break;
+				var my_scene=this.scene_object[scene_name_array[i]];
+				if(!(my_scene.terminate_flag))
+					my_scene.scene_interface.back_process_scene();
+			}
+			if(this.terminate_flag)
+				break;
+
 			await new Promise((resolve)=>
 			{
 				window.requestAnimationFrame(resolve);

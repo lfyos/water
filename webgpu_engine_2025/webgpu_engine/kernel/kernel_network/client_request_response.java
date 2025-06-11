@@ -430,4 +430,19 @@ public class client_request_response extends common_writer
 		}
 		return this;
 	}
+	
+	public String get_fast_load_type()
+	{
+		String fast_load_type=get_parameter("fast_load");
+		fast_load_type=(fast_load_type==null)?"fast":fast_load_type.toLowerCase();
+		switch(fast_load_type){
+		case "fast":
+		case "medium":
+		case "slow":
+		case "clear":
+			return fast_load_type;
+		default:
+			return "fast";
+		}
+	}
 }

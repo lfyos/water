@@ -1,1 +1,0 @@
-lfy_proxy_directory			http://localhost:8080/webgpu_engine/water?channel=buffer&file=

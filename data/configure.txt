@@ -8,7 +8,6 @@
 /*	default_parameter_directory												*/		parameter
 /*	default_system_mount_component_name										*/		system_mount_component
 /*	language_change_file_name												*/		language_change.txt
-/*	proxy_change_file_name													*/		proxy_change.txt
 /*	switch_server_url_file_name												*/		switch_server_url.txt
 
 /*	default_max_loading_number												*/		5

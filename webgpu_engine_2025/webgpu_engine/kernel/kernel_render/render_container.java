@@ -172,56 +172,65 @@ public class render_container
 			client_request_response request_response,permanent_part_id_encoder encoder[],
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		for(int i=0,j=0,part_number=pcps.get_number();i<part_number;i=j){
+		for(int i=0,j,part_number=pcps.get_number();i<part_number;i=j){
 			part i_part=pcps.data_list.get(i);
 			for(j=i;j<part_number;j++)
 				if(i_part.system_name.compareTo(pcps.data_list.get(j).system_name)!=0)
 					break;
-			part p=null;
-			box b=null;
-			for(;i<j;i++)
-				if((i_part=pcps.data_list.get(i)).is_normal_part()){
-					if(p==null)
-						if(i_part.part_mesh!=null)
-							if(i_part.part_par.do_create_bottom_box_flag)
-								if(i_part.driver!=null)
-									if((b=i_part.secure_caculate_part_box(
-											null,-1,-1,-1,-1,-1,-1,-1,null,null))!=null)
-												p=i_part;
-				}else {
-					p=null;
-					b=null;
+			part insert_part=null;
+			box  part_box	=null;
+			
+			for(;i<j;i++) {
+				i_part=pcps.data_list.get(i);
+				boolean normal_flag	=i_part.is_normal_part();
+				boolean do_flag		=i_part.part_par.do_create_bottom_box_flag;
+				if((!normal_flag)||(!do_flag)){
+					insert_part=null;
+					part_box=null;
 					break;
 				}
-			if((p==null)||(b==null))
+				if((insert_part!=null)&&(part_box!=null))
+					continue;
+				if((i_part.part_mesh==null)||(i_part.driver==null))
+					continue;
+				part_box=i_part.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null);
+				insert_part=(part_box==null)?null:i_part;
+			}
+			if((insert_part==null)||(part_box==null))
 				continue;
-			part add_part=new part(p.part_type_id,false,p.part_par.box_part_parameter(),
-						p.directory_name,p.file_charset,p.user_name,p.system_name,
-						null,p.material_file_name,p.description_file_name,p.audio_file_name);
-			if((add_part.part_mesh=new part_rude(1,new part[] {p},new location[]{new location()},new box[] {b}))==null)
+			render ren;
+			if((ren=renders.get(insert_part.render_id))==null)
 				continue;
-			render r=renders.get(p.render_id);
-			if(r==null)
-				continue;
-			r.add_part(add_part,encoder);
-			add_part.part_from_id			=p.part_id;
-			add_part.permanent_part_from_id	=p.permanent_part_id;
+			
+			part add_part=new part(insert_part.part_type_id,false,
+					insert_part.part_par.box_part_parameter(),insert_part.directory_name,
+					insert_part.file_charset,insert_part.user_name,insert_part.system_name,null,
+					insert_part.material_file_name,insert_part.description_file_name,
+					insert_part.audio_file_name);
+			add_part.part_mesh=new part_rude(1,
+					new part[] {insert_part},new location[]{new location()},new box[] {part_box});
+
+			add_part.part_from_id			=insert_part.part_id;
+			add_part.permanent_part_from_id	=insert_part.permanent_part_id;
 			try {
-				add_part.driver=p.driver.clone(p,add_part,request_response,system_par,scene_par);
+				add_part.driver=insert_part.driver.clone(insert_part,add_part,request_response,system_par,scene_par);
 			}catch(Exception e) {
 				
 				e.printStackTrace();
 				
 				debug_information.println("Execte part driver clone() fail");
-				debug_information.println("Part user name:",	p.user_name);
-				debug_information.println("Part system name:",	p.system_name);
-				debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);
-				debug_information.println("Material_file_name:",p.directory_name+p.material_file_name);
+				debug_information.println("Part user name:",	insert_part.user_name);
+				debug_information.println("Part system name:",	insert_part.system_name);
+				debug_information.println("Mesh_file_name:",	
+						insert_part.directory_name+insert_part.mesh_file_name);
+				debug_information.println("Material_file_name:",
+						insert_part.directory_name+insert_part.material_file_name);
 				debug_information.println(e.toString());
 				
-				r.delete_last_part();
 				continue;
 			}
+			
+			ren.add_part(add_part,encoder);
 			pcps.append(add_part);
 		}
 	}
@@ -421,20 +430,5 @@ public class render_container
 		for(int i=0,ni=ren_con.type_part_package.length;i<ni;i++)
 			type_part_package[i]=new part_package(ren_con.type_part_package[i]);
 		scene_part_package	=new part_package(ren_con.scene_part_package);
-	}
-	
-	public static String get_fast_load_type(client_request_response request_response)
-	{
-		String fast_load_type=request_response.get_parameter("fast_load");
-		fast_load_type=(fast_load_type==null)?"fast":fast_load_type.toLowerCase();
-		switch(fast_load_type){
-		case "fast":
-		case "medium":
-		case "slow":
-		case "clear":
-			return fast_load_type;
-		default:
-			return "fast";
-		}
 	}
 }

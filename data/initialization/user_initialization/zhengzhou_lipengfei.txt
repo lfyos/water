@@ -97,7 +97,7 @@ function(component_name,component_id,scene)
 			var my_collector_stack_version=0;
 			var old_collector_stack_version=0;
 			
-			scene.append_routine_function(
+			scene.append_front_routine_function(
 				function(scene)
 				{
 					if(scene.collector_stack_version==my_collector_stack_version)
@@ -200,7 +200,7 @@ function(component_name,component_id,scene)
 				function()
 				{
 					scene.component_call_processor[p.component_id].suspend_status=false;
-					scene.append_routine_function(
+					scene.append_front_routine_function(
 						function()
 						{
 							if(scene.component_call_processor[p.component_id].suspend_status){

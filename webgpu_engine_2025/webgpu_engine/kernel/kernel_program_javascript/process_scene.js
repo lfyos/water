@@ -59,7 +59,7 @@ function construct_scene_interface(my_scene)
 				target_part_object,target_part_driver,target_render_driver,this.scene);
 	}
 	
-	this.process_scene=function(scene_id)
+	this.front_process_scene=function(scene_id)
 	{
 		if(this.scene.terminate_flag)
 			return 0;
@@ -86,12 +86,12 @@ function construct_scene_interface(my_scene)
 			}
 		}
 		
-		var fun_array=this.scene.routine_array;
-		this.scene.routine_array=new Array();
+		var fun_array=this.scene.routine_array_front;
+		this.scene.routine_array_front=new Array();
 		for(var i=0,ni=fun_array.length;i<ni;i++)
 			if(typeof(fun_array[i])=="function")
 				if(fun_array[i](this.scene))
-					this.scene.routine_array.push(fun_array[i]);
+					this.scene.routine_array_front.push(fun_array[i]);
 
 		for(var render_data,i=0,ni=this.scene.render_buffer_array.length;i<ni;i++)
 			if((render_data=this.scene.render_buffer_array[i]).do_render_flag){
@@ -101,4 +101,17 @@ function construct_scene_interface(my_scene)
 
 		return this.scene.parameter.engine_touch_time_length;
 	}
+	
+	this.back_process_scene=function()
+	{
+		if(this.scene.terminate_flag)
+			return 0;
+		var fun_array=this.scene.routine_array_back;
+		this.scene.routine_array_back=new Array();
+		for(var i=0,ni=fun_array.length;i<ni;i++)
+			if(typeof(fun_array[i])=="function")
+				if(fun_array[i](this.scene))
+					this.scene.routine_array_back.push(fun_array[i]);
+	}
+	
 }

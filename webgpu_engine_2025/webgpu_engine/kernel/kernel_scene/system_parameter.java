@@ -46,7 +46,7 @@ public class system_parameter
 	public double box_distance_difference_scale,buffer_data_length_difference_scale; 
 	
 	public String link_file_extend_name;
-	public change_name scene_environment,language_change_name,proxy_server_change_name;
+	public change_name scene_environment,language_change_name;
 	public temporary_file_parameter temporary_file_par;
 	public switch_scene_server		switch_server;
 	public http_date_string 		http_date_str;
@@ -138,7 +138,6 @@ public class system_parameter
 		link_file_extend_name				=sp.link_file_extend_name;
 		scene_environment					=new change_name(sp.scene_environment,false);
 		language_change_name				=new change_name(sp.language_change_name,false);
-		proxy_server_change_name			=new change_name(sp.proxy_server_change_name,false);
 		content_type_change_name			=new change_name(sp.content_type_change_name,false);
 
 		temporary_file_par					=sp.temporary_file_par;
@@ -245,13 +244,7 @@ public class system_parameter
 			language_change_file_name="";
 		else
 			language_change_file_name=file_reader.separator(language_change_file_name);	
-		
-		String proxy_server_change_file_name;
-		if((proxy_server_change_file_name=f.get_string())==null)
-			proxy_server_change_file_name="";
-		else
-			proxy_server_change_file_name=file_reader.separator(proxy_server_change_file_name);
-		
+
 		String switch_server_url_file_name;
 		if((switch_server_url_file_name=f.get_string())==null)
 			switch_server_url_file_name="";
@@ -300,8 +293,6 @@ public class system_parameter
 		temporary_file_par=new temporary_file_parameter(scene_temparatory_path_name,local_data_charset);
 		language_change_name=new change_name(
 				new String[]{data_root_directory_name+language_change_file_name},null,local_data_charset);
-		proxy_server_change_name=new change_name(
-				new String[]{data_root_directory_name+proxy_server_change_file_name},null,local_data_charset);
 		content_type_change_name=get_content_type_change_name.get_change_name(text_class_charset,text_jar_file_charset);
 		switch_server=new switch_scene_server(data_root_directory_name+switch_server_url_file_name,local_data_charset);
 		http_date_str=new http_date_string();
