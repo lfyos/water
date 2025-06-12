@@ -247,6 +247,8 @@ async function request_render_data(scene)
 		for(var p=response_data[7],i=0,ni=p.length;i<ni;i++)
 			scene.vertex_data_downloader.buffer_head_request_queue.push(p[i]);
 		
+		scene.web_server_render_data_version++;
+		
 		return false;
 	};
 	

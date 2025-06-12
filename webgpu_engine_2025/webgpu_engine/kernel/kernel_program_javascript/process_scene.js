@@ -86,13 +86,6 @@ function construct_scene_interface(my_scene)
 			}
 		}
 		
-		var fun_array=this.scene.routine_array_front;
-		this.scene.routine_array_front=new Array();
-		for(var i=0,ni=fun_array.length;i<ni;i++)
-			if(typeof(fun_array[i])=="function")
-				if(fun_array[i](this.scene))
-					this.scene.routine_array_front.push(fun_array[i]);
-
 		for(var render_data,i=0,ni=this.scene.render_buffer_array.length;i<ni;i++)
 			if((render_data=this.scene.render_buffer_array[i]).do_render_flag){
 				render_data.project_matrix=this.scene.camera.compute_camera_data(render_data);
@@ -106,12 +99,11 @@ function construct_scene_interface(my_scene)
 	{
 		if(this.scene.terminate_flag)
 			return 0;
-		var fun_array=this.scene.routine_array_back;
-		this.scene.routine_array_back=new Array();
+		var fun_array=this.scene.routine_array;
+		this.scene.routine_array=new Array();
 		for(var i=0,ni=fun_array.length;i<ni;i++)
 			if(typeof(fun_array[i])=="function")
 				if(fun_array[i](this.scene))
-					this.scene.routine_array_back.push(fun_array[i]);
+					this.scene.routine_array.push(fun_array[i]);
 	}
-	
 }

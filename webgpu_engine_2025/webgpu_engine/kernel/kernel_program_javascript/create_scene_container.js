@@ -141,8 +141,9 @@ function create_scene_container_routine(my_webgpu)
 				if(this.terminate_flag)
 					break;
 				var my_scene=this.scene_object[scene_name_array[i]];
-				if(!(my_scene.terminate_flag))
-					my_scene.scene_interface.back_process_scene();
+				if(my_scene.terminate_flag)
+					continue;
+				my_scene.scene_interface.back_process_scene();
 			}
 			if(this.terminate_flag)
 				break;

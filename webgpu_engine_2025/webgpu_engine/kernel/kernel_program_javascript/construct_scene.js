@@ -51,8 +51,7 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 
 	this.render_buffer_array		=new Array();
 	
-	this.routine_array_front		=new Array();
-	this.routine_array_back			=new Array();
+	this.routine_array				=new Array();
 	
 	this.view=
 	{
@@ -131,6 +130,7 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 	this.browser_current_time		=0;
 	
 	this.collector_stack_version	=0;
+	this.web_server_render_data_version=0; 
 
 	this.terminate_flag=false;
 	
@@ -188,12 +188,8 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 
 		execute_delete_function (this,"");
 	};
-	this.append_front_routine_function=function(my_routine_function)
+	this.append_routine_function=function(my_routine_function)
 	{
-		return this.routine_array_front.push(my_routine_function)-1;
-	};
-	this.append_back_routine_function=function(my_routine_function)
-	{
-		return this.routine_array_back.push(my_routine_function)-1;
+		return this.routine_array.push(my_routine_function)-1;
 	};
 };
