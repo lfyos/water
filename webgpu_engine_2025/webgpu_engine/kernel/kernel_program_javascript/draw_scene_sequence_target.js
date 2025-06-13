@@ -61,20 +61,12 @@ function draw_scene_target_routine(target_parameter,scene_target_array,pass_id,s
 	if(method_array.length<=0)
 		return;
 
-	var view_x0=(render_data.target_view_parameter.view_x0<0)?0:
-			(render_data.target_view_parameter.view_x0>=scene_target.target_view.width)
-			?(scene_target.target_view.width-1):(render_data.target_view_parameter.view_x0);
-	var view_y0=(render_data.target_view_parameter.view_y0<0)?0:
-			(render_data.target_view_parameter.view_y0>=scene_target.target_view.height)
-			?(scene_target.target_view.height-1):(render_data.target_view_parameter.view_y0);
-	var view_width=(render_data.target_view_parameter.view_width<1)?1:
-			((render_data.target_view_parameter.view_width+view_x0)>scene_target.target_view.width)
-			?(scene_target.target_view.width-view_x0):(render_data.target_view_parameter.view_width);	
-	var view_height=(render_data.target_view_parameter.view_height<1)?1:
-			((render_data.target_view_parameter.view_height+view_y0)>scene_target.target_view.height)
-			?(scene_target.target_view.height-view_y0):(render_data.target_view_parameter.view_height);
-	var whole_view_width=render_data.target_view_parameter.whole_view_width;
-	var whole_view_height=render_data.target_view_parameter.whole_view_height;
+	var view_x0				=render_data.target_view_parameter.view_x0;
+	var view_y0				=render_data.target_view_parameter.view_y0;
+	var view_width			=render_data.target_view_parameter.view_width;	
+	var view_height			=render_data.target_view_parameter.view_height;
+	var whole_view_width	=render_data.target_view_parameter.whole_view_width;
+	var whole_view_height	=render_data.target_view_parameter.whole_view_height;
 		
 	if(render_data.main_display_target_flag){
 		scene.view.main_target_x=0.5*(scene.view.x+1.0)*whole_view_width -view_x0;
@@ -83,18 +75,9 @@ function draw_scene_target_routine(target_parameter,scene_target_array,pass_id,s
 		scene.view.main_target_y=0.5*(scene.view.y+1.0)*whole_view_height-view_y0;
 		scene.view.main_target_y=2.0*scene.view.main_target_y/view_height-1.0;
 	}
-	var my_viewport={
-		x			:	view_x0,
-		y			:	scene_target.target_view.height-view_y0-view_height,
-		width		:	view_width,
-		height		:	view_height,
-		min_depth	:	0,
-		max_depth	:	1
-	};
+	
 	scene.webgpu.render_pass_encoder.setViewport(
-		my_viewport.x,			my_viewport.y,
-		my_viewport.width,		my_viewport.height,
-		my_viewport.min_depth,	my_viewport.max_depth);
+		view_x0,whole_view_height-(view_y0+view_height),view_width,view_height,0,1);
 
 	for(var i=0,ni=method_array.length;i<ni;i++){
 		if(method_array[i].method_id<0)

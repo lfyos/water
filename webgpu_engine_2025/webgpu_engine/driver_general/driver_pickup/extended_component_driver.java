@@ -9,17 +9,20 @@ import kernel_network.client_request_response;
 
 public class extended_component_driver  extends component_driver
 {
-	private String pickup_target_name;
+	private String 	pickup_target_name;
+	private int 	pickup_target_width;
 	
 	public void destroy()
 	{
 		super.destroy();
 		pickup_target_name=null;
 	}
-	public extended_component_driver(part my_component_part,String my_pickup_target_name)
+	public extended_component_driver(part my_component_part,
+			String my_pickup_target_name,int my_pickup_target_width)
 	{
 		super(my_component_part);
-		pickup_target_name=my_pickup_target_name;
+		pickup_target_name	=my_pickup_target_name;
+		pickup_target_width	=my_pickup_target_width;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
@@ -33,6 +36,7 @@ public class extended_component_driver  extends component_driver
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
-		return new extended_component_instance_driver(comp,driver_id,pickup_target_name);
+		return new extended_component_instance_driver(
+						comp,driver_id,pickup_target_name,pickup_target_width);
 	}
 }

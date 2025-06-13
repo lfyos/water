@@ -301,7 +301,8 @@ public class extended_component_instance_driver extends component_instance_drive
 		if(ci.parameter.comp!=null){
 			location loca=ci.display_camera_result.negative_matrix;
 			loca=ci.parameter.comp.caculate_negative_absolute_location().multiply(loca);
-			double local_xy[]=ci.display_camera_result.target.target_view.caculate_view_local_xy(ci.parameter.x,ci.parameter.y);
+			double local_xy[]=ci.display_camera_result.target.
+					target_view.caculate_view_local_xy(ci.parameter.x,ci.parameter.y);
 			p0=loca.multiply(new point(local_xy[0],local_xy[1],ci.parameter.depth));
 			p1=loca.multiply(new point(local_xy[0],local_xy[1],ci.parameter.depth+1.0));
 		}

@@ -1,13 +1,20 @@
 function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
 {
 	this.component_ids	=component_ids;
-
+	this.parameter={
+		pickup_target_width	:	init_data,
+		parameter_x			:	0,
+		parameter_y			:	0,
+		whole_view_width	:	1,
+		whole_view_height	:	1
+	}
+	
 	this.id_depth_texture=scene.webgpu.device.createTexture(
 		{
 			size	:
 			{
-				width	:	1,
-				height	:	1
+				width	:	this.parameter.pickup_target_width,
+				height	:	this.parameter.pickup_target_width
 			},
 			format	:	"depth24plus-stencil8",
 			usage	:	GPUTextureUsage.RENDER_ATTACHMENT
@@ -16,8 +23,8 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		{
 			size	:
 			{
-				width	:	1,
-				height	:	1
+				width	:	this.parameter.pickup_target_width,
+				height	:	this.parameter.pickup_target_width
 			},
 			format	:	"rgba32sint",
 			usage	:	GPUTextureUsage.COPY_SRC|GPUTextureUsage.COPY_DST|GPUTextureUsage.RENDER_ATTACHMENT
@@ -26,8 +33,8 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		{
 			size	:
 			{
-				width	:	1,
-				height	:	1
+				width	:	this.parameter.pickup_target_width,
+				height	:	this.parameter.pickup_target_width
 			},
 			format	:	"rgba32sint",
 			usage	:	GPUTextureUsage.COPY_SRC|GPUTextureUsage.COPY_DST|GPUTextureUsage.RENDER_ATTACHMENT
@@ -48,8 +55,8 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		{
 			size	:
 			{
-				width	:	1,
-				height	:	1
+				width	:	this.parameter.pickup_target_width,
+				height	:	this.parameter.pickup_target_width
 			},
 			format	:	"depth24plus-stencil8",
 			usage	:	GPUTextureUsage.RENDER_ATTACHMENT
@@ -58,8 +65,8 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		{
 			size	:
 			{
-				width	:	1,
-				height	:	1
+				width	:	this.parameter.pickup_target_width,
+				height	:	this.parameter.pickup_target_width
 			},
 			format	:	"rgba32float",
 			usage	:	GPUTextureUsage.COPY_SRC|GPUTextureUsage.COPY_DST|GPUTextureUsage.RENDER_ATTACHMENT
@@ -79,7 +86,7 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		if(scene_target_array.length>1)
 			return;
 		
-		if((typeof(scene_target_array[0])!="object")|(scene_target_array[0]==null)){
+		if((typeof(scene_target_array[0])!="object")||(scene_target_array[0]==null)){
 			my_pass_descriptor=
 			{
 				colorAttachments		: 
@@ -112,24 +119,16 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 			
 			scene_target_array[0]={
 				pass_descriptor	:	my_pass_descriptor,
-					
-				target_view		:	
-				{
-					width		:	1,
-					height		:	1
-				},
+				
 				method_array	:
 				[
 					{
 						method_id:	0
 					}
-				],
-				texture			:	[
-					this.id_texture_0,this.id_texture_1
 				]
 			};
 		}
-		if((typeof(scene_target_array[1])!="object")|(scene_target_array[1]==null)){
+		if((typeof(scene_target_array[1])!="object")||(scene_target_array[1]==null)){
 			my_pass_descriptor=
 			{
 				colorAttachments		: 
@@ -155,35 +154,36 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 			};
 			scene_target_array[1]={
 				pass_descriptor	:	my_pass_descriptor,
-					
-				target_view		:	
-				{
-					width		:	1,
-					height		:	1
-				},
 				method_array	:
 				[
 					{
 						method_id:	1
 					}
-				],
-				texture	:	[
-					this.value_texture,
 				]
 			};
 		};
 	}
 	this.end_scene_target=function(	scene_target_array,render_data,
 			target_part_object,target_part_driver,target_render_driver,scene)
-	{
+	{	
+		var diff_x=(scene.view.main_target_x-this.parameter.parameter_x)*this.parameter.whole_view_width;
+		var diff_y=(scene.view.main_target_y-this.parameter.parameter_y)*this.parameter.whole_view_height;
+	
+		var copy_origin={
+			x	:	Math.round((this.parameter.pickup_target_width/2.0)+diff_x),
+			y	:	Math.round((this.parameter.pickup_target_width/2.0)-diff_y)
+		};
+		copy_origin.x=	(copy_origin.x<0)?0:
+						(copy_origin.x<this.parameter.pickup_target_width)?copy_origin.x:
+						(this.parameter.pickup_target_width-1);
+		copy_origin.y=	(copy_origin.y<0)?0:
+						(copy_origin.y<this.parameter.pickup_target_width)?copy_origin.y:
+						(this.parameter.pickup_target_width-1);
+
 		scene.webgpu.command_encoder.copyTextureToBuffer(
 			{	//source
-				texture	:	scene_target_array[0].texture[0],
-				origin	:
-				{
-					x	:	0,
-					y	:	0
-				}
+				texture	:	this.id_texture_0,
+				origin	:	copy_origin
 			},
 			{	//destination
 				buffer			:	this.id_buffer_0,
@@ -197,12 +197,8 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 			});
 		scene.webgpu.command_encoder.copyTextureToBuffer(
 			{	//source
-				texture	:	scene_target_array[0].texture[1],
-				origin	:
-				{
-					x	:	0,
-					y	:	0
-				}
+				texture	:	this.id_texture_1,
+				origin	:	copy_origin
 			},
 			{	//destination
 				buffer			:	this.id_buffer_1,
@@ -216,12 +212,8 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 			});
 		scene.webgpu.command_encoder.copyTextureToBuffer(
 			{	//source
-				texture	:	scene_target_array[1].texture[0],
-				origin	:
-				{
-					x	:	0,
-					y	:	0
-				}
+				texture	:	this.value_texture,
+				origin	:	copy_origin
 			},
 			{	//destination
 				buffer			:	this.value_buffer,
@@ -347,6 +339,10 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 	}
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
+		this.parameter.parameter_x		=buffer_data_item[0];
+		this.parameter.parameter_y		=buffer_data_item[1];
+		this.parameter.whole_view_width	=buffer_data_item[2];
+		this.parameter.whole_view_height=buffer_data_item[3];
 	}
 	this.destroy=function()
 	{

@@ -5,13 +5,14 @@ pickup_part
 	part\part.description
 	part\part.mp3
 	
-	
 			/*	terminated_token_string:begin		*/	terminated_token_string
 			
 				/*	name				*/		pickup_component
 				/*	type				*/		pickup_part
 				/*	location			*/		identity
 				/*	pickup_target_name	*/		pickup_target
+				/*	pickup_target_width	*/		200
+				
 				/*	children number 	*/		0
 				
 			/*	terminated_token_string:end			*/	terminated_token_string

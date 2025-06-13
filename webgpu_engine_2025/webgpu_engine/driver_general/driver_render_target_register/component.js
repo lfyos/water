@@ -125,12 +125,7 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		
 		scene_target_array[0]={
 			pass_descriptor		:	my_pass_descriptor,
-				
-			target_view			:	
-			{
-				width			:	my_gpu_texture.width,
-				height			:	my_gpu_texture.height
-			},
+			
 			method_array		:
 			[
 				{
@@ -145,9 +140,6 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 				{
 					method_id	:	5		//render for transparent rendering
 				}
-			],
-			texture				:	[
-				my_gpu_texture
 			]
 		};
 	};

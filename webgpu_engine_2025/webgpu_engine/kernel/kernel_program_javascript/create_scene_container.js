@@ -35,7 +35,8 @@ function create_scene_container_routine(my_webgpu)
 				if(this.webgpu.render_pass_encoder==null)
 					continue;
 				for(var j=0,nj=p.length;j<nj;j++)
-					p[j].scene_object.scene_interface.draw_scene_target(p[j].target_parameter,scene_pass_array,pass_id);
+					p[j].scene_object.scene_interface.draw_scene_target(
+						p[j].target_parameter,scene_pass_array,pass_id);
 				
 				if(my_collector_flag)
 					scene_pass_array[pass_id].render_bundle=this.webgpu.render_pass_encoder.finish();
@@ -47,7 +48,8 @@ function create_scene_container_routine(my_webgpu)
 			}
 
 			for(var j=0,nj=p.length;j<nj;j++)
-				p[j].scene_object.scene_interface.destroy_scene_target(p[j].target_parameter,scene_pass_array);
+				p[j].scene_object.scene_interface.destroy_scene_target(
+					p[j].target_parameter,scene_pass_array);
 		}
 	}
 	

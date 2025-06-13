@@ -1,22 +1,25 @@
 package driver_render_target_register;
 
+import java.util.ArrayList;
+
 import kernel_part.part;
 import kernel_scene.scene_kernel;
 import kernel_transformation.box;
 import kernel_component.component;
 import kernel_camera.camera_result;
 import kernel_render.render_target;
-import kernel_render.render_target_parameter;
 import kernel_scene.client_information;
 import kernel_common_class.const_value;
 import kernel_render.render_target_view;
+import kernel_render.render_target_parameter;
 import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
-	private int main_target_id,canvas_width_height[][];
+	private int main_target_id;
+	private ArrayList<int[]>canvas_width_height;
 	private register_target_parameter register_parameter[];
-	private double clear_color[][];
+	private ArrayList<double[]> clear_color;
 	
 	private boolean do_discard_lod_flag,do_selection_lod_flag;
 
@@ -33,15 +36,16 @@ public class extended_component_instance_driver extends component_instance_drive
 		super(my_comp,my_driver_id);
 		
 		main_target_id=-1;
-		canvas_width_height=new int[][]	{new int[]{1,1}	};
+		
+		(canvas_width_height=new ArrayList<int[]>()).add(new int[]{1,1});
 
 		part p=comp.driver_array.get(driver_id).component_part;
 		String file_name=p.directory_name+p.material_file_name;
 		register_parameter=register_target_parameter.load_parameter(file_name,p.file_charset);
 		
-		clear_color=new double[register_parameter.length][];
+		clear_color=new ArrayList<double[]>();
 		for(int i=0,ni=register_parameter.length;i<ni;i++)
-			clear_color[i]=new double[] {0,0,0,1};
+			clear_color.add(new double[] {0,0,0,1});
 		do_discard_lod_flag		=true;
 		do_selection_lod_flag	=true;
 	}
@@ -49,16 +53,15 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		main_target_id=-1;
 		for(int i=0,target_number=register_parameter.length;i<target_number;i++){
-			int canvas_id	=register_parameter[i].canvas_id;
+			int my_canvas_width_height[]=canvas_width_height.get(register_parameter[i].canvas_id);
 
-			int view_x0		=(int)(Math.round(register_parameter[i].target_x0		*canvas_width_height[canvas_id][0]));
-			int view_y0		=(int)(Math.round(register_parameter[i].target_y0		*canvas_width_height[canvas_id][1]));
-			int view_width	=(int)(Math.round(register_parameter[i].target_width	*canvas_width_height[canvas_id][0]));
-			int view_height	=(int)(Math.round(register_parameter[i].target_height	*canvas_width_height[canvas_id][1]));
+			int view_x0		=(int)(Math.round(register_parameter[i].target_x0		*my_canvas_width_height[0]));
+			int view_y0		=(int)(Math.round(register_parameter[i].target_y0		*my_canvas_width_height[1]));
+			int view_width	=(int)(Math.round(register_parameter[i].target_width	*my_canvas_width_height[0]));
+			int view_height	=(int)(Math.round(register_parameter[i].target_height	*my_canvas_width_height[1]));
 			
 			render_target_view rtv=new render_target_view(
-				view_x0,view_y0,view_width,view_height,
-				canvas_width_height[canvas_id][0],canvas_width_height[canvas_id][1]);
+				view_x0,view_y0,view_width,view_height,my_canvas_width_height[0],my_canvas_width_height[1]);
 			
 			double aspect_value	=(double)(rtv.view_width)/(double)(rtv.view_height);
 			box view_volume_box=new box(-aspect_value,-1,-1,aspect_value,1,1);
@@ -110,13 +113,15 @@ public class extended_component_instance_driver extends component_instance_drive
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print("[");
-		for(int i=0,ni=register_parameter.length;i<ni;i++)
+		for(int i=0,ni=register_parameter.length;i<ni;i++) {
+			double my_clear_color[]=clear_color.get(i);
 			ci.request_response.
-							print((i<=0)?"[":",[",	clear_color[i][0]).
-							print(",",				clear_color[i][1]).
-							print(",",				clear_color[i][2]).
-							print(",",				clear_color[i][3]).
+							print((i<=0)?"[":",[",	my_clear_color[0]).
+							print(",",				my_clear_color[1]).
+							print(",",				my_clear_color[2]).
+							print(",",				my_clear_color[3]).
 							print("]");
+		}
 		ci.request_response.print("]");
 	}
 	public String[] response_component_event(scene_kernel sk,client_information ci)
@@ -124,29 +129,29 @@ public class extended_component_instance_driver extends component_instance_drive
 		String str=ci.request_response.get_parameter("operation");
 		switch((str==null)?"":str) {
 		case "camera":
-		{
+		{	
 			if((main_target_id<0)||(main_target_id>=register_parameter.length))
 				break;
 			if((str=ci.request_response.get_parameter("camera"))==null)
 				break;
-			int new_camera_id;
-			if((new_camera_id=Integer.parseInt(str))>=0)
-				if(new_camera_id<sk.camera_cont.size())
-					register_parameter[main_target_id].camera_id=new_camera_id;
+			int new_camera_id=Integer.parseInt(str);
+			if(new_camera_id<0)
+				break;
+			if(new_camera_id>=sk.camera_cont.size())
+				break;
+			register_parameter[main_target_id].camera_id=new_camera_id;
 			break;
 		}
 		case "width_height":
 		{
 			if((str=ci.request_response.get_parameter("width_height"))==null)
 				break;
-			for(int i=0;str.length()>0;i++) {
-				int index_id=str.indexOf('_');
-				if(index_id<0)
+			for(canvas_width_height.clear();str.length()>0;) {
+				int index_id,width,height;
+				if((index_id=str.indexOf('_'))<0)
 					break;
-				int width=Integer.parseInt(str.substring(0,index_id));
+				width=Integer.parseInt(str.substring(0,index_id));
 				str=str.substring(index_id+1);
-				
-				int height;
 				if((index_id=str.indexOf('_'))<0) {
 					height=Integer.parseInt(str);
 					str="";
@@ -154,13 +159,7 @@ public class extended_component_instance_driver extends component_instance_drive
 					height=Integer.parseInt(str.substring(0,index_id));
 					str=str.substring(index_id+1);
 				}
-				if(canvas_width_height.length<=i) {
-					int bak[][]=canvas_width_height;
-					canvas_width_height=new int[i+1][];
-					for(int j=0,nj=bak.length;j<nj;j++)
-						canvas_width_height[j]=bak[j];
-				}
-				canvas_width_height[i]=new int[]{width,height};
+				canvas_width_height.add(new int[]{width,height});
 			}
 			break;
 		}
@@ -191,14 +190,15 @@ public class extended_component_instance_driver extends component_instance_drive
 				end_target_id=target_id;
 			}
 			for(target_id=begin_target_id;target_id<=end_target_id;target_id++) {
+				double my_clear_color[]=clear_color.get(target_id);
 				if((str=ci.request_response.get_parameter("red"))!=null)
-					clear_color[target_id][0]=Double.parseDouble(str);
+					my_clear_color[0]=Double.parseDouble(str);
 				if((str=ci.request_response.get_parameter("green"))!=null)
-					clear_color[target_id][1]=Double.parseDouble(str);
+					my_clear_color[1]=Double.parseDouble(str);
 				if((str=ci.request_response.get_parameter("blue"))!=null)
-					clear_color[target_id][2]=Double.parseDouble(str);
+					my_clear_color[2]=Double.parseDouble(str);
 				if((str=ci.request_response.get_parameter("alf"))!=null)
-					clear_color[target_id][3]=Double.parseDouble(str);
+					my_clear_color[3]=Double.parseDouble(str);
 			}
 			update_component_parameter_version(0);
 			break;

@@ -214,9 +214,9 @@ public class render
 				delete_last_part();
 				my_part.destroy();
 			}
-			String my_type			=my_part.part_par.load_assemble_type;
-			String my_component_name=system_par.default_system_mount_component_name;
-			component_load_source_cont.register_component(f,my_type,my_component_name);
+			component_load_source_cont.register_component(
+					f,my_part.part_par.load_assemble_type,
+					system_par.default_system_mount_component_name);
 		}
 		f.close();
 		return;

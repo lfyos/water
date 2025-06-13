@@ -137,7 +137,8 @@ public class client_parameter
 				ci.not_acknowledge_render_part_id[render_id][part_id]=false;
 			}
 		
-		switch(((str=ci.request_response.get_parameter("precision"))==null)?"":(str.toLowerCase())) {
+		str=ci.request_response.get_parameter("precision");
+		switch((str==null)?"":(str.toLowerCase())) {
 		default:
 			break;
 		case "true":

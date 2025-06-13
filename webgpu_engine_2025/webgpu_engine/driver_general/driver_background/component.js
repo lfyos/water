@@ -215,7 +215,7 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		else
 			return;
 
-		scene.webgpu.render_pass_encoder.setBindGroup(1,this.texture_bind_group.texture_bindgroup);
+		rpe.setBindGroup(1,this.texture_bind_group.texture_bindgroup);
 
 		var p=part_object.buffer_object.face.region_data;
 		for(var i=0,ni=p.length;i<ni;i++){
