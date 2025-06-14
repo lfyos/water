@@ -8,7 +8,6 @@
 /*	default_display_bitmap		1+2+8+64		*/		75
 
 /*	scene_component_name						*/		movement_manager
-/*	default_scene_mount_component_name			*/		default_scene_mount_component
 
 /*	component_collector_stack_file_name			*/		collector.txt
 /*	component_collector_parameter_channel_id	*/		2	0	1

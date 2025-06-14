@@ -321,8 +321,9 @@ public class render_container
 				debug_information.println("part parameter file:		",	part_parameter_file_name);
 				debug_information.println();
 			}
+			component_load_source_cont.register_component(f_render_list,
+				part_par.render_load_assemble_type,system_par.default_system_mount_component_name);
 		}
-		return;
 	}
 	public void load_shader(
 		component_load_source_container component_load_source_cont,

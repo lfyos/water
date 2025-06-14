@@ -17,19 +17,19 @@ public class file_mount_switch
 		default:
 			return;
 		case "component_mount":
-			ccp.clsc.add_source_item(fr.get_string(),token_string, 
+			ccp.clsc.file_add_source_item(fr.get_string(),token_string, 
 					fr.directory_name+file_reader.separator(fr.get_string()),fr.get_charset());
 			return;
 		case "charset_component_mount":
-			ccp.clsc.add_source_item(fr.get_string(),token_string, 
+			ccp.clsc.file_add_source_item(fr.get_string(),token_string, 
 					fr.directory_name+file_reader.separator(fr.get_string()),fr.get_string());
 			return;
 		case "absulate_component_mount":
-			ccp.clsc.add_source_item(fr.get_string(),token_string, 
+			ccp.clsc.file_add_source_item(fr.get_string(),token_string, 
 					file_reader.separator(fr.get_string()),fr.get_charset());
 			return;
 		case "absulate_charset_component_mount":
-			ccp.clsc.add_source_item(fr.get_string(),token_string, 
+			ccp.clsc.file_add_source_item(fr.get_string(),token_string, 
 					file_reader.separator(fr.get_string()),fr.get_string());
 			return;
 		case "environment_component_mount":	
@@ -39,7 +39,7 @@ public class file_mount_switch
 					ccp.sk.system_par.scene_environment.search_change_name(fr.get_string(),null));
 			if(add_file_name.charAt(add_file_name.length()-1)!=File.separatorChar)
 				add_file_name+=File.separatorChar;
-			ccp.clsc.add_source_item(
+			ccp.clsc.file_add_source_item(
 					add_component_name,token_string,add_file_name,fr.get_charset());
 			return;
 		}
@@ -50,7 +50,7 @@ public class file_mount_switch
 					ccp.sk.system_par.scene_environment.search_change_name(fr.get_string(),null));
 			if(add_file_name.charAt(add_file_name.length()-1)!=File.separatorChar)
 				add_file_name+=File.separatorChar;
-			ccp.clsc.add_source_item(
+			ccp.clsc.file_add_source_item(
 					add_component_name,token_string,add_file_name,fr.get_string());
 			return;
 		}

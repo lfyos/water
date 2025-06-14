@@ -4,7 +4,8 @@ import kernel_file_manager.file_reader;
 
 public class part_parameter
 {
-	public String	part_type_string,assemble_part_name,directory_name,file_name,load_assemble_type;
+	public String	part_type_string,assemble_part_name,directory_name,file_name;
+	public String	render_load_assemble_type,part_load_assemble_type;
 	public long 	last_modified_time;
 	
 	public int		process_sequence_id;
@@ -25,7 +26,8 @@ public class part_parameter
 			String	my_assemble_part_name,
 			String	my_directory_name,
 			String	my_file_name,
-			String	my_load_assemble_type,
+			String	my_render_load_assemble_type,
+			String	my_part_load_assemble_type,
 			
 			long	my_last_modified_time,
 			
@@ -56,7 +58,9 @@ public class part_parameter
 		assemble_part_name				=my_assemble_part_name;
 		directory_name					=my_directory_name;
 		file_name						=my_file_name;
-		load_assemble_type				=my_load_assemble_type;
+		
+		render_load_assemble_type		=my_render_load_assemble_type;
+		part_load_assemble_type			=my_part_load_assemble_type;
 		
 		last_modified_time				=my_last_modified_time;
 		
@@ -94,7 +98,9 @@ public class part_parameter
 				assemble_part_name,
 				directory_name,
 				file_name,
-				load_assemble_type,
+				
+				render_load_assemble_type,
+				part_load_assemble_type,
 				
 				last_modified_time,
 				
@@ -129,7 +135,9 @@ public class part_parameter
 				assemble_part_name,
 				directory_name,
 				file_name,
-				load_assemble_type,
+				
+				render_load_assemble_type,
+				part_load_assemble_type,
 				
 				last_modified_time,
 				
@@ -172,7 +180,8 @@ public class part_parameter
 
 		process_sequence_id					=f.get_int();
 		
-		load_assemble_type					=f.get_string();
+		render_load_assemble_type			=f.get_string();
+		part_load_assemble_type				=f.get_string();
 		
 		max_file_head_length				=f.get_long();
 		max_file_data_length				=f.get_long();

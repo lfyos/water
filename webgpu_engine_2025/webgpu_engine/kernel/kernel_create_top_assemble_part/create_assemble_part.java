@@ -162,7 +162,9 @@ public class create_assemble_part
 				p.part_par.assemble_part_name,
 				p.part_par.directory_name,
 				p.part_par.file_name,
-				p.part_par.load_assemble_type,
+				
+				p.part_par.render_load_assemble_type,
+				p.part_par.part_load_assemble_type,
 				
 				my_last_modified_time,
 				

@@ -139,64 +139,60 @@ public class render
 			String file_name,String file_charset,String pre_buffer_object_file_name,
 			permanent_part_id_encoder encoder[],client_request_response request_response)
 	{
-		file_reader f=new file_reader(file_name,file_charset);
-		if(f.error_flag()) {
-			f.close();
+		file_reader part_f=new file_reader(file_name,file_charset);
+		if(part_f.error_flag()) {
+			part_f.close();
 			debug_information.println("Execute add_part fail,part list file NOT exits:	",file_name);
 			return;
 		}
-		while(!(f.eof())){
-			String user_name			=f.get_string();
-			String system_name			=f.get_string();
-			String mesh_file_name		=f.get_string();
-			String material_file_name	=f.get_string();
-			String description_file_name=f.get_string();
-			String audio_file_name		=f.get_string();
+		while(!(part_f.eof())){
+			String user_name			=part_f.get_string();
+			String system_name			=part_f.get_string();
+			String mesh_file_name		=part_f.get_string();
+			String material_file_name	=part_f.get_string();
+			String description_file_name=part_f.get_string();
+			String audio_file_name		=part_f.get_string();
 								
 			if(audio_file_name==null)
 				continue;
 			if(audio_file_name.compareTo("")==0)
 				continue;
-				
-			mesh_file_name			=file_reader.separator(mesh_file_name);
-			material_file_name		=file_reader.separator(material_file_name);
-			description_file_name	=file_reader.separator(description_file_name);
-			audio_file_name			=file_reader.separator(audio_file_name);
-			
-			long my_last_time;
+
+			mesh_file_name		 =file_reader.separator(mesh_file_name);
+			material_file_name	 =file_reader.separator(material_file_name);
+			description_file_name=file_reader.separator(description_file_name);
+			audio_file_name		 =file_reader.separator(audio_file_name);
+
 			part_parameter my_part_par=part_par.clone();
 			
-			if(my_part_par.last_modified_time<f.lastModified_time)
-				my_part_par.last_modified_time=f.lastModified_time;
+			if(my_part_par.last_modified_time<part_f.lastModified_time)
+				my_part_par.last_modified_time=part_f.lastModified_time;
 
-			File mesh_f=new File(f.directory_name+mesh_file_name);
+			File mesh_f=new File(part_f.directory_name+mesh_file_name);
 			if(mesh_f.exists()) {
-				if((my_last_time=mesh_f.lastModified())<f.lastModified_time)
-					mesh_f.setLastModified(f.lastModified_time);
+				long my_last_time=mesh_f.lastModified();
+				if(my_last_time<part_f.lastModified_time)
+					mesh_f.setLastModified(part_f.lastModified_time);
 				if(my_part_par.last_modified_time<my_last_time)
 					my_part_par.last_modified_time=my_last_time;
 			}
-			File material_f=new File(f.directory_name+material_file_name);
+			File material_f=new File(part_f.directory_name+material_file_name);
 			if(material_f.exists()) {
-				if((my_last_time=material_f.lastModified())<f.lastModified_time)
-					material_f.setLastModified(f.lastModified_time);
+				long my_last_time=material_f.lastModified();
+				if(my_last_time<part_f.lastModified_time)
+					material_f.setLastModified(part_f.lastModified_time);
 				if(my_part_par.last_modified_time<my_last_time)
 					my_part_par.last_modified_time=my_last_time;
 			}
-
-			part my_part=new part(part_type_id,false,my_part_par,f.directory_name,f.get_charset(),
-					
-					(user_name==null)				?"":user_name,
-					(system_name==null)				?"":system_name,
-					(mesh_file_name==null)			?"":mesh_file_name,
-					(material_file_name==null)		?"":material_file_name,
-					(description_file_name==null)	?"":description_file_name,		
-					(audio_file_name==null)			?"":audio_file_name);
+			
+			part my_part=new part(part_type_id,false,my_part_par,
+					part_f.directory_name,part_f.get_charset(),user_name,system_name,
+					mesh_file_name,material_file_name,description_file_name,audio_file_name);
 			
 			add_part(my_part,encoder);
-				
+			
 			try{
-				my_part.driver=ren.driver.create_part_driver(f,my_part,ren,
+				my_part.driver=ren.driver.create_part_driver(part_f,my_part,ren,
 						component_load_source_cont,request_response,system_par,scene_par);
 			}catch(Exception e){
 				e.printStackTrace();
@@ -214,11 +210,10 @@ public class render
 				delete_last_part();
 				my_part.destroy();
 			}
-			component_load_source_cont.register_component(
-					f,my_part.part_par.load_assemble_type,
-					system_par.default_system_mount_component_name);
+			component_load_source_cont.register_component(part_f,
+				my_part.part_par.part_load_assemble_type,system_par.default_system_mount_component_name);
 		}
-		f.close();
+		part_f.close();
 		return;
 	}
 }

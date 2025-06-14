@@ -35,7 +35,7 @@ public class scene_parameter
 	public int multiparameter_number;
 	public long default_display_bitmap;
 	
-	public String scene_component_name,default_scene_mount_component_name;
+	public String scene_component_name;
 	
 	public String component_collector_stack_file_name;
 	public int component_collector_parameter_channel_id[];
@@ -282,10 +282,7 @@ public class scene_parameter
 		
 		if((scene_component_name=extra_parameter_fr.get_string())==null)
 			scene_component_name="";
-		if((default_scene_mount_component_name=extra_parameter_fr.get_string())==null)
-			default_scene_mount_component_name="";
-		
-		
+
 		if((component_collector_stack_file_name=extra_parameter_fr.get_string())==null)
 			component_collector_stack_file_name="";
 		else

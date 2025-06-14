@@ -56,25 +56,25 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		this.set_view(event);
 		
-		if(my_scene.system_event_processor.systemmousemove(event,this.scene))
+		if(my_scene.system_event_processor.systemmousemove(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
 		if(my_scene.pickup.component_id>=0)
 			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickupmousemove(event,my_scene.pickup.component_id,this.scene))
+				if(my_scene.system_event_processor.pickupmousemove(event,my_scene.pickup.component_id,my_scene))
 					return;
 				if(my_scene.terminate_flag)
 					return;
 				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
 					if(typeof(ep.pickupmousemove)=="function"){
-						if(ep.pickupmousemove(event,my_scene.pickup.component_id,this.scene))
+						if(ep.pickupmousemove(event,my_scene.pickup.component_id,my_scene))
 							return;
 						if(my_scene.terminate_flag)
 							return;
 					}
 			}
-		if(my_scene.system_event_processor.mousemove(event,this.scene))
+		if(my_scene.system_event_processor.mousemove(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
@@ -84,7 +84,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		component_id=my_scene.operate_component.last_operate_component_id;
 		my_scene.event_component.mouse.component_name=component_id;
 		if(typeof(ep.mousemove)=="function")
-			if(ep.mousemove(event,component_id,this.scene))
+			if(ep.mousemove(event,component_id,my_scene))
 				return;
 	};
 	this.scene.system_event_processor.systemmousedown	=function(event,scene)						{return false;};
@@ -109,25 +109,25 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		this.set_view(event);
 		
-		if(my_scene.system_event_processor.systemmousedown(event,this.scene))
+		if(my_scene.system_event_processor.systemmousedown(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
 		if(my_scene.pickup.component_id>=0)
 			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickupmousedown(event,my_scene.pickup.component_id,this.scene))
+				if(my_scene.system_event_processor.pickupmousedown(event,my_scene.pickup.component_id,my_scene))
 					return;
 				if(my_scene.terminate_flag)
 					return;
 				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
 					if(typeof(ep.pickupmousedown)=="function"){
-						if(ep.pickupmousedown(event,my_scene.pickup.component_id,this.scene))
+						if(ep.pickupmousedown(event,my_scene.pickup.component_id,my_scene))
 							return;
 						if(my_scene.terminate_flag)
 							return;
 					}
-			}
-		if(my_scene.system_event_processor.mousedown(event,this.scene))
+		}
+		if(my_scene.system_event_processor.mousedown(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
@@ -137,8 +137,8 @@ function construct_event_listener(my_canvas_id,my_scene)
 		component_id=my_scene.operate_component.last_operate_component_id;
 		my_scene.event_component.mouse.component_name=component_id;
 		if(typeof(ep.mousedown)=="function")
-			if(ep.mousedown(event,component_id,this.scene))
-				return;	
+			if(ep.mousedown(event,component_id,my_scene))
+				return;
 	};
 	this.scene.system_event_processor.systemmouseup	=function(event,scene)						{return false;};
 	this.scene.system_event_processor.pickupmouseup	=function(event,pickup_component_id,scene)	{return false;};
@@ -161,25 +161,25 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		this.set_view(event);
 		
-		if(my_scene.system_event_processor.systemmouseup(event,this.scene))
+		if(my_scene.system_event_processor.systemmouseup(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
 		if(my_scene.pickup.component_id>=0)
 			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickupmouseup(event,my_scene.pickup.component_id,this.scene))
+				if(my_scene.system_event_processor.pickupmouseup(event,my_scene.pickup.component_id,my_scene))
 					return;
 				if(my_scene.terminate_flag)
 					return;	
 				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
 					if(typeof(ep.pickupmouseup)=="function"){
-						if(ep.pickupmouseup(event,my_scene.pickup.component_id,this.scene))
+						if(ep.pickupmouseup(event,my_scene.pickup.component_id,my_scene))
 							return;
 						if(my_scene.terminate_flag)
 							return;
 					}
 			}
-		if(my_scene.system_event_processor.mouseup(event,this.scene))
+		if(my_scene.system_event_processor.mouseup(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
@@ -189,7 +189,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		component_id=my_scene.operate_component.last_operate_component_id;
 		my_scene.event_component.mouse.component_name=component_id;
 		if(typeof(ep.mouseup)=="function")
-			if(ep.mouseup(event,component_id,this.scene))
+			if(ep.mouseup(event,component_id,my_scene))
 				return;
 	};
 	
@@ -210,25 +210,25 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		this.set_view(event);
 		
-		if(my_scene.system_event_processor.systemdblclick(event,this.scene))
+		if(my_scene.system_event_processor.systemdblclick(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
 		if(my_scene.pickup.component_id>=0)
 			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickupdblclick(event,my_scene.pickup.component_id,this.scene))
+				if(my_scene.system_event_processor.pickupdblclick(event,my_scene.pickup.component_id,my_scene))
 					return;
 				if(my_scene.terminate_flag)
 					return;
 				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
 					if(typeof(ep.pickupdblclick)=="function"){
-						if(ep.pickupdblclick(event,my_scene.pickup.component_id,this.scene))
+						if(ep.pickupdblclick(event,my_scene.pickup.component_id,my_scene))
 							return;
 						if(my_scene.terminate_flag)
 							return;
 					}
 			}
-		if(my_scene.system_event_processor.dblclick(event,this.scene))
+		if(my_scene.system_event_processor.dblclick(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
@@ -238,7 +238,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		component_id=my_scene.operate_component.last_operate_component_id;
 		my_scene.event_component.mouse.component_name=component_id;
 		if(typeof(ep.dblclick)=="function")
-			if(ep.dblclick(event,component_id,this.scene))
+			if(ep.dblclick(event,component_id,my_scene))
 				return;
 	};
 	this.scene.system_event_processor.systemmousewheel	=function(event,scene)						{return false;};
@@ -257,25 +257,25 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		this.set_view(event);
 		
-		if(my_scene.system_event_processor.systemmousewheel(event,this.scene))
+		if(my_scene.system_event_processor.systemmousewheel(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
 		if(my_scene.pickup.component_id>=0)
 			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickupmousewheel(event,my_scene.pickup.component_id,this.scene))
+				if(my_scene.system_event_processor.pickupmousewheel(event,my_scene.pickup.component_id,my_scene))
 					return;
 				if(my_scene.terminate_flag)
 					return;
 				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
 					if(typeof(ep.pickupmousewheel)=="function"){
-						if(ep.pickupmousewheel(event,my_scene.pickup.component_id,this.scene))
+						if(ep.pickupmousewheel(event,my_scene.pickup.component_id,my_scene))
 							return;
 						if(my_scene.terminate_flag)
 							return;
 					}
 			}
-		if(my_scene.system_event_processor.mousewheel(event,this.scene))
+		if(my_scene.system_event_processor.mousewheel(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
@@ -285,7 +285,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		component_id=my_scene.operate_component.last_operate_component_id;
 		my_scene.event_component.mouse.component_name=component_id;		
 		if(typeof(ep.mousewheel)=="function")
-			if(ep.mousewheel(event,component_id,this.scene))
+			if(ep.mousewheel(event,component_id,my_scene))
 				return;
 	};
 	this.scene.system_event_processor.systemmouseover	=function(event,scene)						{return false;};
@@ -302,25 +302,25 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		this.set_view(event);
 		
-		if(my_scene.system_event_processor.systemmouseover(event,this.scene))
+		if(my_scene.system_event_processor.systemmouseover(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
 		if(my_scene.pickup.component_id>=0)
 			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickupmouseover(event,my_scene.pickup.component_id,this.scene))
+				if(my_scene.system_event_processor.pickupmouseover(event,my_scene.pickup.component_id,my_scene))
 					return;
 				if(my_scene.terminate_flag)
 					return;
 				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
 					if(typeof(ep.pickupmouseover)=="function"){
-						if(ep.pickupmouseover(event,my_scene.pickup.component_id,this.scene))
+						if(ep.pickupmouseover(event,my_scene.pickup.component_id,my_scene))
 							return;
 						if(my_scene.terminate_flag)
 							return;
 					}
 			}
-		if(my_scene.system_event_processor.mouseover(event,this.scene))
+		if(my_scene.system_event_processor.mouseover(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
@@ -330,7 +330,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		component_id=my_scene.operate_component.last_operate_component_id;
 		my_scene.event_component.mouse.component_name=component_id;		
 		if(typeof(ep.mouseover)=="function")
-			if(ep.mouseover(event,component_id,this.scene))
+			if(ep.mouseover(event,component_id,my_scene))
 				return;
 	};
 	this.scene.system_event_processor.systemmouseout	=function(event,scene)						{return false;};
@@ -347,25 +347,25 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		this.set_view(event);
 		
-		if(my_scene.system_event_processor.systemmouseout(event,this.scene))
+		if(my_scene.system_event_processor.systemmouseout(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
 		if(my_scene.pickup.component_id>=0)
 			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickupmouseout(event,my_scene.pickup.component_id,this.scene))
+				if(my_scene.system_event_processor.pickupmouseout(event,my_scene.pickup.component_id,my_scene))
 					return;
 				if(my_scene.terminate_flag)
 					return;
 				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
 					if(typeof(ep.pickupmouseout)=="function"){
-						if(ep.pickupmouseout(event,my_scene.pickup.component_id,this.scene))
+						if(ep.pickupmouseout(event,my_scene.pickup.component_id,my_scene))
 							return;
 						if(my_scene.terminate_flag)
 							return;
 					}
 			}
-		if(my_scene.system_event_processor.mouseout(event,this.scene))
+		if(my_scene.system_event_processor.mouseout(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
@@ -375,7 +375,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		component_id=my_scene.operate_component.last_operate_component_id;
 		my_scene.event_component.mouse.component_name=component_id;		
 		if(typeof(ep.mouseout)=="function")
-			if(ep.mouseout(event,component_id,this.scene))
+			if(ep.mouseout(event,component_id,my_scene))
 				return;
 	};
 	this.scene.system_event_processor.systemmouseenter	=function(event,scene)						{return false;};
@@ -394,25 +394,25 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		this.set_view(event);
 		
-		if(my_scene.system_event_processor.systemmouseenter(event,this.scene))
+		if(my_scene.system_event_processor.systemmouseenter(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
 		if(my_scene.pickup.component_id>=0)
 			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickupmouseenter(event,my_scene.pickup.component_id,this.scene))
+				if(my_scene.system_event_processor.pickupmouseenter(event,my_scene.pickup.component_id,my_scene))
 					return;
 				if(my_scene.terminate_flag)
 					return;
 				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
 					if(typeof(ep.pickupmouseenter)=="function"){
-						if(ep.pickupmouseenter(event,my_scene.pickup.component_id,this.scene))
+						if(ep.pickupmouseenter(event,my_scene.pickup.component_id,my_scene))
 							return;
 						if(my_scene.terminate_flag)
 							return;
 					}
 			}
-		if(my_scene.system_event_processor.mouseenter(event,this.scene))
+		if(my_scene.system_event_processor.mouseenter(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
@@ -422,7 +422,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		component_id=my_scene.operate_component.last_operate_component_id;
 		my_scene.event_component.mouse.component_name=component_id;		
 		if(typeof(ep.mouseenter)=="function")
-			if(ep.mouseenter(event,component_id,this.scene))
+			if(ep.mouseenter(event,component_id,my_scene))
 				return;
 	};
 	this.scene.system_event_processor.systemmouseleave	=function(event,scene)						{return false;};
@@ -439,25 +439,25 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		this.set_view(event);
 		
-		if(my_scene.system_event_processor.systemmouseleave(event,this.scene))
+		if(my_scene.system_event_processor.systemmouseleave(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
 		if(my_scene.pickup.component_id>=0)
 			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickupmouseleave(event,my_scene.pickup.component_id,this.scene))
+				if(my_scene.system_event_processor.pickupmouseleave(event,my_scene.pickup.component_id,my_scene))
 					return;
 				if(my_scene.terminate_flag)
 					return;
 				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
 					if(typeof(ep.pickupmouseleave)=="function"){
-						if(ep.pickupmouseleave(event,my_scene.pickup.component_id,this.scene))
+						if(ep.pickupmouseleave(event,my_scene.pickup.component_id,my_scene))
 							return;
 						if(my_scene.terminate_flag)
 							return;
 					}
 			}
-		if(my_scene.system_event_processor.mouseleave(event,this.scene))
+		if(my_scene.system_event_processor.mouseleave(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
@@ -467,7 +467,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		component_id=my_scene.operate_component.last_operate_component_id;
 		my_scene.event_component.mouse.component_name=component_id;		
 		if(typeof(ep.mouseleave)=="function")
-			if(ep.mouseleave(event,component_id,this.scene))
+			if(ep.mouseleave(event,component_id,my_scene))
 				return;
 	};
 	this.scene.system_event_processor.systemcontextmenu	=function(event,scene)						{return false;};
@@ -485,25 +485,25 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		my_scene.webgpu.current_canvas_id=this.canvas_id;
 		
-		if(my_scene.system_event_processor.systemcontextmenu(event,this.scene))
+		if(my_scene.system_event_processor.systemcontextmenu(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
 		if(my_scene.pickup.component_id>=0)
 			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickupcontextmenu(event,my_scene.pickup.component_id,this.scene))
+				if(my_scene.system_event_processor.pickupcontextmenu(event,my_scene.pickup.component_id,my_scene))
 					return;
 				if(my_scene.terminate_flag)
 					return;
 				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
 					if(typeof(ep.pickupcontextmenu)=="function"){
-						if(ep.pickupcontextmenu(event,my_scene.pickup.component_id,this.scene))
+						if(ep.pickupcontextmenu(event,my_scene.pickup.component_id,my_scene))
 							return;
 						if(my_scene.terminate_flag)
 							return;
 					}
 			}
-		if(my_scene.system_event_processor.contextmenu(event,this.scene))
+		if(my_scene.system_event_processor.contextmenu(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
@@ -513,7 +513,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		component_id=my_scene.operate_component.last_operate_component_id;
 		my_scene.event_component.mouse.component_name=component_id;
 		if(typeof(ep.contextmenu)=="function")
-			if(ep.contextmenu(event,component_id,this.scene))
+			if(ep.contextmenu(event,component_id,my_scene))
 				return;
 	};
 
@@ -531,36 +531,45 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		this.set_mobile_view(event);
 		
-		if(my_scene.system_event_processor.systemtouchstart(event,this.scene))
-			return;
-		if(my_scene.terminate_flag)
-			return;
-		if(my_scene.pickup.component_id>=0)
-			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickuptouchstart(event,my_scene.pickup.component_id,this.scene))
-					return;
-				if(my_scene.terminate_flag)
-					return;
-				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
-					if(typeof(ep.pickuptouchstart)=="function"){
-						if(ep.pickuptouchstart(event,my_scene.pickup.component_id,this.scene))
-							return;
-						if(my_scene.terminate_flag)
-							return;
-					}
-			}
-		if(my_scene.system_event_processor.touchstart(event,this.scene))
-			return;
-		if(my_scene.terminate_flag)
-			return;
-		if((ep=my_scene.operate_component.get_component_event_processor(
-			my_scene.event_component.touch.component_name))==null)
-				return;
-		component_id=my_scene.operate_component.last_operate_component_id;
-		my_scene.event_component.touch.component_name=component_id;
-		if(typeof(ep.touchstart)=="function")
-			if(ep.touchstart(event,component_id,this.scene))
-				return;
+		var touchstart_fun=function()
+		{
+			if(my_scene.system_event_processor.systemtouchstart(event,my_scene))
+				return false;
+			if(my_scene.terminate_flag)
+				return false;
+			if(my_scene.pickup.component_id>=0)
+				if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
+					if(my_scene.system_event_processor.pickuptouchstart(event,my_scene.pickup.component_id,my_scene))
+						return false;
+					if(my_scene.terminate_flag)
+						return false;
+					if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
+						if(typeof(ep.pickuptouchstart)=="function"){
+							if(ep.pickuptouchstart(event,my_scene.pickup.component_id,my_scene))
+								return false;
+							if(my_scene.terminate_flag)
+								return false;
+						}
+				}
+			if(my_scene.system_event_processor.touchstart(event,my_scene))
+				return false;
+			if(my_scene.terminate_flag)
+				return false;
+			if((ep=my_scene.operate_component.get_component_event_processor(
+				my_scene.event_component.touch.component_name))==null)
+					return false;
+			component_id=my_scene.operate_component.last_operate_component_id;
+			my_scene.event_component.touch.component_name=component_id;
+			if(typeof(ep.touchstart)=="function")
+				if(ep.touchstart(event,component_id,my_scene))
+					return false;
+			return false;
+		};
+		
+		if(event.touches.length>1)
+			touchstart_fun();
+		else
+			my_scene.append_routine_function(touchstart_fun);
 	};
 	this.scene.system_event_processor.systemtouchend	=function(event,scene)						{return false;};
 	this.scene.system_event_processor.pickuptouchend	=function(event,pickup_component_id,scene)	{return false;};
@@ -576,25 +585,25 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		this.set_mobile_view(event);
 		
-		if(my_scene.system_event_processor.systemtouchend(event,this.scene))
+		if(my_scene.system_event_processor.systemtouchend(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
 		if(my_scene.pickup.component_id>=0)
 			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickuptouchend(event,my_scene.pickup.component_id,this.scene))
+				if(my_scene.system_event_processor.pickuptouchend(event,my_scene.pickup.component_id,my_scene))
 					return;
 				if(my_scene.terminate_flag)
 					return;
 				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
 					if(typeof(ep.pickuptouchend)=="function"){
-						if(ep.pickuptouchend(event,my_scene.pickup.component_id,this.scene))
+						if(ep.pickuptouchend(event,my_scene.pickup.component_id,my_scene))
 							return;
 						if(my_scene.terminate_flag)
 							return;
 					}
 			}
-		if(my_scene.system_event_processor.touchend(event,this.scene))
+		if(my_scene.system_event_processor.touchend(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
@@ -604,7 +613,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		component_id=my_scene.operate_component.last_operate_component_id;
 		my_scene.event_component.touch.component_name=component_id;
 		if(typeof(ep.touchend)=="function")
-			if(ep.touchend(event,component_id,this.scene))
+			if(ep.touchend(event,component_id,my_scene))
 				return;
 	};
 	this.scene.system_event_processor.systemtouchmove	=function(event,scene){return false;};
@@ -621,25 +630,25 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		this.set_mobile_view(event);
 		
-		if(my_scene.system_event_processor.systemtouchmove(event,this.scene))
+		if(my_scene.system_event_processor.systemtouchmove(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
 		if(my_scene.pickup.component_id>=0)
 			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickuptouchmove(event,my_scene.pickup.component_id,this.scene))
+				if(my_scene.system_event_processor.pickuptouchmove(event,my_scene.pickup.component_id,my_scene))
 					return;
 				if(my_scene.terminate_flag)
 					return;
 				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
 					if(typeof(ep.pickuptouchmove)=="function"){
-						if(ep.pickuptouchmove(event,my_scene.pickup.component_id,this.scene))
+						if(ep.pickuptouchmove(event,my_scene.pickup.component_id,my_scene))
 							return;
 						if(my_scene.terminate_flag)
 							return;
 					}
 			}
-		if(my_scene.system_event_processor.touchmove(event,this.scene))
+		if(my_scene.system_event_processor.touchmove(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
@@ -649,7 +658,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		component_id=my_scene.operate_component.last_operate_component_id;
 		my_scene.event_component.touch.component_name=component_id;
 		if(typeof(ep.touchmove)=="function")
-			if(ep.touchmove(event,component_id,this.scene))
+			if(ep.touchmove(event,component_id,my_scene))
 				return;
 	};
 	this.scene.system_event_processor.systemkeydown	=function(event,scene){return false;};
@@ -666,25 +675,25 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		my_scene.webgpu.current_canvas_id=this.canvas_id;
 		
-		if(my_scene.system_event_processor.systemkeydown(event,this.scene))
+		if(my_scene.system_event_processor.systemkeydown(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
 		if(my_scene.pickup.component_id>=0)
 			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickupkeydown(event,my_scene.pickup.component_id,this.scene))
+				if(my_scene.system_event_processor.pickupkeydown(event,my_scene.pickup.component_id,my_scene))
 					return;
 				if(my_scene.terminate_flag)
 					return;
 				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
 					if(typeof(ep.pickupkeydown)=="function"){
-						if(ep.pickupkeydown(event,my_scene.pickup.component_id,this.scene))
+						if(ep.pickupkeydown(event,my_scene.pickup.component_id,my_scene))
 							return;
 						if(my_scene.terminate_flag)
 							return;
 					}
 			}
-		if(my_scene.system_event_processor.keydown(event,this.scene))
+		if(my_scene.system_event_processor.keydown(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
@@ -694,7 +703,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		component_id=my_scene.operate_component.last_operate_component_id;
 		my_scene.event_component.keyboard.component_name=component_id;
 		if(typeof(ep.keydown)=="function")
-			if(ep.keydown(event,component_id,this.scene))
+			if(ep.keydown(event,component_id,my_scene))
 				return;
 	};
 	this.scene.system_event_processor.systemkeypress	=function(event,scene){return false;};
@@ -711,25 +720,25 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		my_scene.webgpu.current_canvas_id=this.canvas_id;
 
-		if(my_scene.system_event_processor.systemkeypress(event,this.scene))
+		if(my_scene.system_event_processor.systemkeypress(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
 		if(my_scene.pickup.component_id>=0)
 			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickupkeypress(event,my_scene.pickup.component_id,this.scene))
+				if(my_scene.system_event_processor.pickupkeypress(event,my_scene.pickup.component_id,my_scene))
 					return;
 				if(my_scene.terminate_flag)
 					return;
 				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
 					if(typeof(ep.pickupkeypress)=="function"){
-						if(ep.pickupkeypress(event,my_scene.pickup.component_id,this.scene))
+						if(ep.pickupkeypress(event,my_scene.pickup.component_id,my_scene))
 							return;
 						if(my_scene.terminate_flag)
 							return;
 					}
 			}
-		if(my_scene.system_event_processor.keypress(event,this.scene))
+		if(my_scene.system_event_processor.keypress(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
@@ -739,7 +748,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		component_id=my_scene.operate_component.last_operate_component_id;
 		my_scene.event_component.keyboard.component_name=component_id;
 		if(typeof(ep.keypress)=="function")
-			if(ep.keypress(event,component_id,this.scene))
+			if(ep.keypress(event,component_id,my_scene))
 				return;
 	};
 	this.scene.system_event_processor.systemkeyup	=function(event,scene){return false;};
@@ -770,25 +779,25 @@ function construct_event_listener(my_canvas_id,my_scene)
 			my_scene.pickup_array[event.keyCode-48]=my_scene.pickup.fork();
 			break;
 		}
-		if(my_scene.system_event_processor.systemkeyup(event,this.scene))
+		if(my_scene.system_event_processor.systemkeyup(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
 		if(my_scene.pickup.component_id>=0)
 			if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-				if(my_scene.system_event_processor.pickupkeyup(event,my_scene.pickup.component_id,this.scene))
+				if(my_scene.system_event_processor.pickupkeyup(event,my_scene.pickup.component_id,my_scene))
 					return;
 				if(my_scene.terminate_flag)
 					return;
 				if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
 					if(typeof(ep.pickupkeyup)=="function"){
-						if(ep.pickupkeyup(event,my_scene.pickup.component_id,this.scene))
+						if(ep.pickupkeyup(event,my_scene.pickup.component_id,my_scene))
 							return;
 						if(my_scene.terminate_flag)
 							return;
 					}
 			}
-		if(my_scene.system_event_processor.keyup(event,this.scene))
+		if(my_scene.system_event_processor.keyup(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
 			return;
@@ -798,7 +807,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		component_id=my_scene.operate_component.last_operate_component_id;
 		my_scene.event_component.keyboard.component_name=component_id;
 		if(typeof(ep.keyup)=="function")
-			if(ep.keyup(event,component_id,this.scene))
+			if(ep.keyup(event,component_id,my_scene))
 				return;
 	};
 	this.destroy=function()

@@ -166,8 +166,8 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 	this.end_scene_target=function(	scene_target_array,render_data,
 			target_part_object,target_part_driver,target_render_driver,scene)
 	{	
-		var diff_x=(scene.view.main_target_x-this.parameter.parameter_x)*this.parameter.whole_view_width;
-		var diff_y=(scene.view.main_target_y-this.parameter.parameter_y)*this.parameter.whole_view_height;
+		var diff_x=(scene.view.main_target_x-this.parameter.parameter_x)*this.parameter.whole_view_width /2.0;
+		var diff_y=(scene.view.main_target_y-this.parameter.parameter_y)*this.parameter.whole_view_height/2.0;
 	
 		var copy_origin={
 			x	:	Math.round((this.parameter.pickup_target_width/2.0)+diff_x),
