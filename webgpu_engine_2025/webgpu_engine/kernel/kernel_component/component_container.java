@@ -199,8 +199,7 @@ public class component_container
 			debug_information.println("Begin loading scene");
 
 			component_construction_parameter ccp=new component_construction_parameter(
-					sk,request_response,sk.part_cont,
-					scene_component_load_source_cont,default_display_bitmap);
+				sk,request_response,scene_component_load_source_cont,default_display_bitmap);
 			
 			try{
 				root_component=new component("",scene_f,false,false,ccp);

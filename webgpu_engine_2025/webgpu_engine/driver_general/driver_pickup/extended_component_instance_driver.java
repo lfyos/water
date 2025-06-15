@@ -46,14 +46,12 @@ public class extended_component_instance_driver extends component_instance_drive
 		double diff_value=0;
 		diff_value+=(ci.parameter.x-parameter_x)*(ci.parameter.x-parameter_x);
 		diff_value+=(ci.parameter.y-parameter_y)*(ci.parameter.y-parameter_y);
-		if(diff_value<=const_value.min_value2)
-			return false;
+		if(diff_value>=const_value.min_value2)
+			update_component_parameter_version(0);
 		
 		parameter_x=ci.parameter.x;
 		parameter_y=ci.parameter.y;
 
-		update_component_parameter_version(0);
-		
 		render_target rt=new render_target(
 			render_target_parameter.create_pickup_parameter(),					//render_target_parameter
 			pickup_target_name,comp.component_id,driver_id,0,					//target IDS,components

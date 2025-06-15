@@ -34,16 +34,15 @@ public class component_core_4 extends component_core_3
 		
 		for(int collect_number=0,i=0;i<new_child_number;i++){
 			String my_component_name,my_part_name;
-			do{
-				String id_str="_"+(ccp.sk.scene_par.inserted_component_and_part_id++);
-				my_component_name=ccp.sk.scene_par.inserted_component_name+id_str;
-				my_part_name=ccp.sk.scene_par.inserted_part_name+id_str;
-				ArrayList<part> my_part_list=ccp.pcfps.search_part(my_part_name);
-				if(my_part_list!=null)
-					if(my_part_list.size()>0)
-						continue;
-			}while(false);
-			
+			for(ArrayList<part> my_part_list;;){
+				String id_str		="_"+(ccp.sk.scene_par.inserted_component_and_part_id++);
+				my_component_name	=ccp.sk.scene_par.inserted_component_name	+id_str;
+				my_part_name		=ccp.sk.scene_par.inserted_part_name		+id_str;
+				if((my_part_list=ccp.sk.part_cont.search_part(my_part_name))==null)
+					break;
+				if(my_part_list.size()<=0)
+					break;
+			}
 			fr.push_string(new String[]
 			{
 				my_component_name,

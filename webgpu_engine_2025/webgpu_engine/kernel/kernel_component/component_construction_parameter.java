@@ -2,11 +2,10 @@ package kernel_component;
 
 import java.util.ArrayList;
 
-import kernel_common_class.change_name;
-import kernel_network.client_request_response;
-import kernel_part.part_container_for_part_search;
 import kernel_scene.scene_kernel;
+import kernel_common_class.change_name;
 import kernel_scene.part_type_string_sorter;
+import kernel_network.client_request_response;
 
 public class component_construction_parameter 
 {
@@ -41,34 +40,37 @@ public class component_construction_parameter
 	}
 	public void pop_part_type_string_sorter()
 	{
-		int index_id=type_string_sorter_list.size()-1;
-		if(index_id>=0)
+		int index_id;
+		if((index_id=type_string_sorter_list.size()-1)>=0)
 			type_string_sorter_list.remove(index_id);
 	}
 	
 	public scene_kernel sk;
 	public client_request_response request_response;
-	public part_container_for_part_search pcfps;
 	
-	component_load_source_container clsc;
+	public component_load_source_container clsc;
 	
 	public long default_display_bitmap;
 	
 	public component_construction_parameter(
-			scene_kernel my_sk,
-			client_request_response my_request_response,
-			part_container_for_part_search my_pcfps,
-			component_load_source_container my_clsc,
-			long my_default_display_bitmap)
+			scene_kernel my_sk,client_request_response my_request_response,
+			component_load_source_container my_clsc,long my_default_display_bitmap)
 	{
 		sk						=my_sk;
 		request_response		=my_request_response;
-		pcfps					=my_pcfps;
 		
 		change_part_name_list	=new ArrayList<change_name>();
-		change_part_name_list.add(
-			new change_name(new String[]{},sk.scene_par.change_part_string,null));
+		if(sk.scene_par.change_part_string!=null)
+			if(sk.scene_par.change_part_string.length()>0)
+				change_part_name_list.add(
+					new change_name(new String[]{},sk.scene_par.change_part_string,null));
+		
 		type_string_sorter_list	=new ArrayList<part_type_string_sorter>();
+		if(sk.scene_par.part_type_string!=null)
+			if(sk.scene_par.part_type_string.length()>0)
+				type_string_sorter_list.add(
+					new part_type_string_sorter(null,sk.scene_par.part_type_string,null));
+		
 		clsc					=my_clsc;
 		default_display_bitmap	=my_default_display_bitmap;
 	}

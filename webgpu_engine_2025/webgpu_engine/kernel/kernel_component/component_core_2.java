@@ -36,12 +36,12 @@ public class component_core_2 extends component_core_1
 		driver_array=new ArrayList<component_driver>();
 		
 		if((change_part_name=ccp.get_change_part_name())==null)
-			search_parts=ccp.pcfps.search_part(part_name);
+			search_parts=ccp.sk.part_cont.search_part(part_name);
 		else{
 			String search_part_name=change_part_name.search_change_name(part_name,part_name);
-			if((search_parts=ccp.pcfps.search_part(search_part_name))==null){
+			if((search_parts=ccp.sk.part_cont.search_part(search_part_name))==null){
 				search_part_name=change_part_name.search_change_name(search_part_name,search_part_name);
-				search_parts=ccp.pcfps.search_part(search_part_name);
+				search_parts=ccp.sk.part_cont.search_part(search_part_name);
 			}
 		}
 		if(search_parts==null)

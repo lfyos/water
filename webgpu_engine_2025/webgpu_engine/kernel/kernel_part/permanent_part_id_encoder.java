@@ -6,29 +6,25 @@ import kernel_common_class.tree_string_search_container;
 
 public class permanent_part_id_encoder
 {
-	class encoder_part_id
-	{
-		public int permanent_part_id;
-		public encoder_part_id()
-		{
-			permanent_part_id=0;
-		}
-	}
-	
-	private tree_string_search_container<encoder_part_id> encoder_tree;
+	private tree_string_search_container<Integer> encoder_tree;
 	
 	public permanent_part_id_encoder()
 	{
-		encoder_tree=new tree_string_search_container<encoder_part_id>();
+		encoder_tree=new tree_string_search_container<Integer>();
 	}
 	
 	public int encoder(String part_type_string)
 	{
-		ArrayList<encoder_part_id>list;
-
-		for(String my_key[]=new String[]{part_type_string};(list=encoder_tree.search(my_key))==null;)
-			encoder_tree.add(my_key,new encoder_part_id());
+		String my_key[]=new String[]{part_type_string};
+		ArrayList<Integer>list=encoder_tree.search(my_key);
+		if(list==null) {
+			encoder_tree.add(my_key,1);
+			return 0;
+		}
 		
-		return list.get(0).permanent_part_id++;
+		int ret_val=list.get(0);
+		list.set(0,ret_val+1);
+		
+		return ret_val;
 	}
 }

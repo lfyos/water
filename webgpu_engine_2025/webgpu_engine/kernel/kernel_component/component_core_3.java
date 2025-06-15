@@ -53,9 +53,15 @@ public class component_core_3 extends component_core_2
 				return;
 			case "push_file_part_type_string":
 				ccp.push_part_type_string_sorter(
+						new part_type_string_sorter(
+							new String[] {fr.directory_name+file_reader.separator(fr.get_string())},
+							ccp.sk.scene_par.part_type_string,fr.get_charset()));
+					break;
+			case "push_file_part_type_string_without_scene_par":
+				ccp.push_part_type_string_sorter(
 					new part_type_string_sorter(
 						new String[] {fr.directory_name+file_reader.separator(fr.get_string())},
-						ccp.sk.scene_par.part_type_string,fr.get_charset()));
+						null,fr.get_charset()));
 				break;
 			case "push_string_part_type_string":
 				if((str=fr.get_string())==null)
@@ -64,7 +70,16 @@ public class component_core_3 extends component_core_2
 					str=ccp.sk.scene_par.part_type_string;
 				else
 					str=ccp.sk.scene_par.part_type_string+";"+str;
-				ccp.push_part_type_string_sorter(new part_type_string_sorter(null,str,fr.get_charset()));
+				ccp.push_part_type_string_sorter(
+						new part_type_string_sorter(null,str,fr.get_charset()));
+				break;
+			case "push_string_part_type_string_without_scene_par":
+				if((str=fr.get_string())==null)
+					str="";
+				else if((str=str.trim()).length()<=0)
+					str="";
+				ccp.push_part_type_string_sorter(
+						new part_type_string_sorter(null,str,fr.get_charset()));
 				break;
 			case "pop_part_type_string":	
 				ccp.pop_part_type_string_sorter();
@@ -75,6 +90,12 @@ public class component_core_3 extends component_core_2
 						new String[] {fr.directory_name+file_reader.separator(fr.get_string())},
 						ccp.sk.scene_par.change_part_string,fr.get_charset()));
 				break;
+			case "push_file_part_change_name_without_scene_par":
+				ccp.push_change_part_name(
+					new change_name(
+						new String[] {fr.directory_name+file_reader.separator(fr.get_string())},
+						null,fr.get_charset()));
+				break;
 			case "push_string_part_change_name":
 				if((str=fr.get_string())==null)
 					str=ccp.sk.scene_par.change_part_string;
@@ -83,6 +104,13 @@ public class component_core_3 extends component_core_2
 				else
 					str=ccp.sk.scene_par.change_part_string+";"+str;
 				
+				ccp.push_change_part_name(new change_name(null,str,fr.get_charset()));
+				break;
+			case "push_string_part_change_name_without_scene_par":
+				if((str=fr.get_string())==null)
+					str="";
+				else if((str=str.trim()).length()<=0)
+					str="";
 				ccp.push_change_part_name(new change_name(null,str,fr.get_charset()));
 				break;
 			case "pop_part_change_name":
