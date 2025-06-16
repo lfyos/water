@@ -70,7 +70,7 @@ public class component_construction_parameter
 			if(sk.scene_par.part_type_string.length()>0)
 				type_string_sorter_list.add(
 					new part_type_string_sorter(null,sk.scene_par.part_type_string,null));
-		
+
 		clsc					=my_clsc;
 		default_display_bitmap	=my_default_display_bitmap;
 	}
