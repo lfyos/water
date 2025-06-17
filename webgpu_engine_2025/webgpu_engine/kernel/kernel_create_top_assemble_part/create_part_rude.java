@@ -1,9 +1,11 @@
 package kernel_create_top_assemble_part;
 
-import kernel_component.component;
+import java.util.ArrayList;
+
 import kernel_part.part;
 import kernel_part.part_rude;
 import kernel_transformation.box;
+import kernel_component.component;
 import kernel_transformation.location;
 
 public class create_part_rude 
@@ -11,10 +13,9 @@ public class create_part_rude
 	public part_rude topbox_part_rude;
 	public part max_part;
 	
-	private int box_number;
-	private part reference_part[];
-	private location box_loca[];
-	private box box_array[];
+	private ArrayList<part> reference_part;
+	private ArrayList<location> box_loca;
+	private ArrayList<box> box_array;
 	
 	private double max_distance2;
 	
@@ -32,22 +33,22 @@ public class create_part_rude
 		for(int i=0,ni=comp.driver_array.size();i<ni;i++) {
 			if((p=comp.driver_array.get(i).component_part)==null)
 				continue;
-			if((box_array[box_number]=p.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null))==null)
+			box my_box=p.secure_caculate_part_box(null,-1,-1,-1,-1,-1,-1,-1,null,null);
+			if(my_box==null)
 				continue;
-			if((my_distance2=box_array[box_number].distance2())<length2)
+			if((my_distance2=my_box.distance2())<length2)
 				continue;
 			if((max_part==null)||(max_distance2<my_distance2)){
 				max_part=p;
 				max_distance2=my_distance2;
 			}
-			reference_part	[box_number]=p;
-			box_loca		[box_number]=nega.multiply(comp.absolute_location);
-			box_number++;
+			reference_part.add(p);
+			box_array.add(my_box);
+			box_loca.add(nega.multiply(comp.absolute_location));
 			return;
 		}
 	}
-	public create_part_rude(component comp,
-			int max_component_number,double discard_top_part_component_precision2)
+	public create_part_rude(component comp,double discard_top_part_component_precision2)
 	{
 		box my_box;
 		max_part		=null;
@@ -55,14 +56,18 @@ public class create_part_rude
 		if((my_box=comp.get_component_box(false))==null)
 			return;
 		max_distance2	=0;
-		box_number		=0;
-		reference_part	=new part		[max_component_number];
-		box_loca		=new location	[max_component_number];
-		box_array		=new box		[max_component_number];
+		reference_part	=new ArrayList<part>();
+		box_loca		=new ArrayList<location>();
+		box_array		=new ArrayList<box>();
 		create_location_box_and_material(comp,comp.caculate_negative_absolute_location(),
-				my_box.distance2()*discard_top_part_component_precision2);
+			my_box.distance2()*discard_top_part_component_precision2);
+		
+		int box_number=box_array.size();
 		if((box_number>1)&&(max_part!=null))
-			topbox_part_rude=new part_rude(box_number,reference_part,box_loca,box_array);
+			topbox_part_rude=new part_rude(box_number,
+				reference_part.toArray(new part[box_number]),
+				box_loca.toArray(new location[box_number]),
+				box_array.toArray(new box[box_number]));
 		return;
 	}
 }

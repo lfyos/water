@@ -63,7 +63,7 @@ public class face
 	}
 	public face(part my_reference_part,location my_face_loca,box my_face_box)
 	{
-		name="no_name";
+		name=my_reference_part.system_name+"_box_face";
 		int double_attribute_number=0,string_attribute_number=0;
 		String my_extra_data=null,my_material[]=null;
 		if(my_reference_part!=null)

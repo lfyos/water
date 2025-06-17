@@ -12,7 +12,6 @@ public class permanent_part_id_encoder
 	{
 		encoder_tree=new tree_string_search_container<Integer>();
 	}
-	
 	public int encoder(String part_type_string)
 	{
 		String my_key[]=new String[]{part_type_string};
@@ -20,11 +19,10 @@ public class permanent_part_id_encoder
 		if(list==null) {
 			encoder_tree.add(my_key,1);
 			return 0;
+		}else{
+			int ret_val=list.get(0);
+			list.set(0,ret_val+1);
+			return ret_val;
 		}
-		
-		int ret_val=list.get(0);
-		list.set(0,ret_val+1);
-		
-		return ret_val;
 	}
 }

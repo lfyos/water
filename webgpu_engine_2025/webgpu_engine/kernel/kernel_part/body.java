@@ -81,8 +81,7 @@ public class body
 		name="box_body_with_"+my_box_number+"_faces";	
 		face_array=new face[my_box_number];
 		for(int i=0;i<my_box_number;i++)
-			face_array[i]=new face(my_reference_part[i],
-				my_box_loca[i],my_box_array[i]);
+			face_array[i]=new face(my_reference_part[i],my_box_loca[i],my_box_array[i]);
 		caculate_box_and_primitive_number();
 	}
 }

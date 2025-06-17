@@ -64,21 +64,21 @@ public class face_edge
 		total_point_primitive_number=s.total_point_primitive_number;
 	}
 	public face_edge(point my_start_point,point my_end_point,
-			String my_extra_data,String my_material[])
+				String my_extra_data,String my_material[])
 	{
 		curve_type="unknown";
 		curve_parameter=null;
 		
-		start_point	=(my_start_point==null)?null:my_start_point;
+		start_point			=(my_start_point==null)?null:my_start_point;
 		start_point_material=my_material;
-		start_extra_data=my_extra_data;
+		start_extra_data	=my_extra_data;
 		
-		end_point	=(my_end_point	==null)?null:my_end_point;
-		end_point_material=my_material;
-		end_extra_data=my_extra_data;
+		end_point			=(my_end_point==null)?null:my_end_point;
+		end_point_material	=my_material;
+		end_extra_data		=my_extra_data;
 		
 		parameter_extra_data=my_extra_data;
-		parameter_material=my_material;
+		parameter_material	=my_material;
 		
 		edge_box=(start_point==null)?null:new box(start_point);
 		if(end_point!=null){

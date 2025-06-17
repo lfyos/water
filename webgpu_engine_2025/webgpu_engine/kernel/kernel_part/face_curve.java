@@ -41,7 +41,7 @@ public class face_curve
 			}
 	}
 	public face_curve(location loca,box b,String my_extra_data,String my_material[])
-	{											//		 Y
+	{														//		 Y
 		point p[]=new point[]								//		 |
 		{													//       2***********************6
 			new point(b.p[0].x,b.p[0].y,b.p[0].z),			//     * |                     * *
@@ -52,7 +52,7 @@ public class face_curve
 			new point(b.p[1].x,b.p[0].y,b.p[1].z),			//	*   /                    *  *
 			new point(b.p[1].x,b.p[1].y,b.p[0].z),			//	* /                      * *  
 			new point(b.p[1].x,b.p[1].y,b.p[1].z),			//	1************************5
-		};												// Z
+		};													// Z
 
 		for(int i=0,ni=p.length;i<ni;i++)
 			p[i]=loca.multiply(p[i]);
@@ -64,7 +64,7 @@ public class face_curve
 			new face_loop(p[1],p[0],p[4],p[5],my_extra_data,my_material),	//down
 			new face_loop(p[2],p[3],p[7],p[6],my_extra_data,my_material),	//up
 			new face_loop(p[0],p[2],p[6],p[4],my_extra_data,my_material),	//front
-			new face_loop(p[1],p[5],p[7],p[3],my_extra_data,my_material)		//back
+			new face_loop(p[1],p[5],p[7],p[3],my_extra_data,my_material)	//back
 		};
 		
 		caculate_box_and_primitive_number();

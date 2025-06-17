@@ -69,8 +69,8 @@ public class face_face
 		face_type="unknown";
 		face_parameter=null;
 		
-		total_face_primitive_number=12;
-		attribute_number=my_attribute_number;
+		total_face_primitive_number	=12;
+		attribute_number			=my_attribute_number;
 
 		face_face_box=new box(b);
 	}

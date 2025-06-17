@@ -72,11 +72,13 @@ public class face_loop
 	public face_loop(point p0,point p1,point p2,point p3,
 			String my_extra_data,String my_material[])
 	{
-		edge=new face_edge[4];
-		edge[0]=new face_edge(p0,p1,my_extra_data,my_material);
-		edge[1]=new face_edge(p1,p2,my_extra_data,my_material);
-		edge[2]=new face_edge(p2,p3,my_extra_data,my_material);
-		edge[3]=new face_edge(p3,p0,my_extra_data,my_material);
+		edge=new face_edge[] 
+		{
+			new face_edge(p0,p1,my_extra_data,my_material),
+			new face_edge(p1,p2,my_extra_data,my_material),
+			new face_edge(p2,p3,my_extra_data,my_material),
+			new face_edge(p3,p0,my_extra_data,my_material)
+		};
 		caculate_box_and_primitive_number();
 	}
 };

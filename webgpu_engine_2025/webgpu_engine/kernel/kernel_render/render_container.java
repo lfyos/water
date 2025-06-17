@@ -107,7 +107,7 @@ public class render_container
 		}
 		return ret_val;
 	}
-	public void load_part(long part_type,int part_normal_bottom_box_top_box_flag,
+	public void load_part(long part_type_code,int part_normal_bottom_box_top_box_flag,
 		part_loader_container part_loader_cont,system_parameter system_par,scene_parameter scene_par,
 		ArrayList<buffer_object_file_modify_time_and_length_container> boftal_container,
 		tree_string_locker_container string_locker_container,
@@ -133,7 +133,7 @@ public class render_container
 					part p;
 					if((p=r.parts.get(j))==null)
 						continue;
-					if(((((long)1)<<p.part_type_id)&part_type)==0)
+					if(((((long)1)<<p.part_type_id)&part_type_code)==0)
 						continue;
 					int my_part_flag=	(p.is_normal_part()		?1:0)+
 										(p.is_bottom_box_part()	?2:0)+
@@ -213,7 +213,8 @@ public class render_container
 			add_part.part_from_id			=insert_part.part_id;
 			add_part.permanent_part_from_id	=insert_part.permanent_part_id;
 			try {
-				add_part.driver=insert_part.driver.clone(insert_part,add_part,request_response,system_par,scene_par);
+				add_part.driver=insert_part.driver.clone(
+					insert_part,add_part,request_response,system_par,scene_par);
 			}catch(Exception e) {
 				
 				e.printStackTrace();
@@ -229,7 +230,6 @@ public class render_container
 				
 				continue;
 			}
-			
 			ren.add_part(add_part,encoder);
 			pcps.append(add_part);
 		}

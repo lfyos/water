@@ -136,28 +136,6 @@ public class scene_kernel
 		render_cont				=my_original_render;
 		part_cont				=null;	
 	}
-	public long get_file_last_modified_time()
-	{
-		long ret_val=0;
-		
-		if(ret_val<system_par.last_modified_time)
-			ret_val=system_par.last_modified_time;
-		if(ret_val<scene_par.parameter_last_modified_time)
-			ret_val=scene_par.parameter_last_modified_time;
-		if(ret_val<scene_par.scene_last_modified_time)
-			ret_val=scene_par.scene_last_modified_time;
-		
-		if(component_cont!=null)
-			if(component_cont.root_component!=null)
-				if(ret_val<component_cont.root_component.uniparameter.file_last_modified_time)
-					ret_val=component_cont.root_component.uniparameter.file_last_modified_time;
-		
-		if(process_part_sequence!=null)
-			if(ret_val<process_part_sequence.all_buffer_object_head_package_last_modify_time)
-				ret_val=process_part_sequence.all_buffer_object_head_package_last_modify_time;
-		
-		return ret_val;
-	}
 	private void load_camera()
 	{
 		String camera_file_name;
@@ -183,34 +161,39 @@ public class scene_kernel
 			part_container_for_part_search part_search,client_request_response request_response)
 	{
 		int child_number;
-		
-		if((comp.driver_array.size()>0)||((child_number=comp.children.size())<=0))
+		if((child_number=comp.children.size())<=0)
 			return;
-		ArrayList<part> part_list=part_search.search_part(comp.part_name);
-		if(part_list!=null)
-			if(part_list.size()>0){
-				part p=part_list.get(0);
-				try{
-					component_driver cd=p.driver.create_component_driver(null,false,p,
-						scene_component_load_source_cont,this,request_response);
-					if(cd!=null){
-						comp.driver_array=new ArrayList<component_driver>();
-						comp.driver_array.add(0,cd);
-						return;
-					}
-				}catch(Exception e){
-					e.printStackTrace();
-					debug_information.println(
-							"create_component_driver fail in mount_top_box_part():	",e.toString());
-					debug_information.println("Part user name:",	p.user_name);
-					debug_information.println("Part system name:",	p.system_name);
-					debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);
-					debug_information.println("Material_file_name:",p.directory_name+p.material_file_name);
-				}
+		if(comp.driver_array.size()>0)
+			return;
+		do{
+			ArrayList<part> part_list;
+			if((part_list=part_search.search_part(comp.part_name))==null)
+				break;
+			if(part_list.size()<=0)
+				break;
+			part p=part_list.get(0);
+			try{
+				component_driver cd=p.driver.create_component_driver(null,false,p,
+					scene_component_load_source_cont,this,request_response);
+				if(cd==null)
+					break;
+				comp.driver_array=new ArrayList<component_driver>();
+				comp.driver_array.add(cd);
+				return;
+			}catch(Exception e){
+				e.printStackTrace();
+				debug_information.println(
+						"create_component_driver fail in mount_top_box_part():	",e.toString());
+				debug_information.println("Part user name:",	p.user_name);
+				debug_information.println("Part system name:",	p.system_name);
+				debug_information.println("Mesh_file_name:",	p.directory_name+p.mesh_file_name);
+				debug_information.println("Material_file_name:",p.directory_name+p.material_file_name);
 			}
+		}while(false);
+		
 		for(int i=0;i<child_number;i++)
 			mount_top_box_part(comp.children.get(i),
-					scene_component_load_source_cont,part_search,request_response);
+				scene_component_load_source_cont,part_search,request_response);
 	}
 	private void load_create_assemble_part(
 			String fast_load_type,client_request_response request_response,
@@ -225,19 +208,28 @@ public class scene_kernel
 			return;
 		if(component_cont.root_component==null)
 			return;
-		create_assemble_part csp=new create_assemble_part(fast_load_type,
-			component_cont,render_cont,request_response,encoder,part_loader_cont,
-			all_part_part_cont,boftal_container,get_file_last_modified_time(),
-			string_locker_container,create_parameter,system_par,scene_par);
-		if(csp.top_box_part==null)
+
+		long last_modified_time=0;
+		if(last_modified_time<system_par.last_modified_time)
+			last_modified_time=system_par.last_modified_time;
+		if(last_modified_time<scene_par.parameter_last_modified_time)
+			last_modified_time=scene_par.parameter_last_modified_time;
+		if(last_modified_time<scene_par.scene_last_modified_time)
+			last_modified_time=scene_par.scene_last_modified_time;
+		if(last_modified_time<component_cont.root_component.uniparameter.file_last_modified_time)
+			last_modified_time=component_cont.root_component.uniparameter.file_last_modified_time;
+		
+		ArrayList<part>top_box_part_list=new create_assemble_part(fast_load_type,component_cont,
+			render_cont,request_response,encoder,part_loader_cont,all_part_part_cont,boftal_container,
+			last_modified_time,string_locker_container,create_parameter,system_par,scene_par).top_box_part;
+		if(top_box_part_list==null)
 			return;
-		if(csp.top_box_part.size()<=0)
+		if(top_box_part_list.size()<=0)
 			return;
-		var pcfps=new part_container_for_part_search(csp.top_box_part);
-		mount_top_box_part(component_cont.root_component,
-				scene_component_load_source_cont,pcfps,request_response);		
+		mount_top_box_part(component_cont.root_component,scene_component_load_source_cont,
+				new part_container_for_part_search(top_box_part_list),request_response);
+		return;
 	}
-	
 	private ArrayList<buffer_object_file_modify_time_and_length_container> get_boftal_container(
 			client_process_bar process_bar,tree_string_locker_container string_locker_container,
 			buffer_object_file_modify_time_and_length_container system_boftal_container,String fast_load_type)
@@ -313,9 +305,14 @@ public class scene_kernel
 			scene_par.scene_shader_directory_name	=scene_f.directory_name;
 		
 		String fast_load_type=request_response.get_fast_load_type();
-		if(fast_load_type.compareTo("clear")==0)
-			process_bar_delete_file.do_delete(scene_par.scene_temporary_directory_name,process_bar);
-
+		switch(fast_load_type){
+		case "clear":
+			process_bar_delete_file.do_delete(
+				scene_par.scene_temporary_directory_name,process_bar);
+			break;
+		default:
+			break;
+		}
 		permanent_part_id_encoder encoder[];
 		encoder=new permanent_part_id_encoder[scene_par.type_sub_directory.length+2];
 		for(int i=0,ni=encoder.length;i<ni;i++)
@@ -324,20 +321,18 @@ public class scene_kernel
 		render_cont	=new render_container(render_cont,request_response,system_par,scene_par);
 		part_cont	=new part_container_for_part_search(render_cont.part_array_list(-1));
 
-		for(int i=0,ni=scene_par.type_sub_directory.length;i<ni;i++)
-			render_cont.load_shader(
-				scene_component_load_source_cont,
-				part_cont,scene_par.parameter_last_modified_time,
-				scene_par.type_shader_directory_name
-						+scene_par.type_sub_directory[i]
-						+scene_par.type_shader_file_name,
+		String path_name;
+		for(int i=0,ni=scene_par.type_sub_directory.length;i<ni;i++) {
+			path_name=scene_par.type_shader_directory_name
+				+scene_par.type_sub_directory[i]+scene_par.type_shader_file_name;
+			render_cont.load_shader(scene_component_load_source_cont,
+				part_cont,scene_par.parameter_last_modified_time,path_name,
 				scene_par.parameter_charset,i+2,system_par,scene_par,encoder,request_response);
-		
-		render_cont.load_shader(
-			scene_component_load_source_cont,
-			part_cont,scene_par.scene_last_modified_time,
-			scene_par.scene_shader_directory_name+scene_par.scene_shader_file_name,
-			create_parameter.scene_charset,1,system_par,scene_par,encoder,request_response);
+		}
+		path_name=scene_par.scene_shader_directory_name+scene_par.scene_shader_file_name;
+		render_cont.load_shader(scene_component_load_source_cont,part_cont,
+			scene_par.scene_last_modified_time,path_name,create_parameter.scene_charset,
+			1,system_par,scene_par,encoder,request_response);
 		
 		part_cont.execute_append();
 		
@@ -354,7 +349,8 @@ public class scene_kernel
 				string_locker_container,system_boftal_container,fast_load_type);
 		
 		start_time=current_time;
-		render_cont.load_part(part_type_code,1,part_loader_cont,system_par,scene_par,boftal_container,
+		render_cont.load_part(
+			part_type_code,1,part_loader_cont,system_par,scene_par,boftal_container,
 			string_locker_container,process_bar,"load_first_class_part",fast_load_type);
 		debug_information.println("Load first class part time length:	",
 				(current_time=new Date().getTime())-start_time);
