@@ -12,9 +12,9 @@ import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_common_class.jason_string;
 import kernel_file_manager.file_directory;
-import kernel_common_class.compress_file_data;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
+import kernel_common_class.compress_file_data;
 
 public class part
 {
@@ -155,18 +155,6 @@ public class part
 		return   "item number:\t"	+Long.toString(gbocc.total_item_number)
 				+"\tfile number:\t"	+Integer.toString(file_number);
 	}
-	public primitive_interface create_primitive_interface(
-			system_parameter system_par,boolean jump_access_flag)
-	{
-		primitive_interface p_i;
-		if(is_normal_part()) {
-			p_i=new primitive_from_file(directory_name+mesh_file_name,file_charset,system_par.response_block_size);
-			if(jump_access_flag)
-				p_i=new primitive_access(part_mesh,p_i);
-		}else
-			p_i=new primitive_from_box(part_mesh.body_array);
-		return p_i;
-	}
 	public boolean load_part_mesh()
 	{
 		if(is_normal_part()){
@@ -252,7 +240,8 @@ public class part
 
 		head_fw.println("\t\"data\"\t\t:\t");
 		head_fw.println("\t{");
-		head_fw.print  ("\t\t\"max_buffer_object_data_length\"\t:\t",part_par.max_buffer_object_data_length);
+		head_fw.print  ("\t\t\"max_buffer_object_data_length\"\t:\t",
+				part_par.max_buffer_object_data_length);
 		head_fw.println(",");
 				
 		mesh_file_collector file_collector=new mesh_file_collector();
@@ -266,8 +255,13 @@ public class part
 			for(int i=0,ni=str.length;i<ni;i++)
 				head_fw.println("		",str[i]);
 		}else{
-			primitive_interface p_i=create_primitive_interface(system_par,false);
-			
+			primitive_interface p_i;
+			if(is_normal_part())
+				p_i=new primitive_from_file(directory_name+mesh_file_name,
+								file_charset,system_par.response_block_size);
+			else
+				p_i=new primitive_from_box(part_mesh.body_array);
+
 			ret_val+="\n\t\tmesh " +response_buffer_object_data(p_i,
 					system_par.max_material_id,file_collector,head_fw,"face",",");
 			ret_val+="\n\t\tedge " +response_buffer_object_data(p_i,

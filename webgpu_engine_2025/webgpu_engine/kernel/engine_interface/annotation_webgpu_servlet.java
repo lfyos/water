@@ -38,13 +38,20 @@ public class annotation_webgpu_servlet extends scene_servlet
 				"UTF-8");
 */
 
+/*
+		super(	"jar_configure_file",
+				"configure.txt",
+				"UTF-8",
+				"UTF-8");
+*/				
+/*
 
 		super(	"system_environment_variable",
 				"lfy_data_configure_file",
 				"lfy_temparatory_configure_file",
 				"lfy_environment_configure_file");
 		
-		
+*/		
 /*		
 		super(	"servlet_initialization_parameter",
     			"lfy_data_configure_file",
@@ -52,13 +59,8 @@ public class annotation_webgpu_servlet extends scene_servlet
     			"lfy_environment_configure_file");
 */
 
-
-		
-/*
 		super(	"webserver_configure_file",
-				"configure.txt","GBK",null);
-*/		
-
+				"configure.txt","GBK",null);	
 
 /*
 		super(	"file_initialization_parameter",

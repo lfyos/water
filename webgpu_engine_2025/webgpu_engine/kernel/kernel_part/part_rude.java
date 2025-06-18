@@ -9,7 +9,7 @@ public class part_rude
 {
 	public boolean test_memory_not_free()
 	{
-		return (body_array!=null);
+		return (body_array!=null)?true:false;
 	}
 	public boolean free_memory()
 	{
@@ -167,19 +167,8 @@ public class part_rude
 		}
 		return;
 	}
-	public part_rude(int my_box_number,part my_reference_part[],location my_box_loca[],box my_box_array[])
-	{		
-		double max_distance_2=my_box_array[0].distance2();
-		int max_index_id=0;
-		for(int i=0;i<my_box_number;i++){
-			double my_max_distance_2=my_box_array[i].distance2();
-			if(my_max_distance_2>max_distance_2) {
-				max_distance_2=my_max_distance_2;
-				max_index_id=i;
-			}
-		}
-		part_rude pr=my_reference_part[max_index_id].part_mesh;
-		
+	public part_rude(part_rude pr,int my_box_number,part my_reference_part[],location my_box_loca[],box my_box_array[])
+	{
 		origin_vertex_extra_data	=pr.origin_vertex_extra_data;
 		origin_material				=pr.origin_material;
 		default_material			=pr.default_material;

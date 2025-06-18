@@ -272,19 +272,28 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		if(scene.terminate_flag)
 			return;
 	
-		var system_bindgroup_id	=p_id_0[0];
-		var part_body_id		=p_id_0[1];
-		var part_face_id		=p_id_0[2];
-		var scene_id			=p_id_0[3]>>4;
-		var primitive_type_id	=p_id_0[3]%16;
-	
+		var my_system_bindgroup_id	=p_id_0[0];
+		var my_body_id				=p_id_0[1];
+		var my_face_id				=p_id_0[2];
+		var my_scene_id				=p_id_0[3]>>4;
+		var my_primitive_type_id	=p_id_0[3]%16;
+		
+		var my_loop_id				=p_id_1[0];
+		var my_edge_id				=p_id_1[1];
+		var my_primitive_id			=p_id_1[2];
+		var my_vertex_id			=p_id_1[3];
+		
+		var my_value				=[p_value[0],p_value[1],p_value[2]];
+		var my_depth				=p_value[3];
+
 		scene.pickup.render_id			=-1;
 		scene.pickup.part_id			=-1;
-		scene.pickup.data_buffer_id	=-1;
+		scene.pickup.data_buffer_id		=-1;
 		scene.pickup.component_id		=-1;
 		scene.pickup.driver_id			=-1;
 		
-		scene.pickup.primitive_type_id	=primitive_type_id;
+		scene.pickup.primitive_type_id	=my_primitive_type_id;
+		
 		scene.pickup.body_id			=-1;
 		scene.pickup.face_id			=-1;
 		
@@ -296,41 +305,38 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		scene.pickup.value				=[0,0,0];
 		scene.pickup.depth				=1.0;
 		
-		if(scene.scene_id!=scene_id)
+		if(scene.scene_id!=my_scene_id)
 			return;
-			
-		if((system_bindgroup_id>=0)&&(system_bindgroup_id<scene.system_bindgroup_id.length)){
-			var p=scene.system_bindgroup_id[system_bindgroup_id];
-			scene.pickup.render_id		=p.render_id;
-			scene.pickup.part_id		=p.part_id;
-			scene.pickup.data_buffer_id	=p.data_buffer_id;
-			scene.pickup.component_id	=p.component_id;
-			scene.pickup.driver_id		=p.driver_id;
-			
-			if((scene.pickup.render_id>=0)&&(scene.pickup.part_id>=0))
-				if(scene.pickup.render_id<scene.part_array.length)
-					if(scene.pickup.part_id<scene.part_array[scene.pickup.render_id].length){
-						scene.pickup.body_id=part_body_id;
-						scene.pickup.face_id=part_face_id;
-					}
-		}
+		if(my_system_bindgroup_id<0)
+			return;
+		if(my_system_bindgroup_id>=scene.system_bindgroup_id.length)
+			return;
+		var p=scene.system_bindgroup_id[my_system_bindgroup_id];
+		if((p.render_id<0)||(p.part_id<0))
+			return;
+		if(p.render_id>=scene.part_array.length)
+			return;
+		if(p.part_id>=scene.part_array[p.render_id].length)
+			return;
 		
-		if(scene.pickup.component_id<0)
-			return;
-		if(scene.pickup.driver_id<0)
-			return;
-		if(scene.pickup.body_id<0)
-			return;
-		if(scene.pickup.face_id<0)
-			return;
-	
-		scene.pickup.loop_id		=p_id_1[0];
-		scene.pickup.edge_id		=p_id_1[1];
-		scene.pickup.primitive_id	=p_id_1[2];
-		scene.pickup.vertex_id		=p_id_1[3];
-	
-		scene.pickup.value=[p_value[0],p_value[1],p_value[2]];
-		scene.pickup.depth=p_value[3];
+		scene.pickup.render_id		=p.render_id;
+		scene.pickup.part_id		=p.part_id;
+						
+		scene.pickup.data_buffer_id	=p.data_buffer_id;
+		scene.pickup.component_id	=p.component_id;
+		scene.pickup.driver_id		=p.driver_id;
+						
+		scene.pickup.body_id		=my_body_id;
+		scene.pickup.face_id		=my_face_id;
+		scene.pickup.loop_id		=my_loop_id;
+		scene.pickup.edge_id		=my_edge_id;
+		scene.pickup.primitive_id	=my_primitive_id;
+		scene.pickup.vertex_id		=my_vertex_id;
+							
+		scene.pickup.value			=my_value;
+		scene.pickup.depth			=my_depth;
+		
+		return;
 	}
 	
 	this.draw_component=function(method_data,render_parameter,

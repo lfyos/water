@@ -162,7 +162,6 @@ public class primitive_from_box implements primitive_interface
 				if(rp.part_mesh.origin_material!=null)
 					if(rp.part_mesh.origin_material.length>=4)
 						return rp.part_mesh.origin_material;
-		
 		return default_primitive_material;
 	}
 	public void destroy()

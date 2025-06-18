@@ -32,15 +32,52 @@ public class face_loop
 		loop_box=null;
 		total_edge_primitive_number=0;
 		total_point_primitive_number=0;
-		for(int i=0,ni=edge_number();i<ni;i++)
+		for(int i=0,ni=edge_number();i<ni;i++) {
 			if(edge[i].edge_box!=null){
 				if(loop_box==null)
 					loop_box=new box(edge[i].edge_box);
 				else
 					loop_box=loop_box.add(edge[i].edge_box);
-				total_edge_primitive_number+=edge[i].total_edge_primitive_number;
-				total_point_primitive_number+=edge[i].total_point_primitive_number;
 			}
+			if(edge[i].start_point!=null)
+				total_point_primitive_number++;
+			if(edge[i].end_point!=null)
+				total_point_primitive_number++;
+			
+			//"line",	"circle",	"ellipse",	"hyperbola",	"parabola",
+			//"pickup_point_set",	"render_point_set",			"segment",		"unknown"
+			switch(edge[i].curve_type){
+			case "line":
+				total_edge_primitive_number+=edge[i].total_edge_primitive_number-1;
+				total_point_primitive_number++;
+				break;
+			case "circle":
+				total_edge_primitive_number+=edge[i].total_edge_primitive_number-1;
+				total_point_primitive_number++;
+				break;
+			case "ellipse":
+			case "hyperbola":
+			case "parabola":
+				total_edge_primitive_number+=edge[i].total_edge_primitive_number-1;
+				total_point_primitive_number++;
+				total_point_primitive_number++;
+				break;
+			case "pickup_point_set":
+				if(edge[i].curve_parameter!=null)
+					total_point_primitive_number+=edge[i].curve_parameter.length/3;
+				break;
+			case "render_point_set":
+				total_point_primitive_number+=edge[i].total_point_primitive_number;
+				break;
+			case "segment":
+				total_edge_primitive_number+=edge[i].total_edge_primitive_number/2;
+				break;
+			case "unknown":
+			default:
+				total_edge_primitive_number+=edge[i].total_edge_primitive_number-1;
+				break;
+			}
+		}
 	}
 	public face_loop(face_loop s)
 	{

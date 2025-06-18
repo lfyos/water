@@ -33,12 +33,7 @@ public class scene_servlet extends HttpServlet
     	scene_data_path_name		=my_scene_data_path_name;
     	scene_temparatory_path_name	=my_scene_temparatory_path_name;
     	scene_environment_path_name	=my_scene_environment_path_name;
-    	
-    	debug_information.println("scene_servlet_type:	",			scene_servlet_type);
-    	debug_information.println("scene_data_path_name:	",		scene_data_path_name);
-    	debug_information.println("scene_temparatory_path_name:	",	scene_temparatory_path_name);
-    	debug_information.println("scene_environment_path_name:	",	scene_environment_path_name);
-    	
+
     	scene=null;
     }
     public void destroy() 
@@ -59,28 +54,24 @@ public class scene_servlet extends HttpServlet
     {
     	String my_scene_data_path_name,my_scene_temparatory_path_name,my_scene_environment_path_name;
 		
+    	debug_information.println("scene_servlet_type:		",	scene_servlet_type);
+    	debug_information.println("scene_data_path_name:	",	scene_data_path_name);
+    	debug_information.println("temparatory_path_name:	",	scene_temparatory_path_name);
+    	debug_information.println("environment_path_name:	",	scene_environment_path_name);
+    	debug_information.println();
+    	
     	switch(scene_servlet_type) {
     	case "servlet_initialization_parameter":
     		my_scene_data_path_name			=config.getInitParameter(scene_data_path_name);
     		my_scene_temparatory_path_name	=config.getInitParameter(scene_temparatory_path_name);
     		my_scene_environment_path_name	=config.getInitParameter(scene_environment_path_name);
     		
-    		debug_information.println("servlet:scene_servlet_type:	",			scene_servlet_type);
-        	debug_information.println("servlet:scene_data_path_name:	",		my_scene_data_path_name);
-        	debug_information.println("servlet:scene_temparatory_path_name:	",	my_scene_temparatory_path_name);
-        	debug_information.println("servlet:scene_environment_path_name:	",	my_scene_environment_path_name);
-
     		break;
     	case "system_environment_variable":
     		my_scene_data_path_name			=System.getenv(scene_data_path_name);
     		my_scene_temparatory_path_name	=System.getenv(scene_temparatory_path_name);
     		my_scene_environment_path_name	=System.getenv(scene_environment_path_name);
  
-    		debug_information.println("environment:scene_servlet_type:	",			scene_servlet_type);
-        	debug_information.println("environment:scene_data_path_name:	",		my_scene_data_path_name);
-        	debug_information.println("environment:scene_temparatory_path_name:	",	my_scene_temparatory_path_name);
-        	debug_information.println("environment:scene_environment_path_name:	",	my_scene_environment_path_name);
-  
     		break;
     	case "webserver_configure_file":
 	    	{
@@ -97,8 +88,8 @@ public class scene_servlet extends HttpServlet
 	    			return;
 	    		}
 	    		file_reader fr=new file_reader(configure_file_name,
-	    				(scene_temparatory_path_name!=null)
-	    				?scene_temparatory_path_name:Charset.defaultCharset().name());
+	    			(scene_temparatory_path_name!=null)
+	    			?scene_temparatory_path_name:Charset.defaultCharset().name());
 	    		my_scene_data_path_name			=fr.get_string();
 	    		my_scene_temparatory_path_name	=fr.get_string();
 	    		my_scene_environment_path_name	=fr.get_string();
@@ -107,13 +98,33 @@ public class scene_servlet extends HttpServlet
 	    	break;
     	case "class_configure_file":
 	    	{
-	    		common_reader reader=class_file_reader.get_reader(scene_data_path_name,getClass(),
-	    			(scene_temparatory_path_name!=null)?scene_temparatory_path_name:Charset.defaultCharset().name(),
-	    			(scene_environment_path_name!=null)?scene_environment_path_name:Charset.defaultCharset().name());
+	    		common_reader reader=class_file_reader.get_reader(
+	    			scene_data_path_name,getClass(),
+	    			(scene_temparatory_path_name!=null)
+	    				?scene_temparatory_path_name:Charset.defaultCharset().name(),
+	    			(scene_environment_path_name!=null)
+	    				?scene_environment_path_name:Charset.defaultCharset().name());
 	    		my_scene_data_path_name			=reader.get_string();
 	    		my_scene_temparatory_path_name	=reader.get_string();
 	    		my_scene_environment_path_name	=reader.get_string();
 	    		reader.close();
+	    	}
+	    	break;
+    	case "jar_configure_file":
+	    	{
+	    		String path_name=class_file_reader.get_file_path(
+	    			scene_data_path_name,getClass(),
+	    			(scene_temparatory_path_name!=null)
+    					?scene_temparatory_path_name
+    					:Charset.defaultCharset().name());
+	    		file_reader fr=new file_reader(path_name,
+	    			(scene_environment_path_name!=null)
+	    				?scene_environment_path_name
+	    				:Charset.defaultCharset().name());
+	    		my_scene_data_path_name			=fr.get_string();
+	    		my_scene_temparatory_path_name	=fr.get_string();
+	    		my_scene_environment_path_name	=fr.get_string();
+	    		fr.close();
 	    	}
 	    	break;
     	default:
@@ -123,9 +134,18 @@ public class scene_servlet extends HttpServlet
     		break;
     	}
     	
-    	scene=new system_scene(	file_reader.separator(my_scene_data_path_name),
-    							file_reader.separator(my_scene_temparatory_path_name),
-    							file_reader.separator(my_scene_environment_path_name));
+    	my_scene_data_path_name			=file_reader.separator(my_scene_data_path_name);
+    	my_scene_temparatory_path_name	=file_reader.separator(my_scene_temparatory_path_name);
+    	my_scene_environment_path_name	=file_reader.separator(my_scene_environment_path_name);
+    	
+    	debug_information.println("scene_servlet_type:		",scene_servlet_type);
+    	debug_information.println("scene_data_path_name:	",my_scene_data_path_name);
+    	debug_information.println("temparatory_path_name:	",my_scene_temparatory_path_name);
+    	debug_information.println("environment_path_name:	",my_scene_environment_path_name);
+    	debug_information.println();
+    	
+    	scene=new system_scene(my_scene_data_path_name,
+    					my_scene_temparatory_path_name,my_scene_environment_path_name);
 	}
 	protected void doGet(HttpServletRequest request,HttpServletResponse response)
 		throws ServletException,IOException 

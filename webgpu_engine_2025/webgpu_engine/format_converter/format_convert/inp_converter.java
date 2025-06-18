@@ -51,26 +51,26 @@ public class inp_converter
 			String type_str;
 
 			switch(type_str=fr.get_string()){
-			case "hex":		//ÁùÃæÌå hexahedron
+			case "hex":		//å…­é¢ä½“ hexahedron
 				unit_type=0;unit_data[i]=new int[3+8];
 				break;
-			case "tri":		//Èı½ÇĞÎ
+			case "tri":		//ä¸‰è§’å½¢
 				unit_type=1;unit_data[i]=new int[3+3];
 				break;
-			case "prism":	//ÈıÀâÖù prism
+			case "prism":	//ä¸‰æ£±æŸ± prism
 				unit_type=2;unit_data[i]=new int[3+6];
 				break;
-			case "tet":		//ËÄÃæÌå tetrahedron
+			case "tet":		//å››é¢ä½“ tetrahedron
 				unit_type=3;unit_data[i]=new int[3+4];
 				break;
-			case "pyr":		//½ğ×ÖËş Pyramid
+			case "pyr":		//é‡‘å­—å¡” Pyramid
 				unit_type=4;unit_data[i]=new int[3+5];
 				break;
-			case "quad":	//ËÄ±ßĞÎ
+			case "quad":	//å››è¾¹å½¢
 				unit_type=5;unit_data[i]=new int[3+4];
 				break;
-			case "line":	//Ïß¶Î
-			case "pt":		//µã
+			case "line":	//çº¿æ®µ
+			case "pt":		//ç‚¹
 			default:
 				fr.get_line();
 				unit_type=-1;unit_data[i]=new int[3+0];
@@ -197,7 +197,7 @@ public class inp_converter
 			vertex_normal_data[i]=new double[]{0,0,0,1};		
 		for(int i=0,ni=unit_number;i<ni;i++){
 			switch(unit_data[i][1]){
-			case 0:		//ÁùÃæÌå hexahedron
+			case 0:		//å…­é¢ä½“ hexahedron
 				add_normal(i,0,3,1);
 				add_normal(i,0,1,4);
 				add_normal(i,0,4,3);
@@ -232,12 +232,12 @@ public class inp_converter
 				add_normal(i,7,3,4);
 				
 				break;
-			case 1:		//Èı½ÇĞÎ
+			case 1:		//ä¸‰è§’å½¢
 				add_normal(i,0,1,2);
 				add_normal(i,1,2,0);
 				add_normal(i,2,0,1);
 				break;
-			case 2:		//ÈıÀâÖù prism
+			case 2:		//ä¸‰æ£±æŸ± prism
 				add_normal(i,0,2,1);
 				add_normal(i,0,1,3);
 				add_normal(i,0,3,2);
@@ -262,7 +262,7 @@ public class inp_converter
 				add_normal(i,5,4,2);
 				add_normal(i,5,2,3);
 				break;
-			case 3:		//ËÄÃæÌå tetrahedron
+			case 3:		//å››é¢ä½“ tetrahedron
 				add_normal(i,0,1,3);
 				add_normal(i,0,3,2);
 				add_normal(i,0,2,1);
@@ -280,7 +280,7 @@ public class inp_converter
 				add_normal(i,3,2,0);
 				
 				break;
-			case 4:		//½ğ×ÖËş Pyramid
+			case 4:		//é‡‘å­—å¡” Pyramid
 				add_normal(i,0,1,4);
 				add_normal(i,0,4,3);
 				add_normal(i,0,3,1);
@@ -303,14 +303,14 @@ public class inp_converter
 				add_normal(i,4,3,0);
 				
 				break;
-			case 5:		//ËÄ±ßĞÎ
+			case 5:		//å››è¾¹å½¢
 				add_normal(i,0,1,3);
 				add_normal(i,1,2,0);
 				add_normal(i,2,3,1);
 				add_normal(i,3,0,2);
 				break;
-			case 6:		//Ïß¶Î
-			case 7:		//µã
+			case 6:		//çº¿æ®µ
+			case 7:		//ç‚¹
 			default:
 				break;
 			};

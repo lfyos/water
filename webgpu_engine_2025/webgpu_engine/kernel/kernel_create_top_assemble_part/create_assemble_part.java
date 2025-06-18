@@ -71,45 +71,48 @@ public class create_assemble_part
 				create_part_number+=my_create_part_number;
 				continue;
 			}
-			part_component_container.add(my_search_key,comp_p);
-			
-			var cpr=new create_part_rude(comp_p,scene_par.discard_top_part_component_precision2);
-			if((cpr.topbox_part_rude==null)||(cpr.max_part==null)){
-				part_number.give_up_number +=my_create_part_number;
-				part_number.all_part_number-=my_create_part_number;
-				continue;
-			}
-			part assemble_part=null;
+
+			part part_par_assemble_part=null;
 			ArrayList<part> assemble_part_array=pcps.search_part(
 				can_create_assemble_part_name[comp_p.component_id]);
 			if(assemble_part_array!=null)
 				for(int i=0,ni=assemble_part_array.size();i<ni;i++)
-					if((assemble_part=assemble_part_array.get(i))!=null){
-						if(assemble_part.driver!=null)
+					if((part_par_assemble_part=assemble_part_array.get(i))!=null){
+						if(part_par_assemble_part.driver!=null)
 							break;
-						assemble_part=null;
+						part_par_assemble_part=null;
 					}
-			if(assemble_part==null)
-				assemble_part=cpr.max_part;
+			var cpr=new create_part_rude(comp_p,
+					scene_par.discard_top_part_component_precision2,
+					part_par_assemble_part);
+			if((cpr.topbox_part_rude==null)||(cpr.select_ref_part==null)){
+				part_number.give_up_number +=my_create_part_number;
+				part_number.all_part_number-=my_create_part_number;
+				continue;
+			}
+			part_component_container.add(my_search_key,comp_p);
 
-			part_parameter part_par=create_part_parameter.create(
-				assemble_part,comp_p.uniparameter.file_last_modified_time,
+			part_parameter part_par=create_part_parameter.create(cpr.select_ref_part,
+				comp_p.uniparameter.file_last_modified_time,
 				scene_par.create_top_part_assembly_precision2,
 				scene_par.create_top_part_discard_precision2);
 			if(part_par.last_modified_time<last_modified_time)
 				part_par.last_modified_time=last_modified_time;
 			
-			part add_part=new part(1,true,part_par,assemble_part.directory_name,assemble_part.file_charset,
-					comp_p.part_name,comp_p.part_name,null,assemble_part.material_file_name,null,null);
+			part add_part=new part(1,true,part_par,
+					cpr.select_ref_part.directory_name,
+					cpr.select_ref_part.file_charset,
+					comp_p.part_name,comp_p.part_name,null,
+					cpr.select_ref_part.material_file_name,null,null);
 			add_part.part_mesh=cpr.topbox_part_rude;
 				
-			render_cont.renders.get(assemble_part.render_id).add_part(add_part,encoder);
-			add_part.part_from_id			=assemble_part.part_id;
-			add_part.permanent_part_from_id	=assemble_part.permanent_part_id;
+			render_cont.renders.get(cpr.select_ref_part.render_id).add_part(add_part,encoder);
+			add_part.part_from_id			=cpr.select_ref_part.part_id;
+			add_part.permanent_part_from_id	=cpr.select_ref_part.permanent_part_id;
 
 			try{
-				add_part.driver=assemble_part.driver.clone(
-						assemble_part,add_part,request_response,system_par,scene_par);
+				add_part.driver=cpr.select_ref_part.driver.clone(
+						cpr.select_ref_part,add_part,request_response,system_par,scene_par);
 			}catch(Exception e) {
 				e.printStackTrace();
 				
@@ -123,17 +126,16 @@ public class create_assemble_part
 				debug_information.println("Temp directory:",	
 						file_directory.part_file_directory(add_part,system_par,scene_par));
 				
-				render_cont.renders.get(assemble_part.render_id).delete_last_part();
+				render_cont.renders.get(cpr.select_ref_part.render_id).delete_last_part();
 				part_component_container.remove(my_search_key);
 				continue;
 			}
 			part_loader_cont.load(add_part,fast_load_type,system_par,scene_par,
 				string_locker_container,already_loaded_part,boftal_container);
 			top_box_part.add(add_part);
-			create_part_number+=my_create_part_number;
-			
 			pcps.append(add_part);
-			
+			create_part_number+=my_create_part_number;
+
 			debug_information.println();
 			debug_information.println(top_box_part.size()
 					+".add top part		name:"+add_part.system_name);

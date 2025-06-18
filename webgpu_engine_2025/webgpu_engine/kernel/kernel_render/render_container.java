@@ -207,7 +207,7 @@ public class render_container
 					insert_part.file_charset,insert_part.user_name,insert_part.system_name,null,
 					insert_part.material_file_name,insert_part.description_file_name,
 					insert_part.audio_file_name);
-			add_part.part_mesh=new part_rude(1,
+			add_part.part_mesh=new part_rude(insert_part.part_mesh,1,
 					new part[] {insert_part},new location[]{new location()},new box[] {part_box});
 
 			add_part.part_from_id			=insert_part.part_id;

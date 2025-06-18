@@ -13,10 +13,11 @@ public class graphics_buffer_object_for_point
 	private int body_id,face_id,loop_id,edge_id;
 	
 	private face_edge fe;
-	
+
 	private point line_create()
 	{
-		int material_id=caculate_material_id.caculate(gbo_part.driver,max_material_id,gbo_part,
+		int material_id=caculate_material_id.caculate(
+				gbo_part.driver,max_material_id,gbo_part,
 				"line",body_id,face_id,loop_id,edge_id,fe.parameter_material);
 		graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
 				file_name,file_charset,create_buffer_object_bitmap);
@@ -42,16 +43,19 @@ public class graphics_buffer_object_for_point
 	}
 	private point circle_create()
 	{
-		int material_id=caculate_material_id.caculate(gbo_part.driver,
-				max_material_id,gbo_part,"circle",body_id,face_id,loop_id,edge_id,fe.parameter_material);
+		int material_id=caculate_material_id.caculate(gbo_part.driver,max_material_id,
+				gbo_part,"circle",body_id,face_id,loop_id,edge_id,fe.parameter_material);
 		graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
 				file_name,file_charset,create_buffer_object_bitmap);
 		
 		gbo.vertex_begin(fe.curve_parameter[0],fe.curve_parameter[1],fe.curve_parameter[2]);
 			
-		gbo.register(fe.curve_parameter[0],fe.curve_parameter[1],fe.curve_parameter[2],fe.parameter_extra_data);
-		gbo.register(fe.curve_parameter[3],fe.curve_parameter[4],fe.curve_parameter[5],"1");
-		gbo.register(fe.parameter_material[0],fe.parameter_material[1],fe.parameter_material[2],fe.parameter_material[3]);
+		gbo.register(	fe.curve_parameter[0],fe.curve_parameter[1],
+						fe.curve_parameter[2],fe.parameter_extra_data);
+		gbo.register(	fe.curve_parameter[3],fe.curve_parameter[4],
+						fe.curve_parameter[5],"1");
+		gbo.register(	fe.parameter_material[0],fe.parameter_material[1],
+						fe.parameter_material[2],fe.parameter_material[3]);
 		
 		gbo.register(body_id,face_id,4,"0");
 		gbo.register(loop_id,edge_id,0,"0");
@@ -63,10 +67,12 @@ public class graphics_buffer_object_for_point
 	}
 	private point ellipse_hyperbola_parabola_create()
 	{
-		int material_id=caculate_material_id.caculate(gbo_part.driver,
-				max_material_id,gbo_part,fe.curve_type,body_id,face_id,loop_id,edge_id,fe.parameter_material);
-		point point_array[]=caculate_part_items.caculate_point_for_ellipse_hyperbola_parabola(fe.curve_parameter,fe.curve_type);
-		point normal=caculate_part_items.caculate_normal_for_ellipse_hyperbola_parabola(fe.curve_parameter);
+		int material_id=caculate_material_id.caculate(gbo_part.driver,max_material_id,
+				gbo_part,fe.curve_type,body_id,face_id,loop_id,edge_id,fe.parameter_material);
+		point point_array[]=caculate_part_items.
+				caculate_point_for_ellipse_hyperbola_parabola(fe.curve_parameter,fe.curve_type);
+		point normal=caculate_part_items.
+				caculate_normal_for_ellipse_hyperbola_parabola(fe.curve_parameter);
 
 		for(int point_i=0,point_n=point_array.length;point_i<point_n;point_i++){
 			graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
@@ -78,7 +84,8 @@ public class graphics_buffer_object_for_point
 
 			gbo.register(pp.x,		pp.y,		pp.z,		fe.parameter_extra_data);
 			gbo.register(normal.x,	normal.y,	normal.z,	"1");
-			gbo.register(fe.parameter_material[0],fe.parameter_material[1],fe.parameter_material[2],fe.parameter_material[3]);
+			gbo.register(	fe.parameter_material[0],fe.parameter_material[1],
+							fe.parameter_material[2],fe.parameter_material[3]);
 			
 			gbo.register(body_id,face_id,5,Integer.toString(point_i));
 			gbo.register(loop_id,edge_id,0,"0");
@@ -92,8 +99,8 @@ public class graphics_buffer_object_for_point
 	
 	private void pickup_point_set_create()
 	{
-		int material_id=caculate_material_id.caculate(gbo_part.driver,
-				max_material_id,gbo_part,"pickup_point_set",body_id,face_id,loop_id,edge_id,fe.parameter_material);
+		int material_id=caculate_material_id.caculate(gbo_part.driver,max_material_id,
+				gbo_part,"pickup_point_set",body_id,face_id,loop_id,edge_id,fe.parameter_material);
 		
 		int point_n=0;
 		if(fe.curve_parameter!=null)
@@ -111,7 +118,8 @@ public class graphics_buffer_object_for_point
 
 			gbo.register(x,y,z,fe.parameter_extra_data);
 			gbo.register(x,y,z,"1");
-			gbo.register(fe.parameter_material[0],fe.parameter_material[1],fe.parameter_material[2],fe.parameter_material[3]);
+			gbo.register(	fe.parameter_material[0],fe.parameter_material[1],
+							fe.parameter_material[2],fe.parameter_material[3]);
 			
 			gbo.register(body_id,face_id,6,Integer.toString(point_i));
 			gbo.register(loop_id,edge_id,0,"0");
@@ -220,6 +228,7 @@ public class graphics_buffer_object_for_point
 			int my_max_material_id,part my_part,String my_file_name,String my_file_charset,
 			long my_max_file_data_length,long my_create_buffer_object_bitmap)
 	{	
+		int body_number,face_number,loop_number,edge_number;
 		max_material_id		=my_max_material_id;
 		gbo_part			=my_part;
 		file_name			=my_file_name;
@@ -229,16 +238,18 @@ public class graphics_buffer_object_for_point
 		
 		gbocc=new graphics_buffer_object_creater_container();
 		origin_create();
-		int body_number=gbo_part.part_mesh.body_number();
-		for(body_id=0;body_id<body_number;body_id++) {
-			int face_number=gbo_part.part_mesh.body_array[body_id].face_number();
-			for(face_id=0;face_id<face_number;face_id++) {
-				int loop_number=gbo_part.part_mesh.body_array[body_id].face_array[face_id].fa_curve.face_loop_number();
-				for(loop_id=0;loop_id<loop_number;loop_id++) {
-					int edge_number=gbo_part.part_mesh.body_array[body_id].face_array[face_id].fa_curve.f_loop[loop_id].edge_number();
-					for(edge_id=0;edge_id<edge_number;edge_id++) {
-						fe=gbo_part.part_mesh.body_array[body_id].face_array[face_id].fa_curve.f_loop[loop_id].edge[edge_id];
+		for(body_id=0,body_number=gbo_part.part_mesh.body_number();body_id<body_number;body_id++) {
+			var my_body=gbo_part.part_mesh.body_array[body_id];
+			for(face_id=0,face_number=my_body.face_number();face_id<face_number;face_id++) {
+				var my_face=my_body.face_array[face_id];
+				for(loop_id=0,loop_number=my_face.fa_curve.face_loop_number();loop_id<loop_number;loop_id++) {
+					var my_loop=my_face.fa_curve.f_loop[loop_id];
+					for(edge_id=0,edge_number=my_loop.edge_number();edge_id<edge_number;edge_id++) {
+						fe=my_loop.edge[edge_id];
 						point start_end_normal=new point(0,0,1);
+						
+						//"line",	"circle",	"ellipse",	"hyperbola",	"parabola",
+						//"pickup_point_set",	"render_point_set",			"segment",		"unknown"
 						switch(fe.curve_type){
 						case "line":
 							start_end_normal=line_create();
@@ -258,7 +269,7 @@ public class graphics_buffer_object_for_point
 							render_point_set_create(p_i);
 							break;
 						case "segment":
-							break;
+						case "unknown":
 						default:
 							break;
 						}

@@ -10,8 +10,8 @@ import kernel_transformation.location;
 
 public class create_part_rude 
 {
+	public part select_ref_part;
 	public part_rude topbox_part_rude;
-	public part max_part;
 	
 	private ArrayList<part> reference_part;
 	private ArrayList<location> box_loca;
@@ -38,9 +38,9 @@ public class create_part_rude
 				continue;
 			if((my_distance2=my_box.distance2())<length2)
 				continue;
-			if((max_part==null)||(max_distance2<my_distance2)){
-				max_part=p;
+			if((select_ref_part==null)||(max_distance2<my_distance2)){
 				max_distance2=my_distance2;
+				select_ref_part=p;
 			}
 			reference_part.add(p);
 			box_array.add(my_box);
@@ -48,10 +48,10 @@ public class create_part_rude
 			return;
 		}
 	}
-	public create_part_rude(component comp,double discard_top_part_component_precision2)
+	public create_part_rude(component comp,double discard_top_part_component_precision2,part my_ref_part)
 	{
 		box my_box;
-		max_part		=null;
+		select_ref_part	=null;
 		topbox_part_rude=null;
 		if((my_box=comp.get_component_box(false))==null)
 			return;
@@ -63,11 +63,16 @@ public class create_part_rude
 			my_box.distance2()*discard_top_part_component_precision2);
 		
 		int box_number=box_array.size();
-		if((box_number>1)&&(max_part!=null))
-			topbox_part_rude=new part_rude(box_number,
+		if((box_number>1)&&(select_ref_part!=null)) {
+			select_ref_part=(my_ref_part==null)?select_ref_part:my_ref_part;
+			topbox_part_rude=new part_rude(
+				select_ref_part.part_mesh,box_number,
 				reference_part.toArray(new part[box_number]),
 				box_loca.toArray(new location[box_number]),
 				box_array.toArray(new box[box_number]));
-		return;
+		}else{
+			select_ref_part	=null;
+			topbox_part_rude=null;
+		}
 	}
 }

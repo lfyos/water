@@ -101,29 +101,31 @@ public class caculate_part_items
 			int body_id,int face_id,int primitive_id,int vertex_id,int loop_id,int edge_id)
 	{
 		my_box=null;
-		
+		if(primitive_id==0)
+			if(body_id<0)
+				if(face_id<0)
+					if(loop_id<0)
+						if(edge_id<0){//coordinate origin
+							my_box=new box(new point(0,0,0));
+							return;
+						}
 		if((my_part_rude=box_part_mesh)==null)
 			return;
-		if(vertex_id==0)
-			if((body_id<0)&&(face_id<0)&&(primitive_id<0)&&(loop_id<0)&&(edge_id<0)){
-				my_box=new box(new point(0,0,0));
-				return;
-			}
 		my_box=(my_part_rude.part_box!=null)?(my_part_rude.part_box):my_box;
+		
 		if((body_id<0)||(body_id>=(my_part_rude.body_number())))
 			return ;
 		if((my_body=my_part_rude.body_array[body_id])==null)
 			return ;
 		my_box=(my_body.body_box!=null)?my_body.body_box:my_box;
-
+		
 		if((face_id<0)||(face_id>=(my_body.face_number())))
 			return ;
 		if((my_face=my_body.face_array[face_id])==null)
-			return ;
+			return ;		
 		my_box=(my_face.face_box!=null)?(my_face.face_box):my_box;
 		
 		my_face_curve=my_face.fa_curve;
-		
 		if((loop_id<0)||(loop_id>=(my_face_curve.face_loop_number()))) {
 			my_box=(my_face.fa_face.face_face_box!=null)?(my_face.fa_face.face_face_box):my_box;
 			return ;
@@ -139,57 +141,51 @@ public class caculate_part_items
 		if((my_face_edge=my_face_loop.edge[edge_id])==null)
 			return ;
 		my_box=(my_face_edge.edge_box!=null)?(my_face_edge.edge_box):my_box;
-		if(primitive_id<0)
-			return;
-		if((vertex_id%2)==1) 
-			return;
-		
+
 		switch(primitive_id){
-		case 0:
+		case 0://original
 			my_box=new box(new point(0,0,0));
 			return;
-		case 1:
+		case 1://start point
 			if(my_face_edge.start_point!=null)
 				my_box=new box(my_face_edge.start_point);
 			return;
-		case 2:
+		case 2://end point
 			if(my_face_edge.end_point!=null)
 				my_box=new box(my_face_edge.end_point);
 			return;
-		};
-		
-		switch(my_face_edge.curve_type) {
-		case "line":
-			my_box=new box(my_face_edge.end_point.add(my_face_edge.start_point).scale(0.5));
+		case 3://line middle point
+			if((my_face_edge.start_point!=null)&&(my_face_edge.end_point!=null))
+				my_box=new box(my_face_edge.start_point.add(my_face_edge.end_point).scale(0.5));
 			return;
-		case "circle":
-			my_box=new box(new point(my_face_edge.curve_parameter[0],
-				my_face_edge.curve_parameter[1],my_face_edge.curve_parameter[2]));
+		case 4://circle center point
+			if(my_face_edge.curve_parameter!=null)
+				if(my_face_edge.curve_parameter.length>=3)
+					my_box=new box(new point(my_face_edge.curve_parameter[0],
+						my_face_edge.curve_parameter[1],my_face_edge.curve_parameter[2]));
 			return;
-		case "ellipse":
-		case "hyperbola":
-		case "parabola":
+		case 5://"ellipse",	"hyperbola",	"parabola",
 			point point_array[]=caculate_point_for_ellipse_hyperbola_parabola(
 					my_face_edge.curve_parameter,my_face_edge.curve_type);
-			if(primitive_id>=5)
-				if((primitive_id-5)<point_array.length)
-					my_box=new box(point_array[primitive_id-5]);
+			if(point_array!=null)
+				if((vertex_id>=0)&&(vertex_id<point_array.length))
+					my_box=new box(point_array[vertex_id]);
 			return;
-		case "pickup_point_set":
-			if(my_face_edge.curve_parameter!=null) {
-				primitive_id-=1000;
-				if(primitive_id>=0)
-					if(primitive_id<(my_face_edge.curve_parameter.length/3))
-						my_box=new box(new point(
-									my_face_edge.curve_parameter[3*primitive_id+0],
-									my_face_edge.curve_parameter[3*primitive_id+1],
-									my_face_edge.curve_parameter[3*primitive_id+2]));
-			}
+		case 6://"pickup_point_set"
+			if(my_face_edge.curve_parameter==null)
+				return;
+			if((vertex_id<0)||(vertex_id>=(my_face_edge.curve_parameter.length/3)))
+				return;
+			my_box=new box(new point(
+						my_face_edge.curve_parameter[3*vertex_id+0],
+						my_face_edge.curve_parameter[3*vertex_id+1],
+						my_face_edge.curve_parameter[3*vertex_id+2]));
 			return;
-		case "render_point_set":
+		case 7://"render_point_set"
+			return;
+		default://"segment","unknown"
 			return;
 		}
-		return;
 	}
 	private location loca,neg_loca;
 	private point local_p0,local_p1,local_normal;

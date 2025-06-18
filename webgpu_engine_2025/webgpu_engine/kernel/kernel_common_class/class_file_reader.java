@@ -85,4 +85,40 @@ public class class_file_reader
 		}
 		return 0;
 	}
+	public static String get_file_path(String file_name,Class<?>my_class,String jar_file_charset)
+	{
+		do{
+			URL url;
+			if((url=my_class.getResource(""))==null)
+				break;
+			URI uri;
+			try{
+				uri=url.toURI();
+			}catch(Exception e){
+				break;
+			}
+			String class_directory_name;
+			if((class_directory_name=uri.getPath())==null)
+				break;
+			String file_path_name=file_reader.separator(class_directory_name+file_name);
+			if(new File(file_path_name).exists())
+				return file_path_name;
+		}while(false);
+		
+		do{
+			String file_path_name=my_class.getProtectionDomain().getCodeSource().getLocation().getPath();
+			try{
+				file_path_name=file_reader.separator(java.net.URLDecoder.decode(file_path_name,jar_file_charset));
+			}catch(Exception e){
+				break;
+			}
+			file_path_name=file_path_name.substring(0,file_path_name.lastIndexOf(File.separatorChar)+1);
+			file_path_name+=file_reader.separator(file_name);
+			
+			if(new File(file_path_name).exists())
+				return file_path_name;
+		}while(false);
+		
+		return null;
+	}
 }

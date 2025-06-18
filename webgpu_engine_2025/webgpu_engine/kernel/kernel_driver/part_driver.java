@@ -49,12 +49,12 @@ public class part_driver
 		caculate_part_items cpi=new caculate_part_items(p,
 				body_id,face_id,primitive_id,vertex_id,loop_id,edge_id);
 		if((p0==null)||(p1==null))
-			return (cpi.my_box==null)?null:new box(cpi.my_box);
+			return cpi.my_box;
 		if(p1.sub(p0).distance2()<const_value.min_value2)
-			return (cpi.my_box==null)?null:new box(cpi.my_box);
+			return cpi.my_box;
 		
 		point my_point=cpi.caculate_focus_point(p0,p1);
-		return (my_point==null)?null:new box(my_point);
+		return (my_point==null)?cpi.my_box:new box(my_point);
 	}
 	public String []assemble_file_name_and_file_charset(file_reader fr,part p,
 			scene_kernel sk,client_request_response request_response)

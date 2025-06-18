@@ -17,21 +17,27 @@ public class graphics_buffer_object_for_face
 	private void create_primitive_vertex(graphics_buffer_object_creater gbo,String material_str[],
 			int body_id,int face_id,int primitive_id,int primitive_vertex_id,int attribute_number)
 	{
-		double my_data[]	=p_i.get_primitive_vertex_location_data(body_id,face_id,primitive_id,primitive_vertex_id);
-		String extra_data	=p_i.get_primitive_vertex_location_extra_data(body_id,face_id,primitive_id,primitive_vertex_id);
+		double my_data[]	=p_i.get_primitive_vertex_location_data(
+				body_id,face_id,primitive_id,primitive_vertex_id);
+		String extra_data	=p_i.get_primitive_vertex_location_extra_data(
+				body_id,face_id,primitive_id,primitive_vertex_id);
 		gbo.vertex_begin(my_data[0],my_data[1],my_data[2]);
 		gbo.register(my_data,extra_data);
 		
-		my_data		=p_i.get_primitive_vertex_normal_data(body_id,face_id,primitive_id,primitive_vertex_id);
-		extra_data	=p_i.get_primitive_vertex_normal_extra_data(body_id,face_id,primitive_id,primitive_vertex_id);
+		my_data		=p_i.get_primitive_vertex_normal_data(
+				body_id,face_id,primitive_id,primitive_vertex_id);
+		extra_data	=p_i.get_primitive_vertex_normal_extra_data(
+				body_id,face_id,primitive_id,primitive_vertex_id);
 		gbo.register(my_data,extra_data);
 		
 		gbo.register(material_str[0],material_str[1],material_str[2],material_str[3]);
 		gbo.register(body_id,face_id,primitive_id,Integer.toString(primitive_vertex_id));
 		
 		for(int attribute_id=0;attribute_id<attribute_number;attribute_id++){
-			my_data		=p_i.get_primitive_vertex_attribute_data(body_id,face_id,primitive_id,primitive_vertex_id,attribute_id);
-			extra_data	=p_i.get_primitive_vertex_attribute_extra_data(body_id,face_id,primitive_id,primitive_vertex_id,attribute_id);
+			my_data		=p_i.get_primitive_vertex_attribute_data(
+					body_id,face_id,primitive_id,primitive_vertex_id,attribute_id);
+			extra_data	=p_i.get_primitive_vertex_attribute_extra_data(
+					body_id,face_id,primitive_id,primitive_vertex_id,attribute_id);
 			gbo.register(my_data,extra_data);
 		}
 		for(int attribute_id=attribute_number;attribute_id<max_attribute_number;attribute_id++) {

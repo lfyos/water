@@ -1,8 +1,6 @@
 package kernel_part;
 
-import java.io.File;
 
-import kernel_common_class.compress_file_data;
 import kernel_file_manager.file_reader;
 
 public class primitive_from_file implements primitive_interface
@@ -10,7 +8,6 @@ public class primitive_from_file implements primitive_interface
 	private file_reader face_file,edge_file,point_file;
 	
 	private String face_file_name,edge_file_name,point_file_name;
-	private String gzip_face_file_name,gzip_edge_file_name,gzip_point_file_name;
 	private String file_charset;
 	
 	public String[]get_primitive_material(int body_id,int face_id,int primitive_id)
@@ -113,37 +110,11 @@ public class primitive_from_file implements primitive_interface
 	}
 	public primitive_from_file(String my_file_name,String my_file_charset,int my_response_block_size)
 	{
-		File f,gf;
-		
 		face_file_name		=my_file_name+".face";
 		edge_file_name		=my_file_name+".edge";
 		point_file_name		=my_file_name+".point";
-		gzip_face_file_name	=my_file_name+".face.gzip";
-		gzip_edge_file_name	=my_file_name+".edge.gzip";
-		gzip_point_file_name=my_file_name+".point.gzip";
 		file_charset		=my_file_charset;
 		
-		if(!((f=new File(face_file_name)).exists()))
-			if((gf=new File(gzip_face_file_name)).exists()){
-				long last_time=gf.lastModified();
-				compress_file_data.do_uncompress(f,gf,my_response_block_size, "gzip");
-				new File(face_file_name).setLastModified(last_time);
-				gf.delete();
-			}
-		if(!((f=new File(edge_file_name)).exists()))
-			if((gf=new File(gzip_edge_file_name)).exists()) {
-				long last_time=gf.lastModified();
-				compress_file_data.do_uncompress(f, gf, my_response_block_size, "gzip");
-				new File(edge_file_name).setLastModified(last_time);
-				gf.delete();
-			}
-		if(!((f=new File(point_file_name)).exists()))
-			if((gf=new File(gzip_point_file_name)).exists()) {
-				long last_time=gf.lastModified();
-				compress_file_data.do_uncompress(f, gf, my_response_block_size, "gzip");
-				new File(point_file_name).setLastModified(last_time);
-				gf.delete();
-			}
 		face_file	=new file_reader(face_file_name, file_charset);
 		edge_file	=new file_reader(edge_file_name, file_charset);
 		point_file	=new file_reader(point_file_name,file_charset);

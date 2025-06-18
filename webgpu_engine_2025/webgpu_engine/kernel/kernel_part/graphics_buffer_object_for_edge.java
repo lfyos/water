@@ -18,48 +18,49 @@ public class graphics_buffer_object_for_edge
 			int body_id,int face_id,int loop_id,int edge_id,int vertex_id)
 	{
 		if((step==2)||(vertex_id==0)) {
-			tessellation_location_0		=p_i.get_edge_location_data	(body_id,face_id,loop_id,edge_id,vertex_id+0);
-			tessellation_extra_data_0	=p_i.get_edge_extra_data	(body_id,face_id,loop_id,edge_id,vertex_id+0);
-			tessellation_material_0		=p_i.get_edge_material		(body_id,face_id,loop_id,edge_id,vertex_id+0);
+			tessellation_location_0		=p_i.get_edge_location_data	(
+					body_id,face_id,loop_id,edge_id,vertex_id+0);
+			tessellation_extra_data_0	=p_i.get_edge_extra_data	(
+					body_id,face_id,loop_id,edge_id,vertex_id+0);
+			tessellation_material_0		=p_i.get_edge_material		(
+					body_id,face_id,loop_id,edge_id,vertex_id+0);
 		}else{
 			tessellation_location_0		=tessellation_location_1;
 			tessellation_extra_data_0	=tessellation_extra_data_1;
 			tessellation_material_0		=tessellation_material_1;
 		}
-		tessellation_location_1			=p_i.get_edge_location_data	(body_id,face_id,loop_id,edge_id,vertex_id+1);
-		tessellation_extra_data_1		=p_i.get_edge_extra_data	(body_id,face_id,loop_id,edge_id,vertex_id+1);
-		tessellation_material_1			=p_i.get_edge_material		(body_id,face_id,loop_id,edge_id,vertex_id+1);
+		tessellation_location_1			=p_i.get_edge_location_data	(
+				body_id,face_id,loop_id,edge_id,vertex_id+1);
+		tessellation_extra_data_1		=p_i.get_edge_extra_data	(
+				body_id,face_id,loop_id,edge_id,vertex_id+1);
+		tessellation_material_1			=p_i.get_edge_material		(
+				body_id,face_id,loop_id,edge_id,vertex_id+1);
 		
-		int material_id=caculate_material_id.caculate(gbo_part.driver,
-				max_material_id,gbo_part,"edge",body_id,face_id,loop_id,edge_id,tessellation_material_0);
+		int material_id=caculate_material_id.caculate(gbo_part.driver,max_material_id,
+				gbo_part,"edge",body_id,face_id,loop_id,edge_id,tessellation_material_0);
 
 		graphics_buffer_object_creater gbo=gbocc.get_creater(material_id,
 				file_name,file_charset,create_buffer_object_bitmap);
 			
 		gbo.vertex_begin(tessellation_location_0[0],tessellation_location_0[1],tessellation_location_0[2]);
 		
-		gbo.register(tessellation_location_0[0],
-					 tessellation_location_0[1],
-					 tessellation_location_0[2],
-					 tessellation_extra_data_0);
+		gbo.register(tessellation_location_0[0], tessellation_location_0[1],
+					 tessellation_location_0[2], tessellation_extra_data_0);
 		gbo.register(tessellation_location_1[0]-tessellation_location_0[0],
 					 tessellation_location_1[1]-tessellation_location_0[1],
 					 tessellation_location_1[2]-tessellation_location_0[2],
 					 tessellation_extra_data_0);
-		gbo.register(tessellation_material_0[0],
-					 tessellation_material_0[1],
-					 tessellation_material_0[2],
-					 tessellation_material_0[3]);
+		gbo.register(tessellation_material_0[0], tessellation_material_0[1],
+					 tessellation_material_0[2], tessellation_material_0[3]);
 		
 		gbo.register(body_id,face_id,vertex_id,"0");
 		gbo.register(loop_id,edge_id,0,"0");
 
-		gbo.vertex_begin(tessellation_location_1[0],tessellation_location_1[1],tessellation_location_1[2]);
+		gbo.vertex_begin(tessellation_location_1[0],
+				tessellation_location_1[1],tessellation_location_1[2]);
 		
-		gbo.register(tessellation_location_1[0],
-					 tessellation_location_1[1],
-					 tessellation_location_1[2],
-					 tessellation_extra_data_1);
+		gbo.register(tessellation_location_1[0], tessellation_location_1[1],
+					 tessellation_location_1[2], tessellation_extra_data_1);
 		
 		gbo.register(
 					tessellation_location_1[0]-tessellation_location_0[0],
@@ -67,12 +68,10 @@ public class graphics_buffer_object_for_edge
 					tessellation_location_1[2]-tessellation_location_0[2],
 					tessellation_extra_data_1);
 		
-		gbo.register(tessellation_material_1[0],
-					 tessellation_material_1[1],
-					 tessellation_material_1[2],
-					 tessellation_material_1[3]);
+		gbo.register(tessellation_material_1[0], tessellation_material_1[1],
+					 tessellation_material_1[2], tessellation_material_1[3]);
 		
-		gbo.register(body_id,face_id,vertex_id,"1");
+		gbo.register(body_id,face_id,vertex_id+1,"1");
 		gbo.register(loop_id,edge_id,0,"0");
 		
 		if(gbo.test_end(max_file_data_length,false))
@@ -92,19 +91,17 @@ public class graphics_buffer_object_for_edge
 		create_buffer_object_bitmap	=my_create_buffer_object_bitmap;
 		gbocc=new graphics_buffer_object_creater_container();
 		
-		int body_number=gbo_part.part_mesh.body_number();
-		for(int body_id=0;body_id<body_number;body_id++){
+		for(int body_id=0,body_number=gbo_part.part_mesh.body_number();body_id<body_number;body_id++){
 			body b=gbo_part.part_mesh.body_array[body_id];
-			int face_number=b.face_number();
-			for(int face_id=0;face_id<face_number;face_id++){
+			for(int face_id=0,face_number=b.face_number();face_id<face_number;face_id++){
 				face fa=b.face_array[face_id];
-				int loop_number=fa.fa_curve.face_loop_number();
-				for(int loop_id=0;loop_id<loop_number;loop_id++){
+				for(int loop_id=0,loop_number=fa.fa_curve.face_loop_number();loop_id<loop_number;loop_id++){
 					face_loop fl=fa.fa_curve.f_loop[loop_id];
-					int edge_number=fl.edge_number();
-					for(int edge_id=0;edge_id<edge_number;edge_id++) {
-						int step;
+					for(int step,edge_id=0,edge_number=fl.edge_number();edge_id<edge_number;edge_id++) {
 						face_edge fe=fl.edge[edge_id];
+						
+						//"line",	"circle",	"ellipse",	"hyperbola",	"parabola",
+						//"pickup_point_set",	"render_point_set",			"segment",		"unknown"
 						switch(fe.curve_type) {
 						case "pickup_point_set":
 						case "render_point_set":
@@ -112,6 +109,12 @@ public class graphics_buffer_object_for_edge
 						case "segment":
 							step=2;
 							break;
+						case "line":
+						case "circle":
+						case "ellipse":
+						case "hyperbola":
+						case "parabola":
+						case "unknown":
 						default:
 							step=1;
 							break;
