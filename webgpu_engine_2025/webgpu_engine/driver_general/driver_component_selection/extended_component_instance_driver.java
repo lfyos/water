@@ -163,7 +163,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		case 0:
 		case 1:
 			if(acd!=null)
-				acd.set_audio(null);
+				acd.set_audio(null,false);
 			component_selection cs=new component_selection(sk);
 			
 			if(ci.parameter.comp==null)
@@ -180,13 +180,14 @@ public class extended_component_instance_driver extends component_instance_drive
 					true,true,true,null,null);
 			break;
 		}
+		
 		if(control_code==0)
 			return;
 		if(ci.parameter.comp.children.size()>0)
 			return;
 		if(ci.parameter.comp.driver_array.size()<=0)
 			return;
-
+		
 		component_array comp_array=new component_array();
 		component_collector collector=sk.collector_stack.get_top_collector();
 		
@@ -195,7 +196,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				comp_array.add_collector(collector);
 				if(comp_array.comp_list.get(0).component_id==ci.parameter.comp.component_id){
 					if(acd!=null)
-						acd.set_audio(collector.audio_file_name);
+						acd.set_audio(collector.audio_file_name,true);
 					return;
 				}
 			}
@@ -205,7 +206,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			sk.scene_par,comp_array,sk.component_cont,sk.render_cont.renders);
 		if((collector=sk.collector_stack.get_top_collector())!=null)							
 			if(acd!=null)
-				acd.set_audio(collector.audio_file_name);
+				acd.set_audio(collector.audio_file_name,true);
 		return;
 	}
 	private void view_scale(component comp,int control_code,scene_kernel sk,client_information ci)

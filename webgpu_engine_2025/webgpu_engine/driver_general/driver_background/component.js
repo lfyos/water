@@ -133,7 +133,6 @@ function create_texture_bind_group()
 				
 		if(scene.terminate_flag)
 			this.texture_bindgroup=null;
-
 		else{
 			var resource_entries=[
 				{	//left

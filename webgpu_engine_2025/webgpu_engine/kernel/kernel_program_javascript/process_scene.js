@@ -92,7 +92,7 @@ function construct_scene_interface(my_scene)
 				this.scene.system_buffer.set_target_buffer(render_data,this.scene);
 			}
 
-		return this.scene.parameter.engine_touch_time_length;
+		return this.scene.init_parameter.scene_touch_time_length;
 	}
 	
 	this.back_process_scene=function()

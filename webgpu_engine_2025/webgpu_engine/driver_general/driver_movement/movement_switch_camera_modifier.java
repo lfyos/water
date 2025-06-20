@@ -40,7 +40,7 @@ public class movement_switch_camera_modifier extends modifier_driver
 	private double scale_value;
 	private int audio_component_id,parameter_channel_id;
 	private int movement_modifier_container_id,camera_modifier_container_id;
-	public String title_string,information_string,sound_reference_file_name;
+	private String title_string,information_string,sound_reference_file_name;
 	
 	public void destroy()
 	{
@@ -151,22 +151,11 @@ public class movement_switch_camera_modifier extends modifier_driver
 	}
 	private boolean can_start_routine(long my_current_time,scene_kernel sk,client_information ci)
 	{
-		if((sound_reference_file_name==null)||(audio_component_id<0))
-			return true;
-		
 		driver_audio_player.extended_component_driver acd;
-		if((acd=get_acd(sk))==null)
-			return true;
-		if(!(acd.get_state()))
-			return true;
-		
-		String play_audio_file_name;
-		if((play_audio_file_name=acd.get_audio_file_name())==null)
-			return true;
-		
-		if(sound_reference_file_name.compareTo(play_audio_file_name)==0)
-			return true;
-		return acd.get_terminate_flag();
+		if(sound_reference_file_name!=null)
+			if((acd=get_acd(sk))!=null)
+				return acd.set_audio(sound_reference_file_name,false);
+		return true;
 	}
 	private void register_visible_component(component comp,component_array comp_array,int depth)
 	{
@@ -215,11 +204,9 @@ public class movement_switch_camera_modifier extends modifier_driver
 		cc.audio_file_name=sound_reference_file_name;
 		
 		driver_audio_player.extended_component_driver acd;
-		if((acd=get_acd(sk))==null)
-			return;
-		if(sound_reference_file_name==null)
-			return;
-		acd.set_audio(sound_reference_file_name);
+		if(sound_reference_file_name!=null)
+			if((acd=get_acd(sk))!=null)
+				acd.set_audio(sound_reference_file_name,false);
 	}
 	public void modify(long my_current_time,scene_kernel sk,client_information ci)
 	{

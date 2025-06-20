@@ -44,7 +44,6 @@ public class client_information
 	public client_request_response 				request_response;
 	public client_process_bar					process_bar;
 	
-	
 	public render_instance_driver_container		render_instance_driver_cont;
 	public part_instance_driver_container		part_instance_driver_cont;
 	public component_instance_driver_container	component_instance_driver_cont;

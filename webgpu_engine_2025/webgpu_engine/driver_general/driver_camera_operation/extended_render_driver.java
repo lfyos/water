@@ -21,9 +21,15 @@ public class extended_render_driver extends render_driver
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
 		super(shader_fr,ren,request_response,system_par,scene_par);
-		
-		depth_start	=0.0;
-		depth_end	=0.1;
+		depth_start	=shader_fr.get_double();
+		depth_end	=shader_fr.get_double();
+	}
+	private extended_render_driver(double my_depth_start,double my_depth_end,render ren,
+			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
+	{
+		super(null,ren,request_response,system_par,scene_par);
+		depth_start	=my_depth_start;
+		depth_end	=my_depth_end;	
 	}
 	public void destroy()
 	{
@@ -32,11 +38,7 @@ public class extended_render_driver extends render_driver
 	public render_driver clone(render ren,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		extended_render_driver ret_val=new extended_render_driver(
-				null,ren,request_response,system_par,scene_par);
-		ret_val.depth_start	=this.depth_start;
-		ret_val.depth_end	=this.depth_end;
-		return ret_val;
+		return new extended_render_driver(depth_start,depth_end,ren,request_response,system_par,scene_par);
 	}
 	public void initialize_render_driver(int render_id,scene_kernel sk,client_request_response request_response)
 	{
@@ -46,8 +48,6 @@ public class extended_render_driver extends render_driver
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
 		String render_list_file_name=file_reader.separator(shader_fr.get_string());
-		depth_start	=shader_fr.get_double();
-		depth_end	=shader_fr.get_double();
 		return new String[] {shader_fr.directory_name+render_list_file_name,shader_fr.get_charset()};
 	}
 	public String[] get_part_list(

@@ -1,11 +1,10 @@
 package driver_audio_player;
 
+import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_camera.camera_result;
-import kernel_common_class.debug_information;
 import kernel_file_manager.file_reader;
 import kernel_scene.client_information;
-import kernel_scene.scene_kernel;
 import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
@@ -44,9 +43,9 @@ public class extended_component_instance_driver extends component_instance_drive
 		
 		switch(str){
 		case "audio":
-			str=acd.get_audio_file_name();
-			str=(str==null)?null:file_reader.separator(str);
-			return new String[] {str,null};
+			if((str=acd.get_audio_file_name())!=null)
+				return new String[] {file_reader.separator(str),null};
+			break;
 		case "ended":
 			acd.mark_terminate_flag();
 			break;
@@ -57,25 +56,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			acd.turn_on_off(false);
 			break;
 		case "state":
-			ci.request_response.print(acd.get_state()?"true":"false");
-			break;
-		case "play":
-			if((str=ci.request_response.get_parameter("file"))!=null)
-				if((str=str.trim()).length()>0){
-					String request_charset=ci.request_response.implementor.get_request_charset();
-					try {
-						str=java.net.URLDecoder.decode(str,request_charset);
-						str=java.net.URLDecoder.decode(str,request_charset);
-					}catch(Exception e){
-						acd.set_audio(null);
-						debug_information.println("audio play operation fail:	",e.toString());
-						break;
-					}
-					acd.set_audio(comp.component_directory_name+str);
-					break;
-				}
-			acd.set_audio(null);
-			debug_information.println("audio play file name is empty");
+			ci.request_response.print(acd.get_on_off_flag()?"true":"false");
 			break;
 		default:
 			break;

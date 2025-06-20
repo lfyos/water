@@ -12,8 +12,8 @@
 /*	render_9	*/	distance_tag					driver_distance_tag.extended_render_driver				driver_general\distance_tag\render.list
 /*	render_10	*/	component_marker				driver_component_marker.extended_render_driver			driver_general\component_marker\render.list
 /*	render_11	*/	screen_rectangle				driver_screen_rectangle.extended_render_driver			driver_general\screen_rectangle\render.list
-/*	render_12	*/	camera_operation				driver_camera_operation.extended_render_driver			driver_general\camera_operation\render.list
-															/*		depth_start,depth_end		*/		0.0		0.1
+/*	render_12	*/	camera_operation				driver_camera_operation.extended_render_driver			
+													/*	depth_start,depth_end	*/		0.0		0.1			driver_general\camera_operation\render.list
 /*	render_13	*/	location_modifier				driver_location_modifier.extended_render_driver			driver_general\location_modifier\render.list	
 /*	render_14	*/	show_component_box				driver_show_component_box.extended_render_driver		driver_general\show_component_box\render.list
 /*	render_15	*/	component_selection				driver_component_selection.extended_render_driver		driver_general\component_selection\render.list

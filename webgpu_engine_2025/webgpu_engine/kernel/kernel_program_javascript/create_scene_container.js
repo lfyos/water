@@ -56,7 +56,7 @@ function create_scene_container_routine(my_webgpu)
 	this.draw_scene=async function()
 	{
 		while(!(this.terminate_flag)){
-			var engine_touch_time_length=Number.MAX_SAFE_INTEGER;
+			var scene_touch_time_length=Number.MAX_SAFE_INTEGER;
 			var draw_render_collector	=new Object();
 			var bundle_render_collector	=new Object();
 			var scene_interface_array	=new Array();
@@ -73,9 +73,9 @@ function create_scene_container_routine(my_webgpu)
 					continue;
 				this.scene_object[scene_name_array[i]]=my_scene;
 
-				var si=my_scene.scene_interface,scene_interface_flag=false,my_engine_touch_time_length;
-				if((my_engine_touch_time_length=si.front_process_scene(scene_id++))<engine_touch_time_length)
-					engine_touch_time_length=my_engine_touch_time_length;
+				var si=my_scene.scene_interface,scene_interface_flag=false,my_scene_touch_time_length;
+				if((my_scene_touch_time_length=si.front_process_scene(scene_id++))<scene_touch_time_length)
+					scene_touch_time_length=my_scene_touch_time_length;
 
 				for(var target_par,j=0,nj=si.get_render_buffer_number();j<nj;j++){
 					if((target_par=si.get_target_parameter(j)).do_render_flag){
@@ -153,8 +153,7 @@ function create_scene_container_routine(my_webgpu)
 			await new Promise((resolve)=>
 			{
 				window.requestAnimationFrame(resolve);
-				if(engine_touch_time_length>0)
-					setTimeout(resolve,engine_touch_time_length/1000000);
+				setTimeout(resolve,scene_touch_time_length/1000000);
 			});
 		}
 	}	

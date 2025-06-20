@@ -233,7 +233,7 @@ async function request_render_data(scene)
 		
 		var fetch_end_time=(new Date()).getTime();
 		
-		scene.collector_stack_version=response_data[0][0];
+		scene.collector_stack_version=response_data[0].shift();
 		scene.modifier_current_time=scene.modifier_time_parameter.modify_parameter(response_data[0]);
 		scene.browser_current_time=(fetch_start_time+fetch_end_time)/2.0;
 		
@@ -251,28 +251,15 @@ async function request_render_data(scene)
 		
 		return false;
 	};
-	
-	for(var start_time=0;;){
-		if(scene.terminate_flag)
-			break;
+
+	for(var start_time=0;!(scene.terminate_flag);){
 		var current_time=(new Date()).getTime();
 		var my_delay_time_length=scene.modifier_time_parameter.delay_time_length;
-		if((my_delay_time_length-=(current_time-start_time))>0){
-			await new Promise(resolve=>
-			{
-				setTimeout(resolve,my_delay_time_length);
-			});
-			continue;
-		}
-		start_time=current_time;
-		if(await fetch_web_server_response_data(create_request_url(scene),scene))
-			break;
-		if(scene.terminate_flag)
-			break;
-		await new Promise(resolve=>
-		{
-			window.requestAnimationFrame(resolve);
-			setTimeout(resolve,scene.parameter.engine_touch_time_length/1000000);
-		});
+		if((start_time+my_delay_time_length)>current_time)
+				await new Promise(resolve=>setTimeout(resolve,current_time-start_time-my_delay_time_length));
+		else if(await fetch_web_server_response_data(create_request_url(scene),scene))
+				break;
+		else
+				start_time=current_time;
 	}
 }

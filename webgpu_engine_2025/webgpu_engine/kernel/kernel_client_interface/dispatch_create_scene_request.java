@@ -4,6 +4,7 @@ import kernel_part.part;
 import kernel_component.component;
 import kernel_file_manager.file_directory;
 import kernel_common_class.debug_information;
+import kernel_common_class.jason_string;
 import kernel_driver.component_instance_driver;
 import kernel_driver.component_instance_driver_container;
 import kernel_driver.part_instance_driver;
@@ -176,13 +177,11 @@ public class dispatch_create_scene_request
 				print( "\"component_number\":",			component_number).
 				print(",\"camera_number\":",			camera_number).
 				print(",\"max_loading_number\":",		max_loading_number).
-				
 				print(",\"render_number\":",			sk.render_cont.renders.size()).
 				print(",\"modifier_container_number\":",sk.modifier_cont.length).
-				print(",\"link_name\":\"",				sk.link_name).print("\"").
+				print(",\"link_name\":",				jason_string.change_string(sk.link_name)).
 				print(",\"container_id\":",				ci.request_response.container_id).
 				print(",\"channel_id\":",				ci.channel_id).
-				print(",\"scene_touch_time_length\":",	sk.system_par.scene_touch_time_length).
 				print(",\"multisample\":",				sk.scene_par.multisample_number).
 			print("}");
 		

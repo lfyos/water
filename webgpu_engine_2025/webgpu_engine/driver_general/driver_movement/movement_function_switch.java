@@ -784,7 +784,7 @@ public class movement_function_switch
 		
 		driver_audio_player.extended_component_driver acd;
 		if((acd=manager.config_parameter.get_audio_component_driver(sk))!=null)
-			acd.set_audio(null);
+			acd.set_audio(null,false);
 		component_collector collector=sk.collector_stack.push_component_array(true,
 				sk.system_par,sk.scene_par,all_components,sk.component_cont,sk.render_cont.renders);
 		if(collector==null)
@@ -796,7 +796,7 @@ public class movement_function_switch
 		collector.audio_file_name=file_reader.separator(
 				manager.directory_name+searcher.search_link_list.tree_node.sound_file_name);
 		if(acd!=null)
-			acd.set_audio(collector.audio_file_name);
+			acd.set_audio(collector.audio_file_name,false);
 		return collector.list_id;
 	}
 	private void reset_movement_component(movement_tree t)
@@ -1349,7 +1349,7 @@ public class movement_function_switch
 		
 		driver_audio_player.extended_component_driver acd;
 		if((acd=manager.config_parameter.get_audio_component_driver(sk))!=null)
-			acd.set_audio(null);
+			acd.set_audio(null,false);
 		
 		manager.movement_start(modifier_cont,
 				manager.parameter.current_movement_id,

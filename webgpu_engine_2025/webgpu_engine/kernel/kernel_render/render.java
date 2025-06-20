@@ -76,8 +76,7 @@ public class render
 			var my_class=Class.forName(my_driver_name);
 			var my_constructor=my_class.getConstructor(file_reader.class,render.class,
 					client_request_response.class,system_parameter.class,scene_parameter.class);
-			my_render_driver=my_constructor.newInstance(
-					f_shader,this,request_response,system_par,scene_par);
+			my_render_driver=my_constructor.newInstance(f_shader,this,request_response,system_par,scene_par);
 		}catch(Exception e){
 			debug_information.println("Create render driver exception,class name:	",	my_driver_name);
 			debug_information.println("Create render driver exception,file_name:	",	my_file_name);

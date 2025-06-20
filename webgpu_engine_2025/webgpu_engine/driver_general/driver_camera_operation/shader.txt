@@ -1,5 +1,4 @@
 override primitive_type	: i32;
-
 override depth_start	: f32;
 override depth_end		: f32;
 

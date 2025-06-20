@@ -39,10 +39,10 @@ public class extended_part_driver extends part_driver
 	{
 		return 0;
 	}
-	public void create_part_material_in_head(file_writer fw,
+	public void create_part_material_in_head(file_writer part_head_fw,
 			part p,system_parameter system_par,scene_parameter scene_par)
 	{
-		file_reader.get_text(fw,p.directory_name+p.material_file_name,p.file_charset);
+		file_reader.get_text(part_head_fw,p.directory_name+p.material_file_name,p.file_charset);
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int primitive_id,int vertex_id,int loop_id,int edge_id,

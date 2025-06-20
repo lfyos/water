@@ -4,73 +4,42 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 		{	//left
 			binding		:	0,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
-			texture		:
-			{
-				sampleType		:	"float",
-    			viewDimension	:	"2d"
-			}
+			texture		:	{}
 		},
 		{	//right
 			binding		:	1,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
-			texture		:
-			{
-				sampleType		:	"float",
-    			viewDimension	:	"2d"
-			}
+			texture		:	{}
 		},
 		{	//top
 			binding		:	2,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
-			texture		:
-			{
-				sampleType		:	"float",
-    			viewDimension	:	"2d"
-			}
+			texture		:	{}
 		},
 		{	//down
 			binding		:	3,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
-			texture		:
-			{
-				sampleType		:	"float",
-    			viewDimension	:	"2d"
-			}
+			texture		:	{}
 		},
 		{	//front
 			binding		:	4,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
-			texture		:
-			{
-				sampleType		:	"float",
-    			viewDimension	:	"2d"
-			}
+			texture		:	{}
 		},
 		{	//back
 			binding		:	5,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
-			texture		:
-			{
-				sampleType		:	"float",
-    			viewDimension	:	"2d"
-			}
+			texture		:	{}
 		},
 		{	//no box
 			binding		:	6,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
-			texture		:
-			{
-				sampleType		:	"float",
-    			viewDimension	:	"2d"
-			}
+			texture		:	{}
 		},
 		{	//sampler
 			binding		:	7,
 			visibility	:	GPUShaderStage.VERTEX|GPUShaderStage.FRAGMENT,
-			sampler		:
-			{
-				type	:	"filtering"
-			}
+			sampler		:	{}
 		}
 	];
 	this.texture_bindgroup_layout=scene.webgpu.device.createBindGroupLayout(
@@ -128,6 +97,10 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 		{
 			topology	:	"triangle-list",
 		},
+		multisample		:
+		{
+			count		:	scene.parameter.multisample
+		},
 		depthStencil	:
 		{
 			format				:	"depth24plus-stencil8",
@@ -141,8 +114,6 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			stencilWriteMask	:	0xFFFFFFFF,
 		}
 	};
-	
-	pipeline_descr.multisample={count:scene.parameter.multisample};
 
 	pipeline_descr.fragment.constants={no_box_mode:true};
 	this.no_box_pipeline = scene.webgpu.device.createRenderPipeline(pipeline_descr);

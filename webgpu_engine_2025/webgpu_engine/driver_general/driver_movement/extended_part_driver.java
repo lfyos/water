@@ -42,7 +42,7 @@ public class extended_part_driver extends part_driver
 	{
 		return 0;
 	}
-	public void create_part_material_in_head(file_writer fw,
+	public void create_part_material_in_head(file_writer part_head_fw,
 			part p,system_parameter system_par,scene_parameter scene_par)
 	{
 	}

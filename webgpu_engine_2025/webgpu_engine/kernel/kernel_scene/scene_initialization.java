@@ -441,8 +441,9 @@ public class scene_initialization
 		
 		fw.println("{");
 		
-		fw.print  ("	max_target_number	:	",sk.scene_par.max_target_number).println(",");
-		fw.print  ("	max_method_number	:	",sk.system_par.max_method_number);
+		fw.print  ("	scene_touch_time_length	:	",sk.system_par.scene_touch_time_length).	println(",");
+		fw.print  ("	max_target_number		:	",sk.scene_par.max_target_number).			println(",");
+		fw.print  ("	max_method_number		:	",sk.system_par.max_method_number);
 		
 		fw.println("}");
 		
@@ -486,7 +487,7 @@ public class scene_initialization
 		debug_information.println();
 		debug_information.println("Begin create initialization file");
 
-		String destination_directory_name	=sk.scene_par.scene_temporary_directory_name;
+		String destination_directory_name=sk.scene_par.scene_temporary_directory_name;
 		String lock_key=destination_directory_name+"initialization.lock";
 		string_locker_container.write_lock(lock_key);
 		file_initialize(destination_directory_name+"initialization.gzip_js",

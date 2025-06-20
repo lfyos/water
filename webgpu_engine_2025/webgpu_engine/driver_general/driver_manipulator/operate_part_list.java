@@ -117,7 +117,7 @@ public class operate_part_list
 			}
 		}
 		
-		acd.set_audio(null);
+		acd.set_audio(null,true);
 		
 		if(ci.display_camera_result.cam.parameter.movement_flag)
 			if(comp_con.comp_list.size()>0)
@@ -171,7 +171,7 @@ public class operate_part_list
 		{
 			if((collector=get_collector(sk,ci))==null)
 				return;
-			acd.set_audio(null);
+			acd.set_audio(null,true);
 			int flag=0;
 			if((str=ci.request_response.get_parameter("title"))!=null)
 				try{
@@ -206,22 +206,22 @@ public class operate_part_list
 		case "delete":
 			if((collector=get_collector(sk,ci))==null)
 				return;
-			acd.set_audio(null);
+			acd.set_audio(null,true);
 			sk.collector_stack.delete_collector(collector.list_id,sk.component_cont);
 			if((collector=sk.collector_stack.get_top_collector())!=null)
-				acd.set_audio(collector.audio_file_name);
+				acd.set_audio(collector.audio_file_name,true);
 			return;
 		case "top":
 			if((collector=get_collector(sk,ci))==null)
 				return;
-			acd.set_audio(null);
+			acd.set_audio(null,true);
 			collector=sk.collector_stack.delete_collector(collector.list_id,sk.component_cont);
 			if(collector!=null){
 				long old_id=collector.list_id;
 				sk.collector_stack.push_collector(false,sk.system_par,sk.scene_par,
 							collector,sk.component_cont,sk.render_cont.renders);
 				collector.list_id=old_id;
-				acd.set_audio(collector.audio_file_name);
+				acd.set_audio(collector.audio_file_name,true);
 			}
 			return;
 		case "create":
@@ -271,9 +271,9 @@ public class operate_part_list
 			}
 			collector=sk.collector_stack.push_component_array(part_list_flag_effective_flag,
 					sk.system_par,sk.scene_par,comp_cont,sk.component_cont,sk.render_cont.renders);
-			acd.set_audio(null);
+			acd.set_audio(null,true);
 			if((collector=sk.collector_stack.get_top_collector())!=null)
-				acd.set_audio(collector.audio_file_name);
+				acd.set_audio(collector.audio_file_name,true);
 			return;
 		case "target":
 			if((str=ci.request_response.get_parameter("target"))==null)
@@ -294,12 +294,12 @@ public class operate_part_list
 					sk.collector_stack.push_collector(false,sk.system_par,
 						sk.scene_par,cc,sk.component_cont,sk.render_cont.renders);
 			}
-			acd.set_audio(null);
+			acd.set_audio(null,true);
 			if((collector=sk.collector_stack.get_top_collector())!=null)
-				acd.set_audio(collector.audio_file_name);
+				acd.set_audio(collector.audio_file_name,true);
 			return;
 		case "clear":
-			acd.set_audio(null);
+			acd.set_audio(null,true);
 			sk.collector_stack.pop(sk.component_cont,true);
 			return;
 		case "save":
@@ -317,9 +317,9 @@ public class operate_part_list
 					sk.collector_stack.component_collector_stack_file_charset);
 			sk.collector_stack.load(cr,sk.component_cont,sk.system_par,sk.scene_par,sk.render_cont.renders);
 			cr.close();
-			acd.set_audio(null);
+			acd.set_audio(null,true);
 			if((collector=sk.collector_stack.get_top_collector())!=null)
-				acd.set_audio(collector.audio_file_name);
+				acd.set_audio(collector.audio_file_name,true);
 			return;
 		}
 		case "download":
@@ -333,9 +333,9 @@ public class operate_part_list
 					ci.request_response.get_charset_name());
 			sk.collector_stack.load(cr,sk.component_cont,sk.system_par,sk.scene_par,sk.render_cont.renders);
 			cr.close();			
-			acd.set_audio(null);
+			acd.set_audio(null,true);
 			if((collector=sk.collector_stack.get_top_collector())!=null)
-				acd.set_audio(collector.audio_file_name);
+				acd.set_audio(collector.audio_file_name,true);
 			return;
 		}
 		case "upload_webpage":

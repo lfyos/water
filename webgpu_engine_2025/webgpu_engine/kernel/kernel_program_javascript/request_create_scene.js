@@ -82,13 +82,15 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 	var common_shader_data_structure		=init_data[4][0];
 	var common_shader_variable_declaration	=init_data[4][1];
 	var location_shader_program				=init_data[4][2];
-	var init_parameter						=init_data[5]
+	scene.init_parameter					=init_data[5];
 			
 	init_ids_of_part_and_component(scene,
 		sorted_component_name_id,part_component_id_and_driver_id);
 	
 	scene.system_buffer=new construct_system_buffer(
-		init_parameter.max_target_number,init_parameter.max_method_number,scene);
+		scene.init_parameter.max_target_number,
+		scene.init_parameter.max_method_number,
+		scene);
 	
 	scene.component_location_data.do_component_location_initialization(
 			scene.component_array_sorted_by_id,

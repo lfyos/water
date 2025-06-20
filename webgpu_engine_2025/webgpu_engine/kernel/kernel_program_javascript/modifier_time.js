@@ -14,12 +14,12 @@ function construct_modifier_time_parameter(modifier_container_number)
 	};
 	this.modify_parameter=function(response_data)
 	{
-		this.delay_time_length		 =response_data[1];
-		this.webserver_current_time	+=response_data[2];
+		this.delay_time_length		 =response_data.shift();
+		this.webserver_current_time	+=response_data.shift();
 
-		for(var i=3,ni=response_data.length;i<ni;){
-			var index_id					  =response_data[i++];
-			this.timer_adjust_value[index_id]+=response_data[i++];
+		while(response_data.length>0){
+			var index_id					  =response_data.shift();
+			this.timer_adjust_value[index_id]+=response_data.shift();
 		}
 		var ret_val=new Array(this.timer_adjust_value.length);
 		for(var i=0,ni=ret_val.length;i<ni;i++)
