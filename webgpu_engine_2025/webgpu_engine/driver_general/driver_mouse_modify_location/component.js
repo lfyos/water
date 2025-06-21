@@ -38,7 +38,7 @@ function send_location_to_webserver(command_str,component_id,scene,do_delay_flag
 				?(ep.selected_component_id):(camera_component_id);
 	var current_time=(new Date()).getTime();
 	if(do_delay_flag)
-		if((current_time-ep.send_mousemove_time)<scene.modifier_time_parameter.delay_time_length)
+		if((current_time-ep.send_mousemove_time)<scene.parameter.delay_time_length)
 			return;
 	ep.send_mousemove_time=current_time;
 

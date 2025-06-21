@@ -1,6 +1,5 @@
 function construct_modifier_time_parameter(modifier_container_number)
 {
-	this.delay_time_length		=0;
 	this.webserver_current_time	=0;
 	
 	this.timer_adjust_value		=new Array(modifier_container_number);
@@ -14,9 +13,7 @@ function construct_modifier_time_parameter(modifier_container_number)
 	};
 	this.modify_parameter=function(response_data)
 	{
-		this.delay_time_length		 =response_data.shift();
 		this.webserver_current_time	+=response_data.shift();
-
 		while(response_data.length>0){
 			var index_id					  =response_data.shift();
 			this.timer_adjust_value[index_id]+=response_data.shift();

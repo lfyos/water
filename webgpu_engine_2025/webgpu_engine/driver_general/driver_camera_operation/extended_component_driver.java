@@ -19,28 +19,15 @@ import kernel_driver.component_instance_driver;
 public class extended_component_driver  extends component_driver
 {
 	private int modifier_container_id;
-	private change_name title_change_name;
+	
 	public void destroy()
 	{
 		super.destroy();
-		title_change_name=null;
 	}
 	public extended_component_driver(part my_component_part,int my_modifier_container_id)
 	{
 		super(my_component_part);
 		modifier_container_id=my_modifier_container_id;
-		
-		String file_name=component_part.directory_name+component_part.material_file_name;
-		file_reader fr=new file_reader(file_name,component_part.file_charset);
-		if(fr.error_flag()){
-			fr.close();
-			title_change_name=new change_name();
-			debug_information.println("camera material file error:	",file_name);
-		}else {
-			file_name=fr.directory_name+fr.get_string();
-			fr.close();
-			title_change_name=new change_name(new String[] {file_name},null,fr.get_charset());
-		}
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
@@ -126,10 +113,27 @@ public class extended_component_driver  extends component_driver
 
 		return;
 	}
+	
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
-		return new extended_component_instance_driver(comp,driver_id,
-				modifier_container_id,title_change_name,request_response.language_str);
+		change_name title_change_name;
+		String file_name=component_part.directory_name+component_part.material_file_name;
+		file_reader fr=new file_reader(file_name,component_part.file_charset);
+		if(fr.error_flag()){
+			fr.close();
+			title_change_name=new change_name();
+			debug_information.println("camera material file error:	",file_name);
+		}else {
+			file_name=fr.directory_name+fr.get_string();
+			fr.close();
+			title_change_name=new change_name(new String[] {file_name},null,fr.get_charset());
+		}
+		
+		return new extended_component_instance_driver(comp,driver_id,modifier_container_id,
+				" "+title_change_name.search_change_name(
+						"camera_body_title+"+request_response.language_str,"body"),
+				" "+title_change_name.search_change_name(
+						"camera_face_title+"+request_response.language_str,"face"));
 	}
 }

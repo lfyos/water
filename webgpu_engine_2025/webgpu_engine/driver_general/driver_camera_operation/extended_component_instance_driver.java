@@ -4,13 +4,12 @@ import kernel_part.face;
 import kernel_part.part_rude;
 import kernel_scene.scene_kernel;
 import kernel_transformation.box;
-import kernel_transformation.point;
 import kernel_component.component;
 import kernel_camera.camera_result;
 import kernel_camera.locate_camera;
+import kernel_transformation.point;
 import kernel_driver.component_driver;
 import kernel_transformation.location;
-import kernel_common_class.change_name;
 import kernel_scene.client_information;
 import kernel_common_class.const_value;
 import kernel_component.component_array;
@@ -26,14 +25,13 @@ public class extended_component_instance_driver extends component_instance_drive
 		super.destroy();
 	}
 	public extended_component_instance_driver(component my_comp,int my_driver_id,
-			int my_modifier_container_id,change_name title_change_name,String language_str)
+			int my_modifier_container_id,String my_body_title,String my_face_title)
 	{
 		super(my_comp,my_driver_id);
 		modifier_container_id=my_modifier_container_id;
+		display_parameter.body_title=my_body_title;
+		display_parameter.face_title=my_face_title;
 		show_flag=true;
-		
-		display_parameter.body_title=" "+title_change_name.search_change_name("camera_body_title+"+language_str,"body");
-		display_parameter.face_title=" "+title_change_name.search_change_name("camera_face_title+"+language_str,"face");
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
@@ -49,22 +47,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print(0);
-	}
-	private boolean get_client_type_flag(client_information ci)
-	{
-		String str=ci.request_response.get_parameter("type");
-		if(str==null)
-			str="false";
-		switch(str.toLowerCase()){
-		case "yes":
-		case "true":
-			return true;
-		case "no":
-		case "false":
-			return false;
-		default:
-			return false;
-		}
 	}
 	private location get_component_location(scene_kernel sk,client_information ci)
 	{
@@ -122,13 +104,15 @@ public class extended_component_instance_driver extends component_instance_drive
 		location loca=get_component_location(sk,ci);
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
 		if(direct_rotate_flag)
-			loca=lc.direction_locate(p,loca,get_client_type_flag(ci));
+			loca=lc.direction_locate(p,loca,
+					ci.request_response.get_boolean("type", false));
 		else{
 			String str;
 			if((str=ci.request_response.get_parameter("alf"))==null)
 				return;
 			double alf=Double.parseDouble(str);
-			loca=lc.rotation_locate(p,(get_client_type_flag(ci)?(-1.0):1.0)*alf,loca);
+			loca=lc.rotation_locate(p,
+				(ci.request_response.get_boolean("type", false)?(-1.0):1.0)*alf,loca);
 		}
 		ci.display_camera_result.cam.mark_restore_stack();
 		ci.display_camera_result.cam.push_restore_stack(
@@ -152,7 +136,8 @@ public class extended_component_instance_driver extends component_instance_drive
 		
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
 		location loca=get_component_location(sk,ci);
-		loca=lc.direction_locate(new point(x,y,z),loca,get_client_type_flag(ci));
+		loca=lc.direction_locate(new point(x,y,z),loca,
+				ci.request_response.get_boolean("type", false));
 		ci.display_camera_result.cam.mark_restore_stack();
 		ci.display_camera_result.cam.push_restore_stack(
 			sk.modifier_cont[modifier_container_id],true,

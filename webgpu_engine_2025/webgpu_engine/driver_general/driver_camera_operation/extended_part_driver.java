@@ -18,18 +18,22 @@ import kernel_component.component_load_source_container;
 
 public class extended_part_driver extends part_driver
 {
-	private double x0,y0,scale;
+	private double x0,y0,size,depth_start,depth_end;
 	private int modifier_container_id;
 	
-	public extended_part_driver(double my_x0,double my_y0,
-			double my_scale,int my_modifier_container_id)
+	public extended_part_driver(
+			double my_x0,double my_y0,double my_size,
+			double my_depth_start,double my_depth_end,
+			int my_modifier_container_id)
 	{
 		super();
 		
-		x0=my_x0;
-		y0=my_y0;
-		scale=my_scale;
-		modifier_container_id=my_modifier_container_id;
+		x0						=my_x0;
+		y0						=my_y0;
+		size					=my_size;
+		depth_start				=my_depth_start;
+		depth_end				=my_depth_end;
+		modifier_container_id	=my_modifier_container_id;
 	}
 	public void destroy()
 	{	
@@ -42,7 +46,7 @@ public class extended_part_driver extends part_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(x0,y0,scale,modifier_container_id);
+		return new extended_part_driver(x0,y0,size,depth_start,depth_end,modifier_container_id);
 	}
 	public int caculate_material_id(part p,String type_str,
 			int body_id,int face_id,int loop_id,int edge_id,String material[])
@@ -58,7 +62,9 @@ public class extended_part_driver extends part_driver
 				box_distance=my_box_distance;
 		part_head_fw.print  ("		",	x0);
 		part_head_fw.print  (",",		y0);
-		part_head_fw.print  (",",		scale);
+		part_head_fw.print  (",",		size);
+		part_head_fw.print  (",",		depth_start);
+		part_head_fw.print  (",",		depth_end);
 		part_head_fw.println(",",		box_distance);
 		part_head_fw.print  (",1");
 	}

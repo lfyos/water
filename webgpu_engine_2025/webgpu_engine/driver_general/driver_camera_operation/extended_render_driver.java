@@ -15,21 +15,10 @@ import kernel_component.component_load_source_container;
 
 public class extended_render_driver extends render_driver
 {
-	private double depth_start,depth_end;
-	
 	public extended_render_driver(file_reader shader_fr,render ren,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
 		super(shader_fr,ren,request_response,system_par,scene_par);
-		depth_start	=shader_fr.get_double();
-		depth_end	=shader_fr.get_double();
-	}
-	private extended_render_driver(double my_depth_start,double my_depth_end,render ren,
-			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
-	{
-		super(null,ren,request_response,system_par,scene_par);
-		depth_start	=my_depth_start;
-		depth_end	=my_depth_end;	
 	}
 	public void destroy()
 	{
@@ -38,7 +27,7 @@ public class extended_render_driver extends render_driver
 	public render_driver clone(render ren,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_render_driver(depth_start,depth_end,ren,request_response,system_par,scene_par);
+		return new extended_render_driver(null,ren,request_response,system_par,scene_par);
 	}
 	public void initialize_render_driver(int render_id,scene_kernel sk,client_request_response request_response)
 	{
@@ -66,12 +55,15 @@ public class extended_render_driver extends render_driver
 			component_load_source_container component_load_source_cont,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(part_fr.get_double(),
-				part_fr.get_double(),part_fr.get_double(),part_fr.get_int());
+		return new extended_part_driver(
+				part_fr.get_double(),part_fr.get_double(),		//x0,y0
+				part_fr.get_double(),							//size
+				part_fr.get_double(),part_fr.get_double(),		//depth_start,depth_end
+				part_fr.get_int());
 	}
 	public render_instance_driver create_render_instance_driver(render ren,
 			scene_kernel sk,client_request_response request_response)
 	{
-		return new extended_render_instance_driver(depth_start,depth_end);
+		return new extended_render_instance_driver();
 	}
 }

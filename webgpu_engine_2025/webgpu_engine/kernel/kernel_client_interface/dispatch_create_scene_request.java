@@ -183,6 +183,7 @@ public class dispatch_create_scene_request
 				print(",\"container_id\":",				ci.request_response.container_id).
 				print(",\"channel_id\":",				ci.channel_id).
 				print(",\"multisample\":",				sk.scene_par.multisample_number).
+				print(",\"delay_time_length\":",		1).
 			print("}");
 		
 		ci.request_response.print("]");

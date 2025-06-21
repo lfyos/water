@@ -20,9 +20,7 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 			entryPoint	:	"vertex_main",
 			constants	:
 			{
-				primitive_type	:	0,
-				depth_start		:	init_data[0],
-				depth_end		:	init_data[1]
+				primitive_type	:	0
 			},
 			buffers		:
 			[
@@ -44,14 +42,19 @@ function new_render_driver(	render_id,render_name,init_data,shader_code,text_arr
 					]
 				},
 				{
-					arrayStride	:	16,
+					arrayStride	:	32,
 					stepMode	:	"instance",
 					attributes	:
 					[
-						{	//scale
+						{
 							format			:	"float32x4",
 							offset			:	0,
 							shaderLocation	:	2
+						},
+						{
+							format			:	"float32x4",
+							offset			:	16,
+							shaderLocation	:	3
 						}
 					]
 				}

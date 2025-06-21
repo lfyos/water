@@ -10,6 +10,7 @@ import kernel_scene.scene_kernel;
 public class extended_component_driver  extends component_driver
 {
 	private long max_time_length;
+	
 	public void destroy()
 	{
 		super.destroy();

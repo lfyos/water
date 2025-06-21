@@ -233,7 +233,9 @@ async function request_render_data(scene)
 		
 		var fetch_end_time=(new Date()).getTime();
 		
-		scene.collector_stack_version=response_data[0].shift();
+		scene.collector_stack_version		=response_data[0].shift();
+		scene.parameter.delay_time_length	=response_data[0].shift();
+		
 		scene.modifier_current_time=scene.modifier_time_parameter.modify_parameter(response_data[0]);
 		scene.browser_current_time=(fetch_start_time+fetch_end_time)/2.0;
 		
@@ -254,9 +256,9 @@ async function request_render_data(scene)
 
 	for(var start_time=0;!(scene.terminate_flag);){
 		var current_time=(new Date()).getTime();
-		var my_delay_time_length=scene.modifier_time_parameter.delay_time_length;
-		if((start_time+my_delay_time_length)>current_time)
-				await new Promise(resolve=>setTimeout(resolve,current_time-start_time-my_delay_time_length));
+		if((start_time+scene.parameter.delay_time_length)>current_time)
+				await new Promise(resolve=>setTimeout(resolve,
+							current_time-start_time-scene.parameter.delay_time_length));
 		else if(await fetch_web_server_response_data(create_request_url(scene),scene))
 				break;
 		else
