@@ -8,6 +8,10 @@ function construct_event_listener(my_canvas_id,my_scene)
 	this.mouse_down_flag			=false;
 	this.mouse_down_flag_array		=[false,false,false,false,false];
 
+	this.render_resolve_function=function()
+	{
+		
+	};
 	this.set_view=function(event)
 	{
 		var rect=this.canvas.getBoundingClientRect();
@@ -517,59 +521,69 @@ function construct_event_listener(my_canvas_id,my_scene)
 				return;
 	};
 
+	this.is_waiting_touchstart_flag=false;
 	this.scene.system_event_processor.systemtouchstart	=function(event,scene)						{return false;};
 	this.scene.system_event_processor.pickuptouchstart	=function(event,pickup_component_id,scene)	{return false;};
 	this.scene.system_event_processor.touchstart		=function(event,scene)						{return false;};
 	this.touchstart_event_listener=function (event)
 	{
-		var my_scene;
-		if((my_scene=this.scene).terminate_flag)
+		var my_scene,my_this_object=this;
+		if((my_scene=my_this_object.scene).terminate_flag)
 			return;
-		my_scene.webgpu.current_canvas_id=this.canvas_id;
+		my_scene.webgpu.current_canvas_id=my_this_object.canvas_id;
 
-		var ep,component_id;
 		event.preventDefault();
-		this.set_mobile_view(event);
-		
-		var touchstart_fun=function()
+		my_this_object.set_mobile_view(event);
+
+		var process_touchstart_function=function()
 		{
-			if(my_scene.system_event_processor.systemtouchstart(event,my_scene))
-				return false;
-			if(my_scene.terminate_flag)
-				return false;
-			if(my_scene.pickup.component_id>=0)
-				if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
-					if(my_scene.system_event_processor.pickuptouchstart(event,my_scene.pickup.component_id,my_scene))
-						return false;
-					if(my_scene.terminate_flag)
-						return false;
-					if(typeof(ep=my_scene.component_event_processor[my_scene.pickup.component_id])=="object")
-						if(typeof(ep.pickuptouchstart)=="function"){
-							if(ep.pickuptouchstart(event,my_scene.pickup.component_id,my_scene))
-								return false;
-							if(my_scene.terminate_flag)
-								return false;
-						}
-				}
-			if(my_scene.system_event_processor.touchstart(event,my_scene))
-				return false;
-			if(my_scene.terminate_flag)
-				return false;
-			if((ep=my_scene.operate_component.get_component_event_processor(
-				my_scene.event_component.touch.component_name))==null)
-					return false;
-			component_id=my_scene.operate_component.last_operate_component_id;
-			my_scene.event_component.touch.component_name=component_id;
-			if(typeof(ep.touchstart)=="function")
-				if(ep.touchstart(event,component_id,my_scene))
-					return false;
+			do{
+				if(my_scene.system_event_processor.systemtouchstart(event,my_scene))
+					break;
+				if(my_scene.terminate_flag)
+					break;
+				if(my_scene.pickup.component_id>=0)
+					if(my_scene.pickup.component_id<(my_scene.component_event_processor.length)){
+						if(my_scene.system_event_processor.pickuptouchstart(event,my_scene.pickup.component_id,my_scene))
+							break;
+						if(my_scene.terminate_flag)
+							break;
+						var ep=my_scene.component_event_processor[my_scene.pickup.component_id]
+						if(typeof(ep)=="object")
+							if(typeof(ep.pickuptouchstart)=="function"){
+								if(ep.pickuptouchstart(event,my_scene.pickup.component_id,my_scene))
+									break;
+								if(my_scene.terminate_flag)
+									break;
+							}
+					}
+				if(my_scene.system_event_processor.touchstart(event,my_scene))
+					break;
+				if(my_scene.terminate_flag)
+					break;
+				var ep=my_scene.operate_component.get_component_event_processor(
+						my_scene.event_component.touch.component_name);
+				if(ep==null)
+					break;
+				var component_id=my_scene.operate_component.last_operate_component_id;
+				my_scene.event_component.touch.component_name=component_id;
+				if(typeof(ep.touchstart)=="function")
+					if(ep.touchstart(event,component_id,my_scene))
+						break;
+			}while(false);
+			
+			my_this_object.is_waiting_touchstart_flag=false;
+			
 			return false;
 		};
 		
 		if(event.touches.length>1)
-			touchstart_fun();
-		else
-			my_scene.append_routine_function(touchstart_fun);
+			process_touchstart_function();
+		else{
+			this.is_waiting_touchstart_flag=true;
+			my_scene.append_routine_function(process_touchstart_function);
+			this.render_resolve_function();
+		}
 	};
 	this.scene.system_event_processor.systemtouchend	=function(event,scene)						{return false;};
 	this.scene.system_event_processor.pickuptouchend	=function(event,pickup_component_id,scene)	{return false;};
@@ -584,7 +598,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 		var ep,component_id;
 		event.preventDefault();
 		this.set_mobile_view(event);
-		
+
 		if(my_scene.system_event_processor.systemtouchend(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)
@@ -618,7 +632,7 @@ function construct_event_listener(my_canvas_id,my_scene)
 	};
 	this.scene.system_event_processor.systemtouchmove	=function(event,scene){return false;};
 	this.scene.system_event_processor.pickuptouchmove	=function(event,scene,pickup_component_id){return false;};
-	this.scene.system_event_processor.touchmove		=function(event,scene){return false;};
+	this.scene.system_event_processor.touchmove			=function(event,scene){return false;};
 	this.touchmove_event_listener=function (event)
 	{
 		var my_scene;
@@ -630,6 +644,8 @@ function construct_event_listener(my_canvas_id,my_scene)
 		event.preventDefault();
 		this.set_mobile_view(event);
 		
+		if(this.is_waiting_touchstart_flag)
+			return;
 		if(my_scene.system_event_processor.systemtouchmove(event,my_scene))
 			return;
 		if(my_scene.terminate_flag)

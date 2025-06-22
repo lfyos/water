@@ -16,13 +16,22 @@ function create_scene_container_routine(my_webgpu)
 		var target_name_array=Object.keys(my_collector).sort();
 		for(var i=0,ni=target_name_array.length;i<ni;i++){
 			var scene_pass_array=new Array();
+			var render_component_target_id=new Array();
 			var p=my_collector[target_name_array[i]];
-
-			for(var j=0,nj=p.length;j<nj;j++)
-				p[j].scene_object.scene_interface.create_scene_target(p[j].target_parameter,scene_pass_array);
-
+			
+			for(var j=0,nj=p.length;j<nj;j++){
+				var my_driver_target_id=p[j].scene_object.scene_interface.
+						create_scene_target(p[j].target_parameter,scene_pass_array);
+				render_component_target_id[j]=p[j].target_parameter.target_id;
+				if(typeof(my_driver_target_id)=="number")
+					if(my_driver_target_id>=0)
+						render_component_target_id[j]=my_driver_target_id;
+			}
+			
 			for(var pass_id=0,pass_number=scene_pass_array.length;pass_id<pass_number;pass_id++){
-				if((typeof(scene_pass_array[pass_id])!="object")||(scene_pass_array[pass_id]==null))
+				if(typeof(scene_pass_array[pass_id])!="object")
+					continue;
+				if(scene_pass_array[pass_id]==null)
 					continue;
 				var my_pass_descriptor=scene_pass_array[pass_id].pass_descriptor;
 				if(my_collector_flag)
@@ -36,7 +45,7 @@ function create_scene_container_routine(my_webgpu)
 					continue;
 				for(var j=0,nj=p.length;j<nj;j++)
 					p[j].scene_object.scene_interface.draw_scene_target(
-						p[j].target_parameter,scene_pass_array,pass_id);
+							p[j].target_parameter,render_component_target_id[j],scene_pass_array,pass_id);
 				
 				if(my_collector_flag)
 					scene_pass_array[pass_id].render_bundle=this.webgpu.render_pass_encoder.finish();
@@ -49,7 +58,7 @@ function create_scene_container_routine(my_webgpu)
 
 			for(var j=0,nj=p.length;j<nj;j++)
 				p[j].scene_object.scene_interface.destroy_scene_target(
-					p[j].target_parameter,scene_pass_array);
+						p[j].target_parameter,scene_pass_array);
 		}
 	}
 	
@@ -150,10 +159,20 @@ function create_scene_container_routine(my_webgpu)
 			if(this.terminate_flag)
 				break;
 
+			var my_this_object=this;
 			await new Promise((resolve)=>
 			{
 				window.requestAnimationFrame(resolve);
 				setTimeout(resolve,scene_touch_time_length/1000000);
+				
+				for(var i=0,ni=scene_name_array.length;i<ni;i++){
+					if(my_this_object.terminate_flag)
+						break;
+					var my_scene=my_this_object.scene_object[scene_name_array[i]];
+					if(my_scene.terminate_flag)
+						continue;
+					my_scene.scene_interface.set_render_resolve_function(resolve);
+				}
 			});
 		}
 	}	

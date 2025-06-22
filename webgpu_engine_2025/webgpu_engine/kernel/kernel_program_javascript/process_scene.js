@@ -26,15 +26,15 @@ function construct_scene_interface(my_scene)
 	}
 	this.create_scene_target=function(target_parameter,scene_target_array)
 	{
-		create_scene_target_routine(target_parameter,scene_target_array,this.scene);
+		return create_scene_target_routine(target_parameter,scene_target_array,this.scene);
 	}
 	this.destroy_scene_target=function(target_parameter,scene_target_array)
 	{
 		destroy_scene_target_routine(target_parameter,scene_target_array,this.scene);
 	}
-	this.draw_scene_target=function(target_parameter,scene_target_array,pass_id)
+	this.draw_scene_target=function(target_parameter,render_component_target_id,scene_target_array,pass_id)
 	{
-		draw_scene_target_routine(target_parameter,scene_target_array,pass_id,this.scene);
+		draw_scene_target_routine(target_parameter,render_component_target_id,scene_target_array,pass_id,this.scene);
 	}
 	this.complete_render_target=async function(target_id)
 	{
@@ -58,7 +58,6 @@ function construct_scene_interface(my_scene)
 		await target_component_driver.complete_render_target(render_data,
 				target_part_object,target_part_driver,target_render_driver,this.scene);
 	}
-	
 	this.front_process_scene=function(scene_id)
 	{
 		if(this.scene.terminate_flag)
@@ -94,7 +93,6 @@ function construct_scene_interface(my_scene)
 
 		return this.scene.init_parameter.scene_touch_time_length;
 	}
-	
 	this.back_process_scene=function()
 	{
 		if(this.scene.terminate_flag)
@@ -105,5 +103,12 @@ function construct_scene_interface(my_scene)
 			if(typeof(fun_array[i])=="function")
 				if(fun_array[i](this.scene))
 					this.scene.routine_array.push(fun_array[i]);
+	}
+	this.set_render_resolve_function=function(my_render_resolve_function)
+	{
+		if(Array.isArray(this.scene.event_listener))
+			for(var p,i=0,ni=this.scene.event_listener.length;i<ni;i++)
+				if(typeof(p=this.scene.event_listener[i])=="object")
+					p.render_resolve_function=my_render_resolve_function;
 	}
 }

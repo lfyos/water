@@ -6,7 +6,8 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		parameter_x			:	0,
 		parameter_y			:	0,
 		whole_view_width	:	1,
-		whole_view_height	:	1
+		whole_view_height	:	1,
+		main_target_id		:	-1
 	}
 	
 	this.id_depth_texture=scene.webgpu.device.createTexture(
@@ -84,7 +85,7 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 	{
 		var my_pass_descriptor;
 		if(scene_target_array.length>1)
-			return;
+			return render_data.target_id;
 		
 		if((typeof(scene_target_array[0])!="object")||(scene_target_array[0]==null)){
 			my_pass_descriptor=
@@ -162,6 +163,13 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 				]
 			};
 		};
+
+		if(this.parameter.main_target_id<0)
+			return render_data.target_id;
+		
+		return render_data.target_id;
+		
+//		return this.parameter.main_target_id;
 	}
 	this.end_scene_target=function(	scene_target_array,render_data,
 			target_part_object,target_part_driver,target_render_driver,scene)
@@ -349,6 +357,7 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		this.parameter.parameter_y		=buffer_data_item[1];
 		this.parameter.whole_view_width	=buffer_data_item[2];
 		this.parameter.whole_view_height=buffer_data_item[3];
+		this.parameter.main_target_id	=buffer_data_item[4];
 	}
 	this.destroy=function()
 	{
