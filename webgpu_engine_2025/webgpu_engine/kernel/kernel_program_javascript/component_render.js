@@ -23,14 +23,7 @@ function construct_component_render_parameter()
     		
     		while(render_parameter.length<=target_id)
     			render_parameter.push(new Array());
-    		render_parameter=render_parameter[target_id];
-			
-			if(instance_id<render_parameter.length)
-				scene.render_buffer_array[target_id].replace_render_instance_number++;
-			else
-				scene.render_buffer_array[target_id].append_render_instance_number++;
-			
-			render_parameter[instance_id]=[data_buffer_id,new_instance_data];
+    		render_parameter[target_id][instance_id]=[data_buffer_id,new_instance_data];
 		}
 		
 		var delete_index_id,render_id=-1,part_id=-1,target_id=-1;
@@ -57,8 +50,6 @@ function construct_component_render_parameter()
 	   		var last_instance_data=render_parameter.pop();
 	   		if(delete_index_id<render_parameter.length)
 	   			render_parameter[delete_index_id]=last_instance_data;
-
-			scene.render_buffer_array[target_id].delete_render_instance_number++;
 		}
 	}
 	this.modify_component_buffer_parameter=function(component_buffer_data,scene)

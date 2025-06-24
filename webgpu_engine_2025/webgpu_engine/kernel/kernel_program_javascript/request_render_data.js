@@ -102,8 +102,8 @@ async function request_render_data(scene)
 		for(var i=0,ni=scene.event_listener.length;i<ni;i++)
 			mouse_down_flag|=scene.event_listener[i].mouse_down_flag;
 
-		if(scene.view_bak.mouse_down_flag^mouse_down_flag){
-			scene.view_bak.mouse_down_flag=mouse_down_flag;
+		if(scene.view.mouse_down_flag^mouse_down_flag){
+			scene.view.mouse_down_flag=mouse_down_flag;
 			request_url+="&precision="+(mouse_down_flag?"false":"true");
 		}
 		request_url+="&length=";
@@ -124,13 +124,8 @@ async function request_render_data(scene)
 			while(my_target_id>=scene.render_buffer_array.length)
 				scene.render_buffer_array.push(
 					{
-						do_render_flag					:	false,
-						
-						append_render_instance_number	:	0,
-						replace_render_instance_number	:	0,
-						delete_render_instance_number	:	0,
-						
-						project_matrix					:	null
+						do_render_flag	:	false,
+						project_matrix	:	null
 					});
 
 			var p=scene.render_buffer_array[my_target_id];
@@ -163,6 +158,14 @@ async function request_render_data(scene)
 						[	my_data[j++],	my_data[j++],	my_data[j++],	1	],
 						[	my_data[j++],	my_data[j++],	my_data[j++],	1	]
 					];
+					p.view_volume_box_bak=[
+						[	p.view_volume_box[0][0],	p.view_volume_box[0][1],
+							p.view_volume_box[0][2],	p.view_volume_box[0][3]
+						],
+						[	p.view_volume_box[1][0],	p.view_volume_box[1][1],
+							p.view_volume_box[1][2],	p.view_volume_box[1][3]
+						]
+					];
 					break;
 				case 6:
 					p.clip_plane=null;
@@ -192,12 +195,22 @@ async function request_render_data(scene)
 					break;
 				case 12:
 					p.target_view_parameter=new Object();
+					
 					p.target_view_parameter.view_x0				=my_data[j++];
 					p.target_view_parameter.view_y0				=my_data[j++];
 					p.target_view_parameter.view_width			=my_data[j++];
 					p.target_view_parameter.view_height			=my_data[j++];
 					p.target_view_parameter.whole_view_width	=my_data[j++];
 					p.target_view_parameter.whole_view_height	=my_data[j++];
+					
+					p.target_view_parameter_bak={
+						view_x0				:	p.target_view_parameter.view_x0,
+						view_y0				:	p.target_view_parameter.view_y0,
+						view_width			:	p.target_view_parameter.view_width,
+						view_height			:	p.target_view_parameter.view_height,
+						whole_view_width	:	p.target_view_parameter.whole_view_width,
+						whole_view_height	:	p.target_view_parameter.whole_view_height
+					}
 					break;
 				}
 		}
@@ -255,13 +268,17 @@ async function request_render_data(scene)
 	};
 
 	for(var start_time=0;!(scene.terminate_flag);){
-		var current_time=(new Date()).getTime();
-		if((start_time+scene.parameter.delay_time_length)>current_time)
-				await new Promise(resolve=>setTimeout(resolve,
-							current_time-start_time-scene.parameter.delay_time_length));
-		else if(await fetch_web_server_response_data(create_request_url(scene),scene))
-				break;
-		else
-				start_time=current_time;
+		var current_time=(new Date()).getTime(),sleep_time_length;
+		var clear_far_distance_pickup_flag=scene.view.far_distance_pickup_flag;
+		if(!clear_far_distance_pickup_flag)
+			if((sleep_time_length=start_time+scene.parameter.delay_time_length-current_time)>0){
+				await new Promise((resolve)=>{setTimeout(resolve,sleep_time_length);});
+				continue;
+			}
+		if(await fetch_web_server_response_data(create_request_url(scene),scene))
+			break;
+		start_time=current_time;
+		if(clear_far_distance_pickup_flag)
+			scene.view.far_distance_pickup_flag=false;
 	}
 }

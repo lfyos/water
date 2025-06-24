@@ -55,10 +55,13 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 	
 	this.view=
 	{
-		x					:	-10.0,
-		y					:	-10.0,
-		main_target_x		:	-10.0,
-		main_target_y		:	-10.0
+		x							:	-10.0,
+		y							:	-10.0,
+		main_target_x				:	-10.0,
+		main_target_y				:	-10.0,
+		
+		mouse_down_flag				:	false,
+		far_distance_pickup_flag	:	false
 	};
 	this.view_bak=
 	{
@@ -82,9 +85,7 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 		vertex				:	-2,
 		
 		depth				:	-2,
-		value				:	[-2,-2,-2],
-		
-		mouse_down_flag		:	false
+		value				:	[-2,-2,-2]
 	};
 
 	this.caller						=new construct_server_caller(this);

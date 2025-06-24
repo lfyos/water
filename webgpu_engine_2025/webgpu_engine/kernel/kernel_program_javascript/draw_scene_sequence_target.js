@@ -1,6 +1,5 @@
-function create_scene_target_routine(target_parameter,scene_target_array,scene)
+function scene_target_begin_routine(target_id,scene_target_array,scene)
 {
-	var target_id		=target_parameter.target_id;
 	var render_data		=scene.render_buffer_array[target_id];
 	var render_id		=render_data.target_ids.render_id;
 	var part_id			=render_data.target_ids.part_id;
@@ -16,13 +15,20 @@ function create_scene_target_routine(target_parameter,scene_target_array,scene)
 		return -1;
 	if(typeof(target_component_driver.begin_scene_target)!="function")
 		return -1;
-	return target_component_driver.begin_scene_target(scene_target_array,render_data,
-				target_part_object,target_part_driver,target_render_driver,scene);
+	var render_component_target_id=target_component_driver.begin_scene_target(
+				scene_target_array,render_data,target_part_object,
+				target_part_driver,target_render_driver,scene);
+	if(typeof(render_component_target_id)!="number")
+		return -1;
+	if(render_component_target_id<0)
+		return -1;
+	if(render_component_target_id>=scene.render_buffer_array.length)
+		return -1;
+	return render_component_target_id;
 }
 
-function destroy_scene_target_routine(target_parameter,scene_target_array,scene)
+function scene_target_end_routine(target_id,scene_target_array,scene)
 {
-	var target_id		=target_parameter.target_id;
 	var render_data		=scene.render_buffer_array[target_id];
 	var render_id		=render_data.target_ids.render_id;
 	var part_id			=render_data.target_ids.part_id;
@@ -43,7 +49,7 @@ function destroy_scene_target_routine(target_parameter,scene_target_array,scene)
 		target_part_object,target_part_driver,target_render_driver,scene);
 	return;
 }
-function draw_scene_target_routine(target_parameter,render_component_target_id,scene_target_array,pass_id,scene)
+function draw_scene_target_routine(original_target_id,render_component_target_id,scene_target_array,pass_id,scene)
 {
 	var scene_target=scene_target_array[pass_id];
 	if((typeof(scene_target)!="object")||(scene_target==null))
@@ -54,7 +60,7 @@ function draw_scene_target_routine(target_parameter,render_component_target_id,s
 	if(method_array.length<=0)
 		return;
 
-	var target_render_data	=scene.render_buffer_array[target_parameter.target_id];
+	var target_render_data	=scene.render_buffer_array[original_target_id];
 	var view_x0				=target_render_data.target_view_parameter.view_x0;
 	var view_y0				=target_render_data.target_view_parameter.view_y0;
 	var view_width			=target_render_data.target_view_parameter.view_width;	
@@ -101,8 +107,7 @@ function draw_scene_target_routine(target_parameter,render_component_target_id,s
 					var component_driver=part_object.component_driver_array[data_buffer_id];
 					var component_ids	=part_object.part_component_id_and_driver_id[data_buffer_id];
 
-					scene.system_buffer.set_system_bindgroup(
-							target_parameter.target_id,method_array[i].method_id,
+					scene.system_buffer.set_system_bindgroup(original_target_id,method_array[i].method_id,
 							component_ids.component_id,component_ids.driver_id,scene);
 					component_driver.draw_component(method_array[i],render_parameter,
 							comonent_render_data,part_object,part_driver,render_driver,scene);

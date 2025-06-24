@@ -5,7 +5,6 @@ import kernel_component.component;
 import kernel_camera.camera_result;
 import kernel_render.render_target;
 import kernel_scene.client_information;
-import kernel_common_class.const_value;
 import kernel_render.render_target_view;
 import kernel_render.render_target_parameter;
 import kernel_driver.component_instance_driver;
@@ -13,8 +12,7 @@ import kernel_driver.component_instance_driver;
 public class extended_component_instance_driver extends component_instance_driver
 {
 	private String 	pickup_target_name;
-	private int 	main_target_id,pickup_target_width,whole_view_width,whole_view_height;
-	private double	parameter_x,parameter_y;
+	private int 	main_target_id,pickup_target_width;
 	public void destroy()
 	{
 		super.destroy();
@@ -27,10 +25,6 @@ public class extended_component_instance_driver extends component_instance_drive
 		main_target_id		=-1;
 		pickup_target_name	=my_pickup_target_name;
 		pickup_target_width	=my_pickup_target_width;
-		whole_view_width	=1;
-		whole_view_height	=1;
-		parameter_x			=0;
-		parameter_y			=0;
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
@@ -40,21 +34,10 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		if(!(cr.target.main_display_target_flag))
 			return false;
-		
-		whole_view_width =cr.target.target_view.whole_view_width;
-		whole_view_height=cr.target.target_view.whole_view_height;
-		
-		double diff_value=(cr.target.target_id==main_target_id)?0.0:1.0;
-		diff_value+=(ci.parameter.x-parameter_x)*(ci.parameter.x-parameter_x);
-		diff_value+=(ci.parameter.y-parameter_y)*(ci.parameter.y-parameter_y);
-		if(diff_value>=const_value.min_value2) {
-			parameter_x		=ci.parameter.x;
-			parameter_y		=ci.parameter.y;
+		if(cr.target.target_id!=main_target_id){
 			main_target_id	=cr.target.target_id;
 			update_component_parameter_version(0);
 		}
-		
-
 		render_target rt=new render_target(
 			render_target_parameter.create_pickup_parameter(),					//render_target_parameter
 			pickup_target_name,comp.component_id,driver_id,0,					//target IDS,components
@@ -73,12 +56,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
-		ci.request_response.print("[",parameter_x).
-							print(",",parameter_y).
-							print(",",whole_view_width ).
-							print(",",whole_view_height).
-							print(",",main_target_id).
-							print("]");
+		ci.request_response.print(main_target_id);
 	}
 	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{

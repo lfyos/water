@@ -24,17 +24,41 @@ function construct_scene_interface(my_scene)
 			};
 		return ret_val;
 	}
-	this.create_scene_target=function(target_parameter,scene_target_array)
+	this.scene_target_begin=function(target_id,scene_target_array)
 	{
-		return create_scene_target_routine(target_parameter,scene_target_array,this.scene);
+		var ret_val=target_id,render_data=this.scene.render_buffer_array[target_id];
+		if(render_data.do_render_flag){
+			render_data.view_volume_box=[
+				[	render_data.view_volume_box_bak[0][0],render_data.view_volume_box_bak[0][1],
+					render_data.view_volume_box_bak[0][2],render_data.view_volume_box_bak[0][3]
+				],
+				[	render_data.view_volume_box_bak[1][0],render_data.view_volume_box_bak[1][1],
+					render_data.view_volume_box_bak[1][2],render_data.view_volume_box_bak[1][3]
+				]
+			];
+			render_data.target_view_parameter={
+				view_x0				:	render_data.target_view_parameter_bak.view_x0,
+				view_y0				:	render_data.target_view_parameter_bak.view_y0,
+				view_width			:	render_data.target_view_parameter_bak.view_width,
+				view_height			:	render_data.target_view_parameter_bak.view_height,
+				whole_view_width	:	render_data.target_view_parameter_bak.whole_view_width,
+				whole_view_height	:	render_data.target_view_parameter_bak.whole_view_height
+			};
+			
+			ret_val=scene_target_begin_routine(target_id,scene_target_array,this.scene);
+			
+			render_data.project_matrix=this.scene.camera.compute_camera_data(render_data);
+			this.scene.system_buffer.set_target_buffer(render_data,this.scene);
+		}
+		return ret_val;
 	}
-	this.destroy_scene_target=function(target_parameter,scene_target_array)
+	this.scene_target_end=function(target_id,scene_target_array)
 	{
-		destroy_scene_target_routine(target_parameter,scene_target_array,this.scene);
+		scene_target_end_routine(target_id,scene_target_array,this.scene);
 	}
-	this.draw_scene_target=function(target_parameter,render_component_target_id,scene_target_array,pass_id)
+	this.draw_scene_target=function(original_target_id,render_component_target_id,scene_target_array,pass_id)
 	{
-		draw_scene_target_routine(target_parameter,render_component_target_id,scene_target_array,pass_id,this.scene);
+		draw_scene_target_routine(original_target_id,render_component_target_id,scene_target_array,pass_id,this.scene);
 	}
 	this.complete_render_target=async function(target_id)
 	{
@@ -62,11 +86,10 @@ function construct_scene_interface(my_scene)
 	{
 		if(this.scene.terminate_flag)
 			return 0;
-
+		
 		this.scene.scene_id=scene_id;
-
 		this.scene.vertex_data_downloader.process_buffer_head_request_queue(this.scene);
-			
+		
 		var start_time=(new Date()).getTime();
 		if(this.scene.browser_current_time>0){
 			var pass_time=(start_time-this.scene.browser_current_time)*1000*1000;
@@ -84,13 +107,6 @@ function construct_scene_interface(my_scene)
 					this.scene.modifier_current_time[i]++;
 			}
 		}
-		
-		for(var render_data,i=0,ni=this.scene.render_buffer_array.length;i<ni;i++)
-			if((render_data=this.scene.render_buffer_array[i]).do_render_flag){
-				render_data.project_matrix=this.scene.camera.compute_camera_data(render_data);
-				this.scene.system_buffer.set_target_buffer(render_data,this.scene);
-			}
-
 		return this.scene.init_parameter.scene_touch_time_length;
 	}
 	this.back_process_scene=function()
@@ -103,12 +119,5 @@ function construct_scene_interface(my_scene)
 			if(typeof(fun_array[i])=="function")
 				if(fun_array[i](this.scene))
 					this.scene.routine_array.push(fun_array[i]);
-	}
-	this.set_render_resolve_function=function(my_render_resolve_function)
-	{
-		if(Array.isArray(this.scene.event_listener))
-			for(var p,i=0,ni=this.scene.event_listener.length;i<ni;i++)
-				if(typeof(p=this.scene.event_listener[i])=="object")
-					p.render_resolve_function=my_render_resolve_function;
 	}
 }
