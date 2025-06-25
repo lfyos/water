@@ -104,32 +104,23 @@ function create_texture_bind_group()
 	{
 		var render_id	=part_object.render_id;
 		var part_id		=part_object.part_id;
-		this.is_busy_flag=true;
-				
-		scene.vertex_data_downloader.current_loading_mesh_number+=7;
 		
-		this.left_texture	=download_external_texture(
+		this.is_busy_flag=true;
+		
+		this.left_texture	=await download_external_texture(
 				render_id,part_id,my_directory_name+"/left.jpg",scene);
-		this.right_texture	=download_external_texture(
+		this.right_texture	=await download_external_texture(
 				render_id,part_id,my_directory_name+"/right.jpg",scene);
-		this.top_texture	=download_external_texture(
+		this.top_texture	=await download_external_texture(
 				render_id,part_id,my_directory_name+"/top.jpg",scene);
-		this.down_texture	=download_external_texture(
+		this.down_texture	=await download_external_texture(
 				render_id,part_id,my_directory_name+"/down.jpg",scene);
-		this.front_texture	=download_external_texture(
+		this.front_texture	=await download_external_texture(
 				render_id,part_id,my_directory_name+"/front.jpg",scene);
-		this.back_texture	=download_external_texture(
+		this.back_texture	=await download_external_texture(
 				render_id,part_id,my_directory_name+"/back.jpg",scene);
-		this.no_box_texture	=download_external_texture(
+		this.no_box_texture	=await download_external_texture(
 				render_id,part_id,my_directory_name+"/no_box.jpg",scene);
-	
-		this.left_texture	=await (this.left_texture);
-		this.right_texture	=await (this.right_texture);
-		this.top_texture	=await (this.top_texture);
-		this.down_texture	=await (this.down_texture);
-		this.front_texture	=await (this.front_texture);
-		this.back_texture	=await (this.back_texture);
-		this.no_box_texture	=await (this.no_box_texture);
 				
 		if(scene.terminate_flag)
 			this.texture_bindgroup=null;
@@ -183,7 +174,6 @@ function create_texture_bind_group()
 					entries		:	resource_entries
 				});
 		}
-		scene.vertex_data_downloader.current_loading_mesh_number-=7;
 		
 		this.is_busy_flag=false;
 		
@@ -196,12 +186,14 @@ function create_texture_bind_group()
 function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
 {
 	this.component_ids		=component_ids;
-	this.texture_bind_group	=new create_texture_bind_group();
+	this.texture_bind_group	=null;
 	this.mode				=0;
 	
 	this.draw_component=function(method_data,render_parameter,
 			target_data,part_object,part_driver,render_driver,scene)
 	{
+		if(this.texture_bind_group==null)
+			return;
 		if(this.texture_bind_group.is_busy_flag)
 			return;
 			
@@ -226,7 +218,10 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
 		this.mode=buffer_data_item[0];
-		this.texture_bind_group.destroy();
+		
+		if(this.texture_bind_group!=null)
+			this.texture_bind_group.destroy();
+		
 		this.texture_bind_group=new create_texture_bind_group();
 		this.texture_bind_group.create(buffer_data_item[1],part_object,render_driver,scene);
 	}

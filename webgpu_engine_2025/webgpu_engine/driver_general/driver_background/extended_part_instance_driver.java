@@ -1,9 +1,9 @@
 package driver_background;
 
-import kernel_driver.part_instance_driver;
 import kernel_part.part;
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
+import kernel_scene.client_information;
+import kernel_driver.part_instance_driver;
 
 public class extended_part_instance_driver extends part_instance_driver
 {

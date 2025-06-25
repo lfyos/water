@@ -1,11 +1,11 @@
 package driver_manipulator;
 
-import kernel_transformation.plane;
-import kernel_common_class.const_value;
-import kernel_driver.modifier_driver;
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
 import kernel_transformation.box;
+import kernel_transformation.plane;
+import kernel_driver.modifier_driver;
+import kernel_common_class.const_value;
+import kernel_scene.client_information;
 
 class clip_plane_modifier extends modifier_driver
 {

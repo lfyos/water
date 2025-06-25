@@ -1,5 +1,6 @@
 package driver_mouse_modify_location;
 
+import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_camera.camera_result;
 import kernel_transformation.point;
@@ -7,7 +8,6 @@ import kernel_camera.locate_camera;
 import kernel_transformation.location;
 import kernel_driver.location_modifier;
 import kernel_scene.client_information;
-import kernel_scene.scene_kernel;
 import kernel_common_class.const_value;
 import kernel_component.component_array;
 import kernel_driver.component_instance_driver;

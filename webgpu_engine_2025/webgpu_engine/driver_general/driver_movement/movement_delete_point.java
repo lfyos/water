@@ -1,7 +1,7 @@
 package driver_movement;
 
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
+import kernel_scene.client_information;
 
 public class movement_delete_point extends movement_design_base
 {

@@ -1,11 +1,11 @@
 package driver_register_file_proxy;
 
-import kernel_component.component;
-import kernel_driver.component_driver;
-import kernel_driver.component_instance_driver;
-import kernel_network.client_request_response;
 import kernel_part.part;
 import kernel_scene.scene_kernel;
+import kernel_component.component;
+import kernel_driver.component_driver;
+import kernel_network.client_request_response;
+import kernel_driver.component_instance_driver;
 
 public class extended_component_driver  extends component_driver
 {
@@ -20,9 +20,10 @@ public class extended_component_driver  extends component_driver
 	public void initialize_component_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
-//		String component_directory_name=comp.component_directory_name;
-//		String scene_directory_name=ek.scene_directory_name;
-//		String parameter_directory_name=sk.scene_par.directory_name;
+//		String component_directory_name			=comp.component_directory_name;
+//		String scene_directory_name				=sk.create_parameter.scene_directory_name;
+//		String parameter_directory_name			=sk.scene_par.directory_name;
+//		String extra_parameter_directory_name	=sk.scene_par.extra_directory_name;
 		
 		return;
 	}

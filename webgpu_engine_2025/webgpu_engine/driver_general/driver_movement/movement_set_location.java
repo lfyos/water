@@ -1,9 +1,9 @@
 package driver_movement;
 
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
-import kernel_transformation.location;
 import kernel_transformation.point;
+import kernel_transformation.location;
+import kernel_scene.client_information;
 
 public class movement_set_location  extends movement_design_base
 {

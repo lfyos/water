@@ -1,8 +1,8 @@
 package driver_mouse_modify_location;
 
 import kernel_part.part;
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
+import kernel_scene.client_information;
 import kernel_common_class.jason_string;
 import kernel_driver.part_instance_driver;
 

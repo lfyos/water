@@ -1,16 +1,16 @@
 package driver_component_marker;
 
+import kernel_scene.scene_kernel;
 import kernel_transformation.box;
 import kernel_component.component;
 import kernel_camera.camera_result;
 import kernel_camera.locate_camera;
 import kernel_transformation.point;
 import kernel_driver.component_driver;
+import kernel_scene.client_information;
 import kernel_common_class.jason_string;
 import kernel_component.component_selection;
 import kernel_driver.component_instance_driver;
-import kernel_scene.client_information;
-import kernel_scene.scene_kernel;
 
 public class extended_component_instance_driver extends component_instance_driver
 {

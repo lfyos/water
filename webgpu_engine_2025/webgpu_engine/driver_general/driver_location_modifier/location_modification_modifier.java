@@ -1,12 +1,11 @@
 package driver_location_modifier;
 
+import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_driver.modifier_driver;
-import kernel_scene.client_information;
-import kernel_scene.scene_kernel;
 import kernel_driver.component_driver;
 import kernel_transformation.location;
-
+import kernel_scene.client_information;
 
 public class location_modification_modifier extends modifier_driver
 {

@@ -1,7 +1,7 @@
 package driver_movement;
 
-import kernel_transformation.location;
 import kernel_transformation.point;
+import kernel_transformation.location;
 
 public class movement_location_to_move_rotate
 {

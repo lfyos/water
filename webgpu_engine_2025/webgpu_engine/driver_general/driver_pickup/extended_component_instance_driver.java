@@ -13,6 +13,7 @@ public class extended_component_instance_driver extends component_instance_drive
 {
 	private String 	pickup_target_name;
 	private int 	main_target_id,pickup_target_width;
+	
 	public void destroy()
 	{
 		super.destroy();
@@ -28,7 +29,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
-		ci.request_response.print(pickup_target_width);
 	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{

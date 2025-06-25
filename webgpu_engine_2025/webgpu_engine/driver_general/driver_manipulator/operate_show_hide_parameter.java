@@ -1,10 +1,10 @@
 package driver_manipulator;
 
+import kernel_scene.scene_kernel;
 import kernel_component.component;
-import kernel_component.component_array;
 import kernel_driver.component_driver;
 import kernel_scene.client_information;
-import kernel_scene.scene_kernel;
+import kernel_component.component_array;
 
 public class operate_show_hide_parameter
 {

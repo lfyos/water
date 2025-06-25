@@ -1,10 +1,10 @@
 package driver_movement;
 
-import kernel_common_class.jason_string;
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
 import kernel_transformation.point;
 import kernel_transformation.location;
+import kernel_scene.client_information;
+import kernel_common_class.jason_string;
 
 public class movement_get_location extends movement_design_base
 {

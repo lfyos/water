@@ -1,9 +1,9 @@
 package driver_manipulator;
 
-import kernel_component.component;
 import kernel_part.part;
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
+import kernel_component.component;
+import kernel_scene.client_information;
 
 public class check_component 
 {

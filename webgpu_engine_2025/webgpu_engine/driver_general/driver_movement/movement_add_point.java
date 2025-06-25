@@ -1,8 +1,8 @@
 package driver_movement;
 
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
 import kernel_transformation.location;
+import kernel_scene.client_information;
 
 public class movement_add_point extends movement_design_base
 {

@@ -1,9 +1,9 @@
 package driver_opengl_fixed_pipeline;
 
 import kernel_render.render;
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
 import kernel_file_manager.file_reader;
+import kernel_scene.client_information;
 import kernel_driver.render_instance_driver;
 
 public class extended_render_instance_driver extends render_instance_driver

@@ -1,12 +1,12 @@
 package driver_movement;
 
-import kernel_common_class.debug_information;
-import kernel_component.component;
-import kernel_component.component_container;
-import kernel_file_manager.file_writer;
 import kernel_transformation.box;
+import kernel_component.component;
 import kernel_transformation.location;
+import kernel_file_manager.file_writer;
 import kernel_common_class.common_reader;
+import kernel_component.component_container;
+import kernel_common_class.debug_information;
 
 public class movement_item_container
 {

@@ -2,12 +2,12 @@ package driver_movement;
 
 import kernel_part.part;
 import kernel_scene.scene_kernel;
-import kernel_scene.scene_parameter;
-import kernel_scene.system_parameter;
 import kernel_driver.part_driver;
 import kernel_transformation.box;
 import kernel_component.component;
 import kernel_transformation.point;
+import kernel_scene.scene_parameter;
+import kernel_scene.system_parameter;
 import kernel_driver.component_driver;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;

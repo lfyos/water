@@ -1,11 +1,11 @@
 package driver_movement;
 
-import kernel_component.component;
-import kernel_driver.component_instance_driver;
-import kernel_network.network_parameter;
-import kernel_scene.client_information;
 import kernel_scene.scene_kernel;
+import kernel_component.component;
 import kernel_transformation.location;
+import kernel_scene.client_information;
+import kernel_network.network_parameter;
+import kernel_driver.component_instance_driver;
 
 public class movement_move_modifier  extends driver_location_modifier.location_modification_modifier
 {

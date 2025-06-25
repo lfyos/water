@@ -1,17 +1,17 @@
 package driver_distance_tag;
 
-import kernel_transformation.point;
+import kernel_scene.scene_kernel;
 import kernel_transformation.box;
+import kernel_component.component;
+import kernel_transformation.point;
 import kernel_transformation.plane;
 import kernel_camera.locate_camera;
 import kernel_common_class.const_value;
-import kernel_common_class.debug_information;
-import kernel_component.component;
-import kernel_component.component_selection;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_scene.client_information;
-import kernel_scene.scene_kernel;
+import kernel_component.component_selection;
+import kernel_common_class.debug_information;
 
 public class distance_tag_array
 {

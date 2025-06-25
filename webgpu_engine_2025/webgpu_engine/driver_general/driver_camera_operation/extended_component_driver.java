@@ -1,8 +1,8 @@
 package driver_camera_operation;
 
 import kernel_part.part;
-import kernel_scene.scene_kernel;
 import kernel_camera.camera;
+import kernel_scene.scene_kernel;
 import kernel_transformation.box;
 import kernel_component.component;
 import kernel_camera.locate_camera;
@@ -32,9 +32,10 @@ public class extended_component_driver  extends component_driver
 	public void initialize_component_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
-//		String component_directory_name=comp.component_directory_name;
-//		String scene_directory_name=ek.scene_directory_name;
-//		String parameter_directory_name=sk.scene_par.directory_name;
+//		String component_directory_name			=comp.component_directory_name;
+//		String scene_directory_name				=sk.create_parameter.scene_directory_name;
+//		String parameter_directory_name			=sk.scene_par.directory_name;
+//		String extra_parameter_directory_name	=sk.scene_par.extra_directory_name;
 		
 		box my_box;
 		int box_parameter_channel_id;
