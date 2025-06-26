@@ -100,23 +100,3 @@ fn fragment_edge_fun(vf:vertex_to_fragment_struct) -> color_target_struct
 	}
 	return cts;
 }
-@fragment
-fn fragment_point_fun(vf:vertex_to_fragment_struct) ->color_target_struct
-{
-	var cts:color_target_struct;
-	
-	cts.color=vec4<f32>(1.0,0.0,0.0,1.0);
-	cts.depth=0.0;
-	
-	if(system_info.pickup_component_id==id_info.component_id){
-		if(system_info.pickup_driver_id==id_info.driver_id){
-			if(system_info.pickup_body_id==i32(vf.vertex_id.x)){
-				if(system_info.pickup_face_id==i32(vf.vertex_id.y)){
-					return cts;
-				}
-			}
-		}
-	}
-	discard;
-	return cts;
-}

@@ -8,7 +8,7 @@ public class camera_parameter
 	public double scale_value;
 
 	public long switch_time_length;
-	public double distance,half_fovy_tanl,bak_half_fovy_tanl,near_ratio,far_ratio;
+	public double distance,bak_distance,half_fovy_tanl,bak_half_fovy_tanl,near_ratio,far_ratio;
 	public boolean projection_type_flag;
 	public double low_precision_scale,high_precision_scale;
 	public int light_camera_flag,light_camera_flag_ex,light_camera_flag_ex_ex;
@@ -51,6 +51,7 @@ public class camera_parameter
 		
 		switch_time_length			=s.switch_time_length;
 		distance					=s.distance;
+		bak_distance				=s.bak_distance;
 		half_fovy_tanl				=s.half_fovy_tanl;
 		bak_half_fovy_tanl			=s.bak_half_fovy_tanl;
 		near_ratio					=s.near_ratio;
@@ -72,7 +73,8 @@ public class camera_parameter
 	}
 	public camera_parameter(
 			boolean my_movement_flag,boolean my_direction_flag,boolean my_change_type_flag,
-			double my_scale_value,long my_switch_time_length,double my_distance,
+			double my_scale_value,long my_switch_time_length,
+			double my_distance,double my_bak_distance,
 			double my_half_fovy_tanl,double my_bak_half_fovy_tanl,
 			double my_near_ratio,double my_far_value_ratio,
 			boolean my_projection_type_flag,
@@ -86,6 +88,7 @@ public class camera_parameter
 		
 		switch_time_length			=my_switch_time_length;
 		distance					=my_distance;
+		bak_distance				=my_bak_distance;
 		half_fovy_tanl				=my_half_fovy_tanl;
 		bak_half_fovy_tanl			=my_bak_half_fovy_tanl;
 		near_ratio					=my_near_ratio;
@@ -108,6 +111,7 @@ public class camera_parameter
 					scale_value					*p	+t.scale_value			*q,
 					(long)(switch_time_length	*p	+t.switch_time_length	*q),
 					distance					*p	+t.distance				*q,
+					bak_distance				*p	+t.bak_distance			*q,
 					half_fovy_tanl				*p	+t.half_fovy_tanl		*q,
 					bak_half_fovy_tanl			*p	+t.bak_half_fovy_tanl	*q,
 					near_ratio					*p	+t.near_ratio			*q,

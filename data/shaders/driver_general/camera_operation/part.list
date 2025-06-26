@@ -5,9 +5,9 @@
 	part\part.description
 	part\part.mp3
 	
-	/*	x	y		size		*/		0.875		0.825		0.1		
-	/*	depth_start	depth_end	*/		0.0			0.1			
-	/*	modifier_container_id	*/		0
+			/*	x	y		size		*/		0.875		0.825		0.1		
+			/*	depth_start	depth_end	*/		0.0			0.1			
+			/*	modifier_container_id	*/		0
 	
 			/*	terminated_token_string:begin		*/	terminated_token_string
 			
@@ -16,20 +16,5 @@
 					/*	component location			*/	identity
 					/*	component children number	*/	0
 			
-			/*	terminated_token_string:end			*/	terminated_token_string
-		
-·½Ïò°´Å¥
-	camera_operation_part_2
-	part\part.SLDPRT.mesh
-	part\part_2.material
-	part\part.description
-	part\part.mp3
-	
-	/*	x	y		size		*/		0.875		0.825		0.1		
-	/*	depth_start	depth_end	*/		0.0			0.1			
-	/*	modifier_container_id	*/		0
-		
-			/*	terminated_token_string:begin		*/	terminated_token_string
-						
 			/*	terminated_token_string:end			*/	terminated_token_string
 		

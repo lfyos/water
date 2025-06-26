@@ -1,5 +1,6 @@
 package driver_camera_operation;
 
+import kernel_part.body;
 import kernel_part.face;
 import kernel_part.part_rude;
 import kernel_scene.scene_kernel;
@@ -12,7 +13,6 @@ import kernel_driver.component_driver;
 import kernel_transformation.location;
 import kernel_scene.client_information;
 import kernel_common_class.const_value;
-import kernel_component.component_array;
 import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
@@ -28,9 +28,9 @@ public class extended_component_instance_driver extends component_instance_drive
 			int my_modifier_container_id,String my_body_title,String my_face_title)
 	{
 		super(my_comp,my_driver_id);
-		modifier_container_id=my_modifier_container_id;
-		display_parameter.body_title=my_body_title;
-		display_parameter.face_title=my_face_title;
+		modifier_container_id		=my_modifier_container_id;
+		display_parameter.body_title="  "+my_body_title;
+		display_parameter.face_title="  "+my_face_title;
 		show_flag=true;
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
@@ -50,17 +50,19 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	private location get_component_location(scene_kernel sk,client_information ci)
 	{
-		String str;
 		component comp;
-		if((str=ci.request_response.get_parameter("coordinate"))!=null){
-			if(str.compareTo("camera")==0){
-				if((comp=ci.display_camera_result.cam.eye_component)!=null)
+		String str=ci.request_response.get_parameter("coordinate");
+		
+		switch((str==null)?"":str) {
+		case "camera":
+			if((comp=ci.display_camera_result.cam.eye_component)!=null)
+				return comp.absolute_location;
+			break;
+		case "selection":
+			if((comp=sk.component_cont.search_component())!=null)
+				if(comp.uniparameter.selected_flag)
 					return comp.absolute_location;
-			}else if(str.compareTo("selection")==0){
-				if((comp=sk.component_cont.search_component())!=null)
-					if(comp.uniparameter.selected_flag)
-						return comp.absolute_location;
-			}
+			break;
 		}
 		return null;
 	}
@@ -69,55 +71,51 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		if(ci.parameter.comp==null)
 			return;
-		if(ci.parameter.body_id<0)
-			return;
-		if(ci.parameter.face_id<0)
-			return;
 		if(ci.parameter.comp.component_id!=comp.component_id)
 			return;
-		if(comp.driver_array.size()<=0)
+		if(ci.parameter.driver_id!=driver_id)
 			return;
-		component_driver c_d=comp.driver_array.get(driver_id);
+		component_driver c_d;
+		if((c_d=comp.driver_array.get(driver_id))==null)
+			return;
 		if(c_d.component_part==null)
 			return;
-		part_rude part_mesh=c_d.component_part.part_mesh;
-		if(part_mesh==null)
+		part_rude part_mesh;
+		if((part_mesh=c_d.component_part.part_mesh)==null)
 			return;
-		if(ci.parameter.body_id>=part_mesh.body_number())
+		if((ci.parameter.body_id<0)||(ci.parameter.body_id>=part_mesh.body_number()))
 			return;
-		if(ci.parameter.face_id>=part_mesh.body_array[ci.parameter.body_id].face_number())
+		body b=part_mesh.body_array[ci.parameter.body_id];
+		if((ci.parameter.face_id<0)||(ci.parameter.face_id>=b.face_number()))
 			return;
-		face fa=part_mesh.body_array[ci.parameter.body_id].face_array[ci.parameter.face_id];
-
+		face fa=b.face_array[ci.parameter.face_id];
+		if(fa.fa_face.face_type.compareTo("plane")!=0)
+			return;
 		double par[];
 		if((par=fa.fa_face.face_parameter)==null)
 			return;
 		if(par.length<3)
 			return;
-		if(fa.fa_face.face_type.compareTo("plane")!=0)
-			return;
-		
-		point p=new point(par[0],par[1],par[2]);
-		if(ci.display_camera_result.to_me_direct.dot(p)<0)
-			p=p.reverse();
+
+		point direction=new point(par[0],par[1],par[2]);
+		if(ci.display_camera_result.to_me_direct.dot(direction)<0)
+			direction=direction.reverse();
 		
 		location loca=get_component_location(sk,ci);
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
-		if(direct_rotate_flag)
-			loca=lc.direction_locate(p,loca,
-					ci.request_response.get_boolean("type", false));
+		
+		if(direct_rotate_flag) 
+			loca=lc.direction_locate(direction,loca,ci.request_response.get_boolean("type",false));
 		else{
 			String str;
 			if((str=ci.request_response.get_parameter("alf"))==null)
 				return;
-			double alf=Double.parseDouble(str);
-			loca=lc.rotation_locate(p,
-				(ci.request_response.get_boolean("type", false)?(-1.0):1.0)*alf,loca);
+			double alf=(ci.request_response.get_boolean("type",false)?-1.0:1.0)*Double.parseDouble(str);
+			loca=lc.rotation_locate(direction,alf,loca);
 		}
 		ci.display_camera_result.cam.mark_restore_stack();
 		ci.display_camera_result.cam.push_restore_stack(
-			sk.modifier_cont[modifier_container_id],true,
-			loca,ci.display_camera_result.cam.parameter);
+			sk.modifier_cont[modifier_container_id],true,loca,ci.display_camera_result.cam.parameter);
 	}
 	private void camera_direct(scene_kernel sk,client_information ci)
 	{
@@ -136,8 +134,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
 		location loca=get_component_location(sk,ci);
-		loca=lc.direction_locate(new point(x,y,z),loca,
-				ci.request_response.get_boolean("type", false));
+		loca=lc.direction_locate(new point(x,y,z),loca,ci.request_response.get_boolean("type", false));
 		ci.display_camera_result.cam.mark_restore_stack();
 		ci.display_camera_result.cam.push_restore_stack(
 			sk.modifier_cont[modifier_container_id],true,
@@ -251,21 +248,21 @@ public class extended_component_instance_driver extends component_instance_drive
 				}
 				if((body_id<0)||(body_id>=pr.body_number()))
 					break;
-				if((face_id>=0)&&(face_id<pr.body_array[body_id].face_number()))
-					if((face_box=pr.body_array[body_id].face_array[face_id].face_box)!=null){
+				body b=pr.body_array[body_id];
+				if((face_id>=0)&&(face_id<b.face_number())) {
+					face fa=b.face_array[face_id];
+					if((face_box=fa.face_box)!=null){
 						my_box=locate_comp.absolute_location.multiply(face_box);
-						if(my_box.distance2()<const_value.min_value2) {
+						if(my_box.distance2()<const_value.min_value2)
 							my_box=null;
-							break;
-						}
 						break;
 					}
-				if((body_box=pr.body_array[body_id].body_box)!=null) {
+				}
+				if((body_box=b.body_box)!=null) {
 					my_box=locate_comp.absolute_location.multiply(body_box);
-					if(my_box.distance2()<const_value.min_value2) {
+					if(my_box.distance2()<const_value.min_value2)
 						my_box=null;
-						break;
-					}
+					break;
 				}
 				break;
 			}
@@ -348,41 +345,27 @@ public class extended_component_instance_driver extends component_instance_drive
 			if(sk.component_cont.root_component==null)
 				return null;
 			sk.modifier_cont[modifier_container_id].process(sk, ci,true);
-			if((str=ci.request_response.get_parameter("value"))==null)
-				return null;
-			boolean new_change_type_flag=(str.compareTo("true")==0)?true:false;
+			boolean new_change_type_flag=ci.request_response.get_boolean("value",
+							ci.display_camera_result.cam.parameter.change_type_flag);
 			if(!(ci.display_camera_result.cam.parameter.change_type_flag^new_change_type_flag))
 				return null;
 			
 			double screen_distance;
 			screen_distance =ci.display_camera_result.cam.parameter.distance;
 			screen_distance*=ci.display_camera_result.cam.parameter.half_fovy_tanl;
-			
+
 			if(new_change_type_flag){
 				ci.display_camera_result.cam.parameter.half_fovy_tanl
 					=ci.display_camera_result.cam.parameter.bak_half_fovy_tanl;
 				ci.display_camera_result.cam.parameter.distance
 					=screen_distance/ci.display_camera_result.cam.parameter.half_fovy_tanl;
-				ci.display_camera_result.cam.parameter.change_type_flag=true;
-				return null;
-			}
-			
-			box my_box;
-			component_array effective_comp_container=new component_array();
-			effective_comp_container.add_part_list_component(sk.component_cont.root_component);
-			if((my_box=effective_comp_container.get_box())==null){
-				effective_comp_container.clear_compoment();
-				effective_comp_container.add_component(sk.component_cont.root_component);
-				if((my_box=effective_comp_container.get_box())==null)
-					if((my_box=sk.component_cont.root_component.get_component_box(false))==null)
-						my_box=sk.component_cont.root_component.get_component_box(true);
-			}
-			if(my_box!=null){
-				ci.display_camera_result.cam.parameter.distance=my_box.distance();
+			}else{
+				ci.display_camera_result.cam.parameter.distance
+					=ci.display_camera_result.cam.parameter.bak_distance;
 				ci.display_camera_result.cam.parameter.half_fovy_tanl
 					=screen_distance/ci.display_camera_result.cam.parameter.distance;
-				ci.display_camera_result.cam.parameter.change_type_flag=false;
 			}
+			ci.display_camera_result.cam.parameter.change_type_flag=new_change_type_flag;
 			return null;
 		}
 		case "show_hide":

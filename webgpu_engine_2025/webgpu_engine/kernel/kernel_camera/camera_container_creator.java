@@ -16,7 +16,7 @@ public class camera_container_creator
 		for(;;){
 			long switch_time_length				=f.get_long();
 			double distance						=f.get_double();
-			double half_fovy_tanl				=Math.tan(f.get_double()*(Math.PI)/360.0);
+			double half_fovy_tanl				=Math.tan(f.get_double()*Math.PI/360.0);
 			double near_value_ratio				=f.get_double();
 			double far_value_ratio				=f.get_double();
 			double low_precision_scale			=f.get_double();
@@ -44,7 +44,7 @@ public class camera_container_creator
 			else{
 				camera_parameter cam_par=new camera_parameter(
 						movement_flag,direction_flag,change_type_flag,
-						scale_value,switch_time_length,distance,
+						scale_value,switch_time_length,distance,distance,
 						half_fovy_tanl,half_fovy_tanl,near_value_ratio,far_value_ratio,
 						projection_type_flag,low_precision_scale,high_precision_scale,
 						light_camera_flag,light_camera_flag_ex,light_camera_flag_ex_ex);

@@ -9,10 +9,11 @@ import kernel_transformation.point;
 import kernel_scene.scene_parameter;
 import kernel_scene.system_parameter;
 import kernel_driver.component_driver;
-import kernel_common_class.const_value;
+import kernel_common_class.change_name;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_driver.part_instance_driver;
+import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 import kernel_component.component_load_source_container;
 
@@ -20,24 +21,39 @@ public class extended_part_driver extends part_driver
 {
 	private double x0,y0,size,depth_start,depth_end;
 	private int modifier_container_id;
+	private change_name title_change_name;
 	
-	public extended_part_driver(
-			double my_x0,double my_y0,double my_size,
-			double my_depth_start,double my_depth_end,
-			int my_modifier_container_id)
+	public extended_part_driver(part p,double my_x0,double my_y0,double my_size,
+				double my_depth_start,double my_depth_end,int my_modifier_container_id)
 	{
 		super();
-		
+
 		x0						=my_x0;
 		y0						=my_y0;
 		size					=my_size;
 		depth_start				=my_depth_start;
 		depth_end				=my_depth_end;
 		modifier_container_id	=my_modifier_container_id;
+		
+		String file_name=p.directory_name+p.material_file_name;
+		file_reader fr=new file_reader(file_name,p.file_charset);
+		if(fr.error_flag()){
+			fr.close();
+			title_change_name=new change_name();
+			debug_information.println("camera material file error:	",file_name);
+		}else {
+			file_name=fr.directory_name+fr.get_string();
+			fr.close();
+			title_change_name=new change_name(new String[] {file_name},null,fr.get_charset());
+		}
 	}
 	public void destroy()
 	{	
 		super.destroy();
+		if(title_change_name!=null) {
+			title_change_name.destroy();
+			title_change_name=null;
+		}
 	}
 	public void initialize_part_driver(part p,scene_kernel sk,client_request_response request_response)
 	{
@@ -46,7 +62,7 @@ public class extended_part_driver extends part_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(x0,y0,size,depth_start,depth_end,modifier_container_id);
+		return new extended_part_driver(p,x0,y0,size,depth_start,depth_end,modifier_container_id);
 	}
 	public int caculate_material_id(part p,String type_str,
 			int body_id,int face_id,int loop_id,int edge_id,String material[])
@@ -56,17 +72,6 @@ public class extended_part_driver extends part_driver
 	public void create_part_material_in_head(file_writer part_head_fw,
 			part p,system_parameter system_par,scene_parameter scene_par)
 	{
-		double box_distance=1.0,my_box_distance;
-		if(p.part_mesh.part_box!=null)
-			if((my_box_distance=p.part_mesh.part_box.distance())>const_value.min_value)
-				box_distance=my_box_distance;
-		part_head_fw.print  ("		",	x0);
-		part_head_fw.print  (",",		y0);
-		part_head_fw.print  (",",		size);
-		part_head_fw.print  (",",		depth_start);
-		part_head_fw.print  (",",		depth_end);
-		part_head_fw.println(",",		box_distance);
-		part_head_fw.print  (",1");
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int primitive_id,int vertex_id,int loop_id,int edge_id,
@@ -85,11 +90,11 @@ public class extended_part_driver extends part_driver
 			component_load_source_container component_load_source_cont,
 			scene_kernel sk,client_request_response request_response)
 	{
-		return new extended_component_driver(my_component_part,modifier_container_id);
+		return new extended_component_driver(my_component_part,modifier_container_id,title_change_name);
 	}
 	public part_instance_driver create_part_instance_driver(part p,
 			scene_kernel sk,client_request_response request_response)
 	{
-		return new extended_part_instance_driver();
+		return new extended_part_instance_driver(x0,y0,size,depth_start,depth_end);
 	}
 }

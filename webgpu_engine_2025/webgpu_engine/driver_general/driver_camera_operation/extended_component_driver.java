@@ -19,15 +19,22 @@ import kernel_driver.component_instance_driver;
 public class extended_component_driver  extends component_driver
 {
 	private int modifier_container_id;
+	private change_name title_change_name;
 	
 	public void destroy()
 	{
 		super.destroy();
+		if(title_change_name!=null) {
+			title_change_name.destroy();
+			title_change_name=null;
+		}
 	}
-	public extended_component_driver(part my_component_part,int my_modifier_container_id)
+	public extended_component_driver(part my_component_part,
+			int my_modifier_container_id,change_name my_title_change_name)
 	{
 		super(my_component_part);
 		modifier_container_id=my_modifier_container_id;
+		title_change_name=my_title_change_name;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
@@ -73,7 +80,7 @@ public class extended_component_driver  extends component_driver
 			debug_information.println("Find box_parameter_channel_id less than zero	",box_parameter_channel_id);
 			return;
 		}
-		if(sk.scene_par.multiparameter_number<=box_parameter_channel_id){
+		if(box_parameter_channel_id>=sk.scene_par.multiparameter_number){
 			fr.close();
 			debug_information.println("(sk.scene_par.multiparameter_number<=box_parameter_channel_id)	",
 					sk.scene_par.multiparameter_number+"/"+box_parameter_channel_id);
@@ -107,7 +114,8 @@ public class extended_component_driver  extends component_driver
 			locate_camera loca_cam=new locate_camera(cam);
 			cam.eye_component.set_component_move_location(loca_cam.locate(my_box,loca),sk.component_cont);
 			loca_cam.scale(Math.abs(cam.parameter.scale_value));
-			cam.parameter.distance=loca_cam.distance;
+			cam.parameter.distance		=loca_cam.distance;
+			cam.parameter.bak_distance	=loca_cam.distance;
 		}while(true);
 		
 		fr.close();
@@ -118,23 +126,11 @@ public class extended_component_driver  extends component_driver
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
-		change_name title_change_name;
-		String file_name=component_part.directory_name+component_part.material_file_name;
-		file_reader fr=new file_reader(file_name,component_part.file_charset);
-		if(fr.error_flag()){
-			fr.close();
-			title_change_name=new change_name();
-			debug_information.println("camera material file error:	",file_name);
-		}else {
-			file_name=fr.directory_name+fr.get_string();
-			fr.close();
-			title_change_name=new change_name(new String[] {file_name},null,fr.get_charset());
-		}
-		
-		return new extended_component_instance_driver(comp,driver_id,modifier_container_id,
-				" "+title_change_name.search_change_name(
-						"camera_body_title+"+request_response.language_str,"body"),
-				" "+title_change_name.search_change_name(
-						"camera_face_title+"+request_response.language_str,"face"));
+		String camera_body_title=title_change_name.search_change_name(
+				"camera_body_title+"+request_response.language_str,"body");
+		String camera_face_title=title_change_name.search_change_name(
+				"camera_face_title+"+request_response.language_str,"face");
+		return new extended_component_instance_driver(comp,driver_id,
+					modifier_container_id,camera_body_title,camera_face_title);
 	}
 }

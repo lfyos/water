@@ -1,6 +1,24 @@
 function construct_event_listener()
 {
-	this.alf="0090";
+	this.alf="90";
+	
+	this.caculate_angle=function(event)
+	{
+		var alf=parseFloat(this.alf);
+		
+		if(event.ctrlKey)
+			if(event.altKey)
+				alf/=1000.0;
+			else
+				alf/=100.0;
+		else
+			if(event.altKey)
+				alf/=10.0;
+			else
+				alf/=1.0;
+
+		return alf;
+	}
 
 	this.pickupcontextmenu=function(event,component_id,scene)
 	{
@@ -24,9 +42,8 @@ function construct_event_listener()
 	};
 	this.pickupmouseup=function(event,component_id,scene)
 	{
-		var my_ep=scene.component_event_processor[component_id];
-		var alf=parseFloat(my_ep.alf);
-			
+		var alf=this.caculate_angle(event);
+		
 		switch(event.button){
 		default:
 			break;
@@ -36,16 +53,6 @@ function construct_event_listener()
 				 ["type",event.shiftKey?"true":"false"]]);
 			break;
 		case 2:
-			if(event.ctrlKey)
-				if(event.altKey)
-					alf/=1000.0;
-				else
-					alf/=100.0;
-			else
-				if(event.altKey)	
-					alf/=10.0;
-				else
-					alf/=1.0;
 			scene.caller.call_server_component(component_id,"all",
 				[["operation","body_face_rotate"],["coordinate","global"],
 				 ["type",event.shiftKey?"true":"false"],["alf",alf.toString()]]);
@@ -55,13 +62,7 @@ function construct_event_listener()
 	};
 	this.pickupkeyup=function(event,component_id,scene)
 	{
-		var my_ep=scene.component_event_processor[component_id];
-			
-		var alf=parseFloat(my_ep.alf);
-		alf=(event.shiftKey||event.ctrlKey)?(-alf):alf;
-		if(event.altKey)
-			alf=alf/10.0;
-		alf*=Math.PI/180.0;
+		var alf=this.caculate_angle(event)*Math.PI/180.0;
 
 		switch(event.keyCode){
 		case 48:	//	0-9
@@ -74,8 +75,16 @@ function construct_event_listener()
 		case 55:
 		case 56:
 		case 57:
-			my_ep.alf=my_ep.alf+(event.keyCode-48).toString();
-			my_ep.alf=my_ep.alf.substring(my_ep.alf.length-3);
+			this.alf=this.alf+(event.keyCode-48).toString();
+			while(true){
+				if(this.alf.length<=3){
+					if(this.alf.length<=1)
+						break;
+					if(this.alf.substring(1,2)!="0")
+						break;
+				}
+				this.alf=this.alf.substring(1);
+			}	
 			break;
 		case 8:		//backspace
 		case 37:	//left arrow
@@ -175,26 +184,24 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 			usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.VERTEX
 		});
 
-	this.save_buffer_data=function(target_id,project_matrix,part_object,scene)
+	this.save_buffer_data=function(target_id,project_matrix,part_object,part_driver,scene)
 	{
-		var x0				=part_object.material[0];
-		var y0				=part_object.material[1];
-		var size			=part_object.material[2];
-		var depth_start		=part_object.material[3];
-		var depth_end		=part_object.material[4];
-		var box_distance	=part_object.material[5];
+		var x0				=part_driver.init_data[0];
+		var y0				=part_driver.init_data[1];
+		var size			=part_driver.init_data[2];
+		var depth_start		=part_driver.init_data[3];
+		var depth_end		=part_driver.init_data[4];
+		var box_distance	=part_driver.init_data[5];
 		
 		var view_distance	=scene.computer.sub_operation(
-									project_matrix.right_up_center_point,
-									project_matrix.left_down_center_point);
+					project_matrix.right_up_center_point,project_matrix.left_down_center_point);
 			view_distance	=scene.computer.distance(view_distance)*size;
 		
 		var buffer_place	=8*target_id*Float32Array.BYTES_PER_ELEMENT;
-
-		scene.webgpu.device.queue.writeBuffer(this.parameter_buffer,buffer_place,
-			new Float32Array([x0,y0,view_distance,view_distance/box_distance,depth_start,depth_end,0,1]));
+		var buffer_data		=[x0,y0,view_distance,view_distance/box_distance,depth_start,depth_end,0,1];
+		scene.webgpu.device.queue.writeBuffer(
+			this.parameter_buffer,buffer_place,new Float32Array(buffer_data));
 	}
-	
 	this.draw_component=function(method_data,render_parameter,
 			target_data,part_object,part_driver,render_driver,scene)	
 	{
@@ -202,48 +209,42 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		
 		if(target_data.main_display_target_flag)
 			this.main_target_id=target_data.target_id;
-			
+
 		switch(method_data.method_id){
 		case 0:	
 			rpe.setVertexBuffer(1,this.parameter_buffer,
 					Float32Array.BYTES_PER_ELEMENT*8*this.main_target_id,
 					Float32Array.BYTES_PER_ELEMENT*8);
-
-			p=part_object.buffer_object.face.region_data;
+					
 			rpe.setPipeline(render_driver.id_pipeline);
+			p=part_object.buffer_object.face.region_data;
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);
 				rpe.draw(p[i].item_number);
 			}
 			break;
 		case 2:
-			this.save_buffer_data(target_data.target_id,target_data.project_matrix,part_object,scene);
+			this.save_buffer_data(target_data.target_id,
+				target_data.project_matrix,part_object,part_driver,scene);
+				
 			rpe.setVertexBuffer(1,this.parameter_buffer,
 					Float32Array.BYTES_PER_ELEMENT*8*target_data.target_id,
 					Float32Array.BYTES_PER_ELEMENT*8);
-		
-			p=part_object.buffer_object.face.region_data;
-			rpe.setPipeline(render_driver.face_pipeline);
 			
+			rpe.setPipeline(render_driver.face_pipeline);
+			p=part_object.buffer_object.face.region_data;
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);
 				rpe.draw(p[i].item_number);
 			};
-	
-			p=part_object.buffer_object.edge.region_data;
-			rpe.setPipeline(render_driver.edge_pipeline);
 
+			rpe.setPipeline(render_driver.edge_pipeline);
+			p=part_object.buffer_object.edge.region_data;
 			for(var i=0,ni=p.length;i<ni;i++){
 				rpe.setVertexBuffer(0,p[i].buffer);
 				rpe.draw(p[i].item_number);
 			}
-	
-			p=part_object.buffer_object.point.region_data;
-			rpe.setPipeline(render_driver.point_pipeline);
-			for(var i=0,ni=p.length;i<ni;i++){
-				rpe.setVertexBuffer(0,p[i].buffer);
-				rpe.draw(p[i].item_number);
-			}
+
 			break;
 		default:
 			break;
@@ -251,7 +252,6 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 	};
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
-		
 	}
 	this.destroy=function()
 	{

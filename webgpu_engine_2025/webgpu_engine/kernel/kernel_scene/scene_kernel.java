@@ -361,7 +361,7 @@ public class scene_kernel
 		part_cont.execute_append();
 		
 		render_cont.load_part(part_type_code,2,part_loader_cont,system_par,scene_par,boftal_container,
-			string_locker_container,process_bar,"load_second_class_part",fast_load_type);
+							string_locker_container,process_bar,"load_second_class_part",fast_load_type);
 		debug_information.println("Load second class part time length:	",
 				(current_time=new Date().getTime())-start_time);
 		debug_information.println();
@@ -396,7 +396,7 @@ public class scene_kernel
 		part_cont.execute_append();
 	
 		render_cont.load_part(part_type_code,4,part_loader_cont,system_par,scene_par,boftal_container,
-				string_locker_container,process_bar,"load_third_class_part",fast_load_type);
+							string_locker_container,process_bar,"load_third_class_part",fast_load_type);
 
 		debug_information.println("Create top assemble time length:	",
 				(current_time=new Date().getTime())-start_time);
@@ -413,7 +413,7 @@ public class scene_kernel
 		
 		start_time=current_time;
 		
-		component_cont.original_part_number	=new compress_render_container(
+		component_cont.original_part_number=new compress_render_container(
 				render_cont,part_cont,component_cont.root_component).original_part_number;
 		
 		part_cont.destroy();

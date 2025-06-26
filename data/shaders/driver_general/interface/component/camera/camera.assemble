@@ -335,39 +335,39 @@
 							case 2:
 								scene.caller.call_server_component("camera_operation_component","all",
 									[["operation","project"],["project",(function_id==1)?"frustum":"orthogonal"]]);
-								break;
+								return;
 							case 3:
 								return;
 							case 4:
 							case 5:
 								scene.caller.call_server_component("camera_operation_component","all",
 									[["operation","change_type"],["value",(function_id==4)?"true":"false"]]);
-								break;
+								return;
 							case 6:
 								return;
 							case 7:
 							case 8:
 								scene.caller.call_server_component("camera_operation_component","all",
 									[["operation","view_move"],	["value",(function_id==7)?"true":"false"]]);
-								break;
+								return;
 							case 9:
 								return;
 							case 10:
 							case 11:
 								scene.caller.call_server_component("camera_operation_component","all",
 									[["operation","view_direct"],["value",(function_id==10)?"true":"false"]]);
-								break;
+								return;
 							case 12:
 								return;
 							case 13:
 							case 14:
 								scene.caller.call_server_component("camera_operation_component","all",
 									[["operation","view_scale"],["value",(function_id==13)?"true":"false"]]);
-								break;
+								return;
 							default:
 								scene.system_call_processor.set_menu_show("相机功能选择组件");
 								scene.system_call_processor.set_menu_hide(component_id);
-								break;
+								return;
 							}
 						}
 					};
