@@ -35,15 +35,18 @@ fn vertex_main(@location(0) my_position:vec4<f32>)->vertex_to_fragment_struct
 @fragment
 fn fragment_main(vf:vertex_to_fragment_struct) -> fragment_to_target_struct
 {
-	var p0=target_info.eye_point;
+	var     half_fovy_tanl	=camera_info[target_info.camera_id].    half_fovy_tanl;
+	var bak_half_fovy_tanl	=camera_info[target_info.camera_id].bak_half_fovy_tanl;
+	var view_scale			=bak_half_fovy_tanl/half_fovy_tanl;
 
-	var pp:vec4<f32>;
-	if(target_info.projection_type_flag>0){
-		pp=target_info.negative_projection_matrix		*vf.coord;
-	}else{
-		pp=target_info.other_negative_projection_matrix	*vf.coord;
-	}
-	var dp=(pp/pp.w)-(p0/p0.w);
+	var pp=vec4<f32>(view_scale,view_scale,1.0,1.0)*vf.coord;
+	if(camera_info[target_info.camera_id].projection_type_flag>0)
+		{pp=target_info.negative_projection_matrix*pp;}
+	else
+		{pp=target_info.other_negative_projection_matrix*pp;}
+	
+	var p0=camera_info[target_info.camera_id].eye_point;
+	var dp=pp/pp.w-p0/p0.w;
 	var ap=abs(dp);
 	
 	var back_color	=textureSample(back_texture,	texture_sampler,	vec2<f32>((1.0+dp.x/dp.z)/2.0,(1.0-dp.y/dp.z)/2.0));
@@ -54,8 +57,9 @@ fn fragment_main(vf:vertex_to_fragment_struct) -> fragment_to_target_struct
 	var down_color	=textureSample(down_texture,	texture_sampler,	vec2<f32>((1.0-dp.x/dp.y)/2.0,(1.0+dp.z/dp.y)/2.0));
 	var no_box_color=textureSample(no_box_texture,	texture_sampler,	(vec2(1.0,1.0)-vf.coord.xy)/2.0);
 	
-	var ft	:fragment_to_target_struct;
-	ft.depth=0.9999999;
+	var ft	:	fragment_to_target_struct;
+	
+	ft.depth=1.0;
 
 	if(no_box_mode){
 		ft.color=no_box_color; 

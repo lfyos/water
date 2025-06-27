@@ -22,16 +22,18 @@ override system_id_workgroup_size	:	i32;
 	component_id=i32(global_id.x)+component_workgroup_size*component_id;
 	
 	if(component_id<component_number){
-		var component_matrix=mat4x4<f32>(
-				vec4<f32>(1.0,0.0,0.0,0.0),vec4<f32>(0.0,1.0,0.0,0.0),
-				vec4<f32>(0.0,0.0,1.0,0.0),vec4<f32>(0.0,0.0,0.0,1.0));	
-		for(var i=component_id;i>=0;i=parent_id[i]){
-			component_matrix=move_matrix[i]*component_matrix;
-			if(location_flag[i]>0)
-				{break;}
-			component_matrix=relative_matrix[i]*component_matrix;
+		if(location_flag[component_id]>0)
+			{absolute_matrix[component_id]=move_matrix[component_id];}
+		else{
+			var component_matrix=relative_matrix[component_id]*move_matrix[component_id];	
+			for(var i=parent_id[component_id];i>=0;i=parent_id[i]){
+				component_matrix=move_matrix[i]*component_matrix;
+				if(location_flag[i]>0)
+					{break;}
+				component_matrix=relative_matrix[i]*component_matrix;
+			}
+			absolute_matrix[component_id]=component_matrix;	
 		}
-		absolute_matrix[component_id]=component_matrix;	
 	}
 }
 @compute @workgroup_size(1)	fn set_location_main(@builtin(global_invocation_id)global_id: vec3<u32>)
@@ -47,11 +49,13 @@ override system_id_workgroup_size	:	i32;
 		id_info[id_index_id].matrix=absolute_matrix[my_component_id];
 	}
 	if(id_index_id<camera_number){
-		var my_component_id=camera_info[id_index_id].component_id;
-		var my_matrix	=absolute_matrix[my_component_id];
-		var my_position	=my_matrix*vec4(0.0,0.0,camera_info[id_index_id].distance,1.0);
+		var my_component_id	=camera_info[id_index_id].component_id;
+		var my_matrix		=absolute_matrix[my_component_id];
+		var my_eye_point	=my_matrix*vec4(0.0,0.0,camera_info[id_index_id].distance,1.0);
 
 		camera_info[id_index_id].matrix		=my_matrix;
-		camera_info[id_index_id].position	=my_position/my_position.w;
+		camera_info[id_index_id].eye_point	=my_eye_point/my_eye_point.w;
+		camera_info[id_index_id].near_value	=camera_info[id_index_id].near_value_ratio	*camera_info[id_index_id].distance;
+		camera_info[id_index_id].far_value	=camera_info[id_index_id].far_value_ratio	*camera_info[id_index_id].distance;
 	}
 }

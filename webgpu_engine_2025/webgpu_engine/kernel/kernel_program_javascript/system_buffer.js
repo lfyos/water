@@ -65,8 +65,7 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*10*
 				(scene.component_location_data.identify_matrix.length);
 	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*4*33;
-	my_target_buffer_size+=Float32Array.BYTES_PER_ELEMENT*8;
-	my_target_buffer_size+=Int32Array.	BYTES_PER_ELEMENT*12;
+	my_target_buffer_size+=Int32Array.	BYTES_PER_ELEMENT*8;
 	
 	for(this.target_buffer_stride=0;this.target_buffer_stride<my_target_buffer_size;)
 		this.target_buffer_stride+=scene.webgpu.adapter.limits.minUniformBufferOffsetAlignment;
@@ -136,28 +135,18 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 		});
 
 //	init camera buffer:	binding point 4
-	
-	var my_camera_buffer_size=0;
-	
-	my_camera_buffer_size+=Int32Array.BYTES_PER_ELEMENT*1;
-	my_camera_buffer_size+=Int32Array.BYTES_PER_ELEMENT*7;
-	
-	my_camera_buffer_size+=Float32Array.BYTES_PER_ELEMENT*8;
-	my_camera_buffer_size+=Float32Array.BYTES_PER_ELEMENT*
-				(scene.component_location_data.identify_matrix.length);
-	
-	this.camera_buffer_step=my_camera_buffer_size;
-	
-	my_camera_buffer_size*=scene.camera.camera_number;
-	
+
+	this.camera_buffer_step=0;
+	this.camera_buffer_step+=Int32Array.BYTES_PER_ELEMENT*8;
+	this.camera_buffer_step+=Float32Array.BYTES_PER_ELEMENT*12;
+	this.camera_buffer_step+=scene.component_location_data.identify_matrix.length
+								*Float32Array.BYTES_PER_ELEMENT;
+								
 	this.camera_buffer	=scene.webgpu.device.createBuffer(
 		{
-			size	:	my_camera_buffer_size,
+			size	:	scene.camera.camera_number*this.camera_buffer_step,
 			usage	:	GPUBufferUsage.UNIFORM|GPUBufferUsage.COPY_DST|GPUBufferUsage.STORAGE
 		});
-	for(var i=0,ni=scene.camera.camera_number;i<ni;i++)
-		scene.webgpu.device.queue.writeBuffer(this.camera_buffer,
-					this.camera_buffer_step*i,new Int32Array([0]));
 					
 // init system_bindgroup
 	this.system_bindgroup=scene.webgpu.device.createBindGroup(
@@ -201,7 +190,7 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 				resource	:
 				{
 					buffer	:	this.camera_buffer,
-					size	:	my_camera_buffer_size
+					size	:	scene.camera.camera_number*this.camera_buffer_step
 				}
 			}
 		]
@@ -272,6 +261,25 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 		scene.webgpu.device.queue.writeBuffer(this.system_buffer,0,	new Int32Array(int_data));
 		scene.webgpu.device.queue.writeBuffer(this.system_buffer,
 					int_data.length*Int32Array.BYTES_PER_ELEMENT,	new Float32Array(float_data));
+					
+		for(var p,i=0,ni=scene.camera.camera_object_parameter.length;i<ni;i++)
+			if((p=scene.camera.camera_object_parameter[i]).should_update_buffer_data_flag){
+				p.should_update_buffer_data_flag=false;
+				int_data	=[
+					p.component_id,				p.projection_type_flag?1:0,	
+					p.light_camera_flag,		p.light_camera_flag_ex,		p.light_camera_flag_ex_ex,	
+					0,0,0
+				];
+				float_data	=[
+					p.distance,			p.bak_distance,
+					p.half_fovy_tanl,	p.bak_half_fovy_tanl,
+					p.near_value_ratio,	p.far_value_ratio
+				];
+				var offset=this.camera_buffer_step*i;
+				scene.webgpu.device.queue.writeBuffer(this.camera_buffer,offset,new Int32Array(int_data));
+				offset+=Int32Array.BYTES_PER_ELEMENT*int_data.length;
+				scene.webgpu.device.queue.writeBuffer(this.camera_buffer,offset,new Float32Array(float_data));
+			}
 	};
 	this.set_target_buffer=function(render_data,scene)
 	{
@@ -286,14 +294,9 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 			render_data.target_view_parameter.view_height,
 			render_data.target_view_parameter.whole_view_width,
 			render_data.target_view_parameter.whole_view_height,
-			
-			render_data.project_matrix.projection_type_flag?1:0,
-			
+
 			scene.scene_id,
-			
-			render_data.camera_id,
-			
-			0,0,0
+			render_data.camera_id
 		];
 		var matrix_array=[
 			render_data.project_matrix.matrix,
@@ -373,18 +376,7 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 				float_data.push(0,0,0,0);
 			else
 				float_data.push(p[0],p[1],p[2],p[3]);
-				
-		float_data.push(
-			render_data.project_matrix.half_fovy_tanl,
-			render_data.project_matrix.near_value_ratio,
-			render_data.project_matrix.far_value_ratio,
-			
-			render_data.project_matrix.distance,
-			render_data.project_matrix.near_value,
-			render_data.project_matrix.far_value,
-
-			0,0
-		);
+		
 		var offset=this.target_buffer_stride*render_data.target_id;
 		scene.webgpu.device.queue.writeBuffer(this.target_buffer,offset,new Float32Array(float_data));
 		offset+=float_data.length*Float32Array.BYTES_PER_ELEMENT;

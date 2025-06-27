@@ -256,8 +256,7 @@ async function request_render_data(scene)
 		
 		scene.component_render_data.modify_component_render_parameter(response_data[2],response_data[3],scene);
 		scene.component_render_data.modify_component_buffer_parameter(response_data[4],scene);
-		scene.camera.modify_camera_data(response_data[5],scene.webgpu,
-			scene.system_buffer.camera_buffer,scene.system_buffer.camera_buffer_step);
+		scene.camera.modify_camera_data(response_data[5]);
 		scene.component_location_data.set_component_location(response_data[6]);
 		for(var p=response_data[7],i=0,ni=p.length;i<ni;i++)
 			scene.vertex_data_downloader.buffer_head_request_queue.push(p[i]);

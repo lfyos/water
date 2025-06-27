@@ -10,7 +10,7 @@ public class camera_buffer
 {
 	private int camera_component_id[];
 	
-	private double distance[],half_fovy_tanl[],near_ratio[],far_ratio[];
+	private double distance[],bak_distance[],half_fovy_tanl[],bak_half_fovy_tanl[],near_ratio[],far_ratio[];
 	private int projection_type_flag[],light_camera_flag[][];
 	
 	public void destroy()
@@ -18,7 +18,9 @@ public class camera_buffer
 		camera_component_id=null;
 		
 		distance=null;
+		bak_distance=null;
 		half_fovy_tanl=null;
+		bak_half_fovy_tanl=null;
 		near_ratio=null;
 		far_ratio=null;
 		projection_type_flag=null;
@@ -32,7 +34,9 @@ public class camera_buffer
 		projection_type_flag=new int[my_camera_array.length];
 		light_camera_flag=new int[my_camera_array.length][];
 		distance=new double[my_camera_array.length];
+		bak_distance=new double[my_camera_array.length];
 		half_fovy_tanl=new double[my_camera_array.length];
+		bak_half_fovy_tanl=new double[my_camera_array.length];
 		near_ratio=new double[my_camera_array.length];
 		far_ratio=new double[my_camera_array.length];
 		
@@ -42,7 +46,9 @@ public class camera_buffer
 			projection_type_flag[i]	=-1;
 			light_camera_flag[i]	=new int[] {0,0,0};
 			distance[i]				=-1;
+			bak_distance[i]			=-1;
 			half_fovy_tanl[i]		=-1;
+			bak_half_fovy_tanl[i]	=-1;
 			near_ratio[i]			=-1;
 			far_ratio[i]			=-1;
 		}
@@ -58,7 +64,9 @@ public class camera_buffer
 		camera_component_id	[camera_id]=(cam.eye_component==null)?-1:(cam.eye_component.component_id);
 		
 		distance			[camera_id]=cam.parameter.distance;
+		bak_distance		[camera_id]=cam.parameter.bak_distance;
 		half_fovy_tanl		[camera_id]=cam.parameter.half_fovy_tanl;
+		bak_half_fovy_tanl	[camera_id]=cam.parameter.bak_half_fovy_tanl;
 		near_ratio			[camera_id]=cam.parameter.near_ratio;
 		far_ratio			[camera_id]=cam.parameter.far_ratio;
 		projection_type_flag[camera_id]=cam.parameter.projection_type_flag?1:0;
@@ -91,21 +99,38 @@ public class camera_buffer
 				ci.request_response.print(",",current_camera_id);
 			ci.request_response.print(",1,",distance[current_camera_id]=cam.parameter.distance);
 		}
-		if(Math.abs(cam.parameter.half_fovy_tanl-half_fovy_tanl[current_camera_id])>const_value.min_value){
+		if(Math.abs(cam.parameter.bak_distance-bak_distance[current_camera_id])>const_value.min_value){
 			if(create_flag.first_item_flag) {
 				ci.request_response.print(current_camera_id);
 				create_flag.first_item_flag=false;
 			}else
 				ci.request_response.print(",",current_camera_id);
-			ci.request_response.print(",2,",half_fovy_tanl[current_camera_id]=cam.parameter.half_fovy_tanl);
+			ci.request_response.print(",2,",bak_distance[current_camera_id]=cam.parameter.bak_distance);
 		}
+		if(Math.abs(cam.parameter.    half_fovy_tanl-    half_fovy_tanl[current_camera_id])>const_value.min_value){
+			if(create_flag.first_item_flag) {
+				ci.request_response.print(current_camera_id);
+				create_flag.first_item_flag=false;
+			}else
+				ci.request_response.print(",",current_camera_id);
+			ci.request_response.print(",3,",  half_fovy_tanl[current_camera_id]=cam.parameter.half_fovy_tanl);
+		}
+		if(Math.abs(cam.parameter.bak_half_fovy_tanl-bak_half_fovy_tanl[current_camera_id])>const_value.min_value){
+			if(create_flag.first_item_flag) {
+				ci.request_response.print(current_camera_id);
+				create_flag.first_item_flag=false;
+			}else
+				ci.request_response.print(",",current_camera_id);
+			ci.request_response.print(",4,",bak_half_fovy_tanl[current_camera_id]=cam.parameter.bak_half_fovy_tanl);
+		}
+		
 		if(Math.abs(cam.parameter.near_ratio-near_ratio[current_camera_id])>const_value.min_value){
 			if(create_flag.first_item_flag) {
 				ci.request_response.print(current_camera_id);
 				create_flag.first_item_flag=false;
 			}else
 				ci.request_response.print(",",current_camera_id);
-			ci.request_response.print(",3,",near_ratio[current_camera_id]=cam.parameter.near_ratio);
+			ci.request_response.print(",5,",near_ratio[current_camera_id]=cam.parameter.near_ratio);
 		}
 		if(Math.abs(cam.parameter.far_ratio-far_ratio[current_camera_id])>const_value.min_value){
 			if(create_flag.first_item_flag) {
@@ -113,7 +138,7 @@ public class camera_buffer
 				create_flag.first_item_flag=false;
 			}else
 				ci.request_response.print(",",current_camera_id);
-			ci.request_response.print(",4,",far_ratio[current_camera_id]=cam.parameter.far_ratio);
+			ci.request_response.print(",6,",far_ratio[current_camera_id]=cam.parameter.far_ratio);
 		}
 		int value=cam.parameter.projection_type_flag?1:0;
 		if(projection_type_flag[current_camera_id]!=value){
@@ -122,7 +147,7 @@ public class camera_buffer
 				create_flag.first_item_flag=false;
 			}else
 				ci.request_response.print(",",current_camera_id);
-			ci.request_response.print(",5,",projection_type_flag[current_camera_id]=value);
+			ci.request_response.print(",7,",projection_type_flag[current_camera_id]=value);
 		}
 		
 		if(	  (light_camera_flag[current_camera_id][0]!=cam.parameter.light_camera_flag)
@@ -139,7 +164,7 @@ public class camera_buffer
 			}else
 				ci.request_response.print(",",current_camera_id);
 			
-			ci.request_response.print(",6,",cam.parameter.light_camera_flag).
+			ci.request_response.print(",8,",cam.parameter.light_camera_flag).
 								print(",",	cam.parameter.light_camera_flag_ex).
 								print(",",	cam.parameter.light_camera_flag_ex_ex);
 		}

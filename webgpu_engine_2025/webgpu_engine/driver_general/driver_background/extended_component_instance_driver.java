@@ -38,7 +38,9 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{	
-		ci.request_response.print("[",mode).print(",",jason_string.change_string(directory_name)).print("]");
+		ci.request_response.print("[",mode).
+							print(",",jason_string.change_string(directory_name)).
+							print("]");
 	}
 	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{

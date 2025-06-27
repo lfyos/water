@@ -11,6 +11,8 @@ import kernel_scene.system_parameter;
 import kernel_file_manager.file_reader;
 import kernel_driver.render_instance_driver;
 import kernel_network.client_request_response;
+import kernel_common_class.change_name;
+import kernel_common_class.debug_information;
 import kernel_component.component_load_source_container;
 
 public class extended_render_driver extends render_driver
@@ -55,7 +57,21 @@ public class extended_render_driver extends render_driver
 			component_load_source_container component_load_source_cont,
 			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(p,
+		change_name title_change_name;
+		
+		String file_name=p.directory_name+p.material_file_name;
+		file_reader fr=new file_reader(file_name,p.file_charset);
+		if(fr.error_flag()){
+			fr.close();
+			title_change_name=new change_name();
+			debug_information.println("camera material file error:	",file_name);
+		}else {
+			file_name=fr.directory_name+fr.get_string();
+			fr.close();
+			title_change_name=new change_name(new String[] {file_name},null,fr.get_charset());
+		}
+		
+		return new extended_part_driver(p,title_change_name,
 					part_fr.get_double(),part_fr.get_double(),part_fr.get_double(),
 					//x0,y0,size
 					part_fr.get_double(),part_fr.get_double(),part_fr.get_int());

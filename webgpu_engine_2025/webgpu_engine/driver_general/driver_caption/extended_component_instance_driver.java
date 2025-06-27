@@ -30,7 +30,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
-		
 	}
 	private String pickup_string(client_information ci,int display_precision)
 	{
@@ -41,10 +40,11 @@ public class extended_component_instance_driver extends component_instance_drive
 		if(ci.parameter.comp==null)
 			return ret_val;
 		for(int i=0,ni=ci.parameter.comp.driver_array.size();i<ni;i++){
-			part p=ci.parameter.comp.driver_array.get(i).component_part;
-			if(p==null)
+			part p;
+			if((p=ci.parameter.comp.driver_array.get(i).component_part)==null)
 				continue;
-			component_instance_driver in_d=ci.component_instance_driver_cont.get_component_instance_driver(ci.parameter.comp,i);
+			component_instance_driver in_d=ci.component_instance_driver_cont.
+					get_component_instance_driver(ci.parameter.comp,i);
 			if(in_d==null)
 				continue;
 			if(ci.parameter.comp.uniparameter.display_part_name_or_component_name_flag){

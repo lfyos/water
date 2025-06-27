@@ -23,8 +23,6 @@ public class component_instance_driver
 	
 	public instance_display_parameter display_parameter;
 	
-	public boolean instance_driver_can_not_bundle_render_flag;
-
 	public void destroy()
 	{
 		if(render_version!=null) {
@@ -105,8 +103,6 @@ public class component_instance_driver
 		instance_driver_lod_precision_scale	=1.0;
 		
 		display_parameter			=new instance_display_parameter();
-		
-		instance_driver_can_not_bundle_render_flag=true;
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{

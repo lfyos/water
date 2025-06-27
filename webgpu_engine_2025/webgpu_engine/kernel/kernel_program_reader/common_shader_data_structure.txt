@@ -102,17 +102,6 @@ struct target_information
 	view_volume_box_p0						:	vec4<f32>,
 	view_volume_box_p1						:	vec4<f32>,
 
-	half_fovy_tanl							:	f32,
-	near_value_ratio						:	f32,
-	far_value_ratio							:	f32,
-			
-	distance								:	f32,
-	near_value								:	f32,
-	far_value								:	f32,
-	
-	tmp_float_0								:	f32,
-	tmp_float_1								:	f32,
-	
 	target_view_x0							:	i32,
 	target_view_y0							:	i32,
 	target_view_width						:	i32,
@@ -120,14 +109,8 @@ struct target_information
 	target_whole_view_width					:	i32,
 	target_whole_view_height				:	i32,
 	
-	projection_type_flag					:	i32,
-	
 	scene_id								:	i32,
-	camera_id								:	i32,
-	
-	tmp_int_0								:	i32,
-	tmp_int_1								:	i32,
-	tmp_int_2								:	i32
+	camera_id								:	i32
 };
 
 struct method_information
@@ -164,19 +147,26 @@ struct id_information
 struct camera_information 
 {
 	component_id							:	i32,
-	
+	projection_type_flag					:	i32,
 	light_camera_flag						:	i32,
 	light_camera_flag_ex					:	i32,
 	light_camera_flag_ex_ex					:	i32,
-	
-	tmp_int_v								:	vec4<i32>,
+	tmp_int_0								:	i32,
+	tmp_int_1								:	i32,
+	tmp_int_2								:	i32,
 	
 	distance								:	f32,
+	bak_distance							:	f32,
+	half_fovy_tanl							:	f32,
+	bak_half_fovy_tanl						:	f32,
 	
-	tmp_float_0								:	f32,
-	tmp_float_1								:	f32,
-	tmp_float_2								:	f32,
+	near_value_ratio						:	f32,
+	far_value_ratio							:	f32,
 	
-	position								:	vec4<f32>,
+	near_value								:	f32,
+	far_value								:	f32,
+	
+	eye_point								:	vec4<f32>,
+	
 	matrix									:	mat4x4<f32>
 };

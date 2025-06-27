@@ -54,9 +54,7 @@ public class extended_component_driver  extends component_driver
 	{
 		if(global_private_flag&&cmc==null)
 			cmc=new component_marker_container(directory_comp_name,file_name,sk.component_cont);
-		
 		return new extended_component_instance_driver(comp,driver_id,
-						global_private_flag?cmc:new component_marker_container(pickup_flag),
-						modifier_container_id);
+			global_private_flag?cmc:new component_marker_container(pickup_flag),modifier_container_id);
 	}
 }

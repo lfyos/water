@@ -93,7 +93,8 @@ function init_component_event_processor(screen_rectangle_component_id,scene)
 		if(ep.change_type_flag)
 			p.distance		/=Math.exp(mouse_wheel_number/2000);
 		else
-			p.half_fovy_tanl/=Math.exp(mouse_wheel_number/2000);	
+			p.half_fovy_tanl/=Math.exp(mouse_wheel_number/2000);
+		p.should_update_buffer_data_flag=true;
 
 		scene.caller.call_server_component(component_id,0,[["operation","scale"],	
 			["distance",p.distance],["half_fovy_tanl",p.half_fovy_tanl],ep.control_code(event)]);

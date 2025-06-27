@@ -179,9 +179,9 @@ public class locate_camera
 
 		return move_location;
 	}
-	public location locate(box my_locate_box,location dir)
+	public location locate(box my_locate_box,location direction_loca)
 	{
-		location ret_val=locate(my_locate_box.center(),dir);
+		location ret_val=locate(my_locate_box.center(),direction_loca);
 		locate_box=my_locate_box;
 		return ret_val;
 	}
@@ -211,10 +211,10 @@ public class locate_camera
 	}
 	public void scale(double scale_value)
 	{
+		double box_distance;
 		if(locate_box!=null)
 			if(scale_value>=(const_value.min_value))
-				if(locate_box.distance2()>=(const_value.min_value2)){
-					double box_distance=locate_box.distance();
+				if((box_distance=locate_box.distance())>=(const_value.min_value)){
 					distance		=box_distance/(cam.parameter.half_fovy_tanl	*scale_value)/2.0;
 					half_fovy_tanl	=box_distance/(cam.parameter.distance		*scale_value)/2.0;
 				}

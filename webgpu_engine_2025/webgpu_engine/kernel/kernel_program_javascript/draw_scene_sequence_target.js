@@ -49,7 +49,8 @@ function scene_target_end_routine(target_id,scene_target_array,scene)
 		target_part_object,target_part_driver,target_render_driver,scene);
 	return;
 }
-function draw_scene_target_routine(original_target_id,render_component_target_id,scene_target_array,pass_id,scene)
+function draw_scene_target_routine(original_target_id,
+	render_component_target_id,scene_target_array,pass_id,scene)
 {
 	var scene_target=scene_target_array[pass_id];
 	if((typeof(scene_target)!="object")||(scene_target==null))
@@ -77,7 +78,7 @@ function draw_scene_target_routine(original_target_id,render_component_target_id
 	scene.webgpu.render_pass_encoder.setViewport(
 		view_x0,whole_view_height-(view_y0+view_height),view_width,view_height,0,1);
 
-	var comonent_render_data=scene.render_buffer_array[render_component_target_id];
+	var target_data=scene.render_buffer_array[render_component_target_id];
 
 	for(var i=0,ni=method_array.length;i<ni;i++){
 		if(method_array[i].method_id<0)
@@ -98,9 +99,9 @@ function draw_scene_target_routine(original_target_id,render_component_target_id
 				if((typeof(part_driver)!="object")||(part_driver==null))
 					continue;
 				var component_render_parameter	=part_object.component_render_parameter;
-				if(comonent_render_data.target_id>=component_render_parameter.length)
+				if(target_data.target_id>=component_render_parameter.length)
 					continue;
-			   	var render_parameter_array=component_render_parameter[comonent_render_data.target_id];
+			   	var render_parameter_array=component_render_parameter[target_data.target_id];
 				for(var j=0,nj=render_parameter_array.length;j<nj;j++){
 					var data_buffer_id	=render_parameter_array[j][0];
 					var render_parameter=render_parameter_array[j][1];
@@ -110,7 +111,7 @@ function draw_scene_target_routine(original_target_id,render_component_target_id
 					scene.system_buffer.set_system_bindgroup(original_target_id,method_array[i].method_id,
 							component_ids.component_id,component_ids.driver_id,scene);
 					component_driver.draw_component(method_array[i],render_parameter,
-							comonent_render_data,part_object,part_driver,render_driver,scene);
+							target_data,part_object,part_driver,render_driver,scene);
 				}
 			}
 		}

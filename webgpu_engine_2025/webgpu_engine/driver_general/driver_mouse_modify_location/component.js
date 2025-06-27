@@ -536,11 +536,13 @@ function mousewheel(event,component_id,scene)
 	if(event.ctrlKey||event.altKey||event.shiftKey)	
 		mouse_wheel_number*=ep.low_precision_scale;
 
+	var p=scene.camera.camera_object_parameter[ep.render_data.camera_id];
 	if(ep.change_type_flag)
-		scene.camera.camera_object_parameter[ep.render_data.camera_id].distance		/=Math.exp(mouse_wheel_number);
+		p.distance		/=Math.exp(mouse_wheel_number);
 	else
-		scene.camera.camera_object_parameter[ep.render_data.camera_id].half_fovy_tanl	/=Math.exp(mouse_wheel_number);
-
+		p.half_fovy_tanl/=Math.exp(mouse_wheel_number);
+	p.should_update_buffer_data_flag=true;
+		
 	send_location_to_webserver("mousemove",ep.component_id,scene,true);
 	
 	return false;
@@ -617,10 +619,13 @@ function mobile_phone(event,component_id,scene)
 		switch(event.type){
 		case "touchmove":
 			var mouse_wheel_number=0.125*Math.log((dx*dx+dy*dy)/(ep.touchstart_distance_2));
+			var p=scene.camera.camera_object_parameter[ep.render_data.camera_id];
 			if(ep.change_type_flag)
-				scene.camera.camera_object_parameter[ep.render_data.camera_id].distance		 /=Math.exp(mouse_wheel_number);
+				p.distance		 /=Math.exp(mouse_wheel_number);
 			else
-				scene.camera.camera_object_parameter[ep.render_data.camera_id].half_fovy_tanl/=Math.exp(mouse_wheel_number);
+				p.half_fovy_tanl/=Math.exp(mouse_wheel_number);
+			p.should_update_buffer_data_flag=true;
+			
 			send_location_to_webserver("mousemove",ep.component_id,scene,false);
 		case "touchstart":
 			ep.touchstart_distance_2=dx*dx+dy*dy;

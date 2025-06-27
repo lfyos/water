@@ -47,9 +47,10 @@ function construct_component_location_object(my_component_number,my_computer,my_
 			var old_caculate_location_flag=this.component[component_id].caculate_location_flag;
 			this.component[component_id].caculate_location_flag=new_caculate_location_flag;
 			if(old_caculate_location_flag^new_caculate_location_flag)
-				this.webgpu.device.queue.writeBuffer(this.component_location_flag_buffer,
+				this.webgpu.device.queue.writeBuffer(
+					this.component_location_flag_buffer,
 					Int32Array.BYTES_PER_ELEMENT*component_id,
-					new Int32Array(new_caculate_location_flag?1:0));
+					new Int32Array([new_caculate_location_flag?1:0]));
 		}
 	};
 	this.decode_location=function(data)
@@ -94,8 +95,10 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				this.webgpu.device.queue.writeBuffer(this.component_relative_buffer,buffer_position,
 					new Float32Array(this.component[component_id].relative_matrix));
 			if(old_caculate_location_flag^new_caculate_location_flag)
-				this.webgpu.device.queue.writeBuffer(this.component_location_flag_buffer,
-					Int32Array.BYTES_PER_ELEMENT*component_id,new Int32Array(new_caculate_location_flag?1:0));
+				this.webgpu.device.queue.writeBuffer(
+					this.component_location_flag_buffer,
+					Int32Array.BYTES_PER_ELEMENT*component_id,
+					new Int32Array([new_caculate_location_flag?1:0]));
 		}
 	};
 	this.get_component_move_location=function(component_id)
@@ -151,9 +154,9 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		
 		return loca;
 	};
-	this.do_component_location_initialization=function(component_array_sorted_by_id,
-				id_buffer,camera_buffer,system_id_number,camera_number,
-				common_shader_data_structure,location_shader_program)
+	this.do_component_location_initialization=function(
+			component_array_sorted_by_id,id_buffer,camera_buffer,system_id_number,
+			camera_number,common_shader_data_structure,location_shader_program)
 	{
 		for(var i=0,ni=this.component_number;i<ni;i++){
 			var p=component_array_sorted_by_id[i].component_parent;
@@ -186,8 +189,8 @@ function construct_component_location_object(my_component_number,my_computer,my_
 				usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.STORAGE
 			});
 
-		var my_parent_id_array=new Array(this.component_number);
-		var my_location_flag_array=new Array(this.component_number);
+		var my_parent_id_array		=new Array(this.component_number);
+		var my_location_flag_array	=new Array(this.component_number);
 		for(var i=0,ni=this.component_number;i<ni;i++){
 			my_parent_id_array[i]		=this.component[i].parent_id;
 			my_location_flag_array[i]	=0;
@@ -371,16 +374,12 @@ function construct_component_location_object(my_component_number,my_computer,my_
 		encoder.setBindGroup(0,this.component_bindgroup);
 		
 		encoder.setPipeline(this.compute_location_pipeline);
-		encoder.dispatchWorkgroups(
-			this.component_workgroup_size,
-			this.component_workgroup_size,
-			this.component_workgroup_size);	
+		encoder.dispatchWorkgroups(this.component_workgroup_size,
+			this.component_workgroup_size,this.component_workgroup_size);	
 		
 		encoder.setPipeline(this.set_location_pipeline);
-		encoder.dispatchWorkgroups(
-			this.system_id_workgroup_size,
-			this.system_id_workgroup_size,
-			this.system_id_workgroup_size);
+		encoder.dispatchWorkgroups(this.system_id_workgroup_size,
+			this.system_id_workgroup_size,this.system_id_workgroup_size);
 	}
 	this.destroy=function()
 	{

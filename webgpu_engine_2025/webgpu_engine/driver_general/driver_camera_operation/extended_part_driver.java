@@ -13,20 +13,23 @@ import kernel_common_class.change_name;
 import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_driver.part_instance_driver;
-import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 import kernel_component.component_load_source_container;
 
 public class extended_part_driver extends part_driver
 {
-	private double x0,y0,size,depth_start,depth_end;
-	private int modifier_container_id;
 	private change_name title_change_name;
 	
-	public extended_part_driver(part p,double my_x0,double my_y0,double my_size,
+	private double x0,y0,size,depth_start,depth_end;
+	private int modifier_container_id;
+	
+	public extended_part_driver(part p,change_name my_title_change_name,
+				double my_x0,double my_y0,double my_size,
 				double my_depth_start,double my_depth_end,int my_modifier_container_id)
 	{
 		super();
+		
+		title_change_name		=my_title_change_name;
 
 		x0						=my_x0;
 		y0						=my_y0;
@@ -34,18 +37,6 @@ public class extended_part_driver extends part_driver
 		depth_start				=my_depth_start;
 		depth_end				=my_depth_end;
 		modifier_container_id	=my_modifier_container_id;
-		
-		String file_name=p.directory_name+p.material_file_name;
-		file_reader fr=new file_reader(file_name,p.file_charset);
-		if(fr.error_flag()){
-			fr.close();
-			title_change_name=new change_name();
-			debug_information.println("camera material file error:	",file_name);
-		}else {
-			file_name=fr.directory_name+fr.get_string();
-			fr.close();
-			title_change_name=new change_name(new String[] {file_name},null,fr.get_charset());
-		}
 	}
 	public void destroy()
 	{	
@@ -62,7 +53,8 @@ public class extended_part_driver extends part_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(p,x0,y0,size,depth_start,depth_end,modifier_container_id);
+		return new extended_part_driver(p,title_change_name,
+					x0,y0,size,depth_start,depth_end,modifier_container_id);
 	}
 	public int caculate_material_id(part p,String type_str,
 			int body_id,int face_id,int loop_id,int edge_id,String material[])
