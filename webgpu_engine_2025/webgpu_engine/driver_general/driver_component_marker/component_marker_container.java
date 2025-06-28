@@ -1,5 +1,7 @@
 package driver_component_marker;
 
+import java.util.ArrayList;
+
 import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_file_manager.file_reader;
@@ -10,80 +12,72 @@ public class component_marker_container
 {
 	private String file_name,file_charset;
 	public boolean global_private_flag,pickup_flag;
-	public component_marker component_marker_array[];
+	public ArrayList<component_marker> component_marker_list;
 	
 	public void destroy()
 	{
+		component_marker cm;
+		
 		file_name=null;
 		file_charset=null;
-		if(component_marker_array!=null) {
-			for(int i=0,ni=component_marker_array.length;i<ni;i++)
-				if(component_marker_array[i]!=null) {
-					component_marker_array[i].destroy();
-					component_marker_array[i]=null;
-				}
-			component_marker_array=null;
+		if(component_marker_list!=null){
+			for(int i=0,ni=component_marker_list.size();i<ni;i++)
+				if((cm=component_marker_list.get(i))!=null)
+					cm.destroy();
+			component_marker_list.clear();
+			component_marker_list=null;
 		}
 	}
 	
 	private void write(scene_kernel sk)
 	{
+		component_marker cm;
+		component operate_comp;
+		
 		if((file_name==null)||(file_charset==null)||(!global_private_flag))
 			return;
 		file_writer fw=new file_writer(file_name,file_charset);
 		
-		for(int i=0,ni=component_marker_array.length;i<ni;i++) {
-			component operate_comp=sk.component_cont.get_component(
-					component_marker_array[i].marker_component_id);
-			if(operate_comp==null)
+		for(int i=0,ni=component_marker_list.size();i<ni;i++) {
+			if((cm=component_marker_list.get(i))==null)
+				continue;
+			if((operate_comp=sk.component_cont.get_component(cm.marker_component_id))==null)
 				continue;
 			if(operate_comp.component_name==null)
 				continue;
 			if(operate_comp.component_name.trim().length()<=0)
 				continue;
-			fw.print  (			component_marker_array[i].marker_x).
-			   print  ("	",	component_marker_array[i].marker_y).
-			   println("	",	component_marker_array[i].marker_z).
+			fw.print  (			cm.marker_x).
+			   print  ("	",	cm.marker_y).
+			   println("	",	cm.marker_z).
 			   println(operate_comp.component_name).
-			   println(component_marker_array[i].marker_text).
+			   println(cm.marker_text).
 			   println();
 		}
 		fw.println();
 		fw.close();
 	}
-	
-	public void delete_component_marker(int marker_id,scene_kernel sk)
-	{
-		if((marker_id<0)||(marker_id>=component_marker_array.length))
-			return;
-		component_marker bak[]=component_marker_array;
-		component_marker_array=new component_marker[bak.length-1];
-		for(int i=0,j=0,ni=bak.length;i<ni;i++)
-			if(i!=marker_id)
-				component_marker_array[j++]=bak[i];
-		write(sk);
-		return;
-	}
 	public void clear_component_marker(long marker_id,scene_kernel sk)
 	{
-		int number=0;
-		for(int i=0,ni=component_marker_array.length;i<ni;i++)
-			if(component_marker_array[i].marker_id!=marker_id)
-				component_marker_array[number++]=component_marker_array[i];
-		if(component_marker_array.length!=number){
-			component_marker bak[]=component_marker_array;
-			component_marker_array=new component_marker[number];
-			for(int i=0;i<number;i++)
-				component_marker_array[i]=bak[i];
-		}
+		component_marker cm;
+		for(int i=component_marker_list.size()-1;i>=0;i--)
+			if((cm=component_marker_list.get(i))==null)
+				component_marker_list.remove(i);
+			else if(cm.marker_id==marker_id) {
+				component_marker_list.remove(i);
+				cm.destroy();
+			}
 		write(sk);
-		return;
 	}
-	public void clear_all_component_marker(scene_kernel sk)
+	public void clear_all_component_marker(scene_kernel sk,boolean write_flag)
 	{
-		component_marker_array=new component_marker[] {};
-		write(sk);
-		return;
+		component_marker cm;
+		for(int i=component_marker_list.size()-1;i>=0;i--)
+			if((cm=component_marker_list.get(i))!=null)
+				cm.destroy();
+		component_marker_list.clear();
+		if(write_flag)
+			write(sk);
 	}
 	public long  append_component_marker(scene_kernel sk,
 			component my_mark_comp,String my_marker_text,
@@ -93,20 +87,17 @@ public class component_marker_container
 			return -1;
 		if((my_marker_text=my_marker_text.trim()).length()<=0)
 			return -1;
-		component_marker bak[]=component_marker_array;
-		component_marker_array=new component_marker[bak.length+1];
-		for(int i=0,ni=bak.length;i<ni;i++)
-			component_marker_array[i]=bak[i];
-		component_marker_array[bak.length]=new component_marker(
-				my_mark_comp,my_marker_text,my_marker_x,my_marker_y,my_marker_z);
+		component_marker cm=new component_marker(
+			my_mark_comp,my_marker_text,my_marker_x,my_marker_y,my_marker_z);
+		component_marker_list.add(cm);
 		write(sk);
-		return component_marker_array[bak.length].marker_id;
+		return cm.marker_id;
 	}
 	public component_marker_container(boolean my_pickup_flag)
 	{
 		global_private_flag=false;
 		pickup_flag=my_pickup_flag;
-		component_marker_array=new component_marker[] {};
+		component_marker_list=new ArrayList<component_marker>();
 		file_name=null;
 		file_charset=null;
 		return;
@@ -117,7 +108,8 @@ public class component_marker_container
 		component directory_comp,mark_comp;
 		global_private_flag=true;
 		pickup_flag=false;
-		component_marker_array=new component_marker[] {};
+		component_marker_list=new ArrayList<component_marker>();
+		
 		if((directory_comp=component_cont.search_component(my_directory_comp_name))==null) {
 			file_name=null;
 			file_charset=null;
@@ -140,12 +132,8 @@ public class component_marker_container
 				continue;
 			if((mark_comp=component_cont.search_component(marker_component_name))==null)
 				continue;
-			component_marker bak[]=component_marker_array;
-			component_marker_array=new component_marker[bak.length+1];
-			for(int i=0,ni=bak.length;i<ni;i++)
-				component_marker_array[i]=bak[i];
-			component_marker_array[bak.length]=new component_marker(
-					mark_comp,marker_text,marker_x,marker_y,marker_z);
+			var cm=new component_marker(mark_comp,marker_text,marker_x,marker_y,marker_z);
+			component_marker_list.add(cm);
 		}
 	}
 }

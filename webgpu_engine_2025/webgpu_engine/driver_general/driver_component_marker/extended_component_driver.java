@@ -19,23 +19,23 @@ public class extended_component_driver  extends component_driver
 		super.destroy();
 		directory_comp_name=null;
 		file_name=null;
-		if(cmc!=null) {
+		if(cmc!=null){
 			cmc.destroy();
 			cmc=null;
 		}
 	}
-	public extended_component_driver(
-			part my_component_part,int my_modifier_container_id,
-			boolean my_global_private_flag,boolean my_pickup_flag,
+	public extended_component_driver(part my_component_part,
+			int my_modifier_container_id,boolean my_global_private_flag,boolean my_pickup_flag,
 			String my_directory_comp_name,String my_file_name)
 	{
 		super(my_component_part);
-		modifier_container_id=my_modifier_container_id;
-		global_private_flag=my_global_private_flag;
-		pickup_flag=my_pickup_flag;
 		
-		directory_comp_name=my_directory_comp_name;
-		file_name=my_file_name;
+		modifier_container_id	=my_modifier_container_id;
+		global_private_flag		=my_global_private_flag;
+		pickup_flag				=my_pickup_flag;
+		
+		directory_comp_name		=my_directory_comp_name;
+		file_name				=my_file_name;
 		
 		cmc=null;
 	}
@@ -47,14 +47,14 @@ public class extended_component_driver  extends component_driver
 //		String parameter_directory_name			=sk.scene_par.directory_name;
 //		String extra_parameter_directory_name	=sk.scene_par.extra_directory_name;
 		
+		cmc=new component_marker_container(directory_comp_name,file_name,sk.component_cont);
+		
 		return;
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
-		if(global_private_flag&&cmc==null)
-			cmc=new component_marker_container(directory_comp_name,file_name,sk.component_cont);
-		return new extended_component_instance_driver(comp,driver_id,
-			global_private_flag?cmc:new component_marker_container(pickup_flag),modifier_container_id);
+		var my_cmc=global_private_flag?cmc:new component_marker_container(pickup_flag);
+		return new extended_component_instance_driver(comp,driver_id,my_cmc,modifier_container_id);
 	}
 }

@@ -78,10 +78,11 @@ fn vertex_main(
 			projection_matrix=system_info.main_target_screen_move_matrix*projection_matrix;
 			break;
 		}
-	case 2,3,4:		//face,edge,point
+	case 2,3,4:		//render
 		{
 			width	=target_info.target_view_width;
 			height	=target_info.target_view_height;
+			
 			projection_matrix=target_info.projection_matrix;
 			break;
 		}
@@ -105,6 +106,7 @@ fn vertex_main(
 			}
 		}
 	}
+	
 	switch(primitive_type){
 	default:	//face  id
 		{
@@ -118,8 +120,8 @@ fn vertex_main(
 	case 1:	//point id
 		{
 			vf.vertex_texture=point_texture_position[my_vertex_index%6];
-			vf.vertex_position=(vf.vertex_position/vf.vertex_position.w)
-				+(marker_info.point_size*vec4(1.0/f32(width),1.0/f32(height),0.0,0.0)*vf.vertex_texture);
+			var pp=vf.vertex_texture*vec4(1.0/f32(width),1.0/f32(height),0.0,0.0);
+			vf.vertex_position=vf.vertex_position+marker_info.point_size*pp;
 				
 			vf.vertex_position=system_info.main_target_negative_screen_move_matrix*vf.vertex_position;
 			vf.vertex_position=target_info.screen_move_matrix*vf.vertex_position;
@@ -137,8 +139,8 @@ fn vertex_main(
 	case 4:		//point
 		{
 			vf.vertex_texture=point_texture_position[my_vertex_index%6];
-			vf.vertex_position=(vf.vertex_position/vf.vertex_position.w)
-				+(marker_info.point_size*vec4(1.0/f32(width),1.0/f32(height),0.0,0.0)*vf.vertex_texture);
+			var pp=vf.vertex_texture*vec4(1.0/f32(width),1.0/f32(height),0.0,0.0);
+			vf.vertex_position=vf.vertex_position+marker_info.point_size*pp;
 			break;
 		}
 	}
@@ -156,7 +158,6 @@ fn fragment_face_id_fun(vf	:	vertex_to_fragment_struct) -> id_target_struct
 	
 	return ret_val;
 }
-
 @fragment
 fn fragment_point_id_fun(vf	:	vertex_to_fragment_struct) -> id_target_struct
 {
@@ -187,16 +188,15 @@ fn fragment_face_fun(vf	:	vertex_to_fragment_struct) -> color_target_struct
 	
 	ret_val.depth=0.0;
 	ret_val.color=textureSample(marker_texture,marker_sampler,vf.vertex_texture.xy);
-	if(dot(ret_val.color.rgb,ret_val.color.rgb)<0.75){
-		discard;
-	}
+	if(dot(ret_val.color.rgb,ret_val.color.rgb)<0.75)
+		{discard;}
+	
 	ret_val.color=marker_info.face_normal_color;
 	if(   (system_info.pickup_component_id==marker_info.marker_component_id)
 		&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
 		&&(system_info.pickup_body_id==marker_info.marker_body_id))
-	{
-		ret_val.color=marker_info.face_pickup_color;
-	}
+			{ret_val.color=marker_info.face_pickup_color;}
+	
 	return ret_val;
 }
 @fragment
@@ -205,9 +205,9 @@ fn fragment_edge_fun(vf	:	vertex_to_fragment_struct) -> color_target_struct
 	var ret_val	:	color_target_struct;
 	
 	ret_val.depth=vf.vertex_position.z/vf.vertex_position.w;
-	if(marker_info.pickup_flag>0){
-		ret_val.depth=0.0;
-	}
+	if(marker_info.pickup_flag>0)
+		{ret_val.depth=0.0;}
+	
 	ret_val.color=marker_info.edge_normal_color;
 	if(   (system_info.pickup_component_id==marker_info.marker_component_id)
 		&&(system_info.pickup_driver_id==marker_info.marker_driver_id)
@@ -240,8 +240,8 @@ fn fragment_point_fun(vf	:	vertex_to_fragment_struct) -> color_target_struct
 			discard;
 		}
 	}
-	if(dot(vf.vertex_texture,vf.vertex_texture)>1.0){
-		discard;
-	}
+	if(dot(vf.vertex_texture,vf.vertex_texture)>1.0)
+		{discard;}
+	
 	return ret_val;
 }

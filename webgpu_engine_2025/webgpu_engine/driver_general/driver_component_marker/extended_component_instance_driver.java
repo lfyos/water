@@ -17,13 +17,13 @@ public class extended_component_instance_driver extends component_instance_drive
 	private component_marker_container cmc;
 
 	private int modifier_container_id;
-	private boolean display_flag[];
 	
 	public void destroy()
 	{
 		super.destroy();
-		cmc=null;
-		display_flag=null;
+		
+		if(cmc!=null)
+			cmc=null;
 	}
 	public extended_component_instance_driver(component my_comp,int my_driver_id,
 			component_marker_container my_cmc,int my_modifier_container_id)
@@ -32,13 +32,9 @@ public class extended_component_instance_driver extends component_instance_drive
 
 		cmc=my_cmc;
 		modifier_container_id=my_modifier_container_id;
-		display_flag=new boolean[] {};
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
-		for(int i=0,ni=cmc.component_marker_array.length;i<ni;i++)
-			ci.render_buffer.location_buffer.put_in_list(
-				sk.component_cont.get_component(cmc.component_marker_array[i].marker_component_id),sk);
 	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
@@ -55,37 +51,30 @@ public class extended_component_instance_driver extends component_instance_drive
 			point p;
 			if((p=ci.display_camera_result.caculate_local_focus_point(ci.parameter))==null)
 				return true;
-			String marker_text=c_d.component_part.user_name;
-			cmc.component_marker_array=new component_marker[]{
-					new component_marker(ci.parameter.comp,marker_text,p.x,p.y,p.z)};
-			display_flag=new boolean[]{true};
+			
+			cmc.clear_all_component_marker(sk,false);
+			cmc.component_marker_list.add(new component_marker(
+				ci.parameter.comp,c_d.component_part.user_name,p.x,p.y,p.z));
 			update_component_parameter_version(0);
+			ci.render_buffer.location_buffer.put_in_list(ci.parameter.comp,sk);
 			return false;
 		}
-		if(cmc.component_marker_array.length<=0)
+		if(cmc.component_marker_list.size()<=0)
 			return true;
 		if(cr.target.main_display_target_flag) {
-			if(cmc.component_marker_array.length!=display_flag.length) {
-				display_flag=new boolean[cmc.component_marker_array.length];
-				for(int i=0,ni=display_flag.length;i<ni;i++)
-					display_flag[i]=true;
-				update_component_parameter_version(0);
-			}
-			for(int i=0,ni=cmc.component_marker_array.length;i<ni;i++){
-				component my_comp=sk.component_cont.get_component(
-						cmc.component_marker_array[i].marker_component_id);
-				if(my_comp==null) {
-					if(display_flag[i])
+			component my_comp;
+			component_marker my_cm;
+			for(int i=0,ni=cmc.component_marker_list.size();i<ni;i++)
+				if((my_cm=cmc.component_marker_list.get(i))!=null){
+					if((my_comp=sk.component_cont.get_component(my_cm.marker_component_id))!=null) 
+						ci.render_buffer.location_buffer.put_in_list(my_comp,sk);
+					else{
+						cmc.component_marker_list.remove(i);
 						update_component_parameter_version(0);
-					display_flag[i]=false;
-				}else{
-					var my_par=my_comp.multiparameter[cr.target.parameter_channel_id];
-					if(display_flag[i]^my_par.effective_display_flag) {
-						display_flag[i]=my_par.effective_display_flag;
-						update_component_parameter_version(0);
+						ni--;
+						i--;
 					}
 				}
-			}
 		}
 		return false;
 	}
@@ -95,23 +84,25 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
+		component_marker my_cm;
+		component my_comp;
+		String pre_str="[";
+		
 		ci.request_response.print("[");
-		String pre_str="";
-		int n1=cmc.component_marker_array.length;
-		int n2=display_flag.length;
-		for(int i=0,ni=(n1<n2)?n1:n2;i<ni;i++)
-			if(display_flag[i]){
-				component_marker p=cmc.component_marker_array[i];
-				component my_comp=sk.component_cont.get_component(p.marker_component_id);
-				ci.request_response.print(pre_str).
-					print("[",my_comp.component_id).
-					print(",",p.marker_x).
-					print(",",p.marker_y).
-					print(",",p.marker_z).
-					print(",",jason_string.change_string(p.marker_text.trim())).
-					print(cmc.pickup_flag?",true]":",false]");
-				pre_str=",";
-			}
+		for(int i=0,ni=cmc.component_marker_list.size();i<ni;i++) {
+			if((my_cm=cmc.component_marker_list.get(i))==null)
+				continue;
+			if((my_comp=sk.component_cont.get_component(my_cm.marker_component_id))==null)
+				continue;
+			ci.request_response.
+				print(pre_str,	my_comp.component_id).
+				print(",",		my_cm.marker_x).
+				print(",",		my_cm.marker_y).
+				print(",",		my_cm.marker_z).
+				print(",",		jason_string.change_string(my_cm.marker_text.trim())).
+				print(			cmc.pickup_flag?",true]":",false]");
+			pre_str=",[";
+		}
 		ci.request_response.print("]");
 	}
 	public String[] response_component_event(scene_kernel sk,client_information ci)
@@ -119,32 +110,38 @@ public class extended_component_instance_driver extends component_instance_drive
 		component operate_comp;
 		component_marker operate_cm;
 
-		String str,marker_text;
+		String str,marker_text,pre_char="";
 		switch(((str=ci.request_response.get_parameter("operation"))==null)?"":str) {
 		default:
 			break;
 		case "jason":
 			ci.request_response.println("[");
-			for(int i=0,ni=cmc.component_marker_array.length;i<ni;i++) {
-				component_marker p=cmc.component_marker_array[i];
-				operate_comp=sk.component_cont.get_component(p.marker_component_id);
-				String marker_component_name=(operate_comp==null)?"":(operate_comp.component_name);
+			
+			for(int i=0,ni=cmc.component_marker_list.size();i<ni;i++) {
+				component_marker my_cm;
+				if((my_cm=cmc.component_marker_list.get(i))==null)
+					continue;
+				if((operate_comp=sk.component_cont.get_component(my_cm.marker_component_id))==null)
+					continue;
+				ci.request_response.println(pre_char);pre_char=",";
+				
 				ci.request_response.println("	{");
-				ci.request_response.print  ("		\"marker_id\":		",		p.marker_id).println(",");
-				str=jason_string.change_string(marker_component_name);
-				ci.request_response.print  ("		\"component_name\":	",		str).println(",");
-				ci.request_response.print  ("		\"component_id\":		",	p.marker_component_id).println(",");
-				ci.request_response.print  ("		\"marker_x\":		",		p.marker_x).println(",");
-				ci.request_response.print  ("		\"marker_y\":		",		p.marker_y).println(",");
-				ci.request_response.print  ("		\"marker_z\":		",		p.marker_z).println(",");
-				str=jason_string.change_string(p.marker_text);
-				ci.request_response.println("		\"marker_text\":		",	str);
-				ci.request_response.println("	}",(i<(ni-1))?",":"");
+				ci.request_response.print  ("		\"marker_id\":		",		my_cm.marker_id).		println(",");
+				
+				str=jason_string.change_string(operate_comp.component_name);
+				ci.request_response.print  ("		\"component_name\":	",	str).						println(",");
+				ci.request_response.print  ("		\"component_id\":	",	my_cm.marker_component_id).	println(",");
+				ci.request_response.print  ("		\"marker_x\":		",	my_cm.marker_x).			println(",");
+				ci.request_response.print  ("		\"marker_y\":		",	my_cm.marker_y).			println(",");
+				ci.request_response.print  ("		\"marker_z\":		",	my_cm.marker_z).			println(",");
+				
+				str=jason_string.change_string(my_cm.marker_text);
+				ci.request_response.println("		\"marker_text\":		",	str).print("	}");
 			}
-			ci.request_response.println("]");
+			ci.request_response.println().println("]");
 			break;
 		case "clear_all":
-			cmc.clear_all_component_marker(sk);
+			cmc.clear_all_component_marker(sk,true);
 			if(cmc.global_private_flag)
 				comp.driver_array.get(driver_id).update_component_parameter_version();
 			else
@@ -166,14 +163,14 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;
 			if(ci.parameter.comp.component_id!=comp.component_id)
 				break;
-			if((ci.parameter.body_id<0)||(ci.parameter.body_id>=cmc.component_marker_array.length))
+			if((ci.parameter.body_id<0)||(ci.parameter.body_id>=cmc.component_marker_list.size()))
 				break;
-			operate_cm=cmc.component_marker_array[ci.parameter.body_id];
+			operate_cm=cmc.component_marker_list.get(ci.parameter.body_id);
 			if((operate_comp=sk.component_cont.get_component(operate_cm.marker_component_id))==null)
 				break;	
 			switch(str){
 			case "delete":
-				cmc.delete_component_marker(ci.parameter.body_id,sk);
+				cmc.component_marker_list.remove(ci.parameter.body_id);
 				if(cmc.global_private_flag)
 					comp.driver_array.get(driver_id).update_component_parameter_version();
 				else
@@ -193,11 +190,8 @@ public class extended_component_instance_driver extends component_instance_drive
 			break;
 		case "add":
 		case "append":
-			if(cmc.pickup_flag){
-				cmc.component_marker_array=new component_marker[]{new component_marker(comp,"pickup",0,0,0)};
-				update_component_parameter_version(0);
+			if(cmc.pickup_flag)
 				break;
-			}
 			if((marker_text=ci.request_response.get_parameter("value"))==null)
 				break;
 			String request_charset=ci.request_response.implementor.get_request_charset();
