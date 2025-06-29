@@ -192,26 +192,30 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 	this.draw_component=function(method_data,render_parameter,
 			target_data,part_object,part_driver,render_driver,scene)
 	{
-		if(this.texture_bind_group==null)
-			return;
-		if(this.texture_bind_group.is_busy_flag)
-			return;
-			
-		var rpe=scene.webgpu.render_pass_encoder;
-		
-		if(this.mode>0)	
-			rpe.setPipeline(render_driver.box_pipeline);
-		else if(this.mode==0)
-			rpe.setPipeline(render_driver.no_box_pipeline);
-		else
-			return;
-
-		rpe.setBindGroup(1,this.texture_bind_group.texture_bindgroup);
-
-		var p=part_object.buffer_object.face.region_data;
-		for(var i=0,ni=p.length;i<ni;i++){
-			rpe.setVertexBuffer(0,p[i].buffer);
-			rpe.draw(p[i].item_number);
+		switch(method_data.method_id){
+		default:
+			break;
+		case 2:
+			if(this.texture_bind_group==null)
+				break;
+			if(this.texture_bind_group.is_busy_flag)
+				break;
+			var rpe=scene.webgpu.render_pass_encoder;
+			if(this.mode>0)	
+				rpe.setPipeline(render_driver.box_pipeline);
+			else if(this.mode==0)
+				rpe.setPipeline(render_driver.no_box_pipeline);
+			else
+				break;
+	
+			rpe.setBindGroup(1,this.texture_bind_group.texture_bindgroup);
+	
+			var p=part_object.buffer_object.face.region_data;
+			for(var i=0,ni=p.length;i<ni;i++){
+				rpe.setVertexBuffer(0,p[i].buffer);
+				rpe.draw(p[i].item_number);
+			}
+			break;
 		}
 	};
 

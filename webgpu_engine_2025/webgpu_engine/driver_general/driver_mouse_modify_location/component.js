@@ -321,7 +321,7 @@ function change_matrix(component_id,vp_0,vp_1,scene)
 	var ep=scene.component_event_processor[component_id];
 	var camera_distance	=scene.camera.camera_object_parameter[ep.render_data.camera_id].distance;
 	var half_fovy_tanl=scene.camera.camera_object_parameter[ep.render_data.camera_id].half_fovy_tanl;
-	var project_matrix	=scene.camera.compute_camera_data(ep.render_data);
+	var project_matrix	=scene.camera.compute_camera_data(ep.render_data,null);
 	
 	var camera_component_id	=scene.camera.camera_object_parameter[ep.render_data.camera_id].component_id;	
 	var camera_component_location=scene.component_location_data.get_component_location(camera_component_id);

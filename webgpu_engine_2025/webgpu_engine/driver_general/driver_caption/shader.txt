@@ -39,9 +39,8 @@ fn fragment_main(vf	:	vertex_to_fragment_struct) ->  fragment_to_target_struct
 	var texture_x=vf.vertex_parameter.x+vf.vertex_parameter.y*vf.vertex_texture.x;
 	var texture_y=vf.vertex_texture.y;
 	ft.color=textureSample(caption_texture,caption_sampler,vec2(texture_x,texture_y));
-	if(dot(ft.color.xyz,ft.color.xyz)<0.75){
-		discard;
-	}
+	if(dot(ft.color.xyz,ft.color.xyz)<0.75)
+		{discard;}
 	ft.color=vf.vertex_material;
 	return ft;
 }

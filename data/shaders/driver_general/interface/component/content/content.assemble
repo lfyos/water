@@ -207,10 +207,8 @@
 
 							switch(function_id){
 							case 0:
-								for(var i=0;i<8;i++)
-									scene.caller.call_server_component(
-										"background_component_"+i.toString(),"all",
-										[["operation","mode"],["mode",-1]]);									
+								scene.caller.call_server_component(
+									"background_component","all",[["operation","mode"],["mode",-1]]);									
 								var new_red=0.0,new_green=0.0,new_blue=0.0;
 								if((new_red=prompt("请输入红色值") )==null)
 									break;
@@ -227,10 +225,8 @@
 								break;
 							case 2:
 							case 3:
-								for(var i=0;i<8;i++)
-									scene.caller.call_server_component(
-										"background_component_"+i.toString(),"all",
-										[["operation","mode"],["mode",function_id-2]]);
+								scene.caller.call_server_component(
+									"background_component","all",[["operation","mode"],["mode",function_id-2]]);
 								break;
 							case 4:
 								scene.system_call_processor.set_menu_show("内容显示显示背景图片组件");
@@ -270,12 +266,9 @@
 								scene.system_call_processor.set_menu_hide(component_id);
 							}else{
 								var picture_id="picture_"+function_id.toString()+"/";
-								for(var i=0;i<8;i++)
-									scene.caller.call_server_component(
-										"background_component_"+i.toString(),"all",
-										[["operation","directory"],["directory",picture_id]]);
-							}							
-							
+								scene.caller.call_server_component("background_component","all",
+											[["operation","directory"],["directory",picture_id]]);
+							}
 						}
 					};
 				}

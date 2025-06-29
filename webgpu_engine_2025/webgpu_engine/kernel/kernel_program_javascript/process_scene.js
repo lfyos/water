@@ -47,8 +47,12 @@ function construct_scene_interface(my_scene)
 			
 			ret_val=scene_target_begin_routine(target_id,scene_target_array,this.scene);
 			
-			render_data.project_matrix=this.scene.camera.compute_camera_data(render_data);
-			this.scene.system_buffer.set_target_buffer(render_data,this.scene);
+			var render_data_from=null;
+			if(render_data.target_id_from>=0)
+				render_data_from=this.scene.render_buffer_array[render_data.target_id_from];
+			
+			render_data.project_matrix=this.scene.camera.compute_camera_data(render_data,render_data_from);
+			this.scene.system_buffer.set_target_buffer(render_data,render_data_from,this.scene);
 		}
 		return ret_val;
 	}

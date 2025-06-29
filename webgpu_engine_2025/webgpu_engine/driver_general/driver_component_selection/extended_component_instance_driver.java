@@ -32,10 +32,10 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		super(my_comp,my_driver_id);
 		
-		screen_rectangle_component_id=my_screen_rectangle_component_id;
-		audio_component_id=my_audio_component_id;
-		modifier_container_id=my_modifier_container_id;
-		change_type_flag=true;
+		screen_rectangle_component_id	=my_screen_rectangle_component_id;
+		audio_component_id				=my_audio_component_id;
+		modifier_container_id			=my_modifier_container_id;
+		change_type_flag				=true;
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
@@ -43,12 +43,14 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
-		if(cr.target.main_display_target_flag)
+		if(cr.target.main_display_target_flag) {
 			if(ci.display_camera_result.cam.parameter.change_type_flag^change_type_flag){
 				change_type_flag=change_type_flag?false:true;
 				update_component_parameter_version(0);
 			}
-		return cr.target.main_display_target_flag?false:true;
+			return false;
+		}
+		return true;
 	}
 	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
@@ -97,7 +99,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				center.x+diff.x*my_x0,center.y+diff.y*my_y0,view_volume_box.p[0].z,
 				center.x+diff.x*my_x1,center.y+diff.y*my_y1,view_volume_box.p[1].z);
 
-		render_target cam_target=new render_target(
+		render_target cam_target=new render_target(-1,
 				render_target_parameter.create_selection_parameter(((function_id%2)==0)?true:false),
 				null,comp.component_id,driver_id,0,new component[]{sk.component_cont.root_component},
 				t.camera_id,t.parameter_channel_id,null,view_volume_box,ci.clip_plane,null);

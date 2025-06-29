@@ -216,13 +216,13 @@ fn vertex_routine(
 			vf.vertex_texture=point_texture_position[my_vertex_index%6];
 			
 			vf.vertex_position=target_info.negative_screen_move_matrix*vf.vertex_position;
-			vf.vertex_position=system_info.main_target_screen_move_matrix*vf.vertex_position;
+			vf.vertex_position=target_info.screen_move_matrix_from*vf.vertex_position;
 			
 			vf.vertex_position=vf.vertex_position/vf.vertex_position.w+vf.vertex_texture*
-				vec4(	point_size/f32(system_info.main_target_view_width),
-						point_size/f32(system_info.main_target_view_height),
+				vec4(	point_size/f32(target_info.target_view_width_from),
+						point_size/f32(target_info.target_view_height_from),
 						0.0,0.0);
-			vf.vertex_position=system_info.main_target_negative_screen_move_matrix*vf.vertex_position;
+			vf.vertex_position=target_info.negative_screen_move_matrix_from*vf.vertex_position;
 			vf.vertex_position=target_info.screen_move_matrix*vf.vertex_position;	
 			break;
 		}

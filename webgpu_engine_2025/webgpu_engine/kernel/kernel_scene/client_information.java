@@ -238,7 +238,7 @@ public class client_information
 		display_component_collector		=null;
 		target_component_collector_list	=new ArrayList<component_collector>();
 
-		render_target rt=new render_target(
+		render_target rt=new render_target(-1,
 				render_target_parameter.create_client_information_parameter(),
 				null,sk.component_cont.root_component.component_id,0,0,
 				new component[]{sk.component_cont.root_component},0,0,null,null,null,null);

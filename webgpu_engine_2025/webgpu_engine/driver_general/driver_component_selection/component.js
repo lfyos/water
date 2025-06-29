@@ -119,8 +119,10 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 	this.draw_component=function(method_data,render_parameter,
 			target_data,part_object,part_driver,render_driver,scene)
 	{
-		if(target_data.main_display_target_flag)
-			scene.component_event_processor[this.component_ids.component_id].camera_id=target_data.camera_id;
+		if(target_data.main_display_target_flag){
+			var p=scene.component_event_processor[this.component_ids.component_id];
+			p.camera_id=target_data.camera_id;
+		}
 	}
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{

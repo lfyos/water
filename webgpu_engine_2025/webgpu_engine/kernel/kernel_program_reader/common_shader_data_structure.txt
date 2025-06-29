@@ -17,13 +17,6 @@ struct system_information
 	highlight_body_id						:	i32,
 	highlight_face_id						:	i32,
 	
-	main_target_view_x0						:	i32,
-	main_target_view_y0						:	i32,
-	main_target_view_width					:	i32,
-	main_target_view_height					:	i32,
-	main_target_whole_view_width			:	i32,
-	main_target_whole_view_height			:	i32,
-	
 	year									:	i32,
 	month									:	i32,
 	day										:	i32,
@@ -34,13 +27,13 @@ struct system_information
 	microsecond								:	i32,
 	nanosecond								:	i32,
 	
+	int_tmp_0								:	i32,
+	int_tmp_1								:	i32,
+	
 	pickup_depth							:	f32,
 	pickup_value_0							:	f32,
 	pickup_value_1							:	f32,
-	pickup_value_2							:	f32,
-
-	main_target_screen_move_matrix			:	mat4x4<f32>,
-	main_target_negative_screen_move_matrix	:	mat4x4<f32>
+	pickup_value_2							:	f32
 };
 
 struct target_information 
@@ -53,6 +46,8 @@ struct target_information
 	
 	screen_move_matrix						:	mat4x4<f32>,
 	negative_screen_move_matrix				:	mat4x4<f32>,
+	screen_move_matrix_from					:	mat4x4<f32>,
+	negative_screen_move_matrix_from		:	mat4x4<f32>,
 	
 	lookat_matrix							:	mat4x4<f32>,
 	negative_lookat_matrix					:	mat4x4<f32>,
@@ -108,6 +103,15 @@ struct target_information
 	target_view_height						:	i32,
 	target_whole_view_width					:	i32,
 	target_whole_view_height				:	i32,
+	main_display_target_flag				:	i32,
+	
+	target_view_x0_from						:	i32,
+	target_view_y0_from						:	i32,
+	target_view_width_from					:	i32,
+	target_view_height_from					:	i32,
+	target_whole_view_width_from			:	i32,
+	target_whole_view_height_from			:	i32,
+	main_display_target_flag_from			:	i32,
 	
 	scene_id								:	i32,
 	camera_id								:	i32

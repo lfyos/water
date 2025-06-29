@@ -9,7 +9,7 @@ import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
-	private int mode,user_parameter_channel_id;
+	private int mode;
 	private String directory_name;
 	
 	public void destroy()
@@ -17,12 +17,11 @@ public class extended_component_instance_driver extends component_instance_drive
 		super.destroy();
 		directory_name=null;
 	}
-	public extended_component_instance_driver(component my_comp,int my_driver_id,
-			int my_mode,int my_user_parameter_channel_id,String my_directory_name)
+	public extended_component_instance_driver(
+			component my_comp,int my_driver_id,int my_mode,String my_directory_name)
 	{
 		super(my_comp,my_driver_id);
 		mode=my_mode;
-		user_parameter_channel_id=my_user_parameter_channel_id;
 		directory_name=my_directory_name;
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
@@ -30,7 +29,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
-		return (cr.target.parameter_channel_id!=user_parameter_channel_id);
+		return false;
 	}
 	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{

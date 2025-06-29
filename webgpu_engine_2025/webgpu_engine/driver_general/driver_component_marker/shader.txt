@@ -70,12 +70,12 @@ fn vertex_main(
 	switch(primitive_type){
 	default:	//id
 		{
-			width	=system_info.main_target_view_width;
-			height	=system_info.main_target_view_height;
+			width	=target_info.target_view_width_from;
+			height	=target_info.target_view_height_from;
 			
 			projection_matrix=target_info.projection_matrix;
 			projection_matrix=target_info.negative_screen_move_matrix*projection_matrix;
-			projection_matrix=system_info.main_target_screen_move_matrix*projection_matrix;
+			projection_matrix=target_info.screen_move_matrix_from*projection_matrix;
 			break;
 		}
 	case 2,3,4:		//render
@@ -113,7 +113,7 @@ fn vertex_main(
 			vf.vertex_position.x=vf.vertex_position.x+my_coord.x*face_width;
 			vf.vertex_position.y=vf.vertex_position.y+edge_height+my_coord.y*face_height;
 			
-			vf.vertex_position=system_info.main_target_negative_screen_move_matrix*vf.vertex_position;
+			vf.vertex_position=target_info.negative_screen_move_matrix_from*vf.vertex_position;
 			vf.vertex_position=target_info.screen_move_matrix*vf.vertex_position;
 			break;
 		}
@@ -123,7 +123,7 @@ fn vertex_main(
 			var pp=vf.vertex_texture*vec4(1.0/f32(width),1.0/f32(height),0.0,0.0);
 			vf.vertex_position=vf.vertex_position+marker_info.point_size*pp;
 				
-			vf.vertex_position=system_info.main_target_negative_screen_move_matrix*vf.vertex_position;
+			vf.vertex_position=target_info.negative_screen_move_matrix_from*vf.vertex_position;
 			vf.vertex_position=target_info.screen_move_matrix*vf.vertex_position;
 		}
 	case 2:		//face

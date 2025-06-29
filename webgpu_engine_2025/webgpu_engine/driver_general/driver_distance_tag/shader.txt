@@ -97,11 +97,11 @@ fn vertex_main(
 				projection_matrix=target_info.projection_matrix;
 			}else{
 				width_height=vec4(
-					f32(system_info.main_target_view_width),
-					f32(system_info.main_target_view_height),
+					f32(target_info.target_view_width_from),
+					f32(target_info.target_view_height_from),
 					0.0,0.0);
 				projection_matrix=target_info.negative_screen_move_matrix*target_info.projection_matrix;				
-				projection_matrix=system_info.main_target_screen_move_matrix*projection_matrix;
+				projection_matrix=target_info.screen_move_matrix_from*projection_matrix;
 			}
 
 			var x_unit=normalize(tag_info.tag_dx);

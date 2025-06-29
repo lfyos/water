@@ -136,6 +136,9 @@ async function request_render_data(scene)
 				switch(my_data[j++]){
 				default:
 					break;
+				case 0:
+					p.target_id_from		=my_data[j++];
+					break;
 				case 1:
 					p.target_or_bundle_flag=true;
 					break;

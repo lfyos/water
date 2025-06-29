@@ -316,9 +316,9 @@
 							}
 							mouse_usage[4]=function_id;
 							scene.event_component.mouse.	component_name	="component_selection_component";
-							scene.event_component.keyboard.component_name	="component_selection_component";
+							scene.event_component.keyboard.	component_name	="component_selection_component";
 							scene.event_component.mouse.	function_id		=mouse_usage[4];
-							scene.event_component.keyboard.function_id		=mouse_usage[4];
+							scene.event_component.keyboard.	function_id		=mouse_usage[4];
 
 							return;
 						}

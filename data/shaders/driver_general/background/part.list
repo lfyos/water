@@ -6,6 +6,13 @@
 	background\background.mp3
 
 			/*	terminated_token_string:begin		*/	terminated_token_string
-							background.assemble
+			
+					/* name		*/	background_component
+					/* type		*/	background_part
+					/* location	*/  identity
+							/*	mode			*/	1
+							/*	directory_name	*/	picture_4/
+					/* children number */		0
+			
 			/*	terminated_token_string:end			*/	terminated_token_string
 	

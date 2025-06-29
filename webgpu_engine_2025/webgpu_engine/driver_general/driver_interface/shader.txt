@@ -43,7 +43,7 @@ fn vertex_main(
 		par.texture_y0+my_coord.y*par.texture_dy,
 		par.depth,1.0);
 	if(method_id==0){
-		vf.vertex_position=system_info.main_target_negative_screen_move_matrix*vf.vertex_position;
+		vf.vertex_position=target_info.negative_screen_move_matrix_from*vf.vertex_position;
 		vf.vertex_position=target_info.screen_move_matrix*vf.vertex_position;
 		vf.vertex_position=vec4<f32>(vf.vertex_position.xy/vf.vertex_position.w,par.depth,1.0);
 	}

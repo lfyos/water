@@ -39,16 +39,16 @@ fn vertex_main(
 	var p1=target_info.projection_matrix*(target_info.camera_location*vec4(0.0,	0.0,	-par_view_distance/2.0,	1.0));
 
 	if(primitive_type==0){
-		p =system_info.main_target_screen_move_matrix*(target_info.negative_screen_move_matrix*p );
-		p0=system_info.main_target_screen_move_matrix*(target_info.negative_screen_move_matrix*p0);
-		p1=system_info.main_target_screen_move_matrix*(target_info.negative_screen_move_matrix*p1);
+		p =target_info.screen_move_matrix_from*(target_info.negative_screen_move_matrix*p );
+		p0=target_info.screen_move_matrix_from*(target_info.negative_screen_move_matrix*p0);
+		p1=target_info.screen_move_matrix_from*(target_info.negative_screen_move_matrix*p1);
 	}
 	
 	p.z=par_depth_start+(par_depth_end-par_depth_start)*(p.z/p.w-p0.z/p0.w)/(p1.z/p1.w-p0.z/p0.w);
 	p=vec4(p.xy/p.w+my_position_par.xy,p.z,1.0);
 
 	if(primitive_type==0){
-		p=target_info.screen_move_matrix*(system_info.main_target_negative_screen_move_matrix*p);
+		p=target_info.screen_move_matrix*(target_info.negative_screen_move_matrix_from*p);
 	}
 
 	var vf:vertex_to_fragment_struct;

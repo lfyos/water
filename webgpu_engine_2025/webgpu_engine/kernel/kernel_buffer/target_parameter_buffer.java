@@ -32,6 +32,13 @@ public class target_parameter_buffer
 		
 		int print_number=0;
 		client_interface.print(rt.target_id+",[");
+		
+		do{
+			if(old_rt!=null)
+				if(old_rt.target_id_from==rt.target_id_from)
+					break;
+			client_interface.	print(((print_number++)<=0)?"0,":",0,",rt.target_id_from);
+		}while(false);
 
 		do{
 			if(old_rt!=null)
@@ -155,7 +162,7 @@ public class target_parameter_buffer
 								print(",",	rt.target_view.whole_view_width).
 								print(",",	rt.target_view.whole_view_height);
 		}while(false);
-		
+
 		client_interface.print("]");
 	}
 }

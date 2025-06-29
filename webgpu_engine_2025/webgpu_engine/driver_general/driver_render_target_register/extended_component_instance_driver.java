@@ -72,7 +72,8 @@ public class extended_component_instance_driver extends component_instance_drive
 					ci.parameter.high_or_low_precision_flag
 					?cam_par.high_precision_scale:cam_par.low_precision_scale);
 
-			render_target rt=new render_target(target_par,register_parameter[i].render_target_name,
+			render_target rt=new render_target(-1,
+				target_par,register_parameter[i].render_target_name,
 				comp.component_id,driver_id,i+i+(ci.parameter.high_or_low_precision_flag?0:1),
 				new component[] {sk.component_cont.root_component},register_parameter[i].camera_id,
 				register_parameter[i].parameter_channel_id,rtv,view_volume_box,ci.clip_plane,null);

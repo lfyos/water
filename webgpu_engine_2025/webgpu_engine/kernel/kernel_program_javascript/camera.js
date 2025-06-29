@@ -62,9 +62,9 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 		}
 	}
 	
-	this.compute_frustem_projection_matrix=function(camera_render_parameter)
+	this.compute_frustem_projection_matrix=function(target_parameter)
 	{
-		var camera_id			=camera_render_parameter.camera_id;
+		var camera_id			=target_parameter.camera_id;
 		
 		var camera_distance		=this.camera_object_parameter[camera_id].distance;
 		var near_value_ratio	=this.camera_object_parameter[camera_id].near_value_ratio;
@@ -127,9 +127,9 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 			]
 		};
 	};
-	this.compute_orthographic_projection_matrix=function(camera_render_parameter)
+	this.compute_orthographic_projection_matrix=function(target_parameter)
 	{
-		var camera_id		=camera_render_parameter.camera_id;
+		var camera_id		=target_parameter.camera_id;
 		var camera_distance	=this.camera_object_parameter[camera_id].distance;
 		var near_value_ratio=this.camera_object_parameter[camera_id].near_value_ratio;
 		var far_value_ratio	=this.camera_object_parameter[camera_id].far_value_ratio;
@@ -191,9 +191,9 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 			]
 		};
 	};
-	this.compute_screen_move_matrix=function(camera_render_parameter)
+	this.compute_screen_move_matrix=function(target_parameter)
 	{
-		var view_volume_box=camera_render_parameter.view_volume_box;
+		var view_volume_box=target_parameter.view_volume_box;
 		var x0=view_volume_box[0][0],y0=view_volume_box[0][1],z0=view_volume_box[0][2];
 		var x1=view_volume_box[1][0],y1=view_volume_box[1][1],z1=view_volume_box[1][2];
 		var dx=x1-x0,dy=y1-y0,dz=z1-z0;
@@ -216,13 +216,13 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 		};
 	};
 
-	this.compute_lookat_matrix=function(camera_render_parameter,my_computer)
+	this.compute_lookat_matrix=function(target_parameter,my_computer)
 	{
-		var camera_id			=camera_render_parameter.camera_id;
+		var camera_id			=target_parameter.camera_id;
 		var camera_component_id	=this.camera_object_parameter[camera_id].component_id;
 		var camera_location		=this.component_location_data.get_component_location(camera_component_id);
 		var camera_distance		=this.camera_object_parameter[camera_id].distance;
-		var lookat_matrix		=camera_render_parameter.camera_transformation_matrix;
+		var lookat_matrix		=target_parameter.camera_transformation_matrix;
 		lookat_matrix			=my_computer.matrix_multiplication(lookat_matrix,camera_location);
 		lookat_matrix			=my_computer.matrix_multiplication(lookat_matrix,[
 										1,	0,	0,					0,
@@ -237,15 +237,17 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 		};
 	};
 
-	this.compute_camera_data=function(camera_render_parameter)
+	this.compute_camera_data=function(target_parameter,target_parameter_from)
 	{	
 		var my_computer=this.component_location_data.computer;
 		
-		var camera_id						=camera_render_parameter.camera_id;
-		var screen_move_matrix				=this.compute_screen_move_matrix(camera_render_parameter);	
-		var frustem_projection_matrix		=this.compute_frustem_projection_matrix(camera_render_parameter);
-		var orthographic_projection_matrix	=this.compute_orthographic_projection_matrix(camera_render_parameter);
-		var lookat_matrix					=this.compute_lookat_matrix(camera_render_parameter,my_computer);
+		var camera_id						=target_parameter.camera_id;
+		var screen_move_matrix				=this.compute_screen_move_matrix(target_parameter);
+		var screen_move_matrix_from			=(target_parameter_from==null)?screen_move_matrix:		
+											(this.compute_screen_move_matrix(target_parameter_from));	
+		var frustem_projection_matrix		=this.compute_frustem_projection_matrix(target_parameter);
+		var orthographic_projection_matrix	=this.compute_orthographic_projection_matrix(target_parameter);
+		var lookat_matrix					=this.compute_lookat_matrix(target_parameter,my_computer);
 
 		var project_matrix=new  Object();
 
@@ -262,8 +264,10 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 		project_matrix.near_value			=(project_matrix.near_value_ratio)*(project_matrix.distance);
 		project_matrix.far_value			=(project_matrix.far_value_ratio)*(project_matrix.distance);
 		
-		project_matrix.screen_move_matrix			=screen_move_matrix.matrix;
-		project_matrix.negative_screen_move_matrix	=screen_move_matrix.negative_matrix;
+		project_matrix.screen_move_matrix				=screen_move_matrix.matrix;
+		project_matrix.negative_screen_move_matrix		=screen_move_matrix.negative_matrix;
+		project_matrix.screen_move_matrix_from			=screen_move_matrix_from.matrix;
+		project_matrix.negative_screen_move_matrix_from	=screen_move_matrix_from.negative_matrix;
 		
 		project_matrix.lookat_matrix		=lookat_matrix.matrix;
 		project_matrix.negative_lookat_matrix=lookat_matrix.negative_matrix;
@@ -355,10 +359,10 @@ function construct_camera_object(my_camera_number,my_component_location_data)
 		project_matrix.center_plane	=my_computer.create_plane_from_two_point(
 				project_matrix.center_point,			project_matrix.eye_point);
 				
-		project_matrix.clip_plane			=camera_render_parameter.clip_plane;
-		project_matrix.clip_plane_matrix	=camera_render_parameter.clip_plane_matrix;
+		project_matrix.clip_plane			=target_parameter.clip_plane;
+		project_matrix.clip_plane_matrix	=target_parameter.clip_plane_matrix;
 		
-		project_matrix.view_volume_box		=camera_render_parameter.view_volume_box;
+		project_matrix.view_volume_box		=target_parameter.view_volume_box;
 
 		return project_matrix;
 	};

@@ -38,7 +38,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			main_target_id	=cr.target.target_id;
 			update_component_parameter_version(0);
 		}
-		render_target rt=new render_target(
+		render_target rt=new render_target(main_target_id,
 			render_target_parameter.create_pickup_parameter(),					//render_target_parameter
 			pickup_target_name,comp.component_id,driver_id,0,					//target IDS,components
 			cr.target.comp,cr.target.camera_id,cr.target.parameter_channel_id,	//camera_id,parameter_channel_id

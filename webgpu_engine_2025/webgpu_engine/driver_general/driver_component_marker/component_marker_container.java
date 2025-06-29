@@ -28,7 +28,6 @@ public class component_marker_container
 			component_marker_list=null;
 		}
 	}
-	
 	private void write(scene_kernel sk)
 	{
 		component_marker cm;
@@ -68,6 +67,14 @@ public class component_marker_container
 				cm.destroy();
 			}
 		write(sk);
+	}
+	public void delete_component_marker(int index_id,scene_kernel sk)
+	{
+		if(index_id>=0)
+			if(index_id<component_marker_list.size()) {
+				component_marker_list.remove(index_id);
+				write(sk);
+			}
 	}
 	public void clear_all_component_marker(scene_kernel sk,boolean write_flag)
 	{

@@ -53,12 +53,7 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		var my_texture_width	=part_object.material[0].texture_width;
 		var my_texture_height	=part_object.material[0].texture_height;
 		var my_canvas_width		=part_object.material[0].canvas_width;
-		
-		this.parameter={
-			display_width	:	scene.webgpu.context_2d.measureText(buffer_data_item).width,
-			start_time		:	(new Date()).getTime()
-		}
-					
+
 		scene.webgpu.canvas_2d.width	=my_texture_width;
 		scene.webgpu.canvas_2d.height	=my_texture_height;
 	
@@ -70,6 +65,11 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 		scene.webgpu.context_2d.textBaseline	="middle";
 		scene.webgpu.context_2d.textAlign		="left";
 		scene.webgpu.context_2d.fillText(buffer_data_item,0,my_texture_height/2);
+		
+		this.parameter={
+			display_width	:	scene.webgpu.context_2d.measureText(buffer_data_item).width,
+			start_time		:	(new Date()).getTime()
+		}
 						
 		scene.webgpu.device.queue.copyExternalImageToTexture(
 			{

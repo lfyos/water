@@ -7,7 +7,7 @@ import kernel_transformation.location;
 
 public class render_target
 {
-	public int target_id;
+	public int target_id,target_id_from;
 	
 	public boolean do_render_flag,target_or_bundle_flag,main_display_target_flag;
 
@@ -29,6 +29,7 @@ public class render_target
 	public render_target(render_target rt)
 	{
 		target_id					=rt.target_id;
+		target_id_from				=rt.target_id_from;
 		
 		do_render_flag				=rt.do_render_flag;
 		target_or_bundle_flag		=rt.target_or_bundle_flag;
@@ -56,13 +57,15 @@ public class render_target
 									?null:(new location(rt.camera_transformation_matrix));
 		parameter=rt.parameter;
 	}
-	public render_target(render_target_parameter 	my_parameter,					String my_target_name,
+	public render_target(int my_target_id_from,
+			render_target_parameter 	my_parameter,					String my_target_name,
 			int my_target_comonent_id,				int my_target_driver_id,		int my_target_texture_id,
 			component my_comp[],					int my_camera_id,				int my_parameter_channel_id,
 			render_target_view my_target_view,		box my_view_volume_box,					
 			plane my_clip_plane,					location my_camera_transformation_matrix)
 	{
 		target_id				=0;
+		target_id_from			=my_target_id_from;
 		
 		do_render_flag			=true;
 		target_or_bundle_flag	=true;

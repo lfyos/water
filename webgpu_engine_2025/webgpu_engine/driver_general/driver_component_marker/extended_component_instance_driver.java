@@ -170,7 +170,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;	
 			switch(str){
 			case "delete":
-				cmc.component_marker_list.remove(ci.parameter.body_id);
+				cmc.delete_component_marker(ci.parameter.body_id,sk);
 				if(cmc.global_private_flag)
 					comp.driver_array.get(driver_id).update_component_parameter_version();
 				else
