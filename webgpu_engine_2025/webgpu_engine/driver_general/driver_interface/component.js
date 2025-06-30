@@ -243,7 +243,7 @@ function create_bind_group(init_data,render_driver,scene)
 	this.create(init_data,render_driver,scene);
 };
 
-function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
+function construct_component_driver(component_ids,init_data,create_data,part_object,part_driver,render_driver,scene)
 {
 	this.component_ids				=component_ids;
 	

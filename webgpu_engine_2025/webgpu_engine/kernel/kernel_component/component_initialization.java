@@ -50,27 +50,25 @@ public class component_initialization
 			if((terminated_token=fr.get_line())!=null)
 				if((terminated_token=terminated_token.trim()).length()>0) {
 					StringBuffer program_buf=new StringBuffer();
-					for(int flag=0;!(fr.eof());) {
-						if((line_str=fr.get_line())==null)
-							continue;
-						if(line_str.trim().compareTo(terminated_token)==0)
-							break;
-						if((flag++)>0)
-							program_buf.append("\n");
-						program_buf.append(line_str);
-					}
+					for(int flag=0;!(fr.eof());)
+						if((line_str=fr.get_line())!=null) {
+							if(line_str.trim().compareTo(terminated_token)==0)
+								break;
+							if((flag++)>0)
+								program_buf.append("\n");
+							program_buf.append(line_str);
+						}
 					if((my_initialization_program=program_buf.toString())!=null)
 						if(my_initialization_program.length()>0)
 							break;
 				}
 			return;
 		}
-		program_and_charset.add(program_and_charset.size(),new String[] 
-			{
+		program_and_charset.add(
+			new String[]{
 				my_initialization_program,
 				my_initialization_program_charset,
 				not_multifile_flag
 			});
-		return;
 	}
 }

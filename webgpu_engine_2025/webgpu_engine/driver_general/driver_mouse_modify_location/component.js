@@ -635,7 +635,7 @@ function mobile_phone(event,component_id,scene)
 	}
 	return false;		
 }
-function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
+function construct_component_driver(component_ids,init_data,create_data,part_object,part_driver,render_driver,scene)
 {
 	this.component_ids=component_ids;
 	

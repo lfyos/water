@@ -90,16 +90,14 @@ fn vertex_main(
 			var projection_matrix	:	mat4x4<f32>;
 
 			if(primitive_type==1){
-				width_height=vec4(
-					f32(target_info.target_view_width),
-					f32(target_info.target_view_height),
-					0.0,0.0);
+				width_height=vec4(	f32(target_info.target_view_width),
+									f32(target_info.target_view_height),
+									0.0,0.0);
 				projection_matrix=target_info.projection_matrix;
 			}else{
-				width_height=vec4(
-					f32(target_info.target_view_width_from),
-					f32(target_info.target_view_height_from),
-					0.0,0.0);
+				width_height=vec4(	f32(target_info.target_view_width_from),
+									f32(target_info.target_view_height_from),
+									0.0,0.0);
 				projection_matrix=target_info.negative_screen_move_matrix*target_info.projection_matrix;				
 				projection_matrix=target_info.screen_move_matrix_from*projection_matrix;
 			}
@@ -131,11 +129,11 @@ fn vertex_main(
 			vf.vertex_position=target_info.projection_matrix*vf.vertex_location;
 			
 			vf.vertex_texture=point_texture_position[my_vertex_index%6];
-			vf.vertex_position=(vf.vertex_position/vf.vertex_position.w)
-				+(tag_info.point_size*vf.vertex_texture*vec4(
-					1.0/f32(target_info.target_view_width),
-					1.0/f32(target_info.target_view_height),
-					0.0,0.0));
+			vf.vertex_position=vf.vertex_position/vf.vertex_position.w
+					+vf.vertex_texture*vec4(
+						tag_info.point_size/f32(target_info.target_view_width),
+						tag_info.point_size/f32(target_info.target_view_height),
+						0.0,0.0);
 			break;
 		}
 	}
@@ -170,9 +168,9 @@ fn fragment_face_fun(vf:vertex_to_fragment_struct) ->  color_target_struct
 	ret_val.color=tag_info.face_normal_color;
 	
 	var my_color=textureSample(tag_texture,tag_sampler,vf.vertex_texture.xy);
-	if(dot(my_color.rgb,my_color.rgb)<0.75){
-		discard;
-	}
+	if(dot(my_color.rgb,my_color.rgb)<0.75)
+		{discard;}
+	
 	if(   (system_info.pickup_component_id==tag_info.tag_component_id)
 		&&(system_info.pickup_driver_id==tag_info.tag_driver_id)
 		&&(system_info.pickup_body_id==tag_info.tag_body_id))
@@ -209,10 +207,11 @@ fn fragment_point_fun(vf:vertex_to_fragment_struct) -> color_target_struct
 		
 	var ret_val:color_target_struct;
 	ret_val.depth=vf.vertex_position.z*tag_info.depth_proportion;
-	if(dot(vf.vertex_texture,vf.vertex_texture)>1.0){
-		discard;
-	}
+	if(dot(vf.vertex_texture,vf.vertex_texture)>1.0)
+		{discard;}
+	
 	ret_val.color=tag_info.point_normal_color;
+	
 	if(   (system_info.pickup_component_id==tag_info.tag_component_id)
 		&&(system_info.pickup_driver_id==tag_info.tag_driver_id)
 		&&(system_info.pickup_body_id==tag_info.tag_body_id))

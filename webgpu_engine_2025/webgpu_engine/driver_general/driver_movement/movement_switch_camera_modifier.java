@@ -14,6 +14,7 @@ import kernel_scene.client_information;
 import kernel_component.component_array;
 import kernel_component.component_collector;
 import kernel_component.component_container;
+import kernel_common_class.const_value;
 import kernel_common_class.debug_information;
 
 public class movement_switch_camera_modifier extends modifier_driver
@@ -182,9 +183,9 @@ public class movement_switch_camera_modifier extends modifier_driver
 				camera cam=sk.camera_cont.get(i);
 				if(cam.parameter.movement_flag)
 					(new locate_camera(cam)).locate_on_components(
-						sk.modifier_cont[camera_modifier_container_id],b,
-						cam.parameter.direction_flag?dir:null,
-						(cam.parameter.scale_value<=0)?-1.0:scale_value,
+						sk.modifier_cont[camera_modifier_container_id],
+						b,cam.parameter.direction_flag?dir:null,
+						(cam.parameter.scale_value<const_value.min_value)?-1.0:scale_value,
 						true,false,false);
 			}
 		}

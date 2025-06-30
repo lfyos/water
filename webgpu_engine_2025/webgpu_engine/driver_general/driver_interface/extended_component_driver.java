@@ -50,8 +50,12 @@ public class extended_component_driver  extends component_driver
 		comp.uniparameter.display_part_name_or_component_name_flag=false;
 		temp_path_name=file_writer.component_temparatory_link_path_name(
 			comp.component_id,driver_id,directory_name,file_name,sk.system_par,sk.scene_par);
-		
 		return;
+	}
+	public void create_component_driver_initialization_data(
+			file_writer fw,component comp,int driver_id,
+			scene_kernel sk,client_request_response request_response)
+	{
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)

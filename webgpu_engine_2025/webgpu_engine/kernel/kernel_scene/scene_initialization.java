@@ -121,7 +121,7 @@ public class scene_initialization
 				continue;
 			
 			try{
-				r.driver.initialize_render_driver(render_id,sk,request_response);
+				r.driver.initialize_render_driver(r,sk,request_response);
 			}catch(Exception e){
 				e.printStackTrace();
 				
@@ -284,7 +284,7 @@ public class scene_initialization
 				}
 			}
 		}
-	
+		
 		process_bar.set_process_bar(false,"file_initialization_0","",init_comp.size(),init_comp.size());
 		
 		if((new File(destination_file_name)).lastModified()>last_time)
@@ -304,12 +304,35 @@ public class scene_initialization
 				
 				fw.print("\t[",jason_string.change_string(sort_component_array[i].component_name));
 				fw.print(",",sort_component_array[i].component_id);
-				fw.print(",[");
 				
+				fw.print(",[");
 				for(int j=0,nj=sort_component_array[i].children.size();j<nj;j++)
 					fw.print((j<=0)?"":",",sort_component_array[i].children.get(j).component_id);
+				fw.println("],");
 				
-				fw.println((i!=(ni-1))?"]],":"]]");
+				fw.println("\t\t[");
+				int driver_number=sort_component_array[i].driver_array.size();
+				for(int driver_id=0;driver_id<driver_number;driver_id++) {
+					var comp_driver=sort_component_array[i].driver_array.get(driver_id);
+					if(comp_driver!=null) {
+						long output_length=fw.output_data_length;
+						comp_driver.create_component_driver_initialization_data(
+								fw,sort_component_array[i],driver_id,sk,request_response);
+						if(fw.output_data_length>output_length) {
+							if(driver_id<(driver_number-1))
+								fw.println(",");
+							else
+								fw.println();
+							continue;
+						}
+					}
+					if(driver_id<(driver_number-1))
+						fw.print("\t\t\tnull,");
+					else
+						fw.print("\t\t\tnull");
+				}
+				fw.println("\t\t]");
+				fw.println("\t",(i<(ni-1))?"],":"]");
 			}
 			process_bar.set_process_bar(false,"file_initialization_1","",
 					sort_component_array.length, sort_component_array.length);
@@ -322,20 +345,53 @@ public class scene_initialization
 			for(int render_id=0,render_number=id.length;render_id<render_number;render_id++){
 				render r=sk.render_cont.renders.get(render_id);
 				process_bar.set_process_bar(false,"file_initialization_2",r.render_name,render_id,render_number);
-				fw.println("	[");
+				fw.println("\t[");
 				for(int part_id=0,part_number=id[render_id].length;part_id<part_number;part_id++){
-					fw.println("		[");
+					fw.println("\t\t[");
 					for(int i=0,ni=id[render_id][part_id].length;i<ni;i++) {
 						int component_id=id[render_id][part_id][i][0];
 						int driver_id	=id[render_id][part_id][i][1];
-						fw.print  ("			[",component_id);
+						fw.print  ("\t\t\t[",component_id);
 						fw.print  (",",driver_id);
 						fw.println((i==(ni-1))?"]":"],");
 					}
-					fw.println((part_id==(part_number-1))?"		]":"		],");
+					fw.println("\t\t],");
+					
+					part my_part;
+					if((my_part=r.parts.get(part_id))!=null) 
+						if(my_part.driver!=null){
+							long output_length=fw.output_data_length;
+							my_part.driver.create_part_driver_initialization_data(fw,my_part,sk,request_response);
+							if(fw.output_data_length>output_length) {
+								if(part_id<(part_number-1))
+									fw.println(",");
+								else
+									fw.println();
+								continue;
+							}
+						}
+					if(part_id<(part_number-1))
+						fw.println("\t\tnull,");
+					else
+						fw.println("\t\tnull");
 				}
-				fw.println();
-				fw.println((render_id==(render_number-1))?"	]":"	],");	
+				fw.println("\t],");
+				
+				if(r.driver!=null) {
+					long output_length=fw.output_data_length;
+					r.driver.create_render_driver_initialization_data(fw,r,sk,request_response);
+					if(fw.output_data_length>output_length){
+						if(render_id<(render_number-1))
+							fw.println(",");
+						else
+							fw.println();
+						continue;
+					}
+				}
+				if(render_id<(render_number-1))
+					fw.println("\tnull,");
+				else
+					fw.println("\tnull");
 			}
 			process_bar.set_process_bar(false,"file_initialization_2","",id.length, id.length);
 		}
@@ -384,7 +440,7 @@ public class scene_initialization
 						fw.println("		[");
 					else{
 						fw.println("function(render_id,render_name,");
-						fw.println("	init_data,shader_code,text_array,render)");
+						fw.println("	init_data,create_data,shader_code,text_array,render)");
 						fw.println("{");
 					}				
 					for(int j=0,nj=shader_file_name[i].length;j<nj;j++){
@@ -417,9 +473,9 @@ public class scene_initialization
 						fw.print  ("		]");
 					else{
 						fw.println("	return new new_render_driver(render_id,render_name,");
-						fw.println("					init_data,shader_code,text_array,render);");
+						fw.println("		init_data,create_data,shader_code,text_array,render);");
 						fw.print  ("}");
-					}					
+					}
 				}
 				fw.println().println().println();
 				fw.println((render_id<(render_number-1))?"	],":"	]");				
@@ -446,7 +502,7 @@ public class scene_initialization
 		fw.print  ("	max_method_number		:	",sk.system_par.max_method_number);
 		
 		fw.println("}");
-		
+
 		fw.println().println("];").println();
 		
 		fw.close();

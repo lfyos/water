@@ -395,7 +395,7 @@ function create_one_render_driver(array_stride,material_offset,
 	this.color_frame_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 }
 
-function new_render_driver(	render_id,render_name,init_data,shader_code,text_array,scene)
+function new_render_driver(render_id,render_name,init_data,create_data,shader_code,text_array,scene)
 {
 	this.render_material=init_data;
 	

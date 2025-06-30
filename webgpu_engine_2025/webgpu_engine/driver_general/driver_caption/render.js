@@ -1,4 +1,4 @@
-function new_render_driver(	render_id,render_name,init_data,shader_code,text_array,scene)
+function new_render_driver(	render_id,render_name,init_data,create_data,shader_code,text_array,scene)
 {
 	var texture_bindgroup_layout_entries=[
 		{	//texture

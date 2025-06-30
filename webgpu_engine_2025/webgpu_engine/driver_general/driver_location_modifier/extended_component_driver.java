@@ -7,6 +7,7 @@ import kernel_driver.component_driver;
 import kernel_transformation.location;
 import kernel_network.client_request_response;
 import kernel_driver.component_instance_driver;
+import kernel_file_manager.file_writer;
 
 public class extended_component_driver  extends component_driver
 {
@@ -37,6 +38,11 @@ public class extended_component_driver  extends component_driver
 //		String extra_parameter_directory_name	=sk.scene_par.extra_directory_name;
 		
 		return;
+	}
+	public void create_component_driver_initialization_data(
+			file_writer fw,component comp,int driver_id,
+			scene_kernel sk,client_request_response request_response)
+	{
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)

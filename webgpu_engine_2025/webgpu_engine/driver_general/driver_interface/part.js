@@ -1,4 +1,4 @@
-function construct_part_driver(init_data,part_object,render_driver,scene)
+function construct_part_driver(init_data,create_data,part_object,render_driver,scene)
 {
 	this.new_component_driver=construct_component_driver;
 	this.decoder=scene.system_call_processor.default_vertex_data_decoder;

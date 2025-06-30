@@ -7,7 +7,7 @@
 		/* 2type		*/	interface_part
 		/* 2location	*/	1    0    0    0    0    1    0    0    0    0    1    0    0    0    0    1
 				
-		false			0		0.25		1.3		tag_root_menu.png		
+		false			0		0.25		1.3		tag_root_menu.png
 		
 		file_program	tag_root_menu.txt
 
@@ -23,10 +23,12 @@
 		file_program	tag_type_menu.txt
 		
 		token_program	tag_direction_distance_component
+		
 		function(component_name,component_id,scene)
 		{
-			scene.operate_component.get_component_event_processor(component_id).type_base_id=0;
+			scene.operate_component.get_component_event_processor(component_id).type_base_id=3;
 		}
+		
 		tag_direction_distance_component
 		
 
@@ -41,10 +43,12 @@
 		file_program	tag_type_menu.txt
 		
 		token_program	tag_plane_distance_component
+		
 		function(component_name,component_id,scene)
 		{
-			scene.operate_component.get_component_event_processor(component_id).type_base_id=9;
+			scene.operate_component.get_component_event_processor(component_id).type_base_id=12;
 		}
+		
 		tag_plane_distance_component
 
 		/* 2child_number	*/	0	
@@ -59,10 +63,12 @@
 		file_program	tag_type_menu.txt
 		
 		token_program	tag_direction_angle_component
+		
 		function(component_name,component_id,scene)
 		{
-			scene.operate_component.get_component_event_processor(component_id).type_base_id=18;
+			scene.operate_component.get_component_event_processor(component_id).type_base_id=21;
 		}
+		
 		tag_direction_angle_component
 		
 		/* 2child_number	*/	0
@@ -76,10 +82,12 @@
 		file_program	tag_type_menu.txt
 		
 		token_program	tag_plane_angle_component
+		
 		function(component_name,component_id,scene)
 		{
-			scene.operate_component.get_component_event_processor(component_id).type_base_id=27;
+			scene.operate_component.get_component_event_processor(component_id).type_base_id=30;
 		}
+		
 		tag_plane_angle_component
 		
 		/* 2child_number	*/	0	

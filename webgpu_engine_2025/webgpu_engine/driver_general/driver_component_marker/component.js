@@ -49,7 +49,7 @@ function init_component_event_processor()
 		return true;
 	};
 }
-function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
+function construct_component_driver(component_ids,init_data,create_data,part_object,part_driver,render_driver,scene)
 {
 	this.component_ids	=component_ids;
 	this.marker_array	=new Array();
@@ -110,7 +110,6 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 			}
 		}
 	}
-
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
 		for(var i=0,ni=this.marker_array.length;i<ni;i++){

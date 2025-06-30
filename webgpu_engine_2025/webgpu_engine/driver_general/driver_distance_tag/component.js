@@ -141,7 +141,8 @@ function init_component_event_processor(component_id,init_data,scene)
 		}
 	};
 }
-function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
+
+function construct_component_driver(component_ids,init_data,create_data,part_object,part_driver,render_driver,scene)
 {
 	this.component_ids=component_ids;
 	this.event_component_id=-1;
@@ -355,7 +356,6 @@ function construct_component_driver(component_ids,init_data,part_object,part_dri
 			};
 		};
 	};
-	
 	this.destroy=function()
 	{
 		for(var i=0,ni=this.tag_array.length;i<ni;i++){

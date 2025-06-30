@@ -1,0 +1,576 @@
+package driver_distance_tag;
+
+import java.util.ArrayList;
+
+import kernel_scene.scene_kernel;
+import kernel_transformation.box;
+import kernel_component.component;
+import kernel_transformation.point;
+import kernel_transformation.plane;
+import kernel_camera.locate_camera;
+import kernel_common_class.const_value;
+import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
+import kernel_scene.client_information;
+import kernel_component.component_selection;
+import kernel_common_class.debug_information;
+
+public class distance_tag_list
+{
+	private String directory_component_name,distance_tag_file_name;
+	private double min_view_distance;
+
+	public ArrayList<distance_tag_item>distance_tag_list;
+	private distance_tag_item ex_distance_tag;
+	
+	public int display_precision,modifier_container_id;
+
+	public distance_tag_list(
+			String my_directory_component_name,String my_distance_tag_file_name,
+			int my_display_precision,double my_min_view_distance,int my_modifier_container_id)
+	{
+		directory_component_name=my_directory_component_name;
+		distance_tag_file_name=file_reader.separator(my_distance_tag_file_name);
+		min_view_distance=my_min_view_distance;
+
+		distance_tag_list=new ArrayList<distance_tag_item>();
+		ex_distance_tag=null;
+		
+		display_precision=my_display_precision;
+		modifier_container_id=my_modifier_container_id;
+	}
+	public void destroy()
+	{
+		directory_component_name	=null;
+		distance_tag_file_name		=null;
+		if(distance_tag_list!=null) {
+			for(int i=distance_tag_list.size()-1;i>=0;i--) 
+				distance_tag_list.remove(i).destroy();
+			distance_tag_list=null;
+		}
+		if(ex_distance_tag!=null) {
+			ex_distance_tag.destroy();
+			ex_distance_tag=null;
+		}
+	}
+	public void save(scene_kernel sk)
+	{
+		component directory_comp;
+		if((directory_comp=sk.component_cont.search_component(directory_component_name))==null)
+			return;
+		String my_distance_tag_file_name=directory_comp.component_directory_name+distance_tag_file_name;
+		file_writer fw=new file_writer(my_distance_tag_file_name,directory_comp.component_charset);
+		for(int i=0,ni=distance_tag_list.size();i<ni;i++) {
+			var my_list=distance_tag_list.get(i);
+			if(my_list.write_out(fw,sk)){
+				fw.println();
+				if(my_list.extra_distance_tag==null)
+					fw.println("/*	extra_distance_tag	*/	false");
+				else {
+					fw.println("/*	extra_distance_tag	*/	true");
+					my_list.extra_distance_tag.write_out(fw,sk);
+				}
+				fw.println();
+				fw.println();
+			}
+		}
+		fw.close();
+	}
+	public void load(scene_kernel sk)
+	{
+		component directory_comp;
+		if((directory_comp=sk.component_cont.search_component(directory_component_name))==null)
+			return;
+		distance_tag_item my_list;
+		for(int i=distance_tag_list.size()-1;i>=0;i--) 
+			if((my_list=distance_tag_list.remove(i))!=null)
+				my_list.destroy();
+		String my_distance_tag_file_name=directory_comp.component_directory_name+distance_tag_file_name;
+		file_reader fr=new file_reader(my_distance_tag_file_name,directory_comp.component_charset);
+		for(distance_tag_item new_distance_tag;(new_distance_tag=distance_tag_item.load(fr,sk))!=null;){
+			if(fr.get_boolean())
+				new_distance_tag.extra_distance_tag=distance_tag_item.load(fr,sk);
+			distance_tag_list.add(new_distance_tag);
+		}
+		fr.close();
+	}
+	public void jason(scene_kernel sk,client_information ci)
+	{
+		ci.request_response.print  ("[");
+		String follow_str="";
+		for(int i=0,ni=distance_tag_list.size();i<ni;i++) {
+			var p=distance_tag_list.get(i);
+			if(p.response_jason(i, sk, ci, follow_str)) {
+				follow_str=",";
+				if(p.extra_distance_tag!=null)
+					p.extra_distance_tag.response_jason(i, sk, ci, follow_str);
+				else {
+					ci.request_response.print(",");
+					ci.request_response.print("	null");
+				}
+			}
+		}
+		ci.request_response.println();
+		ci.request_response.println("]");
+	}
+	
+	public void clear_all_distance_tag(scene_kernel sk,client_information ci)
+	{
+		for(int i=distance_tag_list.size()-1;i>=0;i--)
+			distance_tag_list.remove(i).destroy();
+	}
+	public boolean clear_distance_tag(scene_kernel sk,client_information ci)
+	{
+		String str;
+		if((str=ci.request_response.get_parameter("id"))==null)
+			str=Integer.toString(distance_tag_list.size()-1);
+		int tag_index=Integer.parseInt(str);
+		if((tag_index<0)||(tag_index>=distance_tag_list.size()))
+			return true;
+		distance_tag_list.remove(tag_index).destroy();
+		return false;
+	}
+	public void set_extra_distance_tag(scene_kernel sk,client_information ci)
+	{
+		if(ex_distance_tag!=null) {
+			ex_distance_tag.destroy();
+			ex_distance_tag=null;
+		}
+		String str;
+		if((str=ci.request_response.get_parameter("id"))==null)
+			return;
+		int tag_index=Integer.parseInt(str);
+		if((tag_index<0)||(tag_index>=distance_tag_list.size()))
+			return;
+		var p=distance_tag_list.get(tag_index);
+		if(p.state.compareTo("end")==0)
+			ex_distance_tag=new distance_tag_item(p);
+		return;
+	}
+	private int test_direction(distance_tag_item t,scene_kernel sk,client_information ci)
+	{
+		component my_comp;
+		if((my_comp=sk.component_cont.get_component(t.p0_component_id))==null)
+			return 0;
+		point p0=ci.display_camera_result.matrix.multiply(my_comp.absolute_location.multiply(t.p0));
+		
+		if((my_comp=sk.component_cont.get_component(t.px_component_id))==null)
+			return 0;
+		point px=ci.display_camera_result.matrix.multiply(my_comp.absolute_location.multiply(t.px));
+		
+		return (p0.x<px.x)?1:2;
+	}
+	public boolean modify_distance_tag(scene_kernel sk,client_information ci)
+	{
+		for(int i=0,ni=distance_tag_list.size();i<ni;i++)
+			switch(distance_tag_list.get(i).state){
+			default:
+			case "begin":
+			case "process":
+				return true;
+			case "end":
+				break;
+			}
+		String str;
+		if((str=ci.request_response.get_parameter("id"))==null)
+			return true;
+		int tag_index=Integer.parseInt(str);
+		if((tag_index<0)||(tag_index>=distance_tag_list.size()))
+			return true;
+		distance_tag_item p=distance_tag_list.get(tag_index);
+		
+		int direction_type;
+		if((direction_type=test_direction(p,sk,ci))==0)
+			return true;
+		
+		if((str=ci.request_response.get_parameter("modify"))==null)
+			return true;
+		switch(str.trim().toLowerCase()){
+		default:
+			p.state="process";
+			return false;
+		case "px":
+			p.state="begin";
+			if(direction_type==1) {
+				p.py=p.px;
+				return false;
+			}
+			break;
+		case "p0":
+			p.state="begin";
+			if(direction_type==2){
+				p.py=p.px;
+				return false;
+			}
+			break;
+		}
+		
+		int bak_int;
+		bak_int=p.p0_component_id;
+		p.p0_component_id=p.px_component_id;
+		p.px_component_id=bak_int;
+		
+		point bak_point;
+		bak_point=p.p0;
+		p.p0=p.px;
+		p.px=bak_point;
+		
+		p.py=p.px;
+		
+		return false;
+	}
+	public void swap_tag_component_selection(scene_kernel sk,client_information ci)
+	{
+		String str;
+		if((str=ci.request_response.get_parameter("id"))==null)
+			return;
+		int tag_index=Integer.parseInt(str);
+		if((tag_index<0)||(tag_index>=distance_tag_list.size()))
+			return;
+
+		int direction_type;
+		distance_tag_item p=distance_tag_list.get(tag_index);
+		if((direction_type=test_direction(p,sk,ci))==0)
+			return;
+		
+		component p0_comp=sk.component_cont.get_component(
+				(direction_type==1)?p.p0_component_id:p.px_component_id);
+		if(p0_comp!=null)
+			if((str=ci.request_response.get_parameter("p0"))!=null)
+				switch(str.trim()) {
+				case "true":
+				case "yes":
+					new component_selection(sk).switch_selected_flag(p0_comp,sk.component_cont);
+					break;
+				}
+		component px_comp=sk.component_cont.get_component(
+				(direction_type==2)?p.p0_component_id:p.px_component_id);
+		if(px_comp!=null)
+			if((str=ci.request_response.get_parameter("px"))!=null)
+				switch(str.trim()) {
+				case "true":
+				case "yes":
+					new component_selection(sk).switch_selected_flag(px_comp,sk.component_cont);
+					break;
+				}
+		return;
+	}
+	public void locate_tag_component(scene_kernel sk,client_information ci)
+	{
+		String str;
+		if((str=ci.request_response.get_parameter("id"))==null)
+			return;
+		int tag_index=Integer.parseInt(str);
+		if((tag_index<0)||(tag_index>=distance_tag_list.size()))
+			return;
+		
+		box b0=null,bx=null,b;
+		boolean locate_type;
+		if((str=ci.request_response.get_parameter("type"))==null)
+			locate_type=false;
+		else
+			switch(str.trim()){
+			case "component":
+				locate_type=true;
+				break;
+			case "point":
+			default:
+				locate_type=false;
+				break;
+			}
+		int direction_type;
+		distance_tag_item p=distance_tag_list.get(tag_index);
+		if((direction_type=test_direction(p,sk,ci))==0)
+			return;
+		
+		component p0_comp;
+		if((p0_comp=sk.component_cont.get_component(
+				(direction_type==1)?p.p0_component_id:p.px_component_id))!=null)
+			if((str=ci.request_response.get_parameter("p0"))!=null)
+				switch(str.trim()) {
+				case "true":
+				case "yes":
+					if(locate_type) {
+						if((b0=p0_comp.get_component_box(false))!=null)
+							break;
+						if((b0=p0_comp.get_component_box(true))!=null)
+							break;
+					}
+					b0=new box(p0_comp.absolute_location.multiply((direction_type==1)?p.p0:p.px));	
+					break;
+				}
+		component px_comp;
+		if((px_comp=sk.component_cont.get_component(
+				(direction_type==2)?p.p0_component_id:p.px_component_id))!=null)
+			if((str=ci.request_response.get_parameter("px"))!=null)
+				switch(str.trim()) {
+				case "true":
+				case "yes":
+					if(locate_type) {
+						if((bx=px_comp.get_component_box(false))!=null)
+							break;
+						if((bx=px_comp.get_component_box(true))!=null)
+							break;
+					}
+					bx=new box(px_comp.absolute_location.multiply((direction_type==2)?p.p0:p.px));
+					break;
+				}
+		if(b0==null) {
+			if(bx==null)
+				return;
+			else
+				b=bx;
+		}else {
+			if(bx==null)
+				b=b0;
+			else
+				b=b0.add(bx);
+		}
+		var lc=new locate_camera(sk.camera_cont.get(ci.display_camera_result.target.camera_id));
+		lc.locate_on_components(sk.modifier_cont[modifier_container_id],b,null,-1.0,true,false,false);
+		return;
+	}
+	public boolean set_distance_tag_type(scene_kernel sk,client_information ci)
+	{
+		String str;
+		if((str=ci.request_response.get_parameter("id"))==null)
+			return true;
+		int tag_index=Integer.parseInt(str);
+		if((tag_index<0)||(tag_index>=distance_tag_list.size()))
+			return true;
+		if((str=ci.request_response.get_parameter("type"))==null)
+			return true;
+		distance_tag_list.get(tag_index).set_distance_tag_type(str,ex_distance_tag,sk,ci);
+		return false;
+	}
+	public boolean title_distance_tag(scene_kernel sk,client_information ci)
+	{
+		String str;
+		if((str=ci.request_response.get_parameter("id"))==null)
+			return true;
+		int tag_index=Integer.parseInt(str);
+		if((tag_index<0)||(tag_index>=distance_tag_list.size()))
+			return true;
+		if((str=ci.request_response.get_parameter("title"))==null)
+			return true;
+		String request_charset=ci.request_response.implementor.get_request_charset();
+		try {
+			str=java.net.URLDecoder.decode(str,request_charset);
+			str=java.net.URLDecoder.decode(str,request_charset);
+		}catch(Exception e) {
+			debug_information.println("Can't decode tag_title \t:\t",str);
+			return true;
+		}
+		
+		str=(str==null)?"":str;
+		str=str.replace(" ","").replace("\t","").replace("\n","").replace("\r","");
+		
+		distance_tag_list.get(tag_index).tag_title=str;
+		
+		return false;
+	}
+	
+	public boolean touch_distance_tag(scene_kernel sk,client_information ci)
+	{
+		distance_tag_item p;
+		component comp_p0,comp_px;
+		point touch_point,global_p0,global_px,global_py,view_p0,view_px,view_py,top_point,down_point;
+		
+		for(int i=0,ni=distance_tag_list.size();i<ni;i++){
+			switch((p=distance_tag_list.get(i)).state){
+			case "begin":	//input second point
+				if(ci.parameter.comp==null)
+					return true;
+				if(!(ci.parameter.comp.uniparameter.part_list_flag))
+					return true;
+				if((touch_point=ci.display_camera_result.caculate_local_focus_point(ci.parameter))==null)
+					return true;
+				comp_p0=sk.component_cont.get_component(p.p0_component_id);
+				global_p0=comp_p0.absolute_location.multiply(p.p0);
+				global_px=ci.parameter.comp.absolute_location.multiply(touch_point);
+				if(global_px.sub(global_p0).distance2()<const_value.min_value2)
+					return true;
+				if(new plane(global_p0,global_px).error_flag)
+					return true;
+				view_p0=ci.display_camera_result.matrix.multiply(global_p0);
+				view_px=ci.display_camera_result.matrix.multiply(global_px);
+				view_p0.z=view_px.z;
+				if(view_px.sub(view_p0).distance2()<(min_view_distance*min_view_distance))
+					return true;
+				
+				global_py=ci.display_camera_result.to_me_direct.cross(global_px.sub(global_p0));
+				if(global_py.distance2()<=const_value.min_value2)
+					return true;
+				
+				top_point =ci.display_camera_result.negative_matrix.multiply(view_px.x, 1,view_px.z);
+				down_point=ci.display_camera_result.negative_matrix.multiply(view_px.x,-1,view_px.z);
+				global_py=global_py.expand(top_point.sub(down_point).distance()/100.0).add(global_p0);
+				
+				p.px_component_id=ci.parameter.comp.component_id;
+				p.px=touch_point;
+				p.py=comp_p0.caculate_negative_absolute_location().multiply(global_py);
+
+				return false;
+			case "process"://confirm third point
+				comp_p0=sk.component_cont.get_component(p.p0_component_id);
+				global_p0=comp_p0.absolute_location.multiply(p.p0);
+				view_p0=ci.display_camera_result.matrix.multiply(global_p0);
+				
+				comp_px=sk.component_cont.get_component(p.px_component_id);
+				global_px=comp_px.absolute_location.multiply(p.px);
+				view_px=ci.display_camera_result.matrix.multiply(global_px);
+
+				plane p_pl_up	=new plane(global_p0,global_px,global_px.add(ci.display_camera_result.up_direct));
+				plane p_pl_right=new plane(global_p0,global_px,global_px.add(ci.display_camera_result.right_direct));
+				plane p_pl;
+				if(p_pl_up.error_flag)
+					if(p_pl_right.error_flag)
+						return true;
+					else
+						p_pl=p_pl_right;
+				else
+					if(p_pl_right.error_flag)
+						p_pl=p_pl_up;
+					else{
+						var dir=ci.display_camera_result.to_me_direct;
+						double p_pl_up_dot	 =Math.abs(dir.dot(new point(p_pl_up.A,		p_pl_up.B,		p_pl_up.C)));
+						double p_pl_right_dot=Math.abs(dir.dot(new point(p_pl_right.A,	p_pl_right.B,	p_pl_right.C)));
+						p_pl=(p_pl_up_dot>=p_pl_right_dot)?p_pl_up:p_pl_right;
+					}
+				
+				var tv=ci.display_camera_result.target.target_view;
+				double local_xy[]=tv.caculate_view_local_xy(ci.parameter.x,ci.parameter.y);
+				global_py=p_pl.insection_point(
+						ci.display_camera_result.negative_matrix.multiply(
+								new point(local_xy[0],local_xy[1],ci.parameter.depth+0)),
+						ci.display_camera_result.negative_matrix.multiply(
+								new point(local_xy[0],local_xy[1],ci.parameter.depth+1)));
+				if(global_py==null)
+					return true;
+				global_py=(new plane(global_p0,global_px)).project_to_plane_location().multiply(global_py);
+				if(global_py.sub(global_p0).distance2()<const_value.min_value2)
+					return true;
+				if(new plane(global_p0,global_py).error_flag)
+					return true;
+				
+				view_p0=ci.display_camera_result.matrix.multiply(global_p0);
+				view_py=ci.display_camera_result.matrix.multiply(global_py);
+				view_p0.z=view_py.z;
+				if(view_py.sub(view_p0).distance2()<(min_view_distance*min_view_distance))
+					return true;
+
+				p.py=comp_p0.caculate_negative_absolute_location().multiply(global_py);
+				return false;
+			default:
+				break;
+			}
+		}
+		return true;
+	}
+	public boolean mark_distance_tag(scene_kernel sk,client_information ci)
+	{
+		component comp_p0;
+		point mark_point,global_p0,global_px,global_py,view_p0,view_px,view_py;
+
+		for(int i=0,ni=distance_tag_list.size();i<ni;i++){
+			distance_tag_item p=distance_tag_list.get(i);
+			switch(p.state){
+			case "begin":	//input second point
+				if(ci.parameter.comp==null)
+					return true;
+				if(!(ci.parameter.comp.uniparameter.part_list_flag))
+					return true;
+				if((mark_point=ci.display_camera_result.caculate_local_focus_point(ci.parameter))==null)
+					return true;
+				
+				comp_p0=sk.component_cont.get_component(p.p0_component_id);
+				global_p0=comp_p0.absolute_location.multiply(p.p0);
+				global_px=ci.parameter.comp.absolute_location.multiply(mark_point);
+				if(global_px.sub(global_p0).distance2()<const_value.min_value2)
+					return true;
+				if(new plane(global_p0,global_px).error_flag)
+					return true;
+				
+				view_p0=ci.display_camera_result.matrix.multiply(global_p0);
+				view_px=ci.display_camera_result.matrix.multiply(global_px);
+				view_p0.z=view_px.z;
+				if(view_px.sub(view_p0).distance2()<(min_view_distance*min_view_distance))
+					return true;
+				
+				p.px_component_id=ci.parameter.comp.component_id;
+				p.px=mark_point;
+				p.state="process";
+				return true;
+			case "process"://confirm third point
+				comp_p0=sk.component_cont.get_component(p.p0_component_id);
+				global_p0=comp_p0.absolute_location.multiply(p.p0);
+				global_py=comp_p0.absolute_location.multiply(p.py);
+				
+				if(global_py.sub(global_p0).distance2()<const_value.min_value2)
+					return true;
+				if(new plane(global_p0,global_py).error_flag)
+					return true;
+				view_p0=ci.display_camera_result.matrix.multiply(global_p0);
+				view_py=ci.display_camera_result.matrix.multiply(global_py);
+				view_p0.z=view_py.z;
+				if(view_py.sub(view_p0).distance2()<(min_view_distance*min_view_distance))
+					return true;
+				p.state="end";
+				return false;
+			default:
+				break;
+			}
+		}
+		//input first point
+		if(ci.parameter.comp==null)
+			return true;
+		if(!(ci.parameter.comp.uniparameter.part_list_flag))
+			return true;
+		if((mark_point=ci.display_camera_result.caculate_local_focus_point(ci.parameter))==null)
+			return true;
+		distance_tag_list.add(new distance_tag_item(mark_point,
+			ci.parameter.comp.component_id,sk.component_cont.root_component.component_id));
+		return true;
+	}
+	public boolean test_location_modify(scene_kernel sk,client_information ci)
+	{
+		boolean ret_val=false;
+		for(int i=0,ni=distance_tag_list.size();i<ni;i++) {
+			distance_tag_item p=distance_tag_list.get(i);
+			switch(p.state) {
+			default:
+				break;
+			case "process":
+			case "end":
+				component comp_p0 =sk.component_cont.get_component(p.p0_component_id);
+				component comp_px =sk.component_cont.get_component(p.px_component_id);
+				component comp_coordinate=sk.component_cont.get_component(p.coordinate_component_id);
+				component comp_extra_p0=null;
+				component comp_extra_px=null;
+				if(p.extra_distance_tag!=null) {
+					comp_extra_p0 =sk.component_cont.get_component(p.extra_distance_tag.p0_component_id);
+					comp_extra_px =sk.component_cont.get_component(p.extra_distance_tag.px_component_id);
+				}
+				if(p.location_version_p0>=comp_p0.get_absolute_location_version())
+					if(p.location_version_px>=comp_px.get_absolute_location_version())
+						if(p.location_version_tag>=comp_coordinate.get_absolute_location_version()) {
+							if(p.extra_distance_tag==null)
+								break;
+							if(p.extra_distance_tag.location_version_p0>=comp_extra_p0.get_absolute_location_version())
+								if(p.extra_distance_tag.location_version_px>=comp_extra_px.get_absolute_location_version())
+									break;
+						}
+				p.location_version_p0=comp_p0.get_absolute_location_version();
+				p.location_version_px=comp_px.get_absolute_location_version();
+				p.location_version_tag=comp_coordinate.get_absolute_location_version();
+				if(p.extra_distance_tag!=null){
+					p.extra_distance_tag.location_version_p0=comp_extra_p0.get_absolute_location_version();
+					p.extra_distance_tag.location_version_px=comp_extra_px.get_absolute_location_version();
+				}
+				ret_val=true;
+				break;
+			}
+		}
+		return ret_val;
+	}
+}

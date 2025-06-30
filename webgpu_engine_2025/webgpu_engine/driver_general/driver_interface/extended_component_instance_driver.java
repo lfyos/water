@@ -60,8 +60,8 @@ public class extended_component_instance_driver extends component_instance_drive
 			file_reader.get_text(ci.request_response,original_path_name,file_charset);
 		}else{
 			String url=ci.get_component_request_url_header(comp.component_id,driver_id);
-			ci.request_response.println("	\"url\"	:	",
-					jason_string.change_string(url+"&operation=file"));
+			url=jason_string.change_string(url+"&operation=file");
+			ci.request_response.println("	\"url\"	:	",url);
 		}
 		ci.request_response.println("}");
 	}
@@ -85,12 +85,10 @@ public class extended_component_instance_driver extends component_instance_drive
 			dx=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("dy"))!=null)
 			dy=Double.parseDouble(str);
-		
 		if((str=ci.request_response.get_parameter("x0"))!=null)
 			x0=Double.parseDouble(str);
 		if((str=ci.request_response.get_parameter("y0"))!=null)
 			y0=Double.parseDouble(str);
-		
 		if((str=ci.request_response.get_parameter("center"))!=null) {
 			render_target_view tv=ci.display_camera_result.target.target_view;
 			double p[]=tv.caculate_view_local_xy(ci.parameter.x,ci.parameter.y);

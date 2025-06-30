@@ -12,8 +12,10 @@
 					/*	component location				*/	identity
 
 					/*	tag_root_menu_component_name	*/		tag_root_menu_component
+					
 					/*	directory_component_name		*/		movement_manager
 					/*	distance_tag_file_name			*/		distance_tag.txt
+					
 					/*	display_precision				*/		6
 					/*	min_view_distance				*/		0.05
 					/*	modifier_container_id			*/		0

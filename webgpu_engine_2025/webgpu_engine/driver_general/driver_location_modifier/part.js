@@ -1,4 +1,4 @@
-function construct_part_driver(init_data,part_object,render_driver,scene)
+function construct_part_driver(init_data,create_data,part_object,render_driver,scene)
 {
 	this.decoder=scene.system_call_processor.default_vertex_data_decoder;
 	this.decode_vertex_data=function(request_type_string,buffer_object_data,part_object)

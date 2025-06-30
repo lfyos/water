@@ -15,7 +15,7 @@ function(component_name,component_id,scene)
 				break;
 			case 1:
 				return;
-			case 2:						
+			case 2:
 				scene.caller.call_server_component(tag_ep.component_id,"all",
 					[["operation","modify"],["id",tag_ep.pickup_tag_id],
 					 ["modify",(ep.x<(1.0/3.0))?"p0":(ep.x>(2.0/3.0))?"px":"position"]]);
@@ -39,11 +39,11 @@ function(component_name,component_id,scene)
 				return;
 			case 6:
 				scene.caller.call_server_component(tag_ep.component_id,"all",
-					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","-1"]]);
+					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","absolute_distance"]]);
 				break;
 			case 7:
 				scene.caller.call_server_component(tag_ep.component_id,"all",
-					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","-2"]]);
+					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","projection_distance"]]);
 				break;
 			case 8:
 				scene.system_call_processor.set_menu_show("tag_direction_distance_component");
@@ -55,7 +55,7 @@ function(component_name,component_id,scene)
 				return;
 			case 11:
 				scene.caller.call_server_component(tag_ep.component_id,"all",
-					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","-3"]]);
+					[["operation","type"],["id",tag_ep.pickup_tag_id],["type","projection_angle"]]);
 				break;
 			case 12:
 				scene.system_call_processor.set_menu_show("tag_direction_angle_component");
@@ -64,7 +64,7 @@ function(component_name,component_id,scene)
 				scene.system_call_processor.set_menu_show("tag_plane_angle_component");
 				break;	
 			}			
-			scene.system_call_processor.set_menu_hide(component_id);					
+			scene.system_call_processor.set_menu_hide(component_id);
 		}
 	}
 }

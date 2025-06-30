@@ -9,14 +9,12 @@ import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_scene.client_information;
 import kernel_common_class.change_name;
-import kernel_common_class.const_value;
 import kernel_component.component_array;
 import kernel_common_class.common_reader;
 import kernel_common_class.upload_web_page;
 import kernel_component.component_collector;
 import kernel_component.component_link_list;
 import kernel_component.component_selection;
-
 import kernel_common_class.component_collector_jason_component;
 
 public class operate_part_list 
@@ -125,8 +123,7 @@ public class operate_part_list
 				if(select_type_id!=2)
 					(new locate_camera(ci.display_camera_result.cam)).locate_on_components(
 						sk.modifier_cont[modifier_container_id],comp_con.get_box(),null,
-						ci.display_camera_result.cam.parameter.scale_value,true,true,
-						ci.display_camera_result.cam.parameter.scale_value>const_value.min_value);
+						ci.display_camera_result.cam.parameter.scale_value,true,true,false);
 		return;
 	}
 	public static void part_list_request(

@@ -1,4 +1,4 @@
-function construct_part_driver(init_data,part_object,render_driver,scene)
+function construct_part_driver(init_data,create_data,part_object,render_driver,scene)
 {
 	this.render_material=render_driver.render_material;
 	this.material_bindgroup_flag=true;

@@ -51,32 +51,25 @@ public class extended_component_instance_driver extends component_instance_drive
 			point p;
 			if((p=ci.display_camera_result.caculate_local_focus_point(ci.parameter))==null)
 				return true;
-			
+			component_marker cm=new component_marker(
+				ci.parameter.comp,c_d.component_part.user_name,p.x,p.y,p.z);
 			cmc.clear_all_component_marker(sk,false);
-			cmc.component_marker_list.add(new component_marker(
-				ci.parameter.comp,c_d.component_part.user_name,p.x,p.y,p.z));
+			cmc.component_marker_list.add(cm);
 			update_component_parameter_version(0);
 			ci.render_buffer.location_buffer.put_in_list(ci.parameter.comp,sk);
 			return false;
 		}
-		if(cmc.component_marker_list.size()<=0)
-			return true;
-		if(cr.target.main_display_target_flag) {
+		for(int i=cmc.component_marker_list.size()-1;i>=0;i--) {
 			component my_comp;
 			component_marker my_cm;
-			for(int i=0,ni=cmc.component_marker_list.size();i<ni;i++)
-				if((my_cm=cmc.component_marker_list.get(i))!=null){
-					if((my_comp=sk.component_cont.get_component(my_cm.marker_component_id))!=null) 
-						ci.render_buffer.location_buffer.put_in_list(my_comp,sk);
-					else{
-						cmc.component_marker_list.remove(i);
-						update_component_parameter_version(0);
-						ni--;
-						i--;
-					}
+			if((my_cm=cmc.component_marker_list.get(i))!=null)
+				if((my_comp=sk.component_cont.get_component(my_cm.marker_component_id))!=null) {
+					ci.render_buffer.location_buffer.put_in_list(my_comp,sk);
+					continue;
 				}
+			cmc.component_marker_list.remove(i);
 		}
-		return false;
+		return (cmc.component_marker_list.size()<=0);
 	}
 	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
@@ -165,7 +158,8 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;
 			if((ci.parameter.body_id<0)||(ci.parameter.body_id>=cmc.component_marker_list.size()))
 				break;
-			operate_cm=cmc.component_marker_list.get(ci.parameter.body_id);
+			if((operate_cm=cmc.component_marker_list.get(ci.parameter.body_id))==null)
+				break;
 			if((operate_comp=sk.component_cont.get_component(operate_cm.marker_component_id))==null)
 				break;	
 			switch(str){

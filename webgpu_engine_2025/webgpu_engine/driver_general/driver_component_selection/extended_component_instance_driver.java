@@ -60,8 +60,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		ci.request_response.print(change_type_flag?"1":"0");
 	}
-	private void select_many_component(component comp,int driver_id,
-			int control_code,scene_kernel sk,client_information ci)
+	private void select_many_component(int control_code,scene_kernel sk,client_information ci)
 	{
 		String str;
 		
@@ -146,8 +145,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		return;
 	}
 	
-	private void select_single_component(
-			component comp,int control_code,scene_kernel sk,client_information ci)
+	private void select_single_component(int control_code,scene_kernel sk,client_information ci)
 	{
 		String str;
 
@@ -211,7 +209,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				acd.set_audio(collector.audio_file_name,true);
 		return;
 	}
-	private void view_scale(component comp,int control_code,scene_kernel sk,client_information ci)
+	private void view_scale(int control_code,scene_kernel sk,client_information ci)
 	{
 		String str;
 
@@ -229,20 +227,22 @@ public class extended_component_instance_driver extends component_instance_drive
 		int control_code=0;
 
 		if((str=ci.request_response.get_parameter("control"))!=null)
-			control_code=Integer.decode(str);
-		if((str=ci.request_response.get_parameter("operation"))==null)
-			return null;
-		switch(str) {
+			try {
+				control_code=Integer.decode(str);
+			}catch(Exception e) {
+				return null;
+			}
+		switch(((str=ci.request_response.get_parameter("operation"))==null)?"":str){
 		default:
 			break;
 		case "single":
-			select_single_component(comp,control_code,sk,ci);
+			select_single_component(control_code,sk,ci);
 			break;
 		case "many":
-			select_many_component(comp,driver_id,control_code,sk,ci);
+			select_many_component(control_code,sk,ci);
 			break;
 		case "scale":
-			view_scale(comp,control_code,sk,ci);
+			view_scale(control_code,sk,ci);
 			break;
 		}
 		return null;

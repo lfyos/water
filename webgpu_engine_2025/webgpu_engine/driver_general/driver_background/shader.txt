@@ -61,26 +61,23 @@ fn fragment_main(vf:vertex_to_fragment_struct) -> fragment_to_target_struct
 	
 	ft.depth=1.0;
 
-	if(no_box_mode){
-		ft.color=no_box_color; 
-	}else if((ap.x>=ap.y)&&(ap.x>=ap.z)){
-	    if(dp.x>0.0){
-	    	ft.color=right_color; 
-		}else{
-			ft.color=left_color; 
-		}
+	if(no_box_mode)
+		{ft.color=no_box_color;}
+	else if((ap.x>=ap.y)&&(ap.x>=ap.z)){
+	    if(dp.x>0.0)
+	    	{ft.color=right_color;} 
+		else
+			{ft.color=left_color;} 
 	}else if((ap.y>=ap.x)&&(ap.y>=ap.z)){
-		if(dp.y>0.0){
-			ft.color=top_color; 
-		}else{
-			ft.color=down_color;
-		}
+		if(dp.y>0.0)
+			{ft.color=top_color;} 
+		else
+			{ft.color=down_color;}
 	}else{
-		if(dp.z>0.0){
-			ft.color=back_color; 
-		}else{
-			ft.color=front_color;
-		}
+		if(dp.z>0.0)
+			{ft.color=back_color;} 
+		else
+			{ft.color=front_color;}
 	}
 	return 	ft;
 }

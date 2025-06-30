@@ -41,20 +41,26 @@ public class extended_part_driver extends part_driver
 	public void destroy()
 	{	
 		super.destroy();
-		if(title_change_name!=null) {
+		
+		if(title_change_name!=null){
 			title_change_name.destroy();
 			title_change_name=null;
 		}
 	}
-	public void initialize_part_driver(part p,scene_kernel sk,client_request_response request_response)
+	public void initialize_part_driver(part p,
+			scene_kernel sk,client_request_response request_response)
+	{
+	}
+	public void create_part_driver_initialization_data(file_writer fw,
+			part p,scene_kernel sk,client_request_response request_response)
 	{
 	}
 	public part_driver clone(part parent,part p,
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(p,title_change_name,
-					x0,y0,size,depth_start,depth_end,modifier_container_id);
+		return new extended_part_driver(p,
+						title_change_name,x0,y0,size,depth_start,depth_end,modifier_container_id);
 	}
 	public int caculate_material_id(part p,String type_str,
 			int body_id,int face_id,int loop_id,int edge_id,String material[])

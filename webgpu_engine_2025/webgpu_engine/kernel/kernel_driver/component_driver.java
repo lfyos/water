@@ -3,6 +3,7 @@ package kernel_driver;
 import kernel_part.part;
 import kernel_scene.scene_kernel;
 import kernel_component.component;
+import kernel_file_manager.file_writer;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 
@@ -63,6 +64,11 @@ public class component_driver
 		component_driver_can_not_bundle_render_flag=true;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
+			scene_kernel sk,client_request_response request_response)
+	{
+	}
+	public void create_component_driver_initialization_data(
+			file_writer fw,component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
 	}

@@ -234,8 +234,8 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 		return 1;
 	};
 	
-	this.create_part_array_and_vertex_data_request=function(
-			render_id,part_id,part_file_proxy_url,part_head_data,part_affiliated_data,scene)
+	this.create_part_array_and_vertex_data_request=function(render_id,part_id,
+				part_file_proxy_url,part_head_data,part_affiliated_data,scene)
 	{
 		if(this.acknowledge_render_part_id==null)
 			this.acknowledge_render_part_id="";
@@ -303,16 +303,33 @@ function construct_download_vertex_data(my_webgpu,my_max_loading_number)
 
 		var render_driver=scene.render_driver[render_id];
 		var part_object=scene.part_array[render_id][part_id];
+		
+		var p=scene.init_data.part_init_data[render_id];
+		var part_init_data=p[part_id];
+		p[part_id]=null;
+		
+		var p=scene.create_data.render_create_data[render_id].part_create_data;
+		var part_create_data=p[part_id];
+		p[part_id]=null;
+		
 		var part_driver=new render_driver.new_part_driver(
-				scene.init_data.part_init_data[render_id][part_id],
-				part_object,render_driver,scene);
+				part_init_data,part_create_data,part_object,render_driver,scene);
 		scene.part_driver[render_id][part_id]=part_driver;
 
 		for(var i=0,ni=part_object.part_component_id_and_driver_id.length;i<ni;i++){
 			var my_component_ids=part_object.part_component_id_and_driver_id[i];
-			part_object.component_driver_array[i]=new part_driver.new_component_driver(my_component_ids,
-				scene.init_data.component_init_data[my_component_ids.component_id][my_component_ids.driver_id],
-				part_object,part_driver,render_driver,scene);
+			
+			var p=scene.init_data.component_init_data[my_component_ids.component_id];
+			var my_init_data=p[my_component_ids.driver_id];
+			p[my_component_ids.driver_id]=null;
+			
+			var p=scene.create_data.component_create_data[my_component_ids.component_id];
+			var my_create_data=p[my_component_ids.driver_id];
+			p[my_component_ids.driver_id]=null;
+
+			part_object.component_driver_array[i]=new part_driver.new_component_driver(
+					my_component_ids,my_init_data,my_create_data,
+					part_object,part_driver,render_driver,scene);
 		}
 		
 		this.request_render_part_id.push([render_id,part_id,

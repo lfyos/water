@@ -75,17 +75,22 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 
 	var	init_data=(await my_init_promise).initialization_data;
 
-	var	sorted_component_name_id			=init_data[0];
-	var	part_component_id_and_driver_id		=init_data[1];
-	var	component_init_fun_array			=init_data[2];
-	var	program_data						=init_data[3];
-	var common_shader_data_structure		=init_data[4][0];
-	var common_shader_variable_declaration	=init_data[4][1];
-	var location_shader_program				=init_data[4][2];
-	scene.init_parameter					=init_data[5];
-			
+	var	sorted_component_name_id_and_create_data			=init_data[0];
+	var	part_component_id_and_driver_id_and_create_data		=init_data[1];
+	var	component_init_fun_array							=init_data[2];
+	var	program_data										=init_data[3];
+	var common_shader_data_structure						=init_data[4][0];
+	var common_shader_variable_declaration					=init_data[4][1];
+	var location_shader_program								=init_data[4][2];
+	scene.init_parameter									=init_data[5];
+	
+	scene.create_data=extract_driver_create_data(
+			sorted_component_name_id_and_create_data,
+			part_component_id_and_driver_id_and_create_data);
+
 	init_ids_of_part_and_component(scene,
-		sorted_component_name_id,part_component_id_and_driver_id);
+			sorted_component_name_id_and_create_data,
+			part_component_id_and_driver_id_and_create_data);
 	
 	scene.system_buffer=new construct_system_buffer(
 		scene.init_parameter.max_target_number,
@@ -138,10 +143,17 @@ async function request_create_scene(create_scene_sleep_time_length_scale,
 
 		for(var i=0,ni=my_shader_program.length;i<ni;i++)
 			combined_shader_program+=my_shader_program[i];
-					
-		scene.render_driver[render_id]=my_render_driver_function(
-			render_id,my_render_name,scene.init_data.render_init_data[render_id],
-			combined_shader_program,my_text_array,scene);
+		
+		var p=scene.init_data.render_init_data;
+		var my_init_data=p[render_id];
+		p[render_id]=null;
+		
+		var p=scene.create_data.render_create_data;
+		var my_create_data=p[render_id].render_create_data;
+		p[render_id].render_create_data=null;
+		
+		scene.render_driver[render_id]=my_render_driver_function(render_id,my_render_name,
+			my_init_data,my_create_data,combined_shader_program,my_text_array,scene);
 
 		if(Array.isArray(scene.render_driver[render_id].method_render_flag)){
 			for(var i=0,ni=scene.render_driver[render_id].method_render_flag.length;i<ni;i++)

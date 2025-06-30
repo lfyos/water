@@ -75,13 +75,13 @@ public class extended_component_instance_driver extends component_instance_drive
 			return;
 		if(ci.parameter.driver_id!=driver_id)
 			return;
-		component_driver c_d;
-		if((c_d=comp.driver_array.get(driver_id))==null)
+		component_driver c_d=comp.driver_array.get(driver_id);
+		if(c_d==null)
 			return;
 		if(c_d.component_part==null)
 			return;
-		part_rude part_mesh;
-		if((part_mesh=c_d.component_part.part_mesh)==null)
+		part_rude part_mesh=c_d.component_part.part_mesh;
+		if(part_mesh==null)
 			return;
 		if((ci.parameter.body_id<0)||(ci.parameter.body_id>=part_mesh.body_number()))
 			return;
@@ -100,7 +100,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		point direction=new point(par[0],par[1],par[2]);
 		if(ci.display_camera_result.to_me_direct.dot(direction)<0)
 			direction=direction.reverse();
-		
+
 		location loca=get_component_location(sk,ci);
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
 		
@@ -115,7 +115,8 @@ public class extended_component_instance_driver extends component_instance_drive
 		}
 		ci.display_camera_result.cam.mark_restore_stack();
 		ci.display_camera_result.cam.push_restore_stack(
-			sk.modifier_cont[modifier_container_id],true,loca,ci.display_camera_result.cam.parameter);
+			sk.modifier_cont[modifier_container_id],true,
+			loca,ci.display_camera_result.cam.parameter);
 	}
 	private void camera_direct(scene_kernel sk,client_information ci)
 	{
@@ -133,8 +134,9 @@ public class extended_component_instance_driver extends component_instance_drive
 		double z=Double.parseDouble(str);
 		
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
-		location loca=get_component_location(sk,ci);
-		loca=lc.direction_locate(new point(x,y,z),loca,ci.request_response.get_boolean("type", false));
+		location loca=lc.direction_locate(
+			new point(x,y,z),get_component_location(sk,ci),
+			ci.request_response.get_boolean("type", false));
 		ci.display_camera_result.cam.mark_restore_stack();
 		ci.display_camera_result.cam.push_restore_stack(
 			sk.modifier_cont[modifier_container_id],true,
@@ -169,8 +171,9 @@ public class extended_component_instance_driver extends component_instance_drive
 		double z1=Double.parseDouble(str);
 		
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
-		location loca=get_component_location(sk,ci);
-		loca=lc.rotation_locate(new point(x0,y0,z0),new point(x1,y1,z1),loca);
+		location loca=lc.rotation_locate(
+				new point(x0,y0,z0),new point(x1,y1,z1),
+				get_component_location(sk,ci));
 		
 		ci.display_camera_result.cam.mark_restore_stack();
 		ci.display_camera_result.cam.push_restore_stack(
@@ -181,10 +184,12 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		String str;
 		locate_camera lc=new locate_camera(ci.display_camera_result.cam);
+		
 		double scale_value=-1.0;
 		if((str=ci.request_response.get_parameter("scale"))!=null)
 			if((scale_value=Double.parseDouble(str))<const_value.min_value)
 				scale_value=-1.0;
+		
 		component locate_comp=null;
 		if((str=ci.request_response.get_parameter("component_name"))!=null) {
 			String request_charset=ci.request_response.implementor.get_request_charset();
@@ -217,7 +222,7 @@ public class extended_component_instance_driver extends component_instance_drive
 					break;
 				}
 			box my_box,body_box,face_box;
-			while(true) {
+			do{
 				if((my_box=locate_comp.get_component_box(false))==null)
 					if((my_box=locate_comp.get_component_box(true))==null){
 						point pp=locate_comp.absolute_location.multiply(new point(0,0,0));
@@ -225,7 +230,8 @@ public class extended_component_instance_driver extends component_instance_drive
 						break;
 					}
 				if(my_box.distance2()<const_value.min_value2) {
-					my_box=null;
+					point pp=my_box.center();
+					my_box=new box(pp,pp);
 					break;
 				}
 				if(locate_comp.driver_array.size()<=0)
@@ -233,8 +239,8 @@ public class extended_component_instance_driver extends component_instance_drive
 				component_driver c_d=locate_comp.driver_array.get(0);
 				if(c_d.component_part==null)
 					break;
-				part_rude pr;
-				if((pr=c_d.component_part.part_mesh)==null)
+				part_rude pr=c_d.component_part.part_mesh;
+				if(pr==null)
 					break;
 				if((str=ci.request_response.get_parameter("body_id"))==null)
 					break;
@@ -249,23 +255,27 @@ public class extended_component_instance_driver extends component_instance_drive
 				if((body_id<0)||(body_id>=pr.body_number()))
 					break;
 				body b=pr.body_array[body_id];
-				if((face_id>=0)&&(face_id<b.face_number())) {
+				if((face_id>=0)&&(face_id<b.face_number())){
 					face fa=b.face_array[face_id];
 					if((face_box=fa.face_box)!=null){
 						my_box=locate_comp.absolute_location.multiply(face_box);
-						if(my_box.distance2()<const_value.min_value2)
-							my_box=null;
-						break;
+						if(my_box.distance2()<const_value.min_value2) {
+							point pp=my_box.center();
+							my_box=new box(pp,pp);
+							break;
+						}
 					}
 				}
 				if((body_box=b.body_box)!=null) {
 					my_box=locate_comp.absolute_location.multiply(body_box);
-					if(my_box.distance2()<const_value.min_value2)
-						my_box=null;
-					break;
+					if(my_box.distance2()<const_value.min_value2) {
+						point pp=my_box.center();
+						my_box=new box(pp,pp);
+						break;
+					}
 				}
-				break;
-			}
+			}while(false);
+			
 			lc.locate_on_components(sk.modifier_cont[modifier_container_id],
 				my_box,null,scale_value,true,mandatory_movement_flag,mandatory_scale_flag);
 			return;
@@ -295,7 +305,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
 		String str;
-		double scale_value;
 		
 		if((str=ci.request_response.get_parameter("operation"))==null)
 			return null;
@@ -335,7 +344,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		case "view_scale":
 			sk.modifier_cont[modifier_container_id].process(sk, ci,true);
 			if((str=ci.request_response.get_parameter("value"))!=null){
-				scale_value=Math.abs(ci.display_camera_result.cam.parameter.scale_value);
+				double scale_value=Math.abs(ci.display_camera_result.cam.parameter.scale_value);
 				scale_value=(str.compareTo("true")==0)?scale_value:(-scale_value);
 				ci.display_camera_result.cam.parameter.scale_value=scale_value;
 			}

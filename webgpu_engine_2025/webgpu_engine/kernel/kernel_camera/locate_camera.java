@@ -225,7 +225,7 @@ public class locate_camera
 	{
 		if(switch_camera_flag&&(cam.parameter.movement_flag|mandatory_movement_flag)){
 			if(!(location.is_not_same_location(cam.eye_component.move_location,move_location))){
-				if(cam.parameter.scale_value<const_value.min_value)
+				if(cam.parameter.scale_value<=const_value.min_value)
 					if(!mandatory_scale_flag)
 						return false;
 				if(cam.parameter.change_type_flag){

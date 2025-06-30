@@ -1,4 +1,4 @@
-function new_render_driver(	render_id,render_name,init_data,shader_code,text_array,render)
+function new_render_driver(	render_id,render_name,init_data,create_data,shader_code,text_array,render)
 {
 	this.new_part_driver=construct_part_driver;
 	

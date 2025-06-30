@@ -103,7 +103,7 @@ function init_component_event_processor(screen_rectangle_component_id,scene)
 	};
 };
 
-function construct_component_driver(component_ids,init_data,part_object,part_driver,render_driver,scene)
+function construct_component_driver(component_ids,init_data,create_data,part_object,part_driver,render_driver,scene)
 {
 	var screen_rectangle_component_id=init_data;
 	var old_ep,ep=new init_component_event_processor(screen_rectangle_component_id,scene);

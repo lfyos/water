@@ -25,7 +25,12 @@ public class extended_part_driver extends part_driver
 	{	
 		super.destroy();
 	}
-	public void initialize_part_driver(part p,scene_kernel sk,client_request_response request_response)
+	public void initialize_part_driver(part p,
+			scene_kernel sk,client_request_response request_response)
+	{
+	}
+	public void create_part_driver_initialization_data(file_writer fw,
+			part p,scene_kernel sk,client_request_response request_response)
 	{
 	}
 	public part_driver clone(part parent,part p,
@@ -42,7 +47,6 @@ public class extended_part_driver extends part_driver
 	public void create_part_material_in_head(file_writer part_head_fw,
 			part p,system_parameter system_par,scene_parameter scene_par)
 	{
-		
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,
 			int body_id,int face_id,int primitive_id,int vertex_id,int loop_id,int edge_id,

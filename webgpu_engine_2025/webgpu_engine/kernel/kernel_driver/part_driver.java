@@ -19,8 +19,13 @@ public class part_driver
 	public void destroy()
 	{
 	}
-	public void initialize_part_driver(part p,scene_kernel sk,client_request_response request_response)
+	public void initialize_part_driver(part p,
+			scene_kernel sk,client_request_response request_response)
 	{	
+	}
+	public void create_part_driver_initialization_data(file_writer fw,
+			part p,scene_kernel sk,client_request_response request_response)
+	{
 	}
 	public part_driver()
 	{

@@ -6,6 +6,7 @@ import kernel_component.component;
 import kernel_driver.component_driver;
 import kernel_network.client_request_response;
 import kernel_driver.component_instance_driver;
+import kernel_file_manager.file_writer;
 
 public class extended_component_driver  extends component_driver
 {
@@ -31,6 +32,11 @@ public class extended_component_driver  extends component_driver
 		comp.uniparameter.display_part_name_or_component_name_flag=false;
 		
 		return;
+	}
+	public void create_component_driver_initialization_data(
+			file_writer fw,component comp,int driver_id,
+			scene_kernel sk,client_request_response request_response)
+	{
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)

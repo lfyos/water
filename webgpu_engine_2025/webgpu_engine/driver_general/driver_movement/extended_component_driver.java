@@ -6,6 +6,7 @@ import kernel_component.component;
 import kernel_camera.camera_parameter;
 import kernel_driver.component_driver;
 import kernel_file_manager.file_reader;
+import kernel_file_manager.file_writer;
 import kernel_common_class.debug_information;
 import kernel_network.client_request_response;
 import kernel_driver.component_instance_driver;
@@ -75,6 +76,11 @@ public class extended_component_driver  extends component_driver
 		debug_information.println("End loading movement information\t",movement_directory_name+design_file_name);
 
 		return;
+	}
+	public void create_component_driver_initialization_data(
+			file_writer fw,component comp,int driver_id,
+			scene_kernel sk,client_request_response request_response)
+	{
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)

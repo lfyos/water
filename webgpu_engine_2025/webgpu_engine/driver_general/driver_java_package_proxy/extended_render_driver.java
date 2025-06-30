@@ -50,7 +50,8 @@ public class extended_render_driver extends render_driver
 		return null;
 	}
 	public extended_render_driver(file_reader shader_fr,render ren,
-			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
+			client_request_response request_response,
+			system_parameter system_par,scene_parameter scene_par)
 	{
 		super(shader_fr,ren,request_response,system_par,scene_par);
 		String jar_file_directory[],sub_jar_file_directory="jar_package_directory"+File.separatorChar;
@@ -96,7 +97,8 @@ public class extended_render_driver extends render_driver
 		}
 	}
 	public render_driver clone(render ren,
-			client_request_response request_response,system_parameter system_par,scene_parameter scene_par)
+			client_request_response request_response,
+			system_parameter system_par,scene_parameter scene_par)
 	{
 		if(real_render_driver==null)
 			return null;
