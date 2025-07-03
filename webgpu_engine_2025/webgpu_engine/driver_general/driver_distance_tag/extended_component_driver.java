@@ -2,6 +2,7 @@ package driver_distance_tag;
 
 import kernel_part.part;
 import kernel_scene.scene_kernel;
+import kernel_common_class.jason_string;
 import kernel_component.component;
 import kernel_driver.component_driver;
 import kernel_file_manager.file_reader;
@@ -47,11 +48,11 @@ public class extended_component_driver  extends component_driver
 			file_writer fw,component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
+		fw.print(jason_string.change_string(tag_root_menu_component_name));
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
-		return new extended_component_instance_driver(
-				comp,driver_id,tag_root_menu_component_name,tag_list);
+		return new extended_component_instance_driver(comp,driver_id,tag_list);
 	}
 }

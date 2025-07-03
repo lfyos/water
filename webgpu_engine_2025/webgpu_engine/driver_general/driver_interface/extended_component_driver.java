@@ -4,6 +4,7 @@ import kernel_part.part;
 import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_driver.component_driver;
+import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_network.client_request_response;
 import kernel_driver.component_instance_driver;
@@ -56,11 +57,27 @@ public class extended_component_driver  extends component_driver
 			file_writer fw,component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
+		fw.println("{");
+
+		fw.print  ("	\"dx\"	:	",		dx).	println(",");
+		fw.print  ("	\"dy\"	:	",		dy).	println(",");
+		fw.print  ("	\"depth\"	:	",	depth).	println(",");
+		
+		fw.println("	\"type\"	:	",menu_type?"true,":"false,");
+		fw.print  ("	\"canvas\"	:	");
+		if(menu_type) {
+			fw.println();
+			file_reader.get_text(fw,directory_name+file_name,file_charset);
+			fw.println();
+		}else
+			fw.println("null");
+
+		fw.println("}");
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
-		return new extended_component_instance_driver(comp,driver_id,menu_type,depth,dx,dy,
-						directory_name+file_name,temp_path_name,file_charset,always_show_flag);
+		return new extended_component_instance_driver(comp,driver_id,
+						menu_type,dx,dy,temp_path_name,file_charset,always_show_flag);
 	}
 }

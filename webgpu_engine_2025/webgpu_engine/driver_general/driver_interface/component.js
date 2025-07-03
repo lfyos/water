@@ -1,6 +1,6 @@
-function create_component_object(my_init_data,scene)
+function create_component_object(my_create_data,scene)
 {
-	this.interface_data=my_init_data;
+	this.interface_data=my_create_data;
 	
 	this.show_x =0;
 	this.show_y =0;
@@ -120,12 +120,12 @@ function create_component_object(my_init_data,scene)
 	};
 }
 
-function create_bind_group(init_data,render_driver,scene)
+function create_bind_group(init_data,create_data,render_driver,scene)
 {
 	this.is_busy_flag		=true;
 	this.should_delete_flag	=false;
 	
-	this.create=async function(init_data,render_driver,scene)
+	this.create=async function(init_data,create_data,render_driver,scene)
 	{
 		this.texture=null;
 		this.buffer=null;
@@ -134,13 +134,13 @@ function create_bind_group(init_data,render_driver,scene)
 		if(scene.terminate_flag)
 			return;
 			
-		if(init_data.type){
+		if(create_data.type){
 			this.texture 		=	scene.webgpu.device.createTexture(
 				{
 					size:
 					{
-						width	:	init_data.canvas.canvas_width,
-						height	:	init_data.canvas.canvas_height
+						width	:	create_data.canvas.canvas_width,
+						height	:	create_data.canvas.canvas_height
 					},
 					format		:	"rgba16float",
 					usage		:	 GPUTextureUsage.TEXTURE_BINDING 
@@ -148,7 +148,7 @@ function create_bind_group(init_data,render_driver,scene)
 									|GPUTextureUsage.RENDER_ATTACHMENT
 		    	});
 		}else{
-			var my_response 	=	await fetch(init_data.url,scene.fetch_parameter.call_server);
+			var my_response 	=	await fetch(init_data,scene.fetch_parameter.call_server);
 			if(scene.terminate_flag){
 				this.is_busy_flag=false;
 				return;
@@ -240,14 +240,14 @@ function create_bind_group(init_data,render_driver,scene)
 			this.texture=null;
 		}
 	};
-	this.create(init_data,render_driver,scene);
+	this.create(init_data,create_data,render_driver,scene);
 };
 
 function construct_component_driver(component_ids,init_data,create_data,part_object,part_driver,render_driver,scene)
 {
 	this.component_ids				=component_ids;
 	
-	var new_ep=new create_component_object(init_data,scene);
+	var new_ep=new create_component_object(create_data,scene);
 	var old_ep=scene.component_event_processor[this.component_ids.component_id];
 	if((typeof(old_ep)=="object")&&(old_ep!=null))
 		new_ep=Object.assign(old_ep,new_ep);
@@ -255,7 +255,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	
 	
 	this.interface_component_id		=this.component_ids.component_id;
-	this.image_bind_group			=new create_bind_group(init_data,render_driver,scene);
+	this.image_bind_group			=new create_bind_group(init_data,create_data,render_driver,scene);
 	this.save_parameter_number		=0;
 	
 	this.draw_component=function(method_data,render_parameter,

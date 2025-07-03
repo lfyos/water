@@ -1,11 +1,11 @@
-function init_component_event_processor(component_id,init_data,scene)
+function init_component_event_processor(component_id,create_data,scene)
 {
 	scene.component_event_processor[component_id]=
 	{
 		component_id				:	component_id,
 		pickup_tag_id				:	-1,
 		tag_point_id				:	0,
-		tag_menu_component_name		:	init_data,
+		tag_menu_component_name		:	create_data,
 		mousemove_flag				:	true,
 
 		pickupdblclick		:	function(event,component_id,scene)
@@ -147,7 +147,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	this.component_ids=component_ids;
 	this.event_component_id=-1;
 	this.tag_array=new Array();
-	init_component_event_processor(this.component_ids.component_id,init_data,scene);
+	init_component_event_processor(this.component_ids.component_id,create_data,scene);
 
 	this.draw_component=function(method_data,render_parameter,
 			target_data,part_object,part_driver,render_driver,scene)	

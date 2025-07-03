@@ -5,12 +5,10 @@ import kernel_component.component;
 import kernel_camera.camera_result;
 import kernel_transformation.point;
 import kernel_scene.client_information;
-import kernel_common_class.jason_string;
 import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
-	private String tag_root_menu_component_name;
 	private distance_tag_list tag_list;
 	private boolean front_show_flag;
 
@@ -18,20 +16,17 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		super.destroy();
 		tag_list=null;
-		tag_root_menu_component_name=null;
 	}
-	public extended_component_instance_driver(component my_comp,int my_driver_id,
-			String my_tag_root_menu_component_name,distance_tag_list my_tag_array)
+	public extended_component_instance_driver(
+			component my_comp,int my_driver_id,distance_tag_list my_tag_array)
 	{
 		super(my_comp,my_driver_id);
-		
-		tag_root_menu_component_name=my_tag_root_menu_component_name;
+
 		tag_list=my_tag_array;
 		front_show_flag=false;
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
-		ci.request_response.print(jason_string.change_string(tag_root_menu_component_name));
 	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
