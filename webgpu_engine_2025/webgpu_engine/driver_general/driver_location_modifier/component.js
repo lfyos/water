@@ -2,15 +2,19 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 {
 	this.component_ids=component_ids;
 	this.location_data=new Array();
+	this.modifier_container_id=create_data;
 	
 	this.draw_component=function(method_data,render_parameter,
 			target_data,part_object,part_driver,render_driver,scene)	
 	{
+		if(!(target_data.main_display_target_flag))
+			return;
+		if(method_data.method_id!=2)
+			return;
+		
 		var computer				=scene.computer;
 		var component_location		=scene.component_location_data;
-		
-		var modifier_container_id	=render_parameter;
-		var modifier_current_time	=scene.modifier_current_time[modifier_container_id];
+		var modifier_current_time	=scene.modifier_current_time[this.modifier_container_id];
 		
 		var old_location_data=this.location_data;
 		this.location_data=new Array();
@@ -79,10 +83,9 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 				this.location_data.push(location_item);
 		}	
 	}
-	
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
-		while(buffer_data_item.length>0)
-			this.location_data.push(buffer_data_item.shift());
+		for(var i=0,ni=buffer_data_item.length;i<ni;i++)
+			this.location_data.push(buffer_data_item[i]);
 	}
 };

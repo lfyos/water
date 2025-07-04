@@ -23,12 +23,11 @@ public class location_modification_modifier extends modifier_driver
 	{
 		super.destroy();
 		
-		start_location=null;
-		terminate_location=null;
-		follow_component_id=null;
-		follow_component_location=null;
+		start_location				=null;
+		terminate_location			=null;
+		follow_component_id			=null;
+		follow_component_location	=null;
 	}
-	
 	public location_modification_modifier(
 			int my_component_id,			int my_location_component_id,
 			long my_start_time,				location my_start_location,
@@ -37,12 +36,12 @@ public class location_modification_modifier extends modifier_driver
 	{
 		super(my_start_time,my_terminate_time);
 
-		component_id					=my_component_id;
-		location_component_id			=my_location_component_id;
-		start_location					=new location(my_start_location);
-		terminate_location				=new location(my_terminate_location);
-		follow_component_id				=my_follow_component_id;
-		follow_component_location		=my_follow_component_location;
+		component_id				=my_component_id;
+		location_component_id		=my_location_component_id;
+		start_location				=new location(my_start_location);
+		terminate_location			=new location(my_terminate_location);
+		follow_component_id			=my_follow_component_id;
+		follow_component_location	=my_follow_component_location;
 		
 		p=0.0;
 		
@@ -108,6 +107,7 @@ public class location_modification_modifier extends modifier_driver
 	public void last_modify(long my_current_time,scene_kernel sk,client_information ci,boolean terminated_flag)
 	{
 		super.last_modify(my_current_time,sk,ci,terminated_flag);
+		
 		if(terminated_flag)
 			set_location(terminate_location,true,sk);
 	}

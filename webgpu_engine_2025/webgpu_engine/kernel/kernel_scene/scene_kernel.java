@@ -195,6 +195,21 @@ public class scene_kernel
 			mount_top_box_part(comp.children.get(i),
 				scene_component_load_source_cont,part_search,request_response);
 	}
+	public long caculate_scene_last_modified_time()
+	{
+		long last_modified_time=0;
+		
+		if(last_modified_time<system_par.last_modified_time)
+			last_modified_time=system_par.last_modified_time;
+		if(last_modified_time<scene_par.parameter_last_modified_time)
+			last_modified_time=scene_par.parameter_last_modified_time;
+		if(last_modified_time<scene_par.scene_last_modified_time)
+			last_modified_time=scene_par.scene_last_modified_time;
+		if(last_modified_time<component_cont.root_component.uniparameter.file_last_modified_time)
+			last_modified_time=component_cont.root_component.uniparameter.file_last_modified_time;
+		
+		return last_modified_time;
+	}
 	private void load_create_assemble_part(
 			String fast_load_type,client_request_response request_response,
 			component_load_source_container scene_component_load_source_cont,
@@ -209,19 +224,12 @@ public class scene_kernel
 		if(component_cont.root_component==null)
 			return;
 
-		long last_modified_time=0;
-		if(last_modified_time<system_par.last_modified_time)
-			last_modified_time=system_par.last_modified_time;
-		if(last_modified_time<scene_par.parameter_last_modified_time)
-			last_modified_time=scene_par.parameter_last_modified_time;
-		if(last_modified_time<scene_par.scene_last_modified_time)
-			last_modified_time=scene_par.scene_last_modified_time;
-		if(last_modified_time<component_cont.root_component.uniparameter.file_last_modified_time)
-			last_modified_time=component_cont.root_component.uniparameter.file_last_modified_time;
+		ArrayList<part>top_box_part_list=new create_assemble_part(
+			fast_load_type,component_cont,render_cont,request_response,encoder,
+			part_loader_cont,all_part_part_cont,boftal_container,
+			caculate_scene_last_modified_time(),string_locker_container,
+			create_parameter,system_par,scene_par).top_box_part;
 		
-		ArrayList<part>top_box_part_list=new create_assemble_part(fast_load_type,component_cont,
-			render_cont,request_response,encoder,part_loader_cont,all_part_part_cont,boftal_container,
-			last_modified_time,string_locker_container,create_parameter,system_par,scene_par).top_box_part;
 		if(top_box_part_list==null)
 			return;
 		if(top_box_part_list.size()<=0)

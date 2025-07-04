@@ -4,6 +4,19 @@ import kernel_transformation.location;
 
 public class location_modification_data
 {
+	public		boolean						clear_flag;
+	public		location_modification_data	next;
+	
+	public		long						parameter_version;
+	
+	public 		int 						component_id;
+	public 		long 						start_time,terminate_time;
+	
+	public		location					start_location,terminate_location;
+	
+	public		int 						follow_component_id[];
+	public		location					follow_component_location[];
+	
 	public void destroy()
 	{
 		if(next!=null) {
@@ -21,20 +34,6 @@ public class location_modification_data
 			follow_component_location=null;
 		}
 	}
-	
-	public		boolean						clear_flag;
-	public		location_modification_data	next;
-	
-	public		long						parameter_version;
-	
-	public 		int 						component_id;
-	public 		long 						start_time,terminate_time;
-	
-	public		location					start_location,terminate_location;
-	
-	public		int 						follow_component_id[];
-	public		location					follow_component_location[];
-	
 	public location_modification_data(long my_parameter_version)
 	{
 		clear_flag					=true;

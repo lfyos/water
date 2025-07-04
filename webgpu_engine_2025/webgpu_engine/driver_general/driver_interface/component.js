@@ -53,13 +53,12 @@ function create_component_object(my_create_data,scene)
 			return true;
 		switch(event.button){
 		case 0:
-			if(!(this.mousedown_flag))
-				break;
-			this.show_x+=scene.view.main_target_x-this.mouse_x;
-			this.show_y+=scene.view.main_target_y-this.mouse_y;
-			this.mouse_x=scene.view.main_target_x;
-			this.mouse_y=scene.view.main_target_y;
-			
+			if(this.mousedown_flag){
+				this.show_x+=scene.view.main_target_x-this.mouse_x;
+				this.show_y+=scene.view.main_target_y-this.mouse_y;
+				this.mouse_x=scene.view.main_target_x;
+				this.mouse_y=scene.view.main_target_y;
+			}
 			break;
 		case 2:
 			break;
@@ -181,7 +180,8 @@ function create_bind_group(init_data,create_data,render_driver,scene)
 					width	:	my_imageBitmap.width,
 					height	:	my_imageBitmap.height
 				});
-		}	
+		}
+			
 		this.buffer_size=Float32Array.BYTES_PER_ELEMENT*64;
 		this.buffer=scene.webgpu.device.createBuffer(
 		{
@@ -251,8 +251,8 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	var old_ep=scene.component_event_processor[this.component_ids.component_id];
 	if((typeof(old_ep)=="object")&&(old_ep!=null))
 		new_ep=Object.assign(old_ep,new_ep);
+
 	scene.component_event_processor[this.component_ids.component_id]=new_ep;
-	
 	
 	this.interface_component_id		=this.component_ids.component_id;
 	this.image_bind_group			=new create_bind_group(init_data,create_data,render_driver,scene);

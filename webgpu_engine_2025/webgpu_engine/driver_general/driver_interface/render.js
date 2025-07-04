@@ -97,17 +97,13 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 		}
 	};
 	
-	pipeline_descr.vertex.constants				={method_id:0};
 	this.id_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	pipeline_descr.fragment.entryPoint			="fragment_color_fun";
 	pipeline_descr.fragment.targets.length		=1;
 	pipeline_descr.fragment.targets[0].format	=scene.webgpu.gpu.getPreferredCanvasFormat();
-	
-	pipeline_descr.multisample={count:scene.parameter.multisample};
-	
-	pipeline_descr.vertex.constants				={method_id:2};
-	this.color_pipeline=scene.webgpu.device.createRenderPipeline(pipeline_descr);
+	pipeline_descr.multisample					={count:scene.parameter.multisample};
+	this.color_pipeline							=scene.webgpu.device.createRenderPipeline(pipeline_descr);
 	
 	this.new_part_driver=construct_part_driver;
 	

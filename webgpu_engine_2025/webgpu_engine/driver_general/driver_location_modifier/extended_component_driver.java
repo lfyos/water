@@ -26,7 +26,9 @@ public class extended_component_driver  extends component_driver
 	public extended_component_driver(part my_component_part,int my_modifier_container_id)
 	{
 		super(my_component_part);
+		
 		modifier_container_id=my_modifier_container_id;
+		
 		first=null;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
@@ -43,11 +45,12 @@ public class extended_component_driver  extends component_driver
 			file_writer fw,component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
+		fw.print(modifier_container_id);
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
-		return new extended_component_instance_driver(comp,driver_id,modifier_container_id);
+		return new extended_component_instance_driver(comp,driver_id);
 	}
 	
 	public void clear_location_modifier()
@@ -57,13 +60,14 @@ public class extended_component_driver  extends component_driver
 	}
 	public void delete_timeout_location_modifier(scene_kernel sk)
 	{
-		long current_time=sk.modifier_cont[modifier_container_id].get_timer().get_current_time();
 		location_modification_data p,pp,last;
+		long current_time=sk.modifier_cont[modifier_container_id].get_timer().get_current_time();
 		
 		for(p=first,first=null,last=null;p!=null;){
 			pp=p;
 			p=p.next;
 			pp.next=null;
+			
 			if((current_time<=pp.start_time)||(current_time<=pp.terminate_time)||pp.clear_flag){
 				if(last==null)
 					first=pp;
@@ -78,11 +82,13 @@ public class extended_component_driver  extends component_driver
 			int my_follow_component_id[],	location my_follow_component_location[])
 	{
 		long current_time=sk.modifier_cont[modifier_container_id].get_timer().get_current_time();
+		
 		first=new location_modification_data(
 				first,get_component_parameter_version(),
 				my_component_id,current_time,current_time+time_length,
 				my_start_location,my_terminate_location,
 				my_follow_component_id,my_follow_component_location);
+		
 		update_component_parameter_version();
 	}
 }

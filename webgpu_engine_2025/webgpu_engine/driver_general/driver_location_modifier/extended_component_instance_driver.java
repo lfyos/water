@@ -3,6 +3,7 @@ package driver_location_modifier;
 import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_camera.camera_result;
+import kernel_driver.component_driver;
 import kernel_transformation.location;
 import kernel_common_class.const_value;
 import kernel_scene.client_information;
@@ -12,33 +13,32 @@ import kernel_driver.component_instance_driver;
 public class extended_component_instance_driver extends component_instance_driver
 {
 	private long last_parameter_version;
-	private int modifier_container_id;
 
 	public void destroy()
 	{
 		super.destroy();
 	}
-	public extended_component_instance_driver(component my_comp,int my_driver_id,int my_modifier_container_id)
+	public extended_component_instance_driver(component my_comp,int my_driver_id)
 	{
 		super(my_comp,my_driver_id);
-		modifier_container_id=my_modifier_container_id;
+		
 		last_parameter_version=0;
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
-		
 	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
 		if(cr.target.main_display_target_flag){
-			((extended_component_driver)(comp.driver_array.get(driver_id))).delete_timeout_location_modifier(sk);
+			component_driver comp_driver=comp.driver_array.get(driver_id);
+			((extended_component_driver)comp_driver).delete_timeout_location_modifier(sk);
 			return false;
 		}
 		return true;
 	}
 	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
-		ci.request_response.print(modifier_container_id);
+		ci.request_response.print(0);
 	}
 	private void response_location_data(location loca,client_request_response request_response)
 	{

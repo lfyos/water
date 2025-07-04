@@ -75,8 +75,8 @@ function construct_component_render_parameter()
 			
 			if((typeof(component_driver)=="object")&&(component_driver!=null))
 				if(typeof(component_driver.append_component_parameter)=="function")
-					component_driver.append_component_parameter(buffer_data_item,
-									part_object,part_driver,render_driver,scene);
+					component_driver.append_component_parameter(
+						buffer_data_item,part_object,part_driver,render_driver,scene);
 		}
 	}
 }

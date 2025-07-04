@@ -17,10 +17,11 @@ public class movement_move_modifier  extends driver_location_modifier.location_m
 	public void destroy()
 	{
 		super.destroy();
-		suspend=null;
-		network_par=null;
-		clear_parameter_channel_id=null;
-		set_parameter_channel_id=null;
+		
+		suspend						=null;
+		network_par					=null;
+		clear_parameter_channel_id	=null;
+		set_parameter_channel_id	=null;
 	}
 	public movement_move_modifier(					boolean my_start_state_flag,			boolean my_terminate_state_flag,
 			movement_suspend my_suspend,			component my_comp,						int my_location_component_id,

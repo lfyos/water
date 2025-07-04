@@ -416,7 +416,7 @@ public class location
 			double ry= caculate_angle(sin_belta,cos_belta);
 			double rz= caculate_angle(sin_gamma,cos_gamma);
 
-			return new double[] {mx,my,mz,rx,ry,rz,0};
+			return new double[] {mx,my,mz,rx,ry,rz, 0};
 		}else if(sin_belta>0){
 			double cos_gamma_minus_alf=(data[5]+data[8])/2.0;
 			double sin_gamma_minus_alf=(data[9]-data[4])/2.0;
@@ -425,7 +425,7 @@ public class location
 			double ry= 90.0;
 			double rz= caculate_angle(sin_gamma_minus_alf,cos_gamma_minus_alf);
 			 
-			return new double[] {mx,my,mz,rx,ry,rz,1};
+			return new double[] {mx,my,mz,rx,ry,rz, 1};
 		}else{
 			double cos_gamma_plus_alf=( data[5]-data[8])/2.0;
 			double sin_gamma_plus_alf=(-data[4]-data[9])/2.0;
