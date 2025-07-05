@@ -51,6 +51,9 @@ public class extended_render_driver extends render_driver
 	public void create_render_driver_initialization_data(file_writer fw,
 			render ren,scene_kernel sk,client_request_response request_response)
 	{
+		file_reader fr=new file_reader(light_file_name,file_charset);
+		fr.get_text(fw);
+		fr.close();
 	}
 	public String[] get_render_list(file_reader shader_fr,render ren,
 			component_load_source_container component_load_source_cont,
@@ -85,6 +88,6 @@ public class extended_render_driver extends render_driver
 	public render_instance_driver create_render_instance_driver(render ren,
 			scene_kernel sk,client_request_response request_response)
 	{
-		return new extended_render_instance_driver(	light_file_name,file_charset);
+		return new extended_render_instance_driver();
 	}
 }

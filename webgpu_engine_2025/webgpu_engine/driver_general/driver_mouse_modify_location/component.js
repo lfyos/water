@@ -418,7 +418,7 @@ function mousedown(event,component_id,scene)
 		break;
 	case 2:	
 		if(event.ctrlKey||event.shiftKey||event.altKey){
-			scene.caller.call_server_component(ep.part_init_data.movement_component_name,"all",
+			scene.caller.call_server_component(ep.part_create_data.movement_component_name,"all",
 				[["operation","design"],["move_method","listdesignbuffer"]],"json").
 			then(
 				function(response_data)
@@ -427,7 +427,7 @@ function mousedown(event,component_id,scene)
 						return;
 					if(response_data.movement.length<=0)
 						return;
-					var p=ep.part_init_data.movement_abstract_menu_component_name;
+					var p=ep.part_create_data.movement_abstract_menu_component_name;
 					if((p=scene.operate_component.get_component_event_processor(p))!=null)
 						p.active_list(response_data,scene.operate_component.last_operate_component_id,scene);
 				});
@@ -436,7 +436,7 @@ function mousedown(event,component_id,scene)
 			if(scene.pickup.component_id>=0)
 				if((value=prompt("输入标注文字"))!=null)
 					if((value=value.trim()).length>0)
-						scene.caller.call_server_component(ep.part_init_data.mark_component_name,"all",
+						scene.caller.call_server_component(ep.part_create_data.mark_component_name,"all",
 							[["operation","append"],["value",encodeURIComponent(encodeURIComponent(value))]]);
 		}
 		break;
@@ -453,7 +453,7 @@ function mouseup(event,component_id,scene)
 	if(ep.render_data==null)
 		return false;
 
-	scene.caller.call_server_component(ep.part_init_data.movement_component_name,"all",
+	scene.caller.call_server_component(ep.part_create_data.movement_component_name,"all",
 		[["operation","virtual_mount"],["virtual_mount","terminate_follow"]]);
 	switch(event.button){
 	case 0:
@@ -641,7 +641,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	
 	var ep=new Object();
 	
-	ep.part_init_data	=part_driver.part_init_data;
+	ep.part_create_data	=part_driver.part_create_data;
 	
 	ep.send_mousemove_time	=0;			
 	ep.mouse_up_flag		=true;

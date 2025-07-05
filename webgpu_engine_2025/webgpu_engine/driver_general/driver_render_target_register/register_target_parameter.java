@@ -52,7 +52,7 @@ public class register_target_parameter
 
 		return rtp;
 	}
-	public static register_target_parameter[] load_parameter(String file_name,String file_charset)
+	public static ArrayList<register_target_parameter> load_parameter(String file_name,String file_charset)
 	{
 		ArrayList<register_target_parameter> rtp_list=new ArrayList<register_target_parameter>();
 		
@@ -61,6 +61,6 @@ public class register_target_parameter
 			rtp_list.add(rtp_list.size(),rtp);
 		fr.close();
 		
-		return rtp_list.toArray(new register_target_parameter[rtp_list.size()]);
+		return rtp_list;
 	}
 }

@@ -1,39 +1,39 @@
-show_pickup_component_box_part
-	show_pickup_component_box_part
-	pickup_part\part.mesh
-	pickup_part\part.material
-	pickup_part\part.description
-	pickup_part\part.mp3
-	
-	/*	show_type_flag	*/	true
-	/*	time_length		*/	2000
+show_component_box_part
+	show_component_box_part
+	part\part.mesh
+	part\part.material
+	part\part.description
+	part\part.mp3
 
-			/*	terminated_token_string:begin		*/	terminated_token_string
+	/*	terminated_token_string:begin		*/	terminated_token_string
+	
+		/*	component name				*/	show_component_box_component_root
+		/*	component type				*/	undefined_part
+		/*	component location			*/	identity
+		/*	component children number	*/	2
 			
 					/*	component name				*/	show_pickup_component_box_component
-					/*	component type				*/	show_pickup_component_box_part
+					/*	component type				*/	show_component_box_part
 					/*	component location			*/	identity
+					
+							/*	show_type_flag			*/	true
+							/*	time_length				*/	500
+							/*	color:read,green,blue	*/	1	0	0
+							/*	depth					*/	0.000000
+					
 					/*	component children number	*/	0
+					
+					
+					/*	component name				*/	show_select_component_box_component
+					/*	component type				*/	show_component_box_part
+					/*	component location			*/	identity
+		
+						/*	show_type_flag			*/	false
+						/*	time_length				*/	10000
+						/*	color:read,green,blue	*/	1	1	1
+						/*	depth					*/	0.000001
+		
+					/*	component children number	*/	0
+					
 			
-			/*	terminated_token_string:end			*/	terminated_token_string
-
-show_select_component_box_part
-	show_select_component_box_part
-	select_part\part.mesh
-	select_part\part.material
-	select_part\part.description
-	select_part\part.mp3
-	
-	/*	show_type_flag	*/	false
-	/*	time_length		*/	2000
-	
-	
-	/*	terminated_token_string:begin	*/	terminated_token_string
-			
-		/*	component name				*/	show_select_component_box_component
-		/*	component type				*/	show_select_component_box_part
-		/*	component location			*/	identity
-		/*	component children number	*/	0
-			
-	/*	terminated_token_string:end		*/	terminated_token_string
-	
+	/*	terminated_token_string:end			*/	terminated_token_string

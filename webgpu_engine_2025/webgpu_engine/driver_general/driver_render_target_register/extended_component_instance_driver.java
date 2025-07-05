@@ -18,7 +18,7 @@ public class extended_component_instance_driver extends component_instance_drive
 {
 	private int main_target_id;
 	private ArrayList<int[]>canvas_width_height;
-	private register_target_parameter register_parameter[];
+	private ArrayList<register_target_parameter> target_parameter_list;
 	private ArrayList<double[]> clear_color;
 	
 	private boolean do_discard_lod_flag,do_selection_lod_flag;
@@ -28,7 +28,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		super.destroy();
 		
 		canvas_width_height=null;
-		register_parameter=null;
+		target_parameter_list=null;
 		clear_color=null;
 	}
 	public extended_component_instance_driver(component my_comp,int my_driver_id)
@@ -37,14 +37,15 @@ public class extended_component_instance_driver extends component_instance_drive
 		
 		main_target_id=-1;
 		
-		(canvas_width_height=new ArrayList<int[]>()).add(new int[]{1,1});
+		canvas_width_height=new ArrayList<int[]>();
+		canvas_width_height.add(new int[]{1,1});
 
 		part p=comp.driver_array.get(driver_id).component_part;
 		String file_name=p.directory_name+p.material_file_name;
-		register_parameter=register_target_parameter.load_parameter(file_name,p.file_charset);
+		target_parameter_list=register_target_parameter.load_parameter(file_name,p.file_charset);
 		
 		clear_color=new ArrayList<double[]>();
-		for(int i=0,ni=register_parameter.length;i<ni;i++)
+		for(int i=0,ni=target_parameter_list.size();i<ni;i++)
 			clear_color.add(new double[] {0,0,0,1});
 		do_discard_lod_flag		=true;
 		do_selection_lod_flag	=true;
@@ -52,13 +53,14 @@ public class extended_component_instance_driver extends component_instance_drive
 	private void register_target(scene_kernel sk,client_information ci)
 	{
 		main_target_id=-1;
-		for(int i=0,target_number=register_parameter.length;i<target_number;i++){
-			int my_canvas_width_height[]=canvas_width_height.get(register_parameter[i].canvas_id);
+		for(int i=0,target_number=target_parameter_list.size();i<target_number;i++){
+			register_target_parameter rtp=target_parameter_list.get(i);
+			int my_canvas_width_height[]=canvas_width_height.get(rtp.canvas_id);
 
-			int view_x0		=(int)(Math.round(register_parameter[i].target_x0		*my_canvas_width_height[0]));
-			int view_y0		=(int)(Math.round(register_parameter[i].target_y0		*my_canvas_width_height[1]));
-			int view_width	=(int)(Math.round(register_parameter[i].target_width	*my_canvas_width_height[0]));
-			int view_height	=(int)(Math.round(register_parameter[i].target_height	*my_canvas_width_height[1]));
+			int view_x0		=(int)(Math.round(rtp.target_x0		*my_canvas_width_height[0]));
+			int view_y0		=(int)(Math.round(rtp.target_y0		*my_canvas_width_height[1]));
+			int view_width	=(int)(Math.round(rtp.target_width	*my_canvas_width_height[0]));
+			int view_height	=(int)(Math.round(rtp.target_height	*my_canvas_width_height[1]));
 			
 			render_target_view rtv=new render_target_view(
 				view_x0,view_y0,view_width,view_height,my_canvas_width_height[0],my_canvas_width_height[1]);
@@ -66,25 +68,25 @@ public class extended_component_instance_driver extends component_instance_drive
 			double aspect_value	=(double)(rtv.view_width)/(double)(rtv.view_height);
 			box view_volume_box=new box(-aspect_value,-1,-1,aspect_value,1,1);
 			
-			var cam_par=sk.camera_cont.get(register_parameter[i].camera_id).parameter;
+			var cam_par=sk.camera_cont.get(rtp.camera_id).parameter;
 			var target_par=render_target_parameter.create_render_parameter(
 					do_discard_lod_flag,do_selection_lod_flag,
 					ci.parameter.high_or_low_precision_flag
 					?cam_par.high_precision_scale:cam_par.low_precision_scale);
 
 			render_target rt=new render_target(-1,
-				target_par,register_parameter[i].render_target_name,
+				target_par,rtp.render_target_name,
 				comp.component_id,driver_id,i+i+(ci.parameter.high_or_low_precision_flag?0:1),
-				new component[] {sk.component_cont.root_component},register_parameter[i].camera_id,
-				register_parameter[i].parameter_channel_id,rtv,view_volume_box,ci.clip_plane,null);
+				new component[] {sk.component_cont.root_component},rtp.camera_id,
+				rtp.parameter_channel_id,rtv,view_volume_box,ci.clip_plane,null);
 
-			if(ci.parameter.current_canvas_id==register_parameter[i].canvas_id) {
+			if(ci.parameter.current_canvas_id==rtp.canvas_id) {
 				double view_x=(ci.parameter.x+1.0)/2.0;
 				double view_y=(ci.parameter.y+1.0)/2.0;
-				double x0=register_parameter[i].target_x0;
-				double x1=register_parameter[i].target_x0+register_parameter[i].target_width;
-				double y0=register_parameter[i].target_y0;
-				double y1=register_parameter[i].target_y0+register_parameter[i].target_height;
+				double x0=rtp.target_x0;
+				double x1=rtp.target_x0+rtp.target_width;
+				double y0=rtp.target_y0;
+				double y1=rtp.target_y0+rtp.target_height;
 				if((x0<=view_x)&&(view_x<=x1)&&(y0<=view_y)&&(view_y<=y1)) {
 					rt.main_display_target_flag=true;
 					main_target_id=i;
@@ -96,9 +98,11 @@ public class extended_component_instance_driver extends component_instance_drive
 	public void response_init_component_data(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print("[");
-		for(int i=0,ni=register_parameter.length;i<ni;i++)
-			ci.request_response.print((i<=0)?"":",",register_parameter[i].canvas_id).
-								print(register_parameter[i].load_operation_flag?",1":",0");
+		for(int i=0,ni=target_parameter_list.size();i<ni;i++) {
+			register_target_parameter rtp=target_parameter_list.get(i);
+			ci.request_response.print((i<=0)?"":",",rtp.canvas_id).
+								print(rtp.load_operation_flag?",1":",0");
+		}
 		ci.request_response.print("]");
 		register_target(sk,ci);
 	}
@@ -114,7 +118,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
 		ci.request_response.print("[");
-		for(int i=0,ni=register_parameter.length;i<ni;i++) {
+		for(int i=0,ni=target_parameter_list.size();i<ni;i++) {
 			double my_clear_color[]=clear_color.get(i);
 			ci.request_response.
 							print((i<=0)?"[":",[",	my_clear_color[0]).
@@ -131,7 +135,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		switch((str==null)?"":str) {
 		case "camera":
 		{	
-			if((main_target_id<0)||(main_target_id>=register_parameter.length))
+			if((main_target_id<0)||(main_target_id>=target_parameter_list.size()))
 				break;
 			if((str=ci.request_response.get_parameter("camera"))==null)
 				break;
@@ -140,7 +144,7 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;
 			if(new_camera_id>=sk.camera_cont.size())
 				break;
-			register_parameter[main_target_id].camera_id=new_camera_id;
+			target_parameter_list.get(main_target_id).camera_id=new_camera_id;
 			break;
 		}
 		case "width_height":
@@ -173,11 +177,11 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;
 			int target_id=Integer.parseInt(str);
 			if(target_id<0)
-				for(target_id=0;target_id<register_parameter.length;target_id++)
-					register_parameter[target_id].parameter_channel_id=parameter_channel_id;
+				for(target_id=0;target_id<target_parameter_list.size();target_id++)
+					target_parameter_list.get(target_id).parameter_channel_id=parameter_channel_id;
 			else
-				if(target_id<register_parameter.length)
-					register_parameter[target_id].parameter_channel_id=parameter_channel_id;
+				if(target_id<target_parameter_list.size())
+					target_parameter_list.get(target_id).parameter_channel_id=parameter_channel_id;
 			break;
 		}
 		case "set_clear_color":
@@ -185,7 +189,7 @@ public class extended_component_instance_driver extends component_instance_drive
 			if((str=ci.request_response.get_parameter("target"))==null)
 				break;
 			int target_id=Integer.parseInt(str);
-			int begin_target_id=0,end_target_id=register_parameter.length-1;
+			int begin_target_id=0,end_target_id=target_parameter_list.size()-1;
 			if((target_id>=0)&&(target_id<end_target_id)) {
 				begin_target_id=target_id;
 				end_target_id=target_id;

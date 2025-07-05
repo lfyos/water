@@ -10,15 +10,19 @@ import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
+	private movement_manager m;
 	private boolean suspend_status;
 	
 	public void destroy()
 	{
 		super.destroy();
+		m=null;
 	}
-	public extended_component_instance_driver(component my_comp,int my_driver_id)
+	public extended_component_instance_driver(component my_comp,int my_driver_id,
+			movement_manager my_movement)
 	{
 		super(my_comp,my_driver_id);
+		m=my_movement;
 		suspend_status=true;
 	}
 	public void response_init_component_data(scene_kernel sk,client_information ci)
@@ -27,10 +31,9 @@ public class extended_component_instance_driver extends component_instance_drive
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
 		component follow_mouse_comp;
-		movement_suspend suspend=((extended_component_driver)(comp.driver_array.get(driver_id))).m.suspend;
 		if(cr.target.main_display_target_flag) {
-			if(suspend.follow_mouse_component_id>=0)
-				if((follow_mouse_comp=sk.component_cont.get_component(suspend.follow_mouse_component_id))!=null) {
+			if(m.suspend.follow_mouse_component_id>=0)
+				if((follow_mouse_comp=sk.component_cont.get_component(m.suspend.follow_mouse_component_id))!=null) {
 					var my_component_box=follow_mouse_comp.get_component_box(false);
 					if(my_component_box==null)
 						my_component_box=follow_mouse_comp.get_component_box(true);
@@ -55,7 +58,8 @@ public class extended_component_instance_driver extends component_instance_drive
 				}
 		}
 		if(cr.target.main_display_target_flag){
-			boolean new_suspend_status=(suspend.get_suspend_match_number()>0)||(suspend.get_suspend_component_number()>0);
+			boolean new_suspend_status=(m.suspend.get_suspend_match_number()>0)
+					||(m.suspend.get_suspend_component_number()>0);
 			if(new_suspend_status^suspend_status){
 				update_component_parameter_version(0);
 				suspend_status=new_suspend_status;
@@ -73,7 +77,6 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
-		extended_component_driver ecd=(extended_component_driver)(comp.driver_array.get(driver_id));
-		return new movement_function_switch(sk,ci,ecd.m).get_result(comp.component_id,driver_id);
+		return new movement_function_switch(sk,ci,m).get_result(comp.component_id,driver_id);
 	}
 }

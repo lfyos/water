@@ -35,21 +35,25 @@ public class extended_component_instance_driver extends component_instance_drive
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
 		if(show_type_flag){
-			int old_component_id=show_component_id;
-			show_component_id=-1;
 			if(ci.parameter.comp!=null)
-				if(ci.parameter.comp.get_model_box()!=null)
-					show_component_id=ci.parameter.comp.component_id;
-			if(old_component_id!=show_component_id)
-				update_component_parameter_version(0);
+				if(ci.parameter.comp.get_model_box()!=null) {
+					if(ci.parameter.comp.component_id!=show_component_id) {
+						show_component_id=ci.parameter.comp.component_id;
+						update_component_parameter_version(0);
+					}
+					return false;
+				}
+			return true;
 		}
 		if(show_component_id<0)
 			return true;
-		if(show_type_flag)
-			return false;
-		if((new Date().getTime()-last_touch_time)<=time_length)
-			return false;
-		return true;
+		long current_time=new Date().getTime();
+		if((current_time-last_touch_time)>time_length)
+			return true;
+		if(ci.parameter.comp!=null)
+			if(ci.parameter.comp.component_id==show_component_id)
+				last_touch_time=current_time;
+		return false;
 	}
 	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
@@ -58,30 +62,24 @@ public class extended_component_instance_driver extends component_instance_drive
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{
 		box my_model_box;
-		component my_comp=sk.component_cont.get_component(show_component_id);
-		if(my_comp!=null)
-			if((my_model_box=my_comp.get_model_box())!=null){
-				point p[]=my_model_box.p;
-				ci.request_response.
-					print("[[",	p[0].x).	print(",",p[0].y).	print(",",p[0].z).	print(",1").
-					print(",",	p[1].x).	print(",",p[1].y).	print(",",p[1].z).	print(",1]").
-					print(",",my_comp.component_id).	 		 print("]");
-				return;
-			}
+		component my_comp;
+		if((my_comp=sk.component_cont.get_component(show_component_id))==null)
+			my_model_box=new box();
+		else if((my_model_box=my_comp.get_model_box())==null)
+			my_model_box=new box();
+		
+		point p[]=my_model_box.p;
 		ci.request_response.
-		print("[[",	0).	print(",",0).	print(",",0).	print(",1").
-		print(",",	0).	print(",",0).	print(",",0).	print(",1]").
-		print(",",-1).	print("]");
-		return;
+			print("[[",	p[0].x).	print(",",p[0].y).	print(",",p[0].z).	print(",1").
+			print(",",	p[1].x).	print(",",p[1].y).	print(",",p[1].z).	print(",1]").
+			print(",",(my_comp==null)?-1:my_comp.component_id).	 			print("]");
 	}
 	public String[] response_component_event(scene_kernel sk,client_information ci)
 	{
 		String str,request_charset=ci.request_response.implementor.get_request_charset();
-
 		do {
 			if((str=ci.request_response.get_parameter("component_name"))==null)
 				break;
-			show_component_id=-1;
 			try {
 				str=java.net.URLDecoder.decode(str,request_charset);
 				str=java.net.URLDecoder.decode(str,request_charset);
@@ -93,15 +91,16 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;
 			if(my_comp.get_model_box()==null)
 				break;
-			show_component_id=my_comp.component_id;
-			update_component_parameter_version(0);
+			if(my_comp.component_id!=show_component_id) {
+				show_component_id=my_comp.component_id;
+				update_component_parameter_version(0);
+			}
 			last_touch_time=new Date().getTime();
 		}while(false);
 		
 		do {
 			if((str=ci.request_response.get_parameter("component_id"))==null)
 				break;
-			show_component_id=-1;
 			int my_component_id;
 			try {
 				str=java.net.URLDecoder.decode(str,request_charset);
@@ -115,9 +114,12 @@ public class extended_component_instance_driver extends component_instance_drive
 				break;
 			if(my_comp.get_model_box()==null)
 				break;
-			show_component_id=my_comp.component_id;
-			update_component_parameter_version(0);
+			if(my_comp.component_id!=show_component_id) {
+				show_component_id=my_comp.component_id;
+				update_component_parameter_version(0);
+			}
 			last_touch_time=new Date().getTime();
+		
 		}while(false);
 
 		return null;

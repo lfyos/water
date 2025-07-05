@@ -12,17 +12,19 @@ public class extended_component_driver  extends component_driver
 {
 	private boolean show_type_flag;
 	private long time_length;
+	private double color_and_depth[];
 	
 	public void destroy()
 	{
 		super.destroy();
 	}
 	public extended_component_driver(part my_component_part,
-			boolean my_show_type_flag,long my_time_length)
+			boolean my_show_type_flag,long my_time_length,double my_color_and_depth[])
 	{
 		super(my_component_part);
 		show_type_flag=my_show_type_flag;
 		time_length=my_time_length;
+		color_and_depth=my_color_and_depth;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
@@ -38,6 +40,11 @@ public class extended_component_driver  extends component_driver
 			file_writer fw,component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
+		fw.	print("[",color_and_depth[0]).
+			print(",",color_and_depth[1]).
+			print(",",color_and_depth[2]).
+			print(",",color_and_depth[3]).
+			print("]");
 	}
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)

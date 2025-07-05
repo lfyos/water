@@ -2,24 +2,35 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 {
 	this.component_ids	=component_ids;
 	
-	var ep=scene.component_event_processor[this.component_ids.component_id];
-	if(typeof(ep)!="object"){
-		scene.component_event_processor[this.component_ids.component_id]=new Object();
-		ep=scene.component_event_processor[this.component_ids.component_id];
-	}	
-	ep.texture=null;
-	ep.set_target=function(my_texture)
-	{
-		this.texture=my_texture;
-	}
-	
-	this.bindgroup=null;
 	this.buffer=scene.webgpu.device.createBuffer(
 		{
 			size	:	Float32Array.BYTES_PER_ELEMENT*8,
 			usage	:	GPUBufferUsage.VERTEX|GPUBufferUsage.COPY_DST
 		});
+	scene.webgpu.device.queue.writeBuffer(this.buffer,0,
+		new Float32Array([init_data[0],init_data[1],0,1,init_data[2],init_data[3],0,1]));
 	
+	this.sampler=scene.webgpu.device.createSampler(
+		{
+			addressModeU	:	"mirror-repeat",
+			addressModeV	:	"mirror-repeat",
+			magFilter		:	"linear",
+			minFilter		:	"linear",
+			mipmapFilter	:	"linear"
+		})
+	
+	var ep=scene.component_event_processor[this.component_ids.component_id];
+	if((typeof(ep)!="object")||(ep==null))
+		scene.component_event_processor[this.component_ids.component_id]=(ep=new Object());
+
+	ep.texture=null;
+	this.bindgroup=null;
+	
+	ep.set_target=function(my_texture)
+	{
+		this.texture=my_texture;
+	}
+
 	this.draw_component=function(method_data,render_parameter,
 			target_data,part_object,part_driver,render_driver,scene)		
 	{
@@ -33,14 +44,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 				{
 					//sampler
 					binding		:	1,
-					resource	:	scene.webgpu.device.createSampler(
-						{
-							addressModeU	:	"mirror-repeat",
-							addressModeV	:	"mirror-repeat",
-							magFilter		:	"linear",
-							minFilter		:	"linear",
-							mipmapFilter	:	"linear"
-						})
+					resource	:	this.sampler
 				}
 			];
 			this.bindgroup=scene.webgpu.device.createBindGroup(
@@ -63,17 +67,19 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			rpe.draw(p[i].item_number);
 		};
 	};
-	
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
-		scene.webgpu.device.queue.writeBuffer(this.buffer,0,new Float32Array(buffer_data_item));
+		
 	};
-	
 	this.destroy=function()
 	{
 		if(this.buffer!=null){
 			this.buffer.destroy();
 			this.buffer=null;
 		};
+		if(this.sampler!=null){
+			this.sampler.destroy();
+			this.sampler=null;
+		}
 	}
 };

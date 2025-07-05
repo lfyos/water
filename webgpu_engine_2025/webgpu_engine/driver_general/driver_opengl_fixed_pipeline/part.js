@@ -229,6 +229,7 @@ function construct_part_driver(init_data,create_data,part_object,render_driver,s
 		};
 		this.material_bindgroup_flag=false;
 	}
+	
 	this.decoder=scene.system_call_processor.default_vertex_data_decoder;
 	this.decode_vertex_data=function(request_type_string,buffer_object_data,part_object)
 	{
@@ -256,6 +257,7 @@ function construct_part_driver(init_data,create_data,part_object,render_driver,s
 			}
 		}
 	}
+	
 	this.create_bind_group(part_object,render_driver,scene);
 	
 	return;

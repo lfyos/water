@@ -13,7 +13,7 @@ import kernel_driver.component_instance_driver;
 
 public class extended_component_driver  extends component_driver
 {
-	public movement_manager m;
+	private movement_manager m;
 	private String sound_pre_string;
 	
 	public void destroy()
@@ -85,6 +85,6 @@ public class extended_component_driver  extends component_driver
 	public component_instance_driver create_component_instance_driver(component comp,int driver_id,
 			scene_kernel sk,client_request_response request_response)
 	{
-		return new extended_component_instance_driver(comp,driver_id);
+		return new extended_component_instance_driver(comp,driver_id,m);
 	}
 }

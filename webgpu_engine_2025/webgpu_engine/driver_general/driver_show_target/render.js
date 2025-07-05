@@ -46,7 +46,7 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 			buffers		:
 			[
 				{
-					arrayStride	:	80,		
+					arrayStride	:	80,	
 					stepMode	:	"vertex",
 					attributes	:
 					[

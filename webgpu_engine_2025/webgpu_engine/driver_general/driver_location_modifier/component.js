@@ -27,7 +27,7 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 		}
 		
 		old_location_data=this.location_data;
-		this.location_data=new Array();	
+		this.location_data=new Array();
 		for(var i=0,ni=old_location_data.length;i<ni;i++){
 			var location_item		=old_location_data[i];
 			var component_id		=location_item[0];
@@ -69,11 +69,11 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 			loca=component_location.get_component_location(component_id);
 						
 			for(var j=5,nj=location_item.length;j<nj;j+=2){
-				var follow_component_id	=location_item[k+0];
-				var follow_loca			=location_item[k+1];
+				var follow_component_id	=location_item[j+0];
+				var follow_loca			=location_item[j+1];
 				if(follow_loca.length<16){
 					follow_loca=component_location.decode_location(follow_loca);
-					location_item[k+1]=follow_loca;
+					location_item[j+1]=follow_loca;
 				}
 				follow_loca=computer.matrix_multiplication(loca,follow_loca)
 				component_location.set_component_move_location(follow_component_id,follow_loca);

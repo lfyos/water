@@ -1,11 +1,11 @@
 function construct_component_driver(component_ids,init_data,create_data,part_object,part_driver,render_driver,scene)
 {
 	this.component_ids	=component_ids;
-	
+	this.color_and_depth=create_data;
 	this.box_component_id=-1;
 	this.buffer=scene.webgpu.device.createBuffer(
 		{
-			size	:	Float32Array.BYTES_PER_ELEMENT*8,
+			size	:	Float32Array.BYTES_PER_ELEMENT*12,
 			usage	:	GPUBufferUsage.VERTEX|GPUBufferUsage.COPY_DST
 		});
 	this.draw_component=function(method_data,render_parameter,
@@ -28,8 +28,9 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 	
 	this.append_component_parameter=function(buffer_data_item,part_object,part_driver,render_driver,scene)  
 	{
-		scene.webgpu.device.queue.writeBuffer(this.buffer,0,new Float32Array(buffer_data_item[0]));
 		this.box_component_id=buffer_data_item[1];
+		scene.webgpu.device.queue.writeBuffer(this.buffer,0,
+			new Float32Array(this.color_and_depth.concat(buffer_data_item[0])));
 	};
 	this.destroy=function()
 	{

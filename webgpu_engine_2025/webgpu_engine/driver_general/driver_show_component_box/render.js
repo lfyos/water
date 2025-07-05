@@ -28,27 +28,27 @@ function new_render_driver(	render_id,render_name,init_data,create_data,shader_c
 							format			:	"float32x4",
 							offset			:	0,
 							shaderLocation	:	0
-						},
-						{	//material
-							format			:	"float32x4",
-							offset			:	32,
-							shaderLocation	:	1
 						}
 					]
 				},
 				{
-					arrayStride	:	32,
+					arrayStride	:	48,
 					stepMode	:	"instance",
 					attributes	:
 					[
-						{	//p0
+						{	//color
 							format			:	"float32x4",
 							offset			:	0,
+							shaderLocation	:	1
+						},
+						{	//p0
+							format			:	"float32x4",
+							offset			:	16,
 							shaderLocation	:	2
 						},
 						{	//p1
 							format			:	"float32x4",
-							offset			:	16,
+							offset			:	32,
 							shaderLocation	:	3
 						}
 					]

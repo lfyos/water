@@ -68,8 +68,8 @@ public class extended_part_driver extends part_driver
 		return new extended_component_driver(my_component_part,
 				new double[] 
 				{
-						fr.get_double(),fr.get_double(),0,1,
-						fr.get_double(),fr.get_double(),0,1
+						fr.get_double(),fr.get_double(),
+						fr.get_double(),fr.get_double()
 				});
 	}
 	public part_instance_driver create_part_instance_driver(part p,

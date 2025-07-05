@@ -1,14 +1,14 @@
 				function(component_name,component_id,scene)
-				{
-/*				
+				{						
 					scene.system_event_processor.pickupmousedown=function(event,pickup_component_id,scene)
 					{
-						scene.call_server_component(
+						scene.caller.call_server_component(
 								"show_select_component_box_component","all",[["component_id",pickup_component_id]]);
-						scene.user_call_processor.scene_mousedown(pickup_component_id,event);
+
+//						scene.user_call_processor.scene_mousedown(pickup_component_id,event);
+						
 						return false;
-					};
-*/
+					};				
 					scene.system_event_processor.keydown=function(event,scene)
 					{
 						switch(event.keyCode){	

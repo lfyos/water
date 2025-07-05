@@ -17,14 +17,9 @@ import kernel_component.component_load_source_container;
 
 public class extended_part_driver extends part_driver
 {
-	private boolean show_type_flag;
-	private long time_length;
-	
-	public extended_part_driver(boolean my_show_type_flag,long my_time_length)
+	public extended_part_driver()
 	{
 		super();
-		show_type_flag=my_show_type_flag;
-		time_length=my_time_length;
 	}
 	public void destroy()
 	{	
@@ -42,7 +37,7 @@ public class extended_part_driver extends part_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		return new extended_part_driver(show_type_flag,time_length);
+		return new extended_part_driver();
 	}
 	public int caculate_material_id(part p,String type_str,
 			int body_id,int face_id,int loop_id,int edge_id,String material[])
@@ -70,7 +65,8 @@ public class extended_part_driver extends part_driver
 			component_load_source_container component_load_source_cont,
 			scene_kernel sk,client_request_response request_response)
 	{
-		return new extended_component_driver(my_component_part,show_type_flag,time_length);
+		return new extended_component_driver(my_component_part,fr.get_boolean(),fr.get_long(),
+			new double[]{fr.get_double(),fr.get_double(),fr.get_double(),fr.get_double()});
 	}
 	public part_instance_driver create_part_instance_driver(part p,
 			scene_kernel sk,client_request_response request_response)

@@ -10,8 +10,10 @@ public class test_1 extends travel_through_directory
 	{
 		String str;
 		if((str=file_reader.get_text(file_name,"GBK"))!=null) {
-			if(str.indexOf("\"change_type\"")>=0)
-				debug_information.println(file_name);
+			if(str.indexOf("show_pickup_component_box_component")>=0)
+				debug_information.println("pickup		",file_name);
+			if(str.indexOf("show_select_component_box_component")>=0)
+				debug_information.println("select		",file_name);
 		}
 	}
 	
