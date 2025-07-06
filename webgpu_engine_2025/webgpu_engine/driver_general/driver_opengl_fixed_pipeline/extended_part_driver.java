@@ -56,11 +56,11 @@ public class extended_part_driver extends part_driver
 	public void create_part_material_in_head(file_writer part_head_fw,
 			part p,system_parameter system_par,scene_parameter scene_par)
 	{
-		if(new File(p.directory_name+p.material_file_name).exists()){
-			part_head_fw.println("		{");
-			file_reader.get_text(part_head_fw,p.directory_name+p.material_file_name,p.file_charset);
-			part_head_fw.println("		}");
-		}else
+		if(new File(p.directory_name+p.material_file_name).exists())
+			part_head_fw.	println("		{").
+							print_charset_file(p.directory_name+p.material_file_name,p.file_charset).
+							println("		}");
+		else
 			part_head_fw.println("		null");
 	}
 	public box caculate_part_box(part p,component comp,int driver_id,

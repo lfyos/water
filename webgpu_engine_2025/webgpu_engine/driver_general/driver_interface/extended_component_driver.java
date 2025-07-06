@@ -4,7 +4,6 @@ import kernel_part.part;
 import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_driver.component_driver;
-import kernel_file_manager.file_reader;
 import kernel_file_manager.file_writer;
 import kernel_network.client_request_response;
 import kernel_driver.component_instance_driver;
@@ -65,11 +64,9 @@ public class extended_component_driver  extends component_driver
 		
 		fw.println("	\"type\"	:	",menu_type?"true,":"false,");
 		fw.print  ("	\"canvas\"	:	");
-		if(menu_type) {
-			fw.println();
-			file_reader.get_text(fw,directory_name+file_name,file_charset);
-			fw.println();
-		}else
+		if(menu_type)
+			fw.println().print_charset_file(directory_name+file_name,file_charset).println();
+		else
 			fw.println("null");
 
 		fw.println("}");

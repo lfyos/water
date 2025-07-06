@@ -1,7 +1,5 @@
 package driver_opengl_fixed_pipeline;
 
-import java.io.File;
-
 import kernel_part.part;
 import kernel_render.render;
 import kernel_scene.scene_kernel;
@@ -40,8 +38,8 @@ public class extended_render_driver extends render_driver
 			system_parameter system_par,scene_parameter scene_par)
 	{
 		var ret_val=new extended_render_driver(null,ren,request_response,system_par,scene_par);
-		ret_val.light_file_name	=this.light_file_name;
-		ret_val.file_charset	=this.file_charset;
+		ret_val.light_file_name	=light_file_name;
+		ret_val.file_charset	=file_charset;
 		return ret_val;
 	}
 	public void initialize_render_driver(render ren,
@@ -51,19 +49,18 @@ public class extended_render_driver extends render_driver
 	public void create_render_driver_initialization_data(file_writer fw,
 			render ren,scene_kernel sk,client_request_response request_response)
 	{
-		file_reader fr=new file_reader(light_file_name,file_charset);
-		fr.get_text(fw);
-		fr.close();
+		new file_reader(light_file_name,file_charset).get_text(fw).close();
 	}
 	public String[] get_render_list(file_reader shader_fr,render ren,
 			component_load_source_container component_load_source_cont,
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		String render_list_file_name=shader_fr.directory_name+file_reader.separator(shader_fr.get_string());
-		light_file_name				=shader_fr.directory_name+file_reader.separator(shader_fr.get_string());
-		file_charset				=shader_fr.get_charset();
-		return (new File(render_list_file_name).exists())?new String[] {render_list_file_name,file_charset}:null;
+		String ret_val[]=super.get_render_list(shader_fr,ren,
+				component_load_source_cont,request_response,system_par,scene_par);
+		light_file_name	=shader_fr.directory_name+file_reader.separator(shader_fr.get_string());
+		file_charset	=shader_fr.get_charset();
+		return ret_val;
 	}
 	public String[] get_part_list(
 			render ren,file_reader render_fr,part_parameter part_par,
@@ -71,8 +68,10 @@ public class extended_render_driver extends render_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		String par_list_file_name=file_reader.separator(render_fr.get_string());
-		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
+		String ret_val[]=super.get_part_list(ren,render_fr,part_par,
+				component_load_source_cont,request_response,system_par,scene_par);
+		
+		return ret_val;
 	}
 	public String[][] shader_file_name_array()
 	{

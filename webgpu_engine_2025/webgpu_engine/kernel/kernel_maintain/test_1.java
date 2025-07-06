@@ -10,10 +10,8 @@ public class test_1 extends travel_through_directory
 	{
 		String str;
 		if((str=file_reader.get_text(file_name,"GBK"))!=null) {
-			if(str.indexOf("show_pickup_component_box_component")>=0)
-				debug_information.println("pickup		",file_name);
-			if(str.indexOf("show_select_component_box_component")>=0)
-				debug_information.println("select		",file_name);
+			if(str.indexOf("driver_opengl_fixed_pipeline")>=0)
+				debug_information.println(file_name);
 		}
 	}
 	
@@ -26,12 +24,11 @@ public class test_1 extends travel_through_directory
 	}
 	public static void main(String args[])
 	{
-		debug_information.println("Begin:");
+//		String path_name="F:\\water_all\\data";
+		String path_name="E:\\project_data";
 		
-		new test_1().do_travel(
-//				"E:\\project_data",
-				"F:\\water_all\\data", 
-				false);
-		debug_information.println("End");
+		debug_information.println("Begin:	",	path_name);
+		new test_1().do_travel(path_name,false);
+		debug_information.println("End:	",		path_name);
 	}
 }

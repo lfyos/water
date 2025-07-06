@@ -47,8 +47,10 @@ public class extended_render_driver extends render_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		String render_list_file_name=file_reader.separator(shader_fr.get_string());
-		return new String[] {shader_fr.directory_name+render_list_file_name,shader_fr.get_charset()};
+		String ret_val[]=super.get_render_list(shader_fr,ren,
+				component_load_source_cont,request_response,system_par,scene_par);
+		
+		return ret_val;
 	}
 	public String[] get_part_list(
 			render ren,file_reader render_fr,part_parameter part_par,
@@ -56,8 +58,10 @@ public class extended_render_driver extends render_driver
 			client_request_response request_response,
 			system_parameter system_par,scene_parameter scene_par)
 	{
-		String par_list_file_name=file_reader.separator(render_fr.get_string());
-		return new String[] {render_fr.directory_name+par_list_file_name,render_fr.get_charset()};
+		String ret_val[]=super.get_part_list(ren,render_fr,part_par,
+				component_load_source_cont,request_response,system_par,scene_par);
+		
+		return ret_val;
 	}
 	public String[][] shader_file_name_array()
 	{

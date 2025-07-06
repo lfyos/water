@@ -64,9 +64,9 @@ function construct_part_driver(init_data,create_data,part_object,render_driver,s
 					try{
 						if(scene.terminate_flag)
 							break;
-						var my_blob=await scene.caller.call_server_part(
-										part_object.render_id,part_object.part_id,
-										[["file",my_material.texture[j].texture_file]],"blob");
+						var encode_file=encodeURIComponent(my_material.texture[j].texture_file);
+						var my_blob=await scene.caller.call_server_part(part_object.render_id,
+											part_object.part_id,[["file",encode_file]],"blob");
 						if(scene.terminate_flag)
 							break;
 						var my_imageBitmap=await createImageBitmap(my_blob);

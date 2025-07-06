@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.nio.charset.Charset;
 
+import kernel_file_manager.file_reader;
+
 public class common_writer 
 {
 	public common_writer flush()
@@ -216,6 +218,17 @@ public class common_writer
 	public common_writer println(String str,double x[])
 	{
 		print(str,x);println();return this;
+	}
+	public common_writer print_charset_file(String file_name,String file_charset)
+	{
+		new file_reader(file_name,file_charset).get_text(this).close();
+		return this;
+	}
+	public common_writer print_charset_file(String str,String file_name,String file_charset)
+	{
+		print(str);
+		print_charset_file(file_name,file_charset);
+		return this;
 	}
 	public common_writer print_file(String file_name)
 	{

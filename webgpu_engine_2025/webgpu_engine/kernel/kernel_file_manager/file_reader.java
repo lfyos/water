@@ -83,11 +83,10 @@ public class file_reader extends common_reader
 			return 1;
 		return 0;
 	}
-	public static void get_text(common_writer cw,String file_name,String file_charset)
+	public static common_writer get_text(common_writer cw,String file_name,String file_charset)
 	{
-		file_reader f=new file_reader(file_name,file_charset);
-		f.get_text(cw);
-		f.close();
+		new file_reader(file_name,file_charset).get_text(cw).close();
+		return cw;
 	}
 	public static String get_text(String file_name,String file_charset)
 	{
