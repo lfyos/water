@@ -1,5 +1,5 @@
 function create_one_render_driver(array_stride,material_offset,
-			material_bindgroup_layout,module,render_material,scene)
+			material_bindgroup_layout,module,point_size,scene)
 {
 	var pipeline_descr=
 	{
@@ -20,8 +20,7 @@ function create_one_render_driver(array_stride,material_offset,
 			{
 				primitive_type	:	0,
 				clip_type		:	0,
-				point_size		:	(typeof(render_material.point_size)!="number")
-									?10:(render_material.point_size)
+				point_size		:	(typeof(point_size)!="number")?10:(point_size)				
 			},
 			buffers		:
 			[
@@ -497,10 +496,11 @@ function new_render_driver(render_id,render_name,init_data,create_data,shader_co
 			
 	this.new_part_driver=construct_part_driver;
 	this.method_render_flag=[true,true,true,true,true,true];		
-			
+	
+	var my_light_number=Math.floor(this.render_material.light_color_factor.length/4);
 	var my_module=scene.webgpu.device.createShaderModule(
 			{
-				code: shader_code
+				code: "const light_number : i32="+my_light_number+";\n"+shader_code
 			});
 	
 	this.pipeline_array=new Array(this.render_material.material_offset.length);
@@ -510,7 +510,7 @@ function new_render_driver(render_id,render_name,init_data,create_data,shader_co
 				this.render_material.array_stride,
 				this.render_material.material_offset[i],
 				this.material_bindgroup_layout,my_module,
-				this.render_material,scene);
+				this.render_material.point_size,scene);
 	};
 	
 	this.destroy=function()

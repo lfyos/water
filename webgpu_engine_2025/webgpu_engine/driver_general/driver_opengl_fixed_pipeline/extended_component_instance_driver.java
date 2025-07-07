@@ -1,5 +1,7 @@
 package driver_opengl_fixed_pipeline;
 
+import java.util.ArrayList;
+
 import kernel_scene.scene_kernel;
 import kernel_component.component;
 import kernel_camera.camera_result;
@@ -8,7 +10,7 @@ import kernel_driver.component_instance_driver;
 
 public class extended_component_instance_driver extends component_instance_driver
 {
-	private long display_bitmap[];
+	private ArrayList<Long> display_bitmap;
 	
 	private double transparency_value;
 	private int close_clip_plane_number;
@@ -18,13 +20,16 @@ public class extended_component_instance_driver extends component_instance_drive
 	{
 		super.destroy();
 		
-		display_bitmap=null;
+		if(display_bitmap!=null) {
+			display_bitmap.clear();
+			display_bitmap=null;
+		}
 	}
 	public extended_component_instance_driver(component my_comp,int my_driver_id)
 	{
 		super(my_comp,my_driver_id);
 		
-		display_bitmap=new long[0];
+		display_bitmap=new ArrayList<Long>();
 		
 		transparency_value=-1;
 		close_clip_plane_number=-1;
@@ -35,26 +40,21 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public boolean check(scene_kernel sk,client_information ci,camera_result cr)
 	{
-		if(cr.target.target_id>=display_bitmap.length){
-			long bak[]=display_bitmap;
-			display_bitmap=new long[cr.target.target_id+1];
-			for(int i=0,ni=bak.length;i<ni;i++)
-				display_bitmap[i]=bak[i];
-			for(int i=bak.length,ni=display_bitmap.length;i<ni;i++)
-				display_bitmap[i]=-1;
-		}
+		while(cr.target.target_id>=display_bitmap.size())
+			display_bitmap.add((long)-1);
+
 		long new_display_bitmap=comp.multiparameter[cr.target.parameter_channel_id].display_bitmap;
-		if(display_bitmap[cr.target.target_id]!=new_display_bitmap){
-			display_bitmap[cr.target.target_id]=new_display_bitmap;
+		if(display_bitmap.get(cr.target.target_id)!=new_display_bitmap){
+			display_bitmap.set(cr.target.target_id,new_display_bitmap);
 			update_component_render_version(cr.target.target_id,0);
 		}
 		if(	  (transparency_value!=comp.uniparameter.transparency_value) 
 			||(comp.clip.close_clip_plane_number!=close_clip_plane_number)
 			||(effective_selected_flag^comp.uniparameter.effective_selected_flag))
 		{
-			transparency_value=comp.uniparameter.transparency_value;
-			close_clip_plane_number=comp.clip.close_clip_plane_number;
-			effective_selected_flag=comp.uniparameter.effective_selected_flag;
+			transparency_value		=comp.uniparameter.transparency_value;
+			close_clip_plane_number	=comp.clip.close_clip_plane_number;
+			effective_selected_flag	=comp.uniparameter.effective_selected_flag;
 			
 			update_component_parameter_version(0);
 		}
@@ -62,7 +62,7 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	public void create_render_parameter(scene_kernel sk,client_information ci,camera_result cr)
 	{
-		ci.request_response.print(display_bitmap[cr.target.target_id]);
+		ci.request_response.print(display_bitmap.get(cr.target.target_id));
 	}
 	public void create_component_parameter(scene_kernel sk,client_information ci)
 	{

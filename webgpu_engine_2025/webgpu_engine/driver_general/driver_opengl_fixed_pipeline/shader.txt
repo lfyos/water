@@ -1,3 +1,4 @@
+
 struct material_information
 {
 	vertex_color_type			:	i32,
@@ -21,7 +22,7 @@ struct material_information
 	
 	texture_matrix				:	array<mat4x4<f32>,4>,
 	
-	light_color_factor			:	array<vec4<f32>,4>
+	light_color_factor			:	array<vec4<f32>,light_number>
 };
 
 @group(1) @binding(0)	var	<uniform> material_info	:	material_information;
@@ -98,13 +99,11 @@ fn caculate_vertex_color(
 			var p0=id_info.matrix*vec4(				 my_coord.xyz,1.0);		p0=p0/p0.w;
 			var p1=id_info.matrix*vec4(my_normal.xyz+my_coord.xyz,1.0);		p1=p1/p1.w;
 			var normal_value=normalize(p1.xyz-p0.xyz);
-			var to_eye_value=normalize(target_info.eye_point.xyz/target_info.eye_point.w-p0.xyz);
-			
-			for (var i: i32 = 0; i < scene_camera_number; i++) {
-				if((camera_info[i].light_camera_flag&0x01)==0)
-					{continue;}
-					
-				var to_light_value	=normalize(camera_info[i].eye_point.xyz-p0.xyz);
+			var to_eye_value=normalize(target_info.eye_point.xyz-p0.xyz);
+
+			for (var i: i32 = 0; i < light_number; i++) {
+				var camera_id=i32(material_info.light_color_factor[i].w);
+				var to_light_value	=normalize(camera_info[camera_id].eye_point.xyz-p0.xyz);
 				var half_value		=normalize(to_eye_value+to_light_value);
 				
 				var light_color	=vec4(0.0,0.0,0.0,0.0);
@@ -130,10 +129,6 @@ fn caculate_fragment_color(vf:vertex_to_fragment_struct)->vec4<f32>
 {
 	if(i32(id_info.data[0].z)<=0){
 		switch(material_info.fragment_color_type){
-		default:
-			{
-				break;
-			}
 		case 1:
 			{
 				var ret_val=material_info.texture_matrix[0]*vf.vertex_texture;
@@ -147,6 +142,10 @@ fn caculate_fragment_color(vf:vertex_to_fragment_struct)->vec4<f32>
 				if(ret_val.a<=material_info.vertex_color_parameter.x)
 					{discard;};
 				return vec4<f32>(ret_val.rgb,1.0);
+			}
+		default:
+			{
+				break;
 			}
 		}
 	}

@@ -81,7 +81,7 @@
 /*	direction					*/		no
 /*	change_type_flag			*/		yes
 /*	scale						*/		-0.55
-/*	light_camera_flag			*/		0x01	0x00	0x00
+/*	light_camera_flag			*/		0x00	0x00	0x00
 /*	name            			*/		light_0
 		        
 		
@@ -98,7 +98,7 @@
 /*	direction					*/		no
 /*	change_type_flag			*/		yes
 /*	scale						*/		-0.55
-/*	light_camera_flag			*/		0x01	0x00	0x00
+/*	light_camera_flag			*/		0x00	0x00	0x00
 /*	name            			*/		light_1
 
 /*	switch_time					*/		1000000000
@@ -114,7 +114,7 @@
 /*	direction					*/		no
 /*	change_type_flag			*/		yes
 /*	scale						*/		-0.55
-/*	light_camera_flag			*/		0x01	0x00	0x00
+/*	light_camera_flag			*/		0x00	0x00	0x00
 /*	name            			*/		light_2
 		        
 /*	switch_time					*/		1000000000
@@ -130,5 +130,5 @@
 /*	direction					*/		no
 /*	change_type_flag			*/		yes
 /*	scale						*/		-0.55
-/*	light_camera_flag			*/		0x01	0x00	0x00
+/*	light_camera_flag			*/		0x00	0x00	0x00
 /*	name           				*/		light_3

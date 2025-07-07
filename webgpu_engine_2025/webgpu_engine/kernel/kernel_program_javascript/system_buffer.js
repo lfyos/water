@@ -431,17 +431,19 @@ function construct_system_buffer(my_max_target_number,my_max_method_number,scene
 			return;
 		if(!(Array.isArray(method_data)))
 			return;
-		var i,ni=method_data.length,my_method_data=new Array();
 		var max_number=this.method_buffer_stride;
 		max_number-=Int32Array.BYTES_PER_ELEMENT*4;
 		max_number/=Float32Array.BYTES_PER_ELEMENT;
 		
-		for(i=0;(i<ni)&&(i<max_number);i++)
+		var my_method_data=new Array(max_number);
+		var i=0,ni=method_data.length;
+		for(ni=(ni<max_number)?ni:max_number;i<ni;i++)
 			my_method_data[i]=method_data[i];
 		for(;i<max_number;i++)
 			my_method_data[i]=0;
+		my_method_data=new Float32Array(my_method_data);
 		var pos=this.method_buffer_stride*method_id+Int32Array.BYTES_PER_ELEMENT*4;
-		scene.webgpu.device.queue.writeBuffer(this.method_buffer,pos,new Float32Array(my_method_data));
+		scene.webgpu.device.queue.writeBuffer(this.method_buffer,pos,my_method_data);
 		return;
 	};
 	this.destroy=function()

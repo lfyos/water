@@ -37,12 +37,11 @@ public class extended_part_instance_driver extends part_instance_driver
 			return null;
 		}
 		file_name=file_reader.separator(file_name);
+		String temp_path_name=file_directory.part_file_directory(p,sk.system_par, sk.scene_par)+file_name;
 		
 		File f=new File(p.directory_name+p.material_file_name);
 		String path_name_0=f.getParent()+File.separator+file_name;
 		if((f=new File(path_name_0)).exists()){
-			String temp_path_name=file_directory.part_file_directory(
-					p,sk.system_par, sk.scene_par)+file_name;
 			if(new File(temp_path_name).lastModified()<f.lastModified())
 				file_writer.file_copy(path_name_0,temp_path_name);
 			return new String[]{temp_path_name,p.file_charset};
@@ -50,10 +49,8 @@ public class extended_part_instance_driver extends part_instance_driver
 		
 		String path_name_1=p.directory_name+file_name;
 		if((f=new File(path_name_1)).exists()){
-			String temp_path_name=file_directory.part_file_directory(
-						p, sk.system_par, sk.scene_par)+file_name;
 			if(new File(temp_path_name).lastModified()<f.lastModified())
-				file_writer.file_copy(path_name_1, temp_path_name);
+				file_writer.file_copy(path_name_1,temp_path_name);
 			return new String[]{temp_path_name,p.file_charset};
 		}
 		

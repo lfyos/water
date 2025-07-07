@@ -35,7 +35,6 @@ struct system_information
 	pickup_value_1							:	f32,
 	pickup_value_2							:	f32
 };
-
 struct target_information 
 {
 	projection_matrix						:	mat4x4<f32>,
@@ -116,7 +115,6 @@ struct target_information
 	scene_id								:	i32,
 	camera_id								:	i32
 };
-
 struct method_information
 {
 	method_id								:	i32,
@@ -127,7 +125,6 @@ struct method_information
 	
 	data									:	array<vec4<f32>,15>
 };
-
 struct id_information 
 {
 	matrix									:	mat4x4<f32>,
@@ -147,7 +144,6 @@ struct id_information
 	tmp_int_0								:	i32,
 	tmp_int_1								:	i32
 };
-
 struct camera_information 
 {
 	component_id							:	i32,
@@ -155,6 +151,7 @@ struct camera_information
 	light_camera_flag						:	i32,
 	light_camera_flag_ex					:	i32,
 	light_camera_flag_ex_ex					:	i32,
+	
 	tmp_int_0								:	i32,
 	tmp_int_1								:	i32,
 	tmp_int_2								:	i32,
