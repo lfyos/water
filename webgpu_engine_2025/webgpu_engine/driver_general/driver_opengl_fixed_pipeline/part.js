@@ -10,7 +10,6 @@ function construct_part_driver(init_data,create_data,part_object,render_driver,s
 	{
 		if(scene.terminate_flag)
 			return;
-			
 		for(var p,i=0,ni=part_object.material[0].material.length;i<ni;i++){
 			var my_material=part_object.material[0].material[i];
 			
@@ -57,52 +56,51 @@ function construct_part_driver(init_data,create_data,part_object,render_driver,s
 			];
 			var my_texture_array=new Array();
 					
-			if(Array.isArray(my_material.texture))
-				for(var j=0,nj=my_material.texture.length;(j<nj)&&(j<4);j++){
-					for(var k=0;k<16;k++)
-						p[16*j+k]=my_material.texture[j].matrix[k];
-					try{
-						if(scene.terminate_flag)
-							break;
-						var encode_file=encodeURIComponent(my_material.texture[j].texture_file);
-						var my_blob=await scene.caller.call_server_part(part_object.render_id,
+			if(!(Array.isArray(my_material.texture)))
+				my_material.texture=new Array(); 
+			for(var j=0,nj=my_material.texture.length;(j<nj)&&(j<4);j++){
+				for(var k=0;k<16;k++)
+					p[16*j+k]=my_material.texture[j].matrix[k];
+				try{
+					if(scene.terminate_flag)
+						break;
+					var encode_file=encodeURIComponent(my_material.texture[j].texture_file);
+					var my_blob=await scene.caller.call_server_part(part_object.render_id,
 											part_object.part_id,[["file",encode_file]],"blob");
-						if(scene.terminate_flag)
-							break;
-						var my_imageBitmap=await createImageBitmap(my_blob);
-						if(scene.terminate_flag)
-							break;
-						var my_texture=scene.webgpu.device.createTexture(
-								{
-									size:
-									{
-										width	:	my_imageBitmap.width,
-										height	:	my_imageBitmap.height
-									},
-									format		:	"rgba16float",
-									usage		:	 GPUTextureUsage.TEXTURE_BINDING 
-													|GPUTextureUsage.COPY_DST
-													|GPUTextureUsage.RENDER_ATTACHMENT
-						    	});
-						scene.webgpu.device.queue.copyExternalImageToTexture(
-							{
-								source	:	my_imageBitmap
-							},
-							{
-								texture	:	my_texture
-							},
-							{
+					if(scene.terminate_flag)
+						break;
+					var my_imageBitmap=await createImageBitmap(my_blob);
+					if(scene.terminate_flag)
+						break;
+					var my_texture=scene.webgpu.device.createTexture({
+							size		:	{
 								width	:	my_imageBitmap.width,
 								height	:	my_imageBitmap.height
-							});
-						my_texture_array.push(my_texture);
-					}catch(e){
-						my_texture_array.push(render_driver.tmp_texture);
-						console.log(part_object.information.system_name
-							+"	download texture picture fail:	"
-							+my_material.texture[j].texture_file);
-					}
+							},
+							format		:	"rgba16float",
+							usage		:	 GPUTextureUsage.TEXTURE_BINDING 
+											|GPUTextureUsage.COPY_DST
+											|GPUTextureUsage.RENDER_ATTACHMENT
+					});
+					scene.webgpu.device.queue.copyExternalImageToTexture(
+						{
+							source	:	my_imageBitmap
+						},
+						{
+							texture	:	my_texture
+						},
+						{
+							width	:	my_imageBitmap.width,
+							height	:	my_imageBitmap.height
+						});
+					my_texture_array.push(my_texture);
+				}catch(e){
+					my_texture_array.push(render_driver.tmp_texture);
+					console.log(part_object.information.system_name
+						+"	download texture picture fail:	"
+						+my_material.texture[j].texture_file);
 				}
+			}
 			if(scene.terminate_flag){
 				for(var j=0,nj=my_texture_array.length;j<nj;j++)
 					my_texture_array[j].destroy();
@@ -122,9 +120,9 @@ function construct_part_driver(init_data,create_data,part_object,render_driver,s
 				usage	:	GPUBufferUsage.COPY_DST|GPUBufferUsage.UNIFORM 
 			});
 			scene.webgpu.device.queue.writeBuffer(my_parameter_buffer,
-				0,				  new Int32Array(int_buffer_data));
+				0,					new Int32Array(int_buffer_data));
 			scene.webgpu.device.queue.writeBuffer(my_parameter_buffer,
-				int_buffer_length,new Float32Array(float_buffer_data));
+				int_buffer_length,	new Float32Array(float_buffer_data));
 			
 			var my_bindgroup_entries=[
 				{	// material_information
@@ -138,82 +136,46 @@ function construct_part_driver(init_data,create_data,part_object,render_driver,s
 				{	//texture 1
 					binding		:	1,
 					resource	:	(my_texture_array.length<=0)
-										?(render_driver.tmp_texture.createView())
-										:(my_texture_array[0].createView())
+						?(render_driver.tmp_texture.createView()):(my_texture_array[0].createView())
 				},
 				{	//texture 2
 					binding		:	2,
 					resource	:	(my_texture_array.length<=1)
-										?(render_driver.tmp_texture.createView())
-										:(my_texture_array[1].createView())
+						?(render_driver.tmp_texture.createView()):(my_texture_array[1].createView())
 				},
 				{	//texture 3
 					binding		:	3,
 					resource	:	(my_texture_array.length<=2)
-										?(render_driver.tmp_texture.createView())
-										:(my_texture_array[2].createView())
+						?(render_driver.tmp_texture.createView()):(my_texture_array[2].createView())
 				},
 				{	//texture 4
 					binding		:	4,
 					resource	:	(my_texture_array.length<=3)
-										?(render_driver.tmp_texture.createView())
-										:(my_texture_array[3].createView())
+						?(render_driver.tmp_texture.createView()):(my_texture_array[3].createView())
 				},
 				{
 					//sampler_1
 					binding		:	5,
 					resource	:	scene.webgpu.device.createSampler(
-						(my_texture_array.length>0)
-						?my_material.texture[0].parameter
-						:{
-							addressModeU	:	"mirror-repeat",
-							addressModeV	:	"mirror-repeat",
-							magFilter		:	"nearest",
-							minFilter		:	"nearest",
-							mipmapFilter	:	"nearest"
-						})
+						(my_texture_array.length>0)?my_material.texture[0].parameter:{})
 				},
 				{
 					//sampler_2
 					binding		:	6,
 					resource	:	scene.webgpu.device.createSampler(
-						(my_texture_array.length>1)
-						?my_material.texture[1].parameter
-						:{
-							addressModeU	:	"mirror-repeat",
-							addressModeV	:	"mirror-repeat",
-							magFilter		:	"nearest",
-							minFilter		:	"nearest",
-							mipmapFilter	:	"nearest"
-						})
+						(my_texture_array.length>1)?my_material.texture[1].parameter:{})
 				},
 				{
 					//sampler_3
 					binding		:	7,
 					resource	:	scene.webgpu.device.createSampler(
-						(my_texture_array.length>2)
-						?my_material.texture[2].parameter
-						:{
-							addressModeU	:	"mirror-repeat",
-							addressModeV	:	"mirror-repeat",
-							magFilter		:	"nearest",
-							minFilter		:	"nearest",
-							mipmapFilter	:	"nearest"
-						})
+						(my_texture_array.length>2)?my_material.texture[2].parameter:{})
 				},
 				{
 					//sampler_4
 					binding		:	8,
 					resource	:	scene.webgpu.device.createSampler(
-						(my_texture_array.length>3)
-						?my_material.texture[3].parameter
-						:{
-							addressModeU	:	"mirror-repeat",
-							addressModeV	:	"mirror-repeat",
-							magFilter		:	"nearest",
-							minFilter		:	"nearest",
-							mipmapFilter	:	"nearest"
-						})
+						(my_texture_array.length>3)?my_material.texture[3].parameter:{})
 				}
 			];
 			var my_bindgroup=scene.webgpu.device.createBindGroup(

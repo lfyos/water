@@ -1,5 +1,6 @@
-function create_one_render_driver(array_stride,material_offset,
-			material_bindgroup_layout,module,point_size,scene)
+function create_one_render_driver(
+	material_offset,array_stride,point_size,
+	material_bindgroup_layout,module,scene)
 {
 	var pipeline_descr=
 	{
@@ -505,14 +506,12 @@ function new_render_driver(render_id,render_name,init_data,create_data,shader_co
 	
 	this.pipeline_array=new Array(this.render_material.material_offset.length);
 	
-	for(var i=0,ni=this.pipeline_array.length;i<ni;i++){
+	for(var i=0,ni=this.pipeline_array.length;i<ni;i++)
 		this.pipeline_array[i]=new create_one_render_driver(
-				this.render_material.array_stride,
-				this.render_material.material_offset[i],
-				this.material_bindgroup_layout,my_module,
-				this.render_material.point_size,scene);
-	};
-	
+				this.render_material.material_offset[i],this.render_material.array_stride,
+				this.render_material.point_size,		this.material_bindgroup_layout,
+				my_module,scene);
+
 	this.destroy=function()
 	{
 		if(this.tmp_texture!=null){
