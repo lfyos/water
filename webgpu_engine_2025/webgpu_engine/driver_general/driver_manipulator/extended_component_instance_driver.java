@@ -63,9 +63,6 @@ public class extended_component_instance_driver extends component_instance_drive
 		switch(str.toLowerCase()){
 		default:
 			break;
-		case "check_component":
-			check_component.check(sk,ci);
-			break;
 		case "last_component":
 			ci.request_response.println(
 				((my_comp=sk.component_cont.search_component())==null)?-1:(my_comp.component_id));

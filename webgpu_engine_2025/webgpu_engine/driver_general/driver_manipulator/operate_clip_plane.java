@@ -63,8 +63,7 @@ public class operate_clip_plane
 		long my_terminate_time=ci.display_camera_result.cam.parameter.switch_time_length+my_start_time;
 		
 		box my_box;
-		plane source_pl,target_pl;
-		
+		plane source_pl,target_pl;
 		switch(str.toLowerCase()) {
 		case "off":
 		case "no":

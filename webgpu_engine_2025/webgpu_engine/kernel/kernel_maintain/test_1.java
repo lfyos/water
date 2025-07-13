@@ -10,7 +10,7 @@ public class test_1 extends travel_through_directory
 	{
 		String str;
 		if((str=file_reader.get_text(file_name,"GBK"))!=null) {
-			if(str.indexOf("driver_opengl_fixed_pipeline")>=0)
+			if(str.indexOf("component_ids")>=0)
 				debug_information.println(file_name);
 		}
 	}
@@ -24,8 +24,8 @@ public class test_1 extends travel_through_directory
 	}
 	public static void main(String args[])
 	{
-//		String path_name="F:\\water_all\\data";
-		String path_name="E:\\project_data";
+		String path_name="F:\\water_all\\data";
+//		String path_name="E:\\project_data";
 		
 		debug_information.println("Begin:	",	path_name);
 		new test_1().do_travel(path_name,false);

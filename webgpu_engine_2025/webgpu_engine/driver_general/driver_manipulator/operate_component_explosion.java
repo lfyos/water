@@ -126,11 +126,11 @@ public class operate_component_explosion
 			return;
 		}
 		
-		for(int i=0,ni=comp_array.comp_list.size();i<ni;i++) {
-			modifier_container_timer timer=sk.modifier_cont[modifier_container_id].get_timer();
-			long start_time=timer.get_current_time();
-			long terminate_time=ci.display_camera_result.cam.parameter.switch_time_length+start_time;
-			
+		modifier_container_timer timer=sk.modifier_cont[modifier_container_id].get_timer();
+		long start_time=timer.get_current_time();
+		long terminate_time=ci.display_camera_result.cam.parameter.switch_time_length+start_time;
+		
+		for(int i=0,ni=comp_array.comp_list.size();i<ni;i++) {	
 			component my_comp=comp_array.comp_list.get(i);
 			location new_move_location;
 			if(reset_flag)

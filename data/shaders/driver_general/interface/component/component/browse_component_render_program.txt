@@ -134,7 +134,8 @@ function(component_name,component_id,scene)
 				for(var driver_id=0,driver_number=p.length;driver_id<driver_number;driver_id++){
 					if(pos>=text_format.canvas_height)
 						break;
-					var render_id=p[driver_id][0],part_id=p[driver_id][1];
+					var render_id			=p[driver_id].render_id;
+					var part_id				=p[driver_id].part_id;
 					var part_information	=scene.part_array[render_id][part_id].information;
 					var part_property		=scene.part_array[render_id][part_id].property;
 										
