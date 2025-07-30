@@ -21,12 +21,10 @@ public class extended_component_instance_driver extends component_instance_drive
 		super.destroy();
 		
 		temp_path_name=null;
-		file_charset=null;
 	}
 	public extended_component_instance_driver(component my_comp,int my_driver_id,
 			boolean my_menu_type,double my_dx,double my_dy,
-			String my_temp_path_name,String my_file_charset,
-			boolean my_always_show_flag)
+			String my_temp_path_name,String my_file_charset,boolean my_always_show_flag)
 	{
 		super(my_comp,my_driver_id);
 		
@@ -103,9 +101,7 @@ public class extended_component_instance_driver extends component_instance_drive
 		String str=ci.request_response.get_parameter("operation");
 		switch((str==null)?"":(str.toLowerCase())){
 		case "file":
-			if(menu_type)
-				return null;
-			return new String[]{temp_path_name,file_charset};
+			return menu_type?null:new String[]{temp_path_name,file_charset};
 		case "hide":
 			hide_show_flag=true;
 			return null;

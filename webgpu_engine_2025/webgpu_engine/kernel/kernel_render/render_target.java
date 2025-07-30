@@ -58,7 +58,7 @@ public class render_target
 		parameter=rt.parameter;
 	}
 	public render_target(int my_target_id_from,
-			render_target_parameter 	my_parameter,					String my_target_name,
+			render_target_parameter 				my_parameter,					String my_target_name,
 			int my_target_comonent_id,				int my_target_driver_id,		int my_target_texture_id,
 			component my_comp[],					int my_camera_id,				int my_parameter_channel_id,
 			render_target_view my_target_view,		box my_view_volume_box,					

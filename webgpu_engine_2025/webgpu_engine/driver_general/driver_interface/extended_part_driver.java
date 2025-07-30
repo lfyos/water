@@ -22,6 +22,7 @@ public class extended_part_driver extends part_driver
 	public extended_part_driver(boolean my_always_show_flag,double my_depth_step)
 	{
 		super();
+		
 		always_show_flag=my_always_show_flag;
 		depth_step=my_depth_step;
 	}
@@ -73,8 +74,8 @@ public class extended_part_driver extends part_driver
 	{
 		return new extended_component_driver(my_component_part,	fr.get_boolean(),
 				fr.get_double()*depth_step,fr.get_double(),fr.get_double(),
-				fr.directory_name,file_reader.separator(fr.get_string()),
-				fr.get_charset(),always_show_flag);
+				fr.directory_name,file_reader.separator(fr.get_string()),fr.get_charset(),
+				always_show_flag);
 	}
 	public part_instance_driver create_part_instance_driver(part p,
 			scene_kernel sk,client_request_response request_response)

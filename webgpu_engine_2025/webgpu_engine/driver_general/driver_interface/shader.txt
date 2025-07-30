@@ -11,10 +11,10 @@ struct id_target_struct
 
 struct interface_parameter
 {
-	texture_x0		:	f32,
-	texture_y0		:	f32,
-	texture_dx		:	f32,
-	texture_dy		:	f32,
+	position_x0		:	f32,
+	position_y0		:	f32,
+	position_dx		:	f32,
+	position_dy		:	f32,
 	
 	depth			:	f32,
 	
@@ -39,8 +39,8 @@ fn vertex_main(
 	vf.vertex_texture=my_texture;
 	
 	vf.vertex_position	=vec4(
-		par.texture_x0+my_coord.x*par.texture_dx,
-		par.texture_y0+my_coord.y*par.texture_dy,
+		par.position_x0+my_coord.x*par.position_dx,
+		par.position_y0+my_coord.y*par.position_dy,
 		par.depth,1.0);
 		
 	switch(method_info.method_id){

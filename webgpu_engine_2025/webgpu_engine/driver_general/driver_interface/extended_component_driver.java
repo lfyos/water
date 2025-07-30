@@ -19,7 +19,6 @@ public class extended_component_driver  extends component_driver
 		super.destroy();
 		
 		file_name=null;
-		file_charset=null;
 		temp_path_name=null;
 	}
 	public extended_component_driver(part my_component_part,
@@ -35,8 +34,8 @@ public class extended_component_driver  extends component_driver
 		depth=my_depth;
 		directory_name=my_directory_name;
 		file_name=my_file_name;
-		temp_path_name=null;
 		file_charset=my_file_charset;
+		temp_path_name=null;
 		always_show_flag=my_always_show_flag;
 	}
 	public void initialize_component_driver(component comp,int driver_id,
@@ -58,11 +57,10 @@ public class extended_component_driver  extends component_driver
 	{
 		fw.println("{");
 
-		fw.print  ("	\"dx\"	:	",		dx).	println(",");
-		fw.print  ("	\"dy\"	:	",		dy).	println(",");
+		fw.print  ("	\"dx\"		:	",	dx).	println(",");
+		fw.print  ("	\"dy\"		:	",	dy).	println(",");
 		fw.print  ("	\"depth\"	:	",	depth).	println(",");
-		
-		fw.println("	\"type\"	:	",menu_type?"true,":"false,");
+		fw.println("	\"type\"	:	",	menu_type?"true,":"false,");
 		fw.print  ("	\"canvas\"	:	");
 		if(menu_type)
 			fw.println().print_charset_file(directory_name+file_name,file_charset).println();

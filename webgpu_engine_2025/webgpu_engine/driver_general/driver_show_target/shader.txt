@@ -17,7 +17,7 @@ fn vertex_main(
 {
 	var vf:vertex_to_fragment_struct;
 
-	vf.vertex_position	=my_p0*(vec4(1.0,1.0,1.0,1.0)-my_coord)+my_p1*my_coord
+	vf.vertex_position	=my_p0*(vec4(1.0,1.0,1.0,1.0)-my_coord)+my_p1*my_coord;
 	vf.vertex_position	=vec4(vf.vertex_position.xy,0.0,1.0);
 	vf.vertex_texture	=my_texture;
 	

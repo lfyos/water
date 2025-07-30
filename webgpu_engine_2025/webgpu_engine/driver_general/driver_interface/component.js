@@ -2,10 +2,10 @@ function create_component_object(my_create_data,scene)
 {
 	this.interface_data=my_create_data;
 	
-	this.show_x =0;
-	this.show_y =0;
+	this.show_x 	=0;
+	this.show_y 	=0;
 
-	this.hightlight=[-1,-1,-1,-1];
+	this.hightlight	=[-1,-1,-1,-1];
 	
 	this.mousedown_flag	=false;
 	this.mouse_x 		=scene.view.main_target_x;
@@ -13,17 +13,19 @@ function create_component_object(my_create_data,scene)
 	this.mousedown_x	=scene.view.main_target_x;
 	this.mousedown_y	=scene.view.main_target_y;
 
-	this.x=0;
-	this.y=0;
-	this.id_base=0;
+	this.x			=0;
+	this.y			=0;
+	this.id_base	=0;
 	this.update_flag=false;
 	
 	this.parameter_bak={
-		x	:	this.show_x,
-		y	:	this.show_y,
-		dx	:	this.interface_data.dx,
-		dy	:	this.interface_data.dy
+		x			:	this.show_x,
+		y			:	this.show_y,
+		dx			:	this.interface_data.dx,
+		dy			:	this.interface_data.dy,
+		hightlight	:	[0,0,0,0]
 	}
+	this.write_buffer_flag=true;
 
 	this.pickupmousedown=function(event,component_id,scene)
 	{
@@ -182,7 +184,7 @@ function create_bind_group(init_data,create_data,render_driver,scene)
 				});
 		}
 			
-		this.buffer_size=Float32Array.BYTES_PER_ELEMENT*64;
+		this.buffer_size=Float32Array.BYTES_PER_ELEMENT*16;
 		this.buffer=scene.webgpu.device.createBuffer(
 		{
 			size	:	this.buffer_size,
@@ -245,7 +247,7 @@ function create_bind_group(init_data,create_data,render_driver,scene)
 
 function construct_component_driver(component_ids,init_data,create_data,part_object,part_driver,render_driver,scene)
 {
-	this.component_ids				=component_ids;
+	this.component_ids=component_ids;
 	
 	var new_ep=new create_component_object(create_data,scene);
 	var old_ep=scene.component_event_processor[this.component_ids.component_id];
@@ -254,17 +256,10 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 
 	scene.component_event_processor[this.component_ids.component_id]=new_ep;
 	
-	this.interface_component_id		=this.component_ids.component_id;
-	this.image_bind_group			=new create_bind_group(init_data,create_data,render_driver,scene);
-	this.save_parameter_number		=0;
+	this.image_bind_group=new create_bind_group(init_data,create_data,render_driver,scene);
 	
-	this.draw_component=function(method_data,render_parameter,
-			target_data,part_object,part_driver,render_driver,scene)
+	this.update_image_bind_group=function(ep,scene)
 	{
-		var ep=scene.component_event_processor[this.component_ids.component_id];
-		if(this.image_bind_group.is_busy_flag)
-			return;
-		
 		if(ep.interface_data.type)
 			if(typeof(ep.update_canvas_texture)=="function")
 				if(ep.update_canvas_texture(
@@ -281,36 +276,52 @@ function construct_component_driver(component_ids,init_data,create_data,part_obj
 							width	:	ep.interface_data.canvas.canvas_width,
 							height	:	ep.interface_data.canvas.canvas_height
 						});
-		if((target_data.main_display_target_flag)||(this.save_parameter_number<=0)){
-			if(	  (ep.parameter_bak.x !=ep.show_x)
-				||(ep.parameter_bak.y !=ep.show_y)
-				||(ep.parameter_bak.dx!=ep.interface_data.dx)
-				||(ep.parameter_bak.dy!=ep.interface_data.dy))
-			{
-				scene.caller.call_server_component(this.component_ids.component_id,"all",[["operation","parameter"],
-					["x0",ep.parameter_bak.x =ep.show_x],
-					["y0",ep.parameter_bak.y =ep.show_y],
-					["dx",ep.parameter_bak.dx=ep.interface_data.dx],
-					["dy",ep.parameter_bak.dy=ep.interface_data.dy]]);
-			}
-			var x0=ep.hightlight[0],y0=ep.hightlight[1];
-			var x1=ep.hightlight[2],y1=ep.hightlight[3];
-			scene.webgpu.device.queue.writeBuffer(
-				this.image_bind_group.buffer,0,
-				new Float32Array([
-						ep.show_x,
-						ep.show_y,
-						ep.interface_data.dx,
-						ep.interface_data.dy,
-						ep.interface_data.depth,
-						(x0<x1)?x0:x1,
-						(y0<y1)?y0:y1,
-						(x0>x1)?x0:x1,
-						(y0>y1)?y0:y1
-					]));
-			this.save_parameter_number++;
+		if(	  (ep.parameter_bak.x !=ep.show_x)
+			||(ep.parameter_bak.y !=ep.show_y)
+			||(ep.parameter_bak.dx!=ep.interface_data.dx)
+			||(ep.parameter_bak.dy!=ep.interface_data.dy))
+		{
+			ep.write_buffer_flag=true;
+			scene.caller.call_server_component(this.component_ids.component_id,"all",[["operation","parameter"],
+				 ["x0",ep.parameter_bak.x =ep.show_x],
+				 ["y0",ep.parameter_bak.y =ep.show_y],
+				 ["dx",ep.parameter_bak.dx=ep.interface_data.dx],
+				 ["dy",ep.parameter_bak.dy=ep.interface_data.dy]]);
 		}
+	
+		for(var i=0;i<4;i++)
+			if(ep.parameter_bak.hightlight[i]!=ep.hightlight[i]){
+				ep.write_buffer_flag=true;
+				ep.parameter_bak.hightlight[i]=ep.hightlight[i];
+			}
+						
+		if(ep.write_buffer_flag){
+			ep.write_buffer_flag=false;
+			scene.webgpu.device.queue.writeBuffer(this.image_bind_group.buffer,0,
+				new Float32Array([
+					ep.show_x,
+					ep.show_y,
+					ep.interface_data.dx,
+					ep.interface_data.dy,
+					ep.interface_data.depth,
+					(ep.hightlight[0]<ep.hightlight[2])?ep.hightlight[0]:ep.hightlight[2],
+					(ep.hightlight[1]<ep.hightlight[3])?ep.hightlight[1]:ep.hightlight[3],
+					(ep.hightlight[0]>ep.hightlight[2])?ep.hightlight[0]:ep.hightlight[2],
+					(ep.hightlight[1]>ep.hightlight[3])?ep.hightlight[1]:ep.hightlight[3]
+				]));
+		}
+	}
+	
+	this.draw_component=function(method_data,render_parameter,
+			target_data,part_object,part_driver,render_driver,scene)
+	{
+		var ep=scene.component_event_processor[this.component_ids.component_id];
+		if(this.image_bind_group.is_busy_flag)
+			return;
 		
+		if(target_data.main_display_target_flag)
+			this.update_image_bind_group(ep,scene);
+
 		var rpe=scene.webgpu.render_pass_encoder;
 		rpe.setPipeline((method_data.method_id==0)
 				?(render_driver.id_pipeline):(render_driver.color_pipeline));		

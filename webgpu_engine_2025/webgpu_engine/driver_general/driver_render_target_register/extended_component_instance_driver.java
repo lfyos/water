@@ -52,8 +52,10 @@ public class extended_component_instance_driver extends component_instance_drive
 	}
 	private void register_target(scene_kernel sk,client_information ci)
 	{
+		boolean has_not_found_main_display_target_flag=true;
 		main_target_id=-1;
-		for(int i=0,target_number=target_parameter_list.size();i<target_number;i++){
+		for(int j=1,target_number=target_parameter_list.size();j<=target_number;j++){
+			int i=j%target_number;
 			register_target_parameter rtp=target_parameter_list.get(i);
 			int my_canvas_width_height[]=canvas_width_height.get(rtp.canvas_id);
 
@@ -92,6 +94,11 @@ public class extended_component_instance_driver extends component_instance_drive
 					main_target_id=i;
 				}
 			}
+			if(rt.main_display_target_flag)
+				has_not_found_main_display_target_flag=false;
+			if(i==0)
+				if(has_not_found_main_display_target_flag)
+					rt.main_display_target_flag=true;
 			ci.target_container.register_target(rt);
 		}
 	}
