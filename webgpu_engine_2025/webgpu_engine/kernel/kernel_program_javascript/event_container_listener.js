@@ -29,6 +29,7 @@ function construct_scene_container_event_listener(my_canvas_id,my_canvas_array,m
 		canvas_object.focus();
 		
 		my_scene.last_event_time=(new Date()).getTime();
+		
 		return my_event_listener_array[canvas_id];
 	}
 	

@@ -139,6 +139,10 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 	{
 		function execute_delete_function(p,name)
 		{
+			if(Array.isArray(p))
+				while(p.length>0)
+					execute_delete_function(p.pop(),name+"["+p.length+"]");
+			
 			if(typeof(p)!="object")
 				return;
 			if(p==null)
@@ -161,24 +165,20 @@ function construct_scene(my_webgpu,my_url,my_user_name,my_pass_word,
 				try{
 					p.destroy();
 				}catch(e){
-					alert("destroy:"+name+"/"+key+"error:"+e.toString());
+					console.log("destroy:"+name+"/"+key+"error:"+e.toString());
 				}
 				p.destroy=null;
 			}
-			
-			if(Array.isArray(p))
-				while(p.length>0)
-					execute_delete_function(p.pop(),name+"["+p.length+"]");
-
 			for(var key in p){
-				var pp;
-				if(typeof(pp=p[key])!="boolean")
+				var pp=p[key];
+				if(typeof(pp)!="boolean")
 					try{
-						delete p[key];
+						p[key]=null;
 					}catch(e){
 						console.log("delete:"+name+"/"+key+"error:"+e.toString());
 					}
-				execute_delete_function(pp,name+"/"+key);
+				if(key!="webgpu")
+					execute_delete_function(pp,name+"/"+key);
 			}
 		}
 		if(this.terminate_flag)

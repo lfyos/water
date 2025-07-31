@@ -136,6 +136,9 @@
 						case 121://F10
 							break;
 						case 122://F11
+						
+							scene.destroy();
+							
 							break;						
 						case 123://F12
 							scene.system_call_processor.set_menu_show("交互界面主菜单");
