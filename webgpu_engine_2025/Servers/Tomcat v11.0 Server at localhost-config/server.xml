@@ -83,7 +83,7 @@
                maxThreads="150" SSLEnabled="true">
         <UpgradeProtocol className="org.apache.coyote.http2.Http2Protocol" />
         <SSLHostConfig>
-            <Certificate certificateKeystoreFile="F:/water_all/data/tomcat.keystore"
+            <Certificate certificateKeystoreFile="G:/water_all/data/tomcat.keystore"
                          certificateKeystorePassword="123456" type="RSA" />
         </SSLHostConfig>
     </Connector>

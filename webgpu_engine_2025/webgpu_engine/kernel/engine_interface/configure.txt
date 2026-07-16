@@ -1,6 +1,6 @@
 
-G:/water_all/data/configure.txt
+F:/water_all/data/configure.txt
 
-G:/temp/configure.txt
+F:/temp/configure.txt
 
-G:/water_all/environment.txt
+F:/water_all/environment.txt

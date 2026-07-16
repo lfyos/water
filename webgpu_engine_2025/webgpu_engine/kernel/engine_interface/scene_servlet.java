@@ -76,8 +76,6 @@ public class scene_servlet extends HttpServlet
     	case "webserver_configure_file":
 	    	{
 	    		String configure_file_name;
-	    		String configure_file_charset=(scene_temparatory_path_name!=null)
-		    			?scene_temparatory_path_name:Charset.defaultCharset().name();
 	    		if((configure_file_name=config.getServletContext().getRealPath(scene_data_path_name))==null){
 	        		debug_information.println("webserver_configure_file name is null");
 	        		System.exit(0);
@@ -89,11 +87,9 @@ public class scene_servlet extends HttpServlet
 	    			System.exit(0);
 	    			return;
 	    		}
-	    		
-	    		debug_information.println("webserver_configure_file is	",configure_file_name);
-	    		debug_information.println("configure_file_charset is	",configure_file_charset);
-	    		
-	    		file_reader fr=new file_reader(configure_file_name,configure_file_charset);
+	    		file_reader fr=new file_reader(configure_file_name,
+	    			(scene_temparatory_path_name!=null)
+	    			?scene_temparatory_path_name:Charset.defaultCharset().name());
 	    		my_scene_data_path_name			=fr.get_string();
 	    		my_scene_temparatory_path_name	=fr.get_string();
 	    		my_scene_environment_path_name	=fr.get_string();
