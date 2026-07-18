@@ -148,8 +148,9 @@ public class system_parameter
 			String scene_temparatory_path_name,String scene_environment_path_name)
 	{
 		debug_information.println();
-		debug_information.println("data_file_configure_file_name:		",	scene_data_path_name);
-		debug_information.println("temporary_file_configure_file_name:	",	scene_temparatory_path_name);
+		debug_information.println("data_file_configure_file_name:		",		scene_data_path_name);
+		debug_information.println("temporary_file_configure_file_name:	",		scene_temparatory_path_name);
+		debug_information.println("scene_environment_configure_file_name:	",	scene_environment_path_name);
 
 		file_reader f=new file_reader(scene_data_path_name,Charset.defaultCharset().name());
 		
@@ -297,7 +298,7 @@ public class system_parameter
 		switch_server=new switch_scene_server(data_root_directory_name+switch_server_url_file_name,local_data_charset);
 		http_date_str=new http_date_string();
 
-		for(int i=0,ni=content_type_change_name.data_list.size();i<ni;i++) {
+		for(int i=0,ni=content_type_change_name.data_list.size();i<ni;i++){
 			String p[]=content_type_change_name.data_list.get(i);
 			if(p[1].indexOf("link:")==0){
 				link_file_extend_name=p[0];

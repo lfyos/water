@@ -1,6 +1,0 @@
-
-F:/water_all/data/configure.txt
-
-F:/temp/configure.txt
-
-F:/water_all/environment.txt
