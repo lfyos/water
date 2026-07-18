@@ -2,9 +2,8 @@ package engine_example;
 
 import java.io.File;
 import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletException;
 
-import kernel_servlet.engine_servlet;
+import kernel_scene.engine_servlet;
 import kernel_file_manager.file_reader;
 import kernel_common_class.common_reader;
 import kernel_common_class.debug_information;
@@ -40,13 +39,8 @@ public class engine_example extends engine_servlet
 {
 	private static final long serialVersionUID = 1L;
 	
-	public engine_example()
+	protected String[]get_engine_configure_files(ServletConfig config)
 	{
-	};
-	public void init(ServletConfig config) throws ServletException 
-	{
-		super.init(config);
-
 		String scene_data_path_name;
 		String scene_temparatory_path_name;
 		String scene_environment_path_name;
@@ -74,13 +68,11 @@ public class engine_example extends engine_servlet
 	    		String configure_file_name;
 	    		if((configure_file_name=config.getServletContext().getRealPath("configure.txt"))==null){
 	        		debug_information.println("webserver_configure_file name is null");
-	        		System.exit(0);
-	        		return;
+	        		return null;
 	        	}
 	    		if(!(new File(configure_file_name).exists())) {
 	    			debug_information.println("webserver_configure_file is NOT exist: ",configure_file_name);
-	    			System.exit(0);
-	    			return;
+	    			return null;
 	    		}
 	    		file_reader fr=new file_reader(configure_file_name,"UTF-8");
 	    		scene_data_path_name		=fr.get_string();
@@ -109,6 +101,6 @@ public class engine_example extends engine_servlet
 	    		break;
 	    	}
 		}
-		create_scene(scene_data_path_name,scene_temparatory_path_name,scene_environment_path_name);
+		return new String[] {scene_data_path_name,scene_temparatory_path_name,scene_environment_path_name};
 	}
 }
