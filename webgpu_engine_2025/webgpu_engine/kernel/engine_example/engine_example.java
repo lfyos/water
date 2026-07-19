@@ -1,9 +1,10 @@
 package engine_example;
 
 import java.io.File;
-import jakarta.servlet.ServletConfig;
 
-import kernel_scene.engine_servlet;
+import engine_servlet.engine_configure_files;
+import engine_servlet.engine_servlet;
+import jakarta.servlet.ServletConfig;
 import kernel_file_manager.file_reader;
 import kernel_common_class.common_reader;
 import kernel_common_class.debug_information;
@@ -39,7 +40,7 @@ public class engine_example extends engine_servlet
 {
 	private static final long serialVersionUID = 1L;
 	
-	protected String[]get_engine_configure_files(ServletConfig config)
+	public engine_configure_files get_engine_configure_files(ServletConfig config)
 	{
 		String scene_data_path_name;
 		String scene_temparatory_path_name;
@@ -101,6 +102,10 @@ public class engine_example extends engine_servlet
 	    		break;
 	    	}
 		}
-		return new String[] {scene_data_path_name,scene_temparatory_path_name,scene_environment_path_name};
+		
+		return new engine_configure_files(
+					scene_data_path_name,
+					scene_temparatory_path_name,
+					scene_environment_path_name);
 	}
 }
