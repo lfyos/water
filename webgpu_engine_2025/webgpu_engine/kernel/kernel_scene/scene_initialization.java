@@ -212,7 +212,7 @@ public class scene_initialization
 				for(int j=0,nj=shader_file_name[i].length;j<nj;j++){
 					String my_file_name=file_reader.separator(shader_file_name[i][j]);
 					my_last_time=class_file_reader.get_last_time(my_file_name,
-							r.driver.getClass(),sk.system_par.js_jar_file_charset);
+							r.driver.getClass(),sk.system_par.text_class_charset);
 					if(last_time<my_last_time)
 						last_time=my_last_time;
 				}
@@ -443,19 +443,15 @@ public class scene_initialization
 						fw.println("{");
 					}				
 					for(int j=0,nj=shader_file_name[i].length;j<nj;j++){
-						String class_charset	=sk.system_par.text_class_charset;
-						String jar_file_charset	=sk.system_par.text_jar_file_charset;
-					
+						String class_charset=sk.system_par.text_class_charset;
 						String my_file_name=file_reader.separator(shader_file_name[i][j]);
 						int index_id=shader_file_name[i][j].lastIndexOf('.');
 						if(index_id>=0)
-							if(my_file_name.substring(index_id,index_id+3).toLowerCase().compareTo(".js")==0) {
+							if(my_file_name.substring(index_id,index_id+3).toLowerCase().compareTo(".js")==0)
 								class_charset	=sk.system_par.js_class_charset;
-								jar_file_charset=sk.system_par.js_jar_file_charset;
-							}						
 						String str="";	
-						common_reader reader=class_file_reader.get_reader(my_file_name,
-							r.driver.getClass(),class_charset,jar_file_charset);
+						common_reader reader=class_file_reader.get_reader(
+							my_file_name,r.driver.getClass(),class_charset);
 						if(reader!=null){
 							if(!(reader.error_flag()))
 								str=reader.get_text();

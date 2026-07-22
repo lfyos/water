@@ -15,7 +15,7 @@ import kernel_common_class.class_file_reader;
 	initParams= {
 		@jakarta.servlet.annotation.WebInitParam(
 			name	=	"lfy_scene_servlet_type",
-			value	=	"class_configure_file"
+			value	=	"program_configure_file"
 		),
 		@jakarta.servlet.annotation.WebInitParam(
 			name	=	"lfy_data_configure_file",
@@ -69,11 +69,13 @@ public class engine_example extends engine_servlet
 	    		String configure_file_name;
 	    		if((configure_file_name=config.getServletContext().getRealPath("configure.txt"))==null){
 	        		debug_information.println("webserver_configure_file name is null");
+	        		System.exit(0);
 	        		return null;
 	        	}
 	    		if(!(new File(configure_file_name).exists())) {
 	    			debug_information.println("webserver_configure_file is NOT exist: ",configure_file_name);
-	    			return null;
+	    			System.exit(0);
+	        		return null;
 	    		}
 	    		file_reader fr=new file_reader(configure_file_name,"UTF-8");
 	    		scene_data_path_name		=fr.get_string();
@@ -82,27 +84,24 @@ public class engine_example extends engine_servlet
 	    		fr.close();
 	    		break;
 	    	}	
-    	case "class_configure_file":
+    	case "program_configure_file":
 	    	{
-	    		common_reader reader=class_file_reader.get_reader("configure.txt",getClass(),"UTF-8","UTF-8");
+	    		common_reader reader;
+	    		String configure_file_name="configure.txt";
+	    		
+	    		if((reader=class_file_reader.get_reader(configure_file_name,getClass(),"UTF-8"))==null) {
+	    			debug_information.println("program_configure_file is NOT exist: ",
+	    					getClass().getName()+"\t"+configure_file_name);
+	    			System.exit(0);
+	        		return null;
+	    		}
 	    		scene_data_path_name		=reader.get_string();
 	    		scene_temparatory_path_name	=reader.get_string();
 	    		scene_environment_path_name	=reader.get_string();
-	    		reader.close();
-	    		break;
+	    		reader.close();	
 	    	}
-    	case "jar_configure_file":
-			{
-	    		String path_name=class_file_reader.get_file_path("configure.txt",getClass(),"UTF-8");
-	    		file_reader fr=new file_reader(path_name,"UTF-8");
-	    		scene_data_path_name		=fr.get_string();
-	    		scene_temparatory_path_name	=fr.get_string();
-	    		scene_environment_path_name	=fr.get_string();
-	    		fr.close();
-	    		break;
-	    	}
+	    	break;
 		}
-		
 		return new engine_configure_files(
 					scene_data_path_name,
 					scene_temparatory_path_name,

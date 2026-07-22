@@ -46,8 +46,8 @@ public class javascript_program
 		last_modified_time=(t1>t2)?t1:t2;
 		
 		for(int i=0,ni=javascript_file_name.length;i<ni;i++) {
-			common_reader cr=class_file_reader.get_reader(javascript_file_name[i],
-				getClass(),system_par.js_class_charset,system_par.js_jar_file_charset);
+			common_reader cr=class_file_reader.get_reader(
+					javascript_file_name[i],getClass(),system_par.js_class_charset);
 			if(cr==null)
 				continue;
 			if(cr.error_flag()){
@@ -94,8 +94,8 @@ public class javascript_program
 		fr.close();
 
 		for(int i=0,ni=javascript_file_name.length;i<ni;i++) {
-			common_reader cr=class_file_reader.get_reader(javascript_file_name[i],
-					getClass(),system_par.js_class_charset,system_par.js_jar_file_charset);
+			common_reader cr=class_file_reader.get_reader(
+					javascript_file_name[i],getClass(),system_par.js_class_charset);
 			if(cr==null){
 				debug_information.println("Javascript file can not be opened!	",javascript_file_name[i]);
 				System.exit(0);

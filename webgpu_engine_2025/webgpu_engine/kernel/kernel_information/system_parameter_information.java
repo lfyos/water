@@ -15,9 +15,7 @@ public class system_parameter_information extends jason_creator
 		print("local_data_charset",						sp.local_data_charset);
 		print("network_data_charset",					sp.network_data_charset);
 		print("text_class_charset",						sp.text_class_charset);
-		print("text_jar_file_charset",					sp.text_jar_file_charset);
 		print("js_class_charset",						sp.js_class_charset);
-		print("js_jar_file_charset",					sp.js_jar_file_charset);
 		
 		print("user_file_name",							sp.user_file_name);
 		print("shader_file_name",						sp.shader_file_name);

@@ -1,49 +1,49 @@
-/*	local_data_charset														*/		GBK
-/*	network_data_charset													*/		UTF-8
-/*	text_class_charset			text_jar_file_charset						*/		GBK			GBK
-/*	js_class_charset			js_jar_file_charset							*/		UTF-8		UTF-8
+/*	local_data_charset										*/		GBK
+/*	network_data_charset									*/		UTF-8
+/*	text_class_charset										*/		GBK
+/*	js_class_charset										*/		UTF-8
 
-/*	user_file_name															*/		users/users.txt
-/*	shader_file_name														*/		shaders/shaders.txt
-/*	default_parameter_directory												*/		parameter
-/*	default_system_mount_component_name										*/		system_mount_component
-/*	language_change_file_name												*/		language_change.txt
-/*	switch_server_url_file_name												*/		switch_server_url.txt
+/*	user_file_name											*/		users/users.txt
+/*	shader_file_name										*/		shaders/shaders.txt
+/*	default_parameter_directory								*/		parameter
+/*	default_system_mount_component_name						*/		system_mount_component
+/*	language_change_file_name								*/		language_change.txt
+/*	switch_server_url_file_name								*/		switch_server_url.txt
 
-/*	default_max_loading_number												*/		5
-/*	max_loading_number														*/		10
-/*	max_method_number														*/		20
+/*	default_max_loading_number								*/		5
+/*	max_loading_number										*/		10
+/*	max_method_number										*/		20
 
-/*	max_material_id															*/		100
+/*	max_material_id											*/		100
 
-/*	response_block_size														*/		65536
+/*	response_block_size										*/		65536
 
-/*	engine_expire_time_length		unit:nanosecond							*/		60000000000
-/*	engine_touch_time_length		unit:nanosecond							*/		10000000000
-/*	part_load_sleep_time_length		unit:millisecond						*/		100
+/*	engine_expire_time_length		unit:nanosecond			*/		60000000000
+/*	engine_touch_time_length		unit:nanosecond			*/		10000000000
+/*	part_load_sleep_time_length		unit:millisecond		*/		100
 
-/*	create_scene_concurrent_number											*/		5
+/*	create_scene_concurrent_number							*/		5
 
-/*	create_scene_sleep_time_length_scale									*/		1.125
-/*	create_scene_sleep_time_length,unit:millisecond							*/		10000
-/*	create_scene_max_sleep_time_length									 	*/		1200000
+/*	create_scene_sleep_time_length_scale					*/		1.125
+/*	create_scene_sleep_time_length,unit:millisecond			*/		10000
+/*	create_scene_max_sleep_time_length						*/		1200000
 
-/*	show_process_bar_interval,	unit:millisecond							*/		1000
-/*	file_buffer_expire_time_length,	unit:second								*/		3600000
-/*	access_control_max_age,	unit:second										*/		3600
+/*	show_process_bar_interval,	unit:millisecond			*/		1000
+/*	file_buffer_expire_time_length,	unit:second				*/		3600000
+/*	access_control_max_age,	unit:second						*/		3600
 
-/*	max_client_container_number												*/		20
-/*	max_client_interface_number												*/		10
+/*	max_client_container_number								*/		20
+/*	max_client_interface_number								*/		10
 
-/*	max_engine_kernel_number												*/		300
-/*	max_engine_component_number												*/		3000000
+/*	max_engine_kernel_number								*/		300
+/*	max_engine_component_number								*/		3000000
 
-/*	max_file_response_length												*/		256
-/*	min_compress_response_length											*/		1024
-/*	max_buffer_object_head_package_length									*/		8000000
+/*	max_file_response_length								*/		256
+/*	min_compress_response_length							*/		1024
+/*	max_buffer_object_head_package_length					*/		8000000
 
-/*	max_process_component_load_number										*/		5
-/*	max_process_modifier_number												*/		5
+/*	max_process_component_load_number						*/		5
+/*	max_process_modifier_number								*/		5
 
-/*	box_distance_difference_scale											*/		0.1
-/*	buffer_data_length_difference_scale										*/		0.1
+/*	box_distance_difference_scale							*/		0.1
+/*	buffer_data_length_difference_scale						*/		0.1

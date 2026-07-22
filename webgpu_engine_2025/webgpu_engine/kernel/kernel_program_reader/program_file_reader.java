@@ -10,8 +10,7 @@ public class program_file_reader
 	{
 		String ret_string="";
 		common_reader reader=class_file_reader.get_reader(file_name,
-			program_file_reader.class,system_par.text_class_charset,
-			system_par.text_jar_file_charset);
+			program_file_reader.class,system_par.text_class_charset);
 		if(reader!=null){
 			if(!(reader.error_flag()))
 				ret_string=reader.get_text();
@@ -41,7 +40,7 @@ public class program_file_reader
 		long ret_val=0,current_file_time;
 		for(int i=0,ni=file_name.length;i<ni;i++) {
 			current_file_time=class_file_reader.get_last_time(file_name[i],
-					program_file_reader.class,system_par.text_jar_file_charset);
+					program_file_reader.class,system_par.text_class_charset);
 			if(current_file_time>ret_val)
 				ret_val=current_file_time;
 		}

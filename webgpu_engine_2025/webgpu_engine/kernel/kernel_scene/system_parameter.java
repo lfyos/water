@@ -17,7 +17,7 @@ public class system_parameter
 	public long last_modified_time;
 	
 	public String local_data_charset,network_data_charset;
-	public String text_class_charset,text_jar_file_charset,js_class_charset,js_jar_file_charset;
+	public String text_class_charset,js_class_charset;
 	
 	public String user_file_name,shader_file_name;
 	public String parameter_directory,default_system_mount_component_name;
@@ -89,9 +89,7 @@ public class system_parameter
 		local_data_charset					=new String(sp.local_data_charset);
 		network_data_charset				=new String(sp.network_data_charset);
 		text_class_charset					=new String(sp.text_class_charset);
-		text_jar_file_charset				=new String(sp.text_jar_file_charset);
 		js_class_charset					=new String(sp.js_class_charset);
-		js_jar_file_charset					=new String(sp.js_jar_file_charset);
 		
 		user_file_name						=new String(sp.user_file_name);
 		shader_file_name					=new String(sp.shader_file_name);
@@ -187,20 +185,10 @@ public class system_parameter
 		if(text_class_charset.compareTo("default_charset")==0)
 			text_class_charset=Charset.defaultCharset().name();
 		
-		if((text_jar_file_charset=f.get_string())==null)
-			text_jar_file_charset=Charset.defaultCharset().name();
-		if(text_jar_file_charset.compareTo("default_charset")==0)
-			text_jar_file_charset=Charset.defaultCharset().name();
-		
 		if((js_class_charset=f.get_string())==null)
 			js_class_charset=Charset.defaultCharset().name();
 		if(js_class_charset.compareTo("default_charset")==0)
 			js_class_charset=Charset.defaultCharset().name();
-		
-		if((js_jar_file_charset=f.get_string())==null)
-			js_jar_file_charset=Charset.defaultCharset().name();
-		if(js_jar_file_charset.compareTo("default_charset")==0)
-			js_jar_file_charset=Charset.defaultCharset().name();
 
 		if((user_file_name=f.get_string())==null)
 			user_file_name="";
@@ -294,7 +282,7 @@ public class system_parameter
 		temporary_file_par=new temporary_file_parameter(scene_temparatory_path_name,local_data_charset);
 		language_change_name=new change_name(
 				new String[]{data_root_directory_name+language_change_file_name},null,local_data_charset);
-		content_type_change_name=get_content_type_change_name.get_change_name(text_class_charset,text_jar_file_charset);
+		content_type_change_name=get_content_type_change_name.get_change_name(text_class_charset);
 		switch_server=new switch_scene_server(data_root_directory_name+switch_server_url_file_name,local_data_charset);
 		http_date_str=new http_date_string();
 
